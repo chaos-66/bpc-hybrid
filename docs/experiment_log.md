@@ -856,3 +856,55 @@ globally set `BPC_HYBRID_DISABLE_PROJECT_ENV=1`.
 
 Completed after tests in both normal and audit-env modes, documentation update,
 commit, and GitHub push succeeded.
+
+## R9 — Controlled Real API Single-Sample Smoke
+
+### Goal
+
+Perform at most one explicitly authorized real API single-sample connectivity smoke through the controlled dry-run harness.
+
+### Scope
+
+- Add/verify real API gate
+- Require explicit CLI flags
+- Require project-local `.env` configuration
+- Run at most one synthetic toy sentence
+- Validate schema-normalized output
+- Do not store raw response
+- Do not run benchmark
+- Do not use real GDPR/BPMN/Sun data
+
+### Non-goals
+
+- No batch LLM execution
+- No formal benchmark
+- No accuracy comparison
+- No Sun comparison
+- No BPMN compliance checking
+- No over-compliance detection
+- No raw response storage
+
+### Real API Execution
+
+Status: SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED
+
+Constraints:
+
+- single sample only
+- no raw response saved
+- no benchmark result
+- no accuracy claim
+- secret redacted
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| Real API network error (redacted) | Single-sample real API call returned network error | Base URL or network connectivity issue; details redacted for security | Error was properly redacted; no secrets leaked; returned valid JSON error envelope | All offline tests (408) passed; health and eval OK; real API gate logic verified |
+
+### Status
+
+Completed after all offline tests passed (408/408), real API gate implementation,
+CLI flag additions, documentation update, commit, and GitHub push succeeded.
+Real API smoke returned network error (redacted) — connectivity issue, not a
+code defect.

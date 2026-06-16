@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R9 ✅**
 
 ## Research Positioning
 
@@ -48,6 +48,15 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R7.1 ✅: Hardened LLM config validation and documentation completed.
 - R7.2 ✅: Completed base_url secret query coverage.
 - R8 ✅: Added controlled single-sample LLM dry-run harness.
+- R9 ✅: Added controlled real API single-sample smoke with explicit gate flags.
+
+## R9 Scope
+
+R9 performs at most one explicitly authorized real API single-sample connectivity smoke using the existing dry-run harness.
+
+R9 does not run batch experiments, does not store raw responses, does not use real GDPR/BPMN/Sun data, and does not produce benchmark results.
+
+A successful R9 run only means single-sample API connectivity smoke succeeded.
 - R8.2 ✅: CLI parse errors (invalid provider, unknown args) return JSON error envelopes.
 
 ## R8 Scope

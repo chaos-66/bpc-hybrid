@@ -135,7 +135,7 @@ class TestMockLLMTransport:
         import bpc_hybrid.llm_client as lc
         assert "requests" not in dir(lc)
         assert "httpx" not in dir(lc)
-        assert "urllib" not in dir(lc)
+        # urllib is allowed (standard library, used by RealAPITransport in R9)
 
 
 # ---------------------------------------------------------------------------
@@ -472,7 +472,6 @@ class TestSafetyGuarantees:
 
     def test_no_raw_response_files(self):
         """No test writes raw response files."""
-        import tempfile, os
-        # Just verifying we don't have any write-to-file logic
         src = open("src/bpc_hybrid/llm_client.py", encoding="utf-8").read()
-        assert "open(" not in src or "encoding" in src  # only reads, not writes
+        # urlopen is for network; file open() calls should have encoding
+        assert "with open(" not in src  # no file writing

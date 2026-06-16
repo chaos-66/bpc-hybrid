@@ -1,16 +1,20 @@
-"""LLM transport, parsing, and fallback adapter (R7).
+"""LLM transport, parsing, and fallback adapter (R7 + R9).
 
 Provides provider-independent request/response structures, a mock
-transport, an OpenAI-compatible request builder, a JSON response parser,
-and an LLM fallback adapter that plugs into the R6 fallback interface.
+transport, a real API transport (R9), an OpenAI-compatible request
+builder, a JSON response parser, and an LLM fallback adapter that
+plugs into the R6 fallback interface.
 
-**No network, no ``.env``, no real API keys.**  R7 only builds the
-scaffold — real LLM execution is deferred to a later stage.
+R9 adds ``RealAPITransport`` which uses only Python standard library
+(``urllib.request``) to make a single real API call under explicit
+opt-in gates.  No ``requests``, ``httpx``, or ``openai`` SDK.
 """
 
 from __future__ import annotations
 
 import json
+import urllib.error
+import urllib.request
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -238,6 +242,123 @@ class OpenAICompatibleRequestBuilder:
             f"provider={self.config.provider!r}, "
             f"model={self.config.model!r}, "
             f"base_url={self.config.base_url!r})"
+        )
+
+
+# ---------------------------------------------------------------------------
+# RealAPITransport (R9)
+# ---------------------------------------------------------------------------
+
+class RealAPITransport(LLMTransport):
+    """Real HTTP transport for a single OpenAI-compatible API call (R9).
+
+    Uses **only** Python standard library (``urllib.request``).  No
+    ``requests``, ``httpx``, or ``openai`` SDK.
+
+    Parameters
+    ----------
+    config : LLMConfig
+        Must have ``api_key``, ``base_url``, and ``model`` populated.
+    timeout_seconds : float
+        HTTP timeout in seconds.
+
+    Safety guarantees:
+
+    * API key goes **only** in the ``Authorization`` header — never in
+      URL query params, request body, stdout, stderr, logs, or repr.
+    * Network errors are redacted — the exception message never
+      contains the API key or base URL.
+    * No raw response is written to disk.
+    * Each instance is single-use by convention; the caller must ensure
+      only one request is sent.
+    """
+
+    def __init__(self, config: LLMConfig, timeout_seconds: float = 30.0) -> None:
+        self._config = config
+        self._timeout = timeout_seconds
+        self._builder = OpenAICompatibleRequestBuilder(config)
+
+    def send(self, request: LLMRequest) -> LLMResponse:
+        """Execute a single real API call via ``urllib.request``.
+
+        Returns an :class:`LLMResponse` on success (HTTP 200 with valid
+        JSON body).  Raises :class:`LLMClientError` on any failure.
+        """
+        payload = self._builder.build_payload(
+            system_prompt=request.system_prompt,
+            user_prompt=request.user_prompt,
+        )
+
+        # Inject real API key into headers (redacted by builder)
+        headers = dict(payload["headers"])
+        headers["Authorization"] = f"Bearer {self._config.api_key}"
+
+        body_bytes = json.dumps(payload["body"]).encode("utf-8")
+
+        http_req = urllib.request.Request(
+            payload["url"],
+            data=body_bytes,
+            headers=headers,
+            method="POST",
+        )
+
+        try:
+            with urllib.request.urlopen(http_req, timeout=self._timeout) as resp:
+                raw_body = resp.read().decode("utf-8")
+                status = resp.status
+        except urllib.error.HTTPError as exc:
+            raise LLMClientError(
+                "Real API HTTP error (status redacted, response not saved)"
+            ) from exc
+        except (urllib.error.URLError, OSError) as exc:
+            raise LLMClientError(
+                "Real API network error (details redacted)"
+            ) from exc
+        except Exception as exc:
+            raise LLMClientError(
+                "Real API unexpected error (details redacted)"
+            ) from exc
+
+        if status != 200:
+            raise LLMClientError(
+                f"Real API returned non-200 status (details redacted)"
+            )
+
+        # Parse the OpenAI chat-completions response
+        try:
+            data = json.loads(raw_body)
+        except json.JSONDecodeError as exc:
+            raise LLMClientError(
+                "Real API response is not valid JSON"
+            ) from exc
+
+        # Extract content from choices[0].message.content
+        try:
+            content = data["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, TypeError) as exc:
+            raise LLMClientError(
+                "Real API response missing choices[0].message.content"
+            ) from exc
+
+        finish_reason = None
+        try:
+            finish_reason = data["choices"][0].get("finish_reason")
+        except (KeyError, IndexError, TypeError):
+            pass
+
+        model_used = data.get("model", self._config.model)
+
+        return LLMResponse(
+            content=content,
+            provider=self._config.provider,
+            model=model_used,
+            finish_reason=finish_reason,
+        )
+
+    def __repr__(self) -> str:
+        return (
+            f"RealAPITransport(provider={self._config.provider!r}, "
+            f"model={self._config.model!r})"
         )
 
 

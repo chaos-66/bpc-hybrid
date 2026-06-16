@@ -114,7 +114,7 @@ class TestDryRunGateErrors:
         assert data["error"] is True
         assert "text" in data["message"].lower()
 
-    def test_openai_compatible_refused_in_r8(self):
+    def test_openai_compatible_refused_without_real_flags(self):
         cp = _run_dry_run(
             "--allow-llm",
             "--single-sample",
@@ -124,7 +124,7 @@ class TestDryRunGateErrors:
         assert cp.returncode != 0
         data = _parse_json_output(cp)
         assert data["error"] is True
-        assert "R8GateError" in data.get("error_type", "")
+        assert "R9GateError" in data.get("error_type", "")
         assert "real_api_call_performed" in data
         assert data["real_api_call_performed"] is False
 

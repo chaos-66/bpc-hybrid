@@ -1,16 +1,28 @@
-"""R8 Controlled Single-Sample LLM Dry-Run Harness.
+"""R9 Controlled Single-Sample LLM Dry-Run Harness.
 
-Provides a safety-gated CLI for single-sample LLM dry-runs.  In R8,
-real API execution is **disabled** — only ``mock`` provider runs are
-allowed.  Explicit ``--allow-llm`` and ``--single-sample`` flags are
-required.  All output is JSON.  No raw secrets, no network, no file
-writes.
+Provides a safety-gated CLI for single-sample LLM dry-runs.  In R9,
+real API execution is **opt-in only** via explicit flags.  Mock
+provider runs require ``--allow-llm`` and ``--single-sample``.  Real
+API runs additionally require ``--execute-real-api``,
+``--confirm-real-api-single-sample``, and
+``BPC_HYBRID_R9_REAL_RUN_CONFIRMED=YES_SINGLE_SAMPLE_ONLY`` in the
+environment.  All output is JSON.  No raw secrets, no raw response
+storage, no batch mode.
 
-Usage::
+Usage (mock)::
 
     .\\.venv\\Scripts\\python.exe scripts\\run_llm_dry_run.py \\
         --allow-llm --single-sample \\
         --source-id dry001 \\
+        --text "A controller shall record the decision."
+
+Usage (real API smoke, R9)::
+
+    .\\.venv\\Scripts\\python.exe scripts\\run_llm_dry_run.py \\
+        --allow-llm --single-sample \\
+        --execute-real-api --confirm-real-api-single-sample \\
+        --provider openai_compatible \\
+        --source-id r9_real_smoke_001 \\
         --text "A controller shall record the decision."
 """
 
@@ -33,9 +45,16 @@ from bpc_hybrid.llm_client import (
     LLMFallbackAdapter,
     LLMResponse,
     MockLLMTransport,
+    RealAPITransport,
     make_schema_valid_mock_response_json,
 )
-from bpc_hybrid.llm_config import ALLOWED_PROVIDERS, LLMConfig, LLMConfigError, load_project_env_file, project_env_disabled
+from bpc_hybrid.llm_config import (
+    ALLOWED_PROVIDERS,
+    LLMConfig,
+    LLMConfigError,
+    load_project_env_file,
+    project_env_disabled,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -75,6 +94,7 @@ def _success(
     fallback_triggered: bool,
     schema_valid: bool,
     output: dict | None,
+    real_api_call_performed: bool = False,
 ) -> str:
     """Return a JSON success line (no raw secrets)."""
     return json.dumps(
@@ -86,7 +106,7 @@ def _success(
             "model": model,
             "fallback_triggered": fallback_triggered,
             "schema_valid": schema_valid,
-            "real_api_call_performed": False,
+            "real_api_call_performed": real_api_call_performed,
             "raw_response_saved": False,
             "secret_redacted": True,
             "output": output if output is not None else {},
@@ -123,7 +143,7 @@ class JsonArgumentParser(argparse.ArgumentParser):
 
 def main(argv: list[str] | None = None) -> int:
     parser = JsonArgumentParser(
-        description="R8 controlled single-sample LLM dry-run harness",
+        description="R9 controlled single-sample LLM dry-run harness",
     )
     parser.add_argument(
         "--allow-llm",
@@ -150,7 +170,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--provider",
         default="mock",
-        help="LLM provider (default: mock; openai_compatible is disabled in R8).",
+        help="LLM provider (mock, openai_compatible, or disabled).",
     )
     parser.add_argument(
         "--model",
@@ -164,6 +184,18 @@ def main(argv: list[str] | None = None) -> int:
             "JSON string to use as mock LLM response. "
             "If omitted, a schema-valid default is generated."
         ),
+    )
+    parser.add_argument(
+        "--execute-real-api",
+        action="store_true",
+        default=False,
+        help="Execute a real API call (R9 gate — requires all confirm flags).",
+    )
+    parser.add_argument(
+        "--confirm-real-api-single-sample",
+        action="store_true",
+        default=False,
+        help="Confirm real API single-sample execution (R9 gate).",
     )
     parser.add_argument(
         "--no-project-env",
@@ -211,47 +243,129 @@ def main(argv: list[str] | None = None) -> int:
         print(_error("GateError", "LLM dry-run requires --text with source text."))
         return 1
 
-    # --- gate: real provider blocked in R8 -------------------------------
-    if args.provider not in ("mock", "disabled"):
-        print(
-            _error(
-                "R8GateError",
-                (
-                    f"Provider {args.provider!r} is not allowed in R8. "
-                    f"Real LLM API execution is disabled in this stage. "
-                    f"Use --provider mock for dry-run testing."
-                ),
+    # --- gate: R9 real API gates for openai_compatible -------------------
+    real_api_requested = False
+    if args.provider == "openai_compatible":
+        # R9.0 gate: --execute-real-api required
+        if not args.execute_real_api:
+            print(
+                _error(
+                    "R9GateError",
+                    "openai_compatible provider requires --execute-real-api "
+                    "for real API execution. Use --provider mock for "
+                    "dry-run testing without network.",
+                )
             )
-        )
-        return 1
+            return 1
 
-    # --- build config ----------------------------------------------------
-    try:
-        config = LLMConfig(
-            enabled=True,
+        # R9.0 gate: --confirm-real-api-single-sample required
+        if not args.confirm_real_api_single_sample:
+            print(
+                _error(
+                    "R9GateError",
+                    "Real API execution requires "
+                    "--confirm-real-api-single-sample to confirm "
+                    "single-sample mode.",
+                )
+            )
+            return 1
+
+        # R9.0 gate: BPC_HYBRID_R9_REAL_RUN_CONFIRMED env var
+        import os as _os_r9
+        r9_confirmed = _os_r9.environ.get(
+            "BPC_HYBRID_R9_REAL_RUN_CONFIRMED", ""
+        ).strip()
+        if r9_confirmed != "YES_SINGLE_SAMPLE_ONLY":
+            print(
+                _error(
+                    "R9GateError",
+                    "BPC_HYBRID_R9_REAL_RUN_CONFIRMED must be set to "
+                    "YES_SINGLE_SAMPLE_ONLY in the environment.",
+                )
+            )
+            return 1
+
+        # R9.0: build config from env (--no-project-env still respected)
+        from bpc_hybrid.llm_config import LLMConfig as _LC
+        try:
+            config = _LC.from_env(
+                project_root=_PROJECT_ROOT if not args.no_project_env else None,
+            )
+        except LLMConfigError as exc:
+            print(
+                _error(
+                    "R9RealAPIConfigError",
+                    f"Real API config error: {exc}",
+                )
+            )
+            return 1
+
+        # R9.0 gate: must have API key, base_url, model
+        missing: list[str] = []
+        if not config.api_key:
+            missing.append("BPC_HYBRID_LLM_API_KEY")
+        if not config.base_url:
+            missing.append("BPC_HYBRID_LLM_BASE_URL")
+        if not config.model or config.model == "mock":
+            missing.append("BPC_HYBRID_LLM_MODEL")
+
+        if missing:
+            print(
+                _error(
+                    "R9RealAPIConfigError",
+                    f"Missing required config: {', '.join(sorted(missing))}. "
+                    f"R9_REAL_API_STATUS: SKIPPED_NO_API_KEY_OR_CONFIG",
+                )
+            )
+            return 1
+
+        # R9.0 gate: provider must be openai_compatible in config
+        if config.provider != "openai_compatible":
+            print(
+                _error(
+                    "R9RealAPIConfigError",
+                    f"Config provider is {config.provider!r}, expected "
+                    f"'openai_compatible'. Set BPC_HYBRID_LLM_PROVIDER="
+                    f"openai_compatible in .env.",
+                )
+            )
+            return 1
+
+        config.enabled = True
+        real_api_requested = True
+
+    else:
+        # --- mock / disabled path (same as R8) ---------------------------
+        try:
+            config = LLMConfig(
+                enabled=True,
+                provider=args.provider,
+                model=args.model,
+            )
+        except LLMConfigError as exc:
+            print(_error("ConfigError", str(exc)))
+            return 1
+
+    # --- build transport -------------------------------------------------
+    transport: MockLLMTransport | RealAPITransport
+    if real_api_requested:
+        transport = RealAPITransport(config, timeout_seconds=config.timeout_seconds)
+    else:
+        mock_json_str: str
+        if args.mock_response is not None:
+            mock_json_str = args.mock_response
+        else:
+            mock_json_str = make_schema_valid_mock_response_json(
+                args.text, args.source_id
+            )
+
+        mock_resp = LLMResponse(
+            content=mock_json_str,
             provider=args.provider,
             model=args.model,
+            finish_reason="stop",
         )
-    except LLMConfigError as exc:
-        print(_error("ConfigError", str(exc)))
-        return 1
-
-    # --- build mock response ---------------------------------------------
-    mock_json_str: str
-    if args.mock_response is not None:
-        mock_json_str = args.mock_response
-    else:
-        mock_json_str = make_schema_valid_mock_response_json(
-            args.text, args.source_id
-        )
-
-    mock_resp = LLMResponse(
-        content=mock_json_str,
-        provider=args.provider,
-        model=args.model,
-        finish_reason="stop",
-    )
-    transport = MockLLMTransport(fixed_response=mock_resp)
+        transport = MockLLMTransport(fixed_response=mock_resp)
 
     # --- run rule-first extraction ---------------------------------------
     rule_response = extract_rule_first(args.text, source_id=args.source_id)
@@ -267,7 +381,13 @@ def main(argv: list[str] | None = None) -> int:
     try:
         result = adapter.complete(request)
     except Exception as exc:
-        print(_error("DryRunError", f"LLM fallback execution failed: {exc}"))
+        print(
+            _error(
+                "DryRunError",
+                f"LLM fallback execution failed: {exc}",
+                real_api_call_performed=real_api_requested,
+            )
+        )
         return 1
 
     # --- check for LLM-level errors ---------------------------------------
@@ -276,6 +396,7 @@ def main(argv: list[str] | None = None) -> int:
             _error(
                 "DryRunError",
                 f"LLM fallback did not produce a valid response: {result.error}",
+                real_api_call_performed=real_api_requested,
             )
         )
         return 1
@@ -287,14 +408,19 @@ def main(argv: list[str] | None = None) -> int:
     else:
         output_dict = {}
 
+    model_used = args.model
+    if real_api_requested and result.response is not None:
+        model_used = config.model
+
     print(
         _success(
             source_id=args.source_id,
             provider=args.provider,
-            model=args.model,
+            model=model_used,
             fallback_triggered=result.response is not None,
             schema_valid=result.is_valid,
             output=output_dict,
+            real_api_call_performed=real_api_requested,
         )
     )
     return 0
