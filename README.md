@@ -2,16 +2,17 @@
 
 ## Current Status
 
-**R0 ✅ | R1 — Minimal Python Project Scaffold**
+**R0 ✅ | R1 ✅ | R1.5 — Research Framing Integrated**
 
-## Research Direction
+## Research Positioning
 
-This project investigates a **rule-first LLM-assisted hybrid framework for design-time business process compliance assessment**.
+`bpc-hybrid` is a **rule-first LLM-assisted hybrid framework** for design-time business process compliance assessment.
 
-The framework combines:
-- Sun-style rule-template / marker-based regulatory semantic extraction as the foundation
-- High consistency, low cost, and interpretability of rule-based methods
-- LLM structured formalization for handling complex regulatory text
+The framework keeps Sun-style rule-template / marker-based regulatory semantic extraction as the **primary path** because it provides consistency, low cost, interpretability, and deterministic traceability. LLMs are planned only as a **controlled fallback** for cases such as multi-modality, missing actor/action, parser failure, or low-confidence matching.
+
+LLM outputs must be constrained by strict JSON schemas and then processed through span normalization and deterministic post-processing to reduce hallucination and representation inconsistency.
+
+A planned **multi-clause schema** will allow compound regulatory sentences with multiple modalities to be decomposed into individual normative clauses, each carrying its own modality, actor, action, condition, constraint, and exception.
 
 ## Important Declarations
 
@@ -19,6 +20,7 @@ The framework combines:
 - ⚠️ No GDPR / BPMN / Sun dataset data is fabricated or included.
 - ⚠️ Only a successful GitHub push marks the completion of a stage.
 - ⚠️ No claims about surpassing Sun or any prior work are made.
+- ⚠️ The current repository is a runnable MVP skeleton, not a validated system.
 
 ## R0 Artifacts
 
@@ -32,8 +34,9 @@ The framework combines:
 
 ## Current Stage
 
-- R0: completed after successful GitHub push.
-- R1: minimal Python project scaffold.
+- R0 ✅: Safe GitHub-backed bootstrap completed.
+- R1 ✅: Minimal Python project scaffold completed.
+- R1.5 ✅: Research framing integrated into project documentation.
 
 ## R1 Scope
 
@@ -43,6 +46,14 @@ R1 does not implement schema extraction, rule extraction, multi-clause splitting
 
 This repository currently contains no real GDPR/BPMN/Sun-aligned dataset and does not report benchmark results.
 
+## Dataset and Claim Boundary
+
+The future formal evaluation target is a **Sun-aligned GDPR + BPMN dataset**, compared against Sun-style rule baseline and Winter-style textual baseline on precision / recall / F1 / AP / MAP.
+
+**EStG / Austrian Income Tax Act** may only be used later as an optional generalization corpus and cannot replace the Sun-aligned main benchmark.
+
+This project currently does **not** claim to outperform Sun-style baselines, Winter-style textual baselines, or any LLM baseline. Synthetic prototype data, if introduced later, is used for pipeline sanity checks only — not for benchmark claims.
+
 ## Next Stage
 
-R2 will only proceed after R1 push is confirmed successful.
+R2 will only proceed after R1.5 push is confirmed successful and user authorization is granted.

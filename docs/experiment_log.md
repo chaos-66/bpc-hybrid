@@ -54,3 +54,32 @@ Create the minimal Python package structure required for later schema, extractor
 ### Status
 
 Completed after tests passed and GitHub push succeeded.
+
+## R1.5 — Research Framing Integration
+
+### Goal
+
+Integrate a safer and clearer research framing into the project documentation after the R1 scaffold.
+
+### Scope
+
+- Update `README.md` with concise research positioning, dataset boundary, and claim boundary.
+- Update `docs/research_idea.md` with prior-work relation, multi-clause schema rationale, deterministic normalization rationale, dataset boundary, and forbidden claims.
+- Keep the current project status limited to a runnable scaffold / MVP skeleton.
+
+### Non-goals
+
+- No schema implementation.
+- No extractor implementation.
+- No LLM fallback implementation.
+- No real GDPR data.
+- No real BPMN model.
+- No Sun-aligned benchmark.
+- No synthetic prototype dataset.
+- No benchmark result.
+- No claim of outperforming Sun or any baseline.
+- No method validation claim (requires R5+).
+
+### Status
+
+Completed after documentation update and GitHub push succeeded.
