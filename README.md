@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 — Safe GitHub-backed Bootstrap**
+**R0 ✅ | R1 — Minimal Python Project Scaffold**
 
 ## Research Direction
 
