@@ -631,3 +631,38 @@ no formal benchmark.
 
 Completed after tests, health script, synthetic evaluation command, commit,
 and GitHub push succeeded.
+
+## R7.2 — Complete base_url Secret Query Coverage
+
+### Goal
+
+Resolve the Codex R7.1 re-audit blocker: `base_url` secret detection
+missing required query parameter names `access_token` and `authorization`.
+
+### Scope
+
+- Add `access_token` and `authorization` to `_SECRET_QUERY_KEYS`
+- Add regression tests for `access_token` and `authorization` rejection
+  in `LLMConfig.validate()` and `OpenAICompatibleRequestBuilder`
+- Verify error messages do not leak raw secret material
+- Update stale test-count documentation
+
+### Non-goals
+
+- No real LLM API calls
+- No network access
+- No `.env` file access
+- No raw response storage
+- No formal benchmark
+- No claim of outperforming Sun
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| Incomplete base_url secret query coverage | Codex R7.1 re-audit found `access_token` and `authorization` were missing from secret query-key detection | R7.1 covered 7 secret-like query names but missed two explicitly required names | Added `access_token` and `authorization` to `_SECRET_QUERY_KEYS` plus regression tests | 58 config + 43 client tests passed; full 320-test suite passed; health script and synthetic eval passed |
+
+### Status
+
+Completed after tests, health script, synthetic evaluation command, commit,
+and GitHub push succeeded.

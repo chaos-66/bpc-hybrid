@@ -49,7 +49,10 @@ _REDACTED = "***REDACTED***"
 
 # Query-parameter keys that indicate secret material in URLs
 _SECRET_QUERY_KEYS: frozenset[str] = frozenset(
-    {"api_key", "key", "token", "secret", "password", "auth", "apikey"}
+    {
+        "api_key", "apikey", "key", "token", "secret", "password",
+        "access_token", "authorization", "auth",
+    }
 )
 
 

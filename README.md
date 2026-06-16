@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅**
 
 ## Research Positioning
 
@@ -46,6 +46,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R6 ✅: Mock LLM fallback interface and deterministic normalization foundation completed.
 - R7 ✅: Safe LLM fallback adapter scaffold completed.
 - R7.1 ✅: Hardened LLM config validation and documentation completed.
+- R7.2 ✅: Completed base_url secret query coverage.
 
 ## R2 Scope
 
@@ -152,8 +153,8 @@ and an OpenAI-compatible request builder scaffold.
   `parse_llm_json_response()` (JSON parse → dict check → from_dict → validate;
   strips markdown fences), `validate_llm_extraction_response()`,
   `LLMFallbackAdapter` (bridges LLM path into R6 `FallbackRequest`/`FallbackResult`)
-- **Tests**: `test_llm_config.py` (53 tests) + `test_llm_client.py` (39 tests)
-  (includes R7.1 hardened validation and base_url security tests)
+- **Tests**: `test_llm_config.py` + `test_llm_client.py` (101 tests, all passed;
+  includes R7.1 hardened validation and R7.2 base_url secret coverage)
 - **Integration**: `extract_hybrid()` in fallback.py accepts any client with
   `.complete(FallbackRequest) → FallbackResult` (duck-typed)
 

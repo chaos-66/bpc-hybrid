@@ -313,6 +313,63 @@ class TestOpenAICompatibleRequestBuilder:
         assert "sk-test-should-not-leak" not in msg
         assert "api_key" not in msg.lower()
 
+    def test_rejects_access_token_in_base_url(self):
+        cfg = LLMConfig.__new__(LLMConfig)
+        object.__setattr__(cfg, "enabled", False)
+        object.__setattr__(cfg, "provider", "openai_compatible")
+        object.__setattr__(cfg, "model", "mock")
+        object.__setattr__(cfg, "api_key", DUMMY_KEY)
+        object.__setattr__(cfg, "base_url", "https://x.com?access_token=sk-test-should-not-leak")
+        object.__setattr__(cfg, "timeout_seconds", 30.0)
+        object.__setattr__(cfg, "max_tokens", 1024)
+        object.__setattr__(cfg, "temperature", 0.0)
+        with pytest.raises(LLMClientError, match="secret material"):
+            OpenAICompatibleRequestBuilder(cfg)
+
+    def test_rejects_authorization_in_base_url(self):
+        cfg = LLMConfig.__new__(LLMConfig)
+        object.__setattr__(cfg, "enabled", False)
+        object.__setattr__(cfg, "provider", "openai_compatible")
+        object.__setattr__(cfg, "model", "mock")
+        object.__setattr__(cfg, "api_key", DUMMY_KEY)
+        object.__setattr__(cfg, "base_url", "https://x.com?authorization=Bearer%20sk-test-should-not-leak")
+        object.__setattr__(cfg, "timeout_seconds", 30.0)
+        object.__setattr__(cfg, "max_tokens", 1024)
+        object.__setattr__(cfg, "temperature", 0.0)
+        with pytest.raises(LLMClientError, match="secret material"):
+            OpenAICompatibleRequestBuilder(cfg)
+
+    def test_builder_access_token_error_no_leak(self):
+        cfg = LLMConfig.__new__(LLMConfig)
+        object.__setattr__(cfg, "enabled", False)
+        object.__setattr__(cfg, "provider", "openai_compatible")
+        object.__setattr__(cfg, "model", "mock")
+        object.__setattr__(cfg, "api_key", DUMMY_KEY)
+        object.__setattr__(cfg, "base_url", "https://x.com?access_token=sk-test-should-not-leak")
+        object.__setattr__(cfg, "timeout_seconds", 30.0)
+        object.__setattr__(cfg, "max_tokens", 1024)
+        object.__setattr__(cfg, "temperature", 0.0)
+        with pytest.raises(LLMClientError) as exc_info:
+            OpenAICompatibleRequestBuilder(cfg)
+        msg = str(exc_info.value)
+        assert "sk-test-should-not-leak" not in msg
+
+    def test_builder_authorization_error_no_leak(self):
+        cfg = LLMConfig.__new__(LLMConfig)
+        object.__setattr__(cfg, "enabled", False)
+        object.__setattr__(cfg, "provider", "openai_compatible")
+        object.__setattr__(cfg, "model", "mock")
+        object.__setattr__(cfg, "api_key", DUMMY_KEY)
+        object.__setattr__(cfg, "base_url", "https://x.com?authorization=Bearer%20sk-test-should-not-leak")
+        object.__setattr__(cfg, "timeout_seconds", 30.0)
+        object.__setattr__(cfg, "max_tokens", 1024)
+        object.__setattr__(cfg, "temperature", 0.0)
+        with pytest.raises(LLMClientError) as exc_info:
+            OpenAICompatibleRequestBuilder(cfg)
+        msg = str(exc_info.value)
+        assert "sk-test-should-not-leak" not in msg
+        assert "Bearer" not in msg
+
 
 # ---------------------------------------------------------------------------
 # LLMFallbackAdapter

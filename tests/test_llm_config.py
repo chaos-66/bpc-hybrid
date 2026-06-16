@@ -162,6 +162,8 @@ class TestLLMConfigBaseUrlSecurity:
     SECRET_URL_API_KEY = "https://api.example.com/v1?api_key=sk-test-should-not-leak"
     SECRET_URL_TOKEN = "https://api.example.com/v1?token=sk-test-should-not-leak"
     SECRET_URL_USERPASS = "https://user:pass@api.example.com/v1"
+    SECRET_URL_ACCESS_TOKEN = "https://api.example.com/v1?access_token=sk-test-should-not-leak"
+    SECRET_URL_AUTHORIZATION = "https://api.example.com/v1?authorization=Bearer%20sk-test-should-not-leak"
     CLEAN_URL = "https://api.example.com/v1"
 
     def test_api_key_in_query_raises(self):
@@ -171,6 +173,14 @@ class TestLLMConfigBaseUrlSecurity:
     def test_token_in_query_raises(self):
         with pytest.raises(LLMConfigError, match="secret material"):
             LLMConfig(enabled=False, base_url=self.SECRET_URL_TOKEN)
+
+    def test_access_token_in_query_raises(self):
+        with pytest.raises(LLMConfigError, match="secret material"):
+            LLMConfig(enabled=False, base_url=self.SECRET_URL_ACCESS_TOKEN)
+
+    def test_authorization_in_query_raises(self):
+        with pytest.raises(LLMConfigError, match="secret material"):
+            LLMConfig(enabled=False, base_url=self.SECRET_URL_AUTHORIZATION)
 
     def test_user_pass_at_host_raises(self):
         with pytest.raises(LLMConfigError, match="secret material"):
@@ -189,6 +199,19 @@ class TestLLMConfigBaseUrlSecurity:
             LLMConfig(enabled=False, base_url=self.SECRET_URL_API_KEY)
         msg = str(exc_info.value)
         assert "sk-test-should-not-leak" not in msg
+
+    def test_error_msg_no_leak_access_token(self):
+        with pytest.raises(LLMConfigError) as exc_info:
+            LLMConfig(enabled=False, base_url=self.SECRET_URL_ACCESS_TOKEN)
+        msg = str(exc_info.value)
+        assert "sk-test-should-not-leak" not in msg
+
+    def test_error_msg_no_leak_authorization(self):
+        with pytest.raises(LLMConfigError) as exc_info:
+            LLMConfig(enabled=False, base_url=self.SECRET_URL_AUTHORIZATION)
+        msg = str(exc_info.value)
+        assert "sk-test-should-not-leak" not in msg
+        assert "Bearer" not in msg
 
     def test_error_msg_no_leak_pass(self):
         with pytest.raises(LLMConfigError) as exc_info:
@@ -211,6 +234,8 @@ class TestLLMConfigBaseUrlSecurity:
     def test_helper_detects_secret_patterns(self):
         assert _base_url_has_secrets("https://x.com?api_key=abc")
         assert _base_url_has_secrets("https://x.com?TOKEN=abc")
+        assert _base_url_has_secrets("https://x.com?access_token=abc")
+        assert _base_url_has_secrets("https://x.com?authorization=abc")
         assert _base_url_has_secrets("https://u:p@x.com")
         assert not _base_url_has_secrets("https://x.com/v1")
         assert not _base_url_has_secrets("https://x.com?model=gpt-4")
@@ -223,6 +248,14 @@ class TestLLMConfigBaseUrlSecurity:
 class TestRedactMappingBaseUrl:
     def test_base_url_with_secret_redacted(self):
         m = redact_mapping({"base_url": "https://x.com?api_key=sk-abc"})
+        assert m["base_url"] == "***REDACTED***"
+
+    def test_base_url_access_token_redacted(self):
+        m = redact_mapping({"base_url": "https://x.com?access_token=sk-abc"})
+        assert m["base_url"] == "***REDACTED***"
+
+    def test_base_url_authorization_redacted(self):
+        m = redact_mapping({"base_url": "https://x.com?authorization=Bearer%20sk-abc"})
         assert m["base_url"] == "***REDACTED***"
 
     def test_base_url_clean_preserved(self):
