@@ -522,6 +522,7 @@ class TestFromEnvWithProjectRoot:
     """System env vars override .env; .env is used as fallback."""
 
     def test_env_var_overrides_dotenv(self, tmp_path, monkeypatch):
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
         env_file = tmp_path / ".env"
         env_file.write_text("BPC_HYBRID_LLM_PROVIDER=mock\n", encoding="utf-8")
         monkeypatch.setenv("BPC_HYBRID_LLM_PROVIDER", "disabled")
@@ -529,6 +530,7 @@ class TestFromEnvWithProjectRoot:
         assert cfg.provider == "disabled"
 
     def test_dotenv_fallback_when_no_env_var(self, tmp_path, monkeypatch):
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
         env_file = tmp_path / ".env"
         env_file.write_text(
             "BPC_HYBRID_LLM_MODEL=qwen\n"
@@ -543,6 +545,7 @@ class TestFromEnvWithProjectRoot:
         assert cfg.provider == "openai_compatible"
 
     def test_missing_dotenv_no_error(self, tmp_path, monkeypatch):
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
         for k in list(os.environ):
             if k.startswith("BPC_HYBRID_LLM_"):
                 monkeypatch.delenv(k, raising=False)
@@ -550,6 +553,7 @@ class TestFromEnvWithProjectRoot:
         assert cfg.provider == "mock"  # default
 
     def test_dotenv_api_key_fallback(self, tmp_path, monkeypatch):
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
         env_file = tmp_path / ".env"
         env_file.write_text(
             "BPC_HYBRID_LLM_ENABLED=true\n"
@@ -567,6 +571,7 @@ class TestFromEnvWithProjectRoot:
         assert DUMMY_KEY not in repr(cfg)
 
     def test_dotenv_does_not_override_system_env_api_key(self, tmp_path, monkeypatch):
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
         env_file = tmp_path / ".env"
         env_file.write_text("BPC_HYBRID_LLM_API_KEY=dotenv-key\n")
         monkeypatch.setenv("BPC_HYBRID_LLM_API_KEY", DUMMY_KEY)
@@ -576,6 +581,7 @@ class TestFromEnvWithProjectRoot:
         assert cfg.api_key == DUMMY_KEY  # system env wins, not "dotenv-key"
 
     def test_api_key_not_in_repr_with_dotenv(self, tmp_path, monkeypatch):
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
         env_file = tmp_path / ".env"
         env_file.write_text(
             "BPC_HYBRID_LLM_ENABLED=true\n"
@@ -592,6 +598,7 @@ class TestFromEnvWithProjectRoot:
 
     def test_no_project_root_works_as_before(self, monkeypatch):
         """from_env() without project_root must still work (backward compat)."""
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
         for k in list(os.environ):
             if k.startswith("BPC_HYBRID_LLM_"):
                 monkeypatch.delenv(k, raising=False)
@@ -655,6 +662,7 @@ class TestProjectEnvDisabled:
 
     def test_disable_not_read_from_dotenv(self, tmp_path, monkeypatch):
         """BPC_HYBRID_DISABLE_PROJECT_ENV in .env does NOT disable."""
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
         env_file = tmp_path / ".env"
         env_file.write_text(
             "BPC_HYBRID_DISABLE_PROJECT_ENV=1\n"
@@ -675,6 +683,7 @@ class TestProjectEnvDisabled:
 
     def test_normal_load_still_reads_dotenv(self, tmp_path, monkeypatch):
         """With load_project_env=True (default), .env is read."""
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
         env_file = tmp_path / ".env"
         env_file.write_text("BPC_HYBRID_LLM_PROVIDER=openai_compatible\n")
         for k in list(os.environ):
@@ -687,6 +696,7 @@ class TestProjectEnvDisabled:
 
     def test_system_env_still_overrides_with_disable_unset(self, tmp_path, monkeypatch):
         """System env overrides .env even when disable is not set."""
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
         env_file = tmp_path / ".env"
         env_file.write_text("BPC_HYBRID_LLM_PROVIDER=mock\n")
         monkeypatch.setenv("BPC_HYBRID_LLM_PROVIDER", "disabled")
@@ -736,3 +746,37 @@ class TestProjectEnvDisabled:
             assert project_env_disabled(
                 {"BPC_HYBRID_DISABLE_PROJECT_ENV": val}
             ) is False
+
+    # -- R9.0.2 isolation tests ---------------------------------------------
+
+    def test_dotenv_fallback_isolated_from_external_disable(self, tmp_path, monkeypatch):
+        """Even when external env has BPC_HYBRID_DISABLE_PROJECT_ENV=1,
+        test can delenv it and read tmp_path fake .env."""
+        # Simulate external audit env
+        monkeypatch.setenv("BPC_HYBRID_DISABLE_PROJECT_ENV", "1")
+        monkeypatch.delenv("BPC_HYBRID_LLM_PROVIDER", raising=False)
+        (tmp_path / ".env").write_text(
+            "BPC_HYBRID_LLM_PROVIDER=openai_compatible\n",
+            encoding="utf-8",
+        )
+        # With disable still active, .env is NOT read
+        cfg_blocked = LLMConfig.from_env(project_root=tmp_path)
+        assert cfg_blocked.provider == "mock"  # default, not openai_compatible
+
+        # Now isolate: clear the disable
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
+        cfg_isolated = LLMConfig.from_env(project_root=tmp_path)
+        assert cfg_isolated.provider == "openai_compatible"
+
+    def test_explicit_disable_prevents_dotenv_reading(self, tmp_path, monkeypatch):
+        """When test explicitly sets BPC_HYBRID_DISABLE_PROJECT_ENV=1,
+        tmp_path fake .env is NOT read."""
+        monkeypatch.setenv("BPC_HYBRID_DISABLE_PROJECT_ENV", "1")
+        monkeypatch.delenv("BPC_HYBRID_LLM_PROVIDER", raising=False)
+        (tmp_path / ".env").write_text(
+            "BPC_HYBRID_LLM_PROVIDER=openai_compatible\n",
+            encoding="utf-8",
+        )
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        # .env should NOT be read; defaults apply
+        assert cfg.provider == "mock"

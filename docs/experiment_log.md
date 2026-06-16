@@ -819,3 +819,40 @@ project `.env`.
 ### Status
 
 Completed after tests, documentation update, commit, and GitHub push succeeded.
+
+## R9.0.2 — Isolate Env-loading Tests From External Audit Environment
+
+### Goal
+
+Make `.env` fallback tests deterministic under Codex audit environments that
+globally set `BPC_HYBRID_DISABLE_PROJECT_ENV=1`.
+
+### Scope
+
+- Update config tests to explicitly clear `BPC_HYBRID_DISABLE_PROJECT_ENV`
+  when testing enabled fake `.env` loading
+- Keep disable-control tests explicitly setting `BPC_HYBRID_DISABLE_PROJECT_ENV`
+- Ensure tests only read temporary fake `.env` files under `tmp_path`
+- Preserve project-root `.env` no-read audit rule
+- Avoid production code behaviour changes
+
+### Non-goals
+
+- No real LLM API calls
+- No network access
+- No raw response storage
+- No batch execution
+- No benchmark result
+- No real GDPR/BPMN/Sun data
+- No project-root `.env` content reads
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| External audit env var broke fake `.env` fallback tests | Codex re-audit with `BPC_HYBRID_DISABLE_PROJECT_ENV=1` produced 4 failing config tests | Tests that expected fake `.env` fallback did not explicitly clear the external disable flag | Added explicit `monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)` to enabled-fallback tests and explicit `setenv` to disable tests; added isolation regression tests | Config tests, dry-run tests, full pytest, health script, and synthetic evaluation passed in both normal and audit-env modes |
+
+### Status
+
+Completed after tests in both normal and audit-env modes, documentation update,
+commit, and GitHub push succeeded.
