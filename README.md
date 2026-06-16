@@ -114,6 +114,12 @@ The future formal evaluation target is a **Sun-aligned GDPR + BPMN dataset**, co
 
 This project currently does **not** claim to outperform Sun-style baselines, Winter-style textual baselines, or any LLM baseline. Synthetic prototype data, if introduced later, is used for pipeline sanity checks only — not for benchmark claims.
 
+## Reproducibility Notes
+
+Implementation issues, audit findings, and resolutions are tracked in [`docs/issue_log.md`](docs/issue_log.md).
+
+The issue log is intended to support reproducibility and later thesis/paper writing. It does not report formal benchmark results.
+
 ## Next Stage
 
 R6 — LLM Fallback — will only proceed after R5.1 is fully tested,

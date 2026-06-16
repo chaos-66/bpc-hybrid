@@ -357,6 +357,14 @@ source-id mapping.
 The R5/R5.1 dataset remains synthetic prototype data only. It is not GDPR
 data, not BPMN data, not Sun-aligned data, and not a formal benchmark.
 
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| CLI import failure | Direct execution of `scripts/run_rule_baseline.py` and `scripts/evaluate_multi_clause.py` failed with `ModuleNotFoundError: No module named 'bpc_hybrid'` | Direct script execution did not include the project `src/` directory in `sys.path` | Added project-local `src/` path insertion before importing `bpc_hybrid` | Direct CLI commands passed; evaluator tests passed; full pytest passed |
+| Dataset ID mapping mismatch | Codex audit found required prototype categories under different source IDs | R5 synthetic prototype categories existed but did not follow the required audit mapping | Updated `legal_sentences.jsonl` and `gold_multiclause.jsonl` to match required IDs such as `d13`, `d12`, `d27`, `d34`, `d05`, `d28`, and `d35` | Dataset mapping tests passed; gold validation passed; evaluation command succeeded |
+| Prior success claim became inaccurate after audit | R5 originally reported 139/139 tests passed, but Codex local audit found 136 passed / 3 failed | Direct CLI tests failed in Codex environment due import path behavior | Fixed CLI import behavior and strengthened tests | Re-ran py_compile, evaluator tests, full pytest, health script, direct CLI commands, and evaluation command |
+
 ### Non-goals
 
 - No R6 LLM fallback
