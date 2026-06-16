@@ -666,3 +666,49 @@ missing required query parameter names `access_token` and `authorization`.
 
 Completed after tests, health script, synthetic evaluation command, commit,
 and GitHub push succeeded.
+
+## R8 — Controlled Single-Sample LLM Dry-Run Harness
+
+### Goal
+
+Add a guarded single-sample dry-run harness for future LLM fallback
+experiments while keeping real API execution disabled in this stage.
+
+### Scope
+
+- Add single-sample dry-run CLI (`scripts/run_llm_dry_run.py`)
+- Require explicit `--allow-llm`
+- Require explicit `--single-sample`
+- Use mock provider by default
+- Refuse real provider execution in R8
+- Emit JSON-only success/error summaries
+- Redact secrets
+- Avoid raw response storage
+- Add `make_schema_valid_mock_response_json` helper to `llm_client.py`
+- Add 23 direct CLI tests
+
+### Non-goals
+
+- No real LLM API calls
+- No network access
+- No `.env` file access
+- No raw response storage
+- No batch execution
+- No real GDPR data
+- No real BPMN models
+- No original Sun dataset
+- No Sun-aligned formal benchmark
+- No claim of outperforming Sun
+- No compliance checking
+- No over-compliance detection
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| No blocking implementation issues were observed in this stage. | N/A | N/A | N/A | 23 dry-run tests, full 343-test suite, health script, and synthetic evaluation command passed |
+
+### Status
+
+Completed after tests, health script, synthetic evaluation command, commit,
+and GitHub push succeeded.

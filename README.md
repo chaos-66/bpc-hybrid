@@ -47,6 +47,15 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R7 ✅: Safe LLM fallback adapter scaffold completed.
 - R7.1 ✅: Hardened LLM config validation and documentation completed.
 - R7.2 ✅: Completed base_url secret query coverage.
+- R8 ✅: Added controlled single-sample LLM dry-run harness.
+
+## R8 Scope
+
+R8 adds a controlled single-sample LLM dry-run harness.
+
+The harness is disabled by default and requires explicit `--allow-llm` and `--single-sample` flags. In R8, the default provider is `mock`, and real provider execution remains disabled. R8 does not call real LLM APIs, does not access the network, does not read `.env` files, does not store raw responses, and does not produce benchmark results.
+
+R8 is intended to test safety gates, CLI behavior, schema validation, and redacted dry-run summaries before any later real API experiment.
 
 ## R2 Scope
 
@@ -153,8 +162,9 @@ and an OpenAI-compatible request builder scaffold.
   `parse_llm_json_response()` (JSON parse → dict check → from_dict → validate;
   strips markdown fences), `validate_llm_extraction_response()`,
   `LLMFallbackAdapter` (bridges LLM path into R6 `FallbackRequest`/`FallbackResult`)
-- **Tests**: `test_llm_config.py` + `test_llm_client.py` (101 tests, all passed;
-  includes R7.1 hardened validation and R7.2 base_url secret coverage)
+- **Tests**: `test_llm_config.py` + `test_llm_client.py` + `test_llm_dry_run.py` (124 tests, all passed;
+  includes R7.1 hardened validation, R7.2 base_url secret coverage,
+  and R8 controlled dry-run harness)
 - **Integration**: `extract_hybrid()` in fallback.py accepts any client with
   `.complete(FallbackRequest) → FallbackResult` (duck-typed)
 

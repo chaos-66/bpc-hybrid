@@ -400,3 +400,72 @@ class LLMFallbackAdapter:
             f"provider={self.config.provider!r}, "
             f"model={self.config.model!r})"
         )
+
+
+# ---------------------------------------------------------------------------
+# Schema-valid mock response helper (R8)
+# ---------------------------------------------------------------------------
+
+def make_schema_valid_mock_response_json(
+    source_text: str,
+    source_id: str = "dry-run-sample",
+) -> str:
+    """Return a schema-valid JSON string for *source_text*.
+
+    Generates a ``MultiClauseExtractionResponse`` as a JSON string that
+    will pass ``parse_llm_json_response()`` validation.  The response
+    wraps the full *source_text* as a single clause with heuristic
+    modality/actor/action spans.
+
+    **No network, no ``.env``, no API keys.**
+    """
+    txt = source_text.strip()
+    length = len(txt)
+
+    # Heuristic modality span
+    modality_span = None
+    for marker in ("shall", "must", "may", "should", "shall not", "must not"):
+        idx = txt.lower().find(marker)
+        if idx != -1:
+            modality_span = {
+                "text": txt[idx : idx + len(marker)],
+                "span_start": idx,
+                "span_end": idx + len(marker),
+                "confidence": 0.95,
+            }
+            break
+
+    # Use full text as clause_text
+    response: dict = {
+        "schema_version": "0.1.0",
+        "source_id": source_id,
+        "source_text": txt,
+        "clauses": [
+            {
+                "clause_id": f"{source_id}-c1",
+                "source_id": source_id,
+                "source_text": txt,
+                "clause_text": txt,
+                "clause_span_start": 0,
+                "clause_span_end": length,
+                "modality": modality_span,
+                "actor": {
+                    "text": txt,
+                    "span_start": 0,
+                    "span_end": length,
+                    "confidence": 0.9,
+                },
+                "action": {
+                    "text": txt,
+                    "span_start": 0,
+                    "span_end": length,
+                    "confidence": 0.9,
+                },
+                "condition": None,
+                "constraint": None,
+                "exception": None,
+                "confidence": 0.9,
+            }
+        ],
+    }
+    return json.dumps(response)

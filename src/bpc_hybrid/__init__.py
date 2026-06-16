@@ -36,6 +36,7 @@ from bpc_hybrid.llm_client import (
     LLMTransport,
     MockLLMTransport,
     OpenAICompatibleRequestBuilder,
+    make_schema_valid_mock_response_json,
     parse_llm_json_response,
     validate_llm_extraction_response,
 )
@@ -105,6 +106,7 @@ __all__ = [
     "load_gold_responses",
     "load_jsonl",
     "load_predicted_responses",
+    "make_schema_valid_mock_response_json",
     "normalize_field_text",
     "normalize_modality_text",
     "parse_llm_json_response",
