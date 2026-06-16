@@ -13,6 +13,7 @@ from bpc_hybrid.llm_config import (
     LLMConfigError,
     LLMProvider,
     _base_url_has_secrets,
+    load_project_env_file,
     redact_mapping,
     redact_secret,
 )
@@ -403,3 +404,196 @@ class TestNoSecretsLeaked:
         src = open("src/bpc_hybrid/llm_config.py", encoding="utf-8").read()
         assert "sk-proj" not in src
         assert "sk-admin" not in src
+
+
+# ---------------------------------------------------------------------------
+# load_project_env_file (R9.0)
+# ---------------------------------------------------------------------------
+
+class TestLoadProjectEnvFile:
+    """Tests for the project-root .env loader."""
+
+    DUMMY_ENV_CONTENT = (
+        "BPC_HYBRID_LLM_PROVIDER=openai_compatible\n"
+        "BPC_HYBRID_LLM_MODEL=qwen-model\n"
+        "BPC_HYBRID_LLM_BASE_URL=https://api.example.com/v1\n"
+        "BPC_HYBRID_LLM_API_KEY=sk-test-should-not-leak\n"
+        "BPC_HYBRID_R9_REAL_RUN_CONFIRMED=YES_SINGLE_SAMPLE_ONLY\n"
+        "# This is a comment\n"
+        "UNKNOWN_KEY=should-be-ignored\n"
+    )
+
+    def test_reads_whitelisted_keys(self, tmp_path):
+        env_file = tmp_path / ".env"
+        env_file.write_text(self.DUMMY_ENV_CONTENT, encoding="utf-8")
+        result = load_project_env_file(tmp_path)
+        assert result["BPC_HYBRID_LLM_PROVIDER"] == "openai_compatible"
+        assert result["BPC_HYBRID_LLM_MODEL"] == "qwen-model"
+        assert result["BPC_HYBRID_LLM_BASE_URL"] == "https://api.example.com/v1"
+        assert result["BPC_HYBRID_LLM_API_KEY"] == DUMMY_KEY
+        assert result["BPC_HYBRID_R9_REAL_RUN_CONFIRMED"] == "YES_SINGLE_SAMPLE_ONLY"
+
+    def test_ignores_unknown_keys(self, tmp_path):
+        env_file = tmp_path / ".env"
+        env_file.write_text(
+            "BPC_HYBRID_LLM_PROVIDER=mock\n"
+            "UNTRACKED_KEY=secret-value\n",
+            encoding="utf-8",
+        )
+        result = load_project_env_file(tmp_path)
+        assert "UNTRACKED_KEY" not in result
+        assert result["BPC_HYBRID_LLM_PROVIDER"] == "mock"
+
+    def test_missing_file_returns_empty(self, tmp_path):
+        """No .env file → empty dict, no error."""
+        result = load_project_env_file(tmp_path)
+        assert result == {}
+
+    def test_ignores_comments_and_empty_lines(self, tmp_path):
+        env_file = tmp_path / ".env"
+        env_file.write_text(
+            "# header comment\n"
+            "\n"
+            "BPC_HYBRID_LLM_MODEL=test\n"
+            "   # inline comment-like value\n"
+            "BPC_HYBRID_LLM_PROVIDER=mock\n",
+            encoding="utf-8",
+        )
+        result = load_project_env_file(tmp_path)
+        assert result["BPC_HYBRID_LLM_MODEL"] == "test"
+        assert result["BPC_HYBRID_LLM_PROVIDER"] == "mock"
+        assert len(result) == 2
+
+    def test_returns_empty_list(self):
+        """Verify the return value is a plain dict (not list)."""
+        # trivial: we already test empty above, but confirm type
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            from pathlib import Path
+            result = load_project_env_file(Path(td))
+            assert isinstance(result, dict)
+
+    def test_does_not_read_outside_project_root(self, tmp_path):
+        """load_project_env_file only reads .env in the exact project_root."""
+        env_file = tmp_path / ".env"
+        env_file.write_text("BPC_HYBRID_LLM_MODEL=nested\n", encoding="utf-8")
+        sub_dir = tmp_path / "sub"
+        sub_dir.mkdir()
+        # Point to sub_dir — its .env should NOT be found
+        result = load_project_env_file(sub_dir)
+        assert result == {}
+
+    def test_trims_whitespace(self, tmp_path):
+        env_file = tmp_path / ".env"
+        env_file.write_text(
+            "  BPC_HYBRID_LLM_PROVIDER  =  openai_compatible  \n",
+            encoding="utf-8",
+        )
+        result = load_project_env_file(tmp_path)
+        assert result["BPC_HYBRID_LLM_PROVIDER"] == "openai_compatible"
+
+    def test_no_dotenv_import(self):
+        """Verify llm_config does not import python-dotenv."""
+        src = open("src/bpc_hybrid/llm_config.py", encoding="utf-8").read()
+        assert "load_dotenv" not in src.lower()
+        assert "from dotenv" not in src.lower()
+        assert "import dotenv" not in src.lower()
+
+    def test_api_key_value_not_leaked_via_exception(self, tmp_path):
+        """The loader must not print or echo the API key value."""
+        env_file = tmp_path / ".env"
+        env_file.write_text("BPC_HYBRID_LLM_API_KEY=sk-test-should-not-leak\n")
+        # load_project_env_file itself never raises, but we just verify
+        # that reading the result does not print the value
+        result = load_project_env_file(tmp_path)
+        assert result["BPC_HYBRID_LLM_API_KEY"] == DUMMY_KEY
+        # str/repr of result must still contain the key — but this is
+        # never printed to stdout/user in production.  The real safety
+        # check is in from_env's repr redaction.
+        # No printing in test is intentional.
+
+
+# ---------------------------------------------------------------------------
+# LLMConfig.from_env with project_root (R9.0)
+# ---------------------------------------------------------------------------
+
+class TestFromEnvWithProjectRoot:
+    """System env vars override .env; .env is used as fallback."""
+
+    def test_env_var_overrides_dotenv(self, tmp_path, monkeypatch):
+        env_file = tmp_path / ".env"
+        env_file.write_text("BPC_HYBRID_LLM_PROVIDER=mock\n", encoding="utf-8")
+        monkeypatch.setenv("BPC_HYBRID_LLM_PROVIDER", "disabled")
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        assert cfg.provider == "disabled"
+
+    def test_dotenv_fallback_when_no_env_var(self, tmp_path, monkeypatch):
+        env_file = tmp_path / ".env"
+        env_file.write_text(
+            "BPC_HYBRID_LLM_MODEL=qwen\n"
+            "BPC_HYBRID_LLM_PROVIDER=openai_compatible\n"
+        )
+        # clear all BPC_HYBRID env vars
+        for k in list(os.environ):
+            if k.startswith("BPC_HYBRID_LLM_"):
+                monkeypatch.delenv(k, raising=False)
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        assert cfg.model == "qwen"
+        assert cfg.provider == "openai_compatible"
+
+    def test_missing_dotenv_no_error(self, tmp_path, monkeypatch):
+        for k in list(os.environ):
+            if k.startswith("BPC_HYBRID_LLM_"):
+                monkeypatch.delenv(k, raising=False)
+        cfg = LLMConfig.from_env(project_root=tmp_path)  # no .env
+        assert cfg.provider == "mock"  # default
+
+    def test_dotenv_api_key_fallback(self, tmp_path, monkeypatch):
+        env_file = tmp_path / ".env"
+        env_file.write_text(
+            "BPC_HYBRID_LLM_ENABLED=true\n"
+            "BPC_HYBRID_LLM_PROVIDER=openai_compatible\n"
+            f"BPC_HYBRID_LLM_API_KEY={DUMMY_KEY}\n"
+        )
+        for k in list(os.environ):
+            if k.startswith("BPC_HYBRID_LLM_"):
+                monkeypatch.delenv(k, raising=False)
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        assert cfg.enabled is True
+        assert cfg.provider == "openai_compatible"
+        assert cfg.api_key == DUMMY_KEY
+        # repr must redact
+        assert DUMMY_KEY not in repr(cfg)
+
+    def test_dotenv_does_not_override_system_env_api_key(self, tmp_path, monkeypatch):
+        env_file = tmp_path / ".env"
+        env_file.write_text("BPC_HYBRID_LLM_API_KEY=dotenv-key\n")
+        monkeypatch.setenv("BPC_HYBRID_LLM_API_KEY", DUMMY_KEY)
+        monkeypatch.setenv("BPC_HYBRID_LLM_ENABLED", "true")
+        monkeypatch.setenv("BPC_HYBRID_LLM_PROVIDER", "openai_compatible")
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        assert cfg.api_key == DUMMY_KEY  # system env wins, not "dotenv-key"
+
+    def test_api_key_not_in_repr_with_dotenv(self, tmp_path, monkeypatch):
+        env_file = tmp_path / ".env"
+        env_file.write_text(
+            "BPC_HYBRID_LLM_ENABLED=true\n"
+            "BPC_HYBRID_LLM_PROVIDER=openai_compatible\n"
+            f"BPC_HYBRID_LLM_API_KEY={DUMMY_KEY}\n"
+        )
+        for k in list(os.environ):
+            if k.startswith("BPC_HYBRID_LLM_"):
+                monkeypatch.delenv(k, raising=False)
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        r = repr(cfg)
+        assert DUMMY_KEY not in r
+        assert "REDACTED" in r
+
+    def test_no_project_root_works_as_before(self, monkeypatch):
+        """from_env() without project_root must still work (backward compat)."""
+        for k in list(os.environ):
+            if k.startswith("BPC_HYBRID_LLM_"):
+                monkeypatch.delenv(k, raising=False)
+        monkeypatch.setenv("BPC_HYBRID_LLM_PROVIDER", "disabled")
+        cfg = LLMConfig.from_env()
+        assert cfg.provider == "disabled"

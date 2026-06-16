@@ -35,7 +35,7 @@ from bpc_hybrid.llm_client import (
     MockLLMTransport,
     make_schema_valid_mock_response_json,
 )
-from bpc_hybrid.llm_config import ALLOWED_PROVIDERS, LLMConfig, LLMConfigError
+from bpc_hybrid.llm_config import ALLOWED_PROVIDERS, LLMConfig, LLMConfigError, load_project_env_file
 
 
 # ---------------------------------------------------------------------------
@@ -167,6 +167,12 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     args = parser.parse_args(argv)
+
+    # --- load project .env (R9.0) ----------------------------------------
+    # System environment variables always take priority over .env.
+    # Missing .env is silent — no error.
+    _project_env = load_project_env_file(_PROJECT_ROOT)
+    del _project_env  # not used in R8; staged for R9 real API smoke
 
     # --- gate: invalid provider ------------------------------------------
     if args.provider not in ALLOWED_PROVIDERS:

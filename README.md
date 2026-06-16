@@ -60,7 +60,53 @@ R8 is intended to test safety gates, CLI behavior, schema validation, and redact
 
 R8.2 ensures parse-level CLI errors (invalid `--provider`, unknown arguments)
 also return redacted JSON error envelopes instead of argparse usage text.
+## Local API Configuration
 
+R9.0 adds project‑local `.env` support for real API credentials during smoke tests.
+This section describes how to configure your local copy of bpc‑hybrid to talk to the
+LLM provider of your choice.
+
+### Quickstart
+
+```bash
+cp .env.example .env
+# Edit .env with your values (see below)
+```
+
+### File Roles
+
+| File | Purpose | Committed to git? |
+|---|---|---|
+| `.env.example` | Template with placeholder values | ✅ yes |
+| `.env` | Your **local** configuration with real values | ❌ no — gitignored |
+
+### Configuration Precedence
+
+System environment variables (`os.environ`) **always override** `.env` values.
+If a key is set both in `os.environ` **and** `.env`, the system environment wins.
+
+### Whitelisted Keys
+
+Only `BPC_HYBRID_LLM_*` keys are read from `.env`.
+
+| Key | Description | Example |
+|---|---|---|
+| `BPC_HYBRID_LLM_PROVIDER` | LLM provider name | `openai_compatible` |
+| `BPC_HYBRID_LLM_MODEL` | Model name / deployment id | `gpt-4o-mini` |
+| `BPC_HYBRID_LLM_BASE_URL` | API endpoint base URL | `https://api.openai.com/v1` |
+| `BPC_HYBRID_LLM_API_KEY` | API key or token | `sk-...` |
+| `BPC_HYBRID_LLM_ENABLED` | Enable real LLM (`true` / `false`) | `true` |
+| `BPC_HYBRID_LLM_TIMEOUT_SECONDS` | Request timeout in seconds | `30.0` |
+| `BPC_HYBRID_LLM_MAX_TOKENS` | Max tokens per response | `1024` |
+| `BPC_HYBRID_LLM_TEMPERATURE` | Sampling temperature | `0.0` |
+| `BPC_HYBRID_R9_REAL_RUN_CONFIRMED` | Explicit gate for R9 real API runs | `true` |
+
+### Safety Invariants
+
+- The API key is **never** printed to stdout, stderr, repr, str, or error messages.
+- `.env` is listed in `.gitignore` and must never be committed.
+- If `.env` is missing or unreadable, the application silently falls back to
+  `os.environ` alone — there is no error.
 ## R2 Scope
 
 R2 implements the core schema objects for multi-clause regulatory extraction:

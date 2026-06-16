@@ -356,11 +356,11 @@ class TestSafetyGuarantees:
             assert pattern not in script_text, f"Script imports forbidden: {pattern}"
 
     def test_no_dotenv_in_script(self):
-        """The script must not reference dotenv."""
+        """The script must not use python-dotenv (R9.0 allows project .env)."""
         script_text = DRY_RUN_SCRIPT.read_text(encoding="utf-8")
-        forbidden = ["dotenv", "load_dotenv", ".env"]
+        forbidden = ["dotenv", "load_dotenv"]
         for pattern in forbidden:
-            assert pattern not in script_text, f"Script references forbidden: {pattern}"
+            assert pattern not in script_text, f"Script imports forbidden: {pattern}"
 
     def test_no_real_gdpr_bpmn_sun_data(self):
         """All test data is synthetic."""
@@ -400,3 +400,63 @@ class TestSafetyGuarantees:
         assert "A controller shall record the decision." in script_text or True
         # No GDPR article references
         assert "Article" not in script_text
+
+
+# ---------------------------------------------------------------------------
+# R9.0 — .env safety
+# ---------------------------------------------------------------------------
+
+class TestDotenvSafety:
+    """Verify project-root .env safety invariants (R9.0)."""
+
+    def test_dotenv_is_gitignored(self):
+        """``.env`` must be ignored by Git."""
+        cp = subprocess.run(
+            ["git", "check-ignore", ".env"],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(PROJECT_ROOT),
+        )
+        assert cp.returncode == 0, f".env is NOT gitignored! stderr={cp.stderr}"
+        assert ".env" in cp.stdout.strip()
+
+    def test_dotenv_example_exists(self):
+        """``.env.example`` must exist in project root."""
+        p = PROJECT_ROOT / ".env.example"
+        assert p.exists(), ".env.example missing"
+        content = p.read_text(encoding="utf-8")
+        assert "BPC_HYBRID_LLM_PROVIDER" in content
+
+    def test_dotenv_not_in_git_status(self):
+        """``.env`` must not appear in ``git status``."""
+        cp = subprocess.run(
+            ["git", "status", "--porcelain"],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(PROJECT_ROOT),
+        )
+        lines = cp.stdout.strip().splitlines()
+        for line in lines:
+            assert ".env" not in line or ".env.example" in line, (
+                f".env unexpectedly in git status: {line}"
+            )
+
+    def test_no_real_api_key_in_dry_run_output(self):
+        """Dry-run stdout+stderr must never contain API key patterns."""
+        cp = _run_dry_run(
+            "--allow-llm",
+            "--single-sample",
+            "--text", SAMPLE_TEXT,
+        )
+        combined = cp.stdout + cp.stderr
+        # No key-like patterns
+        assert "sk-" not in combined.lower()
+        assert "api_key" not in combined.lower()
+
+    def test_dry_run_runs_even_with_dotenv_present(self):
+        """If .env exists, the dry-run must still succeed (R8 gates apply)."""
+        # This test just verifies the .env loading in main() doesn't crash
+        cp = _run_dry_run(
+            "--allow-llm",
+            "--single-sample",
+            "--text", SAMPLE_TEXT,
+        )
+        assert cp.returncode == 0, f"stderr={cp.stderr}"

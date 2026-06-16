@@ -1,8 +1,14 @@
-"""LLM provider configuration gate with secret redaction (R7).
+"""LLM provider configuration gate with secret redaction (R7 + R9.0).
 
 Provides a safety-gated configuration layer for later real LLM fallback
-experiments.  R7 does **not** call any real LLM API, does not read
-``.env`` files, and does not store raw responses.
+experiments.  R7 does **not** call any real LLM API and does not store
+raw responses.
+
+R9.0 adds project-root ``.env`` support as a **fallback** for
+environment variables.  The ``.env`` file is **not** required; when
+missing the loader returns an empty dict without error.  Only
+whitelisted ``BPC_HYBRID_*`` keys are accepted, and values are never
+echoed in logs.
 
 The configuration defaults to ``enabled=False`` and ``provider="mock"``,
 making real LLM calls opt-in only.
@@ -12,6 +18,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any
 
 # ---------------------------------------------------------------------------
@@ -19,6 +26,69 @@ from typing import Any
 # ---------------------------------------------------------------------------
 
 ALLOWED_PROVIDERS: frozenset[str] = frozenset({"mock", "openai_compatible", "disabled"})
+
+# ---------------------------------------------------------------------------
+# Whitelist of keys accepted from project-root .env file
+# ---------------------------------------------------------------------------
+
+_ENV_WHITELIST: frozenset[str] = frozenset(
+    {
+        "BPC_HYBRID_LLM_PROVIDER",
+        "BPC_HYBRID_LLM_MODEL",
+        "BPC_HYBRID_LLM_BASE_URL",
+        "BPC_HYBRID_LLM_API_KEY",
+        "BPC_HYBRID_LLM_ENABLED",
+        "BPC_HYBRID_LLM_TIMEOUT_SECONDS",
+        "BPC_HYBRID_LLM_MAX_TOKENS",
+        "BPC_HYBRID_LLM_TEMPERATURE",
+        "BPC_HYBRID_R9_REAL_RUN_CONFIRMED",
+    }
+)
+
+# ---------------------------------------------------------------------------
+# .env loader (R9.0)
+# ---------------------------------------------------------------------------
+
+def load_project_env_file(project_root: Path | str) -> dict[str, str]:
+    """Load whitelisted ``BPC_HYBRID_*`` keys from *project_root*/.env.
+
+    Rules:
+
+    * Only reads ``.env`` directly inside *project_root* (no recursion).
+    * Only accepts keys listed in ``_ENV_WHITELIST``.
+    * Ignores empty lines, ``#`` comments, and unknown keys.
+    * Trims leading/trailing whitespace from values.
+    * Does **not** print values — never call with an exception handler
+      that echoes the full dict.
+    * If the file is missing or unreadable, returns an empty dict
+      **without** raising an error.
+
+    Returns:
+        dict[str, str]: Whitelisted key→value pairs from the file.
+    """
+    env_path = Path(project_root) / ".env"
+    result: dict[str, str] = {}
+
+    try:
+        lines = env_path.read_text(encoding="utf-8").splitlines()
+    except (FileNotFoundError, PermissionError, OSError):
+        return result
+
+    for raw_line in lines:
+        line = raw_line.strip()
+        # skip empty lines and comments
+        if not line or line.startswith("#"):
+            continue
+        # must contain "="
+        if "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip()
+        if key in _ENV_WHITELIST:
+            result[key] = value
+
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -246,12 +316,18 @@ class LLMConfig:
     # -- from_env -----------------------------------------------------------
 
     @classmethod
-    def from_env(cls) -> LLMConfig:
+    def from_env(cls, project_root: Path | str | None = None) -> LLMConfig:
         """Build a configuration from environment variables.
 
-        Reads from ``BPC_HYBRID_LLM_*`` variables **only**.  Does not
-        read ``.env`` files or call ``dotenv``.  API key values are
-        never echoed in logs.
+        Reads ``BPC_HYBRID_LLM_*`` environment variables with an
+        optional project-root ``.env`` **fallback**.
+
+        Priority: **system environment variables > .env file**.
+
+        When *project_root* is provided, whitelisted keys from
+        ``project_root/.env`` are loaded and used as defaults for any
+        key that is **not** already set in the system environment.
+        Missing ``.env`` is silent — no error is raised.
 
         Environment variables read:
 
@@ -263,22 +339,39 @@ class LLMConfig:
         * ``BPC_HYBRID_LLM_TIMEOUT_SECONDS``
         * ``BPC_HYBRID_LLM_MAX_TOKENS``
         * ``BPC_HYBRID_LLM_TEMPERATURE``
+
+        API key values are never echoed in logs.
         """
+        # -- load .env fallback (if project_root provided) -----------------
+        dotenv: dict[str, str] = {}
+        if project_root is not None:
+            dotenv = load_project_env_file(project_root)
+
+        def _get(key: str, default: str) -> str:
+            """System env var wins; .env is fallback."""
+            env_val = os.environ.get(key)
+            if env_val is not None:
+                return env_val
+            return dotenv.get(key, default)
+
         def _bool_env(name: str, default: bool = False) -> bool:
-            v = os.environ.get(name, "").strip().lower()
+            v = os.environ.get(name)
+            if v is None:
+                v = dotenv.get(name, "")
+            v = v.strip().lower()
             if not v:
                 return default
             return v in ("1", "true", "yes", "on")
 
         enabled = _bool_env("BPC_HYBRID_LLM_ENABLED", False)
-        provider = os.environ.get("BPC_HYBRID_LLM_PROVIDER", "mock").strip()
-        model = os.environ.get("BPC_HYBRID_LLM_MODEL", "mock").strip()
-        api_key = os.environ.get("BPC_HYBRID_LLM_API_KEY") or None
-        base_url = os.environ.get("BPC_HYBRID_LLM_BASE_URL") or None
+        provider = _get("BPC_HYBRID_LLM_PROVIDER", "mock").strip()
+        model = _get("BPC_HYBRID_LLM_MODEL", "mock").strip()
+        api_key = _get("BPC_HYBRID_LLM_API_KEY", "") or None
+        base_url = _get("BPC_HYBRID_LLM_BASE_URL", "") or None
 
-        timeout_raw = os.environ.get("BPC_HYBRID_LLM_TIMEOUT_SECONDS", "30.0")
-        tokens_raw = os.environ.get("BPC_HYBRID_LLM_MAX_TOKENS", "1024")
-        temp_raw = os.environ.get("BPC_HYBRID_LLM_TEMPERATURE", "0.0")
+        timeout_raw = _get("BPC_HYBRID_LLM_TIMEOUT_SECONDS", "30.0")
+        tokens_raw = _get("BPC_HYBRID_LLM_MAX_TOKENS", "1024")
+        temp_raw = _get("BPC_HYBRID_LLM_TEMPERATURE", "0.0")
 
         try:
             timeout_seconds = float(timeout_raw)

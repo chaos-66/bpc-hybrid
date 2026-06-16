@@ -746,3 +746,39 @@ redacted JSON error envelopes instead of argparse usage text.
 
 Completed after tests, health script, synthetic evaluation command, commit,
 and GitHub push succeeded. Codex re-audit pending (awaited before R9).
+
+## R9.0 — Add Project-local .env Support for Real API Smoke
+
+### Goal
+
+Add a safe project-root `.env` configuration system as a blocking prerequisite before
+R9 real API smoke testing.
+
+### Safety Requirements
+
+- Only `BPC_HYBRID_*` keys are read from `.env`
+- System environment variables always override `.env` values
+- `.env` is gitignored; `.env.example` is committed
+- API key must never appear in stdout, stderr, repr, str, or error messages
+- No new dependencies (no `python-dotenv`)
+
+### Artifacts Created/Modified
+
+- `.gitignore` — Added `!.env.example` exception
+- `.env.example` — User template with placeholder values
+- `src/bpc_hybrid/llm_config.py` — Added `_ENV_WHITELIST`, `load_project_env_file()`, updated `from_env()`
+- `scripts/run_llm_dry_run.py` — Added `.env` loading in `main()`
+- `tests/test_llm_config.py` — Added `TestLoadProjectEnvFile` (9 tests) + `TestFromEnvWithProjectRoot` (7 tests)
+- `tests/test_llm_dry_run.py` — Added `TestDotenvSafety` (5 tests)
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| `NameError: name 'Path' is not defined` | 33 tests failed with NameError cascade | `load_project_env_file()` used `Path()` but `pathlib.Path` was not imported | Added `from pathlib import Path` to `llm_config.py` | All tests passed |
+| `test_no_dotenv_in_script` failed | Existing test forbade `.env` in script source | R9.0 intentionally introduces `.env` references | Removed `.env` from forbidden list; renamed `_project_dotenv` to `_project_env` | All tests passed |
+| `test_dotenv_api_key_fallback` failed | `_ENV_WHITELIST` was missing `ENABLED`, `TIMEOUT_SECONDS`, `MAX_TOKENS`, `TEMPERATURE` | Spec only listed 5 user-facing keys, but `from_env()` reads additional keys | Expanded whitelist to all 9 `BPC_HYBRID_LLM_*` keys | All tests passed |
+
+### Status
+
+Completed after tests (366 passed), health check, synthetic eval, and GitHub push.
