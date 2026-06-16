@@ -19,7 +19,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 # ---------------------------------------------------------------------------
 # Allowed provider values
@@ -48,6 +48,22 @@ _ENV_WHITELIST: frozenset[str] = frozenset(
 # ---------------------------------------------------------------------------
 # .env loader (R9.0)
 # ---------------------------------------------------------------------------
+
+def project_env_disabled(environ: Mapping[str, str] | None = None) -> bool:
+    """Return ``True`` if project ``.env`` loading is disabled via system env.
+
+    Reads ``BPC_HYBRID_DISABLE_PROJECT_ENV`` from *environ* (defaults to
+    ``os.environ``).  Recognised truthy values: ``1``, ``true``, ``yes``,
+    ``on`` (case-insensitive).
+
+    This control **must only** come from system environment variables —
+    never from the ``.env`` file itself.
+    """
+    if environ is None:
+        environ = os.environ
+    val = environ.get("BPC_HYBRID_DISABLE_PROJECT_ENV", "").strip().lower()
+    return val in ("1", "true", "yes", "on")
+
 
 def load_project_env_file(project_root: Path | str) -> dict[str, str]:
     """Load whitelisted ``BPC_HYBRID_*`` keys from *project_root*/.env.
@@ -316,7 +332,7 @@ class LLMConfig:
     # -- from_env -----------------------------------------------------------
 
     @classmethod
-    def from_env(cls, project_root: Path | str | None = None) -> LLMConfig:
+    def from_env(cls, project_root: Path | str | None = None, load_project_env: bool = True) -> LLMConfig:
         """Build a configuration from environment variables.
 
         Reads ``BPC_HYBRID_LLM_*`` environment variables with an
@@ -324,10 +340,22 @@ class LLMConfig:
 
         Priority: **system environment variables > .env file**.
 
-        When *project_root* is provided, whitelisted keys from
+        When *project_root* is provided **and** *load_project_env* is
+        ``True`` **and** ``BPC_HYBRID_DISABLE_PROJECT_ENV`` is not set
+        in the system environment, whitelisted keys from
         ``project_root/.env`` are loaded and used as defaults for any
         key that is **not** already set in the system environment.
         Missing ``.env`` is silent — no error is raised.
+
+        Parameters:
+            project_root:
+                Path to the project root.  When provided (and loading
+                is not disabled), ``project_root/.env`` is read as a
+                fallback.
+            load_project_env:
+                Set to ``False`` to skip ``.env`` reading even when
+                *project_root* is provided.  This is the audit/test
+                override — it does **not** read the file at all.
 
         Environment variables read:
 
@@ -342,9 +370,9 @@ class LLMConfig:
 
         API key values are never echoed in logs.
         """
-        # -- load .env fallback (if project_root provided) -----------------
+        # -- load .env fallback (if enabled) -----------------------------
         dotenv: dict[str, str] = {}
-        if project_root is not None:
+        if project_root is not None and load_project_env and not project_env_disabled():
             dotenv = load_project_env_file(project_root)
 
         def _get(key: str, default: str) -> str:

@@ -35,7 +35,7 @@ from bpc_hybrid.llm_client import (
     MockLLMTransport,
     make_schema_valid_mock_response_json,
 )
-from bpc_hybrid.llm_config import ALLOWED_PROVIDERS, LLMConfig, LLMConfigError, load_project_env_file
+from bpc_hybrid.llm_config import ALLOWED_PROVIDERS, LLMConfig, LLMConfigError, load_project_env_file, project_env_disabled
 
 
 # ---------------------------------------------------------------------------
@@ -165,14 +165,23 @@ def main(argv: list[str] | None = None) -> int:
             "If omitted, a schema-valid default is generated."
         ),
     )
+    parser.add_argument(
+        "--no-project-env",
+        action="store_true",
+        default=False,
+        help="Disable reading project-root .env (for audits/tests).",
+    )
 
     args = parser.parse_args(argv)
 
     # --- load project .env (R9.0) ----------------------------------------
     # System environment variables always take priority over .env.
     # Missing .env is silent — no error.
-    _project_env = load_project_env_file(_PROJECT_ROOT)
-    del _project_env  # not used in R8; staged for R9 real API smoke
+    # Skip when --no-project-env is passed or BPC_HYBRID_DISABLE_PROJECT_ENV
+    # is set in the system environment.
+    if not args.no_project_env and not project_env_disabled():
+        _project_env = load_project_env_file(_PROJECT_ROOT)
+        del _project_env  # not used in R8; staged for R9 real API smoke
 
     # --- gate: invalid provider ------------------------------------------
     if args.provider not in ALLOWED_PROVIDERS:

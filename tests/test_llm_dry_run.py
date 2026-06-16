@@ -30,8 +30,10 @@ def _run_dry_run(*args: str) -> subprocess.CompletedProcess[str]:
     """Run the dry-run script with *args* and return completed process.
 
     Does **not** inject PYTHONPATH — the script itself does that.
+    Always passes ``--no-project-env`` so tests never read the real
+    project ``.env`` (R9.0.1 audit/test safety).
     """
-    cmd = [PYTHON_EXE, str(DRY_RUN_SCRIPT), *args]
+    cmd = [PYTHON_EXE, str(DRY_RUN_SCRIPT), "--no-project-env", *args]
     return subprocess.run(
         cmd,
         capture_output=True,
@@ -460,3 +462,46 @@ class TestDotenvSafety:
             "--text", SAMPLE_TEXT,
         )
         assert cp.returncode == 0, f"stderr={cp.stderr}"
+
+
+# ---------------------------------------------------------------------------
+# R9.0.1 — --no-project-env flag
+# ---------------------------------------------------------------------------
+
+class TestNoProjectEnvFlag:
+    """Verify --no-project-env flag behaviour (R9.0.1 audit/test safety)."""
+
+    def test_no_project_env_flag_accepted(self):
+        """Mock dry-run succeeds with --no-project-env."""
+        cp = _run_dry_run(
+            "--allow-llm",
+            "--single-sample",
+            "--text", SAMPLE_TEXT,
+        )
+        assert cp.returncode == 0
+        data = _parse_json_output(cp)
+        assert data["run_type"] == "single_sample_llm_dry_run"
+        assert data["real_api_call_performed"] is False
+
+    def test_no_project_env_no_secrets_in_output(self):
+        """With --no-project-env, no secret patterns appear."""
+        cp = _run_dry_run(
+            "--allow-llm",
+            "--single-sample",
+            "--text", SAMPLE_TEXT,
+        )
+        combined = cp.stdout + cp.stderr
+        assert "sk-" not in combined.lower()
+        assert "api_key" not in combined.lower()
+
+    def test_help_shows_no_project_env(self):
+        """--no-project-env appears in --help output."""
+        proc = subprocess.run(
+            [PYTHON_EXE, str(DRY_RUN_SCRIPT), "--help"],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(PROJECT_ROOT),
+            env={**os.environ},
+        )
+        # argparse writes help to stdout by default
+        combined = proc.stdout + proc.stderr
+        assert "--no-project-env" in combined

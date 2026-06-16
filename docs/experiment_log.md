@@ -782,3 +782,40 @@ R9 real API smoke testing.
 ### Status
 
 Completed after tests (366 passed), health check, synthetic eval, and GitHub push.
+
+## R9.0.1 — Add Audit-safe Project Env Loading Controls
+
+### Goal
+
+Keep project-root `.env` support for local real API smoke tests while
+allowing tests and Codex audits to explicitly disable reading the real
+project `.env`.
+
+### Scope
+
+- Add `load_project_env=False` support
+- Add `BPC_HYBRID_DISABLE_PROJECT_ENV=1` control
+- Add `--no-project-env` CLI flag
+- Update dry-run tests so they do not read the real project `.env`
+- Clarify README whitelist wording
+- Preserve `.env` Git ignore behaviour
+
+### Non-goals
+
+- No real LLM API calls
+- No network access
+- No raw response storage
+- No batch execution
+- No benchmark result
+- No real GDPR/BPMN/Sun data
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| Existing project `.env` blocked Codex test execution under no-read audit rule | Codex refused to run dry-run tests/full pytest because the CLI would read project-root `.env` during startup | R9.0 enabled project `.env` loading but did not provide an audit/test bypass | Added `--no-project-env`, `BPC_HYBRID_DISABLE_PROJECT_ENV=1`, and `load_project_env=False` controls, then updated tests to avoid reading real project `.env` | R9.0.1 config tests, dry-run tests, full pytest, health script, and synthetic evaluation command passed |
+| Codex pytest temp setup hit project-external permission issue | Codex encountered permission denial under the default Windows temp pytest root | Pytest temporary root defaulted outside the project, conflicting with local permission/audit constraints | Documented that future Codex audit should use a project-local pytest basetemp such as `.pytest_cache/codex-tmp` | DeepSeek tests passed; Codex re-audit pending |
+
+### Status
+
+Completed after tests, documentation update, commit, and GitHub push succeeded.

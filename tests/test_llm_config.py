@@ -14,6 +14,7 @@ from bpc_hybrid.llm_config import (
     LLMProvider,
     _base_url_has_secrets,
     load_project_env_file,
+    project_env_disabled,
     redact_mapping,
     redact_secret,
 )
@@ -597,3 +598,141 @@ class TestFromEnvWithProjectRoot:
         monkeypatch.setenv("BPC_HYBRID_LLM_PROVIDER", "disabled")
         cfg = LLMConfig.from_env()
         assert cfg.provider == "disabled"
+
+
+# ---------------------------------------------------------------------------
+# R9.0.1 — Audit-safe env loading controls
+# ---------------------------------------------------------------------------
+
+class TestProjectEnvDisabled:
+    """Verify from_env() respects load_project_env=False and
+    BPC_HYBRID_DISABLE_PROJECT_ENV."""
+
+    # -- load_project_env=False ---------------------------------------------
+
+    def test_load_project_env_false_skips_dotenv(self, tmp_path, monkeypatch):
+        """With load_project_env=False, .env is never read."""
+        env_file = tmp_path / ".env"
+        env_file.write_text(
+            "BPC_HYBRID_LLM_PROVIDER=openai_compatible\n"
+            "BPC_HYBRID_LLM_MODEL=gpt-4\n",
+            encoding="utf-8",
+        )
+        for k in list(os.environ):
+            if k.startswith("BPC_HYBRID_LLM_"):
+                monkeypatch.delenv(k, raising=False)
+        cfg = LLMConfig.from_env(project_root=tmp_path, load_project_env=False)
+        # Should use defaults, not .env values
+        assert cfg.provider == "mock"
+        assert cfg.model == "mock"
+
+    # -- BPC_HYBRID_DISABLE_PROJECT_ENV ------------------------------------
+
+    def test_disable_env_var_skips_dotenv(self, tmp_path, monkeypatch):
+        """BPC_HYBRID_DISABLE_PROJECT_ENV=1 skips .env reading."""
+        env_file = tmp_path / ".env"
+        env_file.write_text("BPC_HYBRID_LLM_MODEL=gpt-4\n", encoding="utf-8")
+        monkeypatch.setenv("BPC_HYBRID_DISABLE_PROJECT_ENV", "1")
+        for k in list(os.environ):
+            if k.startswith("BPC_HYBRID_LLM_"):
+                monkeypatch.delenv(k, raising=False)
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        assert cfg.model == "mock"  # default, not gpt-4
+
+    @pytest.mark.parametrize("truthy_val", ["true", "yes", "on"])
+    def test_disable_env_var_truthy_values(self, truthy_val, tmp_path, monkeypatch):
+        """All recognised truthy values disable .env loading."""
+        env_file = tmp_path / ".env"
+        env_file.write_text("BPC_HYBRID_LLM_MODEL=gpt-4\n", encoding="utf-8")
+        monkeypatch.setenv("BPC_HYBRID_DISABLE_PROJECT_ENV", truthy_val)
+        for k in list(os.environ):
+            if k.startswith("BPC_HYBRID_LLM_"):
+                monkeypatch.delenv(k, raising=False)
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        assert cfg.model == "mock"
+
+    # -- disable only from system env, not .env ----------------------------
+
+    def test_disable_not_read_from_dotenv(self, tmp_path, monkeypatch):
+        """BPC_HYBRID_DISABLE_PROJECT_ENV in .env does NOT disable."""
+        env_file = tmp_path / ".env"
+        env_file.write_text(
+            "BPC_HYBRID_DISABLE_PROJECT_ENV=1\n"
+            "BPC_HYBRID_LLM_MODEL=gpt-4\n",
+            encoding="utf-8",
+        )
+        # Ensure system env does NOT have the disable var
+        monkeypatch.delenv("BPC_HYBRID_DISABLE_PROJECT_ENV", raising=False)
+        for k in list(os.environ):
+            if k.startswith("BPC_HYBRID_LLM_"):
+                monkeypatch.delenv(k, raising=False)
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        # .env is still read because disable is NOT a system env var
+        # But BPC_HYBRID_DISABLE_PROJECT_ENV is NOT whitelisted, so it's ignored
+        assert cfg.model == "gpt-4"  # .env was read normally
+
+    # -- normal loading still works -----------------------------------------
+
+    def test_normal_load_still_reads_dotenv(self, tmp_path, monkeypatch):
+        """With load_project_env=True (default), .env is read."""
+        env_file = tmp_path / ".env"
+        env_file.write_text("BPC_HYBRID_LLM_PROVIDER=openai_compatible\n")
+        for k in list(os.environ):
+            if k.startswith("BPC_HYBRID_LLM_"):
+                monkeypatch.delenv(k, raising=False)
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        assert cfg.provider == "openai_compatible"
+
+    # -- system env still overrides -----------------------------------------
+
+    def test_system_env_still_overrides_with_disable_unset(self, tmp_path, monkeypatch):
+        """System env overrides .env even when disable is not set."""
+        env_file = tmp_path / ".env"
+        env_file.write_text("BPC_HYBRID_LLM_PROVIDER=mock\n")
+        monkeypatch.setenv("BPC_HYBRID_LLM_PROVIDER", "disabled")
+        cfg = LLMConfig.from_env(project_root=tmp_path)
+        assert cfg.provider == "disabled"  # system env wins
+
+    # -- API key safety ----------------------------------------------------
+
+    def test_api_key_not_in_repr_with_disabled(self, tmp_path, monkeypatch):
+        """API key never in repr even when env loading is disabled."""
+        # This is always true anyway — verify for completeness
+        cfg = LLMConfig(
+            enabled=True,
+            provider="openai_compatible",
+            api_key=DUMMY_KEY,
+        )
+        r = repr(cfg)
+        assert DUMMY_KEY not in r
+        assert "REDACTED" in r
+
+    # -- project_env_disabled helper ---------------------------------------
+
+    def test_project_env_disabled_defaults_false(self):
+        """Without the env var, returns False."""
+        assert project_env_disabled({}) is False
+        assert project_env_disabled({"OTHER": "1"}) is False
+
+    def test_project_env_disabled_detects_truthy(self):
+        """Detects truthy disable values."""
+        for val in ("1", "true", "yes", "on"):
+            assert project_env_disabled(
+                {"BPC_HYBRID_DISABLE_PROJECT_ENV": val}
+            ) is True
+
+    def test_project_env_disabled_case_insensitive(self):
+        """Truthy check is case-insensitive."""
+        assert project_env_disabled(
+            {"BPC_HYBRID_DISABLE_PROJECT_ENV": "TRUE"}
+        ) is True
+        assert project_env_disabled(
+            {"BPC_HYBRID_DISABLE_PROJECT_ENV": "On"}
+        ) is True
+
+    def test_project_env_disabled_rejects_falsey(self):
+        """Values other than 1/true/yes/on are not truthy."""
+        for val in ("0", "false", "no", "off", "", "maybe"):
+            assert project_env_disabled(
+                {"BPC_HYBRID_DISABLE_PROJECT_ENV": val}
+            ) is False

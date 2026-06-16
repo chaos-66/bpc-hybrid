@@ -87,7 +87,7 @@ If a key is set both in `os.environ` **and** `.env`, the system environment wins
 
 ### Whitelisted Keys
 
-Only `BPC_HYBRID_LLM_*` keys are read from `.env`.
+Only whitelisted `BPC_HYBRID_*` keys are read from `.env`.
 
 | Key | Description | Example |
 |---|---|---|
@@ -107,6 +107,9 @@ Only `BPC_HYBRID_LLM_*` keys are read from `.env`.
 - `.env` is listed in `.gitignore` and must never be committed.
 - If `.env` is missing or unreadable, the application silently falls back to
   `os.environ` alone — there is no error.
+- For audits and tests, project-root `.env` loading can be disabled with
+  `--no-project-env` or `BPC_HYBRID_DISABLE_PROJECT_ENV=1`.
+- No raw response storage, no batch execution, no benchmark result.
 ## R2 Scope
 
 R2 implements the core schema objects for multi-clause regulatory extraction:
