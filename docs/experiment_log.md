@@ -476,14 +476,16 @@ span-repair helpers — **without** calling any real LLM API.
 
 ### Test Coverage
 
-20 fallback tests + 16 normalization tests + 43 evaluator tests + 40 splitter
-tests + 34 extractor tests + 35 prior tests = 188 total.
+29 fallback tests + 38 normalization tests + 43 evaluator tests + 40 splitter
+tests + 34 extractor tests + 35 prior tests = 219 total.
 
 ### Issues and Resolutions
 
 | Issue | Symptom | Root Cause | Fix | Verification |
 |---|---|---|---|---|
-| None | — | — | — | — |
+| Incorrect normalization test expectation | `test_partial_match_raises` failed during R6 test execution | The test expectation did not match the deterministic exact-match span repair policy | Updated the test expectation to match the intended no-fuzzy, exact-match behavior | R6 fallback/normalization tests passed; full pytest passed |
+| Invalid mock fallback span | A fixed mock fallback response failed validation because a span exceeded the source text length | The configured mock fallback response used an invalid span for the synthetic source text | Corrected the mock fallback response span so it maps to the source text and can be repaired/validated deterministically | R6 fallback tests passed; response validation passed |
+| Missing explicit file encoding | A file-open path in the R6 test or helper code lacked explicit encoding | Windows execution can be sensitive to implicit encoding defaults; reproducibility requires explicit encoding | Added explicit UTF-8 encoding to the relevant file read/write path | R6 tests passed on Windows; full pytest passed |
 
 ### Status
 

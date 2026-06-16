@@ -126,7 +126,7 @@ foundation **without** calling any real LLM APIs:
   `repair_field_span()` (deterministic exact-match unique-fix for wrong spans),
   `repair_response_spans()` (iterate all clauses × 6 fields, repair, preserve
   nulls, validate)
-- **Tests**: `test_fallback.py` (20 tests) + `test_normalization.py` (16 tests)
+- **Tests**: `test_fallback.py` (29 tests) + `test_normalization.py` (38 tests)
   covering trigger logic, mock client, hybrid extraction, no-network guarantees,
   and span repair edge cases.
 
