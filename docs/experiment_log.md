@@ -83,3 +83,36 @@ Integrate a safer and clearer research framing into the project documentation af
 ### Status
 
 Completed after documentation update and GitHub push succeeded.
+
+## R2 — Core Multi-Clause Schema
+
+### Goal
+
+Implement the core schema objects required for later rule-first extraction, multi-clause splitting, LLM fallback validation, and evaluation.
+
+### Scope
+
+- Add `FieldSpan`
+- Add `ClauseExtraction`
+- Add `MultiClauseExtractionResponse`
+- Support object-or-null fields for modality, actor, action, condition, constraint, and exception
+- Support span offsets and confidence scores
+- Add schema validation tests
+- Add JSON/dict round-trip tests
+
+### Non-goals
+
+- No rule extractor
+- No multi-clause splitter
+- No evaluator
+- No LLM fallback
+- No real GDPR data
+- No real BPMN models
+- No Sun-aligned dataset
+- No synthetic prototype dataset
+- No benchmark result
+- No compliance checking
+
+### Status
+
+Completed after schema tests passed and GitHub push succeeded.

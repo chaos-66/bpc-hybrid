@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 — Research Framing Integrated**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 — Core Multi-Clause Schema**
 
 ## Research Positioning
 
@@ -37,14 +37,20 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R0 ✅: Safe GitHub-backed bootstrap completed.
 - R1 ✅: Minimal Python project scaffold completed.
 - R1.5 ✅: Research framing integrated into project documentation.
+- R1.6 ✅: Codex local-only audit report persisted.
+- R2: Core multi-clause schema implemented.
 
-## R1 Scope
+## R2 Scope
 
-R1 creates only a minimal Python package scaffold, pytest setup, smoke test, and project health script.
+R2 implements the core schema objects for multi-clause regulatory extraction:
 
-R1 does not implement schema extraction, rule extraction, multi-clause splitting, LLM fallback, evaluation, BPMN checking, or benchmark comparison.
+- `FieldSpan`
+- `ClauseExtraction`
+- `MultiClauseExtractionResponse`
 
-This repository currently contains no real GDPR/BPMN/Sun-aligned dataset and does not report benchmark results.
+The schema supports object-or-null fields for modality, actor, action, condition, constraint, and exception, with span offsets and confidence scores. Schema validation is enforced via `SchemaValidationError`.
+
+R2 does not implement rule extraction, multi-clause splitting, LLM fallback, evaluation, BPMN checking, real datasets, or benchmark results.
 
 ## Dataset and Claim Boundary
 
@@ -56,4 +62,4 @@ This project currently does **not** claim to outperform Sun-style baselines, Win
 
 ## Next Stage
 
-R2 will only proceed after R1.5 push is confirmed successful and user authorization is granted.
+R3 will only proceed after R2 push is confirmed successful and user authorization is granted.
