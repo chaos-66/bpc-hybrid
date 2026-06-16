@@ -116,3 +116,47 @@ Implement the core schema objects required for later rule-first extraction, mult
 ### Status
 
 Completed after schema tests passed and GitHub push succeeded.
+
+## R3 — Rule-first Extractor
+
+### Goal
+
+Implement a deterministic rule-first extractor that parses single-clause
+regulatory sentences and populates all six semantic fields defined by the
+R2 schema.
+
+### Scope
+
+- Add `RuleFirstExtractor` class with `extract()` method
+- Priority-ordered modality marker detection with word-boundary checks
+- Active-voice actor extraction (text before marker)
+- "no person shall" prohibition handling
+- Passive-voice detection via "be + past-participle" heuristic
+- By-agent passive actor extraction ("by the X")
+- Recipient exclusion ("to the X" is NOT an actor)
+- Initial unless → condition
+- Mid-sentence unless → exception
+- Constraint marker detection (within, before, after, only if, provided that)
+- Action extraction truncated at constraint/exception/by-agent/recipient boundaries
+- Definition / warranty / legal consequence / descriptive → null response
+- Convenience function `extract_rule_first()`
+- 34 unit tests covering positive, negative, edge, span integrity, and JSON/dict
+  round-trip cases
+- Export `ExtractionError`, `RuleFirstExtractor`, `extract_rule_first` from package
+
+### Non-goals
+
+- No multi-clause splitting (R4)
+- No LLM fallback (R5+)
+- No evaluator
+- No real GDPR data
+- No real BPMN models
+- No Sun-aligned dataset
+- No synthetic prototype dataset
+- No benchmark result
+- No compliance checking
+
+### Status
+
+Completed after 34 extractor tests + 35 prior tests all passed and
+GitHub push succeeded.

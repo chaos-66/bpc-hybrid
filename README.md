@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 — Core Multi-Clause Schema**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 — Rule-first Extractor**
 
 ## Research Positioning
 
@@ -38,7 +38,8 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R1 ✅: Minimal Python project scaffold completed.
 - R1.5 ✅: Research framing integrated into project documentation.
 - R1.6 ✅: Codex local-only audit report persisted.
-- R2: Core multi-clause schema implemented.
+- R2 ✅: Core multi-clause schema completed.
+- R3: Rule-first extractor implemented.
 
 ## R2 Scope
 
@@ -51,6 +52,28 @@ R2 implements the core schema objects for multi-clause regulatory extraction:
 The schema supports object-or-null fields for modality, actor, action, condition, constraint, and exception, with span offsets and confidence scores. Schema validation is enforced via `SchemaValidationError`.
 
 R2 does not implement rule extraction, multi-clause splitting, LLM fallback, evaluation, BPMN checking, real datasets, or benchmark results.
+
+## R3 Scope
+
+R3 implements a rule-first extractor (`RuleFirstExtractor`) that parses
+single-clause regulatory sentences and populates all six semantic fields
+(modality, actor, action, condition, constraint, exception) using
+deterministic marker-based heuristics:
+
+- **Modality**: priority-ordered markers (shall, shall not, must, must not, may)
+- **Actor**: active-voice subject before marker, "no person" prohibition,
+  by-agent passive detection
+- **Action**: text after modality, truncated at constraint/exception/by-agent/
+  recipient boundaries
+- **Condition**: initial "Unless X" clause
+- **Exception**: mid-sentence "unless X" clause
+- **Constraint**: markers (within, before, after, only if, provided that)
+
+Non-normative sentences (definitions, warranties, legal consequences,
+descriptive statements) are detected and return null semantic fields.
+Passive voice is detected via "be + past-participle" pattern; the actor
+is extracted from "by the X" phrases while recipients ("to the X") are
+excluded. Multi-clause splitting is deferred to R4.
 
 ## Dataset and Claim Boundary
 
