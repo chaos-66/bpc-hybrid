@@ -85,4 +85,5 @@ This project currently does **not** claim to outperform Sun-style baselines, Win
 
 ## Next Stage
 
-R3 will only proceed after R2 push is confirmed successful and user authorization is granted.
+R4 — Multi-Clause Splitter — will only proceed after R3.1 fix is tested,
+committed, pushed, and user authorization is granted.

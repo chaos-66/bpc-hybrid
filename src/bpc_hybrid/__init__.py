@@ -18,6 +18,7 @@ from bpc_hybrid.schema import (
 __version__ = "0.1.0"
 
 __all__ = [
+    "__version__",
     "ClauseExtraction",
     "ExtractionError",
     "FieldSpan",
@@ -25,7 +26,4 @@ __all__ = [
     "RuleFirstExtractor",
     "SchemaValidationError",
     "extract_rule_first",
-]
-    "MultiClauseExtractionResponse",
-    "SchemaValidationError",
 ]

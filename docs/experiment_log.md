@@ -160,3 +160,41 @@ R2 schema.
 
 Completed after 34 extractor tests + 35 prior tests all passed and
 GitHub push succeeded.
+
+## R3.1 — Fix R3 Package Import Blocking Issue
+
+### Goal
+
+Fix the package-level import failure found by Codex R3 local-only audit.
+
+### Blocking Issue
+
+Codex identified an `IndentationError` in `src/bpc_hybrid/__init__.py`,
+which caused full pytest, extractor-specific pytest, and the health script
+to fail before R3 behavior could be validated.
+
+### Scope
+
+- Fix malformed `__all__` / indentation in `src/bpc_hybrid/__init__.py`
+- Re-run package compile check
+- Re-run extractor tests
+- Re-run full pytest
+- Re-run health script
+- Keep R3 scope limited to the rule-first extractor
+
+### Non-goals
+
+- No R4 multi-clause splitter
+- No evaluator
+- No LLM fallback
+- No real GDPR data
+- No real BPMN models
+- No Sun-aligned dataset
+- No synthetic prototype dataset
+- No benchmark result
+- No compliance checking
+
+### Status
+
+Completed after package import, tests, health script, commit, and GitHub
+push succeeded.
