@@ -248,3 +248,80 @@ individual clause segments, and integrate it with the R3 extractor.
 ### Status
 
 Completed — all 74 tests pass, committed and pushed.
+
+## R5 — Prototype Evaluation Loop
+
+### Goal
+
+Implement a synthetic prototype evaluation loop that validates the full
+pipeline (schema → extractor → splitter → evaluator) with deterministic
+clause/field-level metrics on toy legal sentences only.
+
+### Scope
+
+- Create synthetic prototype sentences at `data/prototype/legal_sentences.jsonl`
+  (14 entries: d01–d14)
+- Create gold multi-clause extraction file at
+  `data/prototype/gold_multiclause.jsonl` with exact spans
+- Implement `src/bpc_hybrid/evaluator.py`:
+  - `EvaluationError(ValueError)` — custom exception
+  - `FieldMetrics` dataclass with tp/fp/fn and precision/recall/f1 properties
+  - `EvaluationReport` dataclass with dataset_type, is_formal_benchmark,
+    compares_against_sun, clause/field micro metrics, per_field breakdown,
+    and source_details
+  - `_normalize(text)` — lowercase, strip punctuation, collapse whitespace
+  - `_compare_field(gold_fs, pred_fs, metrics)` — updates tp/fp/fn; TN not counted
+  - `evaluate_responses(gold, predicted)` — aligns by source_id, clauses by position
+  - `load_jsonl(path)`, `load_gold_responses(path)`, `load_predicted_responses(path)`
+- Create `scripts/run_rule_baseline.py` — runs rule-first extractor on all
+  sentences, outputs JSONL to stdout
+- Create `scripts/evaluate_multi_clause.py` — loads gold + predictions (on-the-fly
+  or pre-computed), runs evaluation, prints JSON report
+- Create `tests/test_evaluator.py` — 30 tests:
+  - TestFieldMetrics (perfect, zero, mixed, to_dict, zero-division)
+  - TestEvaluationReport (defaults, to_dict)
+  - TestNormalize (lowercase, punctuation, whitespace)
+  - TestLoadJsonl (sentences, gold)
+  - TestGoldValidation (all gold validate, IDs match sentences)
+  - TestPerfectPrediction (all-fields F1=1.0, single-field F1=1.0)
+  - TestFieldErrors (missing→FN, extra→FP, wrong text→FP+FN, both null→not counted)
+  - TestClauseCountMismatch (more pred clauses, fewer pred clauses)
+  - TestPerFieldAndMicro (6 fields present, micro sum)
+  - TestDuplicateSourceId (raises EvaluationError)
+  - TestRunRuleBaseline (subprocess, 14 output lines, valid JSONL)
+  - TestEvaluateMultiClause (valid JSON output, synthetic_prototype flags,
+    perfect-on-gold)
+  - TestSyntheticOnly (no GDPR/ARTICLE/EU in any sentence or gold)
+- Update `src/bpc_hybrid/__init__.py` with evaluator exports
+- Update `README.md` with R5 status and scope
+- Update `docs/experiment_log.md` (this section)
+
+### Non-goals
+
+- No LLM fallback (R6)
+- No BPMN checking
+- No formal benchmark
+- No real (GDPR/Sun) datasets
+- No benchmark claims
+- All data is synthetic and used for pipeline sanity checks only
+
+### Key Design Decisions
+
+- Gold spans are exact source_text offsets from rule-first extractor output
+- Clause alignment is positional (by index) within each source_id
+- Field comparison uses normalized text (lowercase, stripped punctuation,
+  collapsed whitespace)
+- TN (both null) is not counted in any metric
+- Extra gold clauses → FN on all non-null fields; extra pred clauses → FP
+- Micro precision/recall/F1 are sums across all fields (not per-field averages)
+- predict-on-the-fly mode writes compact JSONL (no indent) to tempfile
+
+### Test Coverage
+
+30 evaluator tests + 40 splitter tests + 34 extractor tests + 35 prior tests
++ check_project_health = 139 total, all passing.
+
+### Status
+
+Completed — all 139 tests pass, evaluation runs with clause F1=1.0 / field
+micro F1=1.0, committed and pushed.

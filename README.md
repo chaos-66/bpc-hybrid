@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅**
 
 ## Research Positioning
 
@@ -41,6 +41,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R2 ✅: Core multi-clause schema completed.
 - R3 ✅: Rule-first extractor completed.
 - R4 ✅: Multi-clause splitter completed.
+- R5 ✅: Prototype evaluation loop completed.
 
 ## R2 Scope
 
@@ -91,6 +92,19 @@ with multiple modality markers into individual `ClauseSegment` objects:
 
 R4 does not implement LLM fallback, evaluation, BPMN checking, or real datasets.
 
+## R5 Scope
+
+R5 implements a synthetic prototype evaluation loop for pipeline sanity checking:
+
+- **Synthetic dataset**: 14 toy legal sentences at `data/prototype/legal_sentences.jsonl`
+- **Gold multi-clause extractions**: `data/prototype/gold_multiclause.jsonl` with exact spans
+- **Evaluator** (`bpc_hybrid.evaluator`): deterministic clause/field-level metrics with `EvaluationReport`
+- **Rule baseline script**: `scripts/run_rule_baseline.py` runs the rule-first extractor on all sentences
+- **Evaluation script**: `scripts/evaluate_multi_clause.py` loads gold + predictions, prints JSON report
+- **Tests**: `tests/test_evaluator.py` — 30 tests covering FieldMetrics, perfect prediction, field errors, clause mismatch, perf-field/micro metrics, subprocess integration, and data safety
+
+R5 does not implement LLM fallback, BPMN checking, formal benchmarks, or real (GDPR/Sun) datasets. All data is synthetic and used for sanity checks only.
+
 ## Dataset and Claim Boundary
 
 The future formal evaluation target is a **Sun-aligned GDPR + BPMN dataset**, compared against Sun-style rule baseline and Winter-style textual baseline on precision / recall / F1 / AP / MAP.
@@ -101,5 +115,5 @@ This project currently does **not** claim to outperform Sun-style baselines, Win
 
 ## Next Stage
 
-R5 — LLM Fallback — will only proceed after R4 is fully tested,
+R6 — LLM Fallback — will only proceed after R5 is fully tested,
 committed, pushed, and user authorization is granted.
