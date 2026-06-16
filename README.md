@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅**
 
 ## Research Positioning
 
@@ -44,6 +44,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R5 ✅: Prototype evaluation loop completed.
 - R5.1 ✅: R5 CLI direct execution and prototype dataset ID mapping fixed after Codex audit.
 - R6 ✅: Mock LLM fallback interface and deterministic normalization foundation completed.
+- R7 ✅: Safe LLM fallback adapter scaffold completed.
 
 ## R2 Scope
 
@@ -133,6 +134,32 @@ foundation **without** calling any real LLM APIs:
 R6 does NOT call any real LLM API. No `.env` file, no API keys, no network.
 All mock responses are pre-configured synthetic data.
 
+## R7 Scope
+
+R7 adds a safety-gated LLM provider configuration layer, secret redaction
+utilities, provider-independent request/response structures, a mock transport,
+and an OpenAI-compatible request builder scaffold.
+
+- **`llm_config.py`** — `LLMConfig` dataclass (enabled=False by default,
+  provider="mock"), `LLMConfigError`, `LLMProvider` constants, `redact_secret()`
+  / `redact_mapping()` for key safety, `LLMConfig.from_env()` (only reads
+  `BPC_HYBRID_LLM_*` vars, no `.env` / dotenv)
+- **`llm_client.py`** — `LLMRequest` / `LLMResponse` (provider-independent,
+  no API keys), `LLMTransport` protocol, `MockLLMTransport` (simulates valid
+  JSON, invalid JSON, invalid schema, transport error), `OpenAICompatibleRequestBuilder`
+  (constructs payloads — no openai SDK, no requests/httpx, no network),
+  `parse_llm_json_response()` (JSON parse → dict check → from_dict → validate;
+  strips markdown fences), `validate_llm_extraction_response()`,
+  `LLMFallbackAdapter` (bridges LLM path into R6 `FallbackRequest`/`FallbackResult`)
+- **Tests**: `test_llm_config.py` (24 tests) + `test_llm_client.py` (28 tests)
+- **Integration**: `extract_hybrid()` in fallback.py accepts any client with
+  `.complete(FallbackRequest) → FallbackResult` (duck-typed)
+
+R7 does **not** call real LLM APIs, does not access the network, does not
+read `.env` files, does not store raw responses, and does not produce
+benchmark results. Real LLM execution remains disabled by default
+(`LLMConfig.enabled = False`) and must be authorized in a later stage.
+
 ## Dataset and Claim Boundary
 
 The future formal evaluation target is a **Sun-aligned GDPR + BPMN dataset**, compared against Sun-style rule baseline and Winter-style textual baseline on precision / recall / F1 / AP / MAP.
@@ -149,6 +176,6 @@ The issue log is intended to support reproducibility and later thesis/paper writ
 
 ## Next Stage
 
-R7 — E2E hybrid pipeline validation — will run the full hybrid pipeline
-against the prototype dataset and validate the end-to-end fallback +
-normalization path.
+R8 — Codex R7 audit — must pass before any real LLM experimentation begins.
+R8 will verify: no network calls, no .env access, no API key leaks,
+all config defaults disabled, mock transport only.

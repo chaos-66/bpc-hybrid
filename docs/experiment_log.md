@@ -491,3 +491,96 @@ tests + 34 extractor tests + 35 prior tests = 219 total.
 
 Completed after all tests passed, health script passed, commit and GitHub
 push succeeded.
+
+## R7 — Safe Real LLM Fallback Adapter Scaffold
+
+### Goal
+
+Add a safety-gated configuration and adapter scaffold for later real LLM
+fallback experiments, without performing real API calls.
+
+### Scope
+
+- Create `src/bpc_hybrid/llm_config.py`:
+  - `LLMConfigError(ValueError)` — custom exception
+  - `LLMProvider` constants (MOCK, OPENAI_COMPATIBLE, DISABLED)
+  - `LLMConfig` dataclass: enabled/provider/model/api_key/base_url/
+    timeout_seconds/max_tokens/temperature; defaults disabled
+  - `validate()` — checks provider validity, API key requirement,
+    numeric bounds
+  - `__repr__`/`__str__` — always redact api_key
+  - `from_dict()`/`to_dict()` — round-trip
+  - `from_env()` — reads `BPC_HYBRID_LLM_*` env vars only; no `.env`/dotenv
+  - `redact_secret()` — show first 4 chars + `***REDACTED***`
+  - `redact_mapping()` — replace values for keys containing key/secret/token
+    or values containing sk-/Bearer
+- Create `src/bpc_hybrid/llm_client.py`:
+  - `LLMClientError(ValueError)` — custom exception
+  - `LLMRequest` dataclass — source_id, source_text, system_prompt, user_prompt,
+    schema_name; NO api_key
+  - `LLMResponse` dataclass — content, provider, model, finish_reason; NO api_key
+  - `LLMTransport` — abstract protocol with `send(request) → LLMResponse`
+  - `MockLLMTransport` — fixed_response, simulate_invalid_json,
+    simulate_invalid_schema; no network, no .env
+  - `OpenAICompatibleRequestBuilder` — build_url(), build_headers() (redacted),
+    build_body() (no api_key), build_payload(); no openai/requests/httpx import
+  - `_extract_json_from_content()` — strip markdown fences
+  - `parse_llm_json_response()` — fence strip → json.loads → dict check →
+    from_dict → validate
+  - `validate_llm_extraction_response()` — thin validation wrapper
+  - `LLMFallbackAdapter` — config + transport; complete(FallbackRequest) →
+    FallbackResult; auto-creates MockLLMTransport for mock provider
+- Create `tests/test_llm_config.py` — 24 tests:
+  - TestRedactSecret (4), TestRedactMapping (5), TestLLMConfigDefaults (2),
+    TestLLMConfigValidation (9), TestLLMConfigRepr (3), TestLLMConfigDictRoundTrip (1),
+    TestLLMConfigFromEnv (9), TestLLMProvider (2), TestNoSecretsLeaked (1)
+- Create `tests/test_llm_client.py` — 28 tests:
+  - TestLLMRequestResponse (2), TestLLMTransportAbstract (1),
+    TestMockLLMTransport (6), TestParseLLMJsonResponse (7),
+    TestValidateLLMExtractionResponse (2), TestExtractJsonFromContent (3),
+    TestOpenAICompatibleRequestBuilder (6), TestLLMFallbackAdapter (7),
+    TestSafetyGuarantees (3)
+- Update `src/bpc_hybrid/fallback.py` — update `extract_hybrid()` docstring
+  for duck-typed fallback_client compatibility with LLMFallbackAdapter
+- Update `src/bpc_hybrid/__init__.py` — add R7 exports
+- Update `README.md` — add R7 status, scope, next stage
+- Update `docs/experiment_log.md` — this section
+
+### Non-goals
+
+- No real LLM API calls
+- No network access
+- No `.env` file access
+- No raw response storage
+- No real GDPR data
+- No real BPMN models
+- No original Sun dataset
+- No Sun-aligned formal benchmark
+- No claim of outperforming Sun
+- No compliance checking
+- No over-compliance detection
+
+### Key Design Decisions
+
+- **Disabled by default**: `LLMConfig.enabled = False` — real LLM execution
+  requires explicit opt-in.
+- **Secret redaction everywhere**: `repr`, `str`, `redact_mapping()` all
+  replace API keys with `***REDACTED***`.
+- **Duck-typed fallback client**: `extract_hybrid()` accepts any object with
+  `.complete(FallbackRequest) → FallbackResult`; both `MockLLMFallbackClient`
+  (R6) and `LLMFallbackAdapter` (R7) satisfy this.
+- **No real SDK imports**: `llm_client.py` does not import openai, anthropic,
+  requests, or httpx.
+- **Mock transport only**: R7 only exercises `MockLLMTransport`;
+  `OpenAICompatibleRequestBuilder` builds payloads but never sends them.
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| No blocking implementation issues were observed in this stage. | N/A | N/A | N/A | R7 config tests, client tests, fallback tests, full pytest, health script, and synthetic evaluation command passed |
+
+### Status
+
+Completed after tests, health script, synthetic evaluation command, commit,
+and GitHub push succeeded.

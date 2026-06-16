@@ -232,7 +232,13 @@ def extract_hybrid(
     field_confidence_threshold: float = DEFAULT_CONFIDENCE_THRESHOLD,
     clause_confidence_threshold: float = DEFAULT_CONFIDENCE_THRESHOLD,
 ) -> MultiClauseExtractionResponse:
-    """Run rule-first extraction, optionally fall back to a mock client.
+    """Run rule-first extraction, optionally fall back to a fallback client.
+
+    The *fallback_client* must implement ``.complete(FallbackRequest) ->
+    FallbackResult`` (duck-typed).  Compatible implementations include:
+
+    * :class:`MockLLMFallbackClient` (R6 — in-process stub)
+    * :class:`~bpc_hybrid.llm_client.LLMFallbackAdapter` (R7 — LLM bridge)
 
     Workflow
     --------
