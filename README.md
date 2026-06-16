@@ -30,6 +30,19 @@ The framework combines:
 | `docs/experiment_log.md` | Experiment progress log |
 | `docs/safety_rules.md` | Safety constraints for this project |
 
+## Current Stage
+
+- R0: completed after successful GitHub push.
+- R1: minimal Python project scaffold.
+
+## R1 Scope
+
+R1 creates only a minimal Python package scaffold, pytest setup, smoke test, and project health script.
+
+R1 does not implement schema extraction, rule extraction, multi-clause splitting, LLM fallback, evaluation, BPMN checking, or benchmark comparison.
+
+This repository currently contains no real GDPR/BPMN/Sun-aligned dataset and does not report benchmark results.
+
 ## Next Stage
 
-R1 will only proceed after R0 push is confirmed successful.
+R2 will only proceed after R1 push is confirmed successful.

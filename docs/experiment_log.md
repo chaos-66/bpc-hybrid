@@ -25,3 +25,32 @@ Establish a GitHub-backed safe project root before any code implementation.
 ### Status
 
 Completed after successful GitHub push.
+
+## R1 — Minimal Python Project Scaffold
+
+### Goal
+
+Create the minimal Python package structure required for later schema, extractor, splitter, evaluator, and LLM mock stages.
+
+### Scope
+
+- Create `src/bpc_hybrid/`
+- Create `tests/`
+- Create `scripts/`
+- Create `data/prototype/`
+- Configure pytest through `pyproject.toml`
+- Add a minimal smoke test
+- Add a local project health script
+
+### Non-goals
+
+- No real GDPR data
+- No real BPMN models
+- No Sun-aligned benchmark
+- No LLM API call
+- No extraction algorithm
+- No compliance checking
+
+### Status
+
+Pending until tests pass and GitHub push succeeds.

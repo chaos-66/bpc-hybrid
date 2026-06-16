@@ -1,0 +1,10 @@
+[project]
+name = "bpc-hybrid"
+version = "0.1.0"
+description = "Rule-first LLM-assisted hybrid framework prototype for design-time business process compliance assessment."
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
