@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅**
 
 ## Research Positioning
 
@@ -45,6 +45,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R5.1 ✅: R5 CLI direct execution and prototype dataset ID mapping fixed after Codex audit.
 - R6 ✅: Mock LLM fallback interface and deterministic normalization foundation completed.
 - R7 ✅: Safe LLM fallback adapter scaffold completed.
+- R7.1 ✅: Hardened LLM config validation and documentation completed.
 
 ## R2 Scope
 
@@ -151,11 +152,12 @@ and an OpenAI-compatible request builder scaffold.
   `parse_llm_json_response()` (JSON parse → dict check → from_dict → validate;
   strips markdown fences), `validate_llm_extraction_response()`,
   `LLMFallbackAdapter` (bridges LLM path into R6 `FallbackRequest`/`FallbackResult`)
-- **Tests**: `test_llm_config.py` (24 tests) + `test_llm_client.py` (28 tests)
+- **Tests**: `test_llm_config.py` (53 tests) + `test_llm_client.py` (39 tests)
+  (includes R7.1 hardened validation and base_url security tests)
 - **Integration**: `extract_hybrid()` in fallback.py accepts any client with
   `.complete(FallbackRequest) → FallbackResult` (duck-typed)
 
-R7 does **not** call real LLM APIs, does not access the network, does not
+R7 / R7.1 does **not** call real LLM APIs, does not access the network, does not
 read `.env` files, does not store raw responses, and does not produce
 benchmark results. Real LLM execution remains disabled by default
 (`LLMConfig.enabled = False`) and must be authorized in a later stage.

@@ -578,7 +578,54 @@ fallback experiments, without performing real API calls.
 
 | Issue | Symptom | Root Cause | Fix | Verification |
 |---|---|---|---|---|
-| No blocking implementation issues were observed in this stage. | N/A | N/A | N/A | R7 config tests, client tests, fallback tests, full pytest, health script, and synthetic evaluation command passed |
+| LLMConfig bounds validation hidden behind early return | Numeric bound checks for `timeout_seconds`, `max_tokens`, and `temperature` were not applied consistently when `provider="mock"` or config was disabled | `LLMConfig.validate()` returned too early before shared validation logic ran | Moved provider and numeric validation before provider-specific early-return behavior so all configs are structurally validated | `tests/test_llm_config.py` passed; full pytest passed |
+| Dotenv import test false positive | `test_no_dotenv_import` failed because it matched `.env` text in a docstring rather than an actual dotenv import | The assertion searched for the broad substring `.env` instead of import patterns | Narrowed the assertion to reject actual imports such as `from dotenv`, `import dotenv`, and `load_dotenv` | `tests/test_llm_config.py` passed; full pytest passed |
+| Schema invalid error expectation mismatch | `test_schema_invalid_rejected` expected a generic schema validation message but the actual schema layer raised a more specific `Unknown keys` message | The test expectation did not match the existing `MultiClauseExtractionResponse` validation error text | Updated the expected regex to match the actual schema validation behavior while still asserting rejection of invalid LLM output | `tests/test_llm_client.py` passed; full pytest passed |
+
+### Status
+
+Completed after tests, health script, synthetic evaluation command, commit,
+and GitHub push succeeded.
+
+## R7.1 — Harden LLM Config Validation and Documentation
+
+### Goal
+
+Resolve Codex R7 audit blockers around disabled-config validation,
+base_url secret handling, and missing R7 issue documentation.
+
+### Scope
+
+- **Fix A — Provider + numeric validation always runs**: Refactored
+  `LLMConfig.validate()` so provider whitelist and numeric-bound checks
+  (`timeout_seconds`, `max_tokens`, `temperature`) always execute,
+  regardless of `enabled`; only the API-key requirement stays gated
+  behind `enabled=True` and a real provider.
+- **Fix B — base_url secret-material rejection**: Added
+  `_base_url_has_secrets()` (detects `?api_key=`, `?token=`, `?secret=`,
+  `user:password@`), integrated into `LLMConfig.validate()`,
+  `LLMConfig.__repr__`, `redact_mapping()`, and
+  `OpenAICompatibleRequestBuilder.__post_init__`.
+- **Fix C — New tests**: Added 18 config tests (disabled-config
+  validation, base_url security, `redact_mapping` base_url redaction)
+  and 2 client tests (builder rejects secret base_url, error message
+  sanitization). Total: 53 config + 39 client tests.
+- **Fix D — Documentation**: Updated R7 Issues and Resolutions with real
+  implementation issues; added this R7.1 section; appended I007 to
+  `docs/issue_log.md`; corrected test counts in `README.md`.
+
+### Non-goals
+
+Same as R7 non-goals — no real LLM API calls, no network, no `.env`,
+no formal benchmark.
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| Disabled configs skipped shared validation | Codex found invalid provider and invalid numeric settings could pass when `enabled=False` | `validate()` returned before shared provider and numeric bounds checks | Refactored validation so provider whitelist and numeric bounds always run | 18 new config tests passed; full pytest passed |
+| Secret material could be embedded in base_url | Codex found `base_url` could contain key/token/secret material and appear in repr or builder URL | No explicit secret-like URL validation existed | Added `_base_url_has_secrets()` and integrated into `validate()`, `repr`, `redact_mapping()`, and builder `__post_init__` | New base_url security tests passed; full pytest passed |
+| R7 issue documentation incomplete | Codex found R7 implementation fixes were not recorded in `docs/experiment_log.md` | Experiment log still used the generic no-issues template | Updated R7 Issues and Resolutions with actual implementation issues and fixes | Documentation updated; Codex re-audit pending |
 
 ### Status
 

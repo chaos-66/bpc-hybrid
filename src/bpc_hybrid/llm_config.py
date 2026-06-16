@@ -47,6 +47,32 @@ class LLMProvider:
 
 _REDACTED = "***REDACTED***"
 
+# Query-parameter keys that indicate secret material in URLs
+_SECRET_QUERY_KEYS: frozenset[str] = frozenset(
+    {"api_key", "key", "token", "secret", "password", "auth", "apikey"}
+)
+
+
+def _base_url_has_secrets(url: str) -> bool:
+    """Return True if *url* embeds secret-like material.
+
+    Detects:
+
+    * Query parameters named ``api_key``, ``key``, ``token``, ``secret``,
+      ``password``, ``auth``, ``apikey`` (case-insensitive).
+    * ``user:password@`` in the authority portion.
+    """
+    import re
+    # user:password@host pattern
+    if re.search(r"://[^/]*@", url):
+        return True
+    # query-string secret keys
+    lower = url.lower()
+    for qk in _SECRET_QUERY_KEYS:
+        if f"?{qk}=" in lower or f"&{qk}=" in lower:
+            return True
+    return False
+
 
 def redact_secret(value: str | None, *, visible: int = 4) -> str:
     """Return a redacted version of *value*.
@@ -66,8 +92,12 @@ def redact_mapping(mapping: dict[str, Any]) -> dict[str, Any]:
     """Return a shallow copy of *mapping* with any value whose key
     contains ``'key'``, ``'secret'``, or ``'token'`` (case-insensitive)
     replaced by ``***REDACTED***``.
+
+    Also redacts ``base_url`` values that contain secret-like query
+    parameters or ``user:password@`` authorities.
     """
     sensitive = {"key", "secret", "token"}
+    base_url_keys = {"base_url", "url", "endpoint", "api_url"}
     result: dict[str, Any] = {}
     for k, v in mapping.items():
         if any(s in k.lower() for s in sensitive):
@@ -75,6 +105,8 @@ def redact_mapping(mapping: dict[str, Any]) -> dict[str, Any]:
         elif isinstance(v, str):
             lower = v.lower()
             if "sk-" in lower or "bearer" in lower:
+                result[k] = _REDACTED
+            elif k.lower() in base_url_keys and _base_url_has_secrets(v):
                 result[k] = _REDACTED
             else:
                 result[k] = v
@@ -110,26 +142,21 @@ class LLMConfig:
         """Validate this configuration.
 
         Raises :class:`LLMConfigError` if the configuration is
-        inconsistent (e.g. enabled with a real provider but no API key).
-        """
-        if not self.enabled:
-            return  # nothing to validate when disabled
+        inconsistent (e.g. invalid provider, bad numeric bounds,
+        secret material in base_url, or enabled with a real provider
+        but no API key).
 
+        Provider whitelist and numeric bounds are **always** checked,
+        regardless of ``enabled``.
+        """
+        # -- always: provider whitelist ------------------------------------
         if self.provider not in ALLOWED_PROVIDERS:
             raise LLMConfigError(
                 f"Invalid provider {self.provider!r}. "
                 f"Allowed: {sorted(ALLOWED_PROVIDERS)}"
             )
 
-        if self.provider in ("mock", "disabled"):
-            pass  # mock/disabled never needs an API key
-        elif self.provider == "openai_compatible":
-            if not self.api_key:
-                raise LLMConfigError(
-                    f"Provider {self.provider!r} requires an API key, "
-                    f"but api_key is unset"
-                )
-
+        # -- always: numeric bounds ----------------------------------------
         if self.timeout_seconds <= 0:
             raise LLMConfigError(
                 f"timeout_seconds must be > 0, got {self.timeout_seconds}"
@@ -143,16 +170,43 @@ class LLMConfig:
                 f"temperature must be in [0.0, 2.0], got {self.temperature}"
             )
 
+        # -- always: base_url must not embed secrets -----------------------
+        if self.base_url and _base_url_has_secrets(self.base_url):
+            raise LLMConfigError(
+                "base_url contains secret material (query parameter or "
+                "user:password@ authority). Use headers/Authorization "
+                "for credentials instead."
+            )
+
+        # -- only when enabled: API key for real providers -----------------
+        if not self.enabled:
+            return  # disabled configs never need an API key
+
+        if self.provider in ("mock", "disabled"):
+            return  # mock/disabled never needs an API key
+
+        if self.provider == "openai_compatible":
+            if not self.api_key:
+                raise LLMConfigError(
+                    f"Provider {self.provider!r} requires an API key, "
+                    f"but api_key is unset"
+                )
+
     def __post_init__(self) -> None:
         self.validate()
 
     # -- repr / str (redacted) ----------------------------------------------
 
     def __repr__(self) -> str:
+        # Redact base_url if it contains secret material
+        if self.base_url and _base_url_has_secrets(self.base_url):
+            base_display = "***REDACTED***"
+        else:
+            base_display = repr(self.base_url)
         return (
             f"LLMConfig(enabled={self.enabled}, provider={self.provider!r}, "
             f"model={self.model!r}, api_key={redact_secret(self.api_key)}, "
-            f"base_url={self.base_url!r}, timeout_seconds={self.timeout_seconds}, "
+            f"base_url={base_display}, timeout_seconds={self.timeout_seconds}, "
             f"max_tokens={self.max_tokens}, temperature={self.temperature})"
         )
 

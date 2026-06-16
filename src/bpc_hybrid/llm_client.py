@@ -15,7 +15,13 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from bpc_hybrid.fallback import FallbackRequest, FallbackResult
-from bpc_hybrid.llm_config import LLMConfig, LLMConfigError, LLMProvider, redact_mapping
+from bpc_hybrid.llm_config import (
+    LLMConfig,
+    LLMConfigError,
+    LLMProvider,
+    _base_url_has_secrets,
+    redact_mapping,
+)
 from bpc_hybrid.schema import (
     MultiClauseExtractionResponse,
     SchemaValidationError,
@@ -162,9 +168,19 @@ class OpenAICompatibleRequestBuilder:
 
     Does not import ``openai``, ``requests``, ``httpx``, or any real
     HTTP library.  This is a pure payload builder for later use.
+
+    Raises :class:`LLMClientError` if *config.base_url* contains secret
+    material (query parameters or ``user:password@`` authorities).
     """
 
     config: LLMConfig
+
+    def __post_init__(self) -> None:
+        if self.config.base_url and _base_url_has_secrets(self.config.base_url):
+            raise LLMClientError(
+                "Request builder rejected: base_url contains secret "
+                "material. Use headers/Authorization for credentials."
+            )
 
     def build_url(self) -> str:
         """Return the chat-completions endpoint URL."""
