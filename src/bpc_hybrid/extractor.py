@@ -1,11 +1,9 @@
-"""Rule-first extractor (R3).
+"""Rule-first extractor (R3 + R4 integration).
 
-Marker-based extraction of normative elements from single-clause toy
-regulatory sentences.  Uses only the Python standard library and the
-R2 schema objects.
-
-This module does NOT implement multi-clause splitting (R4), LLM fallback
-(R5), or deterministic normalization (R6).
+Marker-based extraction of normative elements from toy regulatory
+sentences.  Uses only the Python standard library and the R2 schema
+objects.  R4 multi-clause splitting is integrated via the splitter
+module.
 """
 
 from __future__ import annotations
@@ -19,6 +17,7 @@ from bpc_hybrid.schema import (
     MultiClauseExtractionResponse,
     SchemaValidationError,
 )
+from bpc_hybrid.splitter import ClauseSegment, split_normative_clauses
 
 
 # ---------------------------------------------------------------------------
@@ -58,6 +57,36 @@ def _span_of_stripped(source_text: str, start: int, end: int,
     new_end = start + len(stripped)
     return FieldSpan(text=stripped, span_start=start, span_end=new_end,
                      confidence=confidence)
+
+
+def _extract_active_actor_segment(
+        source_text: str, seg, marker_start: int,
+        condition: FieldSpan | None,
+) -> FieldSpan | None:
+    """Extract active-voice actor from a clause segment.
+
+    Uses *seg.span_start* as the minimum actor search start (so that
+    text before the segment is not considered).  If a *condition*
+    exists, its span is excluded from the actor region.
+    """
+    actor_start = seg.span_start
+    if condition is not None:
+        after_cond = condition.span_end
+        while after_cond < marker_start and source_text[after_cond] in ', ':
+            after_cond += 1
+        actor_start = max(actor_start, after_cond)
+
+    before = source_text[actor_start:marker_start]
+    before_stripped = before.rstrip()
+    if not before_stripped:
+        return None
+
+    leading_ws_in_before = len(before) - len(before.lstrip())
+    start = actor_start + leading_ws_in_before
+    end = start + len(before_stripped)
+
+    return FieldSpan(text=before_stripped, span_start=start, span_end=end,
+                     confidence=0.95)
 
 
 # ---------------------------------------------------------------------------
@@ -131,45 +160,125 @@ class RuleFirstExtractor:
 
     def extract(self, source_text: str,
                 source_id: str = "synthetic") -> MultiClauseExtractionResponse:
-        """Extract normative elements from a single-clause *source_text*.
+        """Extract normative elements from *source_text*.
 
-        Returns a :class:`MultiClauseExtractionResponse` containing exactly
-        one :class:`ClauseExtraction` (multi-clause splitting is R4).
+        If the text contains multiple modality markers (e.g. may+shall),
+        the sentence is first split into clause segments via the R4
+        splitter, and each segment is extracted independently.
+
+        Returns a :class:`MultiClauseExtractionResponse` with one or
+        more :class:`ClauseExtraction` clauses.
         """
-        # --- Find modality marker ---------------------------------------
-        mod_hit = self._find_modality(source_text)
+        # --- Split into clause segments (R4) ----------------------------
+        segments = split_normative_clauses(source_text)
+
+        clauses: list[ClauseExtraction] = []
+        for idx, seg in enumerate(segments):
+            clause = self._extract_segment(
+                source_text, source_id, seg, idx,
+            )
+            clauses.append(clause)
+
+        return MultiClauseExtractionResponse(
+            schema_version="0.1.0",
+            source_id=source_id,
+            source_text=source_text,
+            clauses=clauses,
+        )
+
+    def _extract_segment(
+            self, source_text: str, source_id: str,
+            seg: ClauseSegment, seg_idx: int,
+    ) -> ClauseExtraction:
+        """Extract semantic fields from a single clause segment.
+
+        Uses the segment's *text* as the scope for modality/actor/action
+        detection, but maps all spans back to *source_text* global
+        offsets via *seg.span_start*.
+        """
+        # Inherited condition from initial-unless
+        inherited_cond = seg.inherited_condition
+
+        # --- Find modality marker within the segment --------------------
+        mod_hit = self._find_modality(seg.text)
         if mod_hit is None:
-            # No normative marker → null semantic fields
-            return self._null_response(source_text, source_id)
+            if inherited_cond is not None:
+                # Even without own modality, record the inherited condition
+                return ClauseExtraction(
+                    clause_id=f"C{seg_idx + 1}",
+                    source_id=source_id,
+                    source_text=source_text,
+                    clause_text=seg.text,
+                    clause_span_start=seg.span_start,
+                    clause_span_end=seg.span_end,
+                    modality=None,
+                    actor=None,
+                    action=None,
+                    condition=inherited_cond,
+                    constraint=None,
+                    exception=None,
+                    confidence=0.1,
+                )
+            return ClauseExtraction(
+                clause_id=f"C{seg_idx + 1}",
+                source_id=source_id,
+                source_text=source_text,
+                clause_text=seg.text,
+                clause_span_start=seg.span_start,
+                clause_span_end=seg.span_end,
+                modality=None,
+                actor=None,
+                action=None,
+                condition=None,
+                constraint=None,
+                exception=None,
+                confidence=0.1,
+            )
 
-        marker_text, marker_start, marker_end = mod_hit
+        marker_text, marker_start_local, marker_end_local = mod_hit
 
-        # --- Build modality span ----------------------------------------
+        # --- Global offsets --------------------------------------------
+        marker_start = seg.span_start + marker_start_local
+        marker_end = seg.span_start + marker_end_local
+
+        # --- Build modality span (global) ------------------------------
         modality = _make_span(source_text, marker_start, marker_end, 1.0)
 
-        # --- Condition (initial unless) — must extract before actor -----
-        condition = self._extract_initial_unless(source_text, marker_start)
+        # --- Condition — use inherited from segment, plus check local --
+        segment_condition = self._extract_initial_unless(
+            seg.text, marker_start_local)
+        if segment_condition is not None:
+            # Map local span to global
+            condition = FieldSpan(
+                text=segment_condition.text,
+                span_start=seg.span_start + segment_condition.span_start,
+                span_end=seg.span_start + segment_condition.span_end,
+                confidence=segment_condition.confidence,
+            )
+        elif inherited_cond is not None:
+            condition = inherited_cond
+        else:
+            condition = None
 
-        # --- Constraint (within / before / after / only if / provided that)
+        # --- Constraint ------------------------------------------------
         constraint = self._find_constraint(source_text, marker_end)
 
-        # --- Exception (mid-sentence unless) ----------------------------
+        # --- Exception (mid-sentence unless) ---------------------------
         exception = self._find_mid_unless(source_text, marker_end)
 
-        # --- Actor + Action — depends on voice --------------------------
-        actor, action = self._extract_actor_and_action(
-            source_text, marker_text, marker_start, marker_end,
+        # --- Actor + Action --------------------------------------------
+        actor, action = self._extract_actor_and_action_segment(
+            source_text, seg, marker_text, marker_start, marker_end,
             condition, constraint, exception,
         )
 
-        # --- Build single-clause response -------------------------------
-        clause = ClauseExtraction(
-            clause_id="C1",
+        return ClauseExtraction(
+            clause_id=f"C{seg_idx + 1}",
             source_id=source_id,
             source_text=source_text,
-            clause_text=source_text,
-            clause_span_start=0,
-            clause_span_end=len(source_text),
+            clause_text=seg.text,
+            clause_span_start=seg.span_start,
+            clause_span_end=seg.span_end,
             modality=modality,
             actor=actor,
             action=action,
@@ -177,13 +286,6 @@ class RuleFirstExtractor:
             constraint=constraint,
             exception=exception,
             confidence=0.9 if action is not None else 0.3,
-        )
-
-        return MultiClauseExtractionResponse(
-            schema_version="0.1.0",
-            source_id=source_id,
-            source_text=source_text,
-            clauses=[clause],
         )
 
     # ------------------------------------------------------------------
@@ -277,6 +379,70 @@ class RuleFirstExtractor:
             action = self._extract_action(source_text, marker_end,
                                           constraint, exception,
                                           passive_by_start=None)
+
+        return actor, action
+
+    def _extract_actor_and_action_segment(
+            self, source_text: str, seg: ClauseSegment,
+            marker_text: str, marker_start: int, marker_end: int,
+            condition: FieldSpan | None,
+            constraint: FieldSpan | None,
+            exception: FieldSpan | None,
+    ) -> tuple[FieldSpan | None, FieldSpan | None]:
+        """Like :meth:`_extract_actor_and_action` but scoped to *seg*.
+
+        All returned spans use *source_text* global offsets.
+        For subsequent segments where the actor text is missing,
+        actor is ``None``.
+        """
+        end_bound = seg.span_end
+
+        # --- Special case: "no person shall" ----------------------------
+        if marker_text.lower() == "no person shall":
+            actor = self._extract_no_person_actor(source_text, marker_start)
+            action = self._extract_action(source_text, marker_end,
+                                          constraint, exception,
+                                          passive_by_start=None,
+                                          end_bound=end_bound)
+            return actor, action
+
+        # --- Determine voice by inspecting tail after modality ----------
+        tail = source_text[marker_end:]
+        is_passive = bool(re.match(r'\s*be\s+\w+', tail))
+
+        if is_passive:
+            by_match = re.search(r'\bby\s+(the\s+\w+)', tail, re.IGNORECASE)
+            if by_match:
+                actor_text = by_match.group(1)
+                actor_global_start = marker_end + by_match.start(1)
+                actor_global_end = marker_end + by_match.end(1)
+                actor = FieldSpan(text=actor_text,
+                                  span_start=actor_global_start,
+                                  span_end=actor_global_end,
+                                  confidence=0.92)
+                by_global = marker_end + by_match.start()
+                action = self._extract_action(source_text, marker_end,
+                                              constraint, exception,
+                                              passive_by_start=by_global,
+                                              end_bound=end_bound)
+            else:
+                actor = None
+                action = self._extract_action(source_text, marker_end,
+                                              constraint, exception,
+                                              passive_by_start=None,
+                                              end_bound=end_bound)
+        else:
+            # Active voice: actor = text before modality marker within seg
+            seg_cond = None
+            if condition is not None:
+                if condition.span_end <= marker_start:
+                    seg_cond = condition
+            actor = _extract_active_actor_segment(source_text, seg,
+                                                  marker_start, seg_cond)
+            action = self._extract_action(source_text, marker_end,
+                                          constraint, exception,
+                                          passive_by_start=None,
+                                          end_bound=end_bound)
 
         return actor, action
 
@@ -409,11 +575,12 @@ class RuleFirstExtractor:
                         constraint: FieldSpan | None,
                         exception: FieldSpan | None,
                         passive_by_start: int | None = None,
+                        end_bound: int | None = None,
                         ) -> FieldSpan | None:
         """Extract the action phrase from the text after the modality marker.
 
         Stops at the earliest of: constraint, exception, ``by``-agent,
-        or ``to the X`` (recipient) boundaries.
+        ``to the X`` (recipient), or *end_bound* boundaries.
         """
         tail = source_text[tail_start:]
 
@@ -438,6 +605,10 @@ class RuleFirstExtractor:
         to_match = re.search(r'\bto\s+the\s+\w+', tail, re.IGNORECASE)
         if to_match:
             boundaries.append(tail_start + to_match.start())
+
+        # Segment boundary
+        if end_bound is not None:
+            boundaries.append(end_bound)
 
         if boundaries:
             action_end = min(boundaries)

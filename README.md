@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅**
 
 ## Research Positioning
 
@@ -40,6 +40,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R1.6 ✅: Codex local-only audit report persisted.
 - R2 ✅: Core multi-clause schema completed.
 - R3 ✅: Rule-first extractor completed.
+- R4 ✅: Multi-clause splitter completed.
 
 ## R2 Scope
 
@@ -75,6 +76,21 @@ Passive voice is detected via "be + past-participle" pattern; the actor
 is extracted from "by the X" phrases while recipients ("to the X") are
 excluded. Multi-clause splitting is deferred to R4.
 
+## R4 Scope
+
+R4 implements a deterministic, rule-based multi-clause splitter
+(`RuleBasedClauseSplitter`) that decomposes compound normative sentences
+with multiple modality markers into individual `ClauseSegment` objects:
+
+- **Modality detection**: priority-ordered markers (shall/shall not/must not/shall/must/may)
+- **Clause-boundary "and"**: splits on "and" between modality markers
+- **Initial-unless**: detected as inherited condition, stripped from segment text
+- **Mid-unless**: prevents splitting across unless clauses
+- **Constraint regions**: within/before/after/only if/provided that
+- **Integration**: Extractor `extract()` calls splitter first, then extracts each segment
+
+R4 does not implement LLM fallback, evaluation, BPMN checking, or real datasets.
+
 ## Dataset and Claim Boundary
 
 The future formal evaluation target is a **Sun-aligned GDPR + BPMN dataset**, compared against Sun-style rule baseline and Winter-style textual baseline on precision / recall / F1 / AP / MAP.
@@ -85,5 +101,5 @@ This project currently does **not** claim to outperform Sun-style baselines, Win
 
 ## Next Stage
 
-R4 — Multi-Clause Splitter — will only proceed after R3.1 fix is tested,
+R5 — LLM Fallback — will only proceed after R4 is fully tested,
 committed, pushed, and user authorization is granted.

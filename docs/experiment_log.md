@@ -198,3 +198,53 @@ to fail before R3 behavior could be validated.
 
 Completed after package import, tests, health script, commit, and GitHub
 push succeeded.
+
+## R4 — Multi-Clause Splitter
+
+### Goal
+
+Implement a deterministic, rule-based multi-clause sentence splitter that
+decomposes compound normative sentences with multiple modality markers into
+individual clause segments, and integrate it with the R3 extractor.
+
+### Scope
+
+- Create `src/bpc_hybrid/splitter.py` with `RuleBasedClauseSplitter`
+- Implement `ClauseSegment` dataclass and `SplitError` exception
+- Implement `split()` method with modality detection, clause-boundary "and",
+  initial-unless stripping, mid-unless detection, constraint regions
+- Implement `_find_all_modalities()`, `_find_clause_boundary_and()`,
+  `_is_inside_constraint()`, `_has_modality_in_range()`,
+  `_detect_initial_unless()`, `_detect_mid_unless()`
+- Provide `split_normative_clauses()` convenience function
+- Integrate splitter into extractor: `extract()` calls splitter first
+- Fix action boundary bleeding: `_extract_action` accepts `end_bound` param
+- Create `tests/test_splitter.py` (40 tests)
+- Update `__init__.py` with splitter exports
+- Update `README.md` and `experiment_log.md`
+
+### Non-goals
+
+- No LLM fallback
+- No evaluator
+- No BPMN checking
+- No real datasets
+- No benchmark results
+
+### Key Design Decisions
+
+- Splitter is purely deterministic (stdlib only, no ML)
+- Modality priority mirrors R3 extractor for consistency
+- Initial-unless is detected as inherited condition, stripped from segments
+- Mid-unless prevents splitting across unless clauses
+- Constraint markers (within/before/after/only if/provided that) are checked
+- Multi-clause extraction: extractor calls splitter, then extracts each segment
+- Action extraction respects `seg.span_end` boundary to prevent bleeding
+
+### Test Coverage
+
+40 splitter tests + 34 extractor tests = 74 total, all passing.
+
+### Status
+
+Completed — all 74 tests pass, committed and pushed.
