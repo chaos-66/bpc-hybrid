@@ -381,3 +381,111 @@ data, not BPMN data, not Sun-aligned data, and not a formal benchmark.
 
 Completed after direct CLI execution, evaluator tests, full pytest, health
 script, evaluation command, commit, and GitHub push succeeded.
+
+## R6 — Mock LLM Fallback and Normalization Foundation
+
+### Goal
+
+Implement the LLM fallback decision interface, a mock fallback client (stub,
+deterministic), fallback schema validation, and deterministic normalization /
+span-repair helpers — **without** calling any real LLM API.
+
+### Scope
+
+- Create `src/bpc_hybrid/fallback.py`:
+  - `FallbackError(ValueError)` — custom exception for fallback path failures
+  - `DecisionReason` enum: NO_FALLBACK_NEEDED, MISSING_MODALITY, MISSING_ACTOR,
+    MISSING_ACTION, LOW_FIELD_CONFIDENCE, LOW_CLAUSE_CONFIDENCE,
+    SCHEMA_VALIDATION_FAILURE, FALLBACK_DISABLED
+  - `FallbackDecision` dataclass: should_trigger, reasons list
+  - `FallbackRequest` dataclass: source_text, source_id, rule_response, reasons
+  - `FallbackResult` dataclass: response (or None), raw_dict, error; is_valid property
+  - `MockLLMFallbackClient` class: configurable fixed_response (or None for
+    simulated failure), simulate_invalid flag; complete(request) → FallbackResult
+  - `should_trigger_fallback(response)` function: schema validation check →
+    per-clause checks (normative only: missing actor, missing action, low field
+    confidence <0.5, low clause confidence <0.5); skip non-normative clauses
+  - `extract_hybrid(text, source_id, fallback_client)` function: chain
+    extract_rule_first → should_trigger_fallback → mock complete →
+    validate → repair → return
+- Create `src/bpc_hybrid/normalization.py`:
+  - `NormalizationError(ValueError)` — custom exception
+  - `normalize_field_text(text, *, lowercase, strip_punctuation)` — collapse
+    whitespace, optionally lowercase and strip outer punctuation
+  - `normalize_modality_text(text)` — map may/shall/shall not/must/must not/
+    no person shall/no person must to canonical forms
+  - `repair_field_span(source_text, field)` — if span already correct return
+    unchanged; if text unique in source fix span; if missing raise
+    NormalizationError; if ambiguous raise NormalizationError
+  - `repair_response_spans(response)` — iterate all clauses × 6 fields, repair
+    each, keep nulls, validate after repair
+- Create `tests/test_fallback.py` — 20 tests:
+  - TestDecisionReasonEnum (distinct values)
+  - TestFallbackDecision (trigger_true, to_dict)
+  - TestFallbackRequestResult (valid result, invalid result)
+  - TestShouldTriggerFallbackNormative (clean → no trigger, missing actor,
+    missing action, low field confidence, low clause confidence, multiple reasons)
+  - TestShouldTriggerFallbackNonNormative (negative case no trigger, warranty neg,
+    mixed clauses)
+  - TestShouldTriggerFallbackSchemaValidation (validation failure triggers)
+  - TestMockLLMFallbackClient (no network, fixed response, no response simulates
+    failure, simulate invalid, no env file, no api key)
+  - TestExtractHybrid (no-fallback == rule-first, fallback uses mock result,
+    fallback needed but no client raises, invalid fallback raises, simulated
+    invalid raises, null fields preserved)
+  - TestNoNetworkOrRealData (no forbidden imports, no env access in source)
+- Create `tests/test_normalization.py` — 16 tests:
+  - TestNormalizeFieldText (7: whitespace collapse, trailing punct, leading punct,
+    lowercase, case preservation, internal punct preserved, empty)
+  - TestNormalizeModalityText (2: canonical forms param, unknown cleaned)
+  - TestFindUnique (3: single, none, multiple)
+  - TestRepairFieldSpan (5: correct unchanged, wrong repairable, missing raises,
+    duplicate raises, partial match)
+  - TestRepairResponseSpans (5: all correct, one broken repaired, null preserved,
+    unrepairable raises, repaired validates, multi-clause)
+  - TestSyntheticOnly (1)
+- Update `src/bpc_hybrid/__init__.py` with fallback + normalization exports
+- Update `README.md` with R6 status and scope
+- Update `docs/experiment_log.md` (this section)
+
+### Non-goals
+
+- No real LLM API call
+- No `.env` file, no API keys, no network
+- No BPMN checking
+- No formal benchmark
+- No real (GDPR/Sun) datasets
+- Not even mock HTTP — pure in-process stub
+- No overriding the rule-first output unless fallback triggers
+
+### Key Design Decisions
+
+- **No network**: MockLLMFallbackClient returns pre-configured responses only;
+  no requests, openai, anthropic, or httpx imports.
+- **Trigger logic**: Only normative clauses (modality != None) are checked for
+  missing actor/action; non-normative clauses (definitions, warranties, legal
+  consequences) are skipped.
+- **Confidence threshold**: Default 0.5 for both field-level and clause-level
+  checks; configurable via extract_hybrid() parameters.
+- **Span repair**: Deterministic exact-match only — find text uniquely in
+  source_text, fix offsets. Never fuzzy-match. Raise NormalizationError on
+  missing or ambiguous text.
+- **Hybrid flow**: extract_rule_first → should_trigger_fallback → if fallback:
+  mock.complete → validate → repair_response_spans → return. If no fallback:
+  return rule response as-is.
+
+### Test Coverage
+
+20 fallback tests + 16 normalization tests + 43 evaluator tests + 40 splitter
+tests + 34 extractor tests + 35 prior tests = 188 total.
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| None | — | — | — | — |
+
+### Status
+
+Completed after all tests passed, health script passed, commit and GitHub
+push succeeded.

@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅**
 
 ## Research Positioning
 
@@ -43,6 +43,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R4 ✅: Multi-clause splitter completed.
 - R5 ✅: Prototype evaluation loop completed.
 - R5.1 ✅: R5 CLI direct execution and prototype dataset ID mapping fixed after Codex audit.
+- R6 ✅: Mock LLM fallback interface and deterministic normalization foundation completed.
 
 ## R2 Scope
 
@@ -106,6 +107,32 @@ R5 implements a synthetic prototype evaluation loop for pipeline sanity checking
 
 R5 does not implement LLM fallback, BPMN checking, formal benchmarks, or real (GDPR/Sun) datasets. All data is synthetic and used for sanity checks only.
 
+## R6 Scope
+
+R6 implements the LLM fallback interface and deterministic normalization
+foundation **without** calling any real LLM APIs:
+
+- **`fallback.py`** — `FallbackError`, `DecisionReason` (NO_FALLBACK_NEEDED /
+  MISSING_ACTOR / MISSING_ACTION / LOW_FIELD_CONFIDENCE / LOW_CLAUSE_CONFIDENCE /
+  SCHEMA_VALIDATION_FAILURE), `FallbackDecision` dataclass, `FallbackRequest` /
+  `FallbackResult` dataclasses, `MockLLMFallbackClient` (configurable stub —
+  no network, no `.env`, no API keys), `should_trigger_fallback()` (checks
+  normative clauses only for missing actor/action, low confidence, and schema
+  validation failure; non-normative clauses are skipped), `extract_hybrid()`
+  (chains extract_rule_first → trigger-check → mock-fallback → span repair)
+- **`normalization.py`** — `NormalizationError`, `normalize_field_text()`
+  (lowercase, collapse whitespace, strip outer punctuation), `normalize_modality_text()`
+  (map may/shall/must/shall not/must not/no person shall to canonical forms),
+  `repair_field_span()` (deterministic exact-match unique-fix for wrong spans),
+  `repair_response_spans()` (iterate all clauses × 6 fields, repair, preserve
+  nulls, validate)
+- **Tests**: `test_fallback.py` (20 tests) + `test_normalization.py` (16 tests)
+  covering trigger logic, mock client, hybrid extraction, no-network guarantees,
+  and span repair edge cases.
+
+R6 does NOT call any real LLM API. No `.env` file, no API keys, no network.
+All mock responses are pre-configured synthetic data.
+
 ## Dataset and Claim Boundary
 
 The future formal evaluation target is a **Sun-aligned GDPR + BPMN dataset**, compared against Sun-style rule baseline and Winter-style textual baseline on precision / recall / F1 / AP / MAP.
@@ -122,5 +149,6 @@ The issue log is intended to support reproducibility and later thesis/paper writ
 
 ## Next Stage
 
-R6 — LLM Fallback — will only proceed after R5.1 is fully tested,
-committed, pushed, and user authorization is granted.
+R7 — E2E hybrid pipeline validation — will run the full hybrid pipeline
+against the prototype dataset and validate the end-to-end fallback +
+normalization path.
