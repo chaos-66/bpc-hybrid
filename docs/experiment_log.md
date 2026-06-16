@@ -419,7 +419,7 @@ span-repair helpers — **without** calling any real LLM API.
     NormalizationError; if ambiguous raise NormalizationError
   - `repair_response_spans(response)` — iterate all clauses × 6 fields, repair
     each, keep nulls, validate after repair
-- Create `tests/test_fallback.py` — 20 tests:
+- Create `tests/test_fallback.py` — 29 tests:
   - TestDecisionReasonEnum (distinct values)
   - TestFallbackDecision (trigger_true, to_dict)
   - TestFallbackRequestResult (valid result, invalid result)
@@ -434,7 +434,7 @@ span-repair helpers — **without** calling any real LLM API.
     fallback needed but no client raises, invalid fallback raises, simulated
     invalid raises, null fields preserved)
   - TestNoNetworkOrRealData (no forbidden imports, no env access in source)
-- Create `tests/test_normalization.py` — 16 tests:
+- Create `tests/test_normalization.py` — 38 tests:
   - TestNormalizeFieldText (7: whitespace collapse, trailing punct, leading punct,
     lowercase, case preservation, internal punct preserved, empty)
   - TestNormalizeModalityText (2: canonical forms param, unknown cleaned)
