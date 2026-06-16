@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅**
 
 ## Research Positioning
 
@@ -42,6 +42,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R3 ✅: Rule-first extractor completed.
 - R4 ✅: Multi-clause splitter completed.
 - R5 ✅: Prototype evaluation loop completed.
+- R5.1 ✅: R5 CLI direct execution and prototype dataset ID mapping fixed after Codex audit.
 
 ## R2 Scope
 
@@ -115,5 +116,5 @@ This project currently does **not** claim to outperform Sun-style baselines, Win
 
 ## Next Stage
 
-R6 — LLM Fallback — will only proceed after R5 is fully tested,
+R6 — LLM Fallback — will only proceed after R5.1 is fully tested,
 committed, pushed, and user authorization is granted.

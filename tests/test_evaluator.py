@@ -1,10 +1,11 @@
-"""Tests for the evaluator (R5).
+"""Tests for the evaluator (R5 / R5.1).
 
 All test data uses synthetic toy sentences only — no real GDPR,
 BPMN, or Sun dataset content.
 """
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -457,6 +458,133 @@ class TestEvaluateMultiClause:
         report = json.loads(result.stdout)
         assert report["clause_f1"] == 1.0
         assert report["field_micro_f1"] == 1.0
+
+
+# ---------------------------------------------------------------------------
+# Required dataset IDs (R5.1 — Codex audit mapping)
+# ---------------------------------------------------------------------------
+
+_REQUIRED_IDS = {
+    "d05": "initial unless",
+    "d12": "by-agent passive actor",
+    "d13": "may + shall",
+    "d27": "legal consequence negative case",
+    "d28": "mid-sentence unless / no person shall",
+    "d34": "warranty negative case",
+    "d35": "no person shall + condition",
+}
+
+
+class TestRequiredDatasetIDs:
+    def test_legal_sentences_contain_all_required_ids(self):
+        records = load_jsonl(_LEGAL_JSONL)
+        ids = {r["id"] for r in records}
+        for rid, desc in _REQUIRED_IDS.items():
+            assert rid in ids, f"Missing required ID {rid} ({desc})"
+
+    def test_gold_contains_all_required_ids(self):
+        gold = load_gold_responses(_GOLD_JSONL)
+        gold_ids = {g.source_id for g in gold}
+        for rid, desc in _REQUIRED_IDS.items():
+            assert rid in gold_ids, f"Gold missing required ID {rid} ({desc})"
+
+    def test_gold_ids_match_sentence_ids(self):
+        sentence_ids = {r["id"] for r in load_jsonl(_LEGAL_JSONL)}
+        gold_ids = {g.source_id for g in load_gold_responses(_GOLD_JSONL)}
+        assert sentence_ids == gold_ids, (
+            f"Mismatch: sentences only {sentence_ids - gold_ids}, "
+            f"gold only {gold_ids - sentence_ids}"
+        )
+
+    def test_dataset_has_10_to_15_samples(self):
+        records = load_jsonl(_LEGAL_JSONL)
+        assert 10 <= len(records) <= 15, f"Expected 10-15, got {len(records)}"
+
+    def test_d13_is_may_shall_multiclause(self):
+        gold = {g.source_id: g for g in load_gold_responses(_GOLD_JSONL)}
+        g = gold["d13"]
+        assert len(g.clauses) == 2, f"d13 should have 2 clauses, got {len(g.clauses)}"
+        assert g.clauses[0].modality.text == "may"
+        assert g.clauses[1].modality.text == "shall"
+
+    def test_d12_is_by_agent_passive(self):
+        gold = {g.source_id: g for g in load_gold_responses(_GOLD_JSONL)}
+        g = gold["d12"]
+        assert g.clauses[0].actor is not None
+        assert "controller" in g.clauses[0].actor.text.lower()
+
+    def test_d27_is_legal_consequence_negative(self):
+        gold = {g.source_id: g for g in load_gold_responses(_GOLD_JSONL)}
+        g = gold["d27"]
+        c = g.clauses[0]
+        assert c.modality is None
+        assert c.actor is None
+        assert c.action is None
+
+    def test_d34_is_warranty_negative(self):
+        gold = {g.source_id: g for g in load_gold_responses(_GOLD_JSONL)}
+        g = gold["d34"]
+        c = g.clauses[0]
+        assert c.modality is None
+        assert c.actor is None
+        assert c.action is None
+
+    def test_d05_is_initial_unless(self):
+        gold = {g.source_id: g for g in load_gold_responses(_GOLD_JSONL)}
+        g = gold["d05"]
+        assert g.clauses[0].condition is not None
+        assert "Unless" in g.clauses[0].condition.text
+
+    def test_d28_is_mid_unless_no_person(self):
+        gold = {g.source_id: g for g in load_gold_responses(_GOLD_JSONL)}
+        g = gold["d28"]
+        assert g.clauses[0].exception is not None
+        assert "unless" in g.clauses[0].exception.text.lower()
+
+    def test_d35_is_no_person_shall_with_condition(self):
+        gold = {g.source_id: g for g in load_gold_responses(_GOLD_JSONL)}
+        g = gold["d35"]
+        c = g.clauses[0]
+        assert c.condition is not None
+        assert "Unless" in c.condition.text
+        assert c.modality is not None
+        assert "no person shall" in c.modality.text.lower()
+
+
+# ---------------------------------------------------------------------------
+# CLI direct execution (no PYTHONPATH dependency, R5.1 fix)
+# ---------------------------------------------------------------------------
+
+class TestCLINoPythonPath:
+    def test_run_baseline_no_pythonpath(self):
+        """run_rule_baseline.py must work without PYTHONPATH set."""
+        env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
+        result = subprocess.run(
+            [str(_PYTHON), str(_RUN_BASELINE), "--input", str(_LEGAL_JSONL)],
+            capture_output=True, text=True, cwd=str(_PROJECT), env=env,
+        )
+        assert result.returncode == 0, (
+            f"stderr: {result.stderr}\nstdout: {result.stdout[:500]}"
+        )
+        lines = [l for l in result.stdout.strip().split("\n") if l.strip()]
+        assert len(lines) == 14
+
+    def test_evaluate_no_pythonpath(self):
+        """evaluate_multi_clause.py must work without PYTHONPATH set."""
+        env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
+        result = subprocess.run(
+            [
+                str(_PYTHON), str(_EVALUATE_SCRIPT),
+                "--gold", str(_GOLD_JSONL),
+                "--input", str(_LEGAL_JSONL),
+            ],
+            capture_output=True, text=True, cwd=str(_PROJECT), env=env,
+        )
+        assert result.returncode == 0, f"stderr: {result.stderr}"
+        report = json.loads(result.stdout)
+        assert report["dataset_type"] == "synthetic_prototype"
+        assert report["is_formal_benchmark"] is False
+        assert report["compares_against_sun"] is False
 
 
 # ---------------------------------------------------------------------------

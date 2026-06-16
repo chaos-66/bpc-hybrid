@@ -319,9 +319,57 @@ clause/field-level metrics on toy legal sentences only.
 ### Test Coverage
 
 30 evaluator tests + 40 splitter tests + 34 extractor tests + 35 prior tests
-+ check_project_health = 139 total, all passing.
++ check_project_health = 139 total (R5 initial run). NOTE: R5 was later found
+to have blocking issues by Codex audit; see R5.1 below.
 
 ### Status
 
-Completed — all 139 tests pass, evaluation runs with clause F1=1.0 / field
-micro F1=1.0, committed and pushed.
+R5 initial commit and push succeeded, but R5 was found BLOCKED by Codex
+local-only audit. See R5.1 for fixes.
+
+## R5.1 — Fix R5 CLI Import and Dataset ID Mapping
+
+### Goal
+
+Fix the blocking issues found by Codex R5 local-only audit.
+
+### Blocking Issues
+
+Codex found that the R5 CLI scripts failed when executed directly because
+`bpc_hybrid` was not importable from script execution. Codex also found that
+the prototype dataset categories were present but did not match the required
+source-id mapping.
+
+### Scope
+
+- Fix direct CLI imports for `scripts/run_rule_baseline.py`
+- Fix direct CLI imports for `scripts/evaluate_multi_clause.py`
+- Update prototype sample IDs to match the required R5 audit mapping
+- Update gold annotations accordingly
+- Strengthen evaluator tests for CLI execution and dataset ID mapping
+- Re-run evaluator tests
+- Re-run full pytest
+- Re-run health script
+- Re-run the evaluation command
+
+### Dataset Boundary
+
+The R5/R5.1 dataset remains synthetic prototype data only. It is not GDPR
+data, not BPMN data, not Sun-aligned data, and not a formal benchmark.
+
+### Non-goals
+
+- No R6 LLM fallback
+- No real GDPR data
+- No real BPMN models
+- No Sun-aligned dataset
+- No formal benchmark
+- No AP/MAP comparison
+- No claim of outperforming Sun
+- No compliance checking
+- No over-compliance detection
+
+### Status
+
+Completed after direct CLI execution, evaluator tests, full pytest, health
+script, evaluation command, commit, and GitHub push succeeded.

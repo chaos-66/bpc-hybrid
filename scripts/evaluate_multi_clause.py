@@ -26,6 +26,12 @@ import sys
 import tempfile
 from pathlib import Path
 
+# ---- Ensure bpc_hybrid is importable when script is run directly ---------
+_PROJECT_ROOT = Path(__file__).resolve().parents[1]
+_SRC_ROOT = _PROJECT_ROOT / "src"
+if str(_SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(_SRC_ROOT))
+
 
 def _run_baseline(input_path: Path) -> Path:
     """Run the rule baseline and return a path to the predictions file."""
