@@ -712,3 +712,37 @@ experiments while keeping real API execution disabled in this stage.
 
 Completed after tests, health script, synthetic evaluation command, commit,
 and GitHub push succeeded.
+
+## R8.2 — JSON Error Envelope for CLI Parse Failures
+
+### Goal
+
+Ensure ALL CLI parse errors (invalid `--provider`, unknown arguments) emit
+redacted JSON error envelopes instead of argparse usage text.
+
+### Scope
+
+- Replace `argparse.ArgumentParser` with `JsonArgumentParser` that overrides
+  `error()` to emit JSON
+- Remove `choices=` from `--provider` to bypass argparse's built-in usage text
+- Add manual provider validation gate that emits `_error("DryRunError", …)`
+  JSON
+- Add regression tests for invalid provider and unknown-flag parse-error paths
+- Assert all parse-error output is valid JSON with no `usage:` text, no
+  `Traceback`, and no secret leakage
+
+### Non-goals
+
+- No real LLM API calls
+- No changes to success paths or existing gate behavior
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| Invalid `--provider` produced argparse usage text | Codex R8 audit found `--provider not_a_provider` emitted `usage:` text instead of the required JSON error envelope | `argparse` `choices=` rejected the value at parse time, before the JSON error helper could run | Replaced `ArgumentParser` with `JsonArgumentParser`, removed `choices=`, added manual provider validation in `main()` with `_error("DryRunError", …)` | 25/25 dry‑run tests passed; full pytest passed; health OK; eval OK |
+
+### Status
+
+Completed after tests, health script, synthetic evaluation command, commit,
+and GitHub push succeeded. Codex re-audit pending (awaited before R9).

@@ -96,11 +96,33 @@ def _success(
 
 
 # ---------------------------------------------------------------------------
+# JSON-safe ArgumentParser
+# ---------------------------------------------------------------------------
+
+class JsonArgumentParser(argparse.ArgumentParser):
+    """ArgumentParser that emits JSON error envelopes instead of usage text."""
+
+    def error(self, message: str) -> None:
+        print(
+            _error(
+                "DryRunError",
+                f"CLI argument error: {message}",
+            ),
+            file=self._get_stderr(),
+        )
+        raise SystemExit(2)
+
+    def _get_stderr(self):
+        """Return sys.stderr (avoids private-access warnings)."""
+        return sys.stderr
+
+
+# ---------------------------------------------------------------------------
 # main
 # ---------------------------------------------------------------------------
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
+    parser = JsonArgumentParser(
         description="R8 controlled single-sample LLM dry-run harness",
     )
     parser.add_argument(
@@ -128,7 +150,6 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--provider",
         default="mock",
-        choices=sorted(ALLOWED_PROVIDERS),
         help="LLM provider (default: mock; openai_compatible is disabled in R8).",
     )
     parser.add_argument(
@@ -146,6 +167,19 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     args = parser.parse_args(argv)
+
+    # --- gate: invalid provider ------------------------------------------
+    if args.provider not in ALLOWED_PROVIDERS:
+        print(
+            _error(
+                "DryRunError",
+                (
+                    f"Invalid provider {args.provider!r}. "
+                    f"Allowed: {sorted(ALLOWED_PROVIDERS)}"
+                ),
+            )
+        )
+        return 1
 
     # --- gate: --allow-llm -----------------------------------------------
     if not args.allow_llm:

@@ -56,6 +56,26 @@ def _parse_json_output(cp: subprocess.CompletedProcess[str]) -> dict:
         )
 
 
+def _parse_from_stdout_or_stderr(cp: subprocess.CompletedProcess[str]) -> dict:
+    """Parse JSON from stdout or stderr (parse errors print to stderr)."""
+    combined = (cp.stdout + cp.stderr).strip()
+    assert combined, f"Expected JSON output, got empty stdout+stderr. returncode={cp.returncode}"
+    try:
+        return json.loads(combined)
+    except json.JSONDecodeError:
+        # Try stderr first (JsonArgumentParser.error writes there)
+        for source in (cp.stderr, cp.stdout):
+            src = source.strip()
+            if src:
+                try:
+                    return json.loads(src)
+                except json.JSONDecodeError:
+                    continue
+        pytest.fail(
+            f"No valid JSON found. stdout={cp.stdout[:300]!r} stderr={cp.stderr[:300]!r}"
+        )
+
+
 # ---------------------------------------------------------------------------
 # Gate tests — missing flags
 # ---------------------------------------------------------------------------
@@ -113,8 +133,52 @@ class TestDryRunGateErrors:
             "--text", SAMPLE_TEXT,
             "--provider", "nonexistent",
         )
-        # argparse should reject this
         assert cp.returncode != 0
+        # Must be JSON (not argparse usage text)
+        data = _parse_from_stdout_or_stderr(cp)
+        assert data["error"] is True
+        assert "nonexistent" in data["message"]
+        assert "usage:" not in cp.stdout
+        assert "usage:" not in cp.stderr
+
+    def test_invalid_provider_json_envelope(self):
+        """Invalid --provider must produce the standard JSON error envelope."""
+        cp = _run_dry_run(
+            "--allow-llm",
+            "--single-sample",
+            "--text", SAMPLE_TEXT,
+            "--provider", "not_a_provider",
+        )
+        assert cp.returncode != 0
+        data = _parse_from_stdout_or_stderr(cp)
+        assert data["error"] is True
+        assert data["error_type"] == "DryRunError"
+        assert data["real_api_call_performed"] is False
+        assert data["raw_response_saved"] is False
+        assert data["secret_redacted"] is True
+        assert "not_a_provider" in data["message"]
+        # No argparse usage text or tracebacks
+        combined = cp.stdout + cp.stderr
+        assert "usage:" not in combined
+        assert "Traceback" not in combined
+        assert "sk-test-should-not-leak" not in combined.lower()
+        assert "sk-" not in combined.lower()
+
+    def test_unknown_argument_json_error(self):
+        """Unknown CLI args must produce JSON error via JsonArgumentParser."""
+        cp = _run_dry_run("--unknown-flag")
+        assert cp.returncode != 0
+        data = _parse_from_stdout_or_stderr(cp)
+        assert data["error"] is True
+        assert data["error_type"] == "DryRunError"
+        assert data["real_api_call_performed"] is False
+        assert data["raw_response_saved"] is False
+        assert data["secret_redacted"] is True
+        assert "unknown" in data["message"].lower()
+        # No argparse usage text or tracebacks
+        combined = cp.stdout + cp.stderr
+        assert "usage:" not in combined
+        assert "Traceback" not in combined
 
 
 # ---------------------------------------------------------------------------
