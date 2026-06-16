@@ -706,7 +706,7 @@ experiments while keeping real API execution disabled in this stage.
 
 | Issue | Symptom | Root Cause | Fix | Verification |
 |---|---|---|---|---|
-| No blocking implementation issues were observed in this stage. | N/A | N/A | N/A | 23 dry-run tests, full 343-test suite, health script, and synthetic evaluation command passed |
+| Invalid mock response returned success exit code | During R8 dry-run verification, the CLI handled invalid LLM/mock responses as JSON errors but still returned exit code `0` | Error handling produced a structured JSON error but did not propagate failure status to the process exit code | Updated the dry-run CLI so invalid LLM/mock responses return a non-zero exit code while still emitting redacted JSON error output | `tests/test_llm_dry_run.py` passed; full pytest passed; health script and synthetic evaluation command passed |
 
 ### Status
 
