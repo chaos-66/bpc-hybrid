@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 — Rule-first Extractor**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅**
 
 ## Research Positioning
 
@@ -39,7 +39,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R1.5 ✅: Research framing integrated into project documentation.
 - R1.6 ✅: Codex local-only audit report persisted.
 - R2 ✅: Core multi-clause schema completed.
-- R3: Rule-first extractor implemented.
+- R3 ✅: Rule-first extractor completed.
 
 ## R2 Scope
 
