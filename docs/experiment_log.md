@@ -1506,3 +1506,47 @@ for the rule-first extraction pipeline.
 ### Exit Gate
 
 Requires Codex audit before R10.3.
+
+
+## R10.2.1 — Fix Empty Rule-first Trigger for Mock Fallback
+
+### Goal
+
+Fix the Codex-blocking R10.2 issue where empty rule-first results did not actually trigger mock fallback, and the corresponding test did not assert the required behavior.
+
+### Scope
+
+- Mock-only code/test fix
+- No real API call
+- No `.env` read
+- No raw response storage
+- No batch execution
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+
+### Change
+
+- Added `_should_trigger_optional_fallback()` — independent trigger logic with empty-clause detection, leaving `should_trigger_fallback()` (used by `extract_hybrid()`) unchanged
+- Added `rule_first_extractor` injector parameter to `extract_with_optional_llm_fallback()` for testability
+- Added `explicit_controlled_smoke` hook for R10.3 readiness
+- Replaced weak `TestEmptyRuleTriggersFallback` (which constructed but never injected `empty_rule`) with 4 strong test classes:
+  - `TestEmptyRuleTriggersMockFallbackValid` — empty rule → valid fallback accepted
+  - `TestEmptyRuleTriggersMockFallbackInvalid` — empty rule → invalid fallback → rule-first returned
+  - `TestEmptyRuleTriggersMockFallbackException` — empty rule → exception → rule-first returned
+  - `TestNonEmptyRuleDoesNotTrigger` — non-empty rule still not triggered
+- Preserved existing strict `extract_hybrid()` behavior (4 tests unchanged)
+- Preserved conservative failure behavior: fallback failures return rule-first
+
+### Test Results
+
+- 30 pipeline tests pass (27 original + 3 new strong tests)
+- 29 fallback tests pass
+- 115 gate tests pass
+- All 486 total tests pass
+- Health: scaffold-ok
+- Synthetic eval: F1=1.0, is_formal_benchmark=false
+
+### Exit Gate
+
+Requires Codex audit before R10.3.

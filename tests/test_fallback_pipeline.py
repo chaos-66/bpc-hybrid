@@ -17,6 +17,7 @@ from bpc_hybrid.fallback import (
     FallbackResult,
     MockLLMFallbackClient,
     OptionalFallbackResult,
+    _should_trigger_optional_fallback,
     extract_hybrid,
     extract_with_optional_llm_fallback,
     should_trigger_fallback,
@@ -154,45 +155,168 @@ class TestFallbackNotTriggeredWhenGood:
 
 
 # ---------------------------------------------------------------------------
-# 7.3  empty rule result can trigger mock fallback when enabled
+# 7.3  empty rule result triggers mock fallback (R10.2.1 — STRONG)
 # ---------------------------------------------------------------------------
 
-class TestEmptyRuleTriggersFallback:
-    def test_empty_clauses_triggers_with_enabled(self):
-        src = "A controller shall record the decision."
-        # Build a rule response with zero clauses (unusual but possible)
-        empty_rule = MultiClauseExtractionResponse(
+class TestEmptyRuleTriggersMockFallbackValid:
+    """6.1: empty rule-first result triggers mock fallback when enabled."""
+
+    def test_empty_clauses_triggers_fallback_accepted(self):
+        """Empty clauses -> trigger -> valid fallback -> accepted."""
+        src = "Any text — ignored by fake extractor."
+
+        # Fake rule-first extractor that returns clauses=[]
+        def _fake_empty_extractor(
+            text: str, sid: str
+        ) -> MultiClauseExtractionResponse:
+            return MultiClauseExtractionResponse(
+                schema_version="0.1.0",
+                source_id=sid,
+                source_text=text,
+                clauses=[],
+            )
+
+        # Valid fallback response
+        fallback_resp = _response([
+            _clause("fb1", "ev1", src, src, 0, len(src),
+                     modality=_fs("shall", 2, 7),
+                     actor=_fs("controller", 8, 18),
+                     action=_fs("record", 19, 25),
+                     confidence=1.0)
+        ], source_text=src, source_id="ev1")
+        client = MockLLMFallbackClient(fixed_response=fallback_resp)
+
+        calls = []
+
+        class _TrackingClient:
+            def complete(self, req: FallbackRequest) -> FallbackResult:
+                calls.append(req)
+                return FallbackResult(response=fallback_resp)
+
+        result = extract_with_optional_llm_fallback(
+            src, source_id="ev1",
+            fallback_enabled=True,
+            fallback_client=_TrackingClient(),
+            rule_first_extractor=_fake_empty_extractor,
+        )
+
+        # STRONG assertions — no weak "in {a, b}" pattern
+        assert result.fallback_status == "fallback_schema_valid"
+        assert result.fallback_used is True
+        assert result.trigger_reason == "empty_rule_result"
+        assert result.rule_first_preserved is False
+        assert result.response.source_id == "ev1"
+        assert result.response is fallback_resp
+        assert len(calls) == 1  # mock called exactly once
+
+
+class TestEmptyRuleTriggersMockFallbackInvalid:
+    """6.2: empty rule-first + invalid fallback -> rule-first returned."""
+
+    def test_empty_clauses_fallback_invalid_returns_rule_first(self):
+        src = "Any text."
+
+        empty_resp = MultiClauseExtractionResponse(
             schema_version="0.1.0",
-            source_id="et1",
+            source_id="ei1",
             source_text=src,
             clauses=[],
         )
 
-        # Wrap the real extract call so we can inject empty_rule
-        # The helper always calls extract_rule_first internally,
-        # so we use a sentence that yields no normative clauses
-        # (non-normative only).
-        non_norm_src = "This is a definition of personal data."
-        fallback_resp = _response([
-            _clause("fb1", "et2", non_norm_src, non_norm_src, 0, len(non_norm_src),
-                     modality=_fs("shall", 10, 15),
-                     actor=_fs("controller", 0, 9),
-                     action=_fs("record", 16, 22),
-                     confidence=1.0)
-        ], source_text=non_norm_src, source_id="et2")
-        client = MockLLMFallbackClient(fixed_response=fallback_resp)
+        def _fake_empty_extractor(
+            text: str, sid: str
+        ) -> MultiClauseExtractionResponse:
+            return empty_resp
+
+        calls = []
+
+        class _InvalidClient:
+            def complete(self, req: FallbackRequest) -> FallbackResult:
+                calls.append(req)
+                return FallbackResult(
+                    raw_dict={"invalid": True},
+                    error="mock: simulated invalid",
+                )
 
         result = extract_with_optional_llm_fallback(
-            non_norm_src, source_id="et2",
+            src, source_id="ei1",
             fallback_enabled=True,
-            fallback_client=client,
+            fallback_client=_InvalidClient(),
+            rule_first_extractor=_fake_empty_extractor,
         )
-        # When rule-first has no normative clauses AND fallback is enabled,
-        # the empty result should be accepted as valid (no trigger).
-        # This test confirms the helper completes without error.
-        assert result.fallback_status in (
-            "fallback_not_triggered", "fallback_schema_valid"
+
+        assert result.fallback_status == "fallback_schema_invalid"
+        assert result.fallback_used is False
+        assert result.rule_first_preserved is True
+        assert result.response is empty_resp
+        assert result.trigger_reason == "empty_rule_result"
+        assert len(calls) == 1  # mock called exactly once
+
+
+class TestEmptyRuleTriggersMockFallbackException:
+    """6.3: empty rule-first + fallback exception -> rule-first returned."""
+
+    def test_empty_clauses_fallback_exception_returns_rule_first(self):
+        src = "Any text."
+
+        empty_resp = MultiClauseExtractionResponse(
+            schema_version="0.1.0",
+            source_id="ee1",
+            source_text=src,
+            clauses=[],
         )
+
+        def _fake_empty_extractor(
+            text: str, sid: str
+        ) -> MultiClauseExtractionResponse:
+            return empty_resp
+
+        calls = []
+
+        class _ExceptionClient:
+            def complete(self, req: FallbackRequest) -> FallbackResult:
+                calls.append(req)
+                raise RuntimeError("mock: simulated transport failure")
+
+        result = extract_with_optional_llm_fallback(
+            src, source_id="ee1",
+            fallback_enabled=True,
+            fallback_client=_ExceptionClient(),
+            rule_first_extractor=_fake_empty_extractor,
+        )
+
+        assert result.fallback_status == "fallback_network_error_redacted"
+        assert result.fallback_used is False
+        assert result.rule_first_preserved is True
+        assert result.response is empty_resp
+        assert result.trigger_reason == "empty_rule_result"
+        assert len(calls) == 1  # mock called exactly once
+
+
+class TestNonEmptyRuleDoesNotTrigger:
+    """6.4: non-empty rule-first still does not trigger by default."""
+
+    def test_non_empty_rule_no_trigger(self):
+        src = "A controller shall record the decision."
+
+        # Use default extract_rule_first (non-empty result)
+        calls = []
+
+        class _TrackingClient:
+            def complete(self, req: FallbackRequest) -> FallbackResult:
+                calls.append(req)
+                return FallbackResult(error="should not be called")
+
+        result = extract_with_optional_llm_fallback(
+            src, source_id="nt1",
+            fallback_enabled=True,
+            fallback_client=_TrackingClient(),
+        )
+
+        assert result.fallback_status == "fallback_not_triggered"
+        assert result.fallback_used is False
+        assert result.rule_first_preserved is True
+        assert len(calls) == 0  # mock NOT called
 
 
 # ---------------------------------------------------------------------------

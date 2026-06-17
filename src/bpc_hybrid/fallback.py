@@ -13,6 +13,7 @@ No network, no ``.env``, no API keys — this is pure infrastructure.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum, auto
 
@@ -175,6 +176,46 @@ def should_trigger_fallback(
         should_trigger=False,
         reasons=[DecisionReason.NO_FALLBACK_NEEDED],
     )
+
+
+# ---------------------------------------------------------------------------
+# Optional fallback trigger (R10.2.1 — independent of extract_hybrid)
+# ---------------------------------------------------------------------------
+
+_TRIGGER_REASON_EMPTY_RULE = "empty_rule_result"
+_TRIGGER_REASON_CONTROLLED_SMOKE = "controlled_smoke"
+
+
+def _should_trigger_optional_fallback(
+    response: MultiClauseExtractionResponse,
+    *,
+    explicit_controlled_smoke: bool = False,
+) -> tuple[bool, str | None]:
+    """Determine whether the optional fallback path should be invoked.
+
+    This function is **independent** of :func:`should_trigger_fallback`
+    (which ``extract_hybrid`` depends on).  It adds empty-clause detection
+    and explicit smoke support without changing the legacy strict path.
+
+    Returns
+    -------
+    (should_trigger, reason_or_none)
+    """
+    # Controlled smoke gate (R10.3 readiness)
+    if explicit_controlled_smoke:
+        return True, _TRIGGER_REASON_CONTROLLED_SMOKE
+
+    # Empty rule-first → trigger
+    if len(response.clauses) == 0:
+        return True, _TRIGGER_REASON_EMPTY_RULE
+
+    # For non-empty responses, delegate to the existing shared trigger.
+    decision = should_trigger_fallback(response)
+    if decision.should_trigger:
+        reason = ", ".join(r.name for r in decision.reasons)
+        return True, reason
+
+    return False, None
 
 
 # ---------------------------------------------------------------------------
@@ -365,6 +406,10 @@ def extract_with_optional_llm_fallback(
     fallback_client: MockLLMFallbackClient | None = None,
     field_confidence_threshold: float = DEFAULT_CONFIDENCE_THRESHOLD,
     clause_confidence_threshold: float = DEFAULT_CONFIDENCE_THRESHOLD,
+    rule_first_extractor: Callable[
+        [str, str], MultiClauseExtractionResponse
+    ] | None = None,
+    explicit_controlled_smoke: bool = False,
 ) -> OptionalFallbackResult:
     """Rule-first extraction with optional, conservative LLM fallback.
 
@@ -387,9 +432,16 @@ def extract_with_optional_llm_fallback(
         Compatible: :class:`MockLLMFallbackClient` (R6) and
         :class:`~bpc_hybrid.llm_client.LLMFallbackAdapter` (R7).
     field_confidence_threshold : float
-        Passed to :func:`should_trigger_fallback`.
+        Passed to :func:`should_trigger_fallback` (non-empty path).
     clause_confidence_threshold : float
-        Passed to :func:`should_trigger_fallback`.
+        Passed to :func:`should_trigger_fallback` (non-empty path).
+    rule_first_extractor : Callable[[str, str], MultiClauseExtractionResponse] | None
+        Test/mock injection hook.  If ``None``, defaults to
+        :func:`extract_rule_first`.  Inject a fake extractor returning
+        ``clauses=[]`` to test the empty-rule trigger path.
+    explicit_controlled_smoke : bool
+        If ``True``, forces fallback trigger regardless of rule-first
+        output (R10.3 readiness hook, not for production benchmarks).
 
     Returns
     -------
@@ -406,7 +458,8 @@ def extract_with_optional_llm_fallback(
     - No schema change to ``MultiClauseExtractionResponse``.
     """
     # ---- 1. Rule-first (always) ------------------------------------------
-    rule_response = extract_rule_first(source_text, source_id=source_id)
+    _extract = rule_first_extractor or extract_rule_first
+    rule_response = _extract(source_text, source_id)
 
     # ---- 2. Gate: fallback disabled --------------------------------------
     if not fallback_enabled:
@@ -429,13 +482,12 @@ def extract_with_optional_llm_fallback(
         )
 
     # ---- 4. Trigger check ------------------------------------------------
-    decision = should_trigger_fallback(
+    should_trigger, reason_str = _should_trigger_optional_fallback(
         rule_response,
-        field_confidence_threshold=field_confidence_threshold,
-        clause_confidence_threshold=clause_confidence_threshold,
+        explicit_controlled_smoke=explicit_controlled_smoke,
     )
 
-    if not decision.should_trigger:
+    if not should_trigger:
         return OptionalFallbackResult(
             response=rule_response,
             fallback_status=_FALLBACK_STATUS_NOT_TRIGGERED,
@@ -444,14 +496,12 @@ def extract_with_optional_llm_fallback(
             rule_first_preserved=True,
         )
 
-    reason_str = ", ".join(r.name for r in decision.reasons)
-
     # ---- 5. Execute fallback ---------------------------------------------
     request = FallbackRequest(
         source_text=source_text,
         source_id=source_id,
         rule_response=rule_response,
-        reasons=decision.reasons,
+        reasons=[],  # optional path does not require DecisionReason list
     )
 
     try:

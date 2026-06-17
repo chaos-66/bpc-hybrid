@@ -39,4 +39,18 @@ The project has not yet been evaluated on real GDPR data, real BPMN models, the 
 | I024 | R9.8.1 | R9.8 source_id metadata omitted from committed documentation | Codex blocked R9.8 because committed documentation did not record the exact `source_id` for the one authorized real API schema smoke | R9.8 commit only changed README and experiment_log; it omitted `r9_8_real_schema_smoke_001` and the full metadata block | R9.8.1 adds exact source ID `r9_8_real_schema_smoke_001` and a full metadata block; documentation-only fix, no real API call, no `.env` read, no raw response | All tests unchanged from R9.8 (456/456); no code changes | pending |
 | I025 | R10.0 | R10 requires strict scope control after successful R9.8 schema smoke | R9.8 succeeded as a one-sentence real API schema smoke, but this does not imply benchmark, accuracy improvement, or method validation | R10.0 creates a conservative staged plan before any implementation or further real API call | `docs/r10_plan.md` created with 5 auditable stages (R10.0–R10.4), mock-first controls, and explicit non-goals; planning only, no real API | No code changes; health and synthetic eval unchanged; compile checks pass | pending |
 | I026 | R10.1 | R10.1 must keep fallback integration design mock-first | R9.8 proved one real API single-sample schema smoke, but R10 fallback integration still needs a mock-first design before any implementation | R10.1 documents a conservative design for rule-first plus optional fallback integration without source code changes, real API calls, raw response storage, batch execution, or benchmark claims | `docs/r10_1_mock_integration_design.md` created with architecture analysis, interface proposal, trigger/merge/error policies, and 13-item mock test plan for R10.2 | No code changes; health and synthetic eval unchanged; compile checks pass | resolved (R10.2 implemented) |
-| I027 | R10.2 | R10.2 must preserve rule-first behavior during mock fallback integration | R10.1 identified that existing `extract_hybrid()` has strict raising behavior, while R10.2 optional fallback helper should conservatively return the rule-first result on fallback failure | R10.2 explicitly tests that the new optional helper is separate from existing `extract_hybrid()` behavior and does not silently overwrite rule-first results | `extract_with_optional_llm_fallback()` returns `OptionalFallbackResult` wrapper with `rule_first_preserved` flag; 27 mock-only tests pin conservative behavior; 483 total tests pass | pending |
+| I027 | R10.2 | R10.2 must preserve rule-first behavior during mock fallback integration | R10.1 identified that existing `extract_hybrid()` has strict raising behavior, while R10.2 optional fallback helper should conservatively return the rule-first result on fallback failure | R10.2 explicitly tests that the new optional helper is separate from existing `extract_hybrid()` behavior and does not silently overwrite rule-first results | `extract_with_optional_llm_fallback()` returns `OptionalFallbackResult` wrapper with `rule_first_preserved` flag; 27 mock-only tests pin conservative behavior; 483 total tests pass | resolved (R10.2.1) |
+
+## I028 — Empty rule-first result did not trigger mock fallback in R10.2
+
+### Status
+
+Resolved in R10.2.1.
+
+### Context
+
+Codex blocked R10.2 because empty rule-first output did not trigger mock fallback when enabled, and the corresponding test constructed but did not use the empty rule-first response.
+
+### Resolution
+
+R10.2.1 adds `_should_trigger_optional_fallback()` with independent empty-clause detection, a `rule_first_extractor` injector for testability, and 4 strong mock-only regression tests. No real API call, no `.env` read, no raw response storage, no batch, and no benchmark claim.

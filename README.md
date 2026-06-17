@@ -290,3 +290,6 @@ R9.8 后必须等待 Codex 审计，才能决定是否进入 R10.
 R10.2 adds mock-only optional fallback integration tests; it does not
 execute real API calls, read `.env`, save raw responses, run batch,
 or perform benchmarks.
+R10.2.1 fixes the mock-only empty rule-first fallback trigger regression;
+it does not execute real API calls, read `.env`, save raw responses, run
+batch, or perform benchmarks.
