@@ -120,3 +120,21 @@ Future real-API stages must use a dedicated audited single-call script or CLI en
 - No benchmark.
 - No accuracy claim.
 - No method-validation claim.
+
+## I032 — R11 planning required for schema-aligned real fallback
+
+### Status
+
+Open for R11 planning.
+
+### Context
+
+R10.3 reached the real provider but returned schema-invalid fallback output. R10.4/R10.4.1 documented the result and evidence limitation. R11 must plan schema alignment and a dedicated single-call real API entrypoint before any further real API smoke.
+
+### Safety Boundary
+
+- No benchmark.
+- No accuracy claim.
+- No method-validation claim.
+- No batch real API.
+- No raw response storage.

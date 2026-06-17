@@ -1643,6 +1643,40 @@ Because local documentation cannot independently prove historical external API c
 Requires Codex audit before R10.4.
 
 
+## R11.0 — Planning for Real Fallback Schema Alignment and Single-call Entrypoint
+
+### Type
+
+Planning-only.
+
+### Goal
+
+Plan how to address the R10.3 schema-invalid real fallback result while preserving conservative rule-first behavior and strict claim boundaries.
+
+### Scope
+
+- No source code changes
+- No test changes
+- No data changes
+- No real API call
+- No `.env` content read
+- No raw response storage
+- No batch execution
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+- No Sun comparison
+- No real GDPR/BPMN evaluation
+
+### Deliverable
+
+- `docs/r11_plan.md`
+
+### Exit Gate
+
+Requires Codex audit before R11.1.
+
+
 ## R10.4 — Documentation and Claim-boundary Audit
 
 ### Goal

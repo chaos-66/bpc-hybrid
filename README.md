@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅ | R11.0 ✅**
 
 ## Research Positioning
 
@@ -22,6 +22,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - ⚠️ No claims about surpassing Sun or any prior work are made.
 - ⚠️ The current repository is a runnable MVP skeleton, not a validated system.
 - ⚠️ R10.3 remains classified as `SINGLE_SAMPLE_REAL_FALLBACK_SCHEMA_INVALID`, not fallback success. Its documented path is `extract_with_optional_llm_fallback()` → `LLMFallbackAdapter` → `RealAPITransport` using `openai_compatible` / `qwen3.7-max`. Future real-API stages must use a dedicated audited single-call entrypoint to avoid call-count ambiguity.
+- ⚠️ R11.0 is a planning-only stage for real fallback schema alignment and a dedicated single-call real API entrypoint. It does not execute real API calls, run benchmarks, evaluate accuracy, validate the method, compare against Sun, or use real GDPR/BPMN data.
 
 ## R0 Artifacts
 
