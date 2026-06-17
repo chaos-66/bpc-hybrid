@@ -1396,3 +1396,32 @@ Sun baseline comparison, and not a real GDPR/BPMN evaluation.
 Completed after full offline validation (456/456 tests pass), one
 authorized real API call, and clean schema smoke.  No retry, no
 batch, no raw response saved, no benchmark.
+
+## R10.0 — Planning for Controlled Real-LLM Fallback Integration
+
+### Goal
+
+Create a conservative R10 plan after R9.8/R9.8.1 accepted the real
+API single-sample schema smoke.
+
+### Scope
+
+- Planning only
+- No real API call
+- No `.env` read
+- No source code changes
+- No raw response storage
+- No batch execution
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+
+### Output
+
+- `docs/r10_plan.md`
+
+### Status
+
+Planning completed.  R10 plan defines 5 small auditable stages
+(R10.0–R10.4) with mock-first, gate-enforced, single-sample-first
+controls.  No real API executed, no `.env` read, no code modified.

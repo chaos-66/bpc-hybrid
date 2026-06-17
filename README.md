@@ -286,3 +286,8 @@ R9.8 records the exact single-smoke `source_id` as
 `r9_8_real_schema_smoke_001`; this remains a one-sentence schema
 smoke, not a benchmark or validation result.
 R9.8 后必须等待 Codex 审计，才能决定是否进入 R10.
+
+R10.0 — Planning for controlled real-LLM fallback integration.
+R10.0 is a planning-only stage for controlled real-LLM fallback
+integration; it does not execute real API calls, benchmarks, or
+real GDPR/BPMN evaluation.
