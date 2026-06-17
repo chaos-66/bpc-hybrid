@@ -279,5 +279,7 @@ The issue log is intended to support reproducibility and later thesis/paper writ
 
 ## Next Stage
 
-R9.7 — Align Real LLM Prompt With Project Schema — code-only prompt strengthening.
-R9.7 后必须等待 Codex 审计，才能决定是否进入 R9.8 real single-sample schema smoke 或 R10.
+R9.7.1 — Fix Unsafe R9.7 CLI Regression Test — code-only test safety fix.
+R9.7.1 fixes the Codex-blocking unsafe test from R9.7; it does not
+execute real API or benchmark.
+R9.7.1 后必须等待 Codex 审计，才能决定是否接受 R9.7 并进入 R9.8 或 R10.

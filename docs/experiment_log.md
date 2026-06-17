@@ -1281,3 +1281,52 @@ the prompt, giving the LLM a precise contract.
 Completed after prompt changes, 17 new tests, full offline validation,
 commit, and GitHub push.  No real API call executed — R9.7 is a
 code-only prompt/schema alignment phase.
+
+## R9.7.1 — Fix Unsafe R9.7 CLI Regression Test
+
+### Goal
+
+Fix the Codex-blocking R9.7 test issue.
+
+### Context
+
+Codex blocked R9.7 because a claimed CLI fake-response regression test
+invoked `run_llm_dry_run.py` in a subprocess with `--execute-real-api`,
+could not receive monkeypatched fake responses, and ended with `pass`
+instead of asserting `SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID`.
+
+### Change
+
+- Extracted `classify_real_api_error_status()` pure function from
+  `scripts/run_llm_dry_run.py` — no side effects, safe to test without
+  network
+- Removed unsafe `test_r9_5_style_via_cli_returns_schema_invalid`
+  (subprocess + `--execute-real-api` + `pass`)
+- Replaced with safe in-process tests:
+  - `test_r9_5_style_via_classify_helper_returns_schema_invalid` (5 assertions)
+  - `TestRealApiErrorClassificationHelper` (11 tests covering parse
+    errors, transport errors, timeout, HTTP, DNS, SSL, connection
+    refused, and mutual exclusion)
+- All 12 new tests are pure-function tests — no network, no subprocess,
+  no `--execute-real-api`
+
+### Scope
+
+- No real API call
+- No `.env` read
+- No raw response storage
+- No batch execution
+- No benchmark result
+- No accuracy claim
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| Unsafe CLI regression test blocked R9.7 Codex audit | `test_r9_5_style_via_cli_returns_schema_invalid` used subprocess + `--execute-real-api` + `pass` | R9.7 test was written as a subprocess test that couldn't receive fake responses and ended with `pass` | Extracted `classify_real_api_error_status()` pure function from `run_llm_dry_run.py`; replaced unsafe test with 12 safe in-process tests | 148/148 tests pass; health and eval OK; safety scan clean |
+
+### Status
+
+Completed after helper extraction, test rewrite (12 new safe tests),
+full offline validation, commit, and GitHub push.  No real API call
+executed — R9.7.1 is a code-only test safety fix.

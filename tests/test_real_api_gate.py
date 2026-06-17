@@ -1530,33 +1530,140 @@ class TestR95StyleInvalidResponseStillFails:
         assert result.response is None
         assert not result.is_valid
 
-    def test_r9_5_style_via_cli_returns_schema_invalid(self):
-        """Full CLI path with R9.5-style mock → SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID."""
-        # We use a multi-step approach:
-        # 1. Monkeypatch _load_mock_json_content to return R9.5-style JSON
-        # 2. Run CLI with all real API gate flags satisfied but no network
-        import sys, subprocess, os as _os
+    def test_r9_5_style_via_classify_helper_returns_schema_invalid(self):
+        """R9.7.1: classify_real_api_error_status() returns
+        SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID for parse/schema errors.
 
-        env = _base_real_api_env()
-        cp = subprocess.run(
-            [sys.executable, str(DRY_RUN_SCRIPT), "--no-project-env",
-             "--allow-llm", "--single-sample",
-             "--text", SAMPLE_TEXT,
-             "--provider", "openai_compatible",
-             "--execute-real-api",
-             "--confirm-real-api-single-sample",
-             ],
-            capture_output=True, text=True, timeout=30,
-            cwd=str(PROJECT_ROOT),
-            env={**_os.environ, **env},
+        This replaces the R9.7 unsafe subprocess test.  No network,
+        no --execute-real-api, no subprocess.
+        """
+        # Import the helper added to run_llm_dry_run.py in R9.7.1
+        sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+        from run_llm_dry_run import classify_real_api_error_status
+
+        # Case 1: "parse error" substring -> schema invalid
+        assert classify_real_api_error_status(
+            "LLM response parse error: Cannot convert LLM response "
+            "to MultiClauseExtractionResponse"
+        ) == "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+
+        # Case 2: "Cannot convert" substring -> schema invalid
+        assert classify_real_api_error_status(
+            "Cannot convert LLM response to MultiClauseExtractionResponse"
+        ) == "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+
+        # Case 3: schema + invalid -> schema invalid
+        assert classify_real_api_error_status(
+            "Schema validation error: schema invalid"
+        ) == "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+
+        # Case 4: schema + unknown -> schema invalid
+        assert classify_real_api_error_status(
+            "Schema error: Unknown keys in response"
+        ) == "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+
+        # Case 5: Must NOT be classified as network error
+        status = classify_real_api_error_status(
+            "LLM response parse error: Cannot convert LLM response"
         )
-        # The real API call will try to connect and fail or return something.
-        # Since we cannot monkeypatch in subprocess, we verify the status
-        # classification code path via the existing integration tests above.
-        # This test documents that the CLI path is exercised by
-        # TestSchemaInvalidStatusClassification (R9.6) and
-        # test_r9_5_style_via_adapter_still_parse_error (above).
-        pass  # Trust the adapter-level test above + R9.6 CLI classification tests
+        assert status != "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED", (
+            f"Parse error must not be classified as network error; got {status}"
+        )
+
+
+# ---------------------------------------------------------------------------
+# 22b. R9.7.1 — classify_real_api_error_status helper regression tests
+# ---------------------------------------------------------------------------
+
+class TestRealApiErrorClassificationHelper:
+    """R9.7.1: Direct unit tests for classify_real_api_error_status().
+
+    These are pure-function tests — no network, no subprocess, no
+    --execute-real-api.  Safe for Codex audit.
+    """
+
+    @staticmethod
+    def _import_helper():
+        import sys as _sys
+        _sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+        from run_llm_dry_run import classify_real_api_error_status
+        return classify_real_api_error_status
+
+    def test_parse_error_is_schema_invalid(self):
+        classify = self._import_helper()
+        assert classify(
+            "LLM response parse error: Cannot convert LLM response "
+            "to MultiClauseExtractionResponse"
+        ) == "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+
+    def test_cannot_convert_is_schema_invalid(self):
+        classify = self._import_helper()
+        assert classify(
+            "Cannot convert LLM response to MultiClauseExtractionResponse"
+        ) == "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+
+    def test_transport_error_is_network_error(self):
+        classify = self._import_helper()
+        assert classify(
+            "LLM transport error: connection timed out"
+        ) == "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+
+    def test_timeout_is_network_error(self):
+        classify = self._import_helper()
+        assert classify(
+            "LLM transport error: timeout"
+        ) == "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+
+    def test_http_error_is_network_error(self):
+        classify = self._import_helper()
+        assert classify(
+            "LLM transport error: HTTP Error 500: Internal Server Error"
+        ) == "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+
+    def test_dns_error_is_network_error(self):
+        classify = self._import_helper()
+        assert classify(
+            "LLM transport error: getaddrinfo failed"
+        ) == "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+
+    def test_connection_refused_is_network_error(self):
+        classify = self._import_helper()
+        assert classify(
+            "LLM transport error: Connection refused"
+        ) == "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+
+    def test_ssl_error_is_network_error(self):
+        classify = self._import_helper()
+        assert classify(
+            "LLM transport error: SSL certificate verify failed"
+        ) == "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+
+    def test_parse_error_not_network_error(self):
+        classify = self._import_helper()
+        status = classify(
+            "LLM response parse error: schema validation failed"
+        )
+        assert status == "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+        assert status != "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+
+    def test_network_error_not_schema_invalid(self):
+        classify = self._import_helper()
+        status = classify(
+            "LLM transport error: socket timeout"
+        )
+        assert status == "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+        assert status != "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+
+    def test_helper_is_pure_no_side_effects(self):
+        """Helper must be callable without any side effects."""
+        classify = self._import_helper()
+        # Multiple calls with same input -> same output
+        msg = "LLM response parse error: test"
+        r1 = classify(msg)
+        r2 = classify(msg)
+        r3 = classify(msg)
+        assert r1 == r2 == r3 == "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+        # No network, no file I/O, no exceptions
 
 
 # ---------------------------------------------------------------------------

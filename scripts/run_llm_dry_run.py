@@ -58,6 +58,37 @@ from bpc_hybrid.llm_config import (
 
 
 # ---------------------------------------------------------------------------
+# status classification helper (R9.7.1 — extractable pure function for testing)
+# ---------------------------------------------------------------------------
+
+_SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID = "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+_SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED = "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+
+
+def classify_real_api_error_status(error_message: str) -> str:
+    """Classify a real-API error message into a status string.
+
+    This is a pure function with no side effects — safe to test without
+    network, subprocess, or real API access.
+
+    Returns:
+        ``SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID`` if the error
+        indicates a parse/schema/conversion failure (e.g. LLM returned
+        fields not matching ``MultiClauseExtractionResponse``).
+
+        ``SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED`` for all
+        transport/network/timeout/HTTP/DNS errors.
+    """
+    _lower = error_message.lower()
+    # Schema-invalid indicators: "parse error", "schema", "cannot convert"
+    if ("parse error" in _lower
+            or "cannot convert" in _lower
+            or ("schema" in _lower and ("invalid" in _lower or "mismatch" in _lower or "unknown" in _lower))):
+        return _SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID
+    return _SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED
+
+
+# ---------------------------------------------------------------------------
 # error helper
 # ---------------------------------------------------------------------------
 
@@ -413,22 +444,14 @@ def main(argv: list[str] | None = None) -> int:
 
     # --- check for LLM-level errors ---------------------------------------
     if result.error is not None:
-        # R9.6: distinguish transport errors (network) from parse/schema errors
-        _is_parse_error = "parse error" in result.error.lower()
+        # R9.7.1: use extracted helper for safe offline testing
+        _status = classify_real_api_error_status(result.error)
         print(
             _error(
                 "DryRunError",
                 f"LLM fallback did not produce a valid response: {result.error}",
                 real_api_call_performed=real_api_requested,
-                status=(
-                    "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
-                    if (real_api_requested and _is_parse_error)
-                    else (
-                        "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
-                        if real_api_requested
-                        else None
-                    )
-                ),
+                status=_status if real_api_requested else None,
             )
         )
         return 1
