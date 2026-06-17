@@ -994,3 +994,43 @@ executed, test isolation fix applied, documentation update, commit, and
 push.  Real API smoke now reaches server (HTTP status error) — progress
 from DNS/connection in R9.1, but not yet a successful response.
 Connectivity improved; auth/endpoint config likely needs adjustment.
+
+## R9.3 — Retry After Workspace Base URL Fix
+
+### Goal
+
+Retry the controlled single-sample real API smoke after the user
+manually corrected the Alibaba Cloud Model Studio WorkspaceId/base_url/API
+configuration.
+
+### Scope
+
+- At most one authorized retry
+- Same synthetic toy sentence
+- Same R9/R9.1/R9.2 safety gates
+- No raw response storage
+- No batch execution
+- No benchmark result
+- No accuracy claim
+
+### Real API Execution
+
+Status: SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED
+
+Error classification: HTTP status error — server reached (same as R9.2),
+but HTTP status indicates auth/endpoint/config issue. Details redacted.
+One retry executed. `real_api_call_performed: true`, `raw_response_saved:
+false`, `secret_redacted: true`.
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| HTTP status error after workspace fix | Real API call reached server but returned HTTP error (status redacted); same as R9.2 | Auth key, model name, workspace ID, or endpoint path mismatch; details redacted | Confirmed server reachable; error redacted; no code defect found | All offline tests pass (423); health and eval OK; one retry executed |
+
+### Status
+
+Completed after all offline tests passed (423/423), one real API retry
+executed, documentation update, commit, and push. Real API smoke still
+returns HTTP status error (same classification as R9.2) — server
+reachable but auth/endpoint config needs further correction by user.
