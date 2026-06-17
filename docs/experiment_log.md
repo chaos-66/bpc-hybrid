@@ -1817,4 +1817,80 @@ The design now distinguishes current parser behavior from proposed R11.2 normali
 
 Requires Codex audit before R11.2.
 
+## R11.2 — Mock-only Schema Alignment Implementation
+
+### Goal
+
+Implement the schema-alignment normalizer (Option B from R11.1 design), integrate it into the LLM fallback adapter, and validate with comprehensive mock-only tests.
+
+### Scope
+
+- Create `src/bpc_hybrid/schema_alignment.py` with `normalize_llm_fallback_json()` and `NormalizationResult`
+- Integrate normalizer into `LLMFallbackAdapter.complete()` via `_parse_and_align_llm_json_response()`
+- Update `LLMFallbackAdapter.system_prompt` default with stronger schema enforcement (Option A reinforcement)
+- Add 45 mock-only tests covering normalizer unit, adapter integration, safety constraints, top-level parser nuance, and aligned parser tests
+- Export `NormalizationResult` and `normalize_llm_fallback_json` from package `__init__.py`
+
+### Non-goals
+
+- No real API call
+- No `.env` read
+- No raw response storage
+- No batch execution
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+- No Sun comparison
+- No real GDPR/BPMN data
+- No schema widening
+
+### Design Reference
+
+R11.1 design: `docs/r11_1_schema_alignment_design.md` (Strategy A+B+C combined).
+
+### Normalizer Behavior
+
+- **Top-level**: Unknown keys removed; only `_MULTI_CLAUSE_KEYS` pass through
+- **Clause-level**: `normative_type → modality`, `subject → actor`, `conditions → condition` (dict/None only, string → null); `object` and `original_text` removed; unknown keys removed
+- **Field-level**: String values where FieldSpan expected → `null` (conservative)
+- **No LLM calls, no network, no `.env`, no raw response storage**
+
+### Adapter Integration
+
+- `LLMFallbackAdapter` gets new `enable_schema_alignment: bool = True` field
+- When enabled: parse → normalize → `from_dict()` → validate
+- When disabled: original `parse_llm_json_response()` path (baseline unchanged)
+- `system_prompt` default updated with explicit allowed/forbidden field names per R11.1 §7.1
+
+### Files Changed
+
+| File | Change |
+|------|--------|
+| `src/bpc_hybrid/schema_alignment.py` | **NEW** — normalizer module |
+| `src/bpc_hybrid/llm_client.py` | Added `_parse_and_align_llm_json_response()`; updated `LLMFallbackAdapter` with `enable_schema_alignment` field and strengthened system_prompt |
+| `src/bpc_hybrid/__init__.py` | Added `NormalizationResult`, `normalize_llm_fallback_json` exports |
+| `tests/test_schema_alignment.py` | **NEW** — 45 mock-only tests |
+| `docs/experiment_log.md` | This section |
+| `docs/issue_log.md` | I035 entry |
+| `README.md` | Status line updated |
+
+### Files NOT Changed
+
+- `src/bpc_hybrid/schema.py` — Schema unchanged (no widening)
+- `src/bpc_hybrid/fallback.py` — Fallback pipeline unchanged
+- `src/bpc_hybrid/extractor.py` — Rule-first extractor unchanged
+- `src/bpc_hybrid/normalization.py` — Span repair unchanged
+
+### Test Results
+
+45/45 schema alignment tests pass. 531/531 full test suite passes.
+
+### Status
+
+Completed after 531 tests passed and GitHub push succeeded.
+
+### Exit Gate
+
+Requires Codex audit before R11.3.
+
 

@@ -175,10 +175,37 @@ Codex found that the R11.1 design document described `schema_version` and `claus
 
 R11.1.1 documents that missing `schema_version` defaults to `"0.1.0"` and missing `clauses` defaults to `[]`. Any future stricter handling is a proposed R11.2 normalizer / prompt-contract gate, not current parser behavior.
 
+- No method-validation claim.
+
+## I035 — R11.2 schema alignment normalizer implemented
+
+### Status
+
+Closed — implemented and tested in R11.2.
+
+### Context
+
+R11.1 designed a combined prompt + normalizer + schema-gate strategy (Options A+B+C) for aligning real LLM fallback output with project schema. R10.3 showed real LLM output using field names (`normative_type`, `subject`, `object`, `original_text`, `conditions`) that don't match `ClauseExtraction` schema fields.
+
+### Implementation
+
+R11.2 implements the normalizer as `src/bpc_hybrid/schema_alignment.py`:
+
+- `normalize_llm_fallback_json(candidate: dict) -> NormalizationResult` — deterministic, pure function
+- Clause-level mapping: `normative_type → modality`, `subject → actor`, `conditions → condition` (dict/None only; string → null)
+- `object` and `original_text` removed (no schema target)
+- Unknown top-level and clause-level keys removed
+- `LLMFallbackAdapter` gets `enable_schema_alignment: bool = True` field with strengthened system_prompt
+- 45 mock-only tests; 531 total tests pass
+
 ### Safety Boundary
 
-- Documentation-only.
-- No source code change.
 - No real API.
+- No `.env` read.
+- No raw response storage.
+- No batch.
 - No benchmark.
+- No accuracy claim.
 - No method-validation claim.
+- No schema widening.
+

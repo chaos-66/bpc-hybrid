@@ -5,7 +5,8 @@ design-time business process compliance assessment.
 
 This package currently contains R1 scaffold + R2 core multi-clause schema
 + R3 rule-first extractor + R4 multi-clause splitter + R5 prototype evaluation
-+ R6 mock fallback and normalization foundation + R7 safe LLM adapter scaffold.
++ R6 mock fallback and normalization foundation + R7 safe LLM adapter scaffold
++ R11.2 schema alignment normalizer.
 """
 
 from bpc_hybrid.evaluator import (
@@ -62,6 +63,10 @@ from bpc_hybrid.schema import (
     MultiClauseExtractionResponse,
     SchemaValidationError,
 )
+from bpc_hybrid.schema_alignment import (
+    NormalizationResult,
+    normalize_llm_fallback_json,
+)
 from bpc_hybrid.splitter import (
     ClauseSegment,
     RuleBasedClauseSplitter,
@@ -98,6 +103,7 @@ __all__ = [
     "MultiClauseExtractionResponse",
     "OptionalFallbackResult",
     "NormalizationError",
+    "NormalizationResult",
     "OpenAICompatibleRequestBuilder",
     "RuleBasedClauseSplitter",
     "RuleFirstExtractor",
@@ -112,6 +118,7 @@ __all__ = [
     "load_predicted_responses",
     "make_schema_valid_mock_response_json",
     "normalize_field_text",
+    "normalize_llm_fallback_json",
     "normalize_modality_text",
     "parse_llm_json_response",
     "redact_mapping",

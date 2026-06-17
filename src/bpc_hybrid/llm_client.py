@@ -32,6 +32,7 @@ from bpc_hybrid.schema import (
     MultiClauseExtractionResponse,
     SchemaValidationError,
 )
+from bpc_hybrid.schema_alignment import normalize_llm_fallback_json
 
 
 # ---------------------------------------------------------------------------
@@ -471,6 +472,67 @@ def validate_llm_extraction_response(data: dict[str, Any]) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Schema-aligned JSON response parser (R11.2)
+# ---------------------------------------------------------------------------
+
+def _parse_and_align_llm_json_response(content: str) -> MultiClauseExtractionResponse:
+    """Parse LLM response with schema-alignment normalizer (R11.2).
+
+    This is the aligned counterpart of :func:`parse_llm_json_response`
+    that inserts :func:`normalize_llm_fallback_json` between raw JSON
+    parsing and ``MultiClauseExtractionResponse.from_dict()``.
+
+    1. Strip optional Markdown code fences.
+    2. Parse JSON.
+    3. Must be a ``dict`` (not a list).
+    4. Apply schema-alignment normalizer.
+    5. Convert to ``MultiClauseExtractionResponse`` via ``from_dict()``.
+    6. Validate the result.
+
+    Raises :class:`LLMClientError` on any failure.
+    """
+    clean = _extract_json_from_content(content)
+
+    try:
+        data = json.loads(clean)
+    except json.JSONDecodeError as exc:
+        raise LLMClientError(
+            f"LLM response is not valid JSON: {exc}"
+        ) from exc
+
+    if not isinstance(data, dict):
+        raise LLMClientError(
+            f"LLM response must be a JSON object, got {type(data).__name__}"
+        )
+
+    # ---- R11.2: apply schema-alignment normalizer -----------------------
+    norm_result = normalize_llm_fallback_json(data)
+    if norm_result.status == "error" or norm_result.normalized is None:
+        raise LLMClientError(
+            f"Schema alignment normalizer failed: "
+            f"{norm_result.error_message or 'unknown error'}"
+        )
+
+    try:
+        result = MultiClauseExtractionResponse.from_dict(norm_result.normalized)
+    except Exception as exc:
+        raise LLMClientError(
+            f"Cannot convert LLM response to MultiClauseExtractionResponse "
+            f"(after schema alignment): {exc}"
+        ) from exc
+
+    try:
+        result.validate()
+    except SchemaValidationError as exc:
+        raise LLMClientError(
+            f"LLM extraction response failed schema validation "
+            f"(after schema alignment): {exc}"
+        ) from exc
+
+    return result
+
+
+# ---------------------------------------------------------------------------
 # LLM fallback adapter
 # ---------------------------------------------------------------------------
 # Schema-prompt skeleton builder (R9.7)
@@ -569,6 +631,7 @@ class LLMFallbackAdapter:
 
     config: LLMConfig
     transport: LLMTransport | None = None
+    enable_schema_alignment: bool = True
     system_prompt: str = (
         "You are a regulatory compliance extraction system. "
         "Your ONLY task is to output a single JSON object that "
@@ -577,7 +640,30 @@ class LLMFallbackAdapter:
         "text outside the JSON object. "
         "Use only the exact field names from the provided JSON skeleton. "
         "Never add extra fields. "
-        "Use null for fields you cannot determine."
+        "Use null for fields you cannot determine. "
+        "Output JSON ONLY — no markdown, no code fences, no explanation. "
+        "Use EXACTLY these top-level keys: "
+        "\"schema_version\", \"source_id\", \"source_text\", \"clauses\". "
+        "Each clause MUST include ALL 13 fields: "
+        "clause_id, source_id, source_text, clause_text, "
+        "clause_span_start, clause_span_end, "
+        "modality, actor, action, condition, constraint, exception, "
+        "confidence. "
+        "The ONLY allowed semantic field names are: "
+        "\"modality\", \"actor\", \"action\", \"condition\", \"constraint\", \"exception\". "
+        "DO NOT USE these field names: "
+        "\"normative_type\", \"subject\", \"object\", \"original_text\", \"conditions\". "
+        "Each semantic field is a FieldSpan object with 4 fields: "
+        "\"text\", \"span_start\", \"span_end\", \"confidence\". "
+        "Or null if the field cannot be determined. "
+        "span_start and span_end are integer character offsets "
+        "(0-indexed) into source_text. span_end is exclusive. "
+        "confidence is a float in [0.0, 1.0]. "
+        "schema_version MUST be \"0.1.0\". "
+        "source_id MUST be exactly as provided. "
+        "source_text MUST be exactly as provided. "
+        "No unknown top-level keys. "
+        "No unknown clause-level keys."
     )
 
     def complete(self, request: FallbackRequest) -> FallbackResult:
@@ -630,9 +716,14 @@ class LLMFallbackAdapter:
                 error=f"LLM transport error: {exc}"
             )
 
-        # Parse → validate → convert
+        # Parse → (optionally normalize) → validate → convert
         try:
-            parsed = parse_llm_json_response(llm_resp.content)
+            if self.enable_schema_alignment:
+                # R11.2: extract raw JSON, apply normalizer, then from_dict()
+                parsed = _parse_and_align_llm_json_response(llm_resp.content)
+            else:
+                # Original path (no normalizer)
+                parsed = parse_llm_json_response(llm_resp.content)
         except LLMClientError as exc:
             return FallbackResult(
                 error=f"LLM response parse error: {exc}",
