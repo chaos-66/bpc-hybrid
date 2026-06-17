@@ -1374,6 +1374,23 @@ Model `qwen3.7-max` via `openai_compatible` provider returned a valid
 `MultiClauseExtractionResponse` JSON with modality/actor/action fields
 matching the project schema.
 
+### Recorded Real API Smoke Metadata
+
+- `source_id`: `r9_8_real_schema_smoke_001`
+- `input`: `A controller shall record the decision.`
+- `provider`: `openai_compatible`
+- `model`: `qwen3.7-max`
+- `real_api_call_performed`: `true`
+- `schema_valid`: `true`
+- `raw_response_saved`: `false`
+- `secret_redacted`: `true`
+- `batch`: `false`
+- `raw_response_body_committed`: `false`
+
+This is a single synthetic-sentence schema smoke only. It is not a
+benchmark, not an accuracy evaluation, not method validation, not a
+Sun baseline comparison, and not a real GDPR/BPMN evaluation.
+
 ### Status
 
 Completed after full offline validation (456/456 tests pass), one

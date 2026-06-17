@@ -282,4 +282,7 @@ The issue log is intended to support reproducibility and later thesis/paper writ
 R9.8 — Real API Single-Sample Schema Smoke — completed.
 R9.8 is a single real API schema smoke using one synthetic sentence;
 it is not a benchmark or accuracy evaluation.
+R9.8 records the exact single-smoke `source_id` as
+`r9_8_real_schema_smoke_001`; this remains a one-sentence schema
+smoke, not a benchmark or validation result.
 R9.8 后必须等待 Codex 审计，才能决定是否进入 R10.
