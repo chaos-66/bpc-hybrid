@@ -1034,3 +1034,44 @@ Completed after all offline tests passed (423/423), one real API retry
 executed, documentation update, commit, and push. Real API smoke still
 returns HTTP status error (same classification as R9.2) — server
 reachable but auth/endpoint config needs further correction by user.
+
+## R9.4 — Retry After API Key / Model / Workspace Alignment Fix
+
+### Goal
+
+Retry the controlled single-sample real API smoke after the user
+manually aligned API key, model, WorkspaceId, and base URL
+configuration.
+
+### Scope
+
+- At most one authorized retry
+- Same synthetic toy sentence
+- Same R9/R9.1/R9.2/R9.3 safety gates
+- No raw response storage
+- No batch execution
+- No benchmark result
+- No accuracy claim
+
+### Real API Execution
+
+Status: SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED
+
+Error classification: DNS/connection error — regression from R9.2/R9.3
+HTTP status error back to DNS/connection error. This config revision
+made the server unreachable again. Details redacted. One retry executed.
+`real_api_call_performed: true`, `raw_response_saved: false`,
+`secret_redacted: true`.
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| DNS/connection error after config alignment | Real API call returned DNS/connection error (regression from HTTP status in R9.2/R9.3) | Config change made server unreachable; base_url/endpoint may be incorrect; details redacted | Error properly redacted; no code defect; one retry executed per policy | All offline tests pass (423); health and eval OK |
+
+### Status
+
+Completed after all offline tests passed (423/423), one real API retry
+executed, documentation update, commit, and push. Real API smoke
+regressed from HTTP status error (R9.2/R9.3) back to DNS/connection
+error — config change made server unreachable. No secrets leaked.
