@@ -1075,3 +1075,60 @@ Completed after all offline tests passed (423/423), one real API retry
 executed, documentation update, commit, and push. Real API smoke
 regressed from HTTP status error (R9.2/R9.3) back to DNS/connection
 error — config change made server unreachable. No secrets leaked.
+
+## R9.5 — Retry After Removing WorkspaceId Braces
+
+### Goal
+
+Retry the controlled single-sample real API smoke after the user
+manually removed the erroneous braces around WorkspaceId in
+project-local `.env`.
+
+### Root Cause Candidate
+
+R9.4 used a malformed Workspace base URL because `{}` placeholder
+braces were retained around the real WorkspaceId. This caused
+DNS/connection failure. The fix is to remove the braces from the
+base URL.
+
+### Scope
+
+- At most one authorized retry
+- Same synthetic toy sentence
+- Same R9/R9.1/R9.2/R9.3/R9.4 safety gates
+- No raw response storage
+- No batch execution
+- No benchmark result
+- No accuracy claim
+
+### Real API Execution
+
+Status: SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED
+
+Error details: LLM response parse error — Cannot convert LLM response
+to MultiClauseExtractionResponse. The LLM returned fields
+(`conditions`, `normative_type`, `object`, `original_text`, `subject`)
+not recognized by the `ClauseExtraction` schema.
+
+**Connectivity assessment**: API connectivity smoke **succeeded** for
+the first time across all R9.x retries. The server was reached, a
+valid HTTP response was received, and the LLM returned structured
+content. The only failure is schema mismatch between the LLM's output
+fields and the project's `ClauseExtraction` schema.
+
+`real_api_call_performed: true`, `raw_response_saved: false`,
+`secret_redacted: true`. One retry executed. No secrets leaked.
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| Schema mismatch after braces fix | Real API returned valid response but LLM output fields don't match ClauseExtraction schema | LLM returned `conditions`, `normative_type`, `object`, `original_text`, `subject` — not in current schema | Connectivity smoke succeeded; schema needs alignment with LLM output format | All offline tests pass (423); health and eval OK; first successful API round-trip |
+
+### Status
+
+Completed after all offline tests passed (423/423), one real API retry
+executed, documentation update, commit, and push. **Connectivity smoke
+succeeded** — the WorkspaceId braces fix resolved the DNS issue and the
+API returned a valid structured response for the first time. Schema
+mismatch remains but is not a connectivity or code defect.
