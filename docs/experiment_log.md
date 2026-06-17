@@ -1425,3 +1425,41 @@ API single-sample schema smoke.
 Planning completed.  R10 plan defines 5 small auditable stages
 (R10.0–R10.4) with mock-first, gate-enforced, single-sample-first
 controls.  No real API executed, no `.env` read, no code modified.
+
+## R10.1 — Offline/Mock Integration Design for Real-LLM Fallback Path
+
+### Goal
+
+Design a conservative mock-first integration path for optional
+real-LLM fallback inside the rule-first extraction pipeline.
+
+### Scope
+
+- Design only
+- No source code changes
+- No test changes
+- No real API call
+- No `.env` read
+- No raw response storage
+- No batch execution
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+
+### Output
+
+- `docs/r10_1_mock_integration_design.md`
+
+### Key Design Decisions
+
+- Fallback interface uses existing `FallbackRequest` / `FallbackResult` types
+- `LLMFallbackAdapter` already satisfies the `FallbackProvider` contract
+- Fallback is disabled by default; requires explicit gate
+- On any fallback failure, rule-first result is returned (never lost)
+- Provenance tracking deferred to R10.2
+- 13 mock-only tests specified for R10.2
+
+### Status
+
+Design completed.  No source code changed, no real API executed,
+no `.env` read, no benchmark.
