@@ -50,6 +50,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R8 ✅: Added controlled single-sample LLM dry-run harness.
 - R9 ✅: Added controlled real API single-sample smoke with explicit gate flags.
 - R9.1 ✅: Improved real API connectivity diagnostics and error classification.
+- R9.2 ✅: Single retry after manual `.env` correction (HTTP status error — reached server, not a benchmark).
 
 ## R9 Scope
 
@@ -73,6 +74,13 @@ R9.1 improves real API connectivity diagnostics without adding new features:
 
 R9.1 does not add new features, does not run benchmarks, and does not
 modify `.env` or `.env.example`.
+
+## R9.2 Scope
+
+R9.2 is a single retry after manual `.env` configuration correction.
+It is not a benchmark, not a formal experiment, and not a validation
+of the method.  It only confirms whether the connectivity smoke now
+reaches the API server.
 - R8.2 ✅: CLI parse errors (invalid provider, unknown args) return JSON error envelopes.
 
 ## R8 Scope

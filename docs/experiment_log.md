@@ -955,3 +955,42 @@ improvements, endpoint construction hardening, status field addition,
 documentation update, commit, and push. Real API smoke still returns
 DNS/connection error (redacted, same as R9) — connectivity issue, not a
 code defect.
+
+## R9.2 — Retry After Manual .env Configuration Fix
+
+### Goal
+
+Retry the controlled single-sample real API smoke after the user
+manually corrected project-local `.env` configuration.
+
+### Scope
+
+- At most one authorized retry
+- Same synthetic toy sentence
+- Same R9/R9.1 safety gates
+- No raw response storage
+- No batch execution
+- No benchmark result
+- No accuracy claim
+
+### Real API Execution
+
+Status: SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED
+
+Error classification: HTTP status error — server reached (unlike R9.1
+DNS/connection error), but HTTP status indicates auth/endpoint/config
+issue.  Details redacted.
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| HTTP status error after .env fix | Real API call reached server but returned HTTP error (status redacted) | Auth key, model name, or endpoint path mismatch; details redacted | Error classified as HTTP status (was DNS/connection in R9.1); `.env` correction improved connectivity from DNS→reachable | All offline tests pass (423); health and eval OK; test isolation fix for env contamination |
+
+### Status
+
+Completed after all offline tests passed (423/423), one real API retry
+executed, test isolation fix applied, documentation update, commit, and
+push.  Real API smoke now reaches server (HTTP status error) — progress
+from DNS/connection in R9.1, but not yet a successful response.
+Connectivity improved; auth/endpoint config likely needs adjustment.

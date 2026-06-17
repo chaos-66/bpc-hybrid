@@ -256,7 +256,8 @@ class TestMissingEnvConfirmationRefuses:
 
     def test_missing_r9_confirmed_env(self):
         env = _base_real_api_env()
-        del env["BPC_HYBRID_R9_REAL_RUN_CONFIRMED"]
+        # Explicitly set to empty to override any parent-shell env (R9.2 isolation)
+        env["BPC_HYBRID_R9_REAL_RUN_CONFIRMED"] = ""
         cp = _run_dry_run(
             "--allow-llm", "--single-sample",
             "--text", SAMPLE_TEXT,
