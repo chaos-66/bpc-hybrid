@@ -279,6 +279,5 @@ The issue log is intended to support reproducibility and later thesis/paper writ
 
 ## Next Stage
 
-R8 — Codex R7 audit — must pass before any real LLM experimentation begins.
-R8 will verify: no network calls, no .env access, no API key leaks,
-all config defaults disabled, mock transport only.
+R9.7 — Align Real LLM Prompt With Project Schema — code-only prompt strengthening.
+R9.7 后必须等待 Codex 审计，才能决定是否进入 R9.8 real single-sample schema smoke 或 R10.

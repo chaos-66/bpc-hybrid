@@ -473,6 +473,90 @@ def validate_llm_extraction_response(data: dict[str, Any]) -> None:
 # ---------------------------------------------------------------------------
 # LLM fallback adapter
 # ---------------------------------------------------------------------------
+# Schema-prompt skeleton builder (R9.7)
+# ---------------------------------------------------------------------------
+
+def build_schema_json_skeleton(
+    source_text: str = "A controller shall record the decision.",
+    source_id: str = "sample-001",
+) -> dict:
+    """Return a prompt-friendly JSON skeleton for the current project schema.
+
+    The skeleton uses the exact field names from
+    ``MultiClauseExtractionResponse`` and ``ClauseExtraction`` as defined
+    in ``src/bpc_hybrid/schema.py``.  Values are illustrative examples
+    that pass schema validation.
+
+    **No network, no ``.env``, no API keys.**
+    """
+    txt = source_text.strip()
+    length = len(txt)
+    return {
+        "schema_version": "0.1.0",
+        "source_id": source_id,
+        "source_text": txt,
+        "clauses": [
+            {
+                "clause_id": f"{source_id}-c1",
+                "source_id": source_id,
+                "source_text": txt,
+                "clause_text": txt,
+                "clause_span_start": 0,
+                "clause_span_end": length,
+                "modality": {
+                    "text": "shall",
+                    "span_start": 13,
+                    "span_end": 18,
+                    "confidence": 0.95,
+                },
+                "actor": {
+                    "text": "A controller",
+                    "span_start": 0,
+                    "span_end": 12,
+                    "confidence": 0.90,
+                },
+                "action": {
+                    "text": "record the decision",
+                    "span_start": 19,
+                    "span_end": length,
+                    "confidence": 0.90,
+                },
+                "condition": None,
+                "constraint": None,
+                "exception": None,
+                "confidence": 0.90,
+            }
+        ],
+    }
+
+
+# Schema instruction text reused by the adapter prompt and by tests.
+_SCHEMA_PROMPT_INSTRUCTIONS = (
+    "Your response MUST be a single JSON object. "
+    "Do NOT wrap the JSON in markdown code fences (```json ... ```). "
+    "Do NOT include any explanation, preamble, or postscript — "
+    "output ONLY the JSON object on a single line or compact form. "
+    "The JSON object MUST use exactly the field names shown in the "
+    "skeleton above. "
+    "Do NOT add extra fields. "
+    "Do NOT rename fields. "
+    "For fields you cannot determine, use null (not omitted). "
+    "Every clause object MUST include ALL 13 fields: "
+    "clause_id, source_id, source_text, clause_text, "
+    "clause_span_start, clause_span_end, "
+    "modality, actor, action, condition, constraint, exception, "
+    "confidence. "
+    "Every FieldSpan object (modality/actor/action/condition/"
+    "constraint/exception when not null) MUST include ALL 4 fields: "
+    "text, span_start, span_end, confidence. "
+    "span_start and span_end MUST be integer character offsets "
+    "(0-indexed) into source_text. "
+    "span_end MUST be exclusive. "
+    "confidence MUST be a float in [0.0, 1.0]."
+)
+
+
+# ---------------------------------------------------------------------------
 
 @dataclass
 class LLMFallbackAdapter:
@@ -487,7 +571,13 @@ class LLMFallbackAdapter:
     transport: LLMTransport | None = None
     system_prompt: str = (
         "You are a regulatory compliance extraction system. "
-        "Extract normative clauses from legal text as structured JSON."
+        "Your ONLY task is to output a single JSON object that "
+        "matches the MultiClauseExtractionResponse schema exactly. "
+        "Never output markdown, code fences, explanations, or any "
+        "text outside the JSON object. "
+        "Use only the exact field names from the provided JSON skeleton. "
+        "Never add extra fields. "
+        "Use null for fields you cannot determine."
     )
 
     def complete(self, request: FallbackRequest) -> FallbackResult:
@@ -511,15 +601,25 @@ class LLMFallbackAdapter:
                     )
                 )
 
-        # Build the LLM request
+        # Build the LLM request with schema-aware prompt
+        skeleton_json = json.dumps(
+            build_schema_json_skeleton(
+                source_text=request.source_text,
+                source_id=request.source_id,
+            ),
+            indent=2,
+        )
         llm_req = LLMRequest(
             source_id=request.source_id,
             source_text=request.source_text,
             system_prompt=self.system_prompt,
             user_prompt=(
                 f"Extract normative clauses from the following text "
-                f"as a MultiClauseExtractionResponse:\n\n"
-                f"{request.source_text}"
+                f"as a MultiClauseExtractionResponse.\n\n"
+                f"Required JSON skeleton (fill in with actual spans "
+                f"from the source text):\n{skeleton_json}\n\n"
+                f"{_SCHEMA_PROMPT_INSTRUCTIONS}\n\n"
+                f"Source text:\n{request.source_text}"
             ),
         )
 

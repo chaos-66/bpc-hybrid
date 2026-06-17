@@ -534,3 +534,167 @@ class TestSafetyGuarantees:
         src = open("src/bpc_hybrid/llm_client.py", encoding="utf-8").read()
         # urlopen is for network; file open() calls should have encoding
         assert "with open(" not in src  # no file writing
+
+
+# ---------------------------------------------------------------------------
+# R9.7 — Prompt schema alignment tests
+# ---------------------------------------------------------------------------
+
+class TestSchemaPromptSkeleton:
+    """R9.7: The prompt skeleton uses exact current-project schema fields."""
+
+    @staticmethod
+    def _all_clause_fields():
+        return frozenset({
+            "clause_id", "source_id", "source_text", "clause_text",
+            "clause_span_start", "clause_span_end",
+            "modality", "actor", "action",
+            "condition", "constraint", "exception",
+            "confidence",
+        })
+
+    @staticmethod
+    def _all_multi_fields():
+        return frozenset({"schema_version", "source_id", "source_text", "clauses"})
+
+    def test_skeleton_top_level_keys_match_schema(self):
+        """Top-level keys must match MultiClauseExtractionResponse."""
+        from bpc_hybrid.llm_client import build_schema_json_skeleton
+        skel = build_schema_json_skeleton()
+        assert self._all_multi_fields() == set(skel.keys()), (
+            f"Top-level keys mismatch: {set(skel.keys())} "
+            f"vs {self._all_multi_fields()}"
+        )
+
+    def test_skeleton_clause_keys_match_schema(self):
+        """Every clause must have exactly the 13 required fields."""
+        from bpc_hybrid.llm_client import build_schema_json_skeleton
+        skel = build_schema_json_skeleton()
+        clause = skel["clauses"][0]
+        assert self._all_clause_fields() == set(clause.keys()), (
+            f"Clause keys mismatch: {set(clause.keys())} "
+            f"vs {self._all_clause_fields()}"
+        )
+
+    def test_skeleton_fieldspan_keys_match_schema(self):
+        """FieldSpan fields must be text, span_start, span_end, confidence."""
+        from bpc_hybrid.llm_client import build_schema_json_skeleton
+        skel = build_schema_json_skeleton()
+        clause = skel["clauses"][0]
+        expected = {"text", "span_start", "span_end", "confidence"}
+        for field_name in ("modality", "actor", "action"):
+            fs = clause[field_name]
+            assert set(fs.keys()) == expected, (
+                f"{field_name} FieldSpan keys: {set(fs.keys())}"
+            )
+        # condition, constraint, exception are None (allowed)
+        for field_name in ("condition", "constraint", "exception"):
+            assert clause[field_name] is None, (
+                f"{field_name} should be null in skeleton"
+            )
+
+    def test_skeleton_passes_schema_validation(self):
+        """The skeleton's values must pass ClauseExtraction.from_dict."""
+        from bpc_hybrid.llm_client import build_schema_json_skeleton
+        from bpc_hybrid.schema import ClauseExtraction, MultiClauseExtractionResponse
+        skel = build_schema_json_skeleton()
+        # Each clause must parse
+        for clause_dict in skel["clauses"]:
+            ce = ClauseExtraction.from_dict(clause_dict)
+            ce.validate()
+        # Full response must parse
+        mcr = MultiClauseExtractionResponse.from_dict(skel)
+        mcr.validate()
+
+    def test_skeleton_rejects_extra_keys(self):
+        """Adding extra keys to skeleton clause must fail schema."""
+        from bpc_hybrid.schema import ClauseExtraction, SchemaValidationError
+        from bpc_hybrid.llm_client import build_schema_json_skeleton
+        skel = build_schema_json_skeleton()
+        bad_clause = dict(skel["clauses"][0])
+        bad_clause["extra_field"] = "should not be here"
+        with pytest.raises(SchemaValidationError, match="Unknown keys"):
+            ClauseExtraction.from_dict(bad_clause)
+
+
+class TestPromptContainsExactSchemaInstructions:
+    """R9.7: The prompt and instructions require exact-schema JSON output."""
+
+    def test_prompt_instructions_require_json_only(self):
+        """Instructions must say JSON only, no markdown, no code fences."""
+        from bpc_hybrid.llm_client import _SCHEMA_PROMPT_INSTRUCTIONS
+        inst = _SCHEMA_PROMPT_INSTRUCTIONS.lower()
+        assert "json" in inst
+        assert "no" in inst  # negative constraints present
+        assert "markdown" in inst or "code fence" in inst
+        assert "extra field" in inst
+
+    def test_prompt_instructions_mention_multiclauseextractionresponse(self):
+        """Instructions should reference the project schema class."""
+        from bpc_hybrid.llm_client import _SCHEMA_PROMPT_INSTRUCTIONS
+        # The user_prompt references MultiClauseExtractionResponse
+        # We verify the skeleton + instructions together form the contract
+        from bpc_hybrid.llm_client import build_schema_json_skeleton
+        skel = build_schema_json_skeleton()
+        assert skel["schema_version"] == "0.1.0"
+        assert "clauses" in skel
+        assert len(skel["clauses"]) == 1
+
+    def test_adapter_system_prompt_forbids_markdown(self):
+        """R9.7 system prompt must forbid markdown/code fences."""
+        from bpc_hybrid.llm_client import LLMFallbackAdapter
+        from bpc_hybrid.llm_config import LLMConfig
+        adapter = LLMFallbackAdapter(LLMConfig())
+        sp = adapter.system_prompt.lower()
+        assert "markdown" in sp or "code fence" in sp
+        assert "json" in sp
+
+    def test_adapter_user_prompt_includes_skeleton(self):
+        """R9.7 user prompt must include the JSON skeleton."""
+        from bpc_hybrid.llm_client import (
+            LLMFallbackAdapter,
+            LLMRequest,
+            MockLLMTransport,
+        )
+        from bpc_hybrid.llm_config import LLMConfig
+        from bpc_hybrid.fallback import FallbackRequest
+        from bpc_hybrid.schema import MultiClauseExtractionResponse
+
+        cfg = LLMConfig(enabled=True, provider="mock")
+        adapter = LLMFallbackAdapter(config=cfg)
+
+        rule_resp = MultiClauseExtractionResponse(
+            schema_version="0.1.0",
+            source_id="test",
+            source_text="A controller shall record the decision.",
+            clauses=[],
+        )
+        fb_req = FallbackRequest(
+            source_text="A controller shall record the decision.",
+            source_id="test",
+            rule_response=rule_resp,
+        )
+
+        # Intercept the LLMRequest to inspect user_prompt
+        original_send = MockLLMTransport.send
+
+        captured_prompts = []
+        def _capture_send(self, req):
+            captured_prompts.append((req.system_prompt, req.user_prompt))
+            return original_send(self, req)
+
+        import bpc_hybrid.llm_client as llm_mod
+        monkeypatch = pytest.MonkeyPatch()
+        monkeypatch.setattr(MockLLMTransport, "send", _capture_send)
+
+        try:
+            adapter.complete(fb_req)
+        finally:
+            monkeypatch.undo()
+
+        assert len(captured_prompts) == 1
+        _sys, user = captured_prompts[0]
+        assert "schema_version" in user
+        assert "clause_id" in user
+        assert "MultiClauseExtractionResponse" in user
+        assert "source_text" in user

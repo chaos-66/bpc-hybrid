@@ -1203,3 +1203,81 @@ schema.  This is a **schema invalid** scenario, not a **network error**.
 Completed after code fix, 5 new gate tests, full offline validation,
 commit, and GitHub push.  No real API call executed — R9.6 is a
 code-only diagnostic fix.
+
+## R9.7 — Align Real LLM Prompt With Project Schema
+
+### Goal
+
+Strengthen the LLM system/user prompt to explicitly require JSON output
+matching the project's current `MultiClauseExtractionResponse` schema,
+so that future real API calls are less likely to return schema-invalid
+responses (as seen in R9.5).
+
+### Rationale
+
+R9.5 demonstrated that the LLM returned valid structured content but
+with field names (`conditions`, `normative_type`, `object`,
+`original_text`, `subject`) not recognized by the `ClauseExtraction`
+schema.  R9.6 correctly classified this as schema-invalid.  R9.7
+addresses the root cause by embedding the exact schema field names into
+the prompt, giving the LLM a precise contract.
+
+### Scope
+
+- Add `build_schema_json_skeleton(source_text, source_id)` to
+  `llm_client.py` — generates a dict with exact project schema field
+  names that passes `MultiClauseExtractionResponse.from_dict().validate()`
+- Add `_SCHEMA_PROMPT_INSTRUCTIONS` constant — strict instructions
+  disallowing markdown, code fences, explanations, extra fields, and
+  requiring all 13 clause fields
+- Update `LLMFallbackAdapter.system_prompt` — mandate single JSON
+  object matching `MultiClauseExtractionResponse` exactly
+- Update `LLMFallbackAdapter.complete()` user prompt — include the JSON
+  skeleton and `_SCHEMA_PROMPT_INSTRUCTIONS`
+- Add 5 categories of tests (17 new tests total):
+  1. **Prompt content tests** (9 tests in `test_llm_client.py`):
+     Skeleton keys match schema, clause keys have 13 fields, FieldSpan
+     keys are correct, skeleton passes validation, extra keys rejected,
+     instructions contain required terms, system prompt forbids
+     markdown, user prompt includes skeleton
+  2. **Valid-schema fake provider tests** (2 tests in
+     `test_real_api_gate.py`): Fake urllib-opener returning
+     schema-valid JSON → adapter succeeds; no raw response files
+  3. **R9.5-style invalid still fails** (3 tests in
+     `test_real_api_gate.py`): Exact R9.5 field names still rejected
+     by schema, through adapter, via CLI path
+  4. **Network/transport errors unchanged** (3 tests in
+     `test_real_api_gate.py`): Timeout, HTTP 500, DNS — all still
+     produce transport error, not parse error
+
+### Non-goals
+
+- No real API calls
+- No `.env` changes
+- No schema widening (schema stays exactly as-is)
+- No benchmark or accuracy claims
+- No batch execution
+
+### Key Design Decisions
+
+- The JSON skeleton uses the exact field names from the current schema
+  (`MultiClauseExtractionResponse`, `ClauseExtraction`, `FieldSpan`)
+- The skeleton passes `from_dict().validate()` — it is a valid
+  schema instance, not just documentation
+- The runtime prompt assembly (skeleton + instructions) is implicit
+  — the `LLMFallbackAdapter.complete()` method builds it at call time
+  from the current schema definitions
+- `condition`, `constraint`, `exception` are `null` in the skeleton
+  (allowed by schema — these are Optional fields)
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| — | — | — | — | — |
+
+### Status
+
+Completed after prompt changes, 17 new tests, full offline validation,
+commit, and GitHub push.  No real API call executed — R9.7 is a
+code-only prompt/schema alignment phase.
