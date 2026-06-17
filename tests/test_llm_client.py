@@ -372,6 +372,65 @@ class TestOpenAICompatibleRequestBuilder:
 
 
 # ---------------------------------------------------------------------------
+# build_url() endpoint construction (R9.1)
+# ---------------------------------------------------------------------------
+
+class TestBuildURLEndpointConstruction:
+    """R9.1: build_url() handles various base URL shapes correctly."""
+
+    def _make_builder(self, base_url: str) -> OpenAICompatibleRequestBuilder:
+        cfg = LLMConfig.__new__(LLMConfig)
+        object.__setattr__(cfg, "enabled", False)
+        object.__setattr__(cfg, "provider", "openai_compatible")
+        object.__setattr__(cfg, "model", "mock")
+        object.__setattr__(cfg, "api_key", "sk-test")
+        object.__setattr__(cfg, "base_url", base_url)
+        object.__setattr__(cfg, "timeout_seconds", 30.0)
+        object.__setattr__(cfg, "max_tokens", 1024)
+        object.__setattr__(cfg, "temperature", 0.0)
+        return OpenAICompatibleRequestBuilder(cfg)
+
+    def test_v1_no_trailing_slash(self):
+        """https://api.example.com/v1 → /v1/chat/completions"""
+        builder = self._make_builder("https://api.example.com/v1")
+        assert builder.build_url() == "https://api.example.com/v1/chat/completions"
+
+    def test_v1_with_trailing_slash(self):
+        """https://api.example.com/v1/ → /v1/chat/completions"""
+        builder = self._make_builder("https://api.example.com/v1/")
+        assert builder.build_url() == "https://api.example.com/v1/chat/completions"
+
+    def test_root_like_no_path(self):
+        """https://api.example.com → /chat/completions"""
+        builder = self._make_builder("https://api.example.com")
+        assert builder.build_url() == "https://api.example.com/chat/completions"
+
+    def test_chat_completions_already_present(self):
+        """base URL already has /chat/completions → unchanged."""
+        builder = self._make_builder("https://api.example.com/chat/completions")
+        assert builder.build_url() == "https://api.example.com/chat/completions"
+
+    def test_v1_chat_completions_already_present(self):
+        """base URL already has /v1/chat/completions → unchanged."""
+        builder = self._make_builder("https://api.example.com/v1/chat/completions")
+        assert builder.build_url() == "https://api.example.com/v1/chat/completions"
+
+    def test_default_openai_url(self):
+        """No base_url → defaults to https://api.openai.com/v1/chat/completions."""
+        cfg = LLMConfig.__new__(LLMConfig)
+        object.__setattr__(cfg, "enabled", False)
+        object.__setattr__(cfg, "provider", "openai_compatible")
+        object.__setattr__(cfg, "model", "mock")
+        object.__setattr__(cfg, "api_key", "sk-test")
+        object.__setattr__(cfg, "base_url", None)
+        object.__setattr__(cfg, "timeout_seconds", 30.0)
+        object.__setattr__(cfg, "max_tokens", 1024)
+        object.__setattr__(cfg, "temperature", 0.0)
+        builder = OpenAICompatibleRequestBuilder(cfg)
+        assert builder.build_url() == "https://api.openai.com/v1/chat/completions"
+
+
+# ---------------------------------------------------------------------------
 # LLMFallbackAdapter
 # ---------------------------------------------------------------------------
 

@@ -68,18 +68,20 @@ def _error(
     real_api_call_performed: bool = False,
     raw_response_saved: bool = False,
     secret_redacted: bool = True,
+    status: str | None = None,
 ) -> str:
     """Return a JSON error line (does **not** print raw secrets)."""
-    return json.dumps(
-        {
-            "error": True,
-            "error_type": error_type,
-            "message": message,
-            "real_api_call_performed": real_api_call_performed,
-            "raw_response_saved": raw_response_saved,
-            "secret_redacted": secret_redacted,
-        }
-    )
+    result: dict[str, object] = {
+        "error": True,
+        "error_type": error_type,
+        "message": message,
+        "real_api_call_performed": real_api_call_performed,
+        "raw_response_saved": raw_response_saved,
+        "secret_redacted": secret_redacted,
+    }
+    if status is not None:
+        result["status"] = status
+    return json.dumps(result)
 
 
 # ---------------------------------------------------------------------------
@@ -301,11 +303,25 @@ def main(argv: list[str] | None = None) -> int:
             return 1
 
         # R9.0 gate: must have API key, base_url, model
+        # Diagnostic existence checks: presence yes/no only — never print values
         missing: list[str] = []
+        diag: dict[str, str] = {}
+
+        diag["BPC_HYBRID_LLM_API_KEY"] = (
+            "present" if config.api_key else "missing"
+        )
         if not config.api_key:
             missing.append("BPC_HYBRID_LLM_API_KEY")
+
+        diag["BPC_HYBRID_LLM_BASE_URL"] = (
+            "present" if config.base_url else "missing"
+        )
         if not config.base_url:
             missing.append("BPC_HYBRID_LLM_BASE_URL")
+
+        diag["BPC_HYBRID_LLM_MODEL"] = (
+            "present" if (config.model and config.model != "mock") else "missing_or_mock"
+        )
         if not config.model or config.model == "mock":
             missing.append("BPC_HYBRID_LLM_MODEL")
 
@@ -313,8 +329,8 @@ def main(argv: list[str] | None = None) -> int:
             print(
                 _error(
                     "R9RealAPIConfigError",
-                    f"Missing required config: {', '.join(sorted(missing))}. "
-                    f"R9_REAL_API_STATUS: SKIPPED_NO_API_KEY_OR_CONFIG",
+                    f"Missing required config: {', '.join(sorted(missing))}.",
+                    status="SKIPPED_NO_API_KEY_OR_CONFIG",
                 )
             )
             return 1
@@ -386,6 +402,11 @@ def main(argv: list[str] | None = None) -> int:
                 "DryRunError",
                 f"LLM fallback execution failed: {exc}",
                 real_api_call_performed=real_api_requested,
+                status=(
+                    "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+                    if real_api_requested
+                    else None
+                ),
             )
         )
         return 1
@@ -397,6 +418,11 @@ def main(argv: list[str] | None = None) -> int:
                 "DryRunError",
                 f"LLM fallback did not produce a valid response: {result.error}",
                 real_api_call_performed=real_api_requested,
+                status=(
+                    "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+                    if real_api_requested
+                    else None
+                ),
             )
         )
         return 1

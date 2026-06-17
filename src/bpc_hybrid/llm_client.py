@@ -13,6 +13,8 @@ opt-in gates.  No ``requests``, ``httpx``, or ``openai`` SDK.
 from __future__ import annotations
 
 import json
+import socket
+import ssl
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
@@ -187,8 +189,19 @@ class OpenAICompatibleRequestBuilder:
             )
 
     def build_url(self) -> str:
-        """Return the chat-completions endpoint URL."""
+        """Return the chat-completions endpoint URL.
+
+        Handles several common base-url shapes:
+
+        * ``https://api.example.com/v1`` → ``.../v1/chat/completions``
+        * ``https://api.example.com/v1/`` → ``.../v1/chat/completions``
+        * ``https://api.example.com`` → ``.../chat/completions``
+        * ``https://api.example.com/v1/chat/completions`` → unchanged
+        * ``https://api.example.com/chat/completions`` → unchanged
+        """
         base = (self.config.base_url or "https://api.openai.com/v1").rstrip("/")
+        if base.endswith("/chat/completions"):
+            return base
         return f"{base}/chat/completions"
 
     def build_headers(self) -> dict[str, str]:
@@ -307,10 +320,27 @@ class RealAPITransport(LLMTransport):
                 raw_body = resp.read().decode("utf-8")
                 status = resp.status
         except urllib.error.HTTPError as exc:
+            # HTTP 4xx/5xx — status redacted, body not saved
             raise LLMClientError(
-                "Real API HTTP error (status redacted, response not saved)"
+                "Real API HTTP status error (details redacted)"
             ) from exc
-        except (urllib.error.URLError, OSError) as exc:
+        except socket.timeout as exc:
+            # Connect or read timeout
+            raise LLMClientError(
+                "Real API timeout (details redacted)"
+            ) from exc
+        except ssl.SSLError as exc:
+            # SSL/TLS handshake failure
+            raise LLMClientError(
+                "Real API SSL error (details redacted)"
+            ) from exc
+        except urllib.error.URLError as exc:
+            # DNS resolution or connection refused
+            raise LLMClientError(
+                "Real API DNS/connection error (details redacted)"
+            ) from exc
+        except OSError as exc:
+            # Other OS-level network errors
             raise LLMClientError(
                 "Real API network error (details redacted)"
             ) from exc

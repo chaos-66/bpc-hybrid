@@ -49,6 +49,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R7.2 ✅: Completed base_url secret query coverage.
 - R8 ✅: Added controlled single-sample LLM dry-run harness.
 - R9 ✅: Added controlled real API single-sample smoke with explicit gate flags.
+- R9.1 ✅: Improved real API connectivity diagnostics and error classification.
 
 ## R9 Scope
 
@@ -57,6 +58,21 @@ R9 performs at most one explicitly authorized real API single-sample connectivit
 R9 does not run batch experiments, does not store raw responses, does not use real GDPR/BPMN/Sun data, and does not produce benchmark results.
 
 A successful R9 run only means single-sample API connectivity smoke succeeded.
+
+## R9.1 Scope
+
+R9.1 improves real API connectivity diagnostics without adding new features:
+
+* Better error classification: timeout, SSL, DNS/connection, HTTP status
+  errors are now distinguished (all redacted)
+* Better endpoint construction: handles base URLs with `/chat/completions`
+  already present, root-like URLs, and `/v1` / `/v1/` variants
+* CLI error JSON now includes a `status` field:
+  `SKIPPED_NO_API_KEY_OR_CONFIG` or `SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED`
+* Diagnostic existence checks for config keys (presence yes/no, no values)
+
+R9.1 does not add new features, does not run benchmarks, and does not
+modify `.env` or `.env.example`.
 - R8.2 ✅: CLI parse errors (invalid provider, unknown args) return JSON error envelopes.
 
 ## R8 Scope

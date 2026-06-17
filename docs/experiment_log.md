@@ -908,3 +908,50 @@ Completed after all offline tests passed (408/408), real API gate implementation
 CLI flag additions, documentation update, commit, and GitHub push succeeded.
 Real API smoke returned network error (redacted) — connectivity issue, not a
 code defect.
+
+## R9.1 — Connectivity and Configuration Diagnostics
+
+### Goal
+
+Improve real API connectivity diagnostics: error classification, endpoint
+construction, and machine-readable status field.
+
+### Scope
+
+* Better error classification in `RealAPITransport.send()`:
+  `socket.timeout`, `ssl.SSLError`, `urllib.error.URLError` (DNS/connection),
+  `urllib.error.HTTPError` (HTTP status) all now produce distinct redacted
+  error messages
+* Better endpoint construction in `build_url()`: handles base URLs with
+  `/chat/completions` already present, root-like URLs, and `/v1/` variants
+* Added `"status"` field to CLI error JSON output:
+  `SKIPPED_NO_API_KEY_OR_CONFIG` or `SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED`
+* Diagnostic existence checks for config keys (presence yes/no only)
+
+### Non-goals
+
+* No new features
+* No batch execution
+* No benchmark
+* No modifications to `.env` or `.env.example`
+
+### Real API Execution
+
+Status: SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED (DNS/connection)
+
+Retry at most once — same redacted result, but now classified as
+DNS/connection error rather than generic network error.
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| DNS/connection error classified | Real API call failed with DNS/connection error | Base URL or network connectivity issue; details redacted | Error now classified as DNS/connection (was generic network error); status field present in JSON | All offline tests pass (423); health and eval OK |
+
+### Status
+
+Completed after all offline tests passed (423/423), error classification
+improvements, endpoint construction hardening, status field addition,
+documentation update, commit, and push. Real API smoke still returns
+DNS/connection error (redacted, same as R9) — connectivity issue, not a
+code defect.
