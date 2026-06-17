@@ -138,3 +138,24 @@ R10.3 reached the real provider but returned schema-invalid fallback output. R10
 - No method-validation claim.
 - No batch real API.
 - No raw response storage.
+
+
+## I033 — R11.1 schema alignment design completed
+
+### Status
+
+Closed — design delivered as `docs/r11_1_schema_alignment_design.md`.
+
+### Context
+
+R11.1 produced the design for aligning real LLM fallback output with the project schema. Four candidate strategies were evaluated (A: prompt, B: normalizer, C: schema gate, D: two-step). A+B+C is recommended for R11.2 implementation.
+
+### Safety Boundary
+
+- No source code changes.
+- No real API call.
+- No benchmark.
+- No accuracy claim.
+- No method-validation claim.
+- No batch real API.
+- No raw response storage.

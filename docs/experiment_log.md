@@ -1732,3 +1732,49 @@ All 486 offline tests pass — no regressions from documentation-only changes.
 
 Requires Codex audit before R11 or any formal experiment.
 
+
+## R11.1 — Schema Alignment Design for Real Fallback Output
+
+### Type
+
+Design-only.
+
+### Goal
+
+Design a multi-strategy schema alignment approach for real LLM fallback output, based on the R10.3 mismatch data and R11.0 plan.
+
+### Scope
+
+- No source code changes
+- No test changes
+- No data changes
+- No real API call
+- No `.env` content read
+- No raw response storage
+- No batch execution
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+- No Sun comparison
+- No real GDPR/BPMN evaluation
+
+### Deliverable
+
+- `docs/r11_1_schema_alignment_design.md`
+
+### Key Design Decisions
+
+1. **Option A (Prompt reinforcement)**: Extend the system prompt with explicit negative constraints naming forbidden field names (`normative_type`, `subject`, `object`, `original_text`, `conditions`).
+2. **Option B (Normalizer)**: Deterministic field-name mapping between known LLM output patterns and project schema fields. No LLM calls, no network, no `.env`.
+3. **Option C (Schema validation gate)**: Retain strict `from_dict()` validation as the final acceptance gate.
+4. **Option D (Two-step repair)**: Rejected — violates single-call constraint.
+5. **Recommended**: A + B + C combined. Prompt → normalizer → schema validation → accept/reject.
+6. **Normalizer boundary**: Pure function, input `dict` → output `dict`, whitelist-only mapping, unknown fields removed, string→null for FieldSpan-expected fields.
+7. **Mock test plan**: 24 test cases (normalizer, adapter integration, safety).
+8. **Entrypoint implications**: Dedicated single-call entrypoint defined with required safety metadata fields.
+
+### Exit Gate
+
+Requires Codex audit before R11.2 (mock implementation).
+
+
