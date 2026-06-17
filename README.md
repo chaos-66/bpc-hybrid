@@ -279,7 +279,7 @@ The issue log is intended to support reproducibility and later thesis/paper writ
 
 ## Next Stage
 
-R9.7.1 — Fix Unsafe R9.7 CLI Regression Test — code-only test safety fix.
-R9.7.1 fixes the Codex-blocking unsafe test from R9.7; it does not
-execute real API or benchmark.
-R9.7.1 后必须等待 Codex 审计，才能决定是否接受 R9.7 并进入 R9.8 或 R10.
+R9.8 — Real API Single-Sample Schema Smoke — completed.
+R9.8 is a single real API schema smoke using one synthetic sentence;
+it is not a benchmark or accuracy evaluation.
+R9.8 后必须等待 Codex 审计，才能决定是否进入 R10.

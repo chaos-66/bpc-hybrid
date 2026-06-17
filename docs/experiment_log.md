@@ -1330,3 +1330,52 @@ instead of asserting `SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID`.
 Completed after helper extraction, test rewrite (12 new safe tests),
 full offline validation, commit, and GitHub push.  No real API call
 executed — R9.7.1 is a code-only test safety fix.
+
+## R9.8 — Real API Single-Sample Schema Smoke
+
+### Goal
+
+Run one controlled real API single-sample schema smoke after R9.7/R9.7.1
+prompt/schema alignment.
+
+### Scope
+
+- At most one authorized real API call
+- One synthetic toy sentence only
+- No real GDPR/BPMN/Sun data
+- No raw response storage
+- No batch execution
+- No benchmark result
+- No accuracy claim
+- No method-validation claim
+
+### Input
+
+Synthetic sentence:
+
+`A controller shall record the decision.`
+
+### Success Criteria
+
+The smoke succeeds only if the real API call returns a response that
+parses into the current `MultiClauseExtractionResponse` schema while
+preserving:
+
+- `real_api_call_performed: true`
+- `schema_valid: true`
+- `raw_response_saved: false`
+- `secret_redacted: true`
+
+### Result
+
+`SINGLE_SAMPLE_SCHEMA_SMOKE_SUCCEEDED`
+
+Model `qwen3.7-max` via `openai_compatible` provider returned a valid
+`MultiClauseExtractionResponse` JSON with modality/actor/action fields
+matching the project schema.
+
+### Status
+
+Completed after full offline validation (456/456 tests pass), one
+authorized real API call, and clean schema smoke.  No retry, no
+batch, no raw response saved, no benchmark.
