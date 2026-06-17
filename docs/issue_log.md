@@ -75,3 +75,25 @@ result. R10.3 is still PASSED because safety metadata is correct:
 `real_api_call_performed: true`, `raw_response_saved: false`,
 `secret_redacted: true`, `batch: false`. No retry executed.
 Schema alignment may be needed before R10.4.
+
+## I030 — R10.4 claim-boundary audit completed
+
+### Status
+
+Recorded (R10.4).
+
+### Context
+
+R10.4 audited all R10 documentation (`experiment_log.md`, `issue_log.md`,
+`r10_plan.md`, `r10_1_mock_integration_design.md`, `README.md`) for
+claim-boundary integrity.
+
+### Resolution
+
+No over-claims, benchmark language, method-validation language, or Sun
+comparison language found. All R10 documentation consistently uses
+"mock-only" / "single-sample" language, explicit Non-goals sections, and
+"not a benchmark / not an accuracy evaluation / not method validation"
+declarations. README status line, Current Stage section, and Next Stage
+section updated to reflect R9.7–R10.4 completion. Documentation-only
+stage — no source code changes, no real API call, no `.env` read.

@@ -1609,3 +1609,60 @@ result. No retry executed, no raw response saved.
 ### Exit Gate
 
 Requires Codex audit before R10.4.
+
+
+## R10.4 — Documentation and Claim-boundary Audit
+
+### Goal
+
+Review all R10 stages for claim-boundary integrity. Ensure no over-claiming,
+no benchmark language, no method-validation language, no Sun comparison
+language in any R10 documentation.
+
+### Scope
+
+- Documentation edits only
+- No source code changes
+- No test changes
+- No real API call
+- No `.env` read
+- No raw response storage
+- No batch execution
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+
+### Documents Audited
+
+| Document | R10 Sections | Finding |
+|---|---|---|
+| `docs/experiment_log.md` | R10.0–R10.3 | All sections have explicit Non-goals ("No benchmark/accuracy/method-validation claim") |
+| `docs/issue_log.md` | I025–I029 | All issues are "mock-only", "design-only", or "recorded" — no claims |
+| `docs/r10_plan.md` | §1–§5 | §3 explicit Non-Goals, §4 Risk Controls, §5 non-goals per stage |
+| `docs/r10_1_mock_integration_design.md` | §1–§7 | Declared "design-only, not implementation" at top |
+| `README.md` | R10.2/10.2.1/10.3 | States "not a benchmark, accuracy evaluation, or method validation" |
+
+### Findings
+
+**No over-claims found.** All R10 documentation consistently uses:
+- "mock-only" or "single-sample" language
+- Explicit "No benchmark result" / "No accuracy claim" / "No method-validation claim" scope sections
+- "Not a benchmark, not an accuracy evaluation, not method validation" declarations
+- No Sun comparison language
+- No claim of outperforming any baseline
+### Changes Made
+
+- Updated `README.md` status line with all R9.x and R10.x stages
+- Updated `README.md` Current Stage section with all R9.7+ and R10.x entries
+- Updated `README.md` Next Stage section for R10.4 → R11 gate
+- Added R10.4 section to `docs/experiment_log.md` (this section)
+- Added I030 to `docs/issue_log.md`
+
+### Test Baseline
+
+All 486 offline tests pass — no regressions from documentation-only changes.
+
+### Exit Gate
+
+Requires Codex audit before R11 or any formal experiment.
+

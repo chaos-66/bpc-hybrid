@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R9 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅**
 
 ## Research Positioning
 
@@ -55,6 +55,16 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R9.4 ✅: Single retry after manual API key/model/workspace alignment (DNS/connection error — not a benchmark).
 - R9.5 ✅: Single retry after removing WorkspaceId braces (schema mismatch — connectivity OK, not a benchmark).
 - R9.6 ✅: Fixed diagnostic classification — parse/schema failures now return `SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID` (code fix, no real API call).
+- R9.7 ✅: Aligned real LLM prompt with project schema (code-only, no real API call).
+- R9.7.1 ✅: Fixed unsafe R9.7 CLI regression test; extracted pure `classify_real_api_error_status()` helper.
+- R9.8 ✅: Real API single-sample schema smoke succeeded (`schema_valid: true`).
+- R9.8.1 ✅: Documented R9.8 source ID metadata (`r9_8_real_schema_smoke_001`).
+- R10.0 ✅: R10 staged plan created (planning only).
+- R10.1 ✅: Offline/mock fallback integration design completed (design only).
+- R10.2 ✅: Mock-only pipeline integration tests completed (27 tests).
+- R10.2.1 ✅: Empty rule-first trigger regression fixed (4 strong mock-only tests).
+- R10.3 ✅: Single-sample real fallback pipeline smoke completed (schema-invalid, conservative path OK).
+- R10.4 ✅: Documentation claim-boundary audit completed (current stage).
 
 ## R9 Scope
 
@@ -279,20 +289,10 @@ The issue log is intended to support reproducibility and later thesis/paper writ
 
 ## Next Stage
 
-R9.8 — Real API Single-Sample Schema Smoke — completed.
-R9.8 is a single real API schema smoke using one synthetic sentence;
-it is not a benchmark or accuracy evaluation.
-R9.8 records the exact single-smoke `source_id` as
-`r9_8_real_schema_smoke_001`; this remains a one-sentence schema
-smoke, not a benchmark or validation result.
-R9.8 后必须等待 Codex 审计，才能决定是否进入 R10.
+R10.4 has completed the documentation claim-boundary audit.
+No over-claims, benchmark language, method-validation language, or Sun
+comparison language found in any R10 documentation.
 
-R10.2 adds mock-only optional fallback integration tests; it does not
-execute real API calls, read `.env`, save raw responses, run batch,
-or perform benchmarks.
-R10.2.1 fixes the mock-only empty rule-first fallback trigger regression;
-it does not execute real API calls, read `.env`, save raw responses, run
-batch, or perform benchmarks.
-R10.3 is a single authorized real API fallback-pipeline smoke using one
-synthetic sentence; it is not a benchmark, accuracy evaluation, or
-method validation.
+All 486 offline tests pass.
+
+**R10.4 后必须等待 Codex 审计，才能决定是否进入 R11 或任何 formal experiment。**
