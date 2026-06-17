@@ -159,3 +159,26 @@ R11.1 produced the design for aligning real LLM fallback output with the project
 - No method-validation claim.
 - No batch real API.
 - No raw response storage.
+
+
+## I034 — R11.1 schema summary overstated current top-level parser strictness
+
+### Status
+
+Fixed in R11.1.1 documentation.
+
+### Context
+
+Codex found that the R11.1 design document described `schema_version` and `clauses` as if current `MultiClauseExtractionResponse.from_dict()` strictly required them. Current parser behavior is more permissive.
+
+### Correction
+
+R11.1.1 documents that missing `schema_version` defaults to `"0.1.0"` and missing `clauses` defaults to `[]`. Any future stricter handling is a proposed R11.2 normalizer / prompt-contract gate, not current parser behavior.
+
+### Safety Boundary
+
+- Documentation-only.
+- No source code change.
+- No real API.
+- No benchmark.
+- No method-validation claim.

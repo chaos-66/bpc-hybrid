@@ -1778,3 +1778,43 @@ Design a multi-strategy schema alignment approach for real LLM fallback output, 
 Requires Codex audit before R11.2 (mock implementation).
 
 
+## R11.1.1 — Fix Schema Summary Nuance in R11.1 Design
+
+### Type
+
+Documentation-only fix.
+
+### Reason
+
+Codex blocked R11.1 because the design document overstated current top-level missing-key enforcement for `MultiClauseExtractionResponse.from_dict()`.
+
+### Correction
+
+The design now distinguishes current parser behavior from proposed R11.2 normalizer / prompt-contract behavior:
+
+- current parser defaults missing `schema_version` to `"0.1.0"`
+- current parser defaults missing `clauses` to `[]`
+- stricter top-level enforcement is a proposed R11.2 alignment gate, not current parser behavior
+
+### Changes Made
+
+- `docs/r11_1_schema_alignment_design.md`: Added §2.1.1 "Top-level parser nuance"; corrected §2.4 `from_dict()` enforcement description to separate `MultiClauseExtractionResponse` from `ClauseExtraction` and `FieldSpan`; updated §6.2 normalizer top-level handling; added §8.4 top-level parser/normalizer tests (5 tests, #25-29); updated test count to 29.
+
+### Scope
+
+- No source code changes
+- No test changes
+- No data changes
+- No real API call
+- No `.env` content read
+- No raw response storage
+- No batch execution
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+
+### Exit Gate
+
+Requires Codex audit before R11.2.
+
+

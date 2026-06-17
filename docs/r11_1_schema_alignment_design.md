@@ -31,6 +31,20 @@ Based on `src/bpc_hybrid/schema.py` (schema version `0.1.0`).
 
 **Unknown top-level keys are rejected** — `from_dict()` checks against the allowed set `_MULTI_CLAUSE_KEYS = {"schema_version", "source_id", "source_text", "clauses"}`.
 
+#### 2.1.1 Top-level parser nuance
+
+Current `MultiClauseExtractionResponse.from_dict()` is **permissive** for two top-level keys at the constructor level:
+
+- missing `schema_version` → defaults to `"0.1.0"` (passes `validate()`)
+- missing `clauses` → defaults to `[]` (passes `validate()`)
+
+The other two top-level keys receive defaults that fail `validate()`:
+
+- missing `source_id` → defaults to `""` (FAILS `validate()` — empty string)
+- missing `source_text` → defaults to `""` (FAILS `validate()` — empty string)
+
+Therefore, the current parser does **not** strictly reject missing `schema_version` or `clauses` by itself. Stricter top-level enforcement (requiring explicit `schema_version` and non-empty `clauses` before `from_dict()` validation) is a **proposed R11.2 normalizer / prompt-contract gate**, not current parser behavior.
+
 ### 2.2 Clause-level: `ClauseExtraction`
 
 13 fields, ALL required by `from_dict()`:
@@ -69,10 +83,10 @@ Based on `src/bpc_hybrid/schema.py` (schema version `0.1.0`).
 - `MultiClauseExtractionResponse.validate()` — validates top-level fields + delegates to each clause.
 - `ClauseExtraction.validate()` — validates clause_text, offsets, confidence, and all 6 semantic `FieldSpan` fields.
 - `FieldSpan.validate(source_text=...)` — validates text, offsets, confidence, and optional cross-check against source_text.
-- `from_dict()` on all three types enforces:
-  - Unknown keys → `SchemaValidationError`.
-  - Missing required keys → `SchemaValidationError`.
-  - Wrong types → `SchemaValidationError`.
+- `from_dict()` enforcement varies by type:
+  - **`MultiClauseExtractionResponse.from_dict()`**: rejects unknown top-level keys. Does **not** reject missing `schema_version` (defaults to `"0.1.0"`) or missing `clauses` (defaults to `[]`). Missing `source_id`/`source_text` default to `""` which fails `validate()`.
+  - **`ClauseExtraction.from_dict()`**: rejects unknown keys, missing required keys, and wrong types — all 13 clause keys must be present.
+  - **`FieldSpan`**: rejects unknown keys, missing required keys, and wrong types — all 4 FieldSpan keys must be present when not null.
 
 ### 2.5 Current LLMFallbackAdapter Prompt
 
@@ -311,7 +325,7 @@ LLM raw JSON output
    - If value is a plain `str` → set to `None` (cannot coerce — conservative).
    - If value is missing → set to `None`.
 
-4. **Top-level required fields**: If `schema_version`, `source_id`, or `source_text` are missing from the raw dict, the normalizer sets them to sentinel values that will fail schema validation (preserving the rejection path).
+4. **Top-level required-field handling**: For `schema_version` and `clauses`, R11.2 must decide whether to enforce explicit model output before calling `MultiClauseExtractionResponse.from_dict()`. If enforced, that is a **normalizer / prompt-contract gate**, not a claim about current parser behavior. If parser defaulting is preserved, documentation must state that behavior clearly. For `source_id` and `source_text`, missing values default to `""` in the current parser, which fails `validate()` — no additional normalizer enforcement is needed for those two fields.
 
 ### 6.3 Failure and Non-recovery Behavior
 
@@ -433,6 +447,16 @@ The following tests should be implemented in R11.2 using mock LLM responses only
 | 22 | `test_no_real_api_in_normalizer` | Normalizer code has no real provider import/usage |
 | 23 | `test_fallback_disabled_returns_rule_first` | `config.enabled=False` → rule-first regardless of normalizer |
 | 24 | `test_no_batch` | No batch mode in normalizer or adapter |
+
+### 8.4 Additional Top-level Parser / Normalizer Tests
+
+| # | Test | Description |
+|---|------|-------------|
+| 25 | `test_top_level_missing_schema_version_defaults` | Missing `schema_version` defaults to `"0.1.0"` in current parser |
+| 26 | `test_top_level_missing_clauses_defaults` | Missing `clauses` defaults to `[]` in current parser |
+| 27 | `test_r11_2_normalizer_enforces_explicit_schema_version` | If R11.2 enforces explicit top-level keys, missing `schema_version` is rejected before parser defaulting |
+| 28 | `test_r11_2_normalizer_enforces_explicit_clauses` | If R11.2 enforces explicit `clauses`, missing `clauses` is rejected before parser defaulting |
+| 29 | `test_parser_defaulting_preserved_documentation` | If parser defaulting is preserved, documentation states that behavior clearly |
 
 ---
 
