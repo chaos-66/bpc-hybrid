@@ -54,6 +54,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - R9.3 ✅: Single retry after manual WorkspaceId/base_url correction (HTTP status error — not a benchmark).
 - R9.4 ✅: Single retry after manual API key/model/workspace alignment (DNS/connection error — not a benchmark).
 - R9.5 ✅: Single retry after removing WorkspaceId braces (schema mismatch — connectivity OK, not a benchmark).
+- R9.6 ✅: Fixed diagnostic classification — parse/schema failures now return `SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID` (code fix, no real API call).
 
 ## R9 Scope
 

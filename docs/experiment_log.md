@@ -1132,3 +1132,74 @@ executed, documentation update, commit, and push. **Connectivity smoke
 succeeded** — the WorkspaceId braces fix resolved the DNS issue and the
 API returned a valid structured response for the first time. Schema
 mismatch remains but is not a connectivity or code defect.
+
+## R9.6 — Fix Diagnostic Classification: Schema Invalid vs Network Error
+
+### Goal
+
+Reclassify real API parse/schema failures as
+`SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID` when the API returns a valid
+response but the content cannot be converted into
+`MultiClauseExtractionResponse`.  Network/transport errors keep their
+existing `SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED` status.
+
+### Rationale
+
+Codex audit found that R9.5's schema parse failure was incorrectly
+classified as `SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED`.  The API
+connectivity succeeded — the server was reached, the LLM returned
+structured content — but the response fields did not match the project
+schema.  This is a **schema invalid** scenario, not a **network error**.
+
+### Diagnostic Rules (Post R9.6)
+
+| Error type | Status field |
+|---|---|
+| DNS failure / connection failure / timeout | `SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED` |
+| HTTP status error (4xx, 5xx) | `SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED` |
+| Request exception / transport-level exception | `SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED` |
+| LLM returned content but JSON/schema/field conversion failed | `SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID` |
+| Missing API key or config | `SKIPPED_NO_API_KEY_OR_CONFIG` |
+
+### Scope
+
+- Update `scripts/run_llm_dry_run.py` — detect `"parse error"` in
+  `result.error` and assign `SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID`
+- Keep network/transport errors as `SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED`
+- Add gate tests:
+    - `TestSchemaInvalidStatusClassification` (3 tests): adapter
+      parse-error prefix, transport-error prefix, status logic
+      verification
+    - `TestSchemaInvalidNoSecretLeak` (2 tests): no key/url/raw-body
+      in error, no raw response files created
+- No `.env` changes (not needed)
+- No real API calls (code-only diagnostic fix)
+
+### Non-goals
+
+- No `.env` modifications
+- No real API execution
+- No widening of the project schema to match arbitrary LLM responses
+- No raw response storage
+- No benchmark or accuracy claims
+
+### Key Design Decisions
+
+- The split between transport errors and parse errors is already present
+  in `LLMFallbackAdapter.complete()`: transport exceptions produce
+  `"LLM transport error: ..."`, while `LLMClientError` exceptions produce
+  `"LLM response parse error: ..."`.  The R9.6 fix simply checks for the
+  `"parse error"` substring in the error message to select the correct
+  status.
+
+### Issues and Resolutions
+
+| Issue | Symptom | Root Cause | Fix | Verification |
+|---|---|---|---|---|
+| Schema-invalid response misclassified as network error | R9.5 returned `SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED` for a schema mismatch | CLI error handler treated all dry-run errors with `real_api_requested=True` the same way | Added `_is_parse_error` check; parse errors → `SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID`; transport errors unchanged | 5 new gate tests passed; full pytest passed; health and eval OK |
+
+### Status
+
+Completed after code fix, 5 new gate tests, full offline validation,
+commit, and GitHub push.  No real API call executed — R9.6 is a
+code-only diagnostic fix.

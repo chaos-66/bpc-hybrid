@@ -413,15 +413,21 @@ def main(argv: list[str] | None = None) -> int:
 
     # --- check for LLM-level errors ---------------------------------------
     if result.error is not None:
+        # R9.6: distinguish transport errors (network) from parse/schema errors
+        _is_parse_error = "parse error" in result.error.lower()
         print(
             _error(
                 "DryRunError",
                 f"LLM fallback did not produce a valid response: {result.error}",
                 real_api_call_performed=real_api_requested,
                 status=(
-                    "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
-                    if real_api_requested
-                    else None
+                    "SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID"
+                    if (real_api_requested and _is_parse_error)
+                    else (
+                        "SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED"
+                        if real_api_requested
+                        else None
+                    )
                 ),
             )
         )

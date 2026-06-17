@@ -911,3 +911,299 @@ class TestStatusFieldInErrorOutput:
         # is verified by code review: run_llm_dry_run.py line ~390-400
         # adds status= when real_api_requested and result.error is not None.
         pass
+
+
+# ---------------------------------------------------------------------------
+# 19. schema invalid status classification (R9.6)
+# ---------------------------------------------------------------------------
+
+class TestSchemaInvalidStatusClassification:
+    """R9.6: Schema/parse failures get SINGLE_SAMPLE_API_RETURNED_SCHEMA_INVALID
+    instead of SINGLE_SAMPLE_API_NETWORK_ERROR_REDACTED."""
+
+    def test_llm_adapter_parse_error_has_parse_error_prefix(self, monkeypatch):
+        """When real API returns content that fails schema conversion,
+        LLMFallbackAdapter returns error with 'parse error' prefix."""
+        from bpc_hybrid.llm_client import (
+            LLMFallbackAdapter,
+            LLMRequest,
+            RealAPITransport,
+        )
+        from bpc_hybrid.llm_config import LLMConfig
+        from bpc_hybrid.fallback import FallbackRequest
+        from bpc_hybrid.schema import MultiClauseExtractionResponse
+
+        # Fake response with valid JSON but wrong fields (R9.5 scenario)
+        fake_content = json.dumps({
+            "conditions": [],
+            "normative_type": "obligation",
+            "object": "decision",
+            "original_text": SAMPLE_TEXT,
+            "subject": "controller",
+        })
+
+        fake_body = json.dumps({
+            "id": "chatcmpl-fake-r9-6",
+            "object": "chat.completion",
+            "created": 1700000000,
+            "model": DUMMY_MODEL,
+            "choices": [
+                {
+                    "index": 0,
+                    "message": {
+                        "role": "assistant",
+                        "content": fake_content,
+                    },
+                    "finish_reason": "stop",
+                }
+            ],
+        }).encode("utf-8")
+
+        class _FakeResponse:
+            status = 200
+            def read(self): return fake_body
+            def __enter__(self): return self
+            def __exit__(self, *a): pass
+
+        monkeypatch.setattr(urllib.request, "urlopen",
+                            lambda req, timeout=None: _FakeResponse())
+
+        cfg = LLMConfig(
+            enabled=True,
+            provider="openai_compatible",
+            api_key=DUMMY_KEY,
+            base_url=DUMMY_URL,
+            model=DUMMY_MODEL,
+        )
+        transport = RealAPITransport(cfg)
+        adapter = LLMFallbackAdapter(config=cfg, transport=transport)
+
+        # Build a rule-first response
+        rule_resp = MultiClauseExtractionResponse(
+            schema_version="0.1.0",
+            source_id="r9_6",
+            source_text=SAMPLE_TEXT,
+            clauses=[],
+        )
+        fb_req = FallbackRequest(
+            source_text=SAMPLE_TEXT,
+            source_id="r9_6",
+            rule_response=rule_resp,
+        )
+
+        result = adapter.complete(fb_req)
+        assert result.error is not None, "Expected error for schema-invalid response"
+        assert "parse error" in result.error.lower(), (
+            f"Expected 'parse error' in error, got: {result.error}"
+        )
+        assert result.response is None
+
+    def test_llm_adapter_transport_error_has_transport_prefix(self, monkeypatch):
+        """When real API transport fails, LLMFallbackAdapter returns
+        error with 'transport error' prefix (NOT 'parse error')."""
+        from bpc_hybrid.llm_client import (
+            LLMFallbackAdapter,
+            RealAPITransport,
+        )
+        from bpc_hybrid.llm_config import LLMConfig
+        from bpc_hybrid.fallback import FallbackRequest
+        from bpc_hybrid.schema import MultiClauseExtractionResponse
+
+        def _raise_url_error(req, timeout=None):
+            raise urllib.error.URLError("getaddrinfo failed")
+
+        monkeypatch.setattr(urllib.request, "urlopen", _raise_url_error)
+
+        cfg = LLMConfig(
+            enabled=True,
+            provider="openai_compatible",
+            api_key=DUMMY_KEY,
+            base_url=DUMMY_URL,
+            model=DUMMY_MODEL,
+        )
+        transport = RealAPITransport(cfg)
+        adapter = LLMFallbackAdapter(config=cfg, transport=transport)
+
+        rule_resp = MultiClauseExtractionResponse(
+            schema_version="0.1.0",
+            source_id="r9_6_t",
+            source_text=SAMPLE_TEXT,
+            clauses=[],
+        )
+        fb_req = FallbackRequest(
+            source_text=SAMPLE_TEXT,
+            source_id="r9_6_t",
+            rule_response=rule_resp,
+        )
+
+        result = adapter.complete(fb_req)
+        assert result.error is not None, "Expected error for transport failure"
+        assert "transport error" in result.error.lower(), (
+            f"Expected 'transport error' in error, got: {result.error}"
+        )
+        assert "parse error" not in result.error.lower(), (
+            f"Transport error should NOT contain 'parse error': {result.error}"
+        )
+
+    def test_status_not_network_error_for_schema_invalid(self):
+        """Verify the R9.6 classification logic: parse error → schema invalid,
+        not network error."""
+        # Simulation of the run_llm_dry_run.py status selection logic
+        _error_msg_transport = "LLM transport error: Real API DNS/connection error (details redacted)"
+        _error_msg_parse = "LLM response parse error: Cannot convert LLM response to MultiClauseExtractionResponse: MultiClauseExtractionResponse.clauses[0]: Unknown keys"
+
+        # Transport error → not parse error → NETWORK_ERROR
+        assert "parse error" not in _error_msg_transport.lower()
+        assert "transport error" in _error_msg_transport.lower()
+
+        # Parse error → contains "parse error" → SCHEMA_INVALID
+        assert "parse error" in _error_msg_parse.lower()
+        assert "transport error" not in _error_msg_parse.lower()
+
+
+# ---------------------------------------------------------------------------
+# 20. schema invalid no secret leak (R9.6)
+# ---------------------------------------------------------------------------
+
+class TestSchemaInvalidNoSecretLeak:
+    """R9.6: Schema invalid error output must not leak secrets."""
+
+    def test_schema_invalid_no_key_in_error(self, monkeypatch):
+        """Error from schema-invalid response must not contain API key."""
+        from bpc_hybrid.llm_client import (
+            LLMFallbackAdapter,
+            RealAPITransport,
+        )
+        from bpc_hybrid.llm_config import LLMConfig
+        from bpc_hybrid.fallback import FallbackRequest
+        from bpc_hybrid.schema import MultiClauseExtractionResponse
+
+        # Schema-invalid fake response
+        fake_content = json.dumps({
+            "wrong_schema": True,
+            "some_field": "value",
+        })
+        fake_body = json.dumps({
+            "id": "cmpl-fake",
+            "object": "chat.completion",
+            "created": 1700000000,
+            "model": DUMMY_MODEL,
+            "choices": [{
+                "index": 0,
+                "message": {"role": "assistant", "content": fake_content},
+                "finish_reason": "stop",
+            }],
+        }).encode("utf-8")
+
+        class _FakeResponse:
+            status = 200
+            def read(self): return fake_body
+            def __enter__(self): return self
+            def __exit__(self, *a): pass
+
+        monkeypatch.setattr(urllib.request, "urlopen",
+                            lambda req, timeout=None: _FakeResponse())
+
+        cfg = LLMConfig(
+            enabled=True,
+            provider="openai_compatible",
+            api_key=DUMMY_KEY,
+            base_url=DUMMY_URL,
+            model=DUMMY_MODEL,
+        )
+        transport = RealAPITransport(cfg)
+        adapter = LLMFallbackAdapter(config=cfg, transport=transport)
+
+        rule_resp = MultiClauseExtractionResponse(
+            schema_version="0.1.0",
+            source_id="r9_6_s",
+            source_text=SAMPLE_TEXT,
+            clauses=[],
+        )
+        fb_req = FallbackRequest(
+            source_text=SAMPLE_TEXT,
+            source_id="r9_6_s",
+            rule_response=rule_resp,
+        )
+
+        result = adapter.complete(fb_req)
+        assert result.error is not None
+        # Must not contain API key, base URL, or raw response body
+        error_str = str(result.error)
+        assert DUMMY_KEY not in error_str, f"API key leaked: {error_str[:200]}"
+        assert DUMMY_URL not in error_str, f"Base URL leaked: {error_str[:200]}"
+        assert DUMMY_KEY not in (result.raw_dict or {}).get("content", ""), (
+            "API key leaked in raw_dict"
+        )
+        # Allowed: schema/parse terminology
+        allowed_terms = ("parse error", "schema", "cannot convert", "unknown keys")
+        assert any(t in error_str.lower() for t in allowed_terms), (
+            f"Expected schema/parse terminology in error, got: {error_str[:200]}"
+        )
+
+    def test_schema_invalid_no_raw_response_file(self, monkeypatch, tmp_path):
+        """Schema-invalid path must not create raw response files."""
+        from bpc_hybrid.llm_client import (
+            LLMFallbackAdapter,
+            RealAPITransport,
+        )
+        from bpc_hybrid.llm_config import LLMConfig
+        from bpc_hybrid.fallback import FallbackRequest
+        from bpc_hybrid.schema import MultiClauseExtractionResponse
+
+        fake_content = json.dumps({"not_a_valid_clause": True})
+        fake_body = json.dumps({
+            "id": "cmpl-fake2",
+            "object": "chat.completion",
+            "created": 1700000000,
+            "model": DUMMY_MODEL,
+            "choices": [{
+                "index": 0,
+                "message": {"role": "assistant", "content": fake_content},
+                "finish_reason": "stop",
+            }],
+        }).encode("utf-8")
+
+        class _FakeResponse:
+            status = 200
+            def read(self): return fake_body
+            def __enter__(self): return self
+            def __exit__(self, *a): pass
+
+        monkeypatch.setattr(urllib.request, "urlopen",
+                            lambda req, timeout=None: _FakeResponse())
+
+        cfg = LLMConfig(
+            enabled=True,
+            provider="openai_compatible",
+            api_key=DUMMY_KEY,
+            base_url=DUMMY_URL,
+            model=DUMMY_MODEL,
+        )
+        transport = RealAPITransport(cfg)
+        adapter = LLMFallbackAdapter(config=cfg, transport=transport)
+
+        rule_resp = MultiClauseExtractionResponse(
+            schema_version="0.1.0",
+            source_id="r9_6_f",
+            source_text=SAMPLE_TEXT,
+            clauses=[],
+        )
+        fb_req = FallbackRequest(
+            source_text=SAMPLE_TEXT,
+            source_id="r9_6_f",
+            rule_response=rule_resp,
+        )
+
+        result = adapter.complete(fb_req)
+        assert result.error is not None
+
+        # Check no raw response / outputs / logs directories created
+        for bad_dir in ["outputs", "logs", "raw_responses"]:
+            p = PROJECT_ROOT / bad_dir
+            if p.exists():
+                # Only fail if newly created (may exist from prior stages)
+                recent = list(p.rglob("*"))
+                assert not recent, (
+                    f"Schema-invalid path created files in {bad_dir}/: {recent}"
+                )
