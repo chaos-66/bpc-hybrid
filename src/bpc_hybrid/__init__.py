@@ -25,7 +25,9 @@ from bpc_hybrid.fallback import (
     FallbackRequest,
     FallbackResult,
     MockLLMFallbackClient,
+    OptionalFallbackResult,
     extract_hybrid,
+    extract_with_optional_llm_fallback,
     should_trigger_fallback,
 )
 from bpc_hybrid.llm_client import (
@@ -94,6 +96,7 @@ __all__ = [
     "MockLLMFallbackClient",
     "MockLLMTransport",
     "MultiClauseExtractionResponse",
+    "OptionalFallbackResult",
     "NormalizationError",
     "OpenAICompatibleRequestBuilder",
     "RuleBasedClauseSplitter",
@@ -103,6 +106,7 @@ __all__ = [
     "evaluate_responses",
     "extract_hybrid",
     "extract_rule_first",
+    "extract_with_optional_llm_fallback",
     "load_gold_responses",
     "load_jsonl",
     "load_predicted_responses",

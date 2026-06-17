@@ -287,7 +287,6 @@ R9.8 records the exact single-smoke `source_id` as
 smoke, not a benchmark or validation result.
 R9.8 后必须等待 Codex 审计，才能决定是否进入 R10.
 
-R10.1 — Offline/mock integration design for optional real-LLM fallback.
-R10.1 is an offline/mock integration design stage for optional
-real-LLM fallback; it does not modify source code, run real API
-calls, or perform benchmarks.
+R10.2 adds mock-only optional fallback integration tests; it does not
+execute real API calls, read `.env`, save raw responses, run batch,
+or perform benchmarks.

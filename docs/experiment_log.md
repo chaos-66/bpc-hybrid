@@ -1463,3 +1463,46 @@ real-LLM fallback inside the rule-first extraction pipeline.
 
 Design completed.  No source code changed, no real API executed,
 no `.env` read, no benchmark.
+
+## R10.2 — Mock-only Pipeline Integration Tests for Optional LLM Fallback
+
+### Goal
+
+Implement and test a mock-only optional LLM fallback integration helper
+for the rule-first extraction pipeline.
+
+### Scope
+
+- Mock-only implementation
+- No real API call
+- No `.env` read
+- No raw response storage
+- No batch execution
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+
+### Change
+
+- Added `OptionalFallbackResult` dataclass (external wrapper metadata, no schema change)
+- Added `extract_with_optional_llm_fallback()` helper with conservative failure behavior:
+  - fallback disabled → return rule-first
+  - fallback not triggered → return rule-first
+  - fallback schema-invalid → return rule-first
+  - fallback network/config error → return rule-first
+  - only schema-valid fallback → accept
+- Preserved existing strict `extract_hybrid()` raising behavior
+- Added 27 mock-only pipeline tests in `tests/test_fallback_pipeline.py`
+  covering all 13 items from the R10.1 test plan
+- Exported new types via `__init__.py`
+
+### Test Results
+
+- All 27 pipeline tests pass (mock-only)
+- All 483 total tests pass
+- Health: scaffold-ok
+- Synthetic eval: F1=1.0, is_formal_benchmark=false
+
+### Exit Gate
+
+Requires Codex audit before R10.3.

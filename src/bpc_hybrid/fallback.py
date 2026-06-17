@@ -311,3 +311,188 @@ def extract_hybrid(
         ) from exc
 
     return repaired
+
+
+# ---------------------------------------------------------------------------
+# Optional fallback integration (R10.2)
+# ---------------------------------------------------------------------------
+
+_FALLBACK_STATUS_DISABLED = "fallback_disabled"
+_FALLBACK_STATUS_NOT_TRIGGERED = "fallback_not_triggered"
+_FALLBACK_STATUS_MOCK_USED = "fallback_mock_used"
+_FALLBACK_STATUS_SCHEMA_VALID = "fallback_schema_valid"
+_FALLBACK_STATUS_SCHEMA_INVALID = "fallback_schema_invalid"
+_FALLBACK_STATUS_NETWORK_ERROR_REDACTED = "fallback_network_error_redacted"
+_FALLBACK_STATUS_CONFIG_MISSING = "fallback_config_missing"
+
+
+@dataclass(frozen=True)
+class OptionalFallbackResult:
+    """Result wrapper for optional LLM fallback (R10.2).
+
+    Holds the extraction response together with metadata describing
+    whether and how the fallback path was exercised.  No provenance
+    field is added to the schema — metadata lives only here.
+    """
+
+    response: MultiClauseExtractionResponse
+    """The final extraction response (rule-first OR fallback output)."""
+
+    fallback_status: str
+    """One of the ``_FALLBACK_STATUS_*`` constants."""
+
+    fallback_used: bool
+    """``True`` only if fallback was triggered AND produced a valid
+    schema-valid result that was accepted."""
+
+    trigger_reason: str | None
+    """Human-readable summary of trigger reason(s), or ``None``."""
+
+    rule_first_preserved: bool
+    """``True`` if the returned response is the rule-first result
+    (fallback was not used, failed, or was rejected)."""
+
+
+# ---------------------------------------------------------------------------
+# Optional fallback helper
+# ---------------------------------------------------------------------------
+
+def extract_with_optional_llm_fallback(
+    source_text: str,
+    source_id: str = "synthetic",
+    *,
+    fallback_enabled: bool = False,
+    fallback_client: MockLLMFallbackClient | None = None,
+    field_confidence_threshold: float = DEFAULT_CONFIDENCE_THRESHOLD,
+    clause_confidence_threshold: float = DEFAULT_CONFIDENCE_THRESHOLD,
+) -> OptionalFallbackResult:
+    """Rule-first extraction with optional, conservative LLM fallback.
+
+    Unlike :func:`extract_hybrid`, this function **never raises**
+    due to fallback failure.  If the fallback path cannot produce a
+    schema-valid result, the rule-first result is returned as-is.
+
+    Parameters
+    ----------
+    source_text : str
+        The regulatory sentence to extract.
+    source_id : str
+        Unique identifier for this extraction.
+    fallback_enabled : bool
+        If ``False`` (default), the fallback path is never consulted.
+        Must be explicitly set to ``True`` by a gate.
+    fallback_client:
+        A duck-typed fallback provider implementing
+        ``.complete(FallbackRequest) -> FallbackResult``.
+        Compatible: :class:`MockLLMFallbackClient` (R6) and
+        :class:`~bpc_hybrid.llm_client.LLMFallbackAdapter` (R7).
+    field_confidence_threshold : float
+        Passed to :func:`should_trigger_fallback`.
+    clause_confidence_threshold : float
+        Passed to :func:`should_trigger_fallback`.
+
+    Returns
+    -------
+    OptionalFallbackResult
+        Always returns a valid result — never raises from the fallback
+        path.
+
+    Notes
+    -----
+    - No real API, no ``.env``, no network unless *fallback_client*
+      is a real-API transport behind a gate.
+    - No raw response is saved.
+    - No secrets are logged.
+    - No schema change to ``MultiClauseExtractionResponse``.
+    """
+    # ---- 1. Rule-first (always) ------------------------------------------
+    rule_response = extract_rule_first(source_text, source_id=source_id)
+
+    # ---- 2. Gate: fallback disabled --------------------------------------
+    if not fallback_enabled:
+        return OptionalFallbackResult(
+            response=rule_response,
+            fallback_status=_FALLBACK_STATUS_DISABLED,
+            fallback_used=False,
+            trigger_reason=None,
+            rule_first_preserved=True,
+        )
+
+    # ---- 3. Gate: no fallback client -------------------------------------
+    if fallback_client is None:
+        return OptionalFallbackResult(
+            response=rule_response,
+            fallback_status=_FALLBACK_STATUS_CONFIG_MISSING,
+            fallback_used=False,
+            trigger_reason=None,
+            rule_first_preserved=True,
+        )
+
+    # ---- 4. Trigger check ------------------------------------------------
+    decision = should_trigger_fallback(
+        rule_response,
+        field_confidence_threshold=field_confidence_threshold,
+        clause_confidence_threshold=clause_confidence_threshold,
+    )
+
+    if not decision.should_trigger:
+        return OptionalFallbackResult(
+            response=rule_response,
+            fallback_status=_FALLBACK_STATUS_NOT_TRIGGERED,
+            fallback_used=False,
+            trigger_reason=None,
+            rule_first_preserved=True,
+        )
+
+    reason_str = ", ".join(r.name for r in decision.reasons)
+
+    # ---- 5. Execute fallback ---------------------------------------------
+    request = FallbackRequest(
+        source_text=source_text,
+        source_id=source_id,
+        rule_response=rule_response,
+        reasons=decision.reasons,
+    )
+
+    try:
+        result = fallback_client.complete(request)
+    except Exception:
+        # Any exception from fallback → return rule-first
+        return OptionalFallbackResult(
+            response=rule_response,
+            fallback_status=_FALLBACK_STATUS_NETWORK_ERROR_REDACTED,
+            fallback_used=False,
+            trigger_reason=reason_str,
+            rule_first_preserved=True,
+        )
+
+    # ---- 6. Validate fallback result -------------------------------------
+    if not result.is_valid or result.response is None:
+        return OptionalFallbackResult(
+            response=rule_response,
+            fallback_status=_FALLBACK_STATUS_SCHEMA_INVALID,
+            fallback_used=False,
+            trigger_reason=reason_str,
+            rule_first_preserved=True,
+        )
+
+    # Schema validation on the parsed response
+    try:
+        result.response.validate()
+    except SchemaValidationError:
+        return OptionalFallbackResult(
+            response=rule_response,
+            fallback_status=_FALLBACK_STATUS_SCHEMA_INVALID,
+            fallback_used=False,
+            trigger_reason=reason_str,
+            rule_first_preserved=True,
+        )
+
+    # ---- 7. Accept valid fallback ----------------------------------------
+    return OptionalFallbackResult(
+        response=result.response,
+        fallback_status=_FALLBACK_STATUS_SCHEMA_VALID,
+        fallback_used=True,
+        trigger_reason=reason_str,
+        rule_first_preserved=False,
+    )
