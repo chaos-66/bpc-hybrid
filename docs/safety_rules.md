@@ -78,6 +78,28 @@ The following factual statements are allowed:
 - "Current project goal is to rebuild a runnable MVP."
 - "Current main track is Sun-aligned GDPR + BPMN."
 - "No real data is included at this stage."
+
+## 8. Local pytest/Codex temp directory convention
+
+All future Codex and pytest `--basetemp` paths should be placed under
+grouped local temp folders instead of the project root.
+
+Use:
+
+```powershell
+--basetemp codex_fresh/
+```
+
+Examples:
+
+```
+--basetemp codex_fresh/r10_4_audit_full
+--basetemp codex_fresh/r10_4_audit_gate
+--basetemp codex_fresh/r11_0_plan_full
+```
+
+Do not create new root-level `.codex_fresh_*` directories unless a
+legacy prompt requires it.
 - "No benchmark results are claimed."
 
 ## 8. Emergency Stop Conditions
