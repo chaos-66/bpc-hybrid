@@ -1550,3 +1550,62 @@ Fix the Codex-blocking R10.2 issue where empty rule-first results did not actual
 ### Exit Gate
 
 Requires Codex audit before R10.3.
+
+
+## R10.3 — Single-sample Real Fallback Pipeline Smoke
+
+### Goal
+
+Run one controlled real API smoke through the optional fallback pipeline
+after R10.2/R10.2.1 mock-only tests were accepted.
+
+### Scope
+
+- At most one authorized real API call
+- One synthetic toy sentence only
+- Uses optional fallback pipeline (`extract_with_optional_llm_fallback`)
+- Uses empty rule-first trigger path (R10.2.1)
+- No real GDPR/BPMN/Sun data
+- No raw response storage
+- No batch execution
+- No benchmark result
+- No accuracy claim
+- No method-validation claim
+
+### Input
+
+- `source_id`: `r10_3_real_fallback_smoke_001`
+- `text`: `A controller shall record the decision.`
+
+### Required Safety Metadata
+
+- `real_api_call_performed`
+- `fallback_used`
+- `fallback_status`
+- `trigger_reason`
+- `schema_valid`
+- `raw_response_saved`
+- `secret_redacted`
+- `batch`
+
+### Result
+
+`SINGLE_SAMPLE_REAL_FALLBACK_SCHEMA_INVALID`
+
+- `real_api_call_performed`: `true` — API connectivity succeeded
+- `fallback_used`: `false` — real LLM response failed schema validation
+- `fallback_status`: `fallback_schema_invalid` — conservative path returned rule-first
+- `trigger_reason`: `empty_rule_result` — empty rule-first trigger path verified
+- `schema_valid`: `false` — real LLM JSON fields did not match ClauseExtraction
+- `raw_response_saved`: `false`
+- `secret_redacted`: `true`
+- `batch`: `false`
+
+The empty-rule trigger path works correctly (R10.2.1 verified).
+The real LLM returned structured JSON but with field names not matching
+the project schema. The conservative behavior preserved the rule-first
+result. No retry executed, no raw response saved.
+
+### Exit Gate
+
+Requires Codex audit before R10.4.

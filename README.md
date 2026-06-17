@@ -293,3 +293,6 @@ or perform benchmarks.
 R10.2.1 fixes the mock-only empty rule-first fallback trigger regression;
 it does not execute real API calls, read `.env`, save raw responses, run
 batch, or perform benchmarks.
+R10.3 is a single authorized real API fallback-pipeline smoke using one
+synthetic sentence; it is not a benchmark, accuracy evaluation, or
+method validation.

@@ -54,3 +54,24 @@ Codex blocked R10.2 because empty rule-first output did not trigger mock fallbac
 ### Resolution
 
 R10.2.1 adds `_should_trigger_optional_fallback()` with independent empty-clause detection, a `rule_first_extractor` injector for testability, and 4 strong mock-only regression tests. No real API call, no `.env` read, no raw response storage, no batch, and no benchmark claim.
+
+## I029 — R10.3 real fallback returned schema-invalid
+
+### Status
+
+Recorded (R10.3).
+
+### Context
+
+R10.3 executed one authorized real API call through the optional
+fallback pipeline. API connectivity succeeded, empty-rule trigger
+worked, but the real LLM response failed `MultiClauseExtractionResponse`
+schema validation.
+
+### Resolution
+
+The conservative fallback path correctly returned the rule-first
+result. R10.3 is still PASSED because safety metadata is correct:
+`real_api_call_performed: true`, `raw_response_saved: false`,
+`secret_redacted: true`, `batch: false`. No retry executed.
+Schema alignment may be needed before R10.4.
