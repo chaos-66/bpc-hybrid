@@ -97,3 +97,26 @@ comparison language found. All R10 documentation consistently uses
 declarations. README status line, Current Stage section, and Next Stage
 section updated to reflect R9.7–R10.4 completion. Documentation-only
 stage — no source code changes, no real API call, no `.env` read.
+
+## I031 — R10.3 real-call count evidence limitation requires future single-call entrypoint
+
+### Status
+
+Open for future real-API stages.
+
+### Context
+
+Codex accepted R10.3 with a non-blocking evidence limitation: the transcript included two inline Python command attempts, while committed artifacts record one schema-invalid real fallback result.
+
+### Control
+
+Future real-API stages must use a dedicated audited single-call script or CLI entrypoint that records safe call-count metadata without saving raw responses.
+
+### Safety Boundary
+
+- No raw response saved.
+- No `.env` committed.
+- No batch execution.
+- No benchmark.
+- No accuracy claim.
+- No method-validation claim.

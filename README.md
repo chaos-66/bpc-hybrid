@@ -21,6 +21,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - ⚠️ Only a successful GitHub push marks the completion of a stage.
 - ⚠️ No claims about surpassing Sun or any prior work are made.
 - ⚠️ The current repository is a runnable MVP skeleton, not a validated system.
+- ⚠️ R10.3 remains classified as `SINGLE_SAMPLE_REAL_FALLBACK_SCHEMA_INVALID`, not fallback success. Its documented path is `extract_with_optional_llm_fallback()` → `LLMFallbackAdapter` → `RealAPITransport` using `openai_compatible` / `qwen3.7-max`. Future real-API stages must use a dedicated audited single-call entrypoint to avoid call-count ambiguity.
 
 ## R0 Artifacts
 

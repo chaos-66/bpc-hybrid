@@ -1606,6 +1606,38 @@ The real LLM returned structured JSON but with field names not matching
 the project schema. The conservative behavior preserved the rule-first
 result. No retry executed, no raw response saved.
 
+### R10.3 Real Fallback Execution Metadata
+
+- `source_id`: `r10_3_real_fallback_smoke_001`
+- `input`: `A controller shall record the decision.`
+- `provider`: `openai_compatible`
+- `model`: `qwen3.7-max`
+- `entrypoint`: `extract_with_optional_llm_fallback()`
+- `adapter`: `LLMFallbackAdapter`
+- `transport`: `RealAPITransport`
+- `trigger_reason`: `empty_rule_result`
+- `real_api_call_performed`: `true`
+- `fallback_used`: `false`
+- `fallback_status`: `fallback_schema_invalid`
+- `schema_valid`: `false`
+- `raw_response_saved`: `false`
+- `secret_redacted`: `true`
+- `batch`: `false`
+
+R10.3 remains classified as `SINGLE_SAMPLE_REAL_FALLBACK_SCHEMA_INVALID`.
+
+This is not fallback success.
+This is not schema-valid fallback success.
+This is not a benchmark.
+This is not an accuracy evaluation.
+This is not method validation.
+
+### R10.3 Real-call Count Evidence Limitation
+
+The execution transcript included two inline Python command attempts. The committed artifacts record one schema-invalid real fallback result and do not contain raw response exposure, retry output, output files, logs, or evidence of more than one successful real fallback result.
+
+Because local documentation cannot independently prove historical external API call count, future real-API stages must use a dedicated audited single-call script or CLI entrypoint that records safe call-count metadata without saving raw responses.
+
 ### Exit Gate
 
 Requires Codex audit before R10.4.
