@@ -1123,3 +1123,208 @@ def test_duration_ms_total_equals_sum(sample_jsonl_path, sample_output_dir):
         f"duration_ms_total={summary['duration_ms_total']}, "
         f"expected={expected_total}"
     )
+
+
+# ============================================================================
+# R12.3.0.1 — Dry-run timeout metadata propagation tests
+# ============================================================================
+
+
+# ---------------------------------------------------------------------------
+# Test: safe dry-run with --timeout-seconds 60 writes summary
+#        timeout_seconds_configured=60.0
+# ---------------------------------------------------------------------------
+
+
+def test_dryrun_timeout_seconds_summary_60(sample_jsonl_path, sample_output_dir):
+    """safe dry-run with --timeout-seconds 60: summary timeout_seconds_configured=60.0."""
+    from scripts.run_synthetic_prototype_pilot import run_pilot
+
+    _, summary = run_pilot(
+        input_file=str(sample_jsonl_path),
+        max_samples=2,
+        output_dir=str(sample_output_dir),
+        execute_real_api=False,
+        timeout_seconds=60.0,
+    )
+
+    assert summary["timeout_seconds_configured"] == 60.0, (
+        f"expected 60.0, got {summary['timeout_seconds_configured']}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Test: safe dry-run with --timeout-seconds 60 writes every result
+#        timeout_seconds_configured=60.0
+# ---------------------------------------------------------------------------
+
+
+def test_dryrun_timeout_seconds_per_result_60(sample_jsonl_path, sample_output_dir):
+    """safe dry-run with --timeout-seconds 60: every result record has 60.0."""
+    from scripts.run_synthetic_prototype_pilot import run_pilot
+
+    results, _ = run_pilot(
+        input_file=str(sample_jsonl_path),
+        max_samples=2,
+        output_dir=str(sample_output_dir),
+        execute_real_api=False,
+        timeout_seconds=60.0,
+    )
+
+    for meta in results:
+        assert meta["timeout_seconds_configured"] == 60.0, (
+            f"expected 60.0, got {meta['timeout_seconds_configured']}"
+        )
+
+
+# ---------------------------------------------------------------------------
+# Test: safe dry-run attempted_call_count_total=0
+# ---------------------------------------------------------------------------
+
+
+def test_dryrun_attempted_call_count_zero(sample_jsonl_path, sample_output_dir):
+    """safe dry-run has attempted_call_count_total=0."""
+    from scripts.run_synthetic_prototype_pilot import run_pilot
+
+    _, summary = run_pilot(
+        input_file=str(sample_jsonl_path),
+        max_samples=2,
+        output_dir=str(sample_output_dir),
+        execute_real_api=False,
+        timeout_seconds=60.0,
+    )
+
+    assert summary["attempted_call_count_total"] == 0, (
+        f"expected 0, got {summary['attempted_call_count_total']}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Test: safe dry-run real_api_call_performed=false
+# ---------------------------------------------------------------------------
+
+
+def test_dryrun_real_api_call_performed_false(sample_jsonl_path, sample_output_dir):
+    """safe dry-run has real_api_call_performed=false on every result."""
+    from scripts.run_synthetic_prototype_pilot import run_pilot
+
+    results, _ = run_pilot(
+        input_file=str(sample_jsonl_path),
+        max_samples=2,
+        output_dir=str(sample_output_dir),
+        execute_real_api=False,
+        timeout_seconds=60.0,
+    )
+
+    for meta in results:
+        assert meta["real_api_call_performed"] is False, (
+            f"expected False, got {meta['real_api_call_performed']}"
+        )
+
+
+# ---------------------------------------------------------------------------
+# Test: safe dry-run raw_response_saved=false
+# ---------------------------------------------------------------------------
+
+
+def test_dryrun_raw_response_saved_false(sample_jsonl_path, sample_output_dir):
+    """safe dry-run has raw_response_saved=false on every result."""
+    from scripts.run_synthetic_prototype_pilot import run_pilot
+
+    results, _ = run_pilot(
+        input_file=str(sample_jsonl_path),
+        max_samples=2,
+        output_dir=str(sample_output_dir),
+        execute_real_api=False,
+        timeout_seconds=60.0,
+    )
+
+    for meta in results:
+        assert meta.get("raw_response_saved", True) is False
+
+
+# ---------------------------------------------------------------------------
+# Test: safe dry-run batch=false
+# ---------------------------------------------------------------------------
+
+
+def test_dryrun_batch_false(sample_jsonl_path, sample_output_dir):
+    """safe dry-run has batch=false on every result."""
+    from scripts.run_synthetic_prototype_pilot import run_pilot
+
+    results, _ = run_pilot(
+        input_file=str(sample_jsonl_path),
+        max_samples=2,
+        output_dir=str(sample_output_dir),
+        execute_real_api=False,
+        timeout_seconds=60.0,
+    )
+
+    for meta in results:
+        assert meta.get("batch", True) is False
+
+
+# ---------------------------------------------------------------------------
+# Test: safe dry-run retry=false
+# ---------------------------------------------------------------------------
+
+
+def test_dryrun_retry_false(sample_jsonl_path, sample_output_dir):
+    """safe dry-run has retry=false on every result."""
+    from scripts.run_synthetic_prototype_pilot import run_pilot
+
+    results, _ = run_pilot(
+        input_file=str(sample_jsonl_path),
+        max_samples=2,
+        output_dir=str(sample_output_dir),
+        execute_real_api=False,
+        timeout_seconds=60.0,
+    )
+
+    for meta in results:
+        assert meta.get("retry", True) is False
+
+
+# ---------------------------------------------------------------------------
+# Test: safe dry-run repair_call=false
+# ---------------------------------------------------------------------------
+
+
+def test_dryrun_repair_call_false(sample_jsonl_path, sample_output_dir):
+    """safe dry-run has repair_call=false on every result."""
+    from scripts.run_synthetic_prototype_pilot import run_pilot
+
+    results, _ = run_pilot(
+        input_file=str(sample_jsonl_path),
+        max_samples=2,
+        output_dir=str(sample_output_dir),
+        execute_real_api=False,
+        timeout_seconds=60.0,
+    )
+
+    for meta in results:
+        assert meta.get("repair_call", True) is False
+
+
+# ---------------------------------------------------------------------------
+# Test: --timeout-seconds does not trigger real API without --execute-real-api
+# ---------------------------------------------------------------------------
+
+
+def test_timeout_seconds_does_not_trigger_real_api(
+    sample_jsonl_path, sample_output_dir,
+):
+    """--timeout-seconds alone does not trigger real API without --execute-real-api."""
+    from scripts.run_synthetic_prototype_pilot import run_pilot
+
+    results, summary = run_pilot(
+        input_file=str(sample_jsonl_path),
+        max_samples=2,
+        output_dir=str(sample_output_dir),
+        execute_real_api=False,
+        timeout_seconds=60.0,
+    )
+
+    assert summary["attempted_call_count_total"] == 0
+    for meta in results:
+        assert meta["real_api_call_performed"] is False

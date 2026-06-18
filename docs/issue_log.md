@@ -588,7 +588,30 @@ timeout configuration.
 - No secret exposure.
 - No benchmark.
 - No method-validation claim.
+## I048 — --timeout-seconds did not propagate to dry-run metadata
 
+### Status
+
+Fixed in R12.3.0.1.
+
+### Context
+
+Codex R12.3.0 audit found that `--timeout-seconds 60` produced dry-run
+metadata with `timeout_seconds_configured=30.0`.
+
+### Correction
+
+Separated `actual_timeout` (metadata-only, always honors CLI value) from
+env-var override (only for `--execute-real-api`).  Dry-run with
+`--timeout-seconds 60` now correctly records 60.0 in every metadata field.
+
+### Safety Boundary
+
+- No real API.
+- No pilot rerun.
+- No R12.1 output modification.
+- No `.env` read.
+- No secret exposure.
 ## I047 — Timeout analysis needs per-sample duration and error category metadata
 
 ### Status

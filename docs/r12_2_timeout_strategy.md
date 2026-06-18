@@ -285,3 +285,42 @@ R12_3_0_STATUS: PASSED
 - full pytest: 606 passed
 - health: scaffold-ok
 - synthetic eval: passed
+
+## 12. R12.3.0.1 — Fix timeout metadata propagation in dry-run (COMPLETED)
+
+### Status
+
+```
+R12_3_0_1_STATUS: PASSED
+```
+
+### Context
+
+Codex R12.3.0 audit found that `--timeout-seconds 60` in dry-run mode
+produced metadata with `timeout_seconds_configured=30.0` (the default).
+Root cause: `actual_timeout` was gated behind `execute_real_api`.
+
+### Fix
+
+Separated the CLI timeout value propagation from the env-var override:
+
+- `actual_timeout` (metadata): Always uses CLI value if `--timeout-seconds`
+  was provided, regardless of `--execute-real-api`.
+- Env-var override (`BPC_HYBRID_LLM_TIMEOUT_SECONDS`): Only set when
+  `--execute-real-api` is active.
+
+### Verification
+
+- pilot tests: **41 passed** (9 new dry-run metadata tests)
+- full pytest: **615 passed**
+- dry-run `--timeout-seconds 60`:
+  - summary.timeout_seconds_configured = 60.0 ✅
+  - per-result timeout_seconds_configured = 60.0 ✅
+
+### Safety Boundary
+
+- No real API call.
+- No pilot rerun.
+- No R12.1 output modification.
+- No `.env` read.
+- No batch / retry / repair.

@@ -315,12 +315,15 @@ def run_pilot(
 
     started_at = datetime.now(timezone.utc).isoformat()
 
-    # Determine actual timeout to record in metadata (R12.3.0)
+    # Determine actual timeout to record in metadata (R12.3.0 / R12.3.0.1)
+    # R12.3.0.1: --timeout-seconds propagates to metadata regardless of
+    # --execute-real-api.  Env-var override only happens for real API calls.
     _saved_timeout_env: str | None = None
-    if timeout_seconds is not None and execute_real_api:
-        _saved_timeout_env = os.environ.get("BPC_HYBRID_LLM_TIMEOUT_SECONDS")
-        os.environ["BPC_HYBRID_LLM_TIMEOUT_SECONDS"] = str(timeout_seconds)
-        actual_timeout = timeout_seconds
+    if timeout_seconds is not None:
+        actual_timeout = timeout_seconds  # CLI overrides for metadata always
+        if execute_real_api:
+            _saved_timeout_env = os.environ.get("BPC_HYBRID_LLM_TIMEOUT_SECONDS")
+            os.environ["BPC_HYBRID_LLM_TIMEOUT_SECONDS"] = str(timeout_seconds)
     else:
         # Read from env / config default without touching .env
         env_val = os.environ.get("BPC_HYBRID_LLM_TIMEOUT_SECONDS")

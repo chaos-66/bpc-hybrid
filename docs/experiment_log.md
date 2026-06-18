@@ -2972,6 +2972,44 @@ next-step strategy (R12.3).
 - No benchmark.
 - No method-validation claim.
 
+## R12.3.0.1 — Fix timeout-seconds dry-run metadata propagation
+
+### Type
+
+Bugfix / test-only verification correction.
+
+### Scope
+
+- Real API call: no
+- R12.1 pilot rerun: no
+- R12.1 output modification: no
+- Raw response storage: no
+- Batch execution: no
+- Benchmark: no
+- Method-validation claim: no
+
+### Fix
+
+`--timeout-seconds` now propagates to dry-run/config-blocked metadata, so
+future bounded timeout sanity checks can rely on committed metadata.
+
+The bug was that `timeout_seconds` from CLI was gated behind
+`execute_real_api`, so dry-run always recorded 30.0 (the default) even
+when `--timeout-seconds 60` was passed.  R12.3.0.1 separates
+`actual_timeout` (metadata-only, always uses CLI value if provided) from
+env-var override (only for actual real API calls).
+
+### Verification
+
+- py_compile: OK
+- pilot tests: **41 passed** (32 old + 9 new)
+- full pytest: **615 passed, 0 failed**
+- health: scaffold-ok
+- synthetic eval: passed
+- dry-run `--timeout-seconds 60`:
+  - summary.timeout_seconds_configured = 60.0 ✅
+  - per-result timeout_seconds_configured = 60.0 ✅
+
 ## R12.3.0 — Add Pilot Duration and Timeout Metadata
 
 ### Type

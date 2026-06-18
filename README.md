@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅ | R10.4.1 ✅ | R11.0 ✅ | R11.1 ✅ | R11.1.1 ✅ | R11.2 ✅ | R11.2.1 ✅ | R11.3 ✅ | R11.3.1 ✅ | R11.4 ❌ CONFIG_BLOCKED | R11.4.1 ❌ CONFIG_BLOCKED | R11.4.3 ✅ | R12.0 ✅ | R12.0.1 ✅ | R12.1 ⚠️ PARTIAL | R12.1.1 ✅ | R12.2 ✅ | R12.3.0 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅ | R10.4.1 ✅ | R11.0 ✅ | R11.1 ✅ | R11.1.1 ✅ | R11.2 ✅ | R11.2.1 ✅ | R11.3 ✅ | R11.3.1 ✅ | R11.4 ❌ CONFIG_BLOCKED | R11.4.1 ❌ CONFIG_BLOCKED | R11.4.3 ✅ | R12.0 ✅ | R12.0.1 ✅ | R12.1 ⚠️ PARTIAL | R12.1.1 ✅ | R12.2 ✅ | R12.3.0 ✅ | R12.3.0.1 ✅**
 
 ## Research Positioning
 
@@ -36,6 +36,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - ⚠️ R12.1.1 fixes 3 legacy safety tests that failed due to committed sanitized pilot outputs under `outputs/`. Adds `_SANITIZED_OUTPUT_REL_PATHS` narrow whitelist. Full pytest: 590/590. No real API call, no pilot rerun, no `.env` read. **Status: PASSED.**
 - ⚠️ R12.2 is an analysis-and-planning stage. It analyzes the R12.1 timeout pattern (10/14 `socket.timeout`), creates `docs/r12_2_timeout_strategy.md`, and recommends a bounded R12.3 strategy (R12.3.0 code-only + R12.3.1 2-sample real API sanity check). R12.2 does NOT execute real API calls, rerun the pilot, change R12.1 outputs, or make benchmark/method-validation claims. **Status: PASSED.**
 - ⚠️ R12.3.0 adds per-sample timing metadata (`duration_ms`, `timeout_seconds_configured`, `error_category`), summary aggregates (`duration_ms_total`, `duration_ms_avg`, `timeout_error_count`, `transport_error_count`), and a `--timeout-seconds` CLI flag to the pilot runner. It adds 16 new mock-only tests. R12.3.0 is code-only — it does NOT execute real API calls, rerun the R12.1 pilot, modify R12.1 outputs, read `.env`, or make benchmark/method-validation claims. Full pytest: 606/606. **Status: PASSED.**
+- ⚠️ R12.3.0.1 fixes a Codex-audit blocker: `--timeout-seconds` now propagates to dry-run/config-blocked metadata (previously gated behind `--execute-real-api`). Adds 9 new mock-only tests. R12.3.0.1 is code-only — it does NOT execute real API calls. **Status: PASSED.**
 - ⚠️ R11.2.1 tightens the mock-only schema alignment normalizer gate after Codex blocked R11.2 for permissive handling of missing top-level keys, unknown fields, and malformed clause items. The normalizer now strictly rejects missing explicit top-level keys before parser validation, unknown top-level/clause-level fields, known unsupported model-like fields (object, original_text), non-dict clause items, unsupported enum values, and alias+target conflicts. It remains mock-only — no LLM calls, no network, no `.env`, no raw response storage. 43 new tests + 529 total tests pass. Requires Codex audit before R11.3.
 
 ## R0 Artifacts
