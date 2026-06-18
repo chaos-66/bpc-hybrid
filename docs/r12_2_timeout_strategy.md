@@ -324,3 +324,37 @@ Separated the CLI timeout value propagation from the env-var override:
 - No R12.1 output modification.
 - No `.env` read.
 - No batch / retry / repair.
+
+## 13. R12.3.1 — Two-sample Timeout Sanity Check (COMPLETED)
+
+### Status
+
+```
+R12_3_1_STATUS: PASSED
+```
+
+### Context
+
+R12.2 recommended a bounded 2-sample real API sanity check at 60s
+timeout.  R12.3.0 code infrastructure enabled `--timeout-seconds` and
+per-sample timing metadata.
+
+### Execution
+
+- Selected d01, d02 from R12.1 api_error records (deterministic sort)
+- Executed 2 real API calls with `--timeout-seconds 60`
+- Both returned schema-valid in ~10.5s each
+- No retry, no batch, no raw response
+
+### Key Finding
+
+R12.1's 30s default timeout was the root cause of the 10 api_error
+failures.  Increasing to 60s resolved both tested samples.  This is a
+bounded sanity check (n=2), not a benchmark.
+
+### Safety
+
+- Real API calls: 2 (authorized)
+- No retry / batch / repair / raw response
+- No R12.1 output modification
+- No benchmark / method-validation claim

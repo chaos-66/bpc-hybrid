@@ -612,6 +612,30 @@ env-var override (only for `--execute-real-api`).  Dry-run with
 - No R12.1 output modification.
 - No `.env` read.
 - No secret exposure.
+
+## I049 — R12.1 timeout hypothesis confirmed by 2-sample sanity check
+
+### Status
+
+Verified in R12.3.1.
+
+### Context
+
+R12.1 produced 10/14 socket.timeout with default 30s timeout.  R12.2
+hypothesized that the 30s default was too short.  R12.3.1 tested this
+with a bounded 2-sample sanity check at 60s timeout.
+
+### Result
+
+Both R12.1-timeout samples (d01, d02) returned schema-valid responses
+at 60s timeout in ~10.5s each.  The hypothesis is confirmed for these
+two samples.
+
+### Scope
+
+- Real API calls: 2 (authorized)
+- No retry, no batch, no raw response, no benchmark claim
+
 ## I047 — Timeout analysis needs per-sample duration and error category metadata
 
 ### Status

@@ -3010,6 +3010,54 @@ env-var override (only for actual real API calls).
   - summary.timeout_seconds_configured = 60.0 ✅
   - per-result timeout_seconds_configured = 60.0 ✅
 
+## R12.3.1 — Two-sample Timeout Sanity Check
+
+### Type
+
+Bounded real-API sanity check (authorized: max 2 calls).
+
+### Goal
+
+Take 2 api_error/timeout samples from R12.1, re-run with
+`--timeout-seconds 60`, and check whether the increased timeout
+resolves the failures.
+
+### Selected Samples
+
+- d01: "A controller shall record the decision."
+- d02: "A reviewer may inspect the file."
+
+Deterministic selection: sort R12.1 api_error records by source_id,
+take first 2.
+
+### Results
+
+| sample | R12.1 (30s) | R12.3.1 (60s) | duration_ms |
+|--------|-------------|---------------|-------------|
+| d01 | socket.timeout | schema_valid | 10589.607 |
+| d02 | socket.timeout | schema_valid | 10397.139 |
+
+Both samples returned schema-valid responses in ~10.5s at 60s timeout.
+
+### Verification
+
+- Real API calls: **2** (exactly as authorized)
+- Retry: 0
+- Batch: 0
+- Raw response saved: no
+- R12.1 outputs modified: no
+- Full report: `docs/r12_3_1_timeout_sanity_report.md`
+
+### Scope
+
+- Real API call: yes (2 calls, authorized)
+- R12.1 pilot rerun: no
+- R12.1 output modification: no
+- Raw response storage: no
+- Batch execution: no
+- Benchmark: no
+- Method-validation claim: no
+
 ## R12.3.0 — Add Pilot Duration and Timeout Metadata
 
 ### Type
