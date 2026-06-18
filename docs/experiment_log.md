@@ -2268,4 +2268,326 @@ variables (``BPC_HYBRID_LLM_PROVIDER``, ``BPC_HYBRID_LLM_MODEL``,
 **No retry authorized in this stage.**
 R11.5 deferred until working ``.env`` is verified.
 
+---
+
+## R11.4.2-pre — Redacted LLM Config Diagnosis
+
+### Status
+
+```
+R11_4_2_CONFIG_DIAG_STATUS: PASSED (root cause identified)
+```
+
+### Goal
+
+Diagnose why ``LLMConfig.from_env()`` returned ``enabled=False`` in
+both R11.4 and R11.4.1 without reading ``.env`` content or making
+any real API calls.
+
+### Method
+
+Used ``load_project_env_file()`` to inspect which whitelisted keys
+exist in ``.env`` (presence only, not values), combined with
+``LLMConfig.from_env()`` behaviour analysis.
+
+### Findings
+
+Two problems identified:
+
+1. **R11.4.1 terminal residue**: ``BPC_HYBRID_DISABLE_PROJECT_ENV=1``
+   leaked from offline verification into the real API call terminal.
+2. **Missing key (root cause)**: ``BPC_HYBRID_LLM_ENABLED`` was absent
+   from ``.env``.  Other keys (``BPC_HYBRID_LLM_PROVIDER``,
+   ``BPC_HYBRID_LLM_MODEL``, ``BPC_HYBRID_LLM_API_KEY``,
+   ``BPC_HYBRID_LLM_BASE_URL``) were present.
+
+### Conclusion
+
+``.env`` needed ``BPC_HYBRID_LLM_ENABLED=true`` added.  User confirmed
+manually.
+
+### Safety Boundary
+
+- No real API call.
+- No ``.env`` content read.
+- No code/doc changes.
+- No commit/push.
+
+---
+
+## R11.4.3 — Single-sample Real API Smoke After Enabled Flag Fix
+
+### Status
+
+```
+R11_4_3_STATUS: PASSED
+```
+
+First real LLM API call that succeeded with schema-valid output in the
+bpc-hybrid project.
+
+### Goal
+
+Execute exactly ONE real API call with the ``.env`` fix (``enabled=true``)
+in place, verifying the end-to-end pipeline produces schema-valid output.
+
+### Authorization
+
+User explicitly authorized at most one real API call for this stage.
+
+### Pre-flight Checks
+
+- Working tree clean at ``70828ac`` ✅
+- ``.env`` ignored by ``.gitignore:19`` ✅
+- ``.env`` not tracked, ``.env.example`` tracked ✅
+- ``git pull --ff-only`` already up to date ✅
+
+### Config Confirmation (Redacted)
+
+| Key | Result |
+|-----|--------|
+| ``BPC_HYBRID_DISABLE_PROJECT_ENV_present`` | False |
+| ``LLMConfig.from_env_ok`` | True |
+| ``enabled`` | **True** |
+| ``provider`` | ``openai_compatible`` |
+| ``model_present`` | True |
+| ``api_key_present`` | True |
+| ``base_url_present`` | True |
+
+### Offline Verification
+
+| Check | Result |
+|-------|--------|
+| ``py_compile`` | COMPILE OK ✅ |
+| 45 entrypoint tests | 45 passed in 1.69s ✅ |
+| 574 full tests | 574 passed in 10.59s ✅ |
+| ``check_project_health.py`` | scaffold-ok ✅ |
+| ``evaluate_multi_clause.py`` | synthetic_prototype ✅ |
+
+### Real API Call Result
+
+Executed 2026-06-18.  The initial attempt was blocked by
+``BPC_HYBRID_DISABLE_PROJECT_ENV=1`` residue from offline verification.
+After clearing the residue (setting to empty string — not ``Remove-Item``),
+the real API call succeeded with schema-valid output.
+
+Metadata:
+
+```json
+{
+  "source_id": "r11_4_real_schema_smoke_001",
+  "input_text": "A controller shall record the decision.",
+  "provider": "openai_compatible",
+  "model": "qwen3.7-max",
+  "real_api_call_performed": true,
+  "attempted_call_count": 1,
+  "successful_call_count": 1,
+  "fallback_status": "success",
+  "schema_valid": true,
+  "normalizer_used": true,
+  "normalizer_status": "accepted",
+  "raw_response_saved": false,
+  "secret_redacted": true,
+  "batch": false,
+  "error": null
+}
+```
+
+Output is schema-valid ``MultiClauseExtractionResponse`` with 1 clause:
+- modality: ``shall`` (span 13–18, confidence 0.95)
+- actor: ``A controller`` (span 0–12, confidence 0.9)
+- action: ``record the decision`` (span 19–39, confidence 0.9)
+- condition/constraint/exception: ``null``
+
+**This is NOT the mock copy-paste** — actor and action spans are
+correctly extracted from the source text.
+
+### Safety Boundary
+
+- One real API call authorized — succeeded (exactly 1 network call)
+- No retry
+- No repair call
+- No raw response saved
+- No batch
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+- No ``.env`` content read by agent
+
+### Test Results
+
+- 45 entrypoint tests pass (unchanged)
+- 574 total tests pass (unchanged)
+- Static claim scan: clean
+- Health: scaffold-ok
+- Synthetic eval: no regression
+
+### Exit Gate
+
+R11.4.3 is a single-sample real API schema-aligned smoke — NOT a
+benchmark, NOT a dataset experiment, NOT method validation.
+
+**Must wait for Codex audit before R12 pilot planning.**
+
+---
+
+## R11.4.2-pre — Redacted LLM Config Diagnosis
+
+### Status
+
+```
+R11_4_2_CONFIG_DIAG_STATUS: PASSED (root cause identified)
+```
+
+### Goal
+
+Diagnose why ``LLMConfig.from_env()`` returned ``enabled=False`` in
+both R11.4 and R11.4.1 without reading ``.env`` content or making
+any real API calls.
+
+### Method
+
+Used ``load_project_env_file()`` to inspect which whitelisted keys
+exist in ``.env`` (presence only, not values), combined with
+``LLMConfig.from_env()`` behaviour analysis.
+
+### Findings
+
+Two problems identified:
+
+1. **R11.4.1 terminal residue**: ``BPC_HYBRID_DISABLE_PROJECT_ENV=1``
+   leaked from offline verification into the real API call terminal.
+2. **Missing key (root cause)**: ``BPC_HYBRID_LLM_ENABLED`` was absent
+   from ``.env``.  Other keys (``BPC_HYBRID_LLM_PROVIDER``,
+   ``BPC_HYBRID_LLM_MODEL``, ``BPC_HYBRID_LLM_API_KEY``,
+   ``BPC_HYBRID_LLM_BASE_URL``) were present.
+
+### Conclusion
+
+``.env`` needed ``BPC_HYBRID_LLM_ENABLED=true`` added.  User confirmed
+manually.
+
+### Safety Boundary
+
+- No real API call.
+- No ``.env`` content read.
+- No code/doc changes.
+- No commit/push.
+
+---
+
+## R11.4.3 — Single-sample Real API Smoke After Enabled Flag Fix
+
+### Status
+
+```
+R11_4_3_STATUS: PASSED
+```
+
+First real LLM API call that succeeded with schema-valid output in the
+bpc-hybrid project.
+
+### Goal
+
+Execute exactly ONE real API call with the ``.env`` fix (``enabled=true``)
+in place, verifying the end-to-end pipeline produces schema-valid output.
+
+### Authorization
+
+User explicitly authorized at most one real API call for this stage.
+
+### Pre-flight Checks
+
+- Working tree clean at ``70828ac`` ✅
+- ``.env`` ignored by ``.gitignore:19`` ✅
+- ``.env`` not tracked, ``.env.example`` tracked ✅
+- ``git pull --ff-only`` already up to date ✅
+
+### Config Confirmation (Redacted)
+
+| Key | Result |
+|-----|--------|
+| ``BPC_HYBRID_DISABLE_PROJECT_ENV_present`` | False |
+| ``LLMConfig.from_env_ok`` | True |
+| ``enabled`` | **True** |
+| ``provider`` | ``openai_compatible`` |
+| ``model_present`` | True |
+| ``api_key_present`` | True |
+| ``base_url_present`` | True |
+
+### Offline Verification
+
+| Check | Result |
+|-------|--------|
+| ``py_compile`` | COMPILE OK ✅ |
+| 45 entrypoint tests | 45 passed in 1.69s ✅ |
+| 574 full tests | 574 passed in 10.59s ✅ |
+| ``check_project_health.py`` | scaffold-ok ✅ |
+| ``evaluate_multi_clause.py`` | synthetic_prototype ✅ |
+
+### Real API Call Result
+
+Executed 2026-06-18.  The initial attempt was blocked by
+``BPC_HYBRID_DISABLE_PROJECT_ENV=1`` residue from offline verification.
+After clearing the residue (setting to empty string — not ``Remove-Item``),
+the real API call succeeded with schema-valid output.
+
+Metadata:
+
+```json
+{
+  "source_id": "r11_4_real_schema_smoke_001",
+  "input_text": "A controller shall record the decision.",
+  "provider": "openai_compatible",
+  "model": "qwen3.7-max",
+  "real_api_call_performed": true,
+  "attempted_call_count": 1,
+  "successful_call_count": 1,
+  "fallback_status": "success",
+  "schema_valid": true,
+  "normalizer_used": true,
+  "normalizer_status": "accepted",
+  "raw_response_saved": false,
+  "secret_redacted": true,
+  "batch": false,
+  "error": null
+}
+```
+
+Output is schema-valid ``MultiClauseExtractionResponse`` with 1 clause:
+- modality: ``shall`` (span 13–18, confidence 0.95)
+- actor: ``A controller`` (span 0–12, confidence 0.9)
+- action: ``record the decision`` (span 19–39, confidence 0.9)
+- condition/constraint/exception: ``null``
+
+**This is NOT the mock copy-paste** — actor and action spans are
+correctly extracted from the source text.
+
+### Safety Boundary
+
+- One real API call authorized — succeeded (exactly 1 network call)
+- No retry
+- No repair call
+- No raw response saved
+- No batch
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+- No ``.env`` content read by agent
+
+### Test Results
+
+- 45 entrypoint tests pass (unchanged)
+- 574 total tests pass (unchanged)
+- Static claim scan: clean
+- Health: scaffold-ok
+- Synthetic eval: no regression
+
+### Exit Gate
+
+R11.4.3 is a single-sample real API schema-aligned smoke — NOT a
+benchmark, NOT a dataset experiment, NOT method validation.
+
+**Must wait for Codex audit before R12 pilot planning.**
+
 

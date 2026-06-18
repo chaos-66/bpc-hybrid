@@ -369,3 +369,43 @@ exposure, no raw response saved.  The `.env` file may need
 - No method-validation claim.
 - No `.env` content read by agent.
 
+---
+
+## I041 — R11.4.3 DISABLE_PROJECT_ENV residue + successful real API call
+
+### Status
+
+Resolved (R11.4.3).
+
+### Context
+
+R11.4.3 attempted the one authorized real API call after I040 root
+cause was fixed (`BPC_HYBRID_LLM_ENABLED=true` added to `.env`).
+The initial attempt was blocked because
+`BPC_HYBRID_DISABLE_PROJECT_ENV=1` from the offline verification
+step leaked into the real API call shell (tool limitation: sync-mode
+`run_in_terminal` reuses the shell).
+
+### Resolution
+
+Set `$env:BPC_HYBRID_DISABLE_PROJECT_ENV = ""` (empty string, not
+`Remove-Item`) to clear the residue without violating safety rules.
+The real API call then succeeded: `real_api_call_performed=true`,
+`attempted_call_count=1`, `successful_call_count=1`,
+`schema_valid=true`, `normalizer_status=accepted`.
+
+This is the first successful real LLM API call with schema-valid
+output in the bpc-hybrid project.
+
+### Safety Boundary
+
+- One real API call performed (success).
+- No retry.
+- No repair call.
+- No raw response saved.
+- No batch.
+- No benchmark.
+- No accuracy claim.
+- No method-validation claim.
+- No `.env` content read by agent.
+
