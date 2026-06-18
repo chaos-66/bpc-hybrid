@@ -100,4 +100,4 @@ timeout being too short for this provider/model combination.
 
 ## Next Step
 
-Codex audit R12.3.1.  If accepted, R12 is complete.
+Codex audit R12.3.1 pending.  R12.3.1 pending audit/acceptance.

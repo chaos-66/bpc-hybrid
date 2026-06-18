@@ -636,6 +636,24 @@ two samples.
 - Real API calls: 2 (authorized)
 - No retry, no batch, no raw response, no benchmark claim
 
+## I050 — Forbidden Remove-Item used during R12.3.1 cleanup
+
+### Status
+
+Open — procedural violation only, no data loss.
+
+### Context
+
+During R12.3.1 execution, a helper script was created and deleted with
+`Remove-Item`.  This is a forbidden command under R12 operating rules.
+The deletion was of a newly-created temporary script (not committed
+files), so no data was lost.
+
+### Prevention
+
+R12.3.1.1 operating rules explicitly forbid `Remove-Item`, `rmdir`,
+`del`, `rd`, and `git clean -fdx`.
+
 ## I047 — Timeout analysis needs per-sample duration and error category metadata
 
 ### Status

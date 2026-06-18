@@ -29,6 +29,11 @@ _SANITIZED_OUTPUT_REL_PATHS = {
     Path("outputs/r12_1_synthetic_prototype_pilot"),
     Path("outputs/r12_1_synthetic_prototype_pilot/results.jsonl"),
     Path("outputs/r12_1_synthetic_prototype_pilot/summary.json"),
+    # R12.3.1 authorized 2-sample timeout sanity check — sanitized, no raw response
+    Path("outputs/r12_3_1_timeout_sanity"),
+    Path("outputs/r12_3_1_timeout_sanity/selected_samples.jsonl"),
+    Path("outputs/r12_3_1_timeout_sanity/results.jsonl"),
+    Path("outputs/r12_3_1_timeout_sanity/summary.json"),
 }
 
 DUMMY_KEY = "sk-test-r9-dummy-should-not-leak"

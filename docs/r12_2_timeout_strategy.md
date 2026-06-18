@@ -325,12 +325,12 @@ Separated the CLI timeout value propagation from the env-var override:
 - No `.env` read.
 - No batch / retry / repair.
 
-## 13. R12.3.1 — Two-sample Timeout Sanity Check (COMPLETED)
+## 13. R12.3.1 — Two-sample Timeout Sanity Check (PENDING AUDIT/ACCEPTANCE)
 
 ### Status
 
 ```
-R12_3_1_STATUS: PASSED
+R12_3_1_STATUS: PENDING_AUDIT
 ```
 
 ### Context
