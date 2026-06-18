@@ -2785,3 +2785,75 @@ experiment.
 - No benchmark.
 - No accuracy claim.
 - No method-validation claim.
+
+---
+
+## R12.1 — Synthetic Prototype Pilot
+
+### Type
+
+Real API pilot (14 sentences, 14 calls max, single execution).
+
+### Status
+
+```
+R12_1_STATUS: PARTIAL
+```
+
+### Reason
+
+Pilot executed with one real API call per sample (14 total). 4/14 produced
+schema-valid output; 10/14 timed out (API transport error).  No retry, no
+repair, no raw response saved.
+
+### Pilot Summary
+
+| Metric | Count |
+|--------|-------|
+| sample_count | 14 |
+| attempted_call_count_total | 14 |
+| successful_call_count_total | 4 |
+| schema_valid_count | 4 |
+| schema_invalid_count | 0 |
+| api_error_count | 10 |
+| config_blocked_count | 0 |
+| raw_response_saved | false |
+| batch | false |
+| retry | false |
+| repair_call | false |
+
+### Scope
+
+- Real API call: **yes** (14, one per sample, executed once)
+- Dataset modification: **no**
+- Raw response storage: **no**
+- Batch: **no**
+- Benchmark: **no**
+- Accuracy claim: **no**
+- Method-validation claim: **no**
+
+### Claim Boundary
+
+R12.1 is a synthetic prototype pilot.  R12.1 is not a benchmark.  R12.1 is not
+formal dataset evaluation.  R12.1 is not method validation.  R12.1 does not
+compare against Sun baseline.
+
+### Artifacts
+
+- `scripts/run_synthetic_prototype_pilot.py` — pilot runner
+- `tests/test_synthetic_prototype_pilot.py` — 16 mock-only tests
+- `outputs/r12_1_synthetic_prototype_pilot/results.jsonl` — per-sample metadata
+- `outputs/r12_1_synthetic_prototype_pilot/summary.json` — pilot summary
+- `docs/r12_1_pilot_report.md` — full pilot report
+
+### Safety Boundary
+
+- Real API calls executed once (14 calls).
+- No retry.
+- No repair call.
+- No raw response saved.
+- No batch.
+- No benchmark.
+- No accuracy claim.
+- No method-validation claim.
+- No `.env` content read by agent.

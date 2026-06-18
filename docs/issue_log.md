@@ -472,3 +472,44 @@ scripts:
 - No dataset modification.
 - No `.env` content read by agent.
 
+---
+
+## I044 — R12.1 synthetic prototype pilot: 10/14 API timeout
+
+### Status
+
+Recorded (R12.1).
+
+### Context
+
+R12.1 executed one real API call per synthetic prototype sentence (14 total).
+4/14 produced schema-valid output; 10/14 timed out with API transport error.
+The timeout pattern correlated with sentence complexity: all 4 successful
+calls were simple single-clause sentences (d03, d04, d07, d34), while
+multi-clause and condition-bearing sentences consistently timed out.
+
+### Resolution
+
+Not resolved — root cause is external (API endpoint timeout threshold).
+This is NOT a code defect. The pipeline worked as designed:
+- All 14 attempted calls returned redacted errors or schema-valid output
+- No retry, no repair call, no raw response saved
+- No secrets leaked
+
+### Recommendation
+
+R12.2 or later should investigate API endpoint timeout configuration before
+a full dataset experiment. The current endpoint is not suitable for larger
+or more complex sentences without timeout adjustment.
+
+### Safety Boundary
+
+- 14 real API calls performed (one execution only).
+- No retry.
+- No repair call.
+- No raw response saved.
+- No batch.
+- No benchmark.
+- No method-validation claim.
+- No `.env` content read by agent.
+
