@@ -2103,7 +2103,15 @@ Requires Codex audit before R11.4.
 
 ## R11.4 — Single-sample Real API Schema-aligned Smoke
 
-### Goal
+### Status
+
+```
+R11_4_CONFIG_BLOCKED
+```
+
+Config gate blocked the call: ``LLMConfig.from_env()`` returned
+``enabled=False``.  No network activity, no secret exposure.
+This stage is NOT counted as PASSED.
 
 Execute exactly ONE real API call via the dedicated single-call entrypoint
 with full schema alignment (normalizer + schema gate), verifying the
@@ -2169,6 +2177,95 @@ designed.  No API key, base URL, or other secret material was exposed.
 Config gate blocked the call.  Requires user to verify ``.env``
 contains ``BPC_HYBRID_LLM_ENABLED=true`` before any retry.
 **No retry authorized in this stage.**
-R11.5 deferred until user confirms ``.env`` is correctly configured.
+R11.4.1 initiated after user confirmed ``.env`` configuration.
+
+---
+
+## R11.4.1 — Re-run Single-sample Real API Schema Smoke After User Config Fix
+
+### Status
+
+```
+R11_4_1_CONFIG_BLOCKED
+```
+
+Config gate again blocked the call — ``LLMConfig.from_env()``
+returned ``enabled=False`` despite user confirmation of ``.env``
+configuration.  No network activity, no secret exposure.
+
+### Goal
+
+Re-execute the ONE authorized real API call via the single-call
+entrypoint after the user manually confirmed ``.env`` has real API
+configuration.  Same fixed input as R11.4.
+
+### Authorization
+
+User explicitly authorized at most one real API call for this stage.
+
+### Pre-flight Checks
+
+- Working tree clean at ``368eeb4`` ✅
+- ``.env`` ignored by ``.gitignore:19`` ✅
+- ``.env`` not tracked, ``.env.example`` tracked ✅
+- ``git pull --ff-only`` already up to date ✅
+
+### Offline Verification
+
+| Check | Result |
+|-------|--------|
+| ``py_compile`` | COMPILE OK ✅ |
+| 45 entrypoint tests | 45 passed in 1.66s ✅ |
+| 574 full tests | 574 passed in 9.89s ✅ |
+| ``check_project_health.py`` | scaffold-ok ✅ |
+| ``evaluate_multi_clause.py`` | synthetic_prototype ✅ |
+
+### Real API Call Result
+
+Executed 2026-06-18:
+
+```json
+{
+  "source_id": "r11_4_real_schema_smoke_001",
+  "input_text": "A controller shall record the decision.",
+  "real_api_call_performed": false,
+  "attempted_call_count": 0,
+  "successful_call_count": 0,
+  "error": "LLM fallback is disabled (config.enabled=False)"
+}
+```
+
+**Config gate blocked the call again.**  ``LLMConfig.from_env()``
+still returns ``enabled=False``.  No API key, base URL, or other
+secret material was exposed.
+
+### Safety Boundary
+
+- One real API call authorized — config gate blocked it (no network activity)
+- No retry
+- No raw response saved
+- No batch
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+- No ``.env`` content read by agent
+
+### Test Results
+
+- 45 entrypoint tests pass (unchanged from R11.4)
+- 574 total tests pass (unchanged from R11.4)
+- Static claim scan: clean
+- Health: scaffold-ok
+- Synthetic eval: no regression
+
+### Exit Gate
+
+R11.4.1 is the second consecutive config-blocked result.
+Config gate is working as designed, but ``.env`` configuration
+may need ``BPC_HYBRID_LLM_ENABLED=true`` and possibly other
+variables (``BPC_HYBRID_LLM_PROVIDER``, ``BPC_HYBRID_LLM_MODEL``,
+``BPC_HYBRID_LLM_API_KEY``, ``BPC_HYBRID_LLM_BASE_URL``).
+**No retry authorized in this stage.**
+R11.5 deferred until working ``.env`` is verified.
 
 

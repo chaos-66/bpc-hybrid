@@ -333,3 +333,39 @@ future real API stage.
 - No method-validation claim.
 - No `.env` content read by agent.
 
+---
+
+## I040 — R11.4.1 config gate again blocked real API call
+
+### Status
+
+Recorded (R11.4.1).
+
+### Context
+
+R11.4.1 re-ran the one authorized real API call after the user
+manually confirmed `.env` configuration.  The config gate again
+blocked the call because `LLMConfig.from_env()` returned
+`enabled=False`.  This is the second consecutive config-blocked
+result (I039 + I040).
+
+### Resolution
+
+No retry executed (not authorized in this stage).  The config gate
+continues to work as designed: no network activity, no API key
+exposure, no raw response saved.  The `.env` file may need
+`BPC_HYBRID_LLM_ENABLED=true` and possibly other required variables
+(`BPC_HYBRID_LLM_PROVIDER`, `BPC_HYBRID_LLM_MODEL`,
+`BPC_HYBRID_LLM_API_KEY`, `BPC_HYBRID_LLM_BASE_URL`).
+
+### Safety Boundary
+
+- No real API call performed (config gate blocked).
+- No retry.
+- No raw response saved.
+- No batch.
+- No benchmark.
+- No accuracy claim.
+- No method-validation claim.
+- No `.env` content read by agent.
+
