@@ -36,7 +36,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -118,6 +120,25 @@ def _build_summary(
         elif status == "config_blocked":
             config_blocked += 1
 
+    # ---- R12.3.0 timing / error category aggregates ------------------
+    duration_ms_list = [r.get("duration_ms", 0) or 0 for r in results]
+    duration_ms_total = sum(duration_ms_list)
+    duration_ms_avg = (duration_ms_total / len(duration_ms_list)) if duration_ms_list else 0
+
+    timeout_error_count = 0
+    transport_error_count = 0
+    for r in results:
+        ec = r.get("error_category", "unknown")
+        if ec == "timeout":
+            timeout_error_count += 1
+        elif ec == "transport_error":
+            transport_error_count += 1
+
+    # Read configured timeout from first sample (same for all samples)
+    timeout_configured = 0.0
+    if results:
+        timeout_configured = float(results[0].get("timeout_seconds_configured", 0) or 0)
+
     return {
         "stage": "R12.1",
         "dataset_type": "synthetic_prototype",
@@ -137,6 +158,11 @@ def _build_summary(
         "repair_call": False,
         "started_at": started_at,
         "ended_at": ended_at,
+        "duration_ms_total": duration_ms_total,
+        "duration_ms_avg": round(duration_ms_avg, 3),
+        "timeout_seconds_configured": timeout_configured,
+        "timeout_error_count": timeout_error_count,
+        "transport_error_count": transport_error_count,
     }
 
 
@@ -194,6 +220,53 @@ def _classify_status(meta: dict) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Error category classifier (R12.3.0)
+# ---------------------------------------------------------------------------
+
+_ERROR_CATEGORY_TIMEOUT_KEYWORDS = (
+    "timeout",
+    "timed out",
+    "socket.timeout",
+)
+
+
+def _classify_error_category(meta: dict) -> str:
+    """Classify a per-sample result into an error category.
+
+    Returns
+    -------
+    str
+        One of: ``"none"``, ``"timeout"``, ``"transport_error"``,
+        ``"schema_invalid"``, ``"config_blocked"``, ``"unknown"``.
+    """
+    status = meta.get("status", "unknown")
+    error = meta.get("error")
+
+    # ---- schema_valid: no error category -------------------------------
+    if status == "schema_valid":
+        return "none"
+
+    # ---- config_blocked: no API call attempted -------------------------
+    if status == "config_blocked":
+        return "config_blocked"
+
+    # ---- schema_invalid -------------------------------------------------
+    if status == "schema_invalid":
+        return "schema_invalid"
+
+    # ---- api_error: distinguish timeout vs other transport errors -------
+    if status == "api_error":
+        if error:
+            err_lower = str(error).lower()
+            if any(kw in err_lower for kw in _ERROR_CATEGORY_TIMEOUT_KEYWORDS):
+                return "timeout"
+            return "transport_error"
+        return "transport_error"
+
+    return "unknown"
+
+
+# ---------------------------------------------------------------------------
 # Core pilot runner
 # ---------------------------------------------------------------------------
 
@@ -204,6 +277,7 @@ def run_pilot(
     output_dir: str = "outputs/r12_1_synthetic_prototype_pilot",
     execute_real_api: bool = False,
     provider: str = "openai_compatible",
+    timeout_seconds: float | None = None,
 ) -> tuple[list[dict], dict]:
     """Run the synthetic prototype pilot.
 
@@ -219,6 +293,10 @@ def run_pilot(
         When True, each sample triggers exactly ONE real API call.
     provider : str
         Provider name for real API calls.
+    timeout_seconds : float | None
+        If provided, sets BPC_HYBRID_LLM_TIMEOUT_SECONDS env var
+        before each call (and restores original afterward).
+        If None, uses LLMConfig default timeout.
 
     Returns
     -------
@@ -237,6 +315,23 @@ def run_pilot(
 
     started_at = datetime.now(timezone.utc).isoformat()
 
+    # Determine actual timeout to record in metadata (R12.3.0)
+    _saved_timeout_env: str | None = None
+    if timeout_seconds is not None and execute_real_api:
+        _saved_timeout_env = os.environ.get("BPC_HYBRID_LLM_TIMEOUT_SECONDS")
+        os.environ["BPC_HYBRID_LLM_TIMEOUT_SECONDS"] = str(timeout_seconds)
+        actual_timeout = timeout_seconds
+    else:
+        # Read from env / config default without touching .env
+        env_val = os.environ.get("BPC_HYBRID_LLM_TIMEOUT_SECONDS")
+        if env_val is not None:
+            try:
+                actual_timeout = float(env_val)
+            except ValueError:
+                actual_timeout = 30.0
+        else:
+            actual_timeout = 30.0  # LLMConfig default
+
     results: list[dict] = []
     for idx, sample in enumerate(samples):
         source_id = sample.get("id", f"unknown_{idx}")
@@ -248,12 +343,19 @@ def run_pilot(
             flush=True,
         )
 
+        # Per-sample timing (R12.3.0)
+        t_start = time.perf_counter()
+
         meta = run_single_call(
             source_id=source_id,
             text=text,
             provider=provider,
             execute_real_api=execute_real_api,
         )
+
+        # Per-sample timing (R12.3.0)
+        t_end = time.perf_counter()
+        duration_ms = round((t_end - t_start) * 1000.0, 3)
 
         # Add pilot-specific metadata
         status = _classify_status(meta)
@@ -263,16 +365,29 @@ def run_pilot(
         meta["retry"] = False
         meta["repair_call"] = False
 
+        # R12.3.0 metadata
+        meta["duration_ms"] = duration_ms
+        meta["timeout_seconds_configured"] = actual_timeout
+        meta["error_category"] = _classify_error_category(meta)
+
         results.append(meta)
 
         # Print progress
         print(
             f"  -> status={status} "
+            f"error_category={meta['error_category']} "
+            f"duration_ms={duration_ms} "
             f"schema_valid={meta.get('schema_valid', False)} "
             f"attempted={meta.get('attempted_call_count', 0)} "
             f"successful={meta.get('successful_call_count', 0)}",
             flush=True,
         )
+
+    # Restore original timeout env var (R12.3.0)
+    if _saved_timeout_env is not None:
+        os.environ["BPC_HYBRID_LLM_TIMEOUT_SECONDS"] = _saved_timeout_env
+    elif timeout_seconds is not None and execute_real_api:
+        os.environ.pop("BPC_HYBRID_LLM_TIMEOUT_SECONDS", None)
 
     ended_at = datetime.now(timezone.utc).isoformat()
 
@@ -340,6 +455,16 @@ def main(argv: list[str] | None = None) -> int:
         default="openai_compatible",
         help="LLM provider (default: openai_compatible).",
     )
+    parser.add_argument(
+        "--timeout-seconds",
+        type=float,
+        default=None,
+        help=(
+            "Override BPC_HYBRID_LLM_TIMEOUT_SECONDS for real API calls. "
+            "If not set, uses LLMConfig default (30s). "
+            "Only takes effect with --execute-real-api."
+        ),
+    )
 
     args = parser.parse_args(argv)
 
@@ -350,6 +475,7 @@ def main(argv: list[str] | None = None) -> int:
             output_dir=args.output_dir,
             execute_real_api=args.execute_real_api,
             provider=args.provider,
+            timeout_seconds=args.timeout_seconds,
         )
     except FileNotFoundError as exc:
         print(

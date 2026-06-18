@@ -2971,3 +2971,58 @@ next-step strategy (R12.3).
 - No secret exposure.
 - No benchmark.
 - No method-validation claim.
+
+## R12.3.0 — Add Pilot Duration and Timeout Metadata
+
+### Type
+
+Code/test only.
+
+### Goal
+
+Add per-sample duration (`duration_ms`), configured timeout
+(`timeout_seconds_configured`), and error category (`error_category`)
+metadata to the pilot runner, with corresponding summary aggregates.
+
+### Changes
+
+- `scripts/run_synthetic_prototype_pilot.py`:
+  - `_classify_error_category()` — maps status+error to one of
+    `none/timeout/transport_error/schema_invalid/config_blocked/unknown`
+  - Per-sample fields: `duration_ms`, `timeout_seconds_configured`,
+    `error_category`
+  - Summary fields: `duration_ms_total`, `duration_ms_avg`,
+    `timeout_seconds_configured`, `timeout_error_count`,
+    `transport_error_count`
+  - `run_pilot(timeout_seconds=...)` parameter + `--timeout-seconds` CLI flag
+  - Env var save/restore for timeout override
+- `tests/test_synthetic_prototype_pilot.py`:
+  - 16 new mock-only tests
+
+### Verification
+
+- py_compile: OK
+- pilot tests: **32 passed**
+- full pytest: **606 passed, 0 failed**
+- health: scaffold-ok
+- synthetic eval: passed
+
+### Scope
+
+- Real API call: **no**
+- R12.1 pilot rerun: **no**
+- R12.1 output modification: **no**
+- Raw response storage: **no**
+- Batch execution: **no**
+- Benchmark: **no**
+- Method-validation claim: **no**
+
+### Safety Boundary
+
+- No real API call.
+- No pilot rerun.
+- No R12.1 output change.
+- No `.env` read.
+- No secret exposure.
+- No benchmark.
+- No method-validation claim.

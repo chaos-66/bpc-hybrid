@@ -589,3 +589,34 @@ timeout configuration.
 - No benchmark.
 - No method-validation claim.
 
+## I047 — Timeout analysis needs per-sample duration and error category metadata
+
+### Status
+
+Fixed in R12.3.0.
+
+### Context
+
+R12.1 produced 10 timeout/api_error samples, but the committed metadata
+lacked per-sample duration and structured timeout category fields.
+R12.2 identified the gap and recommended adding these fields before any
+future timeout sanity check.
+
+### Resolution
+
+R12.3.0 added per-sample `duration_ms`, `timeout_seconds_configured`,
+`error_category` fields, summary aggregates (`duration_ms_total`,
+`duration_ms_avg`, `timeout_error_count`, `transport_error_count`),
+and a `--timeout-seconds` CLI flag.  16 new mock-only tests + 606 full
+tests pass.  Code-only — no real API, no pilot rerun, no `.env` read.
+
+### Safety Boundary
+
+- No real API.
+- No pilot rerun.
+- No R12.1 output modification.
+- No `.env` read.
+- No secret exposure.
+- No benchmark.
+- No method-validation claim.
+

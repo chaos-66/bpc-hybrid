@@ -240,3 +240,48 @@ validation.
 R12.2 recommends a bounded R12.3 strategy: code-only changes first
 (R12.3.0), then a 2-sample real API sanity check (R12.3.1).  R12.3.1
 is conditional on R12.3.0 passing full pytest.
+
+## 11. R12.3.0 Execution — Code-only Metadata (COMPLETED)
+
+### Status
+
+```
+R12_3_0_STATUS: PASSED
+```
+
+### What Changed
+
+- `scripts/run_synthetic_prototype_pilot.py`:
+  - Added `time` and `os` imports
+  - Added `_classify_error_category()` function (returns: `none`, `timeout`,
+    `transport_error`, `schema_invalid`, `config_blocked`, `unknown`)
+  - Per-sample metadata: `duration_ms`, `timeout_seconds_configured`,
+    `error_category`
+  - Summary fields: `duration_ms_total`, `duration_ms_avg`,
+    `timeout_seconds_configured`, `timeout_error_count`,
+    `transport_error_count`
+  - `run_pilot()` accepts `timeout_seconds: float | None` parameter
+  - `--timeout-seconds` CLI flag (only effective with `--execute-real-api`)
+  - Env var `BPC_HYBRID_LLM_TIMEOUT_SECONDS` restored after override
+- `tests/test_synthetic_prototype_pilot.py`:
+  - Added 16 new mock-only tests covering duration_ms, timeout_seconds_configured,
+    error_category, summary aggregates, all 5 error_category values,
+    --timeout-seconds CLI, env var passthrough/restore
+
+### Safety Boundary
+
+- Real API call: **no**
+- R12.1 pilot rerun: **no**
+- R12.1 output modification: **no**
+- Raw response storage: **no**
+- Batch execution: **no**
+- Benchmark: **no**
+- Method-validation claim: **no**
+- `.env` read: **no**
+
+### Verification
+
+- pilot tests: 32 passed
+- full pytest: 606 passed
+- health: scaffold-ok
+- synthetic eval: passed
