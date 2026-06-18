@@ -23,6 +23,14 @@ DRY_RUN_SCRIPT = SCRIPTS_DIR / "run_llm_dry_run.py"
 PYTHON_EXE = sys.executable
 SAMPLE_TEXT = "A controller shall record the decision."
 
+# R12.1 committed sanitized pilot outputs — approved, no raw response, no secrets.
+# These are committed to git and must not trigger legacy safety-test failures.
+_SANITIZED_OUTPUT_REL_PATHS = {
+    Path("outputs/r12_1_synthetic_prototype_pilot"),
+    Path("outputs/r12_1_synthetic_prototype_pilot/results.jsonl"),
+    Path("outputs/r12_1_synthetic_prototype_pilot/summary.json"),
+}
+
 DUMMY_KEY = "sk-test-r9-dummy-should-not-leak"
 DUMMY_URL = "https://dummy-r9.example.com/v1"
 DUMMY_MODEL = "dummy-r9-model"
@@ -1198,12 +1206,15 @@ class TestSchemaInvalidNoSecretLeak:
         result = adapter.complete(fb_req)
         assert result.error is not None
 
-        # Check no raw response / outputs / logs directories created
+        # Check no raw response / outputs / logs directories created.
+        # R12.1.1: Exclude committed sanitized pilot outputs from safety check.
         for bad_dir in ["outputs", "logs", "raw_responses"]:
             p = PROJECT_ROOT / bad_dir
             if p.exists():
-                # Only fail if newly created (may exist from prior stages)
-                recent = list(p.rglob("*"))
+                recent = [
+                    r for r in p.rglob("*")
+                    if r.relative_to(PROJECT_ROOT) not in _SANITIZED_OUTPUT_REL_PATHS
+                ]
                 assert not recent, (
                     f"Schema-invalid path created files in {bad_dir}/: {recent}"
                 )
@@ -1426,7 +1437,11 @@ class TestFakeRealProviderValidSchemaResponse:
         for bad_dir in ["outputs", "logs", "raw_responses"]:
             p = PROJECT_ROOT / bad_dir
             if p.exists():
-                recent = list(p.rglob("*"))
+                # R12.1.1: Exclude committed sanitized pilot outputs from safety check.
+                recent = [
+                    r for r in p.rglob("*")
+                    if r.relative_to(PROJECT_ROOT) not in _SANITIZED_OUTPUT_REL_PATHS
+                ]
                 assert not recent, (
                     f"Valid-schema path created files in {bad_dir}/: {recent}"
                 )

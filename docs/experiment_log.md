@@ -2857,3 +2857,53 @@ compare against Sun baseline.
 - No accuracy claim.
 - No method-validation claim.
 - No `.env` content read by agent.
+
+---
+
+## R12.1.1 — Fix Full Pytest Regression After Sanitized Pilot Outputs
+
+### Type
+
+Test compatibility fix only — no real API, no pilot rerun.
+
+### Status
+
+```
+R12_1_1_STATUS: PASSED
+```
+
+### Reason
+
+R12.1 committed sanitized pilot outputs under
+`outputs/r12_1_synthetic_prototype_pilot/`.  Legacy safety tests in
+`test_llm_dry_run.py` and `test_real_api_gate.py` treated any existing
+output file as unsafe, causing 3 failures in full pytest (590→587).
+
+### Correction
+
+Added `_SANITIZED_OUTPUT_REL_PATHS` whitelist to both test files, filtering
+the approved sanitized pilot output paths from the safety assertions.
+The whitelist covers:
+- `outputs/r12_1_synthetic_prototype_pilot/`
+- `outputs/r12_1_synthetic_prototype_pilot/results.jsonl`
+- `outputs/r12_1_synthetic_prototype_pilot/summary.json`
+
+The whitelist is narrow — only the exact committed paths are excluded.
+All other output/log/raw_response files still trigger the safety assertion.
+
+### Scope
+
+- Real API call: **no**
+- Pilot rerun: **no**
+- Output file modification: **no**
+- Test modification only: **yes**
+- Full pytest: **590 passed, 0 failed**
+
+### Safety Boundary
+
+- No real API call.
+- No pilot rerun.
+- No output file change.
+- No `.env` read.
+- No secret exposure.
+- Whitelist is narrow — does not weaken raw response / secret detection.

@@ -18,6 +18,14 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = PROJECT_ROOT / "scripts"
 DRY_RUN_SCRIPT = SCRIPTS_DIR / "run_llm_dry_run.py"
 
+# R12.1 committed sanitized pilot outputs — approved, no raw response, no secrets.
+# These are committed to git and must not trigger legacy safety-test failures.
+_SANITIZED_OUTPUT_REL_PATHS = {
+    Path("outputs/r12_1_synthetic_prototype_pilot"),
+    Path("outputs/r12_1_synthetic_prototype_pilot/results.jsonl"),
+    Path("outputs/r12_1_synthetic_prototype_pilot/summary.json"),
+}
+
 PYTHON_EXE = sys.executable
 SAMPLE_TEXT = "A controller shall record the decision."
 
@@ -343,8 +351,12 @@ class TestSafetyGuarantees:
         for d in forbidden_dirs:
             p = PROJECT_ROOT / d
             if p.exists():
-                # Directory exists but must be empty (or pre-existing from git)
-                contents = list(p.iterdir())
+                # Directory exists but must be empty (or pre-existing from git).
+                # R12.1.1: Exclude committed sanitized pilot outputs from safety check.
+                contents = [
+                    c for c in p.iterdir()
+                    if c.relative_to(PROJECT_ROOT) not in _SANITIZED_OUTPUT_REL_PATHS
+                ]
                 assert len(contents) == 0, (
                     f"Directory {d}/ has files: {[f.name for f in contents]}"
                 )

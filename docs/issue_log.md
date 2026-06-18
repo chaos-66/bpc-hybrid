@@ -513,3 +513,38 @@ or more complex sentences without timeout adjustment.
 - No method-validation claim.
 - No `.env` content read by agent.
 
+---
+
+## I045 — R12.1 committed sanitized outputs triggered legacy output-safety tests
+
+### Status
+
+Fixed in R12.1.1 (full pytest passes: 590/590).
+
+### Context
+
+R12.1 added approved sanitized pilot outputs under
+`outputs/r12_1_synthetic_prototype_pilot/`.  Legacy safety tests in
+`test_llm_dry_run.py::TestSafetyGuarantees::test_no_output_files_created`,
+`test_real_api_gate.py::TestSchemaInvalidNoSecretLeak::test_schema_invalid_no_raw_response_file`,
+and `test_real_api_gate.py::TestFakeRealProviderValidSchemaResponse::test_fake_real_provider_valid_schema_no_raw_response`
+treated any existing file under `outputs/` as unsafe, causing 3 failures.
+
+### Correction
+
+R12.1.1 added `_SANITIZED_OUTPUT_REL_PATHS` — a narrow whitelist of the
+exact 3 committed sanitized pilot output paths — in both test files.
+Each affected assertion filters the whitelisted paths before checking for
+unexpected output files.  The whitelist does NOT weaken any raw-response
+or secret-detection safety invariants.
+
+### Safety Boundary
+
+- No real API rerun.
+- No pilot rerun.
+- No output file modification.
+- No `.env` read.
+- No secret exposure.
+- Whitelist is narrow — only exact committed sanitized paths excluded.
+- Full pytest: 590 passed, 0 failed.
+

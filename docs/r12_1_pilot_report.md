@@ -6,6 +6,10 @@
 R12_1_STATUS: PARTIAL
 ```
 
+> **R12.1.1** (test compatibility fix only, no real API): `PASSED`.
+> 3 legacy safety tests were updated to whitelist committed sanitized pilot
+> outputs. Full pytest: 590 passed, 0 failed. R12.1 pilot result unchanged.
+
 **Reason**: Pilot executed successfully with 14 real API calls. 4/14 produced
 schema-valid output; 10/14 timed out (API transport error). No config_blocked,
 no schema_invalid, no retry, no repair, no raw response saved.
