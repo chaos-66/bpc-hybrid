@@ -1,7 +1,9 @@
-"""Mock-only schema alignment tests (R11.2).
+"""Mock-only schema alignment tests (R11.2.1 — strict gate).
 
-Tests the schema-alignment normalizer and its integration into
-``LLMFallbackAdapter`` and ``extract_with_optional_llm_fallback()``.
+Tests the schema-alignment normalizer under the strict R11.2.1 gate policy:
+missing top-level keys → rejected, unknown fields → rejected,
+known unsupported model fields → rejected, non-dict clause items → rejected,
+unsupported enum values → rejected, alias+target conflicts → rejected.
 
 No real API, no ``.env``, no network, no raw response storage, no batch.
 All test data is synthetic toy text — no real GDPR, BPMN, or Sun data.
@@ -9,18 +11,13 @@ All test data is synthetic toy text — no real GDPR, BPMN, or Sun data.
 
 from __future__ import annotations
 
-import io
 import json
-import os
-import sys
 from pathlib import Path
 
 import pytest
 
 from bpc_hybrid.fallback import (
     FallbackRequest,
-    FallbackResult,
-    MockLLMFallbackClient,
     extract_with_optional_llm_fallback,
 )
 from bpc_hybrid.llm_client import (
@@ -29,26 +26,29 @@ from bpc_hybrid.llm_client import (
     LLMResponse,
     MockLLMTransport,
     _parse_and_align_llm_json_response,
-    parse_llm_json_response,
 )
 from bpc_hybrid.llm_config import LLMConfig, LLMProvider
 from bpc_hybrid.schema import (
-    ClauseExtraction,
-    FieldSpan,
     MultiClauseExtractionResponse,
     SchemaValidationError,
 )
 from bpc_hybrid.schema_alignment import (
-    NormalizationResult,
+    ERROR_ALIAS_CONFLICT,
+    ERROR_INVALID_CLAUSE_ITEM,
+    ERROR_INVALID_ENUM,
+    ERROR_MISSING_TOP_KEY,
+    ERROR_UNKNOWN_CLAUSE_FIELD,
+    ERROR_UNKNOWN_TOP_FIELD,
+    ERROR_UNSUPPORTED_MODEL_FIELD,
     normalize_llm_fallback_json,
 )
-
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
 SAMPLE_TEXT = "A controller shall record the decision."
+SAMPLE_LEN = len(SAMPLE_TEXT)
 
 
 def _schema_valid_raw() -> dict:
@@ -64,7 +64,7 @@ def _schema_valid_raw() -> dict:
                 "source_text": SAMPLE_TEXT,
                 "clause_text": SAMPLE_TEXT,
                 "clause_span_start": 0,
-                "clause_span_end": len(SAMPLE_TEXT),
+                "clause_span_end": SAMPLE_LEN,
                 "modality": {
                     "text": "shall",
                     "span_start": 13,
@@ -80,7 +80,7 @@ def _schema_valid_raw() -> dict:
                 "action": {
                     "text": "record the decision",
                     "span_start": 19,
-                    "span_end": len(SAMPLE_TEXT),
+                    "span_end": SAMPLE_LEN,
                     "confidence": 0.90,
                 },
                 "condition": None,
@@ -93,7 +93,7 @@ def _schema_valid_raw() -> dict:
 
 
 def _model_like_raw() -> dict:
-    """Return a model-like raw dict using fields from R10.3 mismatch."""
+    """Return a model-like raw dict using alias fields (NO object/original_text)."""
     return {
         "schema_version": "0.1.0",
         "source_id": "sample-001",
@@ -105,7 +105,7 @@ def _model_like_raw() -> dict:
                 "source_text": SAMPLE_TEXT,
                 "clause_text": SAMPLE_TEXT,
                 "clause_span_start": 0,
-                "clause_span_end": len(SAMPLE_TEXT),
+                "clause_span_end": SAMPLE_LEN,
                 "normative_type": {
                     "text": "shall",
                     "span_start": 13,
@@ -121,7 +121,7 @@ def _model_like_raw() -> dict:
                 "action": {
                     "text": "record the decision",
                     "span_start": 19,
-                    "span_end": len(SAMPLE_TEXT),
+                    "span_end": SAMPLE_LEN,
                     "confidence": 0.90,
                 },
                 "conditions": {
@@ -130,8 +130,6 @@ def _model_like_raw() -> dict:
                     "span_end": 13,
                     "confidence": 0.85,
                 },
-                "object": "some object text",
-                "original_text": SAMPLE_TEXT,
                 "constraint": None,
                 "exception": None,
                 "confidence": 0.90,
@@ -140,711 +138,371 @@ def _model_like_raw() -> dict:
     }
 
 
-def _model_like_with_extra_top_level() -> dict:
-    """Model-like with extra unknown top-level key."""
-    d = _model_like_raw()
-    d["unknown_top_key"] = 42
-    return d
-
-
-def _fs(text: str, start: int, end: int, confidence: float = 1.0) -> FieldSpan:
-    return FieldSpan(text=text, span_start=start, span_end=end, confidence=confidence)
-
-
-def _clause(
-    clause_id: str,
-    source_id: str,
-    source_text: str,
-    clause_text: str,
-    start: int,
-    end: int,
-    confidence: float = 0.9,
-    **fields: FieldSpan | None,
-) -> ClauseExtraction:
-    kw: dict = {
-        "modality": None,
-        "actor": None,
-        "action": None,
-        "condition": None,
-        "constraint": None,
-        "exception": None,
-    }
-    kw.update(fields)
-    return ClauseExtraction(
-        clause_id=clause_id,
-        source_id=source_id,
-        source_text=source_text,
-        clause_text=clause_text,
-        clause_span_start=start,
-        clause_span_end=end,
-        confidence=confidence,
-        **kw,
-    )
+def _make_config(enabled: bool = True) -> LLMConfig:
+    return LLMConfig(provider=LLMProvider.MOCK, model="mock-model", enabled=enabled)
 
 
 # ===========================================================================
-# 8.1 Normalizer Unit Tests
+# 1. Top-level explicit-key gate
 # ===========================================================================
 
 
-class TestNormalizerTopLevel:
-    """Tests for top-level key normalization."""
+class TestTopLevelExplicitKeys:
+    """Missing explicit top-level keys → rejected (no parser defaulting)."""
 
-    def test_top_level_clean_passthrough(self):
-        """Top-level keys already matching pass through unchanged."""
-        raw = _schema_valid_raw()
+    def test_missing_schema_version_rejected(self):
+        raw = {"source_id": "s1", "source_text": SAMPLE_TEXT, "clauses": []}
         result = normalize_llm_fallback_json(raw)
-        assert result.status in ("noop", "applied")
-        assert result.normalized is not None
-        assert result.normalized["schema_version"] == "0.1.0"
-        assert result.normalized["source_id"] == "sample-001"
-        assert result.normalized["source_text"] == SAMPLE_TEXT
-        assert isinstance(result.normalized["clauses"], list)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_MISSING_TOP_KEY
+        assert "schema_version" in result.error_message
 
-    def test_top_level_unknown_removed(self):
-        """Unknown top-level keys are removed."""
+    def test_missing_source_id_rejected(self):
+        raw = {"schema_version": "0.1.0", "source_text": SAMPLE_TEXT, "clauses": []}
+        result = normalize_llm_fallback_json(raw)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_MISSING_TOP_KEY
+        assert "source_id" in result.error_message
+
+    def test_missing_source_text_rejected(self):
+        raw = {"schema_version": "0.1.0", "source_id": "s1", "clauses": []}
+        result = normalize_llm_fallback_json(raw)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_MISSING_TOP_KEY
+        assert "source_text" in result.error_message
+
+    def test_missing_clauses_rejected(self):
+        raw = {"schema_version": "0.1.0", "source_id": "s1", "source_text": SAMPLE_TEXT}
+        result = normalize_llm_fallback_json(raw)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_MISSING_TOP_KEY
+        assert "clauses" in result.error_message
+
+    def test_all_four_keys_present_accepted(self):
+        result = normalize_llm_fallback_json(_schema_valid_raw())
+        assert result.status in ("noop", "accepted")
+        assert result.normalized is not None
+
+
+# ===========================================================================
+# 2. Unknown field rejection
+# ===========================================================================
+
+
+class TestUnknownFieldRejection:
+    """Unknown top-level and clause-level fields → rejected."""
+
+    def test_unknown_top_level_field_rejected(self):
         raw = dict(_schema_valid_raw())
-        raw["extra_field"] = "should-be-removed"
-        raw["another_unknown"] = 123
+        raw["extra_top_key"] = 42
         result = normalize_llm_fallback_json(raw)
-        assert result.normalized is not None
-        assert "extra_field" not in result.normalized
-        assert "another_unknown" not in result.normalized
-        assert result.normalized["schema_version"] == "0.1.0"
+        assert result.status == "error"
+        assert result.error_reason == ERROR_UNKNOWN_TOP_FIELD
+        assert "extra_top_key" in result.error_message
 
-    def test_top_level_unknown_in_model_like(self):
-        """Model-like dict with extra top-level key has it removed."""
-        raw = _model_like_with_extra_top_level()
+    def test_unknown_clause_field_rejected(self):
+        raw = _schema_valid_raw()
+        raw["clauses"][0]["made_up_field"] = "nonsense"
         result = normalize_llm_fallback_json(raw)
-        assert result.normalized is not None
-        assert "unknown_top_key" not in result.normalized
-        assert result.status == "applied"
-        assert result.fields_removed >= 1
+        assert result.status == "error"
+        assert result.error_reason == ERROR_UNKNOWN_CLAUSE_FIELD
+        assert "made_up_field" in result.error_message
+
+    def test_object_rejected_as_unsupported_model_field(self):
+        raw = _schema_valid_raw()
+        raw["clauses"][0]["object"] = "some object text"
+        result = normalize_llm_fallback_json(raw)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_UNSUPPORTED_MODEL_FIELD
+        assert "object" in result.error_message
+
+    def test_original_text_rejected_as_unsupported_model_field(self):
+        raw = _schema_valid_raw()
+        raw["clauses"][0]["original_text"] = SAMPLE_TEXT
+        result = normalize_llm_fallback_json(raw)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_UNSUPPORTED_MODEL_FIELD
+        assert "original_text" in result.error_message
 
 
-class TestNormalizerClauseMapping:
-    """Tests for clause-level field-name mapping."""
+# ===========================================================================
+# 3. Clause item integrity
+# ===========================================================================
 
-    def test_normative_type_to_modality(self):
-        """``normative_type`` dict → ``modality`` FieldSpan."""
+
+class TestClauseItemIntegrity:
+    """Non-dict items in clauses → rejected."""
+
+    def test_string_item_in_clauses_rejected(self):
+        raw = {"schema_version": "0.1.0", "source_id": "s1", "source_text": SAMPLE_TEXT, "clauses": ["bad"]}
+        result = normalize_llm_fallback_json(raw)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_INVALID_CLAUSE_ITEM
+
+    def test_none_item_in_clauses_rejected(self):
+        raw = {"schema_version": "0.1.0", "source_id": "s1", "source_text": SAMPLE_TEXT, "clauses": [None]}
+        result = normalize_llm_fallback_json(raw)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_INVALID_CLAUSE_ITEM
+
+    def test_numeric_item_in_clauses_rejected(self):
+        raw = {"schema_version": "0.1.0", "source_id": "s1", "source_text": SAMPLE_TEXT, "clauses": [123]}
+        result = normalize_llm_fallback_json(raw)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_INVALID_CLAUSE_ITEM
+
+    def test_mixed_valid_and_invalid_rejected(self):
+        raw = _schema_valid_raw()
+        raw["clauses"].append("not-a-dict")
+        result = normalize_llm_fallback_json(raw)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_INVALID_CLAUSE_ITEM
+
+    def test_non_list_clauses_rejected(self):
+        raw = {"schema_version": "0.1.0", "source_id": "s1", "source_text": SAMPLE_TEXT, "clauses": "not a list"}
+        result = normalize_llm_fallback_json(raw)
+        assert result.status == "error"
+        assert result.error_reason == ERROR_INVALID_CLAUSE_ITEM
+
+
+# ===========================================================================
+# 4. Mapping rules
+# ===========================================================================
+
+
+class TestMappingRules:
+    """Supported alias mappings accepted; unsupported cases rejected."""
+
+    def test_normative_type_to_modality_accepted(self):
+        result = normalize_llm_fallback_json(_model_like_raw())
+        assert result.status == "accepted"
+        c = result.normalized["clauses"][0]
+        assert "normative_type" not in c
+        assert c["modality"]["text"] == "shall"
+        assert result.mappings_applied >= 1
+
+    def test_subject_to_actor_accepted(self):
+        result = normalize_llm_fallback_json(_model_like_raw())
+        c = result.normalized["clauses"][0]
+        assert "subject" not in c
+        assert c["actor"]["text"] == "A controller"
+
+    def test_conditions_to_condition_accepted(self):
+        result = normalize_llm_fallback_json(_model_like_raw())
+        c = result.normalized["clauses"][0]
+        assert "conditions" not in c
+        assert c["condition"]["text"] == "if applicable"
+
+    def test_unsupported_normative_type_enum_rejected(self):
         raw = _model_like_raw()
-        result = normalize_llm_fallback_json(raw)
-        assert result.normalized is not None
-        clause = result.normalized["clauses"][0]
-        assert "normative_type" not in clause
-        assert "modality" in clause
-        assert clause["modality"]["text"] == "shall"
-
-    def test_subject_to_actor(self):
-        """``subject`` dict → ``actor`` FieldSpan."""
-        raw = _model_like_raw()
-        result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert "subject" not in clause
-        assert "actor" in clause
-        assert clause["actor"]["text"] == "A controller"
-
-    def test_conditions_to_condition(self):
-        """``conditions`` dict → ``condition`` FieldSpan."""
-        raw = _model_like_raw()
-        result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert "conditions" not in clause
-        assert "condition" in clause
-        assert clause["condition"]["text"] == "if applicable"
-
-    def test_object_removed(self):
-        """``object`` key removed (no schema target)."""
-        raw = _model_like_raw()
-        result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert "object" not in clause
-
-    def test_original_text_removed(self):
-        """``original_text`` key removed (no schema target)."""
-        raw = _model_like_raw()
-        result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert "original_text" not in clause
-
-
-class TestNormalizerTypeCoercion:
-    """Tests for field-level type coercion."""
-
-    def test_string_value_to_null(self):
-        """Plain string where FieldSpan expected → ``null``."""
-        raw = _model_like_raw()
-        # Change normative_type from dict to string
         raw["clauses"][0]["normative_type"] = "obligation"
         result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert clause["modality"] is None
+        assert result.status == "error"
+        assert result.error_reason == ERROR_INVALID_ENUM
 
-    def test_string_subject_to_null(self):
-        """Plain string ``subject`` → ``null`` for actor."""
+    def test_alias_target_conflict_rejected(self):
         raw = _model_like_raw()
-        raw["clauses"][0]["subject"] = "controller"
+        raw["clauses"][0]["modality"] = {"text": "must", "span_start": 0, "span_end": 4, "confidence": 1.0}
         result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert clause["actor"] is None
+        assert result.status == "error"
+        assert result.error_reason == ERROR_ALIAS_CONFLICT
 
-    def test_string_conditions_to_null(self):
-        """Plain string ``conditions`` → ``null`` for condition."""
-        raw = _model_like_raw()
-        raw["clauses"][0]["conditions"] = "if applicable"
-        result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert clause["condition"] is None
 
-    def test_preserves_null_fields(self):
-        """``null`` semantic fields remain ``null``."""
-        raw = _schema_valid_raw()
-        raw["clauses"][0]["constraint"] = None
-        raw["clauses"][0]["exception"] = None
-        result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert clause["constraint"] is None
-        assert clause["exception"] is None
+# ===========================================================================
+# 5. Schema gate
+# ===========================================================================
 
-    def test_preserves_valid_clause(self):
-        """Schema-valid clause passes through normalizer unchanged."""
-        raw = _schema_valid_raw()
-        result = normalize_llm_fallback_json(raw)
-        # Should be importable into schema
+
+class TestSchemaGate:
+    """Valid candidates accepted; invalid candidates rejected."""
+
+    def test_valid_project_schema_accepted(self):
+        result = normalize_llm_fallback_json(_schema_valid_raw())
+        assert result.status == "noop"
         response = MultiClauseExtractionResponse.from_dict(result.normalized)
         response.validate()
 
-    def test_preserves_non_semantic_fields(self):
-        """Non-semantic fields pass through unchanged."""
-        raw = _model_like_raw()
-        result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert clause["clause_id"] == "sample-001-c1"
-        assert clause["source_id"] == "sample-001"
-        assert clause["source_text"] == SAMPLE_TEXT
-        assert clause["clause_text"] == SAMPLE_TEXT
-        assert clause["clause_span_start"] == 0
-        assert clause["clause_span_end"] == len(SAMPLE_TEXT)
-        assert clause["confidence"] == 0.90
+    def test_normalized_model_like_accepted(self):
+        result = normalize_llm_fallback_json(_model_like_raw())
+        assert result.status == "accepted"
+        response = MultiClauseExtractionResponse.from_dict(result.normalized)
+        response.validate()
+        c = response.clauses[0]
+        assert c.modality is not None
+        assert c.actor is not None
+        assert c.condition is not None
 
-    def test_unknown_clause_key_removed(self):
-        """Unknown clause-level keys are removed."""
+    def test_normalized_schema_invalid_rejected_by_from_dict(self):
+        raw = {"schema_version": "0.1.0", "source_id": "s1", "source_text": SAMPLE_TEXT, "clauses": [{"clause_id": "c1"}]}
+        result = normalize_llm_fallback_json(raw)
+        assert result.status in ("noop", "accepted")
+        with pytest.raises(SchemaValidationError, match="Missing required key"):
+            MultiClauseExtractionResponse.from_dict(result.normalized)
+
+    def test_missing_required_clause_field_rejected_by_from_dict(self):
+        result = normalize_llm_fallback_json(_model_like_raw())
+        del result.normalized["clauses"][0]["clause_id"]
+        with pytest.raises(SchemaValidationError, match="Missing required key"):
+            MultiClauseExtractionResponse.from_dict(result.normalized)
+
+    def test_invalid_fieldspan_shape_rejected_by_validate(self):
         raw = _schema_valid_raw()
-        raw["clauses"][0]["made_up_field"] = "nonsense"
-        raw["clauses"][0]["extra_number"] = 99
+        raw["clauses"][0]["modality"] = {"text": "", "span_start": 0, "span_end": 5, "confidence": 0.9}
         result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert "made_up_field" not in clause
-        assert "extra_number" not in clause
+        response = MultiClauseExtractionResponse.from_dict(result.normalized)
+        with pytest.raises(SchemaValidationError, match="non-empty"):
+            response.validate()
 
-    def test_keeps_existing_project_key(self):
-        """When model key maps to an existing project key, the project key wins."""
-        raw = _model_like_raw()
-        # Already has 'action' as a native field; 'subject' maps to 'actor'
-        result = normalize_llm_fallback_json(raw)
-        clause = result.normalized["clauses"][0]
-        assert "action" in clause
-        assert clause["action"]["text"] == "record the decision"
-
-
-class TestNormalizerEdgeCases:
-    """Edge-case and error-handling tests."""
-
-    def test_non_dict_rejected(self):
-        """Non-dict input returns error status."""
+    def test_non_dict_candidate_rejected(self):
         result = normalize_llm_fallback_json([1, 2, 3])
         assert result.status == "error"
         assert result.normalized is None
-        assert result.error_message is not None
 
-    def test_non_dict_string_rejected(self):
-        """String input returns error status."""
-        result = normalize_llm_fallback_json("not a dict")
-        assert result.status == "error"
-        assert result.normalized is None
-
-    def test_non_dict_clause_skipped(self):
-        """Non-dict item in clauses is skipped (not crashed)."""
-        raw = _schema_valid_raw()
-        raw["clauses"].append("not-a-dict")
-        raw["clauses"].append(42)
+    def test_empty_clauses_accepted(self):
+        raw = {"schema_version": "0.1.0", "source_id": "s1", "source_text": SAMPLE_TEXT, "clauses": []}
         result = normalize_llm_fallback_json(raw)
-        assert result.normalized is not None
-        # The non-dict items should be removed by normalizer
-        assert len(result.normalized["clauses"]) == 1  # only the valid one
-
-    def test_empty_clauses(self):
-        """Empty clauses array passes through."""
-        raw = {
-            "schema_version": "0.1.0",
-            "source_id": "sample-001",
-            "source_text": SAMPLE_TEXT,
-            "clauses": [],
-        }
-        result = normalize_llm_fallback_json(raw)
-        assert result.normalized is not None
-        assert result.normalized["clauses"] == []
-
-    def test_model_output_to_valid(self):
-        """Full model-like dict normalizes to schema-valid dict."""
-        raw = _model_like_raw()
-        result = normalize_llm_fallback_json(raw)
-        assert result.normalized is not None
-        # Should be importable into schema
-        response = MultiClauseExtractionResponse.from_dict(result.normalized)
-        response.validate()
-        assert response.clauses[0].modality is not None
-        assert response.clauses[0].modality.text == "shall"
-        assert response.clauses[0].actor is not None
-        assert response.clauses[0].actor.text == "A controller"
-
-    def test_full_realistic_model_output(self):
-        """Comprehensive model-like output with mixed types normalizes correctly."""
-        raw = {
-            "schema_version": "0.1.0",
-            "source_id": "doc-001",
-            "source_text": "The data subject shall provide consent before processing.",
-            "extra_top_level": "remove-me",
-            "clauses": [
-                {
-                    "clause_id": "doc-001-c1",
-                    "source_id": "doc-001",
-                    "source_text": "The data subject shall provide consent before processing.",
-                    "clause_text": "The data subject shall provide consent before processing.",
-                    "clause_span_start": 0,
-                    "clause_span_end": 62,
-                    "normative_type": {
-                        "text": "shall",
-                        "span_start": 18,
-                        "span_end": 23,
-                        "confidence": 0.95,
-                    },
-                    "subject": {
-                        "text": "The data subject",
-                        "span_start": 0,
-                        "span_end": 16,
-                        "confidence": 0.90,
-                    },
-                    "action": {
-                        "text": "provide consent",
-                        "span_start": 24,
-                        "span_end": 39,
-                        "confidence": 0.88,
-                    },
-                    "object": "consent",  # should be removed
-                    "original_text": "The data subject shall provide consent before processing.",  # removed
-                    "conditions": {
-                        "text": "before processing",
-                        "span_start": 40,
-                        "span_end": 57,
-                        "confidence": 0.85,
-                    },
-                    "constraint": None,
-                    "exception": None,
-                    "confidence": 0.90,
-                    "extra_clause_field": "remove-me-too",
-                }
-            ],
-        }
-        result = normalize_llm_fallback_json(raw)
-        assert result.normalized is not None
-        assert "extra_top_level" not in result.normalized
-        clause = result.normalized["clauses"][0]
-        assert "normative_type" not in clause
-        assert clause["modality"]["text"] == "shall"
-        assert "subject" not in clause
-        assert clause["actor"]["text"] == "The data subject"
-        assert "conditions" not in clause
-        assert clause["condition"]["text"] == "before processing"
-        assert "object" not in clause
-        assert "original_text" not in clause
-        assert "extra_clause_field" not in clause
-        # Verify schema import
+        assert result.status in ("noop", "accepted")
         response = MultiClauseExtractionResponse.from_dict(result.normalized)
         response.validate()
 
 
 # ===========================================================================
-# 8.2 Adapter Integration Tests
+# 6. Adapter integration
 # ===========================================================================
 
 
 class TestAdapterIntegration:
-    """Tests for LLMFallbackAdapter with normalizer."""
+    """LLMFallbackAdapter integration with strict normalizer gate."""
 
-    @staticmethod
-    def _make_config(enabled: bool = True) -> LLMConfig:
-        return LLMConfig(
-            provider=LLMProvider.MOCK,
-            model="mock-model",
-            enabled=enabled,
-        )
-
-    def test_adapter_with_normalizer_accepts_mapped(self):
-        """Mock LLM returns model-like output → normalizer maps → valid."""
-        config = self._make_config()
-        transport = MockLLMTransport(
-            fixed_response=LLMResponse(
-                content=json.dumps(_model_like_raw()),
-                provider="mock",
-                model="mock-model",
-            )
-        )
-        adapter = LLMFallbackAdapter(
-            config=config,
-            transport=transport,
-            enable_schema_alignment=True,
-        )
-        result = adapter.complete(
-            FallbackRequest(
-                source_text=SAMPLE_TEXT,
-                source_id="sample-001",
-                rule_response=MultiClauseExtractionResponse(
-                    source_id="sample-001",
-                    source_text=SAMPLE_TEXT,
-                    clauses=[],
-                ),
-            )
-        )
+    def test_schema_valid_normalized_accepted(self):
+        config = _make_config()
+        transport = MockLLMTransport(fixed_response=LLMResponse(
+            content=json.dumps(_model_like_raw()), provider="mock", model="mock-model"))
+        adapter = LLMFallbackAdapter(config=config, transport=transport, enable_schema_alignment=True)
+        result = adapter.complete(FallbackRequest(
+            source_text=SAMPLE_TEXT, source_id="sample-001",
+            rule_response=MultiClauseExtractionResponse(source_id="sample-001", source_text=SAMPLE_TEXT, clauses=[])))
         assert result.is_valid
-        assert result.response is not None
-        assert result.response.clauses[0].modality is not None
         assert result.response.clauses[0].modality.text == "shall"
-        assert result.response.clauses[0].actor is not None
-        assert result.response.clauses[0].actor.text == "A controller"
 
-    def test_adapter_with_normalizer_rejects_unmappable(self):
-        """Output with no mappable fields → schema validation fails → error."""
-        config = self._make_config()
-        transport = MockLLMTransport(
-            fixed_response=LLMResponse(
-                content=json.dumps({
-                    "schema_version": "0.1.0",
-                    "source_id": "sample-001",
-                    "source_text": SAMPLE_TEXT,
-                    "clauses": [
-                        {
-                            "unknown_a": 1,
-                            "unknown_b": "text",
-                        }
-                    ],
-                }),
-                provider="mock",
-                model="mock-model",
-            )
-        )
-        adapter = LLMFallbackAdapter(
-            config=config,
-            transport=transport,
-            enable_schema_alignment=True,
-        )
-        result = adapter.complete(
-            FallbackRequest(
-                source_text=SAMPLE_TEXT,
-                source_id="sample-001",
-                rule_response=MultiClauseExtractionResponse(
-                    source_id="sample-001",
-                    source_text=SAMPLE_TEXT,
-                    clauses=[],
-                ),
-            )
-        )
-        assert not result.is_valid
-        assert result.error is not None
-
-    def test_adapter_no_normalizer_still_rejects(self):
-        """Without normalizer, model-like output still rejected (baseline)."""
-        config = self._make_config()
-        transport = MockLLMTransport(
-            fixed_response=LLMResponse(
-                content=json.dumps(_model_like_raw()),
-                provider="mock",
-                model="mock-model",
-            )
-        )
-        adapter = LLMFallbackAdapter(
-            config=config,
-            transport=transport,
-            enable_schema_alignment=False,
-        )
-        result = adapter.complete(
-            FallbackRequest(
-                source_text=SAMPLE_TEXT,
-                source_id="sample-001",
-                rule_response=MultiClauseExtractionResponse(
-                    source_id="sample-001",
-                    source_text=SAMPLE_TEXT,
-                    clauses=[],
-                ),
-            )
-        )
-        # Without normalizer, model-like fields (normative_type, subject, etc.)
-        # produce unknown-key errors in ClauseExtraction.from_dict()
-        assert not result.is_valid
-        assert result.error is not None
-
-    def test_optional_fallback_accepts_normalized(self):
-        """``extract_with_optional_llm_fallback()`` — normalizer → valid."""
-        config = self._make_config()
-        transport = MockLLMTransport(
-            fixed_response=LLMResponse(
-                content=json.dumps(_model_like_raw()),
-                provider="mock",
-                model="mock-model",
-            )
-        )
-        adapter = LLMFallbackAdapter(
-            config=config,
-            transport=transport,
-            enable_schema_alignment=True,
-        )
-
+    def test_schema_invalid_normalized_returns_rule_first(self):
+        config = _make_config()
+        transport = MockLLMTransport(fixed_response=LLMResponse(
+            content=json.dumps({"wrong_shape": [1, 2, 3]}), provider="mock", model="mock-model"))
+        adapter = LLMFallbackAdapter(config=config, transport=transport, enable_schema_alignment=True)
         result = extract_with_optional_llm_fallback(
-            source_text=SAMPLE_TEXT,
-            source_id="sample-001",
-            fallback_enabled=True,
-            fallback_client=adapter,
-            explicit_controlled_smoke=True,  # force trigger
-        )
-        assert result.fallback_used
-        assert result.fallback_status == "fallback_schema_valid"
-        assert result.response.clauses[0].modality is not None
-
-    def test_optional_fallback_returns_rule_first_on_normalized_invalid(self):
-        """Normalized output still invalid → rule-first preserved."""
-        config = self._make_config()
-        transport = MockLLMTransport(
-            fixed_response=LLMResponse(
-                content=json.dumps({
-                    "wrong_shape": [1, 2, 3],
-                }),
-                provider="mock",
-                model="mock-model",
-            )
-        )
-        adapter = LLMFallbackAdapter(
-            config=config,
-            transport=transport,
-            enable_schema_alignment=True,
-        )
-
-        result = extract_with_optional_llm_fallback(
-            source_text=SAMPLE_TEXT,
-            source_id="sample-001",
-            fallback_enabled=True,
-            fallback_client=adapter,
-            explicit_controlled_smoke=True,
-        )
+            source_text=SAMPLE_TEXT, source_id="sample-001", fallback_enabled=True,
+            fallback_client=adapter, explicit_controlled_smoke=True)
         assert not result.fallback_used
-        assert result.rule_first_preserved
         assert result.fallback_status == "fallback_schema_invalid"
+
+    def test_normalizer_rejection_returns_rule_first(self):
+        config = _make_config()
+        raw = _schema_valid_raw()
+        raw["clauses"][0]["object"] = "consent"
+        transport = MockLLMTransport(fixed_response=LLMResponse(
+            content=json.dumps(raw), provider="mock", model="mock-model"))
+        adapter = LLMFallbackAdapter(config=config, transport=transport, enable_schema_alignment=True)
+        result = extract_with_optional_llm_fallback(
+            source_text=SAMPLE_TEXT, source_id="sample-001", fallback_enabled=True,
+            fallback_client=adapter, explicit_controlled_smoke=True)
+        assert not result.fallback_used
+
+    def test_fallback_disabled_returns_rule_first(self):
+        config = LLMConfig(provider=LLMProvider.MOCK, model="mock-model", enabled=False)
+        adapter = LLMFallbackAdapter(config=config, enable_schema_alignment=True)
+        result = adapter.complete(FallbackRequest(
+            source_text=SAMPLE_TEXT, source_id="sample-001",
+            rule_response=MultiClauseExtractionResponse(source_id="sample-001", source_text=SAMPLE_TEXT, clauses=[])))
+        assert not result.is_valid
+        assert "disabled" in result.error.lower()
+
+    def test_fallback_exception_returns_rule_first(self):
+        config = _make_config()
+        transport = MockLLMTransport(fixed_response=None)
+        adapter = LLMFallbackAdapter(config=config, transport=transport, enable_schema_alignment=True)
+        result = adapter.complete(FallbackRequest(
+            source_text=SAMPLE_TEXT, source_id="sample-001",
+            rule_response=MultiClauseExtractionResponse(source_id="sample-001", source_text=SAMPLE_TEXT, clauses=[])))
+        assert not result.is_valid
+        assert "transport error" in result.error.lower()
 
 
 # ===========================================================================
-# 8.3 Safety Tests
+# 7. Parse-and-align function
+# ===========================================================================
+
+
+class TestParseAndAlign:
+    """Tests for _parse_and_align_llm_json_response."""
+
+    def test_model_like_succeeds(self):
+        response = _parse_and_align_llm_json_response(json.dumps(_model_like_raw()))
+        assert isinstance(response, MultiClauseExtractionResponse)
+        assert response.clauses[0].modality is not None
+
+    def test_schema_valid_passthrough(self):
+        response = _parse_and_align_llm_json_response(json.dumps(_schema_valid_raw()))
+        assert isinstance(response, MultiClauseExtractionResponse)
+        response.validate()
+
+    def test_invalid_json_raises(self):
+        with pytest.raises(LLMClientError, match="not valid JSON"):
+            _parse_and_align_llm_json_response("not json {{{")
+
+    def test_non_dict_raises(self):
+        with pytest.raises(LLMClientError, match="JSON object"):
+            _parse_and_align_llm_json_response("[1, 2, 3]")
+
+    def test_normalizer_rejected_raises(self):
+        with pytest.raises(LLMClientError, match="normalizer failed"):
+            _parse_and_align_llm_json_response(json.dumps({"wrong_shape": True}))
+
+    def test_markdown_wrapped(self):
+        content = "```json\n" + json.dumps(_model_like_raw()) + "\n```"
+        response = _parse_and_align_llm_json_response(content)
+        assert isinstance(response, MultiClauseExtractionResponse)
+
+
+# ===========================================================================
+# 8. Safety tests
 # ===========================================================================
 
 
 class TestNormalizerSafety:
-    """Safety and constraint tests."""
+    """Safety and constraint tests (no env, no network, no file write, no batch)."""
 
     def test_no_env_read(self):
-        """Normalizer does not access ``.env``."""
-        # Verify the normalizer source code has no os.environ / dotenv references
         src = (Path(__file__).parents[1] / "src" / "bpc_hybrid" / "schema_alignment.py").read_text(encoding="utf-8")
         assert "dotenv" not in src.lower()
         assert "os.environ" not in src
         assert "load_dotenv" not in src
 
     def test_no_network(self):
-        """Normalizer does not make network calls."""
         src = (Path(__file__).parents[1] / "src" / "bpc_hybrid" / "schema_alignment.py").read_text(encoding="utf-8")
         for token in ("urllib", "socket", "http", "requests", "httpx", "urlopen"):
-            assert token not in src.lower(), f"Network token '{token}' found in normalizer source"
+            assert token not in src.lower(), f"Network token '{token}' found"
 
     def test_no_raw_response_saved(self):
-        """Normalizer does not write files."""
         src = (Path(__file__).parents[1] / "src" / "bpc_hybrid" / "schema_alignment.py").read_text(encoding="utf-8")
-        for token in ("open(", "write(", "writelines", "json.dump", "json.dumps"):
-            assert token not in src, f"File-write token '{token}' found in normalizer source"
+        for token in ("open(", "write(", "writelines", "json.dump"):
+            assert token not in src, f"File-write token '{token}' found"
 
     def test_no_real_api_in_normalizer(self):
-        """Normalizer code has no real provider import/usage."""
         src = (Path(__file__).parents[1] / "src" / "bpc_hybrid" / "schema_alignment.py").read_text(encoding="utf-8")
         assert "RealAPI" not in src
-        assert "real_api" not in src
         assert "openai" not in src.lower()
 
-    def test_fallback_disabled_returns_rule_first(self):
-        """``config.enabled=False`` → rule-first regardless of normalizer."""
-        config = LLMConfig(
-            provider=LLMProvider.MOCK,
-            model="mock-model",
-            enabled=False,
-        )
-        adapter = LLMFallbackAdapter(
-            config=config,
-            enable_schema_alignment=True,
-        )
-        result = adapter.complete(
-            FallbackRequest(
-                source_text=SAMPLE_TEXT,
-                source_id="sample-001",
-                rule_response=MultiClauseExtractionResponse(
-                    source_id="sample-001",
-                    source_text=SAMPLE_TEXT,
-                    clauses=[],
-                ),
-            )
-        )
-        assert not result.is_valid
-        assert "disabled" in result.error.lower()
-
     def test_no_batch(self):
-        """No batch mode in normalizer or adapter."""
-        src_normalizer = (Path(__file__).parents[1] / "src" / "bpc_hybrid" / "schema_alignment.py").read_text(encoding="utf-8")
-        src_llm = (Path(__file__).parents[1] / "src" / "bpc_hybrid" / "llm_client.py").read_text(encoding="utf-8")
-        for src in (src_normalizer, src_llm):
-            assert "batch" not in src.lower() or "no batch" in src.lower(), \
-                "Batch language found without explicit denial"
+        src_n = (Path(__file__).parents[1] / "src" / "bpc_hybrid" / "schema_alignment.py").read_text(encoding="utf-8")
+        src_l = (Path(__file__).parents[1] / "src" / "bpc_hybrid" / "llm_client.py").read_text(encoding="utf-8")
+        for s in (src_n, src_l):
+            assert "batch" not in s.lower() or "no batch" in s.lower()
 
-
-# ===========================================================================
-# 8.4 Top-level Parser / Normalizer Tests
-# ===========================================================================
-
-
-class TestTopLevelParserNuance:
-    """Tests for top-level parser defaulting behavior and normalizer enforcement."""
-
-    def test_missing_schema_version_defaults_in_parser(self):
-        """Missing ``schema_version`` defaults to ``\"0.1.0\"`` in current parser."""
-        # This test confirms CURRENT parser behavior, not normalizer behavior
-        raw = {
-            "source_id": "sample-001",
-            "source_text": SAMPLE_TEXT,
-            "clauses": [],
-        }
-        # Current parser defaults schema_version to "0.1.0"
-        response = MultiClauseExtractionResponse.from_dict(raw)
-        assert response.schema_version == "0.1.0"
-
-    def test_missing_clauses_defaults_in_parser(self):
-        """Missing ``clauses`` defaults to ``[]`` in current parser."""
-        raw = {
-            "schema_version": "0.1.0",
-            "source_id": "sample-001",
-            "source_text": SAMPLE_TEXT,
-        }
-        response = MultiClauseExtractionResponse.from_dict(raw)
-        assert response.clauses == []
-
-    def test_normalizer_preserves_schema_version(self):
-        """Normalizer preserves explicit ``schema_version`` when present."""
-        raw = _schema_valid_raw()
-        result = normalize_llm_fallback_json(raw)
-        assert result.normalized is not None
-        assert result.normalized["schema_version"] == "0.1.0"
-
-    def test_normalizer_does_not_add_missing_keys(self):
-        """Normalizer does not fabricate missing required keys."""
-        # Input missing schema_version entirely
-        raw: dict = {
-            "source_id": "sample-001",
-            "source_text": SAMPLE_TEXT,
-            "clauses": [],
-        }
-        result = normalize_llm_fallback_json(raw)
-        assert result.normalized is not None
-        # Normalizer passes through — does NOT add schema_version
-        assert "schema_version" not in result.normalized
-        # from_dict() will default it to "0.1.0" — current parser behavior
-        response = MultiClauseExtractionResponse.from_dict(result.normalized)
-        assert response.schema_version == "0.1.0"
-
-    def test_parser_defaulting_preserved(self):
-        """Current parser defaulting behavior is preserved (documented)."""
-        # Verify that from_dict() still defaults missing top-level keys
-        raw = {
-            "source_id": "sample-001",
-            "source_text": SAMPLE_TEXT,
-            "clauses": [
-                {
-                    "clause_id": "c1",
-                    "source_id": "sample-001",
-                    "source_text": SAMPLE_TEXT,
-                    "clause_text": SAMPLE_TEXT,
-                    "clause_span_start": 0,
-                    "clause_span_end": len(SAMPLE_TEXT),
-                    "modality": None,
-                    "actor": None,
-                    "action": None,
-                    "condition": None,
-                    "constraint": None,
-                    "exception": None,
-                    "confidence": 0.9,
-                }
-            ],
-        }
-        # Missing schema_version — defaults to "0.1.0"
-        response = MultiClauseExtractionResponse.from_dict(raw)
-        assert response.schema_version == "0.1.0"
-        response.validate()
-
-    def test_normalizer_result_is_importable(self):
-        """The normalized dict can be imported into schema (integration)."""
-        result = normalize_llm_fallback_json(_model_like_raw())
-        response = MultiClauseExtractionResponse.from_dict(result.normalized)
-        response.validate()
-        assert len(response.clauses) == 1
-        c = response.clauses[0]
-        assert c.modality is not None
-        assert c.actor is not None
-        assert c.action is not None
-
-
-# ===========================================================================
-# 8.5 _parse_and_align_llm_json_response Tests
-# ===========================================================================
-
-
-class TestParseAndAlign:
-    """Tests for the aligned parse function in llm_client.py."""
-
-    def test_parse_model_like_succeeds(self):
-        """Model-like JSON with normalizer produces valid response."""
-        content = json.dumps(_model_like_raw())
-        response = _parse_and_align_llm_json_response(content)
-        assert isinstance(response, MultiClauseExtractionResponse)
-        assert response.clauses[0].modality is not None
-
-    def test_parse_schema_valid_passthrough(self):
-        """Schema-valid JSON passes through normalizer unchanged."""
-        content = json.dumps(_schema_valid_raw())
-        response = _parse_and_align_llm_json_response(content)
-        assert isinstance(response, MultiClauseExtractionResponse)
-        response.validate()
-
-    def test_parse_invalid_json_raises(self):
-        """Invalid JSON raises LLMClientError."""
-        with pytest.raises(LLMClientError, match="not valid JSON"):
-            _parse_and_align_llm_json_response("not json {{{")
-
-    def test_parse_non_dict_raises(self):
-        """Non-dict JSON raises LLMClientError."""
-        with pytest.raises(LLMClientError, match="JSON object"):
-            _parse_and_align_llm_json_response("[1, 2, 3]")
-
-    def test_parse_unmappable_raises(self):
-        """Totally unmappable output raises LLMClientError."""
-        content = json.dumps({"wrong_shape": True})
-        # Normalizer removes unknown keys, leaving empty dict
-        # from_dict() then rejects missing required keys
-        with pytest.raises(LLMClientError):
-            _parse_and_align_llm_json_response(content)
-
-    def test_parse_markdown_wrapped(self):
-        """Markdown-wrapped JSON is extracted and parsed."""
-        content = "```json\n" + json.dumps(_model_like_raw()) + "\n```"
-        response = _parse_and_align_llm_json_response(content)
-        assert isinstance(response, MultiClauseExtractionResponse)
+    def test_deterministic(self):
+        raw = _model_like_raw()
+        r1 = normalize_llm_fallback_json(raw)
+        r2 = normalize_llm_fallback_json(raw)
+        assert r1.status == r2.status
+        assert r1.error_reason == r2.error_reason
+        assert r1.mappings_applied == r2.mappings_applied

@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅ | R10.4.1 ✅ | R11.0 ✅ | R11.1 ✅ | R11.1.1 ✅ | R11.2 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅ | R10.4.1 ✅ | R11.0 ✅ | R11.1 ✅ | R11.1.1 ✅ | R11.2 ✅ | R11.2.1 ✅**
 
 ## Research Positioning
 
@@ -25,7 +25,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 - ⚠️ R11.0 is a planning-only stage for real fallback schema alignment and a dedicated single-call real API entrypoint. It does not execute real API calls, run benchmarks, evaluate accuracy, validate the method, compare against Sun, or use real GDPR/BPMN data.
 - ⚠️ R11.1 is a design-only stage producing `docs/r11_1_schema_alignment_design.md`. It does not change source code, tests, or data; does not execute real API calls; and does not make any benchmark, accuracy, method-validation, or Sun-comparison claims. The design recommends a combined prompt + normalizer + schema-gate strategy (Options A+B+C) for R11.2 mock implementation.
 - ⚠️ R11.1.1 corrects the R11.1 schema summary: current `MultiClauseExtractionResponse.from_dict()` defaults missing `schema_version` to `"0.1.0"` and missing `clauses` to `[]`, while stricter top-level enforcement remains a proposed R11.2 normalizer / prompt-contract gate.
-- ⚠️ R11.2 implements the schema-alignment normalizer (Option B from R11.1 design) and integrates it into `LLMFallbackAdapter` with a strengthened system prompt (Option A). The normalizer is a deterministic, mock-only pure function — no LLM calls, no network, no `.env`, no raw response storage. `LLMFallbackAdapter.enable_schema_alignment=True` by default. 45 new tests + 531 total tests pass. Requires Codex audit before R11.3.
+- ⚠️ R11.2.1 tightens the mock-only schema alignment normalizer gate after Codex blocked R11.2 for permissive handling of missing top-level keys, unknown fields, and malformed clause items. The normalizer now strictly rejects missing explicit top-level keys before parser validation, unknown top-level/clause-level fields, known unsupported model-like fields (object, original_text), non-dict clause items, unsupported enum values, and alias+target conflicts. It remains mock-only — no LLM calls, no network, no `.env`, no raw response storage. 43 new tests + 529 total tests pass. Requires Codex audit before R11.3.
 
 ## R0 Artifacts
 

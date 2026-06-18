@@ -1893,4 +1893,49 @@ Completed after 531 tests passed and GitHub push succeeded.
 
 Requires Codex audit before R11.3.
 
+## R11.2.1 — Tighten Mock-only Schema Alignment Normalizer Gate
+
+### Type
+
+Mock-only implementation fix.
+
+### Reason
+
+Codex blocked R11.2 because the normalizer accepted candidates after parser defaulting, silently removed unknown fields, and skipped non-dict clause items.
+
+### Fix
+
+R11.2.1 tightens the normalizer gate:
+
+- explicit top-level keys (`schema_version`, `source_id`, `source_text`, `clauses`) are required before parser validation
+- unknown top-level fields are rejected
+- unknown clause-level fields are rejected
+- known unsupported model-like fields (`object`, `original_text`) are rejected
+- non-dict items inside `clauses` are rejected
+- unsupported enum values (non-dict/non-None mapped field values) are rejected
+- alias + target field conflicts are rejected
+- schema-invalid normalized output remains rejected
+- fallback failure remains conservative rule-first
+
+### Scope
+
+- Source code changes: yes (`schema_alignment.py` rewritten with strict gates)
+- Test changes: yes (`test_schema_alignment.py` rewritten — 43 tests, rejection-first policy)
+- `NormalizationResult` updated: `fields_removed` removed, `error_reason` added
+- Real API call: no
+- `.env` content read: no
+- Raw response storage: no
+- Batch execution: no
+- Benchmark: no
+- Accuracy claim: no
+- Method-validation claim: no
+
+### Status
+
+Completed after 529 tests passed. Requires Codex audit before R11.3.
+
+### Exit Gate
+
+Requires Codex audit before R11.3.
+
 

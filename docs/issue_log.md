@@ -209,3 +209,32 @@ R11.2 implements the normalizer as `src/bpc_hybrid/schema_alignment.py`:
 - No method-validation claim.
 - No schema widening.
 
+## I036 — R11.2 normalizer gate was too permissive
+
+### Status
+
+Fixed in R11.2.1 (pending Codex audit).
+
+### Context
+
+Codex blocked R11.2 because the normalizer silently removed unknown fields, relied on parser defaulting for missing top-level keys, and skipped non-dict clause items.
+
+### Correction
+
+R11.2.1 changes the normalizer to reject:
+- missing explicit top-level keys before parser validation
+- unknown top-level and clause-level fields
+- known unsupported model-like fields (`object`, `original_text`)
+- non-dict items in `clauses`
+- unsupported enum values for mapped fields
+- alias + target field conflicts
+
+### Safety Boundary
+
+- Mock-only.
+- No real API.
+- No raw response storage.
+- No batch.
+- No benchmark.
+- No method-validation claim.
+

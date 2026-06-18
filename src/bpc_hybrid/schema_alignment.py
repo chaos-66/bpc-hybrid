@@ -1,15 +1,23 @@
-"""Schema-alignment normalizer for real LLM fallback output (R11.2).
+"""Schema-alignment normalizer for real LLM fallback output (R11.2.1).
 
-Provides a deterministic, mock-only post-processing layer that maps
-known LLM field-name mismatches to project schema fields before
+Provides a deterministic, mock-only strict gate that validates and maps
+known LLM field-name mismatches to project schema fields **before**
 ``MultiClauseExtractionResponse.from_dict()`` validation.
 
 **No LLM calls, no network, no ``.env``, no raw response storage.**
+
+R11.2.1 tightens the normalizer from "permissive cleaning" to "strict gate":
+- missing explicit top-level keys are rejected (no parser defaulting)
+- unknown top-level / clause-level fields are rejected
+- known unsupported model-like fields (``object``, ``original_text``) are rejected
+- non-dict items inside ``clauses`` are rejected
+- unsupported enum values for mapped fields are rejected
+- alias + target field conflicts are rejected
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from bpc_hybrid.schema import _CLAUSE_KEYS, _MULTI_CLAUSE_KEYS, _SEMANTIC_FIELDS
 
@@ -23,14 +31,29 @@ _CLAUSE_FIELD_MAP: dict[str, str] = {
     "conditions": "condition",
 }
 
-# Clause-level keys to remove (no matching schema field)
-_CLAUSE_FIELDS_TO_REMOVE: frozenset[str] = frozenset({
+# Model-like clause fields with no project-schema target — REJECT, not remove.
+_CLAUSE_FIELDS_REJECT: frozenset[str] = frozenset({
     "object",
     "original_text",
 })
 
-# Top-level mapping table (currently no known alternatives beyond _MULTI_CLAUSE_KEYS)
-_TOP_LEVEL_MAP: dict[str, str] = {}
+# Allowed clause-level input keys = project keys + known model aliases.
+_ALLOWED_CLAUSE_INPUT_KEYS: frozenset[str] = (
+    _CLAUSE_KEYS
+    | frozenset(_CLAUSE_FIELD_MAP.keys())
+)
+
+# ---------------------------------------------------------------------------
+# Error reason constants
+# ---------------------------------------------------------------------------
+
+ERROR_MISSING_TOP_KEY = "missing_required_top_level_key"
+ERROR_UNKNOWN_TOP_FIELD = "unknown_top_level_field"
+ERROR_UNKNOWN_CLAUSE_FIELD = "unknown_clause_field"
+ERROR_UNSUPPORTED_MODEL_FIELD = "unsupported_model_field"
+ERROR_INVALID_CLAUSE_ITEM = "invalid_clause_item"
+ERROR_INVALID_ENUM = "invalid_enum"
+ERROR_ALIAS_CONFLICT = "alias_target_conflict"
 
 # ---------------------------------------------------------------------------
 # Normalization result
@@ -39,29 +62,32 @@ _TOP_LEVEL_MAP: dict[str, str] = {}
 
 @dataclass
 class NormalizationResult:
-    """Result of a schema-alignment normalization pass.
+    """Result of a schema-alignment normalization pass (R11.2.1).
 
     Parameters
     ----------
     normalized : dict | None
         The cleaned and mapped dict, or ``None`` if normalization
-        failed before producing a candidate.
+        was rejected before producing a candidate.
     status : str
-        One of ``"applied"`` (mappings executed), ``"noop"`` (no
-        changes needed), or ``"error"`` (input rejected).
+        ``"accepted"`` — mapped successfully and ready for schema validation.
+        ``"noop"`` — no changes needed; candidate already uses only recognized
+        field names.
+        ``"error"`` — input rejected; see *error_reason* and *error_message*.
     mappings_applied : int
         Number of field-name mappings applied.
-    fields_removed : int
-        Number of unknown/unmappable fields removed.
     error_message : str | None
         Human-readable error if *status* is ``"error"``.
+    error_reason : str | None
+        Machine-readable error category (one of the ``ERROR_*`` constants)
+        when *status* is ``"error"``.
     """
 
     normalized: dict | None = None
     status: str = "noop"
     mappings_applied: int = 0
-    fields_removed: int = 0
     error_message: str | None = None
+    error_reason: str | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -70,11 +96,7 @@ class NormalizationResult:
 
 def _is_fieldspan_compatible(value: object) -> bool:
     """Return ``True`` if *value* is a dict or ``None`` (FieldSpan-compatible)."""
-    if value is None:
-        return True
-    if isinstance(value, dict):
-        return True
-    return False
+    return value is None or isinstance(value, dict)
 
 
 def _normalize_semantic_value(value: object) -> object:
@@ -88,99 +110,112 @@ def _normalize_semantic_value(value: object) -> object:
         return None
     if isinstance(value, dict):
         return value
-    # Plain string or other non-dict → cannot coerce safely
     return None
 
 
-def _normalize_clause_dict(clause: dict) -> dict:
-    """Normalize a single clause dict.
+def _validate_and_normalize_clause(clause: dict) -> tuple[dict | None, str | None, str | None, int]:
+    """Validate and normalize a single clause dict (R11.2.1 strict gate).
 
-    Steps:
-    1. Rename known alternative field names to project schema names.
-    2. Remove fields not in ``_CLAUSE_KEYS`` (unknown/unmappable).
-    3. Coerce semantic-field values to FieldSpan-compatible or ``None``.
+    Returns ``(normalized_dict, error_reason, error_message, mappings)``.
+    On success, *error_reason* and *error_message* are ``None``.
+    On failure, *normalized_dict* is ``None``.
 
-    Returns a new dict (does not mutate the input).
+    Strict gates (checked before any mapping):
+    1. Reject known unsupported model fields (``object``, ``original_text``).
+    2. Reject unknown clause-level keys not in the allowed input set.
+    3. Reject alias+target conflicts where both are present with non-equivalent values.
+    4. Reject unsupported enum values (non-dict, non-None) for mapped fields.
+
+    Mapping (after gates pass):
+    5. Rename alias fields to project field names.
+    6. Coerce semantic-field values to FieldSpan-compatible or ``None``.
     """
+    # ---- Gate 1: known unsupported model fields --------------------------
+    for key in _CLAUSE_FIELDS_REJECT:
+        if key in clause:
+            return (
+                None,
+                ERROR_UNSUPPORTED_MODEL_FIELD,
+                f"Known unsupported model field '{key}' found in clause — "
+                f"no project schema target exists for this field",
+                0,
+            )
+
+    # ---- Gate 2: unknown clause-level keys -------------------------------
+    unknown = set(clause.keys()) - _ALLOWED_CLAUSE_INPUT_KEYS
+    if unknown:
+        return (
+            None,
+            ERROR_UNKNOWN_CLAUSE_FIELD,
+            f"Unknown clause-level keys not in project schema or "
+            f"recognised aliases: {sorted(unknown)}",
+            0,
+        )
+
+    # ---- Gate 3: alias + target conflicts --------------------------------
+    for alias, target in _CLAUSE_FIELD_MAP.items():
+        if alias in clause and target in clause:
+            alias_val = _normalize_semantic_value(clause[alias])
+            target_val = _normalize_semantic_value(clause[target])
+            # For simplicity and strictness, always reject conflicts.
+            return (
+                None,
+                ERROR_ALIAS_CONFLICT,
+                f"Alias '{alias}' and target '{target}' both present in clause — "
+                f"ambiguous, rejecting conservatively",
+                0,
+            )
+
+    # ---- Gate 4: unsupported enum values for mapped fields ---------------
+    for alias in _CLAUSE_FIELD_MAP:
+        if alias in clause:
+            val = clause[alias]
+            if not _is_fieldspan_compatible(val):
+                return (
+                    None,
+                    ERROR_INVALID_ENUM,
+                    f"Mapped field '{alias}' has non-FieldSpan, non-None value "
+                    f"(type {type(val).__name__}) — unsupported enum/value",
+                    0,
+                )
+
+    # ---- Mapping phase ---------------------------------------------------
     result: dict[str, object] = {}
     mappings = 0
-    removed = 0
 
     for key, value in clause.items():
-        # Step 1 — rename mapped fields
         if key in _CLAUSE_FIELD_MAP:
             target = _CLAUSE_FIELD_MAP[key]
-            # Only map if the value is FieldSpan-compatible or None
-            if _is_fieldspan_compatible(value):
-                # Avoid overwriting an existing project-field key
-                if target not in result:
-                    result[target] = _normalize_semantic_value(value)
-                    mappings += 1
-                # else: project key already present — keep original
-            else:
-                # Non-dict/None value for a mapped field → set to None
-                if target not in result:
-                    result[target] = None
-                    mappings += 1
+            # All alias fields have passed Gate 4, so value is dict or None.
+            normalized_val = _normalize_semantic_value(value)
+            if target not in result:
+                result[target] = normalized_val
+                mappings += 1
+            # If target already present from another source, keep existing
             continue
 
-        # Step 2 — remove known-unmappable fields
-        if key in _CLAUSE_FIELDS_TO_REMOVE:
-            removed += 1
-            continue
-
-        # Step 3 — keep fields in _CLAUSE_KEYS
+        # Project-schema keys
         if key in _CLAUSE_KEYS:
-            # Coerce semantic fields
             if key in _SEMANTIC_FIELDS:
                 result[key] = _normalize_semantic_value(value)
             else:
                 result[key] = value
             continue
 
-        # Unknown key → remove
-        removed += 1
-
-    # Attach metadata via private keys (not in _CLAUSE_KEYS, won't leak)
-    # We use a separate tracking approach — return the result directly.
-    # Callers track mappings/removals via NormalizationResult.
-    return result
-
-
-def _normalize_top_level(raw: dict) -> dict:
-    """Normalize the top-level dict.
-
-    Steps:
-    1. Rename known top-level alternatives.
-    2. Remove keys not in ``_MULTI_CLAUSE_KEYS``.
-    """
-    result: dict[str, object] = {}
-
-    for key, value in raw.items():
-        # Rename mapped top-level keys
-        if key in _TOP_LEVEL_MAP:
-            target = _TOP_LEVEL_MAP[key]
-            if target not in result:
-                result[target] = value
-            continue
-
-        # Keep recognized top-level keys
-        if key in _MULTI_CLAUSE_KEYS:
-            result[key] = value
-            continue
-
-        # Unknown top-level key → remove
-        pass
-
-    return result
+    return result, None, None, mappings
 
 
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
+
 def normalize_llm_fallback_json(candidate: dict) -> NormalizationResult:
-    """Normalize a raw LLM JSON dict for schema alignment.
+    """Normalize and validate a raw LLM JSON dict for schema alignment.
+
+    R11.2.1 **strict gate**: rejects candidates with missing explicit
+    top-level keys, unknown fields, known unsupported model fields, non-dict
+    clause items, unsupported enum values, and alias-target conflicts.
 
     This is a **deterministic, mock-safe** pure function.  It never calls
     an LLM, accesses the network, reads ``.env``, or saves raw responses.
@@ -188,76 +223,112 @@ def normalize_llm_fallback_json(candidate: dict) -> NormalizationResult:
     Parameters
     ----------
     candidate : dict
-        The raw JSON dict parsed from the LLM response.  Must be a
-        ``dict``, not a list or other type.
+        The raw JSON dict parsed from the LLM response.
 
     Returns
     -------
     NormalizationResult
-        - ``status="applied"``: field-name mappings and/or removals were
-          applied; the ``normalized`` dict is ready for
-          ``MultiClauseExtractionResponse.from_dict()``.
+        - ``status="accepted"``: mappings applied successfully; the
+          ``normalized`` dict is ready for schema validation.
         - ``status="noop"``: no changes needed — the candidate already
           uses only recognized field names.
-        - ``status="error"``: the candidate was rejected before
-          producing a normalized dict (e.g., not a dict, missing
-          required keys).  ``normalized`` is ``None``.
+        - ``status="error"``: the candidate was rejected.  ``normalized``
+          is ``None``.  See ``error_reason`` for the category.
     """
     # ---- Gate: must be a dict --------------------------------------------
     if not isinstance(candidate, dict):
         return NormalizationResult(
             normalized=None,
             status="error",
+            error_reason=ERROR_MISSING_TOP_KEY,
             error_message=(
                 f"normalize_llm_fallback_json expects a dict, "
                 f"got {type(candidate).__name__}"
             ),
         )
 
-    total_mappings = 0
-    total_removed = 0
-
-    # ---- 1. Normalize top-level keys -------------------------------------
-    original_top_keys = set(candidate.keys())
-    normalized = _normalize_top_level(candidate)
-    after_top_keys = set(normalized.keys())
-    top_removed = len(original_top_keys) - len(after_top_keys)
-    total_removed += top_removed
-
-    # ---- 2. Normalize clauses array --------------------------------------
-    clauses_raw = normalized.get("clauses")
-    if isinstance(clauses_raw, list):
-        normalized_clauses: list[dict] = []
-        for i, clause in enumerate(clauses_raw):
-            if not isinstance(clause, dict):
-                # Non-dict in clauses → skip (schema validation will catch)
-                continue
-            clause_result = _normalize_clause_dict(clause)
-            normalized_clauses.append(clause_result)
-        normalized["clauses"] = normalized_clauses
-    # If clauses is not a list, leave it as-is (schema validation rejects)
-
-    # ---- Track per-clause mappings and removals --------------------------
-    # We can't easily count clause-level changes here without comparing
-    # before/after.  For the result summary, we report top-level changes
-    # and note that clause-level normalization was applied.
-    # The status determination below handles this.
-
-    # ---- Determine status ------------------------------------------------
-    if top_removed > 0:
+    # ---- Gate: must have all four explicit top-level keys ----------------
+    missing = [k for k in _MULTI_CLAUSE_KEYS if k not in candidate]
+    if missing:
         return NormalizationResult(
-            normalized=normalized,
-            status="applied",
-            mappings_applied=total_mappings,
-            fields_removed=total_removed,
+            normalized=None,
+            status="error",
+            error_reason=ERROR_MISSING_TOP_KEY,
+            error_message=(
+                f"Missing required top-level keys: {sorted(missing)}. "
+                f"R11.2.1 strict gate requires all of: "
+                f"{sorted(_MULTI_CLAUSE_KEYS)}"
+            ),
         )
 
-    # If no top-level changes, the normalizer was essentially a noop
-    # at the top level.  Clause-level changes may still have occurred,
-    # but we report the overall status conservatively.
+    # ---- Gate: no unknown top-level keys ---------------------------------
+    unknown_top = set(candidate.keys()) - _MULTI_CLAUSE_KEYS
+    if unknown_top:
+        return NormalizationResult(
+            normalized=None,
+            status="error",
+            error_reason=ERROR_UNKNOWN_TOP_FIELD,
+            error_message=(
+                f"Unknown top-level keys: {sorted(unknown_top)}. "
+                f"Allowed top-level keys: {sorted(_MULTI_CLAUSE_KEYS)}"
+            ),
+        )
+
+    # ---- Gate: clauses must be a list ------------------------------------
+    clauses_raw = candidate.get("clauses")
+    if not isinstance(clauses_raw, list):
+        return NormalizationResult(
+            normalized=None,
+            status="error",
+            error_reason=ERROR_INVALID_CLAUSE_ITEM,
+            error_message=(
+                f"MultiClauseExtractionResponse.clauses must be a list, "
+                f"got {type(clauses_raw).__name__}"
+            ),
+        )
+
+    # ---- Gate: every clause item must be a dict --------------------------
+    for i, item in enumerate(clauses_raw):
+        if not isinstance(item, dict):
+            return NormalizationResult(
+                normalized=None,
+                status="error",
+                error_reason=ERROR_INVALID_CLAUSE_ITEM,
+                error_message=(
+                    f"MultiClauseExtractionResponse.clauses[{i}] must be a dict, "
+                    f"got {type(item).__name__}"
+                ),
+            )
+
+    # ---- Normalize each clause (strict gates inside) ---------------------
+    total_mappings = 0
+    normalized_clauses: list[dict] = []
+
+    for i, clause_dict in enumerate(clauses_raw):
+        norm_dict, err_reason, err_msg, mappings = _validate_and_normalize_clause(clause_dict)
+        if err_reason is not None:
+            return NormalizationResult(
+                normalized=None,
+                status="error",
+                error_reason=err_reason,
+                error_message=(
+                    f"clauses[{i}]: {err_msg}"
+                ),
+            )
+        total_mappings += mappings
+        normalized_clauses.append(norm_dict)
+
+    # ---- Build normalized output -----------------------------------------
+    normalized: dict[str, object] = {
+        "schema_version": candidate["schema_version"],
+        "source_id": candidate["source_id"],
+        "source_text": candidate["source_text"],
+        "clauses": normalized_clauses,
+    }
+
+    status = "accepted" if total_mappings > 0 else "noop"
     return NormalizationResult(
         normalized=normalized,
-        status="noop",
-        mappings_applied=0,
-        fields_removed=0,
+        status=status,
+        mappings_applied=total_mappings,
     )
