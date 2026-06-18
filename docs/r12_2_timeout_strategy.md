@@ -358,3 +358,18 @@ bounded sanity check (n=2), not a benchmark.
 - No retry / batch / repair / raw response
 - No R12.1 output modification
 - No benchmark / method-validation claim
+
+---
+
+## 14. R12.4 Closure Note
+
+R12.3.1 was accepted as a bounded two-sample synthetic timeout sanity
+check. It supports using a 60-second timeout for future small controlled
+pilots, but it is not a benchmark or method validation.
+
+R12 is closed as a synthetic prototype API-pipeline sanity milestone.
+
+Next recommended stage: R13.0 formal dataset acquisition and evaluation
+design.
+
+See `docs/r12_closure_report.md` for the full closure report.

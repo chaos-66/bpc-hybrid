@@ -3058,6 +3058,35 @@ Both samples returned schema-valid responses in ~10.5s at 60s timeout.
 - Benchmark: no
 - Method-validation claim: no
 
+## R12.4 — R12 Closure and Next-stage Planning
+
+### Type
+
+Closure and planning only.
+
+### Scope
+
+- Real API call: no
+- R12.1/R12.3.1 rerun: no
+- Output modification: no
+- Dataset modification: no
+- Benchmark: no
+- Method-validation claim: no
+
+### Result
+
+R12 is closed as a synthetic prototype API-pipeline sanity milestone.
+R12.1 showed partial success under the 30-second default timeout, R12.2
+identified timeout as the dominant failure mode, R12.3.0 added
+timing/error metadata, and R12.3.1 showed that two selected
+prior-timeout samples succeed under 60 seconds.
+
+### Next Stage
+
+R13.0 — formal dataset acquisition and evaluation design.
+
+See `docs/r12_closure_report.md` for the full closure report.
+
 ## R12.3.0 — Add Pilot Duration and Timeout Metadata
 
 ### Type

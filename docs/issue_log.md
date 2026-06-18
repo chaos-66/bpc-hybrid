@@ -654,6 +654,24 @@ files), so no data was lost.
 R12.3.1.1 operating rules explicitly forbid `Remove-Item`, `rmdir`,
 `del`, `rd`, and `git clean -fdx`.
 
+## I051 — R12 closure requires strict claim boundary
+
+### Status
+
+Closed in R12.4.
+
+### Context
+
+R12 produced useful synthetic prototype API-pipeline evidence, but it
+must not be overstated as benchmark completion, formal dataset
+evaluation, or method validation.
+
+### Resolution
+
+R12.4 closes R12 only as a synthetic prototype API-pipeline sanity
+milestone and recommends R13.0 for formal dataset acquisition and
+evaluation design.  See `docs/r12_closure_report.md`.
+
 ## I047 — Timeout analysis needs per-sample duration and error category metadata
 
 ### Status
