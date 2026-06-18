@@ -159,5 +159,5 @@ Recommended R13.0 objectives:
 ```
 R12_4_DECISION: CLOSED_AS_SYNTHETIC_PROTOTYPE_MILESTONE
 R12_4_CLAIM: NOT_BENCHMARK | NOT_FORMAL_DATASET | NOT_METHOD_VALIDATION
-R12_4_NEXT: R13.0 — Formal Dataset Acquisition and Evaluation Design
+R12_4_NEXT: R13.0 — Formal Dataset Acquisition and Evaluation Design (IN PROGRESS as of 2026-06-19)
 ```

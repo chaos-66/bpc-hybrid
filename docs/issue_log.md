@@ -672,6 +672,24 @@ R12.4 closes R12 only as a synthetic prototype API-pipeline sanity
 milestone and recommends R13.0 for formal dataset acquisition and
 evaluation design.  See `docs/r12_closure_report.md`.
 
+## I052 — Formal dataset is required before real evaluation claims
+
+### Status
+
+Open in R13.0.
+
+### Context
+
+R12 closed only as a synthetic prototype API-pipeline sanity milestone.
+Formal evaluation requires a verified dataset source, license/source
+tracking, processed input format, and gold/baseline plan.
+
+### Resolution Plan
+
+R13.0 defines formal dataset intake requirements and user action items
+before any formal API pilot.  See `docs/r13_formal_dataset_plan.md`
+and `docs/dataset_sources.md`.
+
 ## I047 — Timeout analysis needs per-sample duration and error category metadata
 
 ### Status

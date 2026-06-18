@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅ | R10.4.1 ✅ | R11.0 ✅ | R11.1 ✅ | R11.1.1 ✅ | R11.2 ✅ | R11.2.1 ✅ | R11.3 ✅ | R11.3.1 ✅ | R11.4 ❌ CONFIG_BLOCKED | R11.4.1 ❌ CONFIG_BLOCKED | R11.4.3 ✅ | R12.0 ✅ | R12.0.1 ✅ | R12.1 ⚠️ PARTIAL | R12.1.1 ✅ | R12.2 ✅ | R12.3.0 ✅ | R12.3.0.1 ✅ | R12.3.1 ✅ | R12.4 ✅**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅ | R10.4.1 ✅ | R11.0 ✅ | R11.1 ✅ | R11.1.1 ✅ | R11.2 ✅ | R11.2.1 ✅ | R11.3 ✅ | R11.3.1 ✅ | R11.4 ❌ CONFIG_BLOCKED | R11.4.1 ❌ CONFIG_BLOCKED | R11.4.3 ✅ | R12.0 ✅ | R12.0.1 ✅ | R12.1 ⚠️ PARTIAL | R12.1.1 ✅ | R12.2 ✅ | R12.3.0 ✅ | R12.3.0.1 ✅ | R12.3.1 ✅ | R12.4 ✅ | R13.0 🔵 IN PROGRESS**
 
 ## Research Positioning
 
@@ -87,7 +87,7 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 
 ### Current Stage
 
-**R12.4 closure completed / pending commit.** The next recommended stage is R13.0 — formal dataset acquisition and evaluation design. See `docs/r12_closure_report.md`.
+**R13.0 — formal dataset acquisition and evaluation design.** R12 is closed as a synthetic prototype API-pipeline sanity milestone. R13 begins formal dataset acquisition and evaluation design. No real API is executed in R13.0. See `docs/r13_formal_dataset_plan.md`.
 
 ## R9 Scope
 

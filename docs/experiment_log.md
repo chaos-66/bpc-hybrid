@@ -3087,6 +3087,35 @@ R13.0 — formal dataset acquisition and evaluation design.
 
 See `docs/r12_closure_report.md` for the full closure report.
 
+## R13.0 — Formal Dataset Acquisition and Evaluation Design
+
+### Type
+
+Planning and dataset acquisition design only.
+
+### Scope
+
+- Real API call: no
+- Dataset download: no, unless explicitly user-approved later
+- Dataset modification: no
+- R12 output modification: no
+- Benchmark: no
+- Method-validation claim: no
+
+### Goal
+
+Prepare formal dataset intake after R12 closed as a synthetic prototype API-pipeline sanity milestone.
+
+### Result
+
+Created formal dataset directory structure (`data/formal/`), dataset source tracking
+document (`docs/dataset_sources.md`), and R13 formal dataset plan
+(`docs/r13_formal_dataset_plan.md`).
+
+### Next Stage
+
+R13.1 — Data intake of first confirmed formal dataset (no API calls).
+
 ## R12.3.0 — Add Pilot Duration and Timeout Metadata
 
 ### Type
