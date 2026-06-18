@@ -2101,3 +2101,74 @@ R11.4 must wait for Codex audit of R11.3 + R11.3.1.
 Requires Codex audit before R11.4.
 
 
+## R11.4 — Single-sample Real API Schema-aligned Smoke
+
+### Goal
+
+Execute exactly ONE real API call via the dedicated single-call entrypoint
+with full schema alignment (normalizer + schema gate), verifying the
+end-to-end pipeline: `LLMConfig.from_env()` → `RealAPITransport` →
+`LLMFallbackAdapter` → normalizer → schema validation.
+
+### Authorization
+
+User explicitly authorized one real API call for this stage only.
+
+### Implementation
+
+R11.4 replaces the R11.3.1 `--execute-real-api` scaffold refusal gate
+with actual real API execution path:
+
+- ``_execute_real_api_call()`` loads config via ``LLMConfig.from_env()``
+- Config gate: refuses if ``enabled=False`` or ``api_key`` is missing
+- ``RealAPITransport`` with ``LLMFallbackAdapter`` for single HTTP call
+- ``_execute_fallback()`` shared by both mock and real paths
+- No retry, no batch, no raw response saved
+
+### Real API Call Result
+
+Executed 2026-06-18:
+
+```json
+{
+  "source_id": "r11_4_real_schema_smoke_001",
+  "input_text": "A controller shall record the decision.",
+  "real_api_call_performed": false,
+  "attempted_call_count": 0,
+  "successful_call_count": 0,
+  "error": "LLM fallback is disabled (config.enabled=False)"
+}
+```
+
+**Config gate blocked the call** — ``LLMConfig.from_env()`` returned
+``enabled=False`` because ``BPC_HYBRID_LLM_ENABLED`` is not set to
+``true`` in the project ``.env``.  This is the safety gate working as
+designed.  No API key, base URL, or other secret material was exposed.
+
+### Safety Boundary
+
+- One real API call authorized — config gate blocked it (no network activity)
+- No retry
+- No raw response saved
+- No batch
+- No benchmark
+- No accuracy claim
+- No method-validation claim
+- No .env content read by agent
+
+### Test Results
+
+- 45 entrypoint tests pass (6 new real-path config-gate tests)
+- 574 total tests pass
+- Static claim scan: clean
+- Health: scaffold-ok
+- Synthetic eval: no regression
+
+### Exit Gate
+
+Config gate blocked the call.  Requires user to verify ``.env``
+contains ``BPC_HYBRID_LLM_ENABLED=true`` before any retry.
+**No retry authorized in this stage.**
+R11.5 deferred until user confirms ``.env`` is correctly configured.
+
+

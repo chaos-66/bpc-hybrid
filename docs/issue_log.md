@@ -299,3 +299,37 @@ batch + openai_compatible, and 5 `--no-project-env` CLI paths.
 - No accuracy claim.
 - No method-validation claim.
 
+---
+
+## I039 — R11.4 config gate blocked real API call
+
+### Status
+
+Recorded (R11.4).
+
+### Context
+
+R11.4 executed the one authorized real API call via
+`--execute-real-api --source-id r11_4_real_schema_smoke_001`.
+The config gate blocked the call because `LLMConfig.from_env()`
+returned `enabled=False` — `BPC_HYBRID_LLM_ENABLED` is not set
+to `true` in the project `.env`.
+
+### Resolution
+
+No retry executed (not authorized in this stage).  The config gate
+worked as designed: no network activity, no API key exposure, no raw
+response saved.  User must verify `.env` configuration before any
+future real API stage.
+
+### Safety Boundary
+
+- No real API call performed (config gate blocked).
+- No retry.
+- No raw response saved.
+- No batch.
+- No benchmark.
+- No accuracy claim.
+- No method-validation claim.
+- No `.env` content read by agent.
+

@@ -1,15 +1,15 @@
-"""Tests for R11.3 single-call entrypoint scaffold (test_single_call_entrypoint.py).
+"""Tests for R11.4 single-call entrypoint (test_single_call_entrypoint.py).
 
 Covers:
 - Mock default path (succeeds with schema-valid output)
 - Non-mock provider refused without --execute-real-api
-- --execute-real-api scaffold refusal
+- --execute-real-api config gate (disabled, missing api_key, mock transport)
 - Metadata structure completeness
 - Error handling
 - Safety constraints (.env, network, raw response, batch)
 - Programmatic API (run_single_call)
 
-**No real API, no .env read, no raw response storage, no network.**
+**No real API in tests — real path gated behind mocked LLMConfig.from_env().**
 """
 
 from __future__ import annotations
@@ -39,7 +39,6 @@ if _SRC not in sys.path:
 
 from scripts.run_single_call_schema_smoke import (  # noqa: E402
     _METADATA_TEMPLATE,
-    _R11_3_REAL_REFUSAL_MSG,
     _build_metadata,
     run_single_call,
 )
@@ -215,30 +214,29 @@ class TestNonMockRefusal:
 
 
 # ===========================================================================
-# TestExecuteRealApiScaffoldRefusal
+# TestExecuteRealApiConfigGate (R11.4)
 # ===========================================================================
 
 
-class TestExecuteRealApiScaffoldRefusal:
-    """--execute-real-api is accepted but refuses real execution (R11.3 scaffold)."""
+class TestExecuteRealApiConfigGate:
+    """--execute-real-api triggers LLMConfig.from_env(); tests mock it."""
 
-    def test_execute_real_api_refused_with_mock(self, sample_source_id, sample_text):
-        meta = run_single_call(
-            source_id=sample_source_id,
-            text=sample_text,
-            provider="mock",
-            execute_real_api=True,
+    def test_execute_real_api_config_disabled(self, sample_source_id, sample_text, monkeypatch):
+        """When from_env() returns enabled=False, real API is refused."""
+        from bpc_hybrid.llm_config import LLMConfig
+
+        def _fake_from_env(project_root=None, load_project_env=True):
+            return LLMConfig(
+                enabled=False,
+                provider="openai_compatible",
+                model="test-model",
+            )
+
+        monkeypatch.setattr(
+            "scripts.run_single_call_schema_smoke.LLMConfig.from_env",
+            _fake_from_env,
         )
-        assert meta["error"] is not None
-        assert "R11.3 scaffold does not execute real API" in str(meta["error"])
-        assert meta["real_api_call_performed"] is False
-        assert meta["attempted_call_count"] == 0
-        assert meta["successful_call_count"] == 0
-        assert meta["raw_response_saved"] is False
 
-    def test_execute_real_api_refused_with_openai_compatible(
-        self, sample_source_id, sample_text
-    ):
         meta = run_single_call(
             source_id=sample_source_id,
             text=sample_text,
@@ -246,7 +244,210 @@ class TestExecuteRealApiScaffoldRefusal:
             execute_real_api=True,
         )
         assert meta["error"] is not None
-        assert "R11.3 scaffold does not execute real API" in str(meta["error"])
+        assert "disabled" in str(meta["error"]).lower()
+        assert meta["real_api_call_performed"] is False
+        assert meta["attempted_call_count"] == 0
+        assert meta["successful_call_count"] == 0
+        assert meta["raw_response_saved"] is False
+
+    def test_execute_real_api_missing_api_key(self, sample_source_id, sample_text, monkeypatch):
+        """When from_env() returns no api_key, real API is refused."""
+        from bpc_hybrid.llm_config import LLMConfig
+
+        def _fake_from_env(project_root=None, load_project_env=True):
+            return LLMConfig(
+                enabled=True,
+                provider="openai_compatible",
+                model="test-model",
+                api_key=None,  # missing!
+            )
+
+        monkeypatch.setattr(
+            "scripts.run_single_call_schema_smoke.LLMConfig.from_env",
+            _fake_from_env,
+        )
+
+        meta = run_single_call(
+            source_id=sample_source_id,
+            text=sample_text,
+            provider="openai_compatible",
+            execute_real_api=True,
+        )
+        assert meta["error"] is not None
+        assert "api_key" in str(meta["error"]).lower()
+        assert meta["real_api_call_performed"] is False
+
+    def test_execute_real_api_transport_error(self, sample_source_id, sample_text, monkeypatch):
+        """When transport raises, error is redacted and no raw response saved."""
+        from bpc_hybrid.llm_client import LLMClientError
+        from bpc_hybrid.llm_config import LLMConfig
+
+        def _fake_from_env(project_root=None, load_project_env=True):
+            return LLMConfig(
+                enabled=True,
+                provider="openai_compatible",
+                model="test-model",
+                api_key="redacted-test-key",
+                base_url="https://test.example.com/v1",
+            )
+
+        def _fake_send(self, request):
+            raise LLMClientError("Real API DNS/connection error (details redacted)")
+
+        monkeypatch.setattr(
+            "scripts.run_single_call_schema_smoke.LLMConfig.from_env",
+            _fake_from_env,
+        )
+        monkeypatch.setattr(
+            "bpc_hybrid.llm_client.RealAPITransport.send",
+            _fake_send,
+        )
+
+        meta = run_single_call(
+            source_id=sample_source_id,
+            text=sample_text,
+            provider="openai_compatible",
+            execute_real_api=True,
+        )
+        assert meta["error"] is not None
+        assert "DNS/connection" in str(meta["error"])
+        assert meta["real_api_call_performed"] is True
+        assert meta["attempted_call_count"] == 1
+        assert meta["successful_call_count"] == 0
+        assert meta["raw_response_saved"] is False
+        assert meta["batch"] is False
+
+    def test_execute_real_api_schema_invalid(self, sample_source_id, sample_text, monkeypatch):
+        """Real API returns schema-invalid JSON — metadata reflects it."""
+        from bpc_hybrid.llm_client import LLMResponse
+        from bpc_hybrid.llm_config import LLMConfig
+
+        def _fake_from_env(project_root=None, load_project_env=True):
+            return LLMConfig(
+                enabled=True,
+                provider="openai_compatible",
+                model="test-model",
+                api_key="redacted-test-key",
+                base_url="https://test.example.com/v1",
+            )
+
+        def _fake_send(self, request):
+            return LLMResponse(
+                content='{"wrong": "schema"}',
+                provider="openai_compatible",
+                model="test-model",
+                finish_reason="stop",
+            )
+
+        monkeypatch.setattr(
+            "scripts.run_single_call_schema_smoke.LLMConfig.from_env",
+            _fake_from_env,
+        )
+        monkeypatch.setattr(
+            "bpc_hybrid.llm_client.RealAPITransport.send",
+            _fake_send,
+        )
+
+        meta = run_single_call(
+            source_id=sample_source_id,
+            text=sample_text,
+            provider="openai_compatible",
+            execute_real_api=True,
+        )
+        assert meta["error"] is not None
+        assert "schema" in str(meta["error"]).lower() or "parse" in str(meta["error"]).lower()
+        assert meta["real_api_call_performed"] is True
+        assert meta["attempted_call_count"] == 1
+        assert meta["raw_response_saved"] is False
+
+    def test_execute_real_api_schema_valid_mock(self, sample_source_id, sample_text, monkeypatch):
+        """Real API returns schema-valid JSON — metadata reflects success."""
+        from bpc_hybrid.llm_client import LLMResponse
+        from bpc_hybrid.llm_config import LLMConfig
+
+        def _fake_from_env(project_root=None, load_project_env=True):
+            return LLMConfig(
+                enabled=True,
+                provider="openai_compatible",
+                model="test-model",
+                api_key="redacted-test-key",
+                base_url="https://test.example.com/v1",
+            )
+
+        def _fake_send(self, request):
+            # Build a schema-valid response
+            content = json.dumps({
+                "schema_version": "0.1.0",
+                "source_id": sample_source_id,
+                "source_text": sample_text,
+                "clauses": [{
+                    "clause_id": "r11_4_test_001_clause_0",
+                    "source_id": sample_source_id,
+                    "source_text": sample_text,
+                    "clause_text": sample_text,
+                    "clause_span_start": 0,
+                    "clause_span_end": len(sample_text),
+                    "modality": {"text": "shall", "span_start": 14, "span_end": 19, "confidence": 0.95},
+                    "actor": {"text": "controller", "span_start": 2, "span_end": 12, "confidence": 0.95},
+                    "action": {"text": "record the decision", "span_start": 20, "span_end": 39, "confidence": 0.95},
+                    "condition": None,
+                    "constraint": None,
+                    "exception": None,
+                    "confidence": 0.95,
+                }],
+            })
+            return LLMResponse(
+                content=content,
+                provider="openai_compatible",
+                model="test-model",
+                finish_reason="stop",
+            )
+
+        monkeypatch.setattr(
+            "scripts.run_single_call_schema_smoke.LLMConfig.from_env",
+            _fake_from_env,
+        )
+        monkeypatch.setattr(
+            "bpc_hybrid.llm_client.RealAPITransport.send",
+            _fake_send,
+        )
+
+        meta = run_single_call(
+            source_id=sample_source_id,
+            text=sample_text,
+            provider="openai_compatible",
+            execute_real_api=True,
+        )
+        assert meta["error"] is None
+        assert meta["real_api_call_performed"] is True
+        assert meta["attempted_call_count"] == 1
+        assert meta["successful_call_count"] == 1
+        assert meta["schema_valid"] is True
+        assert meta["raw_response_saved"] is False
+        assert meta["batch"] is False
+        assert meta["output"] is not None
+        assert "clauses" in meta["output"]
+
+    def test_execute_real_api_from_env_error(self, sample_source_id, sample_text, monkeypatch):
+        """When from_env() raises LLMConfigError, error is captured."""
+        from bpc_hybrid.llm_config import LLMConfigError
+
+        def _fake_from_env(project_root=None, load_project_env=True):
+            raise LLMConfigError("BPC_HYBRID_LLM_TIMEOUT_SECONDS must be a float")
+
+        monkeypatch.setattr(
+            "scripts.run_single_call_schema_smoke.LLMConfig.from_env",
+            _fake_from_env,
+        )
+
+        meta = run_single_call(
+            source_id=sample_source_id,
+            text=sample_text,
+            provider="openai_compatible",
+            execute_real_api=True,
+        )
+        assert meta["error"] is not None
+        assert "from_env" in str(meta["error"]).lower()
         assert meta["real_api_call_performed"] is False
 
 
@@ -507,15 +708,18 @@ class TestCLIIntegration:
         assert data.get("error") is not None
         assert "requires --execute-real-api" in str(data.get("error", ""))
 
-    def test_cli_execute_real_api_refused(self):
+    def test_cli_execute_real_api_config_gate(self):
+        """--execute-real-api triggers from_env() — without .env, config gate returns error."""
         exit_code, data = self._run_cli(
-            "--source-id", "r11_3_cli_003",
+            "--source-id", "r11_4_cli_003",
             "--text", "A controller shall record the decision.",
             "--execute-real-api",
         )
         assert exit_code == 1
         assert data.get("error") is not None
-        assert "R11.3 scaffold does not execute real API" in str(data.get("error", ""))
+        # Without .env, config will be disabled or missing api_key
+        assert "disabled" in str(data.get("error", "")).lower() or "api_key" in str(data.get("error", "")).lower()
+        assert data.get("real_api_call_performed") is False
 
     def test_cli_missing_source_id(self):
         exit_code, data = self._run_cli(
@@ -654,16 +858,18 @@ class TestNoProjectEnvCLI:
         assert data.get("real_api_call_performed") is False
         assert data.get("attempted_call_count") == 0
 
-    def test_cli_no_project_env_execute_real_api_refused(self):
-        """--execute-real-api with --no-project-env still scaffold-refused."""
+    def test_cli_no_project_env_execute_real_api_config_gate(self):
+        """--execute-real-api with --no-project-env triggers from_env() but hits config gate."""
         exit_code, data = self._run_cli(
             "--no-project-env",
-            "--source-id", "r11_3_1_real_refuse_001",
+            "--source-id", "r11_4_real_refuse_001",
             "--text", "A controller shall record the decision.",
             "--execute-real-api",
         )
         assert exit_code == 1
-        assert "scaffold does not execute real API" in str(data.get("error", ""))
+        assert data.get("error") is not None
+        # Without .env, config will be disabled or missing api_key
+        assert "disabled" in str(data.get("error", "")).lower() or "api_key" in str(data.get("error", "")).lower()
         assert data.get("real_api_call_performed") is False
 
     def test_cli_no_project_env_batch_rejected(self):

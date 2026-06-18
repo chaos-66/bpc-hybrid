@@ -1,28 +1,28 @@
-"""R11.3.1 Dedicated Single-call Real API Entrypoint Scaffold.
+"""R11.4 Single-sample Real API Schema-aligned Smoke Entrypoint.
 
-Provides a safety-gated, single-call CLI entrypoint for future R11.4
-single-sentence real API schema-aligned smoke tests.  In R11.3.1, real
-API execution is **refused by default** — only mock mode runs unless
-the explicit future flag ``--execute-real-api`` is provided for
-scaffold design validation.
+Provides a safety-gated, single-call CLI entrypoint for exactly ONE
+real API schema-aligned smoke test per authorized stage.  Mock mode
+remains the safe default; real execution requires the explicit
+``--execute-real-api`` flag.
 
-Usage (mock, R11.3.1)::
+Usage (real API, R11.4)::
 
     .\\.venv\\Scripts\\python.exe scripts\\run_single_call_schema_smoke.py \\
-        --no-project-env \\
+        --execute-real-api \\
         --source-id r11_4_real_schema_smoke_001 \\
-        --text "A controller shall record the decision."
+        --text "A controller shall record the decision." \\
+        --provider openai_compatible
 
-**Safety constraints (R11.3.1 scaffold):**
+**Safety constraints (R11.4):**
 
+* ``--execute-real-api`` — enables exactly ONE real API call (no retry).
 * ``--no-project-env`` CLI flag — disables project-root ``.env`` loading.
 * ``--batch`` CLI flag — explicitly rejected (single-call only).
-* No ``.env`` read.
-* No real API execution without ``--execute-real-api``.
 * No raw response saved to disk.
 * No batch mode — single call only.
 * No benchmark, no accuracy claim, no method-validation claim.
-* R11.4 will add the real execution path after Codex audit.
+* Provider config read via safe ``LLMConfig.from_env()`` — never echoed.
+* Only ``r11_4_real_schema_smoke_001`` is authorized for this stage.
 """
 
 from __future__ import annotations
@@ -43,6 +43,7 @@ from bpc_hybrid.llm_client import (
     LLMFallbackAdapter,
     LLMResponse,
     MockLLMTransport,
+    RealAPITransport,
     make_schema_valid_mock_response_json,
 )
 from bpc_hybrid.llm_config import LLMConfig, LLMConfigError, LLMProvider
@@ -151,15 +152,6 @@ class _JsonArgumentParser(argparse.ArgumentParser):
 # Gate: refuse real execution without explicit flag
 # ---------------------------------------------------------------------------
 
-_R11_3_REAL_REFUSAL_MSG = (
-    "R11.3 scaffold does not execute real API calls. "
-    "The --execute-real-api flag is accepted for scaffold design "
-    "validation (R11.4 forward-compat) but the R11.3 scaffold "
-    "still routes through mock transport. "
-    "No network, no .env read, no raw response storage."
-)
-
-
 # ---------------------------------------------------------------------------
 # Core: run single-call with metadata tracking
 # ---------------------------------------------------------------------------
@@ -172,7 +164,7 @@ def run_single_call(
     execute_real_api: bool = False,
     request_batch: bool = False,
 ) -> dict[str, object]:
-    """Execute a single mock call and return metadata.
+    """Execute a single call (mock or real) and return metadata.
 
     This is the programmatic entrypoint — callable from tests without
     CLI or subprocess.
@@ -186,10 +178,13 @@ def run_single_call(
     provider : str
         LLM provider name (default ``"mock"``).
     model : str
-        Model name (default ``"mock"``).
+        Model name (default ``"mock"``).  When empty and
+        ``execute_real_api`` is ``True``, the model is resolved from
+        ``LLMConfig.from_env()``.
     execute_real_api : bool
-        When ``True``, accepts the future flag (R11.4 forward-compat)
-        but still routes through mock in R11.3.1.
+        When ``True``, performs exactly ONE real API call using
+        ``LLMConfig.from_env()`` and ``RealAPITransport``.  No retry,
+        no raw response save, no batch.
     request_batch : bool
         When ``True``, the call is explicitly rejected — batch is not
         supported in this single-call entrypoint.
@@ -197,7 +192,7 @@ def run_single_call(
     Returns
     -------
     dict
-        Full metadata dict per R11.3.1 spec.
+        Full metadata dict per R11.4 spec.
     """
     # ---- Gate: explicit batch rejection ---------------------------------
     if request_batch:
@@ -223,8 +218,7 @@ def run_single_call(
             model=model,
             error=(
                 f"Provider {provider!r} requires --execute-real-api for "
-                f"real API execution. In R11.3, only --provider mock is "
-                f"supported without --execute-real-api."
+                f"real API execution. Use --provider mock for mock mode."
             ),
             real_api_call_performed=False,
             attempted_call_count=0,
@@ -233,24 +227,18 @@ def run_single_call(
             batch=False,
         )
 
-    # ---- Gate: --execute-real-api scaffold path (R11.3 still mock) ------
+    # ==================================================================
+    # R11.4: --execute-real-api → real API execution path
+    # ==================================================================
     if execute_real_api:
-        # R11.3 scaffold: accept the flag but refuse real execution.
-        # R11.4 will implement the actual real path here.
-        return _build_metadata(
+        return _execute_real_api_call(
             source_id=source_id,
-            input_text=text,
+            text=text,
             provider=provider,
             model=model,
-            error=_R11_3_REAL_REFUSAL_MSG,
-            real_api_call_performed=False,
-            attempted_call_count=0,
-            successful_call_count=0,
-            raw_response_saved=False,
-            batch=False,
         )
 
-    # ---- Build config and transport (mock-only in R11.3) ----------------
+    # ---- Build config and transport (mock-only path) --------------------
     try:
         config = LLMConfig(
             enabled=True,
@@ -281,7 +269,124 @@ def run_single_call(
     )
     transport = MockLLMTransport(fixed_response=mock_resp)
 
-    # ---- Execute fallback ------------------------------------------------
+    # ---- Execute fallback (mock) ----------------------------------------
+    return _execute_fallback(
+        source_id=source_id,
+        text=text,
+        provider=provider,
+        model=model,
+        config=config,
+        transport=transport,
+        real_api_call_performed=False,
+    )
+
+
+# ---------------------------------------------------------------------------
+# R11.4: Real API execution (single call, no retry)
+# ---------------------------------------------------------------------------
+
+def _execute_real_api_call(
+    source_id: str,
+    text: str,
+    provider: str,
+    model: str,
+) -> dict[str, object]:
+    """Execute exactly ONE real API call via LLMConfig.from_env().
+
+    No retry.  No raw response saved.  No batch.
+    """
+    attempted = 0
+
+    # ---- Load config from environment (.env fallback) ------------------
+    try:
+        config = LLMConfig.from_env(project_root=_PROJECT_ROOT)
+    except LLMConfigError as exc:
+        return _build_metadata(
+            source_id=source_id,
+            input_text=text,
+            provider=provider,
+            model=model or "unknown",
+            error=f"LLMConfig.from_env() error: {exc}",
+            real_api_call_performed=False,
+            attempted_call_count=0,
+            successful_call_count=0,
+            raw_response_saved=False,
+            batch=False,
+        )
+
+    # ---- Validate config is ready for real API -------------------------
+    if not config.enabled:
+        return _build_metadata(
+            source_id=source_id,
+            input_text=text,
+            provider=config.provider,
+            model=config.model,
+            error="LLM fallback is disabled (config.enabled=False)",
+            real_api_call_performed=False,
+            attempted_call_count=0,
+            successful_call_count=0,
+            raw_response_saved=False,
+            batch=False,
+        )
+
+    if not config.api_key:
+        return _build_metadata(
+            source_id=source_id,
+            input_text=text,
+            provider=config.provider,
+            model=config.model,
+            error="LLM config missing api_key — cannot execute real API call",
+            real_api_call_performed=False,
+            attempted_call_count=0,
+            successful_call_count=0,
+            raw_response_saved=False,
+            batch=False,
+        )
+
+    # ---- Build real transport ------------------------------------------
+    attempted = 1
+    try:
+        transport = RealAPITransport(config, timeout_seconds=config.timeout_seconds)
+    except Exception as exc:
+        return _build_metadata(
+            source_id=source_id,
+            input_text=text,
+            provider=config.provider,
+            model=config.model,
+            error=f"RealAPITransport init error: {exc}",
+            real_api_call_performed=False,
+            attempted_call_count=attempted,
+            successful_call_count=0,
+            raw_response_saved=False,
+            batch=False,
+        )
+
+    # ---- Execute fallback (real) ---------------------------------------
+    return _execute_fallback(
+        source_id=source_id,
+        text=text,
+        provider=config.provider,
+        model=config.model,
+        config=config,
+        transport=transport,
+        real_api_call_performed=True,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Shared fallback execution (mock and real both use this)
+# ---------------------------------------------------------------------------
+
+def _execute_fallback(
+    source_id: str,
+    text: str,
+    provider: str,
+    model: str,
+    config: LLMConfig,
+    transport: object,
+    real_api_call_performed: bool,
+) -> dict[str, object]:
+    """Execute fallback via LLMFallbackAdapter and return metadata."""
     adapter = LLMFallbackAdapter(config=config, transport=transport)
     adapter.enable_schema_alignment = True
 
@@ -291,7 +396,7 @@ def run_single_call(
         rule_response=None,  # single-call entrypoint — no rule-first pre-extraction
     )
 
-    attempted_call_count = 1
+    attempted_call_count = 1 if real_api_call_performed else 1
     successful_call_count = 0
 
     try:
@@ -306,24 +411,26 @@ def run_single_call(
             fallback_status="error",
             attempted_call_count=attempted_call_count,
             successful_call_count=successful_call_count,
-            real_api_call_performed=False,
+            real_api_call_performed=real_api_call_performed,
             raw_response_saved=False,
             batch=False,
         )
 
     # ---- Determine fallback / schema / normalizer status ---------------
     if result.error is not None:
+        error_msg = result.error
+        # Preserve existing error classification for real API calls
         return _build_metadata(
             source_id=source_id,
             input_text=text,
             provider=provider,
             model=model,
-            error=result.error,
+            error=error_msg,
             fallback_status="error",
             schema_valid=result.is_valid,
             attempted_call_count=attempted_call_count,
             successful_call_count=successful_call_count,
-            real_api_call_performed=False,
+            real_api_call_performed=real_api_call_performed,
             raw_response_saved=False,
             batch=False,
         )
@@ -346,7 +453,7 @@ def run_single_call(
         output=output_dict,
         attempted_call_count=attempted_call_count,
         successful_call_count=successful_call_count,
-        real_api_call_performed=False,
+        real_api_call_performed=real_api_call_performed,
         raw_response_saved=False,
         batch=False,
         error=None,
@@ -359,7 +466,7 @@ def run_single_call(
 
 def main(argv: list[str] | None = None) -> int:
     parser = _JsonArgumentParser(
-        description="R11.3.1 dedicated single-call real API entrypoint scaffold",
+        description="R11.4 single-sample real API schema-aligned smoke entrypoint",
     )
     parser.add_argument(
         "--source-id",
@@ -396,9 +503,10 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         default=False,
         help=(
-            "Future real API execution flag (R11.4 forward-compat). "
-            "In R11.3.1, this flag is accepted but routes through mock "
-            "transport — no real API call is performed."
+            "Execute exactly ONE real API call via LLMConfig.from_env() "
+            "and RealAPITransport.  No retry, no batch, no raw response "
+            "saved to disk.  Requires valid BPC_HYBRID_LLM_* env vars "
+            "or .env file."
         ),
     )
     parser.add_argument(
