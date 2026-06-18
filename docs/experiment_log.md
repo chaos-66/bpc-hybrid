@@ -2907,3 +2907,67 @@ All other output/log/raw_response files still trigger the safety assertion.
 - No `.env` read.
 - No secret exposure.
 - Whitelist is narrow — does not weaken raw response / secret detection.
+
+## R12.2 — API Error / Timeout Strategy
+
+### Goal
+
+Analyze the R12.1 timeout/API-error pattern and plan a bounded
+next-step strategy (R12.3).
+
+### R12.1 Recap
+
+| Metric | Value |
+|--------|-------|
+| attempted | 14 |
+| schema_valid | 4 |
+| api_error | 10 |
+| api_error type | 100% `socket.timeout` |
+| pilot duration | ~6 min 4 sec |
+| per-call avg | ~26 sec |
+
+### Key Findings
+
+1. **All 10 failures are `socket.timeout`** — each waited for the full
+   30s timeout before failing (`urllib.request.urlopen(timeout=30.0)`).
+2. **No clear length/complexity correlation**: success avg 45.8 chars
+   (range 36–56), failure avg 49.0 chars (range 32–62).  The shortest
+   sentence (d02, 32 chars) failed; a 56-char sentence with condition
+   (d07) succeeded.
+3. **Intermittent endpoint latency**: some calls complete under 30s,
+   some never complete — consistent with API endpoint load or
+   rate-limiting, not per-sentence processing time.
+4. **Current timeout** is `BPC_HYBRID_LLM_TIMEOUT_SECONDS` defaulting
+   to `30.0`, used as a single `urllib` timeout (connect + read).
+5. **No per-sample duration tracking** in the pilot runner.
+
+### Artifacts
+
+- `docs/r12_2_timeout_strategy.md` — full 10-section analysis and
+  recommended R12.3 strategy (option B: code-only R12.3.0 + 2-sample
+  real API R12.3.1).
+
+### Recommended R12.3 Strategy (Option B)
+
+| Sub-stage | Scope | Real API |
+|-----------|-------|----------|
+| R12.3.0 | Add per-sample `duration_seconds` + `--timeout-seconds` CLI flag | None |
+| R12.3.1 | Retry 2 previously failed samples (d01, d06) with timeout increased to 60s | Max 2 calls |
+
+### Scope
+
+- Real API call: **no**
+- Pilot rerun: **no**
+- Output file modification: **no**
+- Analysis and planning only: **yes**
+- Strategy document: `docs/r12_2_timeout_strategy.md`
+
+### Safety Boundary
+
+- No real API call.
+- No pilot rerun.
+- No R12.1 output change.
+- No `.env` read.
+- No secret exposure.
+- No benchmark.
+- No method-validation claim.

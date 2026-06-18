@@ -548,3 +548,44 @@ or secret-detection safety invariants.
 - Whitelist is narrow — only exact committed sanitized paths excluded.
 - Full pytest: 590 passed, 0 failed.
 
+## I046 — R12.2 timeout pattern analysis identifies intermittent endpoint latency
+
+### Status
+
+Open — R12.2 strategy document created; R12.3 (two-stage) is the
+planned resolution path.
+
+### Context
+
+R12.1 synthetic prototype pilot executed 14 real API calls with 4
+schema_valid and 10 api_error (all `socket.timeout`).  R12.2 performed
+detailed error pattern analysis: length, complexity, timing, and
+timeout configuration.
+
+### Key Findings
+
+- All 10 api_error are `socket.timeout` (each waited full 30s).
+- No clear length or complexity correlation with success/failure.
+- The shortest sentence (d02, 32 chars) failed; a 56-char conditional
+  sentence (d07) succeeded.
+- R12.1 pilot duration ~6 min 4 sec, per-call avg ~26 sec.
+- Hypothesis: intermittent endpoint latency > 30s timeout.
+- Current `BPC_HYBRID_LLM_TIMEOUT_SECONDS` defaults to `30.0`.
+
+### Recommended R12.3 Strategy (Option B)
+
+- R12.3.0: Add per-sample `duration_seconds` tracking and
+  `--timeout-seconds` CLI flag (code/test only, no real API).
+- R12.3.1: 2-sample timeout sanity check (d01, d06) with timeout
+  increased to 60s (max 2 real API calls).
+
+### Safety Boundary
+
+- No real API call (R12.2).
+- No pilot rerun.
+- No R12.1 output change.
+- No `.env` read.
+- No secret exposure.
+- No benchmark.
+- No method-validation claim.
+
