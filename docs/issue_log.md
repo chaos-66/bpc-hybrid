@@ -229,6 +229,29 @@ R11.2.1 changes the normalizer to reject:
 - unsupported enum values for mapped fields
 - alias + target field conflicts
 
+---
+
+## I037 — R11.3 single-call entrypoint scaffold
+
+### Status
+
+Implemented in R11.3 (scaffold-only).
+
+### Context
+
+R11.4 needed a dedicated single-call entrypoint for real API
+schema-aligned smoke tests. R11.3 creates the scaffold with
+safety gates: real API refused by default, mock-only execution,
+full metadata tracking, and forward-compat ``--execute-real-api``
+flag accepted but not honored.
+
+### Scope
+
+- ``scripts/run_single_call_schema_smoke.py`` created
+- ``tests/test_single_call_entrypoint.py`` created (32 tests)
+- No real API, no .env read, no raw response, no batch
+- No existing source files modified
+
 ### Safety Boundary
 
 - Mock-only.

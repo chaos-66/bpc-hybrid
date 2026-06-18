@@ -1938,4 +1938,73 @@ Completed after 529 tests passed. Requires Codex audit before R11.3.
 
 Requires Codex audit before R11.3.
 
+---
+
+## R11.3 — Dedicated Single-call Real API Entrypoint Scaffold
+
+### Date
+
+2026-06-18
+
+### Summary
+
+Created a dedicated, safety-gated single-call CLI entrypoint
+(`scripts/run_single_call_schema_smoke.py`) for future R11.4
+single-sentence real API schema-aligned smoke tests.
+
+In R11.3, real API execution is **refused by default**:
+
+- Without ``--execute-real-api``, non-mock providers are rejected.
+- With ``--execute-real-api``, a scaffold refusal message is returned
+  (R11.4 forward-compat gate — no actual real call).
+- Mock provider works as default, producing schema-valid output
+  tracked with full metadata (counts, status, safety flags).
+
+### Deliverables
+
+- ``scripts/run_single_call_schema_smoke.py`` — dedicated entrypoint
+  with ``run_single_call()`` programmatic API and CLI.
+- ``tests/test_single_call_entrypoint.py`` — 32 tests covering
+  metadata structure, mock default path, non-mock refusal,
+  ``--execute-real-api`` scaffold refusal, error handling,
+  safety constraints, programmatic API, and CLI integration.
+
+### Metadata Format
+
+The entrypoint emits JSON with 17 metadata fields:
+
+- ``source_id``, ``input_text``, ``provider``, ``model``,
+  ``entrypoint``
+- ``real_api_call_performed``, ``attempted_call_count``,
+  ``successful_call_count``
+- ``fallback_status``, ``schema_valid``, ``normalizer_used``,
+  ``normalizer_status``
+- ``raw_response_saved``, ``secret_redacted``, ``batch``
+- ``error``, ``output``
+
+All safety flags default to ``false`` / ``true`` as appropriate.
+
+### Scope
+
+- Source code changes: no existing files modified
+- New files: ``scripts/run_single_call_schema_smoke.py``,
+  ``tests/test_single_call_entrypoint.py``
+- Real API call: no
+- ``.env`` content read: no
+- Raw response storage: no
+- Batch execution: no
+- Benchmark: no
+- Accuracy claim: no
+- Method-validation claim: no
+
+### Status
+
+Completed after 561 tests passed (529 existing + 32 new).
+Scaffold-only — R11.4 will implement the real execution path
+after Codex audit.
+
+### Exit Gate
+
+Requires Codex audit before R11.4.
+
 
