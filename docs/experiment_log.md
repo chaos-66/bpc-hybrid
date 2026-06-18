@@ -2591,3 +2591,107 @@ benchmark, NOT a dataset experiment, NOT method validation.
 **Must wait for Codex audit before R12 pilot planning.**
 
 
+
+
+---
+
+## R12.0 — Pilot Planning and Dataset Inventory
+
+### Type
+
+Planning and dataset inventory only.
+
+### Status
+
+```
+R12_0_STATUS: PASSED
+```
+
+### Goal
+
+Prepare the R12.1 small-sample pilot after R11.4.3 succeeded as a
+single-sample schema-valid real API smoke.
+
+### Scope
+
+- Real API call: **no**
+- Dataset modification: **no**
+- Raw response storage: **no**
+- Batch execution: **no**
+- Benchmark: **no**
+- Accuracy claim: **no**
+- Method-validation claim: **no**
+
+### Dataset Inventory
+
+```
+data/
+└── prototype/
+    ├── .gitkeep                       (0 bytes)
+    ├── legal_sentences.jsonl          (1011 bytes, 14 synthetic sentences)
+    └── gold_multiclause.jsonl         (10564 bytes, 14 gold annotations)
+```
+
+All 14 sentences are **synthetic prototype** data, NOT formal
+GDPR/BPMN/Sun texts.  Each has a human-authored gold annotation in
+``gold_multiclause.jsonl``.
+
+**Sentence complexity breakdown**:
+
+| Category | Count |
+|----------|-------|
+| Simple single-clause | 3 |
+| Negated modality | 1 |
+| With condition | 2 |
+| Multi-clause (2 clauses) | 2 |
+| With constraint | 2 |
+| Passive voice | 1 |
+| Hard (no explicit modality) | 2 |
+| With exception | 1 |
+
+### Dataset Readiness Judgment
+
+| Question | Answer |
+|----------|--------|
+| Formal GDPR/BPMN/Sun dataset present? | **No** |
+| Real regulatory text corpus present? | **No** |
+| Synthetic prototype data present? | **Yes** (14 sentences with gold) |
+| Sufficient for small-sample pilot? | **Yes** |
+| Sufficient for formal benchmark? | **No** |
+| Sufficient for method validation? | **No** |
+
+### R12.1 Pilot Design
+
+- **Input**: ``data/prototype/legal_sentences.jsonl`` (all 14 sentences)
+- **API calls**: 14 max (1 per sentence, via single-call entrypoint)
+- **Retry**: 0
+- **Repair call**: 0
+- **Raw response storage**: none
+- **Output**: per-sentence metadata + summary table
+- **Claim boundary**: descriptive only (counts of schema-valid/invalid/error)
+
+Full plan in ``docs/r12_pilot_plan.md``.
+
+### Result
+
+Created ``docs/r12_pilot_plan.md`` with 10 sections covering current
+status, dataset inventory, readiness judgment, pilot scope, sample
+selection, API call budget, output format, failure handling, claim
+boundary, and exit criteria.
+
+### Safety Boundary
+
+- No real API call.
+- No dataset modification.
+- No raw response storage.
+- No batch execution.
+- No benchmark.
+- No accuracy claim.
+- No method-validation claim.
+
+### Test Results
+
+- 574 total tests pass (unchanged)
+- py_compile: COMPILE OK
+- Health: scaffold-ok
+- Synthetic eval: no regression

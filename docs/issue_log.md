@@ -409,3 +409,33 @@ output in the bpc-hybrid project.
 - No method-validation claim.
 - No `.env` content read by agent.
 
+---
+
+## I042 — R12 pilot requires dataset inventory and bounded pilot plan
+
+### Status
+
+Fixed in R12.0 (plan created).
+
+### Context
+
+R11.4.3 proved the single-sample real API schema-aligned pipeline can
+return schema-valid output.  Before any formal dataset experiment, the
+project needs a bounded pilot plan and dataset readiness check.
+
+### Resolution
+
+R12.0 created ``docs/r12_pilot_plan.md`` with:
+- Dataset inventory of all 14 synthetic prototype sentences
+- Dataset readiness judgment (no formal GDPR/BPMN/Sun data present)
+- R12.1 pilot scope: 14 sentences, 14 API calls max, no retry, no repair
+- Claim boundary: descriptive only, no benchmark/accuracy/method-validation
+
+### Safety Boundary
+
+- No real API in R12.0.
+- No dataset modification.
+- No raw response storage.
+- No benchmark.
+- No method-validation claim.
+
