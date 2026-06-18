@@ -439,3 +439,36 @@ R12.0 created ``docs/r12_pilot_plan.md`` with:
 - No benchmark.
 - No method-validation claim.
 
+---
+
+## I043 — R12.0 verification used temporary snippets instead of project scripts
+
+### Status
+
+Fixed in R12.0.1.
+
+### Context
+
+R12.0 planning was directionally correct, but the reported
+health/evaluation verification used temporary Python snippets
+(`python -c "..."`) rather than the required project scripts
+(`scripts/check_project_health.py` and
+`scripts/evaluate_multi_clause.py`).
+
+### Correction
+
+R12.0.1 reruns the exact project health and synthetic evaluation
+scripts:
+
+- `scripts/check_project_health.py` → `status: scaffold-ok`,
+  `uses_real_gdpr_bpmn_data: false`, `uses_real_llm_api: false`
+- `scripts/evaluate_multi_clause.py` → `dataset_type:
+  synthetic_prototype`, 14/14 sources matched, all F1=1.0
+  (synthetic prototype matching gold)
+
+### Safety Boundary
+
+- No real API call.
+- No dataset modification.
+- No `.env` content read by agent.
+

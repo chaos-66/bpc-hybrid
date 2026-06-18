@@ -2695,3 +2695,93 @@ boundary, and exit criteria.
 - py_compile: COMPILE OK
 - Health: scaffold-ok
 - Synthetic eval: no regression
+
+**Note**: R12.0 initially reported health/evaluate results from
+temporary Python snippets.  R12.0.1 reruns the correct project
+scripts to confirm.
+
+---
+
+## R12.0.1 — Correct R12.0 Verification Commands
+
+### Type
+
+Verification correction only.
+
+### Status
+
+```
+R12_0_1_STATUS: PASSED
+```
+
+### Reason
+
+R12.0 initially used temporary Python snippets (`python -c "..."`)
+instead of the required project health and evaluation scripts.
+R12.0.1 reruns the correct project scripts.
+
+### Scope
+
+- Real API call: **no**
+- Dataset modification: **no**
+- Raw response storage: **no**
+- Benchmark: **no**
+- Method-validation claim: **no**
+
+### Correct Verification
+
+**`scripts/check_project_health.py`**:
+
+```json
+{
+  "project": "bpc-hybrid",
+  "stage": "R1",
+  "status": "scaffold-ok",
+  "benchmark": "none",
+  "uses_real_gdpr_bpmn_data": false,
+  "uses_real_llm_api": false
+}
+```
+
+**`scripts/evaluate_multi_clause.py`**:
+
+```json
+{
+  "dataset_type": "synthetic_prototype",
+  "is_formal_benchmark": false,
+  "num_gold_sources": 14,
+  "num_predicted_sources": 14,
+  "total_gold_clauses": 16,
+  "total_predicted_clauses": 16,
+  "matched_clauses": 16,
+  "clause_precision": 1.0,
+  "clause_recall": 1.0,
+  "clause_f1": 1.0,
+  "field_micro_precision": 1.0,
+  "field_micro_recall": 1.0,
+  "field_micro_f1": 1.0
+}
+```
+
+### Test Results
+
+- py_compile: COMPILE OK
+- 574 total tests pass
+- `scripts/check_project_health.py`: scaffold-ok
+- `scripts/evaluate_multi_clause.py`: all F1=1.0 (synthetic prototype matching gold)
+
+### Conclusion
+
+R12.0 direction confirmed.  Current data/ contains only synthetic
+prototype data.  No formal GDPR/BPMN/Sun dataset is present.
+R12.1 can only be a synthetic prototype pilot, not a formal dataset
+experiment.
+
+### Safety Boundary
+
+- No real API call.
+- No dataset modification.
+- No raw response storage.
+- No benchmark.
+- No accuracy claim.
+- No method-validation claim.
