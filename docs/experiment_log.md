@@ -2007,4 +2007,97 @@ after Codex audit.
 
 Requires Codex audit before R11.4.
 
+---
+
+## R11.3.1 — Fix Single-call Entrypoint CLI Safety Flags
+
+### Type
+
+Scaffold-only fix.
+
+### Date
+
+2026-06-18
+
+### Reason
+
+Codex blocked R11.3 because the single-call entrypoint was missing:
+
+1. `--no-project-env` CLI flag — documented as a requirement but not
+   implemented, preventing Codex from running tests under the
+   `BPC_HYBRID_DISABLE_PROJECT_ENV=1` audit rule.
+2. `--batch` CLI flag with explicit rejection — the spec requires
+   explicit batch rejection in the dedicated single-call entrypoint.
+3. Tests for both CLI paths and explicit batch rejection behavior.
+
+### Fix
+
+R11.3.1 adds the missing CLI safety flags and corresponding tests:
+
+- **`--no-project-env`**: Added `action="store_true"` flag that sets
+  `BPC_HYBRID_DISABLE_PROJECT_ENV=1` via `os.environ`. This allows
+  Codex to run the entrypoint without reading the project `.env`.
+- **`--batch`**: Added `action="store_true"` flag, passed as
+  `request_batch: bool` parameter to `run_single_call()`.
+- **Batch rejection gate**: A new gate at the top of `run_single_call()`
+  explicitly rejects batch requests before any provider check, returning
+  error `"batch_not_supported — single-call entrypoint does not support
+  batch execution"` with `attempted_call_count=0`,
+  `successful_call_count=0`, `real_api_call_performed=false`,
+  `batch=false`.
+- **New tests**: 9 new tests across 2 new test classes:
+  - `TestBatchRejection` (3 tests): programmatic batch rejection,
+    batch rejection with `--execute-real-api`, batch rejection with
+    `openai_compatible`
+  - `TestNoProjectEnvCLI` (5 tests): CLI accepts `--no-project-env`,
+    mock succeeds, openai refused (exit 1), execute-real-api refused,
+    batch rejected (all 7 safety assertions)
+  - `test_request_batch_param_defaults_false` added to
+    `TestProgrammaticAPI`
+
+### Files Changed
+
+| File | Change |
+|------|--------|
+| `scripts/run_single_call_schema_smoke.py` | Added `--no-project-env` and `--batch` CLI flags; added batch rejection gate; added `request_batch` param to `run_single_call()` |
+| `tests/test_single_call_entrypoint.py` | Added `TestBatchRejection` (3 tests), `TestNoProjectEnvCLI` (5 tests), `test_request_batch_param_defaults_false` |
+
+### Files NOT Changed
+
+- `src/` — No source module changes
+- `data/` — No data changes
+
+### Test Results
+
+41/41 entrypoint tests pass. 570/570 full test suite passes.
+
+### Dry-run Validation
+
+All three required CLI paths verified:
+
+- Mock + `--no-project-env`: exit 0, `schema_valid=true`, `fallback_status=success`
+- `openai_compatible` refusal + `--no-project-env`: exit 1, `attempted_call_count=0`, `real_api_call_performed=false`
+- Batch rejection + `--no-project-env`: exit 1, `"batch_not_supported"`, `attempted_call_count=0`, `real_api_call_performed=false`
+
+### Scope
+
+- Source code changes: yes (`scripts/run_single_call_schema_smoke.py`)
+- Test changes: yes (`tests/test_single_call_entrypoint.py`)
+- Real API call: no
+- `.env` content read: no
+- Raw response storage: no
+- Batch execution: no (explicitly rejected)
+- Benchmark: no
+- Accuracy claim: no
+- Method-validation claim: no
+
+### Status
+
+Completed after 570 tests passed and all dry-run validations succeeded.
+R11.4 must wait for Codex audit of R11.3 + R11.3.1.
+
+### Exit Gate
+
+Requires Codex audit before R11.4.
+
 

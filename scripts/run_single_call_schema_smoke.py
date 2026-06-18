@@ -1,20 +1,23 @@
-"""R11.3 Dedicated Single-call Real API Entrypoint Scaffold.
+"""R11.3.1 Dedicated Single-call Real API Entrypoint Scaffold.
 
 Provides a safety-gated, single-call CLI entrypoint for future R11.4
-single-sentence real API schema-aligned smoke tests.  In R11.3, real
+single-sentence real API schema-aligned smoke tests.  In R11.3.1, real
 API execution is **refused by default** — only mock mode runs unless
 the explicit future flag ``--execute-real-api`` is provided for
 scaffold design validation.
 
-Usage (mock, R11.3)::
+Usage (mock, R11.3.1)::
 
     .\\.venv\\Scripts\\python.exe scripts\\run_single_call_schema_smoke.py \\
+        --no-project-env \\
         --source-id r11_4_real_schema_smoke_001 \\
         --text "A controller shall record the decision."
 
-**Safety constraints (R11.3 scaffold):**
+**Safety constraints (R11.3.1 scaffold):**
 
-* No ``.env`` read (uses ``--no-project-env`` internally).
+* ``--no-project-env`` CLI flag — disables project-root ``.env`` loading.
+* ``--batch`` CLI flag — explicitly rejected (single-call only).
+* No ``.env`` read.
 * No real API execution without ``--execute-real-api``.
 * No raw response saved to disk.
 * No batch mode — single call only.
@@ -167,6 +170,7 @@ def run_single_call(
     provider: str = "mock",
     model: str = "mock",
     execute_real_api: bool = False,
+    request_batch: bool = False,
 ) -> dict[str, object]:
     """Execute a single mock call and return metadata.
 
@@ -185,13 +189,31 @@ def run_single_call(
         Model name (default ``"mock"``).
     execute_real_api : bool
         When ``True``, accepts the future flag (R11.4 forward-compat)
-        but still routes through mock in R11.3.
+        but still routes through mock in R11.3.1.
+    request_batch : bool
+        When ``True``, the call is explicitly rejected — batch is not
+        supported in this single-call entrypoint.
 
     Returns
     -------
     dict
-        Full metadata dict per R11.3 spec.
+        Full metadata dict per R11.3.1 spec.
     """
+    # ---- Gate: explicit batch rejection ---------------------------------
+    if request_batch:
+        return _build_metadata(
+            source_id=source_id,
+            input_text=text,
+            provider=provider,
+            model=model,
+            error="batch_not_supported — single-call entrypoint does not support batch execution",
+            real_api_call_performed=False,
+            attempted_call_count=0,
+            successful_call_count=0,
+            raw_response_saved=False,
+            batch=False,
+        )
+
     # ---- Gate: refuse non-mock provider without --execute-real-api ------
     if provider != "mock" and not execute_real_api:
         return _build_metadata(
@@ -337,7 +359,7 @@ def run_single_call(
 
 def main(argv: list[str] | None = None) -> int:
     parser = _JsonArgumentParser(
-        description="R11.3 dedicated single-call real API entrypoint scaffold",
+        description="R11.3.1 dedicated single-call real API entrypoint scaffold",
     )
     parser.add_argument(
         "--source-id",
@@ -360,17 +382,42 @@ def main(argv: list[str] | None = None) -> int:
         help="Model name (default: mock).",
     )
     parser.add_argument(
+        "--no-project-env",
+        action="store_true",
+        default=False,
+        help=(
+            "Disable reading project-root .env file. "
+            "This is a safety flag — it does NOT authorize real API execution. "
+            "When set, BPC_HYBRID_DISABLE_PROJECT_ENV=1 is honored."
+        ),
+    )
+    parser.add_argument(
         "--execute-real-api",
         action="store_true",
         default=False,
         help=(
             "Future real API execution flag (R11.4 forward-compat). "
-            "In R11.3, this flag is accepted but routes through mock "
+            "In R11.3.1, this flag is accepted but routes through mock "
             "transport — no real API call is performed."
+        ),
+    )
+    parser.add_argument(
+        "--batch",
+        action="store_true",
+        default=False,
+        help=(
+            "EXPLICITLY REJECTED — this single-call entrypoint does not "
+            "support batch execution.  Passing --batch produces a refusal "
+            "JSON with attempted_call_count=0."
         ),
     )
 
     args = parser.parse_args(argv)
+
+    # ---- Honor --no-project-env -----------------------------------------
+    if args.no_project_env:
+        import os as _os_nope
+        _os_nope.environ["BPC_HYBRID_DISABLE_PROJECT_ENV"] = "1"
 
     meta = run_single_call(
         source_id=args.source_id,
@@ -378,6 +425,7 @@ def main(argv: list[str] | None = None) -> int:
         provider=args.provider,
         model=args.model,
         execute_real_api=args.execute_real_api,
+        request_batch=args.batch,
     )
 
     print(json.dumps(meta, indent=2))

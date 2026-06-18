@@ -436,6 +436,16 @@ class TestProgrammaticAPI:
         assert tmpl_after["real_api_call_performed"] is False
         assert tmpl_after["batch"] is False
 
+    def test_request_batch_param_defaults_false(self, sample_source_id, sample_text):
+        """request_batch defaults to False and mock call succeeds."""
+        meta = run_single_call(
+            source_id=sample_source_id,
+            text=sample_text,
+        )
+        # Without request_batch=True, should succeed normally
+        assert meta["error"] is None
+        assert meta["fallback_status"] == "success"
+
 
 # ===========================================================================
 # TestCLIIntegration
@@ -521,3 +531,154 @@ class TestCLIIntegration:
         )
         assert exit_code == 2
         assert "error" in data
+
+
+# ===========================================================================
+# TestBatchRejection (R11.3.1)
+# ===========================================================================
+
+
+class TestBatchRejection:
+    """Explicit --batch flag must be rejected (R11.3.1)."""
+
+    def test_batch_rejected_programmatic(self, sample_source_id, sample_text):
+        meta = run_single_call(
+            source_id=sample_source_id,
+            text=sample_text,
+            request_batch=True,
+        )
+        assert meta["error"] is not None
+        assert "batch_not_supported" in str(meta["error"])
+        assert meta["attempted_call_count"] == 0
+        assert meta["successful_call_count"] == 0
+        assert meta["real_api_call_performed"] is False
+        assert meta["raw_response_saved"] is False
+        assert meta["batch"] is False
+
+    def test_batch_rejected_even_with_execute_real_api(self, sample_source_id, sample_text):
+        """Batch rejection takes priority over --execute-real-api."""
+        meta = run_single_call(
+            source_id=sample_source_id,
+            text=sample_text,
+            execute_real_api=True,
+            request_batch=True,
+        )
+        assert meta["error"] is not None
+        assert "batch_not_supported" in str(meta["error"])
+        assert meta["real_api_call_performed"] is False
+        assert meta["attempted_call_count"] == 0
+
+    def test_batch_rejected_with_openai_compatible(self, sample_source_id, sample_text):
+        """Batch rejection takes priority over provider routing."""
+        meta = run_single_call(
+            source_id=sample_source_id,
+            text=sample_text,
+            provider="openai_compatible",
+            request_batch=True,
+        )
+        assert meta["error"] is not None
+        assert "batch_not_supported" in str(meta["error"])
+        assert meta["real_api_call_performed"] is False
+
+
+# ===========================================================================
+# TestNoProjectEnvCLI (R11.3.1)
+# ===========================================================================
+
+
+class TestNoProjectEnvCLI:
+    """CLI integration tests with --no-project-env flag (R11.3.1)."""
+
+    @staticmethod
+    def _run_cli(*args: str) -> tuple[int, dict]:
+        cmd = [
+            sys.executable,
+            str(_ENTRYPOINT),
+            *args,
+        ]
+        env = os.environ.copy()
+        env["BPC_HYBRID_DISABLE_PROJECT_ENV"] = "1"
+
+        proc = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            env=env,
+            timeout=30,
+        )
+        for stream in (proc.stdout, proc.stderr):
+            stripped = stream.strip()
+            if stripped:
+                try:
+                    data = json.loads(stripped)
+                    return proc.returncode, data
+                except json.JSONDecodeError:
+                    continue
+        return proc.returncode, {"stdout": proc.stdout, "stderr": proc.stderr}
+
+    def test_cli_accepts_no_project_env(self):
+        """--no-project-env should be accepted by argparse (not rejected)."""
+        exit_code, data = self._run_cli(
+            "--no-project-env",
+            "--source-id", "r11_3_1_mock_001",
+            "--text", "A controller shall record the decision.",
+        )
+        assert exit_code == 0
+        assert data.get("error") is None
+        assert data.get("fallback_status") == "success"
+        assert data.get("schema_valid") is True
+
+    def test_cli_no_project_env_mock_succeeds(self):
+        """Mock dry-run with --no-project-env must succeed."""
+        exit_code, data = self._run_cli(
+            "--no-project-env",
+            "--source-id", "r11_3_1_mock_002",
+            "--text", "A controller shall record the decision.",
+        )
+        assert exit_code == 0
+        assert data.get("error") is None
+        assert data.get("real_api_call_performed") is False
+        assert data.get("attempted_call_count") == 1
+
+    def test_cli_no_project_env_openai_refused(self):
+        """openai_compatible with --no-project-env must reach refusal logic."""
+        exit_code, data = self._run_cli(
+            "--no-project-env",
+            "--source-id", "r11_3_1_refuse_001",
+            "--text", "A controller shall record the decision.",
+            "--provider", "openai_compatible",
+        )
+        assert exit_code == 1
+        assert data.get("error") is not None
+        assert "requires --execute-real-api" in str(data.get("error", ""))
+        assert data.get("real_api_call_performed") is False
+        assert data.get("attempted_call_count") == 0
+
+    def test_cli_no_project_env_execute_real_api_refused(self):
+        """--execute-real-api with --no-project-env still scaffold-refused."""
+        exit_code, data = self._run_cli(
+            "--no-project-env",
+            "--source-id", "r11_3_1_real_refuse_001",
+            "--text", "A controller shall record the decision.",
+            "--execute-real-api",
+        )
+        assert exit_code == 1
+        assert "scaffold does not execute real API" in str(data.get("error", ""))
+        assert data.get("real_api_call_performed") is False
+
+    def test_cli_no_project_env_batch_rejected(self):
+        """--batch with --no-project-env must be explicitly rejected."""
+        exit_code, data = self._run_cli(
+            "--no-project-env",
+            "--batch",
+            "--source-id", "r11_3_1_batch_refuse_001",
+            "--text", "A controller shall record the decision.",
+        )
+        assert exit_code == 1
+        assert data.get("error") is not None
+        assert "batch_not_supported" in str(data.get("error", ""))
+        assert data.get("real_api_call_performed") is False
+        assert data.get("attempted_call_count") == 0
+        assert data.get("successful_call_count") == 0
+        assert data.get("raw_response_saved") is False
+        assert data.get("batch") is False

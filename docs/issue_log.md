@@ -261,3 +261,41 @@ flag accepted but not honored.
 - No benchmark.
 - No method-validation claim.
 
+---
+
+## I038 — R11.3 single-call entrypoint missing CLI safety flags
+
+### Status
+
+Fixed in R11.3.1 (scaffold-only).
+
+### Context
+
+Codex blocked R11.3 because:
+
+1. `--no-project-env` was documented as a requirement but not
+   implemented as a CLI flag, preventing Codex from running the
+   entrypoint under the `BPC_HYBRID_DISABLE_PROJECT_ENV=1` audit rule.
+2. Required safe dry-run commands (`--no-project-env --batch`)
+   would fail at argparse before testing mock/refusal behavior.
+3. Tests were missing the `--no-project-env` CLI path and explicit
+   batch rejection assertions.
+
+### Resolution
+
+R11.3.1 adds `--no-project-env` (sets `os.environ`) and `--batch`
+(passed as `request_batch` param with explicit rejection gate).
+9 new tests cover batch rejection programmatic, batch + execute-real-api,
+batch + openai_compatible, and 5 `--no-project-env` CLI paths.
+41 entrypoint + 570 full tests pass; all 3 CLI dry-run paths verified.
+
+### Safety Boundary
+
+- No real API.
+- No `.env` read.
+- No raw response storage.
+- No batch (explicitly rejected).
+- No benchmark.
+- No accuracy claim.
+- No method-validation claim.
+
