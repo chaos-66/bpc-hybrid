@@ -1,9 +1,10 @@
 {
-  "stage": "R13.7-pre",
+  "stage": "R13.7",
   "selected_prompt_id": "r13_6_prompt_B",
-  "real_api_call_performed": false,
-  "authorization_status": "not_yet_authorized",
+  "real_api_call_performed": true,
+  "authorization_status": "authorized_for_single_bounded_run_completed",
   "authorized_now": false,
+  "future_real_api_runs_require_new_authorization": true,
   "required_before_execution": [
     "explicit_user_authorization",
     "selected_prompt_confirmed",
@@ -16,5 +17,16 @@
     "no_benchmark_claim_confirmed",
     "no_method_validation_claim_confirmed",
     "no_sun_reproduction_claim_confirmed"
-  ]
+  ],
+  "explicit_user_authorization": true,
+  "selected_prompt_confirmed": true,
+  "max_8_calls_confirmed": true,
+  "one_attempt_per_sample_confirmed": true,
+  "no_retry_confirmed": true,
+  "no_repair_call_confirmed": true,
+  "no_batch_confirmed": true,
+  "no_raw_response_saving_confirmed": true,
+  "no_benchmark_claim_confirmed": true,
+  "no_method_validation_claim_confirmed": true,
+  "no_sun_reproduction_claim_confirmed": true
 }

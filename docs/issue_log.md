@@ -1176,3 +1176,34 @@ R13.7-pre
 ### Boundary
 
 No real API call is allowed in R13.7-pre.
+
+
+## I067 — R13.7 Prompt B real mini-pilot requires Codex audit
+
+### Severity
+
+Medium — post-execution audit gate.
+
+### Stage
+
+R13.7
+
+### Description
+
+R13.7 executed one authorized bounded Prompt B real API mini-pilot
+(8 calls, qwen3.7-max). The authorization gate is closed. Results
+must be audited before any post-run analysis or conclusions.
+
+### Resolution
+
+Return to Codex for R13.7 local-only audit before accepting the
+Prompt B real mini-pilot results or drawing any post-run conclusion.
+
+### Discovery Date
+
+R13.7
+
+### Boundary
+
+No benchmark, method-validation, or Sun-reproduction conclusion may
+be drawn before audit.

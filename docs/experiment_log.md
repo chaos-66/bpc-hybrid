@@ -3980,3 +3980,52 @@ This stage plans authorization, does not run any API call.
 
 Completed (R13.7-pre).
 
+
+## R13.7 — Prompt B Real Mini-pilot Execution
+
+### Type
+
+Authorized bounded real API mini-pilot.
+
+### Scope
+
+- Real API call: yes
+- Max real API calls: 8
+- One attempt per sample: yes
+- Retry: no
+- Repair call: no
+- Batch: no
+- Raw response saved: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Executed one authorized bounded Prompt B real API mini-pilot on the same
+8 mini-gold samples. All 8 API calls returned schema-valid JSON. Generated
+R13.7 prediction, evaluation, and report files. Authorization gate was
+closed after execution.
+
+Field-level observed differences from R13.4.2 (same 8 samples, same model):
+modality 8 exact (R13.4.2: 7), actor 7 exact (R13.4.2: 0), action 4 exact
++ 4 partial (R13.4.2: 0 exact), constraint 3 exact + 5 partial (R13.4.2:
+0 exact).
+
+### Artifacts Created
+
+- `scripts/run_r13_7_prompt_b_real_mini_pilot.py`
+- `data/formal/predictions/r13_7_prompt_b_real_predictions.jsonl`
+- `data/formal/results/r13_7_prompt_b_real_evaluation_summary.json`
+- `data/formal/results/r13_7_prompt_b_real_evaluation_details.jsonl`
+- `docs/r13_7_prompt_b_real_mini_pilot_report.md`
+
+### Claim Boundary
+
+This is only a bounded 8-sample real API mini-pilot. It is not a
+benchmark, not method validation, and not Sun reproduction.
+
+### Status
+
+Completed (R13.7). Pending Codex local-only audit.
+

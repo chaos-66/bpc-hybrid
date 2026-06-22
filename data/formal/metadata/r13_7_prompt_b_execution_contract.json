@@ -1,15 +1,24 @@
 {
   "stage": "R13.7",
   "type": "prompt_b_real_mini_pilot_execution_contract",
-  "status": "authorization_required",
+  "status": "executed_single_bounded_run",
   "selected_prompt_id": "r13_6_prompt_B",
   "selected_prompt_path": "prompts/r13_6/few_shot_extraction_prompt.md",
   "real_api_call_allowed_now": false,
+  "real_api_call_performed": true,
   "requires_explicit_user_authorization": true,
+  "requires_explicit_user_authorization_for_future_runs": true,
+  "authorization_text_received": true,
   "max_real_api_calls": 8,
   "one_attempt_per_sample": true,
+  "attempted_call_count": 8,
+  "successful_call_count": 8,
+  "api_error_count": 0,
+  "timeout_count": 0,
   "retry_allowed": false,
+  "retry_count": 0,
   "repair_call_allowed": false,
+  "repair_call_count": 0,
   "batch_allowed": false,
   "raw_response_saved": false,
   "benchmark": false,
@@ -21,5 +30,5 @@
   "planned_summary_output": "data/formal/results/r13_7_prompt_b_real_evaluation_summary.json",
   "planned_details_output": "data/formal/results/r13_7_prompt_b_real_evaluation_details.jsonl",
   "planned_report": "docs/r13_7_prompt_b_real_mini_pilot_report.md",
-  "claim_boundary": "Authorization plan only. No real API call performed in R13.7-pre."
+  "claim_boundary": "Single bounded R13.7 run completed. Authorization consumed. Future runs require fresh authorization."
 }

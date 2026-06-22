@@ -1,0 +1,58 @@
+{
+  "stage": "R13.7",
+  "type": "real_mini_pilot_evaluation",
+  "real_api_call": true,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "sample_count": 8,
+  "schema_valid_count": 8,
+  "field_score_counts": {
+    "modality": {
+      "exact": 8,
+      "partial": 0,
+      "missing": 0,
+      "wrong": 0,
+      "not_applicable": 0
+    },
+    "actor": {
+      "exact": 7,
+      "partial": 1,
+      "missing": 0,
+      "wrong": 0,
+      "not_applicable": 0
+    },
+    "action": {
+      "exact": 4,
+      "partial": 4,
+      "missing": 0,
+      "wrong": 0,
+      "not_applicable": 0
+    },
+    "condition": {
+      "exact": 2,
+      "partial": 3,
+      "missing": 1,
+      "wrong": 0,
+      "not_applicable": 2
+    },
+    "constraint": {
+      "exact": 3,
+      "partial": 5,
+      "missing": 0,
+      "wrong": 0,
+      "not_applicable": 0
+    },
+    "exception": {
+      "exact": 0,
+      "partial": 0,
+      "missing": 0,
+      "wrong": 0,
+      "not_applicable": 8
+    }
+  },
+  "failure_category_counts": {
+    "condition_wrong": 1
+  },
+  "claim_boundary": "8-sample Prompt B real API mini-pilot only. No benchmark, no method validation, no Sun reproduction."
+}
