@@ -963,18 +963,30 @@ No real API has been executed. All R13.4.1 scores are from hand-crafted mock pre
 
 ### Status
 
-Open.
+Resolved (R13.4.2 executed; R13.4.2.1 post-run checkpoint completed).
 
 ### Context
 
-R13.4.2 would be the first real API mini-pilot over the reviewed 8-sample
-mini-gold set.
+R13.4.2 was authorized and executed as a single bounded 8-sample real API
+mini-pilot over the reviewed mini-gold set from R13.3.1.
 
-### Resolution Plan
+### Resolution
 
-Do not run R13.4.2 real execution unless the user explicitly authorizes
-at most 8 calls, one attempt per sample, no retries, no repair calls,
-no batch requests, and no raw response saving.
+One authorized bounded R13.4.2 run was completed (commit `173d9c0`).
+All 8 samples returned schema-valid predictions. No raw responses saved.
+No retry, no repair call, no batch.
+
+Future real API runs still require fresh explicit user authorization.
+
+R13.4.2 results are pending Codex local-only audit and must not be treated
+as benchmark, method validation, or Sun reproduction.
+
+### R13.4.2.1 Post-run Checkpoint
+
+Post-run metadata, authorization state, and documentation aligned in
+R13.4.2.1. The execution contract and authorization checklist now reflect
+the consumed authorization state: `authorized_now=false`,
+`future_real_api_runs_require_new_authorization=true`.
 
 ### Boundary
 

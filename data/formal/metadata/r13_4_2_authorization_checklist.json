@@ -1,7 +1,20 @@
 {
-  "stage": "R13.4.2-pre",
-  "real_api_call_performed": false,
-  "authorization_status": "not_yet_authorized",
+  "stage": "R13.4.2",
+  "real_api_call_performed": true,
+  "authorization_status": "authorized_for_single_bounded_run_completed",
+  "authorized_now": false,
+  "future_real_api_runs_require_new_authorization": true,
+  "authorized_constraints": {
+    "max_real_api_calls": 8,
+    "one_attempt_per_sample": true,
+    "retry_allowed": false,
+    "repair_call_allowed": false,
+    "batch_allowed": false,
+    "raw_response_saved": false,
+    "benchmark": false,
+    "method_validation": false,
+    "sun_reproduction": false
+  },
   "required_before_execution": [
     "explicit_user_authorization",
     "max_8_calls_confirmed",
@@ -13,6 +26,5 @@
     "no_benchmark_claim_confirmed",
     "no_method_validation_claim_confirmed",
     "no_sun_reproduction_claim_confirmed"
-  ],
-  "authorized_now": false
+  ]
 }

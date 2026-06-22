@@ -1,10 +1,11 @@
 # R13.4.2 Real Mini-Pilot Report — Authorized Bounded Execution
 
-**Date:** 2026-01-23
+**Date:** 2026-06-22
 **Stage:** R13.4.2 (Authorized Real API Mini-Pilot)
-**Commit:** (to be committed)
+**Commit:** 173d9c0
 **Authorized by:** User ("我授权 R13.4.2 执行一次有界真实 API mini-pilot...")
 **Status:** ✅ COMPLETE — 8/8 schema-valid, all safety constraints observed
+**Post-run:** Pending Codex local-only audit (R13.4.2.1 checkpoint committed)
 
 ---
 
@@ -151,6 +152,8 @@ No API failures. The only schema-valid prediction with wrong modality was r13_3_
 
 ## 12. Next Step
 
+**Pending Codex local-only audit** before any conclusion is drawn from the real mini-pilot.
+
 Return to Codex for **R13.4.2 local-only audit.** The audit will:
 1. Verify all safety constraints were observed.
 2. Review per-sample prediction quality against gold.
@@ -159,3 +162,15 @@ Return to Codex for **R13.4.2 local-only audit.** The audit will:
 5. Assess whether the pipeline is ready for a larger formal evaluation.
 
 After audit, proceed to R13.5 (formal evaluation planning) or R14 (scaling to the full reviewed-gold set).
+
+---
+
+## 13. R13.4.2.1 Post-run Checkpoint
+
+This report was updated in R13.4.2.1 to align metadata, authorization state,
+and documentation after the R13.4.2 real mini-pilot execution.
+
+- No real API call in R13.4.2.1.
+- No raw response saved.
+- No retry, no repair, no batch.
+- 8-sample mini-pilot only — not benchmark, not method validation, not Sun reproduction.

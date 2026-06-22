@@ -3673,3 +3673,37 @@ conditions under which the user may authorize it later.
 
 Completed (R13.4.2-pre).
 
+## R13.4.2 — Authorized Real API Mini-pilot
+
+### Type
+
+Bounded real API mini-pilot.
+
+### Scope
+
+- User authorization: yes
+- Maximum real API calls: 8
+- One attempt per sample: yes
+- Retry: no
+- Repair call: no
+- Batch: no
+- Raw response saving: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Executed one bounded real API mini-pilot on the 8 reviewed mini-gold samples
+and evaluated the structured predictions with the local R13.4.1 evaluator.
+
+### Claim Boundary
+
+This is only an 8-sample mini-pilot. It does not constitute a benchmark,
+method validation, or Sun reproduction. No conclusion should be drawn
+before Codex local-only audit.
+
+### Status
+
+Completed (R13.4.2). Pending Codex local-only audit.
+

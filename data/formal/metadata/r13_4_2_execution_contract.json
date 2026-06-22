@@ -1,10 +1,13 @@
 {
   "stage": "R13.4.2",
   "type": "real_mini_pilot_execution_contract",
-  "status": "authorization_required",
+  "status": "executed_single_bounded_run",
+  "authorization_status": "authorized_for_single_bounded_run",
   "real_api_call_allowed_now": false,
-  "requires_explicit_user_authorization": true,
+  "requires_explicit_user_authorization_for_future_runs": true,
+  "real_api_call_performed": true,
   "max_real_api_calls": 8,
+  "attempted_call_count": 8,
   "one_attempt_per_sample": true,
   "retry_allowed": false,
   "repair_call_allowed": false,
@@ -15,9 +18,9 @@
   "sun_reproduction": false,
   "input_candidates": "data/formal/processed/r13_3_candidate_samples.jsonl",
   "input_gold": "data/formal/gold/r13_3_manual_gold_template.jsonl",
-  "planned_prediction_output": "data/formal/predictions/r13_4_2_real_predictions.jsonl",
-  "planned_summary_output": "data/formal/results/r13_4_2_real_evaluation_summary.json",
-  "planned_details_output": "data/formal/results/r13_4_2_real_evaluation_details.jsonl",
-  "planned_report": "docs/r13_4_2_real_mini_pilot_report.md",
-  "claim_boundary": "Authorization plan only. No real API call performed in this stage."
+  "prediction_output": "data/formal/predictions/r13_4_2_real_predictions.jsonl",
+  "summary_output": "data/formal/results/r13_4_2_real_evaluation_summary.json",
+  "details_output": "data/formal/results/r13_4_2_real_evaluation_details.jsonl",
+  "report": "docs/r13_4_2_real_mini_pilot_report.md",
+  "claim_boundary": "Executed single 8-sample real API mini-pilot only. No benchmark, no method validation, no Sun reproduction. Future real API runs require explicit user authorization."
 }
