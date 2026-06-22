@@ -3643,3 +3643,33 @@ validation. No Sun reproduction. Fixes are purely local evaluator mechanics.
 
 Completed (R13.4.1.1).
 
+
+## R13.4.2-pre — Real Mini-pilot Authorization Plan
+
+### Type
+
+Authorization planning only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Data download: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Created the R13.4.2 execution contract and authorization checklist for a
+future bounded 8-sample real API mini-pilot.
+
+### Claim Boundary
+
+This stage does not execute the real mini-pilot. It only defines the
+conditions under which the user may authorize it later.
+
+### Status
+
+Completed (R13.4.2-pre).
+

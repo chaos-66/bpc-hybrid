@@ -957,3 +957,26 @@ No real API has been executed. All R13.4.1 scores are from hand-crafted mock pre
 - No real API until user authorization.
 - Max 8 calls when authorized.
 - No retry, no batch, no raw response storage.
+
+
+## I060 — R13.4.2 real API mini-pilot requires explicit authorization
+
+### Status
+
+Open.
+
+### Context
+
+R13.4.2 would be the first real API mini-pilot over the reviewed 8-sample
+mini-gold set.
+
+### Resolution Plan
+
+Do not run R13.4.2 real execution unless the user explicitly authorizes
+at most 8 calls, one attempt per sample, no retries, no repair calls,
+no batch requests, and no raw response saving.
+
+### Boundary
+
+Even after execution, R13.4.2 may only be described as an 8-sample
+mini-pilot, not a benchmark, method validation, or Sun reproduction.
