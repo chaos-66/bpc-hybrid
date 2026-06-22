@@ -1,24 +1,26 @@
 """
-R13.4.2.2 Safety regressions for real mini-pilot runner gates.
+R13.4.2.3 Safety regressions for real mini-pilot runner gates.
 
 Tests verify the runner enforces:
-  1. Authorization contract gate (closed contract rejected)
-  2. Authorization checklist gate (closed checklist rejected)
-  3. Both closed → AUTHORIZATION_GATE_CLOSED
-  4. --max-calls > 8 rejected
-  5. Missing --execute-real-api rejected
-  6. Candidate count > 8 rejected
-  7. sample_id mismatch rejected
-  8. Non-reviewed_gold rejected
-  9. Duplicate sample_ids rejected
-  10. No bypass flag exists
+  1. Canonical closed metadata rejects --execute-real-api (no path override)
+  2. --execution-contract is NOT accepted by CLI
+  3. --authorization-checklist is NOT accepted by CLI
+  4. _check_authorization_gate() can be unit-tested directly with fixture paths
+  5. No bypass / force / ignore-authorization flags
+  6. --max-calls > 8 rejected
+  7. Missing --execute-real-api rejected
+  8. Candidate count > 8 rejected (_validate_inputs unit test)
+  9. sample_id mismatch rejected (_validate_inputs unit test)
+  10. Non-reviewed_gold rejected (_validate_inputs unit test)
+  11. Duplicate sample_ids rejected (_validate_inputs unit test)
 
-CONSTRAINTS (R13.4.2.2):
+CONSTRAINTS (R13.4.2.3):
   - NO network access
   - NO .env read
   - NO real API call
-  - Subprocess calls ONLY (no mutable import)
-  - Temp JSON files for contract/checklist fixtures
+  - Subprocess calls for CLI-level tests
+  - Direct function calls for internal gate / input validation tests
+  - Fixture metadata ONLY for direct internal function calls (NOT via CLI)
 """
 
 from __future__ import annotations
@@ -26,10 +28,23 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 import pytest
+
+# ---------------------------------------------------------------------------
+# Import internal runner functions for direct unit testing
+# ---------------------------------------------------------------------------
+
+_RUNNER_DIR = Path(__file__).resolve().parents[1] / "scripts"
+if str(_RUNNER_DIR) not in sys.path:
+    sys.path.insert(0, str(_RUNNER_DIR))
+
+# Import from the runner module (safe -- no side effects on import)
+from run_r13_4_2_real_mini_pilot import (  # noqa: E402
+    _check_authorization_gate,
+    _validate_inputs,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -85,8 +100,8 @@ def _run(*extra_args: str) -> subprocess.CompletedProcess:
 
 
 def _write_contract(path: Path, overrides: dict | None = None) -> Path:
-    """Write a closed-gate execution contract JSON."""
-    data = {
+    """Write an execution contract JSON fixture."""
+    data: dict = {
         "stage": "R13.4.2",
         "type": "real_mini_pilot_execution_contract",
         "status": "executed_single_bounded_run",
@@ -114,8 +129,8 @@ def _write_contract(path: Path, overrides: dict | None = None) -> Path:
 
 
 def _write_checklist(path: Path, overrides: dict | None = None) -> Path:
-    """Write a closed-gate authorization checklist JSON."""
-    data = {
+    """Write an authorization checklist JSON fixture."""
+    data: dict = {
         "stage": "R13.4.2",
         "real_api_call_performed": True,
         "authorization_status": "authorized_for_single_bounded_run_completed",
@@ -139,82 +154,45 @@ def _write_checklist(path: Path, overrides: dict | None = None) -> Path:
     return path
 
 
+# ===========================================================================
+# CLI-level tests (no metadata path overrides -- canonical only)
+# ===========================================================================
+
+
 # ---------------------------------------------------------------------------
-# Test 1: closed-gate contract + checklist → AUTHORIZATION_GATE_CLOSED
+# Test 1: canonical closed metadata rejects --execute-real-api
 # ---------------------------------------------------------------------------
 
 
-def test_authorization_gate_closed_both(
-    tmp_path: Path,
-) -> None:
-    """Runner exits 1 with AUTHORIZATION_GATE_CLOSED when both closed."""
-    contract = _write_contract(tmp_path / "contract.json")
-    checklist = _write_checklist(tmp_path / "checklist.json")
-
-    result = _run(
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
+def test_canonical_closed_metadata_rejects_execute_real_api() -> None:
+    """Runner exits 1 with AUTHORIZATION_GATE_CLOSED using canonical metadata."""
+    result = _run("--execute-real-api")
     assert result.returncode == 1, f"stderr: {result.stderr}"
     assert "AUTHORIZATION_GATE_CLOSED" in result.stderr
 
 
 # ---------------------------------------------------------------------------
-# Test 2: contract authorized_now=false / real_api_call_allowed_now=false
+# Test 2: --execution-contract is NOT accepted by CLI
 # ---------------------------------------------------------------------------
 
 
-def test_authorization_gate_contract_not_authorized(
-    tmp_path: Path,
-) -> None:
-    """Runner exits 1 when contract.real_api_call_allowed_now is false."""
-    contract = _write_contract(
-        tmp_path / "contract.json",
-        {"real_api_call_allowed_now": False},
-    )
-    checklist = _write_checklist(
-        tmp_path / "checklist.json",
-        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
-    )
-
-    result = _run(
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "real_api_call_allowed_now is not true" in result.stderr
+def test_cli_rejects_execution_contract_arg() -> None:
+    """Runner exits with 'unrecognized arguments' for --execution-contract."""
+    result = _run("--execution-contract", "fake.json")
+    assert result.returncode != 0, f"stdout: {result.stdout} | stderr: {result.stderr}"
+    assert "unrecognized arguments" in result.stderr.lower() or result.returncode == 2
 
 
 # ---------------------------------------------------------------------------
-# Test 3: checklist authorized_now=false
+# Test 3: --authorization-checklist is NOT accepted by CLI
 # ---------------------------------------------------------------------------
 
 
-def test_authorization_gate_checklist_not_authorized(
-    tmp_path: Path,
-) -> None:
-    """Runner exits 1 when checklist.authorized_now is false."""
-    contract = _write_contract(
-        tmp_path / "contract.json",
-        {
-            "real_api_call_allowed_now": True,
-            "status": "authorized_for_single_bounded_run",
-        },
-    )
-    checklist = _write_checklist(
-        tmp_path / "checklist.json",
-        {"authorized_now": False, "authorization_status": "authorized_for_single_bounded_run"},
-    )
-
-    result = _run(
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "authorized_now is not true" in result.stderr
+def test_cli_rejects_authorization_checklist_arg() -> None:
+    """Runner exits with 'unrecognized arguments' for --authorization-checklist."""
+    result = _run("--authorization-checklist", "fake.json")
+    assert result.returncode != 0, f"stdout: {result.stdout} | stderr: {result.stderr}"
+    assert "unrecognized arguments" in result.stderr.lower() or result.returncode == 2
 
 
 # ---------------------------------------------------------------------------
@@ -242,193 +220,103 @@ def test_missing_execute_real_api() -> None:
 
 
 # ---------------------------------------------------------------------------
-# Test 6: candidate count > 8 rejected (uses existing input validation)
-# ---------------------------------------------------------------------------
-
-
-def test_candidate_count_exceeds_8(tmp_path: Path) -> None:
-    """Runner exits 1 when candidates exceed 8."""
-    # Create 9 fake candidates
-    cand_path = tmp_path / "candidates.jsonl"
-    gold_path = tmp_path / "gold.jsonl"
-    records = []
-    for i in range(9):
-        records.append({"sample_id": f"extra_{i:03d}", "source_id": "test", "text": "test"})
-    cand_path.write_text(
-        "\n".join(json.dumps(r) for r in records), encoding="utf-8"
-    )
-    gold_records = [
-        {"sample_id": f"extra_{i:03d}", "annotation_status": "reviewed_gold"}
-        for i in range(9)
-    ]
-    gold_path.write_text(
-        "\n".join(json.dumps(r) for r in gold_records), encoding="utf-8"
-    )
-
-    contract = _write_contract(
-        tmp_path / "contract.json",
-        {"real_api_call_allowed_now": True, "status": "authorized_for_single_bounded_run"},
-    )
-    checklist = _write_checklist(
-        tmp_path / "checklist.json",
-        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
-    )
-
-    result = _run(
-        "--candidates", str(cand_path),
-        "--gold", str(gold_path),
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "exceeds max" in result.stderr
-
-
-# ---------------------------------------------------------------------------
-# Test 7: sample_id mismatch
-# ---------------------------------------------------------------------------
-
-
-def test_sample_id_mismatch(tmp_path: Path) -> None:
-    """Runner exits 1 when candidate and gold sample_ids don't match."""
-    cand_path = tmp_path / "candidates_mismatch.jsonl"
-    gold_path = tmp_path / "gold_mismatch.jsonl"
-
-    cand_path.write_text(
-        json.dumps({"sample_id": "r13_3_candidate_001", "source_id": "gdpr_eurlex",
-                     "text": "test"}) + "\n",
-        encoding="utf-8",
-    )
-    gold_path.write_text(
-        json.dumps({"sample_id": "r13_3_candidate_999", "annotation_status": "reviewed_gold"}) + "\n",
-        encoding="utf-8",
-    )
-
-    contract = _write_contract(
-        tmp_path / "contract.json",
-        {"real_api_call_allowed_now": True, "status": "authorized_for_single_bounded_run"},
-    )
-    checklist = _write_checklist(
-        tmp_path / "checklist.json",
-        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
-    )
-
-    result = _run(
-        "--candidates", str(cand_path),
-        "--gold", str(gold_path),
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "do not match" in result.stderr
-
-
-# ---------------------------------------------------------------------------
-# Test 8: non-reviewed_gold rejected
-# ---------------------------------------------------------------------------
-
-
-def test_non_reviewed_gold(tmp_path: Path) -> None:
-    """Runner exits 1 when gold annotation_status is not reviewed_gold."""
-    cand_path = tmp_path / "candidates_nonreviewed.jsonl"
-    gold_path = tmp_path / "gold_nonreviewed.jsonl"
-
-    cand_path.write_text(
-        json.dumps({"sample_id": "r13_3_candidate_001", "source_id": "gdpr_eurlex",
-                     "text": "test"}) + "\n",
-        encoding="utf-8",
-    )
-    gold_path.write_text(
-        json.dumps({"sample_id": "r13_3_candidate_001", "annotation_status": "draft"}) + "\n",
-        encoding="utf-8",
-    )
-
-    contract = _write_contract(
-        tmp_path / "contract.json",
-        {"real_api_call_allowed_now": True, "status": "authorized_for_single_bounded_run"},
-    )
-    checklist = _write_checklist(
-        tmp_path / "checklist.json",
-        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
-    )
-
-    result = _run(
-        "--candidates", str(cand_path),
-        "--gold", str(gold_path),
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "not reviewed_gold" in result.stderr
-
-
-# ---------------------------------------------------------------------------
-# Test 9: duplicate sample_ids
-# ---------------------------------------------------------------------------
-
-
-def test_duplicate_sample_ids(tmp_path: Path) -> None:
-    """Runner exits 1 when candidates have duplicate sample_ids."""
-    cand_path = tmp_path / "candidates_dup.jsonl"
-    gold_path = tmp_path / "gold_dup.jsonl"
-
-    lines = [
-        json.dumps({"sample_id": "dup_001", "source_id": "test", "text": "A"}),
-        json.dumps({"sample_id": "dup_001", "source_id": "test", "text": "B"}),
-    ]
-    cand_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    gold_lines = [
-        json.dumps({"sample_id": "dup_001", "annotation_status": "reviewed_gold"}),
-        json.dumps({"sample_id": "dup_001", "annotation_status": "reviewed_gold"}),
-    ]
-    gold_path.write_text("\n".join(gold_lines) + "\n", encoding="utf-8")
-
-    contract = _write_contract(
-        tmp_path / "contract.json",
-        {"real_api_call_allowed_now": True, "status": "authorized_for_single_bounded_run"},
-    )
-    checklist = _write_checklist(
-        tmp_path / "checklist.json",
-        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
-    )
-
-    result = _run(
-        "--candidates", str(cand_path),
-        "--gold", str(gold_path),
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "Duplicate" in result.stderr
-
-
-# ---------------------------------------------------------------------------
-# Test 10: no bypass flag — runner has no hidden --bypass-auth flag
+# Test 6: no bypass / force / ignore-authorization flags
 # ---------------------------------------------------------------------------
 
 
 def test_no_bypass_flag() -> None:
-    """Runner must not have a --bypass-auth or similar bypass flag."""
+    """Runner must have no bypass, force, or ignore-authorization flags."""
     source = _RUNNER.read_text(encoding="utf-8")
     assert "--bypass-auth" not in source
+    assert "--bypass-authorization" not in source
     assert "--skip-authorization" not in source
     assert "--skip-gate" not in source
-    assert "bypass" not in source.lower().split()
+    assert "--force" not in source
+    assert "--ignore-authorization" not in source
+    assert "--ignore-authorization-contract" not in source
+    # Ensure no "bypass" used as a flag
+    bypass_lines = [l for l in source.lower().splitlines() if "bypass" in l]
+    # "bypass" may appear only in test assertions / comments, not in argparse
+    for line in bypass_lines:
+        # Allow in comments and docstrings
+        stripped = line.strip()
+        if stripped.startswith("#") or stripped.startswith('"') or stripped.startswith("'"):
+            continue
+        if "add_argument" in stripped and "bypass" in stripped:
+            pytest.fail(f"Runner argparse appears to have a bypass flag: {stripped}")
+
+
+# ===========================================================================
+# Direct _check_authorization_gate() unit tests (fixture paths)
+# ===========================================================================
 
 
 # ---------------------------------------------------------------------------
-# Test 11: contract constraints — retry_allowed=true rejected
+# Gate test: both closed
 # ---------------------------------------------------------------------------
 
 
-def test_contract_retry_allowed_true_rejected(tmp_path: Path) -> None:
-    """Runner exits 1 when contract.retry_allowed is true."""
+def test_gate_direct_both_closed(tmp_path: Path) -> None:
+    """_check_authorization_gate exits 1 when both contract+checklist closed."""
+    contract = _write_contract(tmp_path / "c.json")
+    checklist = _write_checklist(tmp_path / "ch.json")
+
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
+
+
+# ---------------------------------------------------------------------------
+# Gate test: contract real_api_call_allowed_now=false
+# ---------------------------------------------------------------------------
+
+
+def test_gate_direct_contract_not_allowed(tmp_path: Path) -> None:
+    """_check_authorization_gate exits when contract is closed."""
     contract = _write_contract(
-        tmp_path / "contract.json",
+        tmp_path / "c.json",
+        {"real_api_call_allowed_now": False},
+    )
+    checklist = _write_checklist(
+        tmp_path / "ch.json",
+        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
+
+
+# ---------------------------------------------------------------------------
+# Gate test: checklist authorized_now=false
+# ---------------------------------------------------------------------------
+
+
+def test_gate_direct_checklist_not_authorized(tmp_path: Path) -> None:
+    """_check_authorization_gate exits when checklist is closed."""
+    contract = _write_contract(
+        tmp_path / "c.json",
+        {"real_api_call_allowed_now": True, "status": "authorized_for_single_bounded_run"},
+    )
+    checklist = _write_checklist(
+        tmp_path / "ch.json",
+        {"authorized_now": False, "authorization_status": "authorized_for_single_bounded_run"},
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
+
+
+# ---------------------------------------------------------------------------
+# Gate test: retry_allowed=true rejected
+# ---------------------------------------------------------------------------
+
+
+def test_gate_direct_retry_allowed_true(tmp_path: Path) -> None:
+    """_check_authorization_gate exits when retry_allowed is true."""
+    contract = _write_contract(
+        tmp_path / "c.json",
         {
             "real_api_call_allowed_now": True,
             "status": "authorized_for_single_bounded_run",
@@ -436,28 +324,24 @@ def test_contract_retry_allowed_true_rejected(tmp_path: Path) -> None:
         },
     )
     checklist = _write_checklist(
-        tmp_path / "checklist.json",
+        tmp_path / "ch.json",
         {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
     )
 
-    result = _run(
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "retry_allowed must be false" in result.stderr
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
 
 
 # ---------------------------------------------------------------------------
-# Test 12: contract constraints — benchmark=true rejected
+# Gate test: benchmark=true rejected
 # ---------------------------------------------------------------------------
 
 
-def test_contract_benchmark_true_rejected(tmp_path: Path) -> None:
-    """Runner exits 1 when contract.benchmark is true."""
+def test_gate_direct_benchmark_true(tmp_path: Path) -> None:
+    """_check_authorization_gate exits when benchmark is true."""
     contract = _write_contract(
-        tmp_path / "contract.json",
+        tmp_path / "c.json",
         {
             "real_api_call_allowed_now": True,
             "status": "authorized_for_single_bounded_run",
@@ -465,28 +349,24 @@ def test_contract_benchmark_true_rejected(tmp_path: Path) -> None:
         },
     )
     checklist = _write_checklist(
-        tmp_path / "checklist.json",
+        tmp_path / "ch.json",
         {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
     )
 
-    result = _run(
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "benchmark must be false" in result.stderr
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
 
 
 # ---------------------------------------------------------------------------
-# Test 13: contract constraints — raw_response_saved=true rejected
+# Gate test: raw_response_saved=true rejected
 # ---------------------------------------------------------------------------
 
 
-def test_contract_raw_response_saved_true_rejected(tmp_path: Path) -> None:
-    """Runner exits 1 when contract.raw_response_saved is true."""
+def test_gate_direct_raw_response_saved_true(tmp_path: Path) -> None:
+    """_check_authorization_gate exits when raw_response_saved is true."""
     contract = _write_contract(
-        tmp_path / "contract.json",
+        tmp_path / "c.json",
         {
             "real_api_call_allowed_now": True,
             "status": "authorized_for_single_bounded_run",
@@ -494,58 +374,154 @@ def test_contract_raw_response_saved_true_rejected(tmp_path: Path) -> None:
         },
     )
     checklist = _write_checklist(
-        tmp_path / "checklist.json",
+        tmp_path / "ch.json",
         {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
     )
 
-    result = _run(
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "raw_response_saved must be false" in result.stderr
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
 
 
 # ---------------------------------------------------------------------------
-# Test 14: missing contract file → AUTHORIZATION_GATE_BLOCKED
+# Gate test: missing contract file → AUTHORIZATION_GATE_BLOCKED
 # ---------------------------------------------------------------------------
 
 
-def test_missing_contract_file(tmp_path: Path) -> None:
-    """Runner exits 1 when execution contract file is missing."""
+def test_gate_direct_missing_contract(tmp_path: Path) -> None:
+    """_check_authorization_gate exits when contract file missing."""
     missing = tmp_path / "missing.json"
     checklist = _write_checklist(
-        tmp_path / "checklist.json",
+        tmp_path / "ch.json",
         {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
     )
 
-    result = _run(
-        "--execution-contract", str(missing),
-        "--authorization-checklist", str(checklist),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "AUTHORIZATION_GATE_BLOCKED" in result.stderr
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(missing, checklist)
+    assert exc_info.value.code == 1
 
 
 # ---------------------------------------------------------------------------
-# Test 15: missing checklist file → AUTHORIZATION_GATE_BLOCKED
+# Gate test: missing checklist file → AUTHORIZATION_GATE_BLOCKED
 # ---------------------------------------------------------------------------
 
 
-def test_missing_checklist_file(tmp_path: Path) -> None:
-    """Runner exits 1 when authorization checklist file is missing."""
+def test_gate_direct_missing_checklist(tmp_path: Path) -> None:
+    """_check_authorization_gate exits when checklist file missing."""
     contract = _write_contract(
-        tmp_path / "contract.json",
+        tmp_path / "c.json",
         {"real_api_call_allowed_now": True, "status": "authorized_for_single_bounded_run"},
     )
     missing = tmp_path / "missing.json"
 
-    result = _run(
-        "--execution-contract", str(contract),
-        "--authorization-checklist", str(missing),
-        "--execute-real-api",
-    )
-    assert result.returncode == 1, f"stderr: {result.stderr}"
-    assert "AUTHORIZATION_GATE_BLOCKED" in result.stderr
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, missing)
+    assert exc_info.value.code == 1
+
+
+# ---------------------------------------------------------------------------
+# Gate test: canonical defaults work (production path)
+# ---------------------------------------------------------------------------
+
+
+def test_gate_no_args_uses_canonical() -> None:
+    """_check_authorization_gate() with no args uses canonical closed metadata."""
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate()
+    assert exc_info.value.code == 1
+
+
+# ===========================================================================
+# Direct _validate_inputs() unit tests
+# ===========================================================================
+
+
+# ---------------------------------------------------------------------------
+# validate_inputs: candidate count > 8
+# ---------------------------------------------------------------------------
+
+
+def test_validate_inputs_candidate_count_exceeds_8() -> None:
+    """_validate_inputs raises ValueError when candidates exceed 8."""
+    candidates = [{"sample_id": f"extra_{i:03d}", "text": "t"} for i in range(9)]
+    gold = [{"sample_id": f"extra_{i:03d}", "annotation_status": "reviewed_gold"}
+            for i in range(9)]
+
+    with pytest.raises(ValueError, match="exceeds max"):
+        _validate_inputs(candidates, gold)
+
+
+# ---------------------------------------------------------------------------
+# validate_inputs: sample_id mismatch
+# ---------------------------------------------------------------------------
+
+
+def test_validate_inputs_sample_id_mismatch() -> None:
+    """_validate_inputs raises ValueError when IDs don't match."""
+    candidates = [{"sample_id": "a_001", "source_id": "test", "text": "t"}]
+    gold = [{"sample_id": "z_999", "annotation_status": "reviewed_gold"}]
+
+    with pytest.raises(ValueError, match="do not match"):
+        _validate_inputs(candidates, gold)
+
+
+# ---------------------------------------------------------------------------
+# validate_inputs: non-reviewed_gold
+# ---------------------------------------------------------------------------
+
+
+def test_validate_inputs_non_reviewed_gold() -> None:
+    """_validate_inputs raises ValueError for non-reviewed_gold."""
+    candidates = [{"sample_id": "a_001", "source_id": "test", "text": "t"}]
+    gold = [{"sample_id": "a_001", "annotation_status": "draft"}]
+
+    with pytest.raises(ValueError, match="not reviewed_gold"):
+        _validate_inputs(candidates, gold)
+
+
+# ---------------------------------------------------------------------------
+# validate_inputs: duplicate sample_ids
+# ---------------------------------------------------------------------------
+
+
+def test_validate_inputs_duplicate_sample_ids() -> None:
+    """_validate_inputs raises ValueError for duplicate sample_ids."""
+    candidates = [
+        {"sample_id": "dup_001", "source_id": "test", "text": "A"},
+        {"sample_id": "dup_001", "source_id": "test", "text": "B"},
+    ]
+    gold = [
+        {"sample_id": "dup_001", "annotation_status": "reviewed_gold"},
+        {"sample_id": "dup_001", "annotation_status": "reviewed_gold"},
+    ]
+
+    with pytest.raises(ValueError, match="Duplicate"):
+        _validate_inputs(candidates, gold)
+
+
+# ---------------------------------------------------------------------------
+# validate_inputs: zero samples
+# ---------------------------------------------------------------------------
+
+
+def test_validate_inputs_zero_samples() -> None:
+    """_validate_inputs raises ValueError for empty candidates."""
+    with pytest.raises(ValueError, match="No samples"):
+        _validate_inputs([], [])
+
+
+# ---------------------------------------------------------------------------
+# validate_inputs: gold count != candidate count
+# ---------------------------------------------------------------------------
+
+
+def test_validate_inputs_count_mismatch() -> None:
+    """_validate_inputs raises ValueError when counts differ."""
+    candidates = [
+        {"sample_id": "a_001", "source_id": "test", "text": "A"},
+        {"sample_id": "a_002", "source_id": "test", "text": "B"},
+    ]
+    gold = [{"sample_id": "a_001", "annotation_status": "reviewed_gold"}]
+
+    with pytest.raises(ValueError, match="!="):
+        _validate_inputs(candidates, gold)

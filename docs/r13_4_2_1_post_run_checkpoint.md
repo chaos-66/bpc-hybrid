@@ -33,3 +33,29 @@ No real API call. No LLM call. Local only.
 ### Status
 
 Completed. Ready for Codex R13.4.2.2 local-only re-audit.
+
+---
+
+## R13.4.2.3 — Close Authorization Metadata Path Bypass
+
+### Result
+
+Codex R13.4.2.2 re-audit found a blocker: the runner CLI accepted
+`--execution-contract` and `--authorization-checklist` arguments that could
+bypass the closed canonical authorization metadata with self-created open JSON
+files.
+
+### Fix
+
+Removed both CLI arguments. `_check_authorization_gate()` now uses canonical
+paths only in production (`main()` passes no args). Hard resolve check prevents
+non-canonical metadata. Tests rewritten to use direct function calls with
+fixture paths instead of CLI overrides.
+
+### Scope
+
+No real API call. No LLM call. Local only.
+
+### Status
+
+Completed. Ready for Codex R13.4.2.3 local-only re-audit.

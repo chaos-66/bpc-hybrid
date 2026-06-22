@@ -982,6 +982,37 @@ No real API. No benchmark. No method validation. No Sun reproduction.
 
 No delete commands. No temp scripts. All inline validation.
 
+## I062 — R13.4.2.3 authorization metadata path bypass (Codex blocker)
+
+### Status
+
+Resolved (R13.4.2.3).
+
+### Context
+
+Codex R13.4.2.2 re-audit found the runner CLI accepted `--execution-contract`
+and `--authorization-checklist` arguments, allowing callers to supply
+self-created open JSON files at arbitrary paths and bypass the closed canonical
+authorization metadata in `data/formal/metadata/`.
+
+### Resolution
+
+1. Removed `--execution-contract` and `--authorization-checklist` from runner
+   argparse. `_check_authorization_gate()` takes `Optional[Path]` with None
+   defaults → canonical. `main()` passes no args.
+2. Rewrote safety test suite (21 tests, up from 15): CLI subprocess tests
+   verify args rejected; direct function call tests use fixture paths for
+   gate and input validation.
+3. Updated report (Section 15), checkpoint, experiment log, and issue log.
+
+### Claim Boundary
+
+No real API. No benchmark. No method validation. No Sun reproduction.
+
+### Safety Boundary
+
+No delete commands. No temp scripts. No bypass flags.
+
 ## I058 — Mini-pilot evaluator is local-only until user authorization
 
 ### Status

@@ -3765,3 +3765,41 @@ Local auditing only. No real API, no new prediction, no benchmark.
 
 Completed (R13.4.2.2). Ready for Codex R13.4.2.2 local-only re-audit.
 
+## R13.4.2.3 — Close Authorization Metadata Path Bypass
+
+### Type
+
+Codex audit blocker resolution (local only).
+
+### Scope
+
+- Real API: no
+- LLM call: no
+- Network: no
+
+### Result
+
+Resolved Codex R13.4.2.2 re-audit blocker: the runner CLI accepted
+`--execution-contract` and `--authorization-checklist` arguments that could
+bypass the closed canonical authorization metadata with self-created open JSON
+files.
+
+1. Runner hardened: removed both CLI args. `_check_authorization_gate()` now
+   uses canonical paths only in production (main() passes no args). Hard
+   resolve check prevents non-canonical metadata paths.
+2. Tests rewritten: 21 tests (up from 15) using direct function calls with
+   fixture paths (no CLI overrides).
+3. Documentation updated: report Section 15, checkpoint, experiment log,
+   issue log (I062).
+
+See `docs/r13_4_2_real_mini_pilot_report.md` Section 15 and
+`tests/test_r13_4_2_real_mini_pilot_safety.py`.
+
+### Claim Boundary
+
+Local auditing only. No real API, no new prediction, no benchmark.
+
+### Status
+
+Completed (R13.4.2.3). Ready for Codex R13.4.2.3 local-only re-audit.
+

@@ -236,3 +236,56 @@ checklist have `real_api_call_allowed_now: false` / `authorized_now: false`).
 ### Status
 ✅ R13.4.2.2 — All 3 Codex audit blockers fixed. Proceed to Codex R13.4.2.2
 local-only re-audit.
+
+---
+
+## 15. R13.4.2.3 — Close Authorization Metadata Path Bypass
+
+**Date:** 2026-01-23
+**Commit:** (this commit)
+
+### Blocker Found by Codex R13.4.2.2 Re-Audit
+
+**Problem:** `scripts/run_r13_4_2_real_mini_pilot.py` accepted `--execution-contract`
+and `--authorization-checklist` CLI arguments. A caller could supply self-created
+open JSON files at arbitrary paths, bypassing the closed canonical authorization
+metadata stored in `data/formal/metadata/`.
+
+### Fix Applied
+
+1. **Runner hardened:**
+   - Removed `--execution-contract` and `--authorization-checklist` from argparse.
+   - `_check_authorization_gate()` now takes `Optional[Path]` parameters with
+     `None` defaults (None → canonical tracked metadata).
+   - Hard resolve check verifies canonical paths match constants when using
+     defaults (production guard).
+   - `main()` calls `_check_authorization_gate()` with NO arguments.
+
+2. **Tests rewritten** (`tests/test_r13_4_2_real_mini_pilot_safety.py`):
+   - 21 tests total (up from 15):
+     - 6 CLI subprocess tests (canonical closed gate, rejected --execution-contract,
+       rejected --authorization-checklist, max-calls>8, missing --execute-real-api,
+       no bypass flags).
+     - 9 direct `_check_authorization_gate()` unit tests (both closed,
+       contract-not-allowed, checklist-not-authorized, retry/benchmark/raw true,
+       missing files, canonical defaults).
+     - 6 direct `_validate_inputs()` unit tests (count>8, ID mismatch,
+       non-reviewed_gold, duplicates, zero samples, count mismatch).
+   - Fixture metadata used ONLY for direct internal function calls, NOT via CLI.
+
+3. **Documentation updated:** This section added. Checkpoint, experiment log,
+   and issue log updated.
+
+### Verification
+
+- Safety pytest: 21/21 passed
+- Full pytest: 680/680 passed (no regressions)
+- CLI override scan: 0 hits for `--execution-contract --authorization-checklist`
+  outside docs/tests
+- Secret/overclaim scan: clean
+- No real API call, no network, no .env read
+
+### Status
+
+✅ R13.4.2.3 — Authorization metadata path bypass closed. Return to Codex for
+R13.4.2.3 local-only re-audit.

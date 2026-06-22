@@ -78,13 +78,65 @@ SYSTEM_PROMPT = (
 
 
 def _check_authorization_gate(
-    execution_contract_path: Path,
-    authorization_checklist_path: Path,
+    execution_contract_path: Path | None = None,
+    authorization_checklist_path: Path | None = None,
 ) -> None:
     """Check the closed authorization gate before any API config load or API call.
 
     Raises SystemExit(1) with a JSON error if the gate is closed.
+
+    Parameters are ONLY for internal unit testing. Production callers must
+    pass ``None`` to enforce canonical tracked metadata paths.
     """
+    # ---- Resolve canonical paths, with hard resolve check -----------------
+    # Production: args are None → use canonical defaults → verify they resolve
+    # Unit-test:  args are explicit fixture paths → skip resolve check
+    _explicit_contract = execution_contract_path is not None
+    _explicit_checklist = authorization_checklist_path is not None
+
+    if execution_contract_path is None:
+        execution_contract_path = _DEFAULT_EXECUTION_CONTRACT
+    if authorization_checklist_path is None:
+        authorization_checklist_path = _DEFAULT_AUTHORIZATION_CHECKLIST
+
+    # Hard resolve check only when using canonical defaults (production guard)
+    if not _explicit_contract:
+        resolved_contract = execution_contract_path.resolve()
+        canonical_contract = _DEFAULT_EXECUTION_CONTRACT.resolve()
+        if resolved_contract != canonical_contract:
+            raise SystemExit(
+                json.dumps(
+                    {
+                        "status": "AUTHORIZATION_GATE_BLOCKED",
+                        "error": (
+                            "Execution contract path does not resolve to "
+                            f"canonical tracked metadata: {canonical_contract}"
+                        ),
+                        "stage": "R13.4.2",
+                        "real_api_call_performed": False,
+                    },
+                    indent=2,
+                )
+            )
+    if not _explicit_checklist:
+        resolved_checklist = authorization_checklist_path.resolve()
+        canonical_checklist = _DEFAULT_AUTHORIZATION_CHECKLIST.resolve()
+        if resolved_checklist != canonical_checklist:
+            raise SystemExit(
+                json.dumps(
+                    {
+                        "status": "AUTHORIZATION_GATE_BLOCKED",
+                        "error": (
+                            "Authorization checklist path does not resolve to "
+                            f"canonical tracked metadata: {canonical_checklist}"
+                        ),
+                        "stage": "R13.4.2",
+                        "real_api_call_performed": False,
+                    },
+                    indent=2,
+                )
+            )
+
     errors: list[str] = []
 
     # Load execution contract
@@ -515,22 +567,6 @@ def main() -> None:
         default=False,
         help="Execute real API calls (required for real execution)",
     )
-    parser.add_argument(
-        "--execution-contract",
-        default=str(_DEFAULT_EXECUTION_CONTRACT),
-        help=(
-            "Path to execution contract JSON "
-            f"(default: {_DEFAULT_EXECUTION_CONTRACT})"
-        ),
-    )
-    parser.add_argument(
-        "--authorization-checklist",
-        default=str(_DEFAULT_AUTHORIZATION_CHECKLIST),
-        help=(
-            "Path to authorization checklist JSON "
-            f"(default: {_DEFAULT_AUTHORIZATION_CHECKLIST})"
-        ),
-    )
     args = parser.parse_args()
 
     # ---- Gate: max-calls ------------------------------------------------
@@ -564,11 +600,8 @@ def main() -> None:
         )
         raise SystemExit(1)
 
-    # ---- Gate: authorization contract/checklist -------------------------
-    _check_authorization_gate(
-        Path(args.execution_contract),
-        Path(args.authorization_checklist),
-    )
+    # ---- Gate: authorization contract/checklist (canonical only) --------
+    _check_authorization_gate()
 
     # ---- Load inputs ----------------------------------------------------
     candidates_path = Path(args.candidates)
