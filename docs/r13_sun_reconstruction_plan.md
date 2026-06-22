@@ -10,6 +10,42 @@ Sun, X., Yang, S., Zhao, C., & Yu, D. (2024). Design-time business process compl
 
 Full intake report: `docs/r13_1_sun_paper_intake.md`
 
+## Terminology
+
+### Paper-aligned Reconstruction
+
+A reconstruction based **only** on Sun paper-visible descriptions, tables, formulas, cited sources, and local/publicly available materials. It is **not** exact reproduction. Paper-aligned reconstruction uses paper-reported metrics (e.g., Table 9 Overall MAP 0.801 at τ=0.8) as comparison targets without claiming access to original Sun code or full original Sun datasets.
+
+### Sun-style Baseline Reconstruction
+
+A local implementation or evaluation design **inspired by** Sun et al.'s described method and comparison setup, without claiming access to original Sun code/data. Sun-style reconstruction may use public cited sources, independently re-created annotations, or simplified model variants.
+
+## Reconstruction Levels
+
+### Level A — Paper-visible Evidence Reconstruction
+
+Use tables, definitions, formulas, and described metrics only. All evaluation targets are taken directly from Sun paper tables (Table 7-12). No original Sun data is used. This is the **current feasible level**.
+
+### Level B — Cited Public Source Reconstruction
+
+Collect public cited sources such as GDPR EUR-Lex, Austrian Income Tax Code, cited BPMN/GDPR papers. Independently process these sources to approximate Sun's pipeline inputs. Results are compared against Sun's paper-reported metrics.
+
+### Level C — Manual Mini-gold Construction
+
+Manually create a small auditable mini-gold dataset with explicit annotation notes. This is used for pipeline sanity checking and qualitative comparison. Mini-gold is **not** a replacement for full Sun dataset evaluation.
+
+### Level D — Optional Author-data Replacement if Later Obtained
+
+If original author code/data are later obtained, replace reconstruction with author-data-backed evaluation. This level requires explicit confirmation of data provenance and license.
+
+## What Cannot Be Claimed With Current Assets
+
+- Exact Sun reproduction cannot be claimed.
+- Original Sun baseline reproduction cannot be claimed.
+- Original Sun implementation cannot be claimed.
+- Original Sun full dataset evaluation cannot be claimed.
+- Sun outperformance cannot be claimed.
+
 ## 3. Paper Pipeline (Sun 2024) vs bpc-hybrid
 
 ```
@@ -36,7 +72,7 @@ bpc-hybrid Pipeline (target):
 | A5 | 4 GDPR BPMN models | 5.3.2 | HIGH | Reference [35] / Contact author | NOT_ACQUIRED |
 | A6 | Pre-trained bert-legal-uncased model | 5.1.2 | MEDIUM | HuggingFace / Author | NOT_ACQUIRED |
 | A7 | Source code / implementation | — | LOW | Not publicly available | NOT_AVAILABLE |
-| A8 | GDPR Articles 1–50 text | 5.3.2 | MEDIUM | EUR-Lex (public) | PARTIAL |
+| A8 | GDPR Articles 1–50 text | 5.3.2 | MEDIUM | EUR-Lex (public) | missing_user_to_collect |
 
 ## 5. Minimum Viable Comparison (MVC) Strategy
 

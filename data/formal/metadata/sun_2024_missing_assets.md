@@ -17,6 +17,9 @@
 | GDPR Articles 1–50 (processed) | 5.3.2 | MEDIUM | Article-level text with IDs. Public via EUR-Lex but needs processing. |
 | bert-legal-uncased model | 5.1.2 | MEDIUM | Pre-trained on EU legislation documents. 12-layer, 768-hidden, 110M params. |
 | Source code | — | LOW | Not publicly available. Full pipeline (classification→extraction→matching→checking). |
+| Full original experimental dataset | all | HIGH | Complete original Sun experimental dataset including all splits, labels, and processed outputs. Not publicly released. |
+| Constructed BPMN1-BPMN4 violation dataset | 5.3.2 | HIGH | The constructed violation dataset fed into Tables 10/11 (matching rules, missing actions, incorrect actors, out-of-order executions per model). Not separately downloadable. |
+| Winter et al. baseline implementation | 5.4 | MEDIUM | Winter et al. (2020) baseline code and evaluation setup. Used in Table 12 comparison. Not publicly available or not located. |
 | Inter-annotator agreement data | 5.2 | LOW | 10% double-annotated. Agreement statistics not reported. |
 | Extended marker lists | 4.2 | LOW | Table 4 shows initial markers; paper states markers were extended. Full lists not provided. |
 | Gold standard for matching | 5.3.1 | HIGH | Which model should match which rules. Needed for AP/MAP computation. |

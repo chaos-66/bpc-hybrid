@@ -166,3 +166,64 @@ The Sun paper defines the primary baseline for bpc-hybrid's formal evaluation. R
 - Both files are excluded via `.gitignore` rules (`data/formal/raw/**/*.pdf`, `data/formal/raw/**/*full_text*.txt`).
 - All derivative work (this intake report, evidence JSON, metadata registry, reconstruction plan) is committed.
 - If you clone this repository, you will need to obtain the PDF independently (e.g., Springer Nature download or corresponding author request) and run the offline text extraction yourself.
+
+## 10. What the Paper Does Not Provide
+
+The Sun (2024) paper describes a complete compliance checking pipeline, but the following are **not available** in the bpc-hybrid project workspace:
+
+- Original Sun source code is not available in the project.
+- Complete original experimental datasets are not available in the project.
+- Exact train/test split for modality classification is not available in the project.
+- Full manually annotated phrase-level dataset is not available in the project.
+- Full BPMN model files are not available in the project.
+- Constructed violation dataset for BPMN1-BPMN4 is not available in the project.
+- Winter et al. baseline implementation is not available in the project.
+
+## 11. Missing Assets
+
+The following assets referenced in Sun (2024) are **missing** from the workspace and must be acquired or re-created:
+
+| Asset | Status |
+|-------|--------|
+| Original author code | missing |
+| Full original experimental dataset | missing |
+| Austrian Income Tax Code labeled modality dataset | missing |
+| 150 manually annotated semantic classification sentences | missing |
+| 12 Austrian energy supplier process models | missing |
+| Smart meter regulatory rule base | missing |
+| Four GDPR BPMN process models | missing |
+| GDPR Articles 1-50 source text | missing_user_to_collect |
+| Constructed BPMN1-BPMN4 violation dataset | missing |
+| Winter et al. baseline implementation | missing |
+
+## 12. Reproducibility Risk
+
+- Exact Sun reproduction is **not possible** with current assets.
+- Only **paper-aligned reconstruction** is possible now.
+- Future claims must distinguish: paper-visible evidence, cited public source reconstruction, manual mini-gold, and exact author-data reproduction.
+- The per-model AP list visible in Table 9 may be incomplete/partially captured in extracted evidence and must not be used to derive the overall MAP.
+- All evaluation results in this project must be labeled as paper-aligned reconstruction, not exact reproduction.
+
+## 13. Claim Boundary
+
+This project currently does **not** claim:
+
+- Exact Sun reproduction
+- Original Sun baseline reproduction
+- Benchmark completion
+- Method validation
+- Outperformance over Sun
+
+Any future evaluation result against Sun-style metrics must be accompanied by an explicit statement of the reconstruction level and data source.
+
+## 14. User Action Items
+
+To progress toward paper-aligned reconstruction, the user should locate:
+
+1. Austrian Income Tax Code source HTML/PDF (https://ris.bka.gv.at/eli/bgbl/1988/400/P0/NOR40205159)
+2. Michel et al. 2022 paper/dataset if available
+3. GDPR EUR-Lex Articles 1-50 text (https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+4. Agostinelli et al. 2019 GDPR BPMN paper and any BPMN model files/supplement
+5. Böhmer & Rinderle-Ma 2016 paper and any process model files/supplement
+6. Winter et al. 2020 baseline paper/code if available
+7. Any README / LICENSE / supplementary material for the above

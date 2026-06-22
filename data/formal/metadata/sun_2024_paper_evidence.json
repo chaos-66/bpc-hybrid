@@ -151,7 +151,7 @@
       "best_tau": 0.8,
       "models": 12,
       "models_with_ap_at_tau_0_8": 10,
-      "notes": "0.889 is a single-process-model AP (not overall MAP); overall MAP at τ=0.8 is approximately 0.801 based on reported individual APs",
+      "notes": "0.889 is a single-process-model AP (not overall MAP). 0.801 is the Overall(MAP) value directly reported in Sun Table 9 at τ=0.8. Do not recompute it from the visible per-model AP list — the per-model AP list may be incomplete/partially captured in extracted evidence and must not be used to derive the overall MAP.",
       "overall_map_at_tau_0_8": 0.801,
       "per_model_ap_at_tau_0_8": [0.802, 0.892, 0.811, 0.678, 0.801, 0.790, 0.889, 0.874, 0.846, 0.773, null, null],
       "table": "Table 9"

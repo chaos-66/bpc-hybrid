@@ -3303,7 +3303,9 @@ Clean up R13.1 artifacts: remove PDF/txt from git tracking, fix incorrect MAP me
 
 ### Files Modified (R13.1.1)
 
-10 files: .gitignore, sources.json, sun_2024_paper_evidence.json, experiment_log.md, issue_log.md, dataset_sources.md, r13_1_sun_paper_intake.md, r13_sun_reconstruction_plan.md, r13_formal_dataset_plan.md, README.md
+10 files claimed but actual commit 1d9ad1c changed 9 paths (including 2 deletions: raw PDF and full_text removed from Git tracking). The local PDF and full-text remain available locally but are not tracked.
+
+Precise commit contents: .gitignore, README.md, sources.json, sun_2024_paper_evidence.json, docs/experiment_log.md, docs/issue_log.md, docs/r13_1_sun_paper_intake.md, plus 2 deletions (raw PDF, raw full_text).
 
 ### Scope
 
