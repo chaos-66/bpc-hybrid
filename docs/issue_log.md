@@ -1094,3 +1094,28 @@ the consumed authorization state: `authorized_now=false`,
 
 Even after execution, R13.4.2 may only be described as an 8-sample
 mini-pilot, not a benchmark, method validation, or Sun reproduction.
+
+
+## I064 — R13.4.2 actor/action extraction weakness
+
+### Status
+
+Open.
+
+### Context
+
+The R13.4.2 bounded 8-sample mini-pilot showed relatively better
+modality extraction (7/8 exact) than actor/action extraction
+(0/8 actor exact, 0/8 action exact). The model extracts verbatim
+text fragments instead of normalized field values, and does not
+infer actors from passive-voice constructions.
+
+### Resolution Plan
+
+Use R13.5 analysis to identify likely prompt and schema causes.
+Plan R13.6 prompt refinement before any further real API execution.
+
+### Boundary
+
+No conclusion should be drawn from the 8-sample mini-pilot as a
+benchmark or method validation.

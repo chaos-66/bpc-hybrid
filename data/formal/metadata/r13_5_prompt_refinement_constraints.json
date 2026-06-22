@@ -1,0 +1,18 @@
+{
+  "stage": "R13.5",
+  "next_stage_candidate": "R13.6",
+  "real_api_call_allowed_now": false,
+  "requires_explicit_user_authorization_for_future_real_api": true,
+  "suggested_next_real_api_scope": {
+    "max_real_api_calls": 8,
+    "one_attempt_per_sample": true,
+    "retry_allowed": false,
+    "repair_call_allowed": false,
+    "batch_allowed": false,
+    "raw_response_saved": false
+  },
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "claim_boundary": "Planning only. No real API call in R13.5."
+}

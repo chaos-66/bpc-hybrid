@@ -1,0 +1,88 @@
+{
+  "stage": "R13.5",
+  "type": "post_pilot_error_taxonomy",
+  "source_run": "R13.4.2",
+  "sample_count": 8,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "error_categories": {
+    "modality_error": ["r13_3_candidate_006"],
+    "definition_as_obligation_error": ["r13_3_candidate_006"],
+    "actor_missing": ["r13_3_candidate_001", "r13_3_candidate_002", "r13_3_candidate_003", "r13_3_candidate_005"],
+    "actor_wrong_granularity": ["r13_3_candidate_004", "r13_3_candidate_006", "r13_3_candidate_007", "r13_3_candidate_008"],
+    "action_wrong_granularity": [
+      "r13_3_candidate_001",
+      "r13_3_candidate_002",
+      "r13_3_candidate_003",
+      "r13_3_candidate_004",
+      "r13_3_candidate_005",
+      "r13_3_candidate_006",
+      "r13_3_candidate_007",
+      "r13_3_candidate_008"
+    ],
+    "condition_boundary_error": ["r13_3_candidate_003", "r13_3_candidate_005", "r13_3_candidate_006", "r13_3_candidate_007", "r13_3_candidate_008"],
+    "constraint_boundary_error": [
+      "r13_3_candidate_001",
+      "r13_3_candidate_002",
+      "r13_3_candidate_003",
+      "r13_3_candidate_004",
+      "r13_3_candidate_005",
+      "r13_3_candidate_006",
+      "r13_3_candidate_007",
+      "r13_3_candidate_008"
+    ],
+    "passive_voice_actor_error": ["r13_3_candidate_001", "r13_3_candidate_002", "r13_3_candidate_003", "r13_3_candidate_005"],
+    "field_normalization_error": [
+      "r13_3_candidate_001",
+      "r13_3_candidate_002",
+      "r13_3_candidate_003",
+      "r13_3_candidate_004",
+      "r13_3_candidate_005",
+      "r13_3_candidate_006",
+      "r13_3_candidate_007",
+      "r13_3_candidate_008"
+    ],
+    "action_subject_complement_confusion": ["r13_3_candidate_003"],
+    "constraint_as_adverbial_fragment": ["r13_3_candidate_001", "r13_3_candidate_002"],
+    "german_text_normalization_failure": ["r13_3_candidate_006", "r13_3_candidate_007", "r13_3_candidate_008"]
+  },
+  "field_summary": {
+    "modality": {
+      "exact": 7,
+      "wrong": 1,
+      "dominant_pattern": "model generally distinguishes obligation/prohibition/definition correctly; one definition misclassified as obligation"
+    },
+    "actor": {
+      "exact": 0,
+      "partial": 1,
+      "missing": 4,
+      "wrong": 3,
+      "dominant_pattern": "passive-voice GDPR sentences produce null actor; German sentences produce non-normalized actor text"
+    },
+    "action": {
+      "exact": 0,
+      "wrong": 8,
+      "dominant_pattern": "model extracts verbatim text fragments (participles, adjectives, gerunds) instead of normalized [verb] [object] action phrases"
+    },
+    "condition": {
+      "exact": 1,
+      "missing": 2,
+      "wrong": 3,
+      "not_applicable": 2,
+      "dominant_pattern": "model does not reliably identify trigger conditions; sometimes outputs fragments, sometimes null"
+    },
+    "constraint": {
+      "exact": 0,
+      "partial": 3,
+      "missing": 1,
+      "wrong": 4,
+      "dominant_pattern": "model outputs adverbial/prepositional fragments or lists of special categories instead of full propositional constraint statements"
+    },
+    "exception": {
+      "not_applicable": 8,
+      "dominant_pattern": "no sample had an exception field in gold; all 8 correctly marked not_applicable"
+    }
+  },
+  "claim_boundary": "Post-pilot analysis of one bounded 8-sample mini-pilot only. No benchmark, no method validation, no Sun reproduction."
+}

@@ -3838,3 +3838,55 @@ R13.4.2 remains only a bounded 8-sample real API mini-pilot.
 Completed (R13.4.2.4). Docs-only fix — no further Codex audit required
 unless user requests one.
 
+## R13.5 — Post-pilot Error Analysis and Prompt-refinement Planning
+
+### Type
+
+Analysis and planning only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Analyzed the accepted R13.4.2 bounded 8-sample real API mini-pilot and
+drafted a prompt-refinement plan for a possible next bounded run.
+
+Key findings:
+- Modality: 7/8 exact (model correctly classifies obligation/
+  prohibition/definition).
+- Actor: 0/8 exact (passive-voice omission for GDPR samples;
+  German text non-normalized for Austrian samples).
+- Action: 0/8 exact (model extracts verbatim fragments instead of
+  normalized [verb] [object] action phrases).
+- Constraint: 0/8 exact (model outputs adverbial fragments instead
+  of full propositional statements).
+
+Three prompt-refinement directions proposed (A: field definitions,
+B: few-shot examples, C: two-step reasoning-hidden extraction).
+
+### Artifacts Created
+
+- `docs/r13_5_post_pilot_error_analysis.md`
+- `docs/r13_5_prompt_refinement_plan.md`
+- `data/formal/metadata/r13_5_error_taxonomy.json`
+- `data/formal/metadata/r13_5_prompt_refinement_constraints.json`
+
+### Claim Boundary
+
+This stage only analyzes one 8-sample mini-pilot and plans prompt
+refinement. It does not validate the method or reproduce any paper
+result.
+
+### Status
+
+Completed (R13.5).
+
