@@ -22,7 +22,7 @@ No dataset has been downloaded yet (R13.0 is planning only).
 
 | ID | Name | Type | URL / Location | License | Has Gold | Has Baseline | Status | Notes |
 |----|------|------|----------------|---------|----------|--------------|--------|-------|
-| DS001 | Sun et al. regulatory extraction baseline | Paper + supplementary | source_unknown | license_unknown | yes (assumed) | yes (assumed) | needs_user_confirmation | R12 methodology reference; user must locate paper PDF, GitHub repo, and supplementary data |
+| DS001 | Sun et al. (2024) — Design-time BPC multi-granularity | Paper + 4 datasets | PDF: `data/formal/raw/sun_2024_design_time_bpc_multigranularity.pdf` | author_request | yes | yes | paper_intake_complete | Intake: R13.1. 4 sub-datasets: Austrian tax code, 150 annotated sentences, 12 energy BPMN models, 4 GDPR BPMN models. All need author contact. See `docs/r13_1_sun_paper_intake.md`. |
 | DS002 | GDPR official text (EUR-Lex) | Regulatory text | https://eur-lex.europa.eu/eli/reg/2016/679/oj | EU open | no (raw text) | no | needs_user_confirmation | Articles and recitals; needs sentence splitting and ID assignment |
 | DS003 | GDPR recitals + articles structured | Processed regulatory text | source_unknown | license_unknown | partially | no | needs_user_confirmation | Some public repos provide structured JSON/XML; check GDPR.eu, GDPR-info.eu |
 | DS004 | Legal document clause/requirement extraction datasets | NLP dataset | source_unknown | license_unknown | yes (assumed) | unknown | needs_user_confirmation | Search ACL Anthology, Papers With Code for "legal requirement extraction", "compliance checking" |
@@ -34,16 +34,29 @@ No dataset has been downloaded yet (R13.0 is planning only).
 The user must **manually** locate and verify each candidate source.  Requested files per
 candidate:
 
-### DS001 — Sun baseline
+### DS001 — Sun (2024) baseline
 
+**Paper PDF**: ✅ Acquired — `data/formal/raw/sun_2024_design_time_bpc_multigranularity.pdf` (2.7 MB, 28 pages)
+**Full text**: ✅ Extracted — `data/formal/raw/sun_2024_full_text.txt` (65,448 chars, utf-8)
+**Intake report**: `docs/r13_1_sun_paper_intake.md`
+
+**Still needed (contact author or re-create)**:
 ```
-- Paper PDF (title/authors TBD — search "regulatory requirement extraction" "Sun")
-- GitHub repository URL or ZIP archive
-- Supplementary material (usually .pdf, .zip, or .xlsx)
-- Gold annotation file (expected format: .jsonl, .csv, .tsv, or .xml)
-- Baseline model output / prediction file
-- README.md or LICENSE file from the repository
+- Austrian Income Tax Code text (Bundesgesetzblatt 1988/400 — public at RIS)
+- Modality labels (4-class: definition/obligation/prohibition/permission)
+- 150 annotated sentences (6-concept phrase-level, 443 ground-truth components)
+- 12 BPMN process models (Austrian energy supplier smart meter)
+- Rule base (parsed from smart meter regulatory documents)
+- 4 GDPR BPMN models (GDPR Articles 1-50 privacy constraints)
+- bert-legal-uncased pre-trained model (HuggingFace or author)
+- Source code (not publicly available)
+- Gold standard matching data
 ```
+
+**Contact**: Dongjin Yu (yudj@hdu.edu.cn), Hangzhou Dianzi University
+**Data availability**: "available from the corresponding author on reasonable request"
+**Reconstruction plan**: `docs/r13_sun_reconstruction_plan.md`
+**Missing assets**: `data/formal/metadata/sun_2024_missing_assets.md`
 
 ### DS002 — GDPR official text
 

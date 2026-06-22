@@ -690,6 +690,53 @@ R13.0 defines formal dataset intake requirements and user action items
 before any formal API pilot.  See `docs/r13_formal_dataset_plan.md`
 and `docs/dataset_sources.md`.
 
+### Resolution (R13.1)
+
+R13.1 acquired and analyzed the Sun (2024) paper PDF. Paper state:
+PAPER_ONLY — all 4 sub-datasets require author contact. See
+`docs/r13_1_sun_paper_intake.md` and `docs/r13_sun_reconstruction_plan.md`.
+
+**Updated**: I052 remains open until at least one dataset is acquired.
+
+## I053 — Sun (2024) paper intake complete; all datasets require author contact
+
+### Status
+
+Open in R13.1.
+
+### Context
+
+R13.1 successfully acquired and analyzed the Sun et al. (2024) paper PDF
+(28 pages, 2.7 MB). Full text extracted offline via pdfplumber (65,448 chars).
+Four sub-datasets identified:
+- A: Austrian Income Tax Code (4-class modality labels)
+- B: 150 annotated sentences (6-concept phrase-level)
+- C: 12 BPMN models (Austrian energy supplier smart meter)
+- D: 4 GDPR BPMN models (GDPR Articles 1-50)
+
+All four datasets require author contact (yudj@hdu.edu.cn). Paper states
+"available from the corresponding author on reasonable request."
+No dataset has been acquired yet.
+
+### Resolution Plan
+
+1. User contacts corresponding author (yudj@hdu.edu.cn) requesting datasets
+2. If no response in 4 weeks, proceed with independent re-creation:
+   - Download Austrian Income Tax Code from public RIS source
+   - Independently re-annotate subset of sentences
+   - Model GDPR BPMN flows from Article text
+3. R13.2 mini-pilot design proceeds with or without author data
+4. If author data arrives, use it for direct comparison
+5. If not, use independently re-created data with documented divergence
+
+### Files
+
+- `docs/r13_1_sun_paper_intake.md` — full intake report
+- `docs/r13_sun_reconstruction_plan.md` — MVC strategy and stage-gate plan
+- `data/formal/metadata/sun_2024_paper_evidence.json` — tables, figures, results
+- `data/formal/metadata/sun_2024_missing_assets.md` — 16-item missing checklist
+- `data/formal/metadata/sources.json` — 6-source registry
+
 ## I047 — Timeout analysis needs per-sample duration and error category metadata
 
 ### Status

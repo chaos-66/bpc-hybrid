@@ -2,10 +2,14 @@
 
 ## 1. Current Status
 
-R13.0 is the **planning and dataset acquisition design** stage.
-No real API calls.  No dataset downloads yet.  No code changes.
+R13.0 ✅ completed — planning and dataset acquisition design done.
+R13.1 🔵 IN PROGRESS — Sun (2024) paper intake completed. Paper state:
+PAPER_ONLY. All 4 sub-datasets require author contact.
+No real API calls. No dataset downloads yet. No code changes.
 
 R12 closed as a synthetic prototype API-pipeline sanity milestone (`2324a9e`).
+R13.1 intake report: `docs/r13_1_sun_paper_intake.md`.
+R13 reconstruction plan: `docs/r13_sun_reconstruction_plan.md`.
 
 ## 2. Why R13 Is Needed
 

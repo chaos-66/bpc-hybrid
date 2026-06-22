@@ -3116,6 +3116,102 @@ document (`docs/dataset_sources.md`), and R13 formal dataset plan
 
 R13.1 — Data intake of first confirmed formal dataset (no API calls).
 
+## R13.1 — Sun (2024) Paper Intake
+
+### Type
+
+Paper intake and analysis only. No real API, no dataset download, no code change.
+
+### Scope
+
+- Real API call: no
+- Dataset download: no
+- Source code modification: no
+- Paper PDF acquisition: yes (user-provided)
+- PDF text extraction: yes (pdfplumber, offline)
+- New docs created: 5
+- Existing docs updated: 5
+
+### Goal
+
+Acquire and analyze the Sun et al. (2024) paper PDF as the primary formal
+baseline for bpc-hybrid, inventory all datasets referenced in the paper,
+and produce a reconstruction plan for comparison.
+
+### Paper Identified
+
+**Title**: Design-time business process compliance assessment based on
+multi-granularity semantic information
+
+**Authors**: Xiaoxiao Sun, Siqing Yang, Chenying Zhao, Dongjin Yu
+(Hangzhou Dianzi University)
+
+**Year**: 2024 | **Venue**: Springer Nature | **Pages**: 28
+
+**PDF**: `data/formal/raw/sun_2024_design_time_bpc_multigranularity.pdf`
+(2,694,008 bytes)
+
+**Full text**: `data/formal/raw/sun_2024_full_text.txt` (65,448 chars, utf-8)
+
+### Datasets Identified
+
+| ID | Description | Status |
+|----|-------------|--------|
+| A | Austrian Income Tax Code — 4-class modality labels | NOT_ACQUIRED |
+| B | 150 annotated sentences — 6-concept phrase-level | NOT_ACQUIRED |
+| C | 12 BPMN models — Austrian energy supplier | NOT_ACQUIRED |
+| D | 4 GDPR BPMN models — GDPR Articles 1–50 | NOT_ACQUIRED |
+
+All four datasets require author contact
+(yudj@hdu.edu.cn, "available on reasonable request").
+
+### Paper State
+
+**PAPER_ONLY** — PDF present, no datasets/code/annotations in workspace.
+
+### Key Results from Paper (for future comparison baseline)
+
+| Task | Metric | Sun (2024) |
+|------|--------|-----------|
+| Modality classification | F1 | 93.1% (bert-legal-uncased) |
+| Semantic extraction | F1 | ~96.6% (overall P=97.9%, R=95.3%) |
+| Model matching (energy) | MAP | 0.889 (τ=0.8) |
+| Violation detection (GDPR) | MAP | 0.840 (τ=0.8) |
+| vs Winter et al. (2020) | F1 | 0.80 (Sun) vs 0.70 (Winter) |
+
+### New Files Created
+
+| File | Description |
+|------|-------------|
+| `docs/r13_1_sun_paper_intake.md` | Full paper intake report (8 sections) |
+| `docs/r13_sun_reconstruction_plan.md` | Stage-gate reconstruction plan (MVC strategy) |
+| `data/formal/metadata/sources.json` | 6-source formal dataset registry |
+| `data/formal/metadata/sun_2024_paper_evidence.json` | Detailed paper evidence (tables, figures, results) |
+| `data/formal/metadata/sun_2024_missing_assets.md` | 16-item missing assets checklist |
+
+### Files Updated
+
+| File | Change |
+|------|--------|
+| `docs/dataset_sources.md` | DS001 updated with full Sun paper details |
+| `docs/r13_formal_dataset_plan.md` | R13.1 reference added |
+| `README.md` | R13.0→✅, R13.1→🔵 IN PROGRESS, descriptions updated |
+| `docs/experiment_log.md` | This section added |
+| `docs/issue_log.md` | I053 added |
+
+### Verification
+
+- PDF integrity: 28 pages, 2.7 MB, readable (pdfplumber)
+- Full text extraction: 65,448 chars, utf-8, saved to `data/formal/raw/`
+- No API calls: ✅
+- No .env read: ✅
+- No source code modified: ✅
+- Only new docs and metadata JSON created: ✅
+
+### Next Stage
+
+R13.2 — Mini-pilot design (≤10 samples, 60s timeout, ≤10 API calls, planning only).
+
 ## R12.3.0 — Add Pilot Duration and Timeout Metadata
 
 ### Type

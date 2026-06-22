@@ -1,0 +1,188 @@
+{
+  "paper": {
+    "title": "Design-time business process compliance assessment based on multi-granularity semantic information",
+    "authors": ["Xiaoxiao Sun", "Siqing Yang", "Chenying Zhao", "Dongjin Yu"],
+    "corresponding_author": "Dongjin Yu",
+    "email": "yudj@hdu.edu.cn",
+    "affiliation": "School of Computer Science and Technology, Hangzhou Dianzi University, Hangzhou, China",
+    "year": 2024,
+    "venue": "Springer Nature",
+    "pages": 28,
+    "keywords": ["Compliance Checking", "Violation Detection", "Business Process", "Text Mining", "Natural Language Processing", "Deep Learning"],
+    "pdf_path": "data/formal/raw/sun_2024_design_time_bpc_multigranularity.pdf",
+    "pdf_size_bytes": 2694008,
+    "text_extraction_method": "pdfplumber (offline)",
+    "text_extraction_date": "2026-06-19",
+    "text_file": "data/formal/raw/sun_2024_full_text.txt",
+    "text_chars": 65448
+  },
+  "methodology": {
+    "pipeline_stages": [
+      {
+        "stage": 1,
+        "name": "Modality Classification",
+        "section": "4.1",
+        "method": "BERT pre-training (general + legal corpora) + fine-tuning on labeled regulatory sentences",
+        "output": "4-class label: definition, obligation, prohibition, permission",
+        "best_model": "bert-legal-uncased"
+      },
+      {
+        "stage": 2,
+        "name": "Semantic Information Extraction",
+        "section": "4.2",
+        "method": "Constituent parse trees + marker-based rule templates",
+        "output": "6 concepts: modality, actor, action, condition, constraint, exception",
+        "note": "Phrase-level extraction with span positions"
+      },
+      {
+        "stage": 3,
+        "name": "Rule Base Construction",
+        "section": "4.3",
+        "method": "Match extracted concepts to structured rule records",
+        "output": "Rule records with obligation/prohibition/permission categorization"
+      },
+      {
+        "stage": 4,
+        "name": "Process Model Disassembly",
+        "section": "4.4",
+        "method": "Decompose BPMN into sequential/parallel/exclusive-gateway fragments",
+        "output": "Activities with labels for matching"
+      },
+      {
+        "stage": 5,
+        "name": "Compliance Checking",
+        "section": "4.5",
+        "method": "Text similarity matching (τ threshold) + violation detection",
+        "output": "3 violation types: missing action, incorrect actor, out-of-order execution"
+      }
+    ],
+    "concepts": {
+      "modality": "The auxiliary representing the action's modality",
+      "actor": "The role responsible for the execution of an activity",
+      "action": "The content of the regulations (mandatory/prohibited/permitted)",
+      "condition": "The conditions stating when the regulation applies",
+      "constraint": "The restriction placed on the applicability of a legal provision",
+      "exception": "The possible exceptions indicating when the provision does not apply"
+    }
+  },
+  "datasets": [
+    {
+      "dataset_id": "A",
+      "name": "Austrian Income Tax Code — Modality Classification",
+      "section": "5.1.1",
+      "source": "Austrian Income Tax Code (Bundesgesetzblatt 1988/400)",
+      "url": "https://ris.bka.gv.at/eli/bgbl/1988/400/P0/NOR40205159",
+      "public": true,
+      "labels": ["definition (0)", "obligation (1)", "prohibition (2)", "permission (3)"],
+      "split": "9:1 train/test",
+      "reference": "[28]"
+    },
+    {
+      "dataset_id": "B",
+      "name": "150 Annotated Sentences — Semantic Extraction",
+      "section": "5.2",
+      "source": "Same Austrian Income Tax Code",
+      "size": "150 sentences, each >20 words",
+      "annotations": "Phrase-level: type (concept) + span (character start/end)",
+      "inter_annotator": "10% double-annotated independently",
+      "ground_truth_components": 443,
+      "reference": "own annotation"
+    },
+    {
+      "dataset_id": "C",
+      "name": "12 BPMN Process Models — Matching Evaluation",
+      "section": "5.3.1",
+      "domain": "Austrian energy supplier — smart meter scenarios",
+      "count": 12,
+      "rule_base": "Parsed from regulatory documents related to smart meters",
+      "validation": "Built and validated by domain experts",
+      "reference": "[33]"
+    },
+    {
+      "dataset_id": "D",
+      "name": "4 GDPR BPMN Models — End-to-End Checking",
+      "section": "5.3.2",
+      "domain": "GDPR privacy constraints",
+      "count": 4,
+      "regulatory_text": "GDPR Articles 1–50",
+      "violation_data": {
+        "model": ["BPMN1", "BPMN2", "BPMN3", "BPMN4"],
+        "matching_rules": [21, 30, 38, 46],
+        "missing_action": [7, 9, 12, 23],
+        "incorrect_actor": [5, 8, 10, 9],
+        "out_of_order_execution": [9, 13, 16, 16]
+      },
+      "reference": "[35]"
+    }
+  ],
+  "results": {
+    "modality_classification": {
+      "best_model": "bert-legal-uncased",
+      "precision": 0.921,
+      "recall": 0.941,
+      "f1": 0.893,
+      "baseline_comparison": {
+        "cf_keyword": {"precision": 0.627, "recall": 0.647, "f1": 0.608},
+        "cf_rnn": {"precision": 0.903, "recall": 0.916, "f1": 0.909},
+        "cf_cnn": {"precision": 0.874, "recall": 0.901, "f1": 0.902},
+        "our_approach": {"precision": 0.921, "recall": 0.941, "f1": 0.931}
+      },
+      "table": "Table 6, Table 7"
+    },
+    "semantic_extraction": {
+      "overall_precision": 0.979,
+      "overall_recall": 0.953,
+      "per_concept": {
+        "modality": {"ground_truth": 82, "extracted": 81, "matched": 80, "misclassified": 1, "missed": 2, "precision": 0.988, "recall": 0.976},
+        "actor": {"ground_truth": 118, "extracted": 110, "matched": 109, "misclassified": 1, "missed": 9, "precision": 0.991, "recall": 0.924},
+        "action": {"ground_truth": 147, "extracted": 147, "matched": 145, "misclassified": 2, "missed": 2, "precision": 0.986, "recall": 0.986},
+        "condition": {"ground_truth": 46, "extracted": 40, "matched": 40, "misclassified": 0, "missed": 6, "precision": 1.0, "recall": 0.869},
+        "constraint": {"ground_truth": 35, "extracted": 38, "matched": 34, "misclassified": 4, "missed": 1, "precision": 0.895, "recall": 0.971},
+        "exception": {"ground_truth": 15, "extracted": 15, "matched": 14, "misclassified": 1, "missed": 1, "precision": 0.933, "recall": 0.933}
+      },
+      "table": "Table 8"
+    },
+    "matching_evaluation": {
+      "best_tau": 0.8,
+      "models": 12,
+      "best_map": 0.889,
+      "per_model_ap_at_tau_0_8": [0.802, 0.892, 0.811, 0.678, 0.801, 0.790, 0.889, 0.874, 0.846, 0.773, null, null],
+      "table": "Table 9"
+    },
+    "gdpr_violation_detection": {
+      "best_tau": 0.8,
+      "models": 4,
+      "best_map": 0.840,
+      "per_model_ap_at_tau_0_8": {
+        "BPMN1": 0.824,
+        "BPMN2": 0.855,
+        "BPMN3": 0.845,
+        "BPMN4": 0.835
+      },
+      "comparison_with_winter": {
+        "winter_precision": 0.58,
+        "winter_recall": 0.89,
+        "winter_f1": 0.70,
+        "sun_precision": 0.77,
+        "sun_recall": 0.83,
+        "sun_f1": 0.80
+      },
+      "table": "Table 10, Table 11, Table 12"
+    }
+  },
+  "ablation_findings": [
+    "Legal corpus pre-training outperforms general corpus (bert-legal-uncased > bert-base-uncased)",
+    "Model size increase (base→large) does not significantly improve classification",
+    "Cased vs uncased: uncased slightly better for legal text",
+    "Keyword baseline (CF_KW) severely underperforms (F1=60.8%)",
+    "Winter et al. (2020) has higher recall but much lower precision than Sun's method",
+    "Marker-based rules can be extended from initial sets",
+    "Best matching threshold τ=0.8 for both Austrian energy (MAP=0.889) and GDPR (MAP=0.840) scenarios"
+  ],
+  "data_availability": {
+    "statement": "The datasets generated during and/or analysed during the current study are available from the corresponding author on reasonable request.",
+    "code_available": false,
+    "datasets_available": "on_request",
+    "contact": "yudj@hdu.edu.cn"
+  }
+}

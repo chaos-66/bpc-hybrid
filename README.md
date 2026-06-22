@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅ | R10.4.1 ✅ | R11.0 ✅ | R11.1 ✅ | R11.1.1 ✅ | R11.2 ✅ | R11.2.1 ✅ | R11.3 ✅ | R11.3.1 ✅ | R11.4 ❌ CONFIG_BLOCKED | R11.4.1 ❌ CONFIG_BLOCKED | R11.4.3 ✅ | R12.0 ✅ | R12.0.1 ✅ | R12.1 ⚠️ PARTIAL | R12.1.1 ✅ | R12.2 ✅ | R12.3.0 ✅ | R12.3.0.1 ✅ | R12.3.1 ✅ | R12.4 ✅ | R13.0 🔵 IN PROGRESS**
+**R0 ✅ | R1 ✅ | R1.5 ✅ | R1.6 ✅ | R2 ✅ | R3 ✅ | R4 ✅ | R5 ✅ | R5.1 ✅ | R6 ✅ | R7 ✅ | R7.1 ✅ | R7.2 ✅ | R8 ✅ | R8.2 ✅ | R9 ✅ | R9.8 ✅ | R10.0 ✅ | R10.1 ✅ | R10.2 ✅ | R10.2.1 ✅ | R10.3 ✅ | R10.4 ✅ | R10.4.1 ✅ | R11.0 ✅ | R11.1 ✅ | R11.1.1 ✅ | R11.2 ✅ | R11.2.1 ✅ | R11.3 ✅ | R11.3.1 ✅ | R11.4 ❌ CONFIG_BLOCKED | R11.4.1 ❌ CONFIG_BLOCKED | R11.4.3 ✅ | R12.0 ✅ | R12.0.1 ✅ | R12.1 ⚠️ PARTIAL | R12.1.1 ✅ | R12.2 ✅ | R12.3.0 ✅ | R12.3.0.1 ✅ | R12.3.1 ✅ | R12.4 ✅ | R13.0 ✅ | R13.1 🔵 IN PROGRESS**
 
 ## Research Positioning
 
@@ -87,7 +87,9 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 
 ### Current Stage
 
-**R13.0 — formal dataset acquisition and evaluation design.** R12 is closed as a synthetic prototype API-pipeline sanity milestone. R13 begins formal dataset acquisition and evaluation design. No real API is executed in R13.0. See `docs/r13_formal_dataset_plan.md`.
+**R13.0 ✅ — formal dataset acquisition and evaluation design.** R12 is closed as a synthetic prototype API-pipeline sanity milestone. R13 begins formal dataset acquisition and evaluation design. No real API is executed in R13.0. See `docs/r13_formal_dataset_plan.md`.
+
+**R13.1 🔵 IN PROGRESS — Sun (2024) paper intake.** Paper PDF acquired and analyzed (2.7 MB, 28 pages, 4 datasets identified). Full text extracted offline via pdfplumber. Paper classified as PAPER_ONLY — all 4 sub-datasets require author contact or independent re-creation. See `docs/r13_1_sun_paper_intake.md`.
 
 ## R9 Scope
 
