@@ -1,0 +1,30 @@
+{
+  "stage": "R13.7-pre",
+  "type": "selected_prompt_snapshot",
+  "selected_prompt_id": "r13_6_prompt_B",
+  "selected_prompt_name": "few_shot_extraction",
+  "selected_prompt_path": "prompts/r13_6/few_shot_extraction_prompt.md",
+  "source_stage": "R13.6",
+  "real_api_call_performed": false,
+  "llm_call_performed": false,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "prompt_file_size_bytes": 2928,
+  "prompt_sha256": "frozen_at_R13_6_commit_1c15432",
+  "prompt_summary": {
+    "strategy": "few_shot_extraction",
+    "example_count": 3,
+    "examples_synthetic": true,
+    "target_modalities": ["obligation", "prohibition", "definition"],
+    "languages": ["english", "german"],
+    "key_features": [
+      "inferred_actor_from_passive_voice",
+      "normalized_action_as_verb_object",
+      "full_propositional_constraint",
+      "definition_vs_obligation_boundary",
+      "english_only_output"
+    ]
+  },
+  "claim_boundary": "Prompt selection snapshot only. No real API call in R13.7-pre."
+}

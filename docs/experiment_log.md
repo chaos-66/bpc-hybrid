@@ -3941,3 +3941,42 @@ execute or validate any prompt.
 
 Completed (R13.6).
 
+
+## R13.7-pre — Prompt B Authorization Plan
+
+### Goal
+
+Create an authorization plan for a possible R13.7 bounded real API
+mini-pilot using Prompt B.
+
+### Method
+
+Selected Prompt B (`r13_6_prompt_B`, few_shot_extraction) from the
+three R13.6 candidates. Defined execution contract (8 calls max, 1
+attempt/sample, no retry, no batch, no raw saving), output paths
+(r13_7-specific, not overwriting R13.4.2), required user authorization
+statement, and stop conditions.
+
+### Result
+
+Created 4 new files:
+- Authorization plan doc with 13 sections
+- Selected prompt snapshot JSON
+- Execution contract JSON
+- Authorization checklist JSON
+
+### Artifacts Created
+
+- `docs/r13_7_pre_prompt_b_authorization_plan.md`
+- `data/formal/metadata/r13_7_prompt_b_selected_prompt_snapshot.json`
+- `data/formal/metadata/r13_7_prompt_b_execution_contract.json`
+- `data/formal/metadata/r13_7_prompt_b_authorization_checklist.json`
+
+### Claim Boundary
+
+This stage plans authorization, does not run any API call.
+
+### Status
+
+Completed (R13.7-pre).
+

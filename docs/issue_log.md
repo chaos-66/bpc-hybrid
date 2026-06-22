@@ -1140,3 +1140,39 @@ authorization.
 ### Boundary
 
 No real API call is allowed in R13.6.
+
+
+## I066 — R13.7 Prompt B real mini-pilot requires fresh authorization
+
+### Severity
+
+Blocker — execution cannot proceed without explicit authorization.
+
+### Stage
+
+R13.7-pre
+
+### Description
+
+R13.4.2 authorization is consumed and expired. A fresh, explicit
+user authorization statement is required before R13.7 Prompt B
+real execution can begin.
+
+### Mitigation
+
+Created authorization plan (`docs/r13_7_pre_prompt_b_authorization_plan.md`)
+with execution contract and authorization checklist. The executing
+agent must refuse to proceed without the exact authorization statement
+from Section 11 of the plan.
+
+### Resolution
+
+Wait for user authorization.
+
+### Discovery Date
+
+R13.7-pre
+
+### Boundary
+
+No real API call is allowed in R13.7-pre.
