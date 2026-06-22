@@ -3457,3 +3457,42 @@ All 6 R13.2 planned public-source folders confirmed present with complete files.
 - Raw PDF/HTML files NOT tracked in git.
 - R13.4 is blocked until user completes manual gold review.
 
+## R13.3.1 — Manual Gold Annotation Commit
+
+### Type
+
+Manual gold annotation update.
+
+### Scope
+
+- Real API call: no
+- Data download: no
+- Raw file modification: no
+- Benchmark: no
+- Method validation: no
+
+### Result
+
+The 8 R13.3 candidate samples were manually reviewed and the gold annotation template was updated from manual_gold_pending to reviewed_gold. All 8 entries validated (modalities: 3 obligation, 1 prohibition, 4 definition).
+
+### Updated Files
+
+- `data/formal/gold/r13_3_manual_gold_template.jsonl` — all 8 entries updated to reviewed_gold
+- `README.md` — stage updated to R13.3.1
+- `docs/experiment_log.md` — this entry
+- `docs/issue_log.md` — I056 updated (resolved for 8-sample mini-gold)
+- `docs/r13_3_data_intake_report.md` — R13.3.1 follow-up added
+
+### Claim Boundary
+
+This creates a small manually reviewed mini-gold file for future local pilot testing. It does not validate the method, does not reproduce Sun et al., and does not constitute a formal benchmark result.
+
+### Safety Boundary
+
+- No real API call.
+- No data download.
+- No .env read.
+- No benchmark.
+- No method-validation claim.
+- The 8-sample mini-gold set is small and suitable only for the next bounded R13.4 mini-pilot, not for benchmark or method-validation claims.
+

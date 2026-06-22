@@ -843,15 +843,19 @@ Create and follow R13.2 public-source checklist. Do not run API or claim formal 
 
 ### Status
 
-Open.
+Resolved for the initial 8-sample mini-gold set (R13.3.1).
 
 ### Context
 
-R13.3 extracted 8 candidate text samples from 2 user-collected public legal sources (GDPR EUR-Lex, Austrian Income Tax Code). All samples are marked `candidate_unreviewed` with matching gold template entries at `manual_gold_pending`. The project cannot proceed to any formal mini-pilot until the user completes manual gold review.
+R13.3 extracted 8 candidate text samples from 2 user-collected public legal sources (GDPR EUR-Lex, Austrian Income Tax Code). All samples were marked `candidate_unreviewed` with matching gold template entries at `manual_gold_pending`. In R13.3.1, the user manually reviewed all 8 samples and updated the gold template to `reviewed_gold`.
 
-### Resolution Plan
+### Resolution
 
-User must review each candidate sample in `data/formal/gold/r13_3_manual_gold_template.jsonl`, assign modality labels and phrase-level annotations following `docs/r13_2_annotation_guideline.md`, and mark `annotation_status` → `reviewed_gold`. After review, signal readiness for R13.4.
+All 8 gold entries now have `annotation_status: reviewed_gold`. Modalities assigned: 3 obligation, 1 prohibition, 4 definition. All entries have actor, action, condition, constraint, and reviewer_notes fields populated.
+
+### Claim Boundary
+
+The 8-sample mini-gold set is small and suitable only for the next bounded R13.4 mini-pilot, not for benchmark or method-validation claims.
 
 ### Related Documents
 
@@ -867,4 +871,4 @@ User must review each candidate sample in `data/formal/gold/r13_3_manual_gold_te
 - No .env read.
 - No benchmark.
 - No method-validation claim.
-- Gold not yet completed.
+- Mini-gold is for pilot testing only.

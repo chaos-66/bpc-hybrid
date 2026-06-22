@@ -131,3 +131,9 @@ The user must:
 4. After review, signal readiness for R13.4
 
 **Important**: The project cannot proceed to any formal mini-pilot (R13.4) until gold annotations are reviewed and committed.
+
+## 11. R13.3.1 Manual Gold Follow-up
+
+The 8 candidate samples have been manually reviewed and the gold template has been updated to `reviewed_gold`. All 8 entries passed JSONL validation (modalities: 3 obligation, 1 prohibition, 4 definition).
+
+**Boundary**: this is a small mini-gold set for future pilot testing only. It is not a benchmark dataset, not an exact Sun reproduction, and not method validation.
