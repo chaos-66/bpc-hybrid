@@ -80,16 +80,20 @@ def _token_overlap_ratio(a: str, b: str) -> float:
 # Schema validation
 # ---------------------------------------------------------------------------
 
-_REQUIRED_TOP_FIELDS = {"sample_id", "predicted", "runtime", "schema_valid"}
+_REQUIRED_TOP_FIELDS = {"sample_id", "source_id", "predicted", "runtime", "schema_valid"}
 _REQUIRED_PREDICTED_FIELDS = {"modality", "actor", "action", "condition", "constraint", "exception"}
 
 
 def validate_prediction_record(record: dict) -> bool:
-    """Return True if the record has all required top-level and predicted fields."""
+    """Return True if the record has all required top-level fields,
+    schema_valid is boolean True, and predicted has all required fields."""
     if not isinstance(record, dict):
         return False
     missing_top = _REQUIRED_TOP_FIELDS - set(record.keys())
     if missing_top:
+        return False
+    # schema_valid must be boolean True (string "false" or False → invalid)
+    if record.get("schema_valid") is not True:
         return False
     predicted = record.get("predicted")
     if not isinstance(predicted, dict):
@@ -215,11 +219,9 @@ def score_prediction(
     """
     sample_id = prediction.get("sample_id", "unknown")
     source_id = prediction.get("source_id", "unknown")
-    schema_valid = bool(prediction.get("schema_valid", False))
 
-    # Structural validation
-    if not validate_prediction_record(prediction):
-        schema_valid = False
+    # Structural validation (includes schema_valid bool check)
+    schema_valid = validate_prediction_record(prediction)
 
     pred = prediction.get("predicted", {}) if isinstance(prediction.get("predicted"), dict) else {}
     g = gold if isinstance(gold, dict) else {}
@@ -269,6 +271,17 @@ def evaluate_predictions(
     Returns (summary_dict, details_list).
     Raises ValueError on sample_id mismatch between gold and predictions.
     """
+    # Detect duplicate sample_ids
+    gold_ids_list = [g.get("sample_id", "") for g in gold_records]
+    if len(gold_ids_list) != len(set(gold_ids_list)):
+        raise ValueError("duplicate sample_id in gold records")
+    pred_ids_list = [p.get("sample_id", "") for p in predictions]
+    if len(pred_ids_list) != len(set(pred_ids_list)):
+        raise ValueError("duplicate sample_id in predictions")
+    cand_ids_list = [c.get("sample_id", "") for c in candidates]
+    if len(cand_ids_list) != len(set(cand_ids_list)):
+        raise ValueError("duplicate sample_id in candidates")
+
     # Index gold by sample_id
     gold_by_id: dict[str, dict] = {}
     for g in gold_records:
@@ -322,10 +335,16 @@ def evaluate_predictions(
         if detail.get("schema_valid"):
             schema_valid_count += 1
 
+    # Derive real_api_call and type from prediction runtime metadata
+    real_api_call = any(
+        isinstance(p.get("runtime"), dict) and p["runtime"].get("real_api_call_performed") is True
+        for p in predictions
+    )
+
     summary: dict = {
         "stage": "R13.4.1",
-        "type": "mock_local_evaluation",
-        "real_api_call": False,
+        "type": "real_mini_pilot_evaluation" if real_api_call else "mock_local_evaluation",
+        "real_api_call": real_api_call,
         "benchmark": False,
         "method_validation": False,
         "sun_reproduction": False,

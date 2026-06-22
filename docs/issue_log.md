@@ -897,6 +897,43 @@ No data was lost. No project artifacts were affected. This is a process-only iss
 - Use `python -c` for inline validation.
 - Use existing scripts for structured verification.
 
+
+## I059 — R13.4.1 Codex audit blocker fixes
+
+### Status
+
+Resolved (R13.4.1.1).
+
+### Context
+
+Codex R13.4.1 audit found 3 blockers:
+1. Summary `real_api_call` and `type` hardcoded to `False` / `mock_local_evaluation`
+2. `source_id` missing from `_REQUIRED_TOP_FIELDS`
+3. `schema_valid` accepted non-bool values (e.g., string `"false"` → truthy `True`)
+
+And 2 suggestions:
+4. No duplicate `sample_id` detection in batched input
+5. Report said "24 unit tests" but actual count differed
+
+### Resolution
+
+Fixed in R13.4.1.1:
+- `evaluate_predictions()` derives `real_api_call` from runtime metadata
+- `_REQUIRED_TOP_FIELDS` includes `source_id`
+- `validate_prediction_record()` enforces `schema_valid is True`
+- Duplicate sample_id detection in `evaluate_predictions()` via ValueError
+- Report test count updated to generic phrasing
+- 9 regression tests added (44 total)
+- 659/659 full pytest pass
+
+### Claim Boundary
+
+No real API. No benchmark. No method validation. No Sun reproduction.
+
+### Safety Boundary
+
+No delete commands. No temp scripts. All inline validation.
+
 ## I058 — Mini-pilot evaluator is local-only until user authorization
 
 ### Status

@@ -28,7 +28,7 @@ R13.4.1 implements a local evaluator, result schema, mock prediction fixture, an
 |------|------|-------------|
 | `src/bpc_hybrid/mini_pilot_evaluator.py` | New | Core evaluator with scoring functions |
 | `scripts/evaluate_mini_pilot_predictions.py` | New | CLI entrypoint for evaluation |
-| `tests/test_mini_pilot_evaluator.py` | New | 24 unit tests |
+| `tests/test_mini_pilot_evaluator.py` | New | Comprehensive unit tests (44 as of R13.4.1.1) |
 | `data/formal/metadata/r13_4_1_result_schema.json` | New | Result schema documentation |
 | `data/formal/predictions/r13_4_1_mock_predictions.jsonl` | New | 8 mock predictions for testing |
 | `data/formal/results/r13_4_1_mock_evaluation_summary.json` | New | Mock evaluation summary output |
@@ -137,13 +137,41 @@ The 8 mock predictions exercise all five scoring labels:
 | CLI produces summary + details | ✅ |
 | Result schema documented | ✅ |
 | Mock predictions exercise all 5 labels | ✅ |
-| Tests cover 14 test scenarios | ✅ |
+| Tests cover comprehensive scoring, schema, and boundary scenarios | ✅ |
 | No real API in any code path | ✅ |
 | No .env read in any code path | ✅ |
 
 The evaluator is ready for R13.4.2. The only missing piece is real API-authorized predictions.
 
-## 10. User Authorization Required
+## 10. R13.4.1.1 — Codex Audit Blocker Fixes
+
+### Fixes Applied
+
+| # | Issue | Fix |
+|---|-------|-----|
+| 1 | Summary `real_api_call` and `type` hardcoded | Derive from `predictions[].runtime.real_api_call_performed` |
+| 2 | `source_id` not in `_REQUIRED_TOP_FIELDS` | Added `source_id` to required top-level fields |
+| 3 | `schema_valid` accepted non-bool values | Enforce `isinstance(schema_valid, bool)` in `validate_prediction_record` |
+| 4 | No duplicate sample_id detection | Raise `ValueError` on duplicate sample_ids in gold, predictions, candidates |
+
+### Updated Files
+
+- `src/bpc_hybrid/mini_pilot_evaluator.py` — 4 fixes applied
+- `tests/test_mini_pilot_evaluator.py` — 9 new regression tests (44 total)
+- `docs/r13_4_1_local_evaluator_report.md` — this entry
+- `README.md` — stage updated to R13.4.1.1
+- `docs/experiment_log.md` — R13.4.1.1 entry
+- `docs/issue_log.md` — I059 added
+
+### Verification
+
+- 659/659 full pytest pass
+- 44/44 evaluator tests pass
+- Mock results regenerated with derived `type: mock_local_evaluation`
+
+---
+
+## 11. User Authorization Required
 
 > ⚠️ **STOP**: R13.4.2 must NOT proceed until the user explicitly authorizes a bounded mini-pilot with real API calls.
 >

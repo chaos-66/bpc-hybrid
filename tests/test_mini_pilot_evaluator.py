@@ -166,21 +166,31 @@ def test_text_wrong():
 # ---------------------------------------------------------------------------
 
 def test_schema_valid_complete():
-    rec = {"sample_id": "x", "predicted": {"modality": "o", "actor": "a", "action": "ac",
+    rec = {"sample_id": "x", "source_id": "s",
+           "predicted": {"modality": "o", "actor": "a", "action": "ac",
              "condition": None, "constraint": "c", "exception": None},
            "runtime": {}, "schema_valid": True}
     assert validate_prediction_record(rec) is True
 
 
 def test_schema_invalid_missing_sample_id():
-    rec = {"predicted": {"modality": "o", "actor": "a", "action": "ac",
+    rec = {"source_id": "s",
+           "predicted": {"modality": "o", "actor": "a", "action": "ac",
+             "condition": None, "constraint": "c", "exception": None},
+           "runtime": {}, "schema_valid": True}
+    assert validate_prediction_record(rec) is False
+
+
+def test_schema_invalid_missing_source_id():
+    rec = {"sample_id": "x",
+           "predicted": {"modality": "o", "actor": "a", "action": "ac",
              "condition": None, "constraint": "c", "exception": None},
            "runtime": {}, "schema_valid": True}
     assert validate_prediction_record(rec) is False
 
 
 def test_schema_invalid_missing_predicted_field():
-    rec = {"sample_id": "x",
+    rec = {"sample_id": "x", "source_id": "s",
            "predicted": {"modality": "o", "actor": "a",
                           "condition": None, "constraint": "c", "exception": None},
            "runtime": {}, "schema_valid": True}
@@ -188,8 +198,27 @@ def test_schema_invalid_missing_predicted_field():
 
 
 def test_schema_invalid_predicted_not_dict():
-    rec = {"sample_id": "x", "predicted": "not-a-dict",
+    rec = {"sample_id": "x", "source_id": "s",
+           "predicted": "not-a-dict",
            "runtime": {}, "schema_valid": True}
+    assert validate_prediction_record(rec) is False
+
+
+def test_schema_invalid_schema_valid_non_bool():
+    """schema_valid must be bool; string 'true'/'false' should be rejected."""
+    rec = {"sample_id": "x", "source_id": "s",
+           "predicted": {"modality": "o", "actor": "a", "action": "ac",
+             "condition": None, "constraint": "c", "exception": None},
+           "runtime": {}, "schema_valid": "true"}
+    assert validate_prediction_record(rec) is False
+
+
+def test_schema_invalid_schema_valid_false():
+    """schema_valid: False is treated as schema-invalid."""
+    rec = {"sample_id": "x", "source_id": "s",
+           "predicted": {"modality": "o", "actor": "a", "action": "ac",
+             "condition": None, "constraint": "c", "exception": None},
+           "runtime": {}, "schema_valid": False}
     assert validate_prediction_record(rec) is False
 
 
@@ -216,6 +245,32 @@ def test_score_prediction_schema_invalid_when_self_declared():
             "predicted": {"modality": "obligation", "actor": "a", "action": "ac",
                           "condition": None, "constraint": "c", "exception": None},
             "runtime": {}, "schema_valid": False}
+    detail = score_prediction({}, gold, pred)
+    assert detail["schema_valid"] is False
+    assert "schema_invalid" in detail["failure_categories"]
+
+
+def test_score_prediction_schema_valid_non_bool():
+    """schema_valid: 'false' (string) → schema_invalid."""
+    gold = {"sample_id": "001", "modality": "obligation", "actor": "a", "action": "ac",
+            "condition": None, "constraint": "c", "exception": None}
+    pred = {"sample_id": "001", "source_id": "s",
+            "predicted": {"modality": "obligation", "actor": "a", "action": "ac",
+                          "condition": None, "constraint": "c", "exception": None},
+            "runtime": {}, "schema_valid": "false"}
+    detail = score_prediction({}, gold, pred)
+    assert detail["schema_valid"] is False
+    assert "schema_invalid" in detail["failure_categories"]
+
+
+def test_score_prediction_missing_source_id():
+    """Prediction missing source_id → schema_invalid."""
+    gold = {"sample_id": "001", "modality": "obligation", "actor": "a", "action": "ac",
+            "condition": None, "constraint": "c", "exception": None}
+    pred = {"sample_id": "001",
+            "predicted": {"modality": "obligation", "actor": "a", "action": "ac",
+                          "condition": None, "constraint": "c", "exception": None},
+            "runtime": {}, "schema_valid": True}
     detail = score_prediction({}, gold, pred)
     assert detail["schema_valid"] is False
     assert "schema_invalid" in detail["failure_categories"]
@@ -271,13 +326,95 @@ def test_evaluator_summary_no_overclaim():
         {"sample_id": "r13_3_candidate_001", "source_id": "s",
          "predicted": {"modality": "obligation", "actor": "a", "action": "ac",
                        "condition": None, "constraint": "c", "exception": None},
-         "runtime": {}, "schema_valid": True},
+         "runtime": {"provider": "mock", "model": "mock", "real_api_call_performed": False},
+         "schema_valid": True},
     ]
     summary, _ = evaluate_predictions([], gold, pred)
     assert summary["benchmark"] is False
     assert summary["method_validation"] is False
     assert summary["sun_reproduction"] is False
     assert summary["real_api_call"] is False
+    assert summary["type"] == "mock_local_evaluation"
+
+
+def test_evaluator_summary_real_api_call_derived_from_runtime():
+    """When any prediction has real_api_call_performed=True, summary reflects it."""
+    gold = [
+        {"sample_id": "001", "modality": "obligation",
+         "actor": "a", "action": "ac", "condition": None, "constraint": "c", "exception": None},
+    ]
+    pred = [
+        {"sample_id": "001", "source_id": "s",
+         "predicted": {"modality": "obligation", "actor": "a", "action": "ac",
+                       "condition": None, "constraint": "c", "exception": None},
+         "runtime": {"provider": "openai", "model": "gpt-4o", "real_api_call_performed": True},
+         "schema_valid": True},
+    ]
+    summary, _ = evaluate_predictions([], gold, pred)
+    assert summary["real_api_call"] is True
+    assert summary["type"] == "real_mini_pilot_evaluation"
+    assert summary["benchmark"] is False
+    assert summary["method_validation"] is False
+    assert summary["sun_reproduction"] is False
+
+
+# ---------------------------------------------------------------------------
+# Duplicate sample_id detection
+# ---------------------------------------------------------------------------
+
+def test_duplicate_gold_sample_id_raises():
+    gold = [
+        {"sample_id": "001", "modality": "obligation", "actor": "a", "action": "ac",
+         "condition": None, "constraint": "c", "exception": None},
+        {"sample_id": "001", "modality": "prohibition", "actor": "b", "action": "ba",
+         "condition": None, "constraint": "c2", "exception": None},
+    ]
+    pred = [
+        {"sample_id": "001", "source_id": "s",
+         "predicted": {"modality": "obligation", "actor": "a", "action": "ac",
+                       "condition": None, "constraint": "c", "exception": None},
+         "runtime": {}, "schema_valid": True},
+    ]
+    with pytest.raises(ValueError, match="duplicate sample_id in gold"):
+        evaluate_predictions([], gold, pred)
+
+
+def test_duplicate_prediction_sample_id_raises():
+    gold = [
+        {"sample_id": "001", "modality": "obligation", "actor": "a", "action": "ac",
+         "condition": None, "constraint": "c", "exception": None},
+    ]
+    pred = [
+        {"sample_id": "001", "source_id": "s",
+         "predicted": {"modality": "obligation", "actor": "a", "action": "ac",
+                       "condition": None, "constraint": "c", "exception": None},
+         "runtime": {}, "schema_valid": True},
+        {"sample_id": "001", "source_id": "s2",
+         "predicted": {"modality": "obligation", "actor": "a", "action": "ac",
+                       "condition": None, "constraint": "c", "exception": None},
+         "runtime": {}, "schema_valid": True},
+    ]
+    with pytest.raises(ValueError, match="duplicate sample_id in predictions"):
+        evaluate_predictions([], gold, pred)
+
+
+def test_duplicate_candidate_sample_id_raises():
+    gold = [
+        {"sample_id": "001", "modality": "obligation", "actor": "a", "action": "ac",
+         "condition": None, "constraint": "c", "exception": None},
+    ]
+    pred = [
+        {"sample_id": "001", "source_id": "s",
+         "predicted": {"modality": "obligation", "actor": "a", "action": "ac",
+                       "condition": None, "constraint": "c", "exception": None},
+         "runtime": {}, "schema_valid": True},
+    ]
+    cand = [
+        {"sample_id": "001", "text": "a"},
+        {"sample_id": "001", "text": "b"},
+    ]
+    with pytest.raises(ValueError, match="duplicate sample_id in candidates"):
+        evaluate_predictions(cand, gold, pred)
 
 
 # ---------------------------------------------------------------------------

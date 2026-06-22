@@ -3586,3 +3586,60 @@ R13.4.1 only validates local evaluator mechanics using hand-crafted mock predict
 - No method-validation claim.
 - No Sun reproduction.
 
+
+## R13.4.1.1 — Codex Audit Blocker Fixes for Local Evaluator
+
+### Goal
+
+Fix 3 Codex audit blockers and 2 suggestions in the R13.4.1 local mini-pilot
+evaluator before proceeding to R13.4.2 (real API authorization).
+
+### Fixes Applied
+
+1. **Summary metadata derivation** (`real_api_call` / `type`):
+   `evaluate_predictions()` now derives `real_api_call` from
+   `predictions[].runtime.real_api_call_performed`. Summary `type` is
+   `mock_local_evaluation` when all predictions are mock,
+   `real_mini_pilot_evaluation` otherwise.
+2. **source_id required**: Added `source_id` to `_REQUIRED_TOP_FIELDS` in
+   `validate_prediction_record()`.
+3. **schema_valid bool enforcement**: `validate_prediction_record()` now checks
+   `record.get("schema_valid") is True` (rejects string `"false"` / `"true"`,
+   `None`, and `False`).
+4. **Duplicate sample_id detection**: `evaluate_predictions()` raises
+   `ValueError` on duplicate sample_ids in gold, predictions, or candidates
+   before scoring.
+
+### Updated Files
+
+- `src/bpc_hybrid/mini_pilot_evaluator.py` — 4 fixes applied
+- `tests/test_mini_pilot_evaluator.py` — 9 new regression tests (44 total)
+- `data/formal/results/r13_4_1_mock_evaluation_summary.json` — regenerated
+- `data/formal/results/r13_4_1_mock_evaluation_details.jsonl` — regenerated
+- `docs/r13_4_1_local_evaluator_report.md` — section 10 added
+- `README.md` — stage updated to R13.4.1.1
+- `docs/experiment_log.md` — this entry
+- `docs/issue_log.md` — I059 added
+
+### Verification
+
+- 659/659 full pytest pass
+- 44/44 evaluator tests pass
+- py_compile OK for both evaluator and CLI
+- Mock results regenerated: `type=mock_local_evaluation`, `real_api_call=False`
+
+### Claim Boundary
+
+No real API call. No LLM call. No .env read. No benchmark. No method
+validation. No Sun reproduction. Fixes are purely local evaluator mechanics.
+
+### Safety Boundary
+
+- No delete commands used.
+- No temporary scripts created.
+- All inline validation via `python -c`.
+
+### Status
+
+Completed (R13.4.1.1).
+
