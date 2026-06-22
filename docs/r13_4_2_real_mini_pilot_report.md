@@ -117,7 +117,7 @@ Stored in `data/formal/results/r13_4_2_real_evaluation_summary.json` and `data/f
 | **constraint** | 0 | 3 | 1 | 4 | 0 |
 | **exception** | 0 | 0 | 0 | 0 | 8 |
 
-**Modality accuracy:** 7/8 (87.5%). The single error is on sample r13_3_candidate_007 (predicted "definition", gold was "obligation" for the unbeschränkte Steuerpflicht clause).
+**Modality accuracy:** 7/8 (87.5%). The single error is on sample r13_3_candidate_006 (predicted "obligation"; gold was "definition" — the Austrian tax code §1 Abs 1 definition clause was misclassified as an obligation).
 
 **Key observation:** Actor and action fields show the most divergence from gold — the model tends to produce null actor for passive constructions and generates rephrased actions. Constraint extraction shows 3 partial matches.
 
@@ -125,7 +125,7 @@ Stored in `data/formal/results/r13_4_2_real_evaluation_summary.json` and `data/f
 
 ## 9. Failure Cases
 
-No API failures. The only schema-valid prediction with wrong modality was r13_3_candidate_007 — this is an Austrian tax code definition clause; the model classified it as "obligation" rather than "definition".
+No API failures. The only schema-valid prediction with wrong modality was r13_3_candidate_006 — this is an Austrian tax code §1 Abs 1 definition clause ("Natürliche Personen... sind unbeschränkt einkommensteuerpflichtig"); the model classified it as "obligation" rather than "definition".
 
 ---
 
@@ -289,3 +289,42 @@ metadata stored in `data/formal/metadata/`.
 
 ✅ R13.4.2.3 — Authorization metadata path bypass closed. Return to Codex for
 R13.4.2.3 local-only re-audit.
+
+---
+
+## 16. R13.4.2.4 — Docs-only Sample-ID Narrative Correction
+
+**Date:** 2026-06-22
+**Commit:** (this commit)
+
+Codex R13.4.2.3 re-audit identified a non-blocking documentation inconsistency
+in the narrative description of samples 006/007. Sections 8 and 9 of this
+report have been corrected to align with the committed evaluation details:
+
+- **Sample r13_3_candidate_006**: modality=`wrong` (predicted "obligation",
+  gold "definition") — this is the single modality error, NOT sample 007.
+- **Sample r13_3_candidate_007**: modality=`exact` (predicted "definition",
+  gold "definition") — the original report incorrectly described 007 as the
+  error sample.
+
+The correction is verified against:
+- `data/formal/results/r13_4_2_real_evaluation_details.jsonl` (source of truth)
+- `data/formal/predictions/r13_4_2_real_predictions.jsonl` (predicted values)
+- `data/formal/gold/r13_3_manual_gold_template.jsonl` (gold values)
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Status
+
+✅ R13.4.2.4 — Docs-only narrative correction. R13.4.2 remains a bounded
+8-sample real API mini-pilot, not a benchmark, not method validation, not
+Sun reproduction.

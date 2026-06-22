@@ -1013,6 +1013,29 @@ No real API. No benchmark. No method validation. No Sun reproduction.
 
 No delete commands. No temp scripts. No bypass flags.
 
+## I063 — R13.4.2 report sample-ID narrative inconsistency
+
+### Status
+
+Resolved in R13.4.2.4.
+
+### Context
+
+Codex R13.4.2.3 re-audit passed with a non-blocking suggestion: the report
+narrative around samples 006/007 contradicted the committed evaluation
+details.
+
+### Resolution
+
+Corrected the report text (Sections 8 and 9) to match
+`r13_4_2_real_evaluation_details.jsonl`. Sample 006 is the modality error
+(predicted "obligation", gold "definition"); sample 007 is exact.
+
+### Boundary
+
+No real API call, prediction file change, evaluator rerun, or score change
+was performed.
+
 ## I058 — Mini-pilot evaluator is local-only until user authorization
 
 ### Status

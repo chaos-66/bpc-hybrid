@@ -3803,3 +3803,38 @@ Local auditing only. No real API, no new prediction, no benchmark.
 
 Completed (R13.4.2.3). Ready for Codex R13.4.2.3 local-only re-audit.
 
+## R13.4.2.4 — Docs-only Mini-pilot Report Correction
+
+### Type
+
+Docs-only cleanup.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Corrected a non-blocking sample-ID narrative inconsistency in the R13.4.2 real
+mini-pilot report (Sections 8 and 9). The report incorrectly described sample
+007 as having a modality error; the committed evaluation details confirm sample
+006 is the single modality error and 007 is exact. No prediction JSONL,
+evaluation summary, or evaluation details were modified.
+
+### Claim Boundary
+
+This does not change any prediction, score, summary, or evaluation detail.
+R13.4.2 remains only a bounded 8-sample real API mini-pilot.
+
+### Status
+
+Completed (R13.4.2.4). Docs-only fix — no further Codex audit required
+unless user requests one.
+
