@@ -4029,3 +4029,48 @@ benchmark, not method validation, and not Sun reproduction.
 
 Completed (R13.7). Pending Codex local-only audit.
 
+## R13.7.1 — Prompt B Audit Blocker Fix
+
+### Date
+
+2025-01-28
+
+### Type
+
+Codex-audit-blocker fix (no real API, no LLM, no evaluator rerun).
+
+### Description
+
+Codex R13.7 local-only audit returned BLOCKED with 3 findings:
+
+1. **Report wording**: §9 conclusionary "improvements" wording →
+   neutralized to "observed actor/action exact-count differences".
+2. **Snapshot placeholder**: `r13_7_prompt_b_selected_prompt_snapshot.json`
+   had wrong size (2928→4084) and placeholder hash → replaced with
+   real SHA-256 `d390ad51e74a7bf3a07e72de037b24babc0455c959b9d78f0f3a8d5f709de72e`.
+3. **Runner gate missing checks**: No explicit `selected_prompt_id` or
+   `one_attempt_per_sample` contract-side validation → added both.
+
+Also created `tests/test_r13_7_prompt_b_real_mini_pilot_safety.py`
+with 19 regression test functions covering all gate checks, CLI bypass
+absence, and input validation.
+
+### Artifacts Modified
+
+- `docs/r13_7_prompt_b_real_mini_pilot_report.md` (Fix 1)
+- `data/formal/metadata/r13_7_prompt_b_selected_prompt_snapshot.json` (Fix 2)
+- `scripts/run_r13_7_prompt_b_real_mini_pilot.py` (Fix 3 + docstring fix)
+
+### Artifacts Created
+
+- `tests/test_r13_7_prompt_b_real_mini_pilot_safety.py` (Fix 4)
+
+### Immutability
+
+Predictions (`data/formal/predictions/r13_7_prompt_b_real_predictions.jsonl`),
+evaluation summary, and evaluation details were NOT modified.
+
+### Status
+
+Completed (R13.7.1). Pending Codex local-only re-audit.
+

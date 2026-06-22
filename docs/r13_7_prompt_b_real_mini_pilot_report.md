@@ -138,11 +138,12 @@ These are **not** benchmark results and do **not** establish Prompt B as
 | constraint | 0 | 3 exact + 5 partial | R13.7 produced full-sentence constraints |
 | exception | 8 N/A | 8 N/A | Consistent: both runs had no applicable exceptions |
 
-Note: The R13.7 actor and action improvements align with the design
-intent of Prompt B (inferred passive-voice actor, normalized [verb]
-[object] action, English-only output). This is consistent with the
-R13.5 error analysis predictions but does **not** establish causation
-from 8 samples.
+Note: The R13.7 observed actor/action exact-count differences relative
+to R13.4.2 are consistent with the design intent of Prompt B (inferred
+passive-voice actor, normalized [verb] [object] action, English-only
+output). This is consistent with the R13.5 error analysis predictions
+but does **not** establish causation from 8 samples and does **not**
+constitute a benchmark or method-validation conclusion.
 
 ## 10. Safety Checks
 

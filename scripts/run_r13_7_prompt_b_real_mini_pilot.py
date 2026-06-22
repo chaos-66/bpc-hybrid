@@ -6,7 +6,7 @@ Executes a bounded single-call-per-sample real API pilot over the
 Usage::
 
     $env:BPC_HYBRID_DISABLE_PROJECT_ENV = "0"
-    .\.venv\Scripts\python.exe scripts\run_r13_7_prompt_b_real_mini_pilot.py \
+    .venv/Scripts/python.exe scripts/run_r13_7_prompt_b_real_mini_pilot.py \
         --candidates data/formal/processed/r13_3_candidate_samples.jsonl \
         --gold data/formal/gold/r13_3_manual_gold_template.jsonl \
         --predictions-out data/formal/predictions/r13_7_prompt_b_real_predictions.jsonl \
@@ -220,12 +220,22 @@ def _check_authorization_gate(
                 f"{checklist.get('authorization_status')}"
             )
 
+    # ---- Check contract selected_prompt_id -----------------------------
+    contract_prompt_id = contract.get("selected_prompt_id")
+    if contract_prompt_id != PROMPT_ID:
+        errors.append(
+            f"execution_contract.selected_prompt_id is {contract_prompt_id!r}, "
+            f"expected {PROMPT_ID!r}"
+        )
+
     # ---- Check constraint alignment -------------------------------------
     contract_max = contract.get("max_real_api_calls", 0)
     if contract_max > MAX_CALLS:
         errors.append(
             f"execution_contract.max_real_api_calls {contract_max} exceeds {MAX_CALLS}"
         )
+    if contract.get("one_attempt_per_sample") is not True:
+        errors.append("execution_contract.one_attempt_per_sample must be true")
     if contract.get("retry_allowed") is not False:
         errors.append("execution_contract.retry_allowed must be false")
     if contract.get("repair_call_allowed") is not False:

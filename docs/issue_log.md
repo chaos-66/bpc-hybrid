@@ -1207,3 +1207,43 @@ R13.7
 
 No benchmark, method-validation, or Sun-reproduction conclusion may
 be drawn before audit.
+
+
+## I068 — R13.7 Codex audit BLOCKED; requires fix iteration
+
+### Severity
+
+Medium — 3 audit blockers (no catastrophic safety failure).
+
+### Stage
+
+R13.7.1
+
+### Description
+
+Codex R13.7 local-only audit returned BLOCKED:
+
+1. Report §9 used conclusionary "improvements" wording.
+2. Prompt snapshot had placeholder size/hash instead of real values.
+3. Runner gate missing `selected_prompt_id` and
+   `one_attempt_per_sample` contract-side checks.
+
+### Resolution
+
+- Fix 1: Neutralized report wording → descriptive comparison only.
+- Fix 2: Computed real SHA-256 and file size from git-tracked prompt
+  and updated snapshot.
+- Fix 3: Added explicit contract field checks in
+  `_check_authorization_gate()`.
+- Fix 4: Created 19 regression safety tests.
+
+Return to Codex for R13.7.1 local-only re-audit.
+
+### Discovery Date
+
+R13.7.1
+
+### Boundary
+
+No real API, no LLM, no evaluator rerun, no prediction/evaluation
+modification.
