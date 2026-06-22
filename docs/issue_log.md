@@ -1119,3 +1119,24 @@ Plan R13.6 prompt refinement before any further real API execution.
 
 No conclusion should be drawn from the 8-sample mini-pilot as a
 benchmark or method validation.
+
+
+## I065 — Next mini-pilot must use fresh authorization and selected prompt
+
+### Status
+
+Open.
+
+### Context
+
+R13.6 creates refined prompt candidates after R13.5 error analysis.
+
+### Resolution Plan
+
+Before any R13.7 real API execution, select one prompt candidate, update
+the real runner to use it safely, and require fresh explicit user
+authorization.
+
+### Boundary
+
+No real API call is allowed in R13.6.

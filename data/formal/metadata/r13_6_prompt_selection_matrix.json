@@ -1,0 +1,106 @@
+{
+  "stage": "R13.6",
+  "type": "prompt_selection_matrix",
+  "real_api_call_performed": false,
+  "llm_call_performed": false,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "comparison": [
+    {
+      "prompt_id": "r13_6_prompt_A",
+      "name": "Field-definition Strengthened",
+      "strategy": "Declarative — adds detailed per-field semantic definitions and normalization rules to the prompt.",
+      "target_errors": [
+        "actor_missing (passive-voice inference rule)",
+        "action_wrong_granularity (normalization rule: [verb][object])",
+        "condition_boundary_error (explicit trigger-condition definition)",
+        "constraint_boundary_error (full-proposition rule, no fragments)",
+        "field_normalization_error (English-only rule)",
+        "passive_voice_actor_error (inference instruction)"
+      ],
+      "expected_strengths": [
+        "Lowest risk — minimal prompt change, purely declarative.",
+        "Clear, auditable field definitions.",
+        "No sample contamination risk (no examples).",
+        "Easiest to debug if errors persist."
+      ],
+      "expected_weaknesses": [
+        "No in-context demonstration of expected normalization level.",
+        "Model may still default to verbatim extraction despite definitions.",
+        "Passive-voice inference may be inconsistent without examples.",
+        "Definition-vs-obligation boundary only described, not shown."
+      ],
+      "prompt_length_estimate": "~550 words (system + field definitions + format rules)",
+      "suitable_for_next_8_call_mini_pilot": true,
+      "recommendation_priority": 2,
+      "recommendation_note": "Low-risk baseline refinement. Recommended as fallback if few-shot is not wanted. May not fully resolve normalization and passive-voice issues without examples."
+    },
+    {
+      "prompt_id": "r13_6_prompt_B",
+      "name": "Few-shot Extraction",
+      "strategy": "In-context learning — provides 3 annotated examples showing expected field granularity.",
+      "target_errors": [
+        "passive_voice_actor_error (Example 1 shows inferred actor)",
+        "definition_as_obligation_error (Example 3 shows German definition clause)",
+        "field_normalization_error (all examples show normalized form)",
+        "action_wrong_granularity (all examples show [verb][object] form)",
+        "constraint_as_adverbial_fragment (all examples show full proposition)",
+        "actor_missing (Example 1 shows passive-voice inference)"
+      ],
+      "expected_strengths": [
+        "In-context learning provides concrete demonstration of expected output.",
+        "Addresses the most pervasive error (action normalization) directly.",
+        "Example 3 specifically targets the German definition-vs-obligation confusion.",
+        "3 diverse examples cover passive voice, prohibition, and definition patterns."
+      ],
+      "expected_weaknesses": [
+        "Few-shot examples may overfit to the example patterns.",
+        "Examples are synthetic and may not match real input distribution.",
+        "Model may still produce verbatim extraction for unseen patterns.",
+        "3 examples may not be enough for complex legal sentence variety."
+      ],
+      "prompt_length_estimate": "~750 words (system + field definitions + 3 examples + format rules)",
+      "suitable_for_next_8_call_mini_pilot": true,
+      "recommendation_priority": 1,
+      "recommendation_note": "Recommended for next bounded test. Most directly addresses the action normalization and actor-missing errors observed in R13.4.2. Synthetic examples avoid data contamination."
+    },
+    {
+      "prompt_id": "r13_6_prompt_C",
+      "name": "Two-step Hidden Extraction",
+      "strategy": "Cognitive — instructs model to internally classify clause type and identify regulated activity before extracting fields, without outputting reasoning.",
+      "target_errors": [
+        "actor_wrong_granularity (internal step identifies actor role)",
+        "action_wrong_granularity (internal step identifies regulated activity)",
+        "condition_boundary_error (internal step separates condition from constraint)",
+        "action_subject_complement_confusion (internal step distinguishes activity from quality predicate)",
+        "definition_as_obligation_error (internal step classifies clause type first)"
+      ],
+      "expected_strengths": [
+        "May resolve the subject-complement confusion (sample 003) by forcing separation of 'what is regulated' from 'how it should be'.",
+        "Internal modality-first classification may reduce definition-vs-obligation errors.",
+        "No examples needed — avoids overfitting risk.",
+        "Conceptually elegant: decompose before extracting."
+      ],
+      "expected_weaknesses": [
+        "Model may ignore the 'hidden reasoning' instruction and still produce surface extraction.",
+        "Effectiveness depends on model's ability to follow internal-reasoning instructions.",
+        "Harder to debug — if output is wrong, no reasoning trace to inspect.",
+        "No concrete demonstration of expected output format.",
+        "May produce inconsistent results across different model versions."
+      ],
+      "prompt_length_estimate": "~600 words (system + internal steps + field definitions + format rules)",
+      "suitable_for_next_8_call_mini_pilot": true,
+      "recommendation_priority": 2,
+      "recommendation_note": "Alternative to Prompt B. Recommended if few-shot examples are not permitted or if subject-complement confusion is the top priority. Higher uncertainty about effectiveness."
+    }
+  ],
+  "final_recommendation": {
+    "primary": "r13_6_prompt_B",
+    "rationale": "Prompt B most directly addresses the two most pervasive error patterns from R13.4.2: (1) action verbatim-fragment extraction via concrete normalized examples, and (2) passive-voice actor omission via a demonstrated inference example. The synthetic examples avoid data contamination. However, this recommendation is a hypothesis — only a real API test can validate effectiveness.",
+    "alternative": "r13_6_prompt_C",
+    "alternative_rationale": "If few-shot examples are not desired or if subject-complement confusion (sample 003) is the highest-priority error to resolve.",
+    "caution": "This recommendation is based on 8 samples from one mini-pilot with one model (qwen3.7-max). It does not constitute a validated prompt selection method."
+  },
+  "claim_boundary": "Prompt comparison and selection recommendation based on one 8-sample mini-pilot (R13.4.2) and subsequent error analysis (R13.5). No real API testing of any prompt has been performed. No benchmark, no method validation, no Sun reproduction."
+}

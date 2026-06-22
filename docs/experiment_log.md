@@ -3890,3 +3890,54 @@ result.
 
 Completed (R13.5).
 
+## R13.6 — Prompt-refinement Design
+
+### Type
+
+Prompt design and next-run planning only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Designed three prompt-refinement candidates based on R13.5 post-pilot
+error analysis and created a next-run constraint plan for a possible
+R13.7 bounded mini-pilot.
+
+Prompts designed:
+- Prompt A (field_definition_strengthened): declarative field-level definitions
+- Prompt B (few_shot_extraction): 3 synthetic examples with in-context learning
+- Prompt C (two_step_hidden_extraction): internal reasoning, no chain-of-thought output
+
+Prompt B recommended for next bounded test (R13.7) based on selection
+matrix comparing target errors, strengths, weaknesses, and risks.
+
+### Artifacts Created
+
+- `prompts/r13_6/field_definition_strengthened_prompt.md`
+- `prompts/r13_6/few_shot_extraction_prompt.md`
+- `prompts/r13_6/two_step_hidden_extraction_prompt.md`
+- `docs/r13_6_prompt_refinement_design.md`
+- `docs/r13_6_next_run_plan.md`
+- `data/formal/metadata/r13_6_prompt_registry.json`
+- `data/formal/metadata/r13_6_prompt_selection_matrix.json`
+- `data/formal/metadata/r13_6_next_run_constraints.json`
+
+### Claim Boundary
+
+This stage only designs prompts and a future run plan. It does not
+execute or validate any prompt.
+
+### Status
+
+Completed (R13.6).
+

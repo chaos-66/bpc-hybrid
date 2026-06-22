@@ -1,0 +1,50 @@
+{
+  "stage": "R13.6",
+  "type": "prompt_registry",
+  "real_api_call_performed": false,
+  "llm_call_performed": false,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "prompts": [
+    {
+      "id": "r13_6_prompt_A",
+      "name": "field_definition_strengthened",
+      "path": "prompts/r13_6/field_definition_strengthened_prompt.md",
+      "target_errors": [
+        "actor_missing",
+        "action_wrong_granularity",
+        "condition_boundary_error",
+        "constraint_boundary_error",
+        "field_normalization_error",
+        "passive_voice_actor_error"
+      ]
+    },
+    {
+      "id": "r13_6_prompt_B",
+      "name": "few_shot_extraction",
+      "path": "prompts/r13_6/few_shot_extraction_prompt.md",
+      "target_errors": [
+        "passive_voice_actor_error",
+        "definition_as_obligation_error",
+        "field_normalization_error",
+        "action_wrong_granularity",
+        "constraint_as_adverbial_fragment",
+        "actor_missing"
+      ]
+    },
+    {
+      "id": "r13_6_prompt_C",
+      "name": "two_step_hidden_extraction",
+      "path": "prompts/r13_6/two_step_hidden_extraction_prompt.md",
+      "target_errors": [
+        "actor_wrong_granularity",
+        "action_wrong_granularity",
+        "condition_boundary_error",
+        "action_subject_complement_confusion",
+        "definition_as_obligation_error"
+      ]
+    }
+  ],
+  "claim_boundary": "Prompt design only. No real API call in R13.6."
+}
