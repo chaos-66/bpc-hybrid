@@ -3376,3 +3376,84 @@ Created public-source collection plan, mini dataset reconstruction plan, annotat
 - No benchmark.
 - No method-validation claim.
 - Original Sun code/dataset: still missing.
+
+## R13.3 — Data Intake and Candidate Sample Extraction
+
+### Type
+
+Data intake and metadata recording. No API, no download, no raw file modification.
+
+### Scope
+
+- Real API call: no
+- Data download: no
+- Raw file modification: no
+- Gold annotation: no (template only, manual_gold_pending)
+- Formal experiment: no
+- Benchmark: no
+- Method validation: no
+
+### Prerequisites
+
+1. `$env:BPC_HYBRID_DISABLE_PROJECT_ENV = "1"` for test mode
+2. pdfplumber available for offline PDF extraction
+3. All 6 user-collected source folders present and verified
+4. Raw PDF/HTML files confirmed present but NOT tracked in git
+5. `.env` gitignored, NOT read
+
+### Result
+
+All 6 R13.2 planned public-source folders confirmed present with complete files. 8 candidate samples extracted from 2 text-parseable legal sources (5 GDPR EUR-Lex + 3 Austrian Income Tax Code). Gold template created but all annotations remain manual_gold_pending.
+
+### Source Inventory
+
+| source_id | Status | Files | Text Extractable |
+|-----------|--------|-------|-----------------|
+| gdpr_eurlex | available_local | 3/3 | yes (PDF via pdfplumber) |
+| austrian_income_tax_code | available_local | 3/3 | yes (HTML via html.parser) |
+| michel_2022_decision_rules | available_local | 3/3 | no (paper PDF, not labeled data) |
+| agostinelli_2019_gdpr_bpmn | available_local | 3/3 | no (paper PDF, BPMN source) |
+| winter_2020_keyword_baseline | available_local | 3/3 | no (paper PDF, baseline source) |
+| bohmer_2016_energy_supplier | available_local | 3/3 | no (univie record page) |
+
+### New Files
+
+- `data/formal/metadata/r13_3_raw_inventory.json` — 6-source inventory with found/missing/status fields
+- `data/formal/metadata/r13_3_source_provenance.json` — URLs, licenses, claim boundaries
+- `data/formal/processed/r13_3_candidate_samples.jsonl` — 8 candidate text samples, extraction_status=candidate_unreviewed
+- `data/formal/gold/r13_3_manual_gold_template.jsonl` — 8 gold template entries, annotation_status=manual_gold_pending
+- `docs/r13_3_data_intake_report.md` — 10-section intake report
+
+### Candidate Samples
+
+| ID | Source | Reference | Text Preview |
+|----|--------|-----------|-------------|
+| r13_3_candidate_001 | GDPR | Article 5(1)(a) | Personal data shall be processed lawfully... |
+| r13_3_candidate_002 | GDPR | Article 5(1)(b) | Personal data shall be collected for specified... |
+| r13_3_candidate_003 | GDPR | Article 5(1)(c) | Personal data shall be adequate, relevant... |
+| r13_3_candidate_004 | GDPR | Article 7(1) | Where processing is based on consent... |
+| r13_3_candidate_005 | GDPR | Article 9(1) | Processing of personal data revealing... shall be prohibited |
+| r13_3_candidate_006 | Austrian | § 1 Abs 1 | Natürliche Personen... sind unbeschränkt einkommensteuerpflichtig |
+| r13_3_candidate_007 | Austrian | § 1 Abs 2 | Unbeschränkt steuerpflichtig sind jene... |
+| r13_3_candidate_008 | Austrian | § 1 Abs 3 | Beschränkt steuerpflichtig sind jene... |
+
+### Updated Files
+
+- `README.md` — stage updated to R13.3
+- `docs/experiment_log.md` — this entry
+- `docs/issue_log.md` — I056 added
+- `docs/dataset_sources.md` — R13.3 data added
+- `data/formal/metadata/sources.json` — stage updated, R13.3 metadata refs added
+
+### Safety Boundary
+
+- No real API call.
+- No data download.
+- No raw file modification.
+- No .env read.
+- No benchmark.
+- No method-validation claim.
+- No gold annotation completed.
+- Raw PDF/HTML files NOT tracked in git.
+- R13.4 is blocked until user completes manual gold review.
+

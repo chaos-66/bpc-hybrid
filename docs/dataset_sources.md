@@ -139,6 +139,28 @@ R13.2 created detailed plans for collecting public sources and reconstructing a 
 
 These documents define a 6-10 sample mini formal dataset using publicly collected sources (not original Sun data). No data has been downloaded yet. All original Sun code and complete datasets remain unavailable.
 
+## 7. R13.3 Data Intake — Collected Public Sources
+
+R13.3 confirmed 6 user-collected public-source folders present in `data/formal/raw/`:
+
+| Source | Directory | Type | Text Extractable |
+|--------|-----------|------|------------------|
+| GDPR EUR-Lex | `data/formal/raw/gdpr_eurlex/` | Official EU legal text | yes |
+| Austrian Income Tax Code | `data/formal/raw/austrian_income_tax_code/` | Official Austrian legal text | yes |
+| Michel 2022 | `data/formal/raw/michel_2022_decision_rules/` | HICSS paper | no |
+| Agostinelli 2019 | `data/formal/raw/agostinelli_2019_gdpr_bpmn/` | BPMN paper | no |
+| Winter 2020 | `data/formal/raw/winter_2020_keyword_baseline/` | Baseline paper | no |
+| Böhmer 2016 | `data/formal/raw/bohmer_2016_energy_supplier/` | Univie publication record | no |
+
+**Key R13.3 documents**:
+- **Raw inventory**: `data/formal/metadata/r13_3_raw_inventory.json`
+- **Source provenance**: `data/formal/metadata/r13_3_source_provenance.json`
+- **Candidate samples**: `data/formal/processed/r13_3_candidate_samples.jsonl` (8 samples: 5 GDPR + 3 Austrian)
+- **Gold template**: `data/formal/gold/r13_3_manual_gold_template.jsonl` (all `manual_gold_pending`)
+- **Intake report**: `docs/r13_3_data_intake_report.md`
+
+**Status**: 8 candidate samples extracted. Gold is NOT completed. R13.4 is blocked until user completes manual gold review.
+
 ## 7. Open Questions
 
 1. Does the Sun baseline paper have a public GitHub repository? (If yes, URL?)

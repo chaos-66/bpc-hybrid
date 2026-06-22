@@ -838,3 +838,33 @@ Create and follow R13.2 public-source checklist. Do not run API or claim formal 
 - No .env read.
 - No benchmark.
 - No method-validation claim.
+
+## I056 — R13.3: Candidate samples extracted from public legal sources remain unreviewed
+
+### Status
+
+Open.
+
+### Context
+
+R13.3 extracted 8 candidate text samples from 2 user-collected public legal sources (GDPR EUR-Lex, Austrian Income Tax Code). All samples are marked `candidate_unreviewed` with matching gold template entries at `manual_gold_pending`. The project cannot proceed to any formal mini-pilot until the user completes manual gold review.
+
+### Resolution Plan
+
+User must review each candidate sample in `data/formal/gold/r13_3_manual_gold_template.jsonl`, assign modality labels and phrase-level annotations following `docs/r13_2_annotation_guideline.md`, and mark `annotation_status` → `reviewed_gold`. After review, signal readiness for R13.4.
+
+### Related Documents
+
+- `data/formal/processed/r13_3_candidate_samples.jsonl`
+- `data/formal/gold/r13_3_manual_gold_template.jsonl`
+- `docs/r13_3_data_intake_report.md`
+- `docs/r13_2_annotation_guideline.md`
+
+### Safety Boundary
+
+- No real API.
+- No data download.
+- No .env read.
+- No benchmark.
+- No method-validation claim.
+- Gold not yet completed.

@@ -1,0 +1,126 @@
+{
+  "stage": "R13.3",
+  "created": "2026-06-22",
+  "type": "raw source inventory",
+  "real_api_call": false,
+  "data_download_performed": false,
+  "raw_files_modified": false,
+  "sources": [
+    {
+      "source_id": "gdpr_eurlex",
+      "raw_folder": "data/formal/raw/gdpr_eurlex/",
+      "expected_files": [
+        "gdpr_2016_679_eurlex.pdf",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "found_files": [
+        "gdpr_2016_679_eurlex.pdf",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "missing_files": [],
+      "status": "available_local",
+      "tracked_in_git": false,
+      "notes": "PDF parsable via pdfplumber. Articles 1-50 accessible. Source URL: EUR-Lex. License: EU open."
+    },
+    {
+      "source_id": "austrian_income_tax_code",
+      "raw_folder": "data/formal/raw/austrian_income_tax_code/",
+      "expected_files": [
+        "estg_1988_ris.html",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "found_files": [
+        "estg_1988_ris.html",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "missing_files": [],
+      "status": "available_local",
+      "tracked_in_git": false,
+      "notes": "HTML parsable via html.parser. Text extracted after stripping JS/CSS. Source URL: RIS. License: public domain assumed."
+    },
+    {
+      "source_id": "michel_2022_decision_rules",
+      "raw_folder": "data/formal/raw/michel_2022_decision_rules/",
+      "expected_files": [
+        "michel_2022_decision_rules.pdf",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "found_files": [
+        "michel_2022_decision_rules.pdf",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "missing_files": [],
+      "status": "available_local",
+      "tracked_in_git": false,
+      "notes": "HICSS 2022 paper. Paper source only — not the original labeled dataset. No candidate samples extracted (not a text source)."
+    },
+    {
+      "source_id": "agostinelli_2019_gdpr_bpmn",
+      "raw_folder": "data/formal/raw/agostinelli_2019_gdpr_bpmn/",
+      "expected_files": [
+        "agostinelli_2019_gdpr_bpmn.pdf",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "found_files": [
+        "agostinelli_2019_gdpr_bpmn.pdf",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "missing_files": [],
+      "status": "available_local",
+      "tracked_in_git": false,
+      "notes": "Paper source for GDPR BPMN process-model reconstruction. Cited by Sun as ref [35]. No candidate text samples extracted (BPMN source, not text)."
+    },
+    {
+      "source_id": "winter_2020_keyword_baseline",
+      "raw_folder": "data/formal/raw/winter_2020_keyword_baseline/",
+      "expected_files": [
+        "winter_2020_compliance_assessment.pdf",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "found_files": [
+        "winter_2020_compliance_assessment.pdf",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "missing_files": [],
+      "status": "available_local",
+      "tracked_in_git": false,
+      "notes": "Winter et al. 2020 baseline paper. Paper source only — not executable baseline. No candidate text samples extracted."
+    },
+    {
+      "source_id": "bohmer_2016_energy_supplier",
+      "raw_folder": "data/formal/raw/bohmer_2016_energy_supplier/",
+      "expected_files": [
+        "bohmer_2016_univie_record.html",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "found_files": [
+        "bohmer_2016_univie_record.html",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "missing_files": [],
+      "status": "available_local",
+      "tracked_in_git": false,
+      "notes": "University of Vienna publication record page. Source record only — not executable process-model data. No candidate text samples extracted."
+    }
+  ],
+  "summary": {
+    "total_sources": 6,
+    "available_local": 6,
+    "partial": 0,
+    "missing": 0,
+    "text_extractable_for_candidates": 2,
+    "text_extractable_sources": ["gdpr_eurlex", "austrian_income_tax_code"]
+  }
+}

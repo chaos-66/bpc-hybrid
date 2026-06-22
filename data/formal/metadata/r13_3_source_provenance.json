@@ -1,0 +1,61 @@
+{
+  "stage": "R13.3",
+  "created": "2026-06-22",
+  "real_api_call": false,
+  "source_provenance": [
+    {
+      "source_id": "gdpr_eurlex",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX%3A32016R0679",
+      "source_note": "Official EU legal text from EUR-Lex. Collected for academic research and provenance tracking. Not a benchmark result.",
+      "license_status": "official_legal_text",
+      "raw_local_path": "data/formal/raw/gdpr_eurlex/gdpr_2016_679_eurlex.pdf",
+      "usable_for_r13_4": true,
+      "claim_boundary": "source only, not benchmark result"
+    },
+    {
+      "source_id": "austrian_income_tax_code",
+      "source_url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570",
+      "source_note": "Official Austrian legal text from RIS. Collected for academic research and provenance tracking. Not a benchmark result.",
+      "license_status": "official_legal_text",
+      "raw_local_path": "data/formal/raw/austrian_income_tax_code/estg_1988_ris.html",
+      "usable_for_r13_4": true,
+      "claim_boundary": "source only, not benchmark result"
+    },
+    {
+      "source_id": "michel_2022_decision_rules",
+      "source_url": "https://scholarspace.manoa.hawaii.edu/items/3af9908b-131b-4013-9dcd-0bddc6179b68",
+      "source_note": "HICSS 2022 paper from ScholarSpace. Collected for academic research and provenance tracking. This is a paper source, not the original labeled dataset.",
+      "license_status": "paper_source",
+      "raw_local_path": "data/formal/raw/michel_2022_decision_rules/michel_2022_decision_rules.pdf",
+      "usable_for_r13_4": false,
+      "claim_boundary": "paper source only, not original dataset"
+    },
+    {
+      "source_id": "agostinelli_2019_gdpr_bpmn",
+      "source_url": "https://www.diag.uniroma1.it/publication/18414",
+      "source_note": "Paper source for GDPR BPMN process-model reconstruction. Collected for academic research and provenance tracking. This is a cited paper source, not the original Sun dataset.",
+      "license_status": "paper_source",
+      "raw_local_path": "data/formal/raw/agostinelli_2019_gdpr_bpmn/agostinelli_2019_gdpr_bpmn.pdf",
+      "usable_for_r13_4": false,
+      "claim_boundary": "paper source only, not original Sun dataset"
+    },
+    {
+      "source_id": "winter_2020_keyword_baseline",
+      "source_url": "https://eprints.cs.univie.ac.at/6508/1/compliance_assessment_paper_ER2020.pdf",
+      "source_note": "Winter et al. 2020 baseline paper source. Collected for academic research and provenance tracking. This is a paper source, not a benchmark result or executable baseline implementation.",
+      "license_status": "paper_source",
+      "raw_local_path": "data/formal/raw/winter_2020_keyword_baseline/winter_2020_compliance_assessment.pdf",
+      "usable_for_r13_4": false,
+      "claim_boundary": "paper source only, not executable baseline"
+    },
+    {
+      "source_id": "bohmer_2016_energy_supplier",
+      "source_url": "https://ucrisportal.univie.ac.at/en/publications/multi-perspective-anomaly-detection-in-business-process-execution/",
+      "source_note": "University of Vienna publication record for Böhmer and Rinderle-Ma 2016. Collected for academic research and provenance tracking. This is a source record for the Austrian energy supplier process-model clue, not the original Sun dataset and not executable process-model data.",
+      "license_status": "source_record",
+      "raw_local_path": "data/formal/raw/bohmer_2016_energy_supplier/bohmer_2016_univie_record.html",
+      "usable_for_r13_4": false,
+      "claim_boundary": "source record only, not executable process-model data"
+    }
+  ]
+}
