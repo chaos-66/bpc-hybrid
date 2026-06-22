@@ -144,3 +144,13 @@ Given the bpc-hybrid focus on **rule-first extraction + hybrid LLM fallback**, t
 - No formal result exists. No benchmark.
 - All R13.x stages before dataset acquisition are PLANNING_ONLY.
 - The MVC strategy may change after dataset inventory.
+
+## 9. R13.2 Next Steps
+
+R13.2 defines concrete next steps for public-source collection and mini dataset reconstruction:
+
+- **Public-source collection plan**: `docs/r13_2_public_source_collection_plan.md` — 7 sources (categories A-G) with priority, license, and risk tracking
+- **Mini dataset reconstruction plan**: `docs/r13_2_mini_dataset_reconstruction_plan.md` — 6-10 samples from public sources with quality gates
+- **Annotation guideline**: `docs/r13_2_annotation_guideline.md` — modality labels, phrase-level concepts, clause fields, examples
+
+These plans translate the reconstruction levels A-D into actionable user-collection steps. Level A (paper-visible evidence) is complete. Level B (cited public sources) begins with R13.2 source collection.

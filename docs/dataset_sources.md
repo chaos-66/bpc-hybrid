@@ -127,6 +127,18 @@ Exclude any dataset that:
 - Is a benchmark test-set whose labels are not publicly available (avoids leaderboard gaming).
 - Contains real-case confidential legal advice or client-attorney information.
 
+## 6. R13.2 Public-source Collection Plans
+
+R13.2 created detailed plans for collecting public sources and reconstructing a mini dataset:
+
+- **Public-source collection plan**: `docs/r13_2_public_source_collection_plan.md`
+- **Mini dataset reconstruction plan**: `docs/r13_2_mini_dataset_reconstruction_plan.md`
+- **Annotation guideline**: `docs/r13_2_annotation_guideline.md`
+- **Collection checklist (JSON)**: `data/formal/metadata/public_source_collection_checklist.json`
+- **Mini dataset schema (JSON)**: `data/formal/metadata/mini_dataset_schema.json`
+
+These documents define a 6-10 sample mini formal dataset using publicly collected sources (not original Sun data). No data has been downloaded yet. All original Sun code and complete datasets remain unavailable.
+
 ## 7. Open Questions
 
 1. Does the Sun baseline paper have a public GitHub repository? (If yes, URL?)

@@ -3322,3 +3322,57 @@ Precise commit contents: .gitignore, README.md, sources.json, sun_2024_paper_evi
 - No secret exposure.
 - No benchmark.
 - No method-validation claim.
+
+## R13.2 — Public-source Collection and Mini Dataset Reconstruction Planning
+
+### Type
+
+Planning only.
+
+### Scope
+
+- Real API call: no
+- Data download: no
+- Formal experiment: no
+- Benchmark: no
+- Method validation: no
+
+### Result
+
+Created public-source collection plan, mini dataset reconstruction plan, annotation guideline, collection checklist, and mini dataset schema.
+
+### New Files
+
+- `docs/r13_2_public_source_collection_plan.md` — 7 public sources across categories A-G with priority, license, risk tracking
+- `docs/r13_2_mini_dataset_reconstruction_plan.md` — 6-10 sample mini dataset plan with quality gates
+- `docs/r13_2_annotation_guideline.md` — Modality labels, phrase-level concepts, clause fields, 5 worked examples
+- `data/formal/metadata/public_source_collection_checklist.json` — Machine-readable checklist with 7 sources
+- `data/formal/metadata/mini_dataset_schema.json` — Processed sample schema + gold annotation schema
+
+### Updated Files
+
+- `README.md` — stage updated to R13.2
+- `docs/experiment_log.md` — this entry
+- `docs/issue_log.md` — I055 added
+- `docs/dataset_sources.md` — R13.2 links added
+- `docs/r13_formal_dataset_plan.md` — status updated
+- `docs/r13_sun_reconstruction_plan.md` — R13.2 references added
+- `data/formal/metadata/sources.json` — stage updated
+
+### Scope
+
+- Model change: **no**
+- Benchmark: **no**
+- Method-validation claim: **no**
+- Data download: **no**
+- Real API call: **no**
+
+### Safety Boundary
+
+- No real API call.
+- No data download.
+- No .env read.
+- No secret exposure.
+- No benchmark.
+- No method-validation claim.
+- Original Sun code/dataset: still missing.

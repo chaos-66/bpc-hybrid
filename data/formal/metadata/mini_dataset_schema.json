@@ -1,0 +1,153 @@
+{
+  "stage": "R13.2",
+  "created": "2026-06-22",
+  "description": "Schema definitions for the R13.2 mini formal dataset. Defines both the processed sample input format and the gold annotation format.",
+  "processed_sample_schema": {
+    "description": "Schema for each regulatory sentence/clause sample in the processed mini dataset (data/formal/processed/formal_mini_samples.jsonl).",
+    "fields": {
+      "sample_id": {
+        "type": "string",
+        "required": true,
+        "pattern": "^formal_mini_\\d{3}$",
+        "description": "Unique sample identifier, e.g. formal_mini_001"
+      },
+      "source_id": {
+        "type": "string",
+        "required": true,
+        "enum": ["gdpr_eurlex", "austrian_income_tax_code", "agostinelli_2019_gdpr_bpmn", "bohmer_2016_energy_supplier", "winter_2020_keyword_baseline", "michel_2022_decision_rules", "manual_mini_gold"],
+        "description": "Source identifier from public_source_collection_checklist.json"
+      },
+      "source_type": {
+        "type": "string",
+        "required": true,
+        "enum": ["legal_text", "process_model", "paper_visible_example", "manual"],
+        "description": "Type of source material"
+      },
+      "source_ref": {
+        "type": "string",
+        "required": true,
+        "description": "Article/paragraph/section reference in the source document"
+      },
+      "text": {
+        "type": "string",
+        "required": true,
+        "minLength": 10,
+        "description": "The exact regulatory sentence text, copied verbatim from source"
+      },
+      "language": {
+        "type": "string",
+        "required": true,
+        "enum": ["en", "de"],
+        "description": "ISO 639-1 language code"
+      },
+      "license_status": {
+        "type": "string",
+        "required": true,
+        "description": "License status of the source text"
+      },
+      "provenance_note": {
+        "type": "string",
+        "required": true,
+        "description": "How and when this sample was obtained from the source"
+      },
+      "processing_date": {
+        "type": "string",
+        "required": true,
+        "format": "date",
+        "description": "ISO 8601 date when sample was extracted/processed"
+      },
+      "processing_stage": {
+        "type": "string",
+        "required": true,
+        "description": "Project stage when processing occurred"
+      }
+    }
+  },
+  "gold_annotation_schema": {
+    "description": "Schema for each gold annotation in the manual mini-gold dataset (data/formal/gold/manual_mini/gold_samples.jsonl).",
+    "fields": {
+      "sample_id": {
+        "type": "string",
+        "required": true,
+        "pattern": "^formal_mini_\\d{3}[a-z]?$",
+        "description": "Matches a processed sample. Suffix letter for multi-clause splits."
+      },
+      "modality": {
+        "type": "string",
+        "required": true,
+        "enum": ["obligation", "prohibition", "permission", "definition", "unknown"],
+        "description": "Deontic modality of the clause. Use 'unknown' when uncertain."
+      },
+      "actor": {
+        "type": ["string", "null"],
+        "required": false,
+        "description": "The entity performing or subject to the action. null if not present."
+      },
+      "action": {
+        "type": ["string", "null"],
+        "required": false,
+        "description": "The verb phrase describing the normative action. null if not applicable."
+      },
+      "condition": {
+        "type": ["string", "null"],
+        "required": false,
+        "description": "Prerequisite or triggering condition. null if not present."
+      },
+      "constraint": {
+        "type": ["string", "null"],
+        "required": false,
+        "description": "Limitation, scope, or boundary on the action. null if not present."
+      },
+      "exception": {
+        "type": ["string", "null"],
+        "required": false,
+        "description": "Exclusion or carve-out from the rule. null if not present."
+      },
+      "violation_type": {
+        "type": ["string", "null"],
+        "required": false,
+        "enum": ["missing_action", "incorrect_actor", "out_of_order_execution", null],
+        "description": "Violation type. Only populated for process-model samples."
+      },
+      "violation_status": {
+        "type": ["string", "null"],
+        "required": false,
+        "enum": ["violation_detected", "no_violation", null],
+        "description": "Violation detection result. Only populated for process-model samples."
+      },
+      "bpmn_model_ref": {
+        "type": ["string", "null"],
+        "required": false,
+        "description": "Reference to BPMN model file. Only populated for process-model samples."
+      },
+      "annotation_status": {
+        "type": "string",
+        "required": true,
+        "enum": ["manual_gold_candidate", "reviewed_gold", "uncertain"],
+        "description": "Annotation review status. Only 'reviewed_gold' samples are considered final."
+      },
+      "reviewer_notes": {
+        "type": "string",
+        "required": false,
+        "description": "Free-text notes from the reviewer about annotation decisions or ambiguities."
+      },
+      "annotation_date": {
+        "type": "string",
+        "required": true,
+        "format": "date",
+        "description": "ISO 8601 date when annotation was created or last reviewed."
+      },
+      "annotator": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the person who created the annotation."
+      }
+    }
+  },
+  "claim_boundary": {
+    "not_original_sun_dataset": true,
+    "not_benchmark": true,
+    "not_method_validation": true,
+    "note": "This schema defines project-created mini dataset formats. It is NOT derived from original Sun data. No benchmark or method-validation claims are made."
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "stage": "R13.2",
+  "created": "2026-06-22",
+  "purpose": "public-source collection checklist for paper-aligned reconstruction",
+  "claim_boundary": {
+    "exact_sun_reproduction": false,
+    "benchmark": false,
+    "method_validation": false,
+    "formal_result": false,
+    "note": "All sources are for paper-aligned reconstruction only. No original Sun code or complete Sun datasets are available."
+  },
+  "sources": [
+    {
+      "source_id": "gdpr_eurlex",
+      "name": "GDPR Regulation (EU) 2016/679",
+      "category": "A. GDPR official legal text",
+      "priority": "P0",
+      "status": "missing_user_to_collect",
+      "expected_files": [
+        "official HTML or PDF",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "target_raw_folder": "data/formal/raw/gdpr_eurlex/",
+      "purpose": "GDPR Articles 1-50 reconstruction source",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "license_status": "EU_open",
+      "must_user_collect": true,
+      "can_be_used_without_author_code": true,
+      "risk_level": "low"
+    },
+    {
+      "source_id": "austrian_income_tax_code",
+      "name": "Austrian Income Tax Code (BGBl 1988/400)",
+      "category": "B. Austrian Income Tax Code / modality classification source clue",
+      "priority": "P0",
+      "status": "missing_user_to_collect",
+      "expected_files": [
+        "RIS HTML or PDF",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "target_raw_folder": "data/formal/raw/austrian_income_tax_code/",
+      "purpose": "Modality classification source (Sun DS001 equivalent)",
+      "url": "https://ris.bka.gv.at/eli/bgbl/1988/400/P0/NOR40205159",
+      "license_status": "public_domain_assumed",
+      "must_user_collect": true,
+      "can_be_used_without_author_code": true,
+      "risk_level": "low"
+    },
+    {
+      "source_id": "michel_2022_decision_rules",
+      "name": "Michel et al. 2022 decision-rule/modality dataset",
+      "category": "C. Michel et al. 2022 decision-rule/modality dataset clue",
+      "priority": "P2",
+      "status": "missing_user_to_collect",
+      "expected_files": [
+        "paper PDF",
+        "dataset if available",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "target_raw_folder": "data/formal/raw/michel_2022_decision_rules/",
+      "purpose": "Decision-rule and modality dataset source clue",
+      "url": "not_available",
+      "license_status": "author_request",
+      "must_user_collect": true,
+      "can_be_used_without_author_code": false,
+      "risk_level": "high"
+    },
+    {
+      "source_id": "agostinelli_2019_gdpr_bpmn",
+      "name": "Agostinelli et al. 2019 GDPR BPMN process models",
+      "category": "D. Agostinelli et al. GDPR BPMN process-model source clue",
+      "priority": "P1",
+      "status": "missing_user_to_collect",
+      "expected_files": [
+        "paper PDF",
+        "supplementary BPMN files if available",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "target_raw_folder": "data/formal/raw/agostinelli_2019_gdpr_bpmn/",
+      "purpose": "GDPR BPMN process-model source (Sun ref [35])",
+      "url": "not_available",
+      "license_status": "author_request",
+      "must_user_collect": true,
+      "can_be_used_without_author_code": false,
+      "risk_level": "medium"
+    },
+    {
+      "source_id": "bohmer_2016_energy_supplier",
+      "name": "Böhmer et al. 2016 Austrian energy supplier BPMN",
+      "category": "E. Böhmer / Austrian energy supplier process-model source clue",
+      "priority": "P1",
+      "status": "missing_user_to_collect",
+      "expected_files": [
+        "paper PDF",
+        "supplementary BPMN files if available",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "target_raw_folder": "data/formal/raw/bohmer_2016_energy_supplier/",
+      "purpose": "Energy supplier BPMN process-model source (Sun ref [33])",
+      "url": "not_available",
+      "license_status": "author_request",
+      "must_user_collect": true,
+      "can_be_used_without_author_code": false,
+      "risk_level": "medium"
+    },
+    {
+      "source_id": "winter_2020_keyword_baseline",
+      "name": "Winter et al. 2020 keyword baseline",
+      "category": "F. Winter et al. keyword baseline source clue",
+      "priority": "P1",
+      "status": "missing_user_to_collect",
+      "expected_files": [
+        "paper PDF",
+        "code/supplementary if available",
+        "source_url.txt",
+        "license_or_source_note.txt"
+      ],
+      "target_raw_folder": "data/formal/raw/winter_2020_keyword_baseline/",
+      "purpose": "Keyword baseline comparison source (Sun Table 12)",
+      "url": "not_available",
+      "license_status": "unknown",
+      "must_user_collect": true,
+      "can_be_used_without_author_code": false,
+      "risk_level": "high"
+    },
+    {
+      "source_id": "manual_mini_gold",
+      "name": "Manual mini-gold annotation",
+      "category": "G. Manual mini-gold annotation created by this project",
+      "priority": "P0",
+      "status": "planned",
+      "expected_files": [
+        "gold_samples.jsonl",
+        "annotation_notes.md"
+      ],
+      "target_raw_folder": "data/formal/gold/manual_mini/",
+      "purpose": "Project-created gold annotations for 6-10 regulatory sentences",
+      "url": "not_applicable",
+      "license_status": "project_own",
+      "must_user_collect": false,
+      "can_be_used_without_author_code": true,
+      "risk_level": "low"
+    }
+  ],
+  "summary": {
+    "total_sources": 7,
+    "p0_count": 3,
+    "p1_count": 3,
+    "p2_count": 1,
+    "missing_user_to_collect": 6,
+    "planned": 1,
+    "acquired": 0
+  }
+}

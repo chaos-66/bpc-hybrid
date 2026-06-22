@@ -3,13 +3,21 @@
 ## 1. Current Status
 
 R13.0 ✅ completed — planning and dataset acquisition design done.
-R13.1 🔵 IN PROGRESS — Sun (2024) paper intake completed. Paper state:
-PAPER_ONLY. All 4 sub-datasets require author contact.
+R13.1 ✅ completed — Sun (2024) paper intake accepted as PAPER_ONLY.
+R13.1.1 ✅ completed — cleanup and evidence metric fix.
+R13.1.2 ✅ completed — Codex audit documentation fixes.
+R13.1.3 ✅ completed — remaining MAP wording residue fix.
+R13.2 🔵 IN PROGRESS — public-source collection and mini dataset reconstruction planning.
+All 4 original Sun sub-datasets still require author contact.
+Original Sun code: not available. Original complete Sun datasets: missing.
 No real API calls. No dataset downloads yet. No code changes.
 
 R12 closed as a synthetic prototype API-pipeline sanity milestone (`2324a9e`).
 R13.1 intake report: `docs/r13_1_sun_paper_intake.md`.
 R13 reconstruction plan: `docs/r13_sun_reconstruction_plan.md`.
+R13.2 public-source collection plan: `docs/r13_2_public_source_collection_plan.md`.
+R13.2 mini dataset reconstruction plan: `docs/r13_2_mini_dataset_reconstruction_plan.md`.
+R13.2 annotation guideline: `docs/r13_2_annotation_guideline.md`.
 
 ## 2. Why R13 Is Needed
 

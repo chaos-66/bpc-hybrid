@@ -808,3 +808,33 @@ dataset_sources.md, README.md
 - No secret exposure.
 - No benchmark.
 - No method-validation claim.
+
+## I055 — R13.2: Formal mini dataset requires public-source collection before any pilot
+
+### Status
+
+Open.
+
+### Context
+
+R13.1 accepted Sun paper intake as PAPER_ONLY. Original Sun code and complete datasets are unavailable. The project must collect public sources and reconstruct a mini dataset before any formal pilot.
+
+### Resolution Plan
+
+Create and follow R13.2 public-source checklist. Do not run API or claim formal results until source collection and R13.3 data intake are accepted.
+
+### Related Documents
+
+- `docs/r13_2_public_source_collection_plan.md`
+- `docs/r13_2_mini_dataset_reconstruction_plan.md`
+- `docs/r13_2_annotation_guideline.md`
+- `data/formal/metadata/public_source_collection_checklist.json`
+- `data/formal/metadata/mini_dataset_schema.json`
+
+### Safety Boundary
+
+- No real API.
+- No data download.
+- No .env read.
+- No benchmark.
+- No method-validation claim.
