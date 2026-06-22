@@ -780,7 +780,9 @@ Fixed in R13.1.1.
 R13.1 paper intake reported matching MAP at τ=0.8 as 0.889. This value
 is actually the per-model AP for ProcessModel7 in Table 9, not the
 overall MAP across all 12 process models. The overall MAP at τ=0.8
-is 0.801 (average of 10 reported individual APs).
+is 0.801 — the Overall(MAP) value directly reported in Sun Table 9 at τ=0.8.
+It must not be recomputed from the extracted per-model AP list.
+0.889 is a single process-model AP value, not the overall MAP.
 
 ### Resolution
 
