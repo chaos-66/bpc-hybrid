@@ -265,11 +265,21 @@ def evaluate_predictions(
     candidates: list[dict],
     gold_records: list[dict],
     predictions: list[dict],
+    stage: str = "R13.4.1",
+    claim_boundary: str = "",
 ) -> tuple[dict, list[dict]]:
     """Evaluate all predictions against gold records.
 
     Returns (summary_dict, details_list).
     Raises ValueError on sample_id mismatch between gold and predictions.
+
+    Parameters
+    ----------
+    stage : str
+        Stage identifier for the summary metadata (default ``"R13.4.1"``).
+    claim_boundary : str
+        Explicit claim boundary string. When empty, auto-derives from
+        ``real_api_call`` detection.
     """
     # Detect duplicate sample_ids
     gold_ids_list = [g.get("sample_id", "") for g in gold_records]
@@ -341,8 +351,21 @@ def evaluate_predictions(
         for p in predictions
     )
 
+    # Derive claim_boundary if not explicitly provided
+    if not claim_boundary:
+        if real_api_call:
+            claim_boundary = (
+                "8-sample real API mini-pilot only. "
+                "No benchmark, no method validation, no Sun reproduction."
+            )
+        else:
+            claim_boundary = (
+                "Mock local evaluator test only. "
+                "No benchmark, no method validation, no Sun reproduction."
+            )
+
     summary: dict = {
-        "stage": "R13.4.1",
+        "stage": stage,
         "type": "real_mini_pilot_evaluation" if real_api_call else "mock_local_evaluation",
         "real_api_call": real_api_call,
         "benchmark": False,
@@ -352,7 +375,7 @@ def evaluate_predictions(
         "schema_valid_count": schema_valid_count,
         "field_score_counts": field_counts,
         "failure_category_counts": failure_counts,
-        "claim_boundary": "Mock local evaluator test only. No benchmark, no method validation, no Sun reproduction.",
+        "claim_boundary": claim_boundary,
     }
 
     return summary, details

@@ -60,6 +60,16 @@ def main() -> int:
         required=True,
         help="Path to write evaluation details JSONL",
     )
+    parser.add_argument(
+        "--stage",
+        default="R13.4.1",
+        help="Stage identifier for summary metadata (default: R13.4.1)",
+    )
+    parser.add_argument(
+        "--claim-boundary",
+        default="",
+        help="Explicit claim boundary string (default: auto-derived from real_api_call detection)",
+    )
     args = parser.parse_args()
 
     # Load inputs
@@ -90,7 +100,11 @@ def main() -> int:
 
     # Evaluate
     try:
-        summary, details = evaluate_predictions(candidates, gold_records, predictions)
+        summary, details = evaluate_predictions(
+            candidates, gold_records, predictions,
+            stage=args.stage,
+            claim_boundary=args.claim_boundary,
+        )
     except ValueError as exc:
         print(f"ERROR: evaluation failed: {exc}", file=sys.stderr)
         return 5

@@ -56,6 +56,13 @@ from bpc_hybrid.llm_config import LLMConfig, LLMConfigError  # noqa: E402
 MAX_CALLS = 8
 MAX_SAMPLES = 8
 
+_DEFAULT_EXECUTION_CONTRACT = (
+    _PROJECT_ROOT / "data" / "formal" / "metadata" / "r13_4_2_execution_contract.json"
+)
+_DEFAULT_AUTHORIZATION_CHECKLIST = (
+    _PROJECT_ROOT / "data" / "formal" / "metadata" / "r13_4_2_authorization_checklist.json"
+)
+
 SYSTEM_PROMPT = (
     "You are extracting structured compliance fields from one legal sentence. "
     "Return JSON only. Do not include markdown. Do not include explanation. "
@@ -63,6 +70,141 @@ SYSTEM_PROMPT = (
     "actor (string or null), action (string or null), condition (string or null), "
     "constraint (string or null), exception (string or null)."
 )
+
+
+# ---------------------------------------------------------------------------
+# Authorization gate
+# ---------------------------------------------------------------------------
+
+
+def _check_authorization_gate(
+    execution_contract_path: Path,
+    authorization_checklist_path: Path,
+) -> None:
+    """Check the closed authorization gate before any API config load or API call.
+
+    Raises SystemExit(1) with a JSON error if the gate is closed.
+    """
+    errors: list[str] = []
+
+    # Load execution contract
+    try:
+        contract = json.loads(execution_contract_path.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError) as exc:
+        errors.append(f"Failed to load execution contract: {exc}")
+        contract = {}
+
+    # Load authorization checklist
+    try:
+        checklist = json.loads(authorization_checklist_path.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError) as exc:
+        errors.append(f"Failed to load authorization checklist: {exc}")
+        checklist = {}
+
+    if errors:
+        print(
+            json.dumps(
+                {
+                    "status": "AUTHORIZATION_GATE_BLOCKED",
+                    "error": "Cannot read authorization metadata: " + "; ".join(errors),
+                    "stage": "R13.4.2",
+                    "real_api_call_performed": False,
+                },
+                indent=2,
+            ),
+            file=sys.stderr,
+        )
+        raise SystemExit(1)
+
+    # ---- Check execution contract ---------------------------------------
+    if contract.get("real_api_call_allowed_now") is not True:
+        errors.append(
+            "execution_contract.real_api_call_allowed_now is not true"
+        )
+    if contract.get("status") not in (
+        "authorized_for_single_bounded_run",
+        "executed_single_bounded_run",
+    ):
+        # Allow executed_single_bounded_run ONLY if re-authorized
+        if contract.get("status") == "executed_single_bounded_run":
+            if contract.get("real_api_call_allowed_now") is not True:
+                errors.append(
+                    "execution_contract previously executed — "
+                    "fresh authorization required"
+                )
+
+    # ---- Check authorization checklist ----------------------------------
+    if checklist.get("authorized_now") is not True:
+        errors.append(
+            "authorization_checklist.authorized_now is not true"
+        )
+    if checklist.get("authorization_status") not in (
+        "authorized_for_single_bounded_run",
+        "authorized_for_single_bounded_run_completed",
+    ):
+        if checklist.get("authorization_status") == "authorized_for_single_bounded_run_completed":
+            errors.append(
+                "authorization_checklist: previous authorization consumed — "
+                "fresh explicit authorization required"
+            )
+
+    # ---- Check constraint alignment -------------------------------------
+    contract_max = contract.get("max_real_api_calls", 0)
+    if contract_max > MAX_CALLS:
+        errors.append(
+            f"execution_contract.max_real_api_calls {contract_max} exceeds {MAX_CALLS}"
+        )
+    if contract.get("retry_allowed") is not False:
+        errors.append("execution_contract.retry_allowed must be false")
+    if contract.get("repair_call_allowed") is not False:
+        errors.append("execution_contract.repair_call_allowed must be false")
+    if contract.get("batch_allowed") is not False:
+        errors.append("execution_contract.batch_allowed must be false")
+    if contract.get("raw_response_saved") is not False:
+        errors.append("execution_contract.raw_response_saved must be false")
+    if contract.get("benchmark") is not False:
+        errors.append("execution_contract.benchmark must be false")
+    if contract.get("method_validation") is not False:
+        errors.append("execution_contract.method_validation must be false")
+    if contract.get("sun_reproduction") is not False:
+        errors.append("execution_contract.sun_reproduction must be false")
+
+    # Future re-authorization requirement
+    if (
+        contract.get("requires_explicit_user_authorization_for_future_runs") is True
+        and contract.get("real_api_call_allowed_now") is not True
+    ):
+        errors.append(
+            "execution_contract requires fresh explicit user authorization for future runs"
+        )
+    if (
+        checklist.get("future_real_api_runs_require_new_authorization") is True
+        and checklist.get("authorized_now") is not True
+    ):
+        if "fresh explicit authorization required" not in " ".join(errors):
+            errors.append(
+                "authorization_checklist requires fresh explicit user authorization"
+            )
+
+    if errors:
+        print(
+            json.dumps(
+                {
+                    "status": "AUTHORIZATION_GATE_CLOSED",
+                    "error": (
+                        "Authorization gate is closed. Fresh explicit authorization "
+                        "and updated execution contract are required before another "
+                        "real API run. Reasons: " + "; ".join(errors)
+                    ),
+                    "stage": "R13.4.2",
+                    "real_api_call_performed": False,
+                },
+                indent=2,
+            ),
+            file=sys.stderr,
+        )
+        raise SystemExit(1)
+
 
 # ---------------------------------------------------------------------------
 # JSON-safe ArgumentParser
@@ -373,6 +515,22 @@ def main() -> None:
         default=False,
         help="Execute real API calls (required for real execution)",
     )
+    parser.add_argument(
+        "--execution-contract",
+        default=str(_DEFAULT_EXECUTION_CONTRACT),
+        help=(
+            "Path to execution contract JSON "
+            f"(default: {_DEFAULT_EXECUTION_CONTRACT})"
+        ),
+    )
+    parser.add_argument(
+        "--authorization-checklist",
+        default=str(_DEFAULT_AUTHORIZATION_CHECKLIST),
+        help=(
+            "Path to authorization checklist JSON "
+            f"(default: {_DEFAULT_AUTHORIZATION_CHECKLIST})"
+        ),
+    )
     args = parser.parse_args()
 
     # ---- Gate: max-calls ------------------------------------------------
@@ -405,6 +563,12 @@ def main() -> None:
             file=sys.stderr,
         )
         raise SystemExit(1)
+
+    # ---- Gate: authorization contract/checklist -------------------------
+    _check_authorization_gate(
+        Path(args.execution_contract),
+        Path(args.authorization_checklist),
+    )
 
     # ---- Load inputs ----------------------------------------------------
     candidates_path = Path(args.candidates)

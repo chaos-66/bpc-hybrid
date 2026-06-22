@@ -3707,3 +3707,61 @@ before Codex local-only audit.
 
 Completed (R13.4.2). Pending Codex local-only audit.
 
+## R13.4.2.1 — Post-run Checkpoint
+
+### Type
+
+Post-real-run metadata and documentation checkpoint.
+
+### Scope
+
+- Real API: no
+- LLM call: no
+- Data download: no
+- Raw file modification: no
+
+### Result
+
+Aligned metadata files (execution contract, authorization checklist), consumed
+authorization state (authorized_now → false), and updated documentation for
+Codex audit readiness. See `docs/r13_4_2_1_post_run_checkpoint.md`.
+
+### Claim Boundary
+
+R13.4.2 remains an 8-sample mini-pilot only, pending Codex local-only audit.
+
+### Status
+
+Completed (R13.4.2.1).
+
+## R13.4.2.2 — Codex Audit Blocker Fixes
+
+### Type
+
+Codex audit blocker resolution (local only).
+
+### Scope
+
+- Real API: no
+- LLM call: no
+- Network: no
+
+### Result
+
+Resolved 3 Codex audit blockers:
+1. Fixed summary stage/claim_boundary metadata (was R13.4.1, now R13.4.2)
+2. Added runner authorization gate (_check_authorization_gate) with
+   enforcement against consumed authorizations
+3. Created 15 regression tests for runner safety gates
+
+See `docs/r13_4_2_real_mini_pilot_report.md` Section 14 and
+`tests/test_r13_4_2_real_mini_pilot_safety.py`.
+
+### Claim Boundary
+
+Local auditing only. No real API, no new prediction, no benchmark.
+
+### Status
+
+Completed (R13.4.2.2). Ready for Codex R13.4.2.2 local-only re-audit.
+

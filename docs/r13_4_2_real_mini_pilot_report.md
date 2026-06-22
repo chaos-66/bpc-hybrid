@@ -174,3 +174,65 @@ and documentation after the R13.4.2 real mini-pilot execution.
 - No raw response saved.
 - No retry, no repair, no batch.
 - 8-sample mini-pilot only — not benchmark, not method validation, not Sun reproduction.
+
+---
+
+## 14. R13.4.2.2 — Codex Audit Blocker Fixes
+
+**Date:** 2026-01-23
+**Commit:** (this commit)
+
+Three Codex audit blockers resolved:
+
+### Blocker 1: Wrong summary metadata (stage/claim_boundary)
+
+**Problem:** `r13_4_2_real_evaluation_summary.json` showed `"stage": "R13.4.1"`
+and a mock `claim_boundary` string.
+
+**Fix:**
+- `evaluate_predictions()` in `src/bpc_hybrid/mini_pilot_evaluator.py` now
+  accepts optional `stage` and `claim_boundary` parameters (defaults preserved
+  for backward compat).
+- `scripts/evaluate_mini_pilot_predictions.py` now accepts `--stage` and
+  `--claim-boundary` CLI arguments.
+- Summary re-generated with `--stage R13.4.2` and correct claim_boundary.
+
+### Blocker 2: Runner had no authorization gate
+
+**Problem:** `scripts/run_r13_4_2_real_mini_pilot.py` could be re-executed with
+`--execute-real-api` even though authorization was consumed (both contract and
+checklist have `real_api_call_allowed_now: false` / `authorized_now: false`).
+
+**Fix:**
+- Added `_check_authorization_gate()` function that reads both
+  `execution_contract.json` and `authorization_checklist.json` and validates
+  ALL conditions before loading `LLMConfig.from_env()` or making any API call.
+- Added `--execution-contract` and `--authorization-checklist` CLI args with
+  sensible defaults.
+- Gate checks: `real_api_call_allowed_now`, `authorized_now`,
+  `max_real_api_calls`, `retry_allowed`, `repair_call_allowed`,
+  `batch_allowed`, `raw_response_saved`, `benchmark`, `method_validation`,
+  `sun_reproduction`, fresh re-authorization requirements.
+- No bypass flags exist.
+
+### Blocker 3: No regression tests for authorization gates
+
+**Problem:** Zero tests covering runner authorization enforcement.
+
+**Fix:**
+- Created `tests/test_r13_4_2_real_mini_pilot_safety.py` with 15 tests:
+  closed-gate contract+checklist, contract-only closed, checklist-only closed,
+  max-calls>8, missing --execute-real-api, candidate count>8, sample_id
+  mismatch, non-reviewed_gold, duplicate IDs, no bypass flag, retry_allowed
+  violation, benchmark violation, raw_response_saved violation, missing
+  contract file, missing checklist file.
+- All tests subprocess only — no network, no .env read, no real API.
+
+### Verification
+- Full pytest: 674 passed (44 evaluator + 15 safety + 615 others)
+- Evaluator re-run with correct stage → summary fixed
+- All 3 blockers resolved; ready for Codex re-audit
+
+### Status
+✅ R13.4.2.2 — All 3 Codex audit blockers fixed. Proceed to Codex R13.4.2.2
+local-only re-audit.

@@ -918,6 +918,54 @@ And 2 suggestions:
 ### Resolution
 
 Fixed in R13.4.1.1:
+
+
+## I060 — R13.4.2 authorization metadata created
+
+### Status
+
+Resolved (R13.4.2-pre).
+
+### Context
+
+Created `r13_4_2_execution_contract.json` and
+`r13_4_2_authorization_checklist.json` defining the conditions for the
+authorized bounded 8-sample real API mini-pilot.
+
+### Resolution
+
+Both files created with explicit constraints: max 8 calls, no retry, no
+repair, no batch, no raw saving, no benchmark/method/Sun claims.
+
+---
+
+## I061 — R13.4.2 Codex audit blockers
+
+### Status
+
+Resolved (R13.4.2.2).
+
+### Context
+
+Codex R13.4.2 audit found 3 blockers:
+1. Summary in `r13_4_2_real_evaluation_summary.json` showed `stage: "R13.4.1"`
+   and a mock-only `claim_boundary`.
+2. `scripts/run_r13_4_2_real_mini_pilot.py` lacked an authorization gate —
+   could be re-executed with `--execute-real-api` even though authorization
+   was consumed.
+3. No regression tests for runner authorization enforcement.
+
+### Resolution
+
+1. Added `--stage`/`--claim-boundary` CLI args to evaluator; re-generated
+   summary with correct `stage: "R13.4.2"` and real claim_boundary.
+2. Added `_check_authorization_gate()` that validates both execution contract
+   and authorization checklist before any `LLMConfig.from_env()` call. No
+   bypass flags exist.
+3. Created `tests/test_r13_4_2_real_mini_pilot_safety.py` with 15 tests
+   covering all gate rejection scenarios.
+
+All tests pass (674/674). Ready for Codex R13.4.2.2 local-only re-audit.
 - `evaluate_predictions()` derives `real_api_call` from runtime metadata
 - `_REQUIRED_TOP_FIELDS` includes `source_id`
 - `validate_prediction_record()` enforces `schema_valid is True`
