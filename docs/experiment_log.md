@@ -3174,9 +3174,9 @@ All four datasets require author contact
 | Task | Metric | Sun (2024) |
 |------|--------|-----------|
 | Modality classification | F1 | 93.1% (bert-legal-uncased) |
-| Semantic extraction | F1 | ~96.6% (overall P=97.9%, R=95.3%) |
-| Model matching (energy) | MAP | 0.889 (τ=0.8) |
-| Violation detection (GDPR) | MAP | 0.840 (τ=0.8) |
+| Semantic extraction | F1 | ~96.6% (derived from P=97.9%, R=95.3%; not directly reported) |
+| Model matching (energy) | overall MAP | 0.801 (τ=0.8; 0.889 is single-model AP) |
+| Violation detection (GDPR) | overall MAP | 0.840 (τ=0.8) |
 | vs Winter et al. (2020) | F1 | 0.80 (Sun) vs 0.70 (Winter) |
 
 ### New Files Created
@@ -3263,6 +3263,60 @@ metadata to the pilot runner, with corresponding summary aggregates.
 - No pilot rerun.
 - No R12.1 output change.
 - No `.env` read.
+- No secret exposure.
+- No benchmark.
+- No method-validation claim.
+
+---
+
+## R13.1.1 — Sun Paper Intake Cleanup (2026-06-19)
+
+### Objective
+
+Clean up R13.1 artifacts: remove PDF/txt from git tracking, fix incorrect MAP metrics (0.889→0.801 overall MAP), add artifact redistribution policy, update .gitignore.
+
+### Changes
+
+| Item | Before | After |
+|------|--------|-------|
+| data/formal/raw/sun_2024_*.pdf | tracked in git | git rm --cached; live in .gitignore |
+| data/formal/raw/sun_2024_full_text.txt | tracked in git | git rm --cached; live in .gitignore |
+| .gitignore | 40 lines | +5 raw artifact rules (pdf/txt/zip/html) |
+| Matching (energy) MAP | 0.889 (incorrectly reported) | 0.801 overall MAP; 0.889 is single-model AP |
+| Semantic F1 | reported as direct | marked as derived (2*P*R/(P+R)) |
+| sources.json | missing artifact policy | added paper_artifact with tracking/redistribution status |
+| sun_2024_paper_evidence.json | missing tracking fields | added pdf_tracked_in_git, derived_text_tracked_in_git, redistribution note |
+
+### Key Metric Corrections
+
+| Task | Old (R13.1) | New (R13.1.1) | Change |
+|------|------------|---------------|--------|
+| Matching MAP (energy, τ=0.8) | 0.889 | **0.801** (overall MAP) | -0.088 |
+| GDPR MAP (τ=0.8) | 0.840 | 0.840 (correct, relabeled) | 0 |
+| Semantic F1 | ~96.6% (reported direct) | ~96.6% (derived from P/R) | re-labeled |
+
+### Artifact Policy
+
+- Sun (2024) PDF is retained locally for reconstruction reference.
+- PDF and derived full-text file are NOT committed to git due to unclear redistribution/copyright status.
+- All derivative work (evidence JSON, metadata, intake notes) are committed; only raw publisher PDF is excluded.
+
+### Files Modified (R13.1.1)
+
+10 files: .gitignore, sources.json, sun_2024_paper_evidence.json, experiment_log.md, issue_log.md, dataset_sources.md, r13_1_sun_paper_intake.md, r13_sun_reconstruction_plan.md, r13_formal_dataset_plan.md, README.md
+
+### Scope
+
+- Model change: **no**
+- Benchmark: **no**
+- Method-validation claim: **no**
+- Evidence metric correction: **yes**
+
+### Safety Boundary
+
+- No real API call.
+- No pilot rerun.
+- No .env read.
 - No secret exposure.
 - No benchmark.
 - No method-validation claim.

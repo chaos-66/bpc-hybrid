@@ -10,10 +10,13 @@
     "pages": 28,
     "keywords": ["Compliance Checking", "Violation Detection", "Business Process", "Text Mining", "Natural Language Processing", "Deep Learning"],
     "pdf_path": "data/formal/raw/sun_2024_design_time_bpc_multigranularity.pdf",
+    "pdf_tracked_in_git": false,
+    "pdf_redistribution_status": "not_committed_due_unclear_redistribution_rights",
     "pdf_size_bytes": 2694008,
     "text_extraction_method": "pdfplumber (offline)",
     "text_extraction_date": "2026-06-19",
-    "text_file": "data/formal/raw/sun_2024_full_text.txt",
+    "derived_text_local_path": "data/formal/raw/sun_2024_full_text.txt",
+    "derived_text_tracked_in_git": false,
     "text_chars": 65448
   },
   "methodology": {
@@ -132,6 +135,8 @@
     "semantic_extraction": {
       "overall_precision": 0.979,
       "overall_recall": 0.953,
+      "overall_f1_derived": 0.9659,
+      "f1_derivation_note": "F1 computed as 2*(P*R)/(P+R) from reported precision (0.979) and recall (0.953), not directly reported in Table 8",
       "per_concept": {
         "modality": {"ground_truth": 82, "extracted": 81, "matched": 80, "misclassified": 1, "missed": 2, "precision": 0.988, "recall": 0.976},
         "actor": {"ground_truth": 118, "extracted": 110, "matched": 109, "misclassified": 1, "missed": 9, "precision": 0.991, "recall": 0.924},
@@ -145,14 +150,16 @@
     "matching_evaluation": {
       "best_tau": 0.8,
       "models": 12,
-      "best_map": 0.889,
+      "models_with_ap_at_tau_0_8": 10,
+      "notes": "0.889 is a single-process-model AP (not overall MAP); overall MAP at τ=0.8 is approximately 0.801 based on reported individual APs",
+      "overall_map_at_tau_0_8": 0.801,
       "per_model_ap_at_tau_0_8": [0.802, 0.892, 0.811, 0.678, 0.801, 0.790, 0.889, 0.874, 0.846, 0.773, null, null],
       "table": "Table 9"
     },
     "gdpr_violation_detection": {
       "best_tau": 0.8,
       "models": 4,
-      "best_map": 0.840,
+      "overall_map_at_tau_0_8": 0.840,
       "per_model_ap_at_tau_0_8": {
         "BPMN1": 0.824,
         "BPMN2": 0.855,
@@ -177,7 +184,7 @@
     "Keyword baseline (CF_KW) severely underperforms (F1=60.8%)",
     "Winter et al. (2020) has higher recall but much lower precision than Sun's method",
     "Marker-based rules can be extended from initial sets",
-    "Best matching threshold τ=0.8 for both Austrian energy (MAP=0.889) and GDPR (MAP=0.840) scenarios"
+    "Best matching threshold τ=0.8 for both Austrian energy (overall MAP=0.801) and GDPR (overall MAP=0.840) scenarios. Note: 0.889 is a single-model AP, not overall MAP."
   ],
   "data_availability": {
     "statement": "The datasets generated during and/or analysed during the current study are available from the corresponding author on reasonable request.",

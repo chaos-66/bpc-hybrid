@@ -768,3 +768,41 @@ tests pass.  Code-only — no real API, no pilot rerun, no `.env` read.
 - No benchmark.
 - No method-validation claim.
 
+
+## I054 — R13.1.1: MAP evidence metric incorrect (0.889 → 0.801 overall MAP)
+
+### Status
+
+Fixed in R13.1.1.
+
+### Context
+
+R13.1 paper intake reported matching MAP at τ=0.8 as 0.889. This value
+is actually the per-model AP for ProcessModel7 in Table 9, not the
+overall MAP across all 12 process models. The overall MAP at τ=0.8
+is 0.801 (average of 10 reported individual APs).
+
+### Resolution
+
+- Corrected best_map: 0.889 → overall_map_at_tau_0_8: 0.801 in sun_2024_paper_evidence.json
+- Added note: 0.889 is a single-process-model AP, not overall MAP
+- Fixed all 10 downstream references in evidence JSON, experiment_log, and markdown docs
+- Marked Table 8 semantic extraction F1 as derived (not directly reported)
+- Renamed best_map → overall_map_at_tau_0_8 in GDPR section for consistency
+- No code changes. No model changes. No benchmark claim.
+
+### Files
+
+10 files modified: .gitignore, sources.json, sun_2024_paper_evidence.json,
+experiment_log.md, issue_log.md, r13_1_sun_paper_intake.md,
+r13_sun_reconstruction_plan.md, r13_formal_dataset_plan.md,
+dataset_sources.md, README.md
+
+### Safety Boundary
+
+- No real API.
+- No pilot rerun.
+- No .env read.
+- No secret exposure.
+- No benchmark.
+- No method-validation claim.

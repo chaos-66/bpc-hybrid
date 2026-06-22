@@ -1,7 +1,17 @@
 {
   "r13_generated": "2026-06-19",
-  "stage": "R13.1",
+  "stage": "R13.1.1",
   "description": "Formal dataset source registry for bpc-hybrid project. All sources are PAPER_ONLY or NOT_ACQUIRED unless otherwise noted.",
+  "paper_artifact": {
+    "title": "Sun et al. 2024 — Design-time business process compliance assessment based on multi-granularity semantic information",
+    "local_pdf_path": "data/formal/raw/sun_2024_design_time_bpc_multigranularity.pdf",
+    "tracked_in_git": false,
+    "redistribution_status": "not_committed_due_unclear_redistribution_rights",
+    "derived_text_local_path": "data/formal/raw/sun_2024_full_text.txt",
+    "derived_text_tracked_in_git": false,
+    "derived_text_tool": "pdfplumber (offline)",
+    "note": "Paper PDF and derived full-text extract are retained locally for reconstruction reference but not committed to git due to unclear redistribution/copyright status of the published PDF."
+  },
   "sources": [
     {
       "id": "DS001",
@@ -69,7 +79,7 @@
       "acquisition_path": "Reference [35]; contact corresponding author",
       "paper_evidence": "Table 10/11 — 4 BPMN models (BPMN1-4), 21-46 matching rules each, GDPR Articles 1-50",
       "size": "4 BPMN models + violation data",
-      "notes": "Process models capturing GDPR privacy constraints. Best MAP=0.840 at τ=0.8."
+      "notes": "Process models capturing GDPR privacy constraints. Overall MAP=0.840 at τ=0.8 (Table 11)."
     },
     {
       "id": "DS005",

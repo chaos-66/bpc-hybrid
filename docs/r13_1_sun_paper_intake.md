@@ -158,3 +158,11 @@ The Sun paper defines the primary baseline for bpc-hybrid's formal evaluation. R
 | No API calls made | ✅ |
 | No .env read | ✅ |
 | No source code modified | ✅ (new docs only) |
+
+## 9. Artifact Redistribution Policy (added R13.1.1)
+
+- The Sun (2024) PDF is stored locally at `data/formal/raw/sun_2024_design_time_bpc_multigranularity.pdf` and the derived full-text extract at `data/formal/raw/sun_2024_full_text.txt`.
+- **Neither file is committed to git** due to unclear redistribution/copyright status of the published PDF.
+- Both files are excluded via `.gitignore` rules (`data/formal/raw/**/*.pdf`, `data/formal/raw/**/*full_text*.txt`).
+- All derivative work (this intake report, evidence JSON, metadata registry, reconstruction plan) is committed.
+- If you clone this repository, you will need to obtain the PDF independently (e.g., Springer Nature download or corresponding author request) and run the offline text extraction yourself.

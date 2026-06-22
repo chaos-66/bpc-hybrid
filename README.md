@@ -89,7 +89,9 @@ A planned **multi-clause schema** will allow compound regulatory sentences with 
 
 **R13.0 ✅ — formal dataset acquisition and evaluation design.** R12 is closed as a synthetic prototype API-pipeline sanity milestone. R13 begins formal dataset acquisition and evaluation design. No real API is executed in R13.0. See `docs/r13_formal_dataset_plan.md`.
 
-**R13.1 🔵 IN PROGRESS — Sun (2024) paper intake.** Paper PDF acquired and analyzed (2.7 MB, 28 pages, 4 datasets identified). Full text extracted offline via pdfplumber. Paper classified as PAPER_ONLY — all 4 sub-datasets require author contact or independent re-creation. See `docs/r13_1_sun_paper_intake.md`.
+**R13.1 ✅ — Sun (2024) paper intake.** Paper PDF acquired and analyzed (2.7 MB, 28 pages, 4 datasets identified). Full text extracted offline via pdfplumber. Paper classified as PAPER_ONLY — all 4 sub-datasets require author contact or independent re-creation. See `docs/r13_1_sun_paper_intake.md`.
+
+**R13.1.1 ✅ — Sun intake artifact cleanup.** PDF/txt removed from git tracking, incorrect MAP (0.889) corrected to overall MAP (0.801), artifact redistribution policy added, `.gitignore` updated with raw artifact rules. See `docs/experiment_log.md#r1311`.
 
 ## R9 Scope
 
