@@ -3537,3 +3537,52 @@ R13.4 does not produce evaluation results. It only prepares a bounded plan for f
 - No method-validation claim.
 - No Sun reproduction.
 
+## R13.4.1 — Local Mini-pilot Evaluator and Result Schema
+
+### Type
+
+Local evaluator implementation only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Data download: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Implemented a local evaluator (`src/bpc_hybrid/mini_pilot_evaluator.py`), CLI entrypoint (`scripts/evaluate_mini_pilot_predictions.py`), result schema (`data/formal/metadata/r13_4_1_result_schema.json`), mock prediction fixture (`data/formal/predictions/r13_4_1_mock_predictions.jsonl`), and 24 unit tests (`tests/test_mini_pilot_evaluator.py`).
+
+### Updated Files
+
+- `src/bpc_hybrid/mini_pilot_evaluator.py` — core evaluator (new)
+- `scripts/evaluate_mini_pilot_predictions.py` — CLI entrypoint (new)
+- `data/formal/metadata/r13_4_1_result_schema.json` — result schema (new)
+- `data/formal/predictions/r13_4_1_mock_predictions.jsonl` — 8 mock predictions (new)
+- `data/formal/results/r13_4_1_mock_evaluation_summary.json` — mock summary (new)
+- `data/formal/results/r13_4_1_mock_evaluation_details.jsonl` — mock details (new)
+- `tests/test_mini_pilot_evaluator.py` — 24 evaluator tests (new)
+- `docs/r13_4_1_local_evaluator_report.md` — stage report (new)
+- `README.md` — stage updated to R13.4.1
+- `docs/experiment_log.md` — this entry
+- `docs/issue_log.md` — I058 added
+
+### Claim Boundary
+
+R13.4.1 only validates local evaluator mechanics using hand-crafted mock predictions. It does not evaluate model quality and does not support benchmark or method-validation claims.
+
+### Safety Boundary
+
+- No real API call.
+- No LLM call.
+- No data download.
+- No .env read.
+- No temporary scripts created or deleted.
+- No Remove-Item or delete commands.
+- No benchmark.
+- No method-validation claim.
+- No Sun reproduction.
+

@@ -1,0 +1,106 @@
+{
+  "stage": "R13.4.1",
+  "type": "result_schema",
+  "version": "0.1.0",
+  "prediction_record_schema": {
+    "description": "Single prediction record in the predictions JSONL input",
+    "required_top_level_fields": ["sample_id", "source_id", "predicted", "runtime", "schema_valid"],
+    "predicted_fields": {
+      "modality": {"type": "string", "enum": ["obligation", "prohibition", "permission", "definition", "unknown"]},
+      "actor": {"type": "string_or_null"},
+      "action": {"type": "string_or_null"},
+      "condition": {"type": "string_or_null"},
+      "constraint": {"type": "string_or_null"},
+      "exception": {"type": "string_or_null"}
+    },
+    "runtime_fields": {
+      "provider": {"type": "string"},
+      "model": {"type": "string"},
+      "real_api_call_performed": {"type": "boolean"},
+      "raw_response_saved": {"type": "boolean"},
+      "attempt_count": {"type": "integer", "minimum": 1},
+      "duration_ms": {"type": "integer", "minimum": 0},
+      "error_category": {"type": "string_or_null"}
+    }
+  },
+  "evaluation_detail_schema": {
+    "description": "Single evaluation detail record in the details JSONL output",
+    "fields": {
+      "sample_id": "string",
+      "source_id": "string",
+      "schema_valid": "boolean",
+      "field_scores": {
+        "modality": "exact | missing | wrong",
+        "actor": "exact | partial | missing | wrong | not_applicable",
+        "action": "exact | partial | missing | wrong | not_applicable",
+        "condition": "exact | partial | missing | wrong | not_applicable",
+        "constraint": "exact | partial | missing | wrong | not_applicable",
+        "exception": "exact | partial | missing | wrong | not_applicable"
+      },
+      "failure_categories": ["array of failure category strings"],
+      "notes": "string"
+    }
+  },
+  "evaluation_summary_schema": {
+    "description": "Summary JSON output",
+    "fields": {
+      "stage": "string",
+      "type": "string",
+      "real_api_call": "boolean",
+      "benchmark": "boolean",
+      "method_validation": "boolean",
+      "sun_reproduction": "boolean",
+      "sample_count": "integer",
+      "schema_valid_count": "integer",
+      "field_score_counts": {
+        "modality": {"exact": 0, "partial": 0, "missing": 0, "wrong": 0, "not_applicable": 0},
+        "actor": {"exact": 0, "partial": 0, "missing": 0, "wrong": 0, "not_applicable": 0},
+        "action": {"exact": 0, "partial": 0, "missing": 0, "wrong": 0, "not_applicable": 0},
+        "condition": {"exact": 0, "partial": 0, "missing": 0, "wrong": 0, "not_applicable": 0},
+        "constraint": {"exact": 0, "partial": 0, "missing": 0, "wrong": 0, "not_applicable": 0},
+        "exception": {"exact": 0, "partial": 0, "missing": 0, "wrong": 0, "not_applicable": 0}
+      },
+      "failure_category_counts": {},
+      "claim_boundary": "string"
+    }
+  },
+  "field_match_labels": {
+    "allowed": ["exact", "partial", "missing", "wrong", "not_applicable"],
+    "notes": {
+      "exact": "normalized prediction matches gold exactly",
+      "partial": "one contains the other or token overlap >= 0.5",
+      "missing": "gold is non-null, prediction is null/empty",
+      "wrong": "prediction differs materially from gold",
+      "not_applicable": "both gold and prediction are null/empty"
+    }
+  },
+  "modality_match_labels": {
+    "allowed": ["exact", "missing", "wrong"],
+    "notes": {
+      "exact": "predicted.modality == gold.modality",
+      "missing": "predicted.modality is null/empty",
+      "wrong": "predicted.modality differs from gold.modality"
+    }
+  },
+  "failure_categories": {
+    "allowed": [
+      "schema_invalid",
+      "modality_wrong",
+      "actor_missing",
+      "action_missing",
+      "condition_wrong",
+      "constraint_wrong",
+      "exception_wrong",
+      "api_timeout",
+      "api_error",
+      "config_blocked",
+      "unsafe_output",
+      "overclaim_detected"
+    ]
+  },
+  "normalization_rules": {
+    "steps": ["lowercase", "strip", "collapse_whitespace", "remove_simple_punctuation"],
+    "simple_punctuation": ".,;:!?\"'()-"
+  },
+  "claim_boundary": "R13.4.1 result schema defines local evaluator mechanics only. No benchmark, no method validation, no Sun reproduction."
+}

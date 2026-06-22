@@ -896,3 +896,27 @@ No data was lost. No project artifacts were affected. This is a process-only iss
 - No delete commands in future stages.
 - Use `python -c` for inline validation.
 - Use existing scripts for structured verification.
+
+## I058 — Mini-pilot evaluator is local-only until user authorization
+
+### Status
+
+Open.
+
+### Context
+
+R13.4.1 implements local scoring mechanics using mock predictions. It must not be interpreted as real LLM evaluation.
+
+### Resolution Plan
+
+Run R13.4.2 only after explicit user authorization, with a bounded maximum of 8 real API calls.
+
+### Claim Boundary
+
+No real API has been executed. All R13.4.1 scores are from hand-crafted mock predictions.
+
+### Safety Boundary
+
+- No real API until user authorization.
+- Max 8 calls when authorized.
+- No retry, no batch, no raw response storage.
