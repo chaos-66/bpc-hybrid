@@ -1,0 +1,61 @@
+{
+  "stage": "R13.4.1",
+  "type": "real_mini_pilot_evaluation",
+  "real_api_call": true,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "sample_count": 8,
+  "schema_valid_count": 8,
+  "field_score_counts": {
+    "modality": {
+      "exact": 7,
+      "partial": 0,
+      "missing": 0,
+      "wrong": 1,
+      "not_applicable": 0
+    },
+    "actor": {
+      "exact": 0,
+      "partial": 1,
+      "missing": 4,
+      "wrong": 3,
+      "not_applicable": 0
+    },
+    "action": {
+      "exact": 0,
+      "partial": 0,
+      "missing": 0,
+      "wrong": 8,
+      "not_applicable": 0
+    },
+    "condition": {
+      "exact": 1,
+      "partial": 0,
+      "missing": 2,
+      "wrong": 3,
+      "not_applicable": 2
+    },
+    "constraint": {
+      "exact": 0,
+      "partial": 3,
+      "missing": 1,
+      "wrong": 4,
+      "not_applicable": 0
+    },
+    "exception": {
+      "exact": 0,
+      "partial": 0,
+      "missing": 0,
+      "wrong": 0,
+      "not_applicable": 8
+    }
+  },
+  "failure_category_counts": {
+    "actor_missing": 4,
+    "condition_wrong": 5,
+    "constraint_wrong": 5,
+    "modality_wrong": 1
+  },
+  "claim_boundary": "Mock local evaluator test only. No benchmark, no method validation, no Sun reproduction."
+}
