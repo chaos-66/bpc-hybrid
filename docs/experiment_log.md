@@ -3473,7 +3473,7 @@ Manual gold annotation update.
 
 ### Result
 
-The 8 R13.3 candidate samples were manually reviewed and the gold annotation template was updated from manual_gold_pending to reviewed_gold. All 8 entries validated (modalities: 3 obligation, 1 prohibition, 4 definition).
+The 8 R13.3 candidate samples were manually reviewed and the gold annotation template was updated from manual_gold_pending to reviewed_gold. All 8 entries validated (modalities: 4 obligation, 1 prohibition, 3 definition).
 
 ### Updated Files
 
@@ -3495,4 +3495,45 @@ This creates a small manually reviewed mini-gold file for future local pilot tes
 - No benchmark.
 - No method-validation claim.
 - The 8-sample mini-gold set is small and suitable only for the next bounded R13.4 mini-pilot, not for benchmark or method-validation claims.
+
+## R13.4 — Mini-pilot Evaluation Plan
+
+### Type
+
+Planning only.
+
+### Scope
+
+- Real API call: no
+- Code execution for real mini-pilot: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Defined the mini-pilot input set, prediction schema, field-level scoring rules, failure categories, and R13.4.x execution roadmap for the 8-sample reviewed mini-gold set.
+
+### Updated Files
+
+- `docs/r13_4_mini_pilot_plan.md` — full evaluation plan
+- `data/formal/metadata/r13_4_metric_plan.json` — machine-readable metric plan
+- `README.md` — stage updated to R13.4
+- `docs/experiment_log.md` — this entry
+- `docs/issue_log.md` — I057 added (process note)
+
+### Claim Boundary
+
+R13.4 does not produce evaluation results. It only prepares a bounded plan for future mini-pilot execution after explicit user authorization.
+
+### Safety Boundary
+
+- No real API call.
+- No data download.
+- No .env read.
+- No temporary scripts created or deleted.
+- No Remove-Item or delete commands.
+- No benchmark.
+- No method-validation claim.
+- No Sun reproduction.
 

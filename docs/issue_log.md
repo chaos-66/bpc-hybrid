@@ -851,7 +851,7 @@ R13.3 extracted 8 candidate text samples from 2 user-collected public legal sour
 
 ### Resolution
 
-All 8 gold entries now have `annotation_status: reviewed_gold`. Modalities assigned: 3 obligation, 1 prohibition, 4 definition. All entries have actor, action, condition, constraint, and reviewer_notes fields populated.
+All 8 gold entries now have `annotation_status: reviewed_gold`. Modalities assigned: 4 obligation, 1 prohibition, 3 definition. All entries have actor, action, condition, constraint, and reviewer_notes fields populated.
 
 ### Claim Boundary
 
@@ -872,3 +872,27 @@ The 8-sample mini-gold set is small and suitable only for the next bounded R13.4
 - No benchmark.
 - No method-validation claim.
 - Mini-gold is for pilot testing only.
+
+## I057 — Temporary-script deletion command must not be used in future stages
+
+### Status
+
+Open.
+
+### Context
+
+During R13.3.1, the agent created a temporary validation script and deleted it with Remove-Item. The deleted file was temporary and no project data was lost, but Remove-Item is forbidden in this project workflow.
+
+### Resolution Plan
+
+Future stages must use `python -c` or existing scripts for validation. Do not create temporary scripts that require deletion. Remove-Item and other delete commands remain forbidden.
+
+### Claim Boundary
+
+No data was lost. No project artifacts were affected. This is a process-only issue.
+
+### Safety Boundary
+
+- No delete commands in future stages.
+- Use `python -c` for inline validation.
+- Use existing scripts for structured verification.

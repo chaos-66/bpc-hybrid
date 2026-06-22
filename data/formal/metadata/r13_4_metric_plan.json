@@ -1,0 +1,48 @@
+{
+  "stage": "R13.4",
+  "type": "mini_pilot_metric_plan",
+  "real_api_call": false,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "sample_count": 8,
+  "gold_distribution": {
+    "obligation": 4,
+    "prohibition": 1,
+    "definition": 3,
+    "permission": 0,
+    "unknown": 0
+  },
+  "evaluation_dimensions": [
+    "modality",
+    "actor",
+    "action",
+    "condition",
+    "constraint",
+    "exception",
+    "schema_validity",
+    "runtime_safety"
+  ],
+  "allowed_field_match_labels": [
+    "exact",
+    "partial",
+    "missing",
+    "wrong",
+    "not_applicable"
+  ],
+  "failure_categories": [
+    "schema_invalid",
+    "modality_wrong",
+    "actor_missing",
+    "action_missing",
+    "condition_wrong",
+    "constraint_wrong",
+    "exception_wrong",
+    "api_timeout",
+    "api_error",
+    "config_blocked",
+    "unsafe_output",
+    "overclaim_detected"
+  ],
+  "claim_boundary": "Planning only. No benchmark, no method validation, no Sun reproduction."
+}
