@@ -1,0 +1,15 @@
+{
+  "stage": "R15.3",
+  "method": "rule_plus_llm_fallback_gdpr50",
+  "timestamp": "2026-06-23T12:48:19.380648+00:00",
+  "input_path": "D:\\Paper\\experiment\\bpc-hybrid\\data\\formal\\r15_gdpr50\\r15_gdpr50_candidate_samples.jsonl",
+  "output_path": "D:\\Paper\\experiment\\bpc-hybrid\\data\\formal\\predictions\\r15_gdpr50_rule_plus_llm_predictions.jsonl",
+  "sample_count": 50,
+  "llm_calls": 49,
+  "llm_errors": 0,
+  "elapsed_seconds": 1599.8551716804504,
+  "real_api": true,
+  "llm_used": true,
+  "llm_provider": "openai_compatible",
+  "llm_model": "qwen3.7-max"
+}
