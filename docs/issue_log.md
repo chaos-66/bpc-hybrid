@@ -1247,3 +1247,28 @@ R13.7.1
 
 No real API, no LLM, no evaluator rerun, no prediction/evaluation
 modification.
+
+
+## I069 — R13.7.1 missing negative gate tests for safety flags
+
+### Status
+
+Resolved in R13.7.2; pending Codex re-audit.
+
+### Context
+
+Codex R13.7.1 re-audit confirmed the original blocker fixes but required
+explicit negative tests for retry_allowed, repair_call_allowed,
+batch_allowed, raw_response_saved, benchmark, method_validation, and
+sun_reproduction.
+
+### Resolution
+
+R13.7.2 adds negative gate tests for all seven safety fields. No real API
+call, LLM call, evaluator rerun, prediction modification, or evaluation
+output modification was performed.
+
+### Boundary
+
+R13.7 remains pending Codex acceptance and may only be treated as a bounded
+8-sample Prompt B mini-pilot after audit acceptance.

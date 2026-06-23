@@ -4033,7 +4033,7 @@ Completed (R13.7). Pending Codex local-only audit.
 
 ### Date
 
-2025-01-28
+2026-06-22
 
 ### Type
 
@@ -4073,4 +4073,33 @@ evaluation summary, and evaluation details were NOT modified.
 ### Status
 
 Completed (R13.7.1). Pending Codex local-only re-audit.
+
+## R13.7.2 — Prompt B Runner Negative Gate Test Coverage Fix
+
+### Type
+
+Test coverage and documentation cleanup only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Added negative gate tests for the remaining R13.7 runner safety fields
+required by Codex: retry_allowed, repair_call_allowed, batch_allowed,
+raw_response_saved, benchmark, method_validation, and sun_reproduction.
+Also cleaned up non-blocking experiment-log wording.
+
+### Claim Boundary
+
+This stage does not change any R13.7 model output or evaluation result.
+R13.7 remains pending Codex re-audit.
 

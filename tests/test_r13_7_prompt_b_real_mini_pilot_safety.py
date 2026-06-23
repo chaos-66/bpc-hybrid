@@ -526,3 +526,180 @@ def test_validate_inputs_duplicate_samples() -> None:
     ]
     with pytest.raises(ValueError):
         _validate_inputs(candidates, gold)
+
+
+# ===========================================================================
+# R13.7.2 — Negative gate tests for safety flag fields
+#
+# Each test sets exactly one of the seven safety flags to True in an
+# otherwise open authorization contract and verifies the gate rejects it
+# BEFORE any API config load or API call.
+# ===========================================================================
+
+
+# ---------------------------------------------------------------------------
+# Test 20: retry_allowed=True rejected by gate
+# ---------------------------------------------------------------------------
+
+
+def test_gate_rejects_retry_allowed_true(tmp_path: Path) -> None:
+    """Gate fails when contract.retry_allowed is True."""
+    contract = _write_contract(
+        tmp_path / "contract.json",
+        {
+            "real_api_call_allowed_now": True,
+            "status": "authorized_for_single_bounded_run",
+            "retry_allowed": True,
+        },
+    )
+    checklist = _write_checklist(
+        tmp_path / "checklist.json",
+        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
+    )
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
+
+
+# ---------------------------------------------------------------------------
+# Test 21: repair_call_allowed=True rejected by gate
+# ---------------------------------------------------------------------------
+
+
+def test_gate_rejects_repair_call_allowed_true(tmp_path: Path) -> None:
+    """Gate fails when contract.repair_call_allowed is True."""
+    contract = _write_contract(
+        tmp_path / "contract.json",
+        {
+            "real_api_call_allowed_now": True,
+            "status": "authorized_for_single_bounded_run",
+            "repair_call_allowed": True,
+        },
+    )
+    checklist = _write_checklist(
+        tmp_path / "checklist.json",
+        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
+    )
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
+
+
+# ---------------------------------------------------------------------------
+# Test 22: batch_allowed=True rejected by gate
+# ---------------------------------------------------------------------------
+
+
+def test_gate_rejects_batch_allowed_true(tmp_path: Path) -> None:
+    """Gate fails when contract.batch_allowed is True."""
+    contract = _write_contract(
+        tmp_path / "contract.json",
+        {
+            "real_api_call_allowed_now": True,
+            "status": "authorized_for_single_bounded_run",
+            "batch_allowed": True,
+        },
+    )
+    checklist = _write_checklist(
+        tmp_path / "checklist.json",
+        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
+    )
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
+
+
+# ---------------------------------------------------------------------------
+# Test 23: raw_response_saved=True rejected by gate
+# ---------------------------------------------------------------------------
+
+
+def test_gate_rejects_raw_response_saved_true(tmp_path: Path) -> None:
+    """Gate fails when contract.raw_response_saved is True."""
+    contract = _write_contract(
+        tmp_path / "contract.json",
+        {
+            "real_api_call_allowed_now": True,
+            "status": "authorized_for_single_bounded_run",
+            "raw_response_saved": True,
+        },
+    )
+    checklist = _write_checklist(
+        tmp_path / "checklist.json",
+        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
+    )
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
+
+
+# ---------------------------------------------------------------------------
+# Test 24: benchmark=True rejected by gate
+# ---------------------------------------------------------------------------
+
+
+def test_gate_rejects_benchmark_true(tmp_path: Path) -> None:
+    """Gate fails when contract.benchmark is True."""
+    contract = _write_contract(
+        tmp_path / "contract.json",
+        {
+            "real_api_call_allowed_now": True,
+            "status": "authorized_for_single_bounded_run",
+            "benchmark": True,
+        },
+    )
+    checklist = _write_checklist(
+        tmp_path / "checklist.json",
+        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
+    )
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
+
+
+# ---------------------------------------------------------------------------
+# Test 25: method_validation=True rejected by gate
+# ---------------------------------------------------------------------------
+
+
+def test_gate_rejects_method_validation_true(tmp_path: Path) -> None:
+    """Gate fails when contract.method_validation is True."""
+    contract = _write_contract(
+        tmp_path / "contract.json",
+        {
+            "real_api_call_allowed_now": True,
+            "status": "authorized_for_single_bounded_run",
+            "method_validation": True,
+        },
+    )
+    checklist = _write_checklist(
+        tmp_path / "checklist.json",
+        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
+    )
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
+
+
+# ---------------------------------------------------------------------------
+# Test 26: sun_reproduction=True rejected by gate
+# ---------------------------------------------------------------------------
+
+
+def test_gate_rejects_sun_reproduction_true(tmp_path: Path) -> None:
+    """Gate fails when contract.sun_reproduction is True."""
+    contract = _write_contract(
+        tmp_path / "contract.json",
+        {
+            "real_api_call_allowed_now": True,
+            "status": "authorized_for_single_bounded_run",
+            "sun_reproduction": True,
+        },
+    )
+    checklist = _write_checklist(
+        tmp_path / "checklist.json",
+        {"authorized_now": True, "authorization_status": "authorized_for_single_bounded_run"},
+    )
+    with pytest.raises(SystemExit) as exc_info:
+        _check_authorization_gate(contract, checklist)
+    assert exc_info.value.code == 1
