@@ -1,0 +1,53 @@
+{
+  "stage": "R14.0",
+  "type": "controlled_experiment_design",
+  "comparison": "rule_only_vs_rule_plus_llm",
+  "research_question": "Does an LLM-assisted structured extraction path show better field-level extraction behavior than a deterministic rule-only baseline on the same small manually annotated sample set?",
+  "research_question_boundary": "This is a small controlled mini-experiment (n=24), not a formal benchmark or method validation.",
+  "planned_sample_count": 24,
+  "seed_sample_count": 8,
+  "new_sample_count": 16,
+  "seed_sample_source": "R13.3",
+  "source_distribution": {
+    "gdpr_eurlex": 12,
+    "austrian_income_tax_code": 12
+  },
+  "compared_systems": {
+    "rule_only": {
+      "extractor": "RuleFirstExtractor",
+      "fallback": "always_rule",
+      "llm_calls": false,
+      "stage": "R14.2"
+    },
+    "rule_plus_llm": {
+      "extractor": "RuleFirstExtractor",
+      "fallback": "few_shot_extraction",
+      "prompt": "Prompt B",
+      "llm_calls": true,
+      "authorization_required": true,
+      "stage": "R14.3"
+    }
+  },
+  "evaluation_metrics": {
+    "primary": "strict_exact_f1_micro",
+    "secondary": "lenient_partial_f1_micro",
+    "diagnostic": ["field_level_accuracy", "macro_f1"],
+    "metric_definition": "docs/r14_0_metric_definition.md"
+  },
+  "gold_file": "data/formal/gold/r14_combined_24_gold.jsonl",
+  "sample_file": "data/formal/processed/r14_combined_24_samples.jsonl",
+  "prediction_files": {
+    "rule_only": "data/formal/predictions/r14_2_rule_only_predictions.jsonl",
+    "rule_plus_llm": "data/formal/predictions/r14_3_rule_plus_llm_predictions.jsonl"
+  },
+  "downstream_stages": ["R14.1", "R14.2", "R14.3", "R14.4"],
+  "real_api_call": false,
+  "llm_call": false,
+  "evaluator_rerun": false,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "safe_to_draw_benchmark_conclusion": false,
+  "safe_to_claim_prompt_superiority": false,
+  "claim_boundary": "Design-only stage. No experimental claims made. Research question stated as a question, not a hypothesis. Results will be descriptive observations on 24 samples only — no statistical significance, no generalizability, no method validation."
+}

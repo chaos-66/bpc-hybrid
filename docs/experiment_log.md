@@ -4216,3 +4216,54 @@ controls`, with safer wording to avoid any production-readiness implication.
 This stage does not change any project evidence, model output, evaluation
 result, or experimental claim.
 
+## R14.0 — Controlled Experiment Design — Rule-only vs Rule+LLM
+
+### Type
+
+Design and planning only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- Prompt superiority claim: no
+
+### Result
+
+Designed a controlled 24-sample mini-experiment comparing a Rule-only
+baseline against a Rule+LLM-assisted extraction path. Defined the research
+question, sample composition (8 seed from R13.3 + 16 new from R14.1),
+compared systems, gold annotation plan, Rule-only baseline plan (R14.2),
+Rule+LLM-assisted plan (R14.3), evaluation metrics (strict exact-F1,
+lenient partial-F1, field-level accuracy, macro-F1), and safety boundary.
+
+### Artifacts Created
+
+- `docs/r14_0_controlled_experiment_plan.md` — 13-section experiment plan
+- `docs/r14_0_metric_definition.md` — 12-section metric definition
+- `data/formal/metadata/r14_0_experiment_design.json` — machine-readable design
+
+### Research Question
+
+"Does an LLM-assisted structured extraction path show better field-level
+extraction behavior than a deterministic rule-only baseline on the same small
+manually annotated sample set?"
+
+### Claim Boundary
+
+This is design-only. No experimental claims made. Research question stated
+as a question, not a hypothesis. All results will be descriptive observations
+on 24 samples only — no statistical significance, no generalizability, no
+method validation.
+
+### Next Stage
+
+R14.1 — Create 16 new candidate samples with gold annotations, build the
+combined 24-sample gold file, and prepare the combined sample input file.
+

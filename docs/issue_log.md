@@ -1317,3 +1317,27 @@ and no prompt superiority claim.
 
 No real API call, LLM call, evaluator rerun, prediction modification, or
 evaluation output modification is allowed in R13.9.
+
+## I072 — R14.0 controlled experiment design requires strict claim boundary
+
+### Status
+
+Open pending Codex audit.
+
+### Context
+
+R14.0 designs a controlled 24-sample Rule-only vs Rule+LLM mini-experiment.
+The research question is stated as a question, not a hypothesis. No
+predictions or experimental claims are made in this design-only stage.
+
+### Resolution Plan
+
+Keep all design documents within the claim boundary: no benchmark, no method
+validation, no Sun reproduction, no prompt superiority claim, no statistical
+significance framework. Results will be descriptive observations on 24 samples
+only.
+
+### Boundary
+
+No real API call, LLM call, evaluator rerun, prediction modification, or
+evaluation output modification is allowed in R14.0. Design-only.
