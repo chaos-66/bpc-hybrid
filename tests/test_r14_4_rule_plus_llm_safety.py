@@ -1,26 +1,32 @@
 """R14.4 Rule+LLM Real Pilot Safety Tests.
 
-Covers 15 test items for the R14.4 bounded real API pilot:
+Covers 16 test items for the R14.4 bounded real API pilot:
   1. No API calls without --execute-real-api
   2. Max API calls ceiling enforced
-  3. Prompt snapshot SHA256 verification
-  4. Prompt snapshot size verification
-  5. Prediction output has correct format
-  6. Each prediction has all 6 required fields with "value" keys
-  7. method always equals "rule_plus_llm_assisted"
-  8. selected_prompt_id always equals "r13_6_prompt_B"
-  9. execution metadata contains required keys
-  10. raw_response_saved always False
-  11. retry_used always False
-  12. repair_call_used always False
-  13. batch_used always False
-  14. attempt_index always 1
-  15. No more than 24 predictions in output
+  3. Max API calls boundary 24 OK
+  4. Prompt snapshot SHA256 verification
+  5. Prompt snapshot size verification
+  6. Prediction output has correct format
+  7. Each prediction has all 6 required fields with "value" keys
+  8. method always equals "rule_plus_llm_assisted"
+  9. selected_prompt_id always equals "r13_6_prompt_B"
+  10. execution metadata contains required keys
+  11. raw_response_saved always False
+  12. retry_used always False
+  13. repair_call_used always False
+  14. batch_used always False
+  15. attempt_index always 1
+  16. No more than 24 predictions in output
+
+R14.4.4: All subprocess tests use --output-predictions with tmp_path.
+         Session-scoped hash guard ensures canonical prediction artifact
+         is never mutated by any test.
 """
 from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -29,7 +35,7 @@ import pytest
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[1]
 _CANDIDATES_PATH = _PROJECT_ROOT / "data" / "formal" / "r14_controlled" / "r14_1_candidate_samples.jsonl"
-_PREDICTIONS_PATH = _PROJECT_ROOT / "data" / "formal" / "predictions" / "r14_4_rule_plus_llm_predictions.jsonl"
+_CANONICAL_PREDICTIONS_PATH = _PROJECT_ROOT / "data" / "formal" / "predictions" / "r14_4_rule_plus_llm_predictions.jsonl"
 _PROMPT_SNAPSHOT_PATH = _PROJECT_ROOT / "data" / "formal" / "metadata" / "r14_3_prompt_snapshot.json"
 _PROMPT_B_PATH = _PROJECT_ROOT / "prompts" / "r13_6" / "few_shot_extraction_prompt.md"
 _RUNNER_SCRIPT = _PROJECT_ROOT / "scripts" / "run_r14_4_rule_plus_llm_real_pilot.py"
@@ -43,32 +49,83 @@ REQUIRED_EXECUTION_KEYS = {
 
 
 # ---------------------------------------------------------------------------
-# Runner CLI tests (no network needed)
+# Session-scoped hash guard: ensure canonical predictions are never mutated
+# ---------------------------------------------------------------------------
+
+def _compute_sha256(path: Path) -> str | None:
+    """Compute SHA256 of a file, or None if it doesn't exist."""
+    if not path.exists():
+        return None
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+# Computed at module load — the real hash of the canonical file
+_CANONICAL_HASH_AT_START = _compute_sha256(_CANONICAL_PREDICTIONS_PATH)
+
+
+@pytest.fixture(scope="session")
+def canonical_predictions_hash_guard():
+    """Session-scoped guard: record canonical SHA256 before any test runs.
+
+    The _assert_canonical_unchanged fixture in TestPredictionsOutputFormat
+    verifies immutability after every test that reads the file.
+    """
+    return _CANONICAL_HASH_AT_START
+
+
+# ---------------------------------------------------------------------------
+# Helper: read JSONL
+# ---------------------------------------------------------------------------
+
+def _read_jsonl(path: Path) -> list[dict]:
+    records: list[dict] = []
+    with path.open("r", encoding="utf-8") as fh:
+        for line in fh:
+            stripped = line.strip()
+            if not stripped:
+                continue
+            records.append(json.loads(stripped))
+    return records
+
+
+# ---------------------------------------------------------------------------
+# Runner CLI tests (no network needed; uses tmp_path for output)
 # ---------------------------------------------------------------------------
 
 class TestRunnerGate:
-    """Tests for the authorization gate and CLI safety."""
+    """Tests for the authorization gate and CLI safety.
 
-    def test_1_no_api_calls_without_execute_real_api(self):
+    ALL subprocess invocations pass --output-predictions to a tmp_path
+    so the canonical prediction artifact is NEVER touched.
+    """
+
+    def test_1_no_api_calls_without_execute_real_api(self, tmp_path: Path):
         """R14.4-T1: Without --execute-real-api, no API calls should occur."""
+        out = tmp_path / "predictions.jsonl"
         result = subprocess.run(
-            [sys.executable, str(_RUNNER_SCRIPT)],
+            [
+                sys.executable, str(_RUNNER_SCRIPT),
+                "--output-predictions", str(out),
+            ],
             capture_output=True, text=True, cwd=str(_PROJECT_ROOT),
-            env={**__import__("os").environ, "BPC_HYBRID_LLM_ENABLED": "true"},
+            env={**os.environ, "BPC_HYBRID_LLM_ENABLED": "true"},
         )
-        # Should exit with error and not make any API calls
         assert result.returncode != 0, "Should exit non-zero without --execute-real-api"
-        # sys.exit(str) writes to stderr
         output = (result.stderr or result.stdout).strip()
         assert output, "Expected error output"
         data = json.loads(output)
         assert data.get("real_api_call_performed") is False
         assert "REAL_API_NOT_ENABLED" in data.get("status", "")
 
-    def test_2_max_api_calls_ceiling_enforced(self):
+    def test_2_max_api_calls_ceiling_enforced(self, tmp_path: Path):
         """R14.4-T2: --max-api-calls > 24 should be rejected."""
+        out = tmp_path / "predictions.jsonl"
         result = subprocess.run(
-            [sys.executable, str(_RUNNER_SCRIPT), "--execute-real-api", "--max-api-calls", "25"],
+            [
+                sys.executable, str(_RUNNER_SCRIPT),
+                "--execute-real-api", "--max-api-calls", "25",
+                "--output-predictions", str(out),
+            ],
             capture_output=True, text=True, cwd=str(_PROJECT_ROOT),
         )
         assert result.returncode != 0
@@ -77,12 +134,17 @@ class TestRunnerGate:
         data = json.loads(output)
         assert "TOO_MANY_CALLS" in data.get("status", "")
 
-    def test_3_max_api_calls_boundary_24_ok(self):
+    def test_3_max_api_calls_boundary_24_ok(self, tmp_path: Path):
         """R14.4-T2b: --max-api-calls 24 should pass the ceiling check."""
+        out = tmp_path / "predictions.jsonl"
         result = subprocess.run(
-            [sys.executable, str(_RUNNER_SCRIPT), "--execute-real-api", "--max-api-calls", "24"],
+            [
+                sys.executable, str(_RUNNER_SCRIPT),
+                "--execute-real-api", "--max-api-calls", "24",
+                "--output-predictions", str(out),
+            ],
             capture_output=True, text=True, cwd=str(_PROJECT_ROOT),
-            env={**__import__("os").environ, "BPC_HYBRID_LLM_ENABLED": "true"},
+            env={**os.environ, "BPC_HYBRID_LLM_ENABLED": "true"},
         )
         # It may fail on missing config/auth, but should NOT fail with TOO_MANY_CALLS
         if result.returncode != 0:
@@ -96,7 +158,7 @@ class TestRunnerGate:
 
 
 class TestPromptSnapshot:
-    """Tests for prompt snapshot verification."""
+    """Tests for prompt snapshot verification (read-only, no side effects)."""
 
     def test_4_prompt_sha256_matches_snapshot(self):
         """R14.4-T4: Prompt B SHA256 must match R14.3 snapshot."""
@@ -118,22 +180,32 @@ class TestPromptSnapshot:
 
 
 class TestPredictionsOutputFormat:
-    """Tests for predictions output file format."""
+    """Tests for predictions output file format.
+
+    Reads from CANONICAL path (read-only).  The hash guard ensures
+    the file is never mutated by any test in this suite.
+    """
 
     @pytest.fixture(autouse=True)
     def _skip_if_no_predictions(self):
-        if not _PREDICTIONS_PATH.exists():
+        if not _CANONICAL_PREDICTIONS_PATH.exists():
             pytest.skip("No predictions file yet — run R14.4 pilot first")
 
+    @pytest.fixture(autouse=True)
+    def _assert_canonical_unchanged(self, canonical_predictions_hash_guard):
+        """After each test, verify canonical file hash matches start-of-session hash."""
+        if _CANONICAL_HASH_AT_START is None:
+            yield
+            return
+        yield
+        current_hash = _compute_sha256(_CANONICAL_PREDICTIONS_PATH)
+        assert current_hash == _CANONICAL_HASH_AT_START, (
+            f"SAFETY VIOLATION: Canonical predictions file was mutated during test! "
+            f"Before: {_CANONICAL_HASH_AT_START}, After: {current_hash}"
+        )
+
     def _read_predictions(self) -> list[dict]:
-        records = []
-        with open(_PREDICTIONS_PATH, "r", encoding="utf-8") as fh:
-            for line in fh:
-                stripped = line.strip()
-                if not stripped:
-                    continue
-                records.append(json.loads(stripped))
-        return records
+        return _read_jsonl(_CANONICAL_PREDICTIONS_PATH)
 
     def test_6_predictions_have_correct_fields(self):
         """R14.4-T6: Each prediction has sample_id, method, selected_prompt_id, prediction_fields, execution."""
@@ -214,27 +286,15 @@ class TestPredictionsOutputFormat:
 
 
 class TestCandidatesIntegrity:
-    """Tests for candidate sample integrity."""
+    """Tests for candidate sample integrity (read-only)."""
 
     def test_candidates_24_samples(self):
         """Candidates file has exactly 24 samples."""
-        records = []
-        with open(_CANDIDATES_PATH, "r", encoding="utf-8") as fh:
-            for line in fh:
-                stripped = line.strip()
-                if not stripped:
-                    continue
-                records.append(json.loads(stripped))
+        records = _read_jsonl(_CANDIDATES_PATH)
         assert len(records) == 24
 
     def test_candidates_no_duplicate_ids(self):
         """Candidates have no duplicate sample IDs."""
-        records = []
-        with open(_CANDIDATES_PATH, "r", encoding="utf-8") as fh:
-            for line in fh:
-                stripped = line.strip()
-                if not stripped:
-                    continue
-                records.append(json.loads(stripped))
+        records = _read_jsonl(_CANDIDATES_PATH)
         ids = [r["sample_id"] for r in records]
         assert len(ids) == len(set(ids))

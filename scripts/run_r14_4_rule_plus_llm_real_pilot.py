@@ -328,7 +328,16 @@ def main() -> None:
         default=60.0,
         help="HTTP timeout per call in seconds (default: 60)",
     )
+    parser.add_argument(
+        "--output-predictions",
+        type=Path,
+        default=None,
+        help="Override predictions output path (for testing; defaults to canonical)",
+    )
     args = parser.parse_args()
+
+    # Resolve output path (canonical by default)
+    out_path = args.output_predictions or _PREDICTIONS_OUT
 
     # Gate: must explicitly opt in
     if not args.execute_real_api:
@@ -429,7 +438,7 @@ def main() -> None:
         predictions.append(record)
 
     # Write predictions
-    _write_jsonl(_PREDICTIONS_OUT, predictions)
+    _write_jsonl(out_path, predictions)
 
     print("--- R14.4 Complete ---")
     print(f"  API calls attempted: {call_count}")
@@ -438,7 +447,7 @@ def main() -> None:
     if error_categories:
         for cat, cnt in sorted(error_categories.items()):
             print(f"    {cat}: {cnt}")
-    print(f"  Predictions written: {_PREDICTIONS_OUT}")
+    print(f"  Predictions written: {out_path}")
 
 
 if __name__ == "__main__":

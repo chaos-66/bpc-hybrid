@@ -4671,3 +4671,54 @@ This stage only removes duplicate non-contract tracked artifacts. It does not re
 
 Completed.
 
+## R14.4.4 — Fix safety-test canonical prediction side effect
+
+### Goal
+
+Fix the side-effect bug where running the R14.4 safety pytest mutated the canonical `data/formal/predictions/r14_4_rule_plus_llm_predictions.jsonl` artifact. This blocked Codex R14.4.3 audit.
+
+### Scope
+
+- Add `--output-predictions` to runner (backward-compatible, defaults to canonical path)
+- Wire all subprocess gate tests (T1-T3) through `tmp_path`
+- Add session-scoped SHA256 hash guard for canonical prediction immutability
+- Fix stale report references in Section 4 and Section 6
+- Restore dirty prediction file from HEAD
+- Update README, experiment_log, issue_log (I084)
+- Run all verifications and push
+
+### Safety Constraints
+
+- API call: none
+- LLM call: none
+- Rule+LLM runner rerun: none
+- Evaluator rerun: no
+- Metrics recomputed: no
+- R14.4 prediction modification: no (restored from HEAD)
+- R14.4 contract-path result modification: no
+- R14.4 contract-path manifest/report modification: audit notes only
+- R14.1 candidate/gold modification: no
+- R14.2 baseline modification: no
+- R13 prediction/evaluation modification: no
+- Raw file modification: no
+- .env content read/search: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+- Remove-Item: none
+- git reset --hard: none
+- git add .: none
+
+### Result
+
+Safety tests now use tmp_path for subprocess outputs and verify canonical prediction immutability via SHA256 hash guard. Runner supports `--output-predictions` for test isolation. Report references corrected. I084 logged.
+
+### Claim Boundary
+
+This stage only fixes a test side-effect bug. It does not rerun API/LLM/evaluator, does not change experiment results, and does not support benchmark, method-validation, Sun-reproduction, or LLM-superiority claims.
+
+### Status
+
+Completed.
+

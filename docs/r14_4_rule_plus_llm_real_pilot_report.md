@@ -73,9 +73,8 @@ All 24 samples received schema-valid JSON responses from the LLM. No network err
 | Evaluation Summary | `data/formal/results/r14_4_rule_plus_llm_evaluation_summary.json` |
 | Evaluation Details | `data/formal/results/r14_4_rule_plus_llm_evaluation_details.jsonl` |
 | Contract Manifest | `data/formal/metadata/r14_4_rule_plus_llm_manifest.json` |
-| Original Manifest | `data/formal/metadata/r14_4_manifest.json` |
 | Runner Script | `scripts/run_r14_4_rule_plus_llm_real_pilot.py` |
-| Safety Tests | `tests/test_r14_4_rule_plus_llm_safety.py` (15 test items, all passing) |
+| Safety Tests | `tests/test_r14_4_rule_plus_llm_safety.py` (16 test items, all passing) |
 | Evaluator (modified) | `scripts/evaluate_r14_field_metrics.py` (added CLI boundary flags) |
 
 ---
@@ -102,12 +101,12 @@ All constraints from R14.3 execution contract satisfied:
 |------|--------|
 | `scripts/run_r14_4_rule_plus_llm_real_pilot.py` | Created |
 | `scripts/evaluate_r14_field_metrics.py` | Modified (added CLI boundary flags) |
-| `tests/test_r14_4_rule_plus_llm_safety.py` | Created (15 test items) |
+| `tests/test_r14_4_rule_plus_llm_safety.py` | Created (16 test items) |
 | `data/formal/predictions/r14_4_rule_plus_llm_predictions.jsonl` | Created (24 records) |
-| `data/formal/evaluations/r14_4_rule_plus_llm_summary.json` | Created |
-| `data/formal/evaluations/r14_4_rule_plus_llm_details.jsonl` | Created (24 records) |
-| `data/formal/metadata/r14_4_manifest.json` | Created |
-| `data/formal/reports/r14_4_rule_plus_llm_real_pilot_report.md` | Created |
+| `data/formal/results/r14_4_rule_plus_llm_evaluation_summary.json` | Created |
+| `data/formal/results/r14_4_rule_plus_llm_evaluation_details.jsonl` | Created (24 records) |
+| `data/formal/metadata/r14_4_rule_plus_llm_manifest.json` | Created |
+| `docs/r14_4_rule_plus_llm_real_pilot_report.md` | Created |
 
 ---
 
@@ -125,3 +124,25 @@ R14.4.1 did not rerun API, LLM, runner, predictor, or evaluator.
 R14.4.1 only aligned output paths and audit metadata.
 The original R14.4 execution log included an .env content search for BPC_HYBRID_LLM; this is recorded as an audit issue and must be reviewed by Codex.
 No .env content was read or searched again in R14.4.1.
+
+R14.4.2 removed `scripts/verify_r14_4.py` — a non-contract verification script (I082).
+No API, LLM, runner, predictor, or evaluator was rerun.
+
+R14.4.3 removed four duplicate non-contract R14.4 output artifacts:
+`data/formal/evaluations/r14_4_rule_plus_llm_summary.json`,
+`data/formal/evaluations/r14_4_rule_plus_llm_details.jsonl`,
+`data/formal/reports/r14_4_rule_plus_llm_real_pilot_report.md`,
+`data/formal/metadata/r14_4_manifest.json` (I083).
+Section 4, Section 6, and this section were updated to reference only contract paths.
+
+R14.4.4 fixed a safety-test side-effect bug: subprocess gate tests (T1-T3)
+were running the runner without `--output-predictions`, which caused
+canonical `data/formal/predictions/r14_4_rule_plus_llm_predictions.jsonl`
+to be overwritten on unexpected code paths. Fix: added `--output-predictions`
+to the runner script and wired all subprocess tests through `tmp_path`.
+Added a session-scoped SHA256 hash guard to assert canonical prediction
+immutability across the entire test suite (I084).
+Stale references in Section 4 and Section 6 (from R14.4.3 removals) were
+corrected. The runner change is backward-compatible: `--output-predictions`
+defaults to the canonical path. No API, LLM, runner, predictor, or evaluator
+was rerun.

@@ -95,6 +95,24 @@ R14.4.3 removes the duplicate non-contract tracked artifacts using exact `git rm
 
 No real API call, LLM call, Rule+LLM runner rerun, evaluator rerun, metrics recomputation, prediction modification, contract-path result modification, candidate/gold modification, baseline modification, raw modification, `.env` content read/search, benchmark claim, method-validation claim, Sun-reproduction claim, or LLM-superiority claim is allowed.
 
+## I084 — R14.4 safety test mutated canonical prediction artifact
+
+### Status
+
+Resolved in R14.4.4; pending Codex audit.
+
+### Context
+
+Running the allowed R14.4 safety pytest (`tests/test_r14_4_rule_plus_llm_safety.py`) mutated `data/formal/predictions/r14_4_rule_plus_llm_predictions.jsonl` because subprocess gate tests (T1-T3) invoked the runner without `--output-predictions`, causing the runner to write to the canonical path on certain code paths. Codex R14.4.3 audit returned BLOCKED until this side effect is fixed.
+
+### Resolution
+
+R14.4.4 adds `--output-predictions` to the runner script (defaults to canonical path, backward-compatible) and wires all subprocess gate tests through `tmp_path`. A session-scoped SHA256 hash guard asserts canonical prediction immutability across the entire test suite. Stale report references (Section 4, Section 6) from R14.4.3 removals were corrected. The dirty prediction file was restored from HEAD.
+
+### Boundary
+
+No real API call, LLM call, Rule+LLM runner rerun, evaluator rerun, metrics recomputation, prediction regeneration, candidate/gold modification, baseline modification, raw modification, `.env` content read/search, benchmark claim, method-validation claim, Sun-reproduction claim, or LLM-superiority claim is allowed.
+
 ## I028 — Empty rule-first result did not trigger mock fallback in R10.2
 
 ### Status
