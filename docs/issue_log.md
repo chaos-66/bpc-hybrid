@@ -1631,3 +1631,21 @@ Create a Rule+LLM execution contract, authorization request, prompt snapshot, an
 ### Boundary
 
 No real API call, LLM call, Rule+LLM run, rule-only predictor rerun, evaluator rerun, metrics computation, prediction modification, evaluation output modification, benchmark claim, method-validation claim, Sun-reproduction claim, or LLM-superiority claim is allowed in R14.3.
+
+## I089 ¡ª H1 cleanup risks after self-audit
+
+### Status
+
+Resolved in H1.1; pending independent audit.
+
+### Context
+
+H1 passed with warnings due PDF/copyright risk, previous git add -A usage, and temporary audit script clutter.
+
+### Resolution
+
+H1.1 checks and removes tracked risky artifacts where needed, without deleting local files or changing experimental outputs.
+
+### Boundary
+
+No experiment rerun, no LLM call, no evaluator rerun, no metric change, no exact Sun reproduction claim, no benchmark claim, and no LLM superiority claim.

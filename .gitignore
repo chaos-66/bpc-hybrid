@@ -39,6 +39,9 @@ tmp/
 temp/
 *.tmp
 
+# Academic PDFs (copyright risk)
+*.pdf
+
 # R13 formal raw source artifacts: keep local, do not commit by default
 data/formal/raw/**/*.pdf
 data/formal/raw/**/*full_text*.txt

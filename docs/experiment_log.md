@@ -4808,3 +4808,31 @@ This stage only fixes a test side-effect bug. It does not rerun API/LLM/evaluato
 
 Completed.
 
+
+## H1.1 ¡ª PDF Risk and Temporary Script Cleanup
+
+### Type
+
+Repository cleanup and audit-risk reduction only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction modification: no
+- Evaluation metric modification: no
+- Raw file modification: no
+- .env content read/search: no
+- Benchmark: no
+- Method validation: no
+- Exact Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Resolved H1 cleanup risks by checking PDF tracking, output/memory tracking, temporary H1 script tracking, and claim-boundary language.
+
+### Claim Boundary
+
+This stage does not change experimental evidence or metrics. It only reduces repository and audit risks.

@@ -106,3 +106,15 @@ Main objective: Read Sun and Barrientos PDFs, update method alignment, and proce
   - Rule+LLM showed higher non-empty field coverage in this local GDPR-50 run, but uses longer phrasing vs gold annotations
   - In this local run, LLM-assisted modality extraction reached 100% non-empty coverage; rule-based baseline reached 92.5%
 - Next action: Document findings, commit changes
+
+### Entry 010
+
+- Phase: H1.1 Cleanup
+- Action: Cleaned tracked PDF/copyright risk and temporary script pollution after H1 self-audit
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction modification: no
+- Result metric modification: no
+- .env content read/search: no
+- Result: pending verification
