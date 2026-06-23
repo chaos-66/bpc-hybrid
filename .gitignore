@@ -4,6 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 .pytest_cache/
+.codex_tmp*/
 .mypy_cache/
 .ruff_cache/
 .coverage
@@ -17,6 +18,7 @@ env/
 # Secrets
 .env
 .env.*
+!.env.example
 *.key
 *.pem
 
@@ -36,3 +38,15 @@ Thumbs.db
 tmp/
 temp/
 *.tmp
+
+# R13 formal raw source artifacts: keep local, do not commit by default
+data/formal/raw/**/*.pdf
+data/formal/raw/**/*full_text*.txt
+data/formal/raw/**/*.zip
+data/formal/raw/**/*.html
+
+# Local Codex / pytest temp basetemp directories
+codex_fresh/
+codex_tmp/
+.codex_fresh_*/
+.codex_tmp_*/
