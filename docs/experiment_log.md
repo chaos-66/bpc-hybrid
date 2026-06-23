@@ -4103,3 +4103,31 @@ Also cleaned up non-blocking experiment-log wording.
 This stage does not change any R13.7 model output or evaluation result.
 R13.7 remains pending Codex re-audit.
 
+## R13.8 — Descriptive Comparison of R13.4.2 and R13.7
+
+### Type
+
+Descriptive post-run analysis only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Created a descriptive comparison between the accepted R13.4.2 and R13.7
+bounded 8-sample mini-pilots. The comparison reports field-level and
+sample-level count differences only.
+
+### Claim Boundary
+
+This stage does not prove Prompt B superiority and does not validate the
+method. It is only a descriptive comparison of two bounded mini-pilot runs.
+

@@ -1272,3 +1272,25 @@ output modification was performed.
 
 R13.7 remains pending Codex acceptance and may only be treated as a bounded
 8-sample Prompt B mini-pilot after audit acceptance.
+
+
+## I070 — R13.8 descriptive comparison requires strict claim boundary
+
+### Status
+
+Open pending Codex audit.
+
+### Context
+
+R13.7 is accepted only as a bounded 8-sample Prompt B mini-pilot after
+R13.7.2. R13.8 compares R13.4.2 and R13.7 descriptively.
+
+### Resolution Plan
+
+Keep all comparison language descriptive and avoid benchmark,
+method-validation, Sun-reproduction, or prompt-superiority claims.
+
+### Boundary
+
+No real API call, LLM call, evaluator rerun, prediction modification, or
+evaluation output modification is allowed in R13.8.

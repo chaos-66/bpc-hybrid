@@ -1,0 +1,46 @@
+{
+  "stage": "R13.8",
+  "type": "descriptive_comparison",
+  "compared_runs": ["R13.4.2", "R13.7"],
+  "sample_count": 8,
+  "same_samples_reused": true,
+  "real_api_call_performed": false,
+  "llm_call_performed": false,
+  "evaluator_rerun": false,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "safe_to_draw_benchmark_conclusion": false,
+  "safe_to_claim_prompt_superiority": false,
+  "field_level_counts": {
+    "modality": {
+      "r13_4_2": {"exact": 7, "partial": 0, "missing": 0, "wrong": 1, "not_applicable": 0},
+      "r13_7": {"exact": 8, "partial": 0, "missing": 0, "wrong": 0, "not_applicable": 0}
+    },
+    "actor": {
+      "r13_4_2": {"exact": 0, "partial": 1, "missing": 4, "wrong": 3, "not_applicable": 0},
+      "r13_7": {"exact": 7, "partial": 1, "missing": 0, "wrong": 0, "not_applicable": 0}
+    },
+    "action": {
+      "r13_4_2": {"exact": 0, "partial": 0, "missing": 0, "wrong": 8, "not_applicable": 0},
+      "r13_7": {"exact": 4, "partial": 4, "missing": 0, "wrong": 0, "not_applicable": 0}
+    },
+    "condition": {
+      "r13_4_2": {"exact": 1, "partial": 0, "missing": 2, "wrong": 3, "not_applicable": 2},
+      "r13_7": {"exact": 2, "partial": 3, "missing": 1, "wrong": 0, "not_applicable": 2}
+    },
+    "constraint": {
+      "r13_4_2": {"exact": 0, "partial": 3, "missing": 1, "wrong": 4, "not_applicable": 0},
+      "r13_7": {"exact": 3, "partial": 5, "missing": 0, "wrong": 0, "not_applicable": 0}
+    },
+    "exception": {
+      "r13_4_2": {"exact": 0, "partial": 0, "missing": 0, "wrong": 0, "not_applicable": 8},
+      "r13_7": {"exact": 0, "partial": 0, "missing": 0, "wrong": 0, "not_applicable": 8}
+    }
+  },
+  "failure_category_counts": {
+    "r13_4_2": {"actor_missing": 4, "condition_wrong": 5, "constraint_wrong": 5, "modality_wrong": 1},
+    "r13_7": {"condition_wrong": 1}
+  },
+  "claim_boundary": "Descriptive comparison of two bounded 8-sample mini-pilots only. No benchmark, no method validation, no Sun reproduction, no prompt superiority claim."
+}
