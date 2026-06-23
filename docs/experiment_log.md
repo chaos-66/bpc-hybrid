@@ -4300,3 +4300,36 @@ comparison language.
 This stage does not create new samples or experimental results. It only
 repairs the R14.0 controlled experiment design package.
 
+## R14.0.2 — Fix Jaccard 1.0 Exact-match Metric Definition
+
+### Type
+
+Metric-definition documentation correction only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Rule-only experiment run: no
+- Rule+LLM experiment run: no
+- Evaluator rerun: no
+- New sample creation: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Fixed the remaining R14.0.1 audit blocker by explicitly defining token-overlap
+Jaccard = 1.0 as exact, even when normalized string order differs. The metric
+definition now has deterministic boundaries: Jaccard = 1.0 is exact, Jaccard
+>= 0.5 and < 1.0 is partial, and Jaccard < 0.5 is wrong.
+
+### Claim Boundary
+
+This stage does not create new samples or experimental results. It only
+repairs the R14.0 metric-definition document.
+

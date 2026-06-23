@@ -1363,3 +1363,25 @@ under the lenient threshold, and neutralizes all expected-improvement wording.
 
 No sample creation, rule-only run, LLM run, evaluator rerun, prediction
 modification, or evaluation output modification is allowed in R14.0.1.
+
+## I074 — R14.0.1 missing Jaccard 1.0 exact-match rule
+
+### Status
+
+Resolved in R14.0.2; pending Codex re-audit.
+
+### Context
+
+Codex blocked R14.0.1 because the metric definition did not explicitly define
+the Jaccard = 1.0 non-identical-string case as exact.
+
+### Resolution
+
+R14.0.2 defines exact match as either normalized string equality or token-set
+equivalence with Jaccard = 1.0. Partial and wrong thresholds remain
+deterministic.
+
+### Boundary
+
+No sample creation, rule-only run, LLM run, evaluator rerun, prediction
+modification, or evaluation output modification is allowed in R14.0.2.

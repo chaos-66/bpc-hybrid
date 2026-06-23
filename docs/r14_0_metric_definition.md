@@ -18,11 +18,23 @@ scores:
 
 | Score | Definition | Example |
 |-------|-----------|---------|
-| **exact** | Predicted value matches gold value exactly after normalization (whitespace collapse, Unicode NFKC). For enum fields (modality), the label must match exactly. | Gold: `"obligation"`, Pred: `"obligation"` |
+| **exact** | Predicted value matches gold value exactly. Satisfied when either: (a) the normalized predicted string equals the normalized gold string (whitespace collapse, Unicode NFKC); OR (b) the normalized token sets are equivalent, producing token-overlap Jaccard = 1.0 (string order may differ). For enum fields (modality), the label must match exactly. | Gold: `"obligation"`, Pred: `"obligation"`; also Gold: `"the controller shall record"`, Pred: `"record controller shall the"` (Jaccard = 1.0 → exact) |
 | **partial** | Predicted value shares substantial content with gold but is not an exact match. For text fields: token-overlap Jaccard >= 0.5 and < 1.0. For closed-set fields: not applicable (only exact/wrong). At exactly Jaccard = 0.5, the label is partial, not wrong. | Gold: `"the controller"`, Pred: `"controller"` (Jaccard = 0.5 → partial) |
 | **missing** | Gold has a non-null value for this field, but prediction is `null` or empty string. | Gold: `"entity processing personal data"`, Pred: `null` |
 | **wrong** | Predicted value is non-null but shares insufficient content with gold (token-overlap Jaccard < 0.5) or is semantically incorrect. | Gold: `"obligation"`, Pred: `"prohibition"` |
 | **not_applicable (NA)** | Both gold and prediction have `null` for this field. The field is not relevant for this sample. | Gold: `null`, Pred: `null` |
+
+**Jaccard 1.0 is exact.** When token-overlap Jaccard = 1.0, the predicted
+token set is identical to the gold token set. This is scored as `exact` even if
+the normalized string order differs from the gold. Therefore:
+- **exact**: normalized string equality OR token-overlap Jaccard = 1.0
+- **partial**: token-overlap Jaccard >= 0.5 AND < 1.0
+- **wrong**: token-overlap Jaccard < 0.5
+
+Example — token-set equivalence (Jaccard = 1.0 → exact):
+- Gold: `"the controller shall record"`
+- Pred: `"record controller shall the"`
+- Normalized token sets are identical (`{the, controller, shall, record}`), Jaccard = 1.0 → **exact**
 
 ## 3. Modality Scoring Rules
 
@@ -39,8 +51,9 @@ Modality is a closed-set enumeration: `obligation`, `prohibition`, `permission`,
 
 Actor is a free-text field normalized to English.
 
-- **exact**: Full string match after normalization (whitespace collapse, Unicode
-  NFKC, leading/trailing whitespace removal).
+- **exact**: Either (a) normalized string equality (whitespace collapse, Unicode
+  NFKC, leading/trailing whitespace removal), OR (b) token-set equivalence
+  with token-overlap Jaccard = 1.0 (string order may differ).
 - **partial**: Case-insensitive token Jaccard similarity >= 0.5 AND < 1.0.
   At exactly Jaccard = 0.5, the label is partial, not wrong.
   Example: "the controller" vs "controller" → tokens {the,controller} ∩
@@ -53,7 +66,8 @@ Actor is a free-text field normalized to English.
 
 Action is a free-text field describing the action in English infinitive form.
 
-- **exact**: Full string match after normalization.
+- **exact**: Either normalized string equality after normalization, OR token-set
+  equivalence with token-overlap Jaccard = 1.0 (string order may differ).
 - **partial**: Case-insensitive token Jaccard similarity >= 0.5 AND < 1.0.
   At exactly Jaccard = 0.5, the label is partial, not wrong.
   Example: "collect and further process personal data" vs "collect and process personal
@@ -67,8 +81,9 @@ Action is a free-text field describing the action in English infinitive form.
 
 Condition is a free-text field; may be null when no condition exists.
 
-- **exact**: Both null, OR both non-null with full string match after
-  normalization.
+- **exact**: Both null, OR both non-null satisfying either (a) full string match
+  after normalization, OR (b) token-set equivalence with token-overlap
+  Jaccard = 1.0 (string order may differ).
 - **partial**: Both non-null, token Jaccard >= 0.5 AND < 1.0.
   At exactly Jaccard = 0.5, the label is partial, not wrong.
 - **missing**: Gold non-null, prediction null.
@@ -85,7 +100,8 @@ irrelevant.
 
 Constraint is a free-text field capturing the normative content.
 
-- **exact**: Full string match after normalization.
+- **exact**: Either normalized string equality after normalization, OR token-set
+  equivalence with token-overlap Jaccard = 1.0 (string order may differ).
 - **partial**: Token Jaccard >= 0.5 AND < 1.0.
   At exactly Jaccard = 0.5, the label is partial, not wrong.
 - **missing**: Gold non-null, prediction null.
@@ -96,8 +112,9 @@ Constraint is a free-text field capturing the normative content.
 
 Exception is a free-text field; null when no exception exists.
 
-- **exact**: Both null, OR both non-null with full string match after
-  normalization.
+- **exact**: Both null, OR both non-null satisfying either (a) full string match
+  after normalization, OR (b) token-set equivalence with token-overlap
+  Jaccard = 1.0 (string order may differ).
 - **partial**: Both non-null, token Jaccard >= 0.5 AND < 1.0.
   At exactly Jaccard = 0.5, the label is partial, not wrong.
 - **missing**: Gold non-null, prediction null (false negative exception).
