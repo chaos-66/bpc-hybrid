@@ -4496,3 +4496,62 @@ Prepared the future Rule+LLM execution plan, authorization request, execution co
 
 This stage does not run Rule+LLM, does not call an LLM or real API, and does not create any Rule+LLM prediction or evaluation result. A future R14.4 run requires fresh explicit user authorization.
 
+## R14.4 — Rule+LLM-assisted Real API Pilot (Bounded)
+
+### Type
+
+Real API pilot execution on 24-sample draft mini-gold.
+
+### Scope
+
+- Real API call: yes (24 calls, qwen3.7-max via Alibaba MaaS)
+- LLM call: yes
+- Rule+LLM experiment run: yes
+- Prompt: r13_6_prompt_B (few-shot extraction, SHA256=d390ad51e...)
+- Rule-only predictor rerun: no
+- R14.1 candidate/gold modification: no
+- R14.2 prediction/evaluation modification: no
+- Raw response saving: no
+- Retry/repair/batch: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+24/24 API calls succeeded with schema-valid predictions. Zero errors.
+
+| Metric | Value |
+|--------|-------|
+| overall_field_exact_accuracy | 0.513 |
+| macro_strict_f1 | 0.5774 |
+| micro_strict_f1 | 0.5221 |
+| macro_lenient_f1 | 0.8405 |
+| micro_lenient_f1 | 0.8142 |
+
+Per-field exact accuracy: modality=0.875, actor=0.708, action=0.417,
+condition=0.250, constraint=0.167, exception=1.000.
+
+### Artifacts
+
+- `scripts/run_r14_4_rule_plus_llm_real_pilot.py`
+- `scripts/evaluate_r14_field_metrics.py` (modified: added CLI boundary flags)
+- `tests/test_r14_4_rule_plus_llm_safety.py` (15 test items, all passing)
+- `data/formal/predictions/r14_4_rule_plus_llm_predictions.jsonl`
+- `data/formal/evaluations/r14_4_rule_plus_llm_summary.json`
+- `data/formal/evaluations/r14_4_rule_plus_llm_details.jsonl`
+- `data/formal/metadata/r14_4_manifest.json`
+- `data/formal/reports/r14_4_rule_plus_llm_real_pilot_report.md`
+
+### Claim Boundary
+
+R14.4 reports Rule+LLM results only. No comparative claims vs R14.2
+(deferred to R14.5). No LLM superiority claim. R14.4 authorization
+does not extend to R14.5 or any subsequent stage.
+
+### Status
+
+Completed after 24 API calls, evaluation, verification (9/9 checks),
+and GitHub push.
+

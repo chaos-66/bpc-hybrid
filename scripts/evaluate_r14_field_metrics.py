@@ -269,7 +269,15 @@ def _micro_average(
     }
 
 
-def evaluate(predictions: list[dict], gold_records: list[dict]) -> tuple[dict, list[dict]]:
+def evaluate(
+    predictions: list[dict],
+    gold_records: list[dict],
+    stage: str = "R14.2",
+    method: str = "rule_only",
+    real_api_call_performed: bool = False,
+    llm_call_performed: bool = False,
+    rule_plus_llm_experiment_run: bool = False,
+) -> tuple[dict, list[dict]]:
     """Evaluate predictions against gold annotations."""
     # Build gold lookup
     gold_by_id: dict[str, dict] = {g["sample_id"]: g for g in gold_records}
@@ -326,12 +334,12 @@ def evaluate(predictions: list[dict], gold_records: list[dict]) -> tuple[dict, l
     overall_accuracy = total_exact / total_applicable if total_applicable > 0 else 0.0
 
     summary = {
-        "stage": "R14.2",
-        "method": "rule_only",
+        "stage": stage,
+        "method": method,
         "sample_count": n,
-        "real_api_call_performed": False,
-        "llm_call_performed": False,
-        "rule_plus_llm_experiment_run": False,
+        "real_api_call_performed": real_api_call_performed,
+        "llm_call_performed": llm_call_performed,
+        "rule_plus_llm_experiment_run": rule_plus_llm_experiment_run,
         "benchmark": False,
         "method_validation": False,
         "sun_reproduction": False,
@@ -363,6 +371,20 @@ def main() -> None:
     parser.add_argument("--gold", required=True, help="Path to gold JSONL")
     parser.add_argument("--summary", required=True, help="Path to output summary JSON")
     parser.add_argument("--details", required=True, help="Path to output details JSONL")
+    parser.add_argument("--stage", default="R14.2", help="Stage label (default: R14.2)")
+    parser.add_argument("--method", default="rule_only", help="Method label (default: rule_only)")
+    parser.add_argument(
+        "--real-api", action="store_true", default=False,
+        help="Set real_api_call_performed=true",
+    )
+    parser.add_argument(
+        "--llm", action="store_true", default=False,
+        help="Set llm_call_performed=true",
+    )
+    parser.add_argument(
+        "--rule-plus-llm", action="store_true", default=False,
+        help="Set rule_plus_llm_experiment_run=true",
+    )
     args = parser.parse_args()
 
     # Load predictions
@@ -383,7 +405,14 @@ def main() -> None:
                 continue
             gold_records.append(json.loads(stripped))
 
-    summary, details = evaluate(predictions, gold_records)
+    summary, details = evaluate(
+        predictions, gold_records,
+        stage=args.stage,
+        method=args.method,
+        real_api_call_performed=args.real_api,
+        llm_call_performed=args.llm,
+        rule_plus_llm_experiment_run=args.rule_plus_llm,
+    )
 
     # Write summary
     Path(args.summary).parent.mkdir(parents=True, exist_ok=True)
