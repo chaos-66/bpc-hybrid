@@ -4131,3 +4131,30 @@ sample-level count differences only.
 This stage does not prove Prompt B superiority and does not validate the
 method. It is only a descriptive comparison of two bounded mini-pilot runs.
 
+## R13.8.1 — Tiny Documentation Polish
+
+### Type
+
+Documentation typo fix only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+
+### Result
+
+Fixed a non-blocking typo in the R13.8 descriptive comparison report:
+`GDPD` was corrected to `GDPR`.
+
+### Claim Boundary
+
+This stage does not change any model output, evaluation result, metadata
+count, or project claim.
+

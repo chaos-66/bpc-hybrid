@@ -299,7 +299,7 @@ Based on this limited 8-sample comparison:
 - **Same samples reused**: Both runs used the identical 8-sample set. No held-out or cross-validation was performed.
 - **Mini-gold only**: The gold template was manually reviewed for 8 samples and is not a comprehensive gold standard.
 - **Single model**: Both runs used qwen3.7-max. Observations may not transfer to other models.
-- **Two domains only**: GDPD and Austrian tax code. Observations may not generalize to other legal domains.
+- **Two domains only**: GDPR and Austrian tax code. Observations may not generalize to other legal domains.
 - **No exception coverage**: The field-level comparison for exception is uninformative because no gold sample contains an exception.
 
 ## 10. Next Step Recommendation
