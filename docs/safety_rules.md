@@ -8,7 +8,8 @@ The ONLY allowed project path is:
 D:\Paper\experiment\bpc-hybrid
 ```
 
-All file reads, writes, and operations MUST stay within this directory and its subdirectories.
+All file reads, writes, and operations MUST stay within this directory
+and its subdirectories.
 
 ## 2. Forbidden Paths
 
@@ -42,7 +43,8 @@ The following commands (and any equivalent variants) are ABSOLUTELY FORBIDDEN:
 - Bulk cleanup
 - Directory wiping
 
-If any operation might affect paths outside `D:\Paper\experiment\bpc-hybrid`, it MUST be stopped immediately and reported.
+If any operation might affect paths outside `D:\Paper\experiment\bpc-hybrid`,
+it MUST be stopped immediately and reported.
 
 ## 4. GitHub Push Requirement
 
@@ -67,8 +69,10 @@ If any operation might affect paths outside `D:\Paper\experiment\bpc-hybrid`, it
 - GDPR / BPMN / Sun dataset data MUST NOT be fabricated.
 - Synthetic prototypes MUST NOT be presented as formal benchmarks.
 - Claims about surpassing Sun or any prior work are forbidden.
-- Claims about completing BPMN compliance checking are forbidden (until actually done).
-- Claims about completing over-compliance detection are forbidden (until actually done).
+- Claims about completing BPMN compliance checking are forbidden
+  (until actually done).
+- Claims about completing over-compliance detection are forbidden
+  (until actually done).
 
 ## 7. Allowed Statements
 
@@ -78,36 +82,15 @@ The following factual statements are allowed:
 - "Current project goal is to rebuild a runnable MVP."
 - "Current main track is Sun-aligned GDPR + BPMN."
 - "No real data is included at this stage."
-- "No benchmark results are claimed."
+- "No benchmark results are claimed at this stage."
 
-## 9. Local pytest/Codex temp directory convention
+## 8. Emergency Protocol
 
-All future Codex and pytest `--basetemp` paths should be placed under
-grouped local temp folders instead of the project root.
+If any of the following are detected, STOP immediately and report:
 
-Use:
-
-```powershell
---basetemp codex_fresh/
-```
-
-Examples:
-
-```
---basetemp codex_fresh/r10_4_audit_full
---basetemp codex_fresh/r10_4_audit_gate
---basetemp codex_fresh/r11_0_plan_full
-```
-
-Do not create new root-level `.codex_fresh_*` directories unless a
-legacy prompt requires it.
-
-## 8. Emergency Stop Conditions
-
-If ANY of the following are detected, STOP immediately and report:
-
-- Current path is not `D:\Paper\experiment\bpc-hybrid`
-- Git status shows unexpected changes outside the project
-- Files are missing that should exist
-- Any forbidden path access is detected
-- Any recursive deletion or cleanup command is triggered
+- Current working directory is outside `D:\Paper\experiment\bpc-hybrid`
+- Git remote points to an unexpected or non-GitHub URL
+- `.env` or credential files appear in Git staging area
+- Large-scale file changes or deletions are detected
+- Unknown processes are modifying the project directory
+- Files outside the project root are accessed or modified
