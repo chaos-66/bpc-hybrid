@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_2"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_incorrect_actor" isExecutable="false">
+    <bpmn:laneSet>
+      <bpmn:lane id="Lane_processor" name="Processor">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_record</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <!-- Rule says: "Controller shall record the decision" -->
+    <!-- But BPMN lane is "Processor" — actor is INCORRECT (should be Controller) -->
+    <bpmn:startEvent id="StartEvent_1" name="Start"/>
+    <bpmn:task id="Task_record" name="Record decision"/>
+    <bpmn:endEvent id="EndEvent_1" name="End"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_record"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_record" targetRef="EndEvent_1"/>
+  </bpmn:process>
+</bpmn:definitions>

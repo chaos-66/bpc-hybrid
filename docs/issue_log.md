@@ -1,5 +1,46 @@
 # Issue Log
 
+## I086 — R15.0 Sun-method Alignment Implementation
+
+- **Date**: 2026-06-23
+- **Type**: Implementation
+- **Description**: R15.0 stage: audit gap between current project and Sun et al. (2024) method; implement Sun-style rule-template extraction core with marker lexicon, modality classifier, syntactic rules, semantic extractor, rule records, BPMN semantics parser, and violation detector; run Sun-style extraction on 24 R14.1 samples; evaluate; compare with R14.4; test; document; commit; push.
+- **Resolution**: Full implementation completed. 13-component gap audit produced. 7 new source modules created under `src/bpc_hybrid/sun_style/`. 3 BPMN fixture files. 4 test files (24 test items). Runner, evaluator, and comparison scripts. All 807 tests pass. No LLM/API/external downloads. Not exact Sun reproduction — original datasets and trained models unavailable.
+- **Key finding**: R15.0 Sun-style rule-template baseline is structurally more aligned with Sun et al. method than R14.2 lightweight baseline. R15.0 rule-only metrics (strict_f1=0.2235) are below R14.4 rule+LLM (strict_f1=0.5221), as expected. Methodological risk identified in R14.2 is now corrected.
+- **Files created**:
+  - `src/bpc_hybrid/sun_style/marker_lexicon.py`
+  - `src/bpc_hybrid/sun_style/modality_classifier.py`
+  - `src/bpc_hybrid/sun_style/syntactic_rules.py`
+  - `src/bpc_hybrid/sun_style/semantic_extractor.py`
+  - `src/bpc_hybrid/sun_style/rule_record.py`
+  - `src/bpc_hybrid/sun_style/bpmn_semantics.py`
+  - `src/bpc_hybrid/sun_style/violation_detection.py`
+  - `data/formal/metadata/r15_0_sun_method_alignment_gap_matrix.json`
+  - `data/formal/metadata/r15_0_sun_style_marker_lexicon.json`
+  - `data/formal/r15_sun_style/fixtures/minimal_bpmn_missing_action.bpmn`
+  - `data/formal/r15_sun_style/fixtures/minimal_bpmn_incorrect_actor.bpmn`
+  - `data/formal/r15_sun_style/fixtures/minimal_bpmn_out_of_order.bpmn`
+  - `scripts/run_r15_sun_style_rule_only.py`
+  - `scripts/compare_r15_sun_style_vs_rule_llm.py`
+  - `data/formal/predictions/r15_0_sun_style_rule_only_predictions.jsonl`
+  - `data/formal/metadata/r15_0_sun_style_rule_only_manifest.json`
+  - `data/formal/results/r15_0_sun_style_rule_only_evaluation_summary.json`
+  - `data/formal/results/r15_0_sun_style_rule_only_evaluation_details.jsonl`
+  - `data/formal/results/r15_vs_r14_4_comparison_summary.json`
+  - `data/formal/results/r15_vs_r14_4_field_comparison.jsonl`
+  - `docs/r15_0_sun_method_alignment_gap_audit.md`
+  - `docs/r15_0_sun_style_vs_r14_4_rule_llm_comparison_report.md`
+  - `docs/r15_0_sun_style_vs_r14_4_ppt_doc.md`
+  - `tests/test_r15_sun_style_g1_lexicon_classifier.py`
+  - `tests/test_r15_sun_style_g2_extraction_rules.py`
+  - `tests/test_r15_sun_style_g3_bpmn_violation.py`
+  - `tests/test_r15_sun_style_g4_outputs_overclaim.py`
+- **Files modified**:
+  - `src/bpc_hybrid/sun_style/__init__.py` (exports updated)
+  - `README.md` (R15.0 added)
+  - `docs/experiment_log.md` (R15.0 entry prepended)
+  - `docs/issue_log.md` (this entry)
+
 ## I085 — R14.5 Descriptive Rule-only vs Rule+LLM Comparison
 
 - **Date**: 2026-06-23

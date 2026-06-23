@@ -1,0 +1,125 @@
+{
+  "stage": "R15.0",
+  "type": "sun_method_alignment_gap_matrix",
+  "audit_date": "2026-06-23",
+  "disclaimer": "R14.2 lightweight rule-only baseline is not equivalent to Sun's full method.",
+  "components": [
+    {
+      "sun_component": "BERT modality classifier",
+      "current_project_status": "missing",
+      "gap_severity": "major",
+      "required_fix": "Implement Sun-style ModalityClassifier interface with deterministic fallback using extended marker lexicon",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "No transformers/torch available. Interface-compatible fallback only. Mark explicitly as 'BERT component is interface-compatible fallback, not exact Sun trained BERT reproduction'."
+    },
+    {
+      "sun_component": "Constituency parsing tree",
+      "current_project_status": "missing",
+      "gap_severity": "blocking_for_exact_reproduction",
+      "required_fix": "Implement marker-span heuristic approximation of tree patterns",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "No spaCy/stanza/benepar available. Approximated by marker-position-based span rules. Document as 'constituency parsing unavailable; approximated by marker-span and dependency-like heuristic'."
+    },
+    {
+      "sun_component": "Dependency parsing",
+      "current_project_status": "missing",
+      "gap_severity": "major",
+      "required_fix": "Implement subject-like heuristic: first NP before modality marker in clause",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "No dependency parser available. Use word-position and marker-proximity heuristics."
+    },
+    {
+      "sun_component": "Domain-marked lexicon",
+      "current_project_status": "partial",
+      "gap_severity": "minor",
+      "required_fix": "Create comprehensive marker lexicon covering modality/condition/constraint/exception/actor markers",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "R14.2 had only 6 modality + 4 constraint markers. Expand to 50+ markers across 5 categories."
+    },
+    {
+      "sun_component": "Semantic concept extraction rules",
+      "current_project_status": "different",
+      "gap_severity": "major",
+      "required_fix": "Implement span-based rule templates that approximate Sun's tree patterns (SBAR/PP/NP/VP-based rules)",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "Use marker positions as anchors. Apply span-level rules (marker + following clause, marker + preceding NP). Remove extracted spans from action computation."
+    },
+    {
+      "sun_component": "Rule record construction",
+      "current_project_status": "partial",
+      "gap_severity": "minor",
+      "required_fix": "Add sun_alignment metadata block to each extraction record",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "Output already has 6 fields. Add provenance metadata."
+    },
+    {
+      "sun_component": "BPMN process model disassembly",
+      "current_project_status": "missing",
+      "gap_severity": "major",
+      "required_fix": "Implement BPMN XML parser using xml.etree.ElementTree; create minimal fixture files",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "Scaffold + fixtures only. Cannot reproduce Sun GDPR BPMN benchmark without original data."
+    },
+    {
+      "sun_component": "Matching score",
+      "current_project_status": "missing",
+      "gap_severity": "major",
+      "required_fix": "Implement field-level Jaccard matching between rule record and process semantic record",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "Reuse existing Jaccard token similarity from evaluator."
+    },
+    {
+      "sun_component": "Missing action detection",
+      "current_project_status": "missing",
+      "gap_severity": "major",
+      "required_fix": "Compare extracted action against BPMN activity labels",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "Deterministic Jaccard threshold comparison."
+    },
+    {
+      "sun_component": "Incorrect actor detection",
+      "current_project_status": "missing",
+      "gap_severity": "major",
+      "required_fix": "Compare extracted actor against BPMN lane assignments",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "Token overlap comparison."
+    },
+    {
+      "sun_component": "Out-of-order execution detection",
+      "current_project_status": "missing",
+      "gap_severity": "major",
+      "required_fix": "Compare constraint-implied ordering against BPMN sequence flow ordering",
+      "can_fix_locally_without_download": true,
+      "will_fix_in_r15": true,
+      "implementation_notes": "Positional ordering heuristic."
+    },
+    {
+      "sun_component": "Evaluation dataset equivalence",
+      "current_project_status": "different",
+      "gap_severity": "blocking_for_exact_reproduction",
+      "required_fix": "Cannot fix. Original Sun GDPR BPMN datasets not available.",
+      "can_fix_locally_without_download": false,
+      "will_fix_in_r15": false,
+      "implementation_notes": "Use R14.1 24 draft mini-gold samples as local test set only."
+    },
+    {
+      "sun_component": "Metric equivalence",
+      "current_project_status": "different",
+      "gap_severity": "minor",
+      "required_fix": "Not required for descriptive comparison. Keep existing evaluator.",
+      "can_fix_locally_without_download": false,
+      "will_fix_in_r15": false,
+      "implementation_notes": "R14 field-level metrics are more granular than Sun's accuracy/F1 on compliance outcomes."
+    }
+  ]
+}

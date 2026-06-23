@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_3"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_out_of_order" isExecutable="false">
+    <bpmn:laneSet>
+      <bpmn:lane id="Lane_controller" name="Controller">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_notify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_record</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <!-- Rule says: "Controller shall record the decision before notifying the data subject" -->
+    <!-- But BPMN has Notify BEFORE Record — OUT OF ORDER -->
+    <bpmn:startEvent id="StartEvent_1" name="Start"/>
+    <bpmn:task id="Task_notify" name="Notify data subject"/>
+    <bpmn:task id="Task_record" name="Record decision"/>
+    <bpmn:endEvent id="EndEvent_1" name="End"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_notify"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_notify" targetRef="Task_record"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_record" targetRef="EndEvent_1"/>
+  </bpmn:process>
+</bpmn:definitions>

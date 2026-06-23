@@ -1,5 +1,63 @@
 # Experiment Log
 
+## R15.0 — Sun-method Alignment Audit and Sun-style Implementation Refactor
+
+### Date
+2026-06-23
+
+### Description
+R15.0 corrects the methodological risk that R14.2 lightweight rule-only baseline is not equivalent to Sun et al. (2024) method. Implements Sun-style rule-template extraction core (modality classifier, domain marker lexicon, syntactic rules, semantic extractor, rule records) along with BPMN semantics and violation detection scaffold. Runs Sun-style extraction on 24 R14.1 samples, evaluates, and compares with R14.4.
+
+All work is deterministic, stdlib-only. No LLM, no API, no external downloads, no original Sun datasets.
+
+### Key Implementation
+- Sun-method gap audit (13 components assessed)
+- Sun-style marker lexicon (50+ markers, 5 categories)
+- Modality classifier with deterministic fallback
+- Syntactic rule engine (span-based surrogate for tree patterns)
+- Semantic extraction pipeline (6-field output)
+- BPMN 2.0 XML parser and violation detector
+- 3 BPMN fixture files for testing
+
+### Evaluation Results
+- R15.0 overall_field_exact_accuracy: 0.1667
+- R15.0 strict_f1: 0.2235
+- R14.4 overall_field_exact_accuracy: 0.513
+- R14.4 strict_f1: 0.5221
+- Delta (R15-R14.4): -0.3463 (expected — R15 is rule-only, R14.4 is rule+LLM)
+
+### Outputs
+- `data/formal/predictions/r15_0_sun_style_rule_only_predictions.jsonl`
+- `data/formal/metadata/r15_0_sun_style_rule_only_manifest.json`
+- `data/formal/results/r15_0_sun_style_rule_only_evaluation_summary.json`
+- `data/formal/results/r15_0_sun_style_rule_only_evaluation_details.jsonl`
+- `data/formal/results/r15_vs_r14_4_comparison_summary.json`
+- `data/formal/results/r15_vs_r14_4_field_comparison.jsonl`
+- `docs/r15_0_sun_method_alignment_gap_audit.md`
+- `docs/r15_0_sun_style_vs_r14_4_rule_llm_comparison_report.md`
+- `docs/r15_0_sun_style_vs_r14_4_ppt_doc.md`
+- `data/formal/metadata/r15_0_sun_method_alignment_gap_matrix.json`
+- `data/formal/metadata/r15_0_sun_style_marker_lexicon.json`
+
+### New Source Modules
+- `src/bpc_hybrid/sun_style/marker_lexicon.py`
+- `src/bpc_hybrid/sun_style/modality_classifier.py`
+- `src/bpc_hybrid/sun_style/syntactic_rules.py`
+- `src/bpc_hybrid/sun_style/semantic_extractor.py`
+- `src/bpc_hybrid/sun_style/rule_record.py`
+- `src/bpc_hybrid/sun_style/bpmn_semantics.py`
+- `src/bpc_hybrid/sun_style/violation_detection.py`
+
+### Claim Boundary
+R15.0 provides a structurally more Sun-aligned rule-template baseline than R14.2. It does NOT constitute exact Sun reproduction. Original datasets, trained BERT model, full marker lexicon, and original BPMN evaluation benchmark are unavailable.
+
+### Test Results
+24 new R15.0 tests + 807 total tests pass (0 failures).
+
+### Scripts
+- `scripts/run_r15_sun_style_rule_only.py` — extraction runner
+- `scripts/compare_r15_sun_style_vs_rule_llm.py` — comparison script
+
 ## R14.5 — Descriptive Rule-only vs Rule+LLM Comparison
 
 ### Date

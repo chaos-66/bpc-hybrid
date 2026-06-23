@@ -1,0 +1,92 @@
+{
+  "comparison_name": "R15.0 Sun-style Rule-Template vs R14.4 Rule+LLM",
+  "timestamp_utc": "2026-06-23T09:27:41.797559+00:00",
+  "r15_method": "sun_style_rule_template",
+  "r14_method": "rule_plus_llm",
+  "r15_no_llm": true,
+  "r14_used_llm": true,
+  "key_claim": "R15.0 Sun-style rule-template baseline is structurally more aligned with Sun et al. (2024) method than R14.2 lightweight rule-only baseline.  R15.0 does NOT outperform R14.4 (rule+LLM) on numeric metrics because R15.0 uses no LLM.  Still, R15.0 is NOT an exact Sun reproduction — the original datasets, trained BERT model, full marker lexicon, and original BPMN benchmark are unavailable.",
+  "metrics": {
+    "overall_field_exact_accuracy": {
+      "R15_0": 0.1667,
+      "R14_4": 0.513,
+      "delta_R15_minus_R14": -0.3463
+    },
+    "strict_f1": {
+      "R15_0": 0.2235,
+      "R14_4": 0.5221,
+      "delta_R15_minus_R14": -0.2986
+    },
+    "macro_strict_f1": {
+      "R15_0": 0.2268,
+      "R14_4": 0.5774,
+      "delta_R15_minus_R14": -0.3506
+    },
+    "lenient_partial_f1": {
+      "R15_0": 0.2824,
+      "R14_4": 0.8142,
+      "delta_R15_minus_R14": -0.5318
+    },
+    "macro_lenient_f1": {
+      "R15_0": 0.2959,
+      "R14_4": 0.8405,
+      "delta_R15_minus_R14": -0.5446
+    }
+  },
+  "field_comparison": {
+    "action": {
+      "R15_0_strict_f1": 0.0,
+      "R14_4_strict_f1": 0.4167,
+      "R15_0_lenient_f1": 0.0476,
+      "R14_4_lenient_f1": 0.7917,
+      "R15_0_exact_accuracy": 0.0,
+      "R14_4_exact_accuracy": 0.4167,
+      "delta_strict_f1": -0.4167
+    },
+    "actor": {
+      "R15_0_strict_f1": 0.0513,
+      "R14_4_strict_f1": 0.7391,
+      "R15_0_lenient_f1": 0.1026,
+      "R14_4_lenient_f1": 0.8261,
+      "R15_0_exact_accuracy": 0.0417,
+      "R14_4_exact_accuracy": 0.7083,
+      "delta_strict_f1": -0.6878
+    },
+    "condition": {
+      "R15_0_strict_f1": 0.0,
+      "R14_4_strict_f1": 0.2667,
+      "R15_0_lenient_f1": 0.3158,
+      "R14_4_lenient_f1": 0.8,
+      "R15_0_exact_accuracy": 0.0,
+      "R14_4_exact_accuracy": 0.25,
+      "delta_strict_f1": -0.2667
+    },
+    "constraint": {
+      "R15_0_strict_f1": 0.0,
+      "R14_4_strict_f1": 0.1667,
+      "R15_0_lenient_f1": 0.0,
+      "R14_4_lenient_f1": 0.75,
+      "R15_0_exact_accuracy": 0.0,
+      "R14_4_exact_accuracy": 0.1667,
+      "delta_strict_f1": -0.1667
+    },
+    "exception": {
+      "R15_0_strict_f1": 0.5,
+      "R14_4_strict_f1": 1.0,
+      "R15_0_lenient_f1": 0.5,
+      "R14_4_lenient_f1": 1.0,
+      "R15_0_exact_accuracy": 0.3333,
+      "R14_4_exact_accuracy": 1.0,
+      "delta_strict_f1": -0.5
+    },
+    "modality": {
+      "R15_0_strict_f1": 0.8095,
+      "R14_4_strict_f1": 0.875,
+      "R15_0_lenient_f1": 0.8095,
+      "R14_4_lenient_f1": 0.875,
+      "R15_0_exact_accuracy": 0.7083,
+      "R14_4_exact_accuracy": 0.875,
+      "delta_strict_f1": -0.0655
+    }
+  }
+}

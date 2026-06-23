@@ -1,0 +1,68 @@
+{
+  "stage": "R15.0",
+  "type": "sun_style_marker_lexicon",
+  "description": "Domain-marked lexicon for Sun-style semantic extraction. Covers modality, condition, constraint, exception, and actor markers inspired by Sun et al. (2024).",
+  "disclaimer": "This is a locally constructed lexicon, not Sun's original marker set. Sun's original full marker lexicon is not publicly available.",
+  "categories": {
+    "modality": {
+      "description": "Deontic modality markers indicating normative force",
+      "classifications": {
+        "obligation": ["shall", "must", "is required to", "has the obligation to", "is obliged to", "it is mandatory to"],
+        "prohibition": ["shall not", "must not", "no person shall", "is prohibited from", "may not", "it is forbidden to", "is not permitted to", "is not allowed to"],
+        "permission": ["may", "is permitted to", "is allowed to", "is authorized to", "has the right to", "it is permissible to"],
+        "definition": ["means", "refers to", "denotes", "is defined as", "shall mean", "is understood as", "shall be construed as"]
+      },
+      "priority_order": ["prohibition", "obligation", "permission", "definition"]
+    },
+    "condition": {
+      "description": "Markers introducing conditional clauses or temporal preconditions",
+      "markers": [
+        "if", "when", "where", "in case of", "provided that", "once",
+        "after", "before", "unless", "in the event that", "insofar as",
+        "to the extent that", "subject to", "on condition that",
+        "as long as", "so long as", "upon", "following",
+        "in the case where", "in cases where", "whenever"
+      ]
+    },
+    "constraint": {
+      "description": "Markers introducing temporal, quantitative, or procedural constraints",
+      "markers": [
+        "within", "at least", "no later than", "without undue delay",
+        "for the purpose of", "only", "minimum", "maximum", "prior to",
+        "not exceeding", "at most", "no sooner than", "not before",
+        "in accordance with", "pursuant to", "in compliance with",
+        "consistent with", "taking into account", "having regard to",
+        "in particular", "including", "in addition to",
+        "for a period of", "for the duration of", "throughout"
+      ]
+    },
+    "exception": {
+      "description": "Markers introducing exception clauses or carve-outs",
+      "markers": [
+        "unless", "except", "except where", "except if",
+        "notwithstanding", "other than", "save where",
+        "with the exception of", "excluding", "apart from",
+        "without prejudice to", "this shall not apply where",
+        "shall not apply to", "does not apply to", "do not apply to",
+        "provided however that"
+      ]
+    },
+    "actor": {
+      "description": "Entity markers for identifying normative actors (data protection / regulatory domain)",
+      "markers": [
+        "controller", "processor", "data subject",
+        "supervisory authority", "data protection officer",
+        "company", "provider", "physician", "officer",
+        "authority", "court", "prosecutor", "driver",
+        "inspector", "customer", "phone company",
+        "recipient", "third party", "joint controller",
+        "representative", "commission", "board",
+        "member state", "union", "organisation", "organization",
+        "employer", "employee", "operator", "user",
+        "public authority", "competent authority",
+        "person", "natural person", "legal person",
+        "data importer", "data exporter", "sub-processor"
+      ]
+    }
+  }
+}

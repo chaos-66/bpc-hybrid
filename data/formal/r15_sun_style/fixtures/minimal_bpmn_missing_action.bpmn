@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_1"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_missing_action" isExecutable="false">
+    <bpmn:laneSet>
+      <bpmn:lane id="Lane_controller" name="Controller">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_notify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <!-- Rule says: "Controller shall record the decision" but no "Record decision" task exists -->
+    <!-- Only "Notify data subject" exists — action is MISSING -->
+    <bpmn:startEvent id="StartEvent_1" name="Start"/>
+    <bpmn:task id="Task_notify" name="Notify data subject"/>
+    <bpmn:endEvent id="EndEvent_1" name="End"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_notify"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_notify" targetRef="EndEvent_1"/>
+  </bpmn:process>
+</bpmn:definitions>
