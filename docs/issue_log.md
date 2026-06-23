@@ -1,5 +1,24 @@
 # Issue Log
 
+## I085 — R14.5 Descriptive Rule-only vs Rule+LLM Comparison
+
+- **Date**: 2026-06-23
+- **Type**: Implementation
+- **Description**: R14.5 stage: compute descriptive deltas between R14.2 (rule-only) and R14.4 (Rule+LLM) evaluation results; create comparison summary, field comparison, report, PPT-safe table, manifest, and tests.
+- **Resolution**: Comparison completed via read-only arithmetic script. No re-running of any predictor/runner/evaluator/LLM. Claim boundary strictly enforced as "descriptive small-scale observation".
+- **Files created**:
+  - `scripts/compare_r14_rule_only_vs_rule_plus_llm.py`
+  - `data/formal/results/r14_5_rule_only_vs_rule_plus_llm_comparison_summary.json`
+  - `data/formal/results/r14_5_rule_only_vs_rule_plus_llm_field_comparison.jsonl`
+  - `data/formal/metadata/r14_5_descriptive_comparison_manifest.json`
+  - `docs/r14_5_descriptive_comparison_report.md`
+  - `docs/r14_5_ppt_safe_result_table.md`
+  - `tests/test_r14_5_descriptive_comparison.py`
+- **Files modified**:
+  - `README.md` (stage updated)
+  - `docs/experiment_log.md` (R14.5 entry prepended)
+  - `docs/issue_log.md` (this entry)
+
 This document records implementation issues, audit findings, debugging decisions, and resolutions encountered during the `bpc-hybrid` rebuild.
 
 The log supports reproducibility, implementation transparency, and later thesis or paper writing.

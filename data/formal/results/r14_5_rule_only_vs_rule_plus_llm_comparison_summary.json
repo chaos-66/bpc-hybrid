@@ -1,0 +1,55 @@
+{
+  "stage": "R14.5",
+  "type": "descriptive_comparison",
+  "sample_count": 24,
+  "comparison": "rule_only_vs_rule_plus_llm_assisted",
+  "rule_only_source_stage": "R14.2",
+  "rule_plus_llm_source_stage": "R14.4",
+  "real_api_call_performed": false,
+  "llm_call_performed": false,
+  "runner_rerun": false,
+  "evaluator_rerun": false,
+  "metrics_recomputed": false,
+  "prediction_files_modified": false,
+  "evaluation_files_modified": false,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "llm_superiority_claim": false,
+  "comparison_claim_type": "descriptive_small_scale_observation",
+  "claim_boundary": "R14.5 is a descriptive comparison of two already accepted bounded pilot outputs. It does not prove generalized LLM advantage, does not validate a method, does not reproduce Sun et al., and is not a formal benchmark.",
+  "overall_metrics": {
+    "overall_field_exact_accuracy": {
+      "rule_only": 0.1491,
+      "rule_plus_llm": 0.513,
+      "available": true
+    },
+    "macro_strict_f1": {
+      "rule_only": 0.1405,
+      "rule_plus_llm": 0.5774,
+      "available": true
+    },
+    "micro_strict_f1": {
+      "rule_only": 0.2138,
+      "rule_plus_llm": 0.5221,
+      "available": true
+    },
+    "macro_lenient_f1": {
+      "rule_only": 0.2212,
+      "rule_plus_llm": 0.8405,
+      "available": true
+    },
+    "micro_lenient_f1": {
+      "rule_only": 0.3145,
+      "rule_plus_llm": 0.8142,
+      "available": true
+    }
+  },
+  "overall_deltas": {
+    "overall_field_exact_accuracy_delta": 0.3639,
+    "macro_strict_f1_delta": 0.4369,
+    "micro_strict_f1_delta": 0.3083,
+    "macro_lenient_f1_delta": 0.6193,
+    "micro_lenient_f1_delta": 0.4997
+  }
+}

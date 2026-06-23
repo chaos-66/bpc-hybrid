@@ -1,5 +1,33 @@
 # Experiment Log
 
+## R14.5 — Descriptive Rule-only vs Rule+LLM Comparison
+
+### Date
+2026-06-23
+
+### Description
+R14.5 is a descriptive comparison of two already accepted bounded pilot outputs (R14.2 rule-only baseline vs R14.4 Rule+LLM-assisted pilot) on the same 24 draft mini-gold samples from R14.1. All metrics and per-field deltas are computed by arithmetic on already-computed numbers. No predictor, runner, evaluator, LLM, or API was called.
+
+### Computed Deltas
+- `overall_field_exact_accuracy_delta`: +0.3639
+- `macro_strict_f1_delta`: +0.4369
+- `micro_strict_f1_delta`: +0.3083
+- `macro_lenient_f1_delta`: +0.6193
+- `micro_lenient_f1_delta`: +0.4997
+
+### Outputs
+- `data/formal/results/r14_5_rule_only_vs_rule_plus_llm_comparison_summary.json`
+- `data/formal/results/r14_5_rule_only_vs_rule_plus_llm_field_comparison.jsonl`
+- `data/formal/metadata/r14_5_descriptive_comparison_manifest.json`
+- `docs/r14_5_descriptive_comparison_report.md`
+- `docs/r14_5_ppt_safe_result_table.md`
+
+### Claim Boundary
+Descriptive small-scale observation. Not a formal benchmark, not method validation, not Sun reproduction, not proof of LLM superiority.
+
+### Script
+`scripts/compare_r14_rule_only_vs_rule_plus_llm.py` — read-only arithmetic script, no API/LLM calls.
+
 ## R0 — Safe GitHub-backed Bootstrap
 
 ### Goal
