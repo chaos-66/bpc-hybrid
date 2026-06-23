@@ -1433,3 +1433,29 @@ actual R14.1 JSONL tags.
 No sample creation, candidate modification, gold annotation modification,
 rule-only run, LLM run, evaluator rerun, metrics computation, prediction
 modification, or evaluation output modification is allowed in R14.1.1.
+
+---
+
+## I077 — R14.2 rule-only baseline requires no-LLM execution boundary
+
+### Status
+
+Open pending Codex audit.
+
+### Context
+
+R14.2 runs the deterministic rule-only baseline on the accepted R14.1 draft
+mini-gold.
+
+### Resolution
+
+Generated rule-only predictions (24 samples), computed field-level metrics
+(strict exact-F1, lenient partial-F1, macro/micro F1, field-level summary),
+and documented the result without using LLM/API or modifying R14.1
+candidate/gold data.
+
+### Boundary
+
+No real API call, LLM call, Rule+LLM run, R14.1 candidate/gold modification,
+R13 prediction/evaluation modification, raw modification, benchmark claim,
+method-validation claim, or LLM-superiority claim is allowed in R14.2.

@@ -4400,3 +4400,37 @@ construction report with the actual R14.1 JSONL tag counts.
 This stage does not create samples, run experiments, or compute metrics.
 It only fixes metadata/report consistency after the R14.1 audit.
 
+## R14.2 — Rule-only Baseline Experiment
+
+### Type
+
+Deterministic no-LLM rule-only baseline run.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Rule-only experiment run: yes
+- Rule+LLM experiment run: no
+- Evaluator rerun: yes, R14 field-level evaluator only
+- Metrics computed: yes, for rule-only baseline only
+- R14.1 candidate/gold modification: no
+- R13 prediction/evaluation modification: no
+- Raw file modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Ran a deterministic rule-only baseline on the R14.1 24-sample draft mini-gold
+and computed field-level accuracy, precision, recall, F1, macro-F1, micro-F1,
+and lenient partial-F1 metrics for the rule-only side only.
+
+### Claim Boundary
+
+This stage establishes only the no-LLM baseline side of the future controlled
+comparison. It does not compare against Rule+LLM and does not support benchmark,
+method-validation, Sun-reproduction, or LLM-superiority claims.
+
