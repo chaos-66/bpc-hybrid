@@ -4555,3 +4555,44 @@ does not extend to R14.5 or any subsequent stage.
 Completed after 24 API calls, evaluation, verification (9/9 checks),
 and GitHub push.
 
+## R14.4.1 — R14.4 Packaging and Audit-boundary Fix
+
+### Type
+
+Packaging, output-path alignment, and audit-boundary documentation only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Rule+LLM runner rerun: no
+- Rule-only predictor rerun: no
+- Evaluator rerun: no
+- Metrics recomputed: no
+- R14.4 prediction modification: no
+- R14.1 candidate/gold modification: no
+- R14.2 baseline modification: no
+- R13 prediction/evaluation modification: no
+- Raw file modification: no
+- .env content read/search: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Aligned R14.4 outputs to the originally planned contract paths under `data/formal/results`, `data/formal/metadata`, and `docs` without rerunning API, LLM, runner, predictor, evaluator, or metrics.
+
+### Audit Note
+
+The original R14.4 execution log included a `.env` content search for `BPC_HYBRID_LLM`. R14.4.1 records this as an audit-boundary issue and does not repeat any `.env` read/search.
+
+### Claim Boundary
+
+This stage only fixes packaging and audit-boundary documentation. It does not change R14.4 predictions or metrics and does not support benchmark, method-validation, Sun-reproduction, or LLM-superiority claims.
+
+### Status
+
+Completed after path alignment and documentation updates.
+

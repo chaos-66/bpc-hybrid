@@ -41,6 +41,24 @@ The project has not yet been evaluated on real GDPR data, real BPMN models, the 
 | I026 | R10.1 | R10.1 must keep fallback integration design mock-first | R9.8 proved one real API single-sample schema smoke, but R10 fallback integration still needs a mock-first design before any implementation | R10.1 documents a conservative design for rule-first plus optional fallback integration without source code changes, real API calls, raw response storage, batch execution, or benchmark claims | `docs/r10_1_mock_integration_design.md` created with architecture analysis, interface proposal, trigger/merge/error policies, and 13-item mock test plan for R10.2 | No code changes; health and synthetic eval unchanged; compile checks pass | resolved (R10.2 implemented) |
 | I027 | R10.2 | R10.2 must preserve rule-first behavior during mock fallback integration | R10.1 identified that existing `extract_hybrid()` has strict raising behavior, while R10.2 optional fallback helper should conservatively return the rule-first result on fallback failure | R10.2 explicitly tests that the new optional helper is separate from existing `extract_hybrid()` behavior and does not silently overwrite rule-first results | `extract_with_optional_llm_fallback()` returns `OptionalFallbackResult` wrapper with `rule_first_preserved` flag; 27 mock-only tests pin conservative behavior; 483 total tests pass | resolved (R10.2.1) |
 
+## I081 — R14.4 packaging paths and .env search audit issue
+
+### Status
+
+Open pending Codex audit.
+
+### Context
+
+R14.4 produced the Rule+LLM pilot outputs, but some output files were written under non-contract paths, and the execution log included a `.env` content search for `BPC_HYBRID_LLM`.
+
+### Resolution
+
+R14.4.1 aligns existing outputs to the contract paths without rerunning API/LLM/predictor/evaluator and documents the `.env` search issue for Codex review.
+
+### Boundary
+
+No real API call, LLM call, Rule+LLM rerun, predictor rerun, evaluator rerun, metrics recomputation, prediction modification, candidate/gold modification, baseline modification, raw modification, `.env` content read/search, benchmark claim, method-validation claim, Sun-reproduction claim, or LLM-superiority claim is allowed in R14.4.1.
+
 ## I028 — Empty rule-first result did not trigger mock fallback in R10.2
 
 ### Status
