@@ -1479,3 +1479,23 @@ R14.2.1 adds `llm_superiority_claim: false` to the summary output and updates ev
 ### Boundary
 
 No real API call, LLM call, Rule+LLM run, rule-only predictor rerun, R14.1 candidate/gold modification, R14.2 prediction modification, R13 prediction/evaluation modification, raw modification, benchmark claim, method-validation claim, or LLM-superiority claim is allowed in R14.2.1.
+
+---
+
+## I079 — R14.3 Rule+LLM run requires explicit future authorization
+
+### Status
+
+Open pending Codex audit.
+
+### Context
+
+R14.2 established the deterministic no-LLM rule-only baseline. R14.3 prepares a possible future Rule+LLM run on the same R14.1 24-sample mini-gold.
+
+### Resolution Plan
+
+Create a Rule+LLM execution contract, authorization request, prompt snapshot, and experiment plan. Do not run Rule+LLM until a future explicit user authorization is provided.
+
+### Boundary
+
+No real API call, LLM call, Rule+LLM run, rule-only predictor rerun, evaluator rerun, metrics computation, prediction modification, evaluation output modification, benchmark claim, method-validation claim, Sun-reproduction claim, or LLM-superiority claim is allowed in R14.3.

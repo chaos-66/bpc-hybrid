@@ -4465,3 +4465,34 @@ Fixed the R14.2 audit blocker by adding `llm_superiority_claim: false` to the ru
 
 This stage only repairs a boundary metadata field in the R14.2 rule-only summary. It does not run Rule+LLM, does not call an LLM or real API, and does not create a benchmark or LLM-superiority claim.
 
+## R14.3 — Rule+LLM Planning and Authorization Package
+
+### Type
+
+Planning and authorization package only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Rule+LLM experiment run: no
+- Rule-only predictor rerun: no
+- Evaluator rerun: no
+- Metrics computed: no
+- R14.1 candidate/gold modification: no
+- R14.2 prediction/evaluation modification: no
+- R13 prediction/evaluation modification: no
+- Raw file modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Prepared the future Rule+LLM execution plan, authorization request, execution contract, and prompt snapshot for a possible R14.4 bounded run on the same 24 draft mini-gold samples.
+
+### Claim Boundary
+
+This stage does not run Rule+LLM, does not call an LLM or real API, and does not create any Rule+LLM prediction or evaluation result. A future R14.4 run requires fresh explicit user authorization.
+
