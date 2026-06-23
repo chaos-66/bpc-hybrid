@@ -77,6 +77,24 @@ R14.4.2 removes the tracked non-contract helper using `git rm -- scripts/verify_
 
 Only the specific tracked helper file `scripts/verify_r14_4.py` is removed. No broad deletion or cleanup command is allowed.
 
+## I083 — Non-contract duplicate R14.4 output artifacts tracked
+
+### Status
+
+Resolved in R14.4.3; pending Codex audit.
+
+### Context
+
+R14.4 initially wrote some outputs under non-contract paths such as `data/formal/evaluations`, `data/formal/reports`, and `data/formal/metadata/r14_4_manifest.json`. R14.4.1 aligned the same outputs to contract paths, but the old duplicate tracked files remained.
+
+### Resolution
+
+R14.4.3 removes the duplicate non-contract tracked artifacts using exact `git rm --` paths. Contract-path outputs are preserved.
+
+### Boundary
+
+No real API call, LLM call, Rule+LLM runner rerun, evaluator rerun, metrics recomputation, prediction modification, contract-path result modification, candidate/gold modification, baseline modification, raw modification, `.env` content read/search, benchmark claim, method-validation claim, Sun-reproduction claim, or LLM-superiority claim is allowed.
+
 ## I028 — Empty rule-first result did not trigger mock fallback in R10.2
 
 ### Status

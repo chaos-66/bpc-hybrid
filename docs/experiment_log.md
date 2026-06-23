@@ -4633,3 +4633,41 @@ This stage only removes a non-contract helper script from the tracked project st
 
 Completed.
 
+## R14.4.3 — Remove Non-contract Duplicate R14.4 Output Artifacts
+
+### Type
+
+Audit-boundary cleanup only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Rule+LLM runner rerun: no
+- Evaluator rerun: no
+- Metrics recomputed: no
+- R14.4 prediction modification: no
+- R14.4 contract-path result modification: no
+- R14.4 contract-path manifest/report modification: no
+- R14.1 candidate/gold modification: no
+- R14.2 baseline modification: no
+- R13 prediction/evaluation modification: no
+- Raw file modification: no
+- .env content read/search: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Removed non-contract duplicate R14.4 artifacts from tracked files after confirming that contract-path outputs already exist under `data/formal/results`, `data/formal/metadata`, and `docs`.
+
+### Claim Boundary
+
+This stage only removes duplicate non-contract tracked artifacts. It does not rerun API/LLM/evaluator, does not change experiment results, and does not support benchmark, method-validation, Sun-reproduction, or LLM-superiority claims.
+
+### Status
+
+Completed.
+
