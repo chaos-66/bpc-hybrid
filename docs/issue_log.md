@@ -1294,3 +1294,26 @@ method-validation, Sun-reproduction, or prompt-superiority claims.
 
 No real API call, LLM call, evaluator rerun, prediction modification, or
 evaluation output modification is allowed in R13.8.
+
+
+## I071 — R13.9 final package requires strict claim boundary
+
+### Status
+
+Open pending Codex audit.
+
+### Context
+
+R13.9 packages the accepted R13 chain for project documentation, resume,
+and interview use.
+
+### Resolution Plan
+
+Keep all statements within the accepted boundary: descriptive project
+evidence only, no benchmark, no method validation, no Sun reproduction,
+and no prompt superiority claim.
+
+### Boundary
+
+No real API call, LLM call, evaluator rerun, prediction modification, or
+evaluation output modification is allowed in R13.9.
