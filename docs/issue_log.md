@@ -1390,21 +1390,46 @@ modification, or evaluation output modification is allowed in R14.0.2.
 
 ### Status
 
-Open pending Codex audit.
+Resolved (Codex accepted R14.1 with non-blocking suggestion).
 
 ### Context
 
 R14.1 constructs a 24-sample mini-gold for future rule-only vs rule+LLM
 comparison.
 
-### Resolution Plan
+### Resolution
 
-Label R13 seed samples and controlled-authored samples clearly, preserve
-domain balance, require user review, and avoid benchmark or real legal
-dataset claims.
+Labeled R13 seed samples and controlled-authored samples clearly, preserved
+domain balance, required user review, and avoided benchmark or real legal
+dataset claims. Codex accepted R14.1 locally.
 
 ### Boundary
 
 No real API call, LLM call, rule-only run, Rule+LLM run, evaluator rerun,
 prediction modification, or evaluation output modification is allowed in
 R14.1.
+
+---
+
+## I076 — R14.1 design tag coverage count mismatch
+
+### Status
+
+Resolved in R14.1.1.
+
+### Context
+
+Codex accepted R14.1 with a non-blocking suggestion that
+`design_tag_coverage` in the manifest/report did not exactly match
+actual JSONL tag counts.
+
+### Resolution
+
+R14.1.1 aligns the manifest and report tag coverage counts with the
+actual R14.1 JSONL tags.
+
+### Boundary
+
+No sample creation, candidate modification, gold annotation modification,
+rule-only run, LLM run, evaluator rerun, metrics computation, prediction
+modification, or evaluation output modification is allowed in R14.1.1.

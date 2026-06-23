@@ -67,11 +67,13 @@ The 24 samples collectively cover the following design tags:
 | permission | 2 | 009, 017 |
 | prohibition | 3 | 005, 011, 018 |
 | definition | 7 | 006–008, 015, 019, 023, 024 |
-| condition_heavy | 10 | 004, 006–008, 010–011, 013, 016–017, 019, 022 |
-| exception_heavy | 4 | 011, 019, 022 |
-| multi_clause | 10 | 005, 007–008, 010–012, 014, 017, 020–021, 023–024 |
+| condition_heavy | 9 | 004, 006, 010–011, 013, 016–017, 019, 022 |
+| exception_heavy | 3 | 011, 019, 022 |
+| multi_clause | 11 | 005, 007–008, 010, 012, 014, 017, 020–021, 023–024 |
 | passive_voice | 7 | 001–003, 005, 013, 018, 021 |
-| constraint_heavy | 16 | 001–003, 005–008, 010–014, 018–024 |
+| active_voice | 2 | 004, 009 |
+| constraint_heavy | 12 | 001–003, 005, 012, 014–015, 018, 020–021, 023–024 |
+| German | 3 | 006–008 |
 
 ## 7. Quality Checks
 

@@ -4366,3 +4366,37 @@ Austrian Income Tax / EStG-style domains.
 This stage does not run experiments or create model results. The mini-gold
 remains draft project data pending user review.
 
+## R14.1.1 — Align Mini-gold Design Tag Coverage Counts
+
+### Type
+
+Metadata/report consistency cleanup only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Rule-only experiment run: no
+- Rule+LLM experiment run: no
+- Evaluator rerun: no
+- Metrics computed: no
+- New sample creation: no
+- Candidate sample modification: no
+- Gold annotation modification: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Aligned the `design_tag_coverage` counts in the R14.1 manifest and
+construction report with the actual R14.1 JSONL tag counts.
+
+### Claim Boundary
+
+This stage does not create samples, run experiments, or compute metrics.
+It only fixes metadata/report consistency after the R14.1 audit.
+
