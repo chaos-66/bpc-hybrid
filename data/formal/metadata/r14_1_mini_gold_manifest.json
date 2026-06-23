@@ -1,0 +1,37 @@
+{
+  "stage": "R14.1",
+  "type": "mini_gold_construction",
+  "sample_count": 24,
+  "gold_count": 24,
+  "seed_samples_reused_from_r13": 8,
+  "controlled_authored_new_samples": 16,
+  "domains": {
+    "GDPR-style": 12,
+    "Austrian Income Tax / EStG-style": 12
+  },
+  "design_tag_coverage": {
+    "obligation": 12,
+    "permission": 2,
+    "prohibition": 3,
+    "definition": 7,
+    "condition_heavy": 10,
+    "exception_heavy": 4,
+    "multi_clause": 10,
+    "passive_voice": 7,
+    "constraint_heavy": 16
+  },
+  "real_api_call_performed": false,
+  "llm_call_performed": false,
+  "rule_only_experiment_run": false,
+  "rule_plus_llm_experiment_run": false,
+  "evaluator_rerun": false,
+  "metrics_computed": false,
+  "prediction_files_modified": false,
+  "evaluation_files_modified": false,
+  "benchmark": false,
+  "method_validation": false,
+  "sun_reproduction": false,
+  "llm_superiority_claim": false,
+  "annotation_status": "draft_mini_gold_pending_user_review",
+  "claim_boundary": "R14.1 constructs a controlled 24-sample draft mini-gold for future comparison only. It does not run experiments or support benchmark, method-validation, Sun-reproduction, or LLM-superiority claims."
+}

@@ -4333,3 +4333,36 @@ definition now has deterministic boundaries: Jaccard = 1.0 is exact, Jaccard
 This stage does not create new samples or experimental results. It only
 repairs the R14.0 metric-definition document.
 
+## R14.1 — 24-sample Mini-gold Construction
+
+### Type
+
+Controlled sample and draft mini-gold construction only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Rule-only experiment run: no
+- Rule+LLM experiment run: no
+- Evaluator rerun: no
+- Metrics computed: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Created a 24-sample controlled draft mini-gold dataset for the future R14
+rule-only vs rule+LLM comparison. The dataset reuses 8 R13 seed samples
+and adds 16 controlled-authored samples, balanced across GDPR-style and
+Austrian Income Tax / EStG-style domains.
+
+### Claim Boundary
+
+This stage does not run experiments or create model results. The mini-gold
+remains draft project data pending user review.
+

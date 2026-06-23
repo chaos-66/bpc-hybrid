@@ -1385,3 +1385,26 @@ deterministic.
 
 No sample creation, rule-only run, LLM run, evaluator rerun, prediction
 modification, or evaluation output modification is allowed in R14.0.2.
+
+## I075 — R14.1 draft mini-gold requires strict source and claim boundary
+
+### Status
+
+Open pending Codex audit.
+
+### Context
+
+R14.1 constructs a 24-sample mini-gold for future rule-only vs rule+LLM
+comparison.
+
+### Resolution Plan
+
+Label R13 seed samples and controlled-authored samples clearly, preserve
+domain balance, require user review, and avoid benchmark or real legal
+dataset claims.
+
+### Boundary
+
+No real API call, LLM call, rule-only run, Rule+LLM run, evaluator rerun,
+prediction modification, or evaluation output modification is allowed in
+R14.1.
