@@ -1,0 +1,68 @@
+{
+  "stage": "R15_three_way_comparison",
+  "method": "three_way_gdpr50_comparison",
+  "comparison_timestamp": "2026-06-23T21:00:00Z",
+  "sample_count": 50,
+  "comparison_id": "R15_three_way",
+  "variants": {
+    "sun_style_rule_only": {
+      "method": "sun_style_rule_only_gdpr50",
+      "strict_f1": 0.2706,
+      "lenient_f1": 0.4456,
+      "exact_accuracy": 0.2464,
+      "macro_strict_f1": 0.1866,
+      "real_api": false,
+      "llm_used": false,
+      "summary_path": "data/formal/results/r15_gdpr50_sun_style_summary.json",
+      "details_path": "data/formal/results/r15_gdpr50_sun_style_details.jsonl"
+    },
+    "spacy_enhanced": {
+      "method": "spacy_enhanced_sun_style_gdpr50",
+      "strict_f1": 0.2827,
+      "lenient_f1": 0.3787,
+      "exact_accuracy": 0.2598,
+      "macro_strict_f1": 0.1924,
+      "real_api": false,
+      "llm_used": false,
+      "summary_path": "data/formal/results/r15_gdpr50_spacy_enhanced_summary.json",
+      "details_path": "data/formal/results/r15_gdpr50_spacy_enhanced_details.jsonl"
+    },
+    "rule_plus_llm": {
+      "method": "rule_plus_llm_fallback_gdpr50",
+      "strict_f1": 0.2675,
+      "lenient_f1": 0.3779,
+      "exact_accuracy": 0.2669,
+      "macro_strict_f1": 0.2132,
+      "real_api": true,
+      "llm_used": true,
+      "llm_model": "qwen3.7-max",
+      "llm_calls": 49,
+      "summary_path": "data/formal/results/r15_gdpr50_rule_plus_llm_summary.json",
+      "details_path": "data/formal/results/r15_gdpr50_rule_plus_llm_details.jsonl"
+    }
+  },
+  "observation_notes": [
+    "Strict F1 range: 0.2675-0.2827 (all variants close)",
+    "Lenient F1 range: 0.3779-0.4456 (sun_style highest)",
+    "Rule+LLM had higher non-empty field coverage (modality=50/50, actor=49/50) in this local GDPR-50 run",
+    "All three variants have low F1 on this local dataset — not comparable to published benchmarks",
+    "Exact accuracy: 0.2464-0.2669 (all below 30%)",
+    "This is a local GDPR-50 study, not a benchmark. Results are not comparable to published work."
+  ],
+  "field_coverage": {
+    "rule_plus_llm": {
+      "modality": 50,
+      "actor": 49,
+      "action": 50,
+      "condition": 36,
+      "constraint": 43,
+      "exception": 7
+    }
+  },
+  "assertions": {
+    "benchmark": false,
+    "method_validation": false,
+    "sun_reproduction": false,
+    "llm_superiority_claim": false
+  }
+}

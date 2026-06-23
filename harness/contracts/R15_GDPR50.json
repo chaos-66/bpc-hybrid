@@ -1,0 +1,42 @@
+{
+  "contract_id": "R15_GDPR50",
+  "contract_version": "1.0.0",
+  "description": "H1 self-audit contract for R15 GDPR-50 hybrid experiment",
+  "required_artifacts": [
+    "data/formal/r15_gdpr50/r15_gdpr50_candidate_samples.jsonl",
+    "data/formal/r15_gdpr50/r15_gdpr50_gold.jsonl",
+    "data/formal/predictions/r15_gdpr50_rule_plus_llm_predictions.jsonl",
+    "data/formal/metadata/r15_gdpr50_rule_plus_llm_manifest.json",
+    "data/formal/metadata/r15_gdpr50_three_way_manifest.json",
+    "data/formal/results/r15_gdpr50_rule_plus_llm_summary.json",
+    "data/formal/results/r15_gdpr50_spacy_enhanced_summary.json",
+    "data/formal/results/r15_gdpr50_sun_style_summary.json",
+    "data/formal/results/r15_gdpr50_three_way_comparison_summary.json"
+  ],
+  "sample_count_check": {
+    "path": "data/formal/r15_gdpr50/r15_gdpr50_candidate_samples.jsonl",
+    "expected": 50
+  },
+  "no_raw_response_check": {
+    "path": "data/formal/metadata/r15_gdpr50_rule_plus_llm_manifest.json",
+    "field": "raw_response_saved",
+    "expected": false
+  },
+  "llm_call_boundary_check": {
+    "path": "data/formal/metadata/r15_gdpr50_rule_plus_llm_manifest.json",
+    "max_field": "max_calls",
+    "actual_field": "llm_calls",
+    "condition": "actual <= max"
+  },
+  "formal_results_exist": [
+    "data/formal/results/r15_gdpr50_rule_plus_llm_summary.json",
+    "data/formal/results/r15_gdpr50_spacy_enhanced_summary.json",
+    "data/formal/results/r15_gdpr50_sun_style_summary.json"
+  ],
+  "claim_boundary_assertions": {
+    "benchmark": false,
+    "method_validation": false,
+    "exact_sun_reproduction": false,
+    "llm_superiority_claim": false
+  }
+}

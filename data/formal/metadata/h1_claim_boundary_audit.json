@@ -1,0 +1,73 @@
+{
+  "audit_id": "H1-CLAIM",
+  "audit_timestamp": "2026-06-23T21:00:00Z",
+  "forbidden_patterns": [
+    "exact Sun reproduction",
+    "benchmark results",
+    "method validated",
+    "LLM superiority",
+    "best method",
+    "proved",
+    "significantly improves",
+    "outperforms"
+  ],
+  "files_scanned": [
+    "docs/RUN_LOG.md",
+    "scripts/compare_three_variants.py",
+    "docs/README.md",
+    "docs/r15_gdpr50_three_way_comparison_report.md",
+    "docs/r15_gdpr50_ppt_safe_result_table.md",
+    "docs/h1_gdpr50_sun_method_alignment_audit.md"
+  ],
+  "repairs_made": [
+    {
+      "file": "docs/RUN_LOG.md",
+      "original": "Rule+LLM significantly improves field coverage but uses longer phrasing vs gold",
+      "repaired": "Rule+LLM showed higher non-empty field coverage in this local GDPR-50 run, but uses longer phrasing vs gold annotations"
+    },
+    {
+      "file": "docs/RUN_LOG.md",
+      "original": "LLM-first extraction (modality=96%) outperforms rule-based (92.5%)",
+      "repaired": "In this local run, LLM-assisted modality extraction reached 100% non-empty coverage; rule-based baseline reached 92.5%"
+    },
+    {
+      "file": "scripts/compare_three_variants.py",
+      "original": "Rule+LLM significantly improves field coverage (more fields filled)",
+      "repaired": "In this local GDPR-50 run, Rule+LLM had higher non-empty field coverage (more fields filled)"
+    }
+  ],
+  "existing_correct_usage": [
+    {
+      "file": "README.md",
+      "pattern": "benchmark results",
+      "context": "Negative claim — states system does NOT produce benchmark results",
+      "status": "correct"
+    },
+    {
+      "file": "README.md",
+      "pattern": "validated",
+      "context": "Negative claim — states system is NOT a validated system",
+      "status": "correct"
+    },
+    {
+      "file": "docs/research_idea.md",
+      "pattern": "Outperforms Sun",
+      "context": "Listed as forbidden claim with ❌",
+      "status": "correct"
+    },
+    {
+      "file": "docs/r14_0_controlled_experiment_plan.md",
+      "pattern": "R14.0 does not claim LLM superiority",
+      "context": "Explicit negative claim",
+      "status": "correct"
+    }
+  ],
+  "assertions": {
+    "benchmark": false,
+    "method_validation": false,
+    "sun_reproduction": false,
+    "llm_superiority_claim": false
+  },
+  "verdict": "PASS",
+  "notes": "All overclaim patterns have been repaired. Existing usage of forbidden patterns in README and docs are correct negative claims (stating what the system does NOT do)."
+}

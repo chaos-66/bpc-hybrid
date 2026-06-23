@@ -103,6 +103,6 @@ Main objective: Read Sun and Barrientos PDFs, update method alignment, and proce
   - Best Lenient F1: Sun-style (0.4456) > spaCy-enhanced (0.3787) > Rule+LLM (0.3779)
   - Best Exact Accuracy: Rule+LLM (0.2669) > spaCy-enhanced (0.2598) > Sun-style (0.2464)
   - Best Macro Strict F1: Rule+LLM (0.2132) > spaCy-enhanced (0.1924) > Sun-style (0.1866)
-  - Rule+LLM significantly improves field coverage but uses longer phrasing vs gold
-  - LLM-first extraction (modality=96%) outperforms rule-based (92.5%)
+  - Rule+LLM showed higher non-empty field coverage in this local GDPR-50 run, but uses longer phrasing vs gold annotations
+  - In this local run, LLM-assisted modality extraction reached 100% non-empty coverage; rule-based baseline reached 92.5%
 - Next action: Document findings, commit changes

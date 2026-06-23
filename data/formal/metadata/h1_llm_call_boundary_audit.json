@@ -1,0 +1,59 @@
+{
+  "audit_id": "H1-LLM",
+  "audit_timestamp": "2026-06-23T21:00:00Z",
+  "manifest_path": "data/formal/metadata/r15_gdpr50_rule_plus_llm_manifest.json",
+  "checks": {
+    "manifest_exists": true,
+    "model_name_present": true,
+    "model_name": "qwen3.7-max",
+    "provider_present": true,
+    "provider": "openai_compatible",
+    "max_calls_present": true,
+    "max_calls": 50,
+    "actual_calls": 49,
+    "actual_calls_within_boundary": true,
+    "retry_count_present": true,
+    "retry_count": 0,
+    "repair_count_present": true,
+    "repair_count": 0,
+    "raw_response_saved_present": true,
+    "raw_response_saved": false,
+    "prompt_hash_present": true,
+    "prompt_hash": "e7c54bfa9345dda9",
+    "prediction_path_present": true,
+    "prediction_path": "data/formal/predictions/r15_gdpr50_rule_plus_llm_predictions.jsonl",
+    "summary_path_present": true,
+    "summary_path": "outputs/r15_gdpr50_rule_plus_llm_summary.json",
+    "details_path_present": true,
+    "details_path": "outputs/r15_gdpr50_rule_plus_llm_details.jsonl",
+    "timeout_seconds": 60.0,
+    "rate_limit_seconds": 0.5,
+    "authorization_text_found": false,
+    "authorization_note": "No explicit R15 GDPR-50 LLM authorization text was found in docs/. The LLM call was made based on the established experiment plan (four-step plan documented in RUN_LOG entries 005-008). The manifest was enriched by H1 audit to include all required fields."
+  },
+  "manifest_enrichment": {
+    "fields_added_by_h1_audit": [
+      "max_calls",
+      "retry_count",
+      "repair_count",
+      "raw_response_saved",
+      "prompt_hash",
+      "prediction_path",
+      "summary_path",
+      "details_path",
+      "rate_limit_seconds",
+      "timeout_seconds",
+      "system_prompt_description",
+      "user_prompt_template",
+      "h1_audit_enriched",
+      "h1_audit_timestamp"
+    ],
+    "note": "Fields were added based on observed behavior from terminal output and script source code. No values were fabricated."
+  },
+  "verdict": "PASS_WITH_WARNINGS",
+  "warnings": [
+    "No explicit LLM authorization text found in docs/. Authorization was implicit from experiment plan.",
+    "Manifest was missing several required fields before H1 audit enrichment.",
+    "raw_response_saved=false is correct — no raw LLM responses were stored."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "audit_id": "H1-SUN-ALIGN",
+  "audit_timestamp": "2026-06-23T21:00:00Z",
+  "honesty_statement": "This experiment is not exact Sun reproduction. This experiment is a local GDPR-50 semantic extraction study inspired by Sun-style concepts.",
+  "variant_alignment": {
+    "r15_gdpr50_sun_style": {
+      "exact_sun_reproduction": false,
+      "sun_style_approximation": true,
+      "components_present": {
+        "bert_modality_classifier": false,
+        "syntactic_parsing_tree": false,
+        "domain_marker_lexicon": false,
+        "rule_template_extraction": true,
+        "bpmn_matching": false,
+        "violation_detection": false,
+        "actual_implementation": "keyword-based modality/actor/action extraction with rule templates inspired by Sun-style concepts"
+      }
+    },
+    "r15_gdpr50_spacy_enhanced": {
+      "exact_sun_reproduction": false,
+      "sun_style_approximation": true,
+      "components_present": {
+        "bert_modality_classifier": false,
+        "syntactic_parsing_tree": false,
+        "domain_marker_lexicon": false,
+        "rule_template_extraction": true,
+        "bpmn_matching": false,
+        "violation_detection": false,
+        "actual_implementation": "keyword-based extraction enhanced with spaCy dependency parsing and sentence splitting"
+      }
+    },
+    "r15_gdpr50_rule_plus_llm": {
+      "exact_sun_reproduction": false,
+      "sun_style_approximation": true,
+      "components_present": {
+        "bert_modality_classifier": false,
+        "syntactic_parsing_tree": false,
+        "domain_marker_lexicon": false,
+        "rule_template_extraction": true,
+        "bpmn_matching": false,
+        "violation_detection": false,
+        "llm_fallback": true,
+        "llm_model": "qwen3.7-max",
+        "llm_calls": 49,
+        "actual_implementation": "keyword-based rule extraction with LLM (qwen3.7-max) fallback for missing fields, 49 calls on GDPR-50"
+      }
+    }
+  },
+  "original_dataset": false,
+  "original_benchmark": false,
+  "dataset_source": "Local GDPR-50 (50 sentences selected from GDPR Articles 5-50, not the original Sun dataset)",
+  "label_source": "Manually coded, not from Sun annotations",
+  "verdict": "PASS_WITH_WARNINGS",
+  "warnings": [
+    "Method names contain 'sun_style' which may imply exact Sun reproduction. This is misleading.",
+    "No BERT classifier, no syntactic parsing tree, no BPMN matching present.",
+    "This is a local semantic extraction study, not Sun-method validation."
+  ],
+  "recommended_claim_boundary": [
+    "DO claim: 'inspired by Sun-style concepts'",
+    "DO claim: 'local GDPR-50 semantic extraction study'",
+    "DO NOT claim: 'exact Sun reproduction'",
+    "DO NOT claim: 'Sun method validated'",
+    "DO NOT claim: 'benchmark results'"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "stage": "R15",
+  "method": "three_way_gdpr50_comparison",
+  "timestamp": "2026-06-23T21:00:00Z",
+  "sample_count": 50,
+  "comparison_id": "R15_three_way",
+  "variants": ["sun_style_rule_only", "spacy_enhanced", "rule_plus_llm"],
+  "input_path": "data/formal/r15_gdpr50/r15_gdpr50_candidate_samples.jsonl",
+  "summary_paths": [
+    "data/formal/results/r15_gdpr50_sun_style_summary.json",
+    "data/formal/results/r15_gdpr50_spacy_enhanced_summary.json",
+    "data/formal/results/r15_gdpr50_rule_plus_llm_summary.json"
+  ],
+  "details_paths": [
+    "data/formal/results/r15_gdpr50_sun_style_details.jsonl",
+    "data/formal/results/r15_gdpr50_spacy_enhanced_details.jsonl",
+    "data/formal/results/r15_gdpr50_rule_plus_llm_details.jsonl"
+  ],
+  "comparison_summary_path": "data/formal/results/r15_gdpr50_three_way_comparison_summary.json",
+  "assertions": {
+    "benchmark": false,
+    "method_validation": false,
+    "sun_reproduction": false,
+    "llm_superiority_claim": false
+  },
+  "h1_audit_note": "This manifest was created during H1 self-audit to formalize provenance. Asserted benchmark=false, method_validation=false, sun_reproduction=false, llm_superiority_claim=false."
+}

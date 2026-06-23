@@ -123,7 +123,7 @@ best_lenient = max(summaries.items(), key=lambda x: x[1].get("lenient_partial_f1
 print(f"  Best Strict F1:  {best_strict[0]} = {best_strict[1]['strict_f1']:.4f}")
 print(f"  Best Lenient F1: {best_lenient[0]} = {best_lenient[1].get('lenient_partial_f1', best_lenient[1].get('lenient_f1', 0)):.4f}")
 print()
-print("  Rule+LLM significantly improves field coverage (more fields filled)")
+print("  In this local GDPR-50 run, Rule+LLM had higher non-empty field coverage (more fields filled)")
 print("  but uses longer/different phrasing that lowers Jaccard similarity.")
 print("  The gap between strict and lenient F1 narrows with Rule+LLM,")
 print("  suggesting the LLM fills content that is semantically relevant")

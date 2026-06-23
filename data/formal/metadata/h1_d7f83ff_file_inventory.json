@@ -1,0 +1,215 @@
+{
+  "audit_id": "H1",
+  "commit": "d7f83ff",
+  "audit_timestamp": "2026-06-23T21:00:00Z",
+  "files": [
+    {
+      "path": "Barrientos 等 - 2026 - Impact analysis of regulatory requirement changes on business process compliance.pdf",
+      "category": "raw_or_secret_risk",
+      "rationale": "Academic PDF committed to repo. Should not be version-controlled. Copyright risk.",
+      "action_required": "remove_from_tracking"
+    },
+    {
+      "path": "Sun 等 - 2024 - Design-time business process compliance assessment based on multi-granularity semantic information.pdf",
+      "category": "raw_or_secret_risk",
+      "rationale": "Academic PDF committed to repo. Should not be version-controlled. Copyright risk.",
+      "action_required": "remove_from_tracking"
+    },
+    {
+      "path": "data/formal/metadata/r15_0_sun_style_rule_only_manifest.json",
+      "category": "allowed_formal_artifact",
+      "rationale": "Manifest for Sun-style rule-only run. Formal metadata path.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/metadata/r15_gdpr50_rule_plus_llm_manifest.json",
+      "category": "allowed_formal_artifact",
+      "rationale": "Manifest for Rule+LLM run. Formal metadata path. Needs enrichment (see Phase B).",
+      "action_required": "enrich_fields"
+    },
+    {
+      "path": "data/formal/metadata/r15_gdpr50_spacy_enhanced_manifest.json",
+      "category": "allowed_formal_artifact",
+      "rationale": "Manifest for spaCy-enhanced run. Formal metadata path.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/metadata/r15_gdpr50_sun_style_manifest.json",
+      "category": "allowed_formal_artifact",
+      "rationale": "Manifest for Sun-style GDPR-50 run. Formal metadata path.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/predictions/r15_gdpr50_rule_plus_llm_predictions.jsonl",
+      "category": "allowed_formal_artifact",
+      "rationale": "Predictions output. Formal predictions path.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/predictions/r15_gdpr50_spacy_enhanced_predictions.jsonl",
+      "category": "allowed_formal_artifact",
+      "rationale": "Predictions output. Formal predictions path.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/predictions/r15_gdpr50_sun_style_predictions.jsonl",
+      "category": "allowed_formal_artifact",
+      "rationale": "Predictions output. Formal predictions path.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/r15_gdpr50/r15_gdpr50_candidate_samples.jsonl",
+      "category": "allowed_formal_artifact",
+      "rationale": "50-sample GDPR dataset. Core experiment input.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/r15_gdpr50/r15_gdpr50_gold.jsonl",
+      "category": "allowed_formal_artifact",
+      "rationale": "Gold standard annotations. Core experiment reference.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/agostinelli_2019_gdpr_bpmn/license_or_source_note.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source attribution for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/agostinelli_2019_gdpr_bpmn/source_url.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source URL for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/austrian_income_tax_code/license_or_source_note.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source attribution for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/austrian_income_tax_code/source_url.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source URL for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/bohmer_2016_energy_supplier/license_or_source_note.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source attribution for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/bohmer_2016_energy_supplier/source_url.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source URL for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/gdpr_eurlex/license_or_source_note.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source attribution for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/gdpr_eurlex/source_url.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source URL for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/michel_2022_decision_rules/license_or_source_note.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source attribution for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/michel_2022_decision_rules/source_url.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source URL for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/winter_2020_keyword_baseline/license_or_source_note.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source attribution for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "data/formal/raw/winter_2020_keyword_baseline/source_url.txt",
+      "category": "allowed_formal_artifact",
+      "rationale": "Source URL for dataset provenance.",
+      "action_required": "none"
+    },
+    {
+      "path": "docs/METHOD_ALIGNMENT.md",
+      "category": "allowed_doc",
+      "rationale": "Method alignment documentation.",
+      "action_required": "none"
+    },
+    {
+      "path": "docs/RUN_LOG.md",
+      "category": "allowed_doc",
+      "rationale": "Run log. Contains overclaim language that needs repair (Phase F).",
+      "action_required": "repair_claims"
+    },
+    {
+      "path": "scripts/build_gdpr_50_dataset.py",
+      "category": "allowed_script",
+      "rationale": "Dataset builder script.",
+      "action_required": "none"
+    },
+    {
+      "path": "scripts/compare_three_variants.py",
+      "category": "allowed_script",
+      "rationale": "Comparison script.",
+      "action_required": "none"
+    },
+    {
+      "path": "scripts/run_r15_gdpr50_rule_plus_llm.py",
+      "category": "allowed_script",
+      "rationale": "Rule+LLM extraction script.",
+      "action_required": "none"
+    },
+    {
+      "path": "scripts/run_r15_gdpr50_spacy_enhanced.py",
+      "category": "allowed_script",
+      "rationale": "spaCy-enhanced extraction script.",
+      "action_required": "none"
+    },
+    {
+      "path": "scripts/run_r15_gdpr50_sun_style.py",
+      "category": "allowed_script",
+      "rationale": "Sun-style extraction script.",
+      "action_required": "none"
+    },
+    {
+      "path": "src/bpc_hybrid/sun_style/spacy_semantic_extractor.py",
+      "category": "allowed_script",
+      "rationale": "spaCy semantic extractor module.",
+      "action_required": "none"
+    },
+    {
+      "path": "src/bpc_hybrid/sun_style/spacy_syntactic_rules.py",
+      "category": "allowed_script",
+      "rationale": "spaCy syntactic rules module.",
+      "action_required": "none"
+    }
+  ],
+  "summary": {
+    "total_files": 32,
+    "allowed_formal_artifact": 17,
+    "allowed_script": 7,
+    "allowed_doc": 2,
+    "raw_or_secret_risk": 2,
+    "suspicious_output_path": 0,
+    "suspicious_memory_file": 0,
+    "untracked_local_only": 0,
+    "critical_findings": [
+      "Two academic PDFs committed to repo (copyright risk, binary bloat). Should be removed from tracking and added to .gitignore.",
+      "R15 outputs (outputs/r15_gdpr50_*) are NOT git-tracked — safe. Older R12/R13 outputs are tracked but pre-existing.",
+      "memories/ directory is NOT git-tracked — safe.",
+      ".env is NOT git-tracked — safe. Only .env.example is tracked."
+    ]
+  }
+}
