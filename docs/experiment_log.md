@@ -4188,3 +4188,31 @@ This stage packages existing descriptive project evidence only. It does
 not create new experimental results and does not support benchmark,
 method-validation, Sun-reproduction, or prompt-superiority claims.
 
+## R13.9.1 — Tiny Resume Wording Polish
+
+### Type
+
+Documentation wording polish only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Evaluator rerun: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- Prompt superiority claim: no
+
+### Result
+
+Replaced a non-blocking resume wording phrase, `production-style safety
+controls`, with safer wording to avoid any production-readiness implication.
+
+### Claim Boundary
+
+This stage does not change any project evidence, model output, evaluation
+result, or experimental claim.
+

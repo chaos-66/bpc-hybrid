@@ -22,7 +22,7 @@ statements stay within the accepted evidence boundary.
   mini-pilot → error analysis → prompt refinement design → few-shot Prompt B
   pilot → descriptive comparison — all under explicit user authorization and
   Codex audit checkpoints.
-- Engineered production-style safety controls: JSON Schema validation gates,
+- Engineered operational safety controls: JSON Schema validation gates,
   secret redaction, raw response suppression, authorization consumption,
   audit-safe environment isolation, and call-count tracking.
 - 708 automated tests; all real API calls were single-attempt, non-batch, and
