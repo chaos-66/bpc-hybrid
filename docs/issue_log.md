@@ -59,6 +59,24 @@ R14.4.1 aligns existing outputs to the contract paths without rerunning API/LLM/
 
 No real API call, LLM call, Rule+LLM rerun, predictor rerun, evaluator rerun, metrics recomputation, prediction modification, candidate/gold modification, baseline modification, raw modification, `.env` content read/search, benchmark claim, method-validation claim, Sun-reproduction claim, or LLM-superiority claim is allowed in R14.4.1.
 
+## I082 — Non-contract R14.4 verification script tracked
+
+### Status
+
+Resolved in R14.4.2; pending Codex audit.
+
+### Context
+
+R14.4 created and tracked `scripts/verify_r14_4.py`, which was not part of the originally allowed R14.4 artifact list.
+
+### Resolution
+
+R14.4.2 removes the tracked non-contract helper using `git rm -- scripts/verify_r14_4.py`. No API, LLM, runner, evaluator, metrics, predictions, evaluations, candidate/gold data, baseline data, raw files, or `.env` content were touched.
+
+### Boundary
+
+Only the specific tracked helper file `scripts/verify_r14_4.py` is removed. No broad deletion or cleanup command is allowed.
+
 ## I028 — Empty rule-first result did not trigger mock fallback in R10.2
 
 ### Status

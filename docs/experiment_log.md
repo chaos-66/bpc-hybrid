@@ -4596,3 +4596,40 @@ This stage only fixes packaging and audit-boundary documentation. It does not ch
 
 Completed after path alignment and documentation updates.
 
+## R14.4.2 — Remove Non-contract Verification Script
+
+### Type
+
+Audit-boundary cleanup only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Rule+LLM runner rerun: no
+- Evaluator rerun: no
+- Metrics recomputed: no
+- R14.4 prediction modification: no
+- R14.4 evaluation modification: no
+- R14.1 candidate/gold modification: no
+- R14.2 baseline modification: no
+- R13 prediction/evaluation modification: no
+- Raw file modification: no
+- .env content read/search: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Removed the non-contract verification helper `scripts/verify_r14_4.py` from tracked files. This cleanup does not change R14.4 predictions, metrics, manifest, or report contents.
+
+### Claim Boundary
+
+This stage only removes a non-contract helper script from the tracked project state. It does not rerun API/LLM/evaluator, does not change experiment results, and does not support benchmark, method-validation, Sun-reproduction, or LLM-superiority claims.
+
+### Status
+
+Completed.
+
