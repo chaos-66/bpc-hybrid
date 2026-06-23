@@ -19,9 +19,9 @@ scores:
 | Score | Definition | Example |
 |-------|-----------|---------|
 | **exact** | Predicted value matches gold value exactly after normalization (whitespace collapse, Unicode NFKC). For enum fields (modality), the label must match exactly. | Gold: `"obligation"`, Pred: `"obligation"` |
-| **partial** | Predicted value shares substantial content with gold but is not an exact match. For text fields: significant token overlap (>50% Jaccard on word tokens). For closed-set fields: not applicable (only exact/wrong). | Gold: `"the controller"`, Pred: `"controller"` (missing article) |
+| **partial** | Predicted value shares substantial content with gold but is not an exact match. For text fields: token-overlap Jaccard >= 0.5 and < 1.0. For closed-set fields: not applicable (only exact/wrong). At exactly Jaccard = 0.5, the label is partial, not wrong. | Gold: `"the controller"`, Pred: `"controller"` (Jaccard = 0.5 → partial) |
 | **missing** | Gold has a non-null value for this field, but prediction is `null` or empty string. | Gold: `"entity processing personal data"`, Pred: `null` |
-| **wrong** | Predicted value is non-null but shares insufficient content with gold (<50% token overlap) or is semantically incorrect. | Gold: `"obligation"`, Pred: `"prohibition"` |
+| **wrong** | Predicted value is non-null but shares insufficient content with gold (token-overlap Jaccard < 0.5) or is semantically incorrect. | Gold: `"obligation"`, Pred: `"prohibition"` |
 | **not_applicable (NA)** | Both gold and prediction have `null` for this field. The field is not relevant for this sample. | Gold: `null`, Pred: `null` |
 
 ## 3. Modality Scoring Rules
@@ -41,11 +41,12 @@ Actor is a free-text field normalized to English.
 
 - **exact**: Full string match after normalization (whitespace collapse, Unicode
   NFKC, leading/trailing whitespace removal).
-- **partial**: Case-insensitive token Jaccard similarity > 0.5 AND < 1.0.
+- **partial**: Case-insensitive token Jaccard similarity >= 0.5 AND < 1.0.
+  At exactly Jaccard = 0.5, the label is partial, not wrong.
   Example: "the controller" vs "controller" → tokens {the,controller} ∩
   {controller} = 1, union = 2, Jaccard = 0.5 → partial.
 - **missing**: Gold non-null, prediction null.
-- **wrong**: Token Jaccard ≤ 0.5 or semantically different entity.
+- **wrong**: Token Jaccard < 0.5 or semantically different entity.
 - **NA**: Both null.
 
 ## 5. Action Scoring Rules
@@ -53,12 +54,13 @@ Actor is a free-text field normalized to English.
 Action is a free-text field describing the action in English infinitive form.
 
 - **exact**: Full string match after normalization.
-- **partial**: Case-insensitive token Jaccard similarity > 0.5. Example:
-  "collect and further process personal data" vs "collect and process personal
+- **partial**: Case-insensitive token Jaccard similarity >= 0.5 AND < 1.0.
+  At exactly Jaccard = 0.5, the label is partial, not wrong.
+  Example: "collect and further process personal data" vs "collect and process personal
   data" → tokens {collect,and,further,process,personal,data} ∩
   {collect,and,process,personal,data} = 5, union = 6, Jaccard ≈ 0.83 → partial.
 - **missing**: Gold non-null, prediction null.
-- **wrong**: Token Jaccard ≤ 0.5.
+- **wrong**: Token Jaccard < 0.5.
 - **NA**: Both null (should not occur — every clause has an action).
 
 ## 6. Condition Scoring Rules
@@ -67,9 +69,10 @@ Condition is a free-text field; may be null when no condition exists.
 
 - **exact**: Both null, OR both non-null with full string match after
   normalization.
-- **partial**: Both non-null, token Jaccard > 0.5.
+- **partial**: Both non-null, token Jaccard >= 0.5 AND < 1.0.
+  At exactly Jaccard = 0.5, the label is partial, not wrong.
 - **missing**: Gold non-null, prediction null.
-- **wrong**: Both non-null, token Jaccard ≤ 0.5. Also: gold null but prediction
+- **wrong**: Both non-null, token Jaccard < 0.5. Also: gold null but prediction
   non-null (false positive condition).
 - **NA**: Both null.
 
@@ -83,9 +86,10 @@ irrelevant.
 Constraint is a free-text field capturing the normative content.
 
 - **exact**: Full string match after normalization.
-- **partial**: Token Jaccard > 0.5.
+- **partial**: Token Jaccard >= 0.5 AND < 1.0.
+  At exactly Jaccard = 0.5, the label is partial, not wrong.
 - **missing**: Gold non-null, prediction null.
-- **wrong**: Token Jaccard ≤ 0.5, or gold null + prediction non-null.
+- **wrong**: Token Jaccard < 0.5, or gold null + prediction non-null.
 - **NA**: Both null (should not occur — every clause has normative content).
 
 ## 8. Exception Scoring Rules
@@ -94,9 +98,10 @@ Exception is a free-text field; null when no exception exists.
 
 - **exact**: Both null, OR both non-null with full string match after
   normalization.
-- **partial**: Both non-null, token Jaccard > 0.5.
+- **partial**: Both non-null, token Jaccard >= 0.5 AND < 1.0.
+  At exactly Jaccard = 0.5, the label is partial, not wrong.
 - **missing**: Gold non-null, prediction null (false negative exception).
-- **wrong**: Both non-null, token Jaccard ≤ 0.5. Also: gold null but prediction
+- **wrong**: Both non-null, token Jaccard < 0.5. Also: gold null but prediction
   non-null (false positive exception).
 - **NA**: Both null (most common case — many clauses have no exception).
 

@@ -1341,3 +1341,25 @@ only.
 
 No real API call, LLM call, evaluator rerun, prediction modification, or
 evaluation output modification is allowed in R14.0. Design-only.
+
+## I073 — R14.0 audit blockers in metadata, metric threshold, and neutral wording
+
+### Status
+
+Resolved in R14.0.1; pending Codex re-audit.
+
+### Context
+
+Codex blocked R14.0 because the metadata JSON missed required boundary keys,
+the metric definition had an ambiguous Jaccard threshold at 0.5, and the
+experiment plan used outcome-predictive improvement wording.
+
+### Resolution
+
+R14.0.1 adds the required metadata keys, defines Jaccard = 0.5 as partial
+under the lenient threshold, and neutralizes all expected-improvement wording.
+
+### Boundary
+
+No sample creation, rule-only run, LLM run, evaluator rerun, prediction
+modification, or evaluation output modification is allowed in R14.0.1.

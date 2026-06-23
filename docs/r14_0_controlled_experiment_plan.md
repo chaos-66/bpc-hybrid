@@ -170,7 +170,7 @@ R14.4. It must be committed and immutable after R14.1 completes.
 - Input: 24 combined samples from `data/formal/processed/r14_combined_24_samples.jsonl`
 - Output: `data/formal/predictions/r14_2_rule_only_predictions.jsonl`
 
-### 7.2 Expected Behavior
+### 7.2 Planned Observation Targets (Rule-only Baseline)
 
 Based on R13.4.2 baseline observations:
 
@@ -184,11 +184,15 @@ Based on R13.4.2 baseline observations:
 - Constraint extraction via regex main-clause capture.
 - Exception extraction via regex "unless"/"except"/"provided that" patterns.
 
-The Rule-only baseline is expected to show higher error rates on:
+Based on R13.4.2 prior evidence, the Rule-only baseline may show higher
+error rates than a human-annotated gold on:
 - Passive-voice actor inference
 - German→English field normalization
 - Condition/exception boundary disambiguation
 - Multi-clause paragraph splitting
+
+R14.2 will measure whether these same patterns appear on the 24-sample set.
+No comparison to R14.3 is predicted in advance.
 
 ### 7.3 Safety
 
@@ -216,19 +220,25 @@ same mechanism used in R13.7 (authorization contract + confirmation). R14.3
 follows the rule-first principle: the LLM is invoked only when the rule
 extraction falls below the confidence threshold or fails schema validation.
 
-### 8.3 Expected Behavior
+### 8.3 Planned Observation Targets (Comparison Questions)
 
-Based on R13.7 Prompt B observations:
+R14.0 makes no outcome prediction. R14.0 does not claim LLM superiority.
+The Rule+LLM run (R14.3) will produce field-level predictions that R14.4
+will compare to the Rule-only baseline (R14.2). The comparison will report
+whether the LLM-assisted path shows higher, lower, or similar field-level
+scores on the same 24 samples. No outcome direction is assumed.
 
-- Modality: near-perfect (7/8 or 8/8 exact on the seed set)
-- Actor: significant improvement over Rule-only on passive-voice clauses
-  and German→English normalization
-- Action: moderate improvement; few-shot examples demonstrate the expected
-  normalization level
-- Condition: improved boundary disambiguation
-- Constraint: improved content capture
-- Exception: expected to remain mostly not_applicable for the selected
-  source sections
+Based on R13.7 Prompt B observations on the 8 seed samples, the following
+are comparison questions R14.4 can answer for the full 24-sample set:
+
+- Modality: Does Rule+LLM match or differ from Rule-only on modality labels?
+- Actor: Does Rule+LLM show different actor extraction behavior on
+  passive-voice clauses and German→English normalization?
+- Action: Does Rule+LLM show different action-field extraction behavior?
+- Condition: Does Rule+LLM show different condition-boundary disambiguation?
+- Constraint: Does Rule+LLM show different constraint content capture?
+- Exception: Both systems are expected to produce mostly not_applicable for
+  the selected source sections; R14.4 will confirm whether this holds.
 
 ### 8.4 Safety
 

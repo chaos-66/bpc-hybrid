@@ -4267,3 +4267,36 @@ method validation.
 R14.1 — Create 16 new candidate samples with gold annotations, build the
 combined 24-sample gold file, and prepare the combined sample input file.
 
+## R14.0.1 — Fix Controlled Experiment Design Audit Blockers
+
+### Type
+
+Design-document and metadata correction only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Rule-only experiment run: no
+- Rule+LLM experiment run: no
+- Evaluator rerun: no
+- New sample creation: no
+- Prediction file modification: no
+- Evaluation output modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Fixed the R14.0 audit blockers by adding required metadata boundary keys,
+making the Jaccard partial-match threshold deterministic at exactly 0.5,
+and replacing outcome-predictive LLM improvement wording with neutral
+comparison language.
+
+### Claim Boundary
+
+This stage does not create new samples or experimental results. It only
+repairs the R14.0 controlled experiment design package.
+
