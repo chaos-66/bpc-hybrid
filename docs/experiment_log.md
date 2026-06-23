@@ -4434,3 +4434,34 @@ This stage establishes only the no-LLM baseline side of the future controlled
 comparison. It does not compare against Rule+LLM and does not support benchmark,
 method-validation, Sun-reproduction, or LLM-superiority claims.
 
+## R14.2.1 — Fix Rule-only Summary Boundary Field
+
+### Type
+
+Evaluation-summary boundary fix only.
+
+### Scope
+
+- Real API call: no
+- LLM call: no
+- Rule-only predictor rerun: no
+- Rule+LLM experiment run: no
+- Evaluator rerun: yes, R14 field-level evaluator only
+- Metrics recomputed: yes, same rule-only predictions only
+- R14.1 candidate/gold modification: no
+- R14.2 prediction modification: no
+- R13 prediction/evaluation modification: no
+- Raw file modification: no
+- Benchmark: no
+- Method validation: no
+- Sun reproduction: no
+- LLM superiority claim: no
+
+### Result
+
+Fixed the R14.2 audit blocker by adding `llm_superiority_claim: false` to the rule-only evaluation summary and updating the R14 evaluator/test coverage so the boundary field is generated and checked consistently.
+
+### Claim Boundary
+
+This stage only repairs a boundary metadata field in the R14.2 rule-only summary. It does not run Rule+LLM, does not call an LLM or real API, and does not create a benchmark or LLM-superiority claim.
+

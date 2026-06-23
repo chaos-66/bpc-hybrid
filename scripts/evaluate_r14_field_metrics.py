@@ -335,6 +335,7 @@ def evaluate(predictions: list[dict], gold_records: list[dict]) -> tuple[dict, l
         "benchmark": False,
         "method_validation": False,
         "sun_reproduction": False,
+        "llm_superiority_claim": False,
         "overall_field_exact_accuracy": round(overall_accuracy, 4),
         "strict_precision": micro_strict["micro_strict_precision"],
         "strict_recall": micro_strict["micro_strict_recall"],

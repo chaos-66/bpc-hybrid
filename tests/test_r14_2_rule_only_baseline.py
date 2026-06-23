@@ -197,6 +197,13 @@ class TestSummaryStructure:
         for key in required:
             assert key in summary, f"Summary missing key: {key}"
 
+    def test_summary_llm_superiority_boundary(self):
+        summary = json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
+        assert "llm_superiority_claim" in summary, "Summary missing llm_superiority_claim"
+        assert summary["llm_superiority_claim"] is False, (
+            f"llm_superiority_claim must be False, got {summary['llm_superiority_claim']}"
+        )
+
     def test_field_level_summary_has_six_fields(self):
         summary = json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
         fls = summary.get("field_level_summary", {})

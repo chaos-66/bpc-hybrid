@@ -1459,3 +1459,23 @@ candidate/gold data.
 No real API call, LLM call, Rule+LLM run, R14.1 candidate/gold modification,
 R13 prediction/evaluation modification, raw modification, benchmark claim,
 method-validation claim, or LLM-superiority claim is allowed in R14.2.
+
+---
+
+## I078 — R14.2 summary missing LLM superiority boundary field
+
+### Status
+
+Resolved in R14.2.1; pending Codex re-audit.
+
+### Context
+
+Codex blocked R14.2 because the rule-only evaluation summary lacked the required `llm_superiority_claim: false` field, even though the manifest already contained it.
+
+### Resolution
+
+R14.2.1 adds `llm_superiority_claim: false` to the summary output and updates evaluator/test coverage to keep this boundary field stable.
+
+### Boundary
+
+No real API call, LLM call, Rule+LLM run, rule-only predictor rerun, R14.1 candidate/gold modification, R14.2 prediction modification, R13 prediction/evaluation modification, raw modification, benchmark claim, method-validation claim, or LLM-superiority claim is allowed in R14.2.1.
