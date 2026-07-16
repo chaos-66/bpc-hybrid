@@ -171,3 +171,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、formal_capsule_not_versioned、sun_stage2_baseline_not_paper_faithful
 - 备注：沿用 MASTER_PIPELINE、PROJECT_AUDIT、EXPERIMENT_LOG 与 CLAIM_EVIDENCE_MATRIX 作为唯一事实源；未新建平行 handoff/status。paper/README 固定外部 ChatGPT 读取顺序、commit/状态/最新事件回报、冲突优先级和写作门禁；formal README 增加入口；新增回归测试。定向 10 passed；全量 930 passed、22 skipped；未修改 Gold、未调用 LLM/API、未读取 .env。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-16T07:22:01.311179+00:00 - 收口 formal_experiment Git checkpoint 与 G0.6 状态
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：930 passed, 22 skipped in 96.39s (0:01:36)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`bfb0b8a99dbe753f52ffe41fa6c7034fabb2ca94`；相关未提交路径：3 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：checkpoint bfb0b8a 已将 formal_experiment 纳入版本控制；提交后机器检查由 formal_capsule_not_versioned blocker 转为 formal_capsule_versioned pass，blocker 10→9。MASTER_PIPELINE 升级至 3.4.3 并将 G0.6 标 verified，PROJECT_AUDIT 同步 checkpoint 事实；定向 7 passed，全量 930 passed、22 skipped；未修改 Gold、未调用 LLM/API、未读取 .env。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

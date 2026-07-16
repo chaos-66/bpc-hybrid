@@ -43,6 +43,7 @@ def test_master_pipeline_covers_the_complete_three_stage_wbs() -> None:
     )
     for marker in required_markers:
         assert marker in pipeline, marker
+    assert "| G0.6 | Git checkpoint | 有意创建的版本点 | verified |" in pipeline
 
 
 def test_docs_root_has_no_competing_pipeline_status_or_handoff() -> None:
