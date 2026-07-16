@@ -4,6 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 .pytest_cache/
+formal_experiment/.tmp/
 .codex_tmp*/
 .mypy_cache/
 .ruff_cache/
@@ -28,11 +29,31 @@ logs/
 raw_responses/
 *.log
 
+# Local provenance stores (documented, read-only, and too large for normal Git)
+archive/
+references/
+
+# S2.1-A: official Sun modality ZIP, extracted members, and any
+# S2.1-B derived artifacts MUST NOT enter Git history. License is
+# unknown_pending_confirmation; user authorization on 2026-07-15 explicitly
+# forbids re-distribution. The directory-level .gitignore inside raw/ is
+# the authoritative copy; the entries below are belt-and-suspenders.
+formal_experiment/data/development/sun_modality/raw/**
+!formal_experiment/data/development/sun_modality/raw/.gitignore
+formal_experiment/data/development/sun_modality/_extract/
+
+# Keep only frozen formal reports versionable; development reports stay local
+!formal_experiment/outputs/
+formal_experiment/outputs/*
+!formal_experiment/outputs/reports/
+!formal_experiment/outputs/reports/**
+
 # OS / IDE
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+.agents/
 
 # Temporary files
 tmp/

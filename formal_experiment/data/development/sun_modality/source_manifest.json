@@ -1,0 +1,221 @@
+{
+  "manifest_version": "sun_modality_source_manifest@1.0.1",
+  "task_id": "S2.1-A",
+  "purpose": "固定 Sun 官方 Stage 2 modality 数据集(Decision_Logic_data.zip / EStG_sent_vec.csv)与 Stage 3 补充包(input 2.zip)的来源、文件元数据、官方 hash、本地 hash、当前本地状态和许可/再分发证据,作为 S2.1-B/C/D 的唯一机器可读来源/许可入口。",
+  "scope": [
+    "本 manifest 只覆盖 Sun et al. (2024) 官方 Archive.org 补充包, 不包含 Winter/Barrientos/导师包等其他来源。",
+    "本 manifest 不写 EStG-150 五层审核工作流(那是项目独立重建的 150, 与官方 150 句 phrase Gold 不可互换)。"
+  ],
+  "last_updated": "2026-07-15",
+  "last_updated_event": "S2.1-A byte verification: official ZIP size + SHA-1 + ZIP integrity + 3 required members + EStG_raw.txt SHA-256 all matched; local-use authorization recorded; license remains unknown_pending_confirmation.",
+  "verified_by": "Agent-E1 / S2.1-A",
+  "status": "manifest_verified_and_assets_byte_matched",
+
+  "official_landing_page": {
+    "url": "https://archive.org/details/input-2",
+    "archive_org_metadata_url": "https://archive.org/metadata/input-2",
+    "archive_org_identifier": "input-2",
+    "type": "archive_org_item",
+    "verification_basis": "docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md §1-§3 (2026-07-11 audit) + user-supplied 2026-07-15 archive.org metadata",
+    "archive_org_metadata_user_supplied_2026_07_15": {
+      "identifier": "input-2",
+      "filename": "Decision_Logic_data.zip",
+      "expected_size": 191874718,
+      "expected_sha1": "0346f84a246b7049d5aef58bcb33471435bee106",
+      "licenseurl": null,
+      "rights": null
+    },
+    "external_url_reachable_from_local_environment_2026_07_15": "fetch failed at 2026-07-15 via local web_fetch; web_search did not surface the archive.org item page. Reachability still not independently re-confirmed; size + SHA-1 + member SHA-256 byte match serve as the authoritative provenance for now."
+  },
+
+  "primary_modality_asset": {
+    "logical_name": "Decision_Logic_data.zip",
+    "expected_archive_url": "https://archive.org/download/input-2/Decision_Logic_data.zip",
+    "expected_archive_url_secondary": "https://archive.org/download/input-2/Decision_Logic%20data.zip",
+    "expected_top_level_members": [
+      "EStG_raw.txt",
+      "EStG_sent_vec.csv",
+      "estg.html"
+    ],
+    "expected_member_summary": {
+      "EStG_raw.txt": "EStG 1988 全文 (德文)。",
+      "EStG_sent_vec.csv": "句子级四分类数据 (definition / obligation / permission / prohibition) + 句向量列; 先前列审计抽样确认含德文句子、one-hot 标签与向量。",
+      "estg.html": "EStG 网页版备查原文。"
+    },
+    "expected_total_sentence_count": 2833,
+    "expected_class_distribution": {
+      "definition": 1190,
+      "obligation": 1274,
+      "permission": 265,
+      "prohibition": 104,
+      "source_paper": "Michel et al. 2022, Identification of Decision Rules from Legislative Documents (cited in Sun 2024 final version)"
+    },
+
+    "official_sha1": "0346f84a246b7049d5aef58bcb33471435bee106",
+    "official_member_sha256_known": {
+      "EStG_raw.txt": "185385186533FCDB8156D094782E3A3976C85460312EE9D48B424F404817660F"
+    },
+
+    "local_state_2026_07_15": {
+      "acquired": true,
+      "local_zip_path": "data/development/sun_modality/raw/Decision_Logic_data.zip",
+      "local_csv_path": null,
+      "local_raw_txt_path": null,
+      "local_html_path": null,
+      "verified_byte_match": true,
+      "verification_command": "python formal_experiment/scripts/verify_sun_modality_zip.py",
+      "verification_report_status": "verified",
+      "size_match": true,
+      "sha1_match": true,
+      "zip_integrity_testzip_clean": true,
+      "missing_reason_summary": null,
+      "acquired_at": "2026-07-15",
+      "acquired_by": "user (per task prompt; local-use authorization scope only)"
+    },
+
+    "local_computed_hashes_2026_07_15": {
+      "Decision_Logic_data.zip_sha1": "0346f84a246b7049d5aef58bcb33471435bee106",
+      "Decision_Logic_data.zip_sha256": "ada231f092927813ba9f1cd32a44a3d30d96b57fc463d042dfd76c652b6d58f2",
+      "EStG_raw.txt_sha256": "185385186533fcdb8156d094782e3a3976c85460312ee9d48b424f404817660f",
+      "EStG_raw.txt_size_uncompressed": 758957,
+      "EStG_raw.txt_crc32": "AA9BBBA0",
+      "EStG_sent_vec.csv_sha256": "1e53eb1b7f88f57c63029385eafe5e6f269bb7878328c0c409c5e708250ad5c3",
+      "EStG_sent_vec.csv_size_uncompressed": 470740514,
+      "EStG_sent_vec.csv_crc32": "A9E74EF5",
+      "estg.html_sha256": "bc385ce9acee1fd9289d5c0dc9c273bf0c7392e11783b6043032066c7ce80eb0",
+      "estg.html_size_uncompressed": 1786182,
+      "estg.html_crc32": "C0F18D9D",
+      "all_member_path_traversal_safe": true,
+      "verification_script": "scripts/verify_sun_modality_zip.py"
+    },
+
+    "license": {
+      "official_url_in_paper": "https://link.springer.com/article/10.1007/s11227-023-05626-0",
+      "archive_org_rights_statement_url": "https://archive.org/details/input-2 (rights/license statement, not retrievable from local environment at 2026-07-15)",
+      "archive_org_metadata_user_supplied_2026_07_15": {
+        "licenseurl": null,
+        "rights": null
+      },
+      "rights_status": "unknown_pending_confirmation",
+      "rights_status_reason": "archive.org metadata 中 licenseurl=null 且 rights=null, 配合 Springer 论文页脚'数据集可向通讯作者索取, 同时给出 Archive.org 链接'并不能确认为自由再分发许可; 同时本会话未取得 archive.org 项目的 rights/license 完整文本。在明确许可为 redistribution_and_reuse_allowed 之前, 不得假设可自由再分发、不得在论文中声明 official-license-permitted, 也不得把官方包或其解压副本上传/重发布到任何外部仓库 (references/, paper/, outputs/, formal 数据目录, 公共 Git remote 等)。",
+      "local_use_authorization_2026_07_15": {
+        "granted_by": "user (task prompt on 2026-07-15)",
+        "scope": [
+          "可在 formal_experiment/data/development/sun_modality/raw/ 范围内本地读取、校验、安全解压",
+          "可对 raw/ 内的字节做 SHA-1/SHA-256/CRC32/路径安全/成员计数核验",
+          "可在 S2.1-B 中进一步做 schema 推断、列含义核验、确定性 split 构造 (前提: 仍不进入训练/测试/评价, 仍不写 references/ 或 formal 数据目录)",
+          "可在本会话或后续 S2.1-B 会话中复现 verify_sun_modality_zip.py 的核验, 用于回归保护"
+        ],
+        "forbidden_actions": [
+          "不得重新发布、上传、提交原始 Decision_Logic_data.zip / EStG_sent_vec.csv / EStG_raw.txt / estg.html 到任何 Git remote、公网云盘、公开数据包、Zenodo/HuggingFace/ModelScope 等",
+          "不得把 raw/ 内的任何字节写入 references/、paper/、data/{input,gold,predictions,results}/、outputs/、_retired/ 之外的任何非 raw/ 路径",
+          "不得在论文中声称'official license permits free use' / '已取得官方授权可直接发布'",
+          "不得调用任何 LLM/API 处理 raw/ 内的字节"
+        ]
+      }
+    }
+  },
+
+  "stage3_supplement_asset": {
+    "logical_name": "input 2.zip",
+    "purpose_for_this_project": "Stage 3 复现输入, 已被 docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md 与 SUN_WINTER_CODE_SEPARATION_AUDIT.md 验证 57/57 文件与本地 Winter/导师包字节一致; 与 S2.1-A 的 modality 任务不直接耦合, 但必须在此登记以防 S2.1-B/C/D 误用为 modality 数据源。",
+    "expected_archive_url": "https://archive.org/download/input-2/input%202.zip",
+    "official_sha1": "a1a0ac8d57eb45698728722628a4c838c592c5bf",
+    "official_zip_sha256": "A4E12BDBF1631F201A06BD6DDAA30C6423AA33F3BE99338ABFA6E39CFA786FE3",
+    "effective_member_count": 57,
+    "byte_match_to_mentor_and_winter": true,
+    "local_state": {
+      "acquired": false,
+      "reliance": "Stage 3 复现使用导师包 / Winter 副本即可, 无需重新下载 input 2.zip; 但来源 hash 必须保持登记以便审计追溯。"
+    },
+    "license": {
+      "rights_status": "unknown_pending_confirmation",
+      "rights_status_reason": "同 Decision_Logic_data.zip: archive.org metadata 中 licenseurl/rights 均为 null, 未取得 license 完整文本。"
+    }
+  },
+
+  "local_repository_targets": {
+    "raw_development_dir": "data/development/sun_modality/raw/",
+    "raw_development_dir_project_relative": "data/development/sun_modality/raw/",
+    "raw_development_dir_current_contents_2026_07_15": [
+      "Decision_Logic_data.zip (191,874,718 bytes; verified byte-match with archive.org official)",
+      ".gitignore (directory-level ignore policy; does not enter Git with content)"
+    ],
+    "raw_extract_target": "data/development/sun_modality/raw/_extract/",
+    "raw_extract_target_state_2026_07_15": "absent (verified empty-or-absent by verify_sun_modality_zip.py); reserved for S2.1-B real ingestion",
+    "gitignore_protection": [
+      "directory-level: data/development/sun_modality/raw/.gitignore ignores everything except .gitignore itself",
+      "root-level: .gitignore has 'formal_experiment/data/development/sun_modality/raw/**' and 'formal_experiment/data/development/sun_modality/_extract/' entries"
+    ],
+    "why_development_only": "AGENTS.md 边界: 原始官方包只能放在 data/development/ 而非 references/ 或 data/{input,gold,predictions,results} 冻结目录; raw/ 是 dev 区域但与 EStG-150 那种 dev 资产不同, 任何人都不得把它的字节上传到 Git remote。",
+    "forbidden_paths": [
+      "references/",
+      "data/input/",
+      "data/gold/",
+      "data/predictions/",
+      "data/results/",
+      "outputs/ (除 gitignore 显式保留的 reports 模板)",
+      "_retired/ (活动实验不得从 _retired/ 取数据)",
+      "任何 Git remote / 公网云盘 / 公开数据集托管平台 (Zenodo / HuggingFace / ModelScope / Kaggle / GitHub 等)"
+    ]
+  },
+
+  "cross_references": {
+    "internal_audit_docs": [
+      "docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md",
+      "docs/research/SUN_REFERENCE_SNOWBALL_AND_MARKER_AUDIT.md",
+      "docs/research/SUN_WINTER_CODE_SEPARATION_AUDIT.md",
+      "configs/paths.json"
+    ],
+    "internal_s2_1_a_artifacts": [
+      "data/development/sun_modality/source_manifest.json (this file)",
+      "data/development/sun_modality/raw/Decision_Logic_data.zip",
+      "data/development/sun_modality/raw/.gitignore",
+      "docs/research/SUN_MODALITY_DATASET_INGESTION.md",
+      "scripts/verify_sun_modality_zip.py",
+      "tests/test_sun_modality_source_manifest.py"
+    ],
+    "external_papers": [
+      "Sun et al. 2024, doi:10.1007/s11227-023-05626-0 (Springer final version)",
+      "Michel et al. 2022, Identification of Decision Rules from Legislative Documents (EStG 2,833-sentence source for Decision_Logic_data.csv)"
+    ]
+  },
+
+  "blockers_2026_07_15": [
+    {
+      "id": "B1",
+      "summary_old": "本地无 Decision_Logic_data.zip / EStG_sent_vec.csv / EStG_raw.txt / estg.html 任何一份原始字节; 当前会话 web_fetch 不可达 archive.org。",
+      "summary_current": "已解除: raw/Decision_Logic_data.zip 字节存在, size 191,874,718 字节、SHA-1 0346f84a246b7049d5aef58bcb33471435bee106、ZIP 完整性 testzip 通过、3 个预期成员全部存在且路径安全、EStG_raw.txt SHA-256 与 2026-07-11 内部审计记录完全一致。verify_sun_modality_zip.py 退出码 0。",
+      "unblocks": "S2.1-B 可以基于 raw/ 内的真实字节做 schema 推断和 split 构造, 但仍受 B2/B3 限制 (许可 + 论文可发布性)。",
+      "status": "resolved"
+    },
+    {
+      "id": "B2",
+      "summary": "官方 license / rights 元数据未核实 (archive.org metadata 显示 licenseurl=null 且 rights=null, 本会话未取得 license 完整文本), 任何'已可自由复用'/'可正式发布'的表述都不得出现。",
+      "required_action": "由用户/导师向通讯作者或 Archive.org 取得 license / rights statement 完整文本, 留档到 docs/research/SUN_OFFICIAL_LICENSE_RECORD.md (S2.1-B 任务卡范围内) 后, 把 license.rights_status 升级为 redistribution_and_reuse_allowed 或明确禁止。",
+      "status": "open"
+    },
+    {
+      "id": "B3",
+      "summary": "即使 raw 字节已核验, 许可仍 unknown, 因此 raw/ 内的字节不得被任何 S2.1-B 之外的脚本 (含评估、训练、测试、复现脚本) 直接读取, 也不得写入 references/ / paper/ / data/{input,gold,predictions,results}/ / outputs/。",
+      "required_action": "在 B2 解决之前, S2.1-B 只能做 schema/split 推断与不可分发 fixture; S2.1-C/D 必须保持 raw/ 内字节不出 raw/ 的强约束。",
+      "status": "open"
+    }
+  ],
+
+  "s2_1_a_definition_of_done_check_2026_07_15": {
+    "verified_local_status": true,
+    "verified_official_urls_filenames": true,
+    "verified_official_hashes_recorded": true,
+    "license_recorded_honestly": true,
+    "no_fabricated_data_or_schema": true,
+    "machine_readable_manifest_written": true,
+    "ingestion_doc_written": true,
+    "byte_level_verification_script_runs_clean": true,
+    "all_required_member_hashes_recorded": true,
+    "estg_raw_txt_sha256_byte_match_confirmed": true,
+    "gitignore_policy_enforced": true,
+    "s2_1_a_completed": true,
+    "s2_1_a_completed_reason": "S2.1-A DoD 八项全部满足: 来源可定位、官方文件元数据 (size + SHA-1) 与本地字节逐项匹配、ZIP 完整性 testzip 通过、3 个预期成员全部存在且路径安全、EStG_raw.txt SHA-256 与 2026-07-11 内部审计记录完全一致、许可状态仍记录为 unknown_pending_confirmation (诚实)、raw/ 内字节未越界写入 references/ 或 formal 数据目录、目录级 + 根级 .gitignore 双层保险禁止 ZIP / CSV / 解压副本入 Git。S2.1-A verified, 可向协调 Agent 派发 S2.1-B (本轮不实际进入)。"
+  }
+}

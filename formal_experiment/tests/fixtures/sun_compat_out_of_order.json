@@ -1,0 +1,69 @@
+[
+  {
+    "fixture_id": "out_of_order_001",
+    "fixture_type": "out_of_order",
+    "description": "Regulation says 'assess risk then notify authority' but BPMN does 'notify then assess'",
+    "source_text": "The controller shall assess the risk and then notify the supervisory authority.",
+    "modality": "obligation",
+    "actor": "the controller",
+    "action": "assess the risk and then notify the supervisory authority",
+    "condition": "",
+    "constraint": "",
+    "exception": "",
+    "bpmn_tasks": {
+      "Data Controller": [
+        ["notify", "supervisory", "authority"],
+        ["assess", "risk"]
+      ]
+    },
+    "bpmn_order": ["notify supervisory authority", "assess risk"],
+    "regulation_order": ["assess risk", "notify supervisory authority"],
+    "expected_detection": true,
+    "expected_violation_type": "out_of_order"
+  },
+  {
+    "fixture_id": "out_of_order_002",
+    "fixture_type": "out_of_order",
+    "description": "Regulation says 'collect then process then store' but BPMN does 'process then collect then store'",
+    "source_text": "The processor shall collect the data, then process it, and then store it securely.",
+    "modality": "obligation",
+    "actor": "the processor",
+    "action": "collect the data, then process it, and then store it securely",
+    "condition": "",
+    "constraint": "",
+    "exception": "",
+    "bpmn_tasks": {
+      "Data Processor": [
+        ["process", "data"],
+        ["collect", "data"],
+        ["store", "data", "securely"]
+      ]
+    },
+    "bpmn_order": ["process data", "collect data", "store data securely"],
+    "regulation_order": ["collect data", "process data", "store data securely"],
+    "expected_detection": true,
+    "expected_violation_type": "out_of_order"
+  },
+  {
+    "fixture_id": "out_of_order_003",
+    "fixture_type": "out_of_order",
+    "description": "Order matches — no violation expected",
+    "source_text": "The controller shall first obtain consent and then process the data.",
+    "modality": "obligation",
+    "actor": "the controller",
+    "action": "first obtain consent and then process the data",
+    "condition": "",
+    "constraint": "",
+    "exception": "",
+    "bpmn_tasks": {
+      "Data Controller": [
+        ["obtain", "consent"],
+        ["process", "data"]
+      ]
+    },
+    "bpmn_order": ["obtain consent", "process data"],
+    "regulation_order": ["obtain consent", "process data"],
+    "expected_detection": false,
+    "expected_violation_type": "out_of_order"
+  }
+]

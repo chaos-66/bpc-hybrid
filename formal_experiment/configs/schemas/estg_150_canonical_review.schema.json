@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bpc-hybrid.local/schemas/estg_150_canonical_review_v1.json",
+  "title": "EStG-150 Canonical Human Review File (v1)",
+  "description": "Single human-editing surface for the EStG-150 reconstruction. The user edits ONLY this file. JSONL inputs, frozen input, and frozen Gold are derived from it by tooling.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dataset", "records"],
+  "properties": {
+    "schema_version": {
+      "const": "estg_150_canonical_review@1.0.0"
+    },
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "membership_payload_sha256",
+        "membership_count",
+        "language_pair",
+        "source_candidate_corpus",
+        "source_selected",
+        "source_translation",
+        "frozen_v1_files"
+      ],
+      "properties": {
+        "name": {"const": "independently_reconstructed_estg_150"},
+        "version": {"const": "v1"},
+        "membership_payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "membership_count": {"const": 150},
+        "language_pair": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source", "translation"],
+          "properties": {
+            "source": {"const": "de"},
+            "translation": {"const": "en"}
+          }
+        },
+        "source_candidate_corpus": {"type": "string"},
+        "source_selected": {"type": "string"},
+        "source_translation": {"type": "string"},
+        "frozen_v1_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string"}
+        },
+        "provenance_notes": {"type": "string"}
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 150,
+      "maxItems": 150,
+      "items": {"$ref": "#/$defs/record"}
+    }
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sample_id",
+        "legacy_record_id",
+        "raw_text_de",
+        "raw_text_de_sha256",
+        "cleaned_text_de_candidate",
+        "cleaned_text_de_candidate_sha256",
+        "candidate_text_en",
+        "approved_text_en",
+        "approved_text_en_sha256",
+        "text_review",
+        "annotation_review",
+        "clauses",
+        "old_gold_sources"
+      ],
+      "properties": {
+        "sample_id": {
+          "type": "string",
+          "pattern": "^estg_[0-9]{6}$"
+        },
+        "legacy_record_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 884
+        },
+        "raw_text_de": {"type": "string", "minLength": 1},
+        "raw_text_de_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "cleaned_text_de_candidate": {"type": "string", "minLength": 1},
+        "cleaned_text_de_candidate_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "cleaning_flags": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "source_boundary_issue": {"type": "boolean"},
+        "official_text_match": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["found", "match_kind"],
+          "properties": {
+            "found": {"type": "boolean"},
+            "match_kind": {"enum": ["exact", "substring", "fuzzy", "not_found"]},
+            "evidence_path": {"type": "string"},
+            "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        },
+        "candidate_text_en": {"type": ["string", "null"], "minLength": 1},
+        "candidate_text_en_sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "approved_text_en": {"type": ["string", "null"], "minLength": 1},
+        "approved_text_en_sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "text_review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reviewer", "reviewed_at", "notes"],
+          "properties": {
+            "status": {
+              "enum": [
+                "needs_review",
+                "needs_adjudication",
+                "approved",
+                "rejected"
+              ]
+            },
+            "reviewer": {"type": ["string", "null"]},
+            "reviewed_at": {"type": ["string", "null"]},
+            "notes": {"type": ["string", "null"]}
+          }
+        },
+        "annotation_review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reviewer", "reviewed_at", "confidence", "notes"],
+          "properties": {
+            "status": {
+              "enum": [
+                "needs_review",
+                "needs_adjudication",
+                "reviewed",
+                "adjudicated"
+              ]
+            },
+            "reviewer": {"type": ["string", "null"]},
+            "reviewed_at": {"type": ["string", "null"]},
+            "confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+            "notes": {"type": ["string", "null"]}
+          }
+        },
+        "clauses": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/clause"}
+        },
+        "old_gold_sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "version_label", "extraction_kind"],
+            "properties": {
+              "path": {"type": "string"},
+              "version_label": {"type": "string"},
+              "extraction_kind": {"type": "string"},
+              "pre_filled": {
+                "const": false,
+                "description": "MUST be false. The agent never pre-fills old auto-Gold into this file (anchoring protection)."
+              }
+            }
+          }
+        }
+      }
+    },
+    "clause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clause_id",
+        "clause_span",
+        "modality",
+        "actors",
+        "actions",
+        "conditions",
+        "constraints",
+        "exceptions",
+        "actor_action_map",
+        "order_relations"
+      ],
+      "properties": {
+        "clause_id": {"type": "string", "pattern": "^cl_[0-9]+$"},
+        "clause_span": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "end", "text"],
+          "properties": {
+            "start": {"type": "integer", "minimum": 0},
+            "end": {"type": "integer", "minimum": 0},
+            "text": {"type": "string", "minLength": 1}
+          }
+        },
+        "modality": {
+          "enum": ["obligation", "permission", "prohibition", "definition"]
+        },
+        "actors": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "actions": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "conditions": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "constraints": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "exceptions": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "actor_action_map": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["actor_id", "action_id"],
+            "properties": {
+              "actor_id": {"type": ["string", "null"]},
+              "action_id": {"type": "string"}
+            }
+          }
+        },
+        "order_relations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["before_action_id", "after_action_id", "evidence"],
+            "properties": {
+              "before_action_id": {"type": "string"},
+              "after_action_id": {"type": "string"},
+              "evidence": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    },
+    "span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "start", "end", "text"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^sp_[0-9]+$"},
+        "start": {"type": "integer", "minimum": 0},
+        "end": {"type": "integer", "minimum": 0},
+        "text": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

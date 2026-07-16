@@ -1,0 +1,18 @@
+# S2.1-A: official Sun modality ZIP, its extracted members, and any
+# S2.1-B derived artifacts MUST NOT enter Git history.
+#
+# Background:
+# - The official `Decision_Logic_data.zip` is licensed under
+#   `unknown_pending_confirmation` per docs/research/SUN_MODALITY_DATASET_INGESTION.md.
+# - User authorization on 2026-07-15 explicitly forbids re-distribution,
+#   uploading, or committing the raw archive and its unpacked members.
+# - Even the S2.1-B "extracted copy" target `_extract/` is a development-only
+#   provenance; only the immutable hashes belong in Git (see
+#   data/development/sun_modality/source_manifest.json).
+#
+# This directory-level ignore keeps the entire raw/ subtree out of Git while
+# still allowing the `.gitignore` file itself to be committed so the
+# policy travels with the directory.
+
+*
+!.gitignore

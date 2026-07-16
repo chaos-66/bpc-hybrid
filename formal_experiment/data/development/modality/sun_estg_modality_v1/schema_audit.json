@@ -1,0 +1,293 @@
+{
+  "auxiliary_metadata": {
+    "auxiliary_binary_counts": {
+      "0": 2720,
+      "1": 113
+    },
+    "auxiliary_integer_unique_count": 342,
+    "ordinal_unique_count": 14,
+    "unresolved_author_field_names": [
+      0,
+      1,
+      2,
+      8
+    ]
+  },
+  "columns": [
+    {
+      "author_field_name_available": false,
+      "meaning": "section_reference_candidate",
+      "position": 0,
+      "type": "nonempty alphanumeric string"
+    },
+    {
+      "author_field_name_available": false,
+      "maximum": 13,
+      "meaning": "ordinal_candidate_not_modality",
+      "minimum": 0,
+      "position": 1,
+      "type": "integer"
+    },
+    {
+      "author_field_name_available": false,
+      "maximum": 348,
+      "meaning": "auxiliary_integer_metadata",
+      "minimum": 0,
+      "position": 2,
+      "type": "integer"
+    },
+    {
+      "meaning": "sentence_text_de",
+      "position": 3,
+      "type": "nonempty string"
+    },
+    {
+      "meaning": "label_definition_bit",
+      "position": 4,
+      "type": "binary integer"
+    },
+    {
+      "meaning": "label_obligation_bit",
+      "position": 5,
+      "type": "binary integer"
+    },
+    {
+      "meaning": "label_permission_bit",
+      "position": 6,
+      "type": "binary integer"
+    },
+    {
+      "meaning": "label_prohibition_bit",
+      "position": 7,
+      "type": "binary integer"
+    },
+    {
+      "author_field_name_available": false,
+      "meaning": "auxiliary_binary_metadata_unknown",
+      "position": 8,
+      "type": "binary integer"
+    },
+    {
+      "meaning": "flattened_word_vectors",
+      "position": 9,
+      "type": "bracketed finite float list"
+    }
+  ],
+  "contains_raw_text": false,
+  "contains_vectors": false,
+  "csv_member_sha256": "1e53eb1b7f88f57c63029385eafe5e6f269bb7878328c0c409c5e708250ad5c3",
+  "csv_schema": {
+    "decode_errors": 0,
+    "delimiter": ",",
+    "empty_rows": 0,
+    "encoding": "utf-8",
+    "expected_row_count": 2833,
+    "field_count_distribution": {
+      "10": 2833
+    },
+    "has_header": false,
+    "long_rows": 0,
+    "row_count": 2833,
+    "short_rows": 0
+  },
+  "deterministic": true,
+  "development_import_allowed": true,
+  "hard_blockers": [],
+  "integer_modality_code_hypothesis": {
+    "actual_integer_value_counts": {
+      "0": 798,
+      "1": 575,
+      "10": 12,
+      "11": 19,
+      "12": 7,
+      "13": 12,
+      "2": 325,
+      "3": 276,
+      "4": 231,
+      "5": 200,
+      "6": 138,
+      "7": 127,
+      "8": 71,
+      "9": 42
+    },
+    "actual_integer_values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "candidate_column": 1,
+    "expected_if_modality_code": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "is_integer_modality_code": false,
+    "mapping": null,
+    "status": "not_applicable_verified_no_integer_modality_column"
+  },
+  "labels": {
+    "actual_class_distribution": {
+      "definition": 1190,
+      "obligation": 1274,
+      "permission": 265,
+      "prohibition": 104
+    },
+    "author_codebook_found": false,
+    "column_to_label": {
+      "4": "definition",
+      "5": "obligation",
+      "6": "permission",
+      "7": "prohibition"
+    },
+    "evidence": [
+      "references/papers/Michel_2022_Decision_rules.pdf p.5 Table 1",
+      "references/papers/Sun_2024_Design_time_BPC.pdf p.15 section 5.1.1 (class names only; not a positional codebook)"
+    ],
+    "exact_distribution_match": true,
+    "mapping_evidence_level": "inferred_by_exact_distribution_match",
+    "mode": "headerless_positional_strict_one_hot",
+    "one_hot_pattern_counts": {
+      "0001": 104,
+      "0010": 265,
+      "0100": 1274,
+      "1000": 1190
+    },
+    "paper_class_distribution": {
+      "definition": 1190,
+      "obligation": 1274,
+      "permission": 265,
+      "prohibition": 104
+    },
+    "project_inference_not_original_codebook": true,
+    "semantic_sanity_check": {
+      "performed_local_only": true,
+      "result": "consistent_with_distribution_inference",
+      "samples_stored_in_versioned_artifacts": false
+    }
+  },
+  "quarantine_policy_evaluation": {
+    "analysis_label_distribution": {
+      "definition": 1190,
+      "obligation": 1273,
+      "permission": 264,
+      "prohibition": 104
+    },
+    "analysis_population_size": 2831,
+    "authorized": true,
+    "configured": true,
+    "mismatch_reasons": [],
+    "policy": "pre_result_conflicting_label_group_quarantine",
+    "policy_version": "sun_modality_conflict_quarantine@1.0.0",
+    "quarantined_group_count": 1,
+    "quarantined_record_count": 2,
+    "quarantined_row_indices": [
+      616,
+      1221
+    ],
+    "source_population_size": 2833,
+    "status": "exact_locked_group_match"
+  },
+  "schema_audit_version": "sun_modality_official_schema_audit@1.1.0",
+  "source_asset_sha256": "ada231f092927813ba9f1cd32a44a3d30d96b57fc463d042dfd76c652b6d58f2",
+  "source_id": {
+    "candidate_column": 0,
+    "candidate_duplicate_rows_beyond_first": 2669,
+    "candidate_is_unique": false,
+    "candidate_nonempty_count": 2833,
+    "candidate_unique_count": 164,
+    "explicit_source_id_column": null,
+    "fallback_required": true,
+    "sample_id_source": "row_index_fallback"
+  },
+  "source_identity": {
+    "csv_member": "EStG_sent_vec.csv",
+    "csv_member_crc32_actual": "A9E74EF5",
+    "csv_member_crc32_expected": "A9E74EF5",
+    "csv_member_crc32_match": true,
+    "csv_member_sha256_actual": "1e53eb1b7f88f57c63029385eafe5e6f269bb7878328c0c409c5e708250ad5c3",
+    "csv_member_sha256_expected": "1e53eb1b7f88f57c63029385eafe5e6f269bb7878328c0c409c5e708250ad5c3",
+    "csv_member_sha256_match": true,
+    "csv_member_size_actual": 470740514,
+    "csv_member_size_expected": 470740514,
+    "csv_member_size_match": true,
+    "zip_actual_sha1": "0346f84a246b7049d5aef58bcb33471435bee106",
+    "zip_actual_sha256": "ada231f092927813ba9f1cd32a44a3d30d96b57fc463d042dfd76c652b6d58f2",
+    "zip_expected_local_sha256": "ada231f092927813ba9f1cd32a44a3d30d96b57fc463d042dfd76c652b6d58f2",
+    "zip_expected_official_sha1": "0346f84a246b7049d5aef58bcb33471435bee106",
+    "zip_local_sha256_match": true,
+    "zip_official_sha1_match": true,
+    "zip_size_actual": 191874718,
+    "zip_size_expected": 191874718,
+    "zip_size_match": true,
+    "zip_testzip_clean": true
+  },
+  "status": "verified_with_pre_result_quarantine",
+  "task_id": "S2.1-C",
+  "text": {
+    "empty_rows": 0,
+    "label_conflict_group_count": 1,
+    "label_conflict_row_count": 2,
+    "label_conflicts": [
+      {
+        "labels": [
+          "obligation",
+          "permission"
+        ],
+        "labels_by_row": {
+          "1221": "obligation",
+          "616": "permission"
+        },
+        "normalized_text_sha256": "df79964183f7abc85e0878ecd73ee4157f800699b42ce7c2ebf1923b4d438d95",
+        "raw_text_hashes_equal": true,
+        "raw_text_sha256": "0289f3ff1d31a392cacb39109df10267297e1d8a184b356227beea4716d8a8d6",
+        "row_indices": [
+          616,
+          1221
+        ],
+        "section_reference_hashes_distinct": true,
+        "section_reference_sha256_by_row": {
+          "1221": "879ce2257ab3468f65bd6d50a1e56f9af8e75a80035cbb1019eced7c3a47db5b",
+          "616": "9309f67fd6480663a48cf90236ec14c1db61583825ac210112e2abf19e47d95c"
+        }
+      }
+    ],
+    "normalized_text_duplicate_group_count": 26,
+    "normalized_text_duplicate_rows_beyond_first": 45,
+    "normalized_text_group_count": 2788,
+    "same_label_duplicate_group_count": 25
+  },
+  "valid_record_count_if_no_group_conflict": 2833,
+  "vectors": {
+    "all_flat_lengths_multiple_of_element_dimension": true,
+    "all_rows_exactly_768": false,
+    "evidence": "Michel_2022_Decision_rules.pdf p.5 and section 3.3.2 describe 300-dimensional word vectors",
+    "flat_length_distinct_count": 61,
+    "flat_length_maximum": 18900,
+    "flat_length_minimum": 900,
+    "missing_or_malformed_vector_rows": 0,
+    "nonfinite_vector_rows": 0,
+    "rows_with_flat_dimension_768": 0,
+    "use_for_training": "pending_stage2_4",
+    "vector_element_dimension": 300,
+    "vector_structure": "flat_sequence_of_whitespace_token_word_vectors",
+    "whitespace_token_count_mismatch_rows": 0
+  },
+  "warnings": [
+    "column_0_is_not_a_unique_source_id_row_index_fallback_required",
+    "column_1_is_not_a_0_3_modality_code",
+    "column_9_is_variable_length_300_dimensional_word_vectors_not_one_768_dimensional_vector",
+    "column_8_author_field_name_unknown_and_excluded_from_labels"
+  ]
+}

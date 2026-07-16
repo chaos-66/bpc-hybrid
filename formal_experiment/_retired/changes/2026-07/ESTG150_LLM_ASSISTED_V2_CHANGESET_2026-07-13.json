@@ -1,0 +1,180 @@
+{
+  "task_id": "ESTG150_LLM_ASSISTED_V2_REMEDIATION_2026-07-13",
+  "task_summary": "Remediate v2 human-correction workflow: split per-record vs global validators, extract HumanCorrectionService, fix save-draft/backup/stats/LLM-budget defects, rewrite tests to cover the first-record flow.",
+  "authored_at_utc": "2026-07-13T10:40:00+00:00",
+  "no_real_llm_call": true,
+  "no_env_read": true,
+  "no_human_decisions_imported": true,
+  "references_archive_untouched": true,
+  "single_estg150_membership_unchanged": true,
+  "no_commit": true,
+  "no_wave_2": true,
+  "old_canonical_review_v1_not_overwritten": true,
+  "files_created": [
+    {
+      "path": "formal_experiment/src/formal_experiment/estg150_validator.py",
+      "role": "Pure validators (per-record structural, per-record eligibility for reviewed/adjudicated, global aggregator)",
+      "sha256": "7DECD92267CF7B652A0FB80BA0D7997F102A4A57585E16C599B6F40B5E654C14"
+    },
+    {
+      "path": "formal_experiment/src/formal_experiment/estg150_service.py",
+      "role": "HumanCorrectionService: single mutator for Layer E; save_draft, mark_reviewed, mark_adjudicated, accept/edit/reject translation, accept/edit/reject field, undo, action log, backup with UTC-microsecond + monotonic counter naming",
+      "sha256": "2ADCC637F41B254F0EFC80A82F82DFA1CF6B0E6D95BB840DD687177445DF63BA"
+    },
+    {
+      "path": "formal_experiment/docs/changes/ESTG150_LLM_ASSISTED_V2_CHANGESET_2026-07-13.json",
+      "role": "This file: task-level precise changeset (per-file SHA-256, invariants, no-op declarations).",
+      "sha256": "<self>"
+    }
+  ],
+  "files_modified": [
+    {
+      "path": "formal_experiment/src/formal_experiment/audit.py",
+      "role": "Add review_aids_zh_not_generated warning; rephrase v2 stats display to show both per-field (n_f/N=900) and per-record (n_records_incomplete/150) counters; do not show the misleading 'six_element_unreviewed=900/150' line.",
+      "sha256": "599B60EDC2CFFDCE6111D1B33D4FD181DA34C154C690102F867CBC1D51825DA0"
+    },
+    {
+      "path": "formal_experiment/src/formal_experiment/status.py",
+      "role": "Add n_records_incomplete / n_records_fully_decided / n_field_decisions_total / n_field_decisions_resolved / n_reviewed / n_adjudicated to v2 summary (per-record and per-field counters, no more 900/150 unit confusion).",
+      "sha256": "7662E8299FAF92EA1523E4D8525BEBA84F96E0BCA78873FD28297A7CF415B67A"
+    },
+    {
+      "path": "formal_experiment/scripts/validate_human_correction.py",
+      "role": "Thin CLI wrapper that delegates to src.formal_experiment.estg150_validator.validate_global; same --path/--json CLI; same exit code 0/2; explicit per-field (900) and per-record (150) display.",
+      "sha256": "C39BE5D69F01BE5DB9F52AB0A3924C536E13167A47B13F922E912B26C403AC6A"
+    },
+    {
+      "path": "formal_experiment/scripts/estg150_review_tool.py",
+      "role": "GUI is a thin shell. All data ops go through HumanCorrectionService. on_save = collect -> save_draft (backup + atomic write) -> validate_global (read-only) -> status bar. Per-record eligibility check used for mark_reviewed/mark_adjudicated. Backup names use UTC microsecond + monotonic counter. Chinese-aid placeholder banner added. Six metric counters in status bar (no 900/150 unit confusion).",
+      "sha256": "B3E2EE46706213A6D1534B1E598A678B1E829EF9F881FC6679D2392BE4D41989"
+    },
+    {
+      "path": "formal_experiment/scripts/dry_run_llm_estimate.py",
+      "role": "Mark annotation-only-default as placeholder (no real model, no determined price, rate_status=hypothetical_rate). Show 4-batch minimum plan (1 Layer C, 3 Layer D) at max-calls=200. Add chunk/resume semantics. Mark all unverified prices price_snapshot_unverified. Output target = data/development/estg/llm_candidate_runs/<run_id>/. Do NOT recommend data/input/.",
+      "sha256": "132A004B48B0A988EB703D94B2E8DBA819ED9E02582B7E4B79E3747107603031"
+    },
+    {
+      "path": "formal_experiment/tests/test_estg_150_review_tool.py",
+      "role": "Replace hand-simulated tests with real service tests. Add 10+ workflow tests: first-record reviewed/adjudicated, global review_ready/freeze_ready at 1/150 and 150/150, save_draft persists, save_draft does not auto-review, two rapid saves produce two distinct backups, action log real-append, undo restores last modification, validation does not touch production file, no real LLM code path. Keep 6 anti-pollution tests with session-level real-file SHA-256 snapshots; add explicit no-touch checks for real backup dir and real action log.",
+      "sha256": "1132DA44D1E26DCFD6E45F38E0B9C43E9436ABACEBBB32580ABB32EC036678A7"
+    },
+    {
+      "path": "formal_experiment/docs/LLM_BUDGET_PROPOSAL_2026-07-12.md",
+      "role": "Fix call-budget math (Layer C=150, Layer D=525, total=675). Mark max-calls=200 per batch; show 4-batch plan; remove '200 covers 675' error; remove Layer D max-calls=400 contradiction. Mark annotation-only-default as PLACEHOLDER; remove its specific price; tag all other models price_snapshot_unverified. Mark runner as 'design draft, not implemented'. Output target = data/development/estg/llm_candidate_runs/<run_id>/. Forbid data/input/. Add review_aids_zh_not_generated state + tool banner text.",
+      "sha256": "B69C1B527FEDBADFA9E43B16C058CC90B5F141895C61FC0F1A8228A971CBFD70"
+    },
+    {
+      "path": "formal_experiment/docs/HUMAN_GOLD_GUIDE.md",
+      "role": "Add §4.2 single-record eligibility rules; §4.3 state machine diagram; §4.4 on_save flow; §6 backup naming (UTC microsecond + monotonic counter, no overwrite); §12 tool architecture (service + validator layers, thin GUI).",
+      "sha256": "4FA8F472E4688BD2673FE7E78303E3089E2228CB51238369EB87AFBFFE085C53"
+    },
+    {
+      "path": "formal_experiment/docs/ROUTE_LOCK.md",
+      "role": "§5 invariants: explicitly note per-record vs global validator split. §6: list service and validator modules. §7: paper disclosure for Layer D not_generated. §8: real-LLM authorization prerequisites (concrete model, not placeholder; --max-calls 200 x 4 batches; output dir; runner not implemented).",
+      "sha256": "C04404E2D998F355B081044FC0CFF0C6D93C9CF80F574E5324A219B6F72896DB"
+    }
+  ],
+  "single_estg150_membership_hash": {
+    "path": "formal_experiment/data/development/estg/estg_150_membership_hashes.json",
+    "sha256": "0F9065523A57900B22A8A04AE9109D37C72ABBE514F3CDE60BCD7652CFA1417B"
+  },
+  "source_files_unchanged": [
+    {
+      "path": "formal_experiment/data/development/estg/estg_selected_150_de.jsonl",
+      "role": "Layer A (immutable German source)",
+      "sha256": "55B64598DEDFA0C0038084EE62C0928BDDFA4BF17F19DB80D461DA2CB7BF26A3"
+    },
+    {
+      "path": "formal_experiment/data/development/estg/estg_selected_150_en_llm_translated.jsonl",
+      "role": "Layer B raw source for translation_en_v1",
+      "sha256": "F4227871072E9ED6A22D54756F645802773DDC4B39C780332CCC8C7575E45712"
+    },
+    {
+      "path": "formal_experiment/data/development/estg/estg_gold_150_llm_draft.jsonl",
+      "role": "Layer C source (legacy LLM draft, not Gold)",
+      "sha256": "9B915A898413C8C20ACABA78D2C6CCDBBC2EDD425AF3B860E5B73BCC56E3111B"
+    },
+    {
+      "path": "formal_experiment/data/development/estg/estg_150_membership_hashes.json",
+      "role": "Single 150 membership + per-record raw DE SHA-256",
+      "sha256": "0F9065523A57900B22A8A04AE9109D37C72ABBE514F3CDE60BCD7652CFA1417B"
+    },
+    {
+      "path": "formal_experiment/data/development/human_review/estg_150_canonical_review_v1.json",
+      "role": "Retired v1 canonical review (kept as provenance, NOT overwritten, NOT modified)",
+      "sha256": "43519542F58BBBD78463DB59C473E05CDBE2E3BD801DFB7156E9BB351F27610D"
+    },
+    {
+      "path": "formal_experiment/data/development/human_review/estg_150_human_correction_v1.json",
+      "role": "Layer E (user-editable). Initial state: 150/150 needs_review, 0/150 approved_en, 0/150 reviewed, 0/150 adjudicated. NOT touched by this task.",
+      "sha256": "D70857E0381EF1D4F068D9736D597FFA71340CE91E9D486200ECE0188F439948"
+    },
+    {
+      "path": "formal_experiment/data/development/human_review/estg_150_translation_en_v1.jsonl",
+      "role": "Layer B (immutable English translation manifest)",
+      "sha256": "F65E929BF1FE498FFCE6F08D30F95D1C4DE53592457352CCE915CFBF8EE91DA3"
+    },
+    {
+      "path": "formal_experiment/data/development/human_review/estg_150_llm_six_element_candidates_v1.jsonl",
+      "role": "Layer C (immutable LLM six-element manifest)",
+      "sha256": "9476945CA387FB7EFAD5C1405CCA59A6EF24FF50A23E22BA2C46AD6847290B8B"
+    },
+    {
+      "path": "formal_experiment/data/development/human_review/estg_150_review_aids_zh_v1.jsonl",
+      "role": "Layer D (Chinese aid, all-null pending authorized LLM call)",
+      "sha256": "D12587E5EE349C9CFE279CDA0194FA89B9BE7604E817DA2F65F3A2F92DFA67C2"
+    }
+  ],
+  "files_not_modified_outside_this_task": [
+    "formal_experiment/AGENTS.md (already locked; only this changeset is added, no AGENTS.md edits)",
+    "references/ (read-only provenance, untouched)",
+    "archive/ (read-only provenance, untouched)",
+    "data/input/ (empty; no LLM runner is implemented; no writes)",
+    "data/gold/ (empty; no Gold is declared; no writes)",
+    "data/predictions/ (empty; no method runs; no writes)",
+    "data/results/ (empty; no metrics; no writes)"
+  ],
+  "test_plan_summary": {
+    "test_file": "formal_experiment/tests/test_estg_150_review_tool.py",
+    "real_file_snapshot_fixture": "session-scoped real_hashes fixture: SHA-256 of all 6 source files + zh_aid",
+    "workspace_fixture": "tmp_path-based workspace: copies source files, runs build_estg150_review_layers.py, returns tmp paths",
+    "service_fixture": "HumanCorrectionService over the tmp workspace",
+    "new_workflow_tests": [
+      "test_first_record_can_be_marked_reviewed",
+      "test_first_record_can_be_marked_adjudicated_after_reviewed",
+      "test_global_review_ready_false_with_one_reviewed",
+      "test_global_review_ready_true_when_all_reviewed",
+      "test_global_freeze_ready_true_when_all_adjudicated",
+      "test_save_draft_actually_persists_to_disk",
+      "test_save_draft_does_not_auto_mark_reviewed",
+      "test_validation_failure_does_not_overwrite_without_backup",
+      "test_two_rapid_saves_produce_two_distinct_backups",
+      "test_action_log_is_real_appended",
+      "test_undo_restores_last_modification",
+      "test_validation_does_not_touch_production_file",
+      "test_no_real_llm_dry_run_is_invoked"
+    ],
+    "anti_pollution_tests": [
+      "test_real_human_correction_file_unchanged_by_tests",
+      "test_real_canonical_review_file_unchanged_by_tests",
+      "test_real_de_source_unchanged_by_tests",
+      "test_real_en_translation_unchanged_by_tests",
+      "test_real_llm_draft_unchanged_by_tests",
+      "test_real_zh_aid_unchanged_by_tests",
+      "test_tool_help_runs",
+      "test_tests_do_not_touch_real_backup_dir",
+      "test_tests_do_not_touch_real_action_log"
+    ],
+    "structural_tests_kept": [
+      "test_layer_b_source_immutable",
+      "test_layer_c_source_immutable",
+      "test_accept_en_candidate_writes_only_human_correction",
+      "test_edit_approved_en_marks_existing_spans_stale",
+      "test_modality_never_defaults_to_obligation",
+      "test_chinese_aid_missing_no_fabrication",
+      "test_membership_hash_unchanged",
+      "test_span_within_clause_span_rejected_by_validator",
+      "test_idempotent_validator_run"
+    ]
+  }
+}

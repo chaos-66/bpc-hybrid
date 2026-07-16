@@ -1,0 +1,70 @@
+{
+  "artifact_scope": "development_only",
+  "boundaries": {
+    "actor_wiktionary_dump_expansion_included": false,
+    "evaluation_run": false,
+    "formal_use_allowed": false,
+    "gold_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "redistribution_allowed": false,
+    "s2_4_or_later_activated": false,
+    "training_run": false
+  },
+  "category_files": {
+    "actor": {
+      "entry_count": 8,
+      "entry_payload_sha256": "dc5f24820c4835b1e8e5b02570dad7bdbb267bd969f77fa15768b0c75d2e7466",
+      "path": "resources/lexicon/actor_markers_en_v1.json",
+      "sha256": "69a3f8ea6d7694b054db4700df8066cd2c4060a1c592b7c0e05463b129a466b8"
+    },
+    "condition": {
+      "entry_count": 25,
+      "entry_payload_sha256": "d1ebd8898ec20094966e42ec753144db6747471eb71207d3191445913647dc56",
+      "path": "resources/lexicon/condition_markers_en_v1.json",
+      "sha256": "6e64811b94913d6251730dfcd70c723f69f8826da274e09c22a32f6662c8416a"
+    },
+    "constraint": {
+      "entry_count": 19,
+      "entry_payload_sha256": "01f2098edc089cd0bee03005ec2f4226aee6638acbab5d0b0d29c7df8ed0ca38",
+      "path": "resources/lexicon/constraint_markers_en_v1.json",
+      "sha256": "320fa49eb3ad6d05e29e4ad4e47632705178c5c7c3002f1cd999d08dcb217781"
+    },
+    "exception": {
+      "entry_count": 5,
+      "entry_payload_sha256": "6d8f8c543dd4af04953fd654ec29667a99b6e3d207034af5ec3a8038ebff151e",
+      "path": "resources/lexicon/exception_markers_en_v1.json",
+      "sha256": "becfaa2c9358aea23cbaa627abac643300ce60a630267a6dc93324290ebbf2dd"
+    },
+    "modality": {
+      "entry_count": 7,
+      "entry_payload_sha256": "9f8c5eefc3960bc57e87821f028600e0a8855a11692d8e64b2d49535de79f038",
+      "path": "resources/lexicon/modality_markers_en_v1.json",
+      "sha256": "f9b8543072154173e03e39ffad2c93461d27ac6d2bd6df04eeb24db5417b3e2a"
+    }
+  },
+  "combined_payload_sha256": "8c3a27b2aa62025ff266b4cb19a1c89984e967539188ccf96820836c2eef7b91",
+  "development_extensions": {
+    "entry_count": 0,
+    "path": "resources/lexicon/development_extensions_en_v1.json",
+    "sha256": "803d4694bdbd7d2f2a97e0bf324cbc4d68540f09526ad84c7fcb03e975d3e12c",
+    "status": "empty_locked_template_not_included_in_v1"
+  },
+  "generation": {
+    "duplicate_policy": "merge exact normalized field/class duplicates and union source_ids",
+    "generation_policy_sha256": "cebb4c64fdbd63339869169697438e3df6ac3612b819cf83b5a4c69a80ea9a59",
+    "normalization": "NFKC, strip, collapse internal whitespace, Unicode casefold",
+    "ordering": "descending token count, descending character count, then normalized surface and modality class"
+  },
+  "language": "en",
+  "lexicon_id": "public_marker_lexicon_en_v1",
+  "schema_version": "public_marker_manifest@1.0.0",
+  "source_snapshot": {
+    "construction_mode": "offline_from_preexisting_local_research_audit",
+    "evidence_cutoff": "2026-07-12",
+    "file_sha256": "e40c85cf572c68278d8fa2db00a57f193c0c9352aee889096731b6e87e31e369",
+    "path": "resources/lexicon/public_marker_sources_en_v1.json",
+    "payload_sha256": "a2b2dce47fad71778fbe6ca0b42548b48720c2594813085c072b9ead62872576",
+    "snapshot_id": "public_marker_sources_en_v1"
+  }
+}

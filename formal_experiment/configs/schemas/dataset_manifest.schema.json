@@ -1,0 +1,279 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dataset_manifest.schema.json@1.3.1",
+  "title": "Dataset Manifest",
+  "description": "Deterministic machine-readable manifest for synthetic and official Sun modality development imports. Runtime timestamps and manifest self-hashes are external. output_files contains only managed derived data children with actual SHA-256 and integer sizes. v1.3.1 requires portable project-relative contract and source-asset paths.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "dataset_id",
+    "contract_version",
+    "contract_path",
+    "contract_sha256",
+    "importer_version",
+    "label_adapter",
+    "split_origin",
+    "source_schema",
+    "vector_policy",
+    "source_asset",
+    "seed",
+    "sample_id_policy",
+    "split_params",
+    "total_samples_in",
+    "total_samples_valid",
+    "total_samples_rejected",
+    "label_distribution_in",
+    "label_distribution_valid",
+    "train_size",
+    "dev_size",
+    "test_size",
+    "train_label_distribution",
+    "dev_label_distribution",
+    "test_label_distribution",
+    "membership_hash",
+    "output_files",
+    "stats",
+    "lifecycle",
+    "license"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "1.3.1"},
+    "manifest_id": {"type": "string", "minLength": 1},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "contract_version": {"type": "string", "minLength": 1},
+    "contract_path": {"type": "string", "minLength": 1, "pattern": "^(?![A-Za-z]:[\\\\/])(?![/\\\\])(?!file://)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+    "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "importer_version": {"type": "string", "minLength": 1},
+    "importer_module": {"type": "string", "minLength": 1},
+    "label_adapter": {"type": "string", "minLength": 1},
+    "split_origin": {"const": "project_reconstructed_deterministic_split"},
+    "source_schema": {
+      "type": "object",
+      "required": ["mode", "encoding", "delimiter", "has_header", "text_column", "source_id_column", "label_mode", "label_columns", "vector_column"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": {"enum": ["headered_named_columns", "headerless_positional"]},
+        "encoding": {"type": "string", "minLength": 1},
+        "delimiter": {"type": "string", "minLength": 1, "maxLength": 1},
+        "has_header": {"type": "boolean"},
+        "text_column": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "integer", "minimum": 0}]},
+        "source_id_column": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "integer", "minimum": 0}, {"type": "null"}]},
+        "label_mode": {"type": "string", "minLength": 1},
+        "label_columns": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "integer", "minimum": 0}]}
+        },
+        "vector_column": {"oneOf": [{"type": "integer", "minimum": 0}, {"type": "null"}]}
+      }
+    },
+    "vector_policy": {
+      "type": "object",
+      "required": ["present", "structure", "element_dimension", "validation_status", "use_for_training"],
+      "additionalProperties": false,
+      "properties": {
+        "present": {"type": "boolean"},
+        "structure": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "element_dimension": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]},
+        "validation_status": {"type": "string", "minLength": 1},
+        "use_for_training": {"type": "string", "minLength": 1}
+      }
+    },
+    "source_asset": {
+      "type": "object",
+      "required": [
+        "logical_name",
+        "local_path",
+        "official_sha1",
+        "local_sha256",
+        "size_bytes",
+        "csv_member_logical_name",
+        "csv_member_sha256",
+        "csv_member_size_uncompressed_bytes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "logical_name": {"type": "string"},
+        "local_path": {"type": "string", "minLength": 1, "pattern": "^(?![A-Za-z]:[\\\\/])(?![/\\\\])(?!file://)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+        "official_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "local_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "size_bytes": {"type": "integer", "minimum": 0},
+        "csv_member_logical_name": {"type": "string"},
+        "csv_member_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "csv_member_size_uncompressed_bytes": {"type": "integer", "minimum": 0},
+        "csv_member_crc32": {"type": "string", "pattern": "^[0-9A-Fa-f]{8}$"}
+      }
+    },
+    "seed": {"type": "integer"},
+    "sample_id_policy": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "source_asset_sha256",
+        "source_id_column",
+        "source_id_mode",
+        "row_index_fallback_used"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {"type": "string", "minLength": 1},
+        "source_asset_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "source_id_column": {
+          "oneOf": [
+            {"type": "string", "minLength": 1},
+            {"type": "integer", "minimum": 0},
+            {"type": "null"}
+          ]
+        },
+        "source_id_mode": {"enum": ["explicit_source_id", "row_index_fallback"]},
+        "row_index_fallback_used": {"type": "boolean"}
+      }
+    },
+    "split_params": {
+      "type": "object",
+      "required": ["train_ratio", "dev_ratio", "test_ratio", "stratified", "shuffle", "min_per_class_in_smallest_split"],
+      "additionalProperties": false,
+      "properties": {
+        "train_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+        "dev_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+        "test_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+        "stratified": {"type": "boolean"},
+        "shuffle": {"type": "boolean"},
+        "min_per_class_in_smallest_split": {"type": "integer", "minimum": 0}
+      }
+    },
+    "population": {
+      "type": "object",
+      "required": ["source_population_size", "analysis_population_size", "quarantined_group_count", "quarantined_record_count"],
+      "additionalProperties": false,
+      "properties": {
+        "source_population_size": {"type": "integer", "minimum": 0},
+        "analysis_population_size": {"type": "integer", "minimum": 0},
+        "quarantined_group_count": {"type": "integer", "minimum": 0},
+        "quarantined_record_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "conflict_policy": {
+      "type": "object",
+      "required": ["policy_version", "name", "exact_locked_group_match", "raw_source_labels_modified", "decision_timing", "sensitivity_variant_status"],
+      "additionalProperties": false,
+      "properties": {
+        "policy_version": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "name": {"type": "string", "minLength": 1},
+        "exact_locked_group_match": {"type": "boolean"},
+        "raw_source_labels_modified": {"type": "boolean"},
+        "decision_timing": {"type": "string", "minLength": 1},
+        "sensitivity_variant_status": {"type": "string", "minLength": 1}
+      }
+    },
+    "total_samples_in": {"type": "integer", "minimum": 0},
+    "total_samples_valid": {"type": "integer", "minimum": 0},
+    "total_samples_rejected": {"type": "integer", "minimum": 0},
+    "total_samples_quarantined": {"type": "integer", "minimum": 0},
+    "label_distribution_in": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "label_distribution_valid": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "train_size": {"type": "integer", "minimum": 0},
+    "dev_size": {"type": "integer", "minimum": 0},
+    "test_size": {"type": "integer", "minimum": 0},
+    "train_label_distribution": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "dev_label_distribution": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "test_label_distribution": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "membership_hash": {
+      "type": "object",
+      "required": ["algorithm", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {"type": "string"},
+        "value": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "output_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["role", "path", "sha256", "size_bytes", "row_count"],
+        "additionalProperties": false,
+        "properties": {
+          "role": {"enum": ["records", "train_split", "dev_split", "test_split", "rejected_log", "quarantine_manifest"]},
+          "path": {"type": "string"},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "size_bytes": {"type": "integer", "minimum": 0},
+          "row_count": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "stats": {
+      "type": "object",
+      "required": [
+        "rejected_empty_text",
+        "rejected_duplicate_id",
+        "rejected_missing_source_id",
+        "rejected_unknown_label",
+        "rejected_missing_label",
+        "rejected_one_hot_all_zero",
+        "rejected_one_hot_multi_hot",
+        "rejected_one_hot_non_binary",
+        "rejected_cross_split_text_leakage",
+        "label_conflict",
+        "rejected_other"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "rejected_empty_text": {"type": "integer", "minimum": 0},
+        "rejected_duplicate_id": {"type": "integer", "minimum": 0},
+        "rejected_missing_source_id": {"type": "integer", "minimum": 0},
+        "rejected_unknown_label": {"type": "integer", "minimum": 0},
+        "rejected_missing_label": {"type": "integer", "minimum": 0},
+        "rejected_one_hot_all_zero": {"type": "integer", "minimum": 0},
+        "rejected_one_hot_multi_hot": {"type": "integer", "minimum": 0},
+        "rejected_one_hot_non_binary": {"type": "integer", "minimum": 0},
+        "rejected_cross_split_text_leakage": {"type": "integer", "minimum": 0},
+        "label_conflict": {"type": "integer", "minimum": 0},
+        "quarantined_conflict_groups": {"type": "integer", "minimum": 0},
+        "quarantined_conflict_records": {"type": "integer", "minimum": 0},
+        "rejected_other": {"type": "integer", "minimum": 0}
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "required": ["stage", "ready_for_training", "ready_for_evaluation", "ready_for_publication"],
+      "additionalProperties": false,
+      "properties": {
+        "stage": {"enum": ["development", "pilot", "formal"]},
+        "ready_for_training": {"type": "boolean"},
+        "ready_for_evaluation": {"type": "boolean"},
+        "ready_for_publication": {"type": "boolean"},
+        "notes": {"type": "string"}
+      }
+    },
+    "license": {
+      "type": "object",
+      "required": ["rights_status", "redistribution_allowed", "publication_in_paper_allowed"],
+      "additionalProperties": false,
+      "properties": {
+        "rights_status": {"type": "string"},
+        "redistribution_allowed": {"type": "boolean"},
+        "publication_in_paper_allowed": {"type": "boolean"}
+      }
+    },
+    "importer_run_command": {"type": "string"}
+  }
+}

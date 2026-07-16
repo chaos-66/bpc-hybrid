@@ -1,0 +1,62 @@
+[
+  {
+    "fixture_id": "missing_action_001",
+    "fixture_type": "missing_action",
+    "description": "BPMN model does not have a task for 'notify the supervisory authority'",
+    "source_text": "The controller shall notify the supervisory authority of a personal data breach without undue delay.",
+    "modality": "obligation",
+    "actor": "the controller",
+    "action": "notify the supervisory authority of a personal data breach",
+    "condition": "",
+    "constraint": "without undue delay",
+    "exception": "",
+    "bpmn_tasks": {
+      "Data Controller": [
+        ["record", "data", "breach"],
+        ["assess", "risk", "data", "subject"]
+      ]
+    },
+    "expected_detection": true,
+    "expected_violation_type": "missing_obligation"
+  },
+  {
+    "fixture_id": "missing_action_002",
+    "fixture_type": "missing_action",
+    "description": "BPMN model lacks 'obtain consent' task",
+    "source_text": "The controller shall obtain explicit consent from the data subject before processing.",
+    "modality": "obligation",
+    "actor": "the controller",
+    "action": "obtain explicit consent from the data subject",
+    "condition": "before processing",
+    "constraint": "",
+    "exception": "",
+    "bpmn_tasks": {
+      "Data Controller": [
+        ["process", "personal", "data"],
+        ["store", "consent", "record"]
+      ]
+    },
+    "expected_detection": true,
+    "expected_violation_type": "missing_obligation"
+  },
+  {
+    "fixture_id": "missing_action_003",
+    "fixture_type": "missing_action",
+    "description": "BPMN model has a similar but different task — should still match if above threshold",
+    "source_text": "The controller shall inform the data subject about the processing purposes.",
+    "modality": "obligation",
+    "actor": "the controller",
+    "action": "inform the data subject about the processing purposes",
+    "condition": "",
+    "constraint": "",
+    "exception": "",
+    "bpmn_tasks": {
+      "Data Controller": [
+        ["notify", "data", "subject", "purpose"],
+        ["provide", "transparency", "information"]
+      ]
+    },
+    "expected_detection": false,
+    "expected_violation_type": "missing_obligation"
+  }
+]

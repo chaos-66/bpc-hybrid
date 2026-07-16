@@ -1,0 +1,38 @@
+[
+  {
+    "description": "Example 1 — single obligation with actor + action + constraint",
+    "input": "The controller shall notify the supervisory authority within 72 hours.",
+    "build": {
+      "sample_id": "estg_demo_1",
+      "source_id": "estg_demo_1",
+      "source_text": "The controller shall notify the supervisory authority within 72 hours."
+    }
+  },
+  {
+    "description": "Example 2 — definition clause (no action)",
+    "input": "'Personal data' means any information relating to an identified or identifiable natural person.",
+    "build": {
+      "sample_id": "estg_demo_2",
+      "source_id": "estg_demo_2",
+      "source_text": "'Personal data' means any information relating to an identified or identifiable natural person."
+    }
+  },
+  {
+    "description": "Example 3 — prohibition with exception",
+    "input": "Member States may not process personal data unless required by Union law.",
+    "build": {
+      "sample_id": "estg_demo_3",
+      "source_id": "estg_demo_3",
+      "source_text": "Member States may not process personal data unless required by Union law."
+    }
+  },
+  {
+    "description": "Example 4 — multi-action with order relation",
+    "input": "The controller shall first assess the risk, then notify the supervisory authority.",
+    "build": {
+      "sample_id": "estg_demo_4",
+      "source_id": "estg_demo_4",
+      "source_text": "The controller shall first assess the risk, then notify the supervisory authority."
+    }
+  }
+]

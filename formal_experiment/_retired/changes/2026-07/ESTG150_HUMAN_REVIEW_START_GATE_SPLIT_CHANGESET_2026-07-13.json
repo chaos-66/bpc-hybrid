@@ -1,0 +1,185 @@
+{
+  "task_id": "ESTG150_HUMAN_REVIEW_START_GATE_SPLIT_2026-07-13",
+  "authored_at_utc": "2026-07-13T11:30:00+08:00",
+  "task_summary": "Split the canonical formal-project audit's 'human review' readiness gate into TWO distinct booleans so the audit never emits the contradictory 'user can edit NOW' / 'don't start human review' pair at the same time. The 'human_review_input_ready' gate (= audit.human_review_ready; the flag --require-human-review-ready) is true at 0/150 once data, schema, tool, and v2 file are in place. The 'human_review_freeze_ready' gate (= v2 human_correction.freeze_ready; tracked in validate_human_correction.py) remains false until 150/150 adjudicated. Both states are reported separately; the old 'formal_human_review_paused' blocker is replaced by 'formal_gold_publication_paused'. No data is modified; no real LLM/API is called; no .env is read; no references/archive changes.",
+  "no_real_llm_call": true,
+  "no_env_read": true,
+  "no_human_decisions_imported": true,
+  "references_archive_untouched": true,
+  "single_estg150_membership_unchanged": true,
+  "no_commit": true,
+  "no_wave_2": true,
+  "no_data_modified": true,
+  "no_event_1_to_20_modified": true,
+  "user_decision_recorded": "single_estg150_self_sampled_150_locked_as_project_dataset",
+  "files_modified": [
+    {
+      "path": "formal_experiment/src/formal_experiment/status.py",
+      "role": "Add two distinct readiness booleans: human_review_input_ready (true at 0/150) and human_review_freeze_ready (true at 150/150 adjudicated). human_review_ready is kept as a backward-compatible alias of human_review_input_ready. ready_for_final_metrics now requires human_review_freeze_ready. print_human prints both gates explicitly.",
+      "post_change_sha256": "F6BDBD349B3CB959ED9A17B2A3BAF66FC54BCDE2F35942E01CF9E89FFE7DE197"
+    },
+    {
+      "path": "formal_experiment/src/formal_experiment/audit.py",
+      "role": "Rewrite the formal_human_review_paused blocker as two separate findings: a new PASS 'human_review_input_ready' (authorizes the user to start review NOW) and a new BLOCKER 'formal_gold_publication_paused' (scopes the pause to formal Gold only). The audit output now prints both 'Human review input ready' and 'Human review freeze ready' lines. Bumps audit_version to 3.1 and rewrites claim_boundary.",
+      "post_change_sha256": "93DBF3F00C0FD4ACCA06C797DABD43010D11C51DA1D68BBB2F2884568C296D86"
+    },
+    {
+      "path": "formal_experiment/AGENTS.md",
+      "role": "Replace the contradictory 'Do not start human Gold review until ... passes audit' boundary with the explicit two-gate description: input-ready does NOT require any record to be reviewed; freeze-ready is the precondition for declaring formal Gold.",
+      "post_change_sha256": "9577160EBE675DA448D272F63882AF6069F90EDE86DD28DADBD738CF52DD3175"
+    },
+    {
+      "path": "formal_experiment/docs/ROUTE_LOCK.md",
+      "role": "Add a new section 5.1 '启动门禁 vs 冻结门禁' that defines the two gates, the expected value at 0/150, the expected value at 150/150 adjudicated, and the exact commands to check each gate. Header note records the 2026-07-13 11:30 split.",
+      "post_change_sha256": "CA574CF250B5B2673341F931DF71106ACD0734CBF76D4A9A85BBB5D89A58CDAE"
+    },
+    {
+      "path": "formal_experiment/docs/HUMAN_GOLD_GUIDE.md",
+      "role": "Add a 4.1.1 subsection under 4.1 that distinguishes the per-record cumulative review_ready / freeze_ready in the v2 human_correction file from the two audit-level gates (input-ready vs freeze-ready). Top of doc records the 2026-07-13 split.",
+      "post_change_sha256": "B4ECC44BED9717CC1F123D8CA8B28FA8EE6E217B691DFA2BCBDBEEF52A907DA2"
+    },
+    {
+      "path": "formal_experiment/configs/experiment_contract.json",
+      "role": "Add user_decisions_2026_07_13_1130 block recording: two_gates_split=true, single_dataset_self_sampled_150_locked=true, not_sun_original_150=true, not_exact_reproduction=true, no_resampling=true, no_parallel_old_new_150=true, review_input_ready_at_0_150=true, review_freeze_ready_requires_150_150_adjudicated=true, with the exact commands for each gate. Also lists the removed blocker code and the new codes.",
+      "post_change_sha256": "6C3FD7694167979133D2544BCD2A51601C1F48356172B15B8A05DD5C6ACA1A91"
+    },
+    {
+      "path": "formal_experiment/tests/test_formal_project_audit.py",
+      "role": "Replace the old 'paused' test with 7 new tests pinning down the two-gate split: (1) both booleans reported, (2) audit authorizes user to start review NOW, (3) old 'formal_human_review_paused' blocker removed, (4) new 'formal_gold_publication_paused' scoped to Gold only, (5) status exposes both booleans, (6) validate_human_correction CLI still shows review_ready=False / freeze_ready=False, (7) --require-human-review-ready exits 0 at 0/150, (8) --require-final-ready still fails at 0/150. Plus the 4 pre-existing governance tests kept.",
+      "post_change_sha256": "3A7267C632D5C54410EE03B74327687B1A593DC5D7D0AE84C6B0DCE0187A2367"
+    }
+  ],
+  "files_created": [
+    {
+      "path": "formal_experiment/docs/changes/ESTG150_HUMAN_REVIEW_START_GATE_SPLIT_CHANGESET_2026-07-13.json",
+      "role": "This file: task-level precise changeset (per-file SHA-256, invariants, no-op declarations, command matrix).",
+      "sha256": "<self>"
+    }
+  ],
+  "immutable_sources_sha256_pre_and_post": {
+    "estg_selected_150_de.jsonl": {
+      "pre": "55B64598DEDFA0C0038084EE62C0928BDDFA4BF17F19DB80D461DA2CB7BF26A3",
+      "post": "55B64598DEDFA0C0038084EE62C0928BDDFA4BF17F19DB80D461DA2CB7BF26A3",
+      "role": "Layer A — German source (immutable)"
+    },
+    "estg_selected_150_en_llm_translated.jsonl": {
+      "pre": "F4227871072E9ED6A22D54756F645802773DDC4B39C780332CCC8C7575E45712",
+      "post": "F4227871072E9ED6A22D54756F645802773DDC4B39C780332CCC8C7575E45712",
+      "role": "Layer B source"
+    },
+    "estg_gold_150_llm_draft.jsonl": {
+      "pre": "9B915A898413C8C20ACABA78D2C6CCDBBC2EDD425AF3B860E5B73BCC56E3111B",
+      "post": "9B915A898413C8C20ACABA78D2C6CCDBBC2EDD425AF3B860E5B73BCC56E3111B",
+      "role": "Layer C source"
+    },
+    "estg_150_membership_hashes.json": {
+      "pre": "0F9065523A57900B22A8A04AE9109D37C72ABBE514F3CDE60BCD7652CFA1417B",
+      "post": "0F9065523A57900B22A8A04AE9109D37C72ABBE514F3CDE60BCD7652CFA1417B",
+      "role": "membership hashes"
+    },
+    "estg_150_translation_en_v1.jsonl": {
+      "pre": "F65E929BF1FE498FFCE6F08D30F95D1C4DE53592457352CCE915CFBF8EE91DA3",
+      "post": "F65E929BF1FE498FFCE6F08D30F95D1C4DE53592457352CCE915CFBF8EE91DA3",
+      "role": "Layer B manifest"
+    },
+    "estg_150_llm_six_element_candidates_v1.jsonl": {
+      "pre": "9476945CA387FB7EFAD5C1405CCA59A6EF24FF50A23E22BA2C46AD6847290B8B",
+      "post": "9476945CA387FB7EFAD5C1405CCA59A6EF24FF50A23E22BA2C46AD6847290B8B",
+      "role": "Layer C candidate"
+    },
+    "estg_150_review_aids_zh_v1.jsonl": {
+      "pre": "D12587E5EE349C9CFE279CDA0194FA89B9BE7604E817DA2F65F3A2F92DFA67C2",
+      "post": "D12587E5EE349C9CFE279CDA0194FA89B9BE7604E817DA2F65F3A2F92DFA67C2",
+      "role": "Layer D — Chinese aid (still not_generated, fields null)"
+    },
+    "estg_150_canonical_review_v1.json": {
+      "pre": "43519542F58BBBD78463DB59C473E05CDBE2E3BD801DFB7156E9BB351F27610D",
+      "post": "43519542F58BBBD78463DB59C473E05CDBE2E3BD801DFB7156E9BB351F27610D",
+      "role": "retired v1 canonical review (workflow draft, kept as provenance, not modified)"
+    },
+    "estg_150_human_correction_v1.json": {
+      "pre": "D70857E0381EF1D4F068D9736D597FFA71340CE91E9D486200ECE0188F439948",
+      "post": "D70857E0381EF1D4F068D9736D597FFA71340CE91E9D486200ECE0188F439948",
+      "role": "Layer E — the single editable human-correction file; SHA-256 unchanged because the user has not yet started review (0/150 approved_en, 150/150 needs_review, 0 reviewed, 0 adjudicated). Tests never write to this path."
+    }
+  },
+  "membership": {
+    "membership_payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
+    "membership_count": 150,
+    "membership_source": "formal_experiment/data/development/estg/estg_selected_150_de.jsonl",
+    "single_dataset_locked": true,
+    "not_sun_original_150": true,
+    "not_exact_reproduction": true,
+    "no_resampling": true,
+    "no_parallel_old_new_150": true
+  },
+  "human_correction_layer_e_state": {
+    "n_records": 150,
+    "approved_text_en": 0,
+    "translation_unreviewed": 150,
+    "six_element_decisions_unreviewed": "900/900",
+    "six_element_records_incomplete": "150/150",
+    "review_state_counts": {
+      "needs_review": 150,
+      "in_progress": 0,
+      "reviewed": 0,
+      "adjudicated": 0
+    },
+    "format_valid": true,
+    "review_ready": false,
+    "freeze_ready": false,
+    "chinese_aid_status": "not_generated (Layer D fields all null, awaiting separate user authorization for a real LLM call)"
+  },
+  "audit_gate_matrix_at_0_150": {
+    "human_review_input_ready": true,
+    "human_review_freeze_ready": false,
+    "final_experiment_ready": false,
+    "audit_human_review_ready": true,
+    "require_human_review_ready_exit_code": 0,
+    "validate_human_correction_review_ready": false,
+    "validate_human_correction_freeze_ready": false,
+    "new_pass_code": "human_review_input_ready",
+    "new_blocker_code": "formal_gold_publication_paused",
+    "removed_blocker_code": "formal_human_review_paused"
+  },
+  "tests": {
+    "scope": "tests/test_formal_project_audit.py",
+    "pre_change_count": 4,
+    "post_change_count": 12,
+    "new_tests": [
+      "test_two_distinct_readiness_gates_are_reported",
+      "test_audit_authorizes_user_to_start_review_now",
+      "test_audit_pauses_only_formal_gold_publication_at_zero_progress",
+      "test_status_exposes_two_separate_ready_booleans",
+      "test_validate_human_correction_cli_still_shows_review_freeze_false",
+      "test_require_human_review_ready_flag_passes_at_zero_progress",
+      "test_require_final_ready_flag_still_fails_at_zero_progress"
+    ],
+    "all_tests_use_tmp_path_or_real_path": true,
+    "tests_touch_real_human_correction": false,
+    "tests_touch_real_backup_dir": false,
+    "tests_touch_real_action_log": false,
+    "full_suite_passed": 633,
+    "full_suite_skipped": 22,
+    "full_suite_failed": 0,
+    "pre_existing_unrelated_failures_ignored": 8
+  },
+  "workflow_invariants_enforced": [
+    "Two distinct readiness gates: human_review_input_ready (input is ready, true at 0/150) and human_review_freeze_ready (150/150 adjudicated, false at 0/150). Both are reported separately so the audit never emits the contradictory 'user can edit NOW' / 'don't start human review' pair.",
+    "Single 150 sample_id set: the EStG-150 dataset is the project-self-sampled 150 (NOT Sun's original 150, NOT exact-reproduction). membership_payload_sha256 is unchanged at 8573e105...0d7.",
+    "No resampling, no parallel old/new 150: layer A/B/C/D SHA-256 unchanged; the user-decision block in experiment_contract.json records the explicit 2026-07-13 decision.",
+    "Chinese aid not generated: Layer D fields are all null; the review_aids_zh_not_generated warning is still emitted; no Chinese content is fabricated.",
+    "No real LLM/API: no test, tool, or audit call invokes an LLM or reads .env. The audit module's imports are scanned for forbidden tokens (requests, httpx, openai, LLMClient, load_dotenv).",
+    "No event 1-20 modified: the new audit event is appended as event 21; historical events are byte-identical."
+  ],
+  "audit_invariants": {
+    "integrity_pass": true,
+    "human_review_input_ready": true,
+    "human_review_freeze_ready": false,
+    "final_experiment_ready": false,
+    "pre_change_audit_event_count": 20,
+    "post_change_audit_event_count_target": 21,
+    "old_events_1_to_20_unchanged": true,
+    "new_event_purpose": "Split the canonical formal-project audit's human-review readiness gate into two distinct booleans so the audit never emits the contradictory 'user can edit NOW' / 'don't start human review' pair; the human_review_input_ready gate (== audit.human_review_ready) is true at 0/150 once data + schema + tool + v2 file are in place, while human_review_freeze_ready remains false until 150/150 adjudicated. Single 150 sample_id set locked as the project-self-sampled EStG-150 dataset (not Sun's original 150, not exact reproduction); no resampling; no data modified; no real LLM/API call; references and archive untouched."
+  }
+}

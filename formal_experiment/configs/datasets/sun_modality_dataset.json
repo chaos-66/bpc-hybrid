@@ -1,0 +1,375 @@
+{
+  "contract_version": "sun_modality_dataset_contract@1.3.1",
+  "dataset_id": "sun_modality_v1",
+  "display_name": "Sun 2024 EStG Modality Dataset (official supplement, development-only)",
+  "owner": "S2.1-C-R1 official CSV conflict quarantine and development import",
+  "created_at": "2026-07-15",
+  "stage": "development",
+  "scope_note": "S2.1-C-R1 applies the user's pre-result data-governance decision without altering the immutable 2,833-row raw source or either original label. The one exactly locked conflicting-label group is quarantined as a whole from the 2,831-row main analysis population. This is not a general skip-conflicts rule: absent policy or any source/hash/row/label/count mismatch remains fail-closed. All later baseline, LLM, and Hybrid main experiments must share the same 2,831-row population; the full-source sensitivity variant is preregistered but not run.",
+
+  "source_manifest_path": "data/development/sun_modality/source_manifest.json",
+  "source_zip_logical_name": "Decision_Logic_data.zip",
+  "source_zip_local_path": "data/development/sun_modality/raw/Decision_Logic_data.zip",
+  "source_zip_official_sha1": "0346f84a246b7049d5aef58bcb33471435bee106",
+  "source_zip_local_sha256": "ada231f092927813ba9f1cd32a44a3d30d96b57fc463d042dfd76c652b6d58f2",
+  "source_zip_size_bytes": 191874718,
+
+  "csv_member_logical_name": "EStG_sent_vec.csv",
+  "csv_member_local_sha256": "1e53eb1b7f88f57c63029385eafe5e6f269bb7878328c0c409c5e708250ad5c3",
+  "csv_member_size_uncompressed_bytes": 470740514,
+  "csv_member_crc32": "A9E74EF5",
+
+  "synthetic_fixture_adapter": {
+    "status": "verified_s2_1_b_r1_only",
+    "adapter": "strict_one_hot",
+    "scope": "tests/fixtures/sun_modality only; must never be described as the official CSV schema",
+    "encoding": "utf-8",
+    "delimiter": ",",
+    "has_header": true,
+    "text_column": "text",
+    "id_column": "source_id",
+    "label_columns": [
+      "label_definition",
+      "label_obligation",
+      "label_permission",
+      "label_prohibition"
+    ]
+  },
+
+  "official_csv_schema": {
+    "status": "verified",
+    "development_ingestion_status": "verified_pre_result_quarantine_import",
+    "verification_basis": "Complete strict UTF-8 csv.reader scan of all bytes from ZipFile.open(EStG_sent_vec.csv), with aggregate-only schema_audit.json.",
+    "encoding": "utf-8",
+    "delimiter": ",",
+    "has_header": false,
+    "field_count": 10,
+    "row_count": 2833,
+    "source_id_column": null,
+    "source_id_candidate_column": 0,
+    "source_id_candidate_unique_count": 164,
+    "source_id_candidate_duplicate_rows_beyond_first": 2669,
+    "sample_id_source": "explicit row_index fallback because no verified unique source-ID column exists",
+    "columns": {
+      "section_reference_candidate": 0,
+      "ordinal_candidate": 1,
+      "auxiliary_integer_metadata": 2,
+      "text_de": 3,
+      "label_definition_bit": 4,
+      "label_obligation_bit": 5,
+      "label_permission_bit": 6,
+      "label_prohibition_bit": 7,
+      "auxiliary_binary_metadata": 8,
+      "flattened_word_vectors": 9
+    },
+    "unresolved_author_field_names": [0, 1, 2, 8],
+    "strict_position_policy": "No heuristic column guessing is permitted. Positions above are the only official adapter configuration. Unresolved metadata columns are retained only as local provenance where needed and are never treated as labels."
+  },
+
+  "official_label_mode": "headerless_positional_strict_one_hot",
+  "official_integer_code_mapping": {
+    "status": "not_applicable_verified_no_integer_modality_column",
+    "mapping": null,
+    "must_not_guess": true,
+    "full_scan_finding": "The earlier column-1 hypothesis is false. Column 1 is an integer ordinal candidate with values 0-13, not a 0-3 modality code. No official integer code-to-label mapping exists in this CSV schema.",
+    "adapter_policy": "The generic explicit integer-code adapter remains fail-closed when mapping is null or a code is unknown, but it is not used for EStG_sent_vec.csv."
+  },
+
+  "official_positional_one_hot_mapping": {
+    "status": "verified",
+    "column_to_label": {
+      "4": "definition",
+      "5": "obligation",
+      "6": "permission",
+      "7": "prohibition"
+    },
+    "mapping_evidence_level": "inferred_by_exact_distribution_match",
+    "project_inference_not_author_codebook": true,
+    "author_codebook_found": false,
+    "evidence": [
+      "references/papers/Michel_2022_Decision_rules.pdf p.5 Table 1: definition 1190, obligation 1274, permission 265, prohibitions 104",
+      "references/papers/Sun_2024_Design_time_BPC.pdf p.15 section 5.1.1: four class names, but no positional CSV codebook"
+    ],
+    "semantic_sanity_check": "A few local-only sentences per inferred class were inspected and were consistent; no sentence was stored in a versioned audit artifact."
+  },
+
+  "official_vector_contract": {
+    "status": "verified",
+    "vector_column": 9,
+    "vector_structure": "flat_sequence_of_whitespace_token_word_vectors",
+    "vector_element_dimension": 300,
+    "flat_length_policy": "variable; exactly 300 * whitespace_token_count",
+    "flat_length_minimum_observed": 900,
+    "flat_length_maximum_observed": 18900,
+    "distinct_flat_lengths_observed": 61,
+    "expected_768_hypothesis_match": false,
+    "rows_with_flat_dimension_768": 0,
+    "require_whitespace_token_count_match": true,
+    "all_vectors_present": true,
+    "all_values_finite": true,
+    "malformed_vector_rows": 0,
+    "token_count_mismatch_rows": 0,
+    "vector_source_status": "verified_against_complete_csv_and_michel_2022_300_dimensional_word_vector_description",
+    "use_for_training": "pending_stage2_4"
+  },
+
+  "conflict_quarantine": {
+    "policy_version": "sun_modality_conflict_quarantine@1.0.0",
+    "status": "authorized_locked",
+    "conflict_policy": "pre_result_conflicting_label_group_quarantine",
+    "source_asset_sha256": "ada231f092927813ba9f1cd32a44a3d30d96b57fc463d042dfd76c652b6d58f2",
+    "source_population_size": 2833,
+    "analysis_population_size": 2831,
+    "quarantined_group_count": 1,
+    "quarantined_record_count": 2,
+    "raw_source_labels_modified": false,
+    "quarantine_decision_timing": "before_any_model_training_or_result",
+    "main_experiment_uses_clean_population": true,
+    "all_main_methods_must_share_analysis_population": true,
+    "analysis_label_distribution": {
+      "definition": 1190,
+      "obligation": 1273,
+      "permission": 264,
+      "prohibition": 104
+    },
+    "locked_groups": [
+      {
+        "normalized_text_sha256": "df79964183f7abc85e0878ecd73ee4157f800699b42ce7c2ebf1923b4d438d95",
+        "raw_text_sha256": "0289f3ff1d31a392cacb39109df10267297e1d8a184b356227beea4716d8a8d6",
+        "raw_text_hashes_equal": true,
+        "row_indices": [616, 1221],
+        "labels": ["obligation", "permission"],
+        "labels_by_row": {
+          "616": "permission",
+          "1221": "obligation"
+        },
+        "section_reference_sha256_by_row": {
+          "616": "9309f67fd6480663a48cf90236ec14c1db61583825ac210112e2abf19e47d95c",
+          "1221": "879ce2257ab3468f65bd6d50a1e56f9af8e75a80035cbb1019eced7c3a47db5b"
+        },
+        "conflict_type": "identical_raw_text_conflicting_original_labels",
+        "exclusion_reason": "pre-result quarantine of an exact raw-text duplicate carrying inconsistent source labels; neither source label is selected or rewritten"
+      }
+    ],
+    "sensitivity_full_source_variant": {
+      "population": 2833,
+      "conflicting_group_preserved_with_original_labels": true,
+      "conflicting_group_split_constraint": "forced_train_only",
+      "conflicting_group_prohibited_from_dev_test": true,
+      "purpose": "measure impact of source-label inconsistency",
+      "status": "planned_not_run",
+      "must_use_same_nonconflict_membership_as_main_where_possible": true,
+      "sensitivity_variant_registered": true,
+      "sensitivity_variant_executed": false
+    }
+  },
+
+  "label_taxonomy": {
+    "modality_classes_canonical": [
+      "definition",
+      "obligation",
+      "permission",
+      "prohibition"
+    ],
+    "synthetic_fixture_label_mode": "strict_one_hot",
+    "official_label_mode": "headerless_positional_strict_one_hot",
+    "expected_class_distribution_from_paper": {
+      "definition": 1190,
+      "obligation": 1274,
+      "permission": 265,
+      "prohibition": 104
+    }
+  },
+
+  "stable_sample_id": {
+    "algorithm": "blake2b(digest_size=8) over canonical JSON [source_asset_sha256, source_key_type, source_key, normalized_text]",
+    "namespace_prefix": "sun_modality",
+    "format": "sun_modality_<16hex>",
+    "deterministic": true,
+    "preferred_source_key": "trimmed explicit source_id from id_column",
+    "explicit_source_id_duplicate_policy": "fail_closed before writing records.jsonl or any split",
+    "row_index_fallback": "Allowed only when the caller explicitly omits id_column. The 0-based data-row index is then used as source_key and sample_id_policy.row_index_fallback_used=true is recorded in manifest.json. Empty IDs in a configured id_column never fall back."
+  },
+
+  "split": {
+    "seed": 20260715,
+    "ratios": {
+      "train": 0.7,
+      "dev": 0.15,
+      "test": 0.15
+    },
+    "stratified": true,
+    "shuffle": true,
+    "min_per_class_in_smallest_split": 1,
+    "allocation_unit": "normalized_text group",
+    "group_definition": "All records with the same normalized_text and the same canonical label form one indivisible group.",
+    "label_conflict_policy": "Default is fail closed. The only exception is conflict_policy=pre_result_conflicting_label_group_quarantine with authorized_locked status and an exact match of source hash, normalized/raw text hashes, row indices, labels, group/record counts, population sizes, and computed post-quarantine distribution. Any other conflict or mismatch fails before output.",
+    "small_class_group_threshold_formula": "active_nonzero_splits * min_per_class_in_smallest_split",
+    "small_class_group_threshold_current": 3,
+    "small_class_handling": "With train/dev/test all nonzero and min=1, a class with fewer than 3 normalized-text groups is assigned entirely to train with an explicit warning. A class with exactly 3 or more groups receives at least one group in every active split. Groups, classes, and records are never discarded.",
+    "leakage_check": {
+      "normalize_for_dedup": "lowercase + collapse whitespace + strip non-alphanumeric (German umlauts preserved, ASCII-only fallback to bytes).",
+      "group_aware_assignment_required": true,
+      "reject_cross_split_text_leakage": true,
+      "rejection_action": "The group-aware allocator prevents leakage by construction; the post-allocation invariant check still raises IngestionError if an implementation bug produces a collision."
+    },
+    "deterministic_replay": "With the same input, contract, and seed, the importer must produce byte-identical output files and a byte-identical manifest."
+  },
+
+  "validation": {
+    "reject_empty_text": true,
+    "reject_duplicate_source_id": true,
+    "reject_duplicate_sample_id": true,
+    "reject_empty_source_id_when_id_column_configured": true,
+    "reject_unknown_label_class": true,
+    "reject_missing_label": true,
+    "reject_one_hot_all_zero": true,
+    "reject_one_hot_multi_hot": true,
+    "reject_one_hot_non_binary": true,
+    "reject_row_whose_id_appears_more_than_once": true,
+    "reject_normalized_text_label_conflict": true,
+    "allow_only_contract_locked_pre_result_conflict_quarantine": true,
+    "reject_unlocked_or_mismatched_conflict_quarantine": true,
+    "reject_cross_split_text_leakage": true,
+    "row_count_must_equal_input_minus_rejected": true
+  },
+
+  "overwrite_policy": {
+    "default": "no_overwrite",
+    "explicit_flag": "--allow-overwrite",
+    "on_no_overwrite_violation": "raise IngestionError listing every output path that already exists"
+  },
+
+  "license": {
+    "rights_status": "unknown_pending_confirmation",
+    "redistribution_allowed": false,
+    "publication_in_paper_allowed": false,
+    "raw_bytes_outside_raw_dir_allowed": false,
+    "rationale": "archive.org metadata self-reports licenseurl=null and rights=null (recorded in source_manifest.json local_use_authorization_2026_07_15). User authorization on 2026-07-15 allows local research use only and forbids re-distribution, upload, or commit of the original ZIP/CSV/extracted members."
+  },
+
+  "outputs": {
+    "development_output_dir": "data/development/modality/sun_estg_modality_v1/",
+    "dev_records_path": "data/development/modality/sun_estg_modality_v1/records.jsonl",
+    "dev_manifest_path": "data/development/modality/sun_estg_modality_v1/manifest.json",
+    "dev_schema_audit_path": "data/development/modality/sun_estg_modality_v1/schema_audit.json",
+    "dev_split_summary_path": "data/development/modality/sun_estg_modality_v1/split_summary.json",
+    "dev_quarantine_manifest_path": "data/development/modality/sun_estg_modality_v1/quarantine_manifest.json",
+    "dev_splits_dir": "data/development/modality/sun_estg_modality_v1/splits/",
+    "dev_splits_paths": {
+      "train": "data/development/modality/sun_estg_modality_v1/splits/train.jsonl",
+      "dev": "data/development/modality/sun_estg_modality_v1/splits/dev.jsonl",
+      "test": "data/development/modality/sun_estg_modality_v1/splits/test.jsonl"
+    },
+    "split_origin": "project_reconstructed_deterministic_split",
+    "sun_original_split_claim_forbidden": true,
+    "local_raw_outputs_git_ignored": [
+      "records.jsonl",
+      "splits/train.jsonl",
+      "splits/dev.jsonl",
+      "splits/test.jsonl"
+    ],
+    "versionable_aggregate_outputs": [
+      ".gitignore",
+      "README.md",
+      "schema_audit.json",
+      "manifest.json",
+      "split_summary.json",
+      "quarantine_manifest.json"
+    ],
+    "membership_hash_algorithm": "blake2b(digest_size=32) over the sorted canonical JSON of [(sample_id, label)] pairs of all VALID (non-rejected) records",
+    "output_file_hash_algorithm": "sha256",
+    "manifest_schema_path": "configs/schemas/dataset_manifest.schema.json",
+    "manifest_schema_id": "dataset_manifest.schema.json@1.3.1",
+    "manifest_self_hash_policy": "manifest.json is not listed in output_files. Its hash belongs in an external run receipt, validation report, or experiment event."
+  },
+
+  "importer": {
+    "module": "bpc_hybrid.datasets.sun_modality_importer",
+    "cli": "scripts/ingest_sun_modality.py",
+    "official_module": "bpc_hybrid.datasets.sun_modality_official",
+    "official_cli": "scripts/audit_ingest_sun_modality_official.py",
+    "label_adapter_policy": "synthetic strict_one_hot remains headered-fixture-only. The official adapter is headerless_positional_strict_one_hot at locked columns 4-7. The explicit integer-code adapter is retained as a fail-closed seam but is not used because the complete official scan proved there is no integer modality column.",
+    "library_policy": "stdlib only (csv, json, hashlib, zipfile, argparse, dataclasses); no pandas, no scikit-learn, no third-party CSV readers",
+    "streaming_required": true,
+    "max_in_memory_bytes_for_csv": 0,
+    "inspect_only_must_not_write": true,
+    "must_not_read_env": true,
+    "must_not_call_llm_or_api": true,
+    "must_not_write_to_forbidden_paths": [
+      "references/",
+      "data/input/",
+      "data/gold/",
+      "data/predictions/",
+      "data/results/",
+      "outputs/ (except gitignore-allowed reports tree)",
+      "_retired/",
+      ".env"
+    ]
+  },
+
+  "s2_1_b_r1_definition_of_done_check_2026_07_15": {
+    "repair_status": "verified",
+    "contract_documented": true,
+    "manifest_schema_documented": true,
+    "importer_implemented": true,
+    "synthetic_fixtures_cover_negative_cases": true,
+    "test_suite_covers_idempotency_and_split_invariants": true,
+    "no_real_csv_ingested": true,
+    "no_llm_or_api_called": true,
+    "no_gold_or_readiness_gates_modified": true,
+    "no_modifications_outside_formal_experiment": true,
+    "s2_1_b_r1_completed": true,
+    "s2_1_b_r1_completed_reason": "R1 targeted tests passed 54/54 and the first exact-state full audit passed 840 tests with 22 skips and zero integrity errors. Source-ID fail-closed, normalized-text group split, label-conflict fail-closed, the unique 3-group small-class threshold, independent ZIP SHA-1/SHA-256, deterministic manifest, no manifest self-child/placeholder, and synthetic-vs-official adapter separation are verified. S2.1-C may be dispatched separately but was not entered in this repair."
+  },
+
+  "s2_1_c_definition_of_done_check_2026_07_15": {
+    "status": "superseded_by_s2_1_c_r1_user_governance_decision",
+    "source_identity_reverified": true,
+    "complete_real_csv_stream_scan_completed": true,
+    "real_row_count": 2833,
+    "official_schema_verified": true,
+    "integer_code_hypothesis_disproved": true,
+    "official_label_mode": "headerless_positional_strict_one_hot",
+    "one_hot_mapping_evidence_level": "inferred_by_exact_distribution_match",
+    "vector_768_hypothesis_disproved": true,
+    "actual_vector_element_dimension": 300,
+    "normalized_text_duplicate_group_count": 26,
+    "normalized_text_label_conflict_group_count": 1,
+    "development_import_attempted": true,
+    "development_import_failed_closed_before_output_write": true,
+    "official_records_or_splits_written": false,
+    "blocking_condition": "One exact normalized sentence occurs twice with conflicting permission and obligation labels. R1 requires label_conflict fail closed; no records/split/manifest may be written until a human or authoritative source resolves the source-label conflict without guessing.",
+    "s2_1_c_completed": false,
+    "s2_1_d_unlocked": false
+  },
+
+  "s2_1_c_r1_definition_of_done_check_2026_07_16": {
+    "status": "verified",
+    "user_governance_decision_recorded": true,
+    "raw_population_expected": 2833,
+    "analysis_population_expected": 2831,
+    "raw_source_labels_must_remain_unmodified": true,
+    "exact_quarantine_policy_implemented": true,
+    "default_and_mismatch_conflicts_fail_closed": true,
+    "real_source_population_verified": 2833,
+    "real_analysis_population_verified": 2831,
+    "real_analysis_label_distribution_verified": {
+      "definition": 1190,
+      "obligation": 1273,
+      "permission": 264,
+      "prohibition": 104
+    },
+    "development_import_completed": true,
+    "deterministic_replay_all_seven_artifacts_byte_identical": true,
+    "split_pairwise_disjoint_and_union_complete": true,
+    "cross_split_normalized_text_leakage_count": 0,
+    "quarantined_rows_absent_from_records_and_splits": true,
+    "sensitivity_variant_registered": true,
+    "sensitivity_variant_executed": false,
+    "no_training_or_evaluation_run": true,
+    "no_network_llm_api_or_gold_modification": true,
+    "s2_1_c_verified": true,
+    "s2_1_d_ready": true
+  }
+}

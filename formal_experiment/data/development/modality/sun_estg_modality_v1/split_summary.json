@@ -1,0 +1,115 @@
+{
+  "analysis_label_distribution": {
+    "definition": 1190,
+    "obligation": 1273,
+    "permission": 264,
+    "prohibition": 104
+  },
+  "conflict_policy": {
+    "decision_timing": "before_any_model_training_or_result",
+    "exact_locked_group_match": true,
+    "name": "pre_result_conflicting_label_group_quarantine",
+    "policy_version": "sun_modality_conflict_quarantine@1.0.0",
+    "raw_source_labels_modified": false,
+    "sensitivity_variant_status": "planned_not_run"
+  },
+  "contains_raw_text": false,
+  "contains_vectors": false,
+  "cross_split_normalized_text_leakage_count": 0,
+  "manifest_sha256": "21a3390c8356053832041d626563910328952097f0c011ece0ec07a229dba534",
+  "membership_hash": {
+    "algorithm": "blake2b-256 over sorted JSON of [(sample_id, label)]",
+    "value": "b3259d52513ed68a22dc3eb4724ec42dbfeab3781d8bb5bd638d330413b65e32"
+  },
+  "output_files": [
+    {
+      "path": "records.jsonl",
+      "role": "records",
+      "row_count": 2831,
+      "sha256": "14417801446d9aa9099d7763542635a6ceb6285658036625cf46102c5eca916f",
+      "size_bytes": 2273998
+    },
+    {
+      "path": "splits/train.jsonl",
+      "role": "train_split",
+      "row_count": 1985,
+      "sha256": "a7367cd35e3a5ce7263ad5b0fae4881a989761d4fba21b75bdc75b6e2b83c142",
+      "size_bytes": 1598589
+    },
+    {
+      "path": "splits/dev.jsonl",
+      "role": "dev_split",
+      "row_count": 420,
+      "sha256": "ad541915d16aaef6119cb3769e6da0b89e8e8af5ec9069ac3a25680040e5a8d6",
+      "size_bytes": 335384
+    },
+    {
+      "path": "splits/test.jsonl",
+      "role": "test_split",
+      "row_count": 426,
+      "sha256": "2f67edad05e3a4d315d9ac65fc0ffd1d83dbaffd2d77a55916d6aa9a6919e871",
+      "size_bytes": 340025
+    },
+    {
+      "path": "quarantine_manifest.json",
+      "role": "quarantine_manifest",
+      "row_count": 2,
+      "sha256": "fb1d461bbb0ff688ca87e2e41689b6c521f19eacf91d773a558d52b7d52a4688",
+      "size_bytes": 2902
+    },
+    {
+      "path": "manifest.json",
+      "role": "manifest",
+      "sha256": "21a3390c8356053832041d626563910328952097f0c011ece0ec07a229dba534",
+      "size_bytes": 6012
+    }
+  ],
+  "population": {
+    "analysis_population_size": 2831,
+    "quarantined_group_count": 1,
+    "quarantined_record_count": 2,
+    "source_population_size": 2833
+  },
+  "quarantined_rows_absent_from_records_and_splits": true,
+  "ratios": {
+    "dev": 0.15,
+    "test": 0.15,
+    "train": 0.7
+  },
+  "seed": 20260715,
+  "sensitivity_full_source_variant_status": "planned_not_run",
+  "source_label_distribution": {
+    "definition": 1190,
+    "obligation": 1274,
+    "permission": 265,
+    "prohibition": 104
+  },
+  "split_label_distribution": {
+    "dev": {
+      "definition": 177,
+      "obligation": 187,
+      "permission": 40,
+      "prohibition": 16
+    },
+    "test": {
+      "definition": 177,
+      "obligation": 195,
+      "permission": 39,
+      "prohibition": 15
+    },
+    "train": {
+      "definition": 836,
+      "obligation": 891,
+      "permission": 185,
+      "prohibition": 73
+    }
+  },
+  "split_origin": "project_reconstructed_deterministic_split",
+  "split_sets_pairwise_disjoint": true,
+  "split_sizes": {
+    "dev": 420,
+    "test": 426,
+    "train": 1985
+  },
+  "split_union_complete": true
+}

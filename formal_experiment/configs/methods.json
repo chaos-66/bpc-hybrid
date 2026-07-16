@@ -1,0 +1,35 @@
+{
+  "config_version": "2.0.0",
+  "methods": [
+    {
+      "id": "sun_rule_only",
+      "canonical_label": "sun_stage2_baseline",
+      "role": "baseline",
+      "llm_used": false,
+      "formal_status": "blocked_final_sun_stage2_reimplementation_required",
+      "current_command": "python scripts/run_sun_rule_only.py",
+      "command_status": "development_only_not_formal",
+      "notes": "Legacy ID retained. The intended baseline is the complete final Sun Stage 2 (BERT-TextCNN plus CoreNLP/Tregex/Tsurgeon phrase extraction). The current runner is a marker/heuristic approximation and must not be reported as the formal Sun baseline."
+    },
+    {
+      "id": "sun_llm_fallback",
+      "canonical_label": "sun_stage2_plus_llm_fallback",
+      "role": "main_method",
+      "llm_used": true,
+      "formal_status": "blocked_until_faithful_baseline_data_and_triggers_are_locked",
+      "current_command": "python scripts/run_sun_llm_fallback.py",
+      "command_status": "development_only_not_formal",
+      "notes": "Must reuse the complete formal Sun Stage 2 baseline and modify only pre-registered failed/uncertain outputs. A real run additionally requires explicit --allow-llm and a hard call budget."
+    },
+    {
+      "id": "direct_llm",
+      "canonical_label": "direct_llm_stage2_replacement",
+      "role": "replacement_method",
+      "llm_used": true,
+      "formal_status": "blocked_until_official_data_output_contract_and_evaluator_are_locked",
+      "current_command": "python scripts/run_direct_llm.py",
+      "command_status": "development_only_not_formal",
+      "notes": "Replaces the whole Stage 2 without running the Sun pipeline or reading Gold. It must use the same frozen inputs, output contract, evaluator, and Stage 3 as the other two methods. Real calls require explicit authorization."
+    }
+  ]
+}

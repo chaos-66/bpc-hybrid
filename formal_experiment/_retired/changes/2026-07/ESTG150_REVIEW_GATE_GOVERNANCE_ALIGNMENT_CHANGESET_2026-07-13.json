@@ -1,0 +1,256 @@
+{
+  "task_id": "ESTG150_REVIEW_GATE_GOVERNANCE_ALIGNMENT_2026-07-13",
+  "authored_at_utc": "2026-07-13T03:43:00+00:00",
+  "task_summary": "Align the EStG-150 human-review gate governance after Event 21. The authoritative experiment_contract.human_review_gate.status is updated from 'paused_until_route_v2_is_locked' to 'input_ready_for_human_review' with explicit allowed/blocking status lists and a new formal_gold_publication_gate block. status.py / audit.py split the four orthogonal gates (input ready / freeze ready / formal Gold publication ready / final experiment ready) and explicitly disambiguate them. Tests cover all four gates with positive and negative state transitions. Active handoff / status docs are updated to match. The deprecated human_review_ready alias is removed from any final-metric code paths. No data modified, no real LLM/API, no .env, no references/archive changes, no commit, no Wave 2.",
+  "no_real_llm_call": true,
+  "no_env_read": true,
+  "no_human_decisions_imported": true,
+  "references_archive_untouched": true,
+  "single_estg150_membership_unchanged": true,
+  "no_commit": true,
+  "no_wave_2": true,
+  "no_data_modified": true,
+  "no_event_1_to_21_modified": true,
+  "user_decision_recorded": "single_estg150_self_sampled_150_locked_as_project_dataset",
+  "files_modified": [
+    {
+      "path": "formal_experiment/configs/experiment_contract.json",
+      "role": "Change human_review_gate.status to 'input_ready_for_human_review' with explicit allowed_input_statuses and blocking_input_statuses lists. Add a new top-level formal_gold_publication_gate block enumerating the five required preconditions and the conservative policy (any missing or non-locked field keeps formal_gold_publication_ready false).",
+      "post_change_sha256": "01B3962F9DDB7689ACB19E3745977052B71FA938BFAB9069FA1D0995C01E84AD"
+    },
+    {
+      "path": "formal_experiment/src/formal_experiment/status.py",
+      "role": "Add four orthogonal gates: human_review_input_ready (gates 1), human_review_freeze_ready (gate 2), formal_gold_publication_ready (gate 3 — human_review_freeze_ready + route.locked + dataset.locked + stage3.locked + formal_gold_publication_gate.status not blocked), final_experiment_ready (gate 4 — adds method readiness and frozen input/gold). Read the authoritative contract gate status and the membership hash; if either disagrees, gate 1 is false. Mark human_review_ready as DEPRECATED alias.",
+      "post_change_sha256": "CEC54B12AE9183D6625E7D0380C0A6AB2A99DFD1FBE49B3728046D2AF8194806"
+    },
+    {
+      "path": "formal_experiment/src/formal_experiment/audit.py",
+      "role": "Report all four gates in print_human. Replace the previous 'formal_gold_publication_paused' message so it never says 'Formal Gold can be declared' when only the annotation is frozen. Add a per-missing-precondition enumeration. Add the contract vs. preconditions mismatch error. Bump audit_version to 3.2.",
+      "post_change_sha256": "AA2C58F0BDACD602CD1078DE225977E2A4C99B79D6B5501884829D39302E26C3"
+    },
+    {
+      "path": "formal_experiment/README.md",
+      "role": "Update the '当前状态' section to reflect the 4-gate state: human_review_input_ready=true (user can start), human_review_freeze_ready=false, formal_gold_publication_ready=false, final_experiment_ready=false, integrity_pass=true. Document the review tool launch command. Remove the outdated '--require-human-review-ready 应失败' claim.",
+      "post_change_sha256": "CE422ED290902619BEA578945000717C592ECDDB12346AAF880B16C863867251"
+    },
+    {
+      "path": "formal_experiment/AGENTS.md",
+      "role": "Add the four orthogonal audit gates table. Replace the 'Do not touch it for formal review until a future route lock' contradictory block with the explicit gate semantics. The 150-record v2 human_correction file is the active editing surface and gate 1 is true NOW; route v2 re-lock affects gate 3 / gate 4, NOT gate 1.",
+      "post_change_sha256": "CC102B62350FF223A6F681CE749F2B3833F51473891C8913251257991AE27426"
+    },
+    {
+      "path": "formal_experiment/docs/ROUTE_LOCK.md",
+      "role": "Update §5.1 '启动门禁 vs 冻结门禁' to a four-gate table. Each gate has its own meaning, current value at 0/150, current value at 150/150 adjudicated, and the command that reports it. The deprecated human_review_ready alias is explicitly scoped to the --require-human-review-ready flag; new code must use the four explicit names.",
+      "post_change_sha256": "0A9104ADFA430D3A2157B6CF02ED957D4A15A242D6ED59B3FD4A7A0AAC0E9ED4"
+    },
+    {
+      "path": "formal_experiment/docs/HUMAN_GOLD_GUIDE.md",
+      "role": "Update §4.1.1 with the four-gate table and the deprecated-alias warning. Clarify the three commands (--require-human-review-ready / --require-final-ready / validate_human_correction.py) and which gate each one checks.",
+      "post_change_sha256": "018355994ADA4A603ED51107A5C4EA44EC44510C9466F643518AF1BA79F307F8"
+    },
+    {
+      "path": "formal_experiment/docs/CURRENT_HANDOFF_2026-07-12.md",
+      "role": "Update the §11 '机器状态' line to report the four gates (input / freeze / formal Gold / final experiment) with current 0/150 values, instead of the old 'human_review_ready=false / final_experiment_ready=false' two-bool summary that was inconsistent with the actual audit.",
+      "post_change_sha256": "57ABF1D19986CDE0C136712E05E6AE683E2322796E295959F4409D94A35C2D63"
+    },
+    {
+      "path": "formal_experiment/docs/STATUS_REPORT.md",
+      "role": "Replace the obsolete two-bool summary (human_review_ready=false / final_experiment_ready=false) with the four-gate summary and add a notice that the snapshot semantics have been upgraded by the 2026-07-13 4-gate split (Event 21/22).",
+      "post_change_sha256": "A062C4752E83DD1F264B69536313900F120A99D25F11D8C73F38B84E336B591A"
+    },
+    {
+      "path": "formal_experiment/docs/STATUS_SNAPSHOT_2026-07-12.md",
+      "role": "Add a SUPERSEDED banner at the very top (no historical content is modified) pointing future agents to the four-gate active sources (ROUTE_LOCK.md §5.1, HUMAN_GOLD_GUIDE.md §4.1.1, CURRENT_HANDOFF, AUDIT_LOG, AUDIT_EVENTS.jsonl). The original 14:55 historical content stays intact below the banner.",
+      "post_change_sha256": "A0362205571BF3E7248A9B6E8A1448B958829F39A82F4C3D230227C2970C97C2"
+    },
+    {
+      "path": "formal_experiment/tests/test_formal_project_audit.py",
+      "role": "Replace the previous 12-test file with a 17-test file covering all four gates with positive and negative state transitions: (1) all four booleans at 0/150, (2) --require-human-review-ready passes, (3) --require-final-ready fails, (4) input gate false on missing schema, (5) input gate false on missing tool/validator, (6) input gate false on sample_id / membership mismatch, (7) input gate false when contract.status is paused, (8) freeze_ready=true but formal_gold_publication_paused is still present and the message never says 'Formal Gold can be declared', (9) formal_gold_publication_ready only true when all five locks are met, (10) conservative false when only one of the five locks is true, (11) no formal runner or final-metric code uses the deprecated alias, (12) validator CLI still shows review_ready / freeze_ready false at 0/150, plus four pre-existing governance tests.",
+      "post_change_sha256": "BB098365B3D40F69D74F714D4767B34691F8D4F6AA5A5481724CA5EFC2FB98FF"
+    }
+  ],
+  "files_created": [
+    {
+      "path": "formal_experiment/docs/changes/ESTG150_REVIEW_GATE_GOVERNANCE_ALIGNMENT_CHANGESET_2026-07-13.json",
+      "role": "This file: task-level precise changeset (per-file SHA-256, 4-gate definitions, gate matrix, new tests, no-op declarations, source-hash snapshot).",
+      "sha256": "<self>"
+    }
+  ],
+  "immutable_sources_sha256_pre_and_post": {
+    "estg_selected_150_de.jsonl": {
+      "pre": "55B64598DEDFA0C0038084EE62C0928BDDFA4BF17F19DB80D461DA2CB7BF26A3",
+      "post": "55B64598DEDFA0C0038084EE62C0928BDDFA4BF17F19DB80D461DA2CB7BF26A3",
+      "role": "Layer A — German source (immutable)"
+    },
+    "estg_selected_150_en_llm_translated.jsonl": {
+      "pre": "F4227871072E9ED6A22D54756F645802773DDC4B39C780332CCC8C7575E45712",
+      "post": "F4227871072E9ED6A22D54756F645802773DDC4B39C780332CCC8C7575E45712",
+      "role": "Layer B source"
+    },
+    "estg_gold_150_llm_draft.jsonl": {
+      "pre": "9B915A898413C8C20ACABA78D2C6CCDBBC2EDD425AF3B860E5B73BCC56E3111B",
+      "post": "9B915A898413C8C20ACABA78D2C6CCDBBC2EDD425AF3B860E5B73BCC56E3111B",
+      "role": "Layer C source"
+    },
+    "estg_150_membership_hashes.json": {
+      "pre": "0F9065523A57900B22A8A04AE9109D37C72ABBE514F3CDE60BCD7652CFA1417B",
+      "post": "0F9065523A57900B22A8A04AE9109D37C72ABBE514F3CDE60BCD7652CFA1417B",
+      "role": "membership hashes (immutable)"
+    },
+    "estg_150_translation_en_v1.jsonl": {
+      "pre": "F65E929BF1FE498FFCE6F08D30F95D1C4DE53592457352CCE915CFBF8EE91DA3",
+      "post": "F65E929BF1FE498FFCE6F08D30F95D1C4DE53592457352CCE915CFBF8EE91DA3",
+      "role": "Layer B manifest"
+    },
+    "estg_150_llm_six_element_candidates_v1.jsonl": {
+      "pre": "9476945CA387FB7EFAD5C1405CCA59A6EF24FF50A23E22BA2C46AD6847290B8B",
+      "post": "9476945CA387FB7EFAD5C1405CCA59A6EF24FF50A23E22BA2C46AD6847290B8B",
+      "role": "Layer C candidate"
+    },
+    "estg_150_review_aids_zh_v1.jsonl": {
+      "pre": "D12587E5EE349C9CFE279CDA0194FA89B9BE7604E817DA2F65F3A2F92DFA67C2",
+      "post": "D12587E5EE349C9CFE279CDA0194FA89B9BE7604E817DA2F65F3A2F92DFA67C2",
+      "role": "Layer D — Chinese aid (still not_generated, fields null)"
+    },
+    "estg_150_canonical_review_v1.json": {
+      "pre": "43519542F58BBBD78463DB59C473E05CDBE2E3BD801DFB7156E9BB351F27610D",
+      "post": "43519542F58BBBD78463DB59C473E05CDBE2E3BD801DFB7156E9BB351F27610D",
+      "role": "retired v1 canonical review (workflow draft, kept as provenance, not modified)"
+    },
+    "estg_150_human_correction_v1.json": {
+      "pre": "D70857E0381EF1D4F068D9736D597FFA71340CE91E9D486200ECE0188F439948",
+      "post": "D70857E0381EF1D4F068D9736D597FFA71340CE91E9D486200ECE0188F439948",
+      "role": "Layer E — the single editable human-correction file; SHA-256 unchanged because the user has not yet started review (0/150 approved_en, 150/150 needs_review, 0 reviewed, 0 adjudicated). Tests never write to this path."
+    }
+  },
+  "membership": {
+    "membership_payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
+    "membership_count": 150,
+    "membership_source": "formal_experiment/data/development/estg/estg_selected_150_de.jsonl",
+    "single_dataset_locked": true,
+    "not_sun_original_150": true,
+    "not_exact_reproduction": true,
+    "no_resampling": true,
+    "no_parallel_old_new_150": true
+  },
+  "human_correction_layer_e_state": {
+    "n_records": 150,
+    "approved_text_en": 0,
+    "translation_unreviewed": 150,
+    "six_element_decisions_unreviewed": "900/900",
+    "six_element_records_incomplete": "150/150",
+    "review_state_counts": {
+      "needs_review": 150,
+      "in_progress": 0,
+      "reviewed": 0,
+      "adjudicated": 0
+    },
+    "format_valid": true,
+    "review_ready": false,
+    "freeze_ready": false,
+    "chinese_aid_status": "not_generated (Layer D fields all null, awaiting separate user authorization for a real LLM call)"
+  },
+  "four_gates_definitions": {
+    "1_human_review_input_ready": {
+      "meaning": "the user can start the human review NOW",
+      "true_when": [
+        "experiment_contract.human_review_gate.status is in allowed_input_statuses",
+        "experiment_contract.human_review_gate.status is NOT in blocking_input_statuses",
+        "v2 human_correction file exists and is format-valid with exactly 150 unique sample_ids",
+        "v1 canonical review file is format-valid with exactly 150 unique sample_ids",
+        "membership_payload_sha256 of the v2 file matches the locked membership",
+        "human_review schema exists",
+        "scripts/estg150_review_tool.py exists",
+        "scripts/validate_human_correction.py exists"
+      ],
+      "current_value": true
+    },
+    "2_human_review_freeze_ready": {
+      "meaning": "150/150 adjudicated, annotation frozen",
+      "true_when": "every record has review_state.status == 'adjudicated' and every decision is in {accepted, edited, rejected}",
+      "current_value": false,
+      "relation_to_gate_3": "necessary but not sufficient"
+    },
+    "3_formal_gold_publication_ready": {
+      "meaning": "formal Gold can be declared and published",
+      "true_when": [
+        "gate 2 is true",
+        "experiment_contract.route.status == 'locked'",
+        "experiment_contract.stage2_dataset.status == 'locked_for_human_review'",
+        "experiment_contract.stage3.status == 'locked'",
+        "experiment_contract.formal_gold_publication_gate.status does NOT start with 'blocked_' and is not 'unknown'"
+      ],
+      "current_value": false,
+      "conservative_policy": "any missing or non-locked field keeps this gate false; do not guess; do not relax"
+    },
+    "4_final_experiment_ready": {
+      "meaning": "the three final methods + Stage 3 + frozen input/gold can run end-to-end",
+      "true_when": [
+        "gate 3 is true",
+        "all three methods in methods.json have formal_status == 'ready'",
+        "data/input/ has at least one non-.gitkeep file (frozen input)",
+        "data/gold/ has at least one non-.gitkeep file (frozen gold)"
+      ],
+      "current_value": false
+    }
+  },
+  "audit_gate_matrix_at_0_150": {
+    "human_review_input_ready": true,
+    "human_review_freeze_ready": false,
+    "formal_gold_publication_ready": false,
+    "final_experiment_ready": false,
+    "audit_human_review_ready_alias": true,
+    "audit_human_review_ready_is_DEPRECATED_alias_of_input_ready": true,
+    "require_human_review_ready_exit_code": 0,
+    "require_final_ready_exit_code": 2,
+    "validate_human_correction_review_ready": false,
+    "validate_human_correction_freeze_ready": false
+  },
+  "tests": {
+    "scope": "tests/test_formal_project_audit.py",
+    "pre_change_count": 12,
+    "post_change_count": 17,
+    "new_tests": [
+      "test_current_state_four_gates_reported_at_zero_progress",
+      "test_input_gate_false_when_schema_missing",
+      "test_input_gate_false_when_tool_or_validator_missing",
+      "test_input_gate_false_on_sample_id_or_membership_mismatch",
+      "test_input_gate_false_when_contract_status_paused",
+      "test_freeze_true_but_gold_paused_keeps_publication_blocked",
+      "test_formal_gold_publication_ready_only_when_all_five_locks_true",
+      "test_formal_gold_publication_ready_conservative_when_route_only_unlocks",
+      "test_no_formal_runner_uses_human_review_ready_alone"
+    ],
+    "all_tests_use_tmp_path_or_monkeypatch": true,
+    "tests_touch_real_human_correction": false,
+    "tests_touch_real_backup_dir": false,
+    "tests_touch_real_action_log": false,
+    "full_suite_passed": 630,
+    "full_suite_skipped": 22,
+    "full_suite_failed_pre_existing_unrelated": 8,
+    "new_tests_passed": 17,
+    "new_tests_failed": 0
+  },
+  "workflow_invariants_enforced": [
+    "Four orthogonal readiness gates: human_review_input_ready (gate 1, true at 0/150 once the input is ready), human_review_freeze_ready (gate 2, true at 150/150 adjudicated), formal_gold_publication_ready (gate 3, true only when gate 2 AND route/dataset/stage3/freeze_policy are all re-locked), final_experiment_ready (gate 4, adds method readiness and frozen input/gold).",
+    "Authoritative contract gate: experiment_contract.human_review_gate.status is the source of truth for the input-gate policy. The audit reads the contract and the membership cross-check; it does NOT silently ignore them.",
+    "Conservative formal Gold policy: any missing or non-locked field of the five formal-gold preconditions keeps formal_gold_publication_ready false. The audit message never says 'Formal Gold can be declared' when only the annotation is frozen.",
+    "Deprecated alias discipline: human_review_ready is kept as a backward-compatible alias of human_review_input_ready (true at 0/150) ONLY for the --require-human-review-ready flag. New code that needs 'ready to publish Gold' must use human_review_freeze_ready / formal_gold_publication_ready / final_experiment_ready. A test scans formal_experiment/ for any other consumer.",
+    "Single 150 sample_id set: the EStG-150 dataset is the project-self-sampled 150 (NOT Sun's original 150, NOT exact-reproduction). membership_payload_sha256 is unchanged at 8573e105...0d7.",
+    "No resampling, no parallel old/new 150: layer A/B/C/D SHA-256 unchanged; the user-decision block in experiment_contract.json records the explicit 2026-07-13 decisions.",
+    "Chinese aid not generated: Layer D fields are all null; the review_aids_zh_not_generated warning is still emitted; no Chinese content is fabricated.",
+    "No real LLM/API: no test, tool, or audit call invokes an LLM or reads .env. The audit module's imports are scanned for forbidden tokens (requests, httpx, openai, LLMClient, load_dotenv).",
+    "No event 1-21 modified: the new audit event is appended as event 22; historical events are byte-identical."
+  ],
+  "audit_invariants": {
+    "integrity_pass": true,
+    "human_review_input_ready": true,
+    "human_review_freeze_ready": false,
+    "formal_gold_publication_ready": false,
+    "final_experiment_ready": false,
+    "pre_change_audit_event_count": 21,
+    "post_change_audit_event_count_target": 22,
+    "old_events_1_to_21_unchanged": true,
+    "new_event_purpose": "Align the EStG-150 human-review gate governance after Event 21: make the authoritative contract explicitly permit starting review at 0/150, separate annotation freeze readiness from formal Gold publication readiness, keep route/data prerequisites conservative, update active handoff/status documentation, and add positive/negative gate-transition tests; no data modified and no real LLM/API call."
+  }
+}

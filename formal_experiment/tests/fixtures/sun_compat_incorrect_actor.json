@@ -1,0 +1,59 @@
+[
+  {
+    "fixture_id": "incorrect_actor_001",
+    "fixture_type": "incorrect_actor",
+    "description": "Regulation says 'controller' but BPMN assigns task to 'processor'",
+    "source_text": "The controller shall notify the supervisory authority of a personal data breach.",
+    "modality": "obligation",
+    "actor": "the controller",
+    "action": "notify the supervisory authority of a personal data breach",
+    "condition": "",
+    "constraint": "",
+    "exception": "",
+    "bpmn_tasks": {
+      "Data Processor": [
+        ["notify", "supervisory", "authority", "personal", "data", "breach"]
+      ]
+    },
+    "expected_detection": true,
+    "expected_violation_type": "incorrect_actor"
+  },
+  {
+    "fixture_id": "incorrect_actor_002",
+    "fixture_type": "incorrect_actor",
+    "description": "Regulation says 'data subject' but BPMN assigns to 'controller'",
+    "source_text": "The data subject shall have the right to access personal data.",
+    "modality": "obligation",
+    "actor": "the data subject",
+    "action": "have the right to access personal data",
+    "condition": "",
+    "constraint": "",
+    "exception": "",
+    "bpmn_tasks": {
+      "Data Controller": [
+        ["provide", "access", "personal", "data"]
+      ]
+    },
+    "expected_detection": true,
+    "expected_violation_type": "incorrect_actor"
+  },
+  {
+    "fixture_id": "incorrect_actor_003",
+    "fixture_type": "incorrect_actor",
+    "description": "Regulation says 'controller' and BPMN correctly assigns to 'Data Controller'",
+    "source_text": "The controller shall implement appropriate technical measures.",
+    "modality": "obligation",
+    "actor": "the controller",
+    "action": "implement appropriate technical measures",
+    "condition": "",
+    "constraint": "",
+    "exception": "",
+    "bpmn_tasks": {
+      "Data Controller": [
+        ["implement", "appropriate", "technical", "measure"]
+      ]
+    },
+    "expected_detection": false,
+    "expected_violation_type": "incorrect_actor"
+  }
+]

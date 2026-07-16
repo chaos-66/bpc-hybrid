@@ -1,0 +1,77 @@
+{
+  "analysis_label_distribution": {
+    "definition": 1190,
+    "obligation": 1273,
+    "permission": 264,
+    "prohibition": 104
+  },
+  "contains_raw_text": false,
+  "contains_vectors": false,
+  "contract_sha256": "ba7544f0df8b7c78cea2308a9ff64c4ec836bd84bbc875c308814620cfff8bfd",
+  "contract_version": "sun_modality_dataset_contract@1.3.1",
+  "dataset_id": "sun_modality_v1",
+  "policy": {
+    "all_main_methods_must_share_analysis_population": true,
+    "conflict_policy": "pre_result_conflicting_label_group_quarantine",
+    "exact_locked_group_match": true,
+    "main_experiment_uses_clean_population": true,
+    "match_status": "exact_locked_group_match",
+    "quarantine_decision_timing": "before_any_model_training_or_result",
+    "raw_source_labels_modified": false
+  },
+  "policy_version": "sun_modality_conflict_quarantine@1.0.0",
+  "population": {
+    "analysis_population_size": 2831,
+    "quarantined_group_count": 1,
+    "quarantined_record_count": 2,
+    "source_population_size": 2833
+  },
+  "quarantined_groups": [
+    {
+      "conflict_type": "identical_raw_text_conflicting_original_labels",
+      "exclusion_reason": "pre-result quarantine of an exact raw-text duplicate carrying inconsistent source labels; neither source label is selected or rewritten",
+      "normalized_text_sha256": "df79964183f7abc85e0878ecd73ee4157f800699b42ce7c2ebf1923b4d438d95",
+      "original_labels": [
+        "obligation",
+        "permission"
+      ],
+      "original_labels_by_row": {
+        "1221": "obligation",
+        "616": "permission"
+      },
+      "raw_text_hashes_equal": true,
+      "raw_text_sha256": "0289f3ff1d31a392cacb39109df10267297e1d8a184b356227beea4716d8a8d6",
+      "row_indices": [
+        616,
+        1221
+      ],
+      "section_reference_hashes_distinct": true,
+      "section_reference_sha256_by_row": {
+        "1221": "879ce2257ab3468f65bd6d50a1e56f9af8e75a80035cbb1019eced7c3a47db5b",
+        "616": "9309f67fd6480663a48cf90236ec14c1db61583825ac210112e2abf19e47d95c"
+      }
+    }
+  ],
+  "schema_version": "1.0.0",
+  "sensitivity_full_source_variant": {
+    "conflicting_group_preserved_with_original_labels": true,
+    "conflicting_group_prohibited_from_dev_test": true,
+    "conflicting_group_split_constraint": "forced_train_only",
+    "must_use_same_nonconflict_membership_as_main_where_possible": true,
+    "population": 2833,
+    "purpose": "measure impact of source-label inconsistency",
+    "sensitivity_variant_executed": false,
+    "sensitivity_variant_registered": true,
+    "status": "planned_not_run"
+  },
+  "source_asset": {
+    "csv_member_sha256": "1e53eb1b7f88f57c63029385eafe5e6f269bb7878328c0c409c5e708250ad5c3",
+    "source_asset_sha256": "ada231f092927813ba9f1cd32a44a3d30d96b57fc463d042dfd76c652b6d58f2"
+  },
+  "source_label_distribution": {
+    "definition": 1190,
+    "obligation": 1274,
+    "permission": 265,
+    "prohibition": 104
+  }
+}

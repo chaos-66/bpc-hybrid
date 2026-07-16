@@ -1,0 +1,51 @@
+{
+  "schema_version": "public_marker_fixture@1.0.0",
+  "lexicon_id": "public_marker_lexicon_en_v1",
+  "language": "en",
+  "positive_cases": [
+    {
+      "field": "modality",
+      "modality_class": "obligation",
+      "text": "The company shall retain the record.",
+      "surface": "shall"
+    },
+    {
+      "field": "modality",
+      "modality_class": "prohibition",
+      "text": "Disclosure is prohibited without a legal basis.",
+      "surface": "is prohibited"
+    },
+    {
+      "field": "condition",
+      "text": "Provided that notice is given, the company may proceed.",
+      "surface": "provided that"
+    },
+    {
+      "field": "constraint",
+      "text": "The filing must occur no later than the deadline.",
+      "surface": "no later"
+    },
+    {
+      "field": "exception",
+      "text": "All records other than the sealed annex are disclosed.",
+      "surface": "other than"
+    },
+    {
+      "field": "actor",
+      "text": "The prosecutor shall inspect the filing.",
+      "surface": "prosecutor"
+    }
+  ],
+  "boundary_negative_cases": [
+    {
+      "field": "modality",
+      "text": "Maybe the filing will arrive tomorrow.",
+      "surface": "may"
+    },
+    {
+      "field": "actor",
+      "text": "The judges reviewed the filing.",
+      "surface": "judge"
+    }
+  ]
+}

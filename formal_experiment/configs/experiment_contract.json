@@ -1,0 +1,369 @@
+{
+  "contract_version": "2.0.2",
+  "reopened_at": "2026-07-11",
+  "route": {
+    "id": "sun_2024_final_version_stage2_reconstruction",
+    "status": "reopened_for_final_version_alignment",
+    "exact_reproduction": false,
+    "methodological_source_of_truth": "Sun et al. (2024) version of record, DOI 10.1007/s11227-023-05626-0",
+    "local_pdf_status": "pre-publication manuscript; useful evidence but not controlling where it differs from the version of record",
+    "claim": "An independently implemented, auditable, paper-faithful reconstruction of the final published Sun et al. (2024) Stage 2, not the authors' original implementation.",
+    "scope": "Modify only Sun Stage 2 regulatory-document parsing; keep one frozen Stage 3 for all methods.",
+    "winter_2020_role": "read-only provenance, inherited Stage 3 prototype/input, and textual comparison reference",
+    "mentor_package_provenance": "Provided to the mentor by the Sun paper authors; its model_check subtree is byte-identical to the Winter 2020 prototype and does not contain Sun's new Stage 2 implementation."
+  },
+  "research_objective": {
+    "baseline": "Reconstruct the final published Sun Stage 2 without an LLM.",
+    "hybrid": "Run the same Sun Stage 2 front end and call an LLM only under pre-registered fallback triggers.",
+    "replacement": "Replace the whole Sun Stage 2 with a direct LLM while preserving the same input IDs, output contract, evaluator, and Stage 3.",
+    "primary_comparison": "baseline vs hybrid vs replacement on identical frozen data and Gold",
+    "downstream_question": "Whether Stage 2 changes improve the unchanged Stage 3 matching and violation-detection results."
+  },
+  "sun_stage2_method": {
+    "statement_level": "Final version identifies a BERT-TextCNN modality classifier for definition, obligation, prohibition, and permission.",
+    "phrase_level": "Stanford CoreNLP preprocessing plus Tregex/Tsurgeon tree rules and a domain marker lexicon for modality, actor, action, condition, constraint, and exception.",
+    "rule_order_constraint": "Extract action only after modality, condition, constraint, and exception spans are identified/removed.",
+    "current_implementation_faithful": false,
+    "missing_for_lock": [
+      "Final-version full method text and hyperparameters must be reconciled with the older local manuscript.",
+      "The current formal runner uses marker/heuristic replacements rather than the final BERT-TextCNN and CoreNLP/Tregex/Tsurgeon pipeline.",
+      "The authors' complete Stage 2 source, trained model, full marker lexicon, and original 150-sentence phrase Gold are not present."
+    ]
+  },
+  "official_supplement": {
+    "landing_page": "https://archive.org/details/input-2",
+    "description": "Datasets of Design-time business process compliance assessment based on multi-granularity semantic information",
+    "decision_logic_archive": {
+      "name": "Decision_Logic_data.zip",
+      "archive_org_sha1": "0346f84a246b7049d5aef58bcb33471435bee106",
+      "contents": ["EStG_raw.txt", "EStG_sent_vec.csv", "estg.html"],
+      "estg_raw_sha256_verified_2026_07_11": "185385186533FCDB8156D094782E3A3976C85460312EE9D48B424F404817660F"
+    },
+    "stage3_input_archive": {
+      "name": "input 2.zip",
+      "archive_org_sha1": "a1a0ac8d57eb45698728722628a4c838c592c5bf",
+      "downloaded_sha256_verified_2026_07_11": "A4E12BDBF1631F201A06BD6DDAA30C6423AA33F3BE99338ABFA6E39CFA786FE3",
+      "effective_file_count": 57,
+      "local_hash_result": "All 57 effective files are byte-identical to both the mentor-provided package and references/winter_2020_model_check/model_check/input."
+    }
+  },
+  "stage2_dataset": {
+    "id": "sun_stage2_data_route_v2",
+    "status": "reopened_modality_verified_pending_phrase_gold_freeze_and_route_relock",
+    "authoritative_language": "de",
+    "working_language": "en_translated_from_de_pending_translation_protocol_and_freeze",
+    "user_decisions_2026_07_12": {
+      "public_marker_reconstruction_accepted": true,
+      "independent_paper_faithful_reimplementation_accepted": true,
+      "retrained_bert_textcnn_weights_accepted": true,
+      "german_to_english_translation_selected": true,
+      "user_will_review_phrase_gold": true
+    },
+    "user_decisions_2026_07_12_1715": {
+      "single_estg_150_membership_locked": true,
+      "membership_source": "data/development/estg/estg_selected_150_de.jsonl",
+      "membership_payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
+      "membership_count": 150,
+      "benchmark_label": "independently_reconstructed_estg_150_v1",
+      "re_sampling_forbidden": true,
+      "parallel_old_new_150_forbidden": true,
+      "active_editing_surface_v1": "data/development/human_review/estg_150_canonical_review_v1.json",
+      "active_editing_surface_v2": "data/development/human_review/estg_150_human_correction_v1.json",
+      "v1_workflow_status": "retired_as_workflow_draft_preserved_as_provenance",
+      "v2_workflow_status": "active_editing_surface",
+      "review_tool_v1": "scripts/estg150_review_tool.py (single-pane v1, kept for provenance verification only)",
+      "review_tool_v2": "scripts/estg150_review_tool.py (rewritten v2 with two tabs and v2 schema; default opens v2 file)",
+      "validator_v1": "scripts/validate_canonical_review.py (dev-only sanity check on v1 file)",
+      "validator_v2": "scripts/validate_human_correction.py (canonical validator for v2 file)",
+      "data_map": "docs/ESTG150_DATA_MAP.md",
+      "workflow_doc": "data/development/human_review/ESTG150_REVIEW_WORKFLOW_V1.md"
+    },
+    "user_decisions_2026_07_12_2130": {
+      "llm_assisted_human_adjudicated_gold": true,
+      "forbidden_claim_from_scratch_human_gold": true,
+      "v2_layer_model": {
+        "A_german_source": "data/development/estg/estg_selected_150_de.jsonl",
+        "B_english_translation": "data/development/human_review/estg_150_translation_en_v1.jsonl",
+        "C_llm_six_element_candidate": "data/development/human_review/estg_150_llm_six_element_candidates_v1.jsonl",
+        "D_chinese_aid": "data/development/human_review/estg_150_review_aids_zh_v1.jsonl",
+        "E_human_correction": "data/development/human_review/estg_150_human_correction_v1.json"
+      },
+      "layers_A_B_C_D_immutable": true,
+      "layer_E_only_editable": true,
+      "candidate_source_for_layer_C": "data/development/estg/estg_gold_150_llm_draft.jsonl",
+      "chinese_aid_currently_null": true,
+      "real_llm_call_not_yet_authorized": true,
+      "real_llm_authorization_required": {
+        "user_verbally_authorized_run_command": "n/a (still waiting)",
+        "model_to_use": "TBD: independent annotation model strongly preferred; if D1/H1 model is used, paper must disclose + add blind samples + report anchoring bias",
+        "max_calls": "TBD: see docs/LLM_BUDGET_PROPOSAL_2026-07-12.md",
+        "estimate_script": "scripts/dry_run_llm_estimate.py (offline, no API)"
+      }
+    },
+    "user_decisions_2026_07_13_1130": {
+      "two_gates_split": true,
+      "single_dataset_self_sampled_150_locked": true,
+      "not_sun_original_150": true,
+      "not_exact_reproduction": true,
+      "no_resampling": true,
+      "no_parallel_old_new_150": true,
+      "review_input_ready_at_0_150": true,
+      "review_input_ready_command": "python formal_experiment/scripts/audit_project.py --require-human-review-ready",
+      "review_freeze_ready_requires_150_150_adjudicated": true,
+      "review_freeze_ready_observed_in": "python formal_experiment/scripts/validate_human_correction.py  (freeze_ready field)",
+      "forbidden_audit_messages_removed": [
+        "Do not start human Gold review until the dataset route, span schema, and multi-clause contract are locked and a full-coverage blank template passes audit."
+      ],
+      "old_blocker_code_removed": "formal_human_review_paused",
+      "new_blocker_code_added": "formal_gold_publication_paused",
+      "new_pass_code_added": "human_review_input_ready"
+    },
+    "modality_dataset": {
+      "status": "verified_development_split_locked",
+      "machine_gate_status": "verified",
+      "formal_use": "development_only_not_formal_gold",
+      "paper_reference": "Michel et al. (2022) reports 2,833 hand-labelled EStG sentences with four modality classes.",
+      "source_manifest": {
+        "path": "data/development/sun_modality/source_manifest.json",
+        "version": "sun_modality_source_manifest@1.0.1",
+        "sha256": "cc7b4112c9fc0827a5227939a836c0e08ef68bc640fbf7d03ed91e8ce5b91982"
+      },
+      "source": {
+        "zip_path": "data/development/sun_modality/raw/Decision_Logic_data.zip",
+        "zip_size_bytes": 191874718,
+        "zip_sha1": "0346f84a246b7049d5aef58bcb33471435bee106",
+        "zip_sha256": "ada231f092927813ba9f1cd32a44a3d30d96b57fc463d042dfd76c652b6d58f2",
+        "csv_member": "EStG_sent_vec.csv",
+        "csv_member_size_uncompressed_bytes": 470740514,
+        "csv_member_sha256": "1e53eb1b7f88f57c63029385eafe5e6f269bb7878328c0c409c5e708250ad5c3",
+        "csv_member_crc32": "A9E74EF5"
+      },
+      "dataset_contract": {
+        "path": "configs/datasets/sun_modality_dataset.json",
+        "version": "sun_modality_dataset_contract@1.3.1",
+        "sha256": "ba7544f0df8b7c78cea2308a9ff64c4ec836bd84bbc875c308814620cfff8bfd"
+      },
+      "schema_audit": {
+        "path": "data/development/modality/sun_estg_modality_v1/schema_audit.json",
+        "status": "verified_with_pre_result_quarantine",
+        "sha256": "92de7e867daa84dca4f013fb25c2394400a33ba8ed86fb282ff68ac05ada3ad8"
+      },
+      "manifest": {
+        "path": "data/development/modality/sun_estg_modality_v1/manifest.json",
+        "sha256": "21a3390c8356053832041d626563910328952097f0c011ece0ec07a229dba534"
+      },
+      "split_summary": {
+        "path": "data/development/modality/sun_estg_modality_v1/split_summary.json",
+        "sha256": "a5b0a828d95eae21fb3ba57d9c59bc34f44a4e997cbb455a7d08ea4be4b08bbc"
+      },
+      "quarantine_manifest": {
+        "path": "data/development/modality/sun_estg_modality_v1/quarantine_manifest.json",
+        "sha256": "fb1d461bbb0ff688ca87e2e41689b6c521f19eacf91d773a558d52b7d52a4688"
+      },
+      "records": {
+        "path": "data/development/modality/sun_estg_modality_v1/records.jsonl",
+        "row_count": 2831,
+        "sha256": "14417801446d9aa9099d7763542635a6ceb6285658036625cf46102c5eca916f"
+      },
+      "splits": {
+        "train": {
+          "path": "data/development/modality/sun_estg_modality_v1/splits/train.jsonl",
+          "row_count": 1985,
+          "sha256": "a7367cd35e3a5ce7263ad5b0fae4881a989761d4fba21b75bdc75b6e2b83c142"
+        },
+        "dev": {
+          "path": "data/development/modality/sun_estg_modality_v1/splits/dev.jsonl",
+          "row_count": 420,
+          "sha256": "ad541915d16aaef6119cb3769e6da0b89e8e8af5ec9069ac3a25680040e5a8d6"
+        },
+        "test": {
+          "path": "data/development/modality/sun_estg_modality_v1/splits/test.jsonl",
+          "row_count": 426,
+          "sha256": "2f67edad05e3a4d315d9ac65fc0ffd1d83dbaffd2d77a55916d6aa9a6919e871"
+        }
+      },
+      "population": {
+        "source_population_size": 2833,
+        "analysis_population_size": 2831,
+        "quarantined_group_count": 1,
+        "quarantined_record_count": 2
+      },
+      "quarantine": {
+        "policy": "pre_result_conflicting_label_group_quarantine",
+        "policy_version": "sun_modality_conflict_quarantine@1.0.0",
+        "row_indices": [616, 1221],
+        "normalized_text_sha256": "df79964183f7abc85e0878ecd73ee4157f800699b42ce7c2ebf1923b4d438d95",
+        "raw_text_sha256": "0289f3ff1d31a392cacb39109df10267297e1d8a184b356227beea4716d8a8d6",
+        "labels_by_row": {
+          "616": "permission",
+          "1221": "obligation"
+        },
+        "raw_source_labels_modified": false
+      },
+      "membership_hash": "b3259d52513ed68a22dc3eb4724ec42dbfeab3781d8bb5bd638d330413b65e32",
+      "split": {
+        "seed": 20260715,
+        "ratios": {
+          "train": 0.7,
+          "dev": 0.15,
+          "test": 0.15
+        },
+        "sizes": {
+          "train": 1985,
+          "dev": 420,
+          "test": 426
+        },
+        "origin": "project_reconstructed_deterministic_split",
+        "normalized_text_group_aware": true
+      },
+      "label_distribution": {
+        "definition": 1190,
+        "obligation": 1273,
+        "permission": 264,
+        "prohibition": 104
+      },
+      "license": {
+        "rights_status": "unknown_pending_confirmation",
+        "redistribution_allowed": false,
+        "publication_allowed": false,
+        "raw_and_derived_data_publication_forbidden": true
+      },
+      "sensitivity_variant": {
+        "name": "sensitivity_full_source_variant",
+        "status": "planned_not_run"
+      },
+      "claim_boundaries": {
+        "sun_original_split": false,
+        "exact_reproduction": false,
+        "training_or_evaluation_run": false
+      }
+    },
+    "public_marker_lexicon": {
+      "status": "verified_development_resource_locked",
+      "task_id": "S2.3",
+      "lexicon_id": "public_marker_lexicon_en_v1",
+      "language": "en",
+      "source_table": {
+        "path": "resources/lexicon/public_marker_sources_en_v1.json",
+        "sha256": "e40c85cf572c68278d8fa2db00a57f193c0c9352aee889096731b6e87e31e369",
+        "construction_mode": "offline_from_preexisting_local_research_audit",
+        "evidence_cutoff": "2026-07-12"
+      },
+      "manifest": {
+        "path": "resources/lexicon/public_marker_lexicon_en_v1.manifest.json",
+        "sha256": "5b9bafb268469acb33c3779ad4e0d8ce6a9984c4cf900855aeeafc0f332e2bf7"
+      },
+      "combined_payload_sha256": "8c3a27b2aa62025ff266b4cb19a1c89984e967539188ccf96820836c2eef7b91",
+      "category_counts": {
+        "modality": 7,
+        "condition": 25,
+        "constraint": 19,
+        "exception": 5,
+        "actor": 8
+      },
+      "language_boundary": "English markers apply only to approved English phrase-level working text; they do not apply to raw German Sun modality sentences.",
+      "action_strategy": "syntax_only_no_action_marker_lexicon",
+      "definition_modality_strategy": "sentence_classifier_only_until_an_explicit_public_definition_marker_source_is_pinned",
+      "development_extension_count": 0,
+      "development_extension_policy": "train/dev evidence only after separate recorded review; test/Gold/evaluation-result additions forbidden; any accepted extension requires a new version and hashes",
+      "source_version_boundary": "The local transcription is hash-frozen; upstream LexNLP latest aliases and upstream licenses were not rechecked in this offline task.",
+      "formal_use": "development_only_not_formal",
+      "redistribution_allowed": false,
+      "training_run": false,
+      "evaluation_run": false,
+      "s2_4_or_later_activated": false
+    },
+    "phrase_dataset": {
+      "status": "superseded_by_single_150_decision_2026_07_12_1715",
+      "target_size": 150,
+      "paper_selection_criteria": ["complete", "sequential", "contains a legal act", "longer than 20 words"],
+      "paper_gold_counts": {
+        "modality": 82,
+        "actor": 118,
+        "action": 147,
+        "condition": 46,
+        "constraint": 35,
+        "exception": 15,
+        "overall": 443
+      },
+      "current_development_pack": "data/development/human_review/estg150_review_pack_v1.jsonl",
+      "current_development_pack_role": "retired as editing surface, retained as development provenance; see data/development/human_review/estg150_review_pack_v1.jsonl for the file and docs/ESTG150_DATA_MAP.md for the data map.",
+      "accepted_strategy_2026_07_12_1715": "The project has ONE 150. The membership is the 150 legacy record_ids of estg_selected_150_de.jsonl. The benchmark is labelled independently_reconstructed_estg_150_v1 and is NOT Sun's original 150. The active editing surface is estg_150_canonical_review_v1.json. The original Sun 150 IDs and 443 phrase spans are not prerequisites."
+    },
+    "freeze_policy": "The Sun modality development schema, 2,831-row analysis population, quarantine policy, and project-reconstructed split are locked by the S2.1-D machine gate. Do not write formal input or Gold: the independently reconstructed phrase Gold still requires human freeze, and the route, Stage 3, freeze/publication policy, and exact publication-status whitelist must each be re-locked separately."
+  },
+  "methods": [
+    "sun_rule_only",
+    "sun_llm_fallback",
+    "direct_llm"
+  ],
+  "method_id_note": "sun_rule_only is retained as a legacy file/API identifier; its intended formal meaning is the complete non-LLM Sun Stage 2 baseline, not a rule-only substitute.",
+  "shared_controls": {
+    "same_input_ids": true,
+    "same_gold": true,
+    "same_prediction_schema": true,
+    "same_normalization": true,
+    "same_evaluator": true,
+    "same_stage3_configuration": true,
+    "gold_visible_to_runners": false
+  },
+  "human_review_gate": {
+    "status": "input_ready_for_human_review",
+    "previous_status": "paused_until_route_v2_is_locked",
+    "status_changed_at_utc": "2026-07-13T03:32:51Z",
+    "status_changed_by_event_22": "Event 22 implementation: review-start-gate governance alignment (split into four orthogonal gates)",
+    "status_changed_by_user_decision_event_21": "Event 21 user decision 2026-07-13 11:30: two-gate split approved; input-ready at 0/150; no resampling; no parallel 150",
+    "status_changed_by_implementation_event_22": "Event 22 implementation 2026-07-13 03:32:51Z: contract human_review_gate.status updated to input_ready_for_human_review and the four-gate split implemented in status.py / audit.py; this is a code+contract change, not a user-policy change",
+    "allowed_input_statuses": [
+      "input_ready_for_human_review"
+    ],
+    "blocking_input_statuses": [
+      "paused",
+      "paused_until_route_v2_is_locked",
+      "blocked",
+      "input_not_ready"
+    ],
+    "input_preconditions": [
+      "single_estg150_self_sampled_150_locked (NOT Sun original 150, NOT exact reproduction)",
+      "membership_payload_sha256 matches estg_150_membership_hashes.json",
+      "v2 human_correction file (Layer E) exists and is format-valid with exactly 150 unique sample_ids",
+      "v1 canonical review file (provenance only) is format-valid with exactly 150 unique sample_ids",
+      "human_review schema exists",
+      "scripts/estg150_review_tool.py exists",
+      "scripts/validate_human_correction.py exists"
+    ],
+    "text_review_required": true,
+    "span_review_required": true,
+    "multi_clause_required": true,
+    "automatic_gold_fill_forbidden": true,
+    "notes": "human_review_input_ready is true once the input gate is satisfied. The four orthogonal gates are: human_review_input_ready (user can start review at 0/150), human_review_freeze_ready (150/150 adjudicated, annotation frozen), formal_gold_publication_ready (route + data + stage3 + freeze policy all re-locked, ready to declare formal Gold), final_experiment_ready (everything including Stage 3 is locked). The route v2 being reopened does NOT block the input gate; it DOES block formal_gold_publication_ready. Agents must not infer or import any human review decision; the user remains the sole owner of approved/reviewed/adjudicated state changes."
+  },
+  "formal_gold_publication_gate": {
+    "status": "blocked_pending_route_data_stage3_re_lock",
+    "status_changed_at_utc_event_23": "2026-07-13 Event 23 governance: this status field is now matched against the exact allowed_publication_statuses whitelist; the previous fail-open 'not blocked and not unknown' heuristic has been removed",
+    "allowed_publication_statuses": [
+      "ready_for_formal_gold_publication"
+    ],
+    "required_preconditions": [
+      "human_review_freeze_ready == true",
+      "route.status == locked",
+      "stage2_dataset.status == locked_for_human_review",
+      "stage3.status == locked",
+      "freeze_policy in experiment_contract has been re-evaluated and explicitly re-locked (no 'reopened_pending_*' status remains anywhere on the formal Gold publication path)",
+      "status field above is an exact match against allowed_publication_statuses (whitelist, not blacklist)"
+    ],
+    "stage3_in_publication_preconditions": "Stage 3 is currently REQUIRED as a precondition (the existing 'required_preconditions' array includes stage3.status == locked). Event 23 did not relax this; if a future contract revision explicitly demotes Stage 3, that change must be made in this contract and recorded in the audit log, not inferred silently. No automated Stage 3 unlock is permitted by Event 23.",
+    "conservative_policy": "If any of the above fields is missing or non-locked, OR the status is not in the allowed_publication_statuses whitelist, formal_gold_publication_ready MUST be false. Do not infer; do not relax; do not auto-clear blockers. The previous 'not startswith blocked and != unknown' heuristic has been removed; the whitelist is exact and additive.",
+    "notes": "human_review_freeze_ready (150/150 adjudicated) is a NECESSARY but NOT SUFFICIENT condition for formal_gold_publication_ready. The route v2 being reopened, official modality data not yet ingested, Stage 3 subset/violation Gold not yet locked, the freeze_policy still being in 'do not write formal input or Gold until ...' mode, or the publication status not exactly matching the whitelist each individually keep formal_gold_publication_ready false."
+  },
+  "stage3": {
+    "status": "pending_final_subset_configuration_and_violation_gold_lock",
+    "official_inputs_available": true,
+    "official_input_summary": "Seven Agostinelli GDPR BPMN models, GDPR Articles 5-50, and four Winter configuration files.",
+    "sun_paper_gap": "The paper reports four GDPR models but does not identify the four filenames in the available manuscript; all-seven evaluation may be reported only as an explicit extension.",
+    "metrics": ["AP", "MAP", "precision", "recall", "F1"],
+    "violation_types": ["missing_action", "incorrect_actor", "out_of_order"],
+    "required_primary_comparison": "Run B0, H1, and D1 through one unchanged frozen Stage 3 and compare downstream deltas on the study's own common data.",
+    "winter_baseline": "Optional enhancement, not required for the minimum LLM contribution claim."
+  }
+}

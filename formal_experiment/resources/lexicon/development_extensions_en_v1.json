@@ -1,0 +1,25 @@
+{
+  "_meta": {
+    "activation": "not_included_in_v1",
+    "artifact_scope": "development_only",
+    "language": "en",
+    "lexicon_id": "public_marker_lexicon_en_v1",
+    "policy": {
+      "activation_rule": "an accepted extension requires a new versioned source snapshot, regenerated artifacts, new hashes, tests, and a recorded change event",
+      "allowed_evidence": "train/dev context only after a separately recorded review decision",
+      "forbidden_evidence": [
+        "test text",
+        "test labels",
+        "test predictions",
+        "formal Gold",
+        "evaluation results"
+      ],
+      "included_in_v1": false,
+      "registry": "resources/lexicon/development_extensions_en_v1.json",
+      "test_time_additions_forbidden": true
+    },
+    "source_file_sha256": "e40c85cf572c68278d8fa2db00a57f193c0c9352aee889096731b6e87e31e369"
+  },
+  "entries": [],
+  "schema_version": "public_marker_extensions@1.0.0"
+}

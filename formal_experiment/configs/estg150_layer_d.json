@@ -1,0 +1,39 @@
+{
+  "config_version": "1.0.0",
+  "purpose": "Single source of truth for which Layer D JSONL the GUI / runner / audit must read. v1 is the all-null placeholder (immutable provenance); v2 is the filled Chinese-aid file produced by an authorized real LLM run. v2 is NOT a second 150; it is the SAME 150 sample_ids with text_zh and back_translation_en filled.",
+  "membership_payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
+  "membership_hashes_path": "data/development/estg/estg_150_membership_hashes.json",
+  "active_path": "data/development/human_review/estg_150_review_aids_zh_v1.jsonl",
+  "placeholder_path": "data/development/human_review/estg_150_review_aids_zh_v1.jsonl",
+  "filled_path": "data/development/human_review/estg_150_review_aids_zh_v2.jsonl",
+  "versioned_paths": {
+    "v1_placeholder": "data/development/human_review/estg_150_review_aids_zh_v1.jsonl",
+    "v2_filled": "data/development/human_review/estg_150_review_aids_zh_v2.jsonl"
+  },
+  "switch_to_v2_rules": {
+    "must_satisfy_all": [
+      "audit_project.py returns integrity_pass=true",
+      "scripts/validate_layer_d_v2.py returns exit code 0 (150/150 record, 150/150 non-null text_zh and back_translation_en, model non-empty, prompt_sha256 non-empty, clauses+elements structurally valid, membership identical)",
+      "data/development/estg/estg_150_membership_hashes.json membership_payload_sha256 unchanged",
+      "estg_150_human_correction_v1.json still 0/150 (user has not started editing); full file SHA-256 must match run_config.json's layer_e_sha256",
+      "data/input, data/gold, data/predictions, data/results are not written by the runner",
+      "Layer A/B/C SHA-256 unchanged",
+      "audit_event log written with llm_api=authorized_called"
+    ],
+    "must_not_happen": [
+      "v1 placeholder file is overwritten",
+      "a third 150 sample_id set is created",
+      "user-entered human_correction data is migrated from one 150 to another",
+      "manual edit of active_path by hand (the promoter is the ONLY activation entry point)",
+      "silent overwrite of a v2 file that was activated by a different run_dir (the promoter refuses cross-run promotion unless the existing v2 is already byte-identical to the new run_dir's v2)"
+    ],
+    "only_activation_entry_point": "python formal_experiment/scripts/promote_layer_d_v2.py --run-dir <run_dir>  [--yes]",
+    "forbidden_actions": [
+      "manual `cp` of the run_dir's layer_d_v2.jsonl into data/development/human_review/",
+      "manual edit of configs/estg150_layer_d.json's `active_path` field",
+      "manual edit of configs/estg150_layer_d.json's `active_run_id` / `active_model` / `active_provider` / `active_v2_sha256` fields"
+    ]
+  },
+  "active_filled_path_status": "not_yet_generated",
+  "active_filled_path_status_note": "Until the user authorizes a real LLM run and validate_layer_d_v2.py returns 0 for 150/150, this config must keep active_path = placeholder_path. The GUI/audit/runner must read this file and never guess v1/v2. The activation metadata fields (active_run_dir / active_run_id / active_model / active_provider / active_base_url / active_v2_sha256 / active_manifest_sha256) are populated ONLY by scripts/promote_layer_d_v2.py; manual edits are forbidden."
+}

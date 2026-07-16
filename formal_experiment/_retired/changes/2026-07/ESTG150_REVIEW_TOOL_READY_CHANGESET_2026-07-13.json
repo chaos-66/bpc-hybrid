@@ -1,0 +1,155 @@
+{
+  "task_id": "ESTG150_REVIEW_TOOL_READY_2026-07-13",
+  "authored_at_utc": "2026-07-13T11:00:00+08:00",
+  "task_summary": "Make the EStG-150 LLM-assisted human-review tool operational for record-by-record review: (1) introduce validate_doc_dict (pure in-memory validator) so save_draft can validate before any disk write; (2) refactor service.save_draft to auto-validate the in-memory doc, back up the on-disk file, atomically write, and return the validation report; (3) refactor GUI on_save to consume the validation result from save_draft; (4) add 6 new service-layer tests covering the new auto-validation, counter, immutability, span-ID-uniqueness, and actor_action_map/order_relations reference contract; (5) emit a precise task-scoped changeset; no real LLM/API call and no human review decisions imported.",
+  "no_real_llm_call": true,
+  "no_env_read": true,
+  "no_human_decisions_imported": true,
+  "references_archive_untouched": true,
+  "single_estg150_membership_unchanged": true,
+  "no_commit": true,
+  "no_wave_2": true,
+  "old_canonical_review_v1_not_overwritten": true,
+  "human_correction_layer_e_initial_state_preserved": true,
+  "files_modified": [
+    {
+      "path": "formal_experiment/src/formal_experiment/estg150_validator.py",
+      "role": "Add validate_doc_dict(doc, hashes_path) pure function that mirrors validate_global but operates on an in-memory doc (no human_correction file read). Refactor validate_global to call validate_doc_dict after reading. Add _resolve_hashes_path helper.",
+      "pre_change_sha256": "7DECD92267CF7B652A0FB80BA0D7997F102A4A57585E16C599B6F40B5E654C14",
+      "post_change_sha256": "95AEFD4C12B377B0D28BC5ADC256ED8CE908FBDABC67BEED689174591DD91E91"
+    },
+    {
+      "path": "formal_experiment/src/formal_experiment/estg150_service.py",
+      "role": "Refactor save_draft to (1) validate in-memory doc with validate_doc_dict (pure Python, no production file overwrite), (2) create a unique-name backup of the on-disk file, (3) atomically write the in-memory doc, (4) return {saved, backup, path, validation}. Import validate_doc_dict and _resolve_hashes_path from the validator module.",
+      "pre_change_sha256": "2ADCC637F41B254F0EFC80A82F82DFA1CF6B0E6D95BB840DD687177445DF63BA",
+      "post_change_sha256": "0F005EABFD7B41A2E013741725E03630820CA936494914CEC1665727BCBAE028"
+    },
+    {
+      "path": "formal_experiment/scripts/estg150_review_tool.py",
+      "role": "Refactor ReviewerApp.on_save to consume the validation result returned by service.save_draft (rather than calling validate_global separately), and surface the three readiness booleans (format_valid / review_ready / freeze_ready) plus the 150-progress counters in the post-save status message. Drafts that are format-invalid still save; the message guides the user to the backup for recovery.",
+      "pre_change_sha256": "B3E2EE46706213A6D1534B1E598A678B1E829EF9F881FC6679D2392BE4D41989",
+      "post_change_sha256": "41CB693516E7CFC3C50D1298B283D270CB11989DD13F6C53527A12DD4FDE6A86"
+    },
+    {
+      "path": "formal_experiment/tests/test_estg_150_review_tool.py",
+      "role": "Add 6 new service-layer tests: test_save_draft_returns_validation_report (validation result shape), test_save_draft_validates_in_memory_before_disk_write (in-memory mutation flagged before write), test_save_draft_counters_reflect_in_memory_state (n_reviewed/records_fully_decided counters), test_continuous_add_span_no_duplicate_id (cross-field ID uniqueness for conditions/constraints/exceptions), test_actor_action_map_and_order_relations_references_legal (validator catches unknown IDs, real IDs pass), test_save_draft_does_not_modify_layer_b_or_layer_c (immutable layers untouched).",
+      "pre_change_sha256": "E1ECCD6FA45C3D28FBE3F3AA00B166C505E8B9AEFDF33B3B35B76C49BAC7B1DD",
+      "post_change_sha256": "F3DBDF5C4D80265DD21959DFBCF8B73F124F1132EE7662F5E7787F2F527AF9E6"
+    }
+  ],
+  "files_created": [
+    {
+      "path": "formal_experiment/docs/changes/ESTG150_REVIEW_TOOL_READY_CHANGESET_2026-07-13.json",
+      "role": "This file: task-level precise changeset (per-file SHA-256, invariants, no-op declarations, source-hash snapshot).",
+      "sha256": "<self>"
+    }
+  ],
+  "immutable_sources_sha256_pre_and_post": {
+    "estg_selected_150_de.jsonl": {
+      "pre": "55B64598DEDFA0C0038084EE62C0928BDDFA4BF17F19DB80D461DA2CB7BF26A3",
+      "post": "55B64598DEDFA0C0038084EE62C0928BDDFA4BF17F19DB80D461DA2CB7BF26A3",
+      "role": "Layer A — German source (immutable)"
+    },
+    "estg_selected_150_en_llm_translated.jsonl": {
+      "pre": "F4227871072E9ED6A22D54756F645802773DDC4B39C780332CCC8C7575E45712",
+      "post": "F4227871072E9ED6A22D54756F645802773DDC4B39C780332CCC8C7575E45712",
+      "role": "Layer B source — English translation (immutable)"
+    },
+    "estg_gold_150_llm_draft.jsonl": {
+      "pre": "9B915A898413C8C20ACABA78D2C6CCDBBC2EDD425AF3B860E5B73BCC56E3111B",
+      "post": "9B915A898413C8C20ACABA78D2C6CCDBBC2EDD425AF3B860E5B73BCC56E3111B",
+      "role": "Layer C source — legacy LLM draft (immutable)"
+    },
+    "estg_150_membership_hashes.json": {
+      "pre": "0F9065523A57900B22A8A04AE9109D37C72ABBE514F3CDE60BCD7652CFA1417B",
+      "post": "0F9065523A57900B22A8A04AE9109D37C72ABBE514F3CDE60BCD7652CFA1417B",
+      "role": "membership hashes (immutable)"
+    },
+    "estg_150_translation_en_v1.jsonl": {
+      "pre": "F65E929BF1FE498FFCE6F08D30F95D1C4DE53592457352CCE915CFBF8EE91DA3",
+      "post": "F65E929BF1FE498FFCE6F08D30F95D1C4DE53592457352CCE915CFBF8EE91DA3",
+      "role": "Layer B — immutable English translation manifest"
+    },
+    "estg_150_llm_six_element_candidates_v1.jsonl": {
+      "pre": "9476945CA387FB7EFAD5C1405CCA59A6EF24FF50A23E22BA2C46AD6847290B8B",
+      "post": "9476945CA387FB7EFAD5C1405CCA59A6EF24FF50A23E22BA2C46AD6847290B8B",
+      "role": "Layer C — immutable LLM six-element candidate"
+    },
+    "estg_150_review_aids_zh_v1.jsonl": {
+      "pre": "D12587E5EE349C9CFE279CDA0194FA89B9BE7604E817DA2F65F3A2F92DFA67C2",
+      "post": "D12587E5EE349C9CFE279CDA0194FA89B9BE7604E817DA2F65F3A2F92DFA67C2",
+      "role": "Layer D — Chinese aid (immutable, fields null until authorized LLM call)"
+    },
+    "estg_150_canonical_review_v1.json": {
+      "pre": "43519542F58BBBD78463DB59C473E05CDBE2E3BD801DFB7156E9BB351F27610D",
+      "post": "43519542F58BBBD78463DB59C473E05CDBE2E3BD801DFB7156E9BB351F27610D",
+      "role": "retired v1 canonical review (workflow draft, kept as provenance, not modified)"
+    }
+  },
+  "editable_target_sha256_pre_and_post": {
+    "estg_150_human_correction_v1.json": {
+      "pre": "D70857E0381EF1D4F068D9736D597FFA71340CE91E9D486200ECE0188F439948",
+      "post": "D70857E0381EF1D4F068D9736D597FFA71340CE91E9D486200ECE0188F439948",
+      "role": "Layer E — the single editable human-correction file; SHA-256 unchanged because the user has not yet started review (0/150 approved_en, 150/150 needs_review, 0 reviewed, 0 adjudicated). Tests never write to this path."
+    }
+  },
+  "membership": {
+    "membership_payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
+    "membership_count": 150,
+    "membership_source": "formal_experiment/data/development/estg/estg_selected_150_de.jsonl"
+  },
+  "human_correction_layer_e_state": {
+    "n_records": 150,
+    "approved_text_en": 0,
+    "translation_unreviewed": 150,
+    "six_element_decisions_unreviewed": "900/900",
+    "six_element_records_incomplete": "150/150",
+    "review_state_counts": {
+      "needs_review": 150,
+      "in_progress": 0,
+      "reviewed": 0,
+      "adjudicated": 0
+    },
+    "format_valid": true,
+    "review_ready": false,
+    "freeze_ready": false,
+    "chinese_aid_status": "not_generated (Layer D fields all null, awaiting separate user authorization for a real LLM call)"
+  },
+  "tests": {
+    "scope": "tests/test_estg_150_review_tool.py",
+    "pre_change_count": 31,
+    "post_change_count": 37,
+    "new_tests": [
+      "test_save_draft_returns_validation_report",
+      "test_save_draft_validates_in_memory_before_disk_write",
+      "test_save_draft_counters_reflect_in_memory_state",
+      "test_continuous_add_span_no_duplicate_id",
+      "test_actor_action_map_and_order_relations_references_legal",
+      "test_save_draft_does_not_modify_layer_b_or_layer_c"
+    ],
+    "all_tests_use_tmp_path": true,
+    "tests_touch_real_human_correction": false,
+    "tests_touch_real_backup_dir": false,
+    "tests_touch_real_action_log": false
+  },
+  "workflow_invariants_enforced": [
+    "Per-record validation: validate_record_for_review is a pure function on a single record; the first record can be marked reviewed while the other 149 are still needs_review (no chicken-and-egg deadlock).",
+    "Global aggregator: validate_doc_dict / validate_global only report readiness booleans and counters; they never block the first-record mark.",
+    "Save-before-validate: save_draft validates the in-memory doc first (pure Python, no production overwrite), then backs up the on-disk file, then atomically writes; the production file is never replaced by an invalid state without a backup existing first.",
+    "Incomplete draft is allowed: an in-progress or format-invalid draft can be saved; only an explicit mark_reviewed call (per-record eligible) moves the state forward.",
+    "Backup naming: UTC-microsecond timestamp + per-backup-dir monotonic counter; two saves in the same microsecond produce two different filenames.",
+    "LLM candidate immutability: layers A/B/C/D are read-only and SHA-256 unchanged before and after the task.",
+    "Layer E initial state preserved: 0/150 approved_en, 0/150 reviewed, 0/150 adjudicated; the editable file is byte-identical pre- and post-task.",
+    "Chinese aid not fabricated: Layer D fields remain null; the GUI shows the explicit '尚未生成' banner; tests verify aid_source=pending_authorized_llm_call and model=null; no real LLM/API call was made.",
+    "Audit warning: review_aids_zh_not_generated is still emitted by audit_project.py so the review tool can never silently claim the Chinese-aided workflow is ready."
+  ],
+  "audit_invariants": {
+    "integrity_pass": true,
+    "human_review_ready": false,
+    "final_experiment_ready": false,
+    "pre_change_audit_event_count": 19,
+    "post_change_audit_event_count_target": 20,
+    "old_events_17_18_unchanged": true,
+    "new_event_purpose": "Make the EStG-150 LLM-assisted human-review tool operational for record-by-record review: fix record-level reviewed/adjudicated validation, automatic post-save validation, collision-free backups, real service-layer workflow tests, accurate counters, Chinese-aid pending handling, and task-scoped traceability; no real LLM/API call and no human review decisions imported."
+  }
+}

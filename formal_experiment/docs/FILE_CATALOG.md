@@ -1,0 +1,372 @@
+# 项目逐文件目录
+
+**生成日期**：2026-07-16  
+**收录文件**：278 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`__pycache__/`）  
+**生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
+
+本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
+表示只可追溯；“开发/溯源”表示不能直接用于最终论文表格；“正式区（受门禁）”
+表示只有冻结和运行门禁通过后才能写入。
+
+## `.env.example`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `.env.example` | 活动 | 不含密钥的配置示例 |
+
+## `_retired`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `_retired/changes/2026-07/ESTG150_HUMAN_REVIEW_START_GATE_SPLIT_CHANGESET_2026-07-13.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
+| `_retired/changes/2026-07/ESTG150_LLM_ASSISTED_V2_CHANGESET_2026-07-13.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
+| `_retired/changes/2026-07/ESTG150_REVIEW_GATE_GOVERNANCE_ALIGNMENT_CHANGESET_2026-07-13.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
+| `_retired/changes/2026-07/ESTG150_REVIEW_TOOL_READY_CHANGESET_2026-07-13.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
+| `_retired/data/human_review_user_audit/convert_jsonl_to_json.py` | 退役归档 | Python 实现、脚本或测试 |
+| `_retired/data/human_review_user_audit/estg150_review_pack_user_audit_v1.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
+| `_retired/data/human_review_user_audit/estg150_review_pack_user_audit_v1.jsonl` | 退役归档 | 机器可读配置、数据、事件或产物 |
+| `_retired/data/legacy_r15_0/sun_rule_only_manifest.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
+| `_retired/data/legacy_r15_0/sun_rule_only_predictions.jsonl` | 退役归档 | 机器可读配置、数据、事件或产物 |
+| `_retired/docs/2026-07/CCF_C_POSITIONING_AND_SUPERVISOR_FIGURE.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/docs/2026-07/CURRENT_HANDOFF_2026-07-12.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/docs/2026-07/DATA_TRANSLATION_PROTOCOL.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/docs/2026-07/EStG_150_SAMPLING_PROTOCOL.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/docs/2026-07/EXPERIMENT_FOR_BEGINNER.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/docs/2026-07/REORGANIZATION_PLAN.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/docs/2026-07/STATUS_REPORT.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/docs/2026-07/STATUS_SNAPSHOT_2026-07-12.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/docs/2026-07/SUN2024_FINAL_GAP_AND_ROADMAP.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/logs/AUDIT_LOG_legacy_through_event_29.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/MANIFEST.md` | 退役归档 | 结构或迁移清单 |
+| `_retired/outputs/reports/2026-07/experiment_design_overview.svg` | 退役归档 | 历史可视化或报告 |
+| `_retired/outputs/reports/2026-07/experiment_overview_for_supervisor_2026-07-12.html` | 退役归档 | 历史可视化或报告 |
+| `_retired/README.md` | 退役归档 | 所在目录的入口说明 |
+| `_retired/scripts/build_user_override_review_pack.py` | 退役归档 | Python 实现、脚本或测试 |
+
+## `AGENTS.md`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `AGENTS.md` | 活动 | Agent 强制合同与操作边界 |
+
+## `configs`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `configs/datasets/sun_modality_dataset.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/estg150_layer_d.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/experiment_contract.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/paths.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/dataset_manifest.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/estg_150_canonical_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/human_gold_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/stage2_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+
+## `data`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `data/development/estg/estg_150_membership_hashes.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/estg_150_prepared_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/estg_gold_150_llm_draft.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/estg_gold_150_v1_backup.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/estg_gold_150_v2_distribution_targeted.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/estg_selected_150_de.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/estg_selected_150_en_llm_translated.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/estg_sentences_de.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/gdpr50/r15_gdpr50_candidate_samples.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/gdpr50/r15_gdpr50_gold.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/gold_review/sun_stage2_gold_review_candidates.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/gold_review/sun_stage2_gold_review_template.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/estg150_review_pack_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/ESTG150_REVIEW_WORKFLOW_V1.md` | 开发/溯源 | 说明、规范或研究文档 |
+| `data/development/human_review/estg_150_canonical_review_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/estg_150_human_correction_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/estg_150_llm_six_element_candidates_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/estg_150_review_aids_zh_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/estg_150_translation_en_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/metadata/exploratory_spacy_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/metadata/sun_llm_fallback_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/metadata/sun_rule_only_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/modality/sun_estg_modality_v1/.gitignore` | 开发/溯源 | 项目文件 |
+| `data/development/modality/sun_estg_modality_v1/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/modality/sun_estg_modality_v1/quarantine_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/modality/sun_estg_modality_v1/README.md` | 开发/溯源 | 所在目录的入口说明 |
+| `data/development/modality/sun_estg_modality_v1/records.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/modality/sun_estg_modality_v1/schema_audit.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/modality/sun_estg_modality_v1/split_summary.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/modality/sun_estg_modality_v1/splits/dev.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/modality/sun_estg_modality_v1/splits/test.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/modality/sun_estg_modality_v1/splits/train.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/predictions/exploratory_spacy.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/predictions/sun_llm_fallback.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/predictions/sun_rule_only.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/sun_modality/raw/.gitignore` | 开发/溯源 | 项目文件 |
+| `data/development/sun_modality/raw/Decision_Logic_data.zip` | 开发/溯源 | 项目文件 |
+| `data/development/sun_modality/source_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/gold/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+| `data/input/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+| `data/predictions/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+| `data/README.md` | 正式区（受门禁） | 所在目录的入口说明 |
+| `data/results/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+
+## `docs`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `docs/AGENT_RUNBOOK.md` | 活动 | Agent 分阶段派工规则与可复制 Prompt |
+| `docs/AI_CHANGE_PROTOCOL.md` | 活动 | 实验日志与自动检查协议 |
+| `docs/ANNOTATION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
+| `docs/B0_RECONSTRUCTION_DESIGN.md` | 活动 | 说明、规范或研究文档 |
+| `docs/DIRECTORY_GUIDE.md` | 活动 | 中文目录职责地图 |
+| `docs/ESTG150_DATA_MAP.md` | 活动 | 说明、规范或研究文档 |
+| `docs/EVAL_3DIM_SPEC.md` | 活动 | 说明、规范或研究文档 |
+| `docs/EXPERIMENT_EVENTS.jsonl` | 活动 | 追加式机器实验事件 |
+| `docs/EXPERIMENT_LOG.md` | 活动 | 中文人类可读实验日志 |
+| `docs/FILE_CATALOG.md` | 活动 | 自动生成的逐文件目录 |
+| `docs/HUMAN_GOLD_GUIDE.md` | 活动 | 说明、规范或研究文档 |
+| `docs/HUMAN_GOLD_REVIEW_PACK_SCHEMA_v2.md` | 活动 | 说明、规范或研究文档 |
+| `docs/INDEX.md` | 活动 | 说明、规范或研究文档 |
+| `docs/LLM_BUDGET_PROPOSAL_2026-07-12.md` | 活动 | 说明、规范或研究文档 |
+| `docs/MASTER_PIPELINE.md` | 活动 | 唯一完整三阶段路线与任务树 |
+| `docs/PROJECT_AUDIT.md` | 活动 | 唯一实时项目状态（兼容文件名） |
+| `docs/REPRODUCTION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
+| `docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/BARRIENTOS_LLM_ROLE.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/PUBLIC_MARKER_LEXICON_RECONSTRUCTION.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/SUN_BASELINE_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/SUN_MODALITY_DATASET_INGESTION.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/SUN_REFERENCE_SNOWBALL_AND_MARKER_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/SUN_WINTER_CODE_SEPARATION_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/ROUTE_LOCK.md` | 活动 | 说明、规范或研究文档 |
+| `docs/STAGE2_CANONICAL_SCHEMA_SPEC.md` | 活动 | 说明、规范或研究文档 |
+| `docs/STAGE2_LLM_INNOVATION_DESIGN.md` | 活动 | 说明、规范或研究文档 |
+| `docs/STYLE_EQUIVALENT_SPEC.md` | 活动 | 说明、规范或研究文档 |
+| `docs/USER_DECISION_LOCK_2026-07-12.md` | 活动 | 说明、规范或研究文档 |
+
+## `MANIFEST.md`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `MANIFEST.md` | 活动 | 结构或迁移清单 |
+
+## `outputs`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `outputs/README.md` | 活动 | 所在目录的入口说明 |
+| `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
+
+## `paper`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `paper/CLAIM_EVIDENCE_MATRIX.md` | 活动 | 科学主张、证据状态和解锁条件 |
+| `paper/README.md` | 活动 | 所在目录的入口说明 |
+| `paper/THESIS_DRAFT.md` | 活动 | 中文论文连续工作稿与结果占位 |
+
+## `prompts`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `prompts/sun_compat/direct_llm_few_shot_fixtures.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `prompts/sun_compat/direct_llm_sun_record_prompt.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/dry_run_back_translation.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/dry_run_six_element.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/dry_run_zh_gloss.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/rule_first_llm_fallback_prompt.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/zh_aid/en_back_translation.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/zh_aid/zh_translation.md` | 活动 | 说明、规范或研究文档 |
+
+## `pyproject.toml`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `pyproject.toml` | 活动 | 配置或工程元数据 |
+
+## `README.md`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `README.md` | 活动 | 所在目录的入口说明 |
+
+## `requirements-audit.txt`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `requirements-audit.txt` | 活动 | 文本清单或依赖说明 |
+
+## `resources`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `resources/lexicon/actor_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/condition_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/constraint_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/development_extensions_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/exception_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/modality_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/public_marker_lexicon_en_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/public_marker_sources_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/sun_marker_lexicon.json` | 活动 | 机器可读配置、数据、事件或产物 |
+
+## `scripts`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `scripts/_precheck_estg150.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/audit_ingest_sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/audit_project.py` | 活动 | 离线项目完整性检查（兼容文件名） |
+| `scripts/audit_stage2_to_stage3.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_estg150_review_layers.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_estg_human_review_pack.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/clean_estg150_german.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/compute_estg_membership_hashes.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/dry_run_llm_estimate.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/estg150_review_tool.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/generate_file_catalog.py` | 活动 | 重建本逐文件目录 |
+| `scripts/ingest_sun_modality.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/promote_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/rebuild_d1_prompt.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
+| `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_llm_zh_aid.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_stage3_fixture_harness.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sun_llm_fallback.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sun_rule_only.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/status.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/validate_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/validate_estg_human_review.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/validate_gold.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/validate_human_correction.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/validate_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/validate_legacy_gold_review.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_sun_modality_zip.py` | 活动 | Python 实现、脚本或测试 |
+
+## `src`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `src/bpc_hybrid/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/datasets/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/datasets/sun_modality_importer.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/datasets/sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/evaluation/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/evaluation/concept_level_eval.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/evaluator.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/extractor.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/fallback.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/llm_client.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/llm_config.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/llm_provider.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/mini_pilot_evaluator.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/normalization.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/prompt_loader.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/smoke.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/splitter.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage2_canonical.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_compat/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_compat/clause_adapter.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_compat/schema.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_compat/similarity_engine.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_compat/stage3_adapter.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/bert_modality_classifier.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/bpmn_semantics.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/modality_classifier.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/rule_record.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/semantic_extractor.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/spacy_semantic_extractor.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/spacy_syntactic_rules.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/syntactic_rules.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/violation_detection.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/audit.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/estg150_service.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/estg150_validator.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/gold.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/layer_d_security.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/layer_d_validator.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/paths.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/status.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/sun_modality_gate.py` | 活动 | Python 实现、脚本或测试 |
+
+## `tests`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `tests/fixtures/bpmn/minimal_bpmn_incorrect_actor.bpmn` | 活动 | 流程模型或测试 fixture |
+| `tests/fixtures/bpmn/minimal_bpmn_missing_action.bpmn` | 活动 | 流程模型或测试 fixture |
+| `tests/fixtures/bpmn/minimal_bpmn_out_of_order.bpmn` | 活动 | 流程模型或测试 fixture |
+| `tests/fixtures/public_marker_lexicon/marker_cases_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/sun_compat_incorrect_actor.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/sun_compat_missing_action.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/sun_compat_out_of_order.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/sun_modality/_fixture_builder.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/fixtures/sun_modality/README.md` | 活动 | 所在目录的入口说明 |
+| `tests/fixtures/sun_modality/synthetic_cross_split_leakage.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_duplicate_id.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_duplicate_text_conflicting_label.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_duplicate_text_same_label.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_empty_text.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_encoding_error.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_headerless_integer.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_large_normal.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_missing_label_column.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_no_source_id.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_normal.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_one_hot_all_zero.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_one_hot_multi_hot.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_one_hot_non_binary.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_small_class.csv` | 活动 | 项目文件 |
+| `tests/fixtures/sun_modality/synthetic_unknown_label.csv` | 活动 | 项目文件 |
+| `tests/test_audit.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_estg_150_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_estg_150_review_tool.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_estg_human_review.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_evaluator.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_event23_gate_hardening.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_extractor.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_fallback.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_fallback_pipeline.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_layer_d_runner_and_validator.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_llm_client.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_llm_config.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_master_pipeline_and_layout.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_normalization.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_project_structure.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_prompt_contract.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_r15_sun_style_g1_lexicon_classifier.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_r15_sun_style_g2_extraction_rules.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_r15_sun_style_g3_bpmn_violation.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_r15_sun_style_g4_outputs_overclaim.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_smoke.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_splitter.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sun_compat.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sun_modality_gate.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sun_modality_ingestion.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sun_modality_source_manifest.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_verification_receipt.py` | 活动 | Python 实现、脚本或测试 |
