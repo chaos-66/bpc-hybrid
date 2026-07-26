@@ -251,3 +251,23 @@ canonical schema、serializer、adapter config 与 transport schema SHA 分别�
 
 该准备不读取 Layer D、Layer E 或 Gold，不产生候选/评价/P/R，不进入 C3/C4。收据明确
 `provider_authorized=false`、`real_api_call=false`、`billed_tokens=0`、`C2 started=false`。
+
+### 7.5 2026-07-26 gpt-5.4-nano 单条 C1 runtime
+
+用户另行明确授权 ChatAnywhere `gpt-5.4-nano` 仅调用 1 条 synthetic，最大 13,000 tokens、
+最大 0.07 CA，输入/输出价格 1.4/8.75 CA per million tokens，运行后停止且不进入 C2。
+离线 strict v1.1 preflight 通过，唯一 transport request SHA 为
+`85ef4b632ddeba1e15e4309c3859302b1ae736965dce92f7b7671f7387b67cff`，无 downgrade。
+
+运行实际完成 1 次内容调用、0 retry。relay 报告模型为
+`gpt-5.4-nano-2026-03-17`（仍为 `unverified_relay_report`），provider usage 为 1167 input +
+1789 output = 2956 tokens，其中 reasoning 1307；按锁定价格计算 0.01728755 CA，低于授权上限。
+模型返回 `finish_reason=stop` 和 schema-shaped JSON，但把长度为 57 的
+`translation.proposed_text_en` 的整句 `clause_span.end` 写成 58，原始 canonical exact-span
+validator 因越界 fail closed。没有修复输出、没有内容重试、没有有效候选，C1=false、C2=false，
+evaluation=0、P/R=null。
+
+原 `failure.json` 在候选校验前尚未提取 usage，因而错误记录 tokens/cost 为 0；该不可变失败
+证据不改写。新增 `accounting_correction.json` 逐 hash 绑定原 failure/preregistration/raw response，
+从 provider response 恢复 2956 tokens 与 0.01728755 CA，并登记 RWI-0027。runner 已改为先
+保存/计入 provider envelope usage，再执行 canonical candidate validation；没有为修复而重跑 API。

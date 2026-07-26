@@ -670,6 +670,77 @@ def test_mocked_success_receipts_record_actual_transport_and_canonical_validatio
         assert receipt["request_downgrade_applied"] is False
 
 
+def test_mocked_invalid_candidate_still_records_provider_usage_and_cost(monkeypatch) -> None:
+    runner = _load_runner()
+    assets = load_protocol_assets()
+    lock = verify_c0_lock(assets)
+    candidate = json.loads(json.dumps(load_json_bytes(VALID_CANDIDATE)))
+    candidate["clauses"][0]["clause_span"]["end"] = (
+        len(candidate["translation"]["proposed_text_en"]) + 1
+    )
+    response = canonical_json_bytes(
+        {
+            "id": "offline-invalid-response",
+            "model": "offline-invalid-provider-report",
+            "choices": [
+                {
+                    "finish_reason": "stop",
+                    "message": {"content": json.dumps(candidate, ensure_ascii=False)},
+                }
+            ],
+            "usage": {"prompt_tokens": 1167, "completion_tokens": 1789},
+        }
+    )
+    with tempfile.TemporaryDirectory(prefix="estg150_c1_invalid_usage_", dir=ROOT) as temporary:
+        temporary_root = Path(temporary)
+        config = dict(assets.config)
+        config["output"] = dict(config["output"])
+        config["output"]["root"] = temporary_root.relative_to(ROOT).as_posix()
+        test_assets = candidate_protocol.ProtocolAssets(
+            config, assets.schema, assets.schema_text, assets.prompts, assets.samples
+        )
+        monkeypatch.setattr(runner, "acquire_api_key", lambda env_name: "offline-mock-key")
+        monkeypatch.setattr(
+            runner,
+            "post_identical_request_with_retries",
+            lambda **kwargs: (response, []),
+        )
+        args = argparse.Namespace(
+            stage="c1",
+            provider_adapter="relay_openai_compatible",
+            model="gpt-5.4-nano",
+            endpoint="https://api.chatanywhere.tech/v1/chat/completions",
+            confirm_authorized_provider_budget=True,
+            run_id="offline_mock_invalid_usage",
+            max_calls=1,
+            max_total_tokens=100_000,
+            max_cost=Decimal("100"),
+            cost_currency="CA",
+            input_price_per_million=Decimal("1.4"),
+            output_price_per_million=Decimal("8.75"),
+            api_key_env_name=None,
+            timeout_seconds=17,
+        )
+        with pytest.raises(CandidateValidationError, match="outside proposed_text_en"):
+            runner.execute(args, test_assets, lock)
+        run_dir = temporary_root / args.run_id
+        failure = load_json_bytes(run_dir / "failure.json")
+        assert failure["input_tokens"] == 1167
+        assert failure["output_tokens"] == 1789
+        assert failure["provider_reported_tokens_available"] is True
+        assert failure["total_cost"] == "0.01728755"
+        assert failure["provider_reported_model"] == "offline-invalid-provider-report"
+        assert failure["provider_response_id"] == "offline-invalid-response"
+        assert failure["response_sha256"] == sha256_path(
+            run_dir / "responses" / "001_synthetic_c1_utf8_full_extract.json"
+        )
+        assert failure["local_canonical_validation"]["passed"] is False
+        assert failure["valid_candidate_count"] == 0
+        assert failure["c1_passed"] is False and failure["c2_started"] is False
+        assert not (run_dir / "manifest.json").exists()
+        assert not (run_dir / "candidates.json").exists()
+
+
 def test_gpt56_transport_hash_is_versioned_and_not_the_canonical_request_hash() -> None:
     _assets, semantic, prepared = _prepared()
     semantic_sha256 = hashlib.sha256(serialize_semantic_request(semantic)).hexdigest()

@@ -1,0 +1,55 @@
+{
+  "schema_version": "estg150_c1_accounting_correction@1.0.0",
+  "run_id": "c1_relay_gpt54_nano_strict_v1_1_pilot_v1",
+  "status": "immutable_failure_receipt_accounting_corrected_without_api_retry",
+  "reason": "The original failure receipt validated the candidate before extracting provider usage, so it recorded zero tokens and cost even though the archived provider response contains usage.",
+  "original_artifacts_preserved": true,
+  "original_failure_path": "data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_strict_v1_1_pilot_v1/failure.json",
+  "original_failure_sha256": "d7e9848fb0f2134d6d7c24db968ec7a762ef0b92b16728b88d745f6cab284176",
+  "preregistration_sha256": "0c95ac7a9c45c0d9cb88eede6e41cbb7fc555c199c354a76e5858b8174ad8a9a",
+  "raw_response_path": "data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_strict_v1_1_pilot_v1/responses/001_synthetic_c1_utf8_full_extract.json",
+  "raw_response_sha256": "2ecac86b9f07114f6f2dfdc4b8aea7a35557178469f3fca3021ade8853bd0622",
+  "transport_request_sha256": "85ef4b632ddeba1e15e4309c3859302b1ae736965dce92f7b7671f7387b67cff",
+  "provider_reported_model": "gpt-5.4-nano-2026-03-17",
+  "provider_identity_attestation": "unverified_relay_report",
+  "finish_reason": "stop",
+  "usage": {
+    "input_tokens": 1167,
+    "output_tokens": 1789,
+    "reasoning_tokens": 1307,
+    "total_tokens": 2956,
+    "provider_reported_tokens_available": true
+  },
+  "pricing": {
+    "input_price_per_million": "1.4",
+    "output_price_per_million": "8.75",
+    "recorded_cost_from_provider_usage": "0.01728755",
+    "cost_currency": "CA",
+    "authorized_maximum_cost": "0.07",
+    "authorized_maximum_total_tokens": 13000,
+    "within_authorized_limits": true
+  },
+  "candidate_validation": {
+    "passed": false,
+    "error_type": "CandidateValidationError",
+    "error": "clauses[0].clause_span is outside proposed_text_en",
+    "proposed_text_length": 57,
+    "reported_clause_span_end": 58,
+    "valid_candidate_count": 0
+  },
+  "safety": {
+    "logical_content_calls": 1,
+    "retry_count": 0,
+    "api_retried_for_correction": false,
+    "credential_persisted": false,
+    "credential_echo_detected": false,
+    "layer_d_read_during_generation": false,
+    "layer_e_read_during_generation": false,
+    "gold_visible_during_generation": false,
+    "evaluation_count": 0,
+    "precision": null,
+    "recall": null,
+    "c1_passed": false,
+    "c2_started": false
+  }
+}

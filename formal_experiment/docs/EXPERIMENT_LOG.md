@@ -1393,3 +1393,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Created no-overwrite C2 dry-run receipt for indices 0-2 Pass A/B: 6/6 strict transport preflights passed, request_downgrade_applied=false, guardrails 6 calls/78000 tokens/1.92 CA. Three Pass-B hashes are historical validated Pass-A fixture scope only; future live hashes remain deferred. Real API not called, billed tokens 0, C2 not started, evaluation 0, P/R null. Full audit: Integrity=True, Errors=0, Passes=47; 1438 passed, 22 skipped.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T07:46:53.382305+00:00 - EStG-150 C1 ChatAnywhere gpt-5.4-nano single-call validation
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=c1_relay_gpt54_nano_strict_v1_1_pilot_v1；阶段=c1；方法=estg150_canonical_external_candidate_protocol；状态=失败（`failed`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_candidate_protocol.py --stage c1 --execute-api --confirm-authorized-provider-budget --provider-adapter relay_openai_compatible --model gpt-5.4-nano --endpoint https://api.chatanywhere.tech/v1/chat/completions --run-id c1_relay_gpt54_nano_strict_v1_1_pilot_v1 --max-calls 1 --max-total-tokens 13000 --max-cost 0.07 --cost-currency CA --input-price-per-million 1.4 --output-price-per-million 8.75 --api-key-env-name CHATANYWHERE_API_KEY --timeout-seconds 300`
+- manifest：data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_strict_v1_1_pilot_v1/failure.json
+- 结果摘要：failed_closed; 1 logical call; 0 retry; provider usage 1167 input + 1789 output = 2956 tokens; recorded cost from provider usage 0.01728755 CA; provider-reported model gpt-5.4-nano-2026-03-17 unverified; candidate rejected because clause_span.end=58 exceeds proposed_text length 57; 0 valid candidates; evaluation=0; P/R=null; C1=false; C2=false
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1439 passed, 22 skipped in 256.11s (0:04:16)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`7b2b780a3d2cdab14e4c4fa9993bff84e599bb51`；相关未提交路径：427 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：User explicitly authorized one ChatAnywhere gpt-5.4-nano synthetic call with ceilings 1 call/13000 tokens/0.07 CA and prices 1.4/8.75 CA per million. Strict transport preflight passed and request SHA was 85ef4b632ddeba1e15e4309c3859302b1ae736965dce92f7b7671f7387b67cff; no downgrade. Original failure/raw response preserved. RWI-0027 corrects the original failure receipt's zero-usage accounting via a hash-bound no-overwrite correction and changes future accounting order; no API retry. Temporary credential helper and environment key were cleared.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

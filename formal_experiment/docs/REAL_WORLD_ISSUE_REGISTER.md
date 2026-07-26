@@ -52,8 +52,28 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0024 | 2026-07-25 | EStG-150 candidate protocol / C1 | runtime/transport | ChatAnywhere gpt-4o 无 HTTP 响应地断开连接，`RemoteDisconnected` 未进入锁定网络重试分支 | `resolved` | 显式归类为可重试 transport error，始终重发同一 request bytes，并在耗尽时保存 retry reasons/终态类型；17 项聚焦回归；Event 119 |
 | RWI-0025 | 2026-07-26 | EStG-150 candidate protocol / C1 | schema/provider compatibility | canonical v1 的 6 个字符串 const/enum 缺显式 type，且旧模型/DeepSeek envelope 不兼容容易诱发静默降级 | `resolved` | 保留 canonical v1，新增 strict transport adapter v1.1、递归预检和七模型 fail-closed capability allowlist；获授权 gpt-5.6-luna 单条 C1 生成 1 个 canonical-valid candidate，C1=true、C2=false；Event 121 |
 | RWI-0026 | 2026-07-26 | EStG-150 candidate protocol / C2 | preregistration/provenance | C2 的 Pass B 请求内嵌同次运行新产生的 Pass A 输出，因此三条未来真实 Pass B request SHA 不可能在调用前诚实计算；旧 dry-run 还只预检第一条 Pass A | `mitigated` | 六槽位离线预检现全部落盘并锁 SHA；三条 Pass B 明确使用已验证历史 Pass A fixture、仅作 offline envelope preflight，未来真实 SHA 保持 deferred；C2=false、API=0；Event 122 |
+| RWI-0027 | 2026-07-26 | EStG-150 candidate protocol / C1 | accounting/provenance | gpt-5.4-nano 返回可计费 usage 后 candidate exact-span 校验失败；旧 runner 在校验后才提取 usage，使 failure receipt 错记 0 tokens/cost | `resolved` | 原 failure/raw response 不改写；新增 hash-bound accounting correction 恢复 1167+1789=2956 tokens、0.01728755 CA；runner 改为先计 usage 再校验，回归覆盖 invalid candidate；无 API 重跑，C1/C2=false；Event 123 |
 
 ## 3. 详细记录
+
+### RWI-0027 — canonical-invalid provider response 的 usage 未进入失败收据
+
+- **首次发现**：2026-07-26 ChatAnywhere `gpt-5.4-nano` 单条 C1 runtime。
+- **阶段/范围**：EStG-150 canonical external runner 的 provider-response accounting；不改变
+  schema、prompt、request bytes、candidate validator 或阶段分流。
+- **现象**：provider 返回 HTTP 成功、`finish_reason=stop`、1167 input / 1789 output tokens，
+  但候选把 57 字符翻译的 `clause_span.end` 写成 58，canonical validator 正确拒绝。旧 runner
+  在 candidate validation 后才提取 usage，因此 `failure.json` 写成 0 tokens、0 cost。
+- **风险**：真实调用可能在候选无效时被误报为无 token/无费用，破坏预算与失败 provenance；
+  不能通过覆盖原 failure 或重跑模型来掩盖。
+- **处置**：保留原 preregistration/request/raw response/failure 的原字节；新增
+  `accounting_correction.json`，绑定三份原证据 SHA，并从 raw response 恢复 2956 total tokens、
+  0.01728755 CA。runner 现在在保存响应后先解析 envelope/usage、累计 token/cost 并执行硬上限，
+  然后才解析和验证 candidate；失败收据同时保留 provider model/response ID/response SHA。
+- **验证**：新增 mocked canonical-invalid response 回归，要求 failure receipt 即使 0 candidates
+  仍保存 provider usage/cost；candidate/transport 聚焦回归与完整审计通过后记录 Event 123。
+- **边界**：仅 1 次获授权内容调用、0 retry；未修复模型输出、未重跑 API、未评价，P/R=null，
+  C1=false、C2=false；relay 模型身份仍未独立验证。
 
 ### RWI-0026 — C2 Pass B 的真实请求 SHA 依赖尚未产生的 Pass A 输出
 

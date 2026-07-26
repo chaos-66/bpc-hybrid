@@ -33,6 +33,7 @@ from formal_experiment.estg150_candidate_protocol import (  # noqa: E402
     build_semantic_request,
     canonical_json_bytes,
     extract_provider_response,
+    extract_provider_response_envelope,
     generate_c0_lock_payload,
     load_json_bytes,
     load_protocol_assets,
@@ -714,6 +715,7 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
     active_prepared: Any = first_prepared
     active_transport_request_sha256: str | None = None
     active_local_canonical_validation: dict[str, Any] | None = None
+    active_provider_metadata: dict[str, Any] | None = None
     active_credential_echo_detected = False
 
     try:
@@ -761,6 +763,7 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
                 active_prepared = prepared
                 active_transport_request_sha256 = request_sha256
                 active_local_canonical_validation = None
+                active_provider_metadata = None
                 active_credential_echo_detected = False
                 write_bytes_no_overwrite(run_dir / "requests" / f"{stem}.semantic.json", semantic_bytes)
                 write_bytes_no_overwrite(run_dir / "requests" / f"{stem}.transport.json", request_bytes)
@@ -779,6 +782,22 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
                     active_credential_echo_detected = True
                     raise ProtocolError("provider response echoed the API credential; raw response archive refused")
                 write_bytes_no_overwrite(run_dir / "responses" / f"{stem}.json", response_bytes)
+                _response, _content, active_provider_metadata = extract_provider_response_envelope(
+                    response_bytes, adapter=adapter
+                )
+                cost = actual_cost(
+                    active_provider_metadata["input_tokens"],
+                    active_provider_metadata["output_tokens"],
+                    args,
+                )
+                totals["input_tokens"] += active_provider_metadata["input_tokens"]
+                totals["output_tokens"] += active_provider_metadata["output_tokens"]
+                usage_response_count += 1
+                total_cost += cost
+                if totals["input_tokens"] + totals["output_tokens"] > args.max_total_tokens:
+                    raise ProtocolError("provider-reported usage exceeds authorized token ceiling")
+                if total_cost > args.max_cost:
+                    raise ProtocolError("provider-reported usage exceeds authorized cost ceiling")
                 candidate, metadata = extract_provider_response(
                     response_bytes,
                     adapter=adapter,
@@ -794,13 +813,6 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
                     "checks": metadata["validation"],
                 }
                 canonical_validation_passes += 1
-                cost = actual_cost(metadata["input_tokens"], metadata["output_tokens"], args)
-                totals["input_tokens"] += metadata["input_tokens"]
-                totals["output_tokens"] += metadata["output_tokens"]
-                usage_response_count += 1
-                total_cost += cost
-                if total_cost > args.max_cost:
-                    raise ProtocolError("provider-reported usage exceeds authorized cost ceiling")
                 append_jsonl(
                     manifest_path,
                     {
@@ -932,6 +944,18 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
         failure_error = str(exc)
         if api_key:
             failure_error = failure_error.replace(api_key, "***")
+        provider_response_receipt = {}
+        if active_provider_metadata is not None:
+            provider_response_receipt = {
+                key: active_provider_metadata[key]
+                for key in (
+                    "provider_reported_model",
+                    "provider_response_id",
+                    "provider_identity_attestation",
+                    "finish_reason",
+                    "response_sha256",
+                )
+            }
         failure = {
             "schema_version": "estg150_candidate_run_failure@1.1.0",
             "run_id": args.run_id,
@@ -942,6 +966,7 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
             "status": "protocol_incompatible" if isinstance(exc, ProtocolIncompatible) else "failed_closed",
             "error_type": type(exc).__name__,
             "error": failure_error[:1200],
+            **provider_response_receipt,
             **failure_provenance,
             "transport_request_sha256s": transport_request_sha256s,
             "request_count": totals["requests"],

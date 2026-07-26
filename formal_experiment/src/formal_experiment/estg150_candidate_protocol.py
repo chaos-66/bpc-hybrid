@@ -511,14 +511,16 @@ def require_inside_clause(start: int, end: int, clause_start: int, clause_end: i
         raise CandidateValidationError(f"{path} is outside its clause_span")
 
 
-def extract_provider_response(
+def extract_provider_response_envelope(
     response_bytes: bytes,
     *,
     adapter: ProviderAdapter,
-    expected_sample_id: str,
-    frozen_candidate_text_en: str,
-    schema: dict[str, Any],
-) -> tuple[dict[str, Any], dict[str, Any]]:
+) -> tuple[dict[str, Any], str, dict[str, Any]]:
+    """Parse provider envelope and usage before candidate validation.
+
+    Provider usage is billable transport evidence even when the structured
+    candidate later fails the canonical validator.
+    """
     try:
         response = json.loads(response_bytes.decode("utf-8"))
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
@@ -535,18 +537,6 @@ def extract_provider_response(
         raise ProtocolIncompatible(f"provider finish_reason is {finish_reason!r}, not 'stop'")
     if not isinstance(content, str):
         raise ProtocolIncompatible("provider structured-output content is not a JSON string")
-    try:
-        candidate = json.loads(content)
-    except json.JSONDecodeError as exc:
-        raise CandidateValidationError("structured-output content is invalid JSON; repair is forbidden") from exc
-    if not isinstance(candidate, dict):
-        raise CandidateValidationError("structured-output content is not an object")
-    validation = validate_candidate(
-        candidate,
-        expected_sample_id=expected_sample_id,
-        frozen_candidate_text_en=frozen_candidate_text_en,
-        schema=schema,
-    )
     usage = response.get("usage")
     if not isinstance(usage, dict):
         raise ProtocolIncompatible("provider response omitted token usage")
@@ -562,8 +552,34 @@ def extract_provider_response(
         "input_tokens": input_tokens,
         "output_tokens": output_tokens,
         "response_sha256": sha256_bytes(response_bytes),
-        "validation": validation,
     }
+    return response, content, metadata
+
+
+def extract_provider_response(
+    response_bytes: bytes,
+    *,
+    adapter: ProviderAdapter,
+    expected_sample_id: str,
+    frozen_candidate_text_en: str,
+    schema: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    _response, content, metadata = extract_provider_response_envelope(
+        response_bytes, adapter=adapter
+    )
+    try:
+        candidate = json.loads(content)
+    except json.JSONDecodeError as exc:
+        raise CandidateValidationError("structured-output content is invalid JSON; repair is forbidden") from exc
+    if not isinstance(candidate, dict):
+        raise CandidateValidationError("structured-output content is not an object")
+    validation = validate_candidate(
+        candidate,
+        expected_sample_id=expected_sample_id,
+        frozen_candidate_text_en=frozen_candidate_text_en,
+        schema=schema,
+    )
+    metadata["validation"] = validation
     return candidate, metadata
 
 
