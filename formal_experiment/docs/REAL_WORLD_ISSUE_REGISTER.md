@@ -54,7 +54,7 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0026 | 2026-07-26 | EStG-150 candidate protocol / C2 | preregistration/provenance | C2 的 Pass B 请求内嵌同次运行新产生的 Pass A 输出，因此三条未来真实 Pass B request SHA 不可能在调用前诚实计算；旧 dry-run 还只预检第一条 Pass A | `mitigated` | 六槽位离线预检现全部落盘并锁 SHA；三条 Pass B 明确使用已验证历史 Pass A fixture、仅作 offline envelope preflight，未来真实 SHA 保持 deferred；C2=false、API=0；Event 122 |
 | RWI-0027 | 2026-07-26 | EStG-150 candidate protocol / C1–C2 | accounting/provenance | 可计费 response 在 canonical candidate 或 finish-reason 校验失败时，usage 可能未进入 failure receipt | `resolved` | 两份原 failure/raw response 均不改写；SHA-bound corrections 分别恢复 C1 的 2956 tokens/0.01728755 CA 与 C2 的 7839 tokens/0.282373 CA；runner 先计 envelope usage，再检查 finish reason/candidate；mocked invalid/length 回归；Events 123–124 |
 | RWI-0028 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/validation | GPT-4o Pass B 把逐字不变的译文标为 `edited`；runner 又错误地用原始英文而非同次 Pass A 文本校验 Pass B translation decision | `mitigated` | v1.5 增加 decision/text 生成前自检并让 Pass B 校验绑定同次 Pass A；旧响应仍 fail closed，57 项聚焦回归和六槽位离线 preflight 通过；真实 runtime 待新授权；Event 134 |
-| RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o 对重复 modality cue 持续给出不可直接切片的错误坐标；v1.6 的生成前短语扩展指令未被稳定遵守 | `open` | v1.6 真实 C2 在 3/6 calls 后再次因 clause 内两个 `may` fail closed；样本 0 Pass A/B 已验证但运行未冻结 candidates，剩余三条未调用；等待不依赖模型遵循自检的版本化确定性修复；Events 135–137 |
+| RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o 对重复 modality cue 持续给出不可直接切片的错误坐标；v1.6 的生成前短语扩展指令未被稳定遵守 | `mitigated` | v1.7 仅在重复精确文本存在唯一最近 model-supplied start 且偏差≤8 时校正坐标，并增加逐 clause 构造示例；并列/超限/零匹配仍 fail closed，v1.6 非逐字 condition 仍被拒绝；62 项回归和六槽位离线 preflight 通过；真实 runtime 待新授权；Events 135–138 |
 
 ## 3. 详细记录
 
@@ -93,9 +93,22 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
   0.381150 CA；2 个已通过请求、`valid_candidate_count=1`，但运行没有生成 `candidates.json` 或
   成功 manifest，因此候选集合未冻结；其余三条未调用。evaluation=0、P/R=null，
   `request_downgrade_applied=false`，Layer D/E/Gold 未读取。
-- **状态**：`open`。v1.6 真实 runtime 已证伪“仅靠输出自检即可稳定解决”的假设；必须形成新的
-  版本化、可离线回放且不猜测语义的确定性坐标边界。本次 v1.6 授权不能转用于新版本。
-- **对应事件**：Events 135–137。
+- **v1.7 离线修复**：新增
+  `deterministic_exact_text_unique_or_bounded_nearest_start_reanchor`。仅当 span 文本在父范围内有
+  多个精确匹配、model-supplied `start` 为整数、最近匹配唯一且起点偏差不超过 8 个字符时，
+  才只改 `start/end`；并列、偏差超过 8、零匹配或缺少整数起点均 fail closed。receipt 记录候选数、
+  选择方法和偏差。transport-only guard 同时增加逐 clause 构造顺序与重复 `may` 示例，明确把非逐字、
+  clause 外或不可定位的可选字段留空并报告 ambiguity；canonical prompt/schema/serializer 不变。
+- **v1.7 验证**：受限单元夹具可把两个 `may` 中距模型起点 3 字符的唯一最近项校正；v1.5 raw
+  response 的第二个重复 `shall` 因最近偏差 30>8 仍 fail closed；v1.6 raw response 的重复 `may`
+  可越过该坐标问题，但随后仍因 `clauses[2].conditions[0]` 零精确匹配而 fail closed，证明 v1.7
+  没有删除 condition、模糊对齐或进行语义修补。62 项聚焦回归通过；
+  `c2_relay_gpt4o_portable_v1_7_pilot3_dry_run_v1` 的 6/6 strict preflight 通过，
+  `request_downgrade_applied=false`，API/key/network=0、billed tokens/cost=0、C2=false、
+  evaluation=0、P/R=null，Layer D/E/Gold 未读取。
+- **状态**：`mitigated`。代码和离线请求边界已验证，但真实 GPT-4o 是否能完成 3×2 C2 仍需新的
+  明确授权与不可覆盖 live run ID；v1.6 授权不能转用，离线证据不足以标为 `resolved`。
+- **对应事件**：Events 135–138。
 
 ### RWI-0028 — C2 Pass B translation decision 与实际候选文本不一致
 

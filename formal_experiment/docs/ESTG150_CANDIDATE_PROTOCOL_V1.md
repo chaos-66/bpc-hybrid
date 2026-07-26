@@ -660,3 +660,57 @@ manifest, so the C2 candidate set is not frozen. The remaining three calls were
 not made. Evaluation did not start, P/R remain null, and Layer D, Layer E, and
 Gold were not read. The v1.6 authorization is exhausted by this immutable run
 and cannot authorize a future adapter version.
+
+### 7.17 GPT-4o v1.7 bounded nearest-start offline mitigation
+
+Portable adapter v1.7 adds a deterministic response-coordinate mode named
+`deterministic_exact_text_unique_or_bounded_nearest_start_reanchor`. When an
+unchanged span text has more than one exact match inside its parent, coordinates
+may be changed only if the model supplied an integer `start`, exactly one match
+has the smallest start displacement, and that displacement is no more than
+eight characters. Ties, larger displacements, zero matches, and missing integer
+starts fail closed. The receipt records candidate-match count, selection method,
+and displacement. No span text, normalized value, label, ID, relation, or
+collection membership is changed.
+
+The v1.7 transport-only output guard also gives an exact clause construction
+order and a duplicated-`may` example. It directs the model to omit optional
+semantic spans that are paraphrased, outside their clause, or unavailable as a
+contiguous exact substring, and to report the ambiguity instead. This does not
+authorize local deletion or fuzzy repair: replaying the v1.6 raw response gets
+past its close duplicated `may` coordinate but still fails closed on the later
+non-verbatim `clauses[2].conditions[0]`. Replaying v1.5 with the new mode still
+fails when its second duplicated `shall` is 30 characters from the nearest
+candidate, beyond the eight-character bound.
+
+Canonical prompt assets, canonical schema, serializer, and transport schema
+remain unchanged. Their hashes remain
+`fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9`,
+`d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef`,
+and `ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7`.
+Adapter v1.7 config SHA is
+`52313835e630d7afee466b95b1e70350bc0181ee0e7eddabbefbfaab433e9ec2`;
+guard SHA is
+`9afd5ccbf457ec737f9815d21ab3224d06683b370302adcca69febc8a9f5d7c7`.
+B0 and D1/H1 are unchanged, while historical v1.6 remains loadable.
+
+The no-overwrite offline preparation
+`c2_relay_gpt4o_portable_v1_7_pilot3_dry_run_v1` covers indices 0, 1, and 2,
+each with Pass A and Pass B. All six strict transport preflights passed with
+`request_downgrade_applied=false`. Frozen transport request SHA-256 values are:
+
+1. `d6a6f0a94755b7094a3f51809057955ce919b7c05e72f86dc5a757dbbb59b986`
+2. `087eaf07d45244f413605c5c0eb7c0dd941bd4618742af079feb0b48fb24a7fd`
+3. `98db2cde66b93d409f978e2ba8c87c333b5da6e67a2e446e73e1dcd98ea4248b`
+4. `e260d2ab0e873520ff9eec1f962bcecd1de6848163a77885f994810108d9ec4a`
+5. `246948c0051a77bb3d54c27ddca97c2d24340802929d87a349a63117a70976b5`
+6. `f1f1408e028ce4cb0789e187a9c38327017fac94bd86be6d8377b0a0d2d00427`
+
+Pass A hashes are exact for the locked inputs/model/profile; offline Pass B
+hashes remain historical-fixture-only and live Pass B hashes remain deferred
+until each live Pass A validates. The offline budget remains six calls, 78,000
+tokens, and 3.60 CA at 17.5/70 CA per million input/output tokens; combined
+worst-case guard cost is 3.4125 CA. Real API calls=0, billed tokens=0, billed
+cost=0, C2 did not start, evaluation=0, and P/R remain null. Layer D, Layer E,
+and Gold were not read. A real v1.7 run requires a new explicit authorization
+and no-overwrite live run ID.

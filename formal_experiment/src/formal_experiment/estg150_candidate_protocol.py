@@ -43,6 +43,10 @@ NORMATIVE_CUE_RE = re.compile(
 )
 RESPONSE_COORDINATE_MODE_REJECT_INVALID = "reject_invalid"
 RESPONSE_COORDINATE_MODE_UNIQUE_EXACT = "deterministic_exact_text_unique_reanchor"
+RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST = (
+    "deterministic_exact_text_unique_or_bounded_nearest_start_reanchor"
+)
+MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT = 8
 
 
 class ProtocolError(RuntimeError):
@@ -527,6 +531,7 @@ def canonicalize_response_coordinates(
     if mode not in {
         RESPONSE_COORDINATE_MODE_REJECT_INVALID,
         RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
+        RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST,
     }:
         raise ProtocolError(f"unsupported response coordinate mode: {mode!r}")
 
@@ -587,17 +592,43 @@ def canonicalize_response_coordinates(
             if match_end <= upper:
                 matches.append((cursor, match_end))
             cursor = source.find(text, cursor + 1, upper)
-        if len(matches) != 1:
+        selection_method = "unique_parent_scoped_text_match"
+        start_displacement: int | None = None
+        if len(matches) == 1:
+            new_start, new_end = matches[0]
+        elif len(matches) > 1 and mode == RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST:
+            if not isinstance(start, int) or isinstance(start, bool):
+                raise CandidateValidationError(
+                    f"{path} repeated exact text requires an integer model-supplied start"
+                )
+            ranked = [(abs(match_start - start), match_start, match_end) for match_start, match_end in matches]
+            minimum_displacement = min(item[0] for item in ranked)
+            nearest = [item for item in ranked if item[0] == minimum_displacement]
+            if (
+                len(nearest) != 1
+                or minimum_displacement > MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT
+            ):
+                raise CandidateValidationError(
+                    f"{path} repeated exact text has no unique nearest start within "
+                    f"{MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT} characters; "
+                    f"found {len(matches)} matches, nearest_count={len(nearest)}, "
+                    f"nearest_displacement={minimum_displacement}"
+                )
+            start_displacement, new_start, new_end = nearest[0]
+            selection_method = "unique_nearest_model_supplied_start_within_bound"
+        else:
             raise CandidateValidationError(
                 f"{path} exact coordinate canonicalization requires one match inside its parent; "
                 f"found {len(matches)}"
             )
-        new_start, new_end = matches[0]
         changes.append(
             {
                 "path": path,
                 "from": {"start": start, "end": end},
                 "to": {"start": new_start, "end": new_end},
+                "candidate_match_count": len(matches),
+                "selection_method": selection_method,
+                "start_displacement": start_displacement,
             }
         )
         span["start"] = new_start
@@ -685,7 +716,16 @@ def canonicalize_response_coordinates(
         "changed_span_count": len(changes),
         "changes": changes,
         "semantic_content_unchanged": True,
-        "ambiguous_match_policy": "fail_closed",
+        "ambiguous_match_policy": (
+            "unique_nearest_model_supplied_start_within_8_else_fail_closed"
+            if mode == RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
+            else "fail_closed"
+        ),
+        "maximum_ambiguous_start_displacement": (
+            MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT
+            if mode == RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
+            else None
+        ),
         "raw_candidate_sha256": raw_sha256,
         "canonicalized_candidate_sha256": canonicalized_sha256,
     }

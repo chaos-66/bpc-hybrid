@@ -1620,3 +1620,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Failing request SHA 0a5f108d561040ef7e9873817e40be0c4aba1b3a35fe22616a1d60d7c92cf835 matched the frozen v1.6 sample-1 Pass-A offline request. The live sample-0 Pass-B SHA deef43fbd7f86dd49855cbb3231aed8ab4c96ad5190a67e61374e58ee70435f9 was recorded after its validated live Pass A. Provider returned model gpt-4o with finish_reason stop. The v1.6 duplicate-cue output instruction was not reliably followed; no response repair, content retry, or guessed occurrence selection was applied. request_downgrade_applied=false. Layer D, Layer E, and Gold were not read; no evaluation was run. Relay backend identity remains unverified. The v1.6 authorization is exhausted and cannot be transferred to a future adapter version.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T16:38:08.537250+00:00 - Add EStG-150 portable adapter v1.7 bounded nearest-start coordinate policy and freeze GPT-4o C2 offline preparation
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1459 passed, 22 skipped in 282.30s (0:04:42)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`744cea5c2ae732ea5f2110f0a2d60ba2cd4c15c8`；相关未提交路径：437 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Minimal v1.7 response-boundary change: repeated exact span text may be coordinate-corrected only when the model supplied an integer start, the nearest parent-scoped match is unique, and start displacement is <=8 characters; ties, larger displacement, zero matches, and missing integer starts fail closed. Only start/end may change and receipts record candidate count, selection method, and displacement. The transport-only guard adds exact clause construction order and a duplicated-may example; canonical prompt assets, schema, serializer, transport schema, B0, and D1/H1 are unchanged. Historical v1.6 remains loadable. Replaying v1.5 still fails when nearest displacement is 30>8. Replaying v1.6 gets past the close duplicated may but still rejects the non-verbatim clause-2 condition with zero matches, proving no semantic deletion/fuzzy repair. Focused tests: 62 passed. Full audit: 1459 passed, 22 skipped, Integrity true, Errors 0. Offline run c2_relay_gpt4o_portable_v1_7_pilot3_dry_run_v1 froze six strict preflight slots; all passed, request_downgrade_applied=false, budget 6/78000/3.60 CA at 17.5/70 CA per million, worst guard cost 3.4125. Adapter config SHA 52313835e630d7afee466b95b1e70350bc0181ee0e7eddabbefbfaab433e9ec2; guard SHA 9afd5ccbf457ec737f9815d21ab3224d06683b370302adcca69febc8a9f5d7c7. Real API not called, billed tokens=0, billed cost=0, C2 not started, evaluation=0, P/R null, Layer D/E/Gold not read. Any real v1.7 run requires new explicit authorization and a new no-overwrite run ID.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
