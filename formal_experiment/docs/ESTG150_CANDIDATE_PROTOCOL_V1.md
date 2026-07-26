@@ -558,3 +558,28 @@ combined token/output reservation cost is 3.4125 CA. No credential, network, or
 real API was used; billed tokens and cost are zero, C2 did not start, and no
 evaluation occurred. A real v1.5 run requires a new explicit authorization and
 a new no-overwrite run ID.
+
+### 7.14 GPT-4o v1.5 C2 ambiguous-evidence fail-closed runtime
+
+The newly authorized v1.5 run
+`c2_relay_gpt4o_portable_v1_5_pilot3_live_v1` matched the first frozen offline
+request SHA-256
+`a61b4041917dfb92b71a1475f0090cb4147130ff938dbe74f14bb588f2575c97`.
+ChatAnywhere reported `gpt-4o`, `finish_reason=stop`, 1,661 input tokens, and
+1,128 output tokens. At the locked 17.5/70 CA-per-million prices, the single
+call cost 0.1080275 CA; retry count was zero.
+
+The v1.5 translation-decision guard addressed the section 7.12 contradiction
+for this response: the unchanged translation was correctly labelled
+`accepted`. A different coordinate ambiguity then failed closed. GPT-4o merged
+two normative statements containing `shall` into one clause, used the single
+word `shall` as `modality.evidence[0].text`, and supplied incorrect coordinates.
+That evidence text occurs twice inside its parent clause, so the locked
+`deterministic_exact_text_unique_reanchor` policy found two matches and could
+not choose one without guessing which normative statement the model intended.
+
+The response was not repaired or retried. The remaining five calls were not
+made, zero candidates were frozen, C2 started but did not complete, and no
+evaluation occurred; P/R remain null. Layer D, Layer E, and Gold were not read.
+This runtime authorization is exhausted by the immutable failed run and cannot
+be transferred to a future adapter version.

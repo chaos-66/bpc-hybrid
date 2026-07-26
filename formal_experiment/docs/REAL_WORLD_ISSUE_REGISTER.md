@@ -54,8 +54,29 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0026 | 2026-07-26 | EStG-150 candidate protocol / C2 | preregistration/provenance | C2 的 Pass B 请求内嵌同次运行新产生的 Pass A 输出，因此三条未来真实 Pass B request SHA 不可能在调用前诚实计算；旧 dry-run 还只预检第一条 Pass A | `mitigated` | 六槽位离线预检现全部落盘并锁 SHA；三条 Pass B 明确使用已验证历史 Pass A fixture、仅作 offline envelope preflight，未来真实 SHA 保持 deferred；C2=false、API=0；Event 122 |
 | RWI-0027 | 2026-07-26 | EStG-150 candidate protocol / C1–C2 | accounting/provenance | 可计费 response 在 canonical candidate 或 finish-reason 校验失败时，usage 可能未进入 failure receipt | `resolved` | 两份原 failure/raw response 均不改写；SHA-bound corrections 分别恢复 C1 的 2956 tokens/0.01728755 CA 与 C2 的 7839 tokens/0.282373 CA；runner 先计 envelope usage，再检查 finish reason/candidate；mocked invalid/length 回归；Events 123–124 |
 | RWI-0028 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/validation | GPT-4o Pass B 把逐字不变的译文标为 `edited`；runner 又错误地用原始英文而非同次 Pass A 文本校验 Pass B translation decision | `mitigated` | v1.5 增加 decision/text 生成前自检并让 Pass B 校验绑定同次 Pass A；旧响应仍 fail closed，57 项聚焦回归和六槽位离线 preflight 通过；真实 runtime 待新授权；Event 134 |
+| RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o v1.5 把两处 `shall` 合入同一 clause，却用重复的单词 `shall` 作 modality evidence 并给出错误坐标，唯一精确重锚无法判定目标 | `open` | v1.5 首条 Pass A 在 1/6 calls 后 fail closed；0 retry、无候选/评价/修补；原响应与失败收据冻结，等待版本化离线修复；Event 135 |
 
 ## 3. 详细记录
+
+### RWI-0029 — 重复 modality cue 使错误坐标无法唯一重锚
+
+- **首次发现**：2026-07-26 ChatAnywhere `gpt-4o` v1.5 C2 runtime。
+- **阶段/范围**：EStG-150 canonical external candidate protocol 的 Pass A modality evidence
+  坐标与 portable response-coordinate boundary；不修改 canonical schema、prompt 或 Gold。
+- **观察事实**：样本 0 Pass A 将两个分别包含 `shall` 的规范句合并为同一个 clause，随后把
+  `modality.evidence[0].text` 仅写成 `shall`，并给出不匹配的坐标 12–17。该父 clause 内恰有
+  两个逐字相同的 `shall`，因此 v1.3 起冻结的 `deterministic_exact_text_unique_reanchor` 找到
+  两个候选位置，无法在不猜测模型意图的前提下选择一个。
+- **影响**：JSON 结构、translation decision 与 evidence 文本本身可以合法，但错误坐标加重复
+  短文本使现有 coordinate-only 规范化无法安全完成。任意选择第一处/最近处都可能把 evidence
+  绑定到错误规范，构成未披露的语义修补。
+- **当前处置**：v1.5 runner 正确 fail closed，没有选择任一匹配、没有修改响应、没有内容重试，
+  其余五条未调用。原 preregistration/request/response/failure 均冻结且不可覆盖。
+- **运行证据**：1 content call、0 retry；provider 报告 `gpt-4o`、`finish_reason=stop`；
+  1,661 input + 1,128 output = 2,789 tokens，0.1080275 CA；0 valid candidates，C2 started
+  但未完成，evaluation=0、P/R=null，Layer D/E/Gold 未读取。
+- **状态**：`open`。必须先形成新的版本化生成边界并离线验证；本次授权不能转用于新版本。
+- **对应事件**：Event 135。
 
 ### RWI-0028 — C2 Pass B translation decision 与实际候选文本不一致
 
