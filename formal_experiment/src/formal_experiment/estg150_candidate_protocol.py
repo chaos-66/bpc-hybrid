@@ -516,10 +516,10 @@ def extract_provider_response_envelope(
     *,
     adapter: ProviderAdapter,
 ) -> tuple[dict[str, Any], str, dict[str, Any]]:
-    """Parse provider envelope and usage before candidate validation.
+    """Parse provider envelope and usage before completion/candidate validation.
 
     Provider usage is billable transport evidence even when the structured
-    candidate later fails the canonical validator.
+    completion later fails the finish-reason or canonical validator.
     """
     try:
         response = json.loads(response_bytes.decode("utf-8"))
@@ -533,8 +533,6 @@ def extract_provider_response_envelope(
         finish_reason = choice["finish_reason"]
     except (KeyError, IndexError, TypeError) as exc:
         raise ProtocolIncompatible("provider response lacks choices[0].message.content") from exc
-    if finish_reason != "stop":
-        raise ProtocolIncompatible(f"provider finish_reason is {finish_reason!r}, not 'stop'")
     if not isinstance(content, str):
         raise ProtocolIncompatible("provider structured-output content is not a JSON string")
     usage = response.get("usage")
@@ -567,6 +565,10 @@ def extract_provider_response(
     _response, content, metadata = extract_provider_response_envelope(
         response_bytes, adapter=adapter
     )
+    if metadata["finish_reason"] != "stop":
+        raise ProtocolIncompatible(
+            f"provider finish_reason is {metadata['finish_reason']!r}, not 'stop'"
+        )
     try:
         candidate = json.loads(content)
     except json.JSONDecodeError as exc:

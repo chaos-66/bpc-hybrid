@@ -1,0 +1,57 @@
+{
+  "schema_version": "estg150_c2_accounting_correction@1.0.0",
+  "run_id": "c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1",
+  "status": "immutable_failure_receipt_accounting_corrected_without_api_retry",
+  "reason": "The original failure receipt rejected finish_reason=length before returning provider usage to the runner, so it recorded zero tokens and cost even though the archived provider response contains usage.",
+  "original_artifacts_preserved": true,
+  "original_failure_path": "data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/failure.json",
+  "original_failure_sha256": "77807ef1edd5701c94be03ee986c1b798549262e9d57215a63b77b33240ea06b",
+  "preregistration_sha256": "68fd359f9f839114809399d3f3b955e64adf0697e443b99c349628dd4278757a",
+  "raw_response_path": "data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/responses/001_estg_000080_pass_a.json",
+  "raw_response_sha256": "6b765b68b3b882e722f9be9e8a856bf9d6f3973cb320654ab81c1c6f91e19aa8",
+  "transport_request_sha256": "9add2487dd36233b3e258ae451a27cebaa5de6b10de70a18b08ef7d527960aac",
+  "provider_reported_model": "gpt-5.6-luna-2026-07-09",
+  "provider_response_id": "chatcmpl-E5o0T53IaaN4W7Z9za17EBao1KtLt",
+  "provider_identity_attestation": "unverified_relay_report",
+  "finish_reason": "length",
+  "usage": {
+    "input_tokens": 1339,
+    "output_tokens": 6500,
+    "reasoning_tokens": 6500,
+    "total_tokens": 7839,
+    "provider_reported_tokens_available": true
+  },
+  "pricing": {
+    "input_price_per_million": "7",
+    "output_price_per_million": "42",
+    "recorded_cost_from_provider_usage": "0.282373",
+    "cost_currency": "CA",
+    "authorized_maximum_cost": "1.92",
+    "authorized_maximum_total_tokens": 78000,
+    "within_authorized_limits": true
+  },
+  "completion_validation": {
+    "passed": false,
+    "error_type": "ProtocolIncompatible",
+    "error": "provider finish_reason is 'length', not 'stop'",
+    "content_characters": 0,
+    "valid_candidate_count": 0
+  },
+  "safety": {
+    "logical_content_calls": 1,
+    "retry_count": 0,
+    "api_retried_for_correction": false,
+    "credential_persisted": false,
+    "credential_echo_detected": false,
+    "layer_d_read_during_generation": false,
+    "layer_e_read_during_generation": false,
+    "gold_visible_during_generation": false,
+    "evaluation_count": 0,
+    "precision": null,
+    "recall": null,
+    "c2_started": true,
+    "c2_completed": false,
+    "c3_started": false,
+    "c4_started": false
+  }
+}

@@ -52,7 +52,7 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0024 | 2026-07-25 | EStG-150 candidate protocol / C1 | runtime/transport | ChatAnywhere gpt-4o 无 HTTP 响应地断开连接，`RemoteDisconnected` 未进入锁定网络重试分支 | `resolved` | 显式归类为可重试 transport error，始终重发同一 request bytes，并在耗尽时保存 retry reasons/终态类型；17 项聚焦回归；Event 119 |
 | RWI-0025 | 2026-07-26 | EStG-150 candidate protocol / C1 | schema/provider compatibility | canonical v1 的 6 个字符串 const/enum 缺显式 type，且旧模型/DeepSeek envelope 不兼容容易诱发静默降级 | `resolved` | 保留 canonical v1，新增 strict transport adapter v1.1、递归预检和七模型 fail-closed capability allowlist；获授权 gpt-5.6-luna 单条 C1 生成 1 个 canonical-valid candidate，C1=true、C2=false；Event 121 |
 | RWI-0026 | 2026-07-26 | EStG-150 candidate protocol / C2 | preregistration/provenance | C2 的 Pass B 请求内嵌同次运行新产生的 Pass A 输出，因此三条未来真实 Pass B request SHA 不可能在调用前诚实计算；旧 dry-run 还只预检第一条 Pass A | `mitigated` | 六槽位离线预检现全部落盘并锁 SHA；三条 Pass B 明确使用已验证历史 Pass A fixture、仅作 offline envelope preflight，未来真实 SHA 保持 deferred；C2=false、API=0；Event 122 |
-| RWI-0027 | 2026-07-26 | EStG-150 candidate protocol / C1 | accounting/provenance | gpt-5.4-nano 返回可计费 usage 后 candidate exact-span 校验失败；旧 runner 在校验后才提取 usage，使 failure receipt 错记 0 tokens/cost | `resolved` | 原 failure/raw response 不改写；新增 hash-bound accounting correction 恢复 1167+1789=2956 tokens、0.01728755 CA；runner 改为先计 usage 再校验，回归覆盖 invalid candidate；无 API 重跑，C1/C2=false；Event 123 |
+| RWI-0027 | 2026-07-26 | EStG-150 candidate protocol / C1–C2 | accounting/provenance | 可计费 response 在 canonical candidate 或 finish-reason 校验失败时，usage 可能未进入 failure receipt | `resolved` | 两份原 failure/raw response 均不改写；SHA-bound corrections 分别恢复 C1 的 2956 tokens/0.01728755 CA 与 C2 的 7839 tokens/0.282373 CA；runner 先计 envelope usage，再检查 finish reason/candidate；mocked invalid/length 回归；Events 123–124 |
 
 ## 3. 详细记录
 
@@ -74,6 +74,20 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
   仍保存 provider usage/cost；candidate/transport 聚焦回归与完整审计通过后记录 Event 123。
 - **边界**：仅 1 次获授权内容调用、0 retry；未修复模型输出、未重跑 API、未评价，P/R=null，
   C1=false、C2=false；relay 模型身份仍未独立验证。
+- **再次发现与解决**：同日获独立授权的 ChatAnywhere `gpt-5.6-luna` C2 在首条 Pass A
+  返回 `finish_reason=length`、空正文和 1339 input + 6500 output/reasoning tokens。前一次修复虽已
+  把 envelope 提取移到 canonical candidate validation 之前，但 envelope 自己仍在返回 usage 前
+  拒绝非 `stop` completion，导致新 `failure.json` 再次错记 0。原失败证据保持不改写；新的
+  `accounting_correction.json` 绑定 failure/preregistration/raw response/request SHA，恢复总计
+  7839 tokens 与 0.282373 CA。envelope 现在只解析并返回 billable transport evidence，finish
+  reason 检查移到 candidate extraction；mocked `length` 回归确认 failure receipt 会记录 model、
+  response ID、finish reason、response SHA、usage 与费用。
+- **第二次边界**：C2 只发生 1 次内容调用、0 retry；其余五条未调用，无 Pass B/候选/评价，
+  C2 started=true 但未完成，C3/C4=false，P/R=null；没有为修复重跑 API。relay 身份仍未独立验证。
+- **状态历史**：
+  - 2026-07-26：C1 canonical-invalid response 暴露首次记账缺口；解决并记录 Event 123。
+  - 2026-07-26：C2 `finish_reason=length` 暴露 envelope 内仍有同根缺口，RWI 重开；将 finish
+    校验移至 usage 记账之后并补回归，验证后再次转为 `resolved`，记录 Event 124。
 
 ### RWI-0026 — C2 Pass B 的真实请求 SHA 依赖尚未产生的 Pass A 输出
 

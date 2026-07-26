@@ -1410,3 +1410,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：User explicitly authorized one ChatAnywhere gpt-5.4-nano synthetic call with ceilings 1 call/13000 tokens/0.07 CA and prices 1.4/8.75 CA per million. Strict transport preflight passed and request SHA was 85ef4b632ddeba1e15e4309c3859302b1ae736965dce92f7b7671f7387b67cff; no downgrade. Original failure/raw response preserved. RWI-0027 corrects the original failure receipt's zero-usage accounting via a hash-bound no-overwrite correction and changes future accounting order; no API retry. Temporary credential helper and environment key were cleared.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T08:18:40.485156+00:00 - 记录获授权的 ChatAnywhere gpt-5.6-luna C2 首条 Pass A fail-closed 运行及 usage 账务边界修复
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1；阶段=C2；方法=estg150_external_candidate_protocol_relay_gpt56_luna；状态=失败（`failed`）
+- 实际运行命令：`python scripts/run_estg150_candidate_protocol.py --stage c2 --execute-api --confirm-authorized-provider-budget --provider-adapter relay_openai_compatible --model gpt-5.6-luna --endpoint https://api.chatanywhere.tech/v1/chat/completions --run-id c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1 --max-calls 6 --max-total-tokens 78000 --max-cost 1.92 --cost-currency CA --input-price-per-million 7 --output-price-per-million 42 --api-key-env-name ESTG_C2_CHATANYWHERE_API_KEY`
+- manifest：data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/preregistration.json, data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/failure.json, data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/accounting_correction.json
+- 结果摘要：1 logical content call, 0 retry; provider-reported gpt-5.6-luna-2026-07-09 returned finish_reason=length with empty content; 1339 input + 6500 output/reasoning = 7839 tokens; corrected cost 0.282373 CA; 0 valid candidates; remaining five calls not sent; C2 started but incomplete; evaluation_count=0, P/R=null; no C3/C4
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1441 passed, 22 skipped in 263.22s (0:04:23)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`fd505ff55a9bf3c1c06b0eaea5017964793d4fb2`；相关未提交路径：426 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Independent C2 authorization ceilings: 6 content calls, 78000 tokens, 1.92 CA at 7/42 CA per million input/output tokens. Strict transport request SHA 9add2487dd36233b3e258ae451a27cebaa5de6b10de70a18b08ef7d527960aac matched offline preparation; no downgrade. Original failure/preregistration/raw response preserved; hash-bound accounting correction added because the immutable failure receipt recorded zero usage before the finish-reason accounting-order fix. No API retry for correction. Temporary key environment variable cleared. Layer D/E/Gold not read during generation; no evaluation.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -741,6 +741,111 @@ def test_mocked_invalid_candidate_still_records_provider_usage_and_cost(monkeypa
         assert not (run_dir / "candidates.json").exists()
 
 
+def test_mocked_length_completion_still_records_provider_usage_and_cost(monkeypatch) -> None:
+    runner = _load_runner()
+    assets = load_protocol_assets()
+    lock = verify_c0_lock(assets)
+    response = canonical_json_bytes(
+        {
+            "id": "offline-length-response",
+            "model": "offline-length-provider-report",
+            "choices": [{"finish_reason": "length", "message": {"content": ""}}],
+            "usage": {"prompt_tokens": 1339, "completion_tokens": 6500},
+        }
+    )
+    with tempfile.TemporaryDirectory(prefix="estg150_c1_length_usage_", dir=ROOT) as temporary:
+        temporary_root = Path(temporary)
+        config = dict(assets.config)
+        config["output"] = dict(config["output"])
+        config["output"]["root"] = temporary_root.relative_to(ROOT).as_posix()
+        test_assets = candidate_protocol.ProtocolAssets(
+            config, assets.schema, assets.schema_text, assets.prompts, assets.samples
+        )
+        monkeypatch.setattr(runner, "acquire_api_key", lambda env_name: "offline-mock-key")
+        monkeypatch.setattr(
+            runner,
+            "post_identical_request_with_retries",
+            lambda **kwargs: (response, []),
+        )
+        args = argparse.Namespace(
+            stage="c1",
+            provider_adapter="relay_openai_compatible",
+            model="gpt-5.6-luna",
+            endpoint="https://api.chatanywhere.tech/v1/chat/completions",
+            confirm_authorized_provider_budget=True,
+            run_id="offline_mock_length_usage",
+            max_calls=1,
+            max_total_tokens=100_000,
+            max_cost=Decimal("100"),
+            cost_currency="CA",
+            input_price_per_million=Decimal("7"),
+            output_price_per_million=Decimal("42"),
+            api_key_env_name=None,
+            timeout_seconds=17,
+        )
+        with pytest.raises(
+            candidate_protocol.ProtocolIncompatible, match="finish_reason is 'length'"
+        ):
+            runner.execute(args, test_assets, lock)
+        run_dir = temporary_root / args.run_id
+        failure = load_json_bytes(run_dir / "failure.json")
+        assert failure["input_tokens"] == 1339
+        assert failure["output_tokens"] == 6500
+        assert failure["provider_reported_tokens_available"] is True
+        assert failure["total_cost"] == "0.282373"
+        assert failure["provider_reported_model"] == "offline-length-provider-report"
+        assert failure["provider_response_id"] == "offline-length-response"
+        assert failure["finish_reason"] == "length"
+        assert failure["response_sha256"] == sha256_path(
+            run_dir / "responses" / "001_synthetic_c1_utf8_full_extract.json"
+        )
+        assert failure["local_canonical_validation"]["performed"] is False
+        assert failure["valid_candidate_count"] == 0
+        assert not (run_dir / "manifest.json").exists()
+        assert not (run_dir / "candidates.json").exists()
+
+
+def test_c2_length_failure_accounting_correction_is_hash_bound() -> None:
+    run_dir = (
+        ROOT
+        / "data"
+        / "development"
+        / "estg"
+        / "llm_candidate_runs"
+        / "c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1"
+    )
+    correction = load_json_bytes(run_dir / "accounting_correction.json")
+    failure = load_json_bytes(run_dir / "failure.json")
+    assert sha256_path(run_dir / "failure.json") == correction["original_failure_sha256"]
+    assert sha256_path(run_dir / "preregistration.json") == correction["preregistration_sha256"]
+    assert sha256_path(run_dir / "responses" / "001_estg_000080_pass_a.json") == (
+        correction["raw_response_sha256"]
+    )
+    assert sha256_path(run_dir / "requests" / "001_estg_000080_pass_a.transport.json") == (
+        correction["transport_request_sha256"]
+    )
+    assert failure["request_count"] == 1 and failure["retry_count"] == 0
+    assert failure["input_tokens"] == failure["output_tokens"] == 0
+    assert correction["usage"] == {
+        "input_tokens": 1339,
+        "output_tokens": 6500,
+        "reasoning_tokens": 6500,
+        "total_tokens": 7839,
+        "provider_reported_tokens_available": True,
+    }
+    assert correction["pricing"]["recorded_cost_from_provider_usage"] == "0.282373"
+    assert correction["pricing"]["within_authorized_limits"] is True
+    assert correction["finish_reason"] == "length"
+    assert correction["completion_validation"]["valid_candidate_count"] == 0
+    assert correction["safety"]["c2_started"] is True
+    assert correction["safety"]["c2_completed"] is False
+    assert correction["safety"]["evaluation_count"] == 0
+    assert correction["safety"]["precision"] is None
+    assert correction["safety"]["recall"] is None
+    assert not (run_dir / "manifest.json").exists()
+    assert not (run_dir / "candidates.json").exists()
+
+
 def test_gpt56_transport_hash_is_versioned_and_not_the_canonical_request_hash() -> None:
     _assets, semantic, prepared = _prepared()
     semantic_sha256 = hashlib.sha256(serialize_semantic_request(semantic)).hexdigest()

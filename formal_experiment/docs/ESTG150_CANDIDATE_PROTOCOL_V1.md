@@ -5,8 +5,9 @@
 本规范是 EStG-150 后续中转站、DeepSeek、Qwen 与 xAI 官方 Grok 调用的唯一候选
 协议入口。C0 已完成离线锁定。C1 先完成一次获授权的七模型 transport 兼容性矩阵，随后
 ChatAnywhere `gpt-5.6-luna` 在新授权下完成单条 strict transport v1.1 runtime 并生成一个
-canonical-valid 候选。没有评测/P/R，也未进入 C2。C2 的六请求离线准备已冻结，但真实
-C2–C4 尚未开始。
+canonical-valid 候选。没有评测/P/R。C2 的六请求离线准备随后冻结；真实 C2 在独立授权下
+启动，但第一个 Pass A 因 `finish_reason=length` fail closed，其余五条未调用，C2 未完成，
+C3–C4 尚未开始。
 
 2026-07-26 已完成只针对请求进入模型前兼容性的版本化修复：canonical v1 schema、prompt、
 messages、synthetic、serializer 和 semantic fixture 均保持原字节；另建
@@ -15,8 +16,9 @@ profile 的 transport body 中给 6 个字符串 const/enum 节点补显式 `typ
 Structured Outputs 预检和七模型 capability preflight 均在 run 目录、API key 和网络之前
 执行。随后在新的明确授权下，ChatAnywhere `gpt-5.6-luna` 单条 synthetic 生成 1 个候选，
 并通过原始 canonical schema、exact span 和 normative-cue coverage 验证；0 retry，provider
-usage 为 1167 input + 829 output = 1996 tokens，记录费用 0.042987 CA。因此 **C1 已通过；
-evaluation 未开始，P/R 仍为 null，C2 仍未开始**。relay 报告的具体模型身份未独立验证。
+usage 为 1167 input + 829 output = 1996 tokens，记录费用 0.042987 CA。因此 **C1 已通过**。
+后续 C2 首条真实 Pass A 失败不撤销 C1，但 C2 没有形成冻结候选；evaluation 未开始，P/R
+仍为 null。relay 报告的具体模型身份未独立验证。
 
 历史内置 Sol 运行保存了 A/B/C、membership、三份 prompt、output schema、样本分流、
 最终候选与聚合 manifest，但没有保存 Codex 内部隐藏 system prompt 或 API envelope。
@@ -271,3 +273,25 @@ evaluation=0、P/R=null。
 证据不改写。新增 `accounting_correction.json` 逐 hash 绑定原 failure/preregistration/raw response，
 从 provider response 恢复 2956 tokens 与 0.01728755 CA，并登记 RWI-0027。runner 已改为先
 保存/计入 provider envelope usage，再执行 canonical candidate validation；没有为修复而重跑 API。
+
+### 7.6 2026-07-26 gpt-5.6-luna C2 首条 Pass A fail-closed runtime
+
+用户以独立授权允许 ChatAnywhere `gpt-5.6-luna` 执行 C2，护栏为恰好六个计划内容调用、
+最多 78,000 tokens、最多 1.92 CA，输入/输出价格 7/42 CA per million tokens；候选冻结后
+停止且不评价。真实运行使用新的不可覆盖 ID
+`c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1`。canonical schema、serializer、strict adapter
+与 transport schema SHA 均未漂移，首条 transport request SHA 与离线预注册一致：
+`9add2487dd36233b3e258ae451a27cebaa5de6b10de70a18b08ef7d527960aac`；无 downgrade。
+
+runner 只发送索引 0 的 Pass A 一次，0 retry。relay 报告模型
+`gpt-5.6-luna-2026-07-09`（仍为 `unverified_relay_report`），返回
+`finish_reason=length`、1339 input + 6500 output/reasoning = 7839 tokens，正文 0 字符；按锁定
+价格为 0.282373 CA。由于冻结协议只接受 `finish_reason=stop`，运行立即 fail closed，没有调用
+其余五条，没有 Pass B，没有有效候选，也没有修复或内容重试。C2 started=true 但未完成；
+C3/C4=false，evaluation=0，P/R=null。
+
+原 `failure.json` 在 envelope 返回 usage 前先拒绝了非 `stop` completion，因而错误记录
+tokens/cost 为 0；原 preregistration/request/raw response/failure 均保持不改写。新增
+`accounting_correction.json` 逐 SHA 绑定原证据并恢复 7839 tokens、0.282373 CA；RWI-0027
+据此重开并再次解决。runner 的 envelope 解析现在先返回 usage，随后才检查 finish reason 和
+candidate；mocked `length` 回归锁定该顺序。没有为账务更正再次调用 API。
