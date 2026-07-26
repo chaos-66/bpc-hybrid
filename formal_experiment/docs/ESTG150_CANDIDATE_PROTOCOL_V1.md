@@ -348,3 +348,30 @@ This is an offline preflight receipt only: no API was called, billed tokens and
 cost are zero, and it does not claim that GPT-4o runtime generation has passed.
 A real GPT-4o C1 call still requires a new run ID and explicit provider, model,
 call, total-token, cost/currency, and price authorization.
+
+### 7.8 2026-07-26 gpt-4o single-call C1 fail-closed runtime
+
+Under a new explicit authorization, ChatAnywhere `gpt-4o` was called for one
+synthetic C1 request with hard ceilings of 1 content call, 13,000 total tokens,
+and 0.60 CA at 17.5/70 CA per million input/output tokens. The immutable run
+directory is
+`data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_2_runtime_v1/`.
+The request used adapter
+`estg150_openai_strict_transport_schema_adapter@1.2.0`, passed strict transport
+preflight, retained `request_downgrade_applied=false`, and matched the locked
+transport request SHA-256
+`08c7c1fc345688b3070a644bec452c23aa2e5c7d2831d966c94ba046e21c201a`.
+
+The relay returned provider-reported model `gpt-4o`, `finish_reason=stop`, and a
+schema-shaped JSON object containing the six semantic element collections. The
+single call used 1201 input + 287 output = 1488 tokens and cost 0.0411075 CA;
+there was no retry. Local canonical validation nevertheless rejected the
+candidate because the model-provided character offsets did not reproduce their
+own text spans. The first error was
+`clauses[0].clause_span.text does not match proposed_text_en[start:end]`; actor,
+action, condition, and modality-evidence offsets were also inconsistent with
+the proposed English string. The run therefore froze `failure.json` with zero
+valid candidates, C1=false for this GPT-4o attempt, C2=false, evaluation=0, and
+precision/recall=null. It did not read Layer D, Layer E, or Gold, did not echo
+credentials, did not repair content, and did not make a second API call. The
+previous successful gpt-5.6-luna C1 receipt and Event 121 remain unchanged.

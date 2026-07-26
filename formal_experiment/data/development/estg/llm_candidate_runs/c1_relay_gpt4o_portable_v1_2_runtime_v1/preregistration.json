@@ -1,0 +1,96 @@
+{
+  "schema_version": "estg150_candidate_preregistration@1.1.0",
+  "run_id": "c1_relay_gpt4o_portable_v1_2_runtime_v1",
+  "stage": "c1",
+  "provider_adapter": "relay_openai_compatible",
+  "provider": "relay_openai_compatible",
+  "model": "gpt-4o",
+  "endpoint_host": "api.chatanywhere.tech",
+  "provider_identity_attestation": "unverified_relay_report",
+  "canonical_protocol_version": "estg150_canonical_external_candidate_protocol@1.0.0",
+  "canonical_schema_path": "configs/schemas/estg150_ai_review_model_output.schema.json",
+  "canonical_schema_sha256": "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9",
+  "serializer_version": "estg150_canonical_external_serializer@1.0.0",
+  "canonical_serializer_sha256": "d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef",
+  "transport_adapter_id": "estg150_openai_strict_transport_schema_adapter",
+  "transport_adapter_version": "1.2.0",
+  "transport_adapter_config_sha256": "929b36b91c2de48434ea42b38ea74ae488253f45557c2c50e983aedae7eea15f",
+  "transport_schema_path": "configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json",
+  "transport_schema_sha256": "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7",
+  "first_transport_request_sha256": "08c7c1fc345688b3070a644bec452c23aa2e5c7d2831d966c94ba046e21c201a",
+  "capability_profile_id": "estg150_chatanywhere_nonreasoning_strict_profile",
+  "capability_profile_version": "1.0.0",
+  "capability_profile_status": "offline_ready_capability_adapted",
+  "structured_outputs_preflight": {
+    "passed": true,
+    "schema_nodes": 58,
+    "object_nodes": 9,
+    "ref_nodes": 13,
+    "any_of_nodes": 0,
+    "first_error_path": null
+  },
+  "local_canonical_validation": null,
+  "transport_schema_adaptation_applied": true,
+  "request_downgrade_applied": false,
+  "request_downgrade_details": [],
+  "asset_hashes": {
+    "membership_payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
+    "layer_a_sha256": "55b64598dedfa0c0038084ee62c0928bddfa4bf17f19db80d461da2cb7bf26a3",
+    "layer_b_sha256": "f65e929bf1fe498ffce6f08d30f95d1c4de53592457352cce915cfbf8ee91da3",
+    "layer_c_sha256": "9476945ca387fb7efad5c1405cca59a6ef24ff50a23e22ba2c46ad6847290b8b",
+    "output_schema_sha256": "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9",
+    "full_extract_prompt_sha256": "9ad65ce8921d76afc3cc3bfe50b1c2f447cae8155cc40041fc32d60f6a63ae0b",
+    "pass_a_prompt_sha256": "9d6127e3457c05d96d52d339701e41d104b11f1128a98853a4a24b650c4d1fec",
+    "pass_b_prompt_sha256": "3ff3c8fd4e22c62ed5e0fedb656a3c290c64e5969b1cc85faea61008449e9fcd"
+  },
+  "authorization": {
+    "provider_authorized": true,
+    "maximum_calls": 1,
+    "maximum_total_tokens": 13000,
+    "maximum_cost": "0.60",
+    "cost_currency": "CA"
+  },
+  "request_plan": {
+    "sample_start_index": 3,
+    "sample_end_index_exclusive": 4,
+    "expected_request_count": 1,
+    "network_retry_limit": 2,
+    "retry_reasons": [
+      "network_timeout",
+      "http_429",
+      "http_5xx"
+    ],
+    "content_retry_forbidden": true
+  },
+  "evaluation": {
+    "valid_candidate_count": 0,
+    "evaluation_count": 0,
+    "precision": null,
+    "recall": null
+  },
+  "stage_transition": {
+    "c1_passed": false,
+    "c2_started": false,
+    "automatic_c2_forbidden": true
+  },
+  "safety": {
+    "historical_hidden_transport_payload_not_archived": true,
+    "layer_d_read_during_generation": false,
+    "layer_e_read_during_generation": false,
+    "gold_visible_during_generation": false,
+    "real_api_call": false
+  },
+  "created_at_utc": "2026-07-26T10:24:34+00:00",
+  "generation_completed_at_utc": null,
+  "evaluation_started_at_utc": null,
+  "transport_envelope_policy": {
+    "message_mode": "merge_system_developer",
+    "reasoning_effort_mode": "omit",
+    "token_limit_field": "max_tokens",
+    "response_format_mode": "json_schema_strict"
+  },
+  "server_output_enforcement": "strict_json_schema",
+  "local_canonical_validation_required": true,
+  "transport_capability_adaptation_applied": true,
+  "semantic_contract_downgrade_applied": false
+}
