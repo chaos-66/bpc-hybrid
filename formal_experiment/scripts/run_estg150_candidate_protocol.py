@@ -48,6 +48,7 @@ from formal_experiment.estg150_candidate_protocol import (  # noqa: E402
     verify_c0_lock,
 )
 from formal_experiment.estg150_c1_transport import (  # noqa: E402
+    load_portable_transport_adapter,
     load_strict_transport_adapter,
     prepare_transport_request,
     serialized_transport_sha256,
@@ -192,7 +193,7 @@ def dry_run(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
     request_count = expected_request_count(samples)
     first_route = route_for_index(int(samples[0]["sample_index"]))[0]
     semantic = build_semantic_request(assets, samples[0], route=first_route)
-    strict_adapter = load_strict_transport_adapter()
+    strict_adapter = load_portable_transport_adapter()
     prepared = prepare_transport_request(
         semantic,
         provider=adapter,
@@ -218,7 +219,10 @@ def dry_run(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
     print(f"capability_profile_status={prepared.capability_profile['status']}")
     print(f"structured_outputs_preflight_passed={str(strict_adapter.transport_preflight['passed']).lower()}")
     print(f"first_transport_request_sha256={transport_sha256}")
-    print("request_downgrade_applied=false")
+    print(
+        "request_downgrade_applied="
+        f"{str(bool(prepared.capability_profile.get('request_downgrade_applied', False))).lower()}"
+    )
     print(f"normalized_endpoint={endpoint}")
     print("Layer D/E/Gold reads=0")
     return 0
@@ -344,8 +348,9 @@ def prepare_c2_offline(args: argparse.Namespace, assets: Any, lock: dict[str, An
     if run_dir.exists():
         raise ProtocolError("offline preparation directory already exists; never overwrite a run ID")
 
-    strict_adapter = load_strict_transport_adapter()
-    c1_manifest = verify_c1_runtime_prerequisite(lock, strict_adapter)
+    frozen_c1_adapter = load_strict_transport_adapter()
+    c1_manifest = verify_c1_runtime_prerequisite(lock, frozen_c1_adapter)
+    strict_adapter = load_portable_transport_adapter()
     pass_a_fixtures = load_c2_offline_pass_a_fixtures(assets, lock)
     pass_a_by_sample = {record["sample_id"]: record for record in pass_a_fixtures}
 
@@ -398,8 +403,15 @@ def prepare_c2_offline(args: argparse.Namespace, assets: Any, lock: dict[str, An
                 "capability_profile_version": prepared.capability_profile["profile_version"],
                 "capability_profile_status": prepared.capability_profile["status"],
                 "structured_outputs_preflight": strict_adapter.transport_preflight,
-                "request_downgrade_applied": False,
-                "request_downgrade_details": [],
+                "server_output_enforcement": prepared.capability_profile[
+                    "server_output_enforcement"
+                ],
+                "request_downgrade_applied": prepared.capability_profile[
+                    "request_downgrade_applied"
+                ],
+                "request_downgrade_details": prepared.capability_profile[
+                    "request_downgrade_details"
+                ],
             }
             artifacts.append((stem, semantic_bytes, transport_bytes, record))
 
@@ -509,7 +521,9 @@ def prepare_c2_offline(args: argparse.Namespace, assets: Any, lock: dict[str, An
         "asset_hashes": lock["asset_hashes"],
         "request_count": 6,
         "requests": [record for _, _, _, record in artifacts],
-        "request_downgrade_applied": False,
+        "request_downgrade_applied": bool(
+            first_prepared.capability_profile["request_downgrade_applied"]
+        ),
         "budget": {
             "authorization_status": "offline_configuration_only_not_api_authorization",
             "maximum_calls": args.max_calls,
@@ -566,7 +580,10 @@ def prepare_c2_offline(args: argparse.Namespace, assets: Any, lock: dict[str, An
     print("c2_started=false")
     print("request_count=6")
     print("all_six_transport_preflights_passed=true")
-    print("request_downgrade_applied=false")
+    print(
+        "request_downgrade_applied="
+        f"{str(bool(first_prepared.capability_profile['request_downgrade_applied'])).lower()}"
+    )
     for _, _, _, record in artifacts:
         print(
             f"request_{record['sequence']}_sha256={record['transport_request_sha256']} "
@@ -675,7 +692,7 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
     endpoint, endpoint_host = adapter.validate_endpoint(args.endpoint)
     samples = planned_samples(assets, args.stage)
     request_count = expected_request_count(samples)
-    strict_adapter = load_strict_transport_adapter()
+    strict_adapter = load_portable_transport_adapter()
     first_route = route_for_index(int(samples[0]["sample_index"]))[0]
     first_semantic = build_semantic_request(assets, samples[0], route=first_route)
     first_prepared = prepare_transport_request(

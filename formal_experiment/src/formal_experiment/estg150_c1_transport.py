@@ -1,9 +1,9 @@
-"""Versioned C1 transport adaptation and offline capability preflight.
+"""Versioned candidate transport adaptation and offline capability preflight.
 
 The canonical semantic request and output schema remain immutable. This module
 derives a transport-only schema, validates the OpenAI Structured Outputs subset,
-and blocks known-incompatible provider/model envelopes before credentials or
-network access are possible.
+and packages the same semantic contract for explicit provider/model capability
+profiles before credentials or network access are possible.
 """
 from __future__ import annotations
 
@@ -27,6 +27,9 @@ ROOT = Path(__file__).resolve().parents[2]
 TRANSPORT_ADAPTER_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_1.json"
 )
+PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH = (
+    ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_2.json"
+)
 EXPECTED_CANONICAL_SCHEMA_SHA256 = (
     "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9"
 )
@@ -41,6 +44,8 @@ EXPECTED_STRING_TYPE_PATCHES = (
 READY_PROFILE_STATUSES = {
     "offline_ready",
     "offline_request_ready_runtime_503_unresolved",
+    "offline_ready_capability_adapted",
+    "offline_ready_json_mode_local_schema_validation",
 }
 JSON_SCHEMA_TYPES = {"object", "array", "string", "integer", "number", "boolean", "null"}
 EXPECTED_PROFILE_CONTRACT = {
@@ -106,6 +111,65 @@ EXPECTED_PROFILE_CONTRACT = {
         "blocking_paths": ("$.messages[1].role", "$.response_format.type"),
         "reason_codes": ("developer_role_unsupported", "strict_response_format_unsupported"),
     },
+}
+
+EXPECTED_PORTABLE_PROFILE_POLICIES = {
+    ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-5.6-luna"): (
+        "offline_ready",
+        "preserve",
+        "preserve",
+        "max_completion_tokens",
+        "json_schema_strict",
+        False,
+    ),
+    ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-5.4-nano"): (
+        "offline_ready",
+        "preserve",
+        "preserve",
+        "max_completion_tokens",
+        "json_schema_strict",
+        False,
+    ),
+    ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-5-nano"): (
+        "offline_request_ready_runtime_503_unresolved",
+        "preserve",
+        "preserve",
+        "max_completion_tokens",
+        "json_schema_strict",
+        False,
+    ),
+    ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-4.1-nano"): (
+        "offline_ready_capability_adapted",
+        "merge_system_developer",
+        "omit",
+        "max_tokens",
+        "json_schema_strict",
+        False,
+    ),
+    ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-4o"): (
+        "offline_ready_capability_adapted",
+        "merge_system_developer",
+        "omit",
+        "max_tokens",
+        "json_schema_strict",
+        False,
+    ),
+    ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-3.5-turbo"): (
+        "offline_ready_json_mode_local_schema_validation",
+        "merge_system_developer_with_canonical_schema",
+        "omit",
+        "max_tokens",
+        "json_object",
+        True,
+    ),
+    ("deepseek_official", "api.deepseek.com", "deepseek-v4-pro"): (
+        "offline_ready_json_mode_local_schema_validation",
+        "merge_system_developer_with_canonical_schema",
+        "omit",
+        "max_tokens",
+        "json_object",
+        True,
+    ),
 }
 
 
@@ -450,13 +514,72 @@ def _validate_capability_profiles(config: dict[str, Any]) -> None:
         raise ProtocolError("locked seven-model C1 capability profile contract drifted")
 
 
-def load_strict_transport_adapter() -> StrictTransportAdapter:
-    config, config_raw = _load_json_object(TRANSPORT_ADAPTER_CONFIG_PATH)
-    if config.get("schema_version") != "estg150_openai_strict_transport_schema_adapter_config@1.1.0":
+def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
+    profiles = config.get("capability_profiles")
+    if not isinstance(profiles, list) or len(profiles) != len(EXPECTED_PORTABLE_PROFILE_POLICIES):
+        raise ProtocolError("portable transport adapter must contain exactly seven capability profiles")
+    observed: dict[tuple[str, str, str], tuple[Any, ...]] = {}
+    for profile in profiles:
+        if not isinstance(profile, dict):
+            raise ProtocolError("portable capability profile must be an object")
+        hosts = profile.get("endpoint_hosts")
+        if not isinstance(hosts, list) or len(hosts) != 1 or not isinstance(hosts[0], str):
+            raise ProtocolError("each portable capability profile must name exactly one endpoint host")
+        key = (profile.get("provider_adapter", ""), hosts[0], profile.get("model", ""))
+        if key in observed:
+            raise ProtocolError(f"duplicate portable transport capability profile: {key!r}")
+        if profile.get("transport_schema_adapter_identity") != config.get("adapter_identity"):
+            raise ProtocolError("portable capability profile adapter identity drifted")
+        policy = profile.get("envelope_policy")
+        if not isinstance(policy, dict):
+            raise ProtocolError("portable capability profile requires an envelope_policy object")
+        downgrade = profile.get("request_downgrade_applied")
+        if not isinstance(downgrade, bool):
+            raise ProtocolError("portable capability profile requires a boolean downgrade receipt")
+        details = profile.get("request_downgrade_details")
+        if not isinstance(details, list) or any(not isinstance(item, str) for item in details):
+            raise ProtocolError("portable capability profile downgrade details must be strings")
+        if bool(details) != downgrade:
+            raise ProtocolError("portable capability profile downgrade receipt/details disagree")
+        if profile.get("local_canonical_validation_required") is not True:
+            raise ProtocolError("portable capability profile must require local canonical validation")
+        response_mode = policy.get("response_format_mode")
+        expected_enforcement = (
+            "strict_json_schema" if response_mode == "json_schema_strict" else "json_syntax_only"
+        )
+        if profile.get("server_output_enforcement") != expected_enforcement:
+            raise ProtocolError("portable capability profile server enforcement receipt drifted")
+        observed[key] = (
+            profile.get("status"),
+            policy.get("message_mode"),
+            policy.get("reasoning_effort_mode"),
+            policy.get("token_limit_field"),
+            response_mode,
+            downgrade,
+        )
+    if observed != EXPECTED_PORTABLE_PROFILE_POLICIES:
+        raise ProtocolError("locked seven-model portable capability profile contract drifted")
+
+
+def _validate_adapter_profiles(config: dict[str, Any]) -> None:
+    version = config.get("adapter_version")
+    if version == "1.1.0":
+        _validate_capability_profiles(config)
+    elif version == "1.2.0":
+        _validate_portable_capability_profiles(config)
+    else:
+        raise ProtocolError("unsupported transport adapter version")
+
+
+def _load_transport_adapter(config_path: Path, *, expected_version: str) -> StrictTransportAdapter:
+    config, config_raw = _load_json_object(config_path)
+    if config.get("schema_version") != (
+        f"estg150_openai_strict_transport_schema_adapter_config@{expected_version}"
+    ):
         raise ProtocolError("strict transport adapter config schema_version drifted")
     if config.get("adapter_id") != "estg150_openai_strict_transport_schema_adapter":
         raise ProtocolError("strict transport adapter ID drifted")
-    if config.get("adapter_version") != "1.1.0":
+    if config.get("adapter_version") != expected_version:
         raise ProtocolError("strict transport adapter version drifted")
     if config.get("canonical_protocol_version") != "estg150_canonical_external_candidate_protocol@1.0.0":
         raise ProtocolError("strict transport adapter canonical protocol version drifted")
@@ -504,7 +627,7 @@ def load_strict_transport_adapter() -> StrictTransportAdapter:
         raise ProtocolError("canonical schema first strict preflight error drifted")
     transport_preflight = preflight_openai_structured_outputs_schema(transport_schema)
 
-    _validate_capability_profiles(config)
+    _validate_adapter_profiles(config)
 
     return StrictTransportAdapter(
         config=config,
@@ -524,6 +647,16 @@ def load_strict_transport_adapter() -> StrictTransportAdapter:
     )
 
 
+def load_strict_transport_adapter() -> StrictTransportAdapter:
+    """Load frozen v1.1 for verification of immutable historical receipts."""
+    return _load_transport_adapter(TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.1.0")
+
+
+def load_portable_transport_adapter() -> StrictTransportAdapter:
+    """Load v1.2 for new dry-runs and separately authorized API calls."""
+    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.2.0")
+
+
 def select_capability_profile(
     strict_adapter: StrictTransportAdapter,
     *,
@@ -531,7 +664,7 @@ def select_capability_profile(
     endpoint_host: str,
     model: str,
 ) -> dict[str, Any]:
-    _validate_capability_profiles(strict_adapter.config)
+    _validate_adapter_profiles(strict_adapter.config)
     selected = None
     for profile in strict_adapter.config["capability_profiles"]:
         if (
@@ -563,6 +696,52 @@ def select_capability_profile(
     return copy.deepcopy(selected)
 
 
+def _adapt_transport_messages(
+    messages: Any,
+    *,
+    mode: str,
+    canonical_schema_text: str,
+) -> list[dict[str, str]]:
+    if not isinstance(messages, list) or len(messages) != 3:
+        raise ProtocolError("canonical semantic request must contain exactly three messages")
+    if [message.get("role") for message in messages if isinstance(message, dict)] != [
+        "system",
+        "developer",
+        "user",
+    ]:
+        raise ProtocolError("canonical semantic request message roles drifted")
+    if any(
+        not isinstance(message, dict) or not isinstance(message.get("content"), str)
+        for message in messages
+    ):
+        raise ProtocolError("canonical semantic request message content drifted")
+    if mode == "preserve":
+        return copy.deepcopy(messages)
+    if mode not in {
+        "merge_system_developer",
+        "merge_system_developer_with_canonical_schema",
+    }:
+        raise ProtocolError(f"unsupported portable message mode: {mode!r}")
+    merged = (
+        messages[0]["content"]
+        + "\n\n[BEGIN DEVELOPER INSTRUCTIONS]\n"
+        + messages[1]["content"]
+        + "\n[END DEVELOPER INSTRUCTIONS]"
+    )
+    if mode == "merge_system_developer_with_canonical_schema":
+        merged += (
+            "\n\n[BEGIN CANONICAL JSON OUTPUT SCHEMA]\n"
+            "Return exactly one JSON object matching this schema. "
+            "Do not omit required semantic fields.\n"
+            + canonical_schema_text
+            + "[END CANONICAL JSON OUTPUT SCHEMA]"
+        )
+    return [
+        {"role": "system", "content": merged},
+        copy.deepcopy(messages[2]),
+    ]
+
+
 def prepare_transport_request(
     semantic_request: dict[str, Any],
     *,
@@ -591,41 +770,99 @@ def prepare_transport_request(
         model=model,
     )
     body = provider.build_transport_body(semantic_request, model=model)
-    body["response_format"]["json_schema"]["schema"] = copy.deepcopy(strict_adapter.transport_schema)
-    preflight_openai_structured_outputs_schema(body["response_format"]["json_schema"]["schema"])
-
     controls = semantic_request["generation_controls"]
-    expected_top_level_keys = {
+    canonical_top_level_keys = {
         "model",
         "messages",
         "reasoning_effort",
         "max_completion_tokens",
         "response_format",
     }
-    if set(body) != expected_top_level_keys:
+    if set(body) != canonical_top_level_keys:
         raise ProtocolError(
-            f"transport envelope top-level keys drifted: {sorted(set(body) - expected_top_level_keys)!r}"
+            f"canonical provider envelope top-level keys drifted: "
+            f"{sorted(set(body) - canonical_top_level_keys)!r}"
         )
     if body.get("model") != model:
         raise ProtocolError("transport envelope model differs from the capability-profile model")
     if body["messages"] != semantic_request["messages"]:
-        raise ProtocolError("transport adaptation changed canonical messages")
+        raise ProtocolError("provider changed canonical messages before transport adaptation")
     if body.get("reasoning_effort") != controls["reasoning_effort"]:
-        raise ProtocolError("transport adaptation changed reasoning_effort")
+        raise ProtocolError("provider changed canonical reasoning_effort before transport adaptation")
     if body.get("max_completion_tokens") != controls["max_completion_tokens"]:
-        raise ProtocolError("transport adaptation changed max_completion_tokens")
-    response_format = body.get("response_format", {})
-    if set(response_format) != {"type", "json_schema"}:
-        raise ProtocolError("transport adaptation changed response_format members")
-    json_schema_envelope = response_format.get("json_schema", {})
+        raise ProtocolError("provider changed canonical max_completion_tokens before transport adaptation")
+    canonical_response_format = body.get("response_format", {})
+    if set(canonical_response_format) != {"type", "json_schema"}:
+        raise ProtocolError("provider changed canonical response_format members before adaptation")
+    json_schema_envelope = canonical_response_format.get("json_schema", {})
     if set(json_schema_envelope) != {"name", "strict", "schema"}:
-        raise ProtocolError("transport adaptation changed strict json_schema envelope members")
+        raise ProtocolError("provider changed canonical json_schema members before adaptation")
     if (
-        response_format.get("type") != "json_schema"
+        canonical_response_format.get("type") != "json_schema"
         or json_schema_envelope.get("name") != "estg150_ai_review_candidate"
         or json_schema_envelope.get("strict") is not True
     ):
-        raise ProtocolError("transport adaptation downgraded strict json_schema")
+        raise ProtocolError("provider changed canonical strict json_schema before adaptation")
+
+    policy = profile.get("envelope_policy")
+    if not isinstance(policy, dict):
+        # Frozen v1.1 profiles predate explicit envelope policies and preserve
+        # the original request byte-for-byte except for the strict schema patch.
+        policy = {
+            "message_mode": "preserve",
+            "reasoning_effort_mode": "preserve",
+            "token_limit_field": "max_completion_tokens",
+            "response_format_mode": "json_schema_strict",
+        }
+    body["messages"] = _adapt_transport_messages(
+        semantic_request["messages"],
+        mode=policy["message_mode"],
+        canonical_schema_text=schema_text,
+    )
+    reasoning_mode = policy["reasoning_effort_mode"]
+    if reasoning_mode == "omit":
+        body.pop("reasoning_effort")
+    elif reasoning_mode != "preserve":
+        raise ProtocolError(f"unsupported reasoning_effort mode: {reasoning_mode!r}")
+
+    token_limit_field = policy["token_limit_field"]
+    if token_limit_field == "max_tokens":
+        body["max_tokens"] = body.pop("max_completion_tokens")
+    elif token_limit_field != "max_completion_tokens":
+        raise ProtocolError(f"unsupported token limit field: {token_limit_field!r}")
+
+    response_mode = policy["response_format_mode"]
+    if response_mode == "json_schema_strict":
+        body["response_format"]["json_schema"]["schema"] = copy.deepcopy(
+            strict_adapter.transport_schema
+        )
+        preflight_openai_structured_outputs_schema(
+            body["response_format"]["json_schema"]["schema"]
+        )
+    elif response_mode == "json_object":
+        body["response_format"] = {"type": "json_object"}
+    else:
+        raise ProtocolError(f"unsupported response format mode: {response_mode!r}")
+
+    expected_top_level_keys = {"model", "messages", token_limit_field, "response_format"}
+    if reasoning_mode == "preserve":
+        expected_top_level_keys.add("reasoning_effort")
+    if set(body) != expected_top_level_keys:
+        raise ProtocolError(f"adapted transport envelope keys drifted: {sorted(body)!r}")
+    if body[token_limit_field] != controls["max_completion_tokens"]:
+        raise ProtocolError("transport token ceiling changed during capability adaptation")
+    if response_mode == "json_schema_strict":
+        adapted_format = body["response_format"]
+        adapted_schema_envelope = adapted_format.get("json_schema", {})
+        if (
+            adapted_format.get("type") != "json_schema"
+            or adapted_schema_envelope.get("name") != "estg150_ai_review_candidate"
+            or adapted_schema_envelope.get("strict") is not True
+            or adapted_schema_envelope.get("schema") != strict_adapter.transport_schema
+        ):
+            raise ProtocolError("strict json_schema transport adaptation drifted")
+    elif body["response_format"] != {"type": "json_object"}:
+        raise ProtocolError("JSON-mode transport adaptation drifted")
     return PreparedTransportRequest(body=body, strict_adapter=strict_adapter, capability_profile=profile)
 
 
@@ -638,6 +875,14 @@ def transport_provenance(
 ) -> dict[str, Any]:
     strict_adapter = prepared.strict_adapter
     profile = prepared.capability_profile
+    policy = profile.get("envelope_policy") or {
+        "message_mode": "preserve",
+        "reasoning_effort_mode": "preserve",
+        "token_limit_field": "max_completion_tokens",
+        "response_format_mode": "json_schema_strict",
+    }
+    request_downgrade_applied = bool(profile.get("request_downgrade_applied", False))
+    request_downgrade_details = copy.deepcopy(profile.get("request_downgrade_details", []))
     return {
         "canonical_protocol_version": strict_adapter.canonical_protocol_version,
         "canonical_schema_path": strict_adapter.canonical_schema_path,
@@ -653,10 +898,24 @@ def transport_provenance(
         "capability_profile_version": profile["profile_version"],
         "capability_profile_status": profile["status"],
         "structured_outputs_preflight": copy.deepcopy(strict_adapter.transport_preflight),
+        "transport_envelope_policy": copy.deepcopy(policy),
+        "server_output_enforcement": profile.get(
+            "server_output_enforcement", "strict_json_schema"
+        ),
+        "local_canonical_validation_required": profile.get(
+            "local_canonical_validation_required", True
+        ),
         "local_canonical_validation": copy.deepcopy(local_canonical_validation),
         "transport_schema_adaptation_applied": True,
-        "request_downgrade_applied": False,
-        "request_downgrade_details": [],
+        "transport_capability_adaptation_applied": policy != {
+            "message_mode": "preserve",
+            "reasoning_effort_mode": "preserve",
+            "token_limit_field": "max_completion_tokens",
+            "response_format_mode": "json_schema_strict",
+        },
+        "semantic_contract_downgrade_applied": False,
+        "request_downgrade_applied": request_downgrade_applied,
+        "request_downgrade_details": request_downgrade_details,
     }
 
 

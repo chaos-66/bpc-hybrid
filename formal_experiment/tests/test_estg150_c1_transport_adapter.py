@@ -35,6 +35,7 @@ from formal_experiment.estg150_c1_transport import (  # noqa: E402
     EXPECTED_STRING_TYPE_PATCHES,
     StructuredOutputsPreflightError,
     derive_strict_transport_schema,
+    load_portable_transport_adapter,
     load_strict_transport_adapter,
     preflight_openai_structured_outputs_schema,
     prepare_transport_request,
@@ -76,6 +77,26 @@ def _prepared(model: str = "gpt-5.6-luna"):
         endpoint_host="api.chatanywhere.tech",
         model=model,
         strict_adapter=load_strict_transport_adapter(),
+    )
+    return assets, semantic, prepared
+
+
+def _portable_prepared(
+    model: str,
+    *,
+    provider_id: str = "relay_openai_compatible",
+    host: str = "api.chatanywhere.tech",
+):
+    assets = load_protocol_assets()
+    provider = adapter_from_config(assets.config, provider_id)
+    synthetic = load_json_bytes(FIXTURE_ROOT / "synthetic_record_v1.json")
+    semantic = build_semantic_request(assets, synthetic, route="full_extract")
+    prepared = prepare_transport_request(
+        semantic,
+        provider=provider,
+        endpoint_host=host,
+        model=model,
+        strict_adapter=load_portable_transport_adapter(),
     )
     return assets, semantic, prepared
 
@@ -285,6 +306,96 @@ def test_modern_chatanywhere_models_use_the_explicit_transport_adapter(model: st
         "max_completion_tokens",
         "response_format",
     }
+
+
+def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen() -> None:
+    assets, semantic, prepared = _portable_prepared("gpt-4o")
+    lock = verify_c0_lock(assets)
+    assert prepared.strict_adapter.adapter_version == "1.2.0"
+    assert prepared.strict_adapter.canonical_schema_sha256 == EXPECTED_CANONICAL_SCHEMA_SHA256
+    assert prepared.strict_adapter.transport_schema_sha256 == (
+        "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
+    )
+    assert lock["serializer_sha256"] == (
+        "d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef"
+    )
+    assert semantic["messages"] == build_semantic_request(
+        assets,
+        load_json_bytes(FIXTURE_ROOT / "synthetic_record_v1.json"),
+        route="full_extract",
+    )["messages"]
+
+
+@pytest.mark.parametrize("model", ["gpt-4o", "gpt-4.1-nano"])
+def test_nonreasoning_openai_profiles_preserve_strict_schema_with_compatible_envelope(
+    model: str,
+) -> None:
+    _assets, semantic, prepared = _portable_prepared(model)
+    body = prepared.body
+    assert prepared.capability_profile["status"] == "offline_ready_capability_adapted"
+    assert prepared.capability_profile["request_downgrade_applied"] is False
+    assert set(body) == {"model", "messages", "max_tokens", "response_format"}
+    assert "reasoning_effort" not in body
+    assert "max_completion_tokens" not in body
+    assert body["max_tokens"] == 6500
+    assert [message["role"] for message in body["messages"]] == ["system", "user"]
+    assert semantic["messages"][0]["content"] in body["messages"][0]["content"]
+    assert semantic["messages"][1]["content"] in body["messages"][0]["content"]
+    assert body["messages"][1] == semantic["messages"][2]
+    assert body["response_format"]["type"] == "json_schema"
+    assert body["response_format"]["json_schema"]["strict"] is True
+    assert body["response_format"]["json_schema"]["schema"] == (
+        prepared.strict_adapter.transport_schema
+    )
+
+
+@pytest.mark.parametrize(
+    ("provider_id", "host", "model"),
+    [
+        ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-3.5-turbo"),
+        ("deepseek_official", "api.deepseek.com", "deepseek-v4-pro"),
+    ],
+)
+def test_json_mode_profiles_embed_canonical_schema_and_require_local_strict_validation(
+    provider_id: str, host: str, model: str
+) -> None:
+    _assets, semantic, prepared = _portable_prepared(
+        model, provider_id=provider_id, host=host
+    )
+    body = prepared.body
+    profile = prepared.capability_profile
+    assert profile["status"] == "offline_ready_json_mode_local_schema_validation"
+    assert profile["server_output_enforcement"] == "json_syntax_only"
+    assert profile["local_canonical_validation_required"] is True
+    assert profile["request_downgrade_applied"] is True
+    assert set(body) == {"model", "messages", "max_tokens", "response_format"}
+    assert body["response_format"] == {"type": "json_object"}
+    assert [message["role"] for message in body["messages"]] == ["system", "user"]
+    assert semantic["messages"][0]["content"] in body["messages"][0]["content"]
+    assert semantic["messages"][1]["content"] in body["messages"][0]["content"]
+    assert semantic["output_schema_text"] in body["messages"][0]["content"]
+    assert body["messages"][1] == semantic["messages"][2]
+
+
+def test_all_seven_registered_models_have_a_fail_closed_portable_preflight() -> None:
+    adapter = load_portable_transport_adapter()
+    assert len(adapter.config["capability_profiles"]) == 7
+    observed = set()
+    for profile in adapter.config["capability_profiles"]:
+        prepared = _portable_prepared(
+            profile["model"],
+            provider_id=profile["provider_adapter"],
+            host=profile["endpoint_hosts"][0],
+        )[2]
+        assert prepared.capability_profile["status"] in {
+            "offline_ready",
+            "offline_request_ready_runtime_503_unresolved",
+            "offline_ready_capability_adapted",
+            "offline_ready_json_mode_local_schema_validation",
+        }
+        assert prepared.strict_adapter.transport_preflight["passed"] is True
+        observed.add((profile["provider_adapter"], profile["model"]))
+    assert len(observed) == 7
 
 
 @pytest.mark.parametrize("tamper", ["model", "tools"])
@@ -599,8 +710,35 @@ def test_preregistration_records_both_contracts_null_metrics_and_no_c2() -> None
     assert matrix["conclusions"]["c2_started"] is False
 
 
+@pytest.mark.parametrize(
+    ("provider_id", "model", "endpoint", "expected_request_downgrade"),
+    [
+        (
+            "relay_openai_compatible",
+            "gpt-5.6-luna",
+            "https://api.chatanywhere.tech/v1/chat/completions",
+            False,
+        ),
+        (
+            "relay_openai_compatible",
+            "gpt-4o",
+            "https://api.chatanywhere.tech/v1/chat/completions",
+            False,
+        ),
+        (
+            "deepseek_official",
+            "deepseek-v4-pro",
+            "https://api.deepseek.com/chat/completions",
+            True,
+        ),
+    ],
+)
 def test_mocked_success_receipts_record_actual_transport_and_canonical_validation(
     monkeypatch,
+    provider_id: str,
+    model: str,
+    endpoint: str,
+    expected_request_downgrade: bool,
 ) -> None:
     runner = _load_runner()
     assets = load_protocol_assets()
@@ -635,9 +773,9 @@ def test_mocked_success_receipts_record_actual_transport_and_canonical_validatio
         )
         args = argparse.Namespace(
             stage="c1",
-            provider_adapter="relay_openai_compatible",
-            model="gpt-5.6-luna",
-            endpoint="https://api.chatanywhere.tech/v1/chat/completions",
+            provider_adapter=provider_id,
+            model=model,
+            endpoint=endpoint,
             confirm_authorized_provider_budget=True,
             run_id="offline_mock_success",
             max_calls=1,
@@ -658,7 +796,8 @@ def test_mocked_success_receipts_record_actual_transport_and_canonical_validatio
         assert manifest["transport_request_sha256"] == manifest["transport_request_sha256s"][0]
         assert manifest["local_canonical_validation"]["all_passed"] is True
         assert manifest["local_canonical_validation"]["passed_count"] == 1
-        assert manifest["request_downgrade_applied"] is False
+        assert manifest["request_downgrade_applied"] is expected_request_downgrade
+        assert manifest["semantic_contract_downgrade_applied"] is False
         assert manifest["evaluation_count"] == 0
         assert manifest["precision"] is None and manifest["recall"] is None
         assert manifest["c2_started"] is False
@@ -667,7 +806,7 @@ def test_mocked_success_receipts_record_actual_transport_and_canonical_validatio
         assert receipt["local_canonical_validation"]["schema_sha256"] == (
             EXPECTED_CANONICAL_SCHEMA_SHA256
         )
-        assert receipt["request_downgrade_applied"] is False
+        assert receipt["request_downgrade_applied"] is expected_request_downgrade
 
 
 def test_mocked_invalid_candidate_still_records_provider_usage_and_cost(monkeypatch) -> None:

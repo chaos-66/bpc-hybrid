@@ -295,3 +295,56 @@ tokens/cost 为 0；原 preregistration/request/raw response/failure 均保持�
 `accounting_correction.json` 逐 SHA 绑定原证据并恢复 7839 tokens、0.282373 CA；RWI-0027
 据此重开并再次解决。runner 的 envelope 解析现在先返回 usage，随后才检查 finish reason 和
 candidate；mocked `length` 回归锁定该顺序。没有为账务更正再次调用 API。
+
+### 7.7 2026-07-26 portable transport adapter v1.2 correction
+
+This section supersedes the universal-envelope rule in section 5 for all new
+dry-runs and separately authorized API calls. Frozen v1.1 requests, receipts,
+manifests, and Event 121 remain immutable and continue to be audited with the
+v1.1 loader.
+
+The defect was in the transport boundary, not in the Barrientos-style semantic
+prompting approach. Adapter v1.1 incorrectly treated `reasoning_effort=high`, a
+three-role message envelope, and strict Structured Outputs as universal model
+requirements. Adapter v1.2 keeps the following bytes and meanings unchanged:
+
+- B0 and D1/H1 prompts;
+- all three EStG-150 candidate prompt assets;
+- the canonical semantic request and serializer;
+- the canonical six-element output schema;
+- exact-span, entity/relation, cue-coverage, and no-repair validation;
+- the prohibition on generation-time Layer D, Layer E, and Gold reads.
+
+Only provider/model transport packaging is profile-specific:
+
+| Profiles | Message packaging | Reasoning field | Token field | Server output mode | Final acceptance |
+|---|---|---|---|---|---|
+| ChatAnywhere GPT-5 profiles | preserve `system/developer/user` | preserve | `max_completion_tokens` | strict `json_schema` | canonical local validation |
+| ChatAnywhere `gpt-4o`, `gpt-4.1-nano` | merge system + developer text into one system message | omit | `max_tokens` | strict `json_schema` | canonical local validation |
+| ChatAnywhere `gpt-3.5-turbo` | merge system + developer and inject the exact canonical schema | omit | `max_tokens` | `json_object` | mandatory canonical local validation |
+| DeepSeek official `deepseek-v4-pro` | merge system + developer and inject the exact canonical schema | omit | `max_tokens` | `json_object` | mandatory canonical local validation |
+
+For `gpt-4o` and `gpt-4.1-nano`, server-side strict schema enforcement is
+preserved, so `request_downgrade_applied=false`. For JSON-mode profiles, the
+receipt honestly records `request_downgrade_applied=true` because the provider
+enforces JSON syntax rather than the full schema; the semantic contract is not
+downgraded because an output is never accepted or frozen unless the unchanged
+canonical local validator passes. Content repair and content retry remain
+forbidden in every profile.
+
+All seven registered provider/model profiles pass runner-level offline
+preflight under adapter `estg150_openai_strict_transport_schema_adapter@1.2.0`.
+The canonical schema, serializer, semantic fixture, and transport schema hashes
+remain, respectively:
+
+- `fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9`
+- `d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef`
+- `eb074081cc52d22025e263e3f94b2165f95493f511ddc454b9ea5f5923c085e1`
+- `ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7`
+
+The GPT-4o synthetic transport request SHA-256 is
+`08c7c1fc345688b3070a644bec452c23aa2e5c7d2831d966c94ba046e21c201a`.
+This is an offline preflight receipt only: no API was called, billed tokens and
+cost are zero, and it does not claim that GPT-4o runtime generation has passed.
+A real GPT-4o C1 call still requires a new run ID and explicit provider, model,
+call, total-token, cost/currency, and price authorization.
