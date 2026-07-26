@@ -26,9 +26,11 @@ from formal_experiment.estg150_candidate_protocol import (  # noqa: E402
     CandidateValidationError,
     ProtocolError,
     ProtocolIncompatible,
+    RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
     adapter_from_config,
     build_semantic_request,
     build_user_object,
+    canonicalize_response_coordinates,
     canonical_json_bytes,
     extract_provider_response,
     load_json_bytes,
@@ -53,6 +55,16 @@ MATRIX_MANIFEST = (
     / "llm_candidate_runs"
     / "c1_transport_compatibility_matrix_20260725_v1"
     / "manifest.json"
+)
+GPT4O_V1_2_RUNTIME_RESPONSE = (
+    ROOT
+    / "data"
+    / "development"
+    / "estg"
+    / "llm_candidate_runs"
+    / "c1_relay_gpt4o_portable_v1_2_runtime_v1"
+    / "responses"
+    / "001_synthetic_c1_utf8_full_extract.json"
 )
 
 
@@ -295,6 +307,83 @@ def test_response_extraction_records_identity_usage_hash_and_validation():
     assert metadata["provider_identity_attestation"] == "unverified_relay_report"
     assert metadata["provider_reported_model"] == "relay-reported-model"
     assert metadata["validation"]["schema_valid"] is True
+    assert metadata["response_coordinate_canonicalization"]["applied"] is False
+
+
+def test_gpt4o_real_v1_2_response_replays_as_valid_semantics_with_unique_exact_coordinates():
+    assets = load_protocol_assets()
+    adapter = adapter_from_config(assets.config, "relay_openai_compatible")
+    fixture = load_json_bytes(SYNTHETIC_FIXTURE_PATH)
+    response = GPT4O_V1_2_RUNTIME_RESPONSE.read_bytes()
+    envelope = json.loads(response.decode("utf-8"))
+    raw_candidate = json.loads(envelope["choices"][0]["message"]["content"])
+
+    with pytest.raises(CandidateValidationError, match="clause_span.text does not match"):
+        extract_provider_response(
+            response,
+            adapter=adapter,
+            expected_sample_id=fixture["sample_id"],
+            frozen_candidate_text_en=fixture["frozen_candidate_text_en"],
+            schema=assets.schema,
+        )
+
+    candidate, metadata = extract_provider_response(
+        response,
+        adapter=adapter,
+        expected_sample_id=fixture["sample_id"],
+        frozen_candidate_text_en=fixture["frozen_candidate_text_en"],
+        schema=assets.schema,
+        response_coordinate_mode=RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
+    )
+    receipt = metadata["response_coordinate_canonicalization"]
+    assert receipt["performed"] is True
+    assert receipt["applied"] is True
+    assert receipt["changed_span_count"] == 5
+    assert receipt["semantic_content_unchanged"] is True
+    assert receipt["ambiguous_match_policy"] == "fail_closed"
+    assert metadata["validation"] == {
+        "schema_valid": True,
+        "exact_span_valid": True,
+        "normative_cue_coverage_valid": True,
+    }
+    clause = candidate["clauses"][0]
+    assert clause["clause_span"] == {
+        "text": fixture["frozen_candidate_text_en"],
+        "start": 0,
+        "end": len(fixture["frozen_candidate_text_en"]),
+    }
+    assert (clause["actors"][0]["start"], clause["actors"][0]["end"]) == (0, 13)
+    assert (clause["actions"][0]["start"], clause["actions"][0]["end"]) == (19, 24)
+    assert (clause["conditions"][0]["start"], clause["conditions"][0]["end"]) == (26, 57)
+    assert (
+        clause["modality"]["evidence"][0]["start"],
+        clause["modality"]["evidence"][0]["end"],
+    ) == (0, 18)
+
+    def without_coordinates(node):
+        if isinstance(node, dict):
+            return {
+                key: without_coordinates(value)
+                for key, value in node.items()
+                if key not in {"start", "end"}
+            }
+        if isinstance(node, list):
+            return [without_coordinates(value) for value in node]
+        return node
+
+    assert without_coordinates(candidate) == without_coordinates(raw_candidate)
+
+
+def test_coordinate_canonicalization_refuses_ambiguous_exact_text():
+    candidate = valid_synthetic_candidate()
+    candidate["clauses"][0]["actions"][0].update(
+        {"text": "e", "start": 999, "end": 1000}
+    )
+    with pytest.raises(CandidateValidationError, match=r"found \d+"):
+        canonicalize_response_coordinates(
+            candidate,
+            mode=RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
+        )
 
 
 def test_network_retry_resends_byte_identical_request(monkeypatch):
@@ -511,7 +600,7 @@ def test_execute_failure_manifest_links_archived_http_error(monkeypatch):
         assert failure["canonical_schema_sha256"] == (
             "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9"
         )
-        assert failure["transport_adapter_version"] == "1.2.0"
+        assert failure["transport_adapter_version"] == "1.3.0"
         assert failure["transport_schema_sha256"] == (
             "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
         )

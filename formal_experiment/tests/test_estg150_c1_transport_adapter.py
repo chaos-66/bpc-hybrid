@@ -36,6 +36,7 @@ from formal_experiment.estg150_c1_transport import (  # noqa: E402
     StructuredOutputsPreflightError,
     derive_strict_transport_schema,
     load_portable_transport_adapter,
+    load_portable_transport_adapter_v1_2,
     load_strict_transport_adapter,
     preflight_openai_structured_outputs_schema,
     prepare_transport_request,
@@ -311,7 +312,7 @@ def test_modern_chatanywhere_models_use_the_explicit_transport_adapter(model: st
 def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen() -> None:
     assets, semantic, prepared = _portable_prepared("gpt-4o")
     lock = verify_c0_lock(assets)
-    assert prepared.strict_adapter.adapter_version == "1.2.0"
+    assert prepared.strict_adapter.adapter_version == "1.3.0"
     assert prepared.strict_adapter.canonical_schema_sha256 == EXPECTED_CANONICAL_SCHEMA_SHA256
     assert prepared.strict_adapter.transport_schema_sha256 == (
         "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
@@ -324,6 +325,10 @@ def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen()
         load_json_bytes(FIXTURE_ROOT / "synthetic_record_v1.json"),
         route="full_extract",
     )["messages"]
+    historical = load_portable_transport_adapter_v1_2()
+    assert historical.adapter_version == "1.2.0"
+    assert historical.canonical_schema_sha256 == prepared.strict_adapter.canonical_schema_sha256
+    assert historical.transport_schema_sha256 == prepared.strict_adapter.transport_schema_sha256
 
 
 @pytest.mark.parametrize("model", ["gpt-4o", "gpt-4.1-nano"])
@@ -334,6 +339,9 @@ def test_nonreasoning_openai_profiles_preserve_strict_schema_with_compatible_env
     body = prepared.body
     assert prepared.capability_profile["status"] == "offline_ready_capability_adapted"
     assert prepared.capability_profile["request_downgrade_applied"] is False
+    assert prepared.capability_profile["response_coordinate_mode"] == (
+        "deterministic_exact_text_unique_reanchor"
+    )
     assert set(body) == {"model", "messages", "max_tokens", "response_format"}
     assert "reasoning_effort" not in body
     assert "max_completion_tokens" not in body
@@ -368,6 +376,9 @@ def test_json_mode_profiles_embed_canonical_schema_and_require_local_strict_vali
     assert profile["server_output_enforcement"] == "json_syntax_only"
     assert profile["local_canonical_validation_required"] is True
     assert profile["request_downgrade_applied"] is True
+    assert profile["response_coordinate_mode"] == (
+        "deterministic_exact_text_unique_reanchor"
+    )
     assert set(body) == {"model", "messages", "max_tokens", "response_format"}
     assert body["response_format"] == {"type": "json_object"}
     assert [message["role"] for message in body["messages"]] == ["system", "user"]
@@ -394,6 +405,9 @@ def test_all_seven_registered_models_have_a_fail_closed_portable_preflight() -> 
             "offline_ready_json_mode_local_schema_validation",
         }
         assert prepared.strict_adapter.transport_preflight["passed"] is True
+        assert prepared.capability_profile["response_coordinate_mode"] == (
+            "deterministic_exact_text_unique_reanchor"
+        )
         observed.add((profile["provider_adapter"], profile["model"]))
     assert len(observed) == 7
 
@@ -814,8 +828,8 @@ def test_mocked_invalid_candidate_still_records_provider_usage_and_cost(monkeypa
     assets = load_protocol_assets()
     lock = verify_c0_lock(assets)
     candidate = json.loads(json.dumps(load_json_bytes(VALID_CANDIDATE)))
-    candidate["clauses"][0]["clause_span"]["end"] = (
-        len(candidate["translation"]["proposed_text_en"]) + 1
+    candidate["clauses"][0]["clause_span"].update(
+        {"text": "This text is absent.", "start": 0, "end": 20}
     )
     response = canonical_json_bytes(
         {
@@ -860,7 +874,10 @@ def test_mocked_invalid_candidate_still_records_provider_usage_and_cost(monkeypa
             api_key_env_name=None,
             timeout_seconds=17,
         )
-        with pytest.raises(CandidateValidationError, match="outside proposed_text_en"):
+        with pytest.raises(
+            CandidateValidationError,
+            match="exact coordinate canonicalization requires one match.*found 0",
+        ):
             runner.execute(args, test_assets, lock)
         run_dir = temporary_root / args.run_id
         failure = load_json_bytes(run_dir / "failure.json")

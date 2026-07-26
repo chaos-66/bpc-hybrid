@@ -17,6 +17,8 @@ from formal_experiment.estg150_candidate_protocol import (
     ProtocolError,
     ProtocolIncompatible,
     ProviderAdapter,
+    RESPONSE_COORDINATE_MODE_REJECT_INVALID,
+    RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
     canonical_json_bytes,
     json_type_matches,
     sha256_bytes,
@@ -28,6 +30,9 @@ TRANSPORT_ADAPTER_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_1.json"
 )
 PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH = (
+    ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_3.json"
+)
+PORTABLE_TRANSPORT_ADAPTER_V1_2_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_2.json"
 )
 EXPECTED_CANONICAL_SCHEMA_SHA256 = (
@@ -170,6 +175,10 @@ EXPECTED_PORTABLE_PROFILE_POLICIES = {
         "json_object",
         True,
     ),
+}
+EXPECTED_PORTABLE_V1_3_PROFILE_POLICIES = {
+    key: (*policy, RESPONSE_COORDINATE_MODE_UNIQUE_EXACT)
+    for key, policy in EXPECTED_PORTABLE_PROFILE_POLICIES.items()
 }
 
 
@@ -515,8 +524,18 @@ def _validate_capability_profiles(config: dict[str, Any]) -> None:
 
 
 def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
+    version = config.get("adapter_version")
+    expected_policies = (
+        EXPECTED_PORTABLE_PROFILE_POLICIES
+        if version == "1.2.0"
+        else EXPECTED_PORTABLE_V1_3_PROFILE_POLICIES
+        if version == "1.3.0"
+        else None
+    )
+    if expected_policies is None:
+        raise ProtocolError("unsupported portable transport adapter version")
     profiles = config.get("capability_profiles")
-    if not isinstance(profiles, list) or len(profiles) != len(EXPECTED_PORTABLE_PROFILE_POLICIES):
+    if not isinstance(profiles, list) or len(profiles) != len(expected_policies):
         raise ProtocolError("portable transport adapter must contain exactly seven capability profiles")
     observed: dict[tuple[str, str, str], tuple[Any, ...]] = {}
     for profile in profiles:
@@ -549,7 +568,7 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
         )
         if profile.get("server_output_enforcement") != expected_enforcement:
             raise ProtocolError("portable capability profile server enforcement receipt drifted")
-        observed[key] = (
+        observed_policy = (
             profile.get("status"),
             policy.get("message_mode"),
             policy.get("reasoning_effort_mode"),
@@ -557,7 +576,17 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
             response_mode,
             downgrade,
         )
-    if observed != EXPECTED_PORTABLE_PROFILE_POLICIES:
+        if version == "1.3.0":
+            coordinate_mode = profile.get("response_coordinate_mode")
+            if coordinate_mode != RESPONSE_COORDINATE_MODE_UNIQUE_EXACT:
+                raise ProtocolError(
+                    "portable v1.3 profiles must use deterministic exact-text coordinate canonicalization"
+                )
+            observed_policy = (*observed_policy, coordinate_mode)
+        elif "response_coordinate_mode" in profile:
+            raise ProtocolError("portable v1.2 profiles cannot declare a response coordinate mode")
+        observed[key] = observed_policy
+    if observed != expected_policies:
         raise ProtocolError("locked seven-model portable capability profile contract drifted")
 
 
@@ -565,7 +594,7 @@ def _validate_adapter_profiles(config: dict[str, Any]) -> None:
     version = config.get("adapter_version")
     if version == "1.1.0":
         _validate_capability_profiles(config)
-    elif version == "1.2.0":
+    elif version in {"1.2.0", "1.3.0"}:
         _validate_portable_capability_profiles(config)
     else:
         raise ProtocolError("unsupported transport adapter version")
@@ -653,8 +682,16 @@ def load_strict_transport_adapter() -> StrictTransportAdapter:
 
 
 def load_portable_transport_adapter() -> StrictTransportAdapter:
-    """Load v1.2 for new dry-runs and separately authorized API calls."""
-    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.2.0")
+    """Load v1.3 for new dry-runs and separately authorized API calls."""
+    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.3.0")
+
+
+def load_portable_transport_adapter_v1_2() -> StrictTransportAdapter:
+    """Load immutable v1.2 for verification of historical portable receipts."""
+    return _load_transport_adapter(
+        PORTABLE_TRANSPORT_ADAPTER_V1_2_CONFIG_PATH,
+        expected_version="1.2.0",
+    )
 
 
 def select_capability_profile(
@@ -883,6 +920,9 @@ def transport_provenance(
     }
     request_downgrade_applied = bool(profile.get("request_downgrade_applied", False))
     request_downgrade_details = copy.deepcopy(profile.get("request_downgrade_details", []))
+    response_coordinate_mode = profile.get(
+        "response_coordinate_mode", RESPONSE_COORDINATE_MODE_REJECT_INVALID
+    )
     return {
         "canonical_protocol_version": strict_adapter.canonical_protocol_version,
         "canonical_schema_path": strict_adapter.canonical_schema_path,
@@ -914,6 +954,7 @@ def transport_provenance(
             "response_format_mode": "json_schema_strict",
         },
         "semantic_contract_downgrade_applied": False,
+        "response_coordinate_mode": response_coordinate_mode,
         "request_downgrade_applied": request_downgrade_applied,
         "request_downgrade_details": request_downgrade_details,
     }

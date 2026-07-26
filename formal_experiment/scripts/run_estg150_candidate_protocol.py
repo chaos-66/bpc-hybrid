@@ -217,6 +217,10 @@ def dry_run(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
     print(f"transport_schema_sha256={strict_adapter.transport_schema_sha256}")
     print(f"canonical_serializer_sha256={lock['serializer_sha256']}")
     print(f"capability_profile_status={prepared.capability_profile['status']}")
+    print(
+        "response_coordinate_mode="
+        f"{prepared.capability_profile.get('response_coordinate_mode', 'reject_invalid')}"
+    )
     print(f"structured_outputs_preflight_passed={str(strict_adapter.transport_preflight['passed']).lower()}")
     print(f"first_transport_request_sha256={transport_sha256}")
     print(
@@ -406,6 +410,9 @@ def prepare_c2_offline(args: argparse.Namespace, assets: Any, lock: dict[str, An
                 "server_output_enforcement": prepared.capability_profile[
                     "server_output_enforcement"
                 ],
+                "response_coordinate_mode": prepared.capability_profile[
+                    "response_coordinate_mode"
+                ],
                 "request_downgrade_applied": prepared.capability_profile[
                     "request_downgrade_applied"
                 ],
@@ -524,6 +531,9 @@ def prepare_c2_offline(args: argparse.Namespace, assets: Any, lock: dict[str, An
         "request_downgrade_applied": bool(
             first_prepared.capability_profile["request_downgrade_applied"]
         ),
+        "response_coordinate_mode": first_prepared.capability_profile[
+            "response_coordinate_mode"
+        ],
         "budget": {
             "authorization_status": "offline_configuration_only_not_api_authorization",
             "maximum_calls": args.max_calls,
@@ -728,6 +738,7 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
     final_records: list[dict[str, Any]] = []
     transport_request_sha256s: list[str] = []
     canonical_validation_passes = 0
+    coordinate_canonicalization_applied_count = 0
     active_stem: str | None = None
     active_prepared: Any = first_prepared
     active_transport_request_sha256: str | None = None
@@ -821,15 +832,22 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
                     expected_sample_id=sample["sample_id"],
                     frozen_candidate_text_en=sample["frozen_candidate_text_en"],
                     schema=assets.schema,
+                    response_coordinate_mode=prepared.capability_profile.get(
+                        "response_coordinate_mode", "reject_invalid"
+                    ),
                 )
+                coordinate_receipt = metadata["response_coordinate_canonicalization"]
                 active_local_canonical_validation = {
                     "performed": True,
                     "passed": True,
                     "schema_path": strict_adapter.canonical_schema_path,
                     "schema_sha256": strict_adapter.canonical_schema_sha256,
                     "checks": metadata["validation"],
+                    "response_coordinate_canonicalization": coordinate_receipt,
                 }
                 canonical_validation_passes += 1
+                if coordinate_receipt["applied"]:
+                    coordinate_canonicalization_applied_count += 1
                 append_jsonl(
                     manifest_path,
                     {
@@ -874,6 +892,9 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
             "all_passed": canonical_validation_passes == request_count,
             "schema_path": strict_adapter.canonical_schema_path,
             "schema_sha256": strict_adapter.canonical_schema_sha256,
+            "coordinate_canonicalization_applied_count": (
+                coordinate_canonicalization_applied_count
+            ),
         }
         summary_provenance = transport_provenance(
             first_prepared,

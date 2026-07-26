@@ -7,6 +7,7 @@ It never loads Layer D, Layer E, Gold, or evaluation-derived sidecars.
 """
 from __future__ import annotations
 
+import copy
 import datetime as dt
 import hashlib
 import http.client
@@ -40,6 +41,8 @@ NORMATIVE_CUE_RE = re.compile(
     r"is\s+prohibited|are\s+prohibited|forbidden|means|is\s+defined\s+as)\b",
     re.IGNORECASE,
 )
+RESPONSE_COORDINATE_MODE_REJECT_INVALID = "reject_invalid"
+RESPONSE_COORDINATE_MODE_UNIQUE_EXACT = "deterministic_exact_text_unique_reanchor"
 
 
 class ProtocolError(RuntimeError):
@@ -511,6 +514,183 @@ def require_inside_clause(start: int, end: int, clause_start: int, clause_end: i
         raise CandidateValidationError(f"{path} is outside its clause_span")
 
 
+def canonicalize_response_coordinates(
+    value: dict[str, Any], *, mode: str
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Canonicalize only character coordinates from exact model-provided text.
+
+    The unique-exact mode never changes translation text, span text, labels,
+    normalized values, IDs, relations, or collection membership.  A coordinate
+    is changed only when the unchanged span text has exactly one occurrence in
+    its parent range.  Zero or multiple matches fail closed.
+    """
+    if mode not in {
+        RESPONSE_COORDINATE_MODE_REJECT_INVALID,
+        RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
+    }:
+        raise ProtocolError(f"unsupported response coordinate mode: {mode!r}")
+
+    candidate = copy.deepcopy(value)
+    raw_sha256 = sha256_bytes(canonical_json_bytes(value))
+    if mode == RESPONSE_COORDINATE_MODE_REJECT_INVALID:
+        return candidate, {
+            "mode": mode,
+            "performed": False,
+            "applied": False,
+            "changed_span_count": 0,
+            "changes": [],
+            "semantic_content_unchanged": True,
+            "ambiguous_match_policy": "fail_closed",
+            "raw_candidate_sha256": raw_sha256,
+            "canonicalized_candidate_sha256": raw_sha256,
+        }
+
+    try:
+        source = candidate["translation"]["proposed_text_en"]
+        clauses = candidate["clauses"]
+    except (KeyError, TypeError) as exc:
+        raise CandidateValidationError(
+            "response coordinate canonicalization requires canonical translation and clauses"
+        ) from exc
+    if not isinstance(source, str) or not isinstance(clauses, list):
+        raise CandidateValidationError(
+            "response coordinate canonicalization requires string proposed_text_en and clause array"
+        )
+
+    changes: list[dict[str, Any]] = []
+
+    def reanchor(span: Any, *, lower: int, upper: int, path: str) -> tuple[int, int]:
+        if not isinstance(span, dict):
+            raise CandidateValidationError(f"{path} must be an object before coordinate canonicalization")
+        text = span.get("text")
+        start = span.get("start")
+        end = span.get("end")
+        if (
+            isinstance(text, str)
+            and text
+            and isinstance(start, int)
+            and not isinstance(start, bool)
+            and isinstance(end, int)
+            and not isinstance(end, bool)
+            and lower <= start < end <= upper
+            and source[start:end] == text
+        ):
+            return start, end
+        if not isinstance(text, str) or not text:
+            raise CandidateValidationError(
+                f"{path}.text is unavailable for exact coordinate canonicalization"
+            )
+        matches: list[tuple[int, int]] = []
+        cursor = source.find(text, lower, upper)
+        while cursor >= 0:
+            match_end = cursor + len(text)
+            if match_end <= upper:
+                matches.append((cursor, match_end))
+            cursor = source.find(text, cursor + 1, upper)
+        if len(matches) != 1:
+            raise CandidateValidationError(
+                f"{path} exact coordinate canonicalization requires one match inside its parent; "
+                f"found {len(matches)}"
+            )
+        new_start, new_end = matches[0]
+        changes.append(
+            {
+                "path": path,
+                "from": {"start": start, "end": end},
+                "to": {"start": new_start, "end": new_end},
+            }
+        )
+        span["start"] = new_start
+        span["end"] = new_end
+        return new_start, new_end
+
+    for clause_index, clause in enumerate(clauses):
+        if not isinstance(clause, dict):
+            raise CandidateValidationError(
+                f"clauses[{clause_index}] must be an object before coordinate canonicalization"
+            )
+        clause_path = f"clauses[{clause_index}]"
+        clause_start, clause_end = reanchor(
+            clause.get("clause_span"),
+            lower=0,
+            upper=len(source),
+            path=f"{clause_path}.clause_span",
+        )
+        modality = clause.get("modality")
+        if not isinstance(modality, dict) or not isinstance(modality.get("evidence"), list):
+            raise CandidateValidationError(
+                f"{clause_path}.modality.evidence is unavailable for coordinate canonicalization"
+            )
+        for evidence_index, span in enumerate(modality["evidence"]):
+            reanchor(
+                span,
+                lower=clause_start,
+                upper=clause_end,
+                path=f"{clause_path}.modality.evidence[{evidence_index}]",
+            )
+        for field in ("actors", "actions", "conditions", "constraints", "exceptions"):
+            spans = clause.get(field)
+            if not isinstance(spans, list):
+                raise CandidateValidationError(
+                    f"{clause_path}.{field} is unavailable for coordinate canonicalization"
+                )
+            for span_index, span in enumerate(spans):
+                reanchor(
+                    span,
+                    lower=clause_start,
+                    upper=clause_end,
+                    path=f"{clause_path}.{field}[{span_index}]",
+                )
+        relations = clause.get("order_relations")
+        if not isinstance(relations, list):
+            raise CandidateValidationError(
+                f"{clause_path}.order_relations is unavailable for coordinate canonicalization"
+            )
+        for relation_index, relation in enumerate(relations):
+            evidence = relation.get("evidence") if isinstance(relation, dict) else None
+            if not isinstance(evidence, list):
+                raise CandidateValidationError(
+                    f"{clause_path}.order_relations[{relation_index}].evidence is unavailable "
+                    "for coordinate canonicalization"
+                )
+            for evidence_index, span in enumerate(evidence):
+                reanchor(
+                    span,
+                    lower=clause_start,
+                    upper=clause_end,
+                    path=(
+                        f"{clause_path}.order_relations[{relation_index}]."
+                        f"evidence[{evidence_index}]"
+                    ),
+                )
+
+    def without_coordinates(node: Any) -> Any:
+        if isinstance(node, dict):
+            return {
+                key: without_coordinates(child)
+                for key, child in node.items()
+                if key not in {"start", "end"}
+            }
+        if isinstance(node, list):
+            return [without_coordinates(child) for child in node]
+        return node
+
+    if without_coordinates(candidate) != without_coordinates(value):
+        raise ProtocolError("response coordinate canonicalization changed semantic content")
+    canonicalized_sha256 = sha256_bytes(canonical_json_bytes(candidate))
+    return candidate, {
+        "mode": mode,
+        "performed": True,
+        "applied": bool(changes),
+        "changed_span_count": len(changes),
+        "changes": changes,
+        "semantic_content_unchanged": True,
+        "ambiguous_match_policy": "fail_closed",
+        "raw_candidate_sha256": raw_sha256,
+        "canonicalized_candidate_sha256": canonicalized_sha256,
+    }
+
+
 def extract_provider_response_envelope(
     response_bytes: bytes,
     *,
@@ -561,6 +741,7 @@ def extract_provider_response(
     expected_sample_id: str,
     frozen_candidate_text_en: str,
     schema: dict[str, Any],
+    response_coordinate_mode: str = RESPONSE_COORDINATE_MODE_REJECT_INVALID,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     _response, content, metadata = extract_provider_response_envelope(
         response_bytes, adapter=adapter
@@ -575,12 +756,18 @@ def extract_provider_response(
         raise CandidateValidationError("structured-output content is invalid JSON; repair is forbidden") from exc
     if not isinstance(candidate, dict):
         raise CandidateValidationError("structured-output content is not an object")
+    validate_schema_subset(candidate, schema, root_schema=schema, path="$model_output")
+    candidate, coordinate_receipt = canonicalize_response_coordinates(
+        candidate,
+        mode=response_coordinate_mode,
+    )
     validation = validate_candidate(
         candidate,
         expected_sample_id=expected_sample_id,
         frozen_candidate_text_en=frozen_candidate_text_en,
         schema=schema,
     )
+    metadata["response_coordinate_canonicalization"] = coordinate_receipt
     metadata["validation"] = validation
     return candidate, metadata
 

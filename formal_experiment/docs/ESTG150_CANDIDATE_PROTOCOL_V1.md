@@ -375,3 +375,49 @@ valid candidates, C1=false for this GPT-4o attempt, C2=false, evaluation=0, and
 precision/recall=null. It did not read Layer D, Layer E, or Gold, did not echo
 credentials, did not repair content, and did not make a second API call. The
 previous successful gpt-5.6-luna C1 receipt and Event 121 remain unchanged.
+
+### 7.9 portable adapter v1.3: deterministic coordinate canonicalization
+
+The gpt-4o runtime in section 7.8 showed that portable model compatibility had
+one remaining non-semantic defect: the relay returned all six semantic element
+collections and exact span text, but supplied character coordinates unrelated
+to its own proposed English string. Adapter v1.3 makes the smallest versioned
+protocol correction needed for this class of output. It does not modify B0,
+D1/H1, any EStG-150 prompt asset, the canonical schema, the transport schema,
+the canonical serializer, or any model-provided semantic content.
+
+For every registered capability profile, v1.3 applies
+`deterministic_exact_text_unique_reanchor` before the unchanged canonical local
+validator. A `start`/`end` pair may be replaced only when the unchanged
+model-provided `text` has exactly one byte-for-byte Python-string match inside
+its parent range: clause spans search the complete `proposed_text_en`; modality,
+actor, action, condition, constraint, exception, and order evidence search only
+inside their canonicalized clause. Zero matches or multiple matches fail
+closed. Translation text/decision, span text, modality labels, normalized
+values, IDs, relations, array membership, confidence, and rationale are
+immutable. Every successful reanchor emits old/new coordinates, raw and
+canonicalized candidate hashes, changed-span count, and a
+`semantic_content_unchanged=true` receipt. Content retry remains forbidden.
+
+The immutable raw ChatAnywhere gpt-4o response from section 7.8 is the primary
+offline regression. Without coordinate canonicalization it still fails at the
+original `clause_span`; through v1.3 it changes exactly five coordinate pairs
+(clause, modality evidence, actor, action, and condition) and then passes the
+canonical schema, exact-span, and normative-cue checks. Removing `start` and
+`end` recursively from the before/after objects yields identical JSON. Thus the
+six-element semantic answer is preserved rather than post-hoc rewritten.
+
+All seven registered provider/model profiles pass offline transport preflight
+under `estg150_openai_strict_transport_schema_adapter@1.3.0`. GPT-4o retains
+strict server-side `json_schema` and `request_downgrade_applied=false`; its
+transport request SHA-256 remains
+`08c7c1fc345688b3070a644bec452c23aa2e5c7d2831d966c94ba046e21c201a`
+because v1.3 changes only the local response boundary. The canonical schema,
+serializer, semantic fixture, and transport schema hashes remain the four
+values locked in section 7.7.
+
+This correction is not retroactive: the v1.2 gpt-4o run remains a frozen failed
+C1 attempt, and the successful gpt-5.6-luna C1/Event 121 remains unchanged. No
+API was called while developing or testing v1.3, billed tokens and cost are
+zero, C2 did not start, and evaluation/P/R remain absent. A new GPT-4o runtime
+claim requires a new run ID and a new explicit API authorization.

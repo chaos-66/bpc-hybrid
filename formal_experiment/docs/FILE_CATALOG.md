@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-07-16  
-**收录文件**：278 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`__pycache__/`）  
+**生成日期**：2026-07-26  
+**收录文件**：380 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`__pycache__/`）  
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -36,10 +36,7 @@
 | `_retired/docs/2026-07/STATUS_REPORT.md` | 退役归档 | 说明、规范或研究文档 |
 | `_retired/docs/2026-07/STATUS_SNAPSHOT_2026-07-12.md` | 退役归档 | 说明、规范或研究文档 |
 | `_retired/docs/2026-07/SUN2024_FINAL_GAP_AND_ROADMAP.md` | 退役归档 | 说明、规范或研究文档 |
-| `_retired/logs/AUDIT_LOG_legacy_through_event_29.md` | 退役归档 | 说明、规范或研究文档 |
 | `_retired/MANIFEST.md` | 退役归档 | 结构或迁移清单 |
-| `_retired/outputs/reports/2026-07/experiment_design_overview.svg` | 退役归档 | 历史可视化或报告 |
-| `_retired/outputs/reports/2026-07/experiment_overview_for_supervisor_2026-07-12.html` | 退役归档 | 历史可视化或报告 |
 | `_retired/README.md` | 退役归档 | 所在目录的入口说明 |
 | `_retired/scripts/build_user_override_review_pack.py` | 退役归档 | Python 实现、脚本或测试 |
 
@@ -54,11 +51,21 @@
 | 文件 | 状态 | 用途 |
 |---|---|---|
 | `configs/datasets/sun_modality_dataset.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/estg150_ai_review_gpt56sol_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/estg150_candidate_preregistration_template_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/estg150_candidate_preregistration_template_v1_1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/estg150_candidate_protocol_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/estg150_candidate_protocol_v1.lock.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_layer_d.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/estg150_openai_strict_transport_schema_adapter_v1_1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/estg150_openai_strict_transport_schema_adapter_v1_2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/estg150_openai_strict_transport_schema_adapter_v1_3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/experiment_contract.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/paths.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/dataset_manifest.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/estg150_ai_review_model_output.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg_150_canonical_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/human_gold_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage2_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -75,6 +82,92 @@
 | `data/development/estg/estg_selected_150_de.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/estg_selected_150_en_llm_translated.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/estg_sentences_de.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_deepseek_v4_pro_diag_v2/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_deepseek_v4_pro_diag_v2/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_deepseek_v4_pro_diag_v2/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_deepseek_v4_pro_diag_v2/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_deepseek_v4_pro_diag_v2/responses/001_synthetic_c1_utf8_full_extract.http_error.body` | 开发/溯源 | 项目文件 |
+| `data/development/estg/llm_candidate_runs/c1_deepseek_v4_pro_transport_pilot_v1/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_deepseek_v4_pro_transport_pilot_v1/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_deepseek_v4_pro_transport_pilot_v1/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_deepseek_v4_pro_transport_pilot_v1/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt35_turbo_diag_v2/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt35_turbo_diag_v2/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt35_turbo_diag_v2/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt35_turbo_diag_v2/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt35_turbo_diag_v2/responses/001_synthetic_c1_utf8_full_extract.http_error.body` | 开发/溯源 | 项目文件 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt41_nano_diag_v2/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt41_nano_diag_v2/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt41_nano_diag_v2/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt41_nano_diag_v2/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt41_nano_diag_v2/responses/001_synthetic_c1_utf8_full_extract.http_error.body` | 开发/溯源 | 项目文件 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_diag_v2/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_diag_v2/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_diag_v2/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_diag_v2/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_2_runtime_v1/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_2_runtime_v1/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_2_runtime_v1/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_2_runtime_v1/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_2_runtime_v1/responses/001_synthetic_c1_utf8_full_extract.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_transport_pilot_v1/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_transport_pilot_v1/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_transport_pilot_v1/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_transport_pilot_v1/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_diag_v2/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_diag_v2/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_diag_v2/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_diag_v2/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_diag_v2/responses/001_synthetic_c1_utf8_full_extract.http_error.body` | 开发/溯源 | 项目文件 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_strict_v1_1_pilot_v1/accounting_correction.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_strict_v1_1_pilot_v1/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_strict_v1_1_pilot_v1/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_strict_v1_1_pilot_v1/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_strict_v1_1_pilot_v1/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt54_nano_strict_v1_1_pilot_v1/responses/001_synthetic_c1_utf8_full_extract.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_diag_v2/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_diag_v2/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_diag_v2/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_diag_v2/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_diag_v2/responses/001_synthetic_c1_utf8_full_extract.http_error.body` | 开发/溯源 | 项目文件 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_strict_v1_1_pilot_v1/candidates.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_strict_v1_1_pilot_v1/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_strict_v1_1_pilot_v1/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_strict_v1_1_pilot_v1/request_manifest.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_strict_v1_1_pilot_v1/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_strict_v1_1_pilot_v1/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_strict_v1_1_pilot_v1/responses/001_synthetic_c1_utf8_full_extract.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt5_nano_diag_v2/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt5_nano_diag_v2/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt5_nano_diag_v2/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt5_nano_diag_v2/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt5_nano_diag_v2/responses/001_synthetic_c1_utf8_full_extract.http_error.body` | 开发/溯源 | 项目文件 |
+| `data/development/estg/llm_candidate_runs/c1_transport_compatibility_matrix_20260725_v1/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_preparation.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/001_estg_000080_pass_a.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/001_estg_000080_pass_a.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/002_estg_000080_pass_b.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/002_estg_000080_pass_b.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/003_estg_000070_pass_a.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/003_estg_000070_pass_a.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/004_estg_000070_pass_b.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/004_estg_000070_pass_b.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/005_estg_000062_pass_a.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/005_estg_000062_pass_a.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/006_estg_000062_pass_b.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/006_estg_000062_pass_b.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/accounting_correction.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/requests/001_estg_000080_pass_a.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/requests/001_estg_000080_pass_a.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_live_v1/responses/001_estg_000080_pass_a.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/codex_internal_gpt56sol_pilot3_v1/manifest.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/codex_internal_gpt56sol_pilot3_v1/pass_a_candidates.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/codex_internal_gpt56sol_pilot3_v1/pass_b_candidates.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/codex_internal_gpt56sol_pilot3_v1/run_config.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/codex_internal_gpt56sol_pilot3_v1/run_summary.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/gdpr50/r15_gdpr50_candidate_samples.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/gdpr50/r15_gdpr50_gold.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/gold_review/sun_stage2_gold_review_candidates.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
@@ -93,17 +186,12 @@
 | `data/development/modality/sun_estg_modality_v1/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/modality/sun_estg_modality_v1/quarantine_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/modality/sun_estg_modality_v1/README.md` | 开发/溯源 | 所在目录的入口说明 |
-| `data/development/modality/sun_estg_modality_v1/records.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/modality/sun_estg_modality_v1/schema_audit.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/modality/sun_estg_modality_v1/split_summary.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
-| `data/development/modality/sun_estg_modality_v1/splits/dev.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
-| `data/development/modality/sun_estg_modality_v1/splits/test.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
-| `data/development/modality/sun_estg_modality_v1/splits/train.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/predictions/exploratory_spacy.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/predictions/sun_llm_fallback.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/predictions/sun_rule_only.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/sun_modality/raw/.gitignore` | 开发/溯源 | 项目文件 |
-| `data/development/sun_modality/raw/Decision_Logic_data.zip` | 开发/溯源 | 项目文件 |
 | `data/development/sun_modality/source_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/gold/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
 | `data/input/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
@@ -120,6 +208,7 @@
 | `docs/ANNOTATION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
 | `docs/B0_RECONSTRUCTION_DESIGN.md` | 活动 | 说明、规范或研究文档 |
 | `docs/DIRECTORY_GUIDE.md` | 活动 | 中文目录职责地图 |
+| `docs/ESTG150_CANDIDATE_PROTOCOL_V1.md` | 活动 | 说明、规范或研究文档 |
 | `docs/ESTG150_DATA_MAP.md` | 活动 | 说明、规范或研究文档 |
 | `docs/EVAL_3DIM_SPEC.md` | 活动 | 说明、规范或研究文档 |
 | `docs/EXPERIMENT_EVENTS.jsonl` | 活动 | 追加式机器实验事件 |
@@ -131,6 +220,7 @@
 | `docs/LLM_BUDGET_PROPOSAL_2026-07-12.md` | 活动 | 说明、规范或研究文档 |
 | `docs/MASTER_PIPELINE.md` | 活动 | 唯一完整三阶段路线与任务树 |
 | `docs/PROJECT_AUDIT.md` | 活动 | 唯一实时项目状态（兼容文件名） |
+| `docs/REAL_WORLD_ISSUE_REGISTER.md` | 活动 | 说明、规范或研究文档 |
 | `docs/REPRODUCTION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
 | `docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/BARRIENTOS_LLM_ROLE.md` | 研究证据 | 说明、规范或研究文档 |
@@ -156,7 +246,6 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
-| `outputs/README.md` | 活动 | 所在目录的入口说明 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 
 ## `paper`
@@ -171,6 +260,9 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `prompts/estg150_ai_review/internal_sol_full_extract_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/estg150_ai_review/pass_a_blind_review_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/estg150_ai_review/pass_b_adjudicator_v1.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/direct_llm_few_shot_fixtures.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `prompts/sun_compat/direct_llm_sun_record_prompt.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/dry_run_back_translation.md` | 活动 | 说明、规范或研究文档 |
@@ -237,6 +329,8 @@
 | `scripts/rebuild_d1_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
 | `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_estg150_ai_review.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_llm_zh_aid.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_fixture_harness.py` | 活动 | Python 实现、脚本或测试 |
@@ -295,6 +389,8 @@
 | `src/bpc_hybrid/sun_style/violation_detection.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/audit.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/estg150_c1_transport.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/estg150_service.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/estg150_validator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/gold.py` | 活动 | Python 实现、脚本或测试 |
@@ -312,6 +408,10 @@
 | `tests/fixtures/bpmn/minimal_bpmn_incorrect_actor.bpmn` | 活动 | 流程模型或测试 fixture |
 | `tests/fixtures/bpmn/minimal_bpmn_missing_action.bpmn` | 活动 | 流程模型或测试 fixture |
 | `tests/fixtures/bpmn/minimal_bpmn_out_of_order.bpmn` | 活动 | 流程模型或测试 fixture |
+| `tests/fixtures/estg150_candidate_protocol/canonical_semantic_request_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/estg150_candidate_protocol/strict_transport_invalid_candidate_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/estg150_candidate_protocol/strict_transport_valid_candidate_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/estg150_candidate_protocol/synthetic_record_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/public_marker_lexicon/marker_cases_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/sun_compat_incorrect_actor.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/sun_compat_missing_action.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -336,6 +436,8 @@
 | `tests/fixtures/sun_modality/synthetic_unknown_label.csv` | 活动 | 项目文件 |
 | `tests/test_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg_150_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg_150_review_tool.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg_human_review.py` | 活动 | Python 实现、脚本或测试 |

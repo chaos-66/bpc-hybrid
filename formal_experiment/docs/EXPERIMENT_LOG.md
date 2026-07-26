@@ -1427,3 +1427,59 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Independent C2 authorization ceilings: 6 content calls, 78000 tokens, 1.92 CA at 7/42 CA per million input/output tokens. Strict transport request SHA 9add2487dd36233b3e258ae451a27cebaa5de6b10de70a18b08ef7d527960aac matched offline preparation; no downgrade. Original failure/preregistration/raw response preserved; hash-bound accounting correction added because the immutable failure receipt recorded zero usage before the finish-reason accounting-order fix. No API retry for correction. Temporary key environment variable cleared. Layer D/E/Gold not read during generation; no evaluation.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T09:03:41.748050+00:00 - Add EStG-150 portable transport adapter v1.2 with GPT-4o strict-schema and JSON-mode compatibility profiles
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1449 passed, 22 skipped in 217.94s (0:03:37)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`5643e5f293ccf8c2cd20734e0af58e8c6213910b`；相关未提交路径：422 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：B0, D1/H1, candidate prompt assets, canonical schema, serializer, frozen v1.1 receipts, Event 121, Layer D/E/Gold, and P/R remain unchanged. Full audit: 1449 passed, 22 skipped, Integrity=True, Errors=0, Passes=47.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T10:38:25.061890+00:00 - Freeze authorized ChatAnywhere gpt-4o single-call C1 fail-closed runtime evidence
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=c1_relay_gpt4o_portable_v1_2_runtime_v1；阶段=C1；方法=relay_openai_compatible ChatAnywhere gpt-4o adapter v1.2；状态=失败（`failed`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_candidate_protocol.py --stage c1 --execute-api --provider-adapter relay_openai_compatible --model gpt-4o --endpoint https://api.chatanywhere.tech/v1/chat/completions --confirm-authorized-provider-budget --run-id c1_relay_gpt4o_portable_v1_2_runtime_v1 --max-calls 1 --max-total-tokens 13000 --max-cost 0.60 --cost-currency CA --input-price-per-million 17.5 --output-price-per-million 70 --api-key-env-name ESTG150_CHATANYWHERE_KEY --timeout-seconds 180`
+- manifest：data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_2_runtime_v1/failure.json
+- 结果摘要：One real call, no retry; provider-reported gpt-4o stop; 1201 input plus 287 output equals 1488 tokens; 0.0411075 CA; six semantic collections returned but exact-span validation failed; valid candidates 0; C2 false; evaluation 0; P/R null.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1449 passed, 22 skipped in 259.23s (0:04:19)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`4be636e1d519edfa461939784b13939b47af6f25`；相关未提交路径：423 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Transport preflight passed; request SHA 08c7c1fc345688b3070a644bec452c23aa2e5c7d2831d966c94ba046e21c201a; request_downgrade_applied=false; Layer D/E/Gold not read; credential echo false; no second API call.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T11:01:32.111311+00:00 - Add EStG-150 portable adapter v1.3 deterministic exact-text coordinate canonicalization and GPT-4o real-response offline regression
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1451 passed, 22 skipped in 257.43s (0:04:17)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`1b9c8089a7b8f274b8d61fed4039525ec6690e87`；相关未提交路径：424 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：B0, D1/H1, all EStG-150 prompt bytes, canonical schema, serializer, semantic fixture, and transport schema remain unchanged. v1.3 changes only start/end when unchanged span text has exactly one match inside its parent; zero/multiple matches fail closed; semantic content repair and content retry remain forbidden. Seven profiles pass offline preflight. Immutable GPT-4o v1.2 raw response replays with five coordinate changes and passes schema/exact-span/cue validation; no API, C2, evaluation, or P/R.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T11:08:25.702806+00:00 - Finalize tested EStG-150 portable adapter v1.3 GPT-4o coordinate-portability correction
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1451 passed, 22 skipped in 260.58s (0:04:20)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`1b9c8089a7b8f274b8d61fed4039525ec6690e87`；相关未提交路径：425 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Final commit-state verification after restoring the pre-existing mixed-worktree audit.py content: 1451 passed, 22 skipped; Integrity true. Adapter v1.3 and tests preserve B0, D1/H1, prompt/schema/serializer bytes and semantic content; only uniquely exact parent-scoped start/end coordinates may be canonicalized with receipt; ambiguous/unmatched text fails closed. Seven profiles pass offline preflight; real GPT-4o v1.2 response passes offline v1.3 replay after five coordinate-only changes. No API, C2, evaluation, or P/R.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
