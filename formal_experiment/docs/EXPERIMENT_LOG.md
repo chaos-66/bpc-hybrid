@@ -1500,3 +1500,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Authorized ceilings: 1 content call, 13000 total tokens, 0.60 CA at 17.5/70 CA per million input/output tokens. Request SHA 08c7c1fc345688b3070a644bec452c23aa2e5c7d2831d966c94ba046e21c201a; request_downgrade_applied=false; response_coordinate_mode=deterministic_exact_text_unique_reanchor; semantic_content_unchanged=true; provider identity remains unverified relay report. B0, D1/H1, canonical prompt/schema/serializer/transport hashes unchanged. Layer D/E/Gold not read during generation; no evaluation or C2. Credential stored outside the repository in Windows Credential Manager and not printed.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T11:58:59.670393+00:00 - Freeze GPT-4o portable v1.3 C2 six-request offline preregistration
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1451 passed, 22 skipped in 227.65s (0:03:47)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`507ccfc60d786a40305b453a4a30f7341f55470b`；相关未提交路径：430 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：C2 offline-only run_id=c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1; samples 0/1/2, each Pass A then Pass B, exactly six prepared requests; all six strict transport preflights passed; request_downgrade_applied=false; response coordinate mode deterministic_exact_text_unique_reanchor. Transport SHAs: 520a254aed2c6df29e466084a5ac0ea5c869fdc8e406a460246c5bbd53959fb3, 4df5de55f13800a35100a61ed2dfd59f0127e31e29cda92bc07b61530ef55822, 4dacfd0c34683974edcc80bef3bd7ceb0c4bb845e58c9e0a9e883ff4ea3c3afc, 2a95a940ec4b6e8d4aa1fb1935214cc9d22f67f2019a150737b19ec3bd85d72c, d805c1c3c94f39f4b0f41a9b17c701edb58cc8c5ca0f4da922d3986c710d6c6a, e29683c32ff7bb7da3f1fc786afcd875a2c0e1820ef41615ca725065e42e277b. Pass A hashes are exact for locked inputs/model/profile; Pass B hashes are offline fixture-only and must bind actual Pass A output in any separately authorized live run. Offline budget configuration only: 6 calls, 78000 tokens, 3.60 CA, prices 17.5/70 CA per million; not API authorization. Canonical schema/serializer/adapter/transport hashes unchanged; Layer D/E/Gold not read; credential not read; real API false; billed tokens 0; C2 not started; evaluation 0; P/R null.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

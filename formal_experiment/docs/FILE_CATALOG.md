@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-07-26  
-**收录文件**：387 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`__pycache__/`）  
+**收录文件**：401 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`__pycache__/`）  
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -150,6 +150,20 @@
 | `data/development/estg/llm_candidate_runs/c1_relay_gpt5_nano_diag_v2/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/llm_candidate_runs/c1_relay_gpt5_nano_diag_v2/responses/001_synthetic_c1_utf8_full_extract.http_error.body` | 开发/溯源 | 项目文件 |
 | `data/development/estg/llm_candidate_runs/c1_transport_compatibility_matrix_20260725_v1/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_preparation.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/001_estg_000080_pass_a.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/001_estg_000080_pass_a.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/002_estg_000080_pass_b.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/002_estg_000080_pass_b.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/003_estg_000070_pass_a.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/003_estg_000070_pass_a.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/004_estg_000070_pass_b.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/004_estg_000070_pass_b.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/005_estg_000062_pass_a.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/005_estg_000062_pass_a.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/006_estg_000062_pass_b.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/offline_requests/006_estg_000062_pass_b.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_preparation.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/001_estg_000080_pass_a.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/llm_candidate_runs/c2_relay_gpt56_luna_strict_v1_1_pilot3_dry_run_v1/offline_requests/001_estg_000080_pass_a.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
