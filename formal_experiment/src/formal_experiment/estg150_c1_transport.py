@@ -30,6 +30,9 @@ TRANSPORT_ADAPTER_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_1.json"
 )
 PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH = (
+    ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_6.json"
+)
+PORTABLE_TRANSPORT_ADAPTER_V1_5_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_5.json"
 )
 PORTABLE_TRANSPORT_ADAPTER_V1_4_CONFIG_PATH = (
@@ -76,7 +79,7 @@ SPAN_TEXT_GUARD_V1_4_INSTRUCTION = (
     "span. Internally verify every slice before returning. Output JSON only.\n"
     "[END EXACT SPAN OUTPUT INVARIANT]"
 )
-SPAN_TEXT_GUARD_INSTRUCTION = (
+SPAN_TEXT_GUARD_V1_5_INSTRUCTION = (
     "[BEGIN EXACT SPAN OUTPUT INVARIANT]\n"
     "Before emitting JSON, first make translation.decision consistent with the exact English "
     "candidate supplied for this review: if translation.proposed_text_en is character-for-character "
@@ -94,6 +97,15 @@ SPAN_TEXT_GUARD_INSTRUCTION = (
     "unsupported_or_ambiguous instead of fabricating a span. Internally verify the decision/text pair "
     "and every slice before returning. Output JSON only.\n"
     "[END EXACT SPAN OUTPUT INVARIANT]"
+)
+SPAN_TEXT_GUARD_INSTRUCTION = SPAN_TEXT_GUARD_V1_5_INSTRUCTION.replace(
+    "For optional semantic collections, if no exact contiguous source span exists, use an empty "
+    "array",
+    "If the visible normative cue text occurs more than once inside the same clause_span, expand "
+    "modality.evidence.text to the shortest verbatim contiguous cue-containing phrase that occurs "
+    "exactly once in that clause; never choose an occurrence by guessing and never use cue-only "
+    "evidence when it is duplicated. For optional semantic collections, if no exact contiguous "
+    "source span exists, use an empty array",
 )
 EXPECTED_PROFILE_CONTRACT = {
     ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-5.6-luna"): {
@@ -571,7 +583,7 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
         EXPECTED_PORTABLE_PROFILE_POLICIES
         if version == "1.2.0"
         else EXPECTED_PORTABLE_V1_3_PROFILE_POLICIES
-        if version in {"1.3.0", "1.4.0", "1.5.0"}
+        if version in {"1.3.0", "1.4.0", "1.5.0", "1.6.0"}
         else None
     )
     if expected_policies is None:
@@ -618,7 +630,7 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
             response_mode,
             downgrade,
         )
-        if version in {"1.3.0", "1.4.0", "1.5.0"}:
+        if version in {"1.3.0", "1.4.0", "1.5.0", "1.6.0"}:
             coordinate_mode = profile.get("response_coordinate_mode")
             if coordinate_mode != RESPONSE_COORDINATE_MODE_UNIQUE_EXACT:
                 raise ProtocolError(
@@ -631,10 +643,12 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
     if observed != expected_policies:
         raise ProtocolError("locked seven-model portable capability profile contract drifted")
     guard = config.get("response_span_text_guard")
-    if version in {"1.4.0", "1.5.0"}:
+    if version in {"1.4.0", "1.5.0", "1.6.0"}:
         expected_instruction = (
             SPAN_TEXT_GUARD_V1_4_INSTRUCTION
             if version == "1.4.0"
+            else SPAN_TEXT_GUARD_V1_5_INSTRUCTION
+            if version == "1.5.0"
             else SPAN_TEXT_GUARD_INSTRUCTION
         )
         if guard != {
@@ -656,7 +670,7 @@ def _validate_adapter_profiles(config: dict[str, Any]) -> None:
     version = config.get("adapter_version")
     if version == "1.1.0":
         _validate_capability_profiles(config)
-    elif version in {"1.2.0", "1.3.0", "1.4.0", "1.5.0"}:
+    elif version in {"1.2.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0"}:
         _validate_portable_capability_profiles(config)
     else:
         raise ProtocolError("unsupported transport adapter version")
@@ -744,8 +758,16 @@ def load_strict_transport_adapter() -> StrictTransportAdapter:
 
 
 def load_portable_transport_adapter() -> StrictTransportAdapter:
-    """Load v1.5 for new dry-runs and separately authorized API calls."""
-    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.5.0")
+    """Load v1.6 for new dry-runs and separately authorized API calls."""
+    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.6.0")
+
+
+def load_portable_transport_adapter_v1_5() -> StrictTransportAdapter:
+    """Load immutable v1.5 for verification of historical guarded receipts."""
+    return _load_transport_adapter(
+        PORTABLE_TRANSPORT_ADAPTER_V1_5_CONFIG_PATH,
+        expected_version="1.5.0",
+    )
 
 
 def load_portable_transport_adapter_v1_4() -> StrictTransportAdapter:

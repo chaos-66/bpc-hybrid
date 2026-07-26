@@ -54,7 +54,7 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0026 | 2026-07-26 | EStG-150 candidate protocol / C2 | preregistration/provenance | C2 的 Pass B 请求内嵌同次运行新产生的 Pass A 输出，因此三条未来真实 Pass B request SHA 不可能在调用前诚实计算；旧 dry-run 还只预检第一条 Pass A | `mitigated` | 六槽位离线预检现全部落盘并锁 SHA；三条 Pass B 明确使用已验证历史 Pass A fixture、仅作 offline envelope preflight，未来真实 SHA 保持 deferred；C2=false、API=0；Event 122 |
 | RWI-0027 | 2026-07-26 | EStG-150 candidate protocol / C1–C2 | accounting/provenance | 可计费 response 在 canonical candidate 或 finish-reason 校验失败时，usage 可能未进入 failure receipt | `resolved` | 两份原 failure/raw response 均不改写；SHA-bound corrections 分别恢复 C1 的 2956 tokens/0.01728755 CA 与 C2 的 7839 tokens/0.282373 CA；runner 先计 envelope usage，再检查 finish reason/candidate；mocked invalid/length 回归；Events 123–124 |
 | RWI-0028 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/validation | GPT-4o Pass B 把逐字不变的译文标为 `edited`；runner 又错误地用原始英文而非同次 Pass A 文本校验 Pass B translation decision | `mitigated` | v1.5 增加 decision/text 生成前自检并让 Pass B 校验绑定同次 Pass A；旧响应仍 fail closed，57 项聚焦回归和六槽位离线 preflight 通过；真实 runtime 待新授权；Event 134 |
-| RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o v1.5 把两处 `shall` 合入同一 clause，却用重复的单词 `shall` 作 modality evidence 并给出错误坐标，唯一精确重锚无法判定目标 | `open` | v1.5 首条 Pass A 在 1/6 calls 后 fail closed；0 retry、无候选/评价/修补；原响应与失败收据冻结，等待版本化离线修复；Event 135 |
+| RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o v1.5 把两处 `shall` 合入同一 clause，却用重复的单词 `shall` 作 modality evidence 并给出错误坐标，唯一精确重锚无法判定目标 | `mitigated` | v1.6 仅在 transport self-check 增加“重复 cue 扩展为 clause 内唯一最短原文短语”；仍禁止猜测/修补/内容重试，旧响应仍 fail closed，六槽位离线 preflight 通过；真实 runtime 待新授权；Events 135–136 |
 
 ## 3. 详细记录
 
@@ -72,11 +72,22 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
   绑定到错误规范，构成未披露的语义修补。
 - **当前处置**：v1.5 runner 正确 fail closed，没有选择任一匹配、没有修改响应、没有内容重试，
   其余五条未调用。原 preregistration/request/response/failure 均冻结且不可覆盖。
+- **离线修复**：portable adapter v1.6 只在 transport-only 输出自检中增加一条规则：如果可见
+  normative cue 在同一 `clause_span` 内出现多次，`modality.evidence.text` 必须扩展为包含该 cue、
+  且在该 clause 内只出现一次的最短逐字连续短语；禁止猜测某次出现，重复时禁止只输出 cue。
+  `deterministic_exact_text_unique_reanchor`、canonical validator、schema、serializer、prompt、
+  response-repair/content-retry 禁令均保持不变，v1.5 由历史 loader 保留。
 - **运行证据**：1 content call、0 retry；provider 报告 `gpt-4o`、`finish_reason=stop`；
   1,661 input + 1,128 output = 2,789 tokens，0.1080275 CA；0 valid candidates，C2 started
   但未完成，evaluation=0、P/R=null，Layer D/E/Gold 未读取。
-- **状态**：`open`。必须先形成新的版本化生成边界并离线验证；本次授权不能转用于新版本。
-- **对应事件**：Event 135。
+- **离线验证**：真实 v1.5 raw response 回放仍因 `found 2` fail closed；唯一扩展短语的错误坐标可在
+  不改语义的前提下确定性重锚。59 项 candidate/transport 聚焦回归通过；
+  `c2_relay_gpt4o_portable_v1_6_pilot3_dry_run_v1` 的 6/6 strict transport preflight 通过，
+  `request_downgrade_applied=false`，API/key/network=0、billed tokens/cost=0、C2=false、
+  evaluation=0、P/R=null，Layer D/E/Gold 未读取。
+- **状态**：`mitigated`。离线生成边界已修复，但真实 GPT-4o 是否遵守新约束仍需新的明确 API 授权
+  和不可覆盖 live run ID；v1.5 授权不能转用，离线证据不足以标为 `resolved`。
+- **对应事件**：Events 135–136。
 
 ### RWI-0028 — C2 Pass B translation decision 与实际候选文本不一致
 

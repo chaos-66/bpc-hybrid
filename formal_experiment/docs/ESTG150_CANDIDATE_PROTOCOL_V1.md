@@ -583,3 +583,52 @@ made, zero candidates were frozen, C2 started but did not complete, and no
 evaluation occurred; P/R remain null. Layer D, Layer E, and Gold were not read.
 This runtime authorization is exhausted by the immutable failed run and cannot
 be transferred to a future adapter version.
+
+### 7.15 GPT-4o v1.6 duplicate-modality-cue offline mitigation
+
+Portable adapter v1.6 makes one transport-only addition to the v1.5 output
+self-check. If a visible normative cue occurs more than once inside the same
+`clause_span`, `modality.evidence.text` must be expanded to the shortest
+verbatim contiguous cue-containing phrase that occurs exactly once in that
+clause. The model must not guess an occurrence and must not emit cue-only
+evidence when that cue is duplicated. The unique-exact coordinate policy still
+fails closed on zero or multiple matches; response repair and content retry
+remain forbidden.
+
+The canonical prompt assets, canonical schema, serializer, transport schema,
+B0, and D1/H1 are unchanged. Their locked hashes remain, respectively,
+`fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9`,
+`d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef`,
+and `ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7`
+for canonical schema, serializer, and transport schema. Adapter v1.6 config SHA
+is `30d4fca5959cdfbcab09df780642742b1847eaf6ff8fb88bed99e01fa85fcb35`;
+its output-guard instruction SHA is
+`3b74d2f87fc57d47375b20b18c940fa0c851f66debfbe1c239b96189bfa267b0`.
+Historical v1.5 remains loadable and its frozen raw response still fails closed
+with two parent-scoped matches.
+
+The no-overwrite offline preparation
+`c2_relay_gpt4o_portable_v1_6_pilot3_dry_run_v1` covers sample indices 0, 1,
+and 2 with Pass A and Pass B, for six preflight slots. All six strict transport
+preflights passed with `request_downgrade_applied=false`. The frozen transport
+request SHA-256 values are:
+
+1. `48a3076954cb264a2a8c82aab5f86b5eb72b3b91bf20a65023ff9ece0f76a0f0`
+2. `1c1ce79a47a83faa6948ebeb3baa088e2627eff36190d83a479abcdb3ea53d63`
+3. `0a5f108d561040ef7e9873817e40be0c4aba1b3a35fe22616a1d60d7c92cf835`
+4. `5d9776ac24d808ceab72938f5a8c9e819d5d2252db7527465c97f4e0ced32b91`
+5. `79affd03af9117c60aae085ef71730c77e7ba0cee1316316ede7ba3dec2aa628`
+6. `57de26029720835b6768086306fc95cadb5a4f2d25da8a6f4fc5d16071e24ab8`
+
+The three Pass A hashes are exact for the same locked inputs/model/profile. The
+three Pass B hashes bind historical validated Pass A fixtures for offline
+envelope preflight only; each future live Pass B hash remains dependent on that
+live run's validated Pass A response and must be recorded afterward.
+
+The offline budget configuration is six calls, 78,000 total tokens, and 3.60 CA
+at 17.5/70 CA per million input/output tokens. The combined token/output guard
+worst case is 3.4125 CA and all hard guard checks passed. No credential or
+network was used: real API calls=0, billed tokens=0, billed cost=0, C2 did not
+start, and evaluation remains 0 with P/R null. Layer D, Layer E, and Gold were
+not read. A real v1.6 run requires a new explicit authorization and a new
+no-overwrite run ID.

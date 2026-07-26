@@ -18,9 +18,12 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from formal_experiment.estg150_candidate_protocol import (  # noqa: E402
     CandidateValidationError,
+    RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
     adapter_from_config,
     build_semantic_request,
     canonical_json_bytes,
+    canonicalize_response_coordinates,
+    extract_provider_response,
     load_json_bytes,
     load_protocol_assets,
     serialize_semantic_request,
@@ -34,10 +37,12 @@ from formal_experiment.estg150_c1_transport import (  # noqa: E402
     EXPECTED_CANONICAL_SCHEMA_SHA256,
     EXPECTED_STRING_TYPE_PATCHES,
     SPAN_TEXT_GUARD_INSTRUCTION,
+    SPAN_TEXT_GUARD_V1_5_INSTRUCTION,
     SPAN_TEXT_GUARD_MODE,
     StructuredOutputsPreflightError,
     derive_strict_transport_schema,
     load_portable_transport_adapter,
+    load_portable_transport_adapter_v1_5,
     load_portable_transport_adapter_v1_2,
     load_portable_transport_adapter_v1_3,
     load_portable_transport_adapter_v1_4,
@@ -316,7 +321,7 @@ def test_modern_chatanywhere_models_use_the_explicit_transport_adapter(model: st
 def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen() -> None:
     assets, semantic, prepared = _portable_prepared("gpt-4o")
     lock = verify_c0_lock(assets)
-    assert prepared.strict_adapter.adapter_version == "1.5.0"
+    assert prepared.strict_adapter.adapter_version == "1.6.0"
     assert prepared.strict_adapter.canonical_schema_sha256 == EXPECTED_CANONICAL_SCHEMA_SHA256
     assert prepared.strict_adapter.transport_schema_sha256 == (
         "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
@@ -343,6 +348,16 @@ def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen()
     assert "Never label unchanged text as edited" in SPAN_TEXT_GUARD_INSTRUCTION
     assert "delete internal words" in SPAN_TEXT_GUARD_INSTRUCTION
     assert "modality.evidence contain the visible normative cue" in SPAN_TEXT_GUARD_INSTRUCTION
+    assert "shortest verbatim contiguous cue-containing phrase" in SPAN_TEXT_GUARD_INSTRUCTION
+    assert "never choose an occurrence by guessing" in SPAN_TEXT_GUARD_INSTRUCTION
+    historical_v1_5 = load_portable_transport_adapter_v1_5()
+    assert historical_v1_5.adapter_version == "1.5.0"
+    assert historical_v1_5.config["response_span_text_guard"]["instruction"] == (
+        SPAN_TEXT_GUARD_V1_5_INSTRUCTION
+    )
+    assert "shortest verbatim contiguous cue-containing phrase" not in (
+        historical_v1_5.config["response_span_text_guard"]["instruction"]
+    )
     historical_v1_4 = load_portable_transport_adapter_v1_4()
     assert historical_v1_4.adapter_version == "1.4.0"
     assert "Never label unchanged text as edited" not in (
@@ -355,6 +370,65 @@ def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen()
     assert historical.adapter_version == "1.2.0"
     assert historical.canonical_schema_sha256 == prepared.strict_adapter.canonical_schema_sha256
     assert historical.transport_schema_sha256 == prepared.strict_adapter.transport_schema_sha256
+
+
+def test_v1_5_real_gpt4o_repeated_modality_cue_replay_remains_fail_closed() -> None:
+    assets = load_protocol_assets()
+    adapter = adapter_from_config(assets.config, "relay_openai_compatible")
+    response_path = (
+        ROOT
+        / "data"
+        / "development"
+        / "estg"
+        / "llm_candidate_runs"
+        / "c2_relay_gpt4o_portable_v1_5_pilot3_live_v1"
+        / "responses"
+        / "001_estg_000080_pass_a.json"
+    )
+    response_bytes = response_path.read_bytes()
+    raw_candidate = json.loads(json.loads(response_bytes)["choices"][0]["message"]["content"])
+    with pytest.raises(
+        CandidateValidationError,
+        match=r"modality\.evidence\[0\].*requires one match.*found 2",
+    ):
+        extract_provider_response(
+            response_bytes,
+            adapter=adapter,
+            expected_sample_id=raw_candidate["sample_id"],
+            frozen_candidate_text_en=raw_candidate["translation"]["proposed_text_en"],
+            schema=assets.schema,
+            response_coordinate_mode=RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
+        )
+
+
+def test_unique_expanded_modality_evidence_can_be_reanchored_without_guessing() -> None:
+    source = "The authority must check; the agency must record."
+    candidate = {
+        "translation": {"proposed_text_en": source},
+        "clauses": [
+            {
+                "clause_span": {"text": source, "start": 0, "end": len(source)},
+                "modality": {
+                    "evidence": [{"text": "authority must", "start": 0, "end": 1}]
+                },
+                "actors": [],
+                "actions": [],
+                "conditions": [],
+                "constraints": [],
+                "exceptions": [],
+                "order_relations": [],
+            }
+        ],
+    }
+    canonicalized, receipt = canonicalize_response_coordinates(
+        candidate,
+        mode=RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
+    )
+    evidence = canonicalized["clauses"][0]["modality"]["evidence"][0]
+    assert evidence == {"text": "authority must", "start": 4, "end": 18}
+    assert receipt["applied"] is True
+    assert receipt["changed_span_count"] == 1
+    assert receipt["semantic_content_unchanged"] is True
 
 
 @pytest.mark.parametrize("model", ["gpt-4o", "gpt-4.1-nano"])

@@ -1590,3 +1590,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Request SHA a61b4041917dfb92b71a1475f0090cb4147130ff938dbe74f14bb588f2575c97 matched the frozen v1.5 offline preregistration. Provider returned model gpt-4o with finish_reason stop. Adapter v1.5 correctly avoided the former decision/text contradiction, but the response supplied an ambiguous repeated modality cue with incorrect coordinates; no response repair, content retry, or guessed occurrence selection was applied. request_downgrade_applied=false. Canonical schema, serializer, semantic fixture, adapter config, guard, and transport schema hashes were recorded in the failure receipt. Layer D, Layer E, and Gold were not read; no evaluation was run. Relay backend identity remains unverified.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T15:41:55.749632+00:00 - Add EStG-150 portable adapter v1.6 duplicate modality-cue output guard and freeze GPT-4o C2 offline preparation
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1456 passed, 22 skipped in 255.47s (0:04:15)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`4317e0a04ff873cfb8ea43199a313bf5d846ecc1`；相关未提交路径：436 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Minimal transport-only v1.6 change: when a normative cue repeats inside one clause_span, require modality.evidence.text to be the shortest verbatim contiguous cue-containing phrase unique in that clause; guessing, response repair, and content retry remain forbidden. Canonical prompt assets, schema, serializer, transport schema, B0, and D1/H1 are unchanged. Historical v1.5 loader and real raw-response replay remain fail closed with found 2. Focused tests: 59 passed. Full audit: 1456 passed, 22 skipped, Integrity true, Errors 0. Offline run c2_relay_gpt4o_portable_v1_6_pilot3_dry_run_v1 froze six strict preflight slots for sample indices 0-2 Pass A/B; all passed, request_downgrade_applied=false, max calls/tokens/cost=6/78000/3.60 CA, 17.5/70 CA per million, hard guards passed. Adapter config SHA 30d4fca5959cdfbcab09df780642742b1847eaf6ff8fb88bed99e01fa85fcb35; guard SHA 3b74d2f87fc57d47375b20b18c940fa0c851f66debfbe1c239b96189bfa267b0. Real API not called, billed tokens=0, billed cost=0, C2 not started, evaluation_count=0, P/R null, Layer D/E/Gold not read. Any real v1.6 run requires a new explicit authorization and new no-overwrite run ID.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
