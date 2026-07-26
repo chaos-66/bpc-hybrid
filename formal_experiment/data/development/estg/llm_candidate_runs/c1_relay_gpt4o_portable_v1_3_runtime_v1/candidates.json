@@ -1,0 +1,75 @@
+{
+  "schema_version": "estg150_candidate_run_output@1.0.0",
+  "run_id": "c1_relay_gpt4o_portable_v1_3_runtime_v1",
+  "records": [
+    {
+      "clauses": [
+        {
+          "actions": [
+            {
+              "end": 24,
+              "id": "a1",
+              "normalized": "check",
+              "start": 19,
+              "text": "check"
+            }
+          ],
+          "actor_action_map": [
+            {
+              "action_id": "a1",
+              "actor_id": "ac1"
+            }
+          ],
+          "actors": [
+            {
+              "end": 13,
+              "id": "ac1",
+              "normalized": "The authority",
+              "start": 0,
+              "text": "The authority"
+            }
+          ],
+          "clause_id": "c1",
+          "clause_span": {
+            "end": 58,
+            "start": 0,
+            "text": "The authority must check,\nwhether transfers are permitted."
+          },
+          "conditions": [
+            {
+              "end": 57,
+              "id": "cond1",
+              "normalized": "whether transfers are permitted",
+              "start": 26,
+              "text": "whether transfers are permitted"
+            }
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "modality": {
+            "evidence": [
+              {
+                "end": 18,
+                "start": 14,
+                "text": "must"
+              }
+            ],
+            "label": "obligation"
+          },
+          "order_relations": []
+        }
+      ],
+      "confidence": "high",
+      "context_sufficiency": "sufficient",
+      "rationale_summary": "The provided English translation matches the German text closely, and the extracted semantic elements accurately represent the content.",
+      "sample_id": "synthetic_c1_utf8",
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "translation": {
+        "decision": "accepted",
+        "issues": [],
+        "proposed_text_en": "The authority must check,\nwhether transfers are permitted."
+      },
+      "unsupported_or_ambiguous": []
+    }
+  ]
+}

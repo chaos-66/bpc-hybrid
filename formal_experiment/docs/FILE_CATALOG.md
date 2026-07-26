@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-07-26  
-**收录文件**：380 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`__pycache__/`）  
+**收录文件**：387 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`__pycache__/`）  
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -110,6 +110,13 @@
 | `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_2_runtime_v1/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_2_runtime_v1/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_2_runtime_v1/responses/001_synthetic_c1_utf8_full_extract.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_3_runtime_v1/candidates.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_3_runtime_v1/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_3_runtime_v1/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_3_runtime_v1/request_manifest.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_3_runtime_v1/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_3_runtime_v1/requests/001_synthetic_c1_utf8_full_extract.transport.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_3_runtime_v1/responses/001_synthetic_c1_utf8_full_extract.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_transport_pilot_v1/failure.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_transport_pilot_v1/preregistration.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/estg/llm_candidate_runs/c1_relay_gpt4o_transport_pilot_v1/requests/001_synthetic_c1_utf8_full_extract.semantic.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |

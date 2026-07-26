@@ -1483,3 +1483,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Final commit-state verification after restoring the pre-existing mixed-worktree audit.py content: 1451 passed, 22 skipped; Integrity true. Adapter v1.3 and tests preserve B0, D1/H1, prompt/schema/serializer bytes and semantic content; only uniquely exact parent-scoped start/end coordinates may be canonicalized with receipt; ambiguous/unmatched text fails closed. Seven profiles pass offline preflight; real GPT-4o v1.2 response passes offline v1.3 replay after five coordinate-only changes. No API, C2, evaluation, or P/R.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T11:43:41.059353+00:00 - Freeze authorized ChatAnywhere GPT-4o portable v1.3 C1 success
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=c1_relay_gpt4o_portable_v1_3_runtime_v1；阶段=C1；方法=relay_openai_compatible ChatAnywhere gpt-4o adapter v1.3；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_candidate_protocol.py --stage c1 --execute-api --confirm-authorized-provider-budget --provider-adapter relay_openai_compatible --model gpt-4o --endpoint https://api.chatanywhere.tech/v1/chat/completions --run-id c1_relay_gpt4o_portable_v1_3_runtime_v1 --max-calls 1 --max-total-tokens 13000 --max-cost 0.60 --cost-currency CA --input-price-per-million 17.5 --output-price-per-million 70 --api-key-env-name ESTG150_CHATANYWHERE_KEY --timeout-seconds 180`
+- manifest：data/development/estg/llm_candidate_runs/c1_relay_gpt4o_portable_v1_3_runtime_v1/manifest.json
+- 结果摘要：One real call, no retry; provider-reported gpt-4o stop; 1201 input plus 274 output equals 1475 tokens; 0.0401975 CA; candidate_count 1; five coordinate-only unique exact-text reanchors; canonical schema, exact-span, and normative-cue validation passed; C1 true for this run; C2 false; evaluation 0; P/R null.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1451 passed, 22 skipped in 229.00s (0:03:48)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`0a55198c77e744153ab521c9780072875d8ad97a`；相关未提交路径：423 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Authorized ceilings: 1 content call, 13000 total tokens, 0.60 CA at 17.5/70 CA per million input/output tokens. Request SHA 08c7c1fc345688b3070a644bec452c23aa2e5c7d2831d966c94ba046e21c201a; request_downgrade_applied=false; response_coordinate_mode=deterministic_exact_text_unique_reanchor; semantic_content_unchanged=true; provider identity remains unverified relay report. B0, D1/H1, canonical prompt/schema/serializer/transport hashes unchanged. Layer D/E/Gold not read during generation; no evaluation or C2. Credential stored outside the repository in Windows Credential Manager and not printed.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
