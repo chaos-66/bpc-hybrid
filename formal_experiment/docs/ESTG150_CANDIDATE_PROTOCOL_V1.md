@@ -421,3 +421,71 @@ C1 attempt, and the successful gpt-5.6-luna C1/Event 121 remains unchanged. No
 API was called while developing or testing v1.3, billed tokens and cost are
 zero, C2 did not start, and evaluation/P/R remain absent. A new GPT-4o runtime
 claim requires a new run ID and a new explicit API authorization.
+
+### 7.10 GPT-4o v1.3 C2 fail-closed runtime evidence
+
+The separately authorized v1.3 C2 run
+`c2_relay_gpt4o_portable_v1_3_pilot3_live_v1` used the frozen six-request
+plan for sample indices 0, 1, and 2. Its first Pass A request SHA-256 was
+`520a254aed2c6df29e466084a5ac0ea5c869fdc8e406a460246c5bbd53959fb3`,
+exactly matching the offline preregistration. ChatAnywhere reported model
+`gpt-4o`, `finish_reason=stop`, 1,373 input tokens, 1,249 output tokens, and
+2,622 total tokens. At the authorized 17.5/70 CA-per-million prices, recorded
+cost was 0.1114575 CA.
+
+The response failed closed before Pass B or any later sample. In
+`clauses[2].conditions[0]`, model-provided `text` omitted the intervening words
+`of a business` from the immutable proposed English text. It therefore had no
+exact contiguous match inside its clause. This is not a coordinate-only error:
+changing `start`/`end` cannot make a non-verbatim string into a source slice.
+Adapter v1.3 consequently refused semantic text repair and content retry. Only
+one content call occurred, retry count was zero, and the other five authorized
+calls were not made. C2 started and then failed closed; evaluation remained
+zero and precision/recall remained null. Layer D, Layer E, and Gold were not
+read. The successful GPT-4o v1.3 C1 and all earlier frozen evidence remain
+unchanged.
+
+### 7.11 portable adapter v1.4: transport exact-span output guard
+
+Adapter v1.4 makes a versioned transport-only instruction change for future
+requests. It does not modify B0, D1/H1, any canonical EStG-150 candidate prompt
+asset, the canonical semantic serializer, canonical schema, transport schema,
+or response validator. After the canonical three-message semantic request is
+serialized, the adapter appends one fixed output invariant to the developer
+instruction boundary (or its capability-compatible merged equivalent). The
+invariant requires the model to freeze `translation.proposed_text_en`, copy
+every span `text` as one verbatim contiguous substring without deleting
+internal words, keep child spans inside their clause, compute exact Python
+half-open coordinates, and use the visible normative cue as modality evidence.
+Optional semantic collections must be empty and explicitly marked uncertain
+rather than populated with a fabricated non-source span.
+
+The guard is generation-time prompting, not response repair. v1.4 retains
+`deterministic_exact_text_unique_reanchor` for coordinate-only errors; any
+non-verbatim span text still fails closed, as demonstrated by replaying the
+immutable v1.3 C2 response. Content retry and semantic repair remain forbidden.
+The guard instruction SHA-256 is
+`d7432611183a6b8cd36bcd2da8f481f7090368d660e7a5fc77cbf0001f693f98`,
+and adapter-config SHA-256 is
+`e7ff366f2df0baa6de03ce3dbb1d3fe77ea74ed2d2a41b05c8d8d2ee93cb356b`.
+The canonical schema, serializer, semantic fixture, and transport schema retain
+the hashes locked in section 7.7.
+
+The v1.4 GPT-4o C2 offline preparation
+`c2_relay_gpt4o_portable_v1_4_pilot3_dry_run_v1` passes all six transport
+preflights with `request_downgrade_applied=false`. Its transport request hashes
+are, in order:
+
+1. `c1b5bc47c0cdc8e61cd2eccdfc96be9296b34f8ba53185f99c46420174fd9a9e`
+2. `7358dae5e890d1922ac673d71d29de9cf57712a693a9388ae08bdc49bc1c401a`
+3. `4334d37ba91ff24953c450ac00876b66abb59f97e426be7fc1c1bf4dcf5c6e7e`
+4. `b34eae7c808a8c24e9b747fb70d53c2be41868b7250c721bea2fd99143a106dd`
+5. `022a591c1a28e14c05ed3368fe1df40fb58ff5ab390a40b7b74f7059ed8fc54e`
+6. `dfe14fbb1b8a6625423846b2b36f010fd1e43844516c16975e27373890756b54`
+
+Pass A hashes are exact for the locked inputs/model/profile; Pass B hashes are
+offline-fixture-only because a live Pass B must bind its corresponding actual
+validated Pass A output. No API or credential was used for v1.4 development or
+offline preparation, billed tokens and cost are zero, C2 did not start, and no
+evaluation was performed. A v1.4 live run requires a new run ID and new explicit
+authorization; unused limits from the failed v1.3 run are not transferable.

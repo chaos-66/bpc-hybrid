@@ -66,6 +66,16 @@ GPT4O_V1_2_RUNTIME_RESPONSE = (
     / "responses"
     / "001_synthetic_c1_utf8_full_extract.json"
 )
+C2_GPT4O_V1_3_NONVERBATIM_RESPONSE = (
+    ROOT
+    / "data"
+    / "development"
+    / "estg"
+    / "llm_candidate_runs"
+    / "c2_relay_gpt4o_portable_v1_3_pilot3_live_v1"
+    / "responses"
+    / "001_estg_000080_pass_a.json"
+)
 
 
 def valid_synthetic_candidate() -> dict:
@@ -386,6 +396,24 @@ def test_coordinate_canonicalization_refuses_ambiguous_exact_text():
         )
 
 
+def test_c2_gpt4o_v1_3_nonverbatim_condition_remains_fail_closed_without_semantic_repair():
+    assets = load_protocol_assets()
+    adapter = adapter_from_config(assets.config, "relay_openai_compatible")
+    sample = assets.samples[0]
+    with pytest.raises(
+        CandidateValidationError,
+        match=r"clauses\[2\]\.conditions\[0\].*found 0",
+    ):
+        extract_provider_response(
+            C2_GPT4O_V1_3_NONVERBATIM_RESPONSE.read_bytes(),
+            adapter=adapter,
+            expected_sample_id=sample["sample_id"],
+            frozen_candidate_text_en=sample["frozen_candidate_text_en"],
+            schema=assets.schema,
+            response_coordinate_mode=RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
+        )
+
+
 def test_network_retry_resends_byte_identical_request(monkeypatch):
     request_bytes = b'{"fixed":"request"}\n'
     observed_payloads = []
@@ -600,7 +628,7 @@ def test_execute_failure_manifest_links_archived_http_error(monkeypatch):
         assert failure["canonical_schema_sha256"] == (
             "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9"
         )
-        assert failure["transport_adapter_version"] == "1.3.0"
+        assert failure["transport_adapter_version"] == "1.4.0"
         assert failure["transport_schema_sha256"] == (
             "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
         )
@@ -765,8 +793,20 @@ def test_c2_offline_preparation_freezes_six_preflights_without_starting_c2(monke
         assert prereg["stage_transition"]["c2_started"] is False
         assert prereg["request_plan"]["expected_request_count"] == 6
         assert prereg["request_plan"]["pass_b_live_request_sha256s_deferred"] is True
+        assert prereg["response_span_text_guard"] == {
+            "mode": "append_transport_exact_span_self_check",
+            "applied": True,
+            "instruction_sha256": (
+                "d7432611183a6b8cd36bcd2da8f481f7090368d660e7a5fc77cbf0001f693f98"
+            ),
+            "canonical_semantic_request_unchanged": True,
+            "canonical_prompt_assets_unchanged": True,
+            "response_repair": "forbidden",
+            "content_retry": "forbidden",
+        }
         assert plan["status"] == "offline_preflight_frozen_real_api_unauthorized_c2_not_started"
         assert plan["request_count"] == 6
+        assert plan["response_span_text_guard"] == prereg["response_span_text_guard"]
         assert [record["route"] for record in plan["requests"]] == [
             "pass_a",
             "pass_b",
@@ -778,6 +818,7 @@ def test_c2_offline_preparation_freezes_six_preflights_without_starting_c2(monke
         assert all(
             record["structured_outputs_preflight"]["passed"] is True
             and record["request_downgrade_applied"] is False
+            and record["response_span_text_guard"] == prereg["response_span_text_guard"]
             for record in plan["requests"]
         )
         assert len({record["transport_request_sha256"] for record in plan["requests"]}) == 6

@@ -221,6 +221,11 @@ def dry_run(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
         "response_coordinate_mode="
         f"{prepared.capability_profile.get('response_coordinate_mode', 'reject_invalid')}"
     )
+    span_guard = strict_adapter.config.get("response_span_text_guard")
+    print(
+        "response_span_text_guard_mode="
+        f"{span_guard['mode'] if span_guard is not None else 'none'}"
+    )
     print(f"structured_outputs_preflight_passed={str(strict_adapter.transport_preflight['passed']).lower()}")
     print(f"first_transport_request_sha256={transport_sha256}")
     print(
@@ -355,6 +360,24 @@ def prepare_c2_offline(args: argparse.Namespace, assets: Any, lock: dict[str, An
     frozen_c1_adapter = load_strict_transport_adapter()
     c1_manifest = verify_c1_runtime_prerequisite(lock, frozen_c1_adapter)
     strict_adapter = load_portable_transport_adapter()
+    span_guard = strict_adapter.config.get("response_span_text_guard")
+    span_guard_receipt = (
+        {
+            "mode": span_guard["mode"],
+            "applied": True,
+            "instruction_sha256": sha256_bytes(span_guard["instruction"].encode("utf-8")),
+            "canonical_semantic_request_unchanged": span_guard[
+                "canonical_semantic_request_unchanged"
+            ],
+            "canonical_prompt_assets_unchanged": span_guard[
+                "canonical_prompt_assets_unchanged"
+            ],
+            "response_repair": span_guard["response_repair"],
+            "content_retry": span_guard["content_retry"],
+        }
+        if span_guard is not None
+        else {"mode": "none", "applied": False}
+    )
     pass_a_fixtures = load_c2_offline_pass_a_fixtures(assets, lock)
     pass_a_by_sample = {record["sample_id"]: record for record in pass_a_fixtures}
 
@@ -413,6 +436,7 @@ def prepare_c2_offline(args: argparse.Namespace, assets: Any, lock: dict[str, An
                 "response_coordinate_mode": prepared.capability_profile[
                     "response_coordinate_mode"
                 ],
+                "response_span_text_guard": span_guard_receipt,
                 "request_downgrade_applied": prepared.capability_profile[
                     "request_downgrade_applied"
                 ],
@@ -534,6 +558,7 @@ def prepare_c2_offline(args: argparse.Namespace, assets: Any, lock: dict[str, An
         "response_coordinate_mode": first_prepared.capability_profile[
             "response_coordinate_mode"
         ],
+        "response_span_text_guard": span_guard_receipt,
         "budget": {
             "authorization_status": "offline_configuration_only_not_api_authorization",
             "maximum_calls": args.max_calls,

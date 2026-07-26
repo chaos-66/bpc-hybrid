@@ -1530,3 +1530,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Authorized ceilings: 6 content calls, 78000 total tokens, 3.60 CA at 17.5/70 CA per million input/output tokens. First request SHA 520a254aed2c6df29e466084a5ac0ea5c869fdc8e406a460246c5bbd53959fb3 matched the frozen offline Pass A request; request_downgrade_applied=false. The condition text omitted the intervening phrase 'of a business' from the immutable proposed text, so this was semantic span-text inconsistency rather than coordinate-only drift; v1.3 correctly refused semantic repair and content retry. C2 started then failed closed; prior C1 success evidence unchanged. Layer D/E/Gold not read; no evaluation; credential not printed.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T14:28:54.233556+00:00 - Add EStG-150 portable adapter v1.4 exact-span output guard and freeze GPT-4o C2 offline preparation
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1452 passed, 22 skipped in 241.87s (0:04:01)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`567d4919d326c67569869e83e67f79ea52abe27b`；相关未提交路径：436 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Adapter v1.4 appends one transport-only exact-span self-check after the unchanged canonical semantic request. It requires every span text to be a verbatim contiguous proposed_text_en substring, prohibits deletion of internal words, requires child containment and visible normative-cue evidence, and tells optional fields to stay empty/uncertain rather than fabricate spans. Response semantic repair and content retry remain forbidden; v1.3 C2 raw response still fails offline because its condition omitted 'of a business'. B0, D1/H1, all canonical candidate prompt assets, canonical protocol/schema/serializer/semantic fixture/transport schema, Layer D/E/Gold, and prior frozen runs remain unchanged. Adapter config SHA e7ff366f2df0baa6de03ce3dbb1d3fe77ea74ed2d2a41b05c8d8d2ee93cb356b; guard SHA d7432611183a6b8cd36bcd2da8f481f7090368d660e7a5fc77cbf0001f693f98. New C2 offline run_id=c2_relay_gpt4o_portable_v1_4_pilot3_dry_run_v1 has six passing preflights, request_downgrade_applied=false, requests c1b5bc47c0cdc8e61cd2eccdfc96be9296b34f8ba53185f99c46420174fd9a9e/7358dae5e890d1922ac673d71d29de9cf57712a693a9388ae08bdc49bc1c401a/4334d37ba91ff24953c450ac00876b66abb59f97e426be7fc1c1bf4dcf5c6e7e/b34eae7c808a8c24e9b747fb70d53c2be41868b7250c721bea2fd99143a106dd/022a591c1a28e14c05ed3368fe1df40fb58ff5ab390a40b7b74f7059ed8fc54e/dfe14fbb1b8a6625423846b2b36f010fd1e43844516c16975e27373890756b54. Pass B hashes are fixture-only/live-dependent. Credential not read; real API false; billed tokens/cost zero; C2 not started; evaluation 0; P/R null; a v1.4 live run requires new authorization.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

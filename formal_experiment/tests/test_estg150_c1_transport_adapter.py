@@ -33,10 +33,13 @@ from formal_experiment.estg150_c1_transport import (  # noqa: E402
     CapabilityPreflightError,
     EXPECTED_CANONICAL_SCHEMA_SHA256,
     EXPECTED_STRING_TYPE_PATCHES,
+    SPAN_TEXT_GUARD_INSTRUCTION,
+    SPAN_TEXT_GUARD_MODE,
     StructuredOutputsPreflightError,
     derive_strict_transport_schema,
     load_portable_transport_adapter,
     load_portable_transport_adapter_v1_2,
+    load_portable_transport_adapter_v1_3,
     load_strict_transport_adapter,
     preflight_openai_structured_outputs_schema,
     prepare_transport_request,
@@ -312,7 +315,7 @@ def test_modern_chatanywhere_models_use_the_explicit_transport_adapter(model: st
 def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen() -> None:
     assets, semantic, prepared = _portable_prepared("gpt-4o")
     lock = verify_c0_lock(assets)
-    assert prepared.strict_adapter.adapter_version == "1.3.0"
+    assert prepared.strict_adapter.adapter_version == "1.4.0"
     assert prepared.strict_adapter.canonical_schema_sha256 == EXPECTED_CANONICAL_SCHEMA_SHA256
     assert prepared.strict_adapter.transport_schema_sha256 == (
         "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
@@ -325,6 +328,21 @@ def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen()
         load_json_bytes(FIXTURE_ROOT / "synthetic_record_v1.json"),
         route="full_extract",
     )["messages"]
+    guard = prepared.strict_adapter.config["response_span_text_guard"]
+    assert guard == {
+        "mode": SPAN_TEXT_GUARD_MODE,
+        "instruction": SPAN_TEXT_GUARD_INSTRUCTION,
+        "canonical_semantic_request_unchanged": True,
+        "canonical_prompt_assets_unchanged": True,
+        "response_repair": "forbidden",
+        "content_retry": "forbidden",
+    }
+    assert prepared.body["messages"][0]["content"].endswith(SPAN_TEXT_GUARD_INSTRUCTION)
+    assert "delete internal words" in SPAN_TEXT_GUARD_INSTRUCTION
+    assert "modality.evidence contain the visible normative cue" in SPAN_TEXT_GUARD_INSTRUCTION
+    historical_v1_3 = load_portable_transport_adapter_v1_3()
+    assert historical_v1_3.adapter_version == "1.3.0"
+    assert "response_span_text_guard" not in historical_v1_3.config
     historical = load_portable_transport_adapter_v1_2()
     assert historical.adapter_version == "1.2.0"
     assert historical.canonical_schema_sha256 == prepared.strict_adapter.canonical_schema_sha256
@@ -349,6 +367,7 @@ def test_nonreasoning_openai_profiles_preserve_strict_schema_with_compatible_env
     assert [message["role"] for message in body["messages"]] == ["system", "user"]
     assert semantic["messages"][0]["content"] in body["messages"][0]["content"]
     assert semantic["messages"][1]["content"] in body["messages"][0]["content"]
+    assert body["messages"][0]["content"].endswith(SPAN_TEXT_GUARD_INSTRUCTION)
     assert body["messages"][1] == semantic["messages"][2]
     assert body["response_format"]["type"] == "json_schema"
     assert body["response_format"]["json_schema"]["strict"] is True
@@ -384,6 +403,7 @@ def test_json_mode_profiles_embed_canonical_schema_and_require_local_strict_vali
     assert [message["role"] for message in body["messages"]] == ["system", "user"]
     assert semantic["messages"][0]["content"] in body["messages"][0]["content"]
     assert semantic["messages"][1]["content"] in body["messages"][0]["content"]
+    assert SPAN_TEXT_GUARD_INSTRUCTION in body["messages"][0]["content"]
     assert semantic["output_schema_text"] in body["messages"][0]["content"]
     assert body["messages"][1] == semantic["messages"][2]
 
@@ -407,6 +427,9 @@ def test_all_seven_registered_models_have_a_fail_closed_portable_preflight() -> 
         assert prepared.strict_adapter.transport_preflight["passed"] is True
         assert prepared.capability_profile["response_coordinate_mode"] == (
             "deterministic_exact_text_unique_reanchor"
+        )
+        assert prepared.strict_adapter.config["response_span_text_guard"]["mode"] == (
+            SPAN_TEXT_GUARD_MODE
         )
         observed.add((profile["provider_adapter"], profile["model"]))
     assert len(observed) == 7

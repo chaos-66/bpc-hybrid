@@ -30,6 +30,9 @@ TRANSPORT_ADAPTER_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_1.json"
 )
 PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH = (
+    ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_4.json"
+)
+PORTABLE_TRANSPORT_ADAPTER_V1_3_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_3.json"
 )
 PORTABLE_TRANSPORT_ADAPTER_V1_2_CONFIG_PATH = (
@@ -53,6 +56,23 @@ READY_PROFILE_STATUSES = {
     "offline_ready_json_mode_local_schema_validation",
 }
 JSON_SCHEMA_TYPES = {"object", "array", "string", "integer", "number", "boolean", "null"}
+SPAN_TEXT_GUARD_MODE = "append_transport_exact_span_self_check"
+SPAN_TEXT_GUARD_INSTRUCTION = (
+    "[BEGIN EXACT SPAN OUTPUT INVARIANT]\n"
+    "Before emitting JSON, freeze translation.proposed_text_en. For every clause_span and "
+    "every modality.evidence, actor, action, condition, constraint, exception, and "
+    "order_relations.evidence span: (1) copy text verbatim as one contiguous substring of "
+    "proposed_text_en; never paraphrase text, normalize it, delete internal words, or join "
+    "discontiguous fragments; normalized may summarize but text may not; (2) ensure every "
+    "child text occurs completely inside its own clause_span; (3) compute start/end from the "
+    "exact Python half-open slice so text == proposed_text_en[start:end]; and (4) make "
+    "modality.evidence contain the visible normative cue that supports the label, such as "
+    "shall, must, may, prohibited, means, or deemed, rather than an actor or object. For "
+    "optional semantic collections, if no exact contiguous source span exists, use an empty "
+    "array and record the uncertainty in unsupported_or_ambiguous instead of fabricating a "
+    "span. Internally verify every slice before returning. Output JSON only.\n"
+    "[END EXACT SPAN OUTPUT INVARIANT]"
+)
 EXPECTED_PROFILE_CONTRACT = {
     ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-5.6-luna"): {
         "profile_id": "estg150_chatanywhere_modern_strict_profile",
@@ -529,7 +549,7 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
         EXPECTED_PORTABLE_PROFILE_POLICIES
         if version == "1.2.0"
         else EXPECTED_PORTABLE_V1_3_PROFILE_POLICIES
-        if version == "1.3.0"
+        if version in {"1.3.0", "1.4.0"}
         else None
     )
     if expected_policies is None:
@@ -576,7 +596,7 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
             response_mode,
             downgrade,
         )
-        if version == "1.3.0":
+        if version in {"1.3.0", "1.4.0"}:
             coordinate_mode = profile.get("response_coordinate_mode")
             if coordinate_mode != RESPONSE_COORDINATE_MODE_UNIQUE_EXACT:
                 raise ProtocolError(
@@ -588,13 +608,26 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
         observed[key] = observed_policy
     if observed != expected_policies:
         raise ProtocolError("locked seven-model portable capability profile contract drifted")
+    guard = config.get("response_span_text_guard")
+    if version == "1.4.0":
+        if guard != {
+            "mode": SPAN_TEXT_GUARD_MODE,
+            "instruction": SPAN_TEXT_GUARD_INSTRUCTION,
+            "canonical_semantic_request_unchanged": True,
+            "canonical_prompt_assets_unchanged": True,
+            "response_repair": "forbidden",
+            "content_retry": "forbidden",
+        }:
+            raise ProtocolError("portable v1.4 exact-span output guard contract drifted")
+    elif guard is not None:
+        raise ProtocolError("portable adapters before v1.4 cannot declare a span-text guard")
 
 
 def _validate_adapter_profiles(config: dict[str, Any]) -> None:
     version = config.get("adapter_version")
     if version == "1.1.0":
         _validate_capability_profiles(config)
-    elif version in {"1.2.0", "1.3.0"}:
+    elif version in {"1.2.0", "1.3.0", "1.4.0"}:
         _validate_portable_capability_profiles(config)
     else:
         raise ProtocolError("unsupported transport adapter version")
@@ -682,8 +715,16 @@ def load_strict_transport_adapter() -> StrictTransportAdapter:
 
 
 def load_portable_transport_adapter() -> StrictTransportAdapter:
-    """Load v1.3 for new dry-runs and separately authorized API calls."""
-    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.3.0")
+    """Load v1.4 for new dry-runs and separately authorized API calls."""
+    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.4.0")
+
+
+def load_portable_transport_adapter_v1_3() -> StrictTransportAdapter:
+    """Load immutable v1.3 for verification of historical coordinate-portable receipts."""
+    return _load_transport_adapter(
+        PORTABLE_TRANSPORT_ADAPTER_V1_3_CONFIG_PATH,
+        expected_version="1.3.0",
+    )
 
 
 def load_portable_transport_adapter_v1_2() -> StrictTransportAdapter:
@@ -738,6 +779,7 @@ def _adapt_transport_messages(
     *,
     mode: str,
     canonical_schema_text: str,
+    span_text_guard_instruction: str | None,
 ) -> list[dict[str, str]]:
     if not isinstance(messages, list) or len(messages) != 3:
         raise ProtocolError("canonical semantic request must contain exactly three messages")
@@ -753,7 +795,10 @@ def _adapt_transport_messages(
     ):
         raise ProtocolError("canonical semantic request message content drifted")
     if mode == "preserve":
-        return copy.deepcopy(messages)
+        adapted = copy.deepcopy(messages)
+        if span_text_guard_instruction is not None:
+            adapted[1]["content"] += "\n\n" + span_text_guard_instruction
+        return adapted
     if mode not in {
         "merge_system_developer",
         "merge_system_developer_with_canonical_schema",
@@ -765,6 +810,8 @@ def _adapt_transport_messages(
         + messages[1]["content"]
         + "\n[END DEVELOPER INSTRUCTIONS]"
     )
+    if span_text_guard_instruction is not None:
+        merged += "\n\n" + span_text_guard_instruction
     if mode == "merge_system_developer_with_canonical_schema":
         merged += (
             "\n\n[BEGIN CANONICAL JSON OUTPUT SCHEMA]\n"
@@ -855,6 +902,11 @@ def prepare_transport_request(
         semantic_request["messages"],
         mode=policy["message_mode"],
         canonical_schema_text=schema_text,
+        span_text_guard_instruction=(
+            strict_adapter.config["response_span_text_guard"]["instruction"]
+            if "response_span_text_guard" in strict_adapter.config
+            else None
+        ),
     )
     reasoning_mode = policy["reasoning_effort_mode"]
     if reasoning_mode == "omit":
@@ -923,6 +975,24 @@ def transport_provenance(
     response_coordinate_mode = profile.get(
         "response_coordinate_mode", RESPONSE_COORDINATE_MODE_REJECT_INVALID
     )
+    guard_config = strict_adapter.config.get("response_span_text_guard")
+    guard_receipt = (
+        {
+            "mode": guard_config["mode"],
+            "applied": True,
+            "instruction_sha256": sha256_bytes(guard_config["instruction"].encode("utf-8")),
+            "canonical_semantic_request_unchanged": guard_config[
+                "canonical_semantic_request_unchanged"
+            ],
+            "canonical_prompt_assets_unchanged": guard_config[
+                "canonical_prompt_assets_unchanged"
+            ],
+            "response_repair": guard_config["response_repair"],
+            "content_retry": guard_config["content_retry"],
+        }
+        if guard_config is not None
+        else {"mode": "none", "applied": False}
+    )
     return {
         "canonical_protocol_version": strict_adapter.canonical_protocol_version,
         "canonical_schema_path": strict_adapter.canonical_schema_path,
@@ -947,14 +1017,19 @@ def transport_provenance(
         ),
         "local_canonical_validation": copy.deepcopy(local_canonical_validation),
         "transport_schema_adaptation_applied": True,
-        "transport_capability_adaptation_applied": policy != {
-            "message_mode": "preserve",
-            "reasoning_effort_mode": "preserve",
-            "token_limit_field": "max_completion_tokens",
-            "response_format_mode": "json_schema_strict",
-        },
+        "transport_capability_adaptation_applied": (
+            policy
+            != {
+                "message_mode": "preserve",
+                "reasoning_effort_mode": "preserve",
+                "token_limit_field": "max_completion_tokens",
+                "response_format_mode": "json_schema_strict",
+            }
+            or guard_receipt["applied"]
+        ),
         "semantic_contract_downgrade_applied": False,
         "response_coordinate_mode": response_coordinate_mode,
+        "response_span_text_guard": guard_receipt,
         "request_downgrade_applied": request_downgrade_applied,
         "request_downgrade_details": request_downgrade_details,
     }
