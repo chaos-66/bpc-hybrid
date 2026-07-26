@@ -632,3 +632,31 @@ network was used: real API calls=0, billed tokens=0, billed cost=0, C2 did not
 start, and evaluation remains 0 with P/R null. Layer D, Layer E, and Gold were
 not read. A real v1.6 run requires a new explicit authorization and a new
 no-overwrite run ID.
+
+### 7.16 GPT-4o v1.6 C2 repeated-cue runtime recurrence
+
+The authorized no-overwrite run
+`c2_relay_gpt4o_portable_v1_6_pilot3_live_v1` made three of the six
+content calls with zero retries. Sample 0 Pass A and Pass B both passed local
+canonical validation. Sample 1 Pass A then failed closed before its manifest
+row was appended. The failing response used the single word `may` as modality
+evidence inside a clause containing two `may` occurrences and supplied reversed
+coordinates `start=116,end=115`. The v1.6 model-facing instruction therefore did
+not reliably cause GPT-4o to expand duplicated cue text.
+
+The failing request SHA-256 was
+`0a5f108d561040ef7e9873817e40be0c4aba1b3a35fe22616a1d60d7c92cf835`,
+matching the frozen sample-1 Pass-A offline request. The first live Pass-B SHA
+was `deef43fbd7f86dd49855cbb3231aed8ab4c96ad5190a67e61374e58ee70435f9`
+and was correctly recorded only after the validated live Pass A response. The
+provider reported `gpt-4o`, `finish_reason=stop`, 6,528 input tokens, and 3,813
+output tokens across the three calls. At the locked 17.5/70 CA-per-million
+prices, recorded cost was 0.381150 CA.
+
+The run preserved `request_downgrade_applied=false` and made no content retry or
+response repair. `valid_candidate_count=1` reflects the completed sample-0
+Pass A/B pair, but the failed run wrote neither `candidates.json` nor a success
+manifest, so the C2 candidate set is not frozen. The remaining three calls were
+not made. Evaluation did not start, P/R remain null, and Layer D, Layer E, and
+Gold were not read. The v1.6 authorization is exhausted by this immutable run
+and cannot authorize a future adapter version.

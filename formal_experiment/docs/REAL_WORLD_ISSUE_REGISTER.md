@@ -54,7 +54,7 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0026 | 2026-07-26 | EStG-150 candidate protocol / C2 | preregistration/provenance | C2 的 Pass B 请求内嵌同次运行新产生的 Pass A 输出，因此三条未来真实 Pass B request SHA 不可能在调用前诚实计算；旧 dry-run 还只预检第一条 Pass A | `mitigated` | 六槽位离线预检现全部落盘并锁 SHA；三条 Pass B 明确使用已验证历史 Pass A fixture、仅作 offline envelope preflight，未来真实 SHA 保持 deferred；C2=false、API=0；Event 122 |
 | RWI-0027 | 2026-07-26 | EStG-150 candidate protocol / C1–C2 | accounting/provenance | 可计费 response 在 canonical candidate 或 finish-reason 校验失败时，usage 可能未进入 failure receipt | `resolved` | 两份原 failure/raw response 均不改写；SHA-bound corrections 分别恢复 C1 的 2956 tokens/0.01728755 CA 与 C2 的 7839 tokens/0.282373 CA；runner 先计 envelope usage，再检查 finish reason/candidate；mocked invalid/length 回归；Events 123–124 |
 | RWI-0028 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/validation | GPT-4o Pass B 把逐字不变的译文标为 `edited`；runner 又错误地用原始英文而非同次 Pass A 文本校验 Pass B translation decision | `mitigated` | v1.5 增加 decision/text 生成前自检并让 Pass B 校验绑定同次 Pass A；旧响应仍 fail closed，57 项聚焦回归和六槽位离线 preflight 通过；真实 runtime 待新授权；Event 134 |
-| RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o v1.5 把两处 `shall` 合入同一 clause，却用重复的单词 `shall` 作 modality evidence 并给出错误坐标，唯一精确重锚无法判定目标 | `mitigated` | v1.6 仅在 transport self-check 增加“重复 cue 扩展为 clause 内唯一最短原文短语”；仍禁止猜测/修补/内容重试，旧响应仍 fail closed，六槽位离线 preflight 通过；真实 runtime 待新授权；Events 135–136 |
+| RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o 对重复 modality cue 持续给出不可直接切片的错误坐标；v1.6 的生成前短语扩展指令未被稳定遵守 | `open` | v1.6 真实 C2 在 3/6 calls 后再次因 clause 内两个 `may` fail closed；样本 0 Pass A/B 已验证但运行未冻结 candidates，剩余三条未调用；等待不依赖模型遵循自检的版本化确定性修复；Events 135–137 |
 
 ## 3. 详细记录
 
@@ -85,9 +85,17 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
   `c2_relay_gpt4o_portable_v1_6_pilot3_dry_run_v1` 的 6/6 strict transport preflight 通过，
   `request_downgrade_applied=false`，API/key/network=0、billed tokens/cost=0、C2=false、
   evaluation=0、P/R=null，Layer D/E/Gold 未读取。
-- **状态**：`mitigated`。离线生成边界已修复，但真实 GPT-4o 是否遵守新约束仍需新的明确 API 授权
-  和不可覆盖 live run ID；v1.5 授权不能转用，离线证据不足以标为 `resolved`。
-- **对应事件**：Events 135–136。
+- **v1.6 再次出现**：新授权运行 `c2_relay_gpt4o_portable_v1_6_pilot3_live_v1` 中，样本 0 的
+  Pass A/B 均通过；样本 1 Pass A 仍把 clause 内出现两次的 `may` 作为单词 evidence，并给出
+  倒置坐标 `start=116,end=115`。该坐标靠近第一个 `may`，但 v1.6 唯一精确重锚仍按冻结规则找到
+  两个文本匹配并 fail closed，证明只增加模型自检指令不足以稳定解决旧模型坐标问题。
+- **v1.6 运行证据**：3/6 content calls、0 retry；6,528 input + 3,813 output = 10,341 tokens，
+  0.381150 CA；2 个已通过请求、`valid_candidate_count=1`，但运行没有生成 `candidates.json` 或
+  成功 manifest，因此候选集合未冻结；其余三条未调用。evaluation=0、P/R=null，
+  `request_downgrade_applied=false`，Layer D/E/Gold 未读取。
+- **状态**：`open`。v1.6 真实 runtime 已证伪“仅靠输出自检即可稳定解决”的假设；必须形成新的
+  版本化、可离线回放且不猜测语义的确定性坐标边界。本次 v1.6 授权不能转用于新版本。
+- **对应事件**：Events 135–137。
 
 ### RWI-0028 — C2 Pass B translation decision 与实际候选文本不一致
 
