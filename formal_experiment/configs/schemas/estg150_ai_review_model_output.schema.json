@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "estg150_ai_review_model_output.schema.json",
+  "title": "EStG-150 two-pass AI review model output",
+  "description": "Development-only AI adjudication candidate. This is not a human review record and cannot set Layer E review states.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sample_id",
+    "context_sufficiency",
+    "translation",
+    "clauses",
+    "unsupported_or_ambiguous",
+    "confidence",
+    "rationale_summary"
+  ],
+  "properties": {
+    "schema_version": {"const": "estg150_ai_review_model_output@1.0.0"},
+    "sample_id": {"type": "string", "minLength": 1},
+    "context_sufficiency": {"enum": ["sufficient", "insufficient", "uncertain"]},
+    "translation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "proposed_text_en", "issues"],
+      "properties": {
+        "decision": {"enum": ["accepted", "edited", "uncertain"]},
+        "proposed_text_en": {"type": "string", "minLength": 1},
+        "issues": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "clauses": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/clause"}
+    },
+    "unsupported_or_ambiguous": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/ambiguity"}
+    },
+    "confidence": {"enum": ["high", "medium", "low"]},
+    "rationale_summary": {"type": "string"}
+  },
+  "$defs": {
+    "span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "start", "end"],
+      "properties": {
+        "text": {"type": "string", "minLength": 1},
+        "start": {"type": "integer", "minimum": 0},
+        "end": {"type": "integer", "minimum": 1}
+      }
+    },
+    "identifiedSpan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text", "start", "end", "normalized"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "text": {"type": "string", "minLength": 1},
+        "start": {"type": "integer", "minimum": 0},
+        "end": {"type": "integer", "minimum": 1},
+        "normalized": {"type": "string", "minLength": 1}
+      }
+    },
+    "modality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "evidence"],
+      "properties": {
+        "label": {"enum": ["obligation", "prohibition", "permission", "definition"]},
+        "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/span"}}
+      }
+    },
+    "actorActionEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor_id", "action_id"],
+      "properties": {
+        "actor_id": {"type": ["string", "null"]},
+        "action_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "orderRelation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["before_action_id", "after_action_id", "evidence"],
+      "properties": {
+        "before_action_id": {"type": "string", "minLength": 1},
+        "after_action_id": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/span"}}
+      }
+    },
+    "clause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clause_id",
+        "clause_span",
+        "modality",
+        "actors",
+        "actions",
+        "conditions",
+        "constraints",
+        "exceptions",
+        "actor_action_map",
+        "order_relations"
+      ],
+      "properties": {
+        "clause_id": {"type": "string", "minLength": 1},
+        "clause_span": {"$ref": "#/$defs/span"},
+        "modality": {"$ref": "#/$defs/modality"},
+        "actors": {"type": "array", "items": {"$ref": "#/$defs/identifiedSpan"}},
+        "actions": {"type": "array", "items": {"$ref": "#/$defs/identifiedSpan"}},
+        "conditions": {"type": "array", "items": {"$ref": "#/$defs/identifiedSpan"}},
+        "constraints": {"type": "array", "items": {"$ref": "#/$defs/identifiedSpan"}},
+        "exceptions": {"type": "array", "items": {"$ref": "#/$defs/identifiedSpan"}},
+        "actor_action_map": {"type": "array", "items": {"$ref": "#/$defs/actorActionEdge"}},
+        "order_relations": {"type": "array", "items": {"$ref": "#/$defs/orderRelation"}}
+      }
+    },
+    "ambiguity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "reason"],
+      "properties": {
+        "field": {"enum": ["translation", "modality", "actor", "action", "condition", "constraint", "exception", "context"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

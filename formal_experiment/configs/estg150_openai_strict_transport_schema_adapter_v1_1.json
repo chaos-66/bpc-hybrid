@@ -1,0 +1,134 @@
+{
+  "schema_version": "estg150_openai_strict_transport_schema_adapter_config@1.1.0",
+  "adapter_id": "estg150_openai_strict_transport_schema_adapter",
+  "adapter_version": "1.1.0",
+  "adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.1.0",
+  "canonical_protocol_version": "estg150_canonical_external_candidate_protocol@1.0.0",
+  "canonical_schema": {
+    "path": "configs/schemas/estg150_ai_review_model_output.schema.json",
+    "sha256": "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9",
+    "output_schema_version": "estg150_ai_review_model_output@1.0.0"
+  },
+  "transport_schema": {
+    "path": "configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json",
+    "sha256": "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7",
+    "output_schema_version": "estg150_ai_review_model_output@1.0.0"
+  },
+  "transformation": {
+    "mode": "add_explicit_string_type_to_locked_homogeneous_const_or_enum_nodes",
+    "allowed_json_pointers": [
+      "/properties/schema_version",
+      "/properties/context_sufficiency",
+      "/properties/translation/properties/decision",
+      "/$defs/modality/properties/label",
+      "/properties/confidence",
+      "/$defs/ambiguity/properties/field"
+    ],
+    "only_added_member": {"type": "string"},
+    "output_schema_version_unchanged": true
+  },
+  "structured_outputs_preflight": {
+    "root_type_object_required": true,
+    "root_any_of_forbidden": true,
+    "all_object_properties_required": true,
+    "all_objects_additional_properties_false": true,
+    "const_and_enum_explicit_type_required": true,
+    "local_refs_allowed": true,
+    "nested_any_of_allowed": true
+  },
+  "capability_profiles": [
+    {
+      "profile_id": "estg150_chatanywhere_modern_strict_profile",
+      "profile_version": "1.0.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-5.6-luna",
+      "status": "offline_ready",
+      "transport_schema_adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.1.0",
+      "runtime_validation": "pending_new_explicit_api_authorization",
+      "request_downgrade_allowed": false
+    },
+    {
+      "profile_id": "estg150_chatanywhere_modern_strict_profile",
+      "profile_version": "1.0.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-5.4-nano",
+      "status": "offline_ready",
+      "transport_schema_adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.1.0",
+      "runtime_validation": "pending_new_explicit_api_authorization",
+      "request_downgrade_allowed": false
+    },
+    {
+      "profile_id": "estg150_chatanywhere_modern_strict_profile",
+      "profile_version": "1.0.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-5-nano",
+      "status": "offline_request_ready_runtime_503_unresolved",
+      "transport_schema_adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.1.0",
+      "runtime_validation": "pending_new_explicit_api_authorization",
+      "request_downgrade_allowed": false
+    },
+    {
+      "profile_id": "estg150_c1_observed_incompatibility",
+      "profile_version": "1.0.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-4.1-nano",
+      "status": "blocked_requires_separately_approved_versioned_provider_profile",
+      "blocking_paths": ["$.reasoning_effort"],
+      "reason_codes": ["reasoning_effort_unsupported"],
+      "request_downgrade_allowed": false
+    },
+    {
+      "profile_id": "estg150_c1_observed_incompatibility",
+      "profile_version": "1.0.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-4o",
+      "status": "blocked_pending_separately_approved_versioned_provider_profile",
+      "blocking_paths": ["$.reasoning_effort"],
+      "reason_codes": [
+        "reasoning_effort_acceptance_unverified_after_remote_disconnect",
+        "field_removal_requires_separate_explicit_approval"
+      ],
+      "request_downgrade_allowed": false
+    },
+    {
+      "profile_id": "estg150_c1_observed_incompatibility",
+      "profile_version": "1.0.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-3.5-turbo",
+      "status": "canonical_protocol_incompatible",
+      "blocking_paths": ["$.reasoning_effort", "$.response_format.type"],
+      "reason_codes": [
+        "reasoning_effort_unsupported",
+        "strict_json_schema_not_supported_without_forbidden_json_object_downgrade"
+      ],
+      "request_downgrade_allowed": false
+    },
+    {
+      "profile_id": "estg150_c1_observed_incompatibility",
+      "profile_version": "1.0.0",
+      "provider_adapter": "deepseek_official",
+      "endpoint_hosts": ["api.deepseek.com"],
+      "model": "deepseek-v4-pro",
+      "status": "canonical_protocol_incompatible",
+      "blocking_paths": ["$.messages[1].role", "$.response_format.type"],
+      "reason_codes": [
+        "developer_role_unsupported",
+        "strict_response_format_unsupported"
+      ],
+      "request_downgrade_allowed": false
+    }
+  ],
+  "downgrade_policy": {
+    "remove_reasoning_effort": "forbidden_without_separate_explicitly_approved_versioned_provider_profile",
+    "merge_or_relabel_messages": "forbidden",
+    "json_schema_to_json_object": "forbidden",
+    "tool_call_substitution": "forbidden",
+    "content_repair": "forbidden"
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "schema_version": "estg150_internal_pass_a@1.0.0",
+  "model": "gpt-5.6-sol",
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000080",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Contributions shall be valued in accordance with item 5; b) In the case of acquisition of a business for consideration, the assets shall be recognized at acquisition cost. 9. a) If a business, a part of a business or the interest of a partner who is considered as an entrepreneur (co-entrepreneur) of a business is taken over free of charge, the legal successor shall adopt the book values of the previous owner of the business (owner of the interest) (continuation of book values), b) If, for business reasons, individual assets are transferred free of charge into the business assets of another taxpayer, the amount that the recipient would have had to pay for the individual asset at the time of receipt shall be deemed as the acquisition cost (deemed acquisition cost).",
+        "issues": [
+          "The content of referenced item 5 and the surrounding enumeration are not supplied, so the cross-reference cannot be substantively checked."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Contributions shall be valued in accordance with item 5", "start": 0, "end": 55},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 14, "end": 19}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be valued", "start": 20, "end": 29, "normalized": "value contributions"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "in accordance with item 5", "start": 30, "end": 55, "normalized": "according to item 5"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "In the case of acquisition of a business for consideration, the assets shall be recognized at acquisition cost", "start": 60, "end": 170},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be recognized", "start": 131, "end": 150}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "shall be recognized", "start": 131, "end": 150, "normalized": "recognize assets"}],
+          "conditions": [{"id": "c2_condition_1", "text": "In the case of acquisition of a business for consideration", "start": 60, "end": 118, "normalized": "business acquired for consideration"}],
+          "constraints": [{"id": "c2_constraint_1", "text": "at acquisition cost", "start": 151, "end": 170, "normalized": "at acquisition cost"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "If a business, a part of a business or the interest of a partner who is considered as an entrepreneur (co-entrepreneur) of a business is taken over free of charge, the legal successor shall adopt the book values of the previous owner of the business (owner of the interest) (continuation of book values)", "start": 178, "end": 481},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall adopt", "start": 362, "end": 373}]},
+          "actors": [{"id": "c3_actor_1", "text": "the legal successor", "start": 342, "end": 361, "normalized": "legal successor"}],
+          "actions": [{"id": "c3_action_1", "text": "adopt the book values of the previous owner of the business (owner of the interest)", "start": 368, "end": 451, "normalized": "adopt predecessor book values"}],
+          "conditions": [{"id": "c3_condition_1", "text": "If a business, a part of a business or the interest of a partner who is considered as an entrepreneur (co-entrepreneur) of a business is taken over free of charge", "start": 178, "end": 340, "normalized": "business, part, or partner interest taken over free of charge"}],
+          "constraints": [{"id": "c3_constraint_1", "text": "(continuation of book values)", "start": 452, "end": 481, "normalized": "book-value continuation"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c3_actor_1", "action_id": "c3_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c4",
+          "clause_span": {"text": "If, for business reasons, individual assets are transferred free of charge into the business assets of another taxpayer, the amount that the recipient would have had to pay for the individual asset at the time of receipt shall be deemed as the acquisition cost (deemed acquisition cost).", "start": 486, "end": 773},
+          "modality": {"label": "definition", "evidence": [{"text": "shall be deemed", "start": 707, "end": 722}]},
+          "actors": [],
+          "actions": [{"id": "c4_action_1", "text": "shall be deemed as the acquisition cost", "start": 707, "end": 746, "normalized": "deem amount to be acquisition cost"}],
+          "conditions": [{"id": "c4_condition_1", "text": "If, for business reasons, individual assets are transferred free of charge into the business assets of another taxpayer", "start": 486, "end": 605, "normalized": "individual assets transferred free of charge for business reasons"}],
+          "constraints": [
+            {"id": "c4_constraint_1", "text": "at the time of receipt", "start": 684, "end": 706, "normalized": "at receipt time"},
+            {"id": "c4_constraint_2", "text": "(deemed acquisition cost)", "start": 747, "end": 772, "normalized": "deemed acquisition cost"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c4_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The sentence is an excerpt from a numbered list: item 5 and the surrounding items are missing, so the referenced valuation rule and enumeration scope cannot be verified from the supplied text alone."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The frozen English candidate faithfully preserves the visible German excerpt. Four normative units are represented, while missing list and cross-reference context is explicitly left unresolved."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000070",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "edited",
+        "proposed_text_en": "For assets that already formed part of the business assets at the end of the preceding fiscal year, the taxpayer may in the following fiscal years recognize the partial value even if that value is higher than the last book value; however, at most the acquisition or production costs may be recognized. b) In the case of agricultural and forestry businesses, the valuation of assets subject to biological growth may be made at the partial value exceeding acquisition or production costs. c) In the statement of assets and liabilities (annual financial statement, balance sheet), a write-down of up to 15% of the amount of the receivable outstanding at the respective balance sheet date may be taken on foreign receivables if the following conditions are met: — The receivables were acquired from supplies pursuant to Section 6 nos. 1 to 3 of the Turnover Tax Act 1972 or from services performed abroad for foreign customers (Section 7(1) no. 1 of the Turnover Tax Act 1972). — The flat-rate write-down is reported for the first time in the balance sheet of the fiscal year in which the receivables arose. — The flat-rate write-down is reversed on a profit-increasing basis as the receivables are collected.",
+        "issues": [
+          "Changed 'continue to carry them at their partial value' to 'recognize the partial value' because the German 'den Teilwert ... ansetzen' does not state that the same carrying basis must be continued.",
+          "The substantive scope of the cited Turnover Tax Act provisions cannot be checked from the supplied excerpt."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "For assets that already formed part of the business assets at the end of the preceding fiscal year, the taxpayer may in the following fiscal years recognize the partial value even if that value is higher than the last book value", "start": 0, "end": 228},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 113, "end": 116}]},
+          "actors": [{"id": "c1_actor_1", "text": "the taxpayer", "start": 100, "end": 112, "normalized": "taxpayer"}],
+          "actions": [{"id": "c1_action_1", "text": "recognize the partial value", "start": 147, "end": 174, "normalized": "recognize partial value"}],
+          "conditions": [{"id": "c1_condition_1", "text": "For assets that already formed part of the business assets at the end of the preceding fiscal year", "start": 0, "end": 98, "normalized": "assets already in business assets at prior fiscal-year end"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "in the following fiscal years", "start": 117, "end": 146, "normalized": "in following fiscal years"},
+            {"id": "c1_constraint_2", "text": "even if that value is higher than the last book value", "start": 175, "end": 228, "normalized": "even above last book value"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "however, at most the acquisition or production costs may be recognized", "start": 230, "end": 300},
+          "modality": {"label": "prohibition", "evidence": [{"text": "at most", "start": 239, "end": 246}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be recognized", "start": 287, "end": 300, "normalized": "recognize amount"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "at most the acquisition or production costs", "start": 239, "end": 282, "normalized": "not above acquisition or production costs"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "In the case of agricultural and forestry businesses, the valuation of assets subject to biological growth may be made at the partial value exceeding acquisition or production costs", "start": 305, "end": 485},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 411, "end": 414}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "be made at the partial value exceeding acquisition or production costs", "start": 415, "end": 485, "normalized": "value at partial value above acquisition or production costs"}],
+          "conditions": [{"id": "c3_condition_1", "text": "In the case of agricultural and forestry businesses", "start": 305, "end": 356, "normalized": "agricultural or forestry business"}],
+          "constraints": [{"id": "c3_constraint_1", "text": "at the partial value exceeding acquisition or production costs", "start": 423, "end": 485, "normalized": "partial value above acquisition or production costs"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c4",
+          "clause_span": {"text": "In the statement of assets and liabilities (annual financial statement, balance sheet), a write-down of up to 15% of the amount of the receivable outstanding at the respective balance sheet date may be taken on foreign receivables if the following conditions are met: — The receivables were acquired from supplies pursuant to Section 6 nos. 1 to 3 of the Turnover Tax Act 1972 or from services performed abroad for foreign customers (Section 7(1) no. 1 of the Turnover Tax Act 1972). — The flat-rate write-down is reported for the first time in the balance sheet of the fiscal year in which the receivables arose. — The flat-rate write-down is reversed on a profit-increasing basis as the receivables are collected.", "start": 490, "end": 1205},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 685, "end": 688}]},
+          "actors": [],
+          "actions": [{"id": "c4_action_1", "text": "be taken on foreign receivables", "start": 689, "end": 720, "normalized": "take write-down on foreign receivables"}],
+          "conditions": [
+            {"id": "c4_condition_1", "text": "The receivables were acquired from supplies pursuant to Section 6 nos. 1 to 3 of the Turnover Tax Act 1972 or from services performed abroad for foreign customers (Section 7(1) no. 1 of the Turnover Tax Act 1972)", "start": 760, "end": 972, "normalized": "receivables arise from specified transactions or foreign services"},
+            {"id": "c4_condition_2", "text": "The flat-rate write-down is reported for the first time in the balance sheet of the fiscal year in which the receivables arose", "start": 976, "end": 1102, "normalized": "first report write-down in fiscal year receivables arose"},
+            {"id": "c4_condition_3", "text": "The flat-rate write-down is reversed on a profit-increasing basis as the receivables are collected", "start": 1106, "end": 1204, "normalized": "reverse write-down as receivables are collected"}
+          ],
+          "constraints": [
+            {"id": "c4_constraint_1", "text": "In the statement of assets and liabilities (annual financial statement, balance sheet)", "start": 490, "end": 576, "normalized": "in statement of assets and liabilities"},
+            {"id": "c4_constraint_2", "text": "up to 15% of the amount of the receivable outstanding at the respective balance sheet date", "start": 594, "end": 684, "normalized": "maximum 15 percent of outstanding receivable"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c4_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The excerpt cites Section 6 nos. 1 to 3 and Section 7(1) no. 1 of another Act without supplying their content, so the precise class of qualifying transactions cannot be established from the provided text."},
+        {"field": "translation", "reason": "The legacy rendering 'acquired from supplies' is awkward and its most precise English tax-law equivalent depends on the unavailable cross-referenced provisions; it is therefore retained rather than expanded from outside knowledge."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "One minimal translation correction removes an unsupported implication of continued carrying. The visible permission, ceiling prohibition, agricultural valuation permission, and conditional foreign-receivable write-down permission are extracted without resolving missing statutory references."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000062",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If the land was acquired within the last ten years, the acquisition costs must not be exceeded. b) Upon transition from the profit determination method pursuant to Section 5 to another profit determination method, the hidden reserves of the land and the voluntary business assets must be disclosed and taxed.",
+        "issues": [
+          "The content of the profit-determination method in Section 5 is not supplied, although the direction of the transition remains explicit."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If the land was acquired within the last ten years, the acquisition costs must not be exceeded", "start": 0, "end": 94},
+          "modality": {"label": "prohibition", "evidence": [{"text": "must not", "start": 74, "end": 82}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be exceeded", "start": 83, "end": 94, "normalized": "exceed acquisition costs"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If the land was acquired within the last ten years", "start": 0, "end": 50, "normalized": "land acquired within last ten years"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "the acquisition costs", "start": 52, "end": 73, "normalized": "acquisition-cost ceiling"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "Upon transition from the profit determination method pursuant to Section 5 to another profit determination method, the hidden reserves of the land and the voluntary business assets must be disclosed and taxed", "start": 99, "end": 307},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 280, "end": 284}]},
+          "actors": [],
+          "actions": [
+            {"id": "c2_action_1", "text": "be disclosed", "start": 285, "end": 297, "normalized": "disclose hidden reserves"},
+            {"id": "c2_action_2", "text": "taxed", "start": 302, "end": 307, "normalized": "tax hidden reserves"}
+          ],
+          "conditions": [{"id": "c2_condition_1", "text": "Upon transition from the profit determination method pursuant to Section 5 to another profit determination method", "start": 99, "end": 212, "normalized": "transition from Section 5 method to another method"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": null, "action_id": "c2_action_1"},
+            {"actor_id": null, "action_id": "c2_action_2"}
+          ],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 5 is referenced but not provided, so the internal content of the source profit-determination method cannot be verified from the excerpt."},
+        {"field": "actor", "reason": "Both duties are expressed in the passive voice and no responsible actor is explicit in the supplied sentence; no actor is inferred."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The frozen English candidate preserves both the acquisition-cost prohibition and the two passive duties triggered by a change of profit-determination method. No unstated responsible actor is added."
+    }
+  ]
+}

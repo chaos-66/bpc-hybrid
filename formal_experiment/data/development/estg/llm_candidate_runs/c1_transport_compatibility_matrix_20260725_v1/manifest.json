@@ -1,0 +1,150 @@
+{
+  "schema_version": "estg150_c1_transport_compatibility_matrix@1.0.0",
+  "matrix_id": "c1_transport_compatibility_matrix_20260725_v1",
+  "stage": "c1",
+  "status": "completed_no_valid_candidate",
+  "completed_at_utc": "2026-07-25T13:50:34.9721639+00:00",
+  "canonical_protocol_version": "estg150_canonical_external_candidate_protocol@1.0.0",
+  "serializer_sha256": "d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef",
+  "semantic_request_sha256": "eb074081cc52d22025e263e3f94b2165f95493f511ddc454b9ea5f5923c085e1",
+  "authorization": {
+    "relay": {
+      "provider": "ChatAnywhere",
+      "maximum_models": 6,
+      "maximum_total_tokens": 78000,
+      "maximum_cost": "1.25",
+      "cost_currency": "CA",
+      "sum_of_per_run_cost_caps": "1.15"
+    },
+    "deepseek_official": {
+      "maximum_models": 1,
+      "maximum_total_tokens": 13000,
+      "maximum_cost": "0.01",
+      "cost_currency": "USD"
+    },
+    "one_synthetic_record_per_model": true,
+    "automatic_c2_forbidden": true
+  },
+  "totals": {
+    "models": 7,
+    "logical_request_count": 7,
+    "transport_retry_count": 2,
+    "derived_http_attempt_count": 9,
+    "valid_candidate_count": 0,
+    "evaluation_count": 0,
+    "precision": null,
+    "recall": null,
+    "provider_reported_tokens_available": false,
+    "actual_billed_cost_observed": false
+  },
+  "runs": [
+    {
+      "run_id": "c1_relay_gpt56_luna_diag_v2",
+      "provider_adapter": "relay_openai_compatible",
+      "provider_identity_attestation": "unverified_relay_report",
+      "model": "gpt-5.6-luna",
+      "status": "protocol_incompatible",
+      "http_status": 400,
+      "retry_count": 0,
+      "diagnostic": "response_format schema rejected because properties.schema_version lacks an explicit type",
+      "failure_sha256": "4f1e597bf0ae4dd193e108da2345d3a5e6f0ce9fac49542eeadb8974e54adf4c",
+      "transport_request_sha256": "bae167f1b9ecdc01f571ef4c4442a77dcd582d296efd390d2f86667e0147778b",
+      "provider_error_response_sha256": "096dd4b6a2c1c5e8640870bed25bb45b8b26597102844a825c30c38a88743a12"
+    },
+    {
+      "run_id": "c1_relay_gpt54_nano_diag_v2",
+      "provider_adapter": "relay_openai_compatible",
+      "provider_identity_attestation": "unverified_relay_report",
+      "model": "gpt-5.4-nano",
+      "status": "protocol_incompatible",
+      "http_status": 400,
+      "retry_count": 0,
+      "diagnostic": "response_format schema rejected because properties.schema_version lacks an explicit type",
+      "failure_sha256": "4ca9602a3a6615fdeace475d70ce1d109719e496460b4e5d506bc97d8c781d87",
+      "transport_request_sha256": "445716c46c9524643887f414344cbf2c8f05e625cc65460c08a267c4f0986c33",
+      "provider_error_response_sha256": "096dd4b6a2c1c5e8640870bed25bb45b8b26597102844a825c30c38a88743a12"
+    },
+    {
+      "run_id": "c1_relay_gpt5_nano_diag_v2",
+      "provider_adapter": "relay_openai_compatible",
+      "provider_identity_attestation": "unverified_relay_report",
+      "model": "gpt-5-nano",
+      "status": "failed_closed",
+      "http_status": 503,
+      "retry_count": 2,
+      "diagnostic": "relay returned no model result and exhausted the two identical-request transport retries",
+      "failure_sha256": "d2b0c1ce4bd325cd08f664941849e43f7adcba5c4667e37249548619e97a7469",
+      "transport_request_sha256": "b8a1afabbbff0a80f2e6d53cad0dca972e729aad91c0eb5e67c54bc6e6a3fca0",
+      "provider_error_response_sha256": "8a5dc5702d30748d0858e4af402330fb81ff09003d344e5851abe62a0f384d97"
+    },
+    {
+      "run_id": "c1_relay_gpt41_nano_diag_v2",
+      "provider_adapter": "relay_openai_compatible",
+      "provider_identity_attestation": "unverified_relay_report",
+      "model": "gpt-4.1-nano",
+      "status": "protocol_incompatible",
+      "http_status": 400,
+      "retry_count": 0,
+      "diagnostic": "reasoning_effort is an unrecognized request argument",
+      "failure_sha256": "39707ad5f2c08c8c77fcaa1a441dfe5f4466b1020d3becd2e98fa0b73da2f6ae",
+      "transport_request_sha256": "ee7a5056687bbe2595efdf53cc0953362d0538b46cb800b400d6515e180ae8e7",
+      "provider_error_response_sha256": "3f39595aeec977ac52477499325c45fc1e1c3744f6ad97bd3c91df421f8c9407"
+    },
+    {
+      "run_id": "c1_relay_gpt4o_diag_v2",
+      "provider_adapter": "relay_openai_compatible",
+      "provider_identity_attestation": "unverified_relay_report",
+      "model": "gpt-4o",
+      "status": "failed_closed",
+      "http_status": null,
+      "retry_count": 0,
+      "diagnostic": "relay closed the connection without an HTTP response; the run predated the RemoteDisconnected retry-classification fix",
+      "failure_sha256": "b72c4cf9d00714966eeb6bc28f34dc2c55cbe2bb22b624dc9c07de775e8d263e",
+      "transport_request_sha256": "601f0e88e569dcf826acd57799d72db99c3bddcdb9d39b462e7ae1c7a7fbea27",
+      "provider_error_response_sha256": null
+    },
+    {
+      "run_id": "c1_relay_gpt35_turbo_diag_v2",
+      "provider_adapter": "relay_openai_compatible",
+      "provider_identity_attestation": "unverified_relay_report",
+      "model": "gpt-3.5-turbo",
+      "status": "protocol_incompatible",
+      "http_status": 400,
+      "retry_count": 0,
+      "diagnostic": "reasoning_effort is an unrecognized request argument",
+      "failure_sha256": "8393a602e9af95614663f0d28948d5ba010f2e182a09d35e5efbe3d0658f397d",
+      "transport_request_sha256": "625bc6f99a80229a2589677d5916b904121f455d4ec44ed9477d2a1ce58cedf4",
+      "provider_error_response_sha256": "3f39595aeec977ac52477499325c45fc1e1c3744f6ad97bd3c91df421f8c9407"
+    },
+    {
+      "run_id": "c1_deepseek_v4_pro_diag_v2",
+      "provider_adapter": "deepseek_official",
+      "provider_identity_attestation": "official_endpoint_provider_report",
+      "model": "deepseek-v4-pro",
+      "status": "protocol_incompatible",
+      "http_status": 400,
+      "retry_count": 0,
+      "diagnostic": "messages[1].role developer is unsupported; endpoint reported only system, user, assistant, tool, and latest_reminder",
+      "failure_sha256": "fb0eaac9a32eb0f63f01053073a52b24025b3ab947aac3a9c87038f48af50a63",
+      "transport_request_sha256": "94de509c0355e2169dbce4e0da7b559c4a0c068af9bc7d5e512d4842cd7bc614",
+      "provider_error_response_sha256": "b8982c512da3900c3d86087fe822e5798b35f62cc9f71a52c624849554133da3"
+    }
+  ],
+  "conclusions": {
+    "model_safety_refusal_observed": false,
+    "latest_relay_models_reached_strict_schema_validation": true,
+    "canonical_schema_is_compatible_with_latest_relay_strict_subset": false,
+    "older_non_reasoning_models_accept_reasoning_effort": false,
+    "deepseek_accepts_developer_role": false,
+    "all_models_failed_for_one_common_reason": false,
+    "c1_passed": false,
+    "c2_started": false
+  },
+  "safety": {
+    "layer_d_read_during_generation": false,
+    "layer_e_read_during_generation": false,
+    "gold_visible_during_generation": false,
+    "credential_echo_detected": false,
+    "request_downgrade_or_repair": false
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": "estg150_internal_ai_review_summary@1.0.0",
+  "run_id": "codex_internal_gpt56sol_pilot3_v1",
+  "completed_at_utc": "2026-07-20T10:09:57Z",
+  "status": "succeeded_development_pilot",
+  "sample_count": 3,
+  "sample_ids": [
+    "estg_000080",
+    "estg_000070",
+    "estg_000062"
+  ],
+  "pass_a_validation": "3/3",
+  "pass_b_validation": "3/3",
+  "root_validation": "3/3",
+  "translation_decisions": {
+    "accepted": 1,
+    "edited": 2,
+    "uncertain": 0
+  },
+  "context_sufficiency": {
+    "sufficient": 0,
+    "insufficient": 1,
+    "uncertain": 2
+  },
+  "confidence": {
+    "high": 0,
+    "medium": 3,
+    "low": 0
+  },
+  "second_pass_material_changes": [
+    "estg_000080 removed parenthetical terminology explanations incorrectly treated as constraints",
+    "estg_000070 removed an action/constraint overlap while retaining the minimal Pass A translation correction",
+    "estg_000062 changed translation decision from accepted to edited and replaced voluntary business assets with elective business assets"
+  ],
+  "output_class": "development_ai_adjudication_candidate_not_human_gold",
+  "layer_e_read": false,
+  "layer_e_write": false,
+  "external_api_called": false,
+  "external_relay_cost_cny": 0,
+  "full_batch_authorized": false,
+  "automatic_promotion": false
+}

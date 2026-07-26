@@ -1,0 +1,26 @@
+{
+  "schema_version": "estg150_candidate_run_failure@1.0.0",
+  "run_id": "c1_relay_gpt5_nano_diag_v2",
+  "status": "failed_closed",
+  "error_type": "ProviderHTTPError",
+  "error": "non-retryable or exhausted HTTP status: 503",
+  "request_count": 1,
+  "retry_count": 2,
+  "real_api_call": true,
+  "layer_d_read_during_generation": false,
+  "layer_e_read_during_generation": false,
+  "gold_visible_during_generation": false,
+  "failed_at_utc": "2026-07-25T13:43:22+00:00",
+  "http_status": 503,
+  "provider_request_id": null,
+  "retry_reasons": [
+    "http_503",
+    "http_503"
+  ],
+  "provider_error_response_truncated": false,
+  "provider_error_response_bytes": 313,
+  "provider_error_response_sha256": "8a5dc5702d30748d0858e4af402330fb81ff09003d344e5851abe62a0f384d97",
+  "credential_echo_detected": false,
+  "provider_error_response_archived": true,
+  "provider_error_response_path": "responses/001_synthetic_c1_utf8_full_extract.http_error.body"
+}

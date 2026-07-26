@@ -1,0 +1,124 @@
+{
+  "schema_version": "estg150_candidate_protocol_config@1.0.0",
+  "protocol_version": "estg150_canonical_external_candidate_protocol@1.0.0",
+  "serializer_version": "estg150_canonical_external_serializer@1.0.0",
+  "historical_run_id": "codex_internal_gpt56sol_full150_v1",
+  "historical_hidden_transport_payload_not_archived": true,
+  "claim_boundary": "This external serializer reproduces the archived visible assets and routing. It does not reproduce an unarchived Codex system prompt or hidden API envelope.",
+  "assets": {
+    "membership": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7"
+    },
+    "layer_a": {
+      "path": "data/development/estg/estg_selected_150_de.jsonl",
+      "sha256": "55b64598dedfa0c0038084ee62c0928bddfa4bf17f19db80d461da2cb7bf26a3"
+    },
+    "layer_b": {
+      "path": "data/development/human_review/estg_150_translation_en_v1.jsonl",
+      "sha256": "f65e929bf1fe498ffce6f08d30f95d1c4de53592457352cce915cfbf8ee91da3"
+    },
+    "layer_c": {
+      "path": "data/development/human_review/estg_150_llm_six_element_candidates_v1.jsonl",
+      "sha256": "9476945ca387fb7efad5c1405cca59a6ef24ff50a23e22ba2c46ad6847290b8b"
+    },
+    "output_schema": {
+      "path": "configs/schemas/estg150_ai_review_model_output.schema.json",
+      "sha256": "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9"
+    },
+    "full_extract_prompt": {
+      "path": "prompts/estg150_ai_review/internal_sol_full_extract_v1.md",
+      "sha256": "9ad65ce8921d76afc3cc3bfe50b1c2f447cae8155cc40041fc32d60f6a63ae0b"
+    },
+    "pass_a_prompt": {
+      "path": "prompts/estg150_ai_review/pass_a_blind_review_v1.md",
+      "sha256": "9d6127e3457c05d96d52d339701e41d104b11f1128a98853a4a24b650c4d1fec"
+    },
+    "pass_b_prompt": {
+      "path": "prompts/estg150_ai_review/pass_b_adjudicator_v1.md",
+      "sha256": "3ff3c8fd4e22c62ed5e0fedb656a3c290c64e5969b1cc85faea61008449e9fcd"
+    }
+  },
+  "message_contract": {
+    "role_order": ["system", "developer", "user"],
+    "system_message": "You are executing the fixed EStG-150 canonical external candidate-generation protocol. Follow the developer message exactly. Use only the user-supplied fields. Return one JSON object that conforms to the supplied strict schema; do not add prose.",
+    "developer_content": "byte_exact_selected_route_prompt",
+    "user_content": "canonical_compact_json"
+  },
+  "route_contract": {
+    "indices_0_2": ["pass_a", "pass_b"],
+    "indices_3_149": ["full_extract"],
+    "pass_a_fields": ["sample_id", "raw_text_de", "frozen_candidate_text_en"],
+    "pass_b_fields": ["sample_id", "raw_text_de", "frozen_candidate_text_en", "pass_a_candidate", "legacy_six_element_draft"],
+    "full_extract_fields": ["sample_id", "raw_text_de", "frozen_candidate_text_en", "legacy_six_element_draft"],
+    "sample_order": "byte_order_of_layer_a_joined_by_legacy_record_id"
+  },
+  "serialization": {
+    "encoding": "utf-8",
+    "ensure_ascii": false,
+    "key_order": "insertion_order",
+    "item_separator": ",",
+    "key_separator": ":",
+    "record_terminator": "LF",
+    "unicode_normalization": "none",
+    "newline_normalization": "none"
+  },
+  "generation_controls": {
+    "reasoning_effort": "high",
+    "max_completion_tokens": 6500,
+    "temperature_policy": "omit",
+    "strict_json_schema": true
+  },
+  "response_contract": {
+    "content_path": "choices[0].message.content",
+    "required_finish_reason": "stop",
+    "content_type": "json_object_string",
+    "content_repair": "forbidden",
+    "content_retry": "forbidden",
+    "network_retry_statuses": [429, 500, 502, 503, 504],
+    "network_retry_timeout": true,
+    "max_network_retries": 2
+  },
+  "validation_contract": {
+    "schema_subset": "dependency_free_draft_2020_12_subset_used_by_output_schema",
+    "exact_python_half_open_spans": true,
+    "unique_clause_and_entity_ids": true,
+    "relations_reference_existing_ids": true,
+    "obvious_normative_cue_coverage": true,
+    "invalid_output_repair": false
+  },
+  "provider_adapters": {
+    "relay_openai_compatible": {
+      "transport_family": "openai_chat_completions",
+      "allowed_endpoint_hosts": [],
+      "endpoint_host_policy": "explicit_user_authorization_required",
+      "provider_identity_attestation": "unverified_relay_report"
+    },
+    "deepseek_official": {
+      "transport_family": "openai_chat_completions",
+      "allowed_endpoint_hosts": ["api.deepseek.com"],
+      "endpoint_host_policy": "official_host_required",
+      "provider_identity_attestation": "official_endpoint_provider_report"
+    },
+    "qwen_official": {
+      "transport_family": "openai_chat_completions",
+      "allowed_endpoint_hosts": ["dashscope.aliyuncs.com"],
+      "endpoint_host_policy": "official_host_required",
+      "provider_identity_attestation": "official_endpoint_provider_report"
+    },
+    "xai_official": {
+      "transport_family": "openai_chat_completions",
+      "allowed_endpoint_hosts": ["api.x.ai"],
+      "endpoint_host_policy": "official_host_required",
+      "provider_identity_attestation": "official_endpoint_provider_report"
+    }
+  },
+  "output": {
+    "root": "data/development/estg/llm_candidate_runs",
+    "schema_version": "estg150_ai_review_model_output@1.0.0",
+    "overwrite": false,
+    "generation_may_read_layer_d": false,
+    "generation_may_read_layer_e": false,
+    "evaluation_is_separate_after_freeze": true
+  }
+}

@@ -184,3 +184,1212 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：checkpoint bfb0b8a 已将 formal_experiment 纳入版本控制；提交后机器检查由 formal_capsule_not_versioned blocker 转为 formal_capsule_versioned pass，blocker 10→9。MASTER_PIPELINE 升级至 3.4.3 并将 G0.6 标 verified，PROJECT_AUDIT 同步 checkpoint 事实；定向 7 passed，全量 930 passed、22 skipped；未修改 Gold、未调用 LLM/API、未读取 .env。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-16T08:07:34.919265+00:00 - S2.4 license fail-closed closure and S2.5-A CoreNLP/Tregex offline contract
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：941 passed, 22 skipped in 82.30s (0:01:22)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：16 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、s2_4_license_gate_blocked、s2_5_corenlp_runtime_missing、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：Pinned CoreNLP 4.5.10 runtime contract, six-field extraction order, candidate Tregex/Tsurgeon registry, synthetic CoreNLP JSON fixture, read-only runtime probe/command builder, exact-hash gate, status/docs/tests. S2.4 remains blocked on unknown_pending_confirmation; S2.5 runtime/overall remain false. No CoreNLP distribution acquired or executed; no Java/Tregex/Tsurgeon live run; no training or evaluation. Verified 941 passed, 22 skipped.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-16T08:11:55.497838+00:00 - Clarify S2.5-A network evidence boundary
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：941 passed, 22 skipped in 81.31s (0:01:21)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：18 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、s2_4_license_gate_blocked、s2_5_corenlp_runtime_missing、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：Corrected research documentation: implementation/tests/audit/runtime probe were offline; the Agent only consulted official Stanford pages for version/license verification and did not download the CoreNLP distribution. S2.4/S2.5 gates unchanged. Verified 941 passed, 22 skipped.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-16T09:28:08.488021+00:00 - Verify S2.5 CoreNLP Tregex Tsurgeon extractor runtime
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：942 passed, 22 skipped in 100.23s (0:01:40)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：23 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、s2_4_license_gate_blocked、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：S2.5-A and S2.5-B are verified with official CoreNLP 4.5.10 held outside formal_experiment: archive sha256 76a04089069dad21176c02881f46e07c19ca148b71c8581de2b5b2e2855e042e; exact code/model JAR hashes locked; 12 Tregex patterns compiled; 2 synthetic sentences produced 28 tokens, 11 field matches, and 7 Tsurgeon surgeries. Offline audit: 942 passed, 22 skipped, 0 errors. No training, evaluation, Gold mutation, formal use, redistribution, or real LLM/API call. S2.4 remains blocked by unknown_pending_confirmation license and S2.6 was not entered.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-16T12:37:21.852080+00:00 - S2.4-L Sun modality license evidence closure
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：950 passed, 22 skipped in 94.60s (0:01:34)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：30 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、s2_4_license_gate_blocked、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：Live read-only checks of the official Archive.org metadata endpoint and Springer article page found licenseurl=null, rights=null, a reasonable-request data-availability statement, and no explicit dataset training/evaluation permission; the local official ZIP has no license member. Added exact-hash evidence record sha256=5a4d6ee78007cbc81c611b4ad1164328589ed6bb323394342d6808a15e11df7e, human record, fail-closed S2.4-L gate, status/audit integration, and negative tests. Evidence review is verified, but rights remain unknown_pending_confirmation; training/evaluation/formal use/publication/redistribution remain false, S2.4 stays blocked, and S2.6 was not entered. Full offline audit: 950 passed, 22 skipped, 0 errors. No Gold mutation or real LLM/API call.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T04:29:58.664550+00:00 - 收口现有文件目录并完成 PW1 引言、RQ0-RQ4 与主张矩阵初稿
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：950 passed, 22 skipped in 96.89s (0:01:36)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：32 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、s2_4_license_gate_blocked、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：按 Sun 原文 Section 4/Figure 1 将三部分与项目 Stage 1/2/3 映射明确分开；新增的 RQ、预期贡献、Oracle/端到端与负结果表述全部保持计划或待检验时态；PROJECT_AUDIT 已将 PW1 标为 verified、PW2 标为下一论文任务；FILE_CATALOG 共 294 个文件且检查有效；未修改 Gold，未运行真实实验或 LLM/API。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T04:59:58.112832+00:00 - 完成 PW2 一手文献核验、相关工作与方法边界，并同步主张矩阵和实时状态
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：950 passed, 22 skipped in 92.66s (0:01:32)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：32 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、s2_4_license_gate_blocked、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：Sun/Winter/Sleimi/Michel/Agostinelli/Barrientos 的任务、schema、代码身份与证据等级已分开；无正式结果主张。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T05:05:11.280719+00:00 - 完成 PW3 三阶段合同与 B0/H1/D1 方法设计稿，并同步 Pipeline、主张矩阵和实时状态
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：950 passed, 22 skipped in 106.61s (0:01:46)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：32 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、s2_4_license_gate_blocked、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：区分 canonical schema/S2.5 verified、B0 blocked、H1/D1 planned；未产生或引用正式结果。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T05:09:35.209392+00:00 - 完成 PW4 modality 数据治理、五层 Gold 与人工标注协议当前稿，并同步 Pipeline、主张矩阵和实时状态
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：950 passed, 22 skipped in 98.72s (0:01:38)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：32 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、s2_4_license_gate_blocked、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：只读运行 human_correction validator；Layer E 仍为 0/150 adjudicated、0/900 字段决定，未写入任何 Gold。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T05:14:04.070265+00:00 - 完成 PW5 baseline、指标、统计与复现设计，并同步 Pipeline、主张矩阵和实时状态
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：950 passed, 22 skipped in 99.58s (0:01:39)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：32 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、s2_4_license_gate_blocked、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：正式 evaluator、阈值、bootstrap 参数与 LLM 重复次数仍保持 TODO-DECISION；未运行任何实验。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T05:24:12.131216+00:00 - 完成 PW6 Stage 2、复杂度、Oracle、端到端结果空表与作图/provenance 模板，并将论文轨道推进到 PW7 门禁
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：950 passed, 22 skipped in 100.62s (0:01:40)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：32 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、s2_4_license_gate_blocked、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：所有待测数值保持空白；恢复测试锁定的 TEMPLATE 安全标记；未生成任何结果或图像。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T06:02:33.626281+00:00 - 根据用户明确决定，将 S2.4 重锁为仅本地非商业训练、开发集选择与评价可用；许可证据仍 unknown，数据再分发继续禁止
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：952 passed, 22 skipped in 98.90s (0:01:38)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：33 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：新增 exact-hash 本地研究使用决定；experiment contract 2.0.6、机器门禁、负测试、Pipeline、项目审计和论文主张同步。952 passed, 22 skipped；未训练、未评价、未进入 S2.6。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T06:30:22.661045+00:00 - 实现并预注册 S2.4 Legal-BERT + TextCNN 本地训练、dev 选择和单次 test 评价流程
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：960 passed, 22 skipped in 87.75s (0:01:27)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：37 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：固定 Legal-BERT commit 与文件 hash、2/3/4 TextCNN、无超参搜索、dev macro-F1 早停、test 只评一次；真实模型离线 smoke 通过。960 passed, 22 skipped；尚未正式训练或评价。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T07:49:33.139596+00:00 - 完成 S2.4 Legal-BERT + TextCNN 可重放训练、development 选择与唯一一次 test 评价
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s24_legal_bert_textcnn_seed20260717_v1；阶段=S2.4；方法=sun_bert_textcnn；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/train_sun_bert_textcnn.py --mode train --device cpu --run-id s24_legal_bert_textcnn_seed20260717_v1 --output-dir outputs/development/s24_legal_bert_textcnn_seed20260717_v1 --manifest-out outputs/reports/s24_legal_bert_textcnn_seed20260717_v1.manifest.json`
+- manifest：outputs/reports/s24_legal_bert_textcnn_seed20260717_v1.manifest.json
+- 结果摘要：development component run; 7 epochs; best epoch 5; dev macro-F1=0.856263; test n=426, accuracy=0.924883, macro-F1=0.851071; test evaluated exactly once
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：960 passed, 22 skipped in 99.48s (0:01:39)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：38 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：Local noncommercial thesis use only; rightsholder license remains unknown; no raw or row-level derived redistribution; no row-level predictions persisted.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T08:31:52.881578+00:00 - 完成 S2.6 no-LLM classifier-extractor-canonical B0 技术组合并锁定双语路由
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s26_sun_b0_canonical_composition_v3；阶段=S2.6；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/verify_sun_b0_s26.py --device cpu --manifest-out formal_experiment/outputs/reports/s26_sun_b0_canonical_composition_v3.manifest.json`
+- manifest：outputs/reports/s26_sun_b0_canonical_composition_v3.manifest.json
+- 结果摘要：synthetic component verification only; exact S2.4 checkpoint + attested S2.5 live observations; de classifier / aligned en phrase+canonical routing; 1 record, 1 clause, schema_invalid=0, cross_field_invalid=0; no performance evaluation
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：968 passed, 22 skipped in 113.21s (0:01:53)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：51 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Only v3 is accepted by the exact-hash gate. Earlier v1/v2 exploratory smoke manifests are superseded and are not evidence or paper results. Test split was not read or re-evaluated; no real-data row predictions were persisted.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T08:56:06.857735+00:00 - 完成 S2.8 H1 离线预注册、B0 重基和 fail-closed dry-run 验证
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s28_sun_h1_selective_dry_run_v3；阶段=stage2；方法=sun_llm_fallback；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_sun_h1_s28.py --manifest-out outputs/reports/s28_sun_h1_selective_dry_run_v3.manifest.json`
+- manifest：outputs/reports/s28_sun_h1_selective_dry_run_v3.manifest.json
+- 结果摘要：verified S2.6 B0 binding; inference-visible trigger and field dependency closure; accepted mock patch canonical-valid; unauthorized patch returned original B0; hard budget 45/150, one request per sample, zero retries; no performance evaluation
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：981 passed, 22 skipped in 100.08s (0:01:40)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：63 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：仅 synthetic dry-run；v1/v2 为本批迭代中被 v3 明确取代的非门禁产物；未读取或修改 Gold，未读取 test split，未调用网络或真实 LLM/API，未写 formal predictions。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T08:56:59.307050+00:00 - 参考 Sun 的综述结构重写相关工作并补充形式化方法、流程文本 NLP、选择性预测与 LLM 路由文献边界
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：981 passed, 22 skipped in 100.98s (0:01:40)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：63 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：仅修改 THESIS_DRAFT 相关工作和 CLAIM_EVIDENCE_MATRIX；未改 Gold、实验数据、结果或方法实现；全量离线验证 981 passed, 22 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T09:08:57.511335+00:00 - 完成 G0.5 预结果文本与 BPMN 复杂度合同及泄漏防护验证
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=g05_complexity_contract_synthetic_v1；阶段=governance；方法=not_applicable；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_complexity_contract_g05.py --manifest-out outputs/reports/g05_complexity_contract_synthetic_v1.manifest.json`
+- manifest：outputs/reports/g05_complexity_contract_synthetic_v1.manifest.json
+- 结果摘要：text 11 indicators and BPMN 12 indicators frozen into low/medium/high strata; text fixture score 4 medium; cyclic BPMN fixture score 1 low; method outputs/results forbidden; no complex dataset selected and no performance evaluation
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：995 passed, 22 skipped in 94.72s (0:01:34)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：72 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：仅 synthetic fixtures；未选择或读取复杂法律数据集，未读取/修改 Gold，未读取 test 结果，未调用网络或 LLM/API，未生成 formal complexity profiles。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T09:35:47.236831+00:00 - 完成 S2.11 官方 GDPR 复杂法律输入 membership 与人工 Gold/映射协议冻结
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s211_gdpr_complex_dataset_freeze_v1；阶段=stage2；方法=not_applicable；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_complex_legal_s211.py --manifest-out outputs/reports/s211_gdpr_complex_dataset_freeze_v1.manifest.json`
+- manifest：outputs/reports/s211_gdpr_complex_dataset_freeze_v1.manifest.json
+- 结果摘要：official CELEX 32016R0679 Formex source; 200 units; deterministic 50 records covering Articles 5-50; membership 9a6a2c892e6e9ef86877066fb3c88ad03d06ca999c41ecbd91c6df35d09c28b9; blank human Gold input-ready 0/50, not frozen; no method/performance results
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1006 passed, 22 skipped in 95.28s (0:01:35)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：90 个
+- Gold：仅按授权调整格式（`authorized_format_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：source acquisition used official EU Publications Office endpoint; verifier is offline; old heuristic gdpr50 excluded; no method outputs, test results, or complexity profiles
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T09:56:27.239349+00:00 - 按Sun相关工作篇幅与连续段落格式压缩论文相关工作
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1020 passed, 22 skipped in 108.01s (0:01:48)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：102 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：将Section 2压缩为1022个汉字、7个连续段落，保留形式化方法、NLP、Sun、LLM与选择性回退脉络；修复文献主张ID冲突。完整离线套件两次均为1005通过、22跳过，唯一失败为测试期间并发新增S2.10文件导致目录索引过期；重建354项目录后该失败项通过，完整性审计0 errors。未修改Gold、数据、结果或方法实现。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T10:04:48.766900+00:00 - 完成 S2.10-E Stage 2 统一离线 evaluator 合同与 fail-closed 门禁
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s210_stage2_evaluator_contract_synthetic_v1；阶段=stage2；方法=shared_evaluator；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_stage2_evaluator_s210.py --manifest-out outputs/reports/s210_stage2_evaluator_contract_synthetic_v1.manifest.json`
+- manifest：outputs/reports/s210_stage2_evaluator_contract_synthetic_v1.manifest.json
+- 结果摘要：five synthetic attempts; exact membership; clause-level four-class modality; strict/safe/token field metrics; coverage/hallucination; structural edges; invalid/API and cost accounting; formal scope fail closed; no formal method performance
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1021 passed, 22 skipped in 108.52s (0:01:48)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：102 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：synthetic fixture only; formal Gold/predictions not read or modified; no real LLM/network; synthetic metric values are contract constants, not B0/H1/D1 results; 1021 passed, 22 skipped
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T10:34:15.445078+00:00 - 完成S2.9 D1离线预注册并锁定实际prompt、模型、重复、预算与失败分母
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s29_sun_d1_offline_prereg_v3；阶段=S2.9；方法=direct_llm；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_sun_d1_s29.py --manifest-out outputs/reports/s29_sun_d1_offline_prereg_v3.manifest.json`
+- manifest：outputs/reports/s29_sun_d1_offline_prereg_v3.manifest.json
+- 结果摘要：synthetic input=3; planned requests=15 (5 repeats); four few-shots/request; primary valid=1 invalid=1 api_error=1; dropped=0; exact-hash gate ready; no performance result
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1034 passed, 22 skipped in 125.31s (0:02:05)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：113 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：修复v3 nested-fence实际prompt截断；v4显式插入4个few-shot；模型gpt-4.1-2025-04-14，temperature=0，0重试，formal 150x5最多750次、9216000 tokens、37 USD ceiling。runner离线且拒绝--allow-llm；未读.env/Gold/B0/H1预测，未联网或调用LLM。全量1034 passed, 22 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T10:52:06.382724+00:00 - 完成S2.7-M非LLM模态baseline聚合运行与exact-hash门禁
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_non_llm_modality_baselines_seed20260717_v1；阶段=S2.7-M；方法=non_llm_modality_baselines；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_s27_modality_baselines.py --allow-test-evaluation --run-id s27_non_llm_modality_baselines_seed20260717_v1 --manifest-out outputs/reports/s27_non_llm_modality_baselines_seed20260717_v1.manifest.json`
+- manifest：outputs/reports/s27_non_llm_modality_baselines_seed20260717_v1.manifest.json
+- 结果摘要：same reconstructed split train/dev/test=1985/420/426; test majority accuracy/macro-F1=0.457746/0.157005; keyword=0.483568/0.414154; NB=0.784038/0.568849; aggregate-only; phrase/full S2.7 blocked
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1043 passed, 22 skipped in 122.84s (0:02:02)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：119 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Pure-standard-library word 1-2 gram Multinomial NB, no hyperparameter search. Disclosed one identical-config unversioned test-label smoke before the versioned run; no alternative config/model selected on test. No row-level predictions, no LLM/network/.env/Gold changes. Full suite 1043 passed, 22 skipped.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T11:12:39.385494+00:00 - 完成S2.12-P结果前复杂度分层、统计推断与错误分析协议冻结
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1049 passed, 22 skipped in 137.12s (0:02:17)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：126 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：No formal Gold/predictions/results read or created. Six synthetic count rows only; no LLM/network/formal complexity profile or method-performance claim. Full suite 1049 passed, 22 skipped.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T12:24:44.402356+00:00 - 闭合S2.10 recovered-error语义并重锁D1、S2.12与H1真实运行前合同
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s210_h1_recovered_fallback_relock_v1；阶段=stage2_offline_contracts；方法=shared_evaluator_and_sun_llm_fallback；状态=成功（`succeeded`）
+- 实际运行命令：`verify_stage2_evaluator_s210.py v2; verify_sun_d1_s29.py v4; verify_s212_analysis_protocol.py v2; verify_sun_h1_s28.py v5`
+- manifest：outputs/reports/s210_stage2_evaluator_contract_synthetic_v2.manifest.json, outputs/reports/s29_sun_d1_offline_prereg_v4.manifest.json, outputs/reports/s212_analysis_protocol_synthetic_v2.manifest.json, outputs/reports/s28_sun_h1_selective_dry_run_v5.manifest.json
+- 结果摘要：S2.10 separates terminal/recovered provider errors; H1 provider-error B0 fallback remains canonical and scorable with H1 identity; exact Chat Completions request, deterministic 45-call allocation, 460800-token and 1.5-USD ceilings locked; D1/S2.12 rebound to evaluator v2; 1053 passed, 22 skipped
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1053 passed, 22 skipped in 131.37s (0:02:11)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：131 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Synthetic/offline contracts only. H1 v4 was an intermediate no-overwrite artifact superseded by canonical v5. No formal Gold/predictions/results, network, .env, or real LLM/API access.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T12:52:37.478913+00:00 - Verify the S1.1/S1.2/S1.4 deterministic BPMN structural Process Record contract on synthetic fixtures
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s11_s14_stage1_structural_synthetic_v1；阶段=stage1_offline_structural；方法=stage1_bpmn_xml_structural；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_stage1_structural_s11_s14.py`
+- manifest：outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json
+- 结果摘要：Synthetic structural verification passed: 2 BPMN fixtures; deterministic entities and flows; 53 reachable pairs on the branching fixture; cycle and unreachable-node detection verified; no performance evaluation.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1064 passed, 22 skipped in 134.47s (0:02:14)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：141 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Full integrity audit passed with 1064 tests passed and 22 skipped; exact-hash Stage 1 structural gate is ready.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T13:11:45.328334+00:00 - Verify the S1.3 deterministic P0/P1 label-semantics sidecar contract on synthetic BPMN
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s13_stage1_label_semantics_synthetic_v1；阶段=stage1_offline_label_semantics；方法=stage1_label_p0_raw_and_p1_surface_split；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_stage1_label_semantics_s13.py`
+- manifest：outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json
+- 结果摘要：Synthetic label verification passed: 6 activities; P0 semantic inference count 0; P1 actor statuses single/no/ambiguous=4/1/1 and label statuses empty/unparsed/action-only/action-object=1/1/1/3; no performance evaluation.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1073 passed, 22 skipped in 137.15s (0:02:17)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：150 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Full integrity audit passed with 1073 tests passed and 22 skipped; exact-hash S1.3 gate is ready; formal BPMN, P2, human Gold, and accuracy remain unrun.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T13:30:11.562409+00:00 - Verify the S1.5 blank human-annotation protocol and fail-closed freeze semantics on synthetic BPMN
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s15_stage1_annotation_protocol_synthetic_v1；阶段=stage1_offline_annotation_protocol；方法=stage1_blank_human_annotation_protocol；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_stage1_annotation_protocol_s15.py`
+- manifest：outputs/reports/s15_stage1_annotation_protocol_synthetic_v1.manifest.json
+- 结果摘要：Protocol-only verification passed: 1 synthetic process, 6 activities, 18 label fields, 0 resolved, 0 adjudicated, 0 Gold Process Records, freeze_ready=false; formal BPMN membership remains 0.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1079 passed, 22 skipped in 132.34s (0:02:12)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：159 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、stage1_formal_bpmn_membership_not_promoted、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Full integrity audit passed with 1079 tests passed and 22 skipped. Protocol gate is ready; formal membership requires user-approved promotion of provenance BPMN candidates and human annotation.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-17T13:45:59.718659+00:00 - Verify the S1.6 unified structural and label-semantics evaluator contract on synthetic constants
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s16_stage1_evaluator_contract_synthetic_v1；阶段=stage1_offline_evaluator_contract；方法=stage1_unified_evaluator；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_stage1_evaluator_s16.py`
+- manifest：outputs/reports/s16_stage1_evaluator_contract_synthetic_v1.manifest.json
+- 结果摘要：Evaluator contract passed: exact P0/P1 membership; 8 structural set components; actor/action/business-object exact metrics; triple accuracy; terminal/invalid denominators. Synthetic constants only, not formal performance.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1085 passed, 22 skipped in 129.43s (0:02:09)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：168 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、stage1_formal_bpmn_membership_not_promoted、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Full integrity audit passed with 1085 tests passed and 22 skipped. Formal evaluator scope remains blocked on active BPMN membership and adjudicated Stage 1 Gold.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-18T05:55:43.361822+00:00 - 经用户批准冻结共享Stage 1/Stage 3 GDPR7扩展membership并生成空白Stage 1审核输入
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s15_s31_gdpr7_membership_v1；阶段=stage1_stage3_membership；方法=stage1_bpmn_xml_structural_with_formal_input_id_adapter；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_stage1_stage3_gdpr7.py`
+- manifest：outputs/reports/s15_s31_gdpr7_membership_v1.manifest.json
+- 结果摘要：7/7 byte-exact BPMN copies verified; 7 unique Process Records; 45 activities; 135 blank label fields; formal membership ready; human Gold 0/7; no performance result
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1090 passed, 22 skipped in 125.49s (0:02:05)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：187 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户于2026-07-18明确批准使用7个模型。来源references/winter_2020_model_check/model_check/input/models/gdpr保持只读；活动副本位于data/input/stage1_stage3/gdpr7。明确标注all-seven extension，不称Sun original four。文件3/4复用raw process id，使用membership input_id作为项目级唯一process_id且保留raw id。全量1090 passed, 22 skipped；未读取.env、未调用网络/LLM、未自动填Gold。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-18T08:50:42.918977+00:00 - 生成并激活 EStG-150 Layer D 中文辅助与盲回译，并保留用户已作出的首条翻译决定
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=run_20260718_layerd_deepseek_v4_flash_v2_nonthinking；阶段=S2.2-Layer-D；方法=deepseek-v4-flash-layer-d-review-aid；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_llm_zh_aid.py --allow-llm --provider openai_compatible --model deepseek-v4-flash --base-url https://api.deepseek.com --max-calls 300 --start-index 0 --end-index 150 --api-key-env-name DEEPSEEK_API_KEY --run-id run_20260718_layerd_deepseek_v4_flash_v2_nonthinking --temperature 0 --max-tokens 2048 --thinking-mode disabled`
+- manifest：data/development/estg/llm_candidate_runs/run_20260718_layerd_deepseek_v4_flash_v2_nonthinking/manifest.jsonl
+- 结果摘要：DeepSeek V4 Flash 非思考模式生成成功并激活 Layer D v2：中文 150/150、盲回译 150/150；主运行清单 150 条成功、1 条失败尝试后按同一锁定配置重试成功；严格校验 25/25；全量测试 1094 passed、22 skipped。当前 Layer E 已批准英文 1/150、人工裁决 0/150。
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1094 passed, 22 skipped in 96.93s (0:01:36)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：204 个
+- Gold：按授权导入人工审核（`authorized_human_review_import`）；LLM/API：已授权调用（`authorized_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户已明确授权自动推进及本次真实 DeepSeek API 调用。API 密钥仅从用户级 DEEPSEEK_API_KEY 环境变量加载，未读取或记录 .env，日志中不含密钥。保留失败溯源运行 run_20260718_layerd_deepseek_v4_flash_v1（2 成功、1 失败）以及成功运行 v2（150 成功、1 失败尝试）。两次运行合计实际 HTTP 调用 306 次，prompt tokens=183680，completion tokens=114109；按全部输入均视为缓存未命中的官方单价估算上限约 0.057666 美元。用户此前对 sample_id=estg_000002 的 translation=accepted 决定通过审核服务原样重放，未由 Agent 推断或新增任何人工 Gold。v1 全 null 占位文件保留，v2 已原子激活。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-18T09:42:04.443164+00:00 - 修复 EStG-150 审核工具的 LLM 候选物化与人工修正流程
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1101 passed, 22 skipped in 134.95s (0:02:14)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：208 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：依据用户要求将流程落实为“LLM先提取、人工再核对修正”。修复逐字段 accepted 只改状态却不复制候选值/span 的断链；新增由用户显式点击的整条六字段接受按钮；非空候选缺少精确 span 时 fail closed；人工编辑唯一文本时自动计算 start/end；rejected 清空旧人工值；needs_adjudication 不再制造空 span；actor_action_map/order_relations JSON 现会保存并校验引用。右侧伪可编辑 JSON 改为只读预览，Layer D 150/150 显示绿色真实状态，缩短面板以显示完整控件。所有接受/复核/裁决仍只能由用户点击；未修改 Layer E 的任何现有人工决定。聚焦测试44 passed；全量1101 passed、22 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-18T10:19:16.127826+00:00 - 修复 EStG-150 审核工具中六要素长候选被裁切的问题
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1102 passed, 22 skipped in 156.05s (0:02:36)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：208 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：六要素候选单元格改为只读自动换行，普通长值显示1至3行；双击任意候选可打开可滚动、可复制的全文窗口；仅修改显示层，未自动改变任何人工决定。聚焦测试45 passed；全量1102 passed、22 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-18T12:17:36.054835+00:00 - 建立全实验实际问题持续登记与解决状态制度
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1103 passed, 22 skipped in 105.90s (0:01:45)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：212 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：新增唯一 REAL_WORLD_ISSUE_REGISTER；RWI-0001 上下文缺失保持 open；RWI-0002 至 RWI-0004 回填解决方法与既有事件；验证中发现并解决 RWI-0005（测试错误写死 Layer E 0/150），保留用户 1/150 adjudicated；全量 1103 passed、22 skipped、integrity errors=0。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-18T12:24:01.284420+00:00 - 补记终端显示乱码核验并完成问题登记制度收口
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1103 passed, 22 skipped in 154.17s (0:02:34)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：212 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Event 74 持久化中文正常；超长 PowerShell 输出仅显示乱码，登记为 RWI-0006 resolved。最终状态：RWI-0001 open，RWI-0002 至 RWI-0006 resolved；全量 1103 passed、22 skipped、integrity errors=0。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-18T12:36:36.063470+00:00 - 登记Sun语言转换缺口并限定非德语人工审核职责
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1103 passed, 22 skipped in 172.51s (0:02:52)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：212 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：新增 RWI-0007 open：Sun 的德文 EStG 来源与英语 phrase 方法之间未披露转换；用户只裁决冻结英文工作文本上的六要素/span，不承担德译英认证；疑似翻译问题待裁决，正式冻结前选择原生英文主轨道或独立翻译加德语复核 QA。全量 1103 passed、22 skipped、integrity errors=0。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-18T12:51:37.538443+00:00 - 完成 EStG-150 句子级独立性逐条盘点并生成审核辅助表
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1103 passed, 22 skipped in 164.11s (0:02:44)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：212 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：150/150；独立82、需上下文核实26、不独立42；生成XLSX、JSONL和manifest；RWI-0001保持open；未修改Layer E。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-19T12:42:25.762119+00:00 - 冻结 Stage 2 统一六要素提取合同并同步人工、D1 与 H1
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1110 passed, 22 skipped in 135.47s (0:02:15)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：221 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：冻结 stage2_extraction_contract@1.0.0 与 hash bundle；现有 canonical schema 保持 byte-identical；同步人工协议、D1/H1 v5、H1 ambiguity metadata merge、方法注册和 exact-hash gates；选取 12 条既有 EStG ID/hash 作为非 Gold/非 few-shot/非性能静态 pilot；S2.8 v6 与 S2.9 v5 离线 manifest 已生成。全量 1110 passed、22 skipped、integrity errors=0；未改 Layer E Gold 或 Rule-only，未调用真实 LLM/API；RWI-0001/RWI-0007 继续 open。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-20T04:32:34.815953+00:00 - 修复 EStG-150 审核工具人工值导航回显与提交断链
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1113 passed, 22 skipped in 158.47s (0:02:38)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：221 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0009 resolved：复数 span 数组正确回显；上一条、下一条、下一条待审、保存、复核和裁决统一先提交当前英文、六要素、关系与备注；无 exact span 或关系错误时停留当前记录。审核工具48项聚焦测试通过；全量1113 passed、22 skipped；未修改用户 Layer E 决定。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-20T09:12:43.823482+00:00 - 准备 EStG-150 GPT-5.6 Sol 双轮 AI 裁决候选与中转安全闸门
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1133 passed, 22 skipped in 138.41s (0:02:18)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：227 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：固定 gpt-5.6-sol/high/strict JSON Schema；支持 ChatAnywhere 基础或完整端点；密钥隐藏输入；实时币种单价、预算、调用上限、pilot≤5 与全量二次授权 fail-closed；不读 DeepSeek Layer D，不读写 Layer E。全量测试 1133 passed、22 skipped；真实 API 未调用。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-20T09:40:06.749845+00:00 - 记录 ChatAnywhere pilot 被托管数据外发策略拒绝
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1133 passed, 22 skipped in 153.40s (0:02:33)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：227 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户已确认第三方风险、CNY 单价、3条/15 CNY预算，并在获知具体外发内容后再次授权；托管策略仍在读取密钥、创建run目录和HTTP调用前拒绝向不受信任中转外发。未绕过；RWI-0010保持mitigated。安全替代为等待用户明确授权Codex内置gpt-5.6-sol子代理委派。全量测试1133 passed、22 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-20T10:20:15.320279+00:00 - 完成内置 GPT-5.6 Sol 三条双轮 AI 裁决候选 pilot
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=codex_internal_gpt56sol_pilot3_v1；阶段=stage2_annotation_candidate；方法=gpt-5.6-sol_two_pass_internal_candidate；状态=成功（`succeeded`）
+- 实际运行命令：`Codex internal subagents: /root/estg_pilot_pass_a then /root/estg_pilot_pass_b`
+- manifest：data/development/estg/llm_candidate_runs/codex_internal_gpt56sol_pilot3_v1/manifest.jsonl
+- 结果摘要：development-only first-3 pilot; Pass A/Pass B/root validation 3/3; translation accepted=1 edited=2; context insufficient=1 uncertain=2; confidence medium=3; no Layer D/E input, no external relay, no Gold promotion
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1134 passed, 22 skipped in 159.00s (0:02:38)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：232 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户明确授权 Codex 内置 gpt-5.6-sol 子代理。两个独立 high-reasoning 子代理完成双轮；外部 ChatAnywhere 未调用、密钥未读取、外部费用0 CNY。Layer E 保持 adjudicated=3/150，六要素已决21/900；全量150条未授权。全量测试1134 passed、22 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-20T12:45:01.494373+00:00 - 完成内置 GPT-5.6 Sol 全量六要素提取与极简用户修改工具
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=codex_internal_gpt56sol_full150_v1；阶段=stage2_annotation_candidate；方法=gpt-5.6-sol_internal_full_extract_simple_user_review；状态=成功（`succeeded`）
+- 实际运行命令：`Codex internal gpt-5.6-sol subagents; python scripts/build_estg150_internal_sol_bundle.py --write`
+- manifest：data/development/estg/llm_candidate_runs/codex_internal_gpt56sol_full150_v1/manifest.json
+- 结果摘要：150/150 regulations extracted into 232 clauses; simple review tool ready; existing Layer E preserved at approved_text_en=4/150, resolved six-element fields=21/900, adjudicated=3/150
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1141 passed, 22 skipped in 128.85s (0:02:08)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：268 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：User explicitly authorized Codex-internal gpt-5.6-sol subagents. No external API or ChatAnywhere was used; no API key was read; cost was zero. All candidates and spans validated. UI exposes only previous, later, German source, and save-next; span offsets and legacy review/adjudication mechanics remain hidden. Scientific label remains LLM-assisted, human-adjudicated after user edits.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-21T06:12:21.206529+00:00 - 验证并锁定 EStG-150 S2.2 人工注释冻结 receipt
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s22_estg150_human_annotation_freeze_v1；阶段=stage2_human_annotation_freeze；方法=human_adjudication_freeze_receipt；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_estg150_s22_freeze.py --write`
+- manifest：outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json
+- 结果摘要：Layer E: 150/150 approved English, 900/900 resolved field decisions, 150/150 adjudicated, 231 clauses; annotation frozen; formal Gold publication and formal B0/H1/D1 runs remain blocked on RWI-0001/RWI-0007 and route/data/Stage3 gates
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1145 passed, 22 skipped in 160.19s (0:02:40)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：273 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Deterministic no-overwrite receipt and fail-closed exact-hash gate added. No data/gold or data/input write, no prediction/result generation, no network/API call, and no human decision changed. Full offline audit: 1145 passed, 22 skipped.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-21T07:36:51.946236+00:00 - 运行并锁定 EStG-150 B0 development 评价及低额度 H1/D1 pilot 计划
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_development_v1；阶段=S2.7-B0-DEV/S2.10；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_estg150_b0_development.py --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：outputs/development/s27_estg150_b0_development_v1/manifest.json
+- 结果摘要：development only: 150/150 attempts; all150 modality clause accuracy/macro-F1=0.103896/0.090583; independent82=0.128440/0.119124; five-field precision/recall/F1 persisted; 0 LLM/API calls
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1153 passed, 22 skipped in 188.81s (0:03:08)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：281 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：首次真实批处理暴露 Tsurgeon 完整树删除并登记 RWI-0013；保留原 locked bridge/rules，以 batch bridge 显式记录 2/266 terminal removals 后成功重跑。exact-hash gate 通过；低额度 paired diagnostic pilot 锁为 7 IDs、H1<=7+D1<=7、0 retry，但精确 gpt-4.1 子代理/transport 当前不可用，未执行且未静默换模。全量离线审计 1153 passed、22 skipped、0 errors；formal Gold 与正式比较仍被既有门禁阻塞。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-21T08:24:07.306502+00:00 - 修复 S2.10-E 方法本地 ID/边界低计并重算 EStG-150 B0 development 指标
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_v3_evaluation_v1；阶段=S2.10-E-v1.2/S2.7-B0-DEV-REEVAL；方法=sun_rule_only_immutable_attempts_v3_evaluator；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/verify_stage2_evaluator_s210_v3.py; python scripts/reevaluate_estg150_b0_v3.py`
+- manifest：outputs/development/s27_estg150_b0_v3_evaluation_v1/manifest.json
+- 结果摘要：development only; all150 modality micro P/R/F1=0.394737/0.454545/0.422535, macro-F1=0.406801; clause alignment P/R/F1=0.680451/0.783550/0.728370; independent82 modality micro P/R/F1=0.433071/0.504587/0.466102; 0 model/API reruns
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1166 passed, 22 skipped in 203.07s (0:03:23)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：291 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0014 resolved. v1.2 threshold 0.5 was frozen before result generation; method-local IDs are ignored, exact segmentation remains separate, and paper-score targeting/threshold search are forbidden. Old v1 development report is preserved as superseded provenance. Sun 0.77/0.83/0.80 is locally recorded Stage 3 evidence and is not a comparable Stage 2 acceptance target. Synthetic/adversarial receipt: outputs/reports/s210_stage2_evaluator_contract_synthetic_v3.manifest.json. Full offline audit: 1166 passed, 22 skipped, 0 errors.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-21T10:04:37.135987+00:00 - EStG-150 B0 enhanced v3 development: clause-level modality routing, segmentation merge, multi-match phrase extraction; no Gold/LLM
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v3；阶段=stage2；方法=b0_enhanced；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_v3.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_enhanced_v3/manifest.json
+- 结果摘要：development only; modality micro F1 0.423->0.612; alignment F1 0.728->0.771; complete-record 0.06->0.167; Table8 any-overlap overall F1=0.443; not formal
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1172 passed, 22 skipped in 138.80s (0:02:18)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：311 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0015 mitigated; RWI-0001/0007 remain open; v1 artifacts preserved; Windows subprocess utf-8 test harness fixed
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-21T11:21:49.373670+00:00 - EStG-150 b0_enhanced v5 development after v4 regression; hybrid segmentation and definition-first modality
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v5；阶段=stage2；方法=b0_enhanced_v5；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_v4_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_v5.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_enhanced_v5/manifest.json
+- 结果摘要：v5 modality micro F1 0.624 align F1 0.801 complete-record 0.347 Table8 F1 0.492; vs v3 modest gains; not formal not Sun targets
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1177 passed, 22 skipped in 162.00s (0:02:41)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：310 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0015 mitigated; RWI-0001/0007 open; v4 retained as negative evidence
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-21T11:28:52.788034+00:00 - Post-v5: regenerate catalog and confirm full offline suite green after b0_enhanced_v5 development batch
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1178 passed, 22 skipped in 172.67s (0:02:52)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：310 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Reconfirm integrity after catalog refresh; experiment run s27_estg150_b0_enhanced_v5 already appended; RWI-0001/0007 remain open
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-21T14:54:51.489267+00:00 - S2.7-B0-ENHANCED-DEV v6 development run (negative evidence vs v5)
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v6；阶段=S2.7-B0-ENHANCED-DEV；方法=b0_enhanced_v6；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_v6_development.py --runtime-home D:\environment\stanford-corenlp-4.5.10 --output-dir formal_experiment/outputs/development/s27_estg150_b0_enhanced_v6`
+- manifest：outputs/development/s27_estg150_b0_enhanced_v6/manifest.json,outputs/development/s27_estg150_b0_enhanced_v6/evaluation_all150.json,outputs/development/s27_estg150_b0_enhanced_v6/evaluation_independent82.json,outputs/development/s27_estg150_b0_enhanced_v6/sun_table8_any_overlap_diagnostic.json
+- 结果摘要：modality micro P=0.562 R=0.628 F1=0.593 (v5 0.594/0.658/0.624); clause alignment F1=0.769 (v5 0.801); regression vs v5; v5 remains current best; v6 retained as negative development evidence
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1225 passed, 22 skipped in 165.50s (0:02:45)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：324 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-21T15:00:59.901952+00:00 - RWI-0015 update: log v6 development run as negative evidence vs v5
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1225 passed, 22 skipped in 163.97s (0:02:43)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：324 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：v6 is a regression vs v5; v5 remains current best; v6 retained as negative development evidence; v6 manifest hash and metric diff recorded in RWI-0015
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T08:14:38.621990+00:00 - Correct invalid Minimax v6 Phase A diagnostics: real S2.4 classifier ablation, Gold segmentation oracle, DE-S2.4 overlap audit; RWI-0016
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1229 passed, 22 skipped in 126.90s (0:02:06)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：328 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：v6 full run retained as negative evidence; Phase A attribution invalid; correction at s27_estg150_b0_phase_a_correction_v2; v5 remains current best; no v7 started
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T12:16:47.276661+00:00 - S2.4 BERT candidates A/B/C preregistered; B invsqrt-weighted wins on dev and is promotable; C balanced sampler secondary; A bound to locked parent
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s24_candidate_selection_v1；阶段=S2.4-CAND；方法=legal_bert_textcnn_candidates；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/train_s24_bert_textcnn_candidates.py --candidate B_invsqrt_weighted_ce --device cpu; python formal_experiment/scripts/train_s24_bert_textcnn_candidates.py --candidate C_balanced_sampler --device cpu`
+- manifest：formal_experiment/outputs/reports/s24_bert_textcnn_candidate_selection_v1.manifest.json
+- 结果摘要：dev winner B macro-F1=0.8590 > parent 0.8563; test B macro-F1=0.8772 (not used for selection); C dev=0.8587 test=0.8642; A=parent
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1235 passed, 22 skipped in 161.33s (0:02:41)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：353 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：No ESTG/All-150 used for selection; test_used_for_selection=false
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T12:23:36.896794+00:00 - b0_enhanced_v7 development modest promote vs v5
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v7；阶段=S2.7-B0-ENHANCED-DEV；方法=b0_enhanced_v7；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_v7_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_v7.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_enhanced_v7/manifest.json
+- 结果摘要：modality micro P/R/F1 0.598/0.662/0.628 vs v5 0.594/0.658/0.624; align F1 0.801; Table8 F1 0.492; current best development; v6 negative
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1234 passed, 22 skipped in 144.59s (0:02:24)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：338 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：candidate B classifier; lexicon v2 161 active; tsurgeon_enabled=false; no edge fanout
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T13:22:34.518404+00:00 - Post-v7 catalog refresh; integrity green; current best b0_enhanced_v7
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1235 passed, 22 skipped in 170.07s (0:02:50)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：338 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：v7 experiment_run already logged; this confirms catalog+1235 tests green
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T14:00:19.074218+00:00 - Preregister b0_enhanced_v8 before any candidate run: residual Phase A fixes, production lexicon, ownership-only edges, max 3 candidates A/B/C
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1235 passed, 22 skipped in 181.38s (0:03:01)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：341 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：prereg=configs/models/estg150_b0_v8_preregistration_v1.json sha=7b8eadd20fd996d7025abcd3f9f54780b5417157865950cb7c57be2e40ddfa48; RWI-0016 mitigated residual; RWI-0017 open S2.4 test exposed; no v8 candidate run yet
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T14:56:42.991214+00:00 - v8 prereg + residual Phase A v3 + overlap v2 + v8-A/B/C candidates; none promoted; v7 remains provisional best
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_v8_batch；阶段=S2.7-B0-ENHANCED-DEV；方法=b0_enhanced_v8；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_v8_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_v8a.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu (and v8b/v8c)`
+- manifest：formal_experiment/outputs/reports/s27_estg150_b0_v8_selection_v1.manifest.json
+- 结果摘要：v8a/b/c modality F1=0.63244 (+0.004 vs v7, +1 TP) fails +0.010 gate; v8b/c Table8 F1 0.506 hallu up; residual: align_cov=0.281 unsupported=184; no promotion
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1240 passed, 22 skipped in 145.84s (0:02:25)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：347 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0016 mitigated residual v3; RWI-0017 open; prereg sha 7b8eadd2... before candidates; tsurgeon_enabled=false; edge FP still 185
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T15:01:35.258870+00:00 - Post-v8 batch: catalog refresh; integrity green; no v8 promotion; v7 provisional best
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1241 passed, 22 skipped in 155.69s (0:02:35)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：347 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Prior v8 experiment_run had integrity_pass=false only due to stale FILE_CATALOG; 1241 passed; selection report s27_estg150_b0_v8_selection_v1; RWI-0016 mitigated; RWI-0017 open
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T16:21:22.241036+00:00 - v8 status correction v2, active_registry_v1, b0_v9 package and v9 preregistration; no v9 experiment run
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1250 passed, 22 skipped in 164.88s (0:02:44)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：359 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：correction 363fdc28; registry 8c8395e0; v9 prereg 22ea52d6; v8a invalid placeholder; v8c no-op; v7 provisional best; 1251 tests green
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T16:27:13.355708+00:00 - Integrity green after v8 correction/registry/v9 prereg catalog refresh; no v9 run
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1251 passed, 22 skipped in 160.76s (0:02:40)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：359 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：v8a invalid; v8c no-op; v8b negative; active v5+v7; v9 prereg only; 1251 passed
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T17:28:44.438869+00:00 - v9a clean-core run not promoted; v9-B not_instantiated; provisional best remains v7
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v9a；阶段=S2.7-B0-ENHANCED-DEV；方法=b0_enhanced_v9a；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_v9_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_v9a.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_enhanced_v9a/manifest.json
+- 结果摘要：mod F1=0.62834 equal v7; placeholder=0; align 225/256; hallu 0.277; edgeFP 34; not promoted
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1253 passed, 22 skipped in 221.89s (0:03:41)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：364 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：selection 910f09d3; modular b0_v9; v9-B not_instantiated
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T18:45:19.246930+00:00 - v9 status correction; v10 modular scope fix; v10a All-150 accepted for scope gates; modality not promoted; v7 remains provisional best
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v10a；阶段=S2.7-B0-ENHANCED-DEV；方法=b0_enhanced_v10a；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_v10_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_v10a.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_enhanced_v10a/manifest.json
+- 结果摘要：Table8 F1 0.492->0.540; cons F1 0.096->0.396 vs v9a; presence 0.703; complete 0.36; hallu 0.343; modality F1 still 0.6283=v7; scope gates PASS; final promotion FAIL
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1261 passed, 22 skipped in 204.52s (0:03:24)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：394 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：prereg v2 9b074dd9; v9 scope prereg mismatch corrected; placeholder=0; tregex_final_affected=453; no S2.4 test; no BERT retrain
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T20:21:43.304695+00:00 - B1 deontic-nucleus segmentation; failed promotion; negative evidence
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_b1；阶段=S2.7-B0-ENHANCED-DEV；方法=b0_enhanced_b1；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_b1_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_b1.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_enhanced_b1/manifest.json
+- 结果摘要：align F1 0.794 exact 0.140 mod P/R/F1 0.596/0.658/0.626 pred 255; gates FAIL; v10-A parent retained; v7 best
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1271 passed, 22 skipped in 187.86s (0:03:07)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：389 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：prereg 1d7e30c0; segmentation only; no B2/BERT; fixtures 10 passed
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-22T21:46:25.372037+00:00 - B2a definition disambiguation on v10-A; FP reduced but definition TP/FN gates fail; not promoted
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_b2a；阶段=S2.7-B0-ENHANCED-DEV；方法=b0_enhanced_b2a；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_b2a_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_b2a.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_enhanced_b2a/manifest.json
+- 结果摘要：def TP/FP/FN 16/28/23 F1 0.386; overall TP 155 F1 0.6366; seg identical v10a 256/195; definition gates FAIL so not promote; v10-A parent
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1282 passed, 22 skipped in 213.10s (0:03:33)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：395 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：prereg 58ed8b51; conf=0.55 a priori; no B1; no second run; diagnostic 37d395c9
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-23T05:44:44.330485+00:00 - B2a2 clause-local constrained decoding removed supported record fallback but failed definition and overall promotion gates; retained as negative evidence
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_b2a2；阶段=S2.7-B0-ENHANCED-DEV；方法=b0_enhanced_b2a2；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_b2a2_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_b2a2.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_enhanced_b2a2/manifest.json
+- 结果摘要：route A and exact-v10 E gates PASS; fallback 20, supported new fallback 0; definition TP/FP/FN 2/13/37 F1 0.0741; overall TP 142 F1 0.5832; B/C/D FAIL; not promoted
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1310 passed, 22 skipped in 136.76s (0:02:16)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：403 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：route diagnostic manifest cf5d8d86: 40/40 same-clause vectors valid; prereg edd69b9d; run manifest 58aacd50; exactly one All150; no rerun, no threshold/rule change, no Independent82, no S2.4 test, no network/LLM, active registry unchanged; RWI-0018
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-23T06:29:58.373211+00:00 - B2b prohibition-permission read-only diagnostic; strict evidence whitelist failed instantiation threshold
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_b2b_prohibition_diagnostic_v1；阶段=S2.7-B0-ENHANCED-DEV-B2b；方法=permission_to_prohibition_strong_negation_scope_diagnostic；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/analyze_estg150_b0_b2b_prohibition_diagnostic_v1.py`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_b2b_prohibition_diagnostic_v1/manifest.json
+- 结果摘要：not_instantiated: aligned prohibition-to-permission=6; allowed-rule triggers=1; recoverable upper bound=1; permission TP loss=0; at-least-three gate failed; no All150
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1310 passed, 22 skipped in 137.93s (0:02:17)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：404 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：diagnostic sha=e0cdc8956eafb76c97a915460b2fcf62f53a8b671eb04f00d27cae0c92de9d44; summary sha=571fc2977fc9017d4ec049311142f764e121a2c73ab0919c0010cc9513d43886; prereg sha=N/A not created; fixed All150 command=N/A not executed; B2b run manifest sha=N/A; promotion report sha=N/A; promotion=not applicable/not instantiated; failed instantiation condition=at_least_three_recoverable_errors; Gold read-only; evaluator unchanged 28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f; S2.4 test unread; Independent-82 unread; LLM/API/network=0; active registry unchanged; no production resolver; no B2c/B3/BERT/lexicon/Tregex
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-24T04:05:25.247797+00:00 - B3a constraint Tregex diagnostic only; not_instantiated; no All-150; v10-A remains parent
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1309 passed, 22 skipped in 164.68s (0:02:44)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：406 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：diagnostic bf1c8180; decision 08ab34fc; union FN recover 7<8; new spans 0; only 2/6 patterns met floor; no registry/runner/prereg/All-150; lexicon/bridge/Tsurgeon unchanged; active registry unchanged
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-24T04:21:55.526524+00:00 - B3a not_instantiated integrity green after catalog refresh; diagnostic only; no All-150
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1310 passed, 22 skipped in 186.20s (0:03:06)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：406 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：prior event integrity_pass=false due to stale FILE_CATALOG only; 1310 passed; decision not_instantiated; diagnostic bf1c8180; decision 08ab34fc; v10-A parent unchanged
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T04:13:02.054087+00:00 - B3a diagnostic correction v2: live CoreNLP/Tregex opportunity attribution with real instance keys and v10-A dedup
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1342 passed, 22 skipped in 186.43s (0:03:06)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：410 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：v1 corrected status=inconclusive_not_instantiated_invalid_for_tregex_opportunity_attribution; diagnostic manifest=ddcf26581d8dde61eb9b95fd015d5cbb34b17763c74db6888af7efffed6a4cc0; status correction=6ac545ae38776075bc78902ddf739418ed11067746b4024fdc610c68f7343de0; six frozen patterns live compile 6/6; raw/accepted/final=106/98/76; exact/normalized/containment/partial/new=40/0/24/2/10; add-only TP/FP/FN delta=0/10/0; 32 focused tests and 1342 full tests passed; no production candidate, candidate All-150, B3b, network, LLM/API, S2.4 test, Independent-82, registry or production bridge change
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T05:40:05.198791+00:00 - B3b typed condition-constraint ownership opportunity diagnostic and stop-gate decision
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_b3b_typed_ownership_diagnostic_v1；阶段=S2.7-B0-ENHANCED-DEV-B3b；方法=typed_condition_constraint_ownership；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/analyze_estg150_b0_b3b_typed_ownership_diagnostic_v1.py --runtime-home D:\environment\stanford-corenlp-4.5.10`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_b3b_typed_ownership_diagnostic_v1/manifest.json
+- 结果摘要：development Gold opportunity diagnostic only; 87 spans/53 records changed; 11/18 instantiation gates failed; decision not_instantiated; no production candidate or candidate All-150
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1368 passed, 22 skipped in 247.87s (0:04:07)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：412 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Fixed v10-A/lexicon/scope/Tregex/evaluator bindings matched; parent scope replay exact for 580 condition/constraint spans; pre-result JSON-array loader correction changed no rule or threshold; active registry unchanged; Independent-82 and S2.4 test not used; B3c/actor/marker expansion/Tsurgeon/BERT not started.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T06:35:53.990650+00:00 - B4 constraint marker lexicon expansion single-candidate development run and stop-gate decision
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_b4；阶段=S2.7-B0-ENHANCED-DEV-B4；方法=b0_enhanced_b4_constraint_marker_expansion；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_b4_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_b4.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_enhanced_b4/manifest.json
+- 结果摘要：single preregistered All-150 succeeded; constraint 130/224/172 P/R/F1 0.367232/0.430464/0.396341; overall 462/430/362 P/R/F1 0.517937/0.560680/0.538462; performance gates failed; not promoted; v10-A remains parent
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：2 failed, 1379 passed, 22 skipped in 176.78s (0:02:56)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：420 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：25 new active constraint markers loaded, 21 invoked, 70 invocations, 19 final new spans across 18 clauses, zero parent spans removed; purity, locked components, coverage, schema, and nonconstraint fields passed; 10 constraint/overall performance gates failed; no tuning or rerun; active registry unchanged; network/LLM/API/test dataset not used; final audit integrity true with 1381 passed and 22 skipped.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T06:40:33.006415+00:00 - B4 provenance verification correction after sandbox-only test false negative
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：2 failed, 1379 passed, 22 skipped in 182.20s (0:03:02)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：420 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Corrects only the verification status of the immediately preceding B4 experiment event: its two test failures came from restricted pytest temp-directory execution after a verification-receipt mismatch. The B4 run, artifacts, metrics, not-promoted decision, marker set, and active registry are unchanged; no All-150 or model process was rerun. Elevated offline verification is authorized solely for isolated pytest temp-directory creation/cleanup.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T06:49:15.629637+00:00 - B4 final UTF-8 provenance verification correction
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1381 passed, 22 skipped in 169.63s (0:02:49)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：420 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Final correction for B4 provenance verification only. With explicit UTF-8 child-process I/O and isolated pytest temp access, the unchanged project state passes the complete offline suite. The two preceding integrity=false events are retained as immutable Windows execution-environment false negatives. No B4 resource, preregistration, output, metric, decision, model process, or active registry was changed; All-150 was not rerun.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T10:03:50.540451+00:00 - B5 genuine Tsurgeon and post-surgery Tregex diagnostic with concurrent preregistration drift disclosed
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_b5；阶段=S2.7-B0-ENHANCED-B5-DEV；方法=b0_enhanced_b5_tsurgeon_post_surgery_tregex_consumed；状态=部分完成（`partial`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_enhanced_b5_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_b5.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_enhanced_b5/manifest.json
+- 结果摘要：Structurally instantiated; synthetic 15/15; sole All-150 raw/attempted/accepted/rejected=1103/338/336/2; A/B/C/E/F fail, D pass; actor/action/overall Table8 F1=0.428571/0.574431/0.505585; not promoted; v10-A remains. Concurrent Grok write changed prereg during the run, so manifest prereg sha 38a11e... differs from frozen/current 2b3062...; outputs retained diagnostic-only and not rerun.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1396 passed, 22 skipped in 146.48s (0:02:26)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：429 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0021 records the concurrent-write provenance defect. Original frozen B5 files were restored byte-exact from local session history and all 22 bindings pass. Existing B5 manifest/output artifacts were not edited. Grok's later duplicate command failed closed in about 5 seconds and did not execute a second All-150. Active registry unchanged; B4 lexicon not loaded; Independent-82 and S2.4 test not read; network/API=0; no B6/BERT stage or training started. The first record_change invocation timed out before append while its fallback pytest run was incomplete; this invocation completed the required evidence run and remains the sole appended B5 event.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T12:18:39.427431+00:00 - EStG-150 原始候选协议 C0：锁定 canonical external serializer、历史路由、四类 provider adapter、preregistration、fixture 与审计门禁
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1408 passed, 22 skipped in 238.00s (0:03:58)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：438 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：历史隐藏 Codex transport payload 未归档，因此仅声明 canonical external protocol v1；Layer D/E/Gold 不进入候选请求；C1-C4 未运行。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T12:52:07.238397+00:00 - EStG-150 C1 DeepSeek-V4-Pro 官方 transport pilot：验证固定 strict JSON Schema envelope
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=c1_deepseek_v4_pro_transport_pilot_v1；阶段=C1；方法=deepseek-v4-pro；状态=失败（`failed`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_candidate_protocol.py --stage c1 --execute-api --confirm-authorized-provider-budget --provider-adapter deepseek_official --model deepseek-v4-pro --endpoint https://api.deepseek.com/chat/completions --run-id c1_deepseek_v4_pro_transport_pilot_v1 --max-calls 1 --max-total-tokens 13000 --max-cost 0.01 --cost-currency USD --input-price-per-million 0.435 --output-price-per-million 0.87 --api-key-env-name DEEPSEEK_API_KEY --timeout-seconds 300`
+- manifest：data/development/estg/llm_candidate_runs/c1_deepseek_v4_pro_transport_pilot_v1/failure.json
+- 结果摘要：Official DeepSeek endpoint rejected the frozen strict JSON Schema request envelope with HTTP 400; status=protocol_incompatible; request_count=1; retry_count=0; no candidate and no evaluation.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1408 passed, 22 skipped in 172.76s (0:02:52)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：442 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：No protocol downgrade, content repair, content retry, C2 transition, Layer D/E/Gold read, or P/R evaluation occurred.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T13:05:51.446551+00:00 - EStG-150 C1 ChatAnywhere gpt-4o transport pilot：验证冻结 canonical strict envelope
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=c1_relay_gpt4o_transport_pilot_v1；阶段=C1；方法=gpt-4o；状态=失败（`failed`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_candidate_protocol.py --stage c1 --execute-api --confirm-authorized-provider-budget --provider-adapter relay_openai_compatible --model gpt-4o --endpoint https://api.chatanywhere.tech/v1/chat/completions --run-id c1_relay_gpt4o_transport_pilot_v1 --max-calls 1 --max-total-tokens 13000 --max-cost 0.60 --cost-currency CA --input-price-per-million 17.5 --output-price-per-million 70 --api-key-env-name CHATANYWHERE_API_KEY --timeout-seconds 300`
+- manifest：data/development/estg/llm_candidate_runs/c1_relay_gpt4o_transport_pilot_v1/failure.json
+- 结果摘要：ChatAnywhere rejected the frozen relay gpt-4o request envelope with HTTP 400; status=protocol_incompatible; request_count=1; retry_count=0; no candidate and no evaluation.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1408 passed, 22 skipped in 154.19s (0:02:34)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：446 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Relay identity is unverified_relay_report. No envelope downgrade, content repair/retry, C2 transition, Layer D/E/Gold read, or P/R evaluation occurred; the HTTP 400 body was not archived, so no single envelope field is claimed as the cause.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T13:38:06.102556+00:00 - EStG-150 C1 HTTP 失败诊断加固：保留限长 provider error body/hash/request ID/retry，阻断密钥回显落盘且保持请求字节不变
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1411 passed, 22 skipped in 239.69s (0:03:59)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：446 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0023 mitigated. 既有 DeepSeek V4 Pro 与 ChatAnywhere gpt-4o 两次 HTTP 400 正文不可恢复；本批次未发真实 API。15 项聚焦测试通过；完整验证 1411 passed, 22 skipped；serializer SHA d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef，既有 gpt-4o transport SHA 601f0e88e569dcf826acd57799d72db99c3bddcdb9d39b462e7ae1c7a7fbea27 均未变化。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-25T14:00:35.531250+00:00 - EStG-150 C1 七模型 transport 兼容性矩阵与字段级失败诊断
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=c1_transport_compatibility_matrix_20260725_v1；阶段=C1；方法=canonical_external_transport_matrix；状态=失败（`failed`）
+- 实际运行命令：`run_estg150_candidate_protocol.py C1: ChatAnywhere gpt-5.6-luna,gpt-5.4-nano,gpt-5-nano,gpt-4.1-nano,gpt-4o,gpt-3.5-turbo plus official deepseek-v4-pro; one synthetic per model; fixed canonical request`
+- manifest：data/development/estg/llm_candidate_runs/c1_transport_compatibility_matrix_20260725_v1/manifest.json
+- 结果摘要：7 logical requests, 2 identical-byte transport retries, 0 valid candidates, 0 evaluations, P/R not applicable, C2 not started. Failures separate into strict-schema type requirement, unsupported reasoning_effort, unsupported DeepSeek developer role, relay 503 exhaustion, and relay disconnect.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1413 passed, 22 skipped in 237.97s (0:03:57)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：481 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：User ceilings: relay 6 models/78000 tokens/1.25 CA; official DeepSeek 1 model/13000 tokens/0.01 USD; per-run relay caps sum 1.15 CA. Provider usage and actual billed cost were unavailable, so zero cost is not claimed. RWI-0023 diagnostic capture worked; RWI-0024 RemoteDisconnected retry classification fixed offline without an extra API call. No request/schema downgrade, C2, Layer D/E/Gold generation read, candidate, or evaluation.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T04:58:45.914106+00:00 - EStG-150 C1 strict transport v1.1 离线兼容性修复与 fail-closed 预检
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1437 passed, 22 skipped in 238.24s (0:03:58)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c3d07c5dcd0036d39d0e8a23b3ec85ab4c6e8ad`；相关未提交路径：489 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Canonical v1 schema/config/lock/prompts/messages/synthetic/serializer remained unchanged; added an exact six-type strict transport derivation, recursive Structured Outputs and seven-model capability preflight, dual-provenance receipts, and Windows nested-test UTF-8 hardening. Full verification: 1437 passed, 22 skipped, integrity errors=0. Real API=0; user-attested billed tokens=0; C1 passed=false; P/R=null; C2=false. git diff --check only reported pre-existing trailing spaces in untouched frozen D1/H1 prompt files.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T06:15:48.687824+00:00 - EStG-150 C1 strict transport v1.1 单条 ChatAnywhere gpt-5.6-luna 真实兼容性验证
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=c1_relay_gpt56_luna_strict_v1_1_pilot_v1；阶段=c1；方法=estg150_canonical_external_candidate_protocol；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_candidate_protocol.py --stage c1 --execute-api --confirm-authorized-provider-budget --provider-adapter relay_openai_compatible --model gpt-5.6-luna --endpoint https://api.chatanywhere.tech/v1/chat/completions --run-id c1_relay_gpt56_luna_strict_v1_1_pilot_v1 --max-calls 1 --max-total-tokens 13000 --max-cost 0.32 --cost-currency CA --input-price-per-million 7 --output-price-per-million 42 --api-key-env-name CHATANYWHERE_API_KEY --timeout-seconds 300`
+- manifest：data/development/estg/llm_candidate_runs/c1_relay_gpt56_luna_strict_v1_1_pilot_v1/manifest.json
+- 结果摘要：succeeded_frozen；1 candidate；canonical schema/exact-span/cue validation passed；1167 input + 829 output = 1996 tokens；0.042987 CA；0 retry；C1=true；evaluation=0；P/R=null；C2=false
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1437 passed, 22 skipped in 236.73s (0:03:56)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`c4df936c62fa4a2b3b23e9629ba1d73a739703df`；相关未提交路径：496 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户明确授权 ChatAnywhere gpt-5.6-luna 仅 1 条 synthetic、最多 13000 tokens、最多 0.32 CA，验证后停止且不得自动进入 C2。调用使用 strict transport adapter v1.1；canonical serializer/schema 未改；Layer D/E/Gold 未参与生成；provider_reported_model=gpt-5.6-luna-2026-07-09 为 unverified relay report。完整离线验证 1437 passed、22 skipped、integrity errors=0；RWI-0025 resolved。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T06:59:23.793420+00:00 - Freeze EStG-150 C2 six-request offline preparation and preregistration
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1438 passed, 22 skipped in 233.78s (0:03:53)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`c4df936c62fa4a2b3b23e9629ba1d73a739703df`；相关未提交路径：510 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Created no-overwrite C2 dry-run receipt for indices 0-2 Pass A/B: 6/6 strict transport preflights passed, request_downgrade_applied=false, guardrails 6 calls/78000 tokens/1.92 CA. Three Pass-B hashes are historical validated Pass-A fixture scope only; future live hashes remain deferred. Real API not called, billed tokens 0, C2 not started, evaluation 0, P/R null. Full audit: Integrity=True, Errors=0, Passes=47; 1438 passed, 22 skipped.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

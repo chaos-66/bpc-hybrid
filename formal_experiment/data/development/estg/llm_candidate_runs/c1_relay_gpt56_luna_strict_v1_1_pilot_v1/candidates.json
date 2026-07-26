@@ -1,0 +1,77 @@
+{
+  "schema_version": "estg150_candidate_run_output@1.0.0",
+  "run_id": "c1_relay_gpt56_luna_strict_v1_1_pilot_v1",
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "synthetic_c1_utf8",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "edited",
+        "proposed_text_en": "The authority must check whether transfers are permitted.",
+        "issues": [
+          "Removed the comma and line break after \"check\" to form a grammatical English sentence."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "synthetic_c01",
+          "clause_span": {
+            "text": "The authority must check whether transfers are permitted.",
+            "start": 0,
+            "end": 57
+          },
+          "modality": {
+            "label": "obligation",
+            "evidence": [
+              {
+                "text": "must",
+                "start": 14,
+                "end": 18
+              }
+            ]
+          },
+          "actors": [
+            {
+              "id": "actor_1",
+              "text": "The authority",
+              "start": 0,
+              "end": 13,
+              "normalized": "The authority"
+            }
+          ],
+          "actions": [
+            {
+              "id": "action_1",
+              "text": "check",
+              "start": 19,
+              "end": 24,
+              "normalized": "check"
+            }
+          ],
+          "conditions": [
+            {
+              "id": "condition_1",
+              "text": "whether transfers are permitted.",
+              "start": 25,
+              "end": 57,
+              "normalized": "whether transfers are permitted."
+            }
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [
+            {
+              "actor_id": "actor_1",
+              "action_id": "action_1"
+            }
+          ],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The sentence expresses an obligation for the authority to check whether transfers are permitted. The frozen English was minimally edited for grammaticality."
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": "estg150_ai_review_run_contract@1.0.0",
+  "status": "development_pilot_prepared_not_authorized",
+  "purpose": "Two-pass AI adjudication candidate generation for the fixed EStG-150 membership",
+  "formal_route_effect": "none_until_separately_approved",
+  "gold_policy": {
+    "layer_e_read": false,
+    "layer_e_write": false,
+    "human_review_state_write": false,
+    "output_class": "development_ai_adjudication_candidate_not_human_gold"
+  },
+  "provider": {
+    "id": "chatanywhere_openai_compatible_relay",
+    "third_party": true,
+    "endpoint": "https://api.chatanywhere.tech/v1/chat/completions",
+    "accepted_endpoint_inputs": [
+      "https://api.chatanywhere.tech/v1",
+      "https://api.chatanywhere.tech/v1/chat/completions"
+    ],
+    "protocol": "openai_chat_completions",
+    "provider_identity_and_model_attestation": "not_independently_verifiable"
+  },
+  "model": {
+    "request_model_id": "gpt-5.6-sol",
+    "required_returned_model_ids": ["gpt-5.6-sol"],
+    "reasoning_effort": "high",
+    "structured_output": "strict_json_schema",
+    "temperature_field_policy": "omit",
+    "max_completion_tokens_per_call": 6500,
+    "calls_per_new_sample": 2
+  },
+  "passes": {
+    "pass_a": "blind_source_and_translation_review",
+    "pass_b": "independent_critique_and_final_candidate",
+    "deepseek_layer_d_allowed_as_input": false
+  },
+  "pricing_snapshot_from_user_screenshot": {
+    "input_per_1000_tokens": 0.035,
+    "output_per_1000_tokens": 0.21,
+    "price_unit": "unverified_provider_display_unit",
+    "tiered_input_pricing_notice": true,
+    "captured_date": "2026-07-20",
+    "real_run_requirement": "user_must_supply_and_confirm_the_actual_price_unit_and_max_budget"
+  },
+  "pilot_policy": {
+    "recommended_samples": 3,
+    "maximum_samples_before_separate_full_batch_authorization": 5,
+    "full_batch_calls": 300,
+    "automatic_pilot_to_full_continuation": false
+  },
+  "output_schema": "configs/schemas/estg150_ai_review_model_output.schema.json",
+  "prompts": {
+    "pass_a": "prompts/estg150_ai_review/pass_a_blind_review_v1.md",
+    "pass_b": "prompts/estg150_ai_review/pass_b_adjudicator_v1.md"
+  },
+  "output_root": "data/development/estg/llm_candidate_runs"
+}

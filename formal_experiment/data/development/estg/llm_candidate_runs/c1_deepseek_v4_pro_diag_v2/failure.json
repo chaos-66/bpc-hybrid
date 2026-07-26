@@ -1,0 +1,23 @@
+{
+  "schema_version": "estg150_candidate_run_failure@1.0.0",
+  "run_id": "c1_deepseek_v4_pro_diag_v2",
+  "status": "protocol_incompatible",
+  "error_type": "ProtocolIncompatible",
+  "error": "provider rejected the fixed strict request envelope with HTTP 400",
+  "request_count": 1,
+  "retry_count": 0,
+  "real_api_call": true,
+  "layer_d_read_during_generation": false,
+  "layer_e_read_during_generation": false,
+  "gold_visible_during_generation": false,
+  "failed_at_utc": "2026-07-25T13:48:27+00:00",
+  "http_status": 400,
+  "provider_request_id": null,
+  "retry_reasons": [],
+  "provider_error_response_truncated": false,
+  "provider_error_response_bytes": 297,
+  "provider_error_response_sha256": "b8982c512da3900c3d86087fe822e5798b35f62cc9f71a52c624849554133da3",
+  "credential_echo_detected": false,
+  "provider_error_response_archived": true,
+  "provider_error_response_path": "responses/001_synthetic_c1_utf8_full_extract.http_error.body"
+}

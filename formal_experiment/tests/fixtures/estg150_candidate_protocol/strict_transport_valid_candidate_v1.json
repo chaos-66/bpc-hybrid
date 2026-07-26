@@ -1,0 +1,50 @@
+{
+  "schema_version": "estg150_ai_review_model_output@1.0.0",
+  "sample_id": "synthetic_c1_utf8",
+  "context_sufficiency": "sufficient",
+  "translation": {
+    "decision": "accepted",
+    "proposed_text_en": "The authority must check,\nwhether transfers are permitted.",
+    "issues": []
+  },
+  "clauses": [
+    {
+      "clause_id": "synthetic_c01",
+      "clause_span": {
+        "text": "The authority must check,\nwhether transfers are permitted.",
+        "start": 0,
+        "end": 58
+      },
+      "modality": {
+        "label": "obligation",
+        "evidence": [
+          {"text": "must", "start": 14, "end": 18}
+        ]
+      },
+      "actors": [
+        {"id": "actor_1", "text": "The authority", "start": 0, "end": 13, "normalized": "authority"}
+      ],
+      "actions": [
+        {"id": "action_1", "text": "check", "start": 19, "end": 24, "normalized": "check"}
+      ],
+      "conditions": [
+        {
+          "id": "condition_1",
+          "text": "whether transfers are permitted",
+          "start": 26,
+          "end": 57,
+          "normalized": "whether transfers are permitted"
+        }
+      ],
+      "constraints": [],
+      "exceptions": [],
+      "actor_action_map": [
+        {"actor_id": "actor_1", "action_id": "action_1"}
+      ],
+      "order_relations": []
+    }
+  ],
+  "unsupported_or_ambiguous": [],
+  "confidence": "high",
+  "rationale_summary": "Synthetic strict transport fixture."
+}
