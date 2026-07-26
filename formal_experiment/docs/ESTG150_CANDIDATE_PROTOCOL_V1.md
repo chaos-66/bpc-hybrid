@@ -489,3 +489,72 @@ validated Pass A output. No API or credential was used for v1.4 development or
 offline preparation, billed tokens and cost are zero, C2 did not start, and no
 evaluation was performed. A v1.4 live run requires a new run ID and new explicit
 authorization; unused limits from the failed v1.3 run are not transferable.
+
+### 7.12 GPT-4o v1.4 C2 decision/text-consistency failure
+
+The separately authorized run
+`c2_relay_gpt4o_portable_v1_4_pilot3_live_v1` sent sample 0 Pass A and Pass B,
+then failed closed. Both responses were provider-reported `gpt-4o` with
+`finish_reason=stop`; there were 2 content calls and 0 retries. Recorded usage
+was 4,378 input + 2,405 output = 6,783 tokens and 0.244965 CA at the locked
+17.5/70 CA-per-million prices. The remaining four authorized calls were not
+made.
+
+Pass A was canonically valid after deterministic coordinate reanchoring. Pass B
+returned schema-shaped six-element JSON and declared `translation.decision` as
+`edited`, but its `translation.proposed_text_en` was character-for-character
+identical to the Pass A text. The unchanged canonical validator rejected it as
+`edited translation is unchanged`; there was no semantic repair, response
+rewrite, content retry, or second run. Thus no candidate set was frozen, C2
+started but did not complete, evaluation remained zero, and P/R remained null.
+Layer D, Layer E, and Gold were not read. The v1.4 failure evidence is immutable.
+
+### 7.13 portable adapter v1.5: translation decision consistency
+
+Adapter v1.5 makes the smallest versioned generation-boundary correction for
+the section 7.12 failure. It retains the v1.4 exact-span invariant and adds one
+cross-field self-check: if `translation.proposed_text_en` is exactly unchanged
+from the English candidate supplied for the current review, the decision must
+be `accepted`; `edited` is permitted only when the proposed text actually
+differs. This instruction is applied before JSON emission. It is not response
+repair, and the unchanged canonical validator still rejects the frozen v1.4
+response.
+
+The C2 runner also now supplies the correct comparison text to that validator:
+Pass A and `full_extract` use the original frozen English candidate, while Pass
+B uses the same-run, already validated Pass A `proposed_text_en`. Previously
+Pass B incorrectly reused the original sample text, which could reject a valid
+Pass B acceptance after Pass A had genuinely edited the translation. This
+runner correction does not change generated semantic content.
+
+The following remain byte-for-byte unchanged: B0, D1/H1, every canonical
+EStG-150 prompt asset, canonical semantic requests before transport adaptation,
+canonical schema, serializer, semantic fixture, transport schema, Layer D,
+Layer E, Gold, and all historical run evidence. Historical v1.4 loading remains
+available. Response repair and content retry remain forbidden. v1.5 hashes are:
+
+- adapter config: `3d4508612b4d15533dbaf4ceea291eab232598bcd347d7a5ed5bd254f6969e2b`
+- output guard: `c68d59ca1e25d0e4bde6faef3544e07a2b74b60e186a88c75de5fc4d32a78b5a`
+- canonical schema: `fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9`
+- serializer: `d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef`
+- semantic fixture: `eb074081cc52d22025e263e3f94b2165f95493f511ddc454b9ea5f5923c085e1`
+- transport schema: `ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7`
+
+The no-overwrite GPT-4o offline preparation
+`c2_relay_gpt4o_portable_v1_5_pilot3_dry_run_v1` passed all six strict
+transport preflights with `request_downgrade_applied=false`. Its hashes are:
+
+1. `a61b4041917dfb92b71a1475f0090cb4147130ff938dbe74f14bb588f2575c97`
+2. `3bea8469870b55e356d922ce8eb5595d278b566ad6a559d2d5aec23f977acfe5`
+3. `4e66cc9b1a17e3a0519ad139d9c9d6ba522390a5f5ff2e564cf46a9300a68933`
+4. `eab5d93397633640ad5097da319eed872ed142245167d5cdf9349bb189e81b15`
+5. `9323f5f012a16cbd8be80fbaaf3198f7a6df784d54854944fdb1ab5270574643`
+6. `a8042a5bec2a7aa7acbf0f9622e4039de90336726bd0bc540c1766dd39984bda`
+
+Pass B hashes remain fixture-only because live Pass B requests depend on the
+same run's actual Pass A outputs. The 6-call/78,000-token/3.60-CA budget and
+17.5/70 input/output prices are locked as offline configuration; worst-case
+combined token/output reservation cost is 3.4125 CA. No credential, network, or
+real API was used; billed tokens and cost are zero, C2 did not start, and no
+evaluation occurred. A real v1.5 run requires a new explicit authorization and
+a new no-overwrite run ID.

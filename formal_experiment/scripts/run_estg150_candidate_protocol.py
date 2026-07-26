@@ -88,6 +88,25 @@ def write_json_no_overwrite(path: Path, value: Any) -> None:
     write_bytes_no_overwrite(path, json.dumps(value, ensure_ascii=False, indent=2).encode("utf-8") + b"\n")
 
 
+def reviewed_candidate_text_en(
+    sample: dict[str, Any], route: str, pass_a_candidate: dict[str, Any] | None
+) -> str:
+    """Return the exact English candidate whose translation decision is being reviewed."""
+    if route in {"pass_a", "full_extract"}:
+        return sample["frozen_candidate_text_en"]
+    if route != "pass_b":
+        raise ProtocolError(f"unsupported review route: {route!r}")
+    if pass_a_candidate is None:
+        raise ProtocolError("Pass B requires the validated same-run Pass A candidate")
+    try:
+        text = pass_a_candidate["translation"]["proposed_text_en"]
+    except (KeyError, TypeError) as exc:
+        raise ProtocolError("Pass B dependency has no proposed English candidate") from exc
+    if not isinstance(text, str) or not text:
+        raise ProtocolError("Pass B dependency proposed English candidate must be non-empty")
+    return text
+
+
 def append_jsonl(path: Path, value: dict[str, Any]) -> None:
     with path.open("ab") as handle:
         handle.write(canonical_json_bytes(value))
@@ -855,7 +874,9 @@ def execute(args: argparse.Namespace, assets: Any, lock: dict[str, Any]) -> int:
                     response_bytes,
                     adapter=adapter,
                     expected_sample_id=sample["sample_id"],
-                    frozen_candidate_text_en=sample["frozen_candidate_text_en"],
+                    frozen_candidate_text_en=reviewed_candidate_text_en(
+                        sample, route, pass_a_candidate
+                    ),
                     schema=assets.schema,
                     response_coordinate_mode=prepared.capability_profile.get(
                         "response_coordinate_mode", "reject_invalid"

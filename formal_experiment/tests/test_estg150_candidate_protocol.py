@@ -76,6 +76,14 @@ C2_GPT4O_V1_3_NONVERBATIM_RESPONSE = (
     / "responses"
     / "001_estg_000080_pass_a.json"
 )
+C2_GPT4O_V1_4_RUN_DIR = (
+    ROOT
+    / "data"
+    / "development"
+    / "estg"
+    / "llm_candidate_runs"
+    / "c2_relay_gpt4o_portable_v1_4_pilot3_live_v1"
+)
 
 
 def valid_synthetic_candidate() -> dict:
@@ -414,6 +422,46 @@ def test_c2_gpt4o_v1_3_nonverbatim_condition_remains_fail_closed_without_semanti
         )
 
 
+def test_c2_gpt4o_v1_4_unchanged_edited_translation_remains_fail_closed() -> None:
+    assets = load_protocol_assets()
+    sample = assets.samples[0]
+    pass_a_envelope = load_json_bytes(
+        C2_GPT4O_V1_4_RUN_DIR / "responses" / "001_estg_000080_pass_a.json"
+    )
+    pass_b_response = (
+        C2_GPT4O_V1_4_RUN_DIR / "responses" / "002_estg_000080_pass_b.json"
+    ).read_bytes()
+    pass_a_candidate = json.loads(pass_a_envelope["choices"][0]["message"]["content"])
+    with pytest.raises(CandidateValidationError, match="edited translation is unchanged"):
+        extract_provider_response(
+            pass_b_response,
+            adapter=adapter_from_config(assets.config, "relay_openai_compatible"),
+            expected_sample_id=sample["sample_id"],
+            frozen_candidate_text_en=pass_a_candidate["translation"]["proposed_text_en"],
+            schema=assets.schema,
+            response_coordinate_mode=RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
+        )
+
+
+def test_pass_b_translation_validation_uses_the_same_run_pass_a_text() -> None:
+    spec = importlib.util.spec_from_file_location("estg150_candidate_runner_pass_b_test", RUNNER)
+    assert spec is not None and spec.loader is not None
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    sample = {"frozen_candidate_text_en": "Original candidate."}
+    pass_a_candidate = {
+        "translation": {"decision": "edited", "proposed_text_en": "Edited candidate."}
+    }
+    assert runner.reviewed_candidate_text_en(sample, "pass_a", None) == "Original candidate."
+    assert runner.reviewed_candidate_text_en(sample, "full_extract", None) == "Original candidate."
+    assert (
+        runner.reviewed_candidate_text_en(sample, "pass_b", pass_a_candidate)
+        == "Edited candidate."
+    )
+    with pytest.raises(ProtocolError, match="same-run Pass A"):
+        runner.reviewed_candidate_text_en(sample, "pass_b", None)
+
+
 def test_network_retry_resends_byte_identical_request(monkeypatch):
     request_bytes = b'{"fixed":"request"}\n'
     observed_payloads = []
@@ -628,7 +676,7 @@ def test_execute_failure_manifest_links_archived_http_error(monkeypatch):
         assert failure["canonical_schema_sha256"] == (
             "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9"
         )
-        assert failure["transport_adapter_version"] == "1.4.0"
+        assert failure["transport_adapter_version"] == "1.5.0"
         assert failure["transport_schema_sha256"] == (
             "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
         )
@@ -797,7 +845,7 @@ def test_c2_offline_preparation_freezes_six_preflights_without_starting_c2(monke
             "mode": "append_transport_exact_span_self_check",
             "applied": True,
             "instruction_sha256": (
-                "d7432611183a6b8cd36bcd2da8f481f7090368d660e7a5fc77cbf0001f693f98"
+                "c68d59ca1e25d0e4bde6faef3544e07a2b74b60e186a88c75de5fc4d32a78b5a"
             ),
             "canonical_semantic_request_unchanged": True,
             "canonical_prompt_assets_unchanged": True,

@@ -40,6 +40,7 @@ from formal_experiment.estg150_c1_transport import (  # noqa: E402
     load_portable_transport_adapter,
     load_portable_transport_adapter_v1_2,
     load_portable_transport_adapter_v1_3,
+    load_portable_transport_adapter_v1_4,
     load_strict_transport_adapter,
     preflight_openai_structured_outputs_schema,
     prepare_transport_request,
@@ -315,7 +316,7 @@ def test_modern_chatanywhere_models_use_the_explicit_transport_adapter(model: st
 def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen() -> None:
     assets, semantic, prepared = _portable_prepared("gpt-4o")
     lock = verify_c0_lock(assets)
-    assert prepared.strict_adapter.adapter_version == "1.4.0"
+    assert prepared.strict_adapter.adapter_version == "1.5.0"
     assert prepared.strict_adapter.canonical_schema_sha256 == EXPECTED_CANONICAL_SCHEMA_SHA256
     assert prepared.strict_adapter.transport_schema_sha256 == (
         "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
@@ -338,8 +339,15 @@ def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen()
         "content_retry": "forbidden",
     }
     assert prepared.body["messages"][0]["content"].endswith(SPAN_TEXT_GUARD_INSTRUCTION)
+    assert "translation.decision must be accepted" in SPAN_TEXT_GUARD_INSTRUCTION
+    assert "Never label unchanged text as edited" in SPAN_TEXT_GUARD_INSTRUCTION
     assert "delete internal words" in SPAN_TEXT_GUARD_INSTRUCTION
     assert "modality.evidence contain the visible normative cue" in SPAN_TEXT_GUARD_INSTRUCTION
+    historical_v1_4 = load_portable_transport_adapter_v1_4()
+    assert historical_v1_4.adapter_version == "1.4.0"
+    assert "Never label unchanged text as edited" not in (
+        historical_v1_4.config["response_span_text_guard"]["instruction"]
+    )
     historical_v1_3 = load_portable_transport_adapter_v1_3()
     assert historical_v1_3.adapter_version == "1.3.0"
     assert "response_span_text_guard" not in historical_v1_3.config

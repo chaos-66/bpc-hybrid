@@ -1,0 +1,249 @@
+{
+  "schema_version": "estg150_openai_strict_transport_schema_adapter_config@1.5.0",
+  "adapter_id": "estg150_openai_strict_transport_schema_adapter",
+  "adapter_version": "1.5.0",
+  "adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.5.0",
+  "canonical_protocol_version": "estg150_canonical_external_candidate_protocol@1.0.0",
+  "canonical_schema": {
+    "path": "configs/schemas/estg150_ai_review_model_output.schema.json",
+    "sha256": "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9",
+    "output_schema_version": "estg150_ai_review_model_output@1.0.0"
+  },
+  "transport_schema": {
+    "path": "configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json",
+    "sha256": "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7",
+    "output_schema_version": "estg150_ai_review_model_output@1.0.0"
+  },
+  "transformation": {
+    "mode": "add_explicit_string_type_to_locked_homogeneous_const_or_enum_nodes",
+    "allowed_json_pointers": [
+      "/properties/schema_version",
+      "/properties/context_sufficiency",
+      "/properties/translation/properties/decision",
+      "/$defs/modality/properties/label",
+      "/properties/confidence",
+      "/$defs/ambiguity/properties/field"
+    ],
+    "only_added_member": {"type": "string"},
+    "output_schema_version_unchanged": true
+  },
+  "response_coordinate_policy": {
+    "mode": "deterministic_exact_text_unique_reanchor",
+    "mutable_members": ["start", "end"],
+    "immutable_members": [
+      "translation text and decision",
+      "span text",
+      "modality labels",
+      "normalized values",
+      "IDs and relations",
+      "collection membership",
+      "confidence and rationale"
+    ],
+    "match_scope": "unchanged span text inside its proposed-text or clause parent",
+    "required_match_count": 1,
+    "zero_or_multiple_matches": "fail_closed",
+    "receipt_required": true
+  },
+  "response_span_text_guard": {
+    "mode": "append_transport_exact_span_self_check",
+    "instruction": "[BEGIN EXACT SPAN OUTPUT INVARIANT]\nBefore emitting JSON, first make translation.decision consistent with the exact English candidate supplied for this review: if translation.proposed_text_en is character-for-character unchanged, translation.decision must be accepted; use edited only when proposed_text_en actually differs by at least one character. Never label unchanged text as edited. Then freeze translation.proposed_text_en. For every clause_span and every modality.evidence, actor, action, condition, constraint, exception, and order_relations.evidence span: (1) copy text verbatim as one contiguous substring of proposed_text_en; never paraphrase text, normalize it, delete internal words, or join discontiguous fragments; normalized may summarize but text may not; (2) ensure every child text occurs completely inside its own clause_span; (3) compute start/end from the exact Python half-open slice so text == proposed_text_en[start:end]; and (4) make modality.evidence contain the visible normative cue that supports the label, such as shall, must, may, prohibited, means, or deemed, rather than an actor or object. For optional semantic collections, if no exact contiguous source span exists, use an empty array and record the uncertainty in unsupported_or_ambiguous instead of fabricating a span. Internally verify the decision/text pair and every slice before returning. Output JSON only.\n[END EXACT SPAN OUTPUT INVARIANT]",
+    "canonical_semantic_request_unchanged": true,
+    "canonical_prompt_assets_unchanged": true,
+    "response_repair": "forbidden",
+    "content_retry": "forbidden"
+  },
+  "semantic_transport_boundary": {
+    "immutable": [
+      "canonical prompt asset bytes",
+      "canonical semantic request bytes before transport adaptation",
+      "canonical output schema bytes",
+      "canonical serializer bytes",
+      "six-element semantic content",
+      "exact-span and cue validation after coordinate canonicalization",
+      "no Layer D, Layer E, or Gold reads"
+    ],
+    "profile_adaptable": [
+      "message role packaging",
+      "reasoning_effort presence",
+      "token limit field name",
+      "server output-format enforcement",
+      "deterministic response coordinate canonicalization",
+      "transport-only exact-span and translation-decision output self-check instruction"
+    ],
+    "semantic_content_repair": "forbidden",
+    "coordinate_canonicalization": "unique exact text only with receipt",
+    "content_retry": "forbidden",
+    "local_canonical_validation_required": true
+  },
+  "structured_outputs_preflight": {
+    "root_type_object_required": true,
+    "root_any_of_forbidden": true,
+    "all_object_properties_required": true,
+    "all_objects_additional_properties_false": true,
+    "const_and_enum_explicit_type_required": true,
+    "local_refs_allowed": true,
+    "nested_any_of_allowed": true
+  },
+  "capability_profiles": [
+    {
+      "profile_id": "estg150_chatanywhere_modern_strict_profile",
+      "profile_version": "1.2.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-5.6-luna",
+      "status": "offline_ready",
+      "transport_schema_adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.5.0",
+      "runtime_validation": "existing_gpt56_luna success is historical evidence only; v1.5 pending separately authorized runtime validation",
+      "envelope_policy": {
+        "message_mode": "preserve",
+        "reasoning_effort_mode": "preserve",
+        "token_limit_field": "max_completion_tokens",
+        "response_format_mode": "json_schema_strict"
+      },
+      "server_output_enforcement": "strict_json_schema",
+      "local_canonical_validation_required": true,
+      "response_coordinate_mode": "deterministic_exact_text_unique_reanchor",
+      "request_downgrade_applied": false,
+      "request_downgrade_details": []
+    },
+    {
+      "profile_id": "estg150_chatanywhere_modern_strict_profile",
+      "profile_version": "1.2.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-5.4-nano",
+      "status": "offline_ready",
+      "transport_schema_adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.5.0",
+      "runtime_validation": "pending_new_explicit_api_authorization",
+      "envelope_policy": {
+        "message_mode": "preserve",
+        "reasoning_effort_mode": "preserve",
+        "token_limit_field": "max_completion_tokens",
+        "response_format_mode": "json_schema_strict"
+      },
+      "server_output_enforcement": "strict_json_schema",
+      "local_canonical_validation_required": true,
+      "response_coordinate_mode": "deterministic_exact_text_unique_reanchor",
+      "request_downgrade_applied": false,
+      "request_downgrade_details": []
+    },
+    {
+      "profile_id": "estg150_chatanywhere_modern_strict_profile",
+      "profile_version": "1.2.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-5-nano",
+      "status": "offline_request_ready_runtime_503_unresolved",
+      "transport_schema_adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.5.0",
+      "runtime_validation": "pending_new_explicit_api_authorization",
+      "envelope_policy": {
+        "message_mode": "preserve",
+        "reasoning_effort_mode": "preserve",
+        "token_limit_field": "max_completion_tokens",
+        "response_format_mode": "json_schema_strict"
+      },
+      "server_output_enforcement": "strict_json_schema",
+      "local_canonical_validation_required": true,
+      "response_coordinate_mode": "deterministic_exact_text_unique_reanchor",
+      "request_downgrade_applied": false,
+      "request_downgrade_details": []
+    },
+    {
+      "profile_id": "estg150_chatanywhere_nonreasoning_strict_profile",
+      "profile_version": "1.1.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-4.1-nano",
+      "status": "offline_ready_capability_adapted",
+      "transport_schema_adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.5.0",
+      "runtime_validation": "reasoning_effort rejection observed; adapted request pending new explicit API authorization",
+      "envelope_policy": {
+        "message_mode": "merge_system_developer",
+        "reasoning_effort_mode": "omit",
+        "token_limit_field": "max_tokens",
+        "response_format_mode": "json_schema_strict"
+      },
+      "server_output_enforcement": "strict_json_schema",
+      "local_canonical_validation_required": true,
+      "response_coordinate_mode": "deterministic_exact_text_unique_reanchor",
+      "request_downgrade_applied": false,
+      "request_downgrade_details": []
+    },
+    {
+      "profile_id": "estg150_chatanywhere_nonreasoning_strict_profile",
+      "profile_version": "1.1.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-4o",
+      "status": "offline_ready_capability_adapted",
+      "transport_schema_adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.5.0",
+      "runtime_validation": "real v1.4 C2 failed closed when Pass B labeled unchanged text edited; v1.5 decision/text guard pending separately authorized runtime validation",
+      "envelope_policy": {
+        "message_mode": "merge_system_developer",
+        "reasoning_effort_mode": "omit",
+        "token_limit_field": "max_tokens",
+        "response_format_mode": "json_schema_strict"
+      },
+      "server_output_enforcement": "strict_json_schema",
+      "local_canonical_validation_required": true,
+      "response_coordinate_mode": "deterministic_exact_text_unique_reanchor",
+      "request_downgrade_applied": false,
+      "request_downgrade_details": []
+    },
+    {
+      "profile_id": "estg150_chatanywhere_legacy_json_profile",
+      "profile_version": "1.1.0",
+      "provider_adapter": "relay_openai_compatible",
+      "endpoint_hosts": ["api.chatanywhere.tech"],
+      "model": "gpt-3.5-turbo",
+      "status": "offline_ready_json_mode_local_schema_validation",
+      "transport_schema_adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.5.0",
+      "runtime_validation": "reasoning_effort rejection observed; adapted request pending new explicit API authorization",
+      "envelope_policy": {
+        "message_mode": "merge_system_developer_with_canonical_schema",
+        "reasoning_effort_mode": "omit",
+        "token_limit_field": "max_tokens",
+        "response_format_mode": "json_object"
+      },
+      "server_output_enforcement": "json_syntax_only",
+      "local_canonical_validation_required": true,
+      "response_coordinate_mode": "deterministic_exact_text_unique_reanchor",
+      "request_downgrade_applied": true,
+      "request_downgrade_details": [
+        "provider cannot enforce the canonical schema server-side; exact canonical schema is injected into the system message and enforced locally"
+      ]
+    },
+    {
+      "profile_id": "estg150_deepseek_json_profile",
+      "profile_version": "1.1.0",
+      "provider_adapter": "deepseek_official",
+      "endpoint_hosts": ["api.deepseek.com"],
+      "model": "deepseek-v4-pro",
+      "status": "offline_ready_json_mode_local_schema_validation",
+      "transport_schema_adapter_identity": "estg150_openai_strict_transport_schema_adapter@1.5.0",
+      "runtime_validation": "developer role and json_schema rejections observed; adapted request pending new explicit API authorization",
+      "envelope_policy": {
+        "message_mode": "merge_system_developer_with_canonical_schema",
+        "reasoning_effort_mode": "omit",
+        "token_limit_field": "max_tokens",
+        "response_format_mode": "json_object"
+      },
+      "server_output_enforcement": "json_syntax_only",
+      "local_canonical_validation_required": true,
+      "response_coordinate_mode": "deterministic_exact_text_unique_reanchor",
+      "request_downgrade_applied": true,
+      "request_downgrade_details": [
+        "provider cannot enforce the canonical schema through response_format; exact canonical schema is injected into the system message and enforced locally"
+      ]
+    }
+  ],
+  "fail_closed_policy": {
+    "undeclared_model": "forbidden",
+    "unversioned_transport_change": "forbidden",
+    "semantic_content_repair": "forbidden",
+    "accept_nonverbatim_span_text": "forbidden",
+    "coordinate_reanchor_without_one_exact_parent-scoped_match": "forbidden",
+    "content_retry": "forbidden",
+    "accept_without_local_canonical_validation": "forbidden"
+  }
+}

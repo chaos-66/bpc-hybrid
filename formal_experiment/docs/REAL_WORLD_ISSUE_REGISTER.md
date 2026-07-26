@@ -53,8 +53,35 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0025 | 2026-07-26 | EStG-150 candidate protocol / C1 | schema/provider compatibility | canonical v1 的 6 个字符串 const/enum 缺显式 type，且旧模型/DeepSeek envelope 不兼容容易诱发静默降级 | `resolved` | 保留 canonical v1，新增 strict transport adapter v1.1、递归预检和七模型 fail-closed capability allowlist；获授权 gpt-5.6-luna 单条 C1 生成 1 个 canonical-valid candidate，C1=true、C2=false；Event 121 |
 | RWI-0026 | 2026-07-26 | EStG-150 candidate protocol / C2 | preregistration/provenance | C2 的 Pass B 请求内嵌同次运行新产生的 Pass A 输出，因此三条未来真实 Pass B request SHA 不可能在调用前诚实计算；旧 dry-run 还只预检第一条 Pass A | `mitigated` | 六槽位离线预检现全部落盘并锁 SHA；三条 Pass B 明确使用已验证历史 Pass A fixture、仅作 offline envelope preflight，未来真实 SHA 保持 deferred；C2=false、API=0；Event 122 |
 | RWI-0027 | 2026-07-26 | EStG-150 candidate protocol / C1–C2 | accounting/provenance | 可计费 response 在 canonical candidate 或 finish-reason 校验失败时，usage 可能未进入 failure receipt | `resolved` | 两份原 failure/raw response 均不改写；SHA-bound corrections 分别恢复 C1 的 2956 tokens/0.01728755 CA 与 C2 的 7839 tokens/0.282373 CA；runner 先计 envelope usage，再检查 finish reason/candidate；mocked invalid/length 回归；Events 123–124 |
+| RWI-0028 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/validation | GPT-4o Pass B 把逐字不变的译文标为 `edited`；runner 又错误地用原始英文而非同次 Pass A 文本校验 Pass B translation decision | `mitigated` | v1.5 增加 decision/text 生成前自检并让 Pass B 校验绑定同次 Pass A；旧响应仍 fail closed，57 项聚焦回归和六槽位离线 preflight 通过；真实 runtime 待新授权；Event 134 |
 
 ## 3. 详细记录
+
+### RWI-0028 — C2 Pass B translation decision 与实际候选文本不一致
+
+- **首次发现**：2026-07-26 ChatAnywhere `gpt-4o` v1.4 C2 runtime。
+- **阶段/范围**：EStG-150 canonical external candidate protocol 的 Pass B 生成边界与本地
+  translation-decision 校验；不修改 B0、D1/H1、canonical prompt/schema/serializer 或 Gold。
+- **观察事实**：样本 0 Pass A 返回 `decision=accepted`；Pass B 随后返回
+  `decision=edited`，但两次 `translation.proposed_text_en` 逐字符完全相同。canonical validator
+  因 `edited translation is unchanged` 正确拒绝，真实运行在 2/6 calls 后 fail closed。同时检查
+  runner 发现：Pass B 即使依赖同次 Pass A 输出，validation 仍固定拿样本原始英文作比较基准；
+  若 Pass A 真正改过译文，合法的 Pass B `accepted` 也可能被误拒。
+- **影响**：strict JSON schema 只能约束枚举和结构，不能表达“`edited` 必须对应文本实际变化”的
+  跨字段不等式；缺少显式输出自检时，旧模型可生成结构正确但语义自相矛盾的 JSON。错误的
+  Pass B 比较基准还会让本地校验偏离实际被审核文本。
+- **当前处置**：新增 portable adapter v1.5，在 transport-only invariant 中明确要求
+  `proposed_text_en` 逐字不变时必须 `accepted`，只有实际至少变化一个字符才允许 `edited`；
+  无 response repair 或 content retry。runner 的 Pass A/`full_extract` 继续绑定原始冻结英文，
+  Pass B 改为绑定同次已验证 Pass A 的 `proposed_text_en`。v1.4 配置、失败运行和响应均保持原样，
+  并由历史 loader/回归继续验证。
+- **验证证据**：旧 v1.4 Pass B response 离线重放仍以同一错误 fail closed；candidate/transport
+  聚焦回归 57 passed。`c2_relay_gpt4o_portable_v1_5_pilot3_dry_run_v1` 的六个请求全部通过
+  strict transport preflight，`request_downgrade_applied=false`，未读取 key、未联网、0 tokens、
+  0 cost、C2=false、evaluation=0、P/R=null。
+- **状态**：`mitigated`。代码与离线请求边界已修复；是否足以约束真实 GPT-4o 输出仍需新的
+  明确 API 授权和不可覆盖 run ID 验证，不能仅凭离线测试写为 `resolved`。
+- **对应事件**：Event 134。
 
 ### RWI-0027 — canonical-invalid provider response 的 usage 未进入失败收据
 
