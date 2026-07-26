@@ -1513,3 +1513,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：C2 offline-only run_id=c2_relay_gpt4o_portable_v1_3_pilot3_dry_run_v1; samples 0/1/2, each Pass A then Pass B, exactly six prepared requests; all six strict transport preflights passed; request_downgrade_applied=false; response coordinate mode deterministic_exact_text_unique_reanchor. Transport SHAs: 520a254aed2c6df29e466084a5ac0ea5c869fdc8e406a460246c5bbd53959fb3, 4df5de55f13800a35100a61ed2dfd59f0127e31e29cda92bc07b61530ef55822, 4dacfd0c34683974edcc80bef3bd7ceb0c4bb845e58c9e0a9e883ff4ea3c3afc, 2a95a940ec4b6e8d4aa1fb1935214cc9d22f67f2019a150737b19ec3bd85d72c, d805c1c3c94f39f4b0f41a9b17c701edb58cc8c5ca0f4da922d3986c710d6c6a, e29683c32ff7bb7da3f1fc786afcd875a2c0e1820ef41615ca725065e42e277b. Pass A hashes are exact for locked inputs/model/profile; Pass B hashes are offline fixture-only and must bind actual Pass A output in any separately authorized live run. Offline budget configuration only: 6 calls, 78000 tokens, 3.60 CA, prices 17.5/70 CA per million; not API authorization. Canonical schema/serializer/adapter/transport hashes unchanged; Layer D/E/Gold not read; credential not read; real API false; billed tokens 0; C2 not started; evaluation 0; P/R null.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-26T14:11:56.568491+00:00 - Freeze authorized ChatAnywhere GPT-4o v1.3 C2 fail-closed span-text evidence
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=c2_relay_gpt4o_portable_v1_3_pilot3_live_v1；阶段=C2；方法=relay_openai_compatible ChatAnywhere gpt-4o adapter v1.3；状态=失败（`failed`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_candidate_protocol.py --stage c2 --execute-api --confirm-authorized-provider-budget --provider-adapter relay_openai_compatible --model gpt-4o --endpoint https://api.chatanywhere.tech/v1/chat/completions --run-id c2_relay_gpt4o_portable_v1_3_pilot3_live_v1 --max-calls 6 --max-total-tokens 78000 --max-cost 3.60 --cost-currency CA --input-price-per-million 17.5 --output-price-per-million 70 --api-key-env-name ESTG150_CHATANYWHERE_KEY --timeout-seconds 180`
+- manifest：data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_3_pilot3_live_v1/failure.json
+- 结果摘要：Fail-closed after the first Pass A content call; provider-reported gpt-4o stop; 1373 input plus 1249 output equals 2622 tokens; 0.1114575 CA; retry 0; clauses[2].conditions[0] model text was not an exact substring of its clause, so valid candidates 0 and remaining five calls were not made; evaluation 0; P/R null.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1451 passed, 22 skipped in 227.34s (0:03:47)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`53e5b4fc76b2c9aa966f62182a0574aeaac30a5b`；相关未提交路径：421 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Authorized ceilings: 6 content calls, 78000 total tokens, 3.60 CA at 17.5/70 CA per million input/output tokens. First request SHA 520a254aed2c6df29e466084a5ac0ea5c869fdc8e406a460246c5bbd53959fb3 matched the frozen offline Pass A request; request_downgrade_applied=false. The condition text omitted the intervening phrase 'of a business' from the immutable proposed text, so this was semantic span-text inconsistency rather than coordinate-only drift; v1.3 correctly refused semantic repair and content retry. C2 started then failed closed; prior C1 success evidence unchanged. Layer D/E/Gold not read; no evaluation; credential not printed.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
