@@ -714,3 +714,55 @@ worst-case guard cost is 3.4125 CA. Real API calls=0, billed tokens=0, billed
 cost=0, C2 did not start, evaluation=0, and P/R remain null. Layer D, Layer E,
 and Gold were not read. A real v1.7 run requires a new explicit authorization
 and no-overwrite live run ID.
+
+### 7.18 GPT-4o v1.7 runtime failure and v1.8 path-scoped mitigation
+
+The authorized v1.7 live run
+`c2_relay_gpt4o_portable_v1_7_pilot3_live_v1` stopped fail-closed after three
+of six content calls. Sample 0 Pass A/B validated, but sample 1 Pass A emitted
+the repeated modality evidence text `may` with a model start 23 characters
+from the unique nearest exact occurrence. Totals were 6,897 input tokens,
+3,679 output tokens, 0 retries, and 0.3782275 CA. No candidate set was frozen;
+evaluation remained zero and P/R remained null. Layer D, Layer E, and Gold
+were not read during generation.
+
+The same response also contains a later non-verbatim action that deletes the
+intervening words `subject to biological growth`. Consequently, the archived
+response cannot be made canonical by coordinate correction alone and remains
+invalid. Adapter v1.8 therefore makes one path-scoped coordinate change only:
+repeated exact `modality.evidence` text may use the unique nearest
+model-supplied start without a distance ceiling, because identical visible
+normative cues under the same clause modality label provide the same label
+evidence. Ties, missing integer starts, and zero matches still fail closed.
+All other repeated actor/action/condition/constraint/exception/order evidence
+spans retain the eight-character ceiling. Only `start` and `end` may change;
+all changes are receipted. No fuzzy matching, deletion, insertion, span-text
+change, or collection-membership repair is allowed.
+
+The transport-only guard now also states that all coordinates are absolute
+offsets in the entire `translation.proposed_text_en`, forbids copying actor
+coordinates into modality evidence, and explicitly requires actions to retain
+intervening modifiers and objects in exact source text. Canonical prompt
+assets, canonical schema, serializer, transport schema, B0, and D1/H1 remain
+unchanged. Adapter v1.7 remains available only for historical receipt replay.
+
+Adapter v1.8 config SHA is
+`715c803fef5f8c91c6c4b8fb83002182aca01e461745c2c38a5d48254ac72462`;
+guard SHA is
+`ff5813a7410a891b6d87966950d8f7ef0223da52e76f28644bbbc0d9304ae25e`.
+The no-overwrite offline preparation
+`c2_relay_gpt4o_portable_v1_8_pilot3_dry_run_v1` passed all six strict
+transport preflights with `request_downgrade_applied=false`. Request SHA-256
+values are:
+
+1. `52d691a163440cef6ad803d6a7a73029db74287e276d03eec51af7451184affb`
+2. `4f2bd3252dc886200f4b1820ca17eca4ca69b8ef5e448c2cb5ac9ba02ceffcc3`
+3. `72a834db1710a0e22d6e0add9e27fab8ebd943cfed07d87df2ebe724575071f3`
+4. `b0947d3bb36f04ac48f29e8f62e1faef1c93430e7153df8fe5d5306d564d4759`
+5. `0d48df85e1d67031c2da440d994917a8eceed3913c8700cf9e5ffe071a4111fc`
+6. `9ba3a2185513d1610d51d17865ae39b45cd3062aa4c64a02e7b12c610ddb2ab4`
+
+The offline budget is 6 calls / 78,000 tokens / 3.60 CA at 17.5/70 CA per
+million input/output tokens. Offline API calls, billed tokens, and billed cost
+are zero; C2 is not started by this dry-run, evaluation remains zero, and P/R
+remain null.

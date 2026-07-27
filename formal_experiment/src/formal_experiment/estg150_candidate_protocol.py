@@ -46,6 +46,9 @@ RESPONSE_COORDINATE_MODE_UNIQUE_EXACT = "deterministic_exact_text_unique_reancho
 RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST = (
     "deterministic_exact_text_unique_or_bounded_nearest_start_reanchor"
 )
+RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST = (
+    "deterministic_exact_text_unique_or_path_scoped_nearest_start_reanchor"
+)
 MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT = 8
 
 
@@ -532,6 +535,7 @@ def canonicalize_response_coordinates(
         RESPONSE_COORDINATE_MODE_REJECT_INVALID,
         RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
         RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST,
+        RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST,
     }:
         raise ProtocolError(f"unsupported response coordinate mode: {mode!r}")
 
@@ -564,7 +568,14 @@ def canonicalize_response_coordinates(
 
     changes: list[dict[str, Any]] = []
 
-    def reanchor(span: Any, *, lower: int, upper: int, path: str) -> tuple[int, int]:
+    def reanchor(
+        span: Any,
+        *,
+        lower: int,
+        upper: int,
+        path: str,
+        unbounded_repeated_modality_cue: bool = False,
+    ) -> tuple[int, int]:
         if not isinstance(span, dict):
             raise CandidateValidationError(f"{path} must be an object before coordinate canonicalization")
         text = span.get("text")
@@ -596,7 +607,10 @@ def canonicalize_response_coordinates(
         start_displacement: int | None = None
         if len(matches) == 1:
             new_start, new_end = matches[0]
-        elif len(matches) > 1 and mode == RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST:
+        elif len(matches) > 1 and mode in {
+            RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST,
+            RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST,
+        }:
             if not isinstance(start, int) or isinstance(start, bool):
                 raise CandidateValidationError(
                     f"{path} repeated exact text requires an integer model-supplied start"
@@ -604,18 +618,30 @@ def canonicalize_response_coordinates(
             ranked = [(abs(match_start - start), match_start, match_end) for match_start, match_end in matches]
             minimum_displacement = min(item[0] for item in ranked)
             nearest = [item for item in ranked if item[0] == minimum_displacement]
-            if (
-                len(nearest) != 1
-                or minimum_displacement > MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT
+            distance_is_unbounded = (
+                mode == RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST
+                and unbounded_repeated_modality_cue
+            )
+            if len(nearest) != 1 or (
+                not distance_is_unbounded
+                and minimum_displacement > MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT
             ):
+                allowed_distance = (
+                    "without a distance ceiling for modality evidence"
+                    if distance_is_unbounded
+                    else f"within {MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT} characters"
+                )
                 raise CandidateValidationError(
-                    f"{path} repeated exact text has no unique nearest start within "
-                    f"{MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT} characters; "
+                    f"{path} repeated exact text has no unique nearest start {allowed_distance}; "
                     f"found {len(matches)} matches, nearest_count={len(nearest)}, "
                     f"nearest_displacement={minimum_displacement}"
                 )
             start_displacement, new_start, new_end = nearest[0]
-            selection_method = "unique_nearest_model_supplied_start_within_bound"
+            selection_method = (
+                "unique_nearest_model_supplied_start_modality_evidence_unbounded"
+                if distance_is_unbounded
+                else "unique_nearest_model_supplied_start_within_bound"
+            )
         else:
             raise CandidateValidationError(
                 f"{path} exact coordinate canonicalization requires one match inside its parent; "
@@ -658,6 +684,7 @@ def canonicalize_response_coordinates(
                 lower=clause_start,
                 upper=clause_end,
                 path=f"{clause_path}.modality.evidence[{evidence_index}]",
+                unbounded_repeated_modality_cue=True,
             )
         for field in ("actors", "actions", "conditions", "constraints", "exceptions"):
             spans = clause.get(field)
@@ -717,14 +744,24 @@ def canonicalize_response_coordinates(
         "changes": changes,
         "semantic_content_unchanged": True,
         "ambiguous_match_policy": (
-            "unique_nearest_model_supplied_start_within_8_else_fail_closed"
+            "path_scoped_modality_evidence_unique_nearest_unbounded_other_spans_within_8_else_fail_closed"
+            if mode == RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST
+            else "unique_nearest_model_supplied_start_within_8_else_fail_closed"
             if mode == RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
             else "fail_closed"
         ),
         "maximum_ambiguous_start_displacement": (
             MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT
-            if mode == RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
+            if mode in {
+                RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST,
+                RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST,
+            }
             else None
+        ),
+        "modality_evidence_maximum_ambiguous_start_displacement": (
+            None if mode == RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST else
+            MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT
+            if mode == RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST else None
         ),
         "raw_candidate_sha256": raw_sha256,
         "canonicalized_candidate_sha256": canonicalized_sha256,

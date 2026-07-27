@@ -676,7 +676,7 @@ def test_execute_failure_manifest_links_archived_http_error(monkeypatch):
         assert failure["canonical_schema_sha256"] == (
             "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9"
         )
-        assert failure["transport_adapter_version"] == "1.7.0"
+        assert failure["transport_adapter_version"] == "1.8.0"
         assert failure["transport_schema_sha256"] == (
             "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
         )
@@ -845,7 +845,7 @@ def test_c2_offline_preparation_freezes_six_preflights_without_starting_c2(monke
             "mode": "append_transport_exact_span_self_check",
             "applied": True,
             "instruction_sha256": (
-                    "9afd5ccbf457ec737f9815d21ab3224d06683b370302adcca69febc8a9f5d7c7"
+                    "ff5813a7410a891b6d87966950d8f7ef0223da52e76f28644bbbc0d9304ae25e"
             ),
             "canonical_semantic_request_unchanged": True,
             "canonical_prompt_assets_unchanged": True,

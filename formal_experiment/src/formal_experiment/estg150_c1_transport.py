@@ -19,6 +19,7 @@ from formal_experiment.estg150_candidate_protocol import (
     ProviderAdapter,
     MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT,
     RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST,
+    RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST,
     RESPONSE_COORDINATE_MODE_REJECT_INVALID,
     RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
     canonical_json_bytes,
@@ -32,6 +33,9 @@ TRANSPORT_ADAPTER_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_1.json"
 )
 PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH = (
+    ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_8.json"
+)
+PORTABLE_TRANSPORT_ADAPTER_V1_7_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_7.json"
 )
 PORTABLE_TRANSPORT_ADAPTER_V1_6_CONFIG_PATH = (
@@ -112,7 +116,7 @@ SPAN_TEXT_GUARD_V1_6_INSTRUCTION = SPAN_TEXT_GUARD_V1_5_INSTRUCTION.replace(
     "evidence when it is duplicated. For optional semantic collections, if no exact contiguous "
     "source span exists, use an empty array",
 )
-SPAN_TEXT_GUARD_INSTRUCTION = SPAN_TEXT_GUARD_V1_6_INSTRUCTION.replace(
+SPAN_TEXT_GUARD_V1_7_INSTRUCTION = SPAN_TEXT_GUARD_V1_6_INSTRUCTION.replace(
     "Internally verify the decision/text pair and every slice before returning.",
     "Use this exact construction order for each clause: first copy one contiguous "
     "clause_span; then add a semantic span only if its text is one exact contiguous "
@@ -123,6 +127,15 @@ SPAN_TEXT_GUARD_INSTRUCTION = SPAN_TEXT_GUARD_V1_6_INSTRUCTION.replace(
     "first cue-only text 'may' is duplicated, so use a unique cue-containing phrase such as "
     "'taxpayer may'; never reuse 'may' alone with guessed coordinates. Internally verify the "
     "decision/text pair and every slice before returning.",
+)
+SPAN_TEXT_GUARD_INSTRUCTION = SPAN_TEXT_GUARD_V1_7_INSTRUCTION.replace(
+    "Internally verify the decision/text pair and every slice before returning.",
+    "For actions, never delete intervening modifiers or objects: copy an exact full verb "
+    "phrase from the clause; normalized may paraphrase, but action.text must not. All "
+    "start/end values are absolute offsets in the entire translation.proposed_text_en, "
+    "never offsets relative to a clause and never copied from an actor or another span. For "
+    "modality.evidence, calculate the cue's own absolute coordinates; do not reuse actor.start. "
+    "Internally verify the decision/text pair and every slice before returning.",
 )
 EXPECTED_PROFILE_CONTRACT = {
     ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-5.6-luna"): {
@@ -253,6 +266,10 @@ EXPECTED_PORTABLE_V1_3_PROFILE_POLICIES = {
 }
 EXPECTED_PORTABLE_V1_7_PROFILE_POLICIES = {
     key: (*policy, RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST)
+    for key, policy in EXPECTED_PORTABLE_PROFILE_POLICIES.items()
+}
+EXPECTED_PORTABLE_V1_8_PROFILE_POLICIES = {
+    key: (*policy, RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST)
     for key, policy in EXPECTED_PORTABLE_PROFILE_POLICIES.items()
 }
 
@@ -603,6 +620,8 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
     expected_policies = (
         EXPECTED_PORTABLE_PROFILE_POLICIES
         if version == "1.2.0"
+        else EXPECTED_PORTABLE_V1_8_PROFILE_POLICIES
+        if version == "1.8.0"
         else EXPECTED_PORTABLE_V1_7_PROFILE_POLICIES
         if version == "1.7.0"
         else EXPECTED_PORTABLE_V1_3_PROFILE_POLICIES
@@ -653,10 +672,12 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
             response_mode,
             downgrade,
         )
-        if version in {"1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.7.0"}:
+        if version in {"1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.7.0", "1.8.0"}:
             coordinate_mode = profile.get("response_coordinate_mode")
             expected_coordinate_mode = (
-                RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
+                RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST
+                if version == "1.8.0"
+                else RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
                 if version == "1.7.0"
                 else RESPONSE_COORDINATE_MODE_UNIQUE_EXACT
             )
@@ -693,8 +714,33 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
             "receipt_required": True,
         }:
             raise ProtocolError("portable v1.7 bounded coordinate policy drifted")
+    elif version == "1.8.0":
+        if coordinate_policy != {
+            "mode": RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST,
+            "mutable_members": ["start", "end"],
+            "immutable_members": [
+                "translation text and decision",
+                "span text",
+                "modality labels",
+                "normalized values",
+                "IDs and relations",
+                "collection membership",
+                "confidence and rationale",
+            ],
+            "match_scope": "unchanged span text inside its proposed-text or clause parent",
+            "required_match_count": 1,
+            "multiple_match_resolution": "path_scoped_unique_nearest_model_supplied_start",
+            "non_modality_maximum_start_displacement": (
+                MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT
+            ),
+            "modality_evidence_maximum_start_displacement": None,
+            "tie": "fail_closed",
+            "zero_or_unresolved_multiple_matches": "fail_closed",
+            "receipt_required": True,
+        }:
+            raise ProtocolError("portable v1.8 path-scoped coordinate policy drifted")
     guard = config.get("response_span_text_guard")
-    if version in {"1.4.0", "1.5.0", "1.6.0", "1.7.0"}:
+    if version in {"1.4.0", "1.5.0", "1.6.0", "1.7.0", "1.8.0"}:
         expected_instruction = (
             SPAN_TEXT_GUARD_V1_4_INSTRUCTION
             if version == "1.4.0"
@@ -702,6 +748,8 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
             if version == "1.5.0"
             else SPAN_TEXT_GUARD_V1_6_INSTRUCTION
             if version == "1.6.0"
+            else SPAN_TEXT_GUARD_V1_7_INSTRUCTION
+            if version == "1.7.0"
             else SPAN_TEXT_GUARD_INSTRUCTION
         )
         if guard != {
@@ -723,7 +771,9 @@ def _validate_adapter_profiles(config: dict[str, Any]) -> None:
     version = config.get("adapter_version")
     if version == "1.1.0":
         _validate_capability_profiles(config)
-    elif version in {"1.2.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.7.0"}:
+    elif version in {
+        "1.2.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.7.0", "1.8.0"
+    }:
         _validate_portable_capability_profiles(config)
     else:
         raise ProtocolError("unsupported transport adapter version")
@@ -811,8 +861,16 @@ def load_strict_transport_adapter() -> StrictTransportAdapter:
 
 
 def load_portable_transport_adapter() -> StrictTransportAdapter:
-    """Load v1.7 for new dry-runs and separately authorized API calls."""
-    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.7.0")
+    """Load v1.8 for new dry-runs and separately authorized API calls."""
+    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.8.0")
+
+
+def load_portable_transport_adapter_v1_7() -> StrictTransportAdapter:
+    """Load immutable v1.7 for verification of historical bounded receipts."""
+    return _load_transport_adapter(
+        PORTABLE_TRANSPORT_ADAPTER_V1_7_CONFIG_PATH,
+        expected_version="1.7.0",
+    )
 
 
 def load_portable_transport_adapter_v1_6() -> StrictTransportAdapter:

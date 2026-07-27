@@ -20,6 +20,7 @@ from formal_experiment.estg150_candidate_protocol import (  # noqa: E402
     CandidateValidationError,
     MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT,
     RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST,
+    RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST,
     RESPONSE_COORDINATE_MODE_UNIQUE_EXACT,
     adapter_from_config,
     build_semantic_request,
@@ -41,10 +42,12 @@ from formal_experiment.estg150_c1_transport import (  # noqa: E402
     SPAN_TEXT_GUARD_INSTRUCTION,
     SPAN_TEXT_GUARD_V1_5_INSTRUCTION,
     SPAN_TEXT_GUARD_V1_6_INSTRUCTION,
+    SPAN_TEXT_GUARD_V1_7_INSTRUCTION,
     SPAN_TEXT_GUARD_MODE,
     StructuredOutputsPreflightError,
     derive_strict_transport_schema,
     load_portable_transport_adapter,
+    load_portable_transport_adapter_v1_7,
     load_portable_transport_adapter_v1_6,
     load_portable_transport_adapter_v1_5,
     load_portable_transport_adapter_v1_2,
@@ -325,7 +328,7 @@ def test_modern_chatanywhere_models_use_the_explicit_transport_adapter(model: st
 def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen() -> None:
     assets, semantic, prepared = _portable_prepared("gpt-4o")
     lock = verify_c0_lock(assets)
-    assert prepared.strict_adapter.adapter_version == "1.7.0"
+    assert prepared.strict_adapter.adapter_version == "1.8.0"
     assert prepared.strict_adapter.canonical_schema_sha256 == EXPECTED_CANONICAL_SCHEMA_SHA256
     assert prepared.strict_adapter.transport_schema_sha256 == (
         "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
@@ -354,12 +357,27 @@ def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen()
     assert "modality.evidence contain the visible normative cue" in SPAN_TEXT_GUARD_INSTRUCTION
     assert "shortest verbatim contiguous cue-containing phrase" in SPAN_TEXT_GUARD_INSTRUCTION
     assert "never choose an occurrence by guessing" in SPAN_TEXT_GUARD_INSTRUCTION
+    assert "absolute offsets in the entire translation.proposed_text_en" in (
+        SPAN_TEXT_GUARD_INSTRUCTION
+    )
+    assert "do not reuse actor.start" in SPAN_TEXT_GUARD_INSTRUCTION
     assert prepared.capability_profile["response_coordinate_mode"] == (
-        RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
+        RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST
     )
     assert prepared.strict_adapter.config["response_coordinate_policy"][
-        "maximum_start_displacement"
+        "non_modality_maximum_start_displacement"
     ] == MAXIMUM_AMBIGUOUS_REANCHOR_START_DISPLACEMENT
+    assert prepared.strict_adapter.config["response_coordinate_policy"][
+        "modality_evidence_maximum_start_displacement"
+    ] is None
+    historical_v1_7 = load_portable_transport_adapter_v1_7()
+    assert historical_v1_7.adapter_version == "1.7.0"
+    assert historical_v1_7.config["response_span_text_guard"]["instruction"] == (
+        SPAN_TEXT_GUARD_V1_7_INSTRUCTION
+    )
+    assert historical_v1_7.config["capability_profiles"][0][
+        "response_coordinate_mode"
+    ] == RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
     historical_v1_6 = load_portable_transport_adapter_v1_6()
     assert historical_v1_6.adapter_version == "1.6.0"
     assert historical_v1_6.config["response_span_text_guard"]["instruction"] == (
@@ -448,6 +466,95 @@ def test_v1_6_real_gpt4o_replay_still_rejects_nonverbatim_condition() -> None:
             frozen_candidate_text_en=raw_candidate["translation"]["proposed_text_en"],
             schema=assets.schema,
             response_coordinate_mode=RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST,
+        )
+
+
+def test_v1_7_real_gpt4o_replay_advances_past_cue_but_rejects_nonverbatim_action() -> None:
+    assets = load_protocol_assets()
+    adapter = adapter_from_config(assets.config, "relay_openai_compatible")
+    response_path = (
+        ROOT
+        / "data"
+        / "development"
+        / "estg"
+        / "llm_candidate_runs"
+        / "c2_relay_gpt4o_portable_v1_7_pilot3_live_v1"
+        / "responses"
+        / "003_estg_000070_pass_a.json"
+    )
+    response_bytes = response_path.read_bytes()
+    raw_candidate = json.loads(json.loads(response_bytes)["choices"][0]["message"]["content"])
+    with pytest.raises(
+        CandidateValidationError,
+        match=r"clauses\[1\]\.actions\[0\].*found 0",
+    ):
+        extract_provider_response(
+            response_bytes,
+            adapter=adapter,
+            expected_sample_id=raw_candidate["sample_id"],
+            frozen_candidate_text_en=raw_candidate["translation"]["proposed_text_en"],
+            schema=assets.schema,
+            response_coordinate_mode=RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST,
+        )
+
+
+def test_path_scoped_policy_unbounded_reanchors_only_modality_evidence() -> None:
+    source = "The taxpayer may act and costs may be recognized."
+    first_may = source.index("may")
+    candidate = {
+        "translation": {"proposed_text_en": source},
+        "clauses": [
+            {
+                "clause_span": {"text": source, "start": 0, "end": len(source)},
+                "modality": {"evidence": [{"text": "may", "start": 0, "end": 1}]},
+                "actors": [],
+                "actions": [],
+                "conditions": [],
+                "constraints": [],
+                "exceptions": [],
+                "order_relations": [],
+            }
+        ],
+    }
+    canonicalized, receipt = canonicalize_response_coordinates(
+        candidate,
+        mode=RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST,
+    )
+    assert canonicalized["clauses"][0]["modality"]["evidence"][0] == {
+        "text": "may",
+        "start": first_may,
+        "end": first_may + 3,
+    }
+    change = receipt["changes"][0]
+    assert change["candidate_match_count"] == 2
+    assert change["start_displacement"] == first_may
+    assert change["selection_method"] == (
+        "unique_nearest_model_supplied_start_modality_evidence_unbounded"
+    )
+    assert receipt["modality_evidence_maximum_ambiguous_start_displacement"] is None
+
+
+def test_path_scoped_policy_keeps_non_modality_repeated_text_bounded() -> None:
+    source = "The taxpayer may act and the taxpayer may record."
+    candidate = {
+        "translation": {"proposed_text_en": source},
+        "clauses": [
+            {
+                "clause_span": {"text": source, "start": 0, "end": len(source)},
+                "modality": {"evidence": [{"text": "may", "start": 12, "end": 15}]},
+                "actors": [{"text": "taxpayer", "start": 17, "end": 18}],
+                "actions": [],
+                "conditions": [],
+                "constraints": [],
+                "exceptions": [],
+                "order_relations": [],
+            }
+        ],
+    }
+    with pytest.raises(CandidateValidationError, match="within 8 characters"):
+        canonicalize_response_coordinates(
+            candidate,
+            mode=RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST,
         )
 
 
@@ -554,7 +661,7 @@ def test_nonreasoning_openai_profiles_preserve_strict_schema_with_compatible_env
     assert prepared.capability_profile["status"] == "offline_ready_capability_adapted"
     assert prepared.capability_profile["request_downgrade_applied"] is False
     assert prepared.capability_profile["response_coordinate_mode"] == (
-        RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
+        RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST
     )
     assert set(body) == {"model", "messages", "max_tokens", "response_format"}
     assert "reasoning_effort" not in body
@@ -592,7 +699,7 @@ def test_json_mode_profiles_embed_canonical_schema_and_require_local_strict_vali
     assert profile["local_canonical_validation_required"] is True
     assert profile["request_downgrade_applied"] is True
     assert profile["response_coordinate_mode"] == (
-        RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
+        RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST
     )
     assert set(body) == {"model", "messages", "max_tokens", "response_format"}
     assert body["response_format"] == {"type": "json_object"}
@@ -622,7 +729,7 @@ def test_all_seven_registered_models_have_a_fail_closed_portable_preflight() -> 
         }
         assert prepared.strict_adapter.transport_preflight["passed"] is True
         assert prepared.capability_profile["response_coordinate_mode"] == (
-            RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
+            RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST
         )
         assert prepared.strict_adapter.config["response_span_text_guard"]["mode"] == (
             SPAN_TEXT_GUARD_MODE
