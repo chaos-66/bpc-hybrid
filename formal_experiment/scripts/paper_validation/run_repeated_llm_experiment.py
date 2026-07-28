@@ -429,7 +429,10 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument('--model', default='deepseek-v4-pro')
     ap.add_argument('--temperature', type=float, default=0)
     ap.add_argument('--response-format', default='json_object')
-    ap.add_argument('--max-tokens', type=int, default=4000)
+    ap.add_argument('--max-tokens', type=int, default=12000,
+                    help='Prior pilot scripts use 4000, but DeepSeek V4 Pro now runs in reasoning mode '
+                         'that consumes ~3000 tokens for chain-of-thought before producing JSON. '
+                         '12000 leaves room for both reasoning and the actual answer.')
     ap.add_argument('--timeout', type=int, default=180)
     ap.add_argument('--max-retry', type=int, default=3)
     ap.add_argument('--dry-run', action='store_true', help='build request, do not call API')
@@ -445,7 +448,10 @@ def main() -> int:
     method = args.method
     repeat_id = args.repeat_id
     out_root = Path(args.output_root)
-    repeat_dir = out_root / 'runs' / method / f'repeat_{repeat_id:02d}'
+    if args.smoke:
+        repeat_dir = out_root / 'smoke' / method
+    else:
+        repeat_dir = out_root / 'runs' / method / f'repeat_{repeat_id:02d}'
     if repeat_dir.exists():
         # Resume only if --resume; otherwise the caller is at fault.
         if not args.resume:
@@ -551,9 +557,11 @@ def main() -> int:
             source_text = gold[rid]['approved_text_en']
             if method == 'd1_unprimed':
                 user_text = build_d1_user(user_template, source_text)
-            else:
+            elif method == 'h1_selective_primed':
                 b0_clauses = b0.get(rid, [])
                 user_text = build_h1_user(user_template, source_text, b0_clauses)
+            else:  # h1_selective_empty (M3): ALWAYS pass empty B0 list (control)
+                user_text = build_h1_user(user_template, source_text, [])
             per_record_prompts.append({'record_id': rid, 'source_text': source_text, 'user_text': user_text})
 
         # We send ONE request that batches all 30 record prompts concatenated.
