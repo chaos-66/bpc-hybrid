@@ -102,9 +102,10 @@ def main():
 
     # Collect per-repeat data
     per_method = {}
+    invalid_repeats = []
     grand_total = {'input_tokens': 0, 'output_tokens': 0, 'total_tokens': 0}
     for method in METHODS:
-        per_method[method] = {'per_repeat': [], 'agg_metrics': {}, 'per_modality': []}
+        per_method[method] = {'per_repeat': [], 'agg_metrics': {}, 'per_modality': [], 'invalid_repeats': []}
         for rid in args.repeats:
             m = collect_per_repeat(runs_root, method, rid)
             tu = collect_token_usage(runs_root, method, rid)
@@ -112,22 +113,31 @@ def main():
             if m is not None:
                 m['token_usage'] = tu
                 m['per_modality'] = pm
-                per_method[method]['per_repeat'].append(m)
+                # Filter out invalid repeats (coverage_ok=False)
+                if not m.get('coverage_ok', False):
+                    per_method[method]['invalid_repeats'].append({'repeat_id': rid, 'reason': 'coverage_not_ok', 'missing': m.get('coverage', {}).get('missing_count', 0)})
+                    invalid_repeats.append({'method': method, 'repeat_id': rid, 'reason': 'coverage_not_ok', 'missing': m.get('coverage', {}).get('missing_count', 0)})
+                else:
+                    per_method[method]['per_repeat'].append(m)
             if tu:
                 grand_total['input_tokens'] += tu.get('input_tokens', 0)
                 grand_total['output_tokens'] += tu.get('output_tokens', 0)
                 grand_total['total_tokens'] += tu.get('total_tokens', 0)
-        # Aggregate over repeats
-        f1s = [m['aggregate']['f1'] for m in per_method[method]['per_repeat']]
-        ps = [m['aggregate']['precision'] for m in per_method[method]['per_repeat']]
-        rs = [m['aggregate']['recall'] for m in per_method[method]['per_repeat']]
-        f2s = [m['aggregate']['f2'] for m in per_method[method]['per_repeat']]
-        per_method[method]['agg_metrics'] = {
-            'f1': t_ci95(f1s),
-            'precision': t_ci95(ps),
-            'recall': t_ci95(rs),
-            'f2': t_ci95(f2s),
-        }
+        # Aggregate over VALID repeats only
+        valid = per_method[method]['per_repeat']
+        if valid:
+            f1s = [m['aggregate']['f1'] for m in valid]
+            ps = [m['aggregate']['precision'] for m in valid]
+            rs = [m['aggregate']['recall'] for m in valid]
+            f2s = [m['aggregate']['f2'] for m in valid]
+            per_method[method]['agg_metrics'] = {
+                'f1': t_ci95(f1s),
+                'precision': t_ci95(ps),
+                'recall': t_ci95(rs),
+                'f2': t_ci95(f2s),
+            }
+        else:
+            per_method[method]['agg_metrics'] = None
 
     # Write run_level_summary.json
     summary = {
@@ -137,6 +147,7 @@ def main():
         'primary_metric': 'micro_f1',
         'methods': per_method,
         'grand_total_token_usage': grand_total,
+        'invalid_repeats': invalid_repeats,
     }
     with open(stats_dir / 'run_level_summary.json', 'w', encoding='utf-8') as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
@@ -149,6 +160,9 @@ def main():
                 ag = m['aggregate']
                 tu = m.get('token_usage') or {}
                 f.write(f"{method},{m['repeat_id']},{ag['tp']},{ag['fp']},{ag['fn']},{ag['precision']},{ag['recall']},{ag['f1']},{ag['f2']},{tu.get('input_tokens', 0)},{tu.get('output_tokens', 0)},{tu.get('total_tokens', 0)},{m.get('coverage_ok', False)},{m.get('parse_failures', 0)},{m.get('invalid_batches', 0)}\n")
+            for inv in per_method[method]['invalid_repeats']:
+                # Add a row marked invalid
+                f.write(f"{method},{inv['repeat_id']},,,,,,,,,,,,INVALID,{inv['reason']}\n")
 
     # Anchoring
     anchoring_summary = {}

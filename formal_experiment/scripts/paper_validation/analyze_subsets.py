@@ -76,13 +76,21 @@ def load_gold(gold_path):
 
 def load_difficulty(path: Path) -> dict[str, str]:
     out = {}
+    # Map Chinese labels from the audit file to the canonical English keys.
+    ZH_TO_EN = {
+        '独立': 'independent',
+        '需上下文核实': 'needs_context',
+        '不独立': 'not_independent',
+    }
     with open(path, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             if not line:
                 continue
             d = json.loads(line)
-            out[d['sample_id']] = d.get('classification')
+            cls = d.get('classification')
+            cls = ZH_TO_EN.get(cls, cls)
+            out[d['sample_id']] = cls
     return out
 
 
@@ -244,7 +252,8 @@ def main():
         for rid in args.repeats:
             pred = load_pred(runs_root, method, rid)
             rep = {'repeat_id': rid, 'tp': 0, 'fp': 0, 'fn': 0, 'precision': 0, 'recall': 0, 'f1': 0}
-            for sid, gc_list in gold.items():
+            for sid, gold_record in gold.items():
+                gc_list = gold_record['gold_clauses']
                 pc = pred.get(sid, [])
                 g_def = [c for c in gc_list if c['modality'] == 'definition']
                 p_def = [c for c in pc if c.get('modality') == 'definition']
@@ -253,8 +262,6 @@ def main():
                 fn = len(g_def) - len(used_g)
                 fp = len(p_def) - len(used_p)
                 rep['tp'] += tp; rep['fp'] += fp; rep['fn'] += fn
-                if g_def and not any(pi in used_p for pi in range(len(p_def)) for pi, gi in pairs if gc_list[gi]['modality']=='definition' and pc[pi]['modality']=='definition'):
-                    pass
                 if g_def and tp == 0:
                     method_data['missing_definition_records'].add(sid)
                 # Confusion: definition predicted as something else

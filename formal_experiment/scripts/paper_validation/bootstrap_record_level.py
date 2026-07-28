@@ -53,8 +53,11 @@ def best_effort_align(predicted, gold, iou_threshold=0.3):
     return pairs, used_p, used_g
 
 
-def metrics_for_records(record_ids, gold_by_sid, pred_by_sid, iou_threshold=0.3):
-    """Compute aggregate micro P/R/F1/F2 over a (possibly repeated) set of records."""
+def metrics_for_records(record_ids, gold_by_sid, pred_by_sid, iou_threshold=0.3, iou_matrix_cache=None):
+    """Compute aggregate micro P/R/F1/F2 over a (possibly repeated) set of records.
+
+    iou_matrix_cache: optional dict sid -> (sorted_pred, sorted_gold, matrix, gold_idx_by_modality, pred_idx_by_modality)
+    """
     tp = fp = fn = 0
     for sid in record_ids:
         gc = gold_by_sid.get(sid, {}).get('gold_clauses', [])
@@ -70,6 +73,88 @@ def metrics_for_records(record_ids, gold_by_sid, pred_by_sid, iou_threshold=0.3)
                 fp += 1; fn += 1
         fn += len(gc) - len(used_g)
         fp += len(pc) - len(used_p)
+    p = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+    r = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+    f1 = 2 * p * r / (p + r) if (p + r) > 0 else 0.0
+    f2 = 5 * p * r / (4 * p + r) if (4 * p + r) > 0 else 0.0
+    return {'p': p, 'r': r, 'f1': f1, 'f2': f2, 'tp': tp, 'fp': fp, 'fn': fn}
+
+
+def precompute_iou_matrices(gold, pred_by_sid, iou_threshold=0.3):
+    """Precompute sorted pred/gold lists and IoU matrix per record.
+
+    Returns dict sid -> {
+        'pred_list': [...],  # sorted by clause_text
+        'gold_list': [...],
+        'iou_matrix': [[...]],  # matrix[pi][gi]
+    }
+    """
+    cache = {}
+    for sid in gold:
+        gc = gold[sid]['gold_clauses']
+        pc = pred_by_sid.get(sid, [])
+        if not gc and not pc:
+            continue
+        # Tokenize
+        pc_tokens = [set((p.get('clause_text', '') or '').lower().split()) for p in pc]
+        gc_tokens = [set((g.get('clause_text', '') or '').lower().split()) for g in gc]
+        # Matrix
+        n_p = len(pc)
+        n_g = len(gc)
+        if n_p == 0 or n_g == 0:
+            cache[sid] = {'pred_list': pc, 'gold_list': gc, 'iou_matrix': [[0.0]*n_g for _ in range(n_p)] if n_p else []}
+            continue
+        matrix = [[0.0]*n_g for _ in range(n_p)]
+        for pi in range(n_p):
+            tp = pc_tokens[pi]
+            for gi in range(n_g):
+                tg = gc_tokens[gi]
+                if not tp or not tg:
+                    continue
+                inter = len(tp & tg)
+                union = len(tp | tg)
+                if union > 0:
+                    matrix[pi][gi] = inter / union
+        cache[sid] = {'pred_list': pc, 'gold_list': gc, 'iou_matrix': matrix}
+    return cache
+
+
+def fast_metrics_for_records(record_ids, gold_cache, iou_threshold=0.3):
+    """Fast metrics using precomputed IoU matrices."""
+    tp = fp = fn = 0
+    for sid in record_ids:
+        c = gold_cache.get(sid)
+        if c is None:
+            continue
+        pc = c['pred_list']
+        gc = c['gold_list']
+        n_p = len(pc)
+        n_g = len(gc)
+        if not gc:
+            fp += n_p
+            continue
+        # Greedy match: build (iou, pi, gi) list and sort
+        scored = []
+        for pi in range(n_p):
+            for gi in range(n_g):
+                iou = c['iou_matrix'][pi][gi]
+                if iou >= iou_threshold:
+                    scored.append((iou, pi, gi))
+        scored.sort(key=lambda x: (-x[0], x[1], x[2]))
+        used_p = set(); used_g = set()
+        pairs = []
+        for iou, pi, gi in scored:
+            if pi in used_p or gi in used_g:
+                continue
+            pairs.append((pi, gi))
+            used_p.add(pi); used_g.add(gi)
+        for pi, gi in pairs:
+            if pc[pi].get('modality') == gc[gi].get('modality'):
+                tp += 1
+            else:
+                fp += 1; fn += 1
+        fn += n_g - len(used_g)
+        fp += n_p - len(used_p)
     p = tp / (tp + fp) if (tp + fp) > 0 else 0.0
     r = tp / (tp + fn) if (tp + fn) > 0 else 0.0
     f1 = 2 * p * r / (p + r) if (p + r) > 0 else 0.0
@@ -158,9 +243,13 @@ def main():
             'methods': {},
             'pairwise': {},
         }
+        # Precompute IoU matrices per method/repeat (one-time cost)
+        caches = {}
+        for m in args.methods:
+            caches[m] = precompute_iou_matrices(gold, preds[m][rid], iou_threshold=args.iou_threshold)
         # Per-method base metrics (no bootstrap, deterministic)
         for m in args.methods:
-            base = metrics_for_records(record_ids, gold, preds[m][rid], iou_threshold=args.iou_threshold)
+            base = fast_metrics_for_records(record_ids, caches[m], iou_threshold=args.iou_threshold)
             rep_summary['methods'][m] = {
                 'base_p': round(base['p'], 4),
                 'base_r': round(base['r'], 4),
@@ -176,8 +265,8 @@ def main():
             for k in range(BOOTSTRAP_REPS):
                 idx = rng.integers(0, len(record_ids), size=len(record_ids))
                 sampled = [record_ids[i] for i in idx]
-                ma = metrics_for_records(sampled, gold, preds[a][rid], iou_threshold=args.iou_threshold)
-                mb = metrics_for_records(sampled, gold, preds[b][rid], iou_threshold=args.iou_threshold)
+                ma = fast_metrics_for_records(sampled, caches[a], iou_threshold=args.iou_threshold)
+                mb = fast_metrics_for_records(sampled, caches[b], iou_threshold=args.iou_threshold)
                 deltas_p[k] = ma['p'] - mb['p']
                 deltas_r[k] = ma['r'] - mb['r']
                 deltas_f1[k] = ma['f1'] - mb['f1']
