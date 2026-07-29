@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "style_equivalent_review.schema.json",
+  "title": "Human style-equivalent review template",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "method_id",
+    "sampling",
+    "allowed_decisions",
+    "human_only",
+    "records"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "style_equivalent_review@1.0.0"},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "method_id": {
+      "enum": ["sun_rule_only", "sun_llm_fallback", "direct_llm"]
+    },
+    "sampling": {
+      "type": "object",
+      "required": ["seed", "requested", "selected", "candidate_payload_sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "seed": {"type": "string", "minLength": 1},
+        "requested": {"type": "integer", "minimum": 1},
+        "selected": {"type": "integer", "minimum": 0},
+        "candidate_payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "allowed_decisions": {
+      "const": [
+        "full_alignment",
+        "style_equivalent_alignment",
+        "partial_misalignment"
+      ]
+    },
+    "human_only": {"const": true},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "sample_id",
+          "clause_id",
+          "field",
+          "gold_text",
+          "predicted_text",
+          "decision",
+          "reviewer",
+          "review_notes",
+          "review_status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "sample_id": {"type": "string", "minLength": 1},
+          "clause_id": {"type": "string", "minLength": 1},
+          "field": {
+            "enum": ["actor", "action", "condition", "constraint", "exception"]
+          },
+          "gold_text": {"type": "string", "minLength": 1},
+          "predicted_text": {"type": "string", "minLength": 1},
+          "decision": {
+            "type": ["string", "null"],
+            "enum": [
+              null,
+              "full_alignment",
+              "style_equivalent_alignment",
+              "partial_misalignment"
+            ]
+          },
+          "reviewer": {"type": ["string", "null"]},
+          "review_notes": {"type": ["string", "null"]},
+          "review_status": {
+            "enum": ["awaiting_human_review", "reviewed", "adjudicated"]
+          }
+        }
+      }
+    }
+  }
+}

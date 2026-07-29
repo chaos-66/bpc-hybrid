@@ -131,14 +131,19 @@ def _run_tests() -> dict[str, object]:
         str(base_temp),
         *TEST_TARGETS,
     ]
+    environment = os.environ.copy()
+    environment["PYTHONUTF8"] = "1"
     try:
         completed = subprocess.run(
             command,
             cwd=PROJECT_ROOT,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             check=False,
+            env=environment,
         )
         return {
             "command": command,
@@ -148,6 +153,12 @@ def _run_tests() -> dict[str, object]:
         }
     finally:
         shutil.rmtree(base_temp, ignore_errors=True)
+
+
+def _console_safe(value: str) -> str:
+    """Keep diagnostic output printable on Windows legacy code pages."""
+    encoding = sys.stdout.encoding or "utf-8"
+    return value.encode(encoding, errors="replace").decode(encoding)
 
 
 def main() -> int:
@@ -195,7 +206,7 @@ def main() -> int:
             print()
             print("Active offline tests")
             print("=" * 40)
-            print(audit["test_result"]["output"].rstrip())
+            print(_console_safe(audit["test_result"]["output"].rstrip()))
 
     if not audit["integrity_pass"]:
         return 1

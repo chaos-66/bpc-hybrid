@@ -1,0 +1,269 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 3,
+  "end_index_exclusive": 8,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000161",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The contributions are deductible only under the following conditions:\n\n— The professional associations and interest groups must, in accordance with their statutes and actual management, be concerned exclusively or predominantly with safeguarding the professional interests of their members.\n\n— The contributions may only be deducted in a reasonable amount as fixed in the statutes.\n\n4. a) Contributions of the insured person to compulsory insurance under the statutory social insurance scheme.\n\nb) Contributions to the supplementary pension insurance schemes operated by the Pension Institute of Linz Electricity, District Heating and Transport Company (Linzer Elektrizitäts-, Fernwärme- und Verkehrsbetriebe AG) and under the Federal Forestry Service Regulations (Bundesforste-Dienstordnung).\n\nc) Compulsory pension (provident fund) contributions of employees of regional authorities and compulsory contributions of employees of public-law corporations to pension institutions, insofar as an obligation to participate in such a pension institution exists under public-law provisions.\n\nd) Contributions based on statutory obligations of those under Section 25(1) point 4 and",
+        "issues": [
+          "The item 4 list lacks its governing introductory text and item d ends after 'and', so the modality and complete scope of items 4(a)–(d) cannot be recovered from this excerpt."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The contributions are deductible only under the following conditions", "start": 0, "end": 68},
+          "modality": {"label": "permission", "evidence": [{"text": "are deductible", "start": 18, "end": 32}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "are deductible", "start": 18, "end": 32, "normalized": "deduct contributions"}],
+          "conditions": [{"id": "c1_condition_1", "text": "only under the following conditions", "start": 33, "end": 68, "normalized": "only if following conditions hold"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "The professional associations and interest groups must, in accordance with their statutes and actual management, be concerned exclusively or predominantly with safeguarding the professional interests of their members.", "start": 73, "end": 290},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 123, "end": 127}]},
+          "actors": [{"id": "c2_actor_1", "text": "The professional associations and interest groups", "start": 73, "end": 122, "normalized": "professional associations and interest groups"}],
+          "actions": [{"id": "c2_action_1", "text": "be concerned exclusively or predominantly with safeguarding the professional interests of their members", "start": 186, "end": 289, "normalized": "safeguard members' professional interests"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "in accordance with their statutes and actual management", "start": 129, "end": 184, "normalized": "under statutes and actual management"},
+            {"id": "c2_constraint_2", "text": "exclusively or predominantly", "start": 199, "end": 227, "normalized": "exclusively or predominantly"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c2_actor_1", "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "The contributions may only be deducted in a reasonable amount as fixed in the statutes.", "start": 294, "end": 381},
+          "modality": {"label": "permission", "evidence": [{"text": "may only", "start": 312, "end": 320}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "be deducted", "start": 321, "end": 332, "normalized": "deduct contributions"}],
+          "conditions": [],
+          "constraints": [{"id": "c3_constraint_1", "text": "in a reasonable amount as fixed in the statutes", "start": 333, "end": 380, "normalized": "reasonable amount fixed by statutes"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The governing text for the numbered item 4 list is absent and the final item is truncated, preventing reliable assignment of modality and scope to items 4(a)–(d)."},
+        {"field": "action", "reason": "Items 4(a)–(d) are noun phrases without an explicit governing action in the supplied excerpt; no action is invented for them."},
+        {"field": "modality", "reason": "Items 4(a)–(d) cannot be classified independently because their governing provision is missing."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The three explicit normative clauses cover deductibility, the associations' duty, and the amount-limited deduction. The disconnected and truncated item 4 list is preserved in the accepted translation but not assigned invented rules."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000206",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If these expenses in total — are lower than the relevant maximum amount, half of the expenses shall be deducted as special expenses — are equal to or higher than the relevant maximum amount, half of the maximum amount shall be deducted as special expenses. b) If the taxpayer has claimed the increased amount for a child for special expenses within the meaning of paragraph 1 items 2 to 4, with the exception of contributions for voluntary continued insurance in the statutory pension insurance and comparable contributions to pension and support institutions of the chambers of self-employed persons, the spouse shall not be entitled to an increased amount for that child.",
+        "issues": [
+          "The antecedent of 'these expenses', the applicable maximum amount, and the content of paragraph 1 items 2 to 4 are not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If these expenses in total — are lower than the relevant maximum amount, half of the expenses shall be deducted as special expenses", "start": 0, "end": 131},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be deducted", "start": 94, "end": 111}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "shall be deducted", "start": 94, "end": 111, "normalized": "deduct half of expenses"}],
+          "conditions": [{"id": "c1_condition_1", "text": "are lower than the relevant maximum amount", "start": 29, "end": 71, "normalized": "total expenses below applicable maximum"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "half of the expenses", "start": 73, "end": 93, "normalized": "one half of expenses"},
+            {"id": "c1_constraint_2", "text": "as special expenses", "start": 112, "end": 131, "normalized": "as special expenses"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "are equal to or higher than the relevant maximum amount, half of the maximum amount shall be deducted as special expenses", "start": 134, "end": 255},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be deducted", "start": 218, "end": 235}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "shall be deducted", "start": 218, "end": 235, "normalized": "deduct half of maximum amount"}],
+          "conditions": [{"id": "c2_condition_1", "text": "are equal to or higher than the relevant maximum amount", "start": 134, "end": 189, "normalized": "total expenses at or above applicable maximum"}],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "half of the maximum amount", "start": 191, "end": 217, "normalized": "one half of maximum amount"},
+            {"id": "c2_constraint_2", "text": "as special expenses", "start": 236, "end": 255, "normalized": "as special expenses"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "If the taxpayer has claimed the increased amount for a child for special expenses within the meaning of paragraph 1 items 2 to 4, with the exception of contributions for voluntary continued insurance in the statutory pension insurance and comparable contributions to pension and support institutions of the chambers of self-employed persons, the spouse shall not be entitled to an increased amount for that child", "start": 260, "end": 672},
+          "modality": {"label": "prohibition", "evidence": [{"text": "shall not", "start": 613, "end": 622}]},
+          "actors": [
+            {"id": "c3_actor_1", "text": "the taxpayer", "start": 263, "end": 275, "normalized": "taxpayer"},
+            {"id": "c3_actor_2", "text": "the spouse", "start": 602, "end": 612, "normalized": "spouse"}
+          ],
+          "actions": [{"id": "c3_action_1", "text": "be entitled to an increased amount for that child", "start": 623, "end": 672, "normalized": "receive increased amount for child"}],
+          "conditions": [{"id": "c3_condition_1", "text": "If the taxpayer has claimed the increased amount for a child for special expenses", "start": 260, "end": 341, "normalized": "taxpayer claimed child increase for special expenses"}],
+          "constraints": [{"id": "c3_constraint_1", "text": "within the meaning of paragraph 1 items 2 to 4", "start": 342, "end": 388, "normalized": "special expenses under paragraph 1 items 2 to 4"}],
+          "exceptions": [{"id": "c3_exception_1", "text": "with the exception of contributions for voluntary continued insurance in the statutory pension insurance and comparable contributions to pension and support institutions of the chambers of self-employed persons", "start": 390, "end": 600, "normalized": "exclude specified voluntary continued-insurance and comparable contributions"}],
+          "actor_action_map": [{"actor_id": "c3_actor_2", "action_id": "c3_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The referent of 'these expenses', the applicable maximum amount, and the cross-referenced categories in paragraph 1 items 2 to 4 are outside the supplied excerpt."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The two alternative deduction calculations and the spouse-entitlement prohibition are separated so each modality and condition has a precise scope. Missing antecedents and cross-reference content remain unresolved."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000816",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(6) Taxpayers who are required to keep books under commercial law provisions, and bookkeeping taxpayers engaged in agriculture and forestry, may have a business year that deviates from the calendar year; in such case, the profit shall be taken into account when determining income for the calendar year in which the business year ends.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Taxpayers who are required to keep books under commercial law provisions, and bookkeeping taxpayers engaged in agriculture and forestry, may have a business year that deviates from the calendar year", "start": 4, "end": 202},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 141, "end": 144}]},
+          "actors": [
+            {"id": "c1_actor_1", "text": "Taxpayers who are required to keep books under commercial law provisions", "start": 4, "end": 76, "normalized": "taxpayers required to keep books under commercial law"},
+            {"id": "c1_actor_2", "text": "bookkeeping taxpayers engaged in agriculture and forestry", "start": 82, "end": 139, "normalized": "bookkeeping agricultural and forestry taxpayers"}
+          ],
+          "actions": [{"id": "c1_action_1", "text": "have a business year that deviates from the calendar year", "start": 145, "end": 202, "normalized": "use non-calendar business year"}],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": "c1_actor_1", "action_id": "c1_action_1"},
+            {"actor_id": "c1_actor_2", "action_id": "c1_action_1"}
+          ],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "in such case, the profit shall be taken into account when determining income for the calendar year in which the business year ends", "start": 204, "end": 334},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 229, "end": 234}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be taken into account", "start": 235, "end": 256, "normalized": "take profit into account"}],
+          "conditions": [{"id": "c2_condition_1", "text": "in such case", "start": 204, "end": 216, "normalized": "if non-calendar business year is used"}],
+          "constraints": [{"id": "c2_constraint_1", "text": "when determining income for the calendar year in which the business year ends", "start": 257, "end": 334, "normalized": "for calendar year in which business year ends"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The provision expressly grants two taxpayer groups permission to use a non-calendar business year and separately requires allocation of profit to the calendar year in which that business year ends."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000002",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Bookkeeping farmers and foresters and registered traders (Section 5) may, however, have a business year deviating from the calendar year; in this case, the profit shall be taken into account in determining the income for that calendar year in which the business year ends.",
+        "issues": [
+          "The contrast signaled by 'however' and the content of Section 5 are not included in the excerpt."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Bookkeeping farmers and foresters and registered traders (Section 5) may, however, have a business year deviating from the calendar year", "start": 0, "end": 136},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 69, "end": 72}]},
+          "actors": [
+            {"id": "c1_actor_1", "text": "Bookkeeping farmers and foresters", "start": 0, "end": 33, "normalized": "bookkeeping farmers and foresters"},
+            {"id": "c1_actor_2", "text": "registered traders (Section 5)", "start": 38, "end": 68, "normalized": "registered traders under Section 5"}
+          ],
+          "actions": [{"id": "c1_action_1", "text": "have a business year deviating from the calendar year", "start": 83, "end": 136, "normalized": "use non-calendar business year"}],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": "c1_actor_1", "action_id": "c1_action_1"},
+            {"actor_id": "c1_actor_2", "action_id": "c1_action_1"}
+          ],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "in this case, the profit shall be taken into account in determining the income for that calendar year in which the business year ends", "start": 138, "end": 271},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 163, "end": 168}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be taken into account", "start": 169, "end": 190, "normalized": "take profit into account"}],
+          "conditions": [{"id": "c2_condition_1", "text": "in this case", "start": 138, "end": 150, "normalized": "if non-calendar business year is used"}],
+          "constraints": [{"id": "c2_constraint_1", "text": "in determining the income for that calendar year in which the business year ends", "start": 191, "end": 271, "normalized": "for calendar year in which business year ends"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The preceding rule contrasted by 'however' and the content of Section 5 are not supplied, although the two visible normative clauses remain extractable."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The permission and its consequent profit-allocation obligation are separated. The registered-trader cross-reference and omitted contrast are left unresolved."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000028",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The income shall be taxed at the tax rate that results when taking into account the converted income; however, the tax to be assessed may not be higher than that which would result from the taxation of all emoluments.",
+        "issues": [
+          "The bases for 'converted income' and 'all emoluments' are not defined in the supplied excerpt."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The income shall be taxed at the tax rate that results when taking into account the converted income", "start": 0, "end": 100},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 11, "end": 16}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be taxed", "start": 17, "end": 25, "normalized": "tax income"}],
+          "conditions": [{"id": "c1_condition_1", "text": "when taking into account the converted income", "start": 55, "end": 100, "normalized": "taking converted income into account"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "at the tax rate that results when taking into account the converted income", "start": 26, "end": 100, "normalized": "rate derived from converted income"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "however, the tax to be assessed may not be higher than that which would result from the taxation of all emoluments", "start": 102, "end": 216},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 134, "end": 141}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be higher than that which would result from the taxation of all emoluments", "start": 142, "end": 216, "normalized": "exceed tax on all emoluments"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "than that which would result from the taxation of all emoluments", "start": 152, "end": 216, "normalized": "tax resulting from all emoluments"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The excerpt does not define the converted-income calculation or the set of emoluments used for the tax ceiling."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The tax-rate obligation and the separate tax-ceiling prohibition are both explicit and are extracted independently; undefined calculation inputs are not supplied from outside context."
+    }
+  ]
+}

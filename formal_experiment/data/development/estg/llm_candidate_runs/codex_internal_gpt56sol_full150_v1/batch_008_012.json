@@ -1,0 +1,292 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 8,
+  "end_index_exclusive": 13,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000046",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The certificate is not required if the invention is already protected by patent law. — The research allowance generally amounts to up to 12% of research expenditures. — An increased research allowance of up to 18% may be claimed if the inventions are not made available to other persons for substantial exploitation.",
+        "issues": [
+          "The preceding provision that identifies the certificate and its ordinary requirement is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The certificate is not required if the invention is already protected by patent law.", "start": 0, "end": 84},
+          "modality": {"label": "permission", "evidence": [{"text": "not required", "start": 19, "end": 31}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "is not required", "start": 16, "end": 31, "normalized": "waive certificate requirement"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the invention is already protected by patent law", "start": 32, "end": 83, "normalized": "invention already patent-protected"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "The research allowance generally amounts to up to 12% of research expenditures.", "start": 87, "end": 166},
+          "modality": {"label": "definition", "evidence": [{"text": "amounts to", "start": 120, "end": 130}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "amounts to", "start": 120, "end": 130, "normalized": "set research allowance amount"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "generally", "start": 110, "end": 119, "normalized": "general rule"},
+            {"id": "c2_constraint_2", "text": "up to 12% of research expenditures", "start": 131, "end": 165, "normalized": "maximum 12 percent of research expenditures"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "An increased research allowance of up to 18% may be claimed if the inventions are not made available to other persons for substantial exploitation.", "start": 169, "end": 316},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 214, "end": 217}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "be claimed", "start": 218, "end": 228, "normalized": "claim increased research allowance"}],
+          "conditions": [{"id": "c3_condition_1", "text": "if the inventions are not made available to other persons for substantial exploitation", "start": 229, "end": 315, "normalized": "inventions not made available to others for substantial exploitation"}],
+          "constraints": [{"id": "c3_constraint_1", "text": "up to 18%", "start": 204, "end": 213, "normalized": "maximum 18 percent"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The excerpt does not identify the certificate's ordinary statutory role, so only the visible patent-protection exemption can be extracted."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Three separate normative units are visible: a conditional certificate exemption, the general 12% allowance definition, and a conditional permission to claim an increased allowance up to 18%. No claimant is explicit in the passive third clause."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000056",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(7) For buildings that form part of the fixed assets and are let for consideration for residential purposes to persons who are not employees of the enterprise, the following shall apply with regard to repair expenses:\n— Repair expenses that are incurred using correspondingly earmarked tax-free subsidies from public funds (Section 3(1) item 3, Section 3(1) item 5 subitems d and e, Section 3(1) item 6) shall, to that extent, be excluded from the profit determination.\n— If, after offsetting the losses within the meaning of Section 11(1) item 3 determined without taking into account the repair expenses, tax-free reserves under Section 11 still exist, the repair expenses not covered by tax-free subsidies shall be offset against these tax-free reserves.\n— Those repair expenses that were not covered by tax-free subsidies and were not to be offset against tax-free reserves shall be deducted in equal installments over ten years.",
+        "issues": [
+          "The substantive content of the cited Section 3 and Section 11 provisions is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(7) For buildings that form part of the fixed assets and are let for consideration for residential purposes to persons who are not employees of the enterprise, the following shall apply with regard to repair expenses:", "start": 0, "end": 217},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall apply", "start": 174, "end": 185}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "apply", "start": 180, "end": 185, "normalized": "apply following repair-expense rules"}],
+          "conditions": [{"id": "c1_condition_1", "text": "For buildings that form part of the fixed assets and are let for consideration for residential purposes to persons who are not employees of the enterprise", "start": 4, "end": 158, "normalized": "fixed-asset buildings let for consideration as housing to non-employees"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "with regard to repair expenses", "start": 186, "end": 216, "normalized": "repair expenses"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "Repair expenses that are incurred using correspondingly earmarked tax-free subsidies from public funds (Section 3(1) item 3, Section 3(1) item 5 subitems d and e, Section 3(1) item 6) shall, to that extent, be excluded from the profit determination.", "start": 220, "end": 469},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 404, "end": 409}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be excluded from the profit determination", "start": 427, "end": 468, "normalized": "exclude repair expenses from profit determination"}],
+          "conditions": [{"id": "c2_condition_1", "text": "that are incurred using correspondingly earmarked tax-free subsidies from public funds (Section 3(1) item 3, Section 3(1) item 5 subitems d and e, Section 3(1) item 6)", "start": 236, "end": 403, "normalized": "repair expenses funded by earmarked tax-free public subsidies"}],
+          "constraints": [{"id": "c2_constraint_1", "text": "to that extent", "start": 411, "end": 425, "normalized": "to the subsidized extent"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "If, after offsetting the losses within the meaning of Section 11(1) item 3 determined without taking into account the repair expenses, tax-free reserves under Section 11 still exist, the repair expenses not covered by tax-free subsidies shall be offset against these tax-free reserves.", "start": 472, "end": 757},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be offset", "start": 709, "end": 724}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "be offset", "start": 715, "end": 724, "normalized": "offset repair expenses"}],
+          "conditions": [
+            {"id": "c3_condition_1", "text": "If, after offsetting the losses within the meaning of Section 11(1) item 3 determined without taking into account the repair expenses, tax-free reserves under Section 11 still exist", "start": 472, "end": 653, "normalized": "tax-free Section 11 reserves remain after specified loss offset"},
+            {"id": "c3_condition_2", "text": "the repair expenses not covered by tax-free subsidies", "start": 655, "end": 708, "normalized": "repair expenses not covered by tax-free subsidies"}
+          ],
+          "constraints": [{"id": "c3_constraint_1", "text": "against these tax-free reserves", "start": 725, "end": 756, "normalized": "against remaining tax-free reserves"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c4",
+          "clause_span": {"text": "Those repair expenses that were not covered by tax-free subsidies and were not to be offset against tax-free reserves shall be deducted in equal installments over ten years.", "start": 760, "end": 933},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be deducted", "start": 878, "end": 895}]},
+          "actors": [],
+          "actions": [{"id": "c4_action_1", "text": "be deducted", "start": 884, "end": 895, "normalized": "deduct repair expenses"}],
+          "conditions": [{"id": "c4_condition_1", "text": "that were not covered by tax-free subsidies and were not to be offset against tax-free reserves", "start": 782, "end": 877, "normalized": "repair expenses neither subsidy-covered nor offset against reserves"}],
+          "constraints": [{"id": "c4_constraint_1", "text": "in equal installments over ten years", "start": 896, "end": 932, "normalized": "equally over ten years"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c4_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The cited Section 3 subsidy categories and Section 11 reserve and loss rules are unavailable, so their internal scope is not expanded beyond the excerpt."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The applicability heading and all three operative bullets are represented separately. The sequence distinguishes subsidy-funded exclusion, mandatory reserve offset when reserves remain, and ten-year deduction of the residual expenses; no unstated taxpayer or accounting actor is inferred."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000059",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(9) Contributions for voluntary membership in professional and trade associations shall be deductible only under the following conditions:  \n— The professional and trade associations must, according to their statutes and actual management, be exclusively or predominantly concerned with representing the business and professional interests of their members.  \n— The contributions may be deducted only in an appropriate amount as stipulated in the statutes.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(9) Contributions for voluntary membership in professional and trade associations shall be deductible only under the following conditions:", "start": 0, "end": 138},
+          "modality": {"label": "permission", "evidence": [{"text": "shall be deductible", "start": 82, "end": 101}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deductible", "start": 88, "end": 101, "normalized": "deduct membership contributions"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "only under the following conditions", "start": 102, "end": 137, "normalized": "only if listed conditions hold"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "The professional and trade associations must, according to their statutes and actual management, be exclusively or predominantly concerned with representing the business and professional interests of their members.", "start": 143, "end": 357},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 183, "end": 187}]},
+          "actors": [{"id": "c2_actor_1", "text": "The professional and trade associations", "start": 143, "end": 182, "normalized": "professional and trade associations"}],
+          "actions": [{"id": "c2_action_1", "text": "concerned with representing the business and professional interests of their members", "start": 272, "end": 356, "normalized": "represent members' business and professional interests"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "according to their statutes and actual management", "start": 189, "end": 238, "normalized": "under statutes and actual management"},
+            {"id": "c2_constraint_2", "text": "exclusively or predominantly", "start": 243, "end": 271, "normalized": "exclusively or predominantly"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c2_actor_1", "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "The contributions may be deducted only in an appropriate amount as stipulated in the statutes.", "start": 362, "end": 456},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 380, "end": 383}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "be deducted", "start": 384, "end": 395, "normalized": "deduct contributions"}],
+          "conditions": [],
+          "constraints": [{"id": "c3_constraint_1", "text": "only in an appropriate amount as stipulated in the statutes", "start": 396, "end": 455, "normalized": "appropriate amount fixed by statutes"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The eligibility statement and its two express conditions are represented as three linked normative units: conditional deductibility, the associations' required purpose, and the statutory appropriate-amount ceiling. Contributions are not treated as actors."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000173",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If a building was acquired or produced more than ten years ago or any other asset was acquired or produced more than one year ago, the higher fair market value may be used.\ne) For buildings that serve to generate income from letting and leasing, an annual depreciation allowance of 1.5% of the basis of assessment (subparagraphs a to d) may be claimed without proof of the useful life.\n9.",
+        "issues": [
+          "Subparagraphs a to d and the provision beginning at item 9 are not supplied, so the assessment-basis cross-reference and surrounding enumeration cannot be checked."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If a building was acquired or produced more than ten years ago or any other asset was acquired or produced more than one year ago, the higher fair market value may be used.", "start": 0, "end": 172},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 160, "end": 163}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be used", "start": 164, "end": 171, "normalized": "use higher fair market value"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If a building was acquired or produced more than ten years ago or any other asset was acquired or produced more than one year ago", "start": 0, "end": 129, "normalized": "building older than ten years or other asset older than one year"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "the higher fair market value", "start": 131, "end": 159, "normalized": "higher fair market value"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "e) For buildings that serve to generate income from letting and leasing, an annual depreciation allowance of 1.5% of the basis of assessment (subparagraphs a to d) may be claimed without proof of the useful life.", "start": 173, "end": 385},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 337, "end": 340}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be claimed", "start": 341, "end": 351, "normalized": "claim depreciation allowance"}],
+          "conditions": [{"id": "c2_condition_1", "text": "For buildings that serve to generate income from letting and leasing", "start": 176, "end": 244, "normalized": "buildings used to generate letting and leasing income"}],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "an annual depreciation allowance of 1.5% of the basis of assessment (subparagraphs a to d)", "start": 246, "end": 336, "normalized": "annual allowance of 1.5 percent of referenced assessment basis"},
+            {"id": "c2_constraint_2", "text": "without proof of the useful life", "start": 352, "end": 384, "normalized": "without useful-life proof"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The referenced subparagraphs a to d that define the assessment basis are missing, and the trailing '9.' begins an unavailable following provision."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Two permissions are explicit and separately extracted: use of the higher fair market value under age thresholds, and the 1.5% annual depreciation allowance for rental buildings without useful-life proof. The legacy draft omitted the second permission and inferred a taxpayer not present in the excerpt."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000207",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "A child for whom the additional amount has been claimed may not claim such special expenses itself; if the child has claimed such special expenses itself, the additional amount may not be claimed for that child. 3. a) To the extent that amounts have been recognized as special expenses under subsection 1 item 3, they may not be taken into account again as special expenses on another legal basis.",
+        "issues": [
+          "The preceding definition of the additional amount and the content of subsection 1 item 3 are not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "A child for whom the additional amount has been claimed may not claim such special expenses itself", "start": 0, "end": 98},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 56, "end": 63}]},
+          "actors": [{"id": "c1_actor_1", "text": "A child", "start": 0, "end": 7, "normalized": "child"}],
+          "actions": [{"id": "c1_action_1", "text": "claim such special expenses itself", "start": 64, "end": 98, "normalized": "claim such special expenses"}],
+          "conditions": [{"id": "c1_condition_1", "text": "for whom the additional amount has been claimed", "start": 8, "end": 55, "normalized": "additional amount claimed for child"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "if the child has claimed such special expenses itself, the additional amount may not be claimed for that child", "start": 100, "end": 210},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 177, "end": 184}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be claimed", "start": 185, "end": 195, "normalized": "claim additional amount"}],
+          "conditions": [{"id": "c2_condition_1", "text": "if the child has claimed such special expenses itself", "start": 100, "end": 153, "normalized": "child claimed such special expenses"}],
+          "constraints": [{"id": "c2_constraint_1", "text": "for that child", "start": 196, "end": 210, "normalized": "for the same child"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "To the extent that amounts have been recognized as special expenses under subsection 1 item 3, they may not be taken into account again as special expenses on another legal basis.", "start": 218, "end": 397},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 318, "end": 325}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "be taken into account again", "start": 326, "end": 353, "normalized": "count amounts again"}],
+          "conditions": [{"id": "c3_condition_1", "text": "To the extent that amounts have been recognized as special expenses under subsection 1 item 3", "start": 218, "end": 311, "normalized": "amounts recognized under subsection 1 item 3"}],
+          "constraints": [{"id": "c3_constraint_1", "text": "as special expenses on another legal basis", "start": 354, "end": 396, "normalized": "as special expenses under another legal basis"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The nature of the additional amount and the referenced subsection 1 item 3 category are unavailable, so neither is expanded beyond the supplied wording."},
+        {"field": "actor", "reason": "The claimants responsible for the passive prohibitions in clauses c2 and c3 are not explicit and are not inferred."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Three prohibitions are explicit: the child's own claim after an additional amount was claimed for it, the reciprocal bar on the additional amount after the child's claim, and the bar on counting recognized amounts again under another legal basis. Only the first clause has an explicit acting child."
+    }
+  ]
+}

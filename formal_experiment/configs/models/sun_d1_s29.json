@@ -1,0 +1,135 @@
+{
+  "schema_version": "sun_d1_s29@1.1.0",
+  "task_id": "S2.9",
+  "method_id": "direct_llm",
+  "status": "preregistered_locked_offline_dry_run",
+  "input_boundary": {
+    "same_future_frozen_input_as_b0_h1": true,
+    "allowed_data_roles": ["synthetic", "development_input", "formal_input"],
+    "forbidden_path_tokens": ["gold", "human_review"],
+    "forbidden_row_keys": [
+      "gold",
+      "gold_label",
+      "gold_spans",
+      "reference_answer",
+      "b0_prediction",
+      "h1_prediction",
+      "test_metrics"
+    ],
+    "rule_front_end_used": false,
+    "gold_visible_to_method": false
+  },
+  "prompt": {
+    "name": "direct_llm_sun_record_prompt",
+    "path": "prompts/sun_compat/direct_llm_sun_record_prompt.md",
+    "sha256": "79f6f76fc9779abb87fc919e4384386ac812d40fcedaf73df0ea8ea1377af62e",
+    "version": 5,
+    "few_shot_count": 4,
+    "few_shot_insertion": "render_all_parsed_examples_into_few_shot_block",
+    "actual_request_hash_required": true
+  },
+  "extraction_contract": {
+    "contract_id": "stage2_extraction_contract@1.0.0",
+    "path": "configs/stage2_extraction_contract_v1.json",
+    "sha256": "7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46",
+    "input_policy": "target_text_only",
+    "method_visibility": "no_gold_no_b0_no_h1_no_external_legal_context"
+  },
+  "canonical_contract": {
+    "schema_source": "stage2_prediction.schema.json@1.0.0",
+    "schema": {
+      "path": "configs/schemas/stage2_prediction.schema.json",
+      "sha256": "7485ac4a3a42b976d87e63a7d2ead88cc3df1f810b14dd066bc1f63c15599d1b"
+    },
+    "method_name": "direct_llm",
+    "invalid_non_json_or_identity_mismatch": "retain_as_schema_invalid_attempt",
+    "api_error": "retain_as_null_record_attempt",
+    "missing_or_invalid_attempts_may_not_be_dropped": true
+  },
+  "model": {
+    "provider": "openai_compatible",
+    "api_family": "chat_completions",
+    "exact_model_id": "gpt-4.1-2025-04-14",
+    "pin_type": "dated_snapshot",
+    "official_model_source": "https://developers.openai.com/api/docs/models/gpt-4.1",
+    "official_release_and_price_source": "https://openai.com/index/gpt-4-1/",
+    "selection_rationale": "Pinned non-reasoning snapshot with strong instruction following and explicit temperature control; selected before formal predictions and independent of Gold.",
+    "real_api_authorized": false
+  },
+  "sampling": {
+    "temperature": 0,
+    "top_p": 1,
+    "seed": null,
+    "seed_policy": "unsupported_or_omitted",
+    "max_output_tokens": 4096,
+    "response_format": "json_object",
+    "max_retries": 0
+  },
+  "stability": {
+    "repeat_count": 5,
+    "primary_repeat_index": 1,
+    "independent_requests": true,
+    "request_order": "repeat_major_then_input_order",
+    "each_repeat_evaluated_as_exact_membership_batch": true,
+    "primary_metrics_use_repeat_index": 1,
+    "remaining_repeats_use": "field_span_and_canonical_json_agreement_only"
+  },
+  "budget": {
+    "target_dataset_size": 150,
+    "repeat_count": 5,
+    "absolute_max_calls": 750,
+    "max_requests_per_sample_per_repeat": 1,
+    "max_retries": 0,
+    "input_token_ceiling_per_request": 8192,
+    "output_token_ceiling_per_request": 4096,
+    "total_input_token_ceiling": 6144000,
+    "total_output_token_ceiling": 3072000,
+    "total_token_ceiling": 9216000,
+    "price_snapshot_usd_per_million": {
+      "input": 2.0,
+      "output": 8.0,
+      "cached_input_discount_assumed": false
+    },
+    "estimated_worst_case_cost_usd": 36.864,
+    "hard_cost_ceiling_usd": 37.0,
+    "real_api_authorized": false
+  },
+  "evaluator_binding": {
+    "task_id": "S2.10-E",
+    "config": {
+      "path": "configs/stage2_evaluator_s210.json",
+      "sha256": "2b6f7bd4269e475dc4b7bb0561a767a70baba49965c16c7f6b34b8a455badc16"
+    },
+    "report_schema": {
+      "path": "configs/schemas/stage2_evaluation_report.schema.json",
+      "sha256": "9906dce85eaf72995e2a3381eed0e33a0c32f5cbf75d35425f7b97c50ea79c5a"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s210_stage2_evaluator_contract_synthetic_v2.manifest.json",
+      "sha256": "58d65b256225942593b853b0b5f1777de56caca4b9059a28d128e001a933f89b"
+    },
+    "primary_repeat_only_for_main_metrics": true,
+    "failed_and_invalid_requests_stay_in_denominator": true
+  },
+  "verification": {
+    "mode": "synthetic_inputs_plus_deterministic_mock_responses",
+    "fixture_is_gold": false,
+    "fixture_is_performance_evaluation": false,
+    "expected_input_count": 3,
+    "expected_request_count": 15,
+    "expected_few_shot_count_in_every_request": 4,
+    "expected_primary_valid_count": 1,
+    "expected_primary_schema_invalid_count": 1,
+    "expected_primary_api_error_count": 1
+  },
+  "safety": {
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "env_file_read": false,
+    "test_split_read_or_evaluated": false,
+    "formal_predictions_written": false,
+    "no_overwrite": true
+  },
+  "claim_boundary": "S2.9 freezes D1 input isolation, Stage 2 extraction-contract v1 semantics, prompt/few-shot rendering, dated model snapshot, deterministic sampling, five-run stability design, budget, and failure-preserving attempt envelopes on synthetic evidence. It is not a real API run, an LLM quality test, a pilot performance result, or a formal performance result."
+}

@@ -1,8 +1,11 @@
-# EStG-150 真实 LLM 调用预算与授权提案（2026-07-14 修订，第三次迭代）
+# EStG-150 真实 LLM 调用预算与授权提案（2026-07-18 修订，第四次迭代）
 
-> **状态（截至 2026-07-14）**:本任务**不**调用任何真实 LLM/API;**不**读取
-> `.env`;**不**修改 Layer A/B/C/E;**不**写第二套 150;**不**覆盖 v1
-> placeholder。真实调用必须由用户单独授权;授权句见 §6。
+> **状态（截至 2026-07-18）**:用户已指定并授权 DeepSeek
+> `deepseek-v4-flash`。正式 run 使用 `thinking=disabled` 完成150/150中文辅助和
+> 150/150盲回译，严格 validator 25/25通过并已原子激活 Layer D v2。全过程
+> **未**读取 `.env`，Layer A/B/C 未修改，v1 placeholder 保留；Layer E 仅为
+> 生成前字节锁临时恢复，并在激活后通过审核工具 service 原样恢复用户已有的
+> 第1条英文接受决定。失败 pilot 与正式 run 分目录保留 provenance。
 >
 > 详见 `docs/ROUTE_LOCK.md` §3 与 `formal_experiment/AGENTS.md`
 > 的 "EStG-150 5-layer data model"。
@@ -24,8 +27,8 @@
 `max-calls=300` 是**单 run** 的硬上限；一次 runner 进程就够 150 条。
 
 **关键**:pilot 和 full 必须使用**同一 `--run-id`**。runner 第一次创建
-`<run_dir>/run_config.json` 时锁定 13 个字段(provider / model / base_url /
-base_url_sha256 / temperature / max_tokens / membership_payload_sha256 /
+`<run_dir>/run_config.json` 时锁定 14 个字段(provider / model / base_url /
+base_url_sha256 / temperature / max_tokens / thinking_mode / membership_payload_sha256 /
 layer_a_sha256 / layer_b_sha256 / layer_c_sha256 / prompt_a_sha256 /
 prompt_b_sha256 / layer_e_sha256);
 恢复时逐项比较,任一不一致直接拒绝。**Layer E SHA-256 是字节级锁**,
@@ -117,6 +120,30 @@ prompt_b_sha256 / layer_e_sha256);
 **本次 EStG-150 仅使用其中之一**;**不可同时跑两个 provider**。授权句见
 §6。
 
+### 本次用户选定：DeepSeek V4 Flash（2026-07-18）
+
+| 字段 | 锁定值 |
+|---|---|
+| Provider 官方名称 | 深度求索（DeepSeek） |
+| runner provider ID | `openai_compatible` |
+| 精确 model ID | `deepseek-v4-flash` |
+| 官方 base URL | `https://api.deepseek.com` |
+| API 协议 | OpenAI-compatible `/chat/completions` |
+| thinking mode | `disabled`（显式请求并锁入 `run_config.json`） |
+| temperature | `0` |
+| max_tokens | `2048` |
+| 官方输入价（cache miss） | `$0.14 / 1M tokens` |
+| 官方输出价 | `$0.28 / 1M tokens` |
+| 调用硬上限 | 300（150 条 × 2 calls） |
+| 费用硬预算 | `$1.00` |
+| 价格核验日期 | 2026-07-18 |
+| 官方来源 | https://api-docs.deepseek.com/quick_start/pricing |
+
+2026-07-18 的首个 3 条 pilot 使用 provider 默认思考模式，出现 1 条
+`content=""`（推理消耗输出预算但没有最终 JSON）；该 run 作为失败 provenance
+保留，不得 promotion。正式候选 run 必须使用新的 `run_id` 和
+`--thinking-mode disabled`，不得与失败 pilot 混合或续跑。
+
 ## 4. API key 安全(已实现)
 
 - 禁止 `--api-key <value>`(暴露在 shell 历史 / argv) — 已删除
@@ -138,8 +165,8 @@ R2. **硬调用上限**:`--max-calls N` 是单进程硬上限;150 条 × 2 call 
 R3. **具体 model** + **provider**:`--model <concrete>` 必填且**非** `annotation-only-default`;`--provider openai_compatible` 必填
 R4. **样本范围 / manifest**:必填 `--start-index N --end-index M` 或 `--sample-manifest <path>`
 R5. **pilot**:`--pilot N` 只跑前 N 条;同一 `--run-id` 后续用 `[0, 150)` 继续
-R6. **同 run_id 续跑**:`<run_dir>/run_config.json` 锁定 13 个字段(包括 layer_e_sha256 字节级锁);**resume 逐项比较,任一不一致直接拒绝**
-R7. **chunk + resume**:从 `manifest.jsonl` 跳过 status=ok 的 sample
+R6. **同 run_id 续跑**:`<run_dir>/run_config.json` 锁定 14 个字段(包括 thinking_mode 与 layer_e_sha256 字节级锁);**resume 逐项比较,任一不一致直接拒绝**
+R7. **chunk + resume**:从 `manifest.jsonl` 跳过 status=ok 的 sample；补跑成功行追加后，runner 原子重排 `layer_d_v2.jsonl` 为 Layer A 顺序，拒绝重复 sample_id
 R8. **失败重试 3 次**指数退避
 R9. **输出只写** `data/development/estg/llm_candidate_runs/<run_id>/`;**禁止** data/input, data/gold, data/predictions, data/results, outputs/reports
 R10. **Layer A/B/C/E 完全不动**
@@ -148,6 +175,7 @@ R12. **Call B 盲回译**:runtime assertion 拒绝在 Call B payload 出现德�
 R13. **无并发 / 无重试 > 3**
 R14. **OpenAI-compatible 唯一**:Anthropic / Bedrock / Vertex 暂不实现
 R15. **base_url 安全**:HTTPS only(localhost 例外需 `--allow-insecure-localhost`);拒绝 userinfo / fragment;base_url 锁入 run_config.json
+R16. **thinking mode 可复现**:`provider_default|enabled|disabled` 显式入参并锁入 run_config；仅在非默认值时向兼容接口发送 `thinking.type`
 
 ## 5. 授权命令模板(Stage B,用户口头授权后)
 
@@ -301,4 +329,3 @@ python formal_experiment/scripts/record_change.py `
 | GUI 工具对 Layer D | 顶部 banner + 「重新加载中文辅助」按钮(走严格 validator) |
 | 数据流向 | 仅写 `data/development/estg/llm_candidate_runs/<run_id>/` |
 | Event 26 | **待写**(Stage A 收尾) |
-

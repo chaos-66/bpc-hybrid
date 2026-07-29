@@ -1,0 +1,365 @@
+{
+  "schema_version": "stage1_label_semantics_verification_manifest@1.0.0",
+  "run_id": "s13_stage1_label_semantics_synthetic_v1",
+  "task_ids": [
+    "S1.3"
+  ],
+  "status": "succeeded",
+  "created_at": "2026-07-17T12:59:01.057004+00:00",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "claim_boundary": "S1.3 freezes and verifies two deterministic synthetic-only label baselines: P0 preserves raw labels and lane-label context without semantic inference; P1 uses one fixed surface split and a single unambiguous lane label. It performs no lemmatization, POS tagging, learned inference, human-Gold evaluation, formal BPMN evaluation, or performance measurement.",
+  "artifacts": {
+    "config": {
+      "path": "configs/stage1_label_semantics_s13.json",
+      "sha256": "94a76a365b6662a2051ed1fe0d0e9a08bb9582055475b5b6cb796489917d2a88"
+    },
+    "schema": {
+      "path": "configs/schemas/stage1_label_semantics.schema.json",
+      "sha256": "32b7f6685c3931dce677924456618231563f253c39b2a6a7441acc63e55feda6"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage1_label_semantics.py",
+      "sha256": "069e005731b1481656be05c8e38a6bfdaafe7fbaa20caae081607f73d9d271ca"
+    },
+    "runner": {
+      "path": "scripts/run_stage1_label_semantics.py",
+      "sha256": "b11e670fbcf9e22378025677a6f532dc0bbc21181e4e9eace9cc09d6cf2c9697"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage1_label_semantics_s13.py",
+      "sha256": "573f48189b2d288b64f22ae458c8c9e9ca2ecacead6224d121c316b2b6eeac39"
+    },
+    "fixture": {
+      "path": "tests/fixtures/stage1/s13_label_edge_cases.bpmn",
+      "sha256": "95076fbcd21bd3d9619dcace6f3ddec8fceaa97d9dee887e7dfd9b86924dcc43"
+    },
+    "structural_manifest": {
+      "path": "outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json",
+      "sha256": "4f0121b621c0fe648dc93d743ef11f8be93367b18db35c7a430c95cf6950366e"
+    }
+  },
+  "input_process_record": {
+    "schema_version": "process_record@1.0.0",
+    "process_id": "Process_Label_Edges",
+    "source": {
+      "input_id": "s13_label_edge_cases",
+      "path": "tests/fixtures/stage1/s13_label_edge_cases.bpmn",
+      "sha256": "95076fbcd21bd3d9619dcace6f3ddec8fceaa97d9dee887e7dfd9b86924dcc43",
+      "byte_size": 1059,
+      "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL"
+    },
+    "method": {
+      "name": "stage1_bpmn_xml_structural",
+      "parser_version": "stage1_bpmn_parser@1.0.0",
+      "label_semantics": "preserve_original_labels_only"
+    },
+    "pools": [],
+    "lanes": [
+      {
+        "id": "Lane_Claims",
+        "name": "Claims Clerk",
+        "parent_lane_id": null,
+        "flow_node_refs": [
+          "Task_Ambiguous",
+          "Task_Empty",
+          "Task_Punct",
+          "Task_Unparseable"
+        ]
+      },
+      {
+        "id": "Lane_Risk",
+        "name": "Risk Manager",
+        "parent_lane_id": null,
+        "flow_node_refs": [
+          "Task_Ambiguous",
+          "Task_Single"
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "id": "Task_Ambiguous",
+        "name": "Review disputed claim",
+        "type": "task",
+        "lane_ids": [
+          "Lane_Claims",
+          "Lane_Risk"
+        ]
+      },
+      {
+        "id": "Task_Empty",
+        "name": "",
+        "type": "task",
+        "lane_ids": [
+          "Lane_Claims"
+        ]
+      },
+      {
+        "id": "Task_NoLane",
+        "name": "Archive decision",
+        "type": "task",
+        "lane_ids": []
+      },
+      {
+        "id": "Task_Punct",
+        "name": "Approve: claim request",
+        "type": "task",
+        "lane_ids": [
+          "Lane_Claims"
+        ]
+      },
+      {
+        "id": "Task_Single",
+        "name": "Escalate",
+        "type": "task",
+        "lane_ids": [
+          "Lane_Risk"
+        ]
+      },
+      {
+        "id": "Task_Unparseable",
+        "name": "---",
+        "type": "task",
+        "lane_ids": [
+          "Lane_Claims"
+        ]
+      }
+    ],
+    "events": [],
+    "gateways": [],
+    "sequence_flows": [],
+    "control_flow": {
+      "direct_edges": [],
+      "reachable_pairs": [],
+      "activity_order_relations": [],
+      "start_event_ids": [],
+      "end_event_ids": [],
+      "branching_gateway_ids": [],
+      "parallel_gateway_ids": [],
+      "parallel_split_gateway_ids": [],
+      "parallel_join_gateway_ids": [],
+      "cyclic_node_ids": [],
+      "cycle_detected": false,
+      "unreachable_node_ids": [
+        "Task_Ambiguous",
+        "Task_Empty",
+        "Task_NoLane",
+        "Task_Punct",
+        "Task_Single",
+        "Task_Unparseable"
+      ]
+    }
+  },
+  "p0_verification": {
+    "record": {
+      "schema_version": "stage1_label_semantics@1.0.0",
+      "process_record": {
+        "schema_version": "process_record@1.0.0",
+        "process_id": "Process_Label_Edges",
+        "sha256": "5ef7c6c8f680407e8f75b6cd584a747b814a7813ee10449625a9b4adc744bd84"
+      },
+      "method": {
+        "name": "stage1_label_p0_raw",
+        "version": "stage1_label_p0@1.0.0",
+        "baseline": "P0",
+        "language": "en",
+        "learned_model": false
+      },
+      "activities": [
+        {
+          "activity_id": "Task_Ambiguous",
+          "raw_label": "Review disputed claim",
+          "lane_labels": [
+            "Claims Clerk",
+            "Risk Manager"
+          ],
+          "actor_surface": null,
+          "actor_status": "p0_not_inferred",
+          "action_surface": null,
+          "business_object_surface": null,
+          "label_status": "raw_only"
+        },
+        {
+          "activity_id": "Task_Empty",
+          "raw_label": "",
+          "lane_labels": [
+            "Claims Clerk"
+          ],
+          "actor_surface": null,
+          "actor_status": "p0_not_inferred",
+          "action_surface": null,
+          "business_object_surface": null,
+          "label_status": "raw_only"
+        },
+        {
+          "activity_id": "Task_NoLane",
+          "raw_label": "Archive decision",
+          "lane_labels": [],
+          "actor_surface": null,
+          "actor_status": "p0_not_inferred",
+          "action_surface": null,
+          "business_object_surface": null,
+          "label_status": "raw_only"
+        },
+        {
+          "activity_id": "Task_Punct",
+          "raw_label": "Approve: claim request",
+          "lane_labels": [
+            "Claims Clerk"
+          ],
+          "actor_surface": null,
+          "actor_status": "p0_not_inferred",
+          "action_surface": null,
+          "business_object_surface": null,
+          "label_status": "raw_only"
+        },
+        {
+          "activity_id": "Task_Single",
+          "raw_label": "Escalate",
+          "lane_labels": [
+            "Risk Manager"
+          ],
+          "actor_surface": null,
+          "actor_status": "p0_not_inferred",
+          "action_surface": null,
+          "business_object_surface": null,
+          "label_status": "raw_only"
+        },
+        {
+          "activity_id": "Task_Unparseable",
+          "raw_label": "---",
+          "lane_labels": [
+            "Claims Clerk"
+          ],
+          "actor_surface": null,
+          "actor_status": "p0_not_inferred",
+          "action_surface": null,
+          "business_object_surface": null,
+          "label_status": "raw_only"
+        }
+      ]
+    },
+    "activity_count": 6,
+    "semantic_inference_count": 0,
+    "raw_only_count": 6
+  },
+  "p1_verification": {
+    "record": {
+      "schema_version": "stage1_label_semantics@1.0.0",
+      "process_record": {
+        "schema_version": "process_record@1.0.0",
+        "process_id": "Process_Label_Edges",
+        "sha256": "5ef7c6c8f680407e8f75b6cd584a747b814a7813ee10449625a9b4adc744bd84"
+      },
+      "method": {
+        "name": "stage1_label_p1_surface_split",
+        "version": "stage1_label_p1@1.0.0",
+        "baseline": "P1",
+        "language": "en",
+        "learned_model": false
+      },
+      "activities": [
+        {
+          "activity_id": "Task_Ambiguous",
+          "raw_label": "Review disputed claim",
+          "lane_labels": [
+            "Claims Clerk",
+            "Risk Manager"
+          ],
+          "actor_surface": null,
+          "actor_status": "ambiguous_lane_labels",
+          "action_surface": "Review",
+          "business_object_surface": "disputed claim",
+          "label_status": "parsed_action_object"
+        },
+        {
+          "activity_id": "Task_Empty",
+          "raw_label": "",
+          "lane_labels": [
+            "Claims Clerk"
+          ],
+          "actor_surface": "Claims Clerk",
+          "actor_status": "single_lane_label",
+          "action_surface": null,
+          "business_object_surface": null,
+          "label_status": "empty_label"
+        },
+        {
+          "activity_id": "Task_NoLane",
+          "raw_label": "Archive decision",
+          "lane_labels": [],
+          "actor_surface": null,
+          "actor_status": "no_lane_label",
+          "action_surface": "Archive",
+          "business_object_surface": "decision",
+          "label_status": "parsed_action_object"
+        },
+        {
+          "activity_id": "Task_Punct",
+          "raw_label": "Approve: claim request",
+          "lane_labels": [
+            "Claims Clerk"
+          ],
+          "actor_surface": "Claims Clerk",
+          "actor_status": "single_lane_label",
+          "action_surface": "Approve",
+          "business_object_surface": "claim request",
+          "label_status": "parsed_action_object"
+        },
+        {
+          "activity_id": "Task_Single",
+          "raw_label": "Escalate",
+          "lane_labels": [
+            "Risk Manager"
+          ],
+          "actor_surface": "Risk Manager",
+          "actor_status": "single_lane_label",
+          "action_surface": "Escalate",
+          "business_object_surface": null,
+          "label_status": "parsed_action_only"
+        },
+        {
+          "activity_id": "Task_Unparseable",
+          "raw_label": "---",
+          "lane_labels": [
+            "Claims Clerk"
+          ],
+          "actor_surface": "Claims Clerk",
+          "actor_status": "single_lane_label",
+          "action_surface": null,
+          "business_object_surface": null,
+          "label_status": "unparsed_label"
+        }
+      ]
+    },
+    "activity_count": 6,
+    "actor_status_counts": {
+      "single_lane_label": 4,
+      "no_lane_label": 1,
+      "ambiguous_lane_labels": 1
+    },
+    "label_status_counts": {
+      "empty_label": 1,
+      "unparsed_label": 1,
+      "parsed_action_only": 1,
+      "parsed_action_object": 3
+    }
+  },
+  "failure_semantics": {
+    "unknown_baseline_rejected": true,
+    "schema_additional_property_rejected": true,
+    "tampered_surface_rejected": true
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "learned_model_used": false,
+    "performance_evaluation": false,
+    "formal_label_records_written": false
+  }
+}

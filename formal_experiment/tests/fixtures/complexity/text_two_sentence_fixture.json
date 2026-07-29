@@ -1,0 +1,100 @@
+{
+  "item_id": "g05_text_fixture_1",
+  "source_role": "synthetic_fixture",
+  "source_language": "en",
+  "analysis_language": "en",
+  "translation_status": "original",
+  "source_text": "The controller shall file a report. It shall notify the authority.",
+  "annotation": {
+    "sentences": [
+      {
+        "tokens": [
+          {"index": 1, "word": "The", "characterOffsetBegin": 0, "characterOffsetEnd": 3},
+          {"index": 2, "word": "controller", "characterOffsetBegin": 4, "characterOffsetEnd": 14},
+          {"index": 3, "word": "shall", "characterOffsetBegin": 15, "characterOffsetEnd": 20},
+          {"index": 4, "word": "file", "characterOffsetBegin": 21, "characterOffsetEnd": 25},
+          {"index": 5, "word": "a", "characterOffsetBegin": 26, "characterOffsetEnd": 27},
+          {"index": 6, "word": "report", "characterOffsetBegin": 28, "characterOffsetEnd": 34},
+          {"index": 7, "word": ".", "characterOffsetBegin": 34, "characterOffsetEnd": 35}
+        ],
+        "basicDependencies": [
+          {"dep": "ROOT", "governor": 0, "dependent": 4},
+          {"dep": "det", "governor": 2, "dependent": 1},
+          {"dep": "nsubj", "governor": 4, "dependent": 2},
+          {"dep": "aux", "governor": 4, "dependent": 3},
+          {"dep": "det", "governor": 6, "dependent": 5},
+          {"dep": "obj", "governor": 4, "dependent": 6},
+          {"dep": "punct", "governor": 4, "dependent": 7}
+        ]
+      },
+      {
+        "tokens": [
+          {"index": 1, "word": "It", "characterOffsetBegin": 36, "characterOffsetEnd": 38},
+          {"index": 2, "word": "shall", "characterOffsetBegin": 39, "characterOffsetEnd": 44},
+          {"index": 3, "word": "notify", "characterOffsetBegin": 45, "characterOffsetEnd": 51},
+          {"index": 4, "word": "the", "characterOffsetBegin": 52, "characterOffsetEnd": 55},
+          {"index": 5, "word": "authority", "characterOffsetBegin": 56, "characterOffsetEnd": 65},
+          {"index": 6, "word": ".", "characterOffsetBegin": 65, "characterOffsetEnd": 66}
+        ],
+        "basicDependencies": [
+          {"dep": "ROOT", "governor": 0, "dependent": 3},
+          {"dep": "nsubj", "governor": 3, "dependent": 1},
+          {"dep": "aux", "governor": 3, "dependent": 2},
+          {"dep": "det", "governor": 5, "dependent": 4},
+          {"dep": "obj", "governor": 3, "dependent": 5},
+          {"dep": "punct", "governor": 3, "dependent": 6}
+        ]
+      }
+    ]
+  },
+  "canonical_record": {
+    "schema_version": "1.0.0",
+    "sample_id": "g05_text_fixture_1",
+    "source_id": "g05_text_fixture_1",
+    "source_text": "The controller shall file a report. It shall notify the authority.",
+    "clauses": [
+      {
+        "clause_id": "g05_text_fixture_1.c1",
+        "clause_span": {"text": "The controller shall file a report.", "start": 0, "end": 35},
+        "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 15, "end": 20}]},
+        "actors": [{"id": "g05.c1.actor.1", "text": "The controller", "start": 0, "end": 14, "normalized": "controller"}],
+        "actions": [{"id": "g05.c1.action.1", "text": "file a report", "start": 21, "end": 34, "normalized": "file report"}],
+        "conditions": [],
+        "constraints": [],
+        "exceptions": [],
+        "actor_action_map": [{"actor_id": "g05.c1.actor.1", "action_id": "g05.c1.action.1"}],
+        "order_relations": []
+      },
+      {
+        "clause_id": "g05_text_fixture_1.c2",
+        "clause_span": {"text": "It shall notify the authority.", "start": 36, "end": 66},
+        "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 39, "end": 44}]},
+        "actors": [{"id": "g05.c2.actor.1", "text": "It", "start": 36, "end": 38, "normalized": "controller"}],
+        "actions": [{"id": "g05.c2.action.1", "text": "notify the authority", "start": 45, "end": 65, "normalized": "notify authority"}],
+        "conditions": [],
+        "constraints": [],
+        "exceptions": [],
+        "actor_action_map": [{"actor_id": "g05.c2.actor.1", "action_id": "g05.c2.action.1"}],
+        "order_relations": []
+      }
+    ],
+    "method": {"name": "sun_rule_only", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+    "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []}
+  },
+  "cross_sentence_reference_links": [
+    {"source_sentence_index": 1, "target_sentence_index": 0, "relation": "coreference"}
+  ],
+  "expected": {
+    "character_count": 66,
+    "token_count": 13,
+    "sentence_count": 2,
+    "clause_count": 2,
+    "max_dependency_depth": 3,
+    "actor_count": 2,
+    "action_count": 2,
+    "semantic_span_count": 4,
+    "cross_sentence_reference_count": 1,
+    "complexity_score": 4,
+    "complexity_stratum": "medium"
+  }
+}

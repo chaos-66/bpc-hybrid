@@ -1,0 +1,68 @@
+{
+  "schema_version": "public_marker_sources_b4@1.0.0",
+  "snapshot_id": "public_marker_sources_en_v3_b4",
+  "artifact_scope": "development_only",
+  "created_at_utc": "2026-07-25T00:00:00Z",
+  "construction_mode": "offline_from_preexisting_read_only_sources_before_preregistration",
+  "source_policy": {
+    "allowed_sources": [
+      "read_only_local_Sun_paper_text",
+      "frozen_EStG_approved_English_unlabeled_text"
+    ],
+    "network_called": false,
+    "llm_api_called": false,
+    "gold_constraint_fields_read": false,
+    "false_negative_or_error_outcome_used": false,
+    "sample_id_recorded": false,
+    "text_snippet_recorded": false
+  },
+  "sources": [
+    {
+      "source_id": "sun_2024_table4_constraint_markers_local_text",
+      "source_tier": "public_research_paper_explicit_marker_table",
+      "path": "../references/papers/extracted/sun_2024_full_text.txt",
+      "sha256": "947140c3b7e350b4d35b9b6848c275dd265dc060f517da7a1dcfce43a55eec47",
+      "bytes": 65448,
+      "locator": "Table 4, extracted-text lines 435-439",
+      "selected_surfaces": [
+        "equal to",
+        "greatest",
+        "smallest",
+        "last of",
+        "least of"
+      ]
+    },
+    {
+      "source_id": "estg150_frozen_approved_en_unlabeled_marker_observation_b4",
+      "source_tier": "frozen_approved_english_unlabeled_text",
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+      "bytes": 1301626,
+      "visible_field": "approved_text_en_only",
+      "nonempty_text_count": 150,
+      "observation_method": "aggregate case-insensitive literal occurrence count over approved_text_en; no snippets, identifiers, annotations, Gold spans, outcomes, or residuals retained",
+      "selected_surface_occurrence_counts": {
+        "according to": 5,
+        "as defined by": 1,
+        "before the expiry of": 2,
+        "by the end of": 2,
+        "defined in section": 2,
+        "during the calendar year": 2,
+        "during the pay period": 2,
+        "exceeding": 3,
+        "maximum amount": 3,
+        "more than": 6,
+        "not exceed": 6,
+        "not more than": 1,
+        "on the basis of": 7,
+        "per day": 1,
+        "pursuant to section": 16,
+        "referred to in": 5,
+        "within one month": 1,
+        "within the scope of": 1,
+        "within three months": 2,
+        "within two weeks": 1
+      }
+    }
+  ]
+}

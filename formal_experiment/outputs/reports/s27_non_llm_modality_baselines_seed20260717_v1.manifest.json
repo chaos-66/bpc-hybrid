@@ -1,0 +1,438 @@
+{
+  "schema_version": "s27_non_llm_modality_baselines_manifest@1.0.0",
+  "task_id": "S2.7-M",
+  "run_id": "s27_non_llm_modality_baselines_seed20260717_v1",
+  "status": "succeeded",
+  "created_at": "2026-07-17T10:40:30.326652+00:00",
+  "runtime": {
+    "python": "3.14.6",
+    "external_ml_dependency": false
+  },
+  "claim_boundary": "S2.7-M evaluates three non-LLM modality component baselines on the same reconstructed development split used by S2.4 and discloses one identical-config unversioned smoke access to test labels. It does not complete the phrase/full-Stage-2 baseline, use Sun's original split, or establish any B0/H1/D1 comparison.",
+  "artifacts": {
+    "config": {
+      "path": "configs/models/s27_non_llm_baselines.json",
+      "sha256": "32705a57fcba88cfcdf76d9ff3a2fb79b918ea77f2664ec52e4e2986c62ad676"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/sun_style/non_llm_modality_baselines.py",
+      "sha256": "1982b8a7e263fc9d9fa57d9c3f2ce294a10146e51b0d1a5f6a142befe33109df"
+    },
+    "runner": {
+      "path": "scripts/run_s27_modality_baselines.py",
+      "sha256": "09b5754fd338e31eda69de88ab6f8e4731af68090e62d5fe8b19c4661f025a51"
+    }
+  },
+  "dataset": {
+    "dataset_id": "sun_modality_v1",
+    "split_origin": "project_reconstructed_deterministic_split_not_sun_original",
+    "input_hashes": {
+      "dataset_contract": "ba7544f0df8b7c78cea2308a9ff64c4ec836bd84bbc875c308814620cfff8bfd",
+      "dataset_manifest": "21a3390c8356053832041d626563910328952097f0c011ece0ec07a229dba534",
+      "split_summary": "a5b0a828d95eae21fb3ba57d9c59bc34f44a4e997cbb455a7d08ea4be4b08bbc",
+      "local_research_use_decision": "b92cd0845ef5d71b396f2e78da44640e3a000dc3e345d9e77eadd6a06857e70b",
+      "train": "a7367cd35e3a5ce7263ad5b0fae4881a989761d4fba21b75bdc75b6e2b83c142",
+      "dev": "ad541915d16aaef6119cb3769e6da0b89e8e8af5ec9069ac3a25680040e5a8d6",
+      "test": "2f67edad05e3a4d315d9ac65fc0ffd1d83dbaffd2d77a55916d6aa9a6919e871"
+    },
+    "split_counts": {
+      "train": 1985,
+      "dev": 420,
+      "test": 426
+    },
+    "split_ids_disjoint": true,
+    "redistribution_forbidden": true
+  },
+  "training": {
+    "train_class_counts": {
+      "definition": 836,
+      "obligation": 891,
+      "permission": 185,
+      "prohibition": 73
+    },
+    "train_majority_label": "obligation",
+    "nb_vocabulary_size": 8257,
+    "hyperparameter_search": false,
+    "model_selection_on_test": false
+  },
+  "test_execution_disclosure": {
+    "development_smoke_accessed_test_labels_before_versioned_run": true,
+    "smoke_configuration_identical_to_locked_nb_contract": true,
+    "hyperparameter_or_model_selection_on_test": false,
+    "reason": "An unversioned implementation smoke computed the fixed word 1-2 gram NB aggregates once before the versioned runner was created; no alternative configuration was tried or selected.",
+    "versioned_test_run_limit": 1,
+    "known_total_test_evaluations_after_versioned_run": 2
+  },
+  "metrics": {
+    "label_order": [
+      "definition",
+      "obligation",
+      "permission",
+      "prohibition"
+    ],
+    "primary": "macro_f1",
+    "dev": {
+      "train_majority": {
+        "sample_count": 420,
+        "accuracy": 0.4452380952380952,
+        "macro_f1": 0.15403624382207579,
+        "per_class": {
+          "definition": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 177
+          },
+          "obligation": {
+            "precision": 0.4452380952380952,
+            "recall": 1.0,
+            "f1": 0.6161449752883031,
+            "support": 187
+          },
+          "permission": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 40
+          },
+          "prohibition": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 16
+          }
+        },
+        "confusion_matrix": {
+          "definition": {
+            "definition": 0,
+            "obligation": 177,
+            "permission": 0,
+            "prohibition": 0
+          },
+          "obligation": {
+            "definition": 0,
+            "obligation": 187,
+            "permission": 0,
+            "prohibition": 0
+          },
+          "permission": {
+            "definition": 0,
+            "obligation": 40,
+            "permission": 0,
+            "prohibition": 0
+          },
+          "prohibition": {
+            "definition": 0,
+            "obligation": 16,
+            "permission": 0,
+            "prohibition": 0
+          }
+        }
+      },
+      "german_keyword": {
+        "sample_count": 420,
+        "accuracy": 0.5547619047619048,
+        "macro_f1": 0.5086283054414611,
+        "per_class": {
+          "definition": {
+            "precision": 0.515695067264574,
+            "recall": 0.6497175141242938,
+            "f1": 0.575,
+            "support": 177
+          },
+          "obligation": {
+            "precision": 0.5694444444444444,
+            "recall": 0.4385026737967914,
+            "f1": 0.4954682779456193,
+            "support": 187
+          },
+          "permission": {
+            "precision": 0.6938775510204082,
+            "recall": 0.85,
+            "f1": 0.7640449438202247,
+            "support": 40
+          },
+          "prohibition": {
+            "precision": 0.5,
+            "recall": 0.125,
+            "f1": 0.2,
+            "support": 16
+          }
+        },
+        "confusion_matrix": {
+          "definition": {
+            "definition": 115,
+            "obligation": 53,
+            "permission": 7,
+            "prohibition": 2
+          },
+          "obligation": {
+            "definition": 102,
+            "obligation": 82,
+            "permission": 3,
+            "prohibition": 0
+          },
+          "permission": {
+            "definition": 2,
+            "obligation": 4,
+            "permission": 34,
+            "prohibition": 0
+          },
+          "prohibition": {
+            "definition": 4,
+            "obligation": 5,
+            "permission": 5,
+            "prohibition": 2
+          }
+        }
+      },
+      "word_ngram_multinomial_nb": {
+        "sample_count": 420,
+        "accuracy": 0.7666666666666667,
+        "macro_f1": 0.5818579687448893,
+        "per_class": {
+          "definition": {
+            "precision": 0.7512953367875648,
+            "recall": 0.8192090395480226,
+            "f1": 0.7837837837837839,
+            "support": 177
+          },
+          "obligation": {
+            "precision": 0.7897435897435897,
+            "recall": 0.8235294117647058,
+            "f1": 0.8062827225130889,
+            "support": 187
+          },
+          "permission": {
+            "precision": 0.7096774193548387,
+            "recall": 0.55,
+            "f1": 0.619718309859155,
+            "support": 40
+          },
+          "prohibition": {
+            "precision": 1.0,
+            "recall": 0.0625,
+            "f1": 0.11764705882352941,
+            "support": 16
+          }
+        },
+        "confusion_matrix": {
+          "definition": {
+            "definition": 145,
+            "obligation": 27,
+            "permission": 5,
+            "prohibition": 0
+          },
+          "obligation": {
+            "definition": 29,
+            "obligation": 154,
+            "permission": 4,
+            "prohibition": 0
+          },
+          "permission": {
+            "definition": 12,
+            "obligation": 6,
+            "permission": 22,
+            "prohibition": 0
+          },
+          "prohibition": {
+            "definition": 7,
+            "obligation": 8,
+            "permission": 0,
+            "prohibition": 1
+          }
+        }
+      }
+    },
+    "test": {
+      "train_majority": {
+        "sample_count": 426,
+        "accuracy": 0.45774647887323944,
+        "macro_f1": 0.1570048309178744,
+        "per_class": {
+          "definition": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 177
+          },
+          "obligation": {
+            "precision": 0.45774647887323944,
+            "recall": 1.0,
+            "f1": 0.6280193236714976,
+            "support": 195
+          },
+          "permission": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 39
+          },
+          "prohibition": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 15
+          }
+        },
+        "confusion_matrix": {
+          "definition": {
+            "definition": 0,
+            "obligation": 177,
+            "permission": 0,
+            "prohibition": 0
+          },
+          "obligation": {
+            "definition": 0,
+            "obligation": 195,
+            "permission": 0,
+            "prohibition": 0
+          },
+          "permission": {
+            "definition": 0,
+            "obligation": 39,
+            "permission": 0,
+            "prohibition": 0
+          },
+          "prohibition": {
+            "definition": 0,
+            "obligation": 15,
+            "permission": 0,
+            "prohibition": 0
+          }
+        }
+      },
+      "german_keyword": {
+        "sample_count": 426,
+        "accuracy": 0.4835680751173709,
+        "macro_f1": 0.4141535542543099,
+        "per_class": {
+          "definition": {
+            "precision": 0.43636363636363634,
+            "recall": 0.5423728813559322,
+            "f1": 0.48362720403022663,
+            "support": 177
+          },
+          "obligation": {
+            "precision": 0.5032258064516129,
+            "recall": 0.4,
+            "f1": 0.44571428571428573,
+            "support": 195
+          },
+          "permission": {
+            "precision": 0.6530612244897959,
+            "recall": 0.8205128205128205,
+            "f1": 0.7272727272727272,
+            "support": 39
+          },
+          "prohibition": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 15
+          }
+        },
+        "confusion_matrix": {
+          "definition": {
+            "definition": 96,
+            "obligation": 65,
+            "permission": 14,
+            "prohibition": 2
+          },
+          "obligation": {
+            "definition": 116,
+            "obligation": 78,
+            "permission": 1,
+            "prohibition": 0
+          },
+          "permission": {
+            "definition": 2,
+            "obligation": 5,
+            "permission": 32,
+            "prohibition": 0
+          },
+          "prohibition": {
+            "definition": 6,
+            "obligation": 7,
+            "permission": 2,
+            "prohibition": 0
+          }
+        }
+      },
+      "word_ngram_multinomial_nb": {
+        "sample_count": 426,
+        "accuracy": 0.784037558685446,
+        "macro_f1": 0.5688485721495562,
+        "per_class": {
+          "definition": {
+            "precision": 0.7966101694915254,
+            "recall": 0.7966101694915254,
+            "f1": 0.7966101694915254,
+            "support": 177
+          },
+          "obligation": {
+            "precision": 0.8028846153846154,
+            "recall": 0.8564102564102564,
+            "f1": 0.8287841191066997,
+            "support": 195
+          },
+          "permission": {
+            "precision": 0.6341463414634146,
+            "recall": 0.6666666666666666,
+            "f1": 0.6499999999999999,
+            "support": 39
+          },
+          "prohibition": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 15
+          }
+        },
+        "confusion_matrix": {
+          "definition": {
+            "definition": 141,
+            "obligation": 27,
+            "permission": 9,
+            "prohibition": 0
+          },
+          "obligation": {
+            "definition": 24,
+            "obligation": 167,
+            "permission": 4,
+            "prohibition": 0
+          },
+          "permission": {
+            "definition": 10,
+            "obligation": 3,
+            "permission": 26,
+            "prohibition": 0
+          },
+          "prohibition": {
+            "definition": 2,
+            "obligation": 11,
+            "permission": 2,
+            "prohibition": 0
+          }
+        }
+      }
+    }
+  },
+  "phrase_track": {
+    "status": "blocked_pending_s2_2_human_phrase_gold",
+    "reason": "The representative phrase baseline and full Rule Record comparison require the same frozen EStG-150 phrase Gold as B0/H1/D1. No token classifier or CRF may be trained from placeholders.",
+    "formal_method_id_and_shared_evaluator_extension": "defer_until_phrase_baseline_is_selected_before_formal_run",
+    "synthetic_fixture_performance_may_not_substitute_for_gold": true
+  },
+  "safety": {
+    "s2_1_dataset_gate_ready": true,
+    "local_research_use_gate_ready": true,
+    "llm_api_called": false,
+    "network_called": false,
+    "env_file_read": false,
+    "human_gold_read_or_modified": false,
+    "formal_predictions_written": false,
+    "row_level_predictions_persisted": false,
+    "aggregate_component_result_only": true
+  }
+}

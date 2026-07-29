@@ -1,0 +1,70 @@
+{
+  "schema_version": "estg150_b0_development@1.0.0",
+  "task_id": "S2.7-B0-DEV",
+  "run_id": "s27_estg150_b0_development_v1",
+  "status": "preregistered_development_evaluation",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "claim_scope": "development",
+  "inputs": {
+    "human_correction_layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c"
+    },
+    "membership_hashes": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b"
+    },
+    "annotation_freeze_receipt": {
+      "path": "outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json",
+      "sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961"
+    },
+    "independence_audit": {
+      "path": "outputs/development/estg150_independence_audit_v1/estg_150_independence_audit_v1.jsonl",
+      "sha256": "d32a60727e0470c94a8ceeb8f5a0703af68903c5e92b997ffee094d7d6fccc6a"
+    }
+  },
+  "method": {
+    "method_id": "sun_rule_only",
+    "s2_6_config": {
+      "path": "configs/models/sun_b0_s26.json",
+      "sha256": "47566def9b7f8e403fd784b23c9cec0c55a64d4b5d10cd62c60dd4ab87442d46"
+    },
+    "classifier_input": "one raw German Layer E record",
+    "classifier_label_mapping": "repeat the record-level S2.4 prediction for every CoreNLP English sentence in that record",
+    "phrase_input": "approved_text_en",
+    "phrase_extractor": "locked CoreNLP 4.5.10 plus sun_phrase_patterns_en_v1",
+    "batch_bridge_boundary": "If a locked context-prune operation removes the complete constituency tree, count the surgery, emit remaining fields as misses, record a terminal-tree-removal diagnostic, and continue to the next sentence.",
+    "canonical_mapping": "locked S2.6 build_canonical_record"
+  },
+  "evaluator": {
+    "path": "configs/stage2_evaluator_s210.json",
+    "sha256": "2b6f7bd4269e475dc4b7bb0561a767a70baba49965c16c7f6b34b8a455badc16",
+    "tracks": [
+      "all_150_sentence_only_english",
+      "independent_82_sentence_only_english_sensitivity"
+    ]
+  },
+  "output": {
+    "directory": "outputs/development/s27_estg150_b0_development_v1",
+    "no_overwrite": true,
+    "persist_row_level_predictions": true,
+    "persist_canonical_gold_copy": false
+  },
+  "route_boundaries": {
+    "formal_gold_published": false,
+    "formal_performance_result": false,
+    "context_sidecar_used": false,
+    "german_to_english_fidelity_human_verified": false,
+    "same_sentence_only_approved_english_phrase_input_for_future_b0_h1_d1": true,
+    "open_issue_ids": ["RWI-0001", "RWI-0007"],
+    "interpretation": "Development evidence only. The all-150 track measures the frozen sentence-only English benchmark as-is; the independent-82 track quantifies sensitivity to known context dependence."
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_allowed": false,
+    "human_decisions_modified": false,
+    "data_gold_written": false,
+    "data_input_written": false,
+    "formal_predictions_or_results_written": false
+  }
+}

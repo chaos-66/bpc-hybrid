@@ -1,0 +1,232 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 113,
+  "end_index_exclusive": 118,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000061",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Furthermore, it must be ensured through additions or deductions and through appropriate balance sheet items that other changes in the profit determination principles (e.g., regarding the commercial law principles of orderly bookkeeping when transitioning from profit determination pursuant to Section 4(1) or (3) to Section 5, or regarding the consideration of diminutions in the value of business assets when transitioning to bookkeeping) are taken into account upon the change in the profit determination method. 3. a) When transitioning to profit determination pursuant to Section 5, land must be revalued on a tax-neutral basis to the higher going-concern value.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Furthermore, it must be ensured through additions or deductions and through appropriate balance sheet items that other changes in the profit determination principles (e.g., regarding the commercial law principles of orderly bookkeeping when transitioning from profit determination pursuant to Section 4(1) or (3) to Section 5, or regarding the consideration of diminutions in the value of business assets when transitioning to bookkeeping) are taken into account upon the change in the profit determination method", "start": 0, "end": 513},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 16, "end": 20}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be ensured", "start": 21, "end": 31, "normalized": "ensure other accounting-principle changes are recognized"}],
+          "conditions": [{"id": "c1_condition_1", "text": "upon the change in the profit determination method", "start": 463, "end": 513, "normalized": "upon changing the profit-determination method"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "through additions or deductions and through appropriate balance sheet items", "start": 32, "end": 107, "normalized": "through additions, deductions, and appropriate balance-sheet items"},
+            {"id": "c1_constraint_2", "text": "that other changes in the profit determination principles (e.g., regarding the commercial law principles of orderly bookkeeping when transitioning from profit determination pursuant to Section 4(1) or (3) to Section 5, or regarding the consideration of diminutions in the value of business assets when transitioning to bookkeeping) are taken into account upon the change in the profit determination method", "start": 108, "end": 513, "normalized": "account for other changes in profit-determination principles when the method changes"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "3. a) When transitioning to profit determination pursuant to Section 5, land must be revalued on a tax-neutral basis to the higher going-concern value", "start": 515, "end": 665},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 592, "end": 596}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be revalued", "start": 597, "end": 608, "normalized": "revalue land"}],
+          "conditions": [{"id": "c2_condition_1", "text": "When transitioning to profit determination pursuant to Section 5", "start": 521, "end": 585, "normalized": "transition to Section 5 profit determination"}],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "on a tax-neutral basis", "start": 609, "end": 631, "normalized": "tax-neutral basis"},
+            {"id": "c2_constraint_2", "text": "to the higher going-concern value", "start": 632, "end": 665, "normalized": "higher going-concern value"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The opening connective and statutory cross-references rely on surrounding provisions that are not supplied."},
+        {"field": "actor", "reason": "Both duties are expressed passively and no responsible actor is named."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The general adjustment duty and the separate tax-neutral land-revaluation duty are extracted without expanding the referenced accounting provisions."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000068",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "In the case of profit determination pursuant to Section 4(1), for assets that already belonged to the fixed assets at the end of the preceding business year, the balance sheet value may not exceed the last balance sheet value.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "In the case of profit determination pursuant to Section 4(1), for assets that already belonged to the fixed assets at the end of the preceding business year, the balance sheet value may not exceed the last balance sheet value", "start": 0, "end": 225},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 182, "end": 189}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "exceed the last balance sheet value", "start": 190, "end": 225, "normalized": "exceed prior balance-sheet value"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "In the case of profit determination pursuant to Section 4(1)", "start": 0, "end": 60, "normalized": "profit determined under Section 4(1)"},
+            {"id": "c1_condition_2", "text": "for assets that already belonged to the fixed assets at the end of the preceding business year", "start": 62, "end": 156, "normalized": "assets were fixed assets at the end of the preceding business year"}
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "actor", "reason": "The provision limits the balance-sheet value without identifying the person responsible for setting it."}],
+      "confidence": "high",
+      "rationale_summary": "The balance-sheet-value ceiling is extracted with both the accounting-method and prior-fixed-asset conditions."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000071",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "edited",
+        "proposed_text_en": "For registered traders, Item 13 applies. \u2014 The lump-sum depreciation is claimed only to the extent that no partial write-down under subparagraph a was claimed for the receivables. \u2014 The qualifying receivables and the amount of the depreciation are shown separately in the balance sheets.",
+        "issues": ["Corrected the unnatural literal rendering protocolled traders to registered traders."]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "For registered traders, Item 13 applies", "start": 0, "end": 39},
+          "modality": {"label": "definition", "evidence": [{"text": "applies", "start": 32, "end": 39}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "applies", "start": 32, "end": 39, "normalized": "apply Item 13 to registered traders"}],
+          "conditions": [{"id": "c1_condition_1", "text": "For registered traders", "start": 0, "end": 22, "normalized": "registered traders"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "The lump-sum depreciation is claimed only to the extent that no partial write-down under subparagraph a was claimed for the receivables", "start": 43, "end": 178},
+          "modality": {"label": "obligation", "evidence": [{"text": "is claimed only", "start": 69, "end": 84}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "is claimed only", "start": 69, "end": 84, "normalized": "limit claiming of lump-sum depreciation"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "to the extent that no partial write-down under subparagraph a was claimed for the receivables", "start": 85, "end": 178, "normalized": "only where no subparagraph-a partial write-down was claimed for the receivables"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "The qualifying receivables and the amount of the depreciation are shown separately in the balance sheets", "start": 182, "end": 286},
+          "modality": {"label": "obligation", "evidence": [{"text": "are shown separately", "start": 244, "end": 264}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "are shown separately", "start": 244, "end": 264, "normalized": "show qualifying receivables and depreciation amount separately"}],
+          "conditions": [],
+          "constraints": [{"id": "c3_constraint_1", "text": "in the balance sheets", "start": 265, "end": 286, "normalized": "in balance sheets"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The substantive content of Item 13 and subparagraph a is not included."},
+        {"field": "actor", "reason": "The two accounting requirements are passive and do not identify the claimant or reporting party."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The applicability statement, depreciation-claim limitation, and separate balance-sheet disclosure requirement are represented as three distinct units."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000074",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If they were used to generate non-business income, the acquisition or production costs shall be reduced by the amounts taken into account for depreciation for wear and tear or for privileged depreciation of production expenditure.",
+        "issues": ["The antecedent of they is outside the excerpt."]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If they were used to generate non-business income, the acquisition or production costs shall be reduced by the amounts taken into account for depreciation for wear and tear or for privileged depreciation of production expenditure", "start": 0, "end": 229},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 87, "end": 92}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be reduced", "start": 93, "end": 103, "normalized": "reduce acquisition or production costs"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If they were used to generate non-business income", "start": 0, "end": 49, "normalized": "referenced assets used to generate non-business income"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "by the amounts taken into account for depreciation for wear and tear or for privileged depreciation of production expenditure", "start": 104, "end": 229, "normalized": "reduce by prior wear-and-tear or privileged production-expenditure depreciation amounts"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The antecedent of they is absent, so the property or assets triggering the rule cannot be identified."},
+        {"field": "condition", "reason": "The triggering use is explicit, but the object referred to by they is unresolved."},
+        {"field": "actor", "reason": "The reduction obligation is passive and no responsible actor is stated."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The cost-reduction duty and its calculation basis are extracted, while the missing antecedent is left unresolved."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000077",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Participations and loan receivables in companies with registered office or place of management abroad may, under the following conditions, be recognized in the year of acquisition at a value of 90% of the acquisition costs:\na) The funds are used for a permanent establishment abroad which serves the distribution, setting up or servicing of goods produced in Austria.\nb) In the case of corporations, there must be\n\u2014 significant participations (participation of more than 25% in the share capital) acquired upon formation or a capital increase, or\n\u2014 shareholder loans from substantial shareholders, if the loans were granted upon formation or a considerable expansion of the company.\nc) In the case of partnerships in which the partners are considered co-entrepreneurs, significant participations within the meaning of letter (b) acquired upon formation or a considerable expansion of the company must exist.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Participations and loan receivables in companies with registered office or place of management abroad may, under the following conditions, be recognized in the year of acquisition at a value of 90% of the acquisition costs:\na) The funds are used for a permanent establishment abroad which serves the distribution, setting up or servicing of goods produced in Austria.\nb) In the case of corporations, there must be\n\u2014 significant participations (participation of more than 25% in the share capital) acquired upon formation or a capital increase, or\n\u2014 shareholder loans from substantial shareholders, if the loans were granted upon formation or a considerable expansion of the company.\nc) In the case of partnerships in which the partners are considered co-entrepreneurs, significant participations within the meaning of letter (b) acquired upon formation or a considerable expansion of the company must exist", "start": 0, "end": 906},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 102, "end": 105}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be recognized", "start": 139, "end": 152, "normalized": "recognize foreign-company participations and loan receivables at reduced value"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "a) The funds are used for a permanent establishment abroad which serves the distribution, setting up or servicing of goods produced in Austria", "start": 224, "end": 366, "normalized": "funds used for an overseas establishment distributing, installing, or servicing Austrian-made goods"},
+            {"id": "c1_condition_2", "text": "b) In the case of corporations, there must be\n\u2014 significant participations (participation of more than 25% in the share capital) acquired upon formation or a capital increase, or\n\u2014 shareholder loans from substantial shareholders, if the loans were granted upon formation or a considerable expansion of the company", "start": 368, "end": 681, "normalized": "corporation has a qualifying significant participation or qualifying shareholder loan"},
+            {"id": "c1_condition_3", "text": "c) In the case of partnerships in which the partners are considered co-entrepreneurs, significant participations within the meaning of letter (b) acquired upon formation or a considerable expansion of the company must exist", "start": 683, "end": 906, "normalized": "partnership has a letter-b significant participation acquired upon formation or substantial expansion"}
+          ],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "in the year of acquisition", "start": 153, "end": 179, "normalized": "year of acquisition"},
+            {"id": "c1_constraint_2", "text": "at a value of 90% of the acquisition costs", "start": 180, "end": 222, "normalized": "90 percent of acquisition costs"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "b) In the case of corporations, there must be\n\u2014 significant participations (participation of more than 25% in the share capital) acquired upon formation or a capital increase, or\n\u2014 shareholder loans from substantial shareholders, if the loans were granted upon formation or a considerable expansion of the company", "start": 368, "end": 681},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 406, "end": 410}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "there must be", "start": 400, "end": 413, "normalized": "require a qualifying participation or shareholder loan"}],
+          "conditions": [{"id": "c2_condition_1", "text": "if the loans were granted upon formation or a considerable expansion of the company", "start": 598, "end": 681, "normalized": "shareholder loans granted upon formation or considerable company expansion"}],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "significant participations (participation of more than 25% in the share capital) acquired upon formation or a capital increase", "start": 416, "end": 542, "normalized": "more-than-25-percent participation acquired at formation or capital increase"},
+            {"id": "c2_constraint_2", "text": "shareholder loans from substantial shareholders, if the loans were granted upon formation or a considerable expansion of the company", "start": 549, "end": 681, "normalized": "substantial-shareholder loans granted at formation or considerable expansion"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "c) In the case of partnerships in which the partners are considered co-entrepreneurs, significant participations within the meaning of letter (b) acquired upon formation or a considerable expansion of the company must exist", "start": 683, "end": 906},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 896, "end": 900}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "exist", "start": 901, "end": 906, "normalized": "require qualifying significant participations"}],
+          "conditions": [{"id": "c3_condition_1", "text": "In the case of partnerships in which the partners are considered co-entrepreneurs", "start": 686, "end": 767, "normalized": "partnerships whose partners are co-entrepreneurs"}],
+          "constraints": [{"id": "c3_constraint_1", "text": "significant participations within the meaning of letter (b) acquired upon formation or a considerable expansion of the company", "start": 769, "end": 895, "normalized": "letter-b significant participations acquired at formation or considerable expansion"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "actor", "reason": "The valuation permission and the two existence requirements do not state the person applying or administering them."}],
+      "confidence": "high",
+      "rationale_summary": "The reduced-value recognition permission retains all three condition branches; the corporation and partnership existence requirements are also extracted independently."
+    }
+  ]
+}

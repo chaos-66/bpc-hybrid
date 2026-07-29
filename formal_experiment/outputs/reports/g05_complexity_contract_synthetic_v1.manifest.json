@@ -1,0 +1,149 @@
+{
+  "schema_version": "complexity_g05_verification_manifest@1.0.0",
+  "task_id": "G0.5",
+  "status": "succeeded",
+  "created_at": "2026-07-17T09:01:34.181415+00:00",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "artifacts": {
+    "contract": {
+      "path": "configs/complexity_contract.json",
+      "sha256": "0a0e4f809897f22179b752c3c92ddcbf208aced1176c9ac77fb27816c9ac3b7a"
+    },
+    "profile_schema": {
+      "path": "configs/schemas/complexity_profile.schema.json",
+      "sha256": "1cbe678bef8833ef331816d5d08e3f897c368766a393e7a25a008684946cb615"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/complexity.py",
+      "sha256": "eec0cebc2784346e4b11eb3ac2649fde0013ab986a06db5350ded282bdd8aaa4"
+    },
+    "verifier": {
+      "path": "scripts/verify_complexity_contract_g05.py",
+      "sha256": "1028bb033f45282505b755b73fc9d68ccabdf189c99ca78475f26265fcfe7b42"
+    },
+    "text_fixture": {
+      "path": "tests/fixtures/complexity/text_two_sentence_fixture.json",
+      "sha256": "6aee616ccccd2ddaf4923c5770f3cada3b7be932c3c2122c3e311b4b117fd252"
+    },
+    "bpmn_fixture": {
+      "path": "tests/fixtures/complexity/bpmn_cycle_fixture.bpmn",
+      "sha256": "dc0c6e6db0e0c98ce353ccc4a652ac780d68333561daff763e10ead0f51453cc"
+    }
+  },
+  "verification": {
+    "text_profile_schema_valid": true,
+    "bpmn_profile_schema_valid": true,
+    "text_profile": {
+      "schema_version": "complexity_profile@1.0.0",
+      "item_id": "g05_text_fixture_1",
+      "domain": "text",
+      "source_role": "synthetic_fixture",
+      "metrics": {
+        "character_count": 66,
+        "token_count": 13,
+        "sentence_count": 2,
+        "clause_count": 2,
+        "max_dependency_depth": 3,
+        "actor_count": 2,
+        "action_count": 2,
+        "condition_count": 0,
+        "constraint_count": 0,
+        "exception_count": 0,
+        "semantic_span_count": 4,
+        "scope_nesting_depth": 0,
+        "passive_voice_present": false,
+        "implicit_actor_action_count": 0,
+        "cross_sentence_reference_count": 1,
+        "source_language": "en",
+        "analysis_language": "en",
+        "translation_status": "original"
+      },
+      "indicator_flags": {
+        "token_count_ge_40": false,
+        "sentence_count_ge_2": true,
+        "clause_count_ge_3": false,
+        "dependency_depth_ge_8": false,
+        "actor_count_ge_2": true,
+        "action_count_ge_2": true,
+        "scope_element_count_ge_2": false,
+        "scope_nesting_depth_ge_2": false,
+        "passive_voice_present": false,
+        "implicit_actor_present": false,
+        "cross_sentence_reference_present": true
+      },
+      "complexity_score": 4,
+      "complexity_stratum": "medium",
+      "provenance": {
+        "contract_schema": "complexity_contract@1.0.0",
+        "method_output_used": false,
+        "result_used": false
+      }
+    },
+    "bpmn_profile": {
+      "schema_version": "complexity_profile@1.0.0",
+      "item_id": "g05_bpmn_cycle_fixture_1",
+      "domain": "bpmn",
+      "source_role": "synthetic_fixture",
+      "metrics": {
+        "flow_node_count": 5,
+        "activity_count": 2,
+        "event_count": 2,
+        "gateway_count": 1,
+        "lane_count": 1,
+        "participant_count": 1,
+        "sequence_flow_count": 5,
+        "message_flow_count": 0,
+        "subprocess_count": 0,
+        "boundary_event_count": 0,
+        "weak_component_count": 1,
+        "cyclomatic_complexity": 2,
+        "branching_node_count": 1,
+        "joining_node_count": 1,
+        "cycle_present": true,
+        "condensation_dag_depth": 4
+      },
+      "indicator_flags": {
+        "flow_node_count_ge_20": false,
+        "activity_count_ge_10": false,
+        "gateway_count_ge_4": false,
+        "actor_partition_count_ge_3": false,
+        "sequence_flow_count_ge_25": false,
+        "message_flow_count_ge_2": false,
+        "subprocess_present": false,
+        "boundary_event_present": false,
+        "branching_node_count_ge_3": false,
+        "cycle_present": true,
+        "condensation_dag_depth_ge_10": false,
+        "cyclomatic_complexity_ge_8": false
+      },
+      "complexity_score": 1,
+      "complexity_stratum": "low",
+      "provenance": {
+        "contract_schema": "complexity_contract@1.0.0",
+        "method_output_used": false,
+        "result_used": false
+      }
+    },
+    "text_indicator_count": 11,
+    "bpmn_indicator_count": 12,
+    "strata": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "method_output_used": false,
+    "test_result_used": false
+  },
+  "safety": {
+    "synthetic_fixtures_only": true,
+    "complex_dataset_selected_or_read": false,
+    "formal_profiles_generated": false,
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "performance_evaluation": false
+  },
+  "claim_boundary": "G0.5 locks method-independent text and BPMN complexity features, score thresholds, strata, and leakage guards on synthetic fixtures before any complex-dataset result. It does not select or freeze a complex dataset and does not create formal Gold or performance evidence."
+}

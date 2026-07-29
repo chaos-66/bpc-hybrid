@@ -1,0 +1,61 @@
+{
+  "schema_version": "b0_enhanced_v9_status_correction@1.0.0",
+  "correction_id": "s27_estg150_b0_v9_status_correction_v1",
+  "created_at_utc": "2026-07-22T18:05:04.019833+00:00",
+  "claim_scope": "development_diagnostic_only",
+  "does_not_overwrite_prior_artifacts": true,
+  "v9a": {
+    "run_id": "s27_estg150_b0_enhanced_v9a",
+    "manifest": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v9a/manifest.json",
+      "sha256": "c3d1009df50400d52a8e448063da4c1623b66bcea5d85b99569e165b18e507f3",
+      "bytes": 14157
+    },
+    "status": "post_prereg_method_modified_development_negative",
+    "preregistration": {
+      "path": "configs/models/estg150_b0_v9_preregistration_v1.json",
+      "sha256": "22ea52d6640f0f74b22bf97d2cb27caca0a61406beef391f836449648d44cf91",
+      "bytes": 3952
+    },
+    "prereg_scope_binding": {
+      "path": "src/bpc_hybrid/b0_v9/scope.py",
+      "sha256": "b21ae536b8f6202ffffd4e1cc456d27b01a10ce28585c728a8724ab327c18035",
+      "bytes": 10684
+    },
+    "actual_scope_py_at_correction": {
+      "path": "src/bpc_hybrid/b0_v9/scope.py",
+      "sha256": "39c3cdd5aece7a708cf5aab06001d17a4597573111099d64882e4a3c7228f3a0",
+      "bytes": 11414
+    },
+    "scope_hash_match": false,
+    "defects": [
+      "prereg bound scope.py sha b21ae536... but actual file is 39c3cdd5... (post-prereg modification)",
+      "alignment supported=225/256 is heuristic coverage (equal_count+monotone_pack+split), not validated anchor alignment",
+      "ownership_correct_conditional=20 invalid: counted any gold edge presence not exact endpoint-pair ownership",
+      "residual v3 mixed supported-only and abstention FN accounting",
+      "hallu drop 0.406->0.277 accompanied by presence_recall 0.712->0.531 and complete-record 0.347->0.067",
+      "constraint Table8 F1 collapsed ~0.382->0.096 due to scope_test mapping all 45 markers to performance_limit_only requiring literal 'only'",
+      "Tregex match_count recorded but most final spans from lexicon expansion, not Tregex constituents",
+      "modality F1 identical to v7 (+0 TP); not a performance promotion"
+    ],
+    "valid_for_strict_preregistered_comparison": false,
+    "valid_as_engineering_negative_evidence": true
+  },
+  "measurement_corrections_required_before_v10": [
+    "split residual metrics into conditional-on-supported vs coverage-adjusted",
+    "endpoint ownership must map specific actor+action pairs",
+    "alignment statuses must separate validated vs heuristic_unvalidated",
+    "lexicon stats must separate accepted vs final affected spans",
+    "runtime must not name hybrid labels as classifier_label_counts_by_clause"
+  ],
+  "active_policy": {
+    "trusted_baseline": "s27_estg150_b0_enhanced_v5",
+    "provisional_best": "s27_estg150_b0_enhanced_v7",
+    "v9a_active": false
+  },
+  "safety": {
+    "gold_read_only": true,
+    "llm_api_called": false,
+    "network_called": false
+  }
+}

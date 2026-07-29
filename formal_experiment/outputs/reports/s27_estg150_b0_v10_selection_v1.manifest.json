@@ -1,0 +1,244 @@
+{
+  "schema_version": "b0_enhanced_v10_selection_report@1.0.0",
+  "created_at_utc": "2026-07-22T18:40:04.719491+00:00",
+  "preregistration": "configs/models/estg150_b0_v10_preregistration_v2.json",
+  "preregistration_sha256": "9b074dd927bdba40462126ef2d4f909fdf6b85fcaeec70d502ed4ef196bfa333",
+  "v9_status_correction_sha256": "986b918c4ddf8d9f74903cbd57f18d598285dc4371880f8a1bfa4d68709fdd97",
+  "candidates": {
+    "v10-A": {
+      "status": "accepted_scope_recovery_gates_not_final_promotion",
+      "run_id": "s27_estg150_b0_enhanced_v10a",
+      "manifest_sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315",
+      "acceptance_gates_v10a": {
+        "t8_f1": true,
+        "t8_r": true,
+        "cons_f1": true,
+        "presence": true,
+        "complete": true,
+        "hallu": true,
+        "schema": true
+      },
+      "acceptance_pass": true,
+      "metrics": {
+        "modality_micro": {
+          "f1": 0.6283367556468172,
+          "fn": 78.0,
+          "fp": 103.0,
+          "precision": 0.59765625,
+          "recall": 0.6623376623376623,
+          "tp": 153.0
+        },
+        "modality_macro_f1": 0.5863201911589009,
+        "modality_per_class": {
+          "definition": {
+            "f1": 0.3440860215053763,
+            "fn": 23.0,
+            "fp": 38.0,
+            "precision": 0.2962962962962963,
+            "precision_display": 0.2962962962962963,
+            "recall": 0.41025641025641024,
+            "support": 39,
+            "tp": 16.0
+          },
+          "obligation": {
+            "f1": 0.7037037037037038,
+            "fn": 21.0,
+            "fp": 43.0,
+            "precision": 0.6386554621848739,
+            "precision_display": 0.6386554621848739,
+            "recall": 0.7835051546391752,
+            "support": 97,
+            "tp": 76.0
+          },
+          "permission": {
+            "f1": 0.7419354838709677,
+            "fn": 16.0,
+            "fp": 16.0,
+            "precision": 0.7419354838709677,
+            "precision_display": 0.7419354838709677,
+            "recall": 0.7419354838709677,
+            "support": 62,
+            "tp": 46.0
+          },
+          "prohibition": {
+            "f1": 0.5555555555555556,
+            "fn": 18.0,
+            "fp": 6.0,
+            "precision": 0.7142857142857143,
+            "precision_display": 0.7142857142857143,
+            "recall": 0.45454545454545453,
+            "support": 33,
+            "tp": 15.0
+          }
+        },
+        "alignment_f1": 0.8008213552361396,
+        "exact_f1": 0.1437371663244353,
+        "table8_overall": {
+          "f1": 0.5397760754272246,
+          "fn": 366,
+          "fp": 415,
+          "precision": 0.5246277205040092,
+          "recall": 0.5558252427184466,
+          "tp": 458
+        },
+        "table8_per_field": {
+          "action": {
+            "f1": 0.6951219512195121,
+            "fn": 76,
+            "fp": 74,
+            "gold": 247,
+            "precision": 0.6979591836734694,
+            "pred": 245,
+            "recall": 0.6923076923076923,
+            "tp": 171
+          },
+          "actor": {
+            "f1": 0.5121951219512195,
+            "fn": 27,
+            "fp": 13,
+            "gold": 48,
+            "precision": 0.6176470588235294,
+            "pred": 34,
+            "recall": 0.4375,
+            "tp": 21
+          },
+          "condition": {
+            "f1": 0.5664488017429194,
+            "fn": 84,
+            "fp": 115,
+            "gold": 214,
+            "precision": 0.5306122448979592,
+            "pred": 245,
+            "recall": 0.6074766355140186,
+            "tp": 130
+          },
+          "constraint": {
+            "f1": 0.39560439560439564,
+            "fn": 176,
+            "fp": 209,
+            "gold": 302,
+            "precision": 0.3761194029850746,
+            "pred": 335,
+            "recall": 0.41721854304635764,
+            "tp": 126
+          },
+          "exception": {
+            "f1": 0.7407407407407408,
+            "fn": 3,
+            "fp": 4,
+            "gold": 13,
+            "precision": 0.7142857142857143,
+            "pred": 14,
+            "recall": 0.7692307692307693,
+            "tp": 10
+          }
+        },
+        "presence_recall": 0.7033175355450237,
+        "complete_record": 0.36,
+        "hallu": 0.3427812223206377,
+        "edge": {
+          "f1": 0.0,
+          "fn": 245,
+          "fp": 34,
+          "gold_count": 245,
+          "jaccard_iou": 0.0,
+          "precision": 0.0,
+          "predicted_count": 34,
+          "recall": 0.0,
+          "tp": 0
+        }
+      },
+      "vs_v7": {
+        "modality_f1_delta": 0.0,
+        "table8_f1_delta": 0.04768660461434954,
+        "constraint_f1_delta": 0.013438790508854215,
+        "presence_delta": -0.008530805687203769,
+        "complete_delta": 0.013333333333333308,
+        "hallu_delta": -0.06354288835129906,
+        "edge_fp_delta": -151
+      },
+      "vs_v9a": {
+        "table8_f1_delta": 0.04536058771315166,
+        "constraint_f1_delta": 0.29950829950829955,
+        "presence_delta": 0.17251184834123223,
+        "complete_delta": 0.29333333333333333
+      },
+      "runtime": {
+        "routes": {
+          "definition_structure": 4,
+          "heuristic_aligned_classifier": 31,
+          "marker_obligation": 107,
+          "marker_permission": 55,
+          "prohibition_negation": 19,
+          "record_level_classifier_fallback": 20,
+          "validated_aligned_classifier": 20
+        },
+        "alignment": {
+          "by_status": {
+            "equal_count_candidate": 25,
+            "heuristic_monotone_pack_unvalidated": 87,
+            "unsupported": 31,
+            "validated_anchor_alignment": 64,
+            "validated_split": 49
+          },
+          "heuristic_supported": 225,
+          "note": "heuristic_supported is not verified alignment",
+          "total": 256,
+          "unsupported": 31,
+          "validated": 113
+        },
+        "lexicon": {
+          "active_counts": {
+            "actor": 37,
+            "condition": 34,
+            "constraint": 45,
+            "exception": 16,
+            "modality": 29
+          },
+          "category_file_sha256": {
+            "actor": "fdf026e92d9ddc4ca3b3dbe068e5440bf4c0bffd72aad9b204c5c8bc63edc44d",
+            "condition": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a",
+            "constraint": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1",
+            "exception": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e",
+            "modality": "cb6fae1292e3601b0bf10ca21459e37f63957a1e34f58d8155bc7bee74b69095"
+          },
+          "final_affected_spans": 594,
+          "legacy_broken_only_label_ignored": 241,
+          "lexicon_id": "public_marker_lexicon_en_v2",
+          "loaded_active_total": 161,
+          "manifest_sha256": "3f7e6108c1e66de37377abc2e9b9f4d0344ff2d1eca20b49ebf90e38aff7b462",
+          "modality_patterns_compiled": 29,
+          "scope_accepted": 505,
+          "scope_invocations": 768,
+          "scope_raw_matches": 514,
+          "scope_rejected": 9,
+          "tregex_accepted": 453,
+          "tregex_candidates": 561,
+          "tregex_final_affected": 453
+        },
+        "placeholder": 0
+      },
+      "endpoint_diagnostic_exact": {
+        "raw_predicted_edge_count": 34,
+        "actor_endpoint_alignable": 21,
+        "action_endpoint_alignable": 26,
+        "both_endpoints_alignable": 20,
+        "exact_mapped_ownership_tp": 20,
+        "endpoint_failure": 14,
+        "ownership_failure": 0,
+        "note": "ownership TP requires specific Gold actor_id+action_id pair, not any edge"
+      },
+      "final_promotion_vs_v7": false,
+      "reason": "modality F1 still 0.6283 (=v7); final promotion needs >=0.650. Scope/recall recovery gates PASSED."
+    },
+    "v10-B": {
+      "status": "not_run",
+      "reason": "authorized after v10a gates; deferred to avoid no-op if no independent modality/segmentation code path yet"
+    },
+    "v10-C": {
+      "status": "not_instantiated"
+    }
+  },
+  "provisional_best_remains": "s27_estg150_b0_enhanced_v7",
+  "v10a_engineering_accepted_for_scope_track": true
+}

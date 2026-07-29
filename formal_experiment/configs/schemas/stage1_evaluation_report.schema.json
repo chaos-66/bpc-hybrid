@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/bpc-hybrid/stage1_evaluation_report.schema.json",
+  "title": "Stage 1 Evaluation Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scope", "membership", "methods"],
+  "properties": {
+    "schema_version": {"const": "stage1_evaluation_report@1.0.0"},
+    "scope": {"enum": ["synthetic_contract_verification", "formal"]},
+    "membership": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "methods": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/methodReport"}
+    }
+  },
+  "$defs": {
+    "countMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tp", "fp", "fn", "precision", "recall", "f1"],
+      "properties": {
+        "tp": {"type": "integer", "minimum": 0},
+        "fp": {"type": "integer", "minimum": 0},
+        "fn": {"type": "integer", "minimum": 0},
+        "precision": {"type": "number", "minimum": 0, "maximum": 1},
+        "recall": {"type": "number", "minimum": 0, "maximum": 1},
+        "f1": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "semanticMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tp", "fp", "fn", "tn", "precision", "recall", "f1", "exact_value_accuracy"],
+      "properties": {
+        "tp": {"type": "integer", "minimum": 0},
+        "fp": {"type": "integer", "minimum": 0},
+        "fn": {"type": "integer", "minimum": 0},
+        "tn": {"type": "integer", "minimum": 0},
+        "precision": {"type": "number", "minimum": 0, "maximum": 1},
+        "recall": {"type": "number", "minimum": 0, "maximum": 1},
+        "f1": {"type": "number", "minimum": 0, "maximum": 1},
+        "exact_value_accuracy": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "methodReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attempts", "terminal_errors", "invalid_predictions", "structure_record_coverage", "label_record_coverage", "structure", "semantics", "semantic_triple_exact_accuracy"],
+      "properties": {
+        "attempts": {"type": "integer", "minimum": 0},
+        "terminal_errors": {"type": "integer", "minimum": 0},
+        "invalid_predictions": {"type": "integer", "minimum": 0},
+        "structure_record_coverage": {"type": "number", "minimum": 0, "maximum": 1},
+        "label_record_coverage": {"type": "number", "minimum": 0, "maximum": 1},
+        "structure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["by_component", "micro"],
+          "properties": {
+            "by_component": {"type": "object", "additionalProperties": {"$ref": "#/$defs/countMetric"}},
+            "micro": {"$ref": "#/$defs/countMetric"}
+          }
+        },
+        "semantics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["by_field", "micro"],
+          "properties": {
+            "by_field": {"type": "object", "additionalProperties": {"$ref": "#/$defs/semanticMetric"}},
+            "micro": {"$ref": "#/$defs/semanticMetric"}
+          }
+        },
+        "semantic_triple_exact_accuracy": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    }
+  }
+}

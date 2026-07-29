@@ -1,0 +1,158 @@
+{
+  "schema_version": "b0_enhanced_v10_preregistration@1.0.0",
+  "preregistration_id": "s27_estg150_b0_v10_prereg_v1",
+  "created_at_utc": "2026-07-22T18:11:16.679069+00:00",
+  "status": "preregistered_frozen_before_all150",
+  "claim_scope": "development_only",
+  "note": "config embeds prereg sha; prereg binds modules/resources but not config to avoid circular hash. Runner verifies both directions.",
+  "baselines": {
+    "v5": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v5/manifest.json",
+      "sha256": "e1bd642aa55c9bdc3a6a01b600b48910c643b1c270ab718f37f7980d4b776533",
+      "bytes": 12863
+    },
+    "v7": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v7/manifest.json",
+      "sha256": "6099da41cf3c8708d544da3657ccdd0d6d680e5fc87c9b80fb99e01db821b9a4",
+      "bytes": 13956
+    }
+  },
+  "v9_status_correction": {
+    "path": "outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json",
+    "sha256": "986b918c4ddf8d9f74903cbd57f18d598285dc4371880f8a1bfa4d68709fdd97",
+    "bytes": 2903
+  },
+  "active_registry": {
+    "path": "configs/models/estg150_b0_active_registry_v3.json",
+    "sha256": "cc89d4ad730ea6ff48d7c66c355feb0da30f47eb98b9f4500043ea679e69ed97",
+    "bytes": 5022
+  },
+  "candidates": {
+    "v10-A": {
+      "id": "scope_tregex_recall_recovery",
+      "run_id": "s27_estg150_b0_enhanced_v10a"
+    },
+    "v10-B": {
+      "status": "not_run_until_v10a_gates"
+    },
+    "v10-C": {
+      "status": "not_instantiated"
+    }
+  },
+  "acceptance_gates_v10a": {
+    "table8_overall_f1_min": 0.53,
+    "table8_recall_min": 0.5,
+    "constraint_table8_f1_min": 0.3,
+    "presence_recall_min": 0.65,
+    "complete_record_min": 0.25,
+    "hallu_max": 0.406,
+    "schema_valid": 1.0
+  },
+  "module_bindings": {
+    "src/bpc_hybrid/b0_v10/__init__.py": {
+      "path": "src/bpc_hybrid/b0_v10/__init__.py",
+      "sha256": "ffeedc2b0dfb97d2145781fea039e2825aec34c1197fb118179597016d238079",
+      "bytes": 131
+    },
+    "src/bpc_hybrid/b0_v10/profile.py": {
+      "path": "src/bpc_hybrid/b0_v10/profile.py",
+      "sha256": "6df47c23e5d1049462c28fb0f05783d7c3593e01389db8ee20a90ed672dc9353",
+      "bytes": 1393
+    },
+    "src/bpc_hybrid/b0_v10/alignment.py": {
+      "path": "src/bpc_hybrid/b0_v10/alignment.py",
+      "sha256": "957aa591927139ae3f37dbaf8634ba1e5be04beaa7e54e9597d2b6f57db2c2fe",
+      "bytes": 7919
+    },
+    "src/bpc_hybrid/b0_v10/modality.py": {
+      "path": "src/bpc_hybrid/b0_v10/modality.py",
+      "sha256": "6dd2c74bbd5894353b921ff2f29506a950e6e6b2453b426ee451a042c0fc1246",
+      "bytes": 3239
+    },
+    "src/bpc_hybrid/b0_v10/scope.py": {
+      "path": "src/bpc_hybrid/b0_v10/scope.py",
+      "sha256": "8854242c4032c2aa68bb48f26c9863c0b4180ecc2a36e995486ec067a6d7e8d8",
+      "bytes": 13687
+    },
+    "src/bpc_hybrid/b0_v10/actor_action.py": {
+      "path": "src/bpc_hybrid/b0_v10/actor_action.py",
+      "sha256": "5d31f28243c814d363185bf1eec842fd27bf8d201f5f4f2a3bf5a2a593fbb574",
+      "bytes": 6652
+    },
+    "src/bpc_hybrid/b0_v10/diagnostics.py": {
+      "path": "src/bpc_hybrid/b0_v10/diagnostics.py",
+      "sha256": "441b11ce002e7821a91021a3a836578a339f6533695f9709ba08fcc87775feb4",
+      "bytes": 4930
+    },
+    "src/bpc_hybrid/b0_v10/pipeline.py": {
+      "path": "src/bpc_hybrid/b0_v10/pipeline.py",
+      "sha256": "ce3153f75d28369954ed7e0a0e0ca1fa3e44f56b5f7e35724f8034d523a15d79",
+      "bytes": 1038
+    },
+    "src/bpc_hybrid/estg150_b0_development_v10.py": {
+      "path": "src/bpc_hybrid/estg150_b0_development_v10.py",
+      "sha256": "540a51b9faccfbb3e4a046ad9f8cbd177f4e01fca5dc0f11bddfbad594a1b674",
+      "bytes": 24378
+    },
+    "scripts/run_estg150_b0_enhanced_v10_development.py": {
+      "path": "scripts/run_estg150_b0_enhanced_v10_development.py",
+      "sha256": "93d212aa4f18254f0db965c4b5efed81b0928213fd37603b36b7174b044c3206",
+      "bytes": 11308
+    }
+  },
+  "resource_bindings": {
+    "layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+      "bytes": 1301626
+    },
+    "membership": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b",
+      "bytes": 30276
+    },
+    "evaluator": {
+      "path": "configs/stage2_evaluator_s210_v3.json",
+      "sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f",
+      "bytes": 6566
+    },
+    "s26": {
+      "path": "configs/models/sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126",
+      "bytes": 3807
+    },
+    "checkpoint": {
+      "path": "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt",
+      "sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1",
+      "bytes": 441559200
+    },
+    "lexicon_manifest": {
+      "path": "resources/lexicon/public_marker_lexicon_en_v2.manifest.json",
+      "sha256": "3f7e6108c1e66de37377abc2e9b9f4d0344ff2d1eca20b49ebf90e38aff7b462",
+      "bytes": 3179
+    },
+    "patterns": {
+      "path": "resources/corenlp/sun_phrase_patterns_v3_enhanced.json",
+      "sha256": "f49bad50fb6236137f1208aeef572d2a78c789726363897c637dc464c780e142",
+      "bytes": 4425
+    },
+    "bridge": {
+      "path": "tools/corenlp/SunPhraseRuleBatchBridgeMulti.java",
+      "sha256": "1a084befaf1a863889a26b58c5a049f2df846834e26c5643fe5a535c5c13f2a3",
+      "bytes": 5934
+    }
+  },
+  "forbidden": [
+    "s24_test_read",
+    "placeholder_classifier",
+    "noop_candidates",
+    "modify_gold_evaluator",
+    "post_prereg_edit_of_bound_files"
+  ],
+  "safety": {
+    "llm_api_called": false,
+    "network_called": false,
+    "gold_read_only": true
+  },
+  "config_path": "configs/models/estg150_b0_enhanced_s27_v10a.json"
+}

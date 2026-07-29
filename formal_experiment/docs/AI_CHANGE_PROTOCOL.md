@@ -53,6 +53,20 @@ python formal_experiment/scripts/audit_project.py
 evaluator、指标或正式产物的修改。纯错别字、排版和不改变含义的链接修复不需要单独
 建立事件，可以合并进同一连贯批次。
 
+### 3.1 实际问题必须持续登记
+
+真实数据、人工标注、方法行为、工具、运行环境、模型/provider 输出或评价中暴露的
+问题，统一登记到 `docs/REAL_WORLD_ISSUE_REGISTER.md`。实验日志回答“本批次做了
+什么”，问题登记册回答“出现过什么实际问题、是否仍存在、怎样解决”，二者不能互相
+替代。
+
+- 发现即登记；同一批次解决也必须保留问题原貌；
+- 未解决问题保持 `open`，临时绕行但根因未消除为 `mitigated`；
+- 只有解决方法已经实施并有测试/manifest/人工复核等证据才可标 `resolved`；
+- `resolved` 条目必须补齐解决方法、验证证据和实验事件编号；
+- 问题重现时追加 `reopened` 历史，不删除旧记录；
+- 每次批次结束检查新问题和状态更新，再运行全量检查并记录事件。
+
 ## 4. 真实实验日志必须记录什么
 
 每次实际运行至少记录：
@@ -96,6 +110,9 @@ python formal_experiment/scripts/generate_file_catalog.py --check
 git diff --check
 git status --short
 ```
+
+运行前先检查 `REAL_WORLD_ISSUE_REGISTER.md`：本批次发现的问题是否全部登记，已解决
+问题是否有方法/证据/事件，未解决问题是否仍明确为 open/mitigated。
 
 再追加变更日志：
 

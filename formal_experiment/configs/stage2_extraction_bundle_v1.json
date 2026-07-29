@@ -1,0 +1,81 @@
+{
+  "bundle_id": "stage2_extraction_bundle@1.0.0",
+  "status": "frozen_static_pilot_contract",
+  "frozen_at": "2026-07-19",
+  "contract_id": "stage2_extraction_contract@1.0.0",
+  "artifacts": {
+    "machine_contract": {
+      "path": "configs/stage2_extraction_contract_v1.json",
+      "sha256": "7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46"
+    },
+    "canonical_schema": {
+      "path": "configs/schemas/stage2_prediction.schema.json",
+      "sha256": "7485ac4a3a42b976d87e63a7d2ead88cc3df1f810b14dd066bc1f63c15599d1b"
+    },
+    "human_contract": {
+      "path": "docs/STAGE2_EXTRACTION_CONTRACT_V1.md",
+      "sha256": "949d6a738cac11c0c8828b2c7cc3630b1ab37caa0bd1806c205e0295dba4838f"
+    },
+    "annotation_protocol": {
+      "path": "docs/ANNOTATION_PROTOCOL.md",
+      "sha256": "fe029822a65f0113b24bca82c85c3e4a37bf0718897cae8a8e64343564c1240b"
+    },
+    "human_gold_guide": {
+      "path": "docs/HUMAN_GOLD_GUIDE.md",
+      "sha256": "2b4251c9cdb282f059f6c07357b061ed4a4a9449a7323e371aa59dd5a70c7975"
+    },
+    "direct_prompt": {
+      "path": "prompts/sun_compat/direct_llm_sun_record_prompt.md",
+      "sha256": "79f6f76fc9779abb87fc919e4384386ac812d40fcedaf73df0ea8ea1377af62e"
+    },
+    "hybrid_prompt": {
+      "path": "prompts/sun_compat/rule_first_llm_fallback_prompt.md",
+      "sha256": "54e56c4bc52d0e5a83c2b45c3762a36ffb1356bd8190a1cd10d2b5dbd304b40c"
+    },
+    "direct_config": {
+      "path": "configs/models/sun_d1_s29.json",
+      "sha256": "c891e8a0e64a5c60a5bf7e8d0e7330a656e9535f3e069737e5d7ee657066178f"
+    },
+    "hybrid_config": {
+      "path": "configs/models/sun_h1_s28.json",
+      "sha256": "dd99e8c5b6ba3c858d505705bdf6144d57e462651c4d8be7c521007c2afd1bef"
+    },
+    "direct_implementation": {
+      "path": "src/bpc_hybrid/sun_style/d1_direct.py",
+      "sha256": "0fb1861b09766cade085cd74cf2a3a726d817a0557a4dbe2b6d203752fa396db"
+    },
+    "hybrid_implementation": {
+      "path": "src/bpc_hybrid/sun_style/h1_selective.py",
+      "sha256": "f8c647c9d4fb1c701319746ee09437f30147cb6955b68bb70bbff28a496269f3"
+    },
+    "pilot": {
+      "path": "configs/stage2_extraction_pilot_v1.json",
+      "sha256": "25a5184ebc0f7a72a08b8c0b190d48158842f2bf73183a271e35dec10b09b80d"
+    },
+    "method_registry": {
+      "path": "configs/methods.json",
+      "sha256": "38e42398900ddc642c7147dec71c0ab53d634f1f97b63ec36b5998b97a26f66e"
+    },
+    "legacy_rebuild_entry_point": {
+      "path": "scripts/rebuild_d1_prompt.py",
+      "sha256": "6e9598d2b6ac188131f0f1afe79a0f1bc40431f36d0826d70281516509dd29bd"
+    }
+  },
+  "schema_disposition": {
+    "changed": false,
+    "reason": "The existing schema already separates exact evidence from normalized values and supports controlled unsupported_or_ambiguous metadata."
+  },
+  "pilot_boundary": {
+    "sample_count": 12,
+    "gold_created": false,
+    "few_shot_created_from_pilot": false,
+    "method_predictions_created": false,
+    "performance_evaluated": false,
+    "llm_api_called": false
+  },
+  "formal_freeze_blockers_preserved": [
+    "RWI-0001 context sidecar and sentence-only versus context-assisted track decision",
+    "RWI-0007 German-to-English QA or native-English phrase-track decision",
+    "150/150 human adjudication and all existing route/data/Stage 3 publication gates"
+  ]
+}

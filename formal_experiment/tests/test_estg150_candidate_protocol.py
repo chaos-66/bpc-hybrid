@@ -676,9 +676,9 @@ def test_execute_failure_manifest_links_archived_http_error(monkeypatch):
         assert failure["canonical_schema_sha256"] == (
             "fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9"
         )
-        assert failure["transport_adapter_version"] == "1.8.0"
+        assert failure["transport_adapter_version"] == "1.9.0"
         assert failure["transport_schema_sha256"] == (
-            "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
+            "cf1ee3e48b822bfe7cb84fa69e85190553f733647e49f96ec29ffe7d0f7f16db"
         )
         assert failure["canonical_serializer_sha256"] == (
             "d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef"
@@ -787,8 +787,13 @@ def test_c2_offline_preparation_freezes_six_preflights_without_starting_c2(monke
     runner = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(runner)
 
-    with tempfile.TemporaryDirectory(prefix="estg150_c2_offline_", dir=ROOT) as temporary:
+    temporary_parent = ROOT / ".tmp"
+    temporary_parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(
+        prefix="estg150_c2_offline_", dir=temporary_parent
+    ) as temporary:
         temporary_root = Path(temporary)
+        assert temporary_root.parent == temporary_parent
         assets = load_protocol_assets()
         config = dict(assets.config)
         config["output"] = dict(config["output"])
@@ -845,7 +850,7 @@ def test_c2_offline_preparation_freezes_six_preflights_without_starting_c2(monke
             "mode": "append_transport_exact_span_self_check",
             "applied": True,
             "instruction_sha256": (
-                    "ff5813a7410a891b6d87966950d8f7ef0223da52e76f28644bbbc0d9304ae25e"
+                    "f1fa23b201a4fbed4ccafea5ba40bc29b0b336f89836213a44383fb06cc57841"
             ),
             "canonical_semantic_request_unchanged": True,
             "canonical_prompt_assets_unchanged": True,

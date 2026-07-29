@@ -1,0 +1,94 @@
+{
+  "schema_version": "s212_analysis_verification_manifest@1.1.0",
+  "task_id": "S2.12-P",
+  "run_id": "s212_analysis_protocol_synthetic_v2",
+  "status": "succeeded",
+  "artifacts": {
+    "protocol": {
+      "path": "configs/s212_analysis_protocol.json",
+      "sha256": "d3e2d7e38d97e71d60ffc07cc3cae18335881b0d00d3ab8b4dc4fb3f25cfc860"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/s212_analysis.py",
+      "sha256": "efbc068e0d90facedd7e39069a9f6db0ab5d46afe785a82c7b99a4328a42b788"
+    },
+    "verifier": {
+      "path": "scripts/verify_s212_analysis_protocol.py",
+      "sha256": "566b447bf75945c5683bfe3aef86544c66e7cdebaa230e41acf08dabce7230df"
+    },
+    "synthetic_fixture": {
+      "path": "tests/fixtures/s212_analysis/s212_synthetic_counts.json",
+      "sha256": "0e75e6b52b995dda85fcdff2726ea786defdb83d1b766b0a3d6518bf277e2d47"
+    }
+  },
+  "upstream_bindings": {
+    "complexity_contract": {
+      "path": "configs/complexity_contract.json",
+      "sha256": "0a0e4f809897f22179b752c3c92ddcbf208aced1176c9ac77fb27816c9ac3b7a"
+    },
+    "complexity_verification_manifest": {
+      "path": "outputs/reports/g05_complexity_contract_synthetic_v1.manifest.json",
+      "sha256": "e1494f64bbf413a5eb9c4e2414d5fe9b0678733e25b34f2e8be29aaea9fb5cc3"
+    },
+    "evaluator_contract": {
+      "path": "configs/stage2_evaluator_s210.json",
+      "sha256": "2b6f7bd4269e475dc4b7bb0561a767a70baba49965c16c7f6b34b8a455badc16"
+    },
+    "evaluator_verification_manifest": {
+      "path": "outputs/reports/s210_stage2_evaluator_contract_synthetic_v2.manifest.json",
+      "sha256": "58d65b256225942593b853b0b5f1777de56caca4b9059a28d128e001a933f89b"
+    },
+    "complex_dataset_contract": {
+      "path": "configs/datasets/gdpr_articles_5_50_s211.json",
+      "sha256": "041b6269f3da6bdf67b3d06408d9664be5c4fe84e0c9ff4576726a460a6a563c"
+    },
+    "complex_dataset_verification_manifest": {
+      "path": "outputs/reports/s211_gdpr_complex_dataset_freeze_v1.manifest.json",
+      "sha256": "215dae3ebe0378652337d2839f62ea4dbf9787f921cdbbae3ac394c36f5c486b"
+    }
+  },
+  "verification": {
+    "synthetic_sample_count": 6,
+    "primary_endpoint_count": 6,
+    "contrast_count": 2,
+    "hypotheses_per_dataset_family": 12,
+    "bootstrap_iterations": 10000,
+    "randomization_iterations": 10000,
+    "holm_family_size": 12,
+    "sample_array_order_invariant": true,
+    "small_stratum_interval_suppressed": true,
+    "unknown_error_category_fails_closed": true,
+    "qualitative_case_cap_verified": 3,
+    "primary_error_priority_verified": {
+      "primary": "runtime_api_error",
+      "all": [
+        "runtime_api_error",
+        "exception_scope_or_omission"
+      ]
+    },
+    "d1_minus_b0_action_synthetic": {
+      "contrast": "d1_minus_b0",
+      "endpoint": "action_strict_exact_f1",
+      "candidate_point": 1.0,
+      "reference_point": 0.25,
+      "delta": 0.75,
+      "delta_ci_low": 0.33333333333333337,
+      "delta_ci_high": 1.0,
+      "raw_p": 0.06379362063793621,
+      "holm_adjusted_p": 0.6875312468753125,
+      "reject_at_alpha": false,
+      "rank": 4
+    }
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "formal_gold_read_or_modified": false,
+    "formal_predictions_read_or_created": false,
+    "formal_complexity_profiles_generated": false,
+    "formal_performance_evaluation": false,
+    "method_comparison_claim_generated": false,
+    "llm_api_called": false,
+    "network_called": false
+  },
+  "claim_boundary": "S2.12-P freezes complexity strata, sample-cluster inference, Holm families, error taxonomy, and deterministic case selection before formal results. Synthetic verification is not a method comparison; formal S2.12 remains blocked until both human Gold tracks and exact-membership predictions are ready."
+}

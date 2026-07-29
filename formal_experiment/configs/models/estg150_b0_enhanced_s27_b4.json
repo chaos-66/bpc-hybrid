@@ -1,0 +1,165 @@
+{
+  "schema_version": "estg150_b0_enhanced_b4_development@1.0.0",
+  "task_id": "S2.7-B0-ENHANCED-B4-DEV",
+  "run_id": "s27_estg150_b0_enhanced_b4",
+  "status": "preregistered_frozen_before_single_all150",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "claim_scope": "development",
+  "inputs": {
+    "human_correction_layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c"
+    },
+    "membership_hashes": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b"
+    },
+    "annotation_freeze_receipt": {
+      "path": "outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json",
+      "sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961"
+    },
+    "v10a_parent_manifest": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/manifest.json",
+      "sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315"
+    },
+    "v10a_parent_attempts": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/b0_attempts.json",
+      "sha256": "79dc457cdf933cb9fbb29030bab3673b9af645dd0138d8e97f5d1b6dfa6b4792"
+    },
+    "v10a_parent_evaluation": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/evaluation_all150.json",
+      "sha256": "fe0c5ec8f7f7dca15b9b4fec3361473b76d29e83a80622870ff1a73a9cabf971"
+    },
+    "v10a_parent_table8": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/sun_table8_any_overlap_diagnostic.json",
+      "sha256": "726ef0e59568e46187c14364f590229cb283255e2de6309e3dc8d5fe7f6b66b9"
+    },
+    "b3a_negative_evidence": {
+      "path": "outputs/development/s27_estg150_b0_b3a_constraint_tregex_diagnostic_v2/manifest.json",
+      "sha256": "ddcf26581d8dde61eb9b95fd015d5cbb34b17763c74db6888af7efffed6a4cc0",
+      "inheritance": "none"
+    },
+    "b3b_negative_evidence": {
+      "path": "outputs/development/s27_estg150_b0_b3b_typed_ownership_diagnostic_v1/manifest.json",
+      "sha256": "394ad982ab9ef008ad88b77bda1ef740c6e4b1bd4399d2a697f322471d9c1810",
+      "inheritance": "none"
+    }
+  },
+  "method": {
+    "method_id": "sun_rule_only",
+    "method_variant": "b0_enhanced_b4_constraint_marker_expansion",
+    "paper_faithful_b0": false,
+    "parent_run": "s27_estg150_b0_enhanced_v10a",
+    "single_hypothesis": "constraint_marker_lexicon_expansion",
+    "single_candidate": true,
+    "new_active_marker_count": 25,
+    "constraint_lexicon_manifest": {
+      "path": "resources/lexicon/public_marker_lexicon_en_v3_b4.manifest.json",
+      "sha256": "017a60e2abac132cbba860718387be042a14fa3811539edfb783b854da6eeceb"
+    },
+    "s2_6_config": {
+      "path": "configs/models/sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126"
+    },
+    "fixed_tregex": {
+      "path": "resources/corenlp/sun_phrase_patterns_v3_enhanced.json",
+      "sha256": "f49bad50fb6236137f1208aeef572d2a78c789726363897c637dc464c780e142"
+    },
+    "fixed_scope_resolver": {
+      "path": "src/bpc_hybrid/b0_v10/scope.py",
+      "sha256": "3c13d2d73d49476cd3449f50775c6b4b63ac68f5baa2f95a4b564e5ca8b30887"
+    },
+    "fixed_production_bridge": {
+      "path": "tools/corenlp/SunPhraseRuleBatchBridgeMulti.java",
+      "sha256": "1a084befaf1a863889a26b58c5a049f2df846834e26c5643fe5a535c5c13f2a3"
+    },
+    "preregistration": {
+      "path": "configs/models/estg150_b0_b4_preregistration_v1.json"
+    }
+  },
+  "evaluator": {
+    "path": "configs/stage2_evaluator_s210_v3.json",
+    "sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f",
+    "tracks": ["all_150_sentence_only_english", "sun_table8_any_overlap_diagnostic"]
+  },
+  "output": {
+    "directory": "outputs/development/s27_estg150_b0_enhanced_b4",
+    "no_overwrite": true,
+    "persist_row_level_predictions": true,
+    "persist_canonical_gold_copy": false
+  },
+  "promotion_gates": {
+    "fixed_parent_table8": {
+      "constraint": {
+        "f1": 0.39560439560439564,
+        "fn": 176,
+        "fp": 209,
+        "gold": 302,
+        "precision": 0.3761194029850746,
+        "pred": 335,
+        "recall": 0.41721854304635764,
+        "tp": 126
+      },
+      "overall": {
+        "f1": 0.5397760754272246,
+        "fn": 366,
+        "fp": 415,
+        "precision": 0.5246277205040092,
+        "recall": 0.5558252427184466,
+        "tp": 458
+      }
+    },
+    "constraint": {
+      "tp_min": 138,
+      "fp_max": 225,
+      "fn_max": 164,
+      "precision_min": 0.38,
+      "recall_min": 0.457,
+      "f1_min": 0.414
+    },
+    "overall": {
+      "tp_min": 470,
+      "fp_max": 431,
+      "fn_max": 354,
+      "precision_min": 0.522,
+      "recall_min": 0.57,
+      "f1_min": 0.545
+    },
+    "purity": {
+      "new_active_marker_min": 25,
+      "new_active_marker_max": 60,
+      "invoked_unique_new_marker_min": 10,
+      "final_new_constraint_spans_min": 10,
+      "final_new_constraint_spans_max": 80
+    },
+    "coverage": {
+      "presence_recall_min": 0.703318,
+      "complete_record_rate_min": 0.36,
+      "hallucinated_field_rate_max": 0.355,
+      "schema_valid_rate": 1.0
+    }
+  },
+  "route_boundaries": {
+    "formal_gold_published": false,
+    "formal_performance_result": false,
+    "context_sidecar_used": false,
+    "german_to_english_fidelity_human_verified": false,
+    "interpretation": "One preregistered development All-150 run of one fixed B4 constraint-marker candidate; no automatic promotion."
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_allowed": false,
+    "human_decisions_modified": false,
+    "gold_read_only": true,
+    "data_gold_written": false,
+    "data_input_written": false,
+    "formal_predictions_or_results_written": false,
+    "test_dataset_read": false,
+    "bert_retrained": false,
+    "tregex_modified": false,
+    "resolver_modified": false,
+    "span_boundary_modified": false,
+    "modality_modified": false,
+    "active_registry_modified": false
+  }
+}

@@ -180,6 +180,7 @@ SUPPORTED_PROVIDERS = ("openai_compatible",)
 # resume against a typo'd or hostile base URL.
 RUN_CONFIG_LOCKED_FIELDS = (
     "provider", "model", "base_url", "base_url_sha256", "temperature", "max_tokens",
+    "thinking_mode",
     "membership_payload_sha256", "layer_a_sha256", "layer_b_sha256",
     "layer_c_sha256", "prompt_a_sha256", "prompt_b_sha256",
     "layer_e_sha256",
@@ -225,6 +226,35 @@ def append_jsonl(path: Path, row: dict) -> None:
                                      "bearer", "x_api_key", "x-api-key")}
     with path.open("a", encoding="utf-8") as f:
         f.write(json.dumps(scrubbed, ensure_ascii=False) + "\n")
+
+
+def normalize_v2_order(path: Path) -> None:
+    """Atomically restore canonical Layer-A ordering after resume.
+
+    Successful retry rows are appended, so a late retry would otherwise sit
+    at EOF and fail the promotion ordering invariant. Duplicate sample IDs are
+    refused rather than silently de-duplicated.
+    """
+    if not path.exists():
+        return
+    rows = load_jsonl(path)
+    sample_ids = [row.get("sample_id") for row in rows]
+    if len(sample_ids) != len(set(sample_ids)):
+        raise RuntimeError(
+            f"refusing to normalize {path}: duplicate sample_id rows detected"
+        )
+    rows.sort(key=lambda row: (
+        int(row.get("legacy_record_id", 2**63 - 1)),
+        str(row.get("sample_id", "")),
+    ))
+    tmp = path.with_suffix(
+        path.suffix + f".{os.getpid()}.{time.time_ns()}.tmp"
+    )
+    tmp.write_text(
+        "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+    os.replace(tmp, path)
 
 
 def mask_api_key(k: str | None) -> str:
@@ -472,6 +502,7 @@ def call_chat_completion(
     max_tokens: int,
     temperature: float,
     timeout_seconds: int,
+    thinking_mode: str = "provider_default",
 ) -> dict:
     """Call an OpenAI-compatible /chat/completions endpoint.
     Returns the parsed JSON body, OR raises an exception.
@@ -490,6 +521,16 @@ def call_chat_completion(
         "temperature": temperature,
         "max_tokens": max_tokens,
     }
+    if thinking_mode not in ("provider_default", "enabled", "disabled"):
+        raise ValueError(
+            "thinking_mode must be one of: provider_default, enabled, disabled"
+        )
+    if thinking_mode != "provider_default":
+        # DeepSeek V4 exposes the OpenAI-compatible extension
+        # {"thinking": {"type": "enabled|disabled"}}.  Keep the field
+        # opt-in so ordinary OpenAI-compatible providers never receive an
+        # extension they may reject.
+        body["thinking"] = {"type": thinking_mode}
     req = urllib.request.Request(
         url,
         data=json.dumps(body).encode("utf-8"),
@@ -609,7 +650,7 @@ def six_element_candidate_to_english_json(c_row: dict) -> str:
 def build_run_config(
     provider: str, model: str, base_url: str, temperature: float,
     max_tokens: int, run_id: str, expected_sample_count: int,
-    expected_max_calls: int,
+    expected_max_calls: int, thinking_mode: str = "provider_default",
 ) -> dict:
     hashes = json.loads(MEMBERSHIP_HASHES_PATH.read_text(encoding="utf-8"))
     return {
@@ -620,6 +661,7 @@ def build_run_config(
         "base_url_sha256": sha256_text(base_url),
         "temperature": temperature,
         "max_tokens": max_tokens,
+        "thinking_mode": thinking_mode,
         "membership_payload_sha256": hashes["selected_membership"]["membership_payload_sha256"],
         "layer_a_sha256": sha256_path(LAYER_A_PATH),
         "layer_b_sha256": sha256_path(LAYER_B_PATH),
@@ -725,6 +767,14 @@ def main() -> int:
     )
     ap.add_argument("--max-tokens", type=int, default=2048)
     ap.add_argument("--temperature", type=float, default=0.0)
+    ap.add_argument(
+        "--thinking-mode",
+        choices=("provider_default", "enabled", "disabled"),
+        default="provider_default",
+        help="Optional OpenAI-compatible thinking extension. Use 'disabled' "
+             "for DeepSeek V4 structured-output runs; the selected value is "
+             "locked in run_config.json.",
+    )
     ap.add_argument("--timeout-seconds", type=int, default=120)
     ap.add_argument(
         "--max-attempts", type=int, default=3,
@@ -761,6 +811,7 @@ def main() -> int:
         print(f"  range: start={args.start_index} end={args.end_index} "
               f"manifest={args.sample_manifest}")
         print(f"  pilot: {args.pilot}")
+        print(f"  thinking-mode: {args.thinking_mode}")
         print(f"  run-id: {args.run_id}")
         print()
         try:
@@ -852,6 +903,7 @@ def main() -> int:
         provider=args.provider, model=args.model, base_url=args.base_url,
         temperature=args.temperature, max_tokens=args.max_tokens,
         run_id=run_id, expected_sample_count=150, expected_max_calls=300,
+        thinking_mode=args.thinking_mode,
     )
     write_or_verify_run_config(run_dir, new_run_cfg)
     print(f"[run_config] locked: provider={args.provider} model={args.model!r}")
@@ -912,6 +964,7 @@ def main() -> int:
                     user_message=call_a_user,
                     max_tokens=args.max_tokens, temperature=args.temperature,
                     timeout_seconds=args.timeout_seconds,
+                    thinking_mode=args.thinking_mode,
                 )
                 elapsed_a = int((time.time() - t0) * 1000)
                 text_a = extract_assistant_text(resp_a)
@@ -1048,6 +1101,7 @@ def main() -> int:
                     user_message=call_b_user,
                     max_tokens=args.max_tokens, temperature=args.temperature,
                     timeout_seconds=args.timeout_seconds,
+                    thinking_mode=args.thinking_mode,
                 )
                 elapsed_b = int((time.time() - t0) * 1000)
                 text_b = extract_assistant_text(resp_b)
@@ -1149,6 +1203,10 @@ def main() -> int:
             "timestamp_utc": now_utc(),
         })
         n_ok += 1
+    # A recovered sample is appended after the rows that succeeded in an
+    # earlier process. Restore deterministic source ordering before any
+    # validator or promoter sees the candidate file.
+    normalize_v2_order(v2_path)
     # --- Write run_summary.json (no API key) ---
     summary = {
         "run_id": run_id,

@@ -1,0 +1,173 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 123,
+  "end_index_exclusive": 128,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000095",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "This depreciation is also permissible for acquisition or construction costs incurred for listed commercial buildings in the interest of monument preservation.",
+        "issues": [
+          "The preceding provision defining 'This depreciation' is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "This depreciation is also permissible for acquisition or construction costs incurred for listed commercial buildings in the interest of monument preservation", "start": 0, "end": 157},
+          "modality": {"label": "permission", "evidence": [{"text": "is also permissible", "start": 18, "end": 37}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "depreciation", "start": 5, "end": 17, "normalized": "apply referenced depreciation"}],
+          "conditions": [{"id": "c1_condition_1", "text": "for acquisition or construction costs incurred for listed commercial buildings in the interest of monument preservation", "start": 38, "end": 157, "normalized": "costs incurred for listed commercial buildings for monument preservation"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The antecedent defining the referenced depreciation method is unavailable, so only its visible extension to monument-preservation costs can be extracted."},
+        {"field": "actor", "reason": "No taxpayer or other claimant is explicit in the permission."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The visible rule extends an already defined depreciation permission to acquisition or construction costs incurred for listed commercial buildings in the interest of monument preservation. The missing depreciation mechanics are not inferred."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000103",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If this list was not submitted to the tax office with the tax return, but it appears from the return or the annexes attached thereto that the taxpayer is forming a tax-exempt amount, the tax office shall set the taxpayer a grace period of two weeks for submission of the list.",
+        "issues": [
+          "The prior provision defining the required list and tax-exempt amount is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If this list was not submitted to the tax office with the tax return, but it appears from the return or the annexes attached thereto that the taxpayer is forming a tax-exempt amount, the tax office shall set the taxpayer a grace period of two weeks for submission of the list", "start": 0, "end": 275},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 198, "end": 203}]},
+          "actors": [{"id": "c1_actor_1", "text": "the tax office", "start": 183, "end": 197, "normalized": "tax office"}],
+          "actions": [{"id": "c1_action_1", "text": "set the taxpayer a grace period of two weeks for submission of the list", "start": 204, "end": 275, "normalized": "give taxpayer two-week grace period to submit list"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If this list was not submitted to the tax office with the tax return, but it appears from the return or the annexes attached thereto that the taxpayer is forming a tax-exempt amount", "start": 0, "end": 181, "normalized": "list omitted from return but return materials show taxpayer forms tax-exempt amount"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "two weeks", "start": 239, "end": 248, "normalized": "two-week period"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The required list and referenced tax-exempt amount are defined outside the excerpt."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "When the list was omitted from the return but the submitted materials show formation of a tax-exempt amount, the tax office must allow the taxpayer two weeks to submit it. The second occurrence of 'the tax office' is the explicit duty bearer."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000104",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(1) Upon the acquisition or production of depreciable fixed assets, the taxpayer may claim an investment allowance of up to 20% of the acquisition or production costs as a profit-reducing deduction.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(1) Upon the acquisition or production of depreciable fixed assets, the taxpayer may claim an investment allowance of up to 20% of the acquisition or production costs as a profit-reducing deduction", "start": 0, "end": 197},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 81, "end": 84}]},
+          "actors": [{"id": "c1_actor_1", "text": "the taxpayer", "start": 68, "end": 80, "normalized": "taxpayer"}],
+          "actions": [{"id": "c1_action_1", "text": "claim an investment allowance", "start": 85, "end": 114, "normalized": "claim investment allowance"}],
+          "conditions": [{"id": "c1_condition_1", "text": "Upon the acquisition or production of depreciable fixed assets", "start": 4, "end": 66, "normalized": "acquisition or production of depreciable fixed assets"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "up to 20% of the acquisition or production costs", "start": 118, "end": 166, "normalized": "maximum 20 percent of acquisition or production costs"},
+            {"id": "c1_constraint_2", "text": "as a profit-reducing deduction", "start": 167, "end": 197, "normalized": "as profit-reducing deduction"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The taxpayer may claim an investment allowance upon acquiring or producing depreciable fixed assets, capped at 20% of acquisition or production costs and treated as a profit-reducing deduction."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000105",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "At the end of the fourth financial year following the year of acquisition or production, the investment allowances shall be transferred tax-free to a capital account or to a reserve deemed to have been taxed.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "At the end of the fourth financial year following the year of acquisition or production, the investment allowances shall be transferred tax-free to a capital account or to a reserve deemed to have been taxed", "start": 0, "end": 207},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be transferred", "start": 115, "end": 135}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be transferred", "start": 121, "end": 135, "normalized": "transfer investment allowances"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "At the end of the fourth financial year following the year of acquisition or production", "start": 0, "end": 87, "normalized": "end of fourth financial year after acquisition or production year"},
+            {"id": "c1_constraint_2", "text": "tax-free", "start": 136, "end": 144, "normalized": "tax-free"},
+            {"id": "c1_constraint_3", "text": "to a capital account or to a reserve deemed to have been taxed", "start": 145, "end": 207, "normalized": "to capital account or deemed-taxed reserve"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "actor", "reason": "The transfer obligation is passive and no responsible accounting actor is expressly identified."}
+      ],
+      "confidence": "high",
+      "rationale_summary": "Investment allowances must be transferred tax-free at the end of the fourth financial year following acquisition or production, either to a capital account or to a reserve deemed taxed."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000106",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) The investment allowance may only be claimed for business assets which\n\u2014 have a normal useful life in the business of at least four years, and\n\u2014 are used in a domestic permanent establishment that serves to generate income within the meaning of Section 2(3) items 1 to 3.",
+        "issues": [
+          "The substantive content of Section 2(3), items 1 to 3 is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) The investment allowance may only be claimed for business assets which\n\u2014 have a normal useful life in the business of at least four years, and\n\u2014 are used in a domestic permanent establishment that serves to generate income within the meaning of Section 2(3) items 1 to 3", "start": 0, "end": 274},
+          "modality": {"label": "permission", "evidence": [{"text": "may only", "start": 29, "end": 37}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be claimed", "start": 38, "end": 48, "normalized": "claim investment allowance"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "have a normal useful life in the business of at least four years", "start": 77, "end": 141, "normalized": "business asset has normal useful life of at least four years"},
+            {"id": "c1_condition_2", "text": "are used in a domestic permanent establishment that serves to generate income within the meaning of Section 2(3) items 1 to 3", "start": 149, "end": 274, "normalized": "asset used in domestic permanent establishment generating specified income"}
+          ],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "for business assets", "start": 49, "end": 68, "normalized": "business assets only"},
+            {"id": "c1_constraint_2", "text": "at least four years", "start": 122, "end": 141, "normalized": "minimum four-year useful life"},
+            {"id": "c1_constraint_3", "text": "within the meaning of Section 2(3) items 1 to 3", "start": 227, "end": 274, "normalized": "income under Section 2(3), items 1 to 3"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 2(3), items 1 to 3 is unavailable, so the referenced income classes cannot be expanded."},
+        {"field": "actor", "reason": "The claiming permission is passive and no taxpayer is explicit in this excerpt."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The allowance may be claimed only for business assets satisfying both listed requirements: at least a four-year normal business life and use in a domestic permanent establishment generating the referenced income."
+    }
+  ]
+}

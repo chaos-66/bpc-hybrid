@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stage2_evaluation_report_v3.schema.json",
+  "title": "Stage 2 evaluation report v1.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "dataset_id",
+    "method_id",
+    "claim_scope",
+    "is_formal_performance_result",
+    "contract",
+    "membership",
+    "primary_metrics",
+    "semantic_coverage",
+    "structural_encoding",
+    "error_accounting",
+    "cost_accounting",
+    "safety"
+  ],
+  "properties": {
+    "schema_version": {"const": "stage2_evaluation_report@1.2.0"},
+    "task_id": {"const": "S2.10-E"},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "method_id": {"enum": ["sun_rule_only", "sun_llm_fallback", "direct_llm"]},
+    "claim_scope": {"enum": ["synthetic_contract", "development", "formal"]},
+    "is_formal_performance_result": {"type": "boolean"},
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "normalization_rule_set_version", "clause_alignment", "clause_alignment_minimum_iou", "entity_alignment"],
+      "properties": {
+        "schema_version": {"const": "stage2_evaluator_contract@1.2.0"},
+        "normalization_rule_set_version": {"const": "safe-legal-v1"},
+        "clause_alignment": {"const": "maximum_total_character_span_iou"},
+        "clause_alignment_minimum_iou": {"const": 0.5},
+        "entity_alignment": {"const": "metric_specific_method_local_ids_ignored"}
+      }
+    },
+    "membership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sample_count", "payload_sha256", "gold_attempt_ids_exact_match"],
+      "properties": {
+        "sample_count": {"type": "integer", "minimum": 1},
+        "payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "gold_attempt_ids_exact_match": {"const": true}
+      }
+    },
+    "primary_metrics": {"type": "object"},
+    "semantic_coverage": {"type": "object"},
+    "structural_encoding": {"type": "object"},
+    "error_accounting": {"type": "object"},
+    "cost_accounting": {"type": "object"},
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gold_modified", "network_called_by_evaluator", "llm_called_by_evaluator", "row_level_predictions_persisted_in_report", "paper_score_targeting_used"],
+      "properties": {
+        "gold_modified": {"const": false},
+        "network_called_by_evaluator": {"const": false},
+        "llm_called_by_evaluator": {"const": false},
+        "row_level_predictions_persisted_in_report": {"const": false},
+        "paper_score_targeting_used": {"const": false}
+      }
+    }
+  }
+}

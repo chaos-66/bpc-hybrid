@@ -6,10 +6,11 @@ backup directory, or the action log. Every test that verifies a "real
 file" invariant computes the SHA-256 before and after to make sure
 the test never overwrites user data.
 
-The Tk GUI is a thin shell. The data operations live in
-``HumanCorrectionService`` (formally imported from
-``formal_experiment.estg150_service``). These tests call the service
-directly; the GUI is only smoke-tested via ``--help``.
+    The Tk GUI is a thin shell. The data operations live in
+    ``HumanCorrectionService`` (formally imported from
+    ``formal_experiment.estg150_service``). These tests call the service
+    directly; small headless widget doubles also verify navigation/save
+    wiring without opening a real window.
 
 The suite covers two orthogonal concerns:
 
@@ -44,6 +45,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import runpy
 import shutil
 import subprocess
 import sys
@@ -88,11 +90,11 @@ def sha256_file(p: Path) -> str:
 # ---------------------------------------------------------------------------
 
 @pytest.fixture(scope="session")
-def real_hashes() -> dict[str, str]:
+def real_hashes() -> dict[str, object]:
     """Snapshot the real source file SHA-256 once per session. If
     any of these changes after a test runs, that test has touched
     a real file and must fail."""
-    return {
+    snapshot: dict[str, object] = {
         "human_correction": sha256_file(REAL_HUMAN_CORRECTION),
         "canonical_review": sha256_file(REAL_CANONICAL_REVIEW),
         "de": sha256_file(REAL_DE),
@@ -100,7 +102,15 @@ def real_hashes() -> dict[str, str]:
         "llm_draft": sha256_file(REAL_LLM_DRAFT),
         "membership": sha256_file(REAL_MEMBERSHIP),
         "zh_aid": sha256_file(REAL_ZH_AID),
+        "backup_files": {
+            p.name: sha256_file(p)
+            for p in sorted(REAL_BACKUP_DIR.glob("*.json"))
+        } if REAL_BACKUP_DIR.exists() else {},
+        "action_log": (
+            sha256_file(REAL_ACTION_LOG) if REAL_ACTION_LOG.exists() else None
+        ),
     }
+    return snapshot
 
 
 # ---------------------------------------------------------------------------
@@ -144,7 +154,7 @@ def workspace(tmp_path: Path, real_hashes: dict[str, str]):
     # Build the 5 layers in the tmp workspace (does not touch real files)
     res = subprocess.run(
         [sys.executable, "scripts/build_estg150_review_layers.py"],
-        cwd=work, capture_output=True, text=True, check=False,
+        cwd=work, capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
     )
     assert res.returncode == 0, f"build failed: {res.stderr}"
     class WS:
@@ -237,24 +247,161 @@ def test_real_zh_aid_unchanged_by_tests(real_hashes):
 def test_tool_help_runs():
     res = subprocess.run(
         [sys.executable, str(SCRIPTS / "estg150_review_tool.py"), "--help"],
-        capture_output=True, text=True, check=False,
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
     )
     assert res.returncode == 0
     assert "EStG-150 LLM 辅助人工修正工具" in res.stdout
 
 
+def test_long_llm_candidate_cells_wrap_and_offer_full_text_popup():
+    """Long candidates must not regress to one-line clipped labels."""
+    namespace = runpy.run_path(str(SCRIPTS / "estg150_review_tool.py"))
+    display_height = namespace["_candidate_display_height"]
+    assert display_height("permission") == 1
+    assert display_height("x" * 80) == 2
+    assert display_height("x" * 400) == 3
+
+    source = (SCRIPTS / "estg150_review_tool.py").read_text(encoding="utf-8")
+    assert 'wrap="word"' in source
+    assert '"<Double-Button-1>"' in source
+    assert "def _show_full_candidate" in source
+
+
+def test_saved_span_fields_reload_from_plural_arrays():
+    """Returning to a record must show values persisted under actions/etc."""
+    namespace = runpy.run_path(str(SCRIPTS / "estg150_review_tool.py"))
+    display_state = namespace["_human_field_display_state"]
+    clause = {
+        "modality": {"value": "permission", "decision": "accepted"},
+        "actors": [{"text": "It", "decision": "accepted"}],
+        "actions": [{"text": "file the report", "decision": "edited"}],
+        "conditions": [{"text": "if required", "decision": "edited"}],
+        "constraints": [],
+        "exceptions": [],
+    }
+    decisions = {"constraint": "rejected", "exception": "unreviewed"}
+
+    assert display_state(clause, decisions, "modality") == ("permission", "accepted")
+    assert display_state(clause, decisions, "actor") == ("It", "accepted")
+    assert display_state(clause, decisions, "action") == ("file the report", "edited")
+    assert display_state(clause, decisions, "condition") == ("if required", "edited")
+    assert display_state(clause, decisions, "constraint") == ("", "rejected")
+    assert display_state(clause, decisions, "exception") == ("", "unreviewed")
+
+
+class _FakeReviewerWidget:
+    """Minimal Entry/Text/StringVar double for headless ReviewerApp tests."""
+
+    def __init__(self, value: str = ""):
+        self.value = value
+        self.focused = False
+
+    def get(self, *_args):
+        return self.value
+
+    def set(self, value):
+        self.value = value
+
+    def delete(self, *_args):
+        self.value = ""
+
+    def insert(self, _index, value):
+        self.value = value
+
+    def focus_set(self):
+        self.focused = True
+
+
+def _headless_navigation_app(reviewer_cls, display_state, service, action_value: str):
+    """Build only the ReviewerApp attributes used by on_next()."""
+    app = object.__new__(reviewer_cls)
+    app.service = service
+    app.idx = 0
+    app._dirty = False
+    record = service.records[0]
+    clause = record["human_correction"]["clauses"][0]
+    app.clause_id_var = _FakeReviewerWidget(clause["clause_id"])
+    app.t_appr = _FakeReviewerWidget(record.get("approved_text_en") or "")
+    app._six_widgets = {}
+    for field in ("modality", "actor", "action", "condition", "constraint", "exception"):
+        value, decision = display_state(clause, record.get("decisions") or {}, field)
+        if field == "action":
+            value = action_value
+        app._six_widgets[field] = {
+            "val_widget": _FakeReviewerWidget(value),
+            "dec_var": _FakeReviewerWidget(decision),
+        }
+    app.actor_action_map_text = _FakeReviewerWidget("[]")
+    app.order_relations_text = _FakeReviewerWidget("[]")
+    app.review_notes_text = _FakeReviewerWidget("")
+    app._reload_clause_text_widgets = lambda: None
+    app._refresh_span_listbox = lambda: None
+    app.status_messages = []
+    app._set_status = lambda message, color="#444": app.status_messages.append((message, color))
+    app.loaded_indices = []
+    app._load_record = lambda: app.loaded_indices.append(app.idx)
+    return app
+
+
+def test_next_navigation_commits_pending_manual_value_before_switch(service, workspace):
+    namespace = runpy.run_path(str(SCRIPTS / "estg150_review_tool.py"))
+    reviewer_cls = namespace["ReviewerApp"]
+    display_state = namespace["_human_field_display_state"]
+    record = service.records[0]
+    assert service.accept_translation(record["sample_id"])["ok"] is True
+    action = record["llm_candidate"]["clauses"][0]["action"]["span"]["text"]
+    app = _headless_navigation_app(reviewer_cls, display_state, service, action)
+
+    reviewer_cls.on_next(app)
+
+    assert app.idx == 1
+    assert app.loaded_indices == [1]
+    persisted = json.loads(workspace.human_correction.read_text(encoding="utf-8"))
+    saved = persisted["records"][0]
+    assert saved["human_correction"]["clauses"][0]["actions"][0]["text"] == action
+    assert saved["decisions"]["action"] == "edited"
+
+
+def test_next_navigation_stays_put_when_manual_value_has_no_exact_span(
+    service, workspace, monkeypatch
+):
+    namespace = runpy.run_path(str(SCRIPTS / "estg150_review_tool.py"))
+    reviewer_cls = namespace["ReviewerApp"]
+    display_state = namespace["_human_field_display_state"]
+    record = service.records[0]
+    assert service.accept_translation(record["sample_id"])["ok"] is True
+    app = _headless_navigation_app(
+        reviewer_cls,
+        display_state,
+        service,
+        "this phrase is not present in the approved English",
+    )
+    shown_errors = []
+    monkeypatch.setattr(
+        namespace["messagebox"],
+        "showerror",
+        lambda title, message: shown_errors.append((title, message)),
+    )
+
+    reviewer_cls.on_next(app)
+
+    assert app.idx == 0
+    assert app.loaded_indices == []
+    assert shown_errors and shown_errors[0][0] == "人工值无法保存"
+    assert app._six_widgets["action"]["val_widget"].focused is True
+    persisted = json.loads(workspace.human_correction.read_text(encoding="utf-8"))
+    assert persisted["records"][0]["human_correction"]["clauses"][0]["actions"] == []
+
+
 def test_tests_do_not_touch_real_backup_dir(real_hashes):
-    """If a test wrote to REAL_BACKUP_DIR, the directory would have
-    grown. Snapshot the directory listing and compare to a fresh
-    empty listing (the real dir was empty before tests started)."""
-    if not REAL_BACKUP_DIR.exists():
-        return
-    files = sorted(p.name for p in REAL_BACKUP_DIR.glob("*.json"))
-    # The real backup dir must contain zero production backups. Any
-    # test that writes here would have left files behind; this would
-    # have been caught by the SHA-256 snapshot of the source files
-    # too, but this is an explicit belt-and-suspenders check.
-    assert files == [], f"real backup dir was touched: {files}"
+    """Tests preserve any legitimate production backups byte-for-byte."""
+    current = {
+        p.name: sha256_file(p)
+        for p in sorted(REAL_BACKUP_DIR.glob("*.json"))
+    } if REAL_BACKUP_DIR.exists() else {}
+    assert current == real_hashes["backup_files"], (
+        "real backup directory changed during tests"
+    )
 
 
 def test_tests_do_not_touch_real_action_log(real_hashes):
@@ -262,11 +409,8 @@ def test_tests_do_not_touch_real_action_log(real_hashes):
     the file would have grown past the snapshot."""
     if not REAL_ACTION_LOG.exists():
         return
-    pre_size = REAL_ACTION_LOG.stat().st_size
-    # Snapshot the current SHA from session start
-    assert sha256_file(REAL_ACTION_LOG) == sha256_file(REAL_ACTION_LOG), \
-        "real action log SHA-256 mismatch"
-    assert pre_size >= 0  # existence already checked above
+    assert sha256_file(REAL_ACTION_LOG) == real_hashes["action_log"], \
+        "real action log changed during tests"
 
 
 # ---------------------------------------------------------------------------
@@ -836,6 +980,169 @@ def test_accept_en_candidate_writes_only_human_correction(service, workspace):
     assert r2["candidate_text_en"] == cand
 
 
+def test_accept_all_llm_candidates_materializes_values_and_exact_spans(service, workspace):
+    """The human click must copy candidate content, not merely flip a
+    decision flag while leaving the editable Gold payload empty."""
+    r = service.records[0]
+    sid = r["sample_id"]
+    candidate_before = copy.deepcopy(r["llm_candidate"])
+    assert service.accept_translation(sid)["ok"] is True
+
+    result = service.accept_all_candidate_fields(sid)
+    assert result["ok"] is True, result
+    assert r["llm_candidate"] == candidate_before
+    assert r["review_state"]["status"] == "in_progress"
+    assert r["review_state"]["status"] not in {"reviewed", "adjudicated"}
+    assert all(
+        r["decisions"][field] == "accepted"
+        for field in ("modality", "actor", "action", "condition", "constraint", "exception")
+    )
+
+    candidate_clause = candidate_before["clauses"][0]
+    human_clause = r["human_correction"]["clauses"][0]
+    assert human_clause["modality"]["value"] == candidate_clause["modality"]["value"]
+    assert human_clause["modality"]["decision"] == "accepted"
+    approved = r["approved_text_en"]
+    for singular, plural in (
+        ("actor", "actors"),
+        ("action", "actions"),
+        ("condition", "conditions"),
+        ("constraint", "constraints"),
+        ("exception", "exceptions"),
+    ):
+        candidate = candidate_clause[singular]
+        copied = human_clause[plural]
+        if candidate["value"] is None:
+            assert copied == []
+        else:
+            assert len(copied) == 1
+            assert copied[0]["text"] == candidate["span"]["text"]
+            assert copied[0]["decision"] == "accepted"
+            assert copied[0]["text"] == approved[copied[0]["start"]:copied[0]["end"]]
+
+    service.save_draft()
+    assert service.validate_current_record(sid)["format_valid"] is True
+
+
+def test_accept_single_field_copies_candidate_and_reject_clears_it(service):
+    r = service.records[0]
+    sid = r["sample_id"]
+    clause_id = r["human_correction"]["clauses"][0]["clause_id"]
+    assert service.accept_translation(sid)["ok"] is True
+    candidate_actor = r["llm_candidate"]["clauses"][0]["actor"]
+
+    accepted = service.accept_field(sid, clause_id, "actor")
+    assert accepted["ok"] is True, accepted
+    actor = r["human_correction"]["clauses"][0]["actors"][0]
+    assert actor["text"] == candidate_actor["span"]["text"]
+    assert actor["start"] == candidate_actor["span"]["start"]
+    assert actor["end"] == candidate_actor["span"]["end"]
+    assert actor["decision"] == "accepted"
+
+    rejected = service.reject_field(sid, clause_id, "actor")
+    assert rejected["ok"] is True
+    assert r["human_correction"]["clauses"][0]["actors"] == []
+    assert r["decisions"]["actor"] == "rejected"
+
+
+def test_unresolved_non_null_candidate_cannot_be_accepted_as_empty(service):
+    target = None
+    for record in service.records:
+        for candidate_clause in record["llm_candidate"]["clauses"]:
+            for field in ("actor", "action", "condition", "constraint", "exception"):
+                candidate = candidate_clause[field]
+                if candidate["value"] is not None and candidate.get("span") is None:
+                    target = (record, candidate_clause["clause_id"], field)
+                    break
+            if target:
+                break
+        if target:
+            break
+    assert target is not None, "fixture should include at least one unresolved non-null candidate"
+    r, clause_id, field = target
+    assert service.accept_translation(r["sample_id"])["ok"] is True
+    human_before = copy.deepcopy(r["human_correction"])
+
+    result = service.accept_field(r["sample_id"], clause_id, field)
+    assert result["ok"] is False
+    assert "no exact span" in " ".join(result["errors"])
+    assert r["human_correction"] == human_before
+    assert r["decisions"][field] == "unreviewed"
+
+
+def test_needs_adjudication_does_not_create_fake_empty_span(service):
+    r = service.records[0]
+    sid = r["sample_id"]
+    clause_id = r["human_correction"]["clauses"][0]["clause_id"]
+    assert service.accept_translation(sid)["ok"] is True
+
+    result = service._set_field_decision(sid, clause_id, "actor", "needs_adjudication")
+    assert result["ok"] is True
+    assert r["decisions"]["actor"] == "needs_adjudication"
+    assert r["human_correction"]["clauses"][0]["actors"] == []
+
+
+def test_edit_span_field_resolves_unique_offsets_and_refuses_ambiguous_text(service):
+    r = service.records[0]
+    sid = r["sample_id"]
+    clause_id = r["human_correction"]["clauses"][0]["clause_id"]
+    assert service.accept_translation(sid)["ok"] is True
+    candidate_actor = r["llm_candidate"]["clauses"][0]["actor"]["span"]["text"]
+
+    edited = service.edit_field(sid, clause_id, "actor", candidate_actor)
+    assert edited["ok"] is True, edited
+    actor = r["human_correction"]["clauses"][0]["actors"][0]
+    assert actor["decision"] == "edited"
+    assert actor["text"] == r["approved_text_en"][actor["start"]:actor["end"]]
+
+    before = copy.deepcopy(r["human_correction"])
+    ambiguous = service.edit_field(sid, clause_id, "action", "the")
+    assert ambiguous["ok"] is False
+    assert "appears more than once" in " ".join(ambiguous["errors"])
+    assert r["human_correction"] == before
+
+
+def test_accept_all_refuses_after_approved_english_was_edited(service):
+    r = service.records[0]
+    sid = r["sample_id"]
+    assert service.accept_translation(sid)["ok"] is True
+    assert service.edit_translation(sid, r["approved_text_en"] + " ")["ok"] is True
+    result = service.accept_all_candidate_fields(sid)
+    assert result["ok"] is False
+    assert "spans are stale" in " ".join(result["errors"])
+
+
+def test_relation_editor_persists_valid_ids_and_rejects_unknown_ids(service):
+    r = service.records[0]
+    sid = r["sample_id"]
+    assert service.accept_translation(sid)["ok"] is True
+    assert service.accept_all_candidate_fields(sid)["ok"] is True
+    clause = r["human_correction"]["clauses"][0]
+    actor_id = clause["actors"][0]["id"]
+    action_id = clause["actions"][0]["id"]
+
+    valid = service.edit_relations(
+        sid,
+        clause["clause_id"],
+        [{"actor_id": actor_id, "action_id": action_id}],
+        [],
+    )
+    assert valid == {"ok": True, "changed": True}
+    assert clause["actor_action_map"] == [
+        {"actor_id": actor_id, "action_id": action_id}
+    ]
+
+    before = copy.deepcopy(clause["actor_action_map"])
+    invalid = service.edit_relations(
+        sid,
+        clause["clause_id"],
+        [{"actor_id": "missing", "action_id": action_id}],
+        [],
+    )
+    assert invalid["ok"] is False
+    assert clause["actor_action_map"] == before
+
+
 def test_edit_approved_en_marks_existing_spans_stale(service, workspace):
     first_sid = service.records[0]["sample_id"]
     r = service.get_record(first_sid)
@@ -952,13 +1259,13 @@ def test_idempotent_validator_run(workspace):
     res = subprocess.run(
         [sys.executable, str(SCRIPTS / "validate_human_correction.py"),
          "--path", str(workspace.human_correction), "--json"],
-        capture_output=True, text=True, check=False,
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
     )
     a = json.loads(res.stdout)
     res2 = subprocess.run(
         [sys.executable, str(SCRIPTS / "validate_human_correction.py"),
          "--path", str(workspace.human_correction), "--json"],
-        capture_output=True, text=True, check=False,
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
     )
     b = json.loads(res2.stdout)
     assert a == b

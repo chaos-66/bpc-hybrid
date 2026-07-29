@@ -1,0 +1,131 @@
+{
+  "schema_version": "estg150_s22_annotation_freeze_receipt@1.0.0",
+  "run_id": "s22_estg150_human_annotation_freeze_v1",
+  "task_id": "S2.2",
+  "status": "succeeded_annotation_frozen_not_formal_gold_published",
+  "dataset": {
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "claim_label": "LLM-assisted, human-adjudicated annotation freeze",
+    "membership_count": 150,
+    "membership_payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
+    "sun_original_150": false,
+    "exact_reproduction": false
+  },
+  "validation": {
+    "format_valid": true,
+    "review_ready": true,
+    "freeze_ready": true,
+    "n_records": 150,
+    "n_approved_en": 150,
+    "n_translation_unreviewed": 0,
+    "n_field_decisions_total": 900,
+    "n_field_decisions_unreviewed": 0,
+    "n_field_decisions_resolved": 900,
+    "n_records_incomplete": 0,
+    "n_records_fully_decided": 150,
+    "n_reviewed": 0,
+    "n_adjudicated": 150,
+    "review_state_counts": {
+      "needs_review": 0,
+      "in_progress": 0,
+      "reviewed": 0,
+      "adjudicated": 150
+    },
+    "format_errors": [],
+    "review_blockers": [],
+    "freeze_blockers": []
+  },
+  "annotation_summary": {
+    "clause_count": 231,
+    "modality_values": {
+      "definition": 39,
+      "obligation": 97,
+      "permission": 62,
+      "prohibition": 33
+    },
+    "span_counts": {
+      "action": 247,
+      "actor": 48,
+      "condition": 214,
+      "constraint": 302,
+      "exception": 13
+    },
+    "top_level_decisions": {
+      "translation": {
+        "accepted": 139,
+        "edited": 11
+      },
+      "modality": {
+        "accepted": 2,
+        "edited": 148
+      },
+      "actor": {
+        "accepted": 1,
+        "edited": 148,
+        "rejected": 1
+      },
+      "action": {
+        "edited": 150
+      },
+      "condition": {
+        "edited": 150
+      },
+      "constraint": {
+        "accepted": 1,
+        "edited": 148,
+        "rejected": 1
+      },
+      "exception": {
+        "accepted": 3,
+        "edited": 147
+      }
+    },
+    "clause_modality_decisions": {
+      "accepted": 2,
+      "edited": 229
+    },
+    "span_decisions": {
+      "accepted": 1,
+      "edited": 823
+    }
+  },
+  "artifacts": {
+    "human_correction_layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+      "byte_size": 1301626
+    },
+    "membership_hashes": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b",
+      "byte_size": 30276
+    },
+    "human_review_schema": {
+      "path": "configs/schemas/human_gold_review.schema.json",
+      "sha256": "abcccdb420bdf4304279270b8971cdd785d89e14c551842d305033314e128503",
+      "byte_size": 4629
+    }
+  },
+  "route_boundaries": {
+    "annotation_scope": "sentence_only_approved_english_working_text",
+    "german_to_english_fidelity_human_verified": false,
+    "context_sidecar_used": false,
+    "open_issue_ids": [
+      "RWI-0001",
+      "RWI-0007"
+    ],
+    "formal_gold_publication_ready": false,
+    "formal_stage2_method_run_authorized": false,
+    "next_required_task": "re-lock the Stage 2 context/language/input route before formal Gold publication or method evaluation"
+  },
+  "safety": {
+    "human_correction_read_only": true,
+    "human_decisions_modified": false,
+    "data_gold_written": false,
+    "data_input_written": false,
+    "method_predictions_or_results_written": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "performance_evaluation": false
+  }
+}

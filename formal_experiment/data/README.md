@@ -8,6 +8,8 @@ data/
                   and legacy evidence; never use in final result tables
     estg/         independently reconstructed EStG-150 v1 — see below
     human_review/ 5-layer v2 workflow — see below
+    complex_legal/ S2.11 official GDPR source + frozen 50-ID membership;
+                   semantic Gold remains pending human adjudication
   input/          future frozen regulatory inputs shared by all methods
   gold/           future human-reviewed, span-aware, locked Gold
   predictions/    future canonical predictions from M1/M2/M3
@@ -43,6 +45,15 @@ not claim it is "from-scratch human Gold" or "without LLM assistance".
 
 Build all 5 layers: `python formal_experiment/scripts/build_estg150_review_layers.py`
 Review: `python formal_experiment/scripts/estg150_review_tool.py` (default: opens layer E)
+
+## S2.11 complex legal set
+
+`development/complex_legal/gdpr_2016_679_oj_en/` contains the hash-locked
+Publications Office Formex source for CELEX `32016R0679`, a deterministic
+50-record membership covering GDPR Articles 5–50, and a blank 0/50 human-Gold
+template. The input membership and mapping protocol are verified; semantic
+Gold and formal complexity profiles are not frozen. The old
+`development/gdpr50/` heuristic pack is provenance only and is never imported.
 Validate: `python formal_experiment/scripts/validate_human_correction.py`
 
 Initial state should be: `format_valid=true`, `review_ready=false`,

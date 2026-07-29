@@ -157,6 +157,7 @@ def test_render_user_prompt_substitutes_keys():
     rendered = render_user_prompt(
         p.user_prompt_template,
         sample_id="estg_000001",
+        source_id="estg_000001",
         source_text="The controller shall notify.",
         few_shot_block="(omitted)",
     )
@@ -188,83 +189,116 @@ def test_build_manifest_entry_records_sha256():
 # ---------------------------------------------------------------------------
 
 
-# import the apply_repair_patch function from the runner module
-sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
-import importlib.util
-_spec = importlib.util.spec_from_file_location(
-    "run_sun_llm_fallback_mod",
-    PROJECT_ROOT / "scripts" / "run_sun_llm_fallback.py",
-)
-_mod = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(_mod)
-apply_repair_patch = _mod.apply_repair_patch
+from bpc_hybrid.sun_style.h1_selective import RepairPlan, apply_repair_patch
 
 
-def _clause_fixture() -> dict:
+def _record_fixture() -> dict:
     text = "The controller shall notify the supervisory authority within 72 hours."
     return {
-        "clause_id": "estg_000001_c01",
-        "clause_span": {"text": text, "start": 0, "end": len(text)},
-        "modality": {
-            "label": "obligation",
-            "evidence": [{"text": "shall", "start": 15, "end": 20}],
-        },
-        "actors": [{"id": "a01", "text": "The controller", "start": 0, "end": 15, "normalized": "controller"}],
-        "actions": [],
-        "conditions": [],
-        "constraints": [],
-        "exceptions": [],
-        "actor_action_map": [],
-        "order_relations": [],
+        "schema_version": "1.0.0",
+        "sample_id": "estg_000001",
+        "source_id": "estg_000001",
+        "source_text": text,
+        "clauses": [{
+            "clause_id": "estg_000001_c01",
+            "clause_span": {"text": text, "start": 0, "end": len(text)},
+            "modality": {
+                "label": "obligation",
+                "evidence": [{"text": "shall", "start": 15, "end": 20}],
+            },
+            "actors": [{"id": "a01", "text": "The controller", "start": 0, "end": 14, "normalized": "controller"}],
+            "actions": [{"id": "p01", "text": "notify", "start": 21, "end": 27, "normalized": "notify"}],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [{"actor_id": "a01", "action_id": "p01"}],
+            "order_relations": [],
+        }],
+        "method": {"name": "sun_rule_only", "schema_source": SCHEMA_SOURCE},
+        "validation": {"schema_valid": True, "cross_field_valid": True, "errors": []},
+    }
+
+
+def _plan(*fields: str) -> RepairPlan:
+    return RepairPlan(
+        sample_id="estg_000001",
+        clause_id="estg_000001_c01",
+        trigger_codes=("tregex_field_conflict",),
+        repair_fields=fields,
+    )
+
+
+def _envelope(plan: RepairPlan, patches: dict) -> dict:
+    return {
+        "sample_id": plan.sample_id,
+        "clause_id": plan.clause_id,
+        "repair_fields": list(plan.repair_fields),
+        "patches": patches,
+        "unsupported_or_ambiguous": [],
+        "reason": "test patch",
     }
 
 
 def test_h1_patch_cannot_modify_unauthorized_field():
-    clause = _clause_fixture()
-    repair_fields = ["action"]  # only action
+    record = _record_fixture()
+    plan = _plan("actions", "actor_action_map", "order_relations")
     patch = {"modality": {"label": "prohibition", "evidence": [{"text": "shall", "start": 15, "end": 20}]}}
-    new_clause, errors = apply_repair_patch(clause, patch, repair_fields)
-    assert any("unauthorized" in e for e in errors)
-    # modality must NOT have been changed
-    assert new_clause["modality"]["label"] == "obligation"
+    result = apply_repair_patch(record, _envelope(plan, patch), plan)
+    assert not result.accepted
+    assert result.status == "rejected_unauthorized_field"
+    assert result.record == record
 
 
 def test_h1_patch_replaces_entire_modality_block():
-    clause = _clause_fixture()
+    record = _record_fixture()
+    plan = _plan("modality")
     patch = {"modality": {"label": "prohibition", "evidence": [{"text": "shall not", "start": 15, "end": 23}]}}
-    new_clause, errors = apply_repair_patch(clause, patch, ["modality"])
-    assert not errors
-    assert new_clause["modality"]["label"] == "prohibition"
+    result = apply_repair_patch(record, _envelope(plan, patch), plan)
+    assert not result.accepted  # evidence text does not match the source
+    assert result.record == record
 
 
-def test_h1_patch_actor_id_collision_rejected():
-    clause = _clause_fixture()
-    patch = {"actors": [{"id": "a01", "text": "the controller", "start": 0, "end": 15, "normalized": "controller"}]}
-    new_clause, errors = apply_repair_patch(clause, patch, ["actors"])
-    assert any("collides" in e for e in errors)
+def test_h1_patch_same_field_id_preservation_accepted():
+    record = _record_fixture()
+    plan = _plan("actors", "actor_action_map")
+    patch = {
+        "actors": [{"id": "a01", "text": "The controller", "start": 0, "end": 14, "normalized": "controller"}],
+        "actor_action_map": [{"actor_id": "a01", "action_id": "p01"}],
+    }
+    result = apply_repair_patch(record, _envelope(plan, patch), plan)
+    assert result.accepted
 
 
 def test_h1_patch_absent_drops_field():
-    clause = _clause_fixture()
+    record = _record_fixture()
+    plan = _plan("conditions")
     patch = {"actors": {"absent": True}}
-    new_clause, errors = apply_repair_patch(clause, patch, ["actors"])
-    assert not errors
-    assert new_clause["actors"] == []
+    result = apply_repair_patch(record, _envelope(plan, patch), plan)
+    assert not result.accepted
+    assert result.record == record
 
 
 def test_h1_patch_new_id_accepted():
-    clause = _clause_fixture()
-    patch = {"actions": [{"id": "p99", "text": "notify the supervisory authority", "start": 21, "end": 54, "normalized": "notify supervisory authority"}]}
-    new_clause, errors = apply_repair_patch(clause, patch, ["actions"])
-    assert not errors
-    assert new_clause["actions"] == patch["actions"]
+    record = _record_fixture()
+    plan = _plan("actions", "actor_action_map", "order_relations")
+    actions = [{"id": "p99", "text": "notify the supervisory authority", "start": 21, "end": 53, "normalized": "notify supervisory authority"}]
+    patch = {
+        "actions": actions,
+        "actor_action_map": [{"actor_id": "a01", "action_id": "p99"}],
+        "order_relations": [],
+    }
+    result = apply_repair_patch(record, _envelope(plan, patch), plan)
+    assert result.accepted
+    assert result.record["clauses"][0]["actions"] == actions
 
 
 def test_h1_patch_modality_absent_rejected():
-    clause = _clause_fixture()
+    record = _record_fixture()
+    plan = _plan("modality")
     patch = {"modality": {"absent": True}}
-    new_clause, errors = apply_repair_patch(clause, patch, ["modality"])
-    assert any("absent" in e for e in errors)
+    result = apply_repair_patch(record, _envelope(plan, patch), plan)
+    assert not result.accepted
+    assert result.record == record
 
 
 # ---------------------------------------------------------------------------

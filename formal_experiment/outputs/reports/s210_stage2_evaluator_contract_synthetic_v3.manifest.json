@@ -1,0 +1,67 @@
+{
+  "artifacts": {
+    "canonical_schema": {
+      "path": "configs/schemas/stage2_prediction.schema.json",
+      "sha256": "7485ac4a3a42b976d87e63a7d2ead88cc3df1f810b14dd066bc1f63c15599d1b"
+    },
+    "contract": {
+      "path": "configs/stage2_evaluator_s210_v3.json",
+      "sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f"
+    },
+    "fixture": {
+      "path": "tests/fixtures/stage2_evaluator/s210_contract_fixture.json",
+      "sha256": "549c11ce259ed1a754e7ae99845a09318bcbdefd48426784880cd11fe8164c62"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage2_evaluation_v3.py",
+      "sha256": "d7df11f86908b68424ed36afe3386a5c4d8a24f93dfb5cdb1d60333f48d7a9db"
+    },
+    "regression_tests": {
+      "path": "tests/test_s2_10_stage2_evaluation_v3.py",
+      "sha256": "490dd2504987b5f8c980e3a7aba2ed6bf8f0a6a2ec167d3cc90a6953a838abe0"
+    },
+    "report_schema": {
+      "path": "configs/schemas/stage2_evaluation_report_v3.schema.json",
+      "sha256": "004ed6946fb372d52236cf6a952f40efe6a66153a4592752db6fb181b1e7a603"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage2_evaluator_s210_v3.py",
+      "sha256": "6dbaa726058cc64c58416bc8fa943b22a3f070aa06bd5bccbd3091fad174d022"
+    }
+  },
+  "claim_boundary": "This exact gate verifies fixed method-independent alignment mechanics. Synthetic metric constants are not B0/H1/D1 performance and were not selected to match a paper score.",
+  "run_id": "s210_stage2_evaluator_contract_synthetic_v3",
+  "safety": {
+    "formal_gold_read_or_modified": false,
+    "formal_performance_evaluation": false,
+    "formal_predictions_read_or_created": false,
+    "llm_api_called": false,
+    "method_comparison": false,
+    "network_called": false,
+    "paper_score_targeting_used": false,
+    "row_level_predictions_persisted": false,
+    "synthetic_fixture_only": true,
+    "threshold_search_used": false
+  },
+  "schema_version": "s210_evaluator_verification_manifest@1.2.0",
+  "status": "succeeded_candidate_for_future_development",
+  "task_id": "S2.10-E",
+  "verification": {
+    "action_strict_f1_synthetic": 0.25,
+    "adversarial_aligned_match_count": 1,
+    "adversarial_exact_match_count": 0,
+    "adversarial_report_payload_sha256": "01adb5f6cdc9a38cc6e4d43818aa08f321e5b9b2d7e65e07257ae621ecb9c688",
+    "aligned_clause_recall_synthetic": 0.6,
+    "exact_clause_recall_synthetic": 0.6,
+    "formal_scope_fail_closed": true,
+    "manual_report_validation": true,
+    "membership_payload_sha256": "f74be514b6ffed61cb196feb730ec6db29ca0c8e2ffd6a00cf248a6187e5af47",
+    "method_local_id_adversarial_aligned": true,
+    "modality_macro_f1_synthetic": 0.41666666666666663,
+    "record_and_clause_array_order_invariant": true,
+    "report_payload_sha256": "db654cd87d40a22c56677f827fe4d8e53790a4068f76afcd75f54f4945f8117c",
+    "report_schema_identity_validation": true,
+    "sample_count": 5,
+    "shared_id_disjoint_span_rejected": true
+  }
+}

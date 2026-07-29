@@ -105,7 +105,7 @@ def test_canonical_en_text_matches_en_file():
 def test_validator_format_valid_zero_errors():
     res = subprocess.run(
         [sys.executable, str(VALIDATE), "--path", str(CANONICAL), "--json"],
-        capture_output=True, text=True, check=False,
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
     )
     out = json.loads(res.stdout)
     assert out["format_valid"] is True
@@ -137,7 +137,7 @@ def test_validator_rejects_modified_raw_text():
                        encoding="utf-8")
         res = subprocess.run(
             [sys.executable, str(VALIDATE), "--path", str(tmp), "--json"],
-            capture_output=True, text=True, check=False,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
         )
         out = json.loads(res.stdout)
         assert out["format_valid"] is False
@@ -160,7 +160,7 @@ def test_validator_rejects_duplicate_legacy_id():
                        encoding="utf-8")
         res = subprocess.run(
             [sys.executable, str(VALIDATE), "--path", str(tmp), "--json"],
-            capture_output=True, text=True, check=False,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
         )
         out = json.loads(res.stdout)
         assert out["format_valid"] is False
@@ -179,7 +179,7 @@ def test_validator_rejects_pre_filled_old_gold():
                        encoding="utf-8")
         res = subprocess.run(
             [sys.executable, str(VALIDATE), "--path", str(tmp), "--json"],
-            capture_output=True, text=True, check=False,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
         )
         out = json.loads(res.stdout)
         assert out["format_valid"] is False

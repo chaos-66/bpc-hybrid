@@ -1,0 +1,51 @@
+{
+  "_meta": {
+    "artifact_scope": "development_only",
+    "category": "modality",
+    "generation_policy_sha256": "cebb4c64fdbd63339869169697438e3df6ac3612b819cf83b5a4c69a80ea9a59",
+    "language": "en",
+    "lexicon_id": "public_marker_lexicon_en_v2",
+    "parent_lexicon_id": "public_marker_lexicon_en_v1",
+    "policy_change": "v2 adds explicit prohibition forms and a small set of paper-cited Sun modality examples; ambiguous can/may are kept; new entries are restricted to forms verified in the local Sun/Sleimi audit",
+    "source_snapshot_id": "public_marker_sources_en_v2",
+    "source_table": "resources/lexicon/public_marker_sources_en_v2.json"
+  },
+  "class_counts": {
+    "definition": 1,
+    "obligation": 5,
+    "permission": 3,
+    "prohibition": 3
+  },
+  "entries": [
+    {"ambiguity": "low", "modality_class": "definition", "normalized": "shall mean", "source_ids": ["paper_examples_local_audit_2026_07_12", "sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example", "public_research_cited_modality_example"], "surface": "shall mean", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "definition", "normalized": "means", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "means", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "definition", "normalized": "is defined as", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "is defined as", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "definition", "normalized": "are defined as", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "are defined as", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "definition", "normalized": "refers to", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "refers to", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "definition", "normalized": "denotes", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "denotes", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "definition", "normalized": "is understood as", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "is understood as", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "definition", "normalized": "shall be construed as", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "shall be construed as", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "definition", "normalized": "amounts to", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "amounts to", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "definition", "normalized": "also include", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "also include", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "medium", "modality_class": "obligation", "normalized": "shall", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "shall", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "medium", "modality_class": "obligation", "normalized": "must", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "must", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "medium", "modality_class": "obligation", "normalized": "need to", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "need to", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "medium", "modality_class": "obligation", "normalized": "is required to", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "is required to", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "medium", "modality_class": "obligation", "normalized": "is obliged to", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "is obliged to", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "medium", "modality_class": "obligation", "normalized": "has to", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "has to", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "medium", "modality_class": "obligation", "normalized": "should", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "should", "syntactic_scope": "aux_or_main_vp_anchor", "ambiguity_notes": "deontic-should only; epistemic-should is excluded by syntactic_scope"},
+    {"ambiguity": "low", "modality_class": "prohibition", "normalized": "is prohibited", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "is prohibited", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "prohibition", "normalized": "shall not", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "shall not", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "prohibition", "normalized": "must not", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "must not", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "prohibition", "normalized": "may not", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "may not", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "prohibition", "normalized": "is not permitted", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "is not permitted", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "prohibition", "normalized": "is not allowed", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "is not allowed", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "low", "modality_class": "prohibition", "normalized": "must never", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "must never", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "high", "modality_class": "permission", "normalized": "may", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "may", "syntactic_scope": "aux_or_main_vp_anchor"},
+    {"ambiguity": "high", "modality_class": "permission", "normalized": "can", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "can", "syntactic_scope": "aux_or_main_vp_anchor", "ambiguity_notes": "epistemic-can excluded; only deontic/ability can kept by syntactic_scope"},
+    {"ambiguity": "medium", "modality_class": "permission", "normalized": "is authorized", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "is authorized", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "medium", "modality_class": "permission", "normalized": "is allowed to", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "is allowed to", "syntactic_scope": "main_vp_anchor"},
+    {"ambiguity": "medium", "modality_class": "permission", "normalized": "is permitted to", "source_ids": ["sleimi_table5_modality_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_modality_example"], "surface": "is permitted to", "syntactic_scope": "main_vp_anchor"}
+  ],
+  "schema_version": "public_marker_category@1.1.0"
+}

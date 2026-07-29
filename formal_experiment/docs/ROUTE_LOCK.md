@@ -4,12 +4,13 @@
 > 里程碑以 `MASTER_PIPELINE.md` 为唯一主线。本文只锁定 EStG-150、人工 Gold
 > 和当前执行门禁；它不授权真实 LLM/API，也不代替 Stage 3 扩展的后续合同重锁。
 
-> 状态：2026-07-13 11:30 路线 v2 工作流"启动门禁"与"冻结门禁"分离。
+> 状态：2026-07-21 S2.2 annotation freeze 已验证；路线 v2 工作流“启动门禁”、
+> “注释冻结门禁”、“正式 Gold 发布门禁”和“最终实验门禁”保持分离。
 > 启动门禁（`human_review_input_ready`）在 0/150 时即可为 true——意味
 > 着数据来源、150 条 membership、英文翻译、六要素 schema、审核工具已经
 > 锁定，用户可以立刻开始逐条人工审核。冻结门禁（`human_review_freeze_ready`）
-> 在 150 条全部人工裁决完成后才允许声明正式 Gold。这两个门禁刻意分开：输入
-> 已就绪 ≠ 审核已完成，写作或下游运行不能把两者混为一谈。
+> 在 150 条全部人工裁决完成后才为 true。当前 gate 1/2 为 true，gate 3/4 为 false；
+> 注释已冻结 ≠ 正式 Gold 已发布，写作或下游运行不能把这些状态混为一谈。
 >
 > 2026-07-12 21:30 v1 工作流退役为 workflow draft；v2 工作流上线
 > 作为 active editing surface。完整路线锁在 v2 下生效，但 route v2 仍
@@ -47,13 +48,15 @@ SHA-256 记录在同一个文件 `selected_membership.membership_payload_sha256`
 - 工具在每条 span 的字符位置超出 clause_span / 与 approved_text_en 不
   一致 / id 重复时拒绝保存
 - 标记 reviewed/adjudicated 前 validator 必须通过
-- 最终 Gold 在 layer E freeze_ready=true 后由 `audit_project.py` 确认
-  + 在论文中称为 "LLM-assisted, human-adjudicated Gold"
+- layer E `freeze_ready=true` 后，由 S2.2 deterministic receipt 与
+  `audit_project.py` 确认 **annotation snapshot frozen**；只有 formal publication
+  gate 另行通过后，论文才可称 "LLM-assisted, human-adjudicated Gold"
 
 ## 3. 中文 + 英文回译辅助（仅辅助）
 
-- layer D 字段目前全 null（"尚未生成中文核对辅助"）
-- **不调用真实 LLM** 自动填充
+- layer D v2 已由独立授权的 `deepseek-v4-flash`、`thinking=disabled` 运行生成并
+  通过 150/150 中文辅助、150/150 盲回译与严格 promotion 校验；这是审核辅助 provenance
+- S2.2 freeze receipt 不调用 LLM，也不重新生成或修改 layer D
 - 中文和英文回译**不进入**：
   - 英文 span 决定
   - 正式 Gold offset
@@ -74,7 +77,8 @@ SHA-256 记录在同一个文件 `selected_membership.membership_payload_sha256`
 - `membership_payload_sha256` 与 `estg_150_membership_hashes.json` 完全一致
 - layer A/B/C/D SHA-256 在每次 save 时不变
 - 唯一人工编辑文件 = `data/development/human_review/estg_150_human_correction_v1.json`
-- layer E 初始 150/150 needs_review, 0 approved_en, 0 decided fields
+- layer E 初始状态为 150/150 needs_review、0 approved_en、0 decided fields；当前
+  frozen v1 bytes 为 approved 150/150、resolved 900/900、adjudicated 150/150、231 clauses
 - 旧 `estg_150_canonical_review_v1.json` 标记 retired，**不被新工作流
   写覆盖**
 - references/ 和 archive/ 永远只读
@@ -109,7 +113,7 @@ SHA-256 记录在同一个文件 `selected_membership.membership_payload_sha256`
   `allowed_publication_statuses` 白名单时才为 true。**保守策略**：任何一项缺失、
   非 locked 或不在白名单，都使 gate 3 保持 false，不允许猜测放行。
 - 最终实验可运行门禁（gate 4）在 gate 3 之外再要求：三方法全部就绪、
-  冻结 input/gold 已写入。当前 0/150 时一定为 false。
+  冻结 input/gold 已写入。当前 gate 3 仍为 false，因此 gate 4 也为 false。
 - `audit.human_review_ready` 是 gate 1 的 DEPRECATED 别名，保留是为了
   不破坏 `--require-human-review-ready` 命令名。**新代码**需要
   "ready to publish Gold" 必须使用 `human_review_freeze_ready` /
@@ -121,6 +125,9 @@ SHA-256 记录在同一个文件 `selected_membership.membership_payload_sha256`
 - 数据层生成：`scripts/build_estg150_review_layers.py`
 - 人工修正工具：`scripts/estg150_review_tool.py`（薄壳,只调 service）
 - 校验：`scripts/validate_human_correction.py`（v2 layer E 全局聚合）
+- S2.2 冻结 receipt：`scripts/verify_estg150_s22_freeze.py`（deterministic、
+  no-overwrite；不写 formal Gold）
+- S2.2 fail-closed gate：`src/formal_experiment/s2_2_freeze_gate.py`
 - 旧 v1 sanity check：`scripts/validate_canonical_review.py`（仅 dev 用）
 - 路径常量：`src/formal_experiment/paths.py`（HUMAN_CORRECTION_FILE 等）
 - **Service 层**（v2 新增）：`src/formal_experiment/estg150_service.py`
@@ -139,9 +146,8 @@ SHA-256 记录在同一个文件 `selected_membership.membership_payload_sha256`
 - 工具的 4-way modality 强制选择 + 显式 field decision
 - 如未来 LLM 候选由 D1 同一模型产生，必须披露并增加盲审样本
 - 中文辅助不参与 Gold
-- 当前 Layer D 仍为 `not_generated`,**不**得声称"中文回译审核流程
-  ready";需在 `docs/LLM_BUDGET_PROPOSAL_2026-07-12.md` 给出设计草案
-  + 用户单独授权后,才能 fill Layer D
+- Layer D v2 可披露为已完成的中文辅助/盲回译流程，但不得称其验证了德译英忠实度，
+  也不得把它算作 Gold 决策或模型输入
 
 ## 8. 后续审批项
 

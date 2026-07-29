@@ -1,0 +1,166 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 78,
+  "end_index_exclusive": 83,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000546",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(4) An annual adjustment pursuant to subsection 2 or 3 shall not take place if the income from employment is assessed for income tax pursuant to Section 41.",
+        "issues": [
+          "The substantive content of subsections 2 and 3 and Section 41 is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(4) An annual adjustment pursuant to subsection 2 or 3 shall not take place if the income from employment is assessed for income tax pursuant to Section 41", "start": 0, "end": 155},
+          "modality": {"label": "prohibition", "evidence": [{"text": "shall not", "start": 55, "end": 64}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "take place", "start": 65, "end": 75, "normalized": "carry out annual adjustment"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the income from employment is assessed for income tax pursuant to Section 41", "start": 76, "end": 155, "normalized": "employment income is assessed for income tax under Section 41"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "pursuant to subsection 2 or 3", "start": 25, "end": 54, "normalized": "annual adjustment under subsection 2 or 3"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The referenced annual-adjustment provisions and Section 41 assessment rule are unavailable, so their internal scope cannot be verified."},
+        {"field": "actor", "reason": "The prohibition does not expressly identify the authority that would otherwise carry out the annual adjustment."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The single rule prohibits an annual adjustment under subsection 2 or 3 when employment income is assessed for income tax under Section 41. No administrative actor is inferred from the impersonal wording."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000555",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If the child supplements have not had an effect, or not in full, with regard to the sole earner tax credit, the full child supplement or the differential amount shall be refunded, taking into account Section 72(5).",
+        "issues": [
+          "The substantive content of Section 72(5) is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If the child supplements have not had an effect, or not in full, with regard to the sole earner tax credit, the full child supplement or the differential amount shall be refunded, taking into account Section 72(5)", "start": 0, "end": 213},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be refunded", "start": 161, "end": 178}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be refunded", "start": 167, "end": 178, "normalized": "refund full child supplement or differential amount"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If the child supplements have not had an effect, or not in full, with regard to the sole earner tax credit", "start": 0, "end": 106, "normalized": "child supplements had no or incomplete effect on sole-earner tax credit"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "taking into account Section 72(5)", "start": 180, "end": 213, "normalized": "subject to Section 72(5)"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 72(5) is unavailable, so its effect on the refund amount or procedure cannot be expanded."},
+        {"field": "actor", "reason": "The refund duty is passive and the responsible authority is not expressly identified."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The rule requires refund of the full child supplement or the differential amount when the supplements had no or incomplete effect on the sole-earner tax credit, subject to Section 72(5). The refunding authority is not inferred."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000560",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "During the calendar year, wage tax cards may only be exchanged upon corresponding application at the tax office of domicile if the wages taxed under the first wage tax card are no longer received.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "During the calendar year, wage tax cards may only be exchanged upon corresponding application at the tax office of domicile if the wages taxed under the first wage tax card are no longer received", "start": 0, "end": 195},
+          "modality": {"label": "permission", "evidence": [{"text": "may only", "start": 41, "end": 49}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be exchanged", "start": 50, "end": 62, "normalized": "exchange wage tax cards"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the wages taxed under the first wage tax card are no longer received", "start": 124, "end": 195, "normalized": "wages taxed under first wage tax card are no longer received"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "During the calendar year", "start": 0, "end": 24, "normalized": "during calendar year"},
+            {"id": "c1_constraint_2", "text": "upon corresponding application at the tax office of domicile", "start": 63, "end": 123, "normalized": "upon application to domicile tax office"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "actor", "reason": "The exchange permission is passive and does not expressly identify the applicant or official performing the exchange."}
+      ],
+      "confidence": "high",
+      "rationale_summary": "One permission allows wage tax cards to be exchanged during the calendar year only upon application to the domicile tax office and after wages taxed under the first card cease. The cards themselves are regulated objects, not actors."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000569",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The tax office may, however, upon application, permit that the tax-exempt income components pursuant to Section 3 and the income referred to in Section 26 are not recorded in the wage account if the possibility of verification (Sections 86 et seq.) is ensured in another manner or if it concerns cases of minor significance.",
+        "issues": [
+          "The substantive content of Sections 3, 26, and 86 et seq. is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The tax office may, however, upon application, permit that the tax-exempt income components pursuant to Section 3 and the income referred to in Section 26 are not recorded in the wage account if the possibility of verification (Sections 86 et seq.) is ensured in another manner or if it concerns cases of minor significance", "start": 0, "end": 323},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 15, "end": 18}]},
+          "actors": [{"id": "c1_actor_1", "text": "The tax office", "start": 0, "end": 14, "normalized": "tax office"}],
+          "actions": [{"id": "c1_action_1", "text": "permit that the tax-exempt income components pursuant to Section 3 and the income referred to in Section 26 are not recorded in the wage account", "start": 47, "end": 191, "normalized": "permit omission of specified tax-exempt income from wage account"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the possibility of verification (Sections 86 et seq.) is ensured in another manner or if it concerns cases of minor significance", "start": 192, "end": 323, "normalized": "verification is otherwise assured or case is of minor significance"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "upon application", "start": 29, "end": 45, "normalized": "upon application"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The referenced income categories and verification provisions are unavailable, so their internal scope cannot be verified from the excerpt."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The tax office has one conditional permission, exercisable upon application, to allow specified income components to be omitted from the wage account when verification is otherwise ensured or the case is minor. The embedded non-recording phrase is the permitted content, not a separate prohibition."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000578",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(4) If the wages consist wholly or partly of non-cash benefits and the cash wage is insufficient to cover the wage tax to be withheld, taking into account the value of the non-cash benefits (Section 15(2)), the employee shall pay to the employer the amount required to cover the wage tax to the extent that it is not covered by the cash wage.",
+        "issues": [
+          "The substantive valuation rule in Section 15(2) is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(4) If the wages consist wholly or partly of non-cash benefits and the cash wage is insufficient to cover the wage tax to be withheld, taking into account the value of the non-cash benefits (Section 15(2)), the employee shall pay to the employer the amount required to cover the wage tax to the extent that it is not covered by the cash wage", "start": 0, "end": 341},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 220, "end": 225}]},
+          "actors": [{"id": "c1_actor_1", "text": "the employee", "start": 207, "end": 219, "normalized": "employee"}],
+          "actions": [{"id": "c1_action_1", "text": "pay to the employer the amount required to cover the wage tax", "start": 226, "end": 287, "normalized": "pay employer amount needed to cover wage tax"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If the wages consist wholly or partly of non-cash benefits and the cash wage is insufficient to cover the wage tax to be withheld, taking into account the value of the non-cash benefits (Section 15(2))", "start": 4, "end": 205, "normalized": "wages include non-cash benefits and cash wage is insufficient for withholding tax"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "to the extent that it is not covered by the cash wage", "start": 288, "end": 341, "normalized": "only the amount not covered by cash wage"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 15(2), which supplies the non-cash-benefit valuation rule used in the condition, is unavailable."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The employee must pay the employer the wage-tax shortfall when wages include non-cash benefits and the cash wage cannot cover the withholding calculated with their value. The amount is limited to the portion not covered by cash wage."
+    }
+  ]
+}

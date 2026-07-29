@@ -1,0 +1,174 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 53,
+  "end_index_exclusive": 58,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000273",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(1) Income from employment (wages) is: \n1. a) emoluments and benefits from an existing or former employment relationship. \nb) emoluments and benefits of persons who are not substantially interested in corporations within the meaning of Section 22 no. 2, even if, in the case of an employment which otherwise exhibits all the characteristics of an employment relationship (Section 47(2)), the obligation to follow the instructions of another is absent on the basis of a special provision in the articles of association. \nc) emoluments from a statutory sickness or accident insurance. \nd) emoluments from a foreign statutory sickness or accident insurance which corresponds to a domestic sickness or accident insurance. \ne) sickness benefits from the welfare and support institutions of the chambers of self-employed persons.",
+        "issues": ["The content of Sections 22 no. 2 and 47(2) is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(1) Income from employment (wages) is: \n1. a) emoluments and benefits from an existing or former employment relationship. \nb) emoluments and benefits of persons who are not substantially interested in corporations within the meaning of Section 22 no. 2, even if, in the case of an employment which otherwise exhibits all the characteristics of an employment relationship (Section 47(2)), the obligation to follow the instructions of another is absent on the basis of a special provision in the articles of association. \nc) emoluments from a statutory sickness or accident insurance. \nd) emoluments from a foreign statutory sickness or accident insurance which corresponds to a domestic sickness or accident insurance. \ne) sickness benefits from the welfare and support institutions of the chambers of self-employed persons.", "start": 0, "end": 823},
+          "modality": {"label": "definition", "evidence": [{"text": "Income from employment (wages) is", "start": 4, "end": 37}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "is", "start": 35, "end": 37, "normalized": "define income from employment"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "emoluments and benefits from an existing or former employment relationship", "start": 46, "end": 120, "normalized": "emoluments and benefits from current or former employment"},
+            {"id": "c1_constraint_2", "text": "emoluments and benefits of persons who are not substantially interested in corporations within the meaning of Section 22 no. 2", "start": 126, "end": 252, "normalized": "emoluments and benefits of persons without substantial corporate interest"},
+            {"id": "c1_constraint_3", "text": "emoluments from a statutory sickness or accident insurance", "start": 523, "end": 581, "normalized": "statutory sickness or accident insurance emoluments"},
+            {"id": "c1_constraint_4", "text": "emoluments from a foreign statutory sickness or accident insurance which corresponds to a domestic sickness or accident insurance", "start": 587, "end": 716, "normalized": "emoluments from corresponding foreign statutory insurance"},
+            {"id": "c1_constraint_5", "text": "sickness benefits from the welfare and support institutions of the chambers of self-employed persons", "start": 722, "end": 822, "normalized": "specified chamber welfare sickness benefits"}
+          ],
+          "exceptions": [{"id": "c1_exception_1", "text": "even if, in the case of an employment which otherwise exhibits all the characteristics of an employment relationship (Section 47(2)), the obligation to follow the instructions of another is absent on the basis of a special provision in the articles of association", "start": 254, "end": 517, "normalized": "include qualifying employment despite instruction duty being absent by special articles provision"}],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The referenced tests in Sections 22 no. 2 and 47(2) are unavailable and are not expanded."}],
+      "confidence": "medium",
+      "rationale_summary": "The heading and items a through e form one umbrella definition of employment income. The special corporate-employment case expressly remains included despite the missing instruction duty; the listed income types are definitional categories, not actors."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000277",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Special increment amounts from supplementary insurance in the pension insurance or supplementary insurance pensions are to be recorded at only 25%. \nb) Similar emoluments from welfare and support institutions of the chambers of self-employed persons. \nc) Pensions from a foreign statutory social insurance that corresponds to a domestic statutory social insurance. \n4. a) Emoluments, expense allowances and retirement (pension) benefits within the meaning of the Emoluments Act and the Constitutional Court Act. \nb) Similar emoluments, expense allowances and retirement (pension) benefits received by members of a provincial government (of the Vienna City Senate) and members of a provincial parliament and their survivors on the basis of provincial legislation, furthermore emoluments, expense allowances and retirement (pension) benefits received by mayors, deputy mayors (mayoral representatives) or city councillors (executive municipal councillors), district chairpersons (deputies) of the City of Vienna and their survivors on the basis of provincial legislation.",
+        "issues": ["Items b, c, 4.a, and 4.b are list fragments whose governing definitional predicate is outside the excerpt." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Special increment amounts from supplementary insurance in the pension insurance or supplementary insurance pensions are to be recorded at only 25%.", "start": 0, "end": 147},
+          "modality": {"label": "obligation", "evidence": [{"text": "are to be recorded", "start": 116, "end": 134}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be recorded", "start": 123, "end": 134, "normalized": "record supplementary pension increments"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "at only 25%", "start": 135, "end": 146, "normalized": "only 25 percent"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The excerpt begins and continues inside a larger enumeration; items b, c, 4.a, and 4.b have no visible governing predicate, so their legal classification cannot be reconstructed safely."},
+        {"field": "modality", "reason": "The noun-phrase list fragments after the first sentence contain no local modality evidence and are not assigned fabricated clauses."}
+      ],
+      "confidence": "low",
+      "rationale_summary": "Only the visible 25% recording rule has a complete predicate. The remaining list entries are preserved in the translation but not converted into unsupported classifications without their missing heading. No taxpayer actor is inferred."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000283",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "A business trip occurs when an employee\n\n— leaves their duty station (office, permanent establishment, factory premises, warehouse, etc.) on the employer’s orders to perform work duties, or\n— works so far away from their permanent place of residence (family home) that they cannot reasonably be expected to return to that permanent place of residence (family home) on a daily basis.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "A business trip occurs when an employee\n\n— leaves their duty station (office, permanent establishment, factory premises, warehouse, etc.) on the employer’s orders to perform work duties, or\n— works so far away from their permanent place of residence (family home) that they cannot reasonably be expected to return to that permanent place of residence (family home) on a daily basis.", "start": 0, "end": 382},
+          "modality": {"label": "definition", "evidence": [{"text": "occurs", "start": 16, "end": 22}]},
+          "actors": [{"id": "c1_actor_1", "text": "an employee", "start": 28, "end": 39, "normalized": "employee"}],
+          "actions": [
+            {"id": "c1_action_1", "text": "occurs", "start": 16, "end": 22, "normalized": "constitute business trip"},
+            {"id": "c1_action_2", "text": "leaves", "start": 43, "end": 49, "normalized": "leave duty station"},
+            {"id": "c1_action_3", "text": "works", "start": 192, "end": 197, "normalized": "work away from permanent residence"}
+          ],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "on the employer’s orders", "start": 138, "end": 162, "normalized": "on employer orders"},
+            {"id": "c1_condition_2", "text": "that they cannot reasonably be expected to return to that permanent place of residence (family home) on a daily basis", "start": 264, "end": 381, "normalized": "daily return to permanent residence unreasonable"}
+          ],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "their duty station (office, permanent establishment, factory premises, warehouse, etc.)", "start": 50, "end": 137, "normalized": "employee duty station"},
+            {"id": "c1_constraint_2", "text": "to perform work duties", "start": 163, "end": 185, "normalized": "to perform work duties"},
+            {"id": "c1_constraint_3", "text": "so far away from their permanent place of residence (family home)", "start": 198, "end": 263, "normalized": "sufficient distance from permanent residence"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": null, "action_id": "c1_action_1"},
+            {"actor_id": "c1_actor_1", "action_id": "c1_action_2"},
+            {"actor_id": "c1_actor_1", "action_id": "c1_action_3"}
+          ],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "One definition provides two alternative business-trip routes: leaving the duty station on employer orders to perform duties, or working far enough away that daily return is unreasonable. The employee is mapped only to the explicit leaving and working actions."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000293",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(1) The following income shall constitute income from capital, to the extent that it does not fall within the income categories referred to in Section 2(1) to (4): 1. a) profit shares (dividends), interest and other distributions from shares or interests in limited liability companies; b) similar distributions and patronage refunds from interests in commercial and industrial cooperatives, excluding those under Section 13 of the Corporate Income Tax Act 1988; c) similar distributions from profit participation rights and from participation capital within the meaning of the Banking Act or the Insurance Supervision Act. 2.",
+        "issues": ["The referenced Section 2 income categories and Section 13 exclusion are not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(1) The following income shall constitute income from capital, to the extent that it does not fall within the income categories referred to in Section 2(1) to (4): 1. a) profit shares (dividends), interest and other distributions from shares or interests in limited liability companies; b) similar distributions and patronage refunds from interests in commercial and industrial cooperatives, excluding those under Section 13 of the Corporate Income Tax Act 1988; c) similar distributions from profit participation rights and from participation capital within the meaning of the Banking Act or the Insurance Supervision Act.", "start": 0, "end": 623},
+          "modality": {"label": "definition", "evidence": [{"text": "shall constitute", "start": 25, "end": 41}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "constitute income from capital", "start": 31, "end": 61, "normalized": "classify as income from capital"}],
+          "conditions": [{"id": "c1_condition_1", "text": "to the extent that it does not fall within the income categories referred to in Section 2(1) to (4)", "start": 63, "end": 162, "normalized": "not income under Section 2(1) to (4)"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "profit shares (dividends), interest and other distributions from shares or interests in limited liability companies", "start": 170, "end": 285, "normalized": "company share distributions and interest"},
+            {"id": "c1_constraint_2", "text": "similar distributions and patronage refunds from interests in commercial and industrial cooperatives", "start": 290, "end": 390, "normalized": "cooperative distributions and patronage refunds"},
+            {"id": "c1_constraint_3", "text": "similar distributions from profit participation rights and from participation capital within the meaning of the Banking Act or the Insurance Supervision Act", "start": 466, "end": 622, "normalized": "profit-participation and regulated participation-capital distributions"}
+          ],
+          "exceptions": [{"id": "c1_exception_1", "text": "excluding those under Section 13 of the Corporate Income Tax Act 1988", "start": 392, "end": 461, "normalized": "exclude Section 13 cooperative receipts"}],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The referenced Section 2 income categories and Section 13 cooperative exclusion are unavailable, so their internal scope is not inferred."}],
+      "confidence": "medium",
+      "rationale_summary": "The header and items a through c form one capital-income definition with a threshold exclusion from other income categories and an express Section 13 carve-out. The listed income is the classified object, not an actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000302",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(1) The following income shall, to the extent it does not constitute income within the meaning of Section 2(3) items 1 to 5, be income from letting and leasing: 1.",
+        "issues": ["The list introduced after item 1 is missing, so the income covered by 'The following income' is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(1) The following income shall, to the extent it does not constitute income within the meaning of Section 2(3) items 1 to 5, be income from letting and leasing:", "start": 0, "end": 160},
+          "modality": {"label": "definition", "evidence": [{"text": "shall", "start": 25, "end": 30}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be income from letting and leasing", "start": 125, "end": 159, "normalized": "classify as letting and leasing income"}],
+          "conditions": [{"id": "c1_condition_1", "text": "to the extent it does not constitute income within the meaning of Section 2(3) items 1 to 5", "start": 32, "end": 123, "normalized": "not income under Section 2(3) items 1 to 5"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The enumerated income categories beginning at item 1 are absent, leaving the subject 'The following income' unresolved."},
+        {"field": "constraint", "reason": "No qualifying income type can be extracted because the list following the colon is missing."}
+      ],
+      "confidence": "low",
+      "rationale_summary": "Only the umbrella classification and its exclusion from Section 2(3) items 1 to 5 are visible. The missing list is not reconstructed, and the trailing '1.' is treated as an incomplete enumeration marker."
+    }
+  ]
+}

@@ -1,0 +1,252 @@
+{
+  "schema_version": "sun_h1_s28_verification_manifest@1.1.0",
+  "task_id": "S2.8",
+  "status": "succeeded",
+  "created_at": "2026-07-17T12:04:25.176548+00:00",
+  "method": "sun_llm_fallback",
+  "claim_boundary": "S2.8 freezes and dry-run verifies H1 selection, deterministic call allocation, actual repair-request rendering, field-level merge, scorable B0 fallback with H1 method identity, recovered-provider-error accounting, a pinned model/sampling contract, and 45-call/1.5-USD ceilings on locked synthetic B0 evidence. It is not an LLM quality test, a real API run, or a formal performance result.",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "artifacts": {
+    "config": {
+      "path": "configs/models/sun_h1_s28.json",
+      "sha256": "8d37bdf58fec677d59bb83111d8a7b9ce20f8e896ab6964836d6ae04d3488fd4"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/sun_style/h1_selective.py",
+      "sha256": "72b1be08d663d09bcd87f486df7aa23fbdf94b102e6f98905b82fbfa9c101f25"
+    },
+    "runner": {
+      "path": "scripts/run_sun_llm_fallback.py",
+      "sha256": "dfdc78d4292b0bd105368a9f54fe6eab4504c4df1e49707b67291e01e5ca1f85"
+    },
+    "verifier": {
+      "path": "scripts/verify_sun_h1_s28.py",
+      "sha256": "f99c77218959172a234189cdf38bbf059f0dabd7b9219dac348e749e55f1258a"
+    },
+    "prompt": {
+      "path": "prompts/sun_compat/rule_first_llm_fallback_prompt.md",
+      "sha256": "a0b243bec327d2cb77de3744886e5e1842e850bad54c81e1b8731f714e135d96"
+    },
+    "evaluator_config": {
+      "path": "configs/stage2_evaluator_s210.json",
+      "sha256": "2b6f7bd4269e475dc4b7bb0561a767a70baba49965c16c7f6b34b8a455badc16"
+    },
+    "evaluator_report_schema": {
+      "path": "configs/schemas/stage2_evaluation_report.schema.json",
+      "sha256": "9906dce85eaf72995e2a3381eed0e33a0c32f5cbf75d35425f7b97c50ea79c5a"
+    }
+  },
+  "baseline_binding": {
+    "s2_6_gate_ready": true,
+    "legacy_front_end_used": false,
+    "record_method": "sun_rule_only",
+    "verification_manifest": {
+      "path": "outputs/reports/s26_sun_b0_canonical_composition_v3.manifest.json",
+      "sha256": "30a19e8a6476f35eff8561ca35f72a3b3a772067c0128ff4c22ce6b6ddd2fb20"
+    }
+  },
+  "selection": {
+    "evidence_boundary": "inference_time_observations_only_no_gold_or_test_distribution",
+    "clean_plan": {
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+      "fallback_triggered": false,
+      "trigger_codes": [],
+      "repair_fields": []
+    },
+    "triggered_plan": {
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+      "fallback_triggered": true,
+      "trigger_codes": [
+        "tregex_field_conflict"
+      ],
+      "repair_fields": [
+        "actions",
+        "actor_action_map",
+        "order_relations"
+      ]
+    },
+    "gold_or_test_derived_trigger_used": false
+  },
+  "merge_verification": {
+    "accepted_patch": {
+      "accepted": true,
+      "status": "accepted",
+      "errors": []
+    },
+    "accepted_record": {
+      "schema_version": "1.0.0",
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "source_id": "s25_locked_live_fixture",
+      "source_text": "If notice is required, the company shall file within 30 days.",
+      "clauses": [
+        {
+          "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+          "clause_span": {
+            "text": "If notice is required, the company shall file within 30 days.",
+            "start": 0,
+            "end": 61
+          },
+          "modality": {
+            "label": "definition",
+            "evidence": [
+              {
+                "text": "shall",
+                "start": 35,
+                "end": 40
+              }
+            ]
+          },
+          "actors": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.actor.1",
+              "text": "the company",
+              "start": 23,
+              "end": 34,
+              "normalized": "the company"
+            }
+          ],
+          "actions": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.action.1",
+              "text": "file within 30 days",
+              "start": 41,
+              "end": 60,
+              "normalized": "file within 30 days"
+            }
+          ],
+          "conditions": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.condition.1",
+              "text": "If notice is required",
+              "start": 0,
+              "end": 21,
+              "normalized": "if notice is required"
+            }
+          ],
+          "constraints": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.constraint.1",
+              "text": "within 30 days",
+              "start": 46,
+              "end": 60,
+              "normalized": "within 30 days"
+            }
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {
+              "actor_id": "s26_synthetic_obligation_condition_constraint_v1.c1.actor.1",
+              "action_id": "s26_synthetic_obligation_condition_constraint_v1.c1.action.1"
+            }
+          ],
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "validation": {
+        "schema_valid": true,
+        "cross_field_valid": true,
+        "errors": []
+      }
+    },
+    "unrequested_fields_preserved": true,
+    "same_field_id_preserved": true,
+    "unauthorized_patch": {
+      "accepted": false,
+      "status": "rejected_unauthorized_field",
+      "errors": [
+        "unauthorized fields: ['modality']"
+      ]
+    },
+    "rejected_patch_returned_original_b0": true
+  },
+  "request_verification": {
+    "exact_model_id": "gpt-4.1-2025-04-14",
+    "sampling": {
+      "temperature": 0,
+      "top_p": 1,
+      "seed": null,
+      "seed_policy": "unsupported_or_omitted",
+      "max_output_tokens": 2048,
+      "response_format": "json_object",
+      "max_retries": 0
+    },
+    "rendered_request": {
+      "model": "gpt-4.1-2025-04-14",
+      "sampling": {
+        "temperature": 0,
+        "top_p": 1,
+        "seed": null,
+        "seed_policy": "unsupported_or_omitted",
+        "max_output_tokens": 2048,
+        "response_format": "json_object",
+        "max_retries": 0
+      },
+      "system_prompt_sha256": "04746c63c3245083d49d0ab03e879aa0354619fac80da714c206b49084bd21db",
+      "user_prompt_sha256": "87afde7d6699be616de3a4fd2ac9c41f5f276497d13788444fe01f466360065c",
+      "system_prompt_char_count": 2804,
+      "user_prompt_char_count": 3042,
+      "repair_fields": [
+        "actions",
+        "actor_action_map",
+        "order_relations"
+      ]
+    },
+    "prompt_file_sha256_matches": true,
+    "unrendered_placeholder_detected": false
+  },
+  "allocation_verification": {
+    "candidate_order": "ascending_sample_id_then_clause_id",
+    "input_array_order_invariant": true,
+    "candidate_count": 48,
+    "reserved_call_count": 45,
+    "first_45_unique_reserved": true,
+    "call_46_and_later_rejected": true,
+    "duplicate_sample_rejected": true
+  },
+  "budget_verification": {
+    "target_dataset_size": 150,
+    "max_call_fraction": 0.3,
+    "hard_call_limit": 45,
+    "input_token_ceiling_per_request": 8192,
+    "output_token_ceiling_per_request": 2048,
+    "total_token_ceiling": 460800,
+    "estimated_worst_case_cost_usd": 1.47456,
+    "hard_cost_ceiling_usd": 1.5,
+    "max_retries": 0
+  },
+  "fallback_attempt_verification": {
+    "request_status": "ok",
+    "record_method": "sun_llm_fallback",
+    "semantic_b0_content_preserved": true,
+    "recovered_runtime_error_category": "timeout",
+    "schema_valid_rate": 1.0,
+    "terminal_api_error_rate": 0.0,
+    "recovered_api_error_rate": 1.0,
+    "any_api_error_rate": 1.0,
+    "scored_as_h1": true
+  },
+  "prompt": {
+    "role": "repair_patch",
+    "name": "rule_first_llm_fallback_prompt",
+    "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\prompts\\sun_compat\\rule_first_llm_fallback_prompt.md",
+    "sha256": "a0b243bec327d2cb77de3744886e5e1842e850bad54c81e1b8731f714e135d96",
+    "sampling_policy": "temperature=0, top_p=1, max_tokens=2048"
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "performance_evaluation": false,
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "test_split_read_or_evaluated": false,
+    "formal_predictions_written": false
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "schema_version": "s29_offline_contract_fixture@1.0.0",
+  "rows": [
+    {
+      "sample_id": "d1_syn_001",
+      "source_id": "synthetic:d1:001",
+      "source_text": "The controller shall archive the record.",
+      "data_role": "synthetic"
+    },
+    {
+      "sample_id": "d1_syn_002",
+      "source_id": "synthetic:d1:002",
+      "source_text": "The reviewer may inspect the log.",
+      "data_role": "synthetic"
+    },
+    {
+      "sample_id": "d1_syn_003",
+      "source_id": "synthetic:d1:003",
+      "source_text": "No operator shall disclose the key.",
+      "data_role": "synthetic"
+    }
+  ],
+  "primary_mock_responses": [
+    {
+      "sample_id": "d1_syn_001",
+      "kind": "canonical_json",
+      "payload": {
+        "schema_version": "1.0.0",
+        "sample_id": "d1_syn_001",
+        "source_id": "synthetic:d1:001",
+        "source_text": "The controller shall archive the record.",
+        "clauses": [
+          {
+            "clause_id": "d1_syn_001_c01",
+            "clause_span": {
+              "text": "The controller shall archive the record.",
+              "start": 0,
+              "end": 40
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [{"text": "shall", "start": 15, "end": 20}]
+            },
+            "actors": [
+              {
+                "id": "a01",
+                "text": "The controller",
+                "start": 0,
+                "end": 14,
+                "normalized": "controller"
+              }
+            ],
+            "actions": [
+              {
+                "id": "p01",
+                "text": "archive the record",
+                "start": 21,
+                "end": 39,
+                "normalized": "archive record"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [{"actor_id": "a01", "action_id": "p01"}],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "direct_llm",
+          "schema_source": "stage2_prediction.schema.json@1.0.0"
+        },
+        "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+        "unsupported_or_ambiguous": []
+      },
+      "runtime": {
+        "llm_call_performed": false,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "estimated_cost_usd": 0.0,
+        "latency_ms": 1
+      }
+    },
+    {
+      "sample_id": "d1_syn_002",
+      "kind": "non_json",
+      "content": "not valid json",
+      "runtime": {
+        "llm_call_performed": false,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "estimated_cost_usd": 0.0,
+        "latency_ms": 1
+      }
+    },
+    {
+      "sample_id": "d1_syn_003",
+      "kind": "api_error",
+      "error_category": "synthetic_transport_error",
+      "runtime": {
+        "llm_call_performed": false,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "estimated_cost_usd": 0.0,
+        "latency_ms": 1
+      }
+    }
+  ],
+  "safety": {
+    "synthetic_only": true,
+    "fixture_is_gold": false,
+    "fixture_is_performance_evaluation": false,
+    "llm_api_called": false,
+    "network_called": false
+  }
+}

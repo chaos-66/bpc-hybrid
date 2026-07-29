@@ -417,10 +417,179 @@ class HumanCorrectionService:
     # Six-element field operations
     # ------------------------------------------------------------------
     def accept_field(self, sample_id: str, clause_id: str, field: str) -> dict:
-        return self._set_field_decision(sample_id, clause_id, field, "accepted")
+        """Copy one immutable LLM candidate field into the editable
+        human-correction clause and mark it ``accepted``.
+
+        An accepted decision is therefore never a dangling status: the
+        candidate value, exact character offsets, and evidence text are
+        materialized in ``human_correction`` by the user's click.  A null
+        candidate for the five span fields means that the user accepts the
+        field as absent, so the corresponding array remains empty.
+        """
+        r = self.get_record(sample_id)
+        if r is None:
+            return {"ok": False, "errors": [f"sample_id {sample_id!r} not found"]}
+        if field not in ("modality", "actor", "action", "condition", "constraint", "exception"):
+            return {"ok": False, "errors": [f"field {field!r} invalid"]}
+        clause = self._human_clause(r, clause_id)
+        candidate = self._candidate_clause(r, clause_id)
+        if clause is None:
+            return {"ok": False, "errors": [f"clause_id {clause_id!r} not found"]}
+        if candidate is None:
+            return {
+                "ok": False,
+                "errors": [f"LLM candidate clause {clause_id!r} not found; edit the field manually"],
+            }
+
+        prepared = self._prepare_candidate_field(r, clause, candidate, field)
+        if not prepared["ok"]:
+            return prepared
+
+        self._snapshot_for_undo(sample_id)
+        old = copy.deepcopy(clause.get(field if field == "modality" else f"{field}s"))
+        if field == "modality":
+            clause["modality"] = prepared["value"]
+        else:
+            clause[f"{field}s"] = prepared["value"]
+        r["decisions"][field] = "accepted"
+        self._touch_in_progress(r)
+        self.append_action_log(
+            sample_id,
+            f"clauses.{clause_id}.{field}",
+            "accept_llm_candidate",
+            old,
+            prepared["value"],
+        )
+        return {"ok": True}
 
     def reject_field(self, sample_id: str, clause_id: str, field: str) -> dict:
-        return self._set_field_decision(sample_id, clause_id, field, "rejected")
+        """Reject a candidate field and clear it from the editable result.
+
+        The immutable candidate remains available on the left side of the
+        GUI for provenance.  Clearing the human value prevents a previous
+        accept/edit from surviving under a later ``rejected`` decision.
+        """
+        r = self.get_record(sample_id)
+        if r is None:
+            return {"ok": False, "errors": [f"sample_id {sample_id!r} not found"]}
+        if field not in ("modality", "actor", "action", "condition", "constraint", "exception"):
+            return {"ok": False, "errors": [f"field {field!r} invalid"]}
+        clause = self._human_clause(r, clause_id)
+        if clause is None:
+            return {"ok": False, "errors": [f"clause_id {clause_id!r} not found"]}
+
+        self._snapshot_for_undo(sample_id)
+        key = field if field == "modality" else f"{field}s"
+        old = copy.deepcopy(clause.get(key))
+        if field == "modality":
+            clause["modality"] = {
+                "value": None,
+                "decision": "rejected",
+                "span": None,
+                "notes": None,
+            }
+        else:
+            clause[key] = []
+        r["decisions"][field] = "rejected"
+        self._touch_in_progress(r)
+        self.append_action_log(
+            sample_id,
+            f"clauses.{clause_id}.{field}",
+            "reject_llm_candidate",
+            old,
+            clause.get(key),
+        )
+        return {"ok": True}
+
+    def accept_all_candidate_fields(self, sample_id: str) -> dict:
+        """Materialize every usable Layer-C candidate for one record.
+
+        This method is called only by the explicit GUI button.  It never
+        auto-approves a record, never changes the immutable ``llm_candidate``
+        block, and refuses atomically when the approved English differs from
+        the candidate text or when a non-null candidate span cannot be bound
+        exactly to that English text.
+        """
+        r = self.get_record(sample_id)
+        if r is None:
+            return {"ok": False, "errors": [f"sample_id {sample_id!r} not found"]}
+        approved = r.get("approved_text_en")
+        if not approved:
+            return {"ok": False, "errors": ["approve the English translation first"]}
+        if approved != r.get("candidate_text_en"):
+            return {
+                "ok": False,
+                "errors": [
+                    "approved English was edited; the old LLM spans are stale. "
+                    "Review and add corrected spans manually."
+                ],
+            }
+
+        candidate_clauses = list((r.get("llm_candidate") or {}).get("clauses") or [])
+        if not candidate_clauses:
+            return {"ok": False, "errors": ["this record has no LLM candidate clause"]}
+
+        prepared_clauses: list[dict] = []
+        errors: list[str] = []
+        for candidate in candidate_clauses:
+            clause_id = candidate.get("clause_id")
+            clause_span = copy.deepcopy(candidate.get("clause_span") or {})
+            start = clause_span.get("start")
+            end = clause_span.get("end")
+            if (
+                not isinstance(clause_id, str)
+                or not isinstance(start, int)
+                or not isinstance(end, int)
+                or start < 0
+                or end <= start
+                or end > len(approved)
+                or clause_span.get("text") != approved[start:end]
+            ):
+                errors.append(f"candidate clause {clause_id!r} has an invalid clause span")
+                continue
+            human_clause = {
+                "clause_id": clause_id,
+                "clause_span": clause_span,
+                "clause_span_status": candidate.get("clause_span_status") or "candidate_copied",
+                "modality": {"value": None, "decision": "unreviewed", "span": None, "notes": None},
+                "actors": [],
+                "actions": [],
+                "conditions": [],
+                "constraints": [],
+                "exceptions": [],
+                "actor_action_map": [],
+                "order_relations": [],
+            }
+            for field in ("modality", "actor", "action", "condition", "constraint", "exception"):
+                prepared = self._prepare_candidate_field(r, human_clause, candidate, field)
+                if not prepared["ok"]:
+                    errors.extend(
+                        f"{clause_id}.{field}: {msg}" for msg in prepared.get("errors", [])
+                    )
+                    continue
+                if field == "modality":
+                    human_clause["modality"] = prepared["value"]
+                else:
+                    human_clause[f"{field}s"] = prepared["value"]
+            prepared_clauses.append(human_clause)
+
+        if errors:
+            return {"ok": False, "errors": errors}
+
+        self._snapshot_for_undo(sample_id)
+        old = copy.deepcopy(r["human_correction"].get("clauses") or [])
+        r["human_correction"]["clauses"] = prepared_clauses
+        for field in ("modality", "actor", "action", "condition", "constraint", "exception"):
+            r["decisions"][field] = "accepted"
+        self._touch_in_progress(r)
+        self.append_action_log(
+            sample_id,
+            "human_correction.clauses",
+            "accept_all_llm_candidates",
+            old,
+            prepared_clauses,
+        )
+        return {"ok": True, "clause_count": len(prepared_clauses)}
 
     def edit_field(
         self, sample_id: str, clause_id: str, field: str, new_value
@@ -430,24 +599,15 @@ class HumanCorrectionService:
             return {"ok": False, "errors": [f"sample_id {sample_id!r} not found"]}
         if field not in ("modality", "actor", "action", "condition", "constraint", "exception"):
             return {"ok": False, "errors": [f"field {field!r} invalid"]}
-        clause = next(
-            (c for c in r["human_correction"]["clauses"] if c.get("clause_id") == clause_id),
-            None,
-        )
+        clause = self._human_clause(r, clause_id)
         if clause is None:
             return {"ok": False, "errors": [f"clause_id {clause_id!r} not found"]}
-        self._snapshot_for_undo(sample_id)
         if field == "modality":
+            self._snapshot_for_undo(sample_id)
             old = clause["modality"].get("value")
             clause["modality"]["value"] = new_value
-            ap = r.get("approved_text_en")
-            if ap and new_value:
-                s = ap.find(new_value)
-                e = ap.find(new_value, s + 1) if s >= 0 else -1
-                if s >= 0 and e < 0:
-                    clause["modality"]["span"] = {
-                        "text": new_value, "start": s, "end": s + len(new_value)
-                    }
+            clause["modality"]["span"] = None
+            clause["modality"]["decision"] = "edited"
             r["decisions"][field] = "edited"
             self.append_action_log(
                 sample_id,
@@ -455,26 +615,32 @@ class HumanCorrectionService:
                 "edit", old, new_value,
             )
         else:
-            arr = clause.get(field, [])
-            if arr:
-                old = arr[0].get("text")
-                arr[0]["text"] = new_value
+            key = f"{field}s"
+            arr = clause.get(key, [])
+            old = copy.deepcopy(arr)
+            if new_value is None:
+                prepared_spans = []
             else:
-                old = None
-                clause.setdefault(field, []).append({
-                    "id": self._next_span_id(clause, field),
+                exact = self._find_unique_span(r, clause, new_value)
+                if not exact["ok"]:
+                    return exact
+                existing_id = arr[0].get("id") if arr else self._next_span_id(clause, key)
+                prepared_spans = [{
+                    "id": existing_id,
                     "text": new_value,
+                    "start": exact["start"],
+                    "end": exact["end"],
                     "decision": "edited",
-                })
+                }]
+            self._snapshot_for_undo(sample_id)
+            clause[key] = prepared_spans
             r["decisions"][field] = "edited"
             self.append_action_log(
                 sample_id,
-                f"clauses.{clause_id}.{field}[0].text",
-                "edit", old, new_value,
+                f"clauses.{clause_id}.{key}",
+                "edit", old, clause[key],
             )
-        if r["review_state"]["status"] == "needs_review":
-            r["review_state"]["status"] = "in_progress"
-            r["review_state"]["reviewer"] = self.reviewer
+        self._touch_in_progress(r)
         return {"ok": True}
 
     def _set_field_decision(
@@ -485,12 +651,9 @@ class HumanCorrectionService:
             return {"ok": False, "errors": [f"sample_id {sample_id!r} not found"]}
         if field not in ("modality", "actor", "action", "condition", "constraint", "exception"):
             return {"ok": False, "errors": [f"field {field!r} invalid"]}
-        if decision not in ("accepted", "edited", "rejected"):
+        if decision not in ("edited", "needs_adjudication", "unreviewed"):
             return {"ok": False, "errors": [f"decision {decision!r} invalid"]}
-        clause = next(
-            (c for c in r["human_correction"]["clauses"] if c.get("clause_id") == clause_id),
-            None,
-        )
+        clause = self._human_clause(r, clause_id)
         if clause is None:
             return {"ok": False, "errors": [f"clause_id {clause_id!r} not found"]}
         self._snapshot_for_undo(sample_id)
@@ -503,26 +666,204 @@ class HumanCorrectionService:
                 "set", old, decision,
             )
         else:
-            arr = clause.get(field, [])
-            if not arr:
-                arr.append({
-                    "id": self._next_span_id(clause, field),
-                    "text": None,
-                    "decision": decision,
-                })
-                clause[field] = arr
-            else:
-                arr[0]["decision"] = decision
+            key = f"{field}s"
+            arr = clause.get(key, [])
+            old = [span.get("decision") for span in arr]
+            for span in arr:
+                span["decision"] = decision
             self.append_action_log(
                 sample_id,
-                f"clauses.{clause_id}.{field}[0].decision",
-                "set", None, decision,
+                f"clauses.{clause_id}.{key}[*].decision",
+                "set", old, decision,
             )
         r["decisions"][field] = decision
-        if r["review_state"]["status"] == "needs_review":
-            r["review_state"]["status"] = "in_progress"
-            r["review_state"]["reviewer"] = self.reviewer
+        self._touch_in_progress(r)
         return {"ok": True}
+
+    @staticmethod
+    def _human_clause(record: dict, clause_id: str) -> dict | None:
+        return next(
+            (
+                c
+                for c in record.get("human_correction", {}).get("clauses", [])
+                if c.get("clause_id") == clause_id
+            ),
+            None,
+        )
+
+    @staticmethod
+    def _candidate_clause(record: dict, clause_id: str) -> dict | None:
+        return next(
+            (
+                c
+                for c in (record.get("llm_candidate") or {}).get("clauses", [])
+                if c.get("clause_id") == clause_id
+            ),
+            None,
+        )
+
+    def _prepare_candidate_field(
+        self,
+        record: dict,
+        human_clause: dict,
+        candidate_clause: dict,
+        field: str,
+    ) -> dict:
+        candidate = candidate_clause.get(field) or {}
+        value = candidate.get("value") if isinstance(candidate, dict) else None
+        if field == "modality":
+            if value not in ("obligation", "prohibition", "permission", "definition"):
+                return {
+                    "ok": False,
+                    "errors": [f"LLM modality candidate {value!r} is missing or invalid"],
+                }
+            return {
+                "ok": True,
+                "value": {
+                    "value": value,
+                    "decision": "accepted",
+                    "span": copy.deepcopy(candidate.get("span")),
+                    "notes": None,
+                },
+            }
+
+        if value is None:
+            return {"ok": True, "value": []}
+        span = candidate.get("span") if isinstance(candidate, dict) else None
+        approved = record.get("approved_text_en") or ""
+        clause_span = human_clause.get("clause_span") or {}
+        if not isinstance(span, dict):
+            return {
+                "ok": False,
+                "errors": [
+                    f"LLM candidate {value!r} has no exact span; use the manual span editor"
+                ],
+            }
+        start = span.get("start")
+        end = span.get("end")
+        if (
+            not isinstance(start, int)
+            or not isinstance(end, int)
+            or start < clause_span.get("start", 0)
+            or end > clause_span.get("end", len(approved))
+            or end <= start
+            or approved[start:end] != span.get("text")
+        ):
+            return {
+                "ok": False,
+                "errors": [
+                    f"LLM candidate {value!r} does not have a valid exact span in approved English"
+                ],
+            }
+        key = f"{field}s"
+        return {
+            "ok": True,
+            "value": [{
+                "id": self._next_span_id(human_clause, key),
+                "text": span["text"],
+                "start": start,
+                "end": end,
+                "decision": "accepted",
+            }],
+        }
+
+    @staticmethod
+    def _find_unique_span(record: dict, clause: dict, text: str) -> dict:
+        approved = record.get("approved_text_en") or ""
+        clause_span = clause.get("clause_span") or {}
+        start_bound = clause_span.get("start", 0)
+        end_bound = clause_span.get("end", len(approved))
+        positions: list[int] = []
+        pos = approved.find(text, start_bound, end_bound)
+        while pos >= 0 and pos + len(text) <= end_bound:
+            positions.append(pos)
+            pos = approved.find(text, pos + 1, end_bound)
+        if len(positions) != 1:
+            reason = "not found" if not positions else "appears more than once"
+            return {
+                "ok": False,
+                "errors": [
+                    f"edited text {text!r} {reason} inside the clause; "
+                    "use the manual span editor with explicit start/end"
+                ],
+            }
+        return {"ok": True, "start": positions[0], "end": positions[0] + len(text)}
+
+    def _touch_in_progress(self, record: dict) -> None:
+        if record["review_state"]["status"] == "needs_review":
+            record["review_state"]["status"] = "in_progress"
+            record["review_state"]["reviewer"] = self.reviewer
+
+    def edit_relations(
+        self,
+        sample_id: str,
+        clause_id: str,
+        actor_action_map: list,
+        order_relations: list,
+    ) -> dict:
+        """Validate and store the two relation arrays edited in the GUI."""
+        r = self.get_record(sample_id)
+        if r is None:
+            return {"ok": False, "errors": [f"sample_id {sample_id!r} not found"]}
+        clause = self._human_clause(r, clause_id)
+        if clause is None:
+            return {"ok": False, "errors": [f"clause_id {clause_id!r} not found"]}
+        if not isinstance(actor_action_map, list) or not isinstance(order_relations, list):
+            return {"ok": False, "errors": ["relation JSON values must both be arrays"]}
+
+        actor_ids = {span.get("id") for span in clause.get("actors", [])}
+        action_ids = {span.get("id") for span in clause.get("actions", [])}
+        errors: list[str] = []
+        for index, edge in enumerate(actor_action_map):
+            if not isinstance(edge, dict):
+                errors.append(f"actor_action_map[{index}] must be an object")
+                continue
+            actor_id = edge.get("actor_id")
+            action_id = edge.get("action_id")
+            if actor_id is not None and actor_id not in actor_ids:
+                errors.append(f"actor_action_map[{index}].actor_id {actor_id!r} is unknown")
+            if action_id not in action_ids:
+                errors.append(f"actor_action_map[{index}].action_id {action_id!r} is unknown")
+        for index, edge in enumerate(order_relations):
+            if not isinstance(edge, dict):
+                errors.append(f"order_relations[{index}] must be an object")
+                continue
+            before = edge.get("before_action_id")
+            after = edge.get("after_action_id")
+            if before not in action_ids:
+                errors.append(f"order_relations[{index}].before_action_id {before!r} is unknown")
+            if after not in action_ids:
+                errors.append(f"order_relations[{index}].after_action_id {after!r} is unknown")
+            if before is not None and before == after:
+                errors.append(f"order_relations[{index}] cannot order an action before itself")
+        if errors:
+            return {"ok": False, "errors": errors}
+
+        new_actor_action_map = copy.deepcopy(actor_action_map)
+        new_order_relations = copy.deepcopy(order_relations)
+        old = {
+            "actor_action_map": copy.deepcopy(clause.get("actor_action_map") or []),
+            "order_relations": copy.deepcopy(clause.get("order_relations") or []),
+        }
+        new = {
+            "actor_action_map": new_actor_action_map,
+            "order_relations": new_order_relations,
+        }
+        if old == new:
+            return {"ok": True, "changed": False}
+
+        self._snapshot_for_undo(sample_id)
+        clause["actor_action_map"] = new_actor_action_map
+        clause["order_relations"] = new_order_relations
+        self._touch_in_progress(r)
+        self.append_action_log(
+            sample_id,
+            f"clauses.{clause_id}.relations",
+            "edit_relations",
+            old,
+            new,
+        )
+        return {"ok": True, "changed": True}
 
     def _next_span_id(self, clause: dict, fld: str) -> str:
         used: set[str] = set()
@@ -533,6 +874,148 @@ class HumanCorrectionService:
         while f"{clause['clause_id']}_sp{n:03d}" in used:
             n += 1
         return f"{clause['clause_id']}_sp{n:03d}"
+
+    # ------------------------------------------------------------------
+    # One-click simple review
+    # ------------------------------------------------------------------
+    def apply_simple_review_candidate(
+        self,
+        sample_id: str,
+        candidate: dict,
+        *,
+        candidate_source: str = "codex_internal_gpt56sol_full150_v1",
+    ) -> dict:
+        """Persist one user-confirmed Sol candidate in a single operation.
+
+        The simple GUI deliberately hides the legacy accept/review/adjudicate
+        state machine.  A click on ``保存并下一条`` is the user's explicit final
+        decision for the displayed record, so this method materializes the
+        exact spans, runs both per-record gates in memory, and stores the final
+        state atomically from the GUI's point of view.  ``save_draft()`` remains
+        the only method that writes the Layer-E file to disk.
+
+        The immutable Layer-C candidate is never changed.  Six-element
+        decisions are recorded as ``edited`` because the confirmed values came
+        from the newer Sol candidate (possibly after user edits), not from the
+        immutable Layer-C draft.  Translation is ``accepted`` only when the
+        confirmed English is byte-identical to the frozen Layer-B text.
+        """
+        record = self.get_record(sample_id)
+        if record is None:
+            return {"ok": False, "errors": [f"sample_id {sample_id!r} not found"]}
+        if not isinstance(candidate, dict) or candidate.get("sample_id") != sample_id:
+            return {"ok": False, "errors": ["candidate sample_id does not match"]}
+        translation = candidate.get("translation") or {}
+        approved = translation.get("proposed_text_en")
+        clauses = candidate.get("clauses")
+        if not isinstance(approved, str) or not approved.strip():
+            return {"ok": False, "errors": ["candidate has no approved English text"]}
+        if not isinstance(clauses, list) or not clauses:
+            return {"ok": False, "errors": ["candidate must contain at least one clause"]}
+
+        prepared = copy.deepcopy(record)
+        old_approved = prepared.get("approved_text_en")
+        if old_approved is not None and old_approved != approved:
+            prepared.setdefault("approved_text_en_history", []).append({
+                "approved_text_en": old_approved,
+                "approved_text_en_sha256": prepared.get("approved_text_en_sha256"),
+                "superseded_at": now_utc_iso(),
+                "reason": "user confirmed a Sol candidate in the simple review tool",
+            })
+        prepared["approved_text_en"] = approved
+        prepared["approved_text_en_sha256"] = sha256_text(approved)
+
+        translation_decision = (
+            "accepted" if approved == prepared.get("candidate_text_en") else "edited"
+        )
+        prepared["decisions"]["translation"] = translation_decision
+        prepared["human_correction"]["approved_text_en_decision"] = translation_decision
+
+        human_clauses: list[dict] = []
+        for clause in clauses:
+            if not isinstance(clause, dict):
+                return {"ok": False, "errors": ["candidate clause is not an object"]}
+            modality = clause.get("modality") or {}
+            evidence = modality.get("evidence") or []
+            human_clause = {
+                "clause_id": clause.get("clause_id"),
+                "clause_span": copy.deepcopy(clause.get("clause_span") or {}),
+                "clause_span_status": "sol_candidate_user_confirmed",
+                "modality": {
+                    "value": modality.get("label"),
+                    "decision": "edited",
+                    "span": copy.deepcopy(evidence[0]) if evidence else None,
+                    "notes": None,
+                },
+                "actors": [],
+                "actions": [],
+                "conditions": [],
+                "constraints": [],
+                "exceptions": [],
+                "actor_action_map": copy.deepcopy(clause.get("actor_action_map") or []),
+                "order_relations": copy.deepcopy(clause.get("order_relations") or []),
+            }
+            for field in SPAN_FIELDS:
+                for span in clause.get(field) or []:
+                    human_clause[field].append({
+                        "id": span.get("id"),
+                        "text": span.get("text"),
+                        "start": span.get("start"),
+                        "end": span.get("end"),
+                        "decision": "edited",
+                    })
+            human_clauses.append(human_clause)
+
+        prepared["human_correction"]["clauses"] = human_clauses
+        for field in ("modality", "actor", "action", "condition", "constraint", "exception"):
+            prepared["decisions"][field] = "edited"
+
+        prepared["review_state"]["status"] = "in_progress"
+        prepared["review_state"]["reviewer"] = self.reviewer
+        prepared["review_state"]["reviewed_at"] = None
+        prepared["review_state"]["adjudicated_at"] = None
+        review_gate = validate_record_for_review(prepared, {"service": self})
+        if not review_gate["eligible_for_reviewed"]:
+            return {
+                "ok": False,
+                "errors": review_gate["format_errors"] + review_gate["errors"],
+                "eligibility": review_gate,
+            }
+
+        decided_at = now_utc_iso()
+        prepared["review_state"]["status"] = "reviewed"
+        prepared["review_state"]["reviewed_at"] = decided_at
+        final_gate = validate_record_for_review(prepared, {"service": self})
+        if not final_gate["eligible_for_adjudicated"]:
+            return {
+                "ok": False,
+                "errors": final_gate["format_errors"] + final_gate["errors"],
+                "eligibility": final_gate,
+            }
+        prepared["review_state"]["status"] = "adjudicated"
+        prepared["review_state"]["adjudicated_at"] = decided_at
+        if not prepared["review_state"].get("notes"):
+            prepared["review_state"]["notes"] = (
+                f"Confirmed in the simple review tool; candidate source: {candidate_source}"
+            )
+
+        self._snapshot_for_undo(sample_id)
+        for index, existing in enumerate(self.records):
+            if existing.get("sample_id") == sample_id:
+                self.records[index] = prepared
+                break
+        self.append_action_log(
+            sample_id,
+            "human_correction",
+            "simple_save_and_next",
+            record.get("human_correction"),
+            prepared.get("human_correction"),
+        )
+        return {
+            "ok": True,
+            "clause_count": len(human_clauses),
+            "candidate_source": candidate_source,
+        }
 
     # ------------------------------------------------------------------
     # Mark reviewed / adjudicated

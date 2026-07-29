@@ -1,0 +1,243 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 128,
+  "end_index_exclusive": 136,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000108",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(3) For buildings, the investment allowance may only be claimed to the extent that they directly serve the business purpose or are intended for residential purposes of employees of the business.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(3) For buildings, the investment allowance may only be claimed to the extent that they directly serve the business purpose or are intended for residential purposes of employees of the business", "start": 0, "end": 193},
+          "modality": {"label": "permission", "evidence": [{"text": "may only", "start": 44, "end": 52}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be claimed", "start": 53, "end": 63, "normalized": "claim investment allowance for buildings"}],
+          "conditions": [{"id": "c1_condition_1", "text": "to the extent that they directly serve the business purpose or are intended for residential purposes of employees of the business", "start": 64, "end": 193, "normalized": "buildings directly serve the business or provide housing for business employees"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "For buildings", "start": 4, "end": 17, "normalized": "buildings"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "actor", "reason": "The claimant is not identified in the passive permission."}],
+      "confidence": "high",
+      "rationale_summary": "The investment-allowance permission is limited to buildings serving the business directly or housing its employees."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000109",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "edited",
+        "proposed_text_en": "For buildings intended for lease for consideration to third parties (excluding employees of the business), an investment allowance is only available if the exclusive business object is the commercial leasing of assets.",
+        "issues": ["Corrected entgeltliche Überlassung from the overly broad transfer for consideration to lease for consideration in this commercial-leasing context."]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "For buildings intended for lease for consideration to third parties (excluding employees of the business), an investment allowance is only available if the exclusive business object is the commercial leasing of assets", "start": 0, "end": 217},
+          "modality": {"label": "permission", "evidence": [{"text": "is only available", "start": 131, "end": 148}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "is only available", "start": 131, "end": 148, "normalized": "make investment allowance available"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the exclusive business object is the commercial leasing of assets", "start": 149, "end": 217, "normalized": "exclusive business object is commercial asset leasing"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "For buildings intended for lease for consideration to third parties", "start": 0, "end": 67, "normalized": "buildings intended for paid lease to third parties"}],
+          "exceptions": [{"id": "c1_exception_1", "text": "excluding employees of the business", "start": 69, "end": 104, "normalized": "exclude business employees from third parties"}],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The allowance is available for paid third-party leasing buildings only where commercial asset leasing is the exclusive business object, with employees excluded from third parties."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000111",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(5) In the following cases, an investment allowance may be claimed neither as a reduction of profit nor through the designated use of an investment reserve (a tax-free amount):  \n\u2014 For aircraft used for passenger transport, except aircraft of air transport companies (Section 101 of the Aviation Act, BGBl.",
+        "issues": ["The aircraft exception and statutory citation are cut off at the record boundary."]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(5) In the following cases, an investment allowance may be claimed neither as a reduction of profit nor through the designated use of an investment reserve (a tax-free amount):  \n\u2014 For aircraft used for passenger transport, except aircraft of air transport companies (Section 101 of the Aviation Act, BGBl.", "start": 0, "end": 306},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may be claimed neither", "start": 52, "end": 74}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be claimed", "start": 56, "end": 66, "normalized": "claim investment allowance"}],
+          "conditions": [{"id": "c1_condition_1", "text": "For aircraft used for passenger transport", "start": 181, "end": 222, "normalized": "aircraft used for passenger transport"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "neither as a reduction of profit nor through the designated use of an investment reserve (a tax-free amount)", "start": 67, "end": 175, "normalized": "neither reduce profit nor use an investment reserve or tax-free amount"}],
+          "exceptions": [{"id": "c1_exception_1", "text": "except aircraft of air transport companies (Section 101 of the Aviation Act, BGBl.", "start": 224, "end": 306, "normalized": "air-transport-company aircraft exception with incomplete citation"}],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The enumerated prohibition continues beyond this record, and the first exception and citation are incomplete."},
+        {"field": "exception", "reason": "The air-transport-company exception is truncated after BGBl. and cannot be fully resolved."},
+        {"field": "actor", "reason": "The claimant is not stated in the passive prohibition."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The express prohibition, its two claiming methods, and the visible aircraft condition are extracted while the truncated exception remains flagged."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000112",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "No. 253/1957) and civil aviation schools. \u2014 For low-value assets written off pursuant to Section 13. \u2014 Upon acquisition of a business, a part of a business or an interest of a partner who is deemed to be an entrepreneur (co-entrepreneur). \u2014 For used assets which are intended, directly or indirectly, for transfer for consideration to the seller (sale and lease back) or for resale to the seller (sale and sale back). \u2014 For used assets acquired by a group company within a group as defined by Section 15 of the Stock Corporation Act 1965.",
+        "issues": ["The record begins mid-exception and consists of list-item fragments whose governing prohibition is outside this record."]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "a partner who is deemed to be an entrepreneur (co-entrepreneur)", "start": 174, "end": 237},
+          "modality": {"label": "definition", "evidence": [{"text": "is deemed", "start": 188, "end": 197}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "is deemed", "start": 188, "end": 197, "normalized": "deem partner to be an entrepreneur"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "to be an entrepreneur (co-entrepreneur)", "start": 198, "end": 237, "normalized": "entrepreneur or co-entrepreneur status"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The opening text completes the prior record, and every remaining item lacks its governing predicate within this record."},
+        {"field": "modality", "reason": "Apart from the explicit partner-status definition, no modality is assigned because the governing prohibition appears only in the preceding record."},
+        {"field": "action", "reason": "Apart from the explicit deeming action, the record contains list conditions or scope items but no independent operative action."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Strict record boundaries prevent importing the preceding prohibition; the explicit partner-status deeming definition is extracted, while the remaining continuation fragments are not promoted to standalone clauses."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000114",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Where the acquisition or construction of fixed assets extends beyond a balance sheet date, the investment allowance may already be claimed in respect of the partial amounts of the acquisition or construction costs to be capitalized in the respective balance sheet that are attributable to the individual year.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Where the acquisition or construction of fixed assets extends beyond a balance sheet date, the investment allowance may already be claimed in respect of the partial amounts of the acquisition or construction costs to be capitalized in the respective balance sheet that are attributable to the individual year", "start": 0, "end": 308},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 116, "end": 119}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be claimed", "start": 128, "end": 138, "normalized": "claim investment allowance on annual partial cost amounts"}],
+          "conditions": [{"id": "c1_condition_1", "text": "Where the acquisition or construction of fixed assets extends beyond a balance sheet date", "start": 0, "end": 89, "normalized": "fixed-asset acquisition or construction spans a balance-sheet date"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "in respect of the partial amounts of the acquisition or construction costs to be capitalized in the respective balance sheet that are attributable to the individual year", "start": 139, "end": 308, "normalized": "annual attributable partial costs capitalized in the respective balance sheet"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "actor", "reason": "The person entitled to claim the allowance is not identified."}],
+      "confidence": "high",
+      "rationale_summary": "The allowance may be claimed on annual capitalized partial costs when fixed-asset acquisition or construction crosses a balance-sheet date."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000115",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If the acquisition or production costs subsequently change, the investment allowance shall be adjusted accordingly in the year of the change (increased or reduced).",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If the acquisition or production costs subsequently change, the investment allowance shall be adjusted accordingly in the year of the change (increased or reduced)", "start": 0, "end": 163},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 85, "end": 90}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be adjusted accordingly", "start": 91, "end": 114, "normalized": "adjust investment allowance to changed costs"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If the acquisition or production costs subsequently change", "start": 0, "end": 58, "normalized": "acquisition or production costs subsequently change"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "in the year of the change", "start": 115, "end": 140, "normalized": "in year of change"},
+            {"id": "c1_constraint_2", "text": "increased or reduced", "start": 142, "end": 162, "normalized": "increase or reduce as appropriate"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "actor", "reason": "The adjustment duty is passive and no responsible actor is identified."}],
+      "confidence": "high",
+      "rationale_summary": "A subsequent cost change triggers a corresponding increase or reduction of the allowance in the same year."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000118",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(10) If the profit is determined in accordance with Section 4(3), an investment allowance may only be claimed for those assets that are recorded in a special register.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(10) If the profit is determined in accordance with Section 4(3), an investment allowance may only be claimed for those assets that are recorded in a special register", "start": 0, "end": 166},
+          "modality": {"label": "permission", "evidence": [{"text": "may only", "start": 90, "end": 98}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be claimed", "start": 99, "end": 109, "normalized": "claim investment allowance"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If the profit is determined in accordance with Section 4(3)", "start": 5, "end": 64, "normalized": "profit determined under Section 4(3)"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "for those assets that are recorded in a special register", "start": 110, "end": 166, "normalized": "only assets recorded in a special register"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "actor", "reason": "The claimant is not identified in the passive permission."}],
+      "confidence": "high",
+      "rationale_summary": "Under Section 4(3) profit determination, the allowance is restricted to assets recorded in a special register."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000119",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "This list must contain the following:  \n\u2014 acquisition or production costs,  \n\u2014 date of acquisition or production,  \n\u2014 name and address of the supplier,  \n\u2014 the investment allowance claimed.",
+        "issues": ["The antecedent of This list is outside the record."]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "This list must contain the following:  \n\u2014 acquisition or production costs,  \n\u2014 date of acquisition or production,  \n\u2014 name and address of the supplier,  \n\u2014 the investment allowance claimed", "start": 0, "end": 188},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 10, "end": 14}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "contain the following", "start": 15, "end": 36, "normalized": "include the listed information"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "acquisition or production costs", "start": 42, "end": 73, "normalized": "acquisition or production costs"},
+            {"id": "c1_constraint_2", "text": "date of acquisition or production", "start": 79, "end": 112, "normalized": "acquisition or production date"},
+            {"id": "c1_constraint_3", "text": "name and address of the supplier", "start": 118, "end": 150, "normalized": "supplier name and address"},
+            {"id": "c1_constraint_4", "text": "the investment allowance claimed", "start": 156, "end": 188, "normalized": "claimed investment allowance"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The antecedent identifying the list is not present in this record."},
+        {"field": "actor", "reason": "The responsible person who must maintain the required contents is not stated."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The four mandatory content elements are extracted while the missing antecedent and responsible maintainer remain unresolved."
+    }
+  ]
+}

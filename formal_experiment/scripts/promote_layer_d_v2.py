@@ -334,7 +334,15 @@ def update_config_active_path(
     cfg = json.loads(LAYER_D_CONFIG.read_text(encoding="utf-8"))
     run_cfg_path = run_dir / "run_config.json"
     run_cfg = json.loads(run_cfg_path.read_text(encoding="utf-8"))
-    cfg["active_path"] = "data/development/human_review/estg_150_review_aids_zh_v2.jsonl"
+    try:
+        active_path_value = V2_FILLED.resolve().relative_to(REPO.resolve()).as_posix()
+    except ValueError:
+        # Test/recovery layouts may deliberately place the activation target
+        # outside REPO. An absolute path remains unambiguous and is handled by
+        # `is_already_promoted`; the production path still serializes as the
+        # same REPO-relative value as before.
+        active_path_value = str(V2_FILLED.resolve())
+    cfg["active_path"] = active_path_value
     cfg["active_filled_path_status"] = "active"
     cfg["active_run_dir"] = str(run_dir)
     cfg["active_run_id"] = run_cfg.get("run_id", "")
@@ -397,22 +405,7 @@ def main() -> int:
         print(f"  config:  {LAYER_D_CONFIG}")
         return 0
 
-    # --- 2. Cross-run guard: refuse to silently overwrite a
-    #        different run's v2 file ---
-    if is_already_active_for_different_run(run_dir):
-        print(
-            f"ERROR: configs/estg150_layer_d.json already points at a v2 "
-            f"file that does NOT come from {run_dir}. The promoter does "
-            f"not silently overwrite a different run's activation. To "
-            f"re-activate a different run, first demote by re-running the "
-            f"promoter on the current active run (which is idempotent) and "
-            f"then explicitly run the new run's promoter with a one-time "
-            f"--force-promote flag (NOT YET IMPLEMENTED).",
-            file=sys.stderr,
-        )
-        return 2
-
-    # --- 3. Pre-flight checks ---
+    # --- 2. Pre-flight checks ---
     pre_flight: list[tuple[str, bool, str]] = []
     for name, fn in (
         ("mixed_run_id_and_model", check_mixed_run_id_and_model),
@@ -428,7 +421,7 @@ def main() -> int:
             return 2
     print(f"[pre-flight] all {len(pre_flight)} checks passed")
 
-    # --- 4. Strict validator (no partial) ---
+    # --- 3. Strict validator (no partial) ---
     print(f"[validator] running strict validator on {run_dir} ...")
     rc = call_validator(run_dir)
     if rc != 0:
@@ -439,6 +432,21 @@ def main() -> int:
         )
         return 2
     print(f"[validator] strict validator returned 0")
+
+    # --- 4. Cross-run guard: after the candidate itself has passed all
+    #        read-only integrity checks, refuse to overwrite another run. ---
+    if is_already_active_for_different_run(run_dir):
+        print(
+            f"ERROR: configs/estg150_layer_d.json already points at a v2 "
+            f"file that does NOT come from {run_dir}. The promoter does "
+            f"not silently overwrite a different run's activation. To "
+            f"re-activate a different run, first demote by re-running the "
+            f"promoter on the current active run (which is idempotent) and "
+            f"then explicitly run the new run's promoter with a one-time "
+            f"--force-promote flag (NOT YET IMPLEMENTED).",
+            file=sys.stderr,
+        )
+        return 2
 
     # --- 5. Pre-state snapshot for transactional rollback ---
     v1_pre_sha = sha256_path(V1_PLACEHOLDER)  # v1 is never written; this is a guard
@@ -543,10 +551,14 @@ def main() -> int:
 
     # --- 11. Post-condition: config active_path is v2 ---
     post_cfg = json.loads(LAYER_D_CONFIG.read_text(encoding="utf-8"))
-    if post_cfg.get("active_path") != "data/development/human_review/estg_150_review_aids_zh_v2.jsonl":
+    active_raw = post_cfg.get("active_path")
+    active_resolved = Path(active_raw) if isinstance(active_raw, str) else Path()
+    if not active_resolved.is_absolute():
+        active_resolved = REPO / active_resolved
+    if active_resolved.resolve() != V2_FILLED.resolve():
         print(
             f"ERROR: post-promotion active_path is not v2: "
-            f"{post_cfg.get('active_path')!r}",
+            f"{active_raw!r}",
             file=sys.stderr,
         )
         return 2

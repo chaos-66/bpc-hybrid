@@ -3,7 +3,7 @@
   "purpose": "Single source of truth for which Layer D JSONL the GUI / runner / audit must read. v1 is the all-null placeholder (immutable provenance); v2 is the filled Chinese-aid file produced by an authorized real LLM run. v2 is NOT a second 150; it is the SAME 150 sample_ids with text_zh and back_translation_en filled.",
   "membership_payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
   "membership_hashes_path": "data/development/estg/estg_150_membership_hashes.json",
-  "active_path": "data/development/human_review/estg_150_review_aids_zh_v1.jsonl",
+  "active_path": "data/development/human_review/estg_150_review_aids_zh_v2.jsonl",
   "placeholder_path": "data/development/human_review/estg_150_review_aids_zh_v1.jsonl",
   "filled_path": "data/development/human_review/estg_150_review_aids_zh_v2.jsonl",
   "versioned_paths": {
@@ -34,6 +34,13 @@
       "manual edit of configs/estg150_layer_d.json's `active_run_id` / `active_model` / `active_provider` / `active_v2_sha256` fields"
     ]
   },
-  "active_filled_path_status": "not_yet_generated",
-  "active_filled_path_status_note": "Until the user authorizes a real LLM run and validate_layer_d_v2.py returns 0 for 150/150, this config must keep active_path = placeholder_path. The GUI/audit/runner must read this file and never guess v1/v2. The activation metadata fields (active_run_dir / active_run_id / active_model / active_provider / active_base_url / active_v2_sha256 / active_manifest_sha256) are populated ONLY by scripts/promote_layer_d_v2.py; manual edits are forbidden."
+  "active_filled_path_status": "active",
+  "active_filled_path_status_note": "v2 was activated by scripts/promote_layer_d_v2.py at 2026-07-18T08:24:24Z UTC. v1 placeholder provenance is preserved. The activation is atomic and reversible only by re-running the promoter with a different run_dir; manual edit of active_path is FORBIDDEN.",
+  "active_run_dir": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\data\\development\\estg\\llm_candidate_runs\\run_20260718_layerd_deepseek_v4_flash_v2_nonthinking",
+  "active_run_id": "run_20260718_layerd_deepseek_v4_flash_v2_nonthinking",
+  "active_model": "deepseek-v4-flash",
+  "active_provider": "openai_compatible",
+  "active_base_url": "https://api.deepseek.com",
+  "active_v2_sha256": "f3bd24eb98a7416a6a19c3b778c0685e00463d90e43e1d796441776734d01084",
+  "active_manifest_sha256": "ba6dd30749238206f39ddf0e9e9425d436d3b8066a1d55110e416d2470dfb916"
 }

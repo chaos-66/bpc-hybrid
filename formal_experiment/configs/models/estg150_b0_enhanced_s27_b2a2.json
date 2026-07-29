@@ -1,0 +1,139 @@
+{
+  "schema_version": "estg150_b0_enhanced_development@1.0.0",
+  "task_id": "S2.7-B0-ENHANCED-DEV",
+  "run_id": "s27_estg150_b0_enhanced_b2a2",
+  "status": "preregistered_frozen_before_single_all150",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "claim_scope": "development",
+  "inputs": {
+    "human_correction_layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c"
+    },
+    "membership_hashes": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b"
+    },
+    "annotation_freeze_receipt": {
+      "path": "outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json",
+      "sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961"
+    },
+    "v10a_parent_manifest": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/manifest.json",
+      "sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315"
+    },
+    "b2a_negative_manifest": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_b2a/manifest.json",
+      "sha256": "60283d2309f01e3b93ea76bde6eabc97919ccd305d1e00e6115b0d80d9e564b1"
+    },
+    "route_diagnostic": {
+      "path": "outputs/development/s27_estg150_b0_b2a2_route_diagnostic_v1/manifest.json",
+      "sha256": "cf5d8d860fc43fc0420e9c4b4518a060707b4cd029d824bfb772b390b9ca1b3e"
+    }
+  },
+  "method": {
+    "method_id": "b0_enhanced_b2a2",
+    "method_variant": "b0_enhanced_b2a2",
+    "paper_faithful_b0": false,
+    "parent_run": "s27_estg150_b0_enhanced_v10a",
+    "negative_evidence_run": "s27_estg150_b0_enhanced_b2a",
+    "single_hypothesis": "definition_constrained_clause_local_decoding",
+    "s2_6_config": {
+      "path": "configs/models/sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126"
+    },
+    "classifier_input": "same aligned German clause text as v10-A; full record text only for unchanged unsupported-clause parent fallback",
+    "classifier_probability_labels": [
+      "definition",
+      "obligation",
+      "permission",
+      "prohibition"
+    ],
+    "definition_acceptance": "B2a preregistered strict structure conditions only",
+    "definition_rejection": "argmax over obligation/permission/prohibition from the same clause probability vector; no extra confidence threshold",
+    "unsupported_clause": "exact v10-A label, route, confidence, and uses_clause_classifier",
+    "record_classifier_for_supported_clause": false,
+    "segmentation": "unchanged v10-A plan_clause_units_v4",
+    "alignment": "unchanged v10-A align_de_to_en_units",
+    "phrase_extractor": "unchanged CoreNLP 4.5.10 + v3 patterns + lexicon-v2",
+    "scope_actor_action_edges": "unchanged v10-A",
+    "classifier_only_definition_min_conf": 0.55,
+    "additional_constrained_decoding_threshold": null,
+    "preregistration": {
+      "path": "configs/models/estg150_b0_b2a2_preregistration_v1.json"
+    }
+  },
+  "evaluator": {
+    "path": "configs/stage2_evaluator_s210_v3.json",
+    "sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f",
+    "tracks": [
+      "all_150_sentence_only_english",
+      "sun_table8_any_overlap_diagnostic"
+    ]
+  },
+  "output": {
+    "directory": "outputs/development/s27_estg150_b0_enhanced_b2a2",
+    "no_overwrite": true,
+    "persist_row_level_predictions": true,
+    "persist_canonical_gold_copy": false
+  },
+  "promotion_gates": {
+    "record_level_classifier_fallback_max": 20,
+    "fallback_set_must_be_v10a_subset": true,
+    "supported_new_record_fallback_max": 0,
+    "placeholder_classifier_count": 0,
+    "contradictory_record_fallback_path_max": 0,
+    "definition": {
+      "tp_min": 16,
+      "fp_max": 30,
+      "fn_max": 23,
+      "precision_min": 0.35,
+      "recall_min": 0.41,
+      "f1_min": 0.38
+    },
+    "overall_modality": {
+      "tp_min": 154,
+      "precision_min": 0.602,
+      "recall_min": 0.667,
+      "f1_min": 0.634
+    },
+    "other_class_f1_drop_max": 0.015,
+    "locked_to_v10a": {
+      "predicted_clauses": 256,
+      "aligned_clauses": 195,
+      "alignment_f1": true,
+      "exact_segmentation_f1": true,
+      "table8_all_fields_and_overall": true,
+      "presence_recall": true,
+      "complete_record_rate": true,
+      "hallucinated_field_rate": true,
+      "actor_action_edges": true,
+      "schema_valid_rate": 1.0
+    }
+  },
+  "route_boundaries": {
+    "formal_gold_published": false,
+    "formal_performance_result": false,
+    "context_sidecar_used": false,
+    "german_to_english_fidelity_human_verified": false,
+    "open_issue_ids": [
+      "RWI-0001",
+      "RWI-0007"
+    ],
+    "interpretation": "One preregistered development All-150 run; not formal, not Sun exact reproduction, and not an independent test result."
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_allowed": false,
+    "human_decisions_modified": false,
+    "gold_read_only": true,
+    "data_gold_written": false,
+    "data_input_written": false,
+    "formal_predictions_or_results_written": false,
+    "s2_4_test_dataset_read": false,
+    "independent82_read_or_used": false,
+    "bert_retrained": false,
+    "marker_or_tregex_expanded": false,
+    "active_registry_modified": false
+  }
+}

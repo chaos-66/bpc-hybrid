@@ -1,0 +1,216 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 38,
+  "end_index_exclusive": 43,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000127",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(1) If fixed assets are sold, the hidden reserves disclosed thereby may be deducted from the acquisition or production costs, or from the partial amounts of the acquisition or production costs within the meaning of Section 10(7), second sentence, of fixed assets acquired or produced in the financial year of the sale.",
+        "issues": ["The content of Section 10(7), second sentence, is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(1) If fixed assets are sold, the hidden reserves disclosed thereby may be deducted from the acquisition or production costs, or from the partial amounts of the acquisition or production costs within the meaning of Section 10(7), second sentence, of fixed assets acquired or produced in the financial year of the sale.", "start": 0, "end": 318},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 68, "end": 71}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deducted", "start": 72, "end": 83, "normalized": "deduct disclosed hidden reserves"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If fixed assets are sold", "start": 4, "end": 28, "normalized": "fixed assets sold"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "from the acquisition or production costs, or from the partial amounts of the acquisition or production costs", "start": 84, "end": 192, "normalized": "from acquisition or production costs or their partial amounts"},
+            {"id": "c1_constraint_2", "text": "within the meaning of Section 10(7), second sentence, of fixed assets acquired or produced in the financial year of the sale", "start": 193, "end": 317, "normalized": "Section 10(7) qualifying fixed assets acquired or produced in sale year"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The referenced Section 10(7), second sentence, is unavailable, so its treatment of partial acquisition or production costs is not expanded."}],
+      "confidence": "medium",
+      "rationale_summary": "One permission allows disclosed hidden reserves from a fixed-asset sale to be deducted from specified costs of fixed assets acquired or produced in the sale year. The passive clause does not identify a taxpayer actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000128",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) A transfer is only permissible if 1. the disposed-of asset at the time of disposal has belonged to the fixed assets of this business for at least seven years and 2. the asset to which hidden reserves are to be transferred is used in a domestic permanent establishment; Section 10(2) last sentence shall apply.",
+        "issues": ["The content of Section 10(2), last sentence, is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) A transfer is only permissible if 1. the disposed-of asset at the time of disposal has belonged to the fixed assets of this business for at least seven years and 2. the asset to which hidden reserves are to be transferred is used in a domestic permanent establishment", "start": 0, "end": 271},
+          "modality": {"label": "permission", "evidence": [{"text": "only permissible", "start": 18, "end": 34}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "A transfer", "start": 4, "end": 14, "normalized": "transfer hidden reserves"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "the disposed-of asset at the time of disposal has belonged to the fixed assets of this business for at least seven years", "start": 41, "end": 161, "normalized": "disposed asset held as business fixed asset for at least seven years"},
+            {"id": "c1_condition_2", "text": "the asset to which hidden reserves are to be transferred is used in a domestic permanent establishment", "start": 169, "end": 271, "normalized": "destination asset used in domestic permanent establishment"}
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "Section 10(2) last sentence shall apply.", "start": 273, "end": 313},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall apply", "start": 301, "end": 312}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "apply", "start": 307, "end": 312, "normalized": "apply Section 10(2) last sentence"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "Section 10(2) last sentence", "start": 273, "end": 300, "normalized": "Section 10(2) last sentence"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The applicable content of Section 10(2), last sentence, cannot be determined from this excerpt."}],
+      "confidence": "medium",
+      "rationale_summary": "The text states a transfer permission subject to two cumulative conditions and separately mandates application of a missing cross-referenced sentence. The legacy draft incorrectly treated that second norm as a mere constraint."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000139",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The acquisition or production costs of depreciable fixed assets may be deducted as operating expenses if the cost of the individual asset does not exceed 5,000 Schillings (low-value assets).",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The acquisition or production costs of depreciable fixed assets may be deducted as operating expenses if the cost of the individual asset does not exceed 5,000 Schillings (low-value assets).", "start": 0, "end": 190},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 64, "end": 67}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deducted", "start": 68, "end": 79, "normalized": "deduct acquisition or production costs"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the cost of the individual asset does not exceed 5,000 Schillings", "start": 102, "end": 170, "normalized": "individual asset cost at most 5,000 Schillings"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "as operating expenses", "start": 80, "end": 101, "normalized": "as operating expenses"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "One permission allows immediate operating-expense deduction of depreciable fixed-asset costs when the individual asset stays within the stated low-value ceiling. The parenthetical phrase labels the assets rather than adding a separate constraint."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000164",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "edited",
+        "proposed_text_en": "For the consideration of these expenses, the following applies:\na) For a one-way distance between the residence and the place of work of up to 20 km, these expenses are generally compensated by the transport tax credit (Section 33(5) and Section 57(3)).\nb) If the one-way distance between the residence and the place of work predominantly travelled by the employee during the pay period exceeds 20 km and the use of public transport is reasonable, the following additional flat-rate amounts shall be taken into account:\nc) If, during the pay period, the use of public transport between the residence and the place of work is predominantly not reasonable for the employee at least with regard to half of the distance, the following flat-rate amounts shall be taken into account instead of the flat-rate amounts under lit. b:\n152.",
+        "issues": [
+          "Changed 'commuter tax allowance' to 'transport tax credit' because German 'Verkehrsabsetzbetrag' denotes a tax credit and does not itself say 'commuter'.",
+          "The actual flat-rate amounts introduced by items b and c are missing from the excerpt."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "For the consideration of these expenses, the following applies:", "start": 0, "end": 63},
+          "modality": {"label": "definition", "evidence": [{"text": "applies", "start": 55, "end": 62}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "applies", "start": 55, "end": 62, "normalized": "apply following expense rules"}],
+          "conditions": [{"id": "c1_condition_1", "text": "For the consideration of these expenses", "start": 0, "end": 39, "normalized": "consideration of referenced expenses"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "a) For a one-way distance between the residence and the place of work of up to 20 km, these expenses are generally compensated by the transport tax credit (Section 33(5) and Section 57(3)).", "start": 64, "end": 253},
+          "modality": {"label": "definition", "evidence": [{"text": "are generally compensated", "start": 165, "end": 190}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "compensated", "start": 179, "end": 190, "normalized": "compensate expenses"}],
+          "conditions": [{"id": "c2_condition_1", "text": "For a one-way distance between the residence and the place of work of up to 20 km", "start": 67, "end": 148, "normalized": "one-way commute up to 20 km"}],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "generally", "start": 169, "end": 178, "normalized": "general rule"},
+            {"id": "c2_constraint_2", "text": "by the transport tax credit (Section 33(5) and Section 57(3))", "start": 191, "end": 252, "normalized": "through referenced transport tax credit"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "b) If the one-way distance between the residence and the place of work predominantly travelled by the employee during the pay period exceeds 20 km and the use of public transport is reasonable, the following additional flat-rate amounts shall be taken into account:", "start": 254, "end": 519},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be taken into account", "start": 491, "end": 518}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "be taken into account", "start": 497, "end": 518, "normalized": "take additional flat-rate amounts into account"}],
+          "conditions": [
+            {"id": "c3_condition_1", "text": "If the one-way distance between the residence and the place of work predominantly travelled by the employee during the pay period exceeds 20 km", "start": 257, "end": 400, "normalized": "predominant one-way commute exceeds 20 km"},
+            {"id": "c3_condition_2", "text": "the use of public transport is reasonable", "start": 405, "end": 446, "normalized": "public transport is reasonable"}
+          ],
+          "constraints": [{"id": "c3_constraint_1", "text": "the following additional flat-rate amounts", "start": 448, "end": 490, "normalized": "additional flat-rate amounts"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c4",
+          "clause_span": {"text": "c) If, during the pay period, the use of public transport between the residence and the place of work is predominantly not reasonable for the employee at least with regard to half of the distance, the following flat-rate amounts shall be taken into account instead of the flat-rate amounts under lit. b:", "start": 520, "end": 823},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be taken into account", "start": 749, "end": 776}]},
+          "actors": [],
+          "actions": [{"id": "c4_action_1", "text": "be taken into account", "start": 755, "end": 776, "normalized": "take alternative flat-rate amounts into account"}],
+          "conditions": [{"id": "c4_condition_1", "text": "If, during the pay period, the use of public transport between the residence and the place of work is predominantly not reasonable for the employee at least with regard to half of the distance", "start": 523, "end": 715, "normalized": "public transport predominantly unreasonable for at least half the commute"}],
+          "constraints": [
+            {"id": "c4_constraint_1", "text": "the following flat-rate amounts", "start": 717, "end": 748, "normalized": "following alternative flat-rate amounts"},
+            {"id": "c4_constraint_2", "text": "instead of the flat-rate amounts under lit. b", "start": 777, "end": 822, "normalized": "instead of item b amounts"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c4_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The numerical flat-rate schedules introduced after items b and c are absent, and the preceding referent of 'these expenses' is unavailable."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The scope heading and items a, b, and c are four distinct normative units. The excerpt defines the up-to-20-km treatment and two conditional flat-rate routes, but omits the actual schedules; no amounts are fabricated."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000183",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If the precise determination of income-related expenses is associated with disproportionate difficulties, the Federal Minister of Finance may, in addition to the flat-rate amount for income-related expenses pursuant to Section 16(3), establish average rates for income-related expenses by regulation for certain groups of taxpayers according to the respective practical experience.",
+        "issues": ["The content of the Section 16(3) flat-rate rule is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If the precise determination of income-related expenses is associated with disproportionate difficulties, the Federal Minister of Finance may, in addition to the flat-rate amount for income-related expenses pursuant to Section 16(3), establish average rates for income-related expenses by regulation for certain groups of taxpayers according to the respective practical experience.", "start": 0, "end": 381},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 138, "end": 141}]},
+          "actors": [{"id": "c1_actor_1", "text": "the Federal Minister of Finance", "start": 106, "end": 137, "normalized": "Federal Minister of Finance"}],
+          "actions": [{"id": "c1_action_1", "text": "establish average rates for income-related expenses", "start": 234, "end": 285, "normalized": "establish average income-related expense rates"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If the precise determination of income-related expenses is associated with disproportionate difficulties", "start": 0, "end": 104, "normalized": "precise expense determination disproportionately difficult"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "in addition to the flat-rate amount for income-related expenses pursuant to Section 16(3)", "start": 143, "end": 232, "normalized": "in addition to Section 16(3) flat-rate amount"},
+            {"id": "c1_constraint_2", "text": "by regulation", "start": 286, "end": 299, "normalized": "by regulation"},
+            {"id": "c1_constraint_3", "text": "for certain groups of taxpayers", "start": 300, "end": 331, "normalized": "for specified taxpayer groups"},
+            {"id": "c1_constraint_4", "text": "according to the respective practical experience", "start": 332, "end": 380, "normalized": "according to practical experience"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "Section 16(3) is unavailable, so the referenced ordinary flat-rate amount is not defined beyond the text."}],
+      "confidence": "medium",
+      "rationale_summary": "One conditional permission authorizes the Federal Minister of Finance to establish group-specific average expense rates by regulation when precise determination is disproportionately difficult, subject to the stated statutory and practical constraints."
+    }
+  ]
+}

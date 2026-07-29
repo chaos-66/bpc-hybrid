@@ -1,0 +1,121 @@
+{
+  "schema_version": "b0_enhanced_v9_selection_report@1.0.0",
+  "created_at_utc": "2026-07-22T17:06:59.171612+00:00",
+  "preregistration": "configs/models/estg150_b0_v9_preregistration_v1.json",
+  "preregistration_sha256": "22ea52d6640f0f74b22bf97d2cb27caca0a61406beef391f836449648d44cf91",
+  "profiles": {
+    "v9-A": {
+      "status": "valid_negative_clean_engineering_not_promoted",
+      "run_id": "s27_estg150_b0_enhanced_v9a",
+      "manifest_sha256": "c3d1009df50400d52a8e448063da4c1623b66bcea5d85b99569e165b18e507f3",
+      "modality_micro": {
+        "f1": 0.6283367556468172,
+        "fn": 78.0,
+        "fp": 103.0,
+        "precision": 0.59765625,
+        "recall": 0.6623376623376623,
+        "tp": 153.0
+      },
+      "alignment_f1": 0.8008213552361396,
+      "exact_f1": 0.1437371663244353,
+      "table8_overall": {
+        "f1": 0.49441548771407295,
+        "fn": 492,
+        "fp": 187,
+        "precision": 0.6396917148362236,
+        "recall": 0.4029126213592233,
+        "tp": 332
+      },
+      "hallucinated_field_rate": 0.2774193548387097,
+      "actor_action_edges": {
+        "f1": 0.0,
+        "fn": 245,
+        "fp": 34,
+        "gold_count": 245,
+        "jaccard_iou": 0.0,
+        "precision": 0.0,
+        "predicted_count": 34,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "placeholder_classifier_count": 0,
+      "alignment_summary": {
+        "by_status": {
+          "aligned_equal_count": 72,
+          "aligned_monotone_pack": 104,
+          "aligned_split_single_de": 49,
+          "alignment_unsupported": 31
+        },
+        "supported": 225,
+        "total": 256,
+        "unsupported": 31
+      },
+      "modality_routes": {
+        "aligned_classifier": 129,
+        "marker": 107,
+        "record_level_classifier_fallback": 20
+      },
+      "lexicon_stats": {
+        "active_counts": {
+          "actor": 37,
+          "condition": 34,
+          "constraint": 45,
+          "exception": 16,
+          "modality": 29
+        },
+        "category_file_sha256": {
+          "actor": "fdf026e92d9ddc4ca3b3dbe068e5440bf4c0bffd72aad9b204c5c8bc63edc44d",
+          "condition": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a",
+          "constraint": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1",
+          "exception": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e",
+          "modality": "cb6fae1292e3601b0bf10ca21459e37f63957a1e34f58d8155bc7bee74b69095"
+        },
+        "legacy_fallback": 0,
+        "lexicon_id": "public_marker_lexicon_en_v2",
+        "loaded_active_total": 161,
+        "manifest_sha256": "3f7e6108c1e66de37377abc2e9b9f4d0344ff2d1eca20b49ebf90e38aff7b462",
+        "modality_patterns_compiled": 29,
+        "scope_accepted": 308,
+        "scope_invocations": 768,
+        "scope_raw_matches": 514,
+        "scope_rejected": 206
+      },
+      "endpoint_diagnostic": {
+        "raw_predicted_edge_count": 34,
+        "actor_endpoint_alignable": 21,
+        "action_endpoint_alignable": 26,
+        "both_endpoints_alignable": 20,
+        "ownership_correct_conditional": 20,
+        "endpoint_failure": 14,
+        "ownership_failure": 0
+      },
+      "delta_vs_v7": {
+        "modality_f1": 0.0,
+        "modality_tp": 0.0,
+        "table8_f1": 0.0023260169011978804,
+        "table8_r": -0.1444174757281554,
+        "hallu": -0.12890475583322702,
+        "edge_fp": -151
+      },
+      "promotion": false,
+      "promotion_failures": [
+        "modality_f1_delta=0 < 0.010",
+        "additional_aligned_correct_tp=0 < 3",
+        "table8_recall 0.403 < v7 0.547",
+        "table8_f1_delta ~0.002 < 0.020"
+      ]
+    },
+    "v9-B": {
+      "status": "not_instantiated",
+      "reason": "no verified new Tregex fixtures with distinct code path; not created as no-op duplicate"
+    }
+  },
+  "provisional_best_remains": "s27_estg150_b0_enhanced_v7",
+  "engineering_gains_not_promotion": [
+    "placeholder_classifier_count=0",
+    "alignment_supported 225/256 (vs residual ~72)",
+    "hallu 0.406->0.277",
+    "edge FP 185->34",
+    "honest routes: aligned_classifier/marker/record_level_fallback"
+  ]
+}

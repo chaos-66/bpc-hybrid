@@ -13,12 +13,13 @@ Agent 和人类都按以下顺序进入：
 3. `docs/AGENT_RUNBOOK.md`：分阶段派工规则和可复制 Prompt；
 4. `docs/DIRECTORY_GUIDE.md`：每个目录的职责和文件去向；
 5. `docs/EXPERIMENT_LOG.md`：中文实验日志和最新已验证变更；
-6. `AGENTS.md`：强制操作边界；
-7. `docs/AI_CHANGE_PROTOCOL.md`：实验日志、自动检查和记录协议；
-8. `paper/README.md`：外部 ChatGPT 通过 GitHub 协作写作的固定入口；
-9. `paper/THESIS_DRAFT.md`：已启动的论文工作稿；
-10. `docs/INDEX.md`：其余文档地图；
-11. `docs/FILE_CATALOG.md`：自动生成的逐文件目录。
+6. `docs/REAL_WORLD_ISSUE_REGISTER.md`：实际问题、开放状态、解决方法和验证证据；
+7. `AGENTS.md`：强制操作边界；
+8. `docs/AI_CHANGE_PROTOCOL.md`：实验日志、自动检查和记录协议；
+9. `paper/README.md`：外部 ChatGPT 通过 GitHub 协作写作的固定入口；
+10. `paper/THESIS_DRAFT.md`：已启动的论文工作稿；
+11. `docs/INDEX.md`：其余文档地图；
+12. `docs/FILE_CATALOG.md`：自动生成的逐文件目录。
 
 不要新建平行 pipeline、日期版 status 或 handoff。实验中出现新证据时，原位更新
 主 Pipeline 的版本号、任务状态、依赖、完成定义和 changelog。
@@ -29,11 +30,23 @@ Agent 和人类都按以下顺序进入：
 
 ## 当前事实
 
-- EStG-150 人工审核输入门已就绪，但仍是 0/150 adjudicated；
-- 现有 `sun_rule_only` 是 development heuristic，不是完整 Sun baseline；
-- S2.3 `public_marker_lexicon_en_v1` 已离线 verified，但仍是 development-only，
-  未激活 extractor、训练或评价；
-- B0、H1、正式 D1、Stage 1 和 Stage 3 均未完成；
+- EStG-150 人工审核已完成 150/150，并由 S2.2 deterministic receipt 冻结为
+  sentence-only English annotation snapshot；RWI-0001/RWI-0007 仍阻塞 formal Gold publication；
+- 经用户授权，Codex 内置 `gpt-5.6-sol` 已生成并严格校验 150/150 条候选、共 232
+  clauses；外部 API/费用为 0，候选不会自动写 Layer E；
+- 候选协议 C0 已冻结唯一 external canonical serializer/runner：八项历史资产、Layer-A
+  顺序、0–2 双轮/3–149 单轮、四 provider adapters 和 strict validation 均 hash 锁定；
+  历史隐藏 Codex transport 未存档，C1–C4 与真实 API 尚未运行；
+- `sun_rule_only` 已完成 150/150 development attempts；S2.10-E v1.2 复用 immutable
+  attempts 重算得到 modality micro P/R/F1=0.394737/0.454545/0.422535，旧 exact-ID/span
+  低分已标为 superseded。该结果不是 formal performance；
+- Stage 2 六要素 extraction-contract v1 已统一人工、H1 v5 与 D1 v5；12 条 pilot 只作
+  静态/schema 覆盖；H1、D1、v1.2 evaluator 与统计协议已完成真实运行前的离线预注册，
+  尚无正式结果；
+- Stage 1 的结构、P0/P1、blank protocol、evaluator 已验证；7 个 GDPR BPMN 已冻结为
+  Stage 1/Stage 3 共享的 all-seven extension，人工 Stage 1 Gold 仍为 0/7；
+- Stage 3 只完成 all-seven membership 子任务，原 4 模型、matching/violation Gold 和
+  多 baseline 尚未锁定；
 - 未经用户明确授权，不运行真实 LLM/API；
 - 没有 formal Gold，也没有可用于最终论文结论的正式结果。
 
@@ -44,17 +57,20 @@ python formal_experiment/scripts/audit_project.py
 python formal_experiment/scripts/audit_project.py --with-tests
 ```
 
-启动已授权的人工审核工具：
+启动推荐的极简法规六要素修改工具：
 
 ```powershell
-python formal_experiment/scripts/estg150_review_tool.py
+python formal_experiment/scripts/estg150_simple_review_tool.py
 ```
+
+Sol 已预填全部 clause 和六要素；没问题点“保存并下一条”，有问题直接改对应框。
+span/offset 在后台自动定位。旧 `estg150_review_tool.py` 仅保留为疑难情况的高级入口。
 
 ## 目录边界
 
 ```text
 configs/       机器可读合同、方法与 schema
-data/          development 与未来冻结的 input/gold/predictions/results
+data/          development 与冻结的 input、未来 gold/predictions/results
 docs/          主路线、实时状态、规范、日志与研究证据
 outputs/       报告；正式报告必须可追溯
 paper/         论文工作稿与科学主张证据矩阵

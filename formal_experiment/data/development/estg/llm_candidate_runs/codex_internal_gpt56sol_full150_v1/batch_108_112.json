@@ -1,0 +1,168 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 108,
+  "end_index_exclusive": 113,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000051",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "All institutions to which such a notice has been issued shall be published once a year by the Federal Minister for Science and Research in the official gazette of the Wiener Zeitung.",
+        "issues": [
+          "The antecedent and substantive criteria for 'such a notice' are not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "All institutions to which such a notice has been issued shall be published once a year by the Federal Minister for Science and Research in the official gazette of the Wiener Zeitung", "start": 0, "end": 181},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be published", "start": 56, "end": 74}]},
+          "actors": [{"id": "c1_actor_1", "text": "the Federal Minister for Science and Research", "start": 90, "end": 135, "normalized": "Federal Minister for Science and Research"}],
+          "actions": [{"id": "c1_action_1", "text": "be published", "start": 62, "end": 74, "normalized": "publish institutions issued the notice"}],
+          "conditions": [{"id": "c1_condition_1", "text": "All institutions to which such a notice has been issued", "start": 0, "end": 55, "normalized": "institutions issued the referenced notice"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "once a year", "start": 75, "end": 86, "normalized": "annually"},
+            {"id": "c1_constraint_2", "text": "in the official gazette of the Wiener Zeitung", "start": 136, "end": 181, "normalized": "in Wiener Zeitung official gazette"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The provision defining the referenced notice is unavailable, so the eligible institution class cannot be expanded."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The Federal Minister must publish, annually in the specified official gazette, every institution issued the referenced notice. The institutions are publication objects; the Minister named in the passive by-phrase is the actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000052",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The contributions are only deductible insofar as they, together with contributions within the meaning of item 6, do not exceed a total of 10% of the profit of the immediately preceding business year. 6.",
+        "issues": [
+          "The substantive content of referenced item 6 and the provision beginning with the trailing item number 6 are not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The contributions are only deductible insofar as they, together with contributions within the meaning of item 6, do not exceed a total of 10% of the profit of the immediately preceding business year", "start": 0, "end": 198},
+          "modality": {"label": "permission", "evidence": [{"text": "are only deductible", "start": 18, "end": 37}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "deductible", "start": 27, "end": 37, "normalized": "deduct contributions"}],
+          "conditions": [{"id": "c1_condition_1", "text": "insofar as they, together with contributions within the meaning of item 6, do not exceed a total of 10% of the profit of the immediately preceding business year", "start": 38, "end": 198, "normalized": "combined contributions do not exceed 10 percent of immediately preceding business-year profit"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The referenced contribution category in item 6 and the next provision introduced by the trailing '6.' are unavailable."},
+        {"field": "actor", "reason": "The deductibility permission does not expressly identify the claimant."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Contributions are deductible only to the extent their combined amount with item 6 contributions stays within 10% of the immediately preceding business year's profit. The trailing item number is excluded from the clause."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000055",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(6) Prepayments not subject to capitalization for advisory, suretyship, borrowed funds, guarantee, rental, trust, brokerage, distribution and administration costs must be allocated evenly over the period of the prepayment, unless they relate only to the current and the following year.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(6) Prepayments not subject to capitalization for advisory, suretyship, borrowed funds, guarantee, rental, trust, brokerage, distribution and administration costs must be allocated evenly over the period of the prepayment, unless they relate only to the current and the following year", "start": 0, "end": 284},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 163, "end": 167}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be allocated", "start": 168, "end": 180, "normalized": "allocate prepayments"}],
+          "conditions": [{"id": "c1_condition_1", "text": "Prepayments not subject to capitalization for advisory, suretyship, borrowed funds, guarantee, rental, trust, brokerage, distribution and administration costs", "start": 4, "end": 162, "normalized": "non-capitalizable prepayments for the listed cost categories"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "evenly over the period of the prepayment", "start": 181, "end": 221, "normalized": "evenly across prepayment period"}],
+          "exceptions": [{"id": "c1_exception_1", "text": "unless they relate only to the current and the following year", "start": 223, "end": 284, "normalized": "except prepayments concerning only current and following year"}],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "actor", "reason": "The allocation obligation is passive and no accounting actor is expressly identified."}
+      ],
+      "confidence": "high",
+      "rationale_summary": "The rule requires even allocation of the listed non-capitalizable cost prepayments across their prepayment period, with an express exception for prepayments relating only to the current and following year."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000057",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Expenditure on repairs means expenditure that is not part of the cost of acquisition or construction and which, alone or together with construction expenditure, substantially increases the value in use of the building or substantially extends its useful life.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Expenditure on repairs means expenditure that is not part of the cost of acquisition or construction and which, alone or together with construction expenditure, substantially increases the value in use of the building or substantially extends its useful life", "start": 0, "end": 258},
+          "modality": {"label": "definition", "evidence": [{"text": "means", "start": 23, "end": 28}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "means", "start": 23, "end": 28, "normalized": "define expenditure on repairs"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "that is not part of the cost of acquisition or construction", "start": 41, "end": 100, "normalized": "not acquisition or construction cost"},
+            {"id": "c1_condition_2", "text": "which, alone or together with construction expenditure, substantially increases the value in use of the building or substantially extends its useful life", "start": 105, "end": 258, "normalized": "alone or with construction expenditure substantially increases use value or useful life"}
+          ],
+          "constraints": [{"id": "c1_constraint_1", "text": "alone or together with construction expenditure", "start": 112, "end": 159, "normalized": "alone or together with construction expenditure"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The definition requires both exclusion from acquisition or construction cost and either a substantial increase in the building's use value or a substantial extension of useful life, whether caused alone or with construction expenditure."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000060",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The additions and deductions shall be taken into account in the profit of the first profit determination period after the change, and in the case of the sale or abandonment of the entire business, of a part-business or of a co-entrepreneur\u2019s interest in the profit of the last profit determination period before the sale or abandonment. 2.",
+        "issues": [
+          "The type of preceding 'change' and the provision beginning with the trailing item number 2 are not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The additions and deductions shall be taken into account in the profit of the first profit determination period after the change, and in the case of the sale or abandonment of the entire business, of a part-business or of a co-entrepreneur\u2019s interest in the profit of the last profit determination period before the sale or abandonment", "start": 0, "end": 335},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be taken into account", "start": 29, "end": 56}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be taken into account", "start": 35, "end": 56, "normalized": "take additions and deductions into account in profit"}],
+          "conditions": [{"id": "c1_condition_1", "text": "in the case of the sale or abandonment of the entire business, of a part-business or of a co-entrepreneur\u2019s interest", "start": 134, "end": 250, "normalized": "sale or abandonment of entire business, part-business, or co-entrepreneur interest"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "in the profit of the first profit determination period after the change", "start": 57, "end": 128, "normalized": "in first profit-determination period after change"},
+            {"id": "c1_constraint_2", "text": "in the profit of the last profit determination period before the sale or abandonment", "start": 251, "end": 335, "normalized": "in last profit-determination period before sale or abandonment"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The antecedent defining the relevant change and the following item 2 are unavailable."},
+        {"field": "actor", "reason": "The accounting obligation is passive and the responsible person is not expressly identified."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "One accounting duty governs additions and deductions, with a first-period timing after the unspecified change and a last-period timing before sale or abandonment of the listed business interests. The trailing item number is excluded from the clause."
+    }
+  ]
+}

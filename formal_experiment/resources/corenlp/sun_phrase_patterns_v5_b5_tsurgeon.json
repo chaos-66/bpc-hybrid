@@ -1,0 +1,364 @@
+{
+  "schema_version": "sun_tregex_rule_registry_b5_per_pattern@1.0.0",
+  "rule_set_id": "sun_phrase_patterns_en_v5_b5_tsurgeon",
+  "status": "development_b5_tsurgeon_post_surgery_tregex_consumed",
+  "language": "en",
+  "parent_rule_set_id": "sun_phrase_patterns_en_v3_enhanced",
+  "parent_registry_path": "resources/corenlp/sun_phrase_patterns_v3_enhanced.json",
+  "parent_registry_sha256": "f49bad50fb6236137f1208aeef572d2a78c789726363897c637dc464c780e142",
+  "hypothesis": "Sequential Tsurgeon prune of condition/constraint/exception context on one constituency working tree, then extract action/actor from post-surgery Tregex matches only. Bridge still emits pre-surgery context spans for scope; Tsurgeon target is preventing context pollution of action/actor, not eliminating B4 constraint FP.",
+  "parser": {
+    "name": "Stanford CoreNLP",
+    "version": "4.5.10",
+    "tree_representation": "constituency_parse"
+  },
+  "lexicon": {
+    "id": "public_marker_lexicon_en_v1",
+    "combined_payload_sha256": "8c3a27b2aa62025ff266b4cb19a1c89984e967539188ccf96820836c2eef7b91"
+  },
+  "extraction_order": [
+    "modality",
+    "condition",
+    "constraint",
+    "exception",
+    "action",
+    "actor"
+  ],
+  "ordering_policy": {
+    "action_after_removed_context": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "actor_after_action": true,
+    "overlap_resolution": "smallest_sufficient_then_leftmost",
+    "test_time_rule_edits_forbidden": true,
+    "multi_match_per_field": true,
+    "collect_then_resolve": true,
+    "tsurgeon_field_order": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception",
+      "action",
+      "actor"
+    ],
+    "per_pattern_operations": true,
+    "post_surgery_action_actor_required": true
+  },
+  "parent_pattern_count": 29,
+  "candidate_pattern_count": 29,
+  "pattern_strings_exact_parent": true,
+  "pattern_order_exact_parent": true,
+  "only_operation_metadata_changed": true,
+  "fields": [
+    {
+      "field": "modality",
+      "order": 1,
+      "candidate_source": "public_marker_definition_first",
+      "tregex_patterns": [
+        "VP=modality << /(?i)^(shall)$/ << /(?i)^(mean|means)$/",
+        "VP=modality << /(?i)^(means|denotes)$/",
+        "VP=modality << /(?i)^(is|are)$/ << /(?i)^(defined|understood)$/",
+        "/^(MD|VB|VBP|VBZ)$/=modality < /(?i)^(shall|must|may)$/",
+        "VP=modality << /(?i)^(shall|must|may)$/ << /(?i)^(not)$/"
+      ],
+      "pattern_entries": [
+        {
+          "pattern_index": 0,
+          "global_pattern_index": 0,
+          "tregex": "VP=modality << /(?i)^(shall)$/ << /(?i)^(mean|means)$/",
+          "tsurgeon_operation": null,
+          "surgery_enabled": false
+        },
+        {
+          "pattern_index": 1,
+          "global_pattern_index": 1,
+          "tregex": "VP=modality << /(?i)^(means|denotes)$/",
+          "tsurgeon_operation": null,
+          "surgery_enabled": false
+        },
+        {
+          "pattern_index": 2,
+          "global_pattern_index": 2,
+          "tregex": "VP=modality << /(?i)^(is|are)$/ << /(?i)^(defined|understood)$/",
+          "tsurgeon_operation": null,
+          "surgery_enabled": false
+        },
+        {
+          "pattern_index": 3,
+          "global_pattern_index": 3,
+          "tregex": "/^(MD|VB|VBP|VBZ)$/=modality < /(?i)^(shall|must|may)$/",
+          "tsurgeon_operation": null,
+          "surgery_enabled": false
+        },
+        {
+          "pattern_index": 4,
+          "global_pattern_index": 4,
+          "tregex": "VP=modality << /(?i)^(shall|must|may)$/ << /(?i)^(not)$/",
+          "tsurgeon_operation": null,
+          "surgery_enabled": false
+        }
+      ],
+      "tsurgeon_operations": [],
+      "tsurgeon_note": "B5: operations are per pattern_entries only; field-level list must stay empty"
+    },
+    {
+      "field": "condition",
+      "order": 2,
+      "candidate_source": "expanded_public_markers",
+      "tregex_patterns": [
+        "SBAR=condition << /(?i)^(if|when|whenever|unless|provided|where|once|insofar|whilst|while)$/",
+        "PP=condition << /(?i)^(in|upon|on|after|before|to)$/ << /(?i)^(case|event|condition|extent|purpose)$/",
+        "PP=condition << /(?i)^(subject)$/ << /(?i)^(to)$/",
+        "ADVP=condition << /(?i)^(where|when|whenever)$/",
+        "PP=condition << /(?i)^(for)$/ << /(?i)^(business|tax)$/"
+      ],
+      "pattern_entries": [
+        {
+          "pattern_index": 0,
+          "global_pattern_index": 5,
+          "tregex": "SBAR=condition << /(?i)^(if|when|whenever|unless|provided|where|once|insofar|whilst|while)$/",
+          "tsurgeon_operation": "prune condition",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 1,
+          "global_pattern_index": 6,
+          "tregex": "PP=condition << /(?i)^(in|upon|on|after|before|to)$/ << /(?i)^(case|event|condition|extent|purpose)$/",
+          "tsurgeon_operation": "prune condition",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 2,
+          "global_pattern_index": 7,
+          "tregex": "PP=condition << /(?i)^(subject)$/ << /(?i)^(to)$/",
+          "tsurgeon_operation": "prune condition",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 3,
+          "global_pattern_index": 8,
+          "tregex": "ADVP=condition << /(?i)^(where|when|whenever)$/",
+          "tsurgeon_operation": "prune condition",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 4,
+          "global_pattern_index": 9,
+          "tregex": "PP=condition << /(?i)^(for)$/ << /(?i)^(business|tax)$/",
+          "tsurgeon_operation": "prune condition",
+          "surgery_enabled": true
+        }
+      ],
+      "tsurgeon_operations": [],
+      "tsurgeon_note": "B5: operations are per pattern_entries only; field-level list must stay empty"
+    },
+    {
+      "field": "constraint",
+      "order": 3,
+      "candidate_source": "expanded_temporal_quantitative_legal",
+      "tregex_patterns": [
+        "/^(PP|ADVP)$/=constraint << /(?i)^(within|before|after|during|until|throughout|prior|between)$/",
+        "/^(PP|NP|ADJP)$/=constraint << /(?i)^(at|no|least|later|more|most|than|only|minimum|maximum|up)$/",
+        "PP=constraint << /(?i)^(in|pursuant|accordance|compliance|consistent)$/ << /(?i)^(with|to)$/",
+        "PP=constraint << /(?i)^(for)$/ << /(?i)^(purpose|period|duration|year)$/",
+        "ADVP=constraint << /(?i)^(only|solely|exclusively|generally)$/",
+        "PP=constraint << /(?i)^(without)$/",
+        "PP=constraint << /(?i)^(under|pursuant)$/",
+        "PP=constraint << /(?i)^(to)$/ << /(?i)^(an|the)$/",
+        "NP=constraint << /(?i)^(meaning|purposes)$/ << /(?i)^(of)$/",
+        "PP=constraint << /(?i)^(by)$/ << /(?i)^(double|means|way)$/"
+      ],
+      "pattern_entries": [
+        {
+          "pattern_index": 0,
+          "global_pattern_index": 10,
+          "tregex": "/^(PP|ADVP)$/=constraint << /(?i)^(within|before|after|during|until|throughout|prior|between)$/",
+          "tsurgeon_operation": "prune constraint",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 1,
+          "global_pattern_index": 11,
+          "tregex": "/^(PP|NP|ADJP)$/=constraint << /(?i)^(at|no|least|later|more|most|than|only|minimum|maximum|up)$/",
+          "tsurgeon_operation": "prune constraint",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 2,
+          "global_pattern_index": 12,
+          "tregex": "PP=constraint << /(?i)^(in|pursuant|accordance|compliance|consistent)$/ << /(?i)^(with|to)$/",
+          "tsurgeon_operation": "prune constraint",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 3,
+          "global_pattern_index": 13,
+          "tregex": "PP=constraint << /(?i)^(for)$/ << /(?i)^(purpose|period|duration|year)$/",
+          "tsurgeon_operation": "prune constraint",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 4,
+          "global_pattern_index": 14,
+          "tregex": "ADVP=constraint << /(?i)^(only|solely|exclusively|generally)$/",
+          "tsurgeon_operation": "prune constraint",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 5,
+          "global_pattern_index": 15,
+          "tregex": "PP=constraint << /(?i)^(without)$/",
+          "tsurgeon_operation": "prune constraint",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 6,
+          "global_pattern_index": 16,
+          "tregex": "PP=constraint << /(?i)^(under|pursuant)$/",
+          "tsurgeon_operation": "prune constraint",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 7,
+          "global_pattern_index": 17,
+          "tregex": "PP=constraint << /(?i)^(to)$/ << /(?i)^(an|the)$/",
+          "tsurgeon_operation": "prune constraint",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 8,
+          "global_pattern_index": 18,
+          "tregex": "NP=constraint << /(?i)^(meaning|purposes)$/ << /(?i)^(of)$/",
+          "tsurgeon_operation": "prune constraint",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 9,
+          "global_pattern_index": 19,
+          "tregex": "PP=constraint << /(?i)^(by)$/ << /(?i)^(double|means|way)$/",
+          "tsurgeon_operation": "prune constraint",
+          "surgery_enabled": true
+        }
+      ],
+      "tsurgeon_operations": [],
+      "tsurgeon_note": "B5: operations are per pattern_entries only; field-level list must stay empty"
+    },
+    {
+      "field": "exception",
+      "order": 4,
+      "candidate_source": "expanded_exception_cues",
+      "tregex_patterns": [
+        "/^(SBAR|PP|ADVP)$/=exception << /(?i)^(except|excluding|notwithstanding|save|apart|regardless)$/",
+        "SBAR=exception << /(?i)^(unless|even)$/",
+        "PP=exception << /(?i)^(other)$/ << /(?i)^(than)$/",
+        "PP=exception << /(?i)^(with)$/ << /(?i)^(exception)$/",
+        "VP=exception << /(?i)^(shall|does|do)$/ << /(?i)^(not)$/ << /(?i)^(apply)$/"
+      ],
+      "pattern_entries": [
+        {
+          "pattern_index": 0,
+          "global_pattern_index": 20,
+          "tregex": "/^(SBAR|PP|ADVP)$/=exception << /(?i)^(except|excluding|notwithstanding|save|apart|regardless)$/",
+          "tsurgeon_operation": "prune exception",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 1,
+          "global_pattern_index": 21,
+          "tregex": "SBAR=exception << /(?i)^(unless|even)$/",
+          "tsurgeon_operation": "prune exception",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 2,
+          "global_pattern_index": 22,
+          "tregex": "PP=exception << /(?i)^(other)$/ << /(?i)^(than)$/",
+          "tsurgeon_operation": "prune exception",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 3,
+          "global_pattern_index": 23,
+          "tregex": "PP=exception << /(?i)^(with)$/ << /(?i)^(exception)$/",
+          "tsurgeon_operation": "prune exception",
+          "surgery_enabled": true
+        },
+        {
+          "pattern_index": 4,
+          "global_pattern_index": 24,
+          "tregex": "VP=exception << /(?i)^(shall|does|do)$/ << /(?i)^(not)$/ << /(?i)^(apply)$/",
+          "tsurgeon_operation": null,
+          "surgery_enabled": false
+        }
+      ],
+      "tsurgeon_operations": [],
+      "tsurgeon_note": "B5: operations are per pattern_entries only; field-level list must stay empty"
+    },
+    {
+      "field": "action",
+      "order": 5,
+      "candidate_source": "dependency_prefer_python_resolver",
+      "tregex_patterns": [
+        "S=clause !> SBAR < (VP=action !<< MD)",
+        "VP=action < /^(VB|VBD|VBG|VBN|VBP|VBZ)$/ !<< MD"
+      ],
+      "pattern_entries": [
+        {
+          "pattern_index": 0,
+          "global_pattern_index": 25,
+          "tregex": "S=clause !> SBAR < (VP=action !<< MD)",
+          "tsurgeon_operation": null,
+          "surgery_enabled": false
+        },
+        {
+          "pattern_index": 1,
+          "global_pattern_index": 26,
+          "tregex": "VP=action < /^(VB|VBD|VBG|VBN|VBP|VBZ)$/ !<< MD",
+          "tsurgeon_operation": null,
+          "surgery_enabled": false
+        }
+      ],
+      "tsurgeon_operations": [],
+      "tsurgeon_note": "B5: operations are per pattern_entries only; field-level list must stay empty"
+    },
+    {
+      "field": "actor",
+      "order": 6,
+      "candidate_source": "dependency_prefer_python_resolver",
+      "tregex_patterns": [
+        "S=clause !> SBAR < (NP=actor $++ VP)",
+        "PP=actor < (IN < /(?i)^by$/) < NP"
+      ],
+      "pattern_entries": [
+        {
+          "pattern_index": 0,
+          "global_pattern_index": 27,
+          "tregex": "S=clause !> SBAR < (NP=actor $++ VP)",
+          "tsurgeon_operation": null,
+          "surgery_enabled": false
+        },
+        {
+          "pattern_index": 1,
+          "global_pattern_index": 28,
+          "tregex": "PP=actor < (IN < /(?i)^by$/) < NP",
+          "tsurgeon_operation": null,
+          "surgery_enabled": false
+        }
+      ],
+      "tsurgeon_operations": [],
+      "tsurgeon_note": "B5: operations are per pattern_entries only; field-level list must stay empty"
+    }
+  ],
+  "boundaries": {
+    "fixture_accuracy_is_evaluation": false,
+    "formal_gold_used": false,
+    "paper_faithful_only": false,
+    "method_id": "b0_enhanced_b5_tsurgeon_post_surgery_tregex_consumed",
+    "training_or_evaluation_run": false,
+    "b4_lexicon_loaded": false,
+    "sun_original_or_exact_reproduction": false
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "schema_version": "s24_candidate_selection_report@1.0.0",
+  "selection_split": "dev",
+  "selection_metric": "macro_f1",
+  "test_used_for_selection": false,
+  "parent_dev_macro_f1": 0.8562634380932774,
+  "parent_permission_f1": 0.875,
+  "parent_prohibition_f1": 0.6923076923076923,
+  "candidates": {
+    "A_unweighted_ce": {
+      "candidate_key": "A_unweighted_ce",
+      "bound_to_parent": true,
+      "run_id": "s24_legal_bert_textcnn_seed20260717_v1",
+      "dev_macro_f1": 0.8562634380932774,
+      "test_macro_f1": 0.8510709392388781,
+      "dev_per_class_f1": {
+        "definition": 0.9209039548022597,
+        "obligation": 0.9368421052631578,
+        "permission": 0.875,
+        "prohibition": 0.6923076923076923
+      },
+      "test_per_class_f1": {
+        "definition": 0.923076923076923,
+        "obligation": 0.9669211195928753,
+        "permission": 0.8,
+        "prohibition": 0.7142857142857142
+      },
+      "checkpoint_sha256": "cf071dc96de5794b3da43bd3810b570038a762c6ca4b989b2d54c8ec87fe605a",
+      "manifest_sha256": "4aa8fcf4ea8a33301d949b38474415468a2ca169c1e9363e30e3f5effbd5963e",
+      "new_training_run": false
+    },
+    "B_invsqrt_weighted_ce": {
+      "candidate_key": "B",
+      "run_id": "s24_candidate_B_invsqrt_weighted_seed20260717_v1",
+      "dev_macro_f1": 0.8590246946646668,
+      "test_macro_f1": 0.8772277372431857,
+      "dev_per_class_f1": {
+        "definition": 0.9247910863509751,
+        "obligation": 0.944,
+        "permission": 0.875,
+        "prohibition": 0.6923076923076923
+      },
+      "test_per_class_f1": {
+        "definition": 0.9322033898305084,
+        "obligation": 0.9665809768637532,
+        "permission": 0.810126582278481,
+        "prohibition": 0.8000000000000002
+      },
+      "best_epoch": 5,
+      "epochs_completed": 7,
+      "checkpoint_sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1",
+      "manifest_sha256": "baca3ec197014179edc3152fa9a9b11276388bac74379ef1b48b073c2a73e3c3",
+      "test_used_for_selection": false
+    },
+    "C_balanced_sampler": {
+      "candidate_key": "C",
+      "run_id": "s24_candidate_C_balanced_sampler_seed20260717_v1",
+      "dev_macro_f1": 0.8587112337331936,
+      "test_macro_f1": 0.864236377308187,
+      "dev_per_class_f1": {
+        "definition": 0.9273743016759776,
+        "obligation": 0.9272237196765498,
+        "permission": 0.9135802469135802,
+        "prohibition": 0.6666666666666666
+      },
+      "test_per_class_f1": {
+        "definition": 0.9187675070028011,
+        "obligation": 0.9533678756476685,
+        "permission": 0.7848101265822786,
+        "prohibition": 0.8000000000000002
+      },
+      "best_epoch": 7,
+      "epochs_completed": 8,
+      "checkpoint_sha256": "4b02631d3c4f73e21df441a027defe87aca4ea114e37534f76a8d6b25002d0db",
+      "manifest_sha256": "6b6e74c887ac1daa643f67f7ad6c24c751bafcafc1ea3a75130692066ef1eeb1",
+      "test_used_for_selection": false
+    }
+  },
+  "ranking_by_dev_macro_f1": [
+    "B_invsqrt_weighted_ce",
+    "C_balanced_sampler",
+    "A_unweighted_ce"
+  ],
+  "winner_by_dev": "B_invsqrt_weighted_ce",
+  "winner": {
+    "candidate_key": "B",
+    "run_id": "s24_candidate_B_invsqrt_weighted_seed20260717_v1",
+    "dev_macro_f1": 0.8590246946646668,
+    "test_macro_f1": 0.8772277372431857,
+    "dev_per_class_f1": {
+      "definition": 0.9247910863509751,
+      "obligation": 0.944,
+      "permission": 0.875,
+      "prohibition": 0.6923076923076923
+    },
+    "test_per_class_f1": {
+      "definition": 0.9322033898305084,
+      "obligation": 0.9665809768637532,
+      "permission": 0.810126582278481,
+      "prohibition": 0.8000000000000002
+    },
+    "best_epoch": 5,
+    "epochs_completed": 7,
+    "checkpoint_sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1",
+    "manifest_sha256": "baca3ec197014179edc3152fa9a9b11276388bac74379ef1b48b073c2a73e3c3",
+    "test_used_for_selection": false
+  },
+  "promotable_over_parent_by_dev_rule": true,
+  "note": "Test metrics are reported but were not used to choose the winner."
+}

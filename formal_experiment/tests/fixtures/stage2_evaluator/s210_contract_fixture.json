@@ -1,0 +1,321 @@
+{
+  "schema_version": "s210_contract_fixture@1.0.0",
+  "dataset_id": "s210_synthetic_contract_v1",
+  "method_id": "sun_llm_fallback",
+  "gold_records": [
+    {
+      "schema_version": "1.0.0",
+      "sample_id": "syn_s1",
+      "source_id": "synthetic:s1",
+      "source_text": "The clerk shall archive records.",
+      "clauses": [
+        {
+          "clause_id": "s1_c1",
+          "clause_span": {"text": "The clerk shall archive records.", "start": 0, "end": 32},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 10, "end": 15}]},
+          "actors": [{"id": "s1_a1", "text": "The clerk", "start": 0, "end": 9, "normalized": "clerk"}],
+          "actions": [{"id": "s1_p1", "text": "archive records", "start": 16, "end": 31, "normalized": "archive records"}],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "s1_a1", "action_id": "s1_p1"}],
+          "order_relations": []
+        }
+      ],
+      "method": {"name": "sun_llm_fallback", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+      "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+      "unsupported_or_ambiguous": []
+    },
+    {
+      "schema_version": "1.0.0",
+      "sample_id": "syn_s2",
+      "source_id": "synthetic:s2",
+      "source_text": "The inspector may open and then seal the file.",
+      "clauses": [
+        {
+          "clause_id": "s2_c1",
+          "clause_span": {"text": "The inspector may open and then seal the file.", "start": 0, "end": 46},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 14, "end": 17}]},
+          "actors": [{"id": "s2_a1", "text": "The inspector", "start": 0, "end": 13, "normalized": "inspector"}],
+          "actions": [
+            {"id": "s2_p1", "text": "open", "start": 18, "end": 22, "normalized": "open"},
+            {"id": "s2_p2", "text": "seal the file", "start": 32, "end": 45, "normalized": "seal file"}
+          ],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": "s2_a1", "action_id": "s2_p1"},
+            {"actor_id": "s2_a1", "action_id": "s2_p2"}
+          ],
+          "order_relations": [
+            {
+              "before_action_id": "s2_p1",
+              "after_action_id": "s2_p2",
+              "evidence": [{"text": "then", "start": 27, "end": 31}]
+            }
+          ]
+        }
+      ],
+      "method": {"name": "sun_llm_fallback", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+      "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+      "unsupported_or_ambiguous": []
+    },
+    {
+      "schema_version": "1.0.0",
+      "sample_id": "syn_s3",
+      "source_id": "synthetic:s3",
+      "source_text": "The glossary defines record for this policy.",
+      "clauses": [
+        {
+          "clause_id": "s3_c1",
+          "clause_span": {"text": "The glossary defines record for this policy.", "start": 0, "end": 44},
+          "modality": {"label": "definition", "evidence": [{"text": "defines", "start": 13, "end": 20}]},
+          "actors": [],
+          "actions": [],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [],
+          "order_relations": []
+        }
+      ],
+      "method": {"name": "sun_llm_fallback", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+      "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+      "unsupported_or_ambiguous": []
+    },
+    {
+      "schema_version": "1.0.0",
+      "sample_id": "syn_s4",
+      "source_id": "synthetic:s4",
+      "source_text": "No operator shall disclose the key.",
+      "clauses": [
+        {
+          "clause_id": "s4_c1",
+          "clause_span": {"text": "No operator shall disclose the key.", "start": 0, "end": 35},
+          "modality": {"label": "prohibition", "evidence": [{"text": "No operator shall", "start": 0, "end": 17}]},
+          "actors": [{"id": "s4_a1", "text": "No operator", "start": 0, "end": 11, "normalized": "operator"}],
+          "actions": [{"id": "s4_p1", "text": "disclose the key", "start": 18, "end": 34, "normalized": "disclose key"}],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "s4_a1", "action_id": "s4_p1"}],
+          "order_relations": []
+        }
+      ],
+      "method": {"name": "sun_llm_fallback", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+      "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+      "unsupported_or_ambiguous": []
+    },
+    {
+      "schema_version": "1.0.0",
+      "sample_id": "syn_s5",
+      "source_id": "synthetic:s5",
+      "source_text": "A reviewer may inspect logs.",
+      "clauses": [
+        {
+          "clause_id": "s5_c1",
+          "clause_span": {"text": "A reviewer may inspect logs.", "start": 0, "end": 28},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 11, "end": 14}]},
+          "actors": [{"id": "s5_a1", "text": "A reviewer", "start": 0, "end": 10, "normalized": "reviewer"}],
+          "actions": [{"id": "s5_p1", "text": "inspect logs", "start": 15, "end": 27, "normalized": "inspect logs"}],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "s5_a1", "action_id": "s5_p1"}],
+          "order_relations": []
+        }
+      ],
+      "method": {"name": "sun_llm_fallback", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+      "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+      "unsupported_or_ambiguous": []
+    }
+  ],
+  "attempts": [
+    {
+      "sample_id": "syn_s1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "syn_s1",
+        "source_id": "synthetic:s1",
+        "source_text": "The clerk shall archive records.",
+        "clauses": [
+          {
+            "clause_id": "s1_c1",
+            "clause_span": {"text": "The clerk shall archive records.", "start": 0, "end": 32},
+            "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 10, "end": 15}]},
+            "actors": [{"id": "s1_a1", "text": "The clerk", "start": 0, "end": 9, "normalized": "clerk"}],
+            "actions": [{"id": "s1_p1", "text": "archive records.", "start": 16, "end": 32, "normalized": "archive records"}],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [{"actor_id": "s1_a1", "action_id": "s1_p1"}],
+            "order_relations": []
+          }
+        ],
+        "method": {"name": "sun_llm_fallback", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+        "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+        "unsupported_or_ambiguous": []
+      },
+      "error_category": null,
+      "runtime": {
+        "llm_call_performed": false,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "estimated_cost_usd": 0.0,
+        "latency_ms": 8
+      }
+    },
+    {
+      "sample_id": "syn_s2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "syn_s2",
+        "source_id": "synthetic:s2",
+        "source_text": "The inspector may open and then seal the file.",
+        "clauses": [
+          {
+            "clause_id": "s2_c1",
+            "clause_span": {"text": "The inspector may open and then seal the file.", "start": 0, "end": 46},
+            "modality": {"label": "obligation", "evidence": [{"text": "may", "start": 14, "end": 17}]},
+            "actors": [{"id": "s2_a1", "text": "The inspector", "start": 0, "end": 13, "normalized": "inspector"}],
+            "actions": [{"id": "s2_p1", "text": "open", "start": 18, "end": 22, "normalized": "open"}],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [{"actor_id": "s2_a1", "action_id": "s2_p1"}],
+            "order_relations": []
+          }
+        ],
+        "method": {"name": "sun_llm_fallback", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+        "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+        "unsupported_or_ambiguous": [
+          {"field": "action", "reason": "second action omitted by synthetic fixture"},
+          {"field": "order_relations", "reason": "dependent relation unavailable"}
+        ]
+      },
+      "error_category": null,
+      "recovered_runtime_error_category": "timeout",
+      "runtime": {
+        "llm_call_performed": true,
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "estimated_cost_usd": 0.002,
+        "latency_ms": 120
+      }
+    },
+    {
+      "sample_id": "syn_s3",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "syn_s3",
+        "source_id": "synthetic:s3",
+        "source_text": "The glossary defines record for this policy.",
+        "clauses": [
+          {
+            "clause_id": "s3_c1",
+            "clause_span": {"text": "The glossary defines record for this policy.", "start": 0, "end": 44},
+            "modality": {"label": "definition", "evidence": [{"text": "defines", "start": 13, "end": 20}]},
+            "actors": [{"id": "s3_a1", "text": "The glossary", "start": 0, "end": 12, "normalized": "glossary"}],
+            "actions": [{"id": "s3_p1", "text": "defines record", "start": 13, "end": 27, "normalized": "define record"}],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [{"actor_id": "s3_a1", "action_id": "s3_p1"}],
+            "order_relations": []
+          }
+        ],
+        "method": {"name": "sun_llm_fallback", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+        "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+        "unsupported_or_ambiguous": []
+      },
+      "error_category": null,
+      "runtime": {
+        "llm_call_performed": false,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "estimated_cost_usd": 0.0,
+        "latency_ms": 9
+      }
+    },
+    {
+      "sample_id": "syn_s4",
+      "request_status": "api_error",
+      "record": null,
+      "error_category": "timeout",
+      "runtime": {
+        "llm_call_performed": true,
+        "prompt_tokens": 10,
+        "completion_tokens": 0,
+        "total_tokens": 10,
+        "estimated_cost_usd": 0.0001,
+        "latency_ms": 5000
+      }
+    },
+    {
+      "sample_id": "syn_s5",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "syn_s5",
+        "source_id": "synthetic:s5",
+        "source_text": "A reviewer may inspect logs.",
+        "clauses": [
+          {
+            "clause_id": "s5_c1",
+            "clause_span": {"text": "A reviewer may inspect logs.", "start": 0, "end": 28},
+            "modality": {"label": "permission", "evidence": [{"text": "may", "start": 11, "end": 14}]},
+            "actors": [{"id": "s5_a1", "text": "A reviewer", "start": 0, "end": 10, "normalized": "reviewer"}],
+            "actions": [{"id": "s5_p1", "text": "inspect logs", "start": 15, "end": 27, "normalized": "inspect logs"}],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [{"actor_id": "s5_a1", "action_id": "s5_p1"}],
+            "order_relations": []
+          }
+        ],
+        "method": {"name": "unknown_method", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+        "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+        "unsupported_or_ambiguous": []
+      },
+      "error_category": null,
+      "runtime": {
+        "llm_call_performed": true,
+        "prompt_tokens": 80,
+        "completion_tokens": 16,
+        "total_tokens": 96,
+        "estimated_cost_usd": 0.0015,
+        "latency_ms": 90
+      }
+    }
+  ],
+  "style_review_candidates": [
+    {
+      "sample_id": "syn_s1",
+      "clause_id": "s1_c1",
+      "field": "action",
+      "gold_text": "archive records",
+      "predicted_text": "archive records."
+    },
+    {
+      "sample_id": "syn_s2",
+      "clause_id": "s2_c1",
+      "field": "action",
+      "gold_text": "seal the file",
+      "predicted_text": "open"
+    },
+    {
+      "sample_id": "syn_s3",
+      "clause_id": "s3_c1",
+      "field": "actor",
+      "gold_text": "not applicable",
+      "predicted_text": "The glossary"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "dataset_reuse_evidence@1.0.0",
+  "task_id": "S2.11",
+  "source_id": "celex_32016R0679_oj_en",
+  "checked_at": "2026-07-17",
+  "official_document": {
+    "celex": "32016R0679",
+    "eli": "http://data.europa.eu/eli/reg/2016/679/oj",
+    "title": "Regulation (EU) 2016/679 (General Data Protection Regulation)",
+    "official_journal": "OJ L 119, 4.5.2016, pp. 1-88",
+    "language": "EN"
+  },
+  "reuse_evidence": {
+    "source": "EUR-Lex legal notice, Copyright notice",
+    "url": "https://eur-lex.europa.eu/content/legal-notice/legal-notice.html?locale=en",
+    "finding": "Unless otherwise specified, EUR-Lex legal documents may be reused for commercial or non-commercial purposes. Source acknowledgement and change disclosure are retained by this project.",
+    "special_restriction_found_for_celex_32016R0679": false,
+    "additional_rights_caveat_recorded": true
+  },
+  "project_decision": {
+    "status": "qualified_for_local_research_and_reproducible_dataset_derivation",
+    "allowed": [
+      "local research use",
+      "non-commercial or commercial reuse under the EUR-Lex notice",
+      "source-normalized paragraph extraction",
+      "human annotation and derived benchmark metadata",
+      "redistribution with source acknowledgement and change disclosure"
+    ],
+    "required_attribution": "Source: EUR-Lex / Publications Office of the European Union, CELEX 32016R0679; normalized whitespace and deterministic paragraph selection by this project.",
+    "forbidden": [
+      "misrepresenting the derived selection or annotations as an official EU benchmark",
+      "removing the source locator or change disclosure",
+      "claiming the old heuristic gdpr50 file is human Gold"
+    ]
+  },
+  "claim_boundary": "This is project provenance and reuse qualification, not legal advice. The official legal notice remains authoritative."
+}

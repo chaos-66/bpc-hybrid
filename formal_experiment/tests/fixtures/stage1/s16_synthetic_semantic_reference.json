@@ -1,0 +1,15 @@
+{
+  "schema_version": "stage1_synthetic_semantic_reference@1.0.0",
+  "scope": "synthetic_contract_verification_only",
+  "process_id": "Process_Label_Edges",
+  "activities": [
+    {"activity_id": "Task_Ambiguous", "actor": "Risk Manager", "action": "Review", "business_object": "disputed claim"},
+    {"activity_id": "Task_Empty", "actor": null, "action": null, "business_object": null},
+    {"activity_id": "Task_NoLane", "actor": null, "action": "Archive", "business_object": "decision"},
+    {"activity_id": "Task_Punct", "actor": "Claims Clerk", "action": "Approve", "business_object": "claim request"},
+    {"activity_id": "Task_Single", "actor": "Risk Manager", "action": "Escalate", "business_object": null},
+    {"activity_id": "Task_Unparseable", "actor": "Claims Clerk", "action": "Inspect", "business_object": null}
+  ],
+  "human_gold": false,
+  "performance_claim_allowed": false
+}

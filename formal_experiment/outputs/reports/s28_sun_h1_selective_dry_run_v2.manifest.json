@@ -1,0 +1,187 @@
+{
+  "schema_version": "sun_h1_s28_verification_manifest@1.0.0",
+  "task_id": "S2.8",
+  "status": "succeeded",
+  "created_at": "2026-07-17T08:43:57.893577+00:00",
+  "method": "sun_llm_fallback",
+  "claim_boundary": "S2.8 freezes and dry-run verifies H1 selection, field-level merge, fail-closed fallback, and a 45-of-150 call ceiling on locked synthetic B0 evidence. It is not an LLM quality test, a real API run, or a formal performance result.",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "artifacts": {
+    "config": {
+      "path": "configs/models/sun_h1_s28.json",
+      "sha256": "b90f7df14f0238e69c97a6e137be208259f1cb70314dbb195b62c0a2878503af"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/sun_style/h1_selective.py",
+      "sha256": "2f07b455ce3b7f0942bf3da0f42217093c92376a41c2c3b8ed9220bc0e937f6c"
+    },
+    "runner": {
+      "path": "scripts/run_sun_llm_fallback.py",
+      "sha256": "64a1353bdb5cfaaa5996bbb5f56c2f054dc0c2877d2244f7089c76caacba9b1f"
+    },
+    "verifier": {
+      "path": "scripts/verify_sun_h1_s28.py",
+      "sha256": "281ef4519fde03e85a3a14ce1cc60fc894fe5bc11ba586af47c660716c330952"
+    },
+    "prompt": {
+      "path": "prompts/sun_compat/rule_first_llm_fallback_prompt.md",
+      "sha256": "a0b243bec327d2cb77de3744886e5e1842e850bad54c81e1b8731f714e135d96"
+    }
+  },
+  "baseline_binding": {
+    "s2_6_gate_ready": true,
+    "legacy_front_end_used": false,
+    "record_method": "sun_rule_only",
+    "verification_manifest": {
+      "path": "outputs/reports/s26_sun_b0_canonical_composition_v3.manifest.json",
+      "sha256": "30a19e8a6476f35eff8561ca35f72a3b3a772067c0128ff4c22ce6b6ddd2fb20"
+    }
+  },
+  "selection": {
+    "evidence_boundary": "inference_time_observations_only_no_gold_or_test_distribution",
+    "clean_plan": {
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+      "fallback_triggered": false,
+      "trigger_codes": [],
+      "repair_fields": []
+    },
+    "triggered_plan": {
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+      "fallback_triggered": true,
+      "trigger_codes": [
+        "tregex_field_conflict"
+      ],
+      "repair_fields": [
+        "actions",
+        "actor_action_map",
+        "order_relations"
+      ]
+    },
+    "gold_or_test_derived_trigger_used": false
+  },
+  "merge_verification": {
+    "accepted_patch": {
+      "accepted": true,
+      "status": "accepted",
+      "errors": []
+    },
+    "accepted_record": {
+      "schema_version": "1.0.0",
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "source_id": "s25_locked_live_fixture",
+      "source_text": "If notice is required, the company shall file within 30 days.",
+      "clauses": [
+        {
+          "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+          "clause_span": {
+            "text": "If notice is required, the company shall file within 30 days.",
+            "start": 0,
+            "end": 61
+          },
+          "modality": {
+            "label": "definition",
+            "evidence": [
+              {
+                "text": "shall",
+                "start": 35,
+                "end": 40
+              }
+            ]
+          },
+          "actors": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.actor.1",
+              "text": "the company",
+              "start": 23,
+              "end": 34,
+              "normalized": "the company"
+            }
+          ],
+          "actions": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.action.1",
+              "text": "file within 30 days",
+              "start": 41,
+              "end": 60,
+              "normalized": "file within 30 days"
+            }
+          ],
+          "conditions": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.condition.1",
+              "text": "If notice is required",
+              "start": 0,
+              "end": 21,
+              "normalized": "if notice is required"
+            }
+          ],
+          "constraints": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.constraint.1",
+              "text": "within 30 days",
+              "start": 46,
+              "end": 60,
+              "normalized": "within 30 days"
+            }
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {
+              "actor_id": "s26_synthetic_obligation_condition_constraint_v1.c1.actor.1",
+              "action_id": "s26_synthetic_obligation_condition_constraint_v1.c1.action.1"
+            }
+          ],
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "validation": {
+        "schema_valid": true,
+        "cross_field_valid": true,
+        "errors": []
+      }
+    },
+    "unrequested_fields_preserved": true,
+    "same_field_id_preserved": true,
+    "unauthorized_patch": {
+      "accepted": false,
+      "status": "rejected_unauthorized_field",
+      "errors": [
+        "unauthorized fields: ['modality']"
+      ]
+    },
+    "rejected_patch_returned_original_b0": true
+  },
+  "budget_verification": {
+    "target_dataset_size": 150,
+    "max_call_fraction": 0.3,
+    "hard_call_limit": 45,
+    "first_45_unique_reserved": true,
+    "call_46_rejected": true,
+    "duplicate_sample_rejected": true,
+    "max_retries": 0
+  },
+  "prompt": {
+    "role": "repair_patch",
+    "name": "rule_first_llm_fallback_prompt",
+    "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\prompts\\sun_compat\\rule_first_llm_fallback_prompt.md",
+    "sha256": "a0b243bec327d2cb77de3744886e5e1842e850bad54c81e1b8731f714e135d96",
+    "sampling_policy": "temperature=0, top_p=1, max_tokens=2048"
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "performance_evaluation": false,
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "test_split_read_or_evaluated": false,
+    "formal_predictions_written": false
+  }
+}

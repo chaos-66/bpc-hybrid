@@ -1,0 +1,208 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 88,
+  "end_index_exclusive": 93,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000720",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "July 1988 \u2014 No. 400 2961 serving the status, the building savings contract can no longer form the basis for a tax refund, it being irrelevant whether a reclaim within the meaning of paragraphs 7 to 9 has to be made.",
+        "issues": [
+          "The excerpt begins with a page header and the tail of a preceding condition, rendered as the semantically incomplete phrase 'serving the status'.",
+          "The substantive content of paragraphs 7 to 9 is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "the building savings contract can no longer form the basis for a tax refund, it being irrelevant whether a reclaim within the meaning of paragraphs 7 to 9 has to be made", "start": 45, "end": 214},
+          "modality": {"label": "prohibition", "evidence": [{"text": "can no longer", "start": 75, "end": 88}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "form the basis for a tax refund", "start": 89, "end": 120, "normalized": "serve as basis for tax refund"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "it being irrelevant whether a reclaim within the meaning of paragraphs 7 to 9 has to be made", "start": 122, "end": 214, "normalized": "regardless of whether reclaim under paragraphs 7 to 9 is required"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The record starts mid-sentence after a page header, so the condition represented only by the fragment 'serving the status' cannot be reconstructed from the supplied text."},
+        {"field": "translation", "reason": "The frozen phrase 'serving the status' is necessarily incomplete because its German source also begins mid-clause; it is retained rather than repaired from outside context."},
+        {"field": "actor", "reason": "The building savings contract is the regulated instrument, not an acting person, and no responsible actor is explicit."}
+      ],
+      "confidence": "low",
+      "rationale_summary": "Only the complete visible prohibition is extracted: the building savings contract can no longer support a tax refund, irrespective of a reclaim under paragraphs 7 to 9. The missing leading condition is not inferred from the page fragment."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000773",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If the legal person under private law is held exclusively, directly or indirectly, by corporations under public law, activities conducted in a separate set of accounts within the meaning of subsection (3) shall be deemed a single activity, even if the individual activities lack the intention of making a profit.",
+        "issues": [
+          "The substantive content of subsection (3) is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If the legal person under private law is held exclusively, directly or indirectly, by corporations under public law, activities conducted in a separate set of accounts within the meaning of subsection (3) shall be deemed a single activity, even if the individual activities lack the intention of making a profit", "start": 0, "end": 311},
+          "modality": {"label": "definition", "evidence": [{"text": "shall be deemed", "start": 205, "end": 220}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deemed a single activity", "start": 211, "end": 238, "normalized": "deem separately accounted activities a single activity"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If the legal person under private law is held exclusively, directly or indirectly, by corporations under public law", "start": 0, "end": 115, "normalized": "private-law legal person held exclusively by public-law corporations"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "activities conducted in a separate set of accounts", "start": 117, "end": 167, "normalized": "activities maintained in separate accounts"},
+            {"id": "c1_constraint_2", "text": "within the meaning of subsection (3)", "start": 168, "end": 204, "normalized": "activities under subsection (3)"}
+          ],
+          "exceptions": [{"id": "c1_exception_1", "text": "even if the individual activities lack the intention of making a profit", "start": 240, "end": 311, "normalized": "even without profit-making intent for individual activities"}],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Subsection (3), which defines the relevant activities, is unavailable."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The provision defines separately accounted subsection (3) activities as a single activity when the private-law entity is exclusively publicly held. The express 'even if' qualification is retained as an exception to any assumed profit-intent requirement."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000776",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "An exercise of public authority shall be assumed in particular where services are involved the acceptance of which the recipient is obliged to accept by virtue of a statutory or official order.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "An exercise of public authority shall be assumed in particular where services are involved the acceptance of which the recipient is obliged to accept by virtue of a statutory or official order", "start": 0, "end": 192},
+          "modality": {"label": "definition", "evidence": [{"text": "shall be assumed", "start": 32, "end": 48}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be assumed", "start": 38, "end": 48, "normalized": "deem exercise of public authority"}],
+          "conditions": [{"id": "c1_condition_1", "text": "where services are involved the acceptance of which the recipient is obliged to accept by virtue of a statutory or official order", "start": 63, "end": 192, "normalized": "services recipient must accept under statutory or official order"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "in particular", "start": 49, "end": 62, "normalized": "especially"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "the recipient is obliged to accept by virtue of a statutory or official order", "start": 115, "end": 192},
+          "modality": {"label": "obligation", "evidence": [{"text": "is obliged", "start": 129, "end": 139}]},
+          "actors": [{"id": "c2_actor_1", "text": "the recipient", "start": 115, "end": 128, "normalized": "service recipient"}],
+          "actions": [{"id": "c2_action_1", "text": "accept", "start": 143, "end": 149, "normalized": "accept services"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "by virtue of a statutory or official order", "start": 150, "end": 192, "normalized": "under statutory or official order"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c2_actor_1", "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The sentence contains a definitional rule for exercise of public authority and an embedded express obligation of the service recipient. Both are retained because each has its own modality evidence and action."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000785",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "July 1988 \u2014 No. 401 2967 Subsidy schemes of the Federal Government or a Land exist. b) The bank may not, in accordance with its articles of association or other legal basis and its actual management, seek profit; its owners or shareholders may not receive profit shares or other benefits from the bank's funds. c) The bank may not any person through.",
+        "issues": [
+          "The excerpt begins with a page header and the end of an unavailable preceding provision.",
+          "Item c is truncated after 'through' in both the German source and frozen English, leaving its prohibited action incomplete."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The bank may not, in accordance with its articles of association or other legal basis and its actual management, seek profit", "start": 87, "end": 211},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 96, "end": 103}]},
+          "actors": [{"id": "c1_actor_1", "text": "The bank", "start": 87, "end": 95, "normalized": "bank"}],
+          "actions": [{"id": "c1_action_1", "text": "seek profit", "start": 200, "end": 211, "normalized": "seek profit"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "in accordance with its articles of association or other legal basis and its actual management", "start": 105, "end": 198, "normalized": "under governing documents and actual management"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "its owners or shareholders may not receive profit shares or other benefits from the bank's funds", "start": 213, "end": 309},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 240, "end": 247}]},
+          "actors": [{"id": "c2_actor_1", "text": "its owners or shareholders", "start": 213, "end": 239, "normalized": "bank owners or shareholders"}],
+          "actions": [{"id": "c2_action_1", "text": "receive profit shares or other benefits", "start": 248, "end": 287, "normalized": "receive profit shares or other benefits"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "from the bank's funds", "start": 288, "end": 309, "normalized": "from bank funds"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c2_actor_1", "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "The bank may not any person through", "start": 314, "end": 349},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 323, "end": 330}]},
+          "actors": [{"id": "c3_actor_1", "text": "The bank", "start": 314, "end": 322, "normalized": "bank"}],
+          "actions": [],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The leading text continues an unavailable prior item, and item c ends mid-clause, so neither boundary can be reconstructed from this record."},
+        {"field": "translation", "reason": "The frozen English preserves the source truncation in item c and is therefore grammatically incomplete; no missing words are invented."},
+        {"field": "action", "reason": "Item c visibly states that the bank 'may not' but its prohibited predicate is cut off after 'through'; the clause is retained with no fabricated action span."}
+      ],
+      "confidence": "low",
+      "rationale_summary": "Two complete prohibitions bar profit-seeking by the bank and distributions to owners or shareholders. The visible start of item c is also retained, but its action remains empty because the source ends mid-predicate. The leading subsidy fragment is not promoted to a stand-alone norm."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000812",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "For commercial enterprises (Section 2) that are required to keep books under commercial law provisions, and for trading and business cooperatives, the profit shall be determined in accordance with Section 5 of the Income Tax Act 1988.",
+        "issues": [
+          "The substantive content of Section 2 and Section 5 of the Income Tax Act 1988 is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "For commercial enterprises (Section 2) that are required to keep books under commercial law provisions, and for trading and business cooperatives, the profit shall be determined in accordance with Section 5 of the Income Tax Act 1988", "start": 0, "end": 233},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be determined", "start": 158, "end": 177}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be determined", "start": 164, "end": 177, "normalized": "determine profit"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "For commercial enterprises (Section 2) that are required to keep books under commercial law provisions", "start": 0, "end": 102, "normalized": "Section 2 commercial enterprises required to keep books"},
+            {"id": "c1_condition_2", "text": "for trading and business cooperatives", "start": 108, "end": 145, "normalized": "trading and business cooperatives"}
+          ],
+          "constraints": [{"id": "c1_constraint_1", "text": "in accordance with Section 5 of the Income Tax Act 1988", "start": 178, "end": 233, "normalized": "under Section 5 of Income Tax Act 1988"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The two cited provisions are unavailable, so the incorporated enterprise definition and profit-determination method cannot be expanded."},
+        {"field": "actor", "reason": "The profit-determination duty is passive and no calculating person is expressly identified."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The rule requires profit determination under Section 5 for book-keeping Section 2 commercial enterprises and for trading and business cooperatives. Those organizations define scope rather than acting as the unstated calculator."
+    }
+  ]
+}

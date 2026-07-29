@@ -1,0 +1,165 @@
+{
+  "schema_version": "sun_b0_s26_verification_manifest@1.0.0",
+  "task_id": "S2.6",
+  "status": "succeeded",
+  "created_at": "2026-07-17T08:10:17.962398+00:00",
+  "method": "sun_rule_only",
+  "claim_boundary": "S2.6 verifies executable classifier-extractor-canonical composition on locked synthetic evidence. It is not phrase accuracy evaluation, a formal Stage 2 result, Sun original code, or exact reproduction.",
+  "config": {
+    "path": "configs/models/sun_b0_s26.json",
+    "sha256": "ef530ed7f2f23f8022feab85f1ccdb848d076323aa5885629871e0ce5301be9d",
+    "schema_version": "sun_b0_s26@1.0.0"
+  },
+  "runtime": {
+    "python": "3.14.6",
+    "torch": "2.12.1+cpu",
+    "device": "cpu"
+  },
+  "components": {
+    "classifier": {
+      "config": {
+        "path": "configs/models/sun_bert_textcnn_s24.json",
+        "sha256": "82f950bce605e405ee1600bca90a961337f30f2933ab807f33998464bb7af498"
+      },
+      "run_manifest": {
+        "path": "outputs/reports/s24_legal_bert_textcnn_seed20260717_v1.manifest.json",
+        "sha256": "4aa8fcf4ea8a33301d949b38474415468a2ca169c1e9363e30e3f5effbd5963e"
+      },
+      "checkpoint": {
+        "path": "outputs/development/s24_legal_bert_textcnn_seed20260717_v1/best_model.pt",
+        "sha256": "cf071dc96de5794b3da43bd3810b570038a762c6ca4b989b2d54c8ec87fe605a"
+      }
+    },
+    "phrase_extractor": {
+      "runtime_verification_manifest": {
+        "path": "resources/corenlp/s25b_runtime_verification_manifest.json",
+        "sha256": "c3b1ee5a42c13cbc80447a62a957c3c1ef3e9ddd6ef46c36f8754d907f646aa3"
+      },
+      "pattern_registry": {
+        "path": "resources/corenlp/sun_phrase_patterns_v1.json",
+        "sha256": "7cd1f3d590871111724f9fbcc8bbbd34ea83a544226db35845d11602eae24d1c"
+      },
+      "locked_fixture": {
+        "path": "tests/fixtures/corenlp/obligation_condition_constraint.json",
+        "sha256": "df5860316ad927e2513f40497c3793b965c627218872300fa080b53f2e65495b"
+      },
+      "locked_live_observations": {
+        "path": "tests/fixtures/corenlp/s25b_live_expected.json",
+        "sha256": "bd8576f7b41a3b6af70937da63c2062cd68089925c0cec2f569eece0dabdd857"
+      }
+    },
+    "canonical_schema": {
+      "path": "configs/schemas/stage2_prediction.schema.json",
+      "sha256": "7485ac4a3a42b976d87e63a7d2ead88cc3df1f810b14dd066bc1f63c15599d1b"
+    }
+  },
+  "composition": {
+    "actual_s2_4_checkpoint_loaded": true,
+    "s2_4_test_re_evaluated": false,
+    "s2_5_attested_live_observation_consumed": true,
+    "classifier_input_language": "de",
+    "phrase_and_canonical_source_language": "en",
+    "parallel_synthetic_text_alignment": true,
+    "classifier_input_sha256": [
+      "5f491a2b36dbe227f02f8c9e91e09275fdc0ee1aa3e8cd8bfb9360d101b1877c"
+    ],
+    "record_count": 1,
+    "clause_count": 1,
+    "schema_invalid": 0,
+    "cross_field_invalid": 0,
+    "predicted_modalities": [
+      {
+        "label": "definition",
+        "confidence": 0.9714201092720032
+      }
+    ],
+    "synthetic_canonical_record": {
+      "schema_version": "1.0.0",
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "source_id": "s25_locked_live_fixture",
+      "source_text": "If notice is required, the company shall file within 30 days.",
+      "clauses": [
+        {
+          "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+          "clause_span": {
+            "text": "If notice is required, the company shall file within 30 days.",
+            "start": 0,
+            "end": 61
+          },
+          "modality": {
+            "label": "definition",
+            "evidence": [
+              {
+                "text": "shall",
+                "start": 35,
+                "end": 40
+              }
+            ]
+          },
+          "actors": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.actor.1",
+              "text": "the company",
+              "start": 23,
+              "end": 34,
+              "normalized": "the company"
+            }
+          ],
+          "actions": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.action.1",
+              "text": "file",
+              "start": 41,
+              "end": 45,
+              "normalized": "file"
+            }
+          ],
+          "conditions": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.condition.1",
+              "text": "If notice is required",
+              "start": 0,
+              "end": 21,
+              "normalized": "if notice is required"
+            }
+          ],
+          "constraints": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.constraint.1",
+              "text": "within 30 days",
+              "start": 46,
+              "end": 60,
+              "normalized": "within 30 days"
+            }
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {
+              "actor_id": "s26_synthetic_obligation_condition_constraint_v1.c1.actor.1",
+              "action_id": "s26_synthetic_obligation_condition_constraint_v1.c1.action.1"
+            }
+          ],
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_rule_only",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "validation": {
+        "schema_valid": true,
+        "cross_field_valid": true,
+        "errors": []
+      }
+    }
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "performance_evaluation": false,
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "test_split_read_or_evaluated": false,
+    "row_level_real_data_predictions_persisted": false
+  }
+}

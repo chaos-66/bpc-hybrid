@@ -46,9 +46,31 @@ from formal_experiment.paths import (
     WINTER_2020_REFERENCE_DIR,
 )
 from formal_experiment.sun_modality_gate import get_cached_sun_modality_gate
+from formal_experiment.s2_2_freeze_gate import get_cached_s2_2_freeze_gate
+from formal_experiment.s2_4_license_gate import get_cached_s2_4_license_gate
 from bpc_hybrid.sun_style.public_marker_lexicon import (
     get_cached_public_marker_gate,
 )
+from formal_experiment.corenlp_gate import get_cached_corenlp_gate
+from formal_experiment.s2_6_gate import get_cached_s2_6_gate
+from formal_experiment.s2_7_modality_gate import get_cached_s2_7_modality_gate
+from formal_experiment.s2_8_gate import get_cached_s2_8_gate
+from formal_experiment.s2_9_gate import get_cached_s2_9_gate
+from formal_experiment.g05_complexity_gate import get_cached_g05_complexity_gate
+from formal_experiment.s2_11_gate import get_cached_s2_11_gate
+from formal_experiment.s2_10_evaluator_gate import get_cached_s2_10_evaluator_gate
+from formal_experiment.s2_10_evaluator_v3_gate import (
+    get_cached_s2_10_evaluator_v3_gate,
+    get_cached_s2_7_b0_v3_gate,
+)
+from formal_experiment.s2_12_analysis_gate import get_cached_s2_12_analysis_gate
+from formal_experiment.s1_structural_gate import get_cached_stage1_structural_gate
+from formal_experiment.s1_label_semantics_gate import (
+    get_cached_stage1_label_semantics_gate,
+)
+from formal_experiment.s1_annotation_gate import get_cached_stage1_annotation_gate
+from formal_experiment.s1_evaluator_gate import get_cached_stage1_evaluator_gate
+from formal_experiment.s1_membership_gate import get_cached_stage1_membership_gate
 
 
 # Default whitelist for the formal_gold_publication_gate status. The
@@ -280,7 +302,9 @@ def _human_correction_v2_summary(
 
 
 def _meaningful_count(path: Path) -> int:
-    return sum(1 for item in path.glob("*") if item.is_file() and item.name != ".gitkeep") if path.exists() else 0
+    return sum(
+        1 for item in path.rglob("*") if item.is_file() and item.name != ".gitkeep"
+    ) if path.exists() else 0
 
 
 def _check_membership_fail_closed(
@@ -397,8 +421,26 @@ def _check_membership_fail_closed(
 
 def collect_status() -> dict[str, Any]:
     contract = _load_json(EXPERIMENT_CONTRACT)
+    s2_2_freeze_gate = get_cached_s2_2_freeze_gate(REPO_ROOT)
     sun_modality_gate = get_cached_sun_modality_gate(REPO_ROOT)
+    s2_4_license_gate = get_cached_s2_4_license_gate()
     public_marker_gate = get_cached_public_marker_gate(REPO_ROOT)
+    corenlp_gate = get_cached_corenlp_gate(REPO_ROOT)
+    s2_6_gate = get_cached_s2_6_gate(REPO_ROOT)
+    s2_7_modality_gate = get_cached_s2_7_modality_gate(REPO_ROOT)
+    s2_8_gate = get_cached_s2_8_gate(REPO_ROOT)
+    s2_9_gate = get_cached_s2_9_gate(REPO_ROOT)
+    g05_complexity_gate = get_cached_g05_complexity_gate(REPO_ROOT)
+    s2_11_gate = get_cached_s2_11_gate(REPO_ROOT)
+    s2_10_evaluator_gate = get_cached_s2_10_evaluator_gate(REPO_ROOT)
+    s2_10_evaluator_v3_gate = get_cached_s2_10_evaluator_v3_gate(REPO_ROOT)
+    s2_7_b0_v3_gate = get_cached_s2_7_b0_v3_gate(REPO_ROOT)
+    s2_12_analysis_gate = get_cached_s2_12_analysis_gate(REPO_ROOT)
+    stage1_structural_gate = get_cached_stage1_structural_gate(REPO_ROOT)
+    stage1_label_semantics_gate = get_cached_stage1_label_semantics_gate(REPO_ROOT)
+    stage1_annotation_gate = get_cached_stage1_annotation_gate(REPO_ROOT)
+    stage1_membership_gate = get_cached_stage1_membership_gate(REPO_ROOT)
+    stage1_evaluator_gate = get_cached_stage1_evaluator_gate(REPO_ROOT)
     methods = _load_json(METHODS_CONFIG).get("methods", [])
     legacy = _review_summary_legacy(HUMAN_REVIEW_PACK)
     canonical = _canonical_review_summary(CANONICAL_REVIEW_FILE)
@@ -553,9 +595,81 @@ def collect_status() -> dict[str, Any]:
         "route": contract.get("route", {}),
         "dataset": contract.get("stage2_dataset", {}),
         "official_supplement": contract.get("official_supplement", {}),
+        "stage1_structural_gate": stage1_structural_gate,
+        "stage1_structural_verified": bool(stage1_structural_gate.get("ready")),
+        "stage1_label_semantics_gate": stage1_label_semantics_gate,
+        "stage1_label_semantics_verified": bool(
+            stage1_label_semantics_gate.get("ready")
+        ),
+        "stage1_annotation_gate": stage1_annotation_gate,
+        "stage1_annotation_protocol_verified": bool(
+            stage1_annotation_gate.get("protocol_ready")
+        ),
+        "stage1_membership_gate": stage1_membership_gate,
+        "stage1_formal_membership_ready": bool(
+            stage1_membership_gate.get("membership_ready")
+        ),
+        "stage1_human_gold_freeze_ready": bool(
+            stage1_membership_gate.get("human_gold_freeze_ready")
+        ),
+        "stage1_evaluator_gate": stage1_evaluator_gate,
+        "stage1_evaluator_verified": bool(stage1_evaluator_gate.get("evaluator_ready")),
+        "stage1_formal_results_ready": bool(
+            stage1_evaluator_gate.get("formal_results_ready")
+        ),
         "sun_modality_gate": sun_modality_gate,
+        "stage2_annotation_freeze_gate": s2_2_freeze_gate,
+        "stage2_annotation_freeze_verified": bool(
+            s2_2_freeze_gate.get("ready")
+        ),
+        "s2_4_license_gate": s2_4_license_gate,
+        "s2_4_license_evidence_verified": bool(
+            s2_4_license_gate.get("evidence_verified")
+        ),
+        "s2_4_ready": bool(s2_4_license_gate.get("ready")),
         "public_marker_gate": public_marker_gate,
         "public_marker_lexicon_verified": bool(public_marker_gate.get("ready")),
+        "corenlp_gate": corenlp_gate,
+        "s2_5_contract_verified": bool(corenlp_gate.get("contract_ready")),
+        "s2_5_runtime_ready": bool(corenlp_gate.get("runtime_ready")),
+        "s2_5_verified": bool(corenlp_gate.get("ready")),
+        "s2_6_gate": s2_6_gate,
+        "s2_6_verified": bool(s2_6_gate.get("ready")),
+        "s2_7_modality_gate": s2_7_modality_gate,
+        "s2_7_modality_baselines_verified": bool(
+            s2_7_modality_gate.get("modality_component_ready")
+        ),
+        "s2_7_overall_ready": bool(s2_7_modality_gate.get("s2_7_overall_ready")),
+        "s2_8_gate": s2_8_gate,
+        "s2_8_verified": bool(s2_8_gate.get("ready")),
+        "s2_9_gate": s2_9_gate,
+        "s2_9_verified": bool(s2_9_gate.get("ready")),
+        "g05_complexity_gate": g05_complexity_gate,
+        "g05_complexity_verified": bool(g05_complexity_gate.get("ready")),
+        "s2_11_gate": s2_11_gate,
+        "s2_11_verified": bool(s2_11_gate.get("ready")),
+        "s2_11_input_ready": bool(s2_11_gate.get("input_ready")),
+        "s2_11_human_gold_freeze_ready": bool(
+            s2_11_gate.get("human_gold_freeze_ready")
+        ),
+        "s2_10_evaluator_gate": s2_10_evaluator_gate,
+        "s2_10_evaluator_verified": bool(s2_10_evaluator_gate.get("ready")),
+        "s2_10_main_data_results_ready": bool(
+            s2_10_evaluator_gate.get("main_data_results_ready")
+        ),
+        "s2_10_evaluator_v3_gate": s2_10_evaluator_v3_gate,
+        "s2_10_evaluator_v3_verified": bool(
+            s2_10_evaluator_v3_gate.get("ready")
+        ),
+        "s2_7_b0_v3_gate": s2_7_b0_v3_gate,
+        "s2_7_b0_v3_development_verified": bool(s2_7_b0_v3_gate.get("ready")),
+        "s2_12_analysis_gate": s2_12_analysis_gate,
+        "s2_12_analysis_protocol_verified": bool(
+            s2_12_analysis_gate.get("ready")
+        ),
+        "s2_12_formal_results_ready": bool(
+            s2_12_analysis_gate.get("formal_results_ready")
+        ),
         "sun_modality_development_data_verified": bool(
             sun_modality_gate.get("ready")
         ),
@@ -565,8 +679,10 @@ def collect_status() -> dict[str, Any]:
         "sun_modality_train_size": 1985,
         "sun_modality_dev_size": 420,
         "sun_modality_test_size": 426,
-        "sun_modality_license_status": "unknown_pending_confirmation",
-        "sun_modality_formal_use_ready": False,
+        "sun_modality_license_status": s2_4_license_gate.get(
+            "rights_status", "unknown"
+        ),
+        "sun_modality_formal_use_ready": bool(s2_4_license_gate.get("ready")),
         "assets": {
             "winter_2020_reference": WINTER_2020_REFERENCE_DIR.exists(),
             "sun_original_reference": SUN_ORIGINAL_REFERENCE_DIR.exists(),
@@ -599,7 +715,7 @@ def collect_status() -> dict[str, Any]:
         "human_review_ready": human_review_ready,
         "human_review_ready_semantics": (
             "DEPRECATED alias. Current value equals human_review_input_ready "
-            "(true once input is ready at 0/150). New code must use "
+            "(independent of annotation progress). New code must use "
             "human_review_freeze_ready or formal_gold_publication_ready."
         ),
         "frozen_artifacts": frozen,

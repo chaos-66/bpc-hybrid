@@ -1,0 +1,230 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 58,
+  "end_index_exclusive": 63,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000306",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "For buildings serving residential purposes, the following applies with respect to repair and maintenance expenses: \n\u2014 Repair and maintenance expenses that are incurred using correspondingly earmarked tax-free subsidies from public funds are, to that extent, excluded from the determination of income. \n\u2014 If, after offsetting the losses determined without taking into account the repair and maintenance expenses within the meaning of Section 5(3), there remain tax-free amounts under Section 5, then the repair and maintenance expenses not covered by tax-free subsidies shall be offset against these tax-free amounts. \n\u2014 Those repair and maintenance expenses that were not covered by tax-free subsidies and were not required to be offset against tax-free amounts shall be deducted in equal instalments spread over ten years.",
+        "issues": [
+          "The substantive content of the referenced Section 5 provisions is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "For buildings serving residential purposes, the following applies with respect to repair and maintenance expenses", "start": 0, "end": 113},
+          "modality": {"label": "obligation", "evidence": [{"text": "applies", "start": 58, "end": 65}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "applies", "start": 58, "end": 65, "normalized": "apply following repair and maintenance expense rules"}],
+          "conditions": [{"id": "c1_condition_1", "text": "For buildings serving residential purposes", "start": 0, "end": 42, "normalized": "buildings serving residential purposes"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "with respect to repair and maintenance expenses", "start": 66, "end": 113, "normalized": "repair and maintenance expenses"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "Repair and maintenance expenses that are incurred using correspondingly earmarked tax-free subsidies from public funds are, to that extent, excluded from the determination of income", "start": 118, "end": 299},
+          "modality": {"label": "obligation", "evidence": [{"text": "are, to that extent, excluded", "start": 237, "end": 266}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "excluded from the determination of income", "start": 258, "end": 299, "normalized": "exclude repair and maintenance expenses from income determination"}],
+          "conditions": [{"id": "c2_condition_1", "text": "that are incurred using correspondingly earmarked tax-free subsidies from public funds", "start": 150, "end": 236, "normalized": "expenses incurred using earmarked tax-free public subsidies"}],
+          "constraints": [{"id": "c2_constraint_1", "text": "to that extent", "start": 242, "end": 256, "normalized": "to the subsidized extent"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "If, after offsetting the losses determined without taking into account the repair and maintenance expenses within the meaning of Section 5(3), there remain tax-free amounts under Section 5, then the repair and maintenance expenses not covered by tax-free subsidies shall be offset against these tax-free amounts", "start": 304, "end": 615},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be offset", "start": 569, "end": 584}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "be offset", "start": 575, "end": 584, "normalized": "offset repair and maintenance expenses"}],
+          "conditions": [
+            {"id": "c3_condition_1", "text": "If, after offsetting the losses determined without taking into account the repair and maintenance expenses within the meaning of Section 5(3), there remain tax-free amounts under Section 5", "start": 304, "end": 492, "normalized": "tax-free Section 5 amounts remain after the specified loss offset"},
+            {"id": "c3_condition_2", "text": "the repair and maintenance expenses not covered by tax-free subsidies", "start": 499, "end": 568, "normalized": "repair and maintenance expenses not covered by tax-free subsidies"}
+          ],
+          "constraints": [{"id": "c3_constraint_1", "text": "against these tax-free amounts", "start": 585, "end": 615, "normalized": "against the remaining tax-free amounts"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c4",
+          "clause_span": {"text": "Those repair and maintenance expenses that were not covered by tax-free subsidies and were not required to be offset against tax-free amounts shall be deducted in equal instalments spread over ten years", "start": 620, "end": 822},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be deducted", "start": 762, "end": 779}]},
+          "actors": [],
+          "actions": [{"id": "c4_action_1", "text": "be deducted", "start": 768, "end": 779, "normalized": "deduct residual repair and maintenance expenses"}],
+          "conditions": [{"id": "c4_condition_1", "text": "that were not covered by tax-free subsidies and were not required to be offset against tax-free amounts", "start": 658, "end": 761, "normalized": "expenses neither subsidy-covered nor required to be offset against tax-free amounts"}],
+          "constraints": [{"id": "c4_constraint_1", "text": "in equal instalments spread over ten years", "start": 780, "end": 822, "normalized": "in equal instalments over ten years"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c4_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 5 and Section 5(3) are not included, so the referenced loss and tax-free-amount rules cannot be expanded beyond the excerpt."},
+        {"field": "actor", "reason": "The three accounting treatments are expressed without identifying the responsible taxpayer or accounting actor."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The applicability heading and all three operative bullets are retained separately: subsidy-funded expenses are excluded, uncovered expenses are offset when tax-free amounts remain, and residual expenses are deducted equally over ten years. No accounting actor is inferred."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000326",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If the income-related expenses exceed the income, the excess amount may not be offset in the determination of income (Section 2(2)). 4.",
+        "issues": [
+          "The substantive content of Section 2(2) and the provision beginning with the trailing item number 4 are not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If the income-related expenses exceed the income, the excess amount may not be offset in the determination of income (Section 2(2))", "start": 0, "end": 131},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 68, "end": 75}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be offset", "start": 76, "end": 85, "normalized": "offset excess income-related expenses"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If the income-related expenses exceed the income", "start": 0, "end": 48, "normalized": "income-related expenses exceed income"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "in the determination of income (Section 2(2))", "start": 86, "end": 131, "normalized": "in income determination under Section 2(2)"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 2(2) and the following provision introduced by the trailing '4.' are unavailable."},
+        {"field": "actor", "reason": "The offset prohibition is passive and no person performing the income determination is explicit."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The single rule prohibits offsetting the excess amount when income-related expenses exceed income, specifically in the referenced income determination. The trailing '4.' is treated as the unavailable next provision rather than as part of this clause."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000347",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) If the income is not divisible by 100 S, remainders of up to and including 50 S shall be disregarded and remainders exceeding 50 S shall be counted as full 100 S.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) If the income is not divisible by 100 S, remainders of up to and including 50 S shall be disregarded", "start": 0, "end": 104},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be disregarded", "start": 84, "end": 104}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be disregarded", "start": 90, "end": 104, "normalized": "disregard remainder"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "If the income is not divisible by 100 S", "start": 4, "end": 43, "normalized": "income is not divisible by 100 S"},
+            {"id": "c1_condition_2", "text": "remainders of up to and including 50 S", "start": 45, "end": 83, "normalized": "remainder is at most 50 S"}
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "(2) If the income is not divisible by 100 S, remainders of up to and including 50 S shall be disregarded and remainders exceeding 50 S shall be counted as full 100 S", "start": 0, "end": 165},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be counted", "start": 135, "end": 151}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be counted", "start": 141, "end": 151, "normalized": "count remainder as a full 100 S"}],
+          "conditions": [
+            {"id": "c2_condition_1", "text": "If the income is not divisible by 100 S", "start": 4, "end": 43, "normalized": "income is not divisible by 100 S"},
+            {"id": "c2_condition_2", "text": "remainders exceeding 50 S", "start": 109, "end": 134, "normalized": "remainder exceeds 50 S"}
+          ],
+          "constraints": [{"id": "c2_constraint_1", "text": "as full 100 S", "start": 152, "end": 165, "normalized": "as a full 100 S"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "actor", "reason": "Both rounding duties are passive and no calculating authority or taxpayer is expressly identified."}
+      ],
+      "confidence": "high",
+      "rationale_summary": "The common non-divisibility condition governs two distinct threshold results: remainders through 50 S are disregarded, while larger remainders are counted as a full 100 S. The second clause span retains the shared leading condition so all of its extracted elements remain inside that clause."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000366",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(6) The following expenses may be deducted without regard to the deductible: \n\u2014 expenses for the elimination of disaster damage, in particular flood, landslide, mudslide and avalanche damage; \n\u2014 costs of external vocational training under subsection (8); \n\u2014 additional expenses of the taxpayer for persons for whom increased family allowance is granted pursuant to Section 8(4) of the Family Burden Equalisation Act 1967; \n\u2014 expenses within the meaning of Section 35 which are claimed in lieu of the flat-rate amounts (Section 35(5)).",
+        "issues": [
+          "The substantive content of subsection (8), Section 8(4) of the Family Burden Equalisation Act 1967, and Section 35 is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(6) The following expenses may be deducted without regard to the deductible: \n\u2014 expenses for the elimination of disaster damage, in particular flood, landslide, mudslide and avalanche damage; \n\u2014 costs of external vocational training under subsection (8); \n\u2014 additional expenses of the taxpayer for persons for whom increased family allowance is granted pursuant to Section 8(4) of the Family Burden Equalisation Act 1967; \n\u2014 expenses within the meaning of Section 35 which are claimed in lieu of the flat-rate amounts (Section 35(5))", "start": 0, "end": 533},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 27, "end": 30}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deducted", "start": 31, "end": 42, "normalized": "deduct listed expenses"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "expenses for the elimination of disaster damage, in particular flood, landslide, mudslide and avalanche damage", "start": 80, "end": 190, "normalized": "expenses eliminating disaster damage, including specified disasters"},
+            {"id": "c1_condition_2", "text": "costs of external vocational training under subsection (8)", "start": 195, "end": 253, "normalized": "external vocational training costs under subsection (8)"},
+            {"id": "c1_condition_3", "text": "additional expenses of the taxpayer for persons for whom increased family allowance is granted pursuant to Section 8(4) of the Family Burden Equalisation Act 1967", "start": 258, "end": 420, "normalized": "taxpayer's additional expenses for persons receiving the referenced increased family allowance"},
+            {"id": "c1_condition_4", "text": "expenses within the meaning of Section 35 which are claimed in lieu of the flat-rate amounts (Section 35(5))", "start": 425, "end": 533, "normalized": "Section 35 expenses claimed instead of flat-rate amounts"}
+          ],
+          "constraints": [{"id": "c1_constraint_1", "text": "without regard to the deductible", "start": 43, "end": 75, "normalized": "without applying the deductible"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The three cited provisions are unavailable, so the internal eligibility rules for the referenced expense categories cannot be verified."},
+        {"field": "actor", "reason": "The permission is passive and does not expressly identify the claimant."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "One permission governs four enumerated categories of expense and waives the ordinary deductible for all of them. The bullet items are noun phrases completing 'the following expenses', not independent normative predicates, so they remain conditions within one clause."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000375",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(5) Instead of the allowance, the actual costs incurred due to the disability may also be claimed (Section 34(6)).",
+        "issues": [
+          "The substantive content of Section 34(6) and the allowance replaced by this election is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(5) Instead of the allowance, the actual costs incurred due to the disability may also be claimed (Section 34(6))", "start": 0, "end": 113},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 78, "end": 81}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be claimed", "start": 87, "end": 97, "normalized": "claim actual disability costs"}],
+          "conditions": [{"id": "c1_condition_1", "text": "the actual costs incurred due to the disability", "start": 30, "end": 77, "normalized": "actual costs incurred because of disability"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "Instead of the allowance", "start": 4, "end": 28, "normalized": "in place of the allowance"},
+            {"id": "c1_constraint_2", "text": "Section 34(6)", "start": 99, "end": 112, "normalized": "under Section 34(6)"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 34(6) and the referenced allowance are unavailable, so the election's surrounding eligibility rules cannot be resolved."},
+        {"field": "actor", "reason": "The claimant is not explicit in the passive permission."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The single permission allows actual disability-related costs to be claimed instead of the allowance under the referenced provision. No claimant is inferred from the passive construction."
+    }
+  ]
+}

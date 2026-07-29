@@ -1,0 +1,136 @@
+{
+  "schema_version": "complex_legal_dataset_contract@1.0.0",
+  "task_id": "S2.11",
+  "status": "preregistered_source_membership_and_gold_protocol",
+  "dataset_id": "gdpr_2016_679_articles_5_50_seeded50_v1",
+  "source": {
+    "source_id": "celex_32016R0679_oj_en",
+    "celex": "32016R0679",
+    "eli": "http://data.europa.eu/eli/reg/2016/679/oj",
+    "official_journal": "OJ L 119, 4.5.2016, pp. 1-88",
+    "language": "EN",
+    "cellar_work": "https://publications.europa.eu/resource/cellar/3e485e15-11bd-11e6-ba9a-01aa75ed71a1",
+    "metadata_url": "https://publications.europa.eu/resource/cellar/3e485e15-11bd-11e6-ba9a-01aa75ed71a1.0006.02/DOC_1",
+    "body_url": "https://publications.europa.eu/resource/cellar/3e485e15-11bd-11e6-ba9a-01aa75ed71a1.0006.02/DOC_2",
+    "metadata": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/source/DOC_1_metadata.xml",
+      "sha256": "3c13d7d5dc2012e9a290575405639aba1d56cd09b47be6b3f8f4297c11c2af72"
+    },
+    "body": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/source/DOC_2_body.xml",
+      "sha256": "fce6e6ea8724e66a1c4f98c584cafdc9dfbae26aa83c44b43423b8c7f6aa0295"
+    },
+    "reuse_evidence": {
+      "path": "configs/datasets/gdpr_eurlex_reuse_evidence_s211.json",
+      "sha256": "95a20a93b5f90c2282c9c9db760747ac1caa57833f51673d74e6877b0eccb8af",
+      "status": "qualified_for_local_research_and_reproducible_dataset_derivation"
+    },
+    "attribution": "Source: EUR-Lex / Publications Office of the European Union, CELEX 32016R0679; normalized whitespace and deterministic paragraph selection by this project."
+  },
+  "scope": {
+    "article_min": 5,
+    "article_max": 50,
+    "article_count": 46,
+    "source_unit": "top-level PARAG; if absent, the sole direct ALINEA",
+    "source_unit_count": 200,
+    "recitals_included": false,
+    "footnotes_included": false,
+    "source_language": "en",
+    "analysis_language": "en",
+    "translation_status": "original"
+  },
+  "selection": {
+    "target_count": 50,
+    "seed": "s211-gdpr-articles-5-50-coverage-seed-20260717-v1",
+    "algorithm": "minimum SHA-256 rank per Article 5-50, then four minimum-ranked remaining units; final source order",
+    "article_coverage_count": 46,
+    "coverage_supplement_count": 4,
+    "membership_sha256": "9a6a2c892e6e9ef86877066fb3c88ad03d06ca999c41ecbd91c6df35d09c28b9",
+    "allowed_inputs": [
+      "official Formex source bytes",
+      "article and paragraph identifiers",
+      "fixed seed",
+      "normalized source text SHA-256"
+    ],
+    "forbidden_inputs": [
+      "model prediction",
+      "method error",
+      "test metric",
+      "evaluation result",
+      "human annotation difficulty",
+      "post-result complexity rebinning"
+    ],
+    "method_outputs_used": false,
+    "evaluation_results_used": false
+  },
+  "artifacts": {
+    "dataset": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/gdpr_articles_5_50_seeded50_v1.jsonl",
+      "sha256": "f6093f37e1e716a5edf07dd0653d2904f11c0fe3945de1e3b083ecc761e6d1e4"
+    },
+    "membership": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/gdpr_articles_5_50_seeded50_v1.membership.json",
+      "sha256": "adbbb4d0556c0542597d43295f8e5e4531ccbec5005ca725d6020af827e4f6c7"
+    },
+    "blank_human_gold": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/gdpr_articles_5_50_seeded50_human_gold_v1.json",
+      "sha256": "9476947d8bcd460249a7ddab73599d18d9b2d59ee479f94360e1c3e7c2c9dab8",
+      "status": "template_pending_human_annotation",
+      "reviewed": 0,
+      "adjudicated": 0
+    },
+    "human_gold_schema": {
+      "path": "configs/schemas/complex_legal_human_gold.schema.json",
+      "sha256": "a98b6196626e990472b71d1d514929ab37ca8a85a417f6fd3279d5224d63a88a"
+    },
+    "mapping_guide": {
+      "path": "docs/COMPLEX_LEGAL_GOLD_GUIDE.md",
+      "sha256": "ef9f557ccd3b56e3f86c6520c40dc1b7676892e010dbf47bdf0bfab066a18237"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/complex_legal.py",
+      "sha256": "0de00566c0bd9e0ed685ceed4f72e99bcb3214a9228f16876a2ee2f60e0d1fa6"
+    },
+    "builder": {
+      "path": "scripts/build_complex_legal_s211.py",
+      "sha256": "d577a5027d57c049e67f04aa2960b845075ca1503d83c6353eca0877a19f8f3a"
+    }
+  },
+  "gold_mapping": {
+    "status": "protocol_ready_gold_not_frozen",
+    "canonical_schema": "stage2_prediction.schema.json@1.0.0",
+    "top_level_prediction_method_not_stored_in_gold": true,
+    "clause_structure_identical_to_canonical_prediction": true,
+    "span_offsets": "zero-based start, exclusive end into frozen source_text",
+    "modality_labels": ["obligation", "prohibition", "permission", "definition"],
+    "negative_record_policy": "retain membership with record_decision=no_canonical_rule",
+    "source_error_policy": "retain and report separately; never delete to improve results",
+    "freeze_requirement": "50/50 human adjudicated with all decisions resolved and canonical structure valid"
+  },
+  "legacy_gdpr50": {
+    "path": "data/development/gdpr50/",
+    "status": "rejected_as_formal_input_and_gold_kept_as_development_provenance",
+    "candidate_count": 50,
+    "official_full_document_normalized_matches": 44,
+    "official_article_5_50_matches": 29,
+    "annotation_status": "auto_annotated_rule_based_pending_review",
+    "imported_into_s211": false
+  },
+  "complexity": {
+    "g05_contract": {
+      "path": "configs/complexity_contract.json",
+      "sha256": "0a0e4f809897f22179b752c3c92ddcbf208aced1176c9ac77fb27816c9ac3b7a"
+    },
+    "formal_profiles_generated": false,
+    "profile_source_role_after_gold_freeze": "human_approved_gold",
+    "method_specific_rebinning_allowed": false
+  },
+  "safety": {
+    "formal_gold_created": false,
+    "method_outputs_read": false,
+    "test_results_read": false,
+    "llm_api_called": false,
+    "performance_evaluation": false
+  },
+  "claim_boundary": "S2.11 freezes an official-source complex legal input membership and a blank human-Gold/mapping protocol before method results. It does not freeze semantic Gold, generate complexity profiles, run an LLM, or provide performance evidence."
+}

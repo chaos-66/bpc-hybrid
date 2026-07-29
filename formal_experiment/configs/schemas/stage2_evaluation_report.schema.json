@@ -1,0 +1,314 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stage2_evaluation_report.schema.json",
+  "title": "S2.10 Stage 2 aggregate evaluation report",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "dataset_id",
+    "method_id",
+    "claim_scope",
+    "is_formal_performance_result",
+    "contract",
+    "membership",
+    "primary_metrics",
+    "semantic_coverage",
+    "structural_encoding",
+    "error_accounting",
+    "cost_accounting",
+    "safety"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "stage2_evaluation_report@1.1.0"},
+    "task_id": {"const": "S2.10-E"},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "method_id": {
+      "enum": ["sun_rule_only", "sun_llm_fallback", "direct_llm"]
+    },
+    "claim_scope": {"enum": ["synthetic_contract", "development", "formal"]},
+    "is_formal_performance_result": {"type": "boolean"},
+    "contract": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "normalization_rule_set_version",
+        "clause_alignment",
+        "entity_alignment"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {"const": "stage2_evaluator_contract@1.1.0"},
+        "normalization_rule_set_version": {"const": "safe-legal-v1"},
+        "clause_alignment": {"const": "hybrid_exact_id_then_exact_raw_span"},
+        "entity_alignment": {"const": "hybrid_exact_id_then_exact_raw_span"}
+      }
+    },
+    "membership": {
+      "type": "object",
+      "required": ["sample_count", "payload_sha256", "gold_attempt_ids_exact_match"],
+      "additionalProperties": false,
+      "properties": {
+        "sample_count": {"type": "integer", "minimum": 1},
+        "payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "gold_attempt_ids_exact_match": {"const": true}
+      }
+    },
+    "primary_metrics": {
+      "type": "object",
+      "required": ["modality", "fields"],
+      "additionalProperties": false,
+      "properties": {
+        "modality": {"$ref": "#/$defs/modality"},
+        "fields": {
+          "type": "object",
+          "required": ["actor", "action", "condition", "constraint", "exception"],
+          "additionalProperties": false,
+          "properties": {
+            "actor": {"$ref": "#/$defs/fieldMetric"},
+            "action": {"$ref": "#/$defs/fieldMetric"},
+            "condition": {"$ref": "#/$defs/fieldMetric"},
+            "constraint": {"$ref": "#/$defs/fieldMetric"},
+            "exception": {"$ref": "#/$defs/fieldMetric"}
+          }
+        }
+      }
+    },
+    "semantic_coverage": {
+      "type": "object",
+      "required": [
+        "gold_required_count",
+        "predicted_count",
+        "matched_presence_count",
+        "gold_required_presence_recall",
+        "predicted_field_precision",
+        "hallucinated_field_rate",
+        "complete_record_rate",
+        "schema_valid_rate",
+        "unsupported_or_ambiguous_rate",
+        "invalid_record_rate",
+        "api_error_rate",
+        "recovered_api_error_rate",
+        "any_api_error_rate",
+        "invalid_or_api_error_rate"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "gold_required_count": {"type": "integer", "minimum": 0},
+        "predicted_count": {"type": "integer", "minimum": 0},
+        "matched_presence_count": {"type": "integer", "minimum": 0},
+        "gold_required_presence_recall": {"$ref": "#/$defs/rate"},
+        "predicted_field_precision": {"$ref": "#/$defs/rate"},
+        "hallucinated_field_rate": {"$ref": "#/$defs/rate"},
+        "complete_record_rate": {"$ref": "#/$defs/rate"},
+        "schema_valid_rate": {"$ref": "#/$defs/rate"},
+        "unsupported_or_ambiguous_rate": {"$ref": "#/$defs/rate"},
+        "invalid_record_rate": {"$ref": "#/$defs/rate"},
+        "api_error_rate": {"$ref": "#/$defs/rate"},
+        "recovered_api_error_rate": {"$ref": "#/$defs/rate"},
+        "any_api_error_rate": {"$ref": "#/$defs/rate"},
+        "invalid_or_api_error_rate": {"$ref": "#/$defs/rate"}
+      }
+    },
+    "structural_encoding": {
+      "type": "object",
+      "required": [
+        "actor_action_edges",
+        "order_relation_edges",
+        "clause_segmentation",
+        "schema_valid_rate"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "actor_action_edges": {"$ref": "#/$defs/edgeMetric"},
+        "order_relation_edges": {"$ref": "#/$defs/edgeMetric"},
+        "clause_segmentation": {
+          "type": "object",
+          "required": [
+            "gold_count",
+            "predicted_count",
+            "exact_match_count",
+            "exact_precision",
+            "exact_recall",
+            "exact_f1",
+            "mean_gold_clause_span_iou"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "gold_count": {"type": "integer", "minimum": 0},
+            "predicted_count": {"type": "integer", "minimum": 0},
+            "exact_match_count": {"type": "integer", "minimum": 0},
+            "exact_precision": {"$ref": "#/$defs/rate"},
+            "exact_recall": {"$ref": "#/$defs/rate"},
+            "exact_f1": {"$ref": "#/$defs/rate"},
+            "mean_gold_clause_span_iou": {"$ref": "#/$defs/rate"}
+          }
+        },
+        "schema_valid_rate": {"$ref": "#/$defs/rate"}
+      }
+    },
+    "error_accounting": {
+      "type": "object",
+      "required": ["categories_are_nonexclusive", "counts"],
+      "additionalProperties": false,
+      "properties": {
+        "categories_are_nonexclusive": {"const": true},
+        "counts": {
+          "type": "object",
+          "additionalProperties": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "cost_accounting": {
+      "type": "object",
+      "required": [
+        "request_count",
+        "llm_call_count",
+        "prompt_tokens",
+        "completion_tokens",
+        "total_tokens",
+        "estimated_cost_usd",
+        "latency_ms_total",
+        "latency_ms_mean_per_request"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "request_count": {"type": "integer", "minimum": 1},
+        "llm_call_count": {"type": "integer", "minimum": 0},
+        "prompt_tokens": {"type": "integer", "minimum": 0},
+        "completion_tokens": {"type": "integer", "minimum": 0},
+        "total_tokens": {"type": "integer", "minimum": 0},
+        "estimated_cost_usd": {"type": "number", "minimum": 0},
+        "latency_ms_total": {"type": "number", "minimum": 0},
+        "latency_ms_mean_per_request": {"type": "number", "minimum": 0}
+      }
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "gold_modified",
+        "network_called_by_evaluator",
+        "llm_called_by_evaluator",
+        "row_level_predictions_persisted_in_report"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "gold_modified": {"const": false},
+        "network_called_by_evaluator": {"const": false},
+        "llm_called_by_evaluator": {"const": false},
+        "row_level_predictions_persisted_in_report": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "rate": {"type": "number", "minimum": 0, "maximum": 1},
+    "prf": {
+      "type": "object",
+      "required": ["tp", "fp", "fn", "precision", "recall", "f1"],
+      "additionalProperties": true,
+      "properties": {
+        "tp": {"type": "number", "minimum": 0},
+        "fp": {"type": "number", "minimum": 0},
+        "fn": {"type": "number", "minimum": 0},
+        "precision": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "recall": {"$ref": "#/$defs/rate"},
+        "f1": {"$ref": "#/$defs/rate"}
+      }
+    },
+    "classMetric": {
+      "allOf": [
+        {"$ref": "#/$defs/prf"},
+        {
+          "type": "object",
+          "required": ["support", "precision_display"],
+          "properties": {
+            "support": {"type": "integer", "minimum": 0},
+            "precision_display": {"type": ["number", "string"]}
+          }
+        }
+      ]
+    },
+    "modality": {
+      "type": "object",
+      "required": [
+        "unit",
+        "labels",
+        "macro_f1",
+        "per_class",
+        "confusion_matrix",
+        "missing_prediction_by_gold_class",
+        "extra_prediction_by_class"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "unit": {"const": "clause"},
+        "labels": {
+          "const": ["obligation", "prohibition", "permission", "definition"]
+        },
+        "macro_f1": {"$ref": "#/$defs/rate"},
+        "per_class": {
+          "type": "object",
+          "required": ["obligation", "prohibition", "permission", "definition"],
+          "additionalProperties": false,
+          "properties": {
+            "obligation": {"$ref": "#/$defs/classMetric"},
+            "prohibition": {"$ref": "#/$defs/classMetric"},
+            "permission": {"$ref": "#/$defs/classMetric"},
+            "definition": {"$ref": "#/$defs/classMetric"}
+          }
+        },
+        "confusion_matrix": {"type": "object"},
+        "missing_prediction_by_gold_class": {"type": "object"},
+        "extra_prediction_by_class": {"type": "object"}
+      }
+    },
+    "tokenMacro": {
+      "type": "object",
+      "required": ["precision", "recall", "f1", "evaluated_sample_count"],
+      "additionalProperties": false,
+      "properties": {
+        "precision": {"$ref": "#/$defs/rate"},
+        "recall": {"$ref": "#/$defs/rate"},
+        "f1": {"$ref": "#/$defs/rate"},
+        "evaluated_sample_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "fieldMetric": {
+      "type": "object",
+      "required": [
+        "gold_count",
+        "predicted_count",
+        "strict_exact",
+        "safe_normalized",
+        "normalized_f1_lift",
+        "token_overlap_micro",
+        "token_overlap_macro"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "gold_count": {"type": "integer", "minimum": 0},
+        "predicted_count": {"type": "integer", "minimum": 0},
+        "strict_exact": {"$ref": "#/$defs/prf"},
+        "safe_normalized": {"$ref": "#/$defs/prf"},
+        "normalized_f1_lift": {"type": "number"},
+        "token_overlap_micro": {"$ref": "#/$defs/prf"},
+        "token_overlap_macro": {"$ref": "#/$defs/tokenMacro"}
+      }
+    },
+    "edgeMetric": {
+      "allOf": [
+        {"$ref": "#/$defs/prf"},
+        {
+          "type": "object",
+          "required": ["jaccard_iou", "gold_count", "predicted_count"],
+          "properties": {
+            "jaccard_iou": {"$ref": "#/$defs/rate"},
+            "gold_count": {"type": "integer", "minimum": 0},
+            "predicted_count": {"type": "integer", "minimum": 0}
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="defs_fixture">
+  <collaboration id="collab_fixture">
+    <participant id="participant_1" processRef="process_1" />
+  </collaboration>
+  <process id="process_1" isExecutable="false">
+    <laneSet id="lane_set_1">
+      <lane id="lane_1">
+        <flowNodeRef>start_1</flowNodeRef>
+        <flowNodeRef>task_1</flowNodeRef>
+        <flowNodeRef>gateway_1</flowNodeRef>
+        <flowNodeRef>task_2</flowNodeRef>
+        <flowNodeRef>end_1</flowNodeRef>
+      </lane>
+    </laneSet>
+    <startEvent id="start_1" />
+    <task id="task_1" />
+    <exclusiveGateway id="gateway_1" />
+    <task id="task_2" />
+    <endEvent id="end_1" />
+    <sequenceFlow id="flow_1" sourceRef="start_1" targetRef="task_1" />
+    <sequenceFlow id="flow_2" sourceRef="task_1" targetRef="gateway_1" />
+    <sequenceFlow id="flow_3" sourceRef="gateway_1" targetRef="task_2" />
+    <sequenceFlow id="flow_4" sourceRef="task_2" targetRef="gateway_1" />
+    <sequenceFlow id="flow_5" sourceRef="gateway_1" targetRef="end_1" />
+  </process>
+</definitions>

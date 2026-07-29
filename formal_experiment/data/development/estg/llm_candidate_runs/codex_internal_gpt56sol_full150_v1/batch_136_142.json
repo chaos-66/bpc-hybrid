@@ -1,0 +1,253 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 136,
+  "end_index_exclusive": 143,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000121",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "In this context, the operating costs and the ongoing public charges for the land (building) are to be disregarded for both business income and business expenses.",
+        "issues": [
+          "The antecedent of 'In this context' is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "In this context, the operating costs and the ongoing public charges for the land (building) are to be disregarded for both business income and business expenses", "start": 0, "end": 160},
+          "modality": {"label": "obligation", "evidence": [{"text": "are to be disregarded", "start": 92, "end": 113}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be disregarded", "start": 99, "end": 113, "normalized": "disregard specified costs and charges"}],
+          "conditions": [{"id": "c1_condition_1", "text": "In this context", "start": 0, "end": 15, "normalized": "in the referenced context"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "the operating costs and the ongoing public charges for the land (building)", "start": 17, "end": 91, "normalized": "operating costs and ongoing public charges for the land or building"},
+            {"id": "c1_constraint_2", "text": "for both business income and business expenses", "start": 114, "end": 160, "normalized": "for both business income and business expenses"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The preceding context that determines the scope of this accounting treatment is unavailable."},
+        {"field": "actor", "reason": "The obligation is expressed passively and no responsible accounting actor is explicit."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The specified operating costs and public charges must be disregarded on both the income and expense sides, but the provision's opening cross-context reference cannot be resolved from the excerpt."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000123",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If a loss arises in one of the following nine years (operating expenses exceeding operating income within the meaning of item l), the loss shall be offset against the reserves created for the preceding years, starting with the oldest. 4.",
+        "issues": [
+          "The source and translation contain an apparent 'item l' OCR ambiguity and a trailing '4.' enumeration fragment."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If a loss arises in one of the following nine years (operating expenses exceeding operating income within the meaning of item l), the loss shall be offset against the reserves created for the preceding years, starting with the oldest.", "start": 0, "end": 234},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 139, "end": 144}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be offset against the reserves created for the preceding years", "start": 145, "end": 207, "normalized": "offset the loss against reserves created for preceding years"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If a loss arises in one of the following nine years (operating expenses exceeding operating income within the meaning of item l)", "start": 0, "end": 128, "normalized": "a loss arises in one of the following nine years"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "the reserves created for the preceding years", "start": 163, "end": 207, "normalized": "reserves created for preceding years"},
+            {"id": "c1_constraint_2", "text": "starting with the oldest", "start": 209, "end": 233, "normalized": "apply the oldest reserve first"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The referenced item and the rules under which the preceding-year reserves were created are not supplied."},
+        {"field": "translation", "reason": "The token 'item l' may represent an OCR-confused item number, and the trailing '4.' appears to be a detached structural marker."},
+        {"field": "actor", "reason": "The offset obligation is passive and identifies no responsible actor."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "A loss arising in the following nine-year period must be offset against prior-year reserves in oldest-first order. The detached item marker is excluded from the clause span."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000124",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Reserves (parts of reserves) which were not required to be offset by the end of the 9-year period pursuant to item 3 shall be released with an increase in profit at that time.",
+        "issues": [
+          "The substantive rules in item 3 are not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Reserves (parts of reserves) which were not required to be offset by the end of the 9-year period pursuant to item 3 shall be released with an increase in profit at that time", "start": 0, "end": 174},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 117, "end": 122}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be released", "start": 123, "end": 134, "normalized": "release the remaining reserves"}],
+          "conditions": [{"id": "c1_condition_1", "text": "which were not required to be offset by the end of the 9-year period pursuant to item 3", "start": 29, "end": 116, "normalized": "reserves remained unoffset at the end of the item 3 nine-year period"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "Reserves (parts of reserves)", "start": 0, "end": 28, "normalized": "remaining reserves or parts of reserves"},
+            {"id": "c1_constraint_2", "text": "with an increase in profit", "start": 135, "end": 161, "normalized": "increase profit on release"},
+            {"id": "c1_constraint_3", "text": "at that time", "start": 162, "end": 174, "normalized": "at the end of the referenced nine-year period"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Item 3 is unavailable, so the referenced offset regime cannot be expanded."},
+        {"field": "actor", "reason": "The release obligation is passive and no responsible actor is stated."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Any reserve or reserve portion left unoffset when the item 3 nine-year period ends must then be released in a manner that increases profit."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000125",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) In the case of profit determination pursuant to Section 4(3), a tax-exempt amount may be established in accordance with the provisions of paragraph (1).",
+        "issues": [
+          "Paragraph (1), which supplies the governing provisions, is not included."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) In the case of profit determination pursuant to Section 4(3), a tax-exempt amount may be established in accordance with the provisions of paragraph (1)", "start": 0, "end": 155},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 86, "end": 89}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be established", "start": 90, "end": 104, "normalized": "establish a tax-exempt amount"}],
+          "conditions": [{"id": "c1_condition_1", "text": "In the case of profit determination pursuant to Section 4(3)", "start": 4, "end": 64, "normalized": "profit is determined under Section 4(3)"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "a tax-exempt amount", "start": 66, "end": 85, "normalized": "tax-exempt amount"},
+            {"id": "c1_constraint_2", "text": "in accordance with the provisions of paragraph (1)", "start": 105, "end": 155, "normalized": "subject to paragraph 1"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The content of paragraph (1), which controls how the amount may be established, is unavailable."},
+        {"field": "actor", "reason": "The permission is passive and does not expressly name its holder."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "For profit determination under Section 4(3), a tax-exempt amount may be established subject to the rules of paragraph (1), whose details are outside the excerpt."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000130",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(3) A transfer to tangible assets shall only be permissible if the hidden reserves also originate from the sale of tangible assets.",
+        "issues": [
+          "The object or balance being transferred is implicit rather than stated in this excerpt."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(3) A transfer to tangible assets shall only be permissible if the hidden reserves also originate from the sale of tangible assets", "start": 0, "end": 130},
+          "modality": {"label": "permission", "evidence": [{"text": "shall only be permissible", "start": 34, "end": 59}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "A transfer to tangible assets", "start": 4, "end": 33, "normalized": "transfer the implicitly referenced amount to tangible assets"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the hidden reserves also originate from the sale of tangible assets", "start": 60, "end": 130, "normalized": "hidden reserves originate from sale of tangible assets"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "to tangible assets", "start": 15, "end": 33, "normalized": "destination is tangible assets"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The excerpt does not state what is being transferred, although the surrounding subject appears to be hidden reserves."},
+        {"field": "actor", "reason": "No person entitled to make the transfer is explicit."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "A transfer to tangible assets is permitted only where the corresponding hidden reserves also arose from selling tangible assets; the transferred object remains implicit."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000131",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "In the case of participations, a transfer shall only be permissible to participations in corporations, acquisition and economic cooperatives, or as a silent partner, and, furthermore, only if the management or the registered office is located in the domestic territory.",
+        "issues": [
+          "The phrase 'or as a silent partner' is grammatically awkward but preserves the visible source category."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "In the case of participations, a transfer shall only be permissible to participations in corporations, acquisition and economic cooperatives, or as a silent partner, and, furthermore, only if the management or the registered office is located in the domestic territory", "start": 0, "end": 268},
+          "modality": {"label": "permission", "evidence": [{"text": "shall only be permissible", "start": 42, "end": 67}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "a transfer", "start": 31, "end": 41, "normalized": "transfer a participation"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "In the case of participations", "start": 0, "end": 29, "normalized": "the transfer concerns participations"},
+            {"id": "c1_condition_2", "text": "only if the management or the registered office is located in the domestic territory", "start": 184, "end": 268, "normalized": "management or registered office is domestic"}
+          ],
+          "constraints": [{"id": "c1_constraint_1", "text": "to participations in corporations, acquisition and economic cooperatives, or as a silent partner", "start": 68, "end": 164, "normalized": "destination limited to specified corporate, cooperative, or silent-partner participations"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "translation", "reason": "The coordination around the silent-partner category is awkward in English but remains interpretable."},
+        {"field": "actor", "reason": "The holder of the transfer permission is not expressly identified."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "A participation-related transfer is permitted only to the listed categories and only when either management or the registered office is domestic."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000133",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(6) Half of the income from forest uses as a result of force majeure (in particular ice breakage, snow breakage, windthrow, insect infestation, flood or fire) may be used in accordance with paragraphs 1 to 5.",
+        "issues": [
+          "The permitted use is defined only by the unavailable paragraphs 1 to 5."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(6) Half of the income from forest uses as a result of force majeure (in particular ice breakage, snow breakage, windthrow, insect infestation, flood or fire) may be used in accordance with paragraphs 1 to 5", "start": 0, "end": 207},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 159, "end": 162}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be used", "start": 163, "end": 170, "normalized": "use the qualifying half of forest-use income"}],
+          "conditions": [{"id": "c1_condition_1", "text": "as a result of force majeure", "start": 40, "end": 68, "normalized": "forest use results from force majeure"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "Half of the income from forest uses", "start": 4, "end": 39, "normalized": "one half of forest-use income"},
+            {"id": "c1_constraint_2", "text": "in particular ice breakage, snow breakage, windthrow, insect infestation, flood or fire", "start": 70, "end": 157, "normalized": "including specified natural events and infestation"},
+            {"id": "c1_constraint_3", "text": "in accordance with paragraphs 1 to 5", "start": 171, "end": 207, "normalized": "subject to paragraphs 1 through 5"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Paragraphs 1 to 5, which define how the income may be used, are not supplied."},
+        {"field": "actor", "reason": "The permission is passive and no person exercising it is explicit."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Half of the income from forest uses caused by force majeure may be used under paragraphs 1 to 5; the listed events exemplify force majeure, while the actual use mechanics require the missing provisions."
+    }
+  ]
+}

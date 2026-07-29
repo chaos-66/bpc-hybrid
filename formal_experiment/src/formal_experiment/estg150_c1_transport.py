@@ -33,6 +33,9 @@ TRANSPORT_ADAPTER_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_1.json"
 )
 PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH = (
+    ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_9.json"
+)
+PORTABLE_TRANSPORT_ADAPTER_V1_8_CONFIG_PATH = (
     ROOT / "configs" / "estg150_openai_strict_transport_schema_adapter_v1_8.json"
 )
 PORTABLE_TRANSPORT_ADAPTER_V1_7_CONFIG_PATH = (
@@ -64,6 +67,42 @@ EXPECTED_STRING_TYPE_PATCHES = (
     "/properties/confidence",
     "/$defs/ambiguity/properties/field",
 )
+EXACT_SPAN_TEXT_DESCRIPTION = (
+    "Copy one exact contiguous substring from translation.proposed_text_en. From the selected "
+    "first character through the selected last character, include every intervening word, "
+    "modifier, parenthetical, citation, bullet marker, and punctuation; never paraphrase, "
+    "summarize, normalize, or delete internal material."
+)
+ABSOLUTE_START_DESCRIPTION = (
+    "Zero-based absolute Python start offset in the entire translation.proposed_text_en for "
+    "this exact text; never clause-relative and never copied from another span."
+)
+ABSOLUTE_END_DESCRIPTION = (
+    "Exclusive absolute Python end offset in the entire translation.proposed_text_en; the "
+    "required invariant is proposed_text_en[start:end] == text."
+)
+NORMALIZED_DESCRIPTION = (
+    "Semantic normalization may paraphrase the exact source span, but text must remain the "
+    "verbatim contiguous source substring."
+)
+OPTIONAL_EXACT_SPAN_ARRAY_DESCRIPTION = (
+    "Use an empty array rather than output a paraphrase or a span that skips intervening "
+    "source material. Every emitted item.text must be one exact contiguous clause substring."
+)
+EXPECTED_SPAN_GUIDANCE_PATCHES = {
+    "/$defs/span/properties/text": EXACT_SPAN_TEXT_DESCRIPTION,
+    "/$defs/span/properties/start": ABSOLUTE_START_DESCRIPTION,
+    "/$defs/span/properties/end": ABSOLUTE_END_DESCRIPTION,
+    "/$defs/identifiedSpan/properties/text": EXACT_SPAN_TEXT_DESCRIPTION,
+    "/$defs/identifiedSpan/properties/start": ABSOLUTE_START_DESCRIPTION,
+    "/$defs/identifiedSpan/properties/end": ABSOLUTE_END_DESCRIPTION,
+    "/$defs/identifiedSpan/properties/normalized": NORMALIZED_DESCRIPTION,
+    "/$defs/clause/properties/actors": OPTIONAL_EXACT_SPAN_ARRAY_DESCRIPTION,
+    "/$defs/clause/properties/actions": OPTIONAL_EXACT_SPAN_ARRAY_DESCRIPTION,
+    "/$defs/clause/properties/conditions": OPTIONAL_EXACT_SPAN_ARRAY_DESCRIPTION,
+    "/$defs/clause/properties/constraints": OPTIONAL_EXACT_SPAN_ARRAY_DESCRIPTION,
+    "/$defs/clause/properties/exceptions": OPTIONAL_EXACT_SPAN_ARRAY_DESCRIPTION,
+}
 READY_PROFILE_STATUSES = {
     "offline_ready",
     "offline_request_ready_runtime_503_unresolved",
@@ -128,7 +167,7 @@ SPAN_TEXT_GUARD_V1_7_INSTRUCTION = SPAN_TEXT_GUARD_V1_6_INSTRUCTION.replace(
     "'taxpayer may'; never reuse 'may' alone with guessed coordinates. Internally verify the "
     "decision/text pair and every slice before returning.",
 )
-SPAN_TEXT_GUARD_INSTRUCTION = SPAN_TEXT_GUARD_V1_7_INSTRUCTION.replace(
+SPAN_TEXT_GUARD_V1_8_INSTRUCTION = SPAN_TEXT_GUARD_V1_7_INSTRUCTION.replace(
     "Internally verify the decision/text pair and every slice before returning.",
     "For actions, never delete intervening modifiers or objects: copy an exact full verb "
     "phrase from the clause; normalized may paraphrase, but action.text must not. All "
@@ -136,6 +175,15 @@ SPAN_TEXT_GUARD_INSTRUCTION = SPAN_TEXT_GUARD_V1_7_INSTRUCTION.replace(
     "never offsets relative to a clause and never copied from an actor or another span. For "
     "modality.evidence, calculate the cue's own absolute coordinates; do not reuse actor.start. "
     "Internally verify the decision/text pair and every slice before returning.",
+)
+SPAN_TEXT_GUARD_INSTRUCTION = SPAN_TEXT_GUARD_V1_8_INSTRUCTION.replace(
+    "Internally verify the decision/text pair and every slice before returning.",
+    "For every non-empty span, perform the equivalent of "
+    "clause_span.text.find(span.text) and emit it only when the result is >= 0. If selected "
+    "first and last words surround a parenthetical, citation, bullet marker, modifier, or "
+    "other internal material, span.text must include all of it; otherwise omit the optional "
+    "span and report ambiguity. Internally verify the decision/text pair and every slice "
+    "before returning.",
 )
 EXPECTED_PROFILE_CONTRACT = {
     ("relay_openai_compatible", "api.chatanywhere.tech", "gpt-5.6-luna"): {
@@ -272,6 +320,7 @@ EXPECTED_PORTABLE_V1_8_PROFILE_POLICIES = {
     key: (*policy, RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST)
     for key, policy in EXPECTED_PORTABLE_PROFILE_POLICIES.items()
 }
+EXPECTED_PORTABLE_V1_9_PROFILE_POLICIES = dict(EXPECTED_PORTABLE_V1_8_PROFILE_POLICIES)
 
 
 class StructuredOutputsPreflightError(ProtocolIncompatible):
@@ -372,8 +421,10 @@ def _resolve_pointer(document: dict[str, Any], pointer: str) -> Any:
     return current
 
 
-def derive_strict_transport_schema(canonical_schema: dict[str, Any]) -> dict[str, Any]:
-    """Return the only permitted v1.1 derivation without mutating its source."""
+def derive_strict_transport_schema(
+    canonical_schema: dict[str, Any], *, add_span_guidance: bool = False
+) -> dict[str, Any]:
+    """Return a permitted strict-schema derivation without mutating its source."""
     derived = copy.deepcopy(canonical_schema)
     for pointer in EXPECTED_STRING_TYPE_PATCHES:
         node = _resolve_pointer(derived, pointer)
@@ -391,6 +442,14 @@ def derive_strict_transport_schema(canonical_schema: dict[str, Any]) -> dict[str
         if any(not isinstance(value, str) for value in values):
             raise ProtocolError(f"transport patch target is not homogeneously string-valued: {pointer}")
         node["type"] = "string"
+    if add_span_guidance:
+        for pointer, description in EXPECTED_SPAN_GUIDANCE_PATCHES.items():
+            node = _resolve_pointer(derived, pointer)
+            if not isinstance(node, dict):
+                raise ProtocolError(f"span-guidance patch target is not an object: {pointer}")
+            if "description" in node:
+                raise ProtocolError(f"span-guidance patch target already has description: {pointer}")
+            node["description"] = description
     return derived
 
 
@@ -620,6 +679,8 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
     expected_policies = (
         EXPECTED_PORTABLE_PROFILE_POLICIES
         if version == "1.2.0"
+        else EXPECTED_PORTABLE_V1_9_PROFILE_POLICIES
+        if version == "1.9.0"
         else EXPECTED_PORTABLE_V1_8_PROFILE_POLICIES
         if version == "1.8.0"
         else EXPECTED_PORTABLE_V1_7_PROFILE_POLICIES
@@ -672,11 +733,13 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
             response_mode,
             downgrade,
         )
-        if version in {"1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.7.0", "1.8.0"}:
+        if version in {
+            "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.7.0", "1.8.0", "1.9.0"
+        }:
             coordinate_mode = profile.get("response_coordinate_mode")
             expected_coordinate_mode = (
                 RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST
-                if version == "1.8.0"
+                if version in {"1.8.0", "1.9.0"}
                 else RESPONSE_COORDINATE_MODE_BOUNDED_NEAREST
                 if version == "1.7.0"
                 else RESPONSE_COORDINATE_MODE_UNIQUE_EXACT
@@ -714,7 +777,7 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
             "receipt_required": True,
         }:
             raise ProtocolError("portable v1.7 bounded coordinate policy drifted")
-    elif version == "1.8.0":
+    elif version in {"1.8.0", "1.9.0"}:
         if coordinate_policy != {
             "mode": RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST,
             "mutable_members": ["start", "end"],
@@ -738,9 +801,9 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
             "zero_or_unresolved_multiple_matches": "fail_closed",
             "receipt_required": True,
         }:
-            raise ProtocolError("portable v1.8 path-scoped coordinate policy drifted")
+            raise ProtocolError(f"portable v{version.removesuffix('.0')} path-scoped coordinate policy drifted")
     guard = config.get("response_span_text_guard")
-    if version in {"1.4.0", "1.5.0", "1.6.0", "1.7.0", "1.8.0"}:
+    if version in {"1.4.0", "1.5.0", "1.6.0", "1.7.0", "1.8.0", "1.9.0"}:
         expected_instruction = (
             SPAN_TEXT_GUARD_V1_4_INSTRUCTION
             if version == "1.4.0"
@@ -750,6 +813,8 @@ def _validate_portable_capability_profiles(config: dict[str, Any]) -> None:
             if version == "1.6.0"
             else SPAN_TEXT_GUARD_V1_7_INSTRUCTION
             if version == "1.7.0"
+            else SPAN_TEXT_GUARD_V1_8_INSTRUCTION
+            if version == "1.8.0"
             else SPAN_TEXT_GUARD_INSTRUCTION
         )
         if guard != {
@@ -772,7 +837,7 @@ def _validate_adapter_profiles(config: dict[str, Any]) -> None:
     if version == "1.1.0":
         _validate_capability_profiles(config)
     elif version in {
-        "1.2.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.7.0", "1.8.0"
+        "1.2.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.7.0", "1.8.0", "1.9.0"
     }:
         _validate_portable_capability_profiles(config)
     else:
@@ -797,14 +862,29 @@ def _load_transport_adapter(config_path: Path, *, expected_version: str) -> Stri
     pointers = tuple(config.get("transformation", {}).get("allowed_json_pointers", ()))
     if pointers != EXPECTED_STRING_TYPE_PATCHES:
         raise ProtocolError("strict transport adapter patch allowlist drifted")
+    span_guidance_pointers = tuple(
+        config.get("transformation", {}).get("span_guidance_description_patches", ())
+    )
+    if expected_version == "1.9.0":
+        if span_guidance_pointers != tuple(EXPECTED_SPAN_GUIDANCE_PATCHES):
+            raise ProtocolError("strict transport adapter span-guidance allowlist drifted")
+        if config.get("transformation", {}).get("span_guidance_validation_effect") != (
+            "none_descriptions_only"
+        ):
+            raise ProtocolError("strict transport adapter span-guidance effect drifted")
+    elif span_guidance_pointers:
+        raise ProtocolError("historical strict transport adapter declares span guidance")
 
     canonical_spec = config.get("canonical_schema", {})
     transport_spec = config.get("transport_schema", {})
     if canonical_spec.get("path") != "configs/schemas/estg150_ai_review_model_output.schema.json":
         raise ProtocolError("strict transport adapter canonical schema path drifted")
-    if transport_spec.get("path") != (
-        "configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json"
-    ):
+    expected_transport_path = (
+        "configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_2.schema.json"
+        if expected_version == "1.9.0"
+        else "configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json"
+    )
+    if transport_spec.get("path") != expected_transport_path:
         raise ProtocolError("strict transport adapter transport schema path drifted")
     canonical_path = _project_path(canonical_spec.get("path", ""))
     transport_path = _project_path(transport_spec.get("path", ""))
@@ -816,8 +896,13 @@ def _load_transport_adapter(config_path: Path, *, expected_version: str) -> Stri
         raise ProtocolError("canonical v1 output schema hash drifted")
     if transport_sha256 != transport_spec.get("sha256"):
         raise ProtocolError("strict transport schema hash drifted")
-    if derive_strict_transport_schema(canonical_schema) != transport_schema:
-        raise ProtocolError("strict transport schema contains changes outside the six allowed type additions")
+    add_span_guidance = expected_version == "1.9.0"
+    if derive_strict_transport_schema(
+        canonical_schema, add_span_guidance=add_span_guidance
+    ) != transport_schema:
+        raise ProtocolError(
+            "strict transport schema contains changes outside the allowed type and span-guidance additions"
+        )
     canonical_version = _resolve_pointer(canonical_schema, "/properties/schema_version").get("const")
     transport_version = _resolve_pointer(transport_schema, "/properties/schema_version").get("const")
     if canonical_version != transport_version or canonical_version != canonical_spec.get("output_schema_version"):
@@ -861,8 +946,16 @@ def load_strict_transport_adapter() -> StrictTransportAdapter:
 
 
 def load_portable_transport_adapter() -> StrictTransportAdapter:
-    """Load v1.8 for new dry-runs and separately authorized API calls."""
-    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.8.0")
+    """Load v1.9 for new dry-runs and separately authorized API calls."""
+    return _load_transport_adapter(PORTABLE_TRANSPORT_ADAPTER_CONFIG_PATH, expected_version="1.9.0")
+
+
+def load_portable_transport_adapter_v1_8() -> StrictTransportAdapter:
+    """Load immutable v1.8 for verification of historical runtime receipts."""
+    return _load_transport_adapter(
+        PORTABLE_TRANSPORT_ADAPTER_V1_8_CONFIG_PATH,
+        expected_version="1.8.0",
+    )
 
 
 def load_portable_transport_adapter_v1_7() -> StrictTransportAdapter:
@@ -1012,7 +1105,10 @@ def prepare_transport_request(
     model: str,
     strict_adapter: StrictTransportAdapter,
 ) -> PreparedTransportRequest:
-    if derive_strict_transport_schema(strict_adapter.canonical_schema) != strict_adapter.transport_schema:
+    if derive_strict_transport_schema(
+        strict_adapter.canonical_schema,
+        add_span_guidance=strict_adapter.adapter_version == "1.9.0",
+    ) != strict_adapter.transport_schema:
         raise ProtocolError("in-memory strict transport schema drifted after adapter load")
     preflight_openai_structured_outputs_schema(strict_adapter.transport_schema)
     if semantic_request.get("protocol_version") != strict_adapter.canonical_protocol_version:

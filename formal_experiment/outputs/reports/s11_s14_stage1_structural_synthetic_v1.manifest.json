@@ -1,0 +1,828 @@
+{
+  "schema_version": "stage1_structural_verification_manifest@1.0.0",
+  "run_id": "s11_s14_stage1_structural_synthetic_v1",
+  "task_ids": [
+    "S1.1",
+    "S1.2",
+    "S1.4"
+  ],
+  "status": "succeeded",
+  "created_at": "2026-07-17T12:37:35.787823+00:00",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "claim_boundary": "S1.1/S1.2/S1.4 freeze and verify a canonical Process Record schema, deterministic BPMN structural parsing, lane/pool binding, direct flow, reachability, activity order, branch/parallel classification, cycle detection, and unreachable-node accounting on synthetic BPMN only. This is not label-semantic evaluation, human Gold, formal BPMN evaluation, or Stage 1 performance evidence.",
+  "artifacts": {
+    "config": {
+      "path": "configs/stage1_structural_s11_s14.json",
+      "sha256": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48"
+    },
+    "schema": {
+      "path": "configs/schemas/process_record.schema.json",
+      "sha256": "9f2dc77a5386c472f9ea27fcf256a2e47195ed66e70ea5f9550caeccdf26bfef"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage1_process.py",
+      "sha256": "d81bde594190c96bd3f3e1d7a0d943847809b20500044f12a401d6aee822c396"
+    },
+    "runner": {
+      "path": "scripts/run_stage1_structural.py",
+      "sha256": "2f98953ceeea8a1fd2f329c22859b58bf139e938122459e67a40a0e8739c65f6"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage1_structural_s11_s14.py",
+      "sha256": "07e98a7d1af49655a78df618b74f5bfe0a555c4c0159f88d92b0af4615ed5b84"
+    },
+    "branch_fixture": {
+      "path": "tests/fixtures/stage1/s11_branch_parallel.bpmn",
+      "sha256": "b60067cb414af04e87f8cf0d1b050466920fdfeee8d65e7299ae256f79da4314"
+    },
+    "cycle_fixture": {
+      "path": "tests/fixtures/stage1/s14_cycle_unreachable.bpmn",
+      "sha256": "f4c4e455deb634a002a72f6ebed884e948c60b668ce193a04c43cff89a6e4513"
+    }
+  },
+  "branch_parallel_verification": {
+    "record": {
+      "schema_version": "process_record@1.0.0",
+      "process_id": "Process_Claims",
+      "source": {
+        "input_id": "s11_branch_parallel",
+        "path": "tests/fixtures/stage1/s11_branch_parallel.bpmn",
+        "sha256": "b60067cb414af04e87f8cf0d1b050466920fdfeee8d65e7299ae256f79da4314",
+        "byte_size": 3512,
+        "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL"
+      },
+      "method": {
+        "name": "stage1_bpmn_xml_structural",
+        "parser_version": "stage1_bpmn_parser@1.0.0",
+        "label_semantics": "preserve_original_labels_only"
+      },
+      "pools": [
+        {
+          "id": "Pool_Claims",
+          "name": "Claims pool",
+          "process_ref": "Process_Claims"
+        }
+      ],
+      "lanes": [
+        {
+          "id": "Lane_Clerk",
+          "name": "Claims clerk",
+          "parent_lane_id": null,
+          "flow_node_refs": [
+            "Gateway_Decide",
+            "Gateway_Merge",
+            "Start_1",
+            "Task_Receive",
+            "Task_Reject"
+          ]
+        },
+        {
+          "id": "Lane_Supervisor",
+          "name": "Supervisor",
+          "parent_lane_id": null,
+          "flow_node_refs": [
+            "End_1",
+            "Gateway_ParallelJoin",
+            "Gateway_ParallelSplit",
+            "Task_Approve",
+            "Task_Archive",
+            "Task_Notify"
+          ]
+        }
+      ],
+      "activities": [
+        {
+          "id": "Task_Approve",
+          "name": "Approve claim",
+          "type": "serviceTask",
+          "lane_ids": [
+            "Lane_Supervisor"
+          ]
+        },
+        {
+          "id": "Task_Archive",
+          "name": "Archive decision",
+          "type": "manualTask",
+          "lane_ids": [
+            "Lane_Supervisor"
+          ]
+        },
+        {
+          "id": "Task_Notify",
+          "name": "Notify claimant",
+          "type": "sendTask",
+          "lane_ids": [
+            "Lane_Supervisor"
+          ]
+        },
+        {
+          "id": "Task_Receive",
+          "name": "Receive claim",
+          "type": "userTask",
+          "lane_ids": [
+            "Lane_Clerk"
+          ]
+        },
+        {
+          "id": "Task_Reject",
+          "name": "Reject claim",
+          "type": "task",
+          "lane_ids": [
+            "Lane_Clerk"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "End_1",
+          "name": "Done",
+          "type": "endEvent",
+          "lane_ids": [
+            "Lane_Supervisor"
+          ]
+        },
+        {
+          "id": "Start_1",
+          "name": "Claim received",
+          "type": "startEvent",
+          "lane_ids": [
+            "Lane_Clerk"
+          ]
+        }
+      ],
+      "gateways": [
+        {
+          "id": "Gateway_Decide",
+          "name": "Claim valid?",
+          "type": "exclusiveGateway",
+          "lane_ids": [
+            "Lane_Clerk"
+          ]
+        },
+        {
+          "id": "Gateway_Merge",
+          "name": "Decision merged",
+          "type": "exclusiveGateway",
+          "lane_ids": [
+            "Lane_Clerk"
+          ]
+        },
+        {
+          "id": "Gateway_ParallelJoin",
+          "name": "Publication complete",
+          "type": "parallelGateway",
+          "lane_ids": [
+            "Lane_Supervisor"
+          ]
+        },
+        {
+          "id": "Gateway_ParallelSplit",
+          "name": "Publish outcome",
+          "type": "parallelGateway",
+          "lane_ids": [
+            "Lane_Supervisor"
+          ]
+        }
+      ],
+      "sequence_flows": [
+        {
+          "id": "Flow_Approve_Merge",
+          "name": "",
+          "source_ref": "Task_Approve",
+          "target_ref": "Gateway_Merge",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_Archive_Join",
+          "name": "",
+          "source_ref": "Task_Archive",
+          "target_ref": "Gateway_ParallelJoin",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_Decide_Approve",
+          "name": "",
+          "source_ref": "Gateway_Decide",
+          "target_ref": "Task_Approve",
+          "condition_expression": "approved = true",
+          "is_default": false
+        },
+        {
+          "id": "Flow_Decide_Reject",
+          "name": "",
+          "source_ref": "Gateway_Decide",
+          "target_ref": "Task_Reject",
+          "condition_expression": null,
+          "is_default": true
+        },
+        {
+          "id": "Flow_Join_End",
+          "name": "",
+          "source_ref": "Gateway_ParallelJoin",
+          "target_ref": "End_1",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_Merge_Split",
+          "name": "",
+          "source_ref": "Gateway_Merge",
+          "target_ref": "Gateway_ParallelSplit",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_Notify_Join",
+          "name": "",
+          "source_ref": "Task_Notify",
+          "target_ref": "Gateway_ParallelJoin",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_Receive_Decide",
+          "name": "",
+          "source_ref": "Task_Receive",
+          "target_ref": "Gateway_Decide",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_Reject_Merge",
+          "name": "",
+          "source_ref": "Task_Reject",
+          "target_ref": "Gateway_Merge",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_Split_Archive",
+          "name": "",
+          "source_ref": "Gateway_ParallelSplit",
+          "target_ref": "Task_Archive",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_Split_Notify",
+          "name": "",
+          "source_ref": "Gateway_ParallelSplit",
+          "target_ref": "Task_Notify",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_Start_Receive",
+          "name": "",
+          "source_ref": "Start_1",
+          "target_ref": "Task_Receive",
+          "condition_expression": null,
+          "is_default": false
+        }
+      ],
+      "control_flow": {
+        "direct_edges": [
+          {
+            "source_ref": "Gateway_Decide",
+            "target_ref": "Task_Approve"
+          },
+          {
+            "source_ref": "Gateway_Decide",
+            "target_ref": "Task_Reject"
+          },
+          {
+            "source_ref": "Gateway_Merge",
+            "target_ref": "Gateway_ParallelSplit"
+          },
+          {
+            "source_ref": "Gateway_ParallelJoin",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Gateway_ParallelSplit",
+            "target_ref": "Task_Archive"
+          },
+          {
+            "source_ref": "Gateway_ParallelSplit",
+            "target_ref": "Task_Notify"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "Task_Receive"
+          },
+          {
+            "source_ref": "Task_Approve",
+            "target_ref": "Gateway_Merge"
+          },
+          {
+            "source_ref": "Task_Archive",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Task_Notify",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Task_Receive",
+            "target_ref": "Gateway_Decide"
+          },
+          {
+            "source_ref": "Task_Reject",
+            "target_ref": "Gateway_Merge"
+          }
+        ],
+        "reachable_pairs": [
+          {
+            "source_ref": "Gateway_Decide",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Gateway_Decide",
+            "target_ref": "Gateway_Merge"
+          },
+          {
+            "source_ref": "Gateway_Decide",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Gateway_Decide",
+            "target_ref": "Gateway_ParallelSplit"
+          },
+          {
+            "source_ref": "Gateway_Decide",
+            "target_ref": "Task_Approve"
+          },
+          {
+            "source_ref": "Gateway_Decide",
+            "target_ref": "Task_Archive"
+          },
+          {
+            "source_ref": "Gateway_Decide",
+            "target_ref": "Task_Notify"
+          },
+          {
+            "source_ref": "Gateway_Decide",
+            "target_ref": "Task_Reject"
+          },
+          {
+            "source_ref": "Gateway_Merge",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Gateway_Merge",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Gateway_Merge",
+            "target_ref": "Gateway_ParallelSplit"
+          },
+          {
+            "source_ref": "Gateway_Merge",
+            "target_ref": "Task_Archive"
+          },
+          {
+            "source_ref": "Gateway_Merge",
+            "target_ref": "Task_Notify"
+          },
+          {
+            "source_ref": "Gateway_ParallelJoin",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Gateway_ParallelSplit",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Gateway_ParallelSplit",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Gateway_ParallelSplit",
+            "target_ref": "Task_Archive"
+          },
+          {
+            "source_ref": "Gateway_ParallelSplit",
+            "target_ref": "Task_Notify"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "Gateway_Decide"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "Gateway_Merge"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "Gateway_ParallelSplit"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "Task_Approve"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "Task_Archive"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "Task_Notify"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "Task_Receive"
+          },
+          {
+            "source_ref": "Start_1",
+            "target_ref": "Task_Reject"
+          },
+          {
+            "source_ref": "Task_Approve",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Task_Approve",
+            "target_ref": "Gateway_Merge"
+          },
+          {
+            "source_ref": "Task_Approve",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Task_Approve",
+            "target_ref": "Gateway_ParallelSplit"
+          },
+          {
+            "source_ref": "Task_Approve",
+            "target_ref": "Task_Archive"
+          },
+          {
+            "source_ref": "Task_Approve",
+            "target_ref": "Task_Notify"
+          },
+          {
+            "source_ref": "Task_Archive",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Task_Archive",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Task_Notify",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Task_Notify",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Task_Receive",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Task_Receive",
+            "target_ref": "Gateway_Decide"
+          },
+          {
+            "source_ref": "Task_Receive",
+            "target_ref": "Gateway_Merge"
+          },
+          {
+            "source_ref": "Task_Receive",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Task_Receive",
+            "target_ref": "Gateway_ParallelSplit"
+          },
+          {
+            "source_ref": "Task_Receive",
+            "target_ref": "Task_Approve"
+          },
+          {
+            "source_ref": "Task_Receive",
+            "target_ref": "Task_Archive"
+          },
+          {
+            "source_ref": "Task_Receive",
+            "target_ref": "Task_Notify"
+          },
+          {
+            "source_ref": "Task_Receive",
+            "target_ref": "Task_Reject"
+          },
+          {
+            "source_ref": "Task_Reject",
+            "target_ref": "End_1"
+          },
+          {
+            "source_ref": "Task_Reject",
+            "target_ref": "Gateway_Merge"
+          },
+          {
+            "source_ref": "Task_Reject",
+            "target_ref": "Gateway_ParallelJoin"
+          },
+          {
+            "source_ref": "Task_Reject",
+            "target_ref": "Gateway_ParallelSplit"
+          },
+          {
+            "source_ref": "Task_Reject",
+            "target_ref": "Task_Archive"
+          },
+          {
+            "source_ref": "Task_Reject",
+            "target_ref": "Task_Notify"
+          }
+        ],
+        "activity_order_relations": [
+          {
+            "before_activity_id": "Task_Approve",
+            "after_activity_id": "Task_Archive",
+            "relation": "reachable_before"
+          },
+          {
+            "before_activity_id": "Task_Approve",
+            "after_activity_id": "Task_Notify",
+            "relation": "reachable_before"
+          },
+          {
+            "before_activity_id": "Task_Receive",
+            "after_activity_id": "Task_Approve",
+            "relation": "reachable_before"
+          },
+          {
+            "before_activity_id": "Task_Receive",
+            "after_activity_id": "Task_Archive",
+            "relation": "reachable_before"
+          },
+          {
+            "before_activity_id": "Task_Receive",
+            "after_activity_id": "Task_Notify",
+            "relation": "reachable_before"
+          },
+          {
+            "before_activity_id": "Task_Receive",
+            "after_activity_id": "Task_Reject",
+            "relation": "reachable_before"
+          },
+          {
+            "before_activity_id": "Task_Reject",
+            "after_activity_id": "Task_Archive",
+            "relation": "reachable_before"
+          },
+          {
+            "before_activity_id": "Task_Reject",
+            "after_activity_id": "Task_Notify",
+            "relation": "reachable_before"
+          }
+        ],
+        "start_event_ids": [
+          "Start_1"
+        ],
+        "end_event_ids": [
+          "End_1"
+        ],
+        "branching_gateway_ids": [
+          "Gateway_Decide",
+          "Gateway_ParallelSplit"
+        ],
+        "parallel_gateway_ids": [
+          "Gateway_ParallelJoin",
+          "Gateway_ParallelSplit"
+        ],
+        "parallel_split_gateway_ids": [
+          "Gateway_ParallelSplit"
+        ],
+        "parallel_join_gateway_ids": [
+          "Gateway_ParallelJoin"
+        ],
+        "cyclic_node_ids": [],
+        "cycle_detected": false,
+        "unreachable_node_ids": []
+      }
+    },
+    "counts": {
+      "pools": 1,
+      "lanes": 2,
+      "activities": 5,
+      "events": 2,
+      "gateways": 4,
+      "sequence_flows": 12,
+      "direct_edges": 12,
+      "reachable_pairs": 53,
+      "activity_order_relations": 8
+    },
+    "lane_binding_verified": true,
+    "condition_and_default_flow_verified": true,
+    "branch_and_parallel_verified": true,
+    "parallel_branches_not_falsely_ordered": true
+  },
+  "cycle_unreachable_verification": {
+    "record": {
+      "schema_version": "process_record@1.0.0",
+      "process_id": "Process_Cycle",
+      "source": {
+        "input_id": "s14_cycle_unreachable",
+        "path": "tests/fixtures/stage1/s14_cycle_unreachable.bpmn",
+        "sha256": "f4c4e455deb634a002a72f6ebed884e948c60b668ce193a04c43cff89a6e4513",
+        "byte_size": 809,
+        "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL"
+      },
+      "method": {
+        "name": "stage1_bpmn_xml_structural",
+        "parser_version": "stage1_bpmn_parser@1.0.0",
+        "label_semantics": "preserve_original_labels_only"
+      },
+      "pools": [],
+      "lanes": [],
+      "activities": [
+        {
+          "id": "Task_A",
+          "name": "Check request",
+          "type": "task",
+          "lane_ids": []
+        },
+        {
+          "id": "Task_B",
+          "name": "Revise request",
+          "type": "task",
+          "lane_ids": []
+        },
+        {
+          "id": "Task_Orphan",
+          "name": "Disconnected task",
+          "type": "task",
+          "lane_ids": []
+        }
+      ],
+      "events": [
+        {
+          "id": "End_Cycle",
+          "name": "",
+          "type": "endEvent",
+          "lane_ids": []
+        },
+        {
+          "id": "Start_Cycle",
+          "name": "",
+          "type": "startEvent",
+          "lane_ids": []
+        }
+      ],
+      "gateways": [],
+      "sequence_flows": [
+        {
+          "id": "Flow_A_B",
+          "name": "",
+          "source_ref": "Task_A",
+          "target_ref": "Task_B",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_B_A",
+          "name": "",
+          "source_ref": "Task_B",
+          "target_ref": "Task_A",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_B_End",
+          "name": "",
+          "source_ref": "Task_B",
+          "target_ref": "End_Cycle",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "Flow_Start_A",
+          "name": "",
+          "source_ref": "Start_Cycle",
+          "target_ref": "Task_A",
+          "condition_expression": null,
+          "is_default": false
+        }
+      ],
+      "control_flow": {
+        "direct_edges": [
+          {
+            "source_ref": "Start_Cycle",
+            "target_ref": "Task_A"
+          },
+          {
+            "source_ref": "Task_A",
+            "target_ref": "Task_B"
+          },
+          {
+            "source_ref": "Task_B",
+            "target_ref": "End_Cycle"
+          },
+          {
+            "source_ref": "Task_B",
+            "target_ref": "Task_A"
+          }
+        ],
+        "reachable_pairs": [
+          {
+            "source_ref": "Start_Cycle",
+            "target_ref": "End_Cycle"
+          },
+          {
+            "source_ref": "Start_Cycle",
+            "target_ref": "Task_A"
+          },
+          {
+            "source_ref": "Start_Cycle",
+            "target_ref": "Task_B"
+          },
+          {
+            "source_ref": "Task_A",
+            "target_ref": "End_Cycle"
+          },
+          {
+            "source_ref": "Task_A",
+            "target_ref": "Task_B"
+          },
+          {
+            "source_ref": "Task_B",
+            "target_ref": "End_Cycle"
+          },
+          {
+            "source_ref": "Task_B",
+            "target_ref": "Task_A"
+          }
+        ],
+        "activity_order_relations": [
+          {
+            "before_activity_id": "Task_A",
+            "after_activity_id": "Task_B",
+            "relation": "reachable_before"
+          },
+          {
+            "before_activity_id": "Task_B",
+            "after_activity_id": "Task_A",
+            "relation": "reachable_before"
+          }
+        ],
+        "start_event_ids": [
+          "Start_Cycle"
+        ],
+        "end_event_ids": [
+          "End_Cycle"
+        ],
+        "branching_gateway_ids": [],
+        "parallel_gateway_ids": [],
+        "parallel_split_gateway_ids": [],
+        "parallel_join_gateway_ids": [],
+        "cyclic_node_ids": [
+          "Task_A",
+          "Task_B"
+        ],
+        "cycle_detected": true,
+        "unreachable_node_ids": [
+          "Task_Orphan"
+        ]
+      }
+    },
+    "cyclic_node_ids": [
+      "Task_A",
+      "Task_B"
+    ],
+    "unreachable_node_ids": [
+      "Task_Orphan"
+    ]
+  },
+  "determinism_and_failure_verification": {
+    "xml_sibling_order_invariant": true,
+    "unknown_flow_reference_rejected": true,
+    "duplicate_node_id_rejected": true,
+    "doctype_and_entity_rejected": true,
+    "schema_additional_property_rejected": true,
+    "tampered_reachability_rejected": true
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "performance_evaluation": false,
+    "formal_process_records_written": false
+  }
+}

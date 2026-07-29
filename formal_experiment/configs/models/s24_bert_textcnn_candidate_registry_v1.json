@@ -1,0 +1,96 @@
+{
+  "schema_version": "s24_bert_textcnn_candidate_registry@1.0.0",
+  "task_id": "S2.4-CAND",
+  "status": "preregistered_before_any_candidate_result",
+  "parent_locked_run": {
+    "run_id": "s24_legal_bert_textcnn_seed20260717_v1",
+    "manifest": "outputs/reports/s24_legal_bert_textcnn_seed20260717_v1.manifest.json",
+    "manifest_sha256": "4aa8fcf4ea8a33301d949b38474415468a2ca169c1e9363e30e3f5effbd5963e",
+    "checkpoint": "outputs/development/s24_legal_bert_textcnn_seed20260717_v1/best_model.pt",
+    "checkpoint_sha256": "cf071dc96de5794b3da43bd3810b570038a762c6ca4b989b2d54c8ec87fe605a",
+    "dev_macro_f1": 0.8562634380932774,
+    "test_macro_f1": 0.8510709392388781
+  },
+  "selection_rule": {
+    "primary": "dev_macro_f1",
+    "seed": 20260717,
+    "max_candidates": 3,
+    "test_policy": "single_evaluation_only_after_all_candidates_frozen_and_dev_winner_chosen",
+    "no_all150_or_estg_selection": true,
+    "promotion_requires": [
+      "dev_macro_f1_strictly_greater_than_parent_locked_dev",
+      "permission_and_prohibition_not_materially_worse_on_dev",
+      "single_test_eval",
+      "downstream_all150_modality_p_and_r_not_below_v5_if_used"
+    ]
+  },
+  "train_class_counts": {
+    "definition": 836,
+    "obligation": 891,
+    "permission": 185,
+    "prohibition": 73
+  },
+  "candidates": {
+    "A_unweighted_ce": {
+      "loss": "unweighted_cross_entropy",
+      "class_weights": null,
+      "sampler": "shuffle",
+      "run_id": "s24_candidate_A_unweighted_seed20260717_v1",
+      "execution": {
+        "status": "bound_to_locked_parent_identical_recipe",
+        "reason": "Parent s24_legal_bert_textcnn_seed20260717_v1 is already unweighted CE, seed 20260717, same architecture/splits; re-training would waste budget and risk non-determinism on CPU. A uses parent metrics as the unweighted baseline.",
+        "bound_manifest": "outputs/reports/s24_legal_bert_textcnn_seed20260717_v1.manifest.json",
+        "bound_manifest_sha256": "4aa8fcf4ea8a33301d949b38474415468a2ca169c1e9363e30e3f5effbd5963e",
+        "bound_checkpoint": "outputs/development/s24_legal_bert_textcnn_seed20260717_v1/best_model.pt",
+        "bound_checkpoint_sha256": "cf071dc96de5794b3da43bd3810b570038a762c6ca4b989b2d54c8ec87fe605a",
+        "dev_macro_f1": 0.8562634380932774,
+        "test_macro_f1": 0.8510709392388781,
+        "new_training_run": false
+      }
+    },
+    "B_invsqrt_weighted_ce": {
+      "loss": "inverse_sqrt_class_frequency_weighted_cross_entropy",
+      "class_weights": {
+        "definition": 0.5348660754155551,
+        "obligation": 0.5180949269032464,
+        "permission": 1.1370048771557342,
+        "prohibition": 1.8100341205254638
+      },
+      "class_weight_vector": [
+        0.5348660754155551,
+        0.5180949269032464,
+        1.1370048771557342,
+        1.8100341205254638
+      ],
+      "sampler": "shuffle",
+      "run_id": "s24_candidate_B_invsqrt_weighted_seed20260717_v1"
+    },
+    "C_balanced_sampler": {
+      "loss": "unweighted_cross_entropy",
+      "class_weights": null,
+      "sampler": "balanced_weighted_random",
+      "run_id": "s24_candidate_C_balanced_sampler_seed20260717_v1"
+    }
+  },
+  "architecture_locked_to_parent": {
+    "repository_id": "nlpaueb/legal-bert-base-uncased",
+    "kernel_sizes": [
+      2,
+      3,
+      4
+    ],
+    "filters_per_kernel": 128,
+    "num_labels": 4,
+    "seed": 20260717,
+    "max_epochs": 8,
+    "early_stopping_patience": 2,
+    "batch_size": 16
+  },
+  "safety": {
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_allowed": false,
+    "test_used_for_selection": false,
+    "estg150_used_for_selection": false
+  }
+}

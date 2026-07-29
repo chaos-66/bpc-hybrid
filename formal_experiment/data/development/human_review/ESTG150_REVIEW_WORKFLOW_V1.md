@@ -26,10 +26,19 @@ as `decision=unreviewed` and `value=null`. The user explicitly
 moves each field to `accepted` / `edited` / `rejected` /
 `needs_adjudication`. A copy on disk is **not** an approval.
 
+When the user explicitly clicks a field's `accepted` control, the review
+service materializes that immutable candidate value and its exact span in
+`human_correction`. The record-level `accept all LLM candidates` control does
+the same for all six fields after one confirmation. Neither operation marks a
+record `reviewed` or `adjudicated`. Non-null candidates without a valid exact
+span cannot be accepted as empty; they must be corrected with the manual field
+or span editor.
+
 ## What this workflow does NOT do
 
-- Does not call a real LLM/API in this build.
-- Does not fabricate Chinese translations.
+- The review GUI itself does not call a real LLM/API.
+- The GUI only reads a separately authorized and validated Layer D Chinese-aid
+  file; it never fabricates Chinese translations.
 - Does not write to the old `estg_150_canonical_review_v1.json`.
 - Does not pre-approve any field.
 - Does not freeze the formal Gold; final Gold is
@@ -38,8 +47,12 @@ moves each field to `accepted` / `edited` / `rejected` /
 
 ## Tooling
 
-- Review tool: `python formal_experiment/scripts/estg150_review_tool.py`
-  (default: opens layer E)
+- Recommended simple review tool:
+  `python formal_experiment/scripts/estg150_simple_review_tool.py`.
+  It displays the internally generated Sol clauses and six elements, hides
+  offsets, and writes one record only after the user clicks “保存并下一条”.
+- Advanced fallback: `python formal_experiment/scripts/estg150_review_tool.py`
+  (explicit span/relation and exceptional-case controls)
 - Validator: `python formal_experiment/scripts/validate_human_correction.py`
 - Action log: `outputs/development/human_review/estg_150_review_actions_v1.jsonl`
 - Backups: `outputs/development/human_review/review_backups/`

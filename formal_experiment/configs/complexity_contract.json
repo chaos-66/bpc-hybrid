@@ -1,0 +1,125 @@
+{
+  "schema_version": "complexity_contract@1.0.0",
+  "task_id": "G0.5",
+  "status": "preregistered_locked_before_complex_dataset_results",
+  "profile_schema": {
+    "path": "configs/schemas/complexity_profile.schema.json",
+    "schema_version": "complexity_profile@1.0.0"
+  },
+  "leakage_boundary": {
+    "allowed_text_semantic_roles": ["synthetic_fixture", "human_approved_gold"],
+    "allowed_bpmn_input_roles": ["synthetic_fixture", "frozen_bpmn_input"],
+    "forbidden_sources": [
+      "model_prediction",
+      "method_error",
+      "test_metric",
+      "test_result",
+      "violation_prediction",
+      "post_result_manual_bin_edit"
+    ],
+    "strata_frozen_before_method_outputs": true,
+    "missing_required_feature_policy": "fail_closed_no_profile"
+  },
+  "text": {
+    "required_metrics": [
+      "character_count",
+      "token_count",
+      "sentence_count",
+      "clause_count",
+      "max_dependency_depth",
+      "actor_count",
+      "action_count",
+      "condition_count",
+      "constraint_count",
+      "exception_count",
+      "semantic_span_count",
+      "scope_nesting_depth",
+      "passive_voice_present",
+      "implicit_actor_action_count",
+      "cross_sentence_reference_count",
+      "source_language",
+      "analysis_language",
+      "translation_status"
+    ],
+    "translation_status_values": ["original", "human_translation", "llm_candidate_human_approved"],
+    "dependency_depth_definition": "maximum root-to-token node count over basicDependencies; ROOT itself is excluded",
+    "scope_nesting_definition": "maximum strict containment depth among condition, constraint, and exception spans within one clause",
+    "implicit_actor_definition": "an action with no actor_action_map edge whose actor_id is non-null",
+    "cross_sentence_reference_definition": "count of unique human-approved reference links whose source and target sentence indexes differ",
+    "score_indicators": [
+      {"id": "token_count_ge_40", "metric": "token_count", "operator": "ge", "threshold": 40},
+      {"id": "sentence_count_ge_2", "metric": "sentence_count", "operator": "ge", "threshold": 2},
+      {"id": "clause_count_ge_3", "metric": "clause_count", "operator": "ge", "threshold": 3},
+      {"id": "dependency_depth_ge_8", "metric": "max_dependency_depth", "operator": "ge", "threshold": 8},
+      {"id": "actor_count_ge_2", "metric": "actor_count", "operator": "ge", "threshold": 2},
+      {"id": "action_count_ge_2", "metric": "action_count", "operator": "ge", "threshold": 2},
+      {"id": "scope_element_count_ge_2", "metrics": ["condition_count", "constraint_count", "exception_count"], "operator": "sum_ge", "threshold": 2},
+      {"id": "scope_nesting_depth_ge_2", "metric": "scope_nesting_depth", "operator": "ge", "threshold": 2},
+      {"id": "passive_voice_present", "metric": "passive_voice_present", "operator": "is_true"},
+      {"id": "implicit_actor_present", "metric": "implicit_actor_action_count", "operator": "ge", "threshold": 1},
+      {"id": "cross_sentence_reference_present", "metric": "cross_sentence_reference_count", "operator": "ge", "threshold": 1}
+    ],
+    "strata": {
+      "low": {"min_score": 0, "max_score": 3},
+      "medium": {"min_score": 4, "max_score": 7},
+      "high": {"min_score": 8, "max_score": 11}
+    },
+    "language_facets_not_in_score": ["source_language", "analysis_language", "translation_status"]
+  },
+  "bpmn": {
+    "required_metrics": [
+      "flow_node_count",
+      "activity_count",
+      "event_count",
+      "gateway_count",
+      "lane_count",
+      "participant_count",
+      "sequence_flow_count",
+      "message_flow_count",
+      "subprocess_count",
+      "boundary_event_count",
+      "weak_component_count",
+      "cyclomatic_complexity",
+      "branching_node_count",
+      "joining_node_count",
+      "cycle_present",
+      "condensation_dag_depth"
+    ],
+    "cyclomatic_definition": "sequence_flow_count - flow_node_count + 2 * weak_component_count",
+    "condensation_depth_definition": "maximum number of SCC components on a path in the sequence-flow condensation DAG",
+    "score_indicators": [
+      {"id": "flow_node_count_ge_20", "metric": "flow_node_count", "operator": "ge", "threshold": 20},
+      {"id": "activity_count_ge_10", "metric": "activity_count", "operator": "ge", "threshold": 10},
+      {"id": "gateway_count_ge_4", "metric": "gateway_count", "operator": "ge", "threshold": 4},
+      {"id": "actor_partition_count_ge_3", "metrics": ["lane_count", "participant_count"], "operator": "sum_ge", "threshold": 3},
+      {"id": "sequence_flow_count_ge_25", "metric": "sequence_flow_count", "operator": "ge", "threshold": 25},
+      {"id": "message_flow_count_ge_2", "metric": "message_flow_count", "operator": "ge", "threshold": 2},
+      {"id": "subprocess_present", "metric": "subprocess_count", "operator": "ge", "threshold": 1},
+      {"id": "boundary_event_present", "metric": "boundary_event_count", "operator": "ge", "threshold": 1},
+      {"id": "branching_node_count_ge_3", "metric": "branching_node_count", "operator": "ge", "threshold": 3},
+      {"id": "cycle_present", "metric": "cycle_present", "operator": "is_true"},
+      {"id": "condensation_dag_depth_ge_10", "metric": "condensation_dag_depth", "operator": "ge", "threshold": 10},
+      {"id": "cyclomatic_complexity_ge_8", "metric": "cyclomatic_complexity", "operator": "ge", "threshold": 8}
+    ],
+    "strata": {
+      "low": {"min_score": 0, "max_score": 3},
+      "medium": {"min_score": 4, "max_score": 7},
+      "high": {"min_score": 8, "max_score": 12}
+    }
+  },
+  "reporting": {
+    "primary_stratification": "fixed_indicator_score",
+    "report_raw_metrics_alongside_stratum": true,
+    "report_text_and_bpmn_complexity_separately": true,
+    "method_specific_rebinning_allowed": false,
+    "post_result_threshold_tuning_allowed": false
+  },
+  "safety": {
+    "gold_read_or_modified": false,
+    "test_results_read": false,
+    "llm_api_called": false,
+    "network_allowed": false,
+    "formal_profiles_generated": false
+  },
+  "claim_boundary": "G0.5 locks method-independent text and BPMN complexity features, score thresholds, strata, and leakage guards on synthetic fixtures before any complex-dataset result. It does not select or freeze a complex dataset and does not create formal Gold or performance evidence."
+}

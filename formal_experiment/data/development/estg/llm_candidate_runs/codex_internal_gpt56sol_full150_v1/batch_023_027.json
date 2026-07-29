@@ -1,0 +1,214 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 23,
+  "end_index_exclusive": 28,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000504",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The employee shall provide proof of the period of service to be taken into account and of whether and to what amount severance payments within the meaning of paragraph 3 or of this paragraph have already been paid out earlier; it is left to the employee up to which point in time back employment relationships are to be proven.",
+        "issues": [
+          "Paragraph 3 and the surrounding paragraph are not supplied, so the referenced severance-payment categories cannot be expanded."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The employee shall provide proof of the period of service to be taken into account and of whether and to what amount severance payments within the meaning of paragraph 3 or of this paragraph have already been paid out earlier", "start": 0, "end": 225},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 13, "end": 18}]},
+          "actors": [{"id": "c1_actor_1", "text": "The employee", "start": 0, "end": 12, "normalized": "employee"}],
+          "actions": [{"id": "c1_action_1", "text": "provide proof", "start": 19, "end": 32, "normalized": "provide proof"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "of the period of service to be taken into account", "start": 33, "end": 82, "normalized": "qualifying period of service"},
+            {"id": "c1_constraint_2", "text": "of whether and to what amount severance payments within the meaning of paragraph 3 or of this paragraph have already been paid out earlier", "start": 87, "end": 225, "normalized": "whether and how much referenced severance was previously paid"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "it is left to the employee up to which point in time back employment relationships are to be proven.", "start": 227, "end": 327},
+          "modality": {"label": "permission", "evidence": [{"text": "is left to", "start": 230, "end": 240}]},
+          "actors": [{"id": "c2_actor_1", "text": "the employee", "start": 241, "end": 253, "normalized": "employee"}],
+          "actions": [{"id": "c2_action_1", "text": "is left to", "start": 230, "end": 240, "normalized": "allow choice of proof horizon"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "up to which point in time back employment relationships are to be proven", "start": 254, "end": 326, "normalized": "how far back employment relationships are proven"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c2_actor_1", "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The cross-referenced paragraph 3 and the surrounding severance-payment rule are unavailable."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The semicolon separates an employee proof obligation from a distinct permission leaving the look-back period to the employee. The legacy draft incorrectly absorbed the second norm into a constraint of the first."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000572",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If, due to the special nature of the remuneration, a period for which the wage is paid cannot exceptionally be determined, the wage payment period shall be deemed to be at least the actually expended working time.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If, due to the special nature of the remuneration, a period for which the wage is paid cannot exceptionally be determined, the wage payment period shall be deemed to be at least the actually expended working time.", "start": 0, "end": 213},
+          "modality": {"label": "definition", "evidence": [{"text": "shall be deemed", "start": 147, "end": 162}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deemed to be", "start": 153, "end": 168, "normalized": "deem wage payment period"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If, due to the special nature of the remuneration, a period for which the wage is paid cannot exceptionally be determined", "start": 0, "end": 121, "normalized": "payment period exceptionally indeterminable because of remuneration type"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "at least the actually expended working time", "start": 169, "end": 212, "normalized": "minimum actual working time"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The sentence supplies one conditional deeming rule. The wage payment period is the defined subject rather than an acting actor, and actual working time is the explicit minimum."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000599",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(3) Upon request, employers shall also provide the audit body of the tax office with any requested information for the purpose of determining the tax circumstances of other persons working for the business for whom it is doubtful whether they are employees of the business.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(3) Upon request, employers shall also provide the audit body of the tax office with any requested information for the purpose of determining the tax circumstances of other persons working for the business for whom it is doubtful whether they are employees of the business.", "start": 0, "end": 273},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 28, "end": 33}]},
+          "actors": [{"id": "c1_actor_1", "text": "employers", "start": 18, "end": 27, "normalized": "employers"}],
+          "actions": [{"id": "c1_action_1", "text": "also provide the audit body of the tax office with any requested information", "start": 34, "end": 110, "normalized": "provide requested information to tax-office audit body"}],
+          "conditions": [{"id": "c1_condition_1", "text": "Upon request", "start": 4, "end": 16, "normalized": "on request"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "for the purpose of determining the tax circumstances of other persons working for the business for whom it is doubtful whether they are employees of the business", "start": 111, "end": 272, "normalized": "determine tax circumstances of workers with doubtful employee status"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "One request-triggered employer obligation is explicit. The audit body is the information recipient, while the purpose and affected-person scope constrain the required disclosure."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000601",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) The audit body is also entitled to require from persons in respect of whom it is doubtful whether they are employees of the business any information to ascertain their tax situation.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) The audit body is also entitled to require from persons in respect of whom it is doubtful whether they are employees of the business any information to ascertain their tax situation.", "start": 0, "end": 186},
+          "modality": {"label": "permission", "evidence": [{"text": "entitled", "start": 27, "end": 35}]},
+          "actors": [{"id": "c1_actor_1", "text": "The audit body", "start": 4, "end": 18, "normalized": "audit body"}],
+          "actions": [{"id": "c1_action_1", "text": "require", "start": 39, "end": 46, "normalized": "require information"}],
+          "conditions": [{"id": "c1_condition_1", "text": "persons in respect of whom it is doubtful whether they are employees of the business", "start": 52, "end": 136, "normalized": "persons with doubtful employee status"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "any information", "start": 137, "end": 152, "normalized": "any information"},
+            {"id": "c1_constraint_2", "text": "to ascertain their tax situation", "start": 153, "end": 185, "normalized": "to ascertain tax situation"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The audit body has one explicit permission to demand information from persons whose employee status is doubtful, limited by the stated tax-situation purpose. No duty of those persons is inferred from this authorization clause."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000664",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The following shall apply to this provision:\n\n— Certain income, in particular foreign income, may be wholly or partially excluded from the tax base or taxed at a reduced tax rate, or\n\n— taxation may be based solely on the amount corresponding to domestic consumption, or\n\n— the tax base or the tax may also be fixed as a lump sum.",
+        "issues": [
+          "The antecedent of 'this provision' is not supplied, so the scope of the listed alternatives cannot be identified beyond the excerpt."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The following shall apply to this provision:", "start": 0, "end": 44},
+          "modality": {"label": "definition", "evidence": [{"text": "shall apply", "start": 14, "end": 25}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "apply", "start": 20, "end": 25, "normalized": "apply listed alternatives"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "to this provision", "start": 26, "end": 43, "normalized": "to referenced provision"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "Certain income, in particular foreign income, may be wholly or partially excluded from the tax base or taxed at a reduced tax rate", "start": 48, "end": 178},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 94, "end": 97}]},
+          "actors": [],
+          "actions": [
+            {"id": "c2_action_1", "text": "excluded from the tax base", "start": 121, "end": 147, "normalized": "exclude income from tax base"},
+            {"id": "c2_action_2", "text": "taxed at a reduced tax rate", "start": 151, "end": 178, "normalized": "tax income at reduced rate"}
+          ],
+          "conditions": [],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "Certain income, in particular foreign income", "start": 48, "end": 92, "normalized": "specified income, particularly foreign income"},
+            {"id": "c2_constraint_2", "text": "wholly or partially", "start": 101, "end": 120, "normalized": "wholly or partially"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": null, "action_id": "c2_action_1"},
+            {"actor_id": null, "action_id": "c2_action_2"}
+          ],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "taxation may be based solely on the amount corresponding to domestic consumption", "start": 186, "end": 266},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 195, "end": 198}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "be based", "start": 199, "end": 207, "normalized": "base taxation"}],
+          "conditions": [],
+          "constraints": [{"id": "c3_constraint_1", "text": "solely on the amount corresponding to domestic consumption", "start": 208, "end": 266, "normalized": "solely domestic-consumption amount"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c4",
+          "clause_span": {"text": "the tax base or the tax may also be fixed as a lump sum.", "start": 274, "end": 330},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 298, "end": 301}]},
+          "actors": [],
+          "actions": [{"id": "c4_action_1", "text": "be fixed", "start": 307, "end": 315, "normalized": "fix tax base or tax"}],
+          "conditions": [],
+          "constraints": [{"id": "c4_constraint_1", "text": "as a lump sum", "start": 316, "end": 329, "normalized": "as lump sum"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c4_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The preceding provision to which the three alternatives apply is missing, so its triggering conditions and beneficiaries cannot be inferred."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The scope heading and all three alternatives are represented separately. The first alternative contains two permitted actions, exclusion or reduced-rate taxation; the other alternatives permit a domestic-consumption basis or a lump-sum assessment. No implementing authority is explicit."
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "actions_not_taken": [
+    "no production registry/config/runner/preregistration created",
+    "no candidate All-150 run",
+    "no candidate pattern edited/added/removed",
+    "no active registry change",
+    "B3b not started"
+  ],
+  "corrected_v1_status": "inconclusive_not_instantiated_invalid_for_tregex_opportunity_attribution",
+  "correction_id": "s27_estg150_b0_b3a_status_correction_v2",
+  "created_at_utc": "2026-07-25T03:35:31.722403+00:00",
+  "safety": {
+    "active_registry_modified": false,
+    "b3b_started": false,
+    "candidate_all150_run": false,
+    "evaluator_modified": false,
+    "gold_read_only": true,
+    "independent82_read_or_used": false,
+    "layer_e_modified": false,
+    "llm_api_called": false,
+    "modality_classifier_run": false,
+    "network_called": false,
+    "production_bridge_modified": false,
+    "production_candidate_created": false,
+    "s2_4_test_read": false,
+    "tsurgeon_enabled": false
+  },
+  "schema_version": "b3a_diagnostic_status_correction@2.0.0",
+  "v1_bindings": {
+    "decision": {
+      "bytes": 3281,
+      "path": "outputs/reports/s27_estg150_b0_b3a_not_instantiated_v1.manifest.json",
+      "sha256": "08ab34fc6fd3ad387ddfb2d07e4cc5167b94dc2e053bf0b4a5141629285440ef"
+    },
+    "diagnostic": {
+      "bytes": 11914,
+      "path": "outputs/development/s27_estg150_b0_b3a_constraint_tregex_diagnostic_v1/manifest.json",
+      "sha256": "bf1c81808c6c919d19e64048d95831ab7c0bd5a090a58311904f2d6db7976f35"
+    }
+  },
+  "v1_invalid_for_live_tregex_opportunity_attribution": true,
+  "v1_method_defects": [
+    "surface regex proxy is not live Tregex",
+    "clause text hash merges identical text from different records",
+    "Gold text hash merges repeated Gold spans",
+    "FP counts only clauses without Gold constraint",
+    "union new spans are summed without real pipeline deduplication",
+    "FN/FP primary buckets and overlapping facets are not separated"
+  ],
+  "v1_not_instantiated_safe_meaning_remains_valid": true,
+  "v2_diagnostic_manifest": {
+    "bytes": 4840,
+    "path": "outputs/development/s27_estg150_b0_b3a_constraint_tregex_diagnostic_v2/manifest.json",
+    "sha256": "ddcf26581d8dde61eb9b95fd015d5cbb34b17763c74db6888af7efffed6a4cc0"
+  },
+  "v2_instantiation_decision": "deferred_not_authorized_in_this_round",
+  "v2_is_formal_performance_result": false,
+  "v2_is_live_tregex_opportunity_diagnostic": true
+}

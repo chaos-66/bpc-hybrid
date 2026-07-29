@@ -1,0 +1,28 @@
+{
+  "schema_version": "sun_modality_local_research_use_decision@1.0.0",
+  "task_id": "S2.4-U",
+  "decided_at": "2026-07-17",
+  "decision_source": "explicit_user_instruction_in_current_project_session",
+  "rights_evidence_status": "unknown_pending_confirmation",
+  "authorization_basis": "project_owner_research_use_decision_not_rightsholder_license",
+  "scope": {
+    "local_noncommercial_research": true,
+    "training": true,
+    "development_selection": true,
+    "evaluation": true,
+    "paper_aggregate_metrics": true,
+    "paper_methods_and_configs": true,
+    "commercial_use": false
+  },
+  "boundaries": {
+    "claim_explicit_license": false,
+    "redistribute_original_archive": false,
+    "redistribute_raw_or_extracted_text": false,
+    "redistribute_row_level_derived_data": false,
+    "upload_data_to_external_service": false,
+    "commit_data_to_git": false,
+    "modify_gold": false,
+    "authorize_llm_api_calls": false
+  },
+  "decision_text": "The project owner explicitly authorizes local, noncommercial training, development selection, and evaluation on the downloaded Sun modality data for this thesis. This project decision does not assert that an explicit rightsholder license was found and does not authorize redistribution, commercial use, external data upload, Gold modification, or any LLM/API call."
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": "s25b_live_expected@1.0.0",
+  "extraction_order": [
+    "modality",
+    "condition",
+    "constraint",
+    "exception",
+    "action",
+    "actor"
+  ],
+  "cases": [
+    {
+      "sentence_index": 0,
+      "fields": {
+        "modality": {"begin": 7, "end": 8, "text": "shall", "pattern_index": 0, "operation_applied": true},
+        "condition": {"begin": 0, "end": 4, "text": "If notice is required", "pattern_index": 0, "operation_applied": true},
+        "constraint": {"begin": 9, "end": 12, "text": "within 30 days", "pattern_index": 0, "operation_applied": true},
+        "exception": null,
+        "action": {"begin": 8, "end": 9, "text": "file", "pattern_index": 0, "operation_applied": false},
+        "actor": {"begin": 5, "end": 7, "text": "the company", "pattern_index": 0, "operation_applied": false}
+      }
+    },
+    {
+      "sentence_index": 1,
+      "fields": {
+        "modality": {"begin": 7, "end": 8, "text": "must", "pattern_index": 0, "operation_applied": true},
+        "condition": {"begin": 1, "end": 4, "text": "when law permits", "pattern_index": 0, "operation_applied": true},
+        "constraint": {"begin": 11, "end": 14, "text": "after 30 days", "pattern_index": 0, "operation_applied": true},
+        "exception": {"begin": 0, "end": 1, "text": "Except", "pattern_index": 0, "operation_applied": true},
+        "action": {"begin": 8, "end": 11, "text": "not disclose data", "pattern_index": 0, "operation_applied": false},
+        "actor": {"begin": 5, "end": 7, "text": "the company", "pattern_index": 0, "operation_applied": false}
+      }
+    }
+  ],
+  "summary": {
+    "tree_count": 2,
+    "pattern_count": 12,
+    "match_count": 11,
+    "surgery_count": 7
+  }
+}

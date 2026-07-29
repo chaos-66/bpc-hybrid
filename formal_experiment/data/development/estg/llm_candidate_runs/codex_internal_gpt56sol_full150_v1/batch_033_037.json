@@ -1,0 +1,185 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 33,
+  "end_index_exclusive": 38,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000075",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If business assets of a business (permanent establishment) located in Austria are transferred abroad to another business (permanent establishment), the business assets transferred abroad shall be measured at the values that would have been applied in the case of a supply or other service to a business entirely independent of the taxpayer, if\n\n— the foreign business belongs to the same taxpayer,\n— the taxpayer is a co-entrepreneur of the foreign business,\n— the taxpayer holds a substantial interest, i.e. more than 25%, in the foreign corporation, or\n— the same persons exercise management or control over both businesses or have influence on them.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If business assets of a business (permanent establishment) located in Austria are transferred abroad to another business (permanent establishment), the business assets transferred abroad shall be measured at the values that would have been applied in the case of a supply or other service to a business entirely independent of the taxpayer, if\n\n— the foreign business belongs to the same taxpayer,\n— the taxpayer is a co-entrepreneur of the foreign business,\n— the taxpayer holds a substantial interest, i.e. more than 25%, in the foreign corporation, or\n— the same persons exercise management or control over both businesses or have influence on them.", "start": 0, "end": 652},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be measured", "start": 187, "end": 204}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be measured", "start": 193, "end": 204, "normalized": "measure transferred business assets"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "If business assets of a business (permanent establishment) located in Austria are transferred abroad to another business (permanent establishment)", "start": 0, "end": 146, "normalized": "domestic business assets transferred to foreign business"},
+            {"id": "c1_condition_2", "text": "the foreign business belongs to the same taxpayer", "start": 347, "end": 396, "normalized": "foreign business belongs to same taxpayer"},
+            {"id": "c1_condition_3", "text": "the taxpayer is a co-entrepreneur of the foreign business", "start": 400, "end": 457, "normalized": "taxpayer is co-entrepreneur of foreign business"},
+            {"id": "c1_condition_4", "text": "the taxpayer holds a substantial interest, i.e. more than 25%, in the foreign corporation", "start": 461, "end": 550, "normalized": "taxpayer holds more than 25 percent of foreign corporation"},
+            {"id": "c1_condition_5", "text": "the same persons exercise management or control over both businesses or have influence on them", "start": 557, "end": 651, "normalized": "same persons manage, control, or influence both businesses"}
+          ],
+          "constraints": [{"id": "c1_constraint_1", "text": "at the values that would have been applied in the case of a supply or other service to a business entirely independent of the taxpayer", "start": 205, "end": 339, "normalized": "arm's-length supply or service values"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The text contains one valuation obligation triggered by a cross-border asset transfer plus any of four alternative relationship conditions. The transferred assets are the measured object, not an acting actor, and no responsible valuer is explicit."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000083",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972; in this case, the additional amounts shall be treated as business income and the reduced amounts as business expenses. 13.",
+        "issues": [
+          "The antecedent of 'This' is missing, so the rule displaced by the input-tax adjustment cannot be identified from the excerpt."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972", "start": 0, "end": 107},
+          "modality": {"label": "definition", "evidence": [{"text": "does not apply", "start": 5, "end": 19}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "does not apply", "start": 5, "end": 19, "normalized": "exclude preceding rule from application"}],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [{"id": "c1_exception_1", "text": "if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972", "start": 20, "end": 107, "normalized": "input tax adjusted under specified provisions"}],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "in this case, the additional amounts shall be treated as business income and the reduced amounts as business expenses.", "start": 109, "end": 227},
+          "modality": {"label": "definition", "evidence": [{"text": "shall be treated", "start": 146, "end": 162}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "the additional amounts shall be treated as business income and the reduced amounts as business expenses", "start": 123, "end": 226, "normalized": "classify additional amounts as income and reduced amounts as expenses"}],
+          "conditions": [{"id": "c2_condition_1", "text": "in this case", "start": 109, "end": 121, "normalized": "when input tax is adjusted as specified"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The demonstrative 'This' refers to an unavailable preceding rule, and the trailing '13.' begins an unavailable following provision."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The visible text supports a conditional non-application rule and a separate tax classification for the resulting amounts. The legacy draft merged them and inferred a taxpayer absent from both clauses."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000094",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) Acquisition or production costs incurred for the rehabilitation of business buildings may, instead of being depreciated at the rates under subsection (1), be depreciated in equal annual instalments over ten years, if the rehabilitation is carried out pursuant to the Urban Renewal Act.",
+        "issues": [
+          "The depreciation rates in subsection (1) are not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) Acquisition or production costs incurred for the rehabilitation of business buildings may, instead of being depreciated at the rates under subsection (1), be depreciated in equal annual instalments over ten years, if the rehabilitation is carried out pursuant to the Urban Renewal Act.", "start": 0, "end": 289},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 90, "end": 93}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be depreciated", "start": 159, "end": 173, "normalized": "depreciate rehabilitation costs"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "Acquisition or production costs incurred for the rehabilitation of business buildings", "start": 4, "end": 89, "normalized": "costs incurred to rehabilitate business buildings"},
+            {"id": "c1_condition_2", "text": "if the rehabilitation is carried out pursuant to the Urban Renewal Act", "start": 218, "end": 288, "normalized": "rehabilitation under Urban Renewal Act"}
+          ],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "instead of being depreciated at the rates under subsection (1)", "start": 95, "end": 157, "normalized": "instead of subsection 1 rates"},
+            {"id": "c1_constraint_2", "text": "in equal annual instalments over ten years", "start": 174, "end": 216, "normalized": "equal annual installments over ten years"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Subsection (1), whose ordinary depreciation rates are displaced by this permission, is unavailable."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "One conditional permission allows qualifying rehabilitation costs to be depreciated equally over ten years instead of at the missing subsection (1) rates. No claimant is explicit in the passive construction."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000098",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(1) Tax-free reserves (in the case of profit determination pursuant to Section 4(3), tax-free amounts) may be formed up to 10% of the profit — before deduction of trade tax and of an investment allowance claimed as a profit-reducing item and — after deduction of all other business expenses.",
+        "issues": [
+          "The referenced Section 4(3) profit-determination method is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(1) Tax-free reserves (in the case of profit determination pursuant to Section 4(3), tax-free amounts) may be formed up to 10% of the profit — before deduction of trade tax and of an investment allowance claimed as a profit-reducing item and — after deduction of all other business expenses.", "start": 0, "end": 291},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 103, "end": 106}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be formed", "start": 107, "end": 116, "normalized": "form tax-free reserves or amounts"}],
+          "conditions": [{"id": "c1_condition_1", "text": "in the case of profit determination pursuant to Section 4(3)", "start": 23, "end": 83, "normalized": "profit determination under Section 4(3)"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "up to 10% of the profit", "start": 117, "end": 140, "normalized": "maximum 10 percent of profit"},
+            {"id": "c1_constraint_2", "text": "before deduction of trade tax and of an investment allowance claimed as a profit-reducing item", "start": 143, "end": 237, "normalized": "profit before trade tax and profit-reducing investment allowance"},
+            {"id": "c1_constraint_3", "text": "after deduction of all other business expenses", "start": 244, "end": 290, "normalized": "profit after all other business expenses"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 4(3) is unavailable, so the alternative label 'tax-free amounts' is retained without expanding that method's scope."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "One formation permission is explicit, with a 10% ceiling and two stated profit-calculation adjustments. The reserves or amounts are the object of formation, not an actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000113",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(6) To the extent that an investment reserve (a tax-free amount) is to be used in accordance with its designated purpose, an investment allowance may not be claimed as a profit reduction. 152.",
+        "issues": [
+          "The trailing '152.' is treated as a non-normative source fragment."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(6) To the extent that an investment reserve (a tax-free amount) is to be used in accordance with its designated purpose, an investment allowance may not be claimed as a profit reduction.", "start": 0, "end": 187},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 146, "end": 153}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be claimed", "start": 154, "end": 164, "normalized": "claim investment allowance"}],
+          "conditions": [{"id": "c1_condition_1", "text": "To the extent that an investment reserve (a tax-free amount) is to be used in accordance with its designated purpose", "start": 4, "end": 120, "normalized": "investment reserve must be used for designated purpose"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "as a profit reduction", "start": 165, "end": 186, "normalized": "as profit-reducing item"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The sentence contains one conditional prohibition on claiming an investment allowance as a profit reduction. The claimant is not explicit, so the legacy draft's inferred taxpayer is omitted."
+    }
+  ]
+}

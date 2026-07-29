@@ -378,7 +378,8 @@ class TestGateIsolation:
         status = collect_status()
         assert status["sun_modality_development_data_verified"] is True
         assert status["human_review_input_ready"] is True
-        assert status["human_review_freeze_ready"] is False
+        assert status["human_review_freeze_ready"] is True
+        assert status["stage2_annotation_freeze_verified"] is True
         assert status["formal_gold_publication_ready"] is False
         assert status["final_experiment_ready"] is False
         assert status["route"]["status"] != "locked"
@@ -395,7 +396,8 @@ class TestGateIsolation:
         )
         assert next(
             method for method in status["methods"] if method["id"] == "sun_rule_only"
-        )["formal_status"] == "blocked_final_sun_stage2_reimplementation_required"
+        )["formal_status"] == "blocked_pending_s2_2_phrase_gold_and_formal_input_freeze"
+        assert status["s2_6_verified"] is True
         manifest = json.loads(
             (PROJECT_ROOT / gate.MANIFEST_REL).read_text(encoding="utf-8")
         )
@@ -414,7 +416,7 @@ class TestGateIsolation:
         assert "sun_modality_dataset_verified" in passes
         assert "stage2_dataset_route_relock_pending" in blockers
         assert "stage2_dataset_alignment_pending" not in blockers
-        assert audit["human_review_freeze_ready"] is False
+        assert audit["human_review_freeze_ready"] is True
+        assert audit["stage2_annotation_freeze_verified"] is True
         assert audit["formal_gold_publication_ready"] is False
         assert audit["final_experiment_ready"] is False
-

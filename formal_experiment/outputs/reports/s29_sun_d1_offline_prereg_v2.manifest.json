@@ -1,0 +1,108 @@
+{
+  "schema_version": "sun_d1_s29_verification_manifest@1.0.0",
+  "task_id": "S2.9",
+  "status": "succeeded",
+  "created_at": "2026-07-17T10:29:05.327349+00:00",
+  "method": "direct_llm",
+  "claim_boundary": "S2.9 freezes D1 input isolation, prompt/few-shot rendering, dated model snapshot, deterministic sampling, five-run stability design, budget, and failure-preserving attempt envelopes on synthetic evidence. It is not a real API run, an LLM quality test, or a formal performance result.",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "artifacts": {
+    "config": {
+      "path": "configs/models/sun_d1_s29.json",
+      "sha256": "82ef20861aee214553756dd28759d34567ce718e63241680be6b3a70751f6ee8"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/sun_style/d1_direct.py",
+      "sha256": "e087b219778f1708c33e27d4799d9c80b238fa9cbbe83ca2e2c08db30e6c9feb"
+    },
+    "runner": {
+      "path": "scripts/run_direct_llm.py",
+      "sha256": "acaa91f46069e0ed0375381ac6b8f356f4e377ebf66349dc2fa236bd5e93344f"
+    },
+    "verifier": {
+      "path": "scripts/verify_sun_d1_s29.py",
+      "sha256": "ac9048726bc2bf98efd82ed32cdeb46916ea2b761884aa1a07b0612f5ec523ae"
+    },
+    "prompt": {
+      "path": "prompts/sun_compat/direct_llm_sun_record_prompt.md",
+      "sha256": "eb92790537090063c608ed0bcd30cfabdd14646062cee65f5d80dc51b74a6209"
+    },
+    "fixture": {
+      "path": "tests/fixtures/d1_s29/s29_offline_contract_fixture.json",
+      "sha256": "729ccc98d83c128d1feed7f9cc86a05befeb89ef2da4dd95dc1dc6ced588f4d9"
+    }
+  },
+  "model_and_sampling": {
+    "provider": "openai_compatible",
+    "exact_model_id": "gpt-4.1-2025-04-14",
+    "pin_type": "dated_snapshot",
+    "sampling": {
+      "temperature": 0,
+      "top_p": 1,
+      "seed": null,
+      "seed_policy": "unsupported_or_omitted",
+      "max_output_tokens": 4096,
+      "response_format": "json_object",
+      "max_retries": 0
+    },
+    "real_api_authorized": false
+  },
+  "prompt_rendering": {
+    "prompt_sha256": "4a18dcac7aeee19bb7f427c6a050f5fbeb4cffa7f4684ecd6f48b1fc393a6dba",
+    "few_shot_count_parsed": 4,
+    "few_shot_count_in_actual_request": 4,
+    "system_prompt_sha256": "fb206e22ed43a9c91649122e123cbf8a54af96f42c4d267300f417c270bb2eed",
+    "first_user_prompt_sha256": "1d5ab2d41f81a283e6f24e32aabbc40a0708e0dd18b969746be43f88c0b86fe5",
+    "first_user_prompt_char_count": 8063,
+    "unresolved_template_placeholder": false
+  },
+  "request_plan": {
+    "input_count": 3,
+    "repeat_count": 5,
+    "request_count": 15,
+    "unique_request_count": 15,
+    "primary_repeat_index": 1,
+    "plan_sha256": "6200ee56457846be5d47171cdb68c416d57608c2375ee7a8a0b565a06d71c611",
+    "all_requests_have_four_few_shots": true
+  },
+  "attempt_envelope_verification": {
+    "repeat_index": 1,
+    "attempt_count": 3,
+    "canonical_valid_count": 1,
+    "schema_or_cross_field_invalid_count": 1,
+    "api_error_count": 1,
+    "membership_exact": true,
+    "dropped_attempt_count": 0,
+    "attempts_sha256": "62b61d838f9474cbf3847d0f7e11be83e8e13c929770009151b865a2668e8e1c",
+    "raw_response_persisted": false,
+    "invalid_and_api_attempts_retained": true,
+    "s2_10_evaluator_gate_ready": true
+  },
+  "budget_verification": {
+    "target_dataset_size": 150,
+    "repeat_count": 5,
+    "hard_call_limit": 750,
+    "max_retries": 0,
+    "total_token_ceiling": 9216000,
+    "estimated_worst_case_cost_usd": 36.864,
+    "hard_cost_ceiling_usd": 37.0
+  },
+  "input_isolation": {
+    "gold_visible_to_method": false,
+    "b0_or_h1_prediction_visible": false,
+    "rule_front_end_used": false,
+    "same_future_frozen_input_required": true
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "performance_evaluation": false,
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "env_file_read": false,
+    "test_split_read_or_evaluated": false,
+    "formal_predictions_written": false
+  }
+}

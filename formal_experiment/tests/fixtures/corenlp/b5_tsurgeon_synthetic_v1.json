@@ -1,0 +1,53 @@
+{
+  "schema_version": "b5_tsurgeon_synthetic_fixture@1.0.0",
+  "contains_all150_gold": false,
+  "contains_all150_error_lists": false,
+  "contains_sample_ids": false,
+  "cases": [
+    {
+      "id": "condition_sbar",
+      "purpose": "condition SBAR is pruned while the main action and actor survive",
+      "tree": "(ROOT (S (SBAR (IN If) (S (NP (DT the) (NN taxpayer)) (VP (VBZ files)))) (, ,) (NP (DT the) (NN authority)) (VP (MD shall) (VP (VB issue) (NP (DT a) (NN notice)))) (. .)))"
+    },
+    {
+      "id": "temporal_constraint_pp",
+      "purpose": "temporal constraint PP is pruned while the main action survives",
+      "tree": "(ROOT (S (NP (DT The) (NN authority)) (VP (MD shall) (VP (VB issue) (NP (DT a) (NN notice)) (PP (IN within) (NP (CD thirty) (NNS days))))) (. .)))"
+    },
+    {
+      "id": "quantitative_constraint_np",
+      "purpose": "quantitative NP is pruned while the main action survives",
+      "tree": "(ROOT (S (NP (DT The) (NN authority)) (VP (MD shall) (VP (VB issue) (NP (DT a) (NN notice)) (NP (DT no) (JJR later) (IN than) (CD thirty) (NNS days)))) (. .)))"
+    },
+    {
+      "id": "exception_pp",
+      "purpose": "exception PP is pruned while the main action survives",
+      "tree": "(ROOT (S (NP (DT The) (NN authority)) (VP (MD shall) (VP (VB issue) (NP (DT a) (NN notice)) (PP (IN except) (PP (IN for) (NP (NNS appeals)))))) (. .)))"
+    },
+    {
+      "id": "does_not_apply_nondestructive",
+      "purpose": "the frozen final exception VP pattern matches without surgery",
+      "tree": "(ROOT (S (NP (DT The) (NN rule)) (VP (VBZ does) (RB not) (VP (VB apply))) (. .)))"
+    },
+    {
+      "id": "whole_tree_rejection",
+      "purpose": "pruning a root SBAR is rejected and the pre-surgery tree is restored",
+      "tree": "(SBAR (IN If) (S (NP (DT the) (NN authority)) (VP (VBZ acts))))"
+    },
+    {
+      "id": "duplicate_token_identity",
+      "purpose": "repeated surface tokens retain distinct original-token identities",
+      "tree": "(ROOT (S (NP (DT The) (NN authority)) (VP (VB issues) (NP (DT the) (NN notice)) (PP (IN within) (NP (DT the) (NN period))) (NP (DT the) (NN record))) (. .)))"
+    },
+    {
+      "id": "discontinuous_action_runs",
+      "purpose": "a pruned context gap inside an action VP yields distinct surviving runs",
+      "tree": "(ROOT (S (NP (DT The) (NN authority)) (VP (VB issues) (PP (IN within) (NP (DT the) (NN period))) (NP (DT the) (NN notice))) (. .)))"
+    },
+    {
+      "id": "windows_utf8",
+      "purpose": "UTF-8 survives Windows javac/java subprocess boundaries",
+      "tree": "(ROOT (S (NP (DT The) (NN Ärztin)) (VP (VB issues) (NP (DT a) (NN notice))) (. .)))"
+    }
+  ]
+}

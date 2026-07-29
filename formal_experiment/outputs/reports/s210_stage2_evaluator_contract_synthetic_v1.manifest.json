@@ -1,0 +1,70 @@
+{
+  "artifacts": {
+    "canonical_schema": {
+      "path": "configs/schemas/stage2_prediction.schema.json",
+      "sha256": "7485ac4a3a42b976d87e63a7d2ead88cc3df1f810b14dd066bc1f63c15599d1b"
+    },
+    "contract": {
+      "path": "configs/stage2_evaluator_s210.json",
+      "sha256": "925b4645f69f0294dfb284e4e8de88c8faf8dcfdfe7b7352940dd8df7f744c54"
+    },
+    "fixture": {
+      "path": "tests/fixtures/stage2_evaluator/s210_contract_fixture.json",
+      "sha256": "9b6e9be3fb39a4d476ff6f36062badc7693eb214906e77a0b1bd33021cfa42e5"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage2_evaluation.py",
+      "sha256": "218996c85ff5d56b14c9e9b40b1c65264fa449a395a0850e396a6b3998043ad7"
+    },
+    "report_schema": {
+      "path": "configs/schemas/stage2_evaluation_report.schema.json",
+      "sha256": "900aa7e7d20d30548fef9ac7d240d83c54ea8792d5db9790723f00a7e81df749"
+    },
+    "runner": {
+      "path": "scripts/evaluate_stage2_s210.py",
+      "sha256": "92104261557dd9655d477af42ab88d2ef56345e9c6d388751554faad27062316"
+    },
+    "style_review_schema": {
+      "path": "configs/schemas/style_equivalent_review.schema.json",
+      "sha256": "9348a8a267137306b700f88b0f56c03db792c41bc7815ea85ee9969a1211d499"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage2_evaluator_s210.py",
+      "sha256": "ddd21521f6f2abec48a3a39cf6bc2fc67a7e559a65ca30ed9b91c6efcf976ad9"
+    }
+  },
+  "claim_boundary": "This manifest verifies evaluator mechanics on five synthetic attempts. Its metric values are contract-test constants, not B0/H1/D1 performance.",
+  "run_id": "s210_stage2_evaluator_contract_synthetic_v1",
+  "safety": {
+    "formal_gold_read_or_modified": false,
+    "formal_performance_evaluation": false,
+    "formal_predictions_read_or_created": false,
+    "llm_api_called": false,
+    "method_comparison": false,
+    "network_called": false,
+    "row_level_predictions_persisted": false,
+    "synthetic_fixture_only": true
+  },
+  "schema_version": "s210_evaluator_verification_manifest@1.0.0",
+  "status": "succeeded",
+  "task_id": "S2.10-E",
+  "verification": {
+    "action_safe_f1_synthetic": 0.5,
+    "action_strict_f1_synthetic": 0.25,
+    "actor_action_edge_f1_synthetic": 0.5,
+    "api_error_rate_synthetic": 0.2,
+    "array_order_invariant": true,
+    "formal_scope_fail_closed": true,
+    "membership_payload_sha256": "f74be514b6ffed61cb196feb730ec6db29ca0c8e2ffd6a00cf248a6187e5af47",
+    "missing_attempt_fail_closed": true,
+    "modality_macro_f1_synthetic": 0.41666666666666663,
+    "report_payload_sha256": "1388f9fefe34244de9204e17c3d43225acef3543983e36818fc99169b17ae4c3",
+    "report_schema_valid": true,
+    "sample_count": 5,
+    "schema_valid_rate_synthetic": 0.6,
+    "style_review_human_decisions_filled": 0,
+    "style_review_schema_valid": true,
+    "style_review_selected": 2,
+    "style_template_payload_sha256": "5d85ac58174063a3655d3da1c8f7f53255955f21e6b94d87a428f46ab9b62986"
+  }
+}

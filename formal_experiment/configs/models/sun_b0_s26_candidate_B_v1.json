@@ -1,0 +1,92 @@
+{
+  "schema_version": "sun_b0_s26@1.0.0",
+  "task_id": "S2.6",
+  "method_id": "sun_rule_only",
+  "status": "development_candidate_B_classifier_binding",
+  "classifier": {
+    "config": {
+      "path": "configs/models/sun_bert_textcnn_s24.json",
+      "sha256": "82f950bce605e405ee1600bca90a961337f30f2933ab807f33998464bb7af498"
+    },
+    "run_manifest": {
+      "path": "outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json",
+      "sha256": "a67ad5d690155759d068afe37bd32ac8dc0238f237c298ed8ff857accb258026"
+    },
+    "checkpoint": {
+      "path": "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt",
+      "sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1",
+      "bytes": 441559200,
+      "versioned": false
+    },
+    "inference_language": "de",
+    "test_evaluation_repeated_by_s2_6": false
+  },
+  "phrase_extractor": {
+    "runtime_config": {
+      "path": "configs/sun_corenlp_runtime.json",
+      "sha256": "30bddb43bdb6f5ec477d9445b413f5e0891675c3855226a5b04747178336e74c"
+    },
+    "runtime_verification_manifest": {
+      "path": "resources/corenlp/s25b_runtime_verification_manifest.json",
+      "sha256": "c3b1ee5a42c13cbc80447a62a957c3c1ef3e9ddd6ef46c36f8754d907f646aa3"
+    },
+    "pattern_registry": {
+      "path": "resources/corenlp/sun_phrase_patterns_v1.json",
+      "sha256": "7cd1f3d590871111724f9fbcc8bbbd34ea83a544226db35845d11602eae24d1c"
+    },
+    "locked_fixture": {
+      "path": "tests/fixtures/corenlp/obligation_condition_constraint.json",
+      "sha256": "df5860316ad927e2513f40497c3793b965c627218872300fa080b53f2e65495b"
+    },
+    "locked_live_observations": {
+      "path": "tests/fixtures/corenlp/s25b_live_expected.json",
+      "sha256": "bd8576f7b41a3b6af70937da63c2062cd68089925c0cec2f569eece0dabdd857"
+    },
+    "inference_language": "en",
+    "extraction_order": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception",
+      "action",
+      "actor"
+    ]
+  },
+  "canonical_output": {
+    "schema": {
+      "path": "configs/schemas/stage2_prediction.schema.json",
+      "sha256": "7485ac4a3a42b976d87e63a7d2ead88cc3df1f810b14dd066bc1f63c15599d1b",
+      "schema_version": "1.0.0"
+    },
+    "one_record_per_sample": true,
+    "one_clause_per_corenlp_sentence": true,
+    "modality_label_source": "s2_4_classifier",
+    "modality_evidence_source": "s2_5_marker_span_or_full_classifier_input_clause",
+    "span_offsets": "zero_based_start_exclusive_end_into_source_text",
+    "normalization": "unicode_preserving_casefold_and_whitespace_collapse",
+    "actor_action_policy": "map_each_extracted_action_to_first_extracted_actor_or_null",
+    "order_relation_policy": "empty_until_a_separate_pre_result_order_extractor_is_locked"
+  },
+  "verification": {
+    "mode": "actual_s2_4_checkpoint_plus_attested_s2_5_live_synthetic_observation",
+    "classifier_input_texts_de": [
+      "Wenn eine Mitteilung erforderlich ist, muss das Unternehmen innerhalb von 30 Tagen eine Meldung einreichen."
+    ],
+    "classifier_and_phrase_inputs_are_language_aligned_parallel_synthetic_texts": true,
+    "fixture_is_gold": false,
+    "fixture_is_performance_evaluation": false,
+    "expected_records": 1,
+    "expected_schema_invalid": 0,
+    "expected_cross_field_invalid": 0
+  },
+  "safety": {
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_allowed": false,
+    "test_split_read_or_evaluated": false,
+    "row_level_real_data_predictions_persisted": false,
+    "synthetic_fixture_record_may_be_persisted": true,
+    "no_overwrite": true
+  },
+  "claim_boundary": "Development S2.6 binding for b0_enhanced_v7 using preregistered candidate B (inverse-sqrt weighted CE). Not the locked parent S2.4/S2.6 formal composition."
+}

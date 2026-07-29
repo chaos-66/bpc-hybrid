@@ -1,0 +1,361 @@
+{
+  "schema_version": "public_marker_sources@1.1.0",
+  "snapshot_id": "public_marker_sources_en_v2",
+  "parent_snapshot_id": "public_marker_sources_en_v1",
+  "evidence_cutoff": "2026-07-21",
+  "language": "en",
+  "construction_mode": "offline_from_preexisting_local_research_audit_and_pinned_public_seed",
+  "local_evidence_snapshot": {
+    "path": "docs/research/SUN_REFERENCE_SNOWBALL_AND_MARKER_AUDIT.md",
+    "sections": [
+      "4.1",
+      "5.1",
+      "5.2",
+      "5.3",
+      "5.4",
+      "5.5"
+    ],
+    "audit_date": "2026-07-12"
+  },
+  "policy": {
+    "artifact_scope": "development_only",
+    "allowed_fields": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception",
+      "actor"
+    ],
+    "normalization": "NFKC, strip, collapse internal whitespace, Unicode casefold",
+    "ordering": "descending token count, descending character count, then normalized surface and modality class",
+    "matching": "case-insensitive literal phrase with ASCII alphanumeric boundaries; syntax must determine scope",
+    "duplicate_policy": "merge exact normalized field/class duplicates and union source_ids",
+    "cross_field_policy": "preserve cross-field duplicates if a future version introduces them; syntax and extraction order must disambiguate",
+    "action_strategy": "syntax_only_no_action_marker_lexicon",
+    "definition_modality_strategy": "sentence_classifier_or_definition_marker_v2",
+    "language_strategy": {
+      "lexicon_language": "en",
+      "applies_to": "approved English phrase-level working text only",
+      "does_not_apply_to": "raw German Sun modality sentences",
+      "machine_translation_in_s2_3": false
+    },
+    "development_extension_strategy": {
+      "included_in_v1": false,
+      "registry": "resources/lexicon/development_extensions_en_v1.json",
+      "allowed_evidence": "train/dev context only after a separately recorded review decision",
+      "forbidden_evidence": [
+        "test text",
+        "test labels",
+        "test predictions",
+        "formal Gold",
+        "evaluation results"
+      ],
+      "activation_rule": "an accepted extension requires a new versioned source snapshot, regenerated artifacts, new hashes, tests, and a recorded change event",
+      "test_time_additions_forbidden": true
+    },
+    "rights_boundary": {
+      "upstream_license_recheck_completed_in_s2_3": false,
+      "redistribution_allowed": false,
+      "formal_use_allowed": false,
+      "reason": "v2 extends v1 with paper-cited Sun/Sleimi/Wyner examples from the local research audit; no network recheck; non-redistributable and non-formal; Wiktionary dump is still out of scope per v1 boundary"
+    }
+  },
+  "sources": [
+    {
+      "source_id": "paper_examples_local_audit_2026_07_12",
+      "source_tier": "public_explicit_example",
+      "citations": [
+        "Sun et al. (2024), DOI 10.1007/s11227-023-05626-0",
+        "Sleimi et al., arXiv:2001.11245"
+      ],
+      "public_locators": [
+        "https://doi.org/10.1007/s11227-023-05626-0",
+        "https://arxiv.org/abs/2001.11245"
+      ],
+      "upstream_version_status": "citations_pinned_but_example_attribution_preserved_at_local_audit_aggregate_level",
+      "verification": "explicit terms transcribed in the preexisting local research audit; no network recheck in S2.3",
+      "license_status": "not_rechecked_offline",
+      "markers": [
+        {"field": "modality", "modality_class": "obligation", "surface": "must", "ambiguity": "medium"},
+        {"field": "modality", "modality_class": "obligation", "surface": "shall", "ambiguity": "medium"},
+        {"field": "modality", "modality_class": "obligation", "surface": "need to", "ambiguity": "medium"},
+        {"field": "modality", "modality_class": "obligation", "surface": "is required to", "ambiguity": "medium"},
+        {"field": "modality", "modality_class": "obligation", "surface": "is obliged to", "ambiguity": "medium"},
+        {"field": "modality", "modality_class": "prohibition", "surface": "is prohibited", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "prohibition", "surface": "shall not", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "prohibition", "surface": "must not", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "prohibition", "surface": "may not", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "prohibition", "surface": "is not permitted", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "prohibition", "surface": "is not allowed", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "permission", "surface": "may", "ambiguity": "high"},
+        {"field": "modality", "modality_class": "permission", "surface": "can", "ambiguity": "high"},
+        {"field": "modality", "modality_class": "permission", "surface": "is authorized", "ambiguity": "medium"},
+        {"field": "modality", "modality_class": "definition", "surface": "shall mean", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "definition", "surface": "means", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "definition", "surface": "is defined as", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "definition", "surface": "are defined as", "ambiguity": "low"},
+        {"field": "condition", "surface": "if", "ambiguity": "medium"},
+        {"field": "condition", "surface": "in case of", "ambiguity": "medium"},
+        {"field": "condition", "surface": "provided that", "ambiguity": "medium"},
+        {"field": "condition", "surface": "in the context of", "ambiguity": "high"},
+        {"field": "condition", "surface": "whenever", "ambiguity": "medium"},
+        {"field": "condition", "surface": "insofar", "ambiguity": "medium"},
+        {"field": "condition", "surface": "who", "ambiguity": "high"},
+        {"field": "condition", "surface": "whose", "ambiguity": "high"},
+        {"field": "condition", "surface": "which", "ambiguity": "high"},
+        {"field": "condition", "surface": "that", "ambiguity": "high"},
+        {"field": "exception", "surface": "with the exception of", "ambiguity": "low"},
+        {"field": "exception", "surface": "except for", "ambiguity": "low"},
+        {"field": "exception", "surface": "in derogation of", "ambiguity": "medium"},
+        {"field": "exception", "surface": "apart from", "ambiguity": "medium"},
+        {"field": "exception", "surface": "other than", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "for the purpose of", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "for the purposes of", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "in accordance with", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "pursuant to", "ambiguity": "medium"},
+        {"field": "actor", "surface": "physician", "ambiguity": "low"},
+        {"field": "actor", "surface": "expert", "ambiguity": "medium"},
+        {"field": "actor", "surface": "company", "ambiguity": "medium"},
+        {"field": "actor", "surface": "judge", "ambiguity": "low"},
+        {"field": "actor", "surface": "prosecutor", "ambiguity": "low"},
+        {"field": "actor", "surface": "driver", "ambiguity": "medium"},
+        {"field": "actor", "surface": "officer", "ambiguity": "medium"},
+        {"field": "actor", "surface": "inspector", "ambiguity": "low"},
+        {"field": "actor", "surface": "taxpayer", "ambiguity": "medium"},
+        {"field": "actor", "surface": "taxpayers", "ambiguity": "medium"}
+      ]
+    },
+    {
+      "source_id": "sleimi_table5_modality_examples_local_audit_2026_07_12",
+      "source_tier": "public_research_cited_modality_example",
+      "citations": [
+        "Sleimi et al., arXiv:2001.11245 (Table 5, partial)"
+      ],
+      "public_locators": [
+        "https://arxiv.org/abs/2001.11245"
+      ],
+      "upstream_version_status": "table5_pinned_via_local_audit_no_network_recheck",
+      "verification": "explicit terms from Sleimi Table 5 are transcribed in the local research audit; only non-exhaustive examples listed there are included",
+      "license_status": "not_rechecked_offline",
+      "markers": [
+        {"field": "modality", "modality_class": "definition", "surface": "refers to", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "definition", "surface": "denotes", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "definition", "surface": "is understood as", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "definition", "surface": "shall be construed as", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "definition", "surface": "amounts to", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "definition", "surface": "also include", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "obligation", "surface": "has to", "ambiguity": "medium"},
+        {"field": "modality", "modality_class": "obligation", "surface": "should", "ambiguity": "medium"},
+        {"field": "modality", "modality_class": "prohibition", "surface": "must never", "ambiguity": "low"},
+        {"field": "modality", "modality_class": "permission", "surface": "is allowed to", "ambiguity": "medium"},
+        {"field": "modality", "modality_class": "permission", "surface": "is permitted to", "ambiguity": "medium"}
+      ]
+    },
+    {
+      "source_id": "sleimi_table5_actor_examples_local_audit_2026_07_12",
+      "source_tier": "public_research_cited_actor_example",
+      "citations": [
+        "Sleimi et al., arXiv:2001.11245"
+      ],
+      "public_locators": [
+        "https://arxiv.org/abs/2001.11245"
+      ],
+      "upstream_version_status": "table5_pinned_via_local_audit_no_network_recheck",
+      "verification": "explicit actor examples from Sleimi Table 5 are transcribed in the local research audit; Wiktionary-derived auto-actors are not included",
+      "license_status": "not_rechecked_offline",
+      "markers": [
+        {"field": "actor", "surface": "taxpayer", "ambiguity": "medium"},
+        {"field": "actor", "surface": "employee", "ambiguity": "medium"},
+        {"field": "actor", "surface": "employer", "ambiguity": "medium"},
+        {"field": "actor", "surface": "authority", "ambiguity": "medium"},
+        {"field": "actor", "surface": "person", "ambiguity": "medium"},
+        {"field": "actor", "surface": "operator", "ambiguity": "medium"},
+        {"field": "actor", "surface": "minister", "ambiguity": "medium"},
+        {"field": "actor", "surface": "office", "ambiguity": "medium"},
+        {"field": "actor", "surface": "association", "ambiguity": "medium"},
+        {"field": "actor", "surface": "fund", "ambiguity": "medium"},
+        {"field": "actor", "surface": "trader", "ambiguity": "medium"},
+        {"field": "actor", "surface": "farmer", "ambiguity": "medium"},
+        {"field": "actor", "surface": "forester", "ambiguity": "medium"},
+        {"field": "actor", "surface": "board", "ambiguity": "medium"},
+        {"field": "actor", "surface": "court", "ambiguity": "medium"},
+        {"field": "actor", "surface": "insured", "ambiguity": "medium"},
+        {"field": "actor", "surface": "recipient", "ambiguity": "medium"},
+        {"field": "actor", "surface": "controller", "ambiguity": "medium"},
+        {"field": "actor", "surface": "processor", "ambiguity": "medium"}
+      ]
+    },
+    {
+      "source_id": "sleimi_table5_exception_examples_local_audit_2026_07_12",
+      "source_tier": "public_research_cited_exception_example",
+      "citations": [
+        "Sleimi et al., arXiv:2001.11245"
+      ],
+      "public_locators": [
+        "https://arxiv.org/abs/2001.11245"
+      ],
+      "upstream_version_status": "table5_pinned_via_local_audit_no_network_recheck",
+      "verification": "explicit exception examples from Sleimi Table 5 are transcribed in the local research audit",
+      "license_status": "not_rechecked_offline",
+      "markers": [
+        {"field": "exception", "surface": "except", "ambiguity": "low"},
+        {"field": "exception", "surface": "excluding", "ambiguity": "low"},
+        {"field": "exception", "surface": "notwithstanding", "ambiguity": "medium"},
+        {"field": "exception", "surface": "regardless of", "ambiguity": "medium"},
+        {"field": "exception", "surface": "even if", "ambiguity": "medium"},
+        {"field": "exception", "surface": "shall not apply", "ambiguity": "low"},
+        {"field": "exception", "surface": "does not apply", "ambiguity": "low"},
+        {"field": "exception", "surface": "do not apply", "ambiguity": "low"}
+      ]
+    },
+    {
+      "source_id": "sleimi_table5_condition_examples_local_audit_2026_07_12",
+      "source_tier": "public_research_cited_condition_example",
+      "citations": [
+        "Sleimi et al., arXiv:2001.11245"
+      ],
+      "public_locators": [
+        "https://arxiv.org/abs/2001.11245"
+      ],
+      "upstream_version_status": "table5_pinned_via_local_audit_no_network_recheck",
+      "verification": "explicit condition examples from Sleimi Table 5 are transcribed in the local research audit",
+      "license_status": "not_rechecked_offline",
+      "markers": [
+        {"field": "condition", "surface": "in the event of", "ambiguity": "medium"},
+        {"field": "condition", "surface": "in the event that", "ambiguity": "medium"},
+        {"field": "condition", "surface": "to the extent", "ambiguity": "medium"},
+        {"field": "condition", "surface": "to the extent that", "ambiguity": "medium"},
+        {"field": "condition", "surface": "insofar as", "ambiguity": "medium"},
+        {"field": "condition", "surface": "as long as", "ambiguity": "medium"},
+        {"field": "condition", "surface": "so long as", "ambiguity": "medium"},
+        {"field": "condition", "surface": "on condition that", "ambiguity": "medium"},
+        {"field": "condition", "surface": "once", "ambiguity": "medium"}
+      ]
+    },
+    {
+      "source_id": "sleimi_table5_constraint_examples_local_audit_2026_07_12",
+      "source_tier": "public_research_cited_constraint_example",
+      "citations": [
+        "Sleimi et al., arXiv:2001.11245"
+      ],
+      "public_locators": [
+        "https://arxiv.org/abs/2001.11245"
+      ],
+      "upstream_version_status": "table5_pinned_via_local_audit_no_network_recheck",
+      "verification": "explicit constraint examples from Sleimi Table 5 are transcribed in the local research audit; prepositions shared with condition are scope_test tagged",
+      "license_status": "not_rechecked_offline",
+      "markers": [
+        {"field": "constraint", "surface": "under", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "under section", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "by double-entry", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "by means of", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "in such quantity", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "to an annual", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "for a period", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "between", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "throughout", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "until", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "during", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "as defined in", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "within the meaning", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "only", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "solely", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "exclusively", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "generally", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "without undue", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "up to", "ambiguity": "medium"}
+      ]
+    },
+    {
+      "source_id": "lexnlp_conditions_local_audit_2026_07_12",
+      "source_tier": "public_documentation_list",
+      "citations": [
+        "LexNLP English conditions documentation"
+      ],
+      "public_locators": [
+        "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+      ],
+      "upstream_version_status": "latest_alias_was_not_commit_pinned_in_the_preexisting_audit",
+      "verification": "explicit terms transcribed in the preexisting local research audit; local snapshot is frozen by this file hash",
+      "license_status": "not_rechecked_offline",
+      "markers": [
+        {"field": "condition", "surface": "if", "ambiguity": "medium"},
+        {"field": "condition", "surface": "if not", "ambiguity": "medium"},
+        {"field": "condition", "surface": "when", "ambiguity": "medium"},
+        {"field": "condition", "surface": "when not", "ambiguity": "medium"},
+        {"field": "condition", "surface": "where", "ambiguity": "high"},
+        {"field": "condition", "surface": "where not", "ambiguity": "high"},
+        {"field": "condition", "surface": "unless and until", "ambiguity": "medium"},
+        {"field": "condition", "surface": "unless", "ambiguity": "medium"},
+        {"field": "condition", "surface": "unless not", "ambiguity": "high"},
+        {"field": "condition", "surface": "until", "ambiguity": "medium"},
+        {"field": "condition", "surface": "until not", "ambiguity": "high"},
+        {"field": "condition", "surface": "as soon as", "ambiguity": "medium"},
+        {"field": "condition", "surface": "as soon as not", "ambiguity": "high"},
+        {"field": "condition", "surface": "provided that", "ambiguity": "medium"},
+        {"field": "condition", "surface": "provided that not", "ambiguity": "high"},
+        {"field": "condition", "surface": "subject to", "ambiguity": "high"},
+        {"field": "condition", "surface": "not subject to", "ambiguity": "high"},
+        {"field": "condition", "surface": "upon the occurrence", "ambiguity": "medium"},
+        {"field": "condition", "surface": "conditioned on", "ambiguity": "medium"},
+        {"field": "condition", "surface": "conditioned upon", "ambiguity": "medium"}
+      ]
+    },
+    {
+      "source_id": "lexnlp_constraints_local_audit_2026_07_12",
+      "source_tier": "public_documentation_excerpt",
+      "citations": [
+        "LexNLP English constraints documentation"
+      ],
+      "public_locators": [
+        "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+      ],
+      "upstream_version_status": "latest_alias_was_not_commit_pinned_in_the_preexisting_audit",
+      "verification": "only terms explicitly enumerated in the preexisting local audit are included; the untranscribed remainder of the reported 40-pattern upstream table is not guessed",
+      "license_status": "not_rechecked_offline",
+      "markers": [
+        {"field": "constraint", "surface": "after", "ambiguity": "high"},
+        {"field": "constraint", "surface": "before", "ambiguity": "high"},
+        {"field": "constraint", "surface": "within", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "prior to", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "at least", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "at most", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "exactly", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "greater", "ambiguity": "high"},
+        {"field": "constraint", "surface": "less", "ambiguity": "high"},
+        {"field": "constraint", "surface": "equal", "ambiguity": "high"},
+        {"field": "constraint", "surface": "minimum", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "maximum", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "no earlier", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "no later", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "no less", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "no more", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "no more than", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "no less than", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "no earlier than", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "no later than", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "not equal", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "not to exceed", "ambiguity": "medium"},
+        {"field": "constraint", "surface": "exceeds", "ambiguity": "medium"}
+      ]
+    },
+    {
+      "source_id": "wyner_peters_2011_exception_gazetteer_local_audit_2026_07_12",
+      "source_tier": "public_research_cited_exception_example",
+      "citations": [
+        "Wyner & Peters 2011, 'On Rule Extraction from Regulations'"
+      ],
+      "public_locators": [
+        "https://www.researchgate.net/publication/228352094_On_Rule_Extraction_from_Regulations"
+      ],
+      "upstream_version_status": "materials_only_available_upon_request_per_paper_text",
+      "verification": "explicit exception patterns and gazetteer list transcribed in the local research audit",
+      "license_status": "not_rechecked_offline",
+      "markers": [
+        {"field": "exception", "surface": "save where", "ambiguity": "medium"},
+        {"field": "exception", "surface": "save", "ambiguity": "medium"},
+        {"field": "exception", "surface": "unless", "ambiguity": "medium"}
+      ]
+    }
+  ]
+}

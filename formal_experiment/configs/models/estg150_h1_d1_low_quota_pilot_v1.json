@@ -1,0 +1,80 @@
+{
+  "schema_version": "estg150_h1_d1_low_quota_pilot@1.0.0",
+  "task_ids": ["S2.8-DEV-PILOT", "S2.9-DEV-PILOT"],
+  "status": "prepared_blocked_exact_model_transport_unavailable",
+  "claim_scope": "development_trigger_selected_diagnostic",
+  "selection": {
+    "source_run": {
+      "path": "outputs/development/s27_estg150_b0_development_v1/manifest.json",
+      "sha256": "7ab968a5da3fb482e8135977cc323828c8c682db0379bd95c1dacabdc6af8746"
+    },
+    "rule": "ascending sample_id among B0 records with record-level modality confidence below the frozen H1 threshold 0.6",
+    "gold_or_test_metric_used_for_selection": false,
+    "sample_count": 7,
+    "samples": [
+      {"sample_id": "estg_000051", "b0_label": "permission", "b0_confidence": 0.43623876571655273},
+      {"sample_id": "estg_000118", "b0_label": "definition", "b0_confidence": 0.5289092659950256},
+      {"sample_id": "estg_000143", "b0_label": "definition", "b0_confidence": 0.5926415920257568},
+      {"sample_id": "estg_000271", "b0_label": "permission", "b0_confidence": 0.5572068095207214},
+      {"sample_id": "estg_000414", "b0_label": "definition", "b0_confidence": 0.5605703592300415},
+      {"sample_id": "estg_000572", "b0_label": "permission", "b0_confidence": 0.5963356494903564},
+      {"sample_id": "estg_000720", "b0_label": "obligation", "b0_confidence": 0.5811957120895386}
+    ],
+    "independence_composition": {
+      "independent": 4,
+      "not_independent": 3,
+      "needs_context_review": 0
+    }
+  },
+  "paired_methods": {
+    "B0": {
+      "method_id": "sun_rule_only",
+      "calls": 0,
+      "reuse_locked_development_attempts": true
+    },
+    "H1": {
+      "method_id": "sun_llm_fallback",
+      "config": "configs/models/sun_h1_s28.json",
+      "one_request_per_selected_sample": true,
+      "max_calls": 7,
+      "max_retries": 0
+    },
+    "D1": {
+      "method_id": "direct_llm",
+      "config": "configs/models/sun_d1_s29.json",
+      "development_repeat_count": 1,
+      "max_calls": 7,
+      "max_retries": 0,
+      "formal_five_repeat_stability_claim_allowed": false
+    }
+  },
+  "model_boundary": {
+    "frozen_exact_model_id": "gpt-4.1-2025-04-14",
+    "user_requested_string": "gpt4.1o",
+    "user_requested_string_treated_as_exact_alias": false,
+    "codex_subagent_exact_model_available": false,
+    "silent_substitution_allowed": false,
+    "external_relay_allowed": false,
+    "execution_status": "blocked_until_exact_model_or_user_approved_relock_is_available"
+  },
+  "budget": {
+    "h1_max_calls": 7,
+    "d1_max_calls": 7,
+    "combined_max_calls": 14,
+    "max_retries": 0
+  },
+  "evaluation": {
+    "evaluator": "configs/stage2_evaluator_s210_v3.json",
+    "same_ids_required": true,
+    "report_precision_recall_f1": true,
+    "formal_or_population_accuracy_claim_allowed": false,
+    "required_label": "trigger-selected diagnostic pilot; not an unbiased EStG-150 estimate"
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_called": false,
+    "external_relay_called": false,
+    "gold_modified": false,
+    "formal_predictions_written": false
+  }
+}

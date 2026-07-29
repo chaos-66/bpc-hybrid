@@ -1,0 +1,220 @@
+{
+  "schema_version": "sun_bert_textcnn_candidate_run_manifest@1.0.0",
+  "task_id": "S2.4-CAND",
+  "run_id": "s24_candidate_C_balanced_sampler_seed20260717_v1",
+  "candidate_key": "C_balanced_sampler",
+  "status": "succeeded",
+  "created_at": "2026-07-22T12:01:22.601424+00:00",
+  "parent_locked_run_id": "s24_legal_bert_textcnn_seed20260717_v1",
+  "parent_dev_macro_f1": 0.8562634380932774,
+  "parent_test_macro_f1": 0.8510709392388781,
+  "preregistration": {
+    "registry_path": "configs/models/s24_bert_textcnn_candidate_registry_v1.json",
+    "registry_sha256": "aac6d96eca247aaac79ae18b6e1b084dd9e4c0ccda187da6b2374dc0c499db10",
+    "loss": "unweighted_cross_entropy",
+    "sampler": "balanced_weighted_random",
+    "class_weights": null
+  },
+  "config": {
+    "path": "configs/models/sun_bert_textcnn_s24.json",
+    "sha256": "82f950bce605e405ee1600bca90a961337f30f2933ab807f33998464bb7af498"
+  },
+  "runtime": {
+    "python": "3.14.6",
+    "torch": "2.12.1+cpu",
+    "transformers": "5.12.1",
+    "device": "cpu",
+    "cuda_available": false
+  },
+  "pretrained_model": {
+    "repository_id": "nlpaueb/legal-bert-base-uncased",
+    "revision": "15b570cbf88259610b082a167dacc190124f60f6",
+    "verified_files": {
+      "config.json": "716ea70c3c3e74bfe8496cc04cba7cd52f4ca45401e74042bb1058fe0390a1b6",
+      "pytorch_model.bin": "6b4f1da798ff101a66ad5cb11c6daa7f99cd41e7909277e01398576e8bd789bd",
+      "vocab.txt": "3aaa02f2e3a397eee0f813caa567c87cddab1045a4a6b8ac6261f0cc799efb8f"
+    },
+    "local_files_only": true
+  },
+  "dataset": {
+    "train": {
+      "path": "data/development/modality/sun_estg_modality_v1/splits/train.jsonl",
+      "rows": 1985,
+      "sha256": "a7367cd35e3a5ce7263ad5b0fae4881a989761d4fba21b75bdc75b6e2b83c142"
+    },
+    "dev": {
+      "path": "data/development/modality/sun_estg_modality_v1/splits/dev.jsonl",
+      "rows": 420,
+      "sha256": "ad541915d16aaef6119cb3769e6da0b89e8e8af5ec9069ac3a25680040e5a8d6"
+    },
+    "test": {
+      "path": "data/development/modality/sun_estg_modality_v1/splits/test.jsonl",
+      "rows": 426,
+      "sha256": "2f67edad05e3a4d315d9ac65fc0ffd1d83dbaffd2d77a55916d6aa9a6919e871"
+    }
+  },
+  "selection": {
+    "split": "dev",
+    "metric": "macro_f1",
+    "best_epoch": 7,
+    "epochs_completed": 8,
+    "best_dev": {
+      "n": 420,
+      "accuracy": 0.9166666666666666,
+      "macro_precision": 0.8671586047987037,
+      "macro_recall": 0.8519098009003293,
+      "macro_f1": 0.8587112337331936,
+      "per_class": {
+        "definition": {
+          "precision": 0.9171270718232044,
+          "recall": 0.9378531073446328,
+          "f1": 0.9273743016759776,
+          "support": 177
+        },
+        "obligation": {
+          "precision": 0.9347826086956522,
+          "recall": 0.9197860962566845,
+          "f1": 0.9272237196765498,
+          "support": 187
+        },
+        "permission": {
+          "precision": 0.9024390243902439,
+          "recall": 0.925,
+          "f1": 0.9135802469135802,
+          "support": 40
+        },
+        "prohibition": {
+          "precision": 0.7142857142857143,
+          "recall": 0.625,
+          "f1": 0.6666666666666666,
+          "support": 16
+        }
+      },
+      "confusion_matrix": {
+        "label_order": [
+          "definition",
+          "obligation",
+          "permission",
+          "prohibition"
+        ],
+        "rows_gold_columns_predicted": [
+          [
+            166,
+            7,
+            3,
+            1
+          ],
+          [
+            11,
+            172,
+            1,
+            3
+          ],
+          [
+            2,
+            1,
+            37,
+            0
+          ],
+          [
+            2,
+            4,
+            0,
+            10
+          ]
+        ]
+      },
+      "loss": 0.5351547242685532
+    }
+  },
+  "test": {
+    "policy": "single_evaluation_after_best_dev_checkpoint_per_candidate",
+    "evaluation_count": 1,
+    "metrics": {
+      "n": 426,
+      "accuracy": 0.9178403755868545,
+      "macro_precision": 0.8623654741128564,
+      "macro_recall": 0.8662538026944806,
+      "macro_f1": 0.864236377308187,
+      "per_class": {
+        "definition": {
+          "precision": 0.9111111111111111,
+          "recall": 0.9265536723163842,
+          "f1": 0.9187675070028011,
+          "support": 177
+        },
+        "obligation": {
+          "precision": 0.9633507853403142,
+          "recall": 0.9435897435897436,
+          "f1": 0.9533678756476685,
+          "support": 195
+        },
+        "permission": {
+          "precision": 0.775,
+          "recall": 0.7948717948717948,
+          "f1": 0.7848101265822786,
+          "support": 39
+        },
+        "prohibition": {
+          "precision": 0.8,
+          "recall": 0.8,
+          "f1": 0.8000000000000002,
+          "support": 15
+        }
+      },
+      "confusion_matrix": {
+        "label_order": [
+          "definition",
+          "obligation",
+          "permission",
+          "prohibition"
+        ],
+        "rows_gold_columns_predicted": [
+          [
+            164,
+            5,
+            7,
+            1
+          ],
+          [
+            8,
+            184,
+            1,
+            2
+          ],
+          [
+            7,
+            1,
+            31,
+            0
+          ],
+          [
+            1,
+            1,
+            1,
+            12
+          ]
+        ]
+      },
+      "loss": 0.4559796993979231
+    },
+    "used_for_selection": false
+  },
+  "checkpoint": {
+    "path": "outputs/development/s24_candidate_C_balanced_sampler_seed20260717_v1/best_model.pt",
+    "sha256": "4b02631d3c4f73e21df441a027defe87aca4ea114e37534f76a8d6b25002d0db",
+    "bytes": 441559136
+  },
+  "artifacts": {
+    "aggregate_history_path": "outputs/development/s24_candidate_C_balanced_sampler_seed20260717_v1/aggregate_history.json",
+    "row_level_predictions_persisted": false
+  },
+  "safety": {
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "estg150_used": false,
+    "test_used_for_selection": false,
+    "no_overwrite": true
+  }
+}

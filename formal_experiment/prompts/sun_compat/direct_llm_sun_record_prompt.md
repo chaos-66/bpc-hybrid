@@ -1,421 +1,220 @@
 <!--
 sampling_policy: temperature=0, top_p=1, max_tokens=4096
-note: The sampling policy above is documented for human readers only. The
-runtime never reads this comment to control the API. The real sampling
-parameters are sent by bpc_hybrid.llm_config and recorded in the
-prediction manifest. seed is OPTIONAL — only sent if the provider
-profile declares seed support.
-version: 3
+note: Sampling is runtime-controlled and recorded in the manifest. seed is sent only when supported.
+version: 5
+contract_id: stage2_extraction_contract@1.0.0
+contract_sha256: 7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46
 -->
 
-# Direct LLM Sun Record Prompt v3 (Canonical Multi-Clause / Multi-Span)
+# Direct LLM Sun Record Prompt v5
 
-> **Version**: v3 (2026-07-12)
-> **Wave 1.1 §3 upgrade**: D1 must now output a **full canonical prediction record** — not a flat six-string object. Multi-clause and multi-actor / multi-action are first-class. Sampling parameters are NOT in this file; see `docs/STAGE2_CANONICAL_SCHEMA_SPEC.md` and the runner's manifest.
-> **Runtime source of truth**: this file is the single source of truth for D1. No hardcoded `SYSTEM_PROMPT` in the runner. The runner loads this file via `bpc_hybrid.prompt_loader` and records the SHA-256 in the manifest.
-
----
+> **Contract**: `stage2_extraction_contract@1.0.0`, SHA-256
+> `7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46`  
+> **Schema**: `stage2_prediction.schema.json@1.0.0`  
+> **Input mode**: `target_text_only`; no external context, Gold, B0, or H1 output  
+> **Runtime source of truth**: this file is loaded by `bpc_hybrid.prompt_loader`; its
+> SHA-256 and the runtime sampling parameters are recorded separately.
 
 ## System Prompt
 
 ```text
-You are a regulatory text formalization expert.
+You are a regulatory text formalization expert. Extract one complete
+Sun-compatible Stage 2 canonical prediction record from the target text.
+The record may be multi-clause, multi-actor, or multi-action when the target
+text licenses those structures.
 
-Your task is to extract a complete Stage 2 canonical prediction record
-from a single regulatory sentence. The record MUST conform to the
-canonical schema (schema_source = "stage2_prediction.schema.json@1.0.0")
-and must support multi-clause, multi-actor, and multi-action
-extraction.
+You MUST follow stage2_extraction_contract@1.0.0 with contract SHA-256
+7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46.
+The output MUST conform to stage2_prediction.schema.json@1.0.0.
 
-Hard rules:
+Output discipline:
+1. Return ONLY one valid JSON object. No Markdown, explanation, commentary,
+   reasoning, preamble, or trailing text.
+2. Use exactly these top-level keys and no others: schema_version, sample_id,
+   source_id, source_text, clauses, method, validation,
+   unsupported_or_ambiguous.
+3. schema_version = "1.0.0"; method.name = "direct_llm";
+   method.schema_source = "stage2_prediction.schema.json@1.0.0".
+4. Copy sample_id, source_id, and source_text exactly from the user input.
+5. Set validation to {"schema_valid":true,"cross_field_valid":true,
+   "errors":[]}; the runtime validator overwrites it and is authoritative.
 
-1. Output ONLY a single JSON object. No markdown, no code fences, no
-   commentary, no preamble, no postscript.
-2. The JSON object MUST have these top-level keys and no others:
-   schema_version, sample_id, source_id, source_text, clauses, method,
-   validation, unsupported_or_ambiguous.
-3. schema_version MUST be the string "1.0.0".
-4. method.name MUST be "direct_llm".
-5. method.schema_source MUST be "stage2_prediction.schema.json@1.0.0".
-6. validation MUST be {"schema_valid": true, "cross_field_valid": true,
-   "errors": []}. The runtime validator will overwrite this field.
-7. Every span's `text` MUST equal `source_text[start:end]` (Python
-   slice semantics; end is exclusive).
-8. Every span inside a clause MUST lie inside that clause's
-   `clause_span`.
-9. actor_action_map edges MUST reference actor_id / action_id that
-   exist in the same clause's `actors` / `actions` arrays. actor_id
-   may be null when no actor is identifiable.
-10. order_relations edges MUST reference before_action_id /
-    after_action_id that exist in the same clause's `actions` array.
-11. modality.label MUST be one of "obligation", "prohibition",
-    "permission", "definition".
-12. modality.evidence MUST be a non-empty array of spans. Provide at
-    least the modality trigger (shall, must, may, etc.) and the
-    negation token (not) if present.
-13. actors / actions / conditions / constraints / exceptions are
-    arrays. Empty array is allowed. For a `definition` clause,
-    `actions` is expected to be empty.
-14. Do NOT invent content. If a field cannot be determined, omit it
-    from the arrays and (optionally) record it in
-    `unsupported_or_ambiguous` with a short reason.
-15. source_id must be the literal identifier passed by the user
-    prompt. Do not modify it.
+Input and inference boundary:
+6. The only semantic evidence is source_text. No preceding/following sentence,
+   statute, legal common sense, web knowledge, or unstated world knowledge is
+   available. Never add an actor, object, condition, constraint, exception, or
+   antecedent from outside source_text.
+7. Every evidence text MUST equal source_text[start:end], using zero-based start
+   and exclusive end. Every child span MUST lie within clause_span.
+8. normalized is downstream matching metadata. It may case-fold, fold
+   whitespace, lemmatize without adding arguments, or remove a non-identifying
+   article. It MUST NOT replace a pronoun with an antecedent absent from input.
+
+Six-element semantics:
+9. modality is one of obligation, prohibition, permission, definition. Its
+   evidence contains the smallest sufficient surface trigger; include negation
+   evidence when it changes the class.
+10. actor is the smallest explicit noun phrase or pronominal mention that bears
+    or performs the norm. A subject pronoun it/they/this/these/such is a real
+    actor mention. Extract the pronoun exact span even when its reference is
+    unresolved. If this/these/such modifies a noun, extract the complete minimal
+    noun phrase instead of the determiner alone.
+11. action is the smallest verb-centred phrase sufficient to identify the act,
+    including a necessary object, complement, or particle. Exclude modality,
+    condition, constraint, and exception material.
+12. condition is an antecedent state/event that activates or determines whether
+    or when the norm applies. Include its marker and complete governed
+    proposition.
+13. constraint limits how, how much, where, or by when an already applicable act
+    is performed. Include its marker and smallest complete limit.
+14. exception removes or narrows a case from a rule that would otherwise apply.
+    Include its marker and complete governed proposition.
+
+Missing, uncertain, passive, and reference rules:
+15. If an element truly has no source span, use an empty array. Empty means
+    absent, not uncertain.
+16. If a defensible surface mention exists but its reference or scope is
+    uncertain, preserve the exact span and add an unsupported_or_ambiguous
+    entry. Use only these reason strings:
+    - reference_status=unresolved_coreference;independence_status=context_required
+    - semantic_scope_ambiguous_in_target
+    - clause_boundary_ambiguous
+    - context_required
+17. For an unresolved subject pronoun, keep normalized surface-preserving
+    (for example "it"), and add:
+    {"field":"actor","reason":"reference_status=unresolved_coreference;independence_status=context_required"}.
+18. In a passive clause with no expressed performer, do not infer an actor.
+    Emit actors=[] and map each expressed action with actor_id=null. When an
+    explicit by-phrase supplies the relevant performer, extract that phrase.
+19. For a definition clause, actions may be empty. For a fragment that does not
+    contain a defensible normative clause, clauses may be empty and the missing
+    semantic field must be reported with a controlled reason.
+
+Clause, coordination, and relation rules:
+20. Create a separate clause only when a segment has independent normative
+    force, its own modality/actor assignment, or an independently evaluable
+    consequence. A shared modality governing coordinated actions normally stays
+    in one clause.
+21. Store coordinated actors and actions as separate spans. Add only
+    actor_action_map edges licensed by the text; do not assume a cross-product
+    when scope is ambiguous.
+22. Add order_relations only when exact textual evidence or construction
+    establishes order. Ordinary "and" is not automatically sequential.
+23. IDs are unique within the complete record. actor_action_map and
+    order_relations may reference IDs only from the same clause.
+
+Final self-check before output:
+24. All required keys are present, no extra keys exist, all labels are from the
+    fixed enums, all spans are exact, all references resolve, and no forbidden
+    inference was used.
 ```
 
 ## User Prompt Template
 
 ```text
-Regulatory sentence (id: {sample_id}):
-
+Input mode: target_text_only
+sample_id: {sample_id}
+source_id: {source_id}
+source_text:
 {source_text}
 
-Instructions:
-- If the sentence contains multiple normative clauses, return one
-  clause object per clause inside the `clauses` array.
-- Each clause must have its own clause_span covering exactly the
-  sub-string of the regulatory sentence that the clause spans.
-- If a clause is a definition (e.g. "X means ...", "X refers to
-  ..."), set modality.label to "definition" and leave actions empty.
-- For obligation / prohibition / permission clauses, list every
-  actor, action, condition, constraint, and exception you can find
-  with character offsets into source_text.
-- Do not collapse multiple actors or multiple actions into a single
-  string. Each one is a separate array element with a stable id.
-- Use the few-shot examples below for span math, id style, and JSON
-  shape.
+Return the complete canonical JSON record. Use these four synthetic examples
+only for contract behavior, span arithmetic, and JSON shape. They are not
+formal test-set samples:
 
-Few-shot examples (study carefully; offsets are real character
-indices into the example source_text):
+{few_shot_block}
+```
 
-Example 1 — Example 1 — single obligation with actor + action + constraint:
-Input: "The controller shall notify the supervisory authority within 72 hours."
+## Examples
+
+Example 1 — unresolved subject pronoun remains an exact actor mention:
+Input: "It may cover a shorter period if a business is opened."
 Output:
 ```json
 {
   "schema_version": "1.0.0",
-  "sample_id": "estg_demo_1",
-  "source_id": "estg_demo_1",
-  "source_text": "The controller shall notify the supervisory authority within 72 hours.",
+  "sample_id": "synthetic_pronoun_01",
+  "source_id": "synthetic_pronoun_01",
+  "source_text": "It may cover a shorter period if a business is opened.",
   "clauses": [
     {
-      "clause_id": "estg_demo_1_c01",
-      "clause_span": {
-        "text": "The controller shall notify the supervisory authority within 72 hours.",
-        "start": 0,
-        "end": 70
-      },
-      "modality": {
-        "label": "obligation",
-        "evidence": [
-          {
-            "text": "shall",
-            "start": 15,
-            "end": 20
-          }
-        ]
-      },
-      "actors": [
-        {
-          "id": "a01",
-          "text": "The controller",
-          "start": 0,
-          "end": 14,
-          "normalized": "controller"
-        }
-      ],
+      "clause_id": "synthetic_pronoun_01_c01",
+      "clause_span": {"text": "It may cover a shorter period if a business is opened.", "start": 0, "end": 54},
+      "modality": {"label": "permission", "evidence": [{"text": "may", "start": 3, "end": 6}]},
+      "actors": [{"id": "a01", "text": "It", "start": 0, "end": 2, "normalized": "it"}],
+      "actions": [{"id": "p01", "text": "cover a shorter period", "start": 7, "end": 29, "normalized": "cover a shorter period"}],
+      "conditions": [{"id": "c01", "text": "if a business is opened", "start": 30, "end": 53, "normalized": "if a business is opened"}],
+      "constraints": [],
+      "exceptions": [],
+      "actor_action_map": [{"actor_id": "a01", "action_id": "p01"}],
+      "order_relations": []
+    }
+  ],
+  "method": {"name": "direct_llm", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+  "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
+  "unsupported_or_ambiguous": [
+    {"field": "actor", "reason": "reference_status=unresolved_coreference;independence_status=context_required"}
+  ]
+}
+```
+
+Example 2 — passive clause without an expressed actor and with two actions:
+Input: "The report must be filed within 72 hours and retained for 5 years."
+Output:
+```json
+{
+  "schema_version": "1.0.0",
+  "sample_id": "synthetic_passive_01",
+  "source_id": "synthetic_passive_01",
+  "source_text": "The report must be filed within 72 hours and retained for 5 years.",
+  "clauses": [
+    {
+      "clause_id": "synthetic_passive_01_c01",
+      "clause_span": {"text": "The report must be filed within 72 hours and retained for 5 years.", "start": 0, "end": 66},
+      "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 11, "end": 15}]},
+      "actors": [],
       "actions": [
-        {
-          "id": "p01",
-          "text": "notify the supervisory authority",
-          "start": 21,
-          "end": 53,
-          "normalized": "notify supervisory authority"
-        }
+        {"id": "p01", "text": "filed", "start": 19, "end": 24, "normalized": "file"},
+        {"id": "p02", "text": "retained", "start": 45, "end": 53, "normalized": "retain"}
       ],
       "conditions": [],
       "constraints": [
-        {
-          "id": "c01",
-          "text": "within 72 hours",
-          "start": 54,
-          "end": 69,
-          "normalized": "within 72 hours"
-        }
+        {"id": "c01", "text": "within 72 hours", "start": 25, "end": 40, "normalized": "within 72 hours"},
+        {"id": "c02", "text": "for 5 years", "start": 54, "end": 65, "normalized": "for 5 years"}
       ],
       "exceptions": [],
       "actor_action_map": [
-        {
-          "actor_id": "a01",
-          "action_id": "p01"
-        }
+        {"actor_id": null, "action_id": "p01"},
+        {"actor_id": null, "action_id": "p02"}
       ],
       "order_relations": []
     }
   ],
-  "method": {
-    "name": "direct_llm",
-    "schema_source": "stage2_prediction.schema.json@1.0.0"
-  },
-  "validation": {
-    "schema_valid": true,
-    "cross_field_valid": true,
-    "errors": []
-  },
+  "method": {"name": "direct_llm", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+  "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
   "unsupported_or_ambiguous": []
 }
 ```
 
-Example 2 — Example 2 — definition clause (no action):
-Input: "'Personal data' means any information relating to an identified or identifiable natural person."
+Example 3 — prohibition with an exception:
+Input: "The controller may not disclose data unless the data subject consents."
 Output:
 ```json
 {
   "schema_version": "1.0.0",
-  "sample_id": "estg_demo_2",
-  "source_id": "estg_demo_2",
-  "source_text": "'Personal data' means any information relating to an identified or identifiable natural person.",
+  "sample_id": "synthetic_exception_01",
+  "source_id": "synthetic_exception_01",
+  "source_text": "The controller may not disclose data unless the data subject consents.",
   "clauses": [
     {
-      "clause_id": "estg_demo_2_c01",
-      "clause_span": {
-        "text": "'Personal data' means any information relating to an identified or identifiable natural person.",
-        "start": 0,
-        "end": 95
-      },
-      "modality": {
-        "label": "definition",
-        "evidence": [
-          {
-            "text": "means",
-            "start": 16,
-            "end": 21
-          }
-        ]
-      },
-      "actors": [],
-      "actions": [],
+      "clause_id": "synthetic_exception_01_c01",
+      "clause_span": {"text": "The controller may not disclose data unless the data subject consents.", "start": 0, "end": 70},
+      "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 15, "end": 22}, {"text": "not", "start": 19, "end": 22}]},
+      "actors": [{"id": "a01", "text": "The controller", "start": 0, "end": 14, "normalized": "controller"}],
+      "actions": [{"id": "p01", "text": "disclose data", "start": 23, "end": 36, "normalized": "disclose data"}],
       "conditions": [],
       "constraints": [],
-      "exceptions": [],
-      "actor_action_map": [],
-      "order_relations": []
-    }
-  ],
-  "method": {
-    "name": "direct_llm",
-    "schema_source": "stage2_prediction.schema.json@1.0.0"
-  },
-  "validation": {
-    "schema_valid": true,
-    "cross_field_valid": true,
-    "errors": []
-  },
-  "unsupported_or_ambiguous": []
-}
-```
-
-Example 3 — Example 3 — prohibition with exception:
-Input: "Member States may not process personal data unless required by Union law."
-Output:
-```json
-{
-  "schema_version": "1.0.0",
-  "sample_id": "estg_demo_3",
-  "source_id": "estg_demo_3",
-  "source_text": "Member States may not process personal data unless required by Union law.",
-  "clauses": [
-    {
-      "clause_id": "estg_demo_3_c01",
-      "clause_span": {
-        "text": "Member States may not process personal data unless required by Union law.",
-        "start": 0,
-        "end": 73
-      },
-      "modality": {
-        "label": "prohibition",
-        "evidence": [
-          {
-            "text": "may not",
-            "start": 14,
-            "end": 21
-          },
-          {
-            "text": "not",
-            "start": 18,
-            "end": 21
-          }
-        ]
-      },
-      "actors": [
-        {
-          "id": "a01",
-          "text": "Member States",
-          "start": 0,
-          "end": 13,
-          "normalized": "member states"
-        }
-      ],
-      "actions": [
-        {
-          "id": "p01",
-          "text": "process personal data",
-          "start": 22,
-          "end": 43,
-          "normalized": "process personal data"
-        }
-      ],
-      "conditions": [],
-      "constraints": [],
-      "exceptions": [
-        {
-          "id": "e01",
-          "text": "unless required by Union law",
-          "start": 44,
-          "end": 72,
-          "normalized": "unless required by Union law"
-        }
-      ],
-      "actor_action_map": [
-        {
-          "actor_id": "a01",
-          "action_id": "p01"
-        }
-      ],
-      "order_relations": []
-    }
-  ],
-  "method": {
-    "name": "direct_llm",
-    "schema_source": "stage2_prediction.schema.json@1.0.0"
-  },
-  "validation": {
-    "schema_valid": true,
-    "cross_field_valid": true,
-    "errors": []
-  },
-  "unsupported_or_ambiguous": []
-}
-```
-
-Example 4 — Example 4 — multi-action with order relation:
-Input: "The controller shall first assess the risk, then notify the supervisory authority."
-Output:
-```json
-{
-  "schema_version": "1.0.0",
-  "sample_id": "estg_demo_4",
-  "source_id": "estg_demo_4",
-  "source_text": "The controller shall first assess the risk, then notify the supervisory authority.",
-  "clauses": [
-    {
-      "clause_id": "estg_demo_4_c01",
-      "clause_span": {
-        "text": "The controller shall first assess the risk, then notify the supervisory authority.",
-        "start": 0,
-        "end": 82
-      },
-      "modality": {
-        "label": "obligation",
-        "evidence": [
-          {
-            "text": "shall",
-            "start": 15,
-            "end": 20
-          }
-        ]
-      },
-      "actors": [
-        {
-          "id": "a01",
-          "text": "The controller",
-          "start": 0,
-          "end": 14,
-          "normalized": "controller"
-        }
-      ],
-      "actions": [
-        {
-          "id": "p01",
-          "text": "first assess the risk",
-          "start": 21,
-          "end": 42,
-          "normalized": "first assess the risk"
-        },
-        {
-          "id": "p02",
-          "text": "notify the supervisory authority",
-          "start": 49,
-          "end": 81,
-          "normalized": "notify supervisory authority"
-        }
-      ],
-      "conditions": [],
-      "constraints": [],
-      "exceptions": [],
-      "actor_action_map": [
-        {
-          "actor_id": "a01",
-          "action_id": "p01"
-        },
-        {
-          "actor_id": "a01",
-          "action_id": "p02"
-        }
-      ],
-      "order_relations": [
-        {
-          "before_action_id": "p01",
-          "after_action_id": "p02",
-          "evidence": [
-            {
-              "text": "then",
-              "start": 44,
-              "end": 48
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "method": {
-    "name": "direct_llm",
-    "schema_source": "stage2_prediction.schema.json@1.0.0"
-  },
-  "validation": {
-    "schema_valid": true,
-    "cross_field_valid": true,
-    "errors": []
-  },
-  "unsupported_or_ambiguous": []
-}
-```
-
-
-Return the canonical JSON object only. No prose.
-```
-
-## Expected Output Structure
-
-```json
-{
-  "schema_version": "1.0.0",
-  "sample_id": "...",
-  "source_id": "...",
-  "source_text": "...",
-  "clauses": [
-    {
-      "clause_id": "<sample_id>_c<N>",
-      "clause_span": {"text": "...", "start": 0, "end": N},
-      "modality": {
-        "label": "obligation|prohibition|permission|definition",
-        "evidence": [{"text": "shall", "start": 13, "end": 18}]
-      },
-      "actors":      [{"id": "a01", "text": "...", "start": 0, "end": M, "normalized": "..."}],
-      "actions":     [{"id": "p01", "text": "...", "start": M, "end": K, "normalized": "..."}],
-      "conditions":  [],
-      "constraints": [{"id": "c01", "text": "...", "start": K, "end": L, "normalized": "..."}],
-      "exceptions":  [],
+      "exceptions": [{"id": "e01", "text": "unless the data subject consents", "start": 37, "end": 69, "normalized": "unless the data subject consents"}],
       "actor_action_map": [{"actor_id": "a01", "action_id": "p01"}],
       "order_relations": []
     }
@@ -426,115 +225,20 @@ Return the canonical JSON object only. No prose.
 }
 ```
 
-## Examples
-
-### Examples — Canonical multi-clause / multi-span (v3, offsets verified)
-
-Example 1 — Example 1 — single obligation with actor + action + constraint:
-Input: "The controller shall notify the supervisory authority within 72 hours."
+Example 4 — two independently normative clauses, including a definition:
+Input: "'Personal data' means information about a person; the controller must protect it."
 Output:
 ```json
 {
   "schema_version": "1.0.0",
-  "sample_id": "estg_demo_1",
-  "source_id": "estg_demo_1",
-  "source_text": "The controller shall notify the supervisory authority within 72 hours.",
+  "sample_id": "synthetic_multiclause_01",
+  "source_id": "synthetic_multiclause_01",
+  "source_text": "'Personal data' means information about a person; the controller must protect it.",
   "clauses": [
     {
-      "clause_id": "estg_demo_1_c01",
-      "clause_span": {
-        "text": "The controller shall notify the supervisory authority within 72 hours.",
-        "start": 0,
-        "end": 70
-      },
-      "modality": {
-        "label": "obligation",
-        "evidence": [
-          {
-            "text": "shall",
-            "start": 15,
-            "end": 20
-          }
-        ]
-      },
-      "actors": [
-        {
-          "id": "a01",
-          "text": "The controller",
-          "start": 0,
-          "end": 14,
-          "normalized": "controller"
-        }
-      ],
-      "actions": [
-        {
-          "id": "p01",
-          "text": "notify the supervisory authority",
-          "start": 21,
-          "end": 53,
-          "normalized": "notify supervisory authority"
-        }
-      ],
-      "conditions": [],
-      "constraints": [
-        {
-          "id": "c01",
-          "text": "within 72 hours",
-          "start": 54,
-          "end": 69,
-          "normalized": "within 72 hours"
-        }
-      ],
-      "exceptions": [],
-      "actor_action_map": [
-        {
-          "actor_id": "a01",
-          "action_id": "p01"
-        }
-      ],
-      "order_relations": []
-    }
-  ],
-  "method": {
-    "name": "direct_llm",
-    "schema_source": "stage2_prediction.schema.json@1.0.0"
-  },
-  "validation": {
-    "schema_valid": true,
-    "cross_field_valid": true,
-    "errors": []
-  },
-  "unsupported_or_ambiguous": []
-}
-```
-
-Example 2 — Example 2 — definition clause (no action):
-Input: "'Personal data' means any information relating to an identified or identifiable natural person."
-Output:
-```json
-{
-  "schema_version": "1.0.0",
-  "sample_id": "estg_demo_2",
-  "source_id": "estg_demo_2",
-  "source_text": "'Personal data' means any information relating to an identified or identifiable natural person.",
-  "clauses": [
-    {
-      "clause_id": "estg_demo_2_c01",
-      "clause_span": {
-        "text": "'Personal data' means any information relating to an identified or identifiable natural person.",
-        "start": 0,
-        "end": 95
-      },
-      "modality": {
-        "label": "definition",
-        "evidence": [
-          {
-            "text": "means",
-            "start": 16,
-            "end": 21
-          }
-        ]
-      },
+      "clause_id": "synthetic_multiclause_01_c01",
+      "clause_span": {"text": "'Personal data' means information about a person", "start": 0, "end": 48},
+      "modality": {"label": "definition", "evidence": [{"text": "means", "start": 16, "end": 21}]},
       "actors": [],
       "actions": [],
       "conditions": [],
@@ -542,205 +246,31 @@ Output:
       "exceptions": [],
       "actor_action_map": [],
       "order_relations": []
-    }
-  ],
-  "method": {
-    "name": "direct_llm",
-    "schema_source": "stage2_prediction.schema.json@1.0.0"
-  },
-  "validation": {
-    "schema_valid": true,
-    "cross_field_valid": true,
-    "errors": []
-  },
-  "unsupported_or_ambiguous": []
-}
-```
-
-Example 3 — Example 3 — prohibition with exception:
-Input: "Member States may not process personal data unless required by Union law."
-Output:
-```json
-{
-  "schema_version": "1.0.0",
-  "sample_id": "estg_demo_3",
-  "source_id": "estg_demo_3",
-  "source_text": "Member States may not process personal data unless required by Union law.",
-  "clauses": [
+    },
     {
-      "clause_id": "estg_demo_3_c01",
-      "clause_span": {
-        "text": "Member States may not process personal data unless required by Union law.",
-        "start": 0,
-        "end": 73
-      },
-      "modality": {
-        "label": "prohibition",
-        "evidence": [
-          {
-            "text": "may not",
-            "start": 14,
-            "end": 21
-          },
-          {
-            "text": "not",
-            "start": 18,
-            "end": 21
-          }
-        ]
-      },
-      "actors": [
-        {
-          "id": "a01",
-          "text": "Member States",
-          "start": 0,
-          "end": 13,
-          "normalized": "member states"
-        }
-      ],
-      "actions": [
-        {
-          "id": "p01",
-          "text": "process personal data",
-          "start": 22,
-          "end": 43,
-          "normalized": "process personal data"
-        }
-      ],
-      "conditions": [],
-      "constraints": [],
-      "exceptions": [
-        {
-          "id": "e01",
-          "text": "unless required by Union law",
-          "start": 44,
-          "end": 72,
-          "normalized": "unless required by Union law"
-        }
-      ],
-      "actor_action_map": [
-        {
-          "actor_id": "a01",
-          "action_id": "p01"
-        }
-      ],
-      "order_relations": []
-    }
-  ],
-  "method": {
-    "name": "direct_llm",
-    "schema_source": "stage2_prediction.schema.json@1.0.0"
-  },
-  "validation": {
-    "schema_valid": true,
-    "cross_field_valid": true,
-    "errors": []
-  },
-  "unsupported_or_ambiguous": []
-}
-```
-
-Example 4 — Example 4 — multi-action with order relation:
-Input: "The controller shall first assess the risk, then notify the supervisory authority."
-Output:
-```json
-{
-  "schema_version": "1.0.0",
-  "sample_id": "estg_demo_4",
-  "source_id": "estg_demo_4",
-  "source_text": "The controller shall first assess the risk, then notify the supervisory authority.",
-  "clauses": [
-    {
-      "clause_id": "estg_demo_4_c01",
-      "clause_span": {
-        "text": "The controller shall first assess the risk, then notify the supervisory authority.",
-        "start": 0,
-        "end": 82
-      },
-      "modality": {
-        "label": "obligation",
-        "evidence": [
-          {
-            "text": "shall",
-            "start": 15,
-            "end": 20
-          }
-        ]
-      },
-      "actors": [
-        {
-          "id": "a01",
-          "text": "The controller",
-          "start": 0,
-          "end": 14,
-          "normalized": "controller"
-        }
-      ],
-      "actions": [
-        {
-          "id": "p01",
-          "text": "first assess the risk",
-          "start": 21,
-          "end": 42,
-          "normalized": "first assess the risk"
-        },
-        {
-          "id": "p02",
-          "text": "notify the supervisory authority",
-          "start": 49,
-          "end": 81,
-          "normalized": "notify supervisory authority"
-        }
-      ],
+      "clause_id": "synthetic_multiclause_01_c02",
+      "clause_span": {"text": "the controller must protect it.", "start": 50, "end": 81},
+      "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 65, "end": 69}]},
+      "actors": [{"id": "a02", "text": "the controller", "start": 50, "end": 64, "normalized": "controller"}],
+      "actions": [{"id": "p02", "text": "protect it", "start": 70, "end": 80, "normalized": "protect it"}],
       "conditions": [],
       "constraints": [],
       "exceptions": [],
-      "actor_action_map": [
-        {
-          "actor_id": "a01",
-          "action_id": "p01"
-        },
-        {
-          "actor_id": "a01",
-          "action_id": "p02"
-        }
-      ],
-      "order_relations": [
-        {
-          "before_action_id": "p01",
-          "after_action_id": "p02",
-          "evidence": [
-            {
-              "text": "then",
-              "start": 44,
-              "end": 48
-            }
-          ]
-        }
-      ]
+      "actor_action_map": [{"actor_id": "a02", "action_id": "p02"}],
+      "order_relations": []
     }
   ],
-  "method": {
-    "name": "direct_llm",
-    "schema_source": "stage2_prediction.schema.json@1.0.0"
-  },
-  "validation": {
-    "schema_valid": true,
-    "cross_field_valid": true,
-    "errors": []
-  },
+  "method": {"name": "direct_llm", "schema_source": "stage2_prediction.schema.json@1.0.0"},
+  "validation": {"schema_valid": true, "cross_field_valid": true, "errors": []},
   "unsupported_or_ambiguous": []
 }
 ```
 
+## Notes
 
-## Notes (v3 upgrade)
-
-- v3 replaces v2 (Wave 1 D1 prompt). v2 used a flat 6-string schema; v3 requires the full canonical record.
-- Few-shot examples were verified by hand to ensure char offsets and span texts match `source_text`.
-- The runtime validator (`bpc_hybrid.stage2_canonical`) re-verifies every example before the runner ever ships it.
-- The `validation` field in the LLM output is overwritten by the runtime validator; producers do not get to self-certify.
-- If the LLM produces an example that does NOT validate, the runner **does not** write a prediction for that sample — it records the validation error in the manifest and continues.
-- Sampling parameters (temperature, top_p, max_tokens, optional seed) are configured in `bpc_hybrid.llm_config` and recorded in the manifest. The prompt file does not control them.
-- Barrientos 2026 is referenced for prompt discipline only (strict JSON, controlled vocabulary, validation, normalization). The output schema is the Sun 4-class canonical schema, not RC4PC.
-- The `unsupported_or_ambiguous` field is allowed but optional. Use it to record fields you genuinely could not determine, with a short reason string.
+- These four examples are synthetic and are not members of the 12-record pilot or the
+  EStG-150 formal evaluation set.
+- Barrientos is used only for strict structured-output discipline, fixed labels,
+  validation, normalization, and traceability. RC4PC fields are not used.
+- Prompt sampling parameters remain runtime configuration, not instructions trusted from
+  this Markdown file.

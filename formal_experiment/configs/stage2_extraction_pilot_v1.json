@@ -1,0 +1,90 @@
+{
+  "pilot_id": "stage2_extraction_contract_pilot@1.0.0",
+  "status": "static_input_coverage_only",
+  "source": "outputs/development/estg150_independence_audit_v1/estg_150_independence_audit_v1.jsonl",
+  "sample_count": 12,
+  "not_gold": true,
+  "not_few_shot": true,
+  "not_performance_evaluation": true,
+  "selection_rule": "Pre-result representative coverage of explicit actors, pronouns, passive voice, coordination, missing elements, exceptions, and multi-clause structures; no method outputs or metrics were inspected.",
+  "samples": [
+    {
+      "sample_id": "estg_000002",
+      "source_text_sha256": "8f8c2f1de5e7a609bc7f714c771b4a1a374a9a3ec42e9d76cae6d573f6ded314",
+      "coverage": ["explicit_actor", "coordinated_actors", "multiple_normative_clauses"]
+    },
+    {
+      "sample_id": "estg_000003",
+      "source_text_sha256": "4fc741d61a4279add869f42c92de277b2f9bdab61d3d82c9e2829db34083d3d7",
+      "coverage": ["pronoun_it", "unresolved_coreference", "context_required", "parallel_conditions"]
+    },
+    {
+      "sample_id": "estg_000021",
+      "source_text_sha256": "92b044cdc7b580cc5cd3f671d01a90f9c1ed0a402b87f43f236b6119cad9fd84",
+      "coverage": ["missing_main_norm", "missing_modality", "list_fragment", "such_determiner"]
+    },
+    {
+      "sample_id": "estg_000028",
+      "source_text_sha256": "2f03b2626d86dfa9ba7f3b5cb310cb6aeaadc5f24f7c6eb7b74083106ae4508f",
+      "coverage": ["context_reference", "multiple_normative_clauses", "constraint_scope"]
+    },
+    {
+      "sample_id": "estg_000035",
+      "source_text_sha256": "94906e35bea12352e3809e57ae95c16c8b18a832034e7d127685d679c4d8ef52",
+      "coverage": ["passive_voice", "implicit_actor", "condition"]
+    },
+    {
+      "sample_id": "estg_000037",
+      "source_text_sha256": "375ca322600b51f0d1af6d26b8999e62a6ee8782b1e7631c8693e0148ab5a6dd",
+      "coverage": ["multi_clause", "nested_list", "pronoun_these", "multiple_modalities"]
+    },
+    {
+      "sample_id": "estg_000044",
+      "source_text_sha256": "5d4a0dd8ad47c776d56fc950364e56e34cbd3b33909080da231dd1746b7556ee",
+      "coverage": ["pronoun_this", "unresolved_coreference", "context_required"]
+    },
+    {
+      "sample_id": "estg_000055",
+      "source_text_sha256": "52b21d5b190505eb5cae96165b0901b6c6da552f593529528e87d7be244e96e2",
+      "coverage": ["passive_voice", "implicit_actor", "exception_unless", "pronoun_they"]
+    },
+    {
+      "sample_id": "estg_000056",
+      "source_text_sha256": "a739156192069d084a608cd7567c6a44ab71409f1bc3577eaddb0b8cc9d55077",
+      "coverage": ["multi_clause", "nested_conditions", "multiple_actions", "order_sensitive_structure"]
+    },
+    {
+      "sample_id": "estg_000059",
+      "source_text_sha256": "22950e1cec7cb457677b5fcd0c5d9312bd99996f0e689d85cfc2eb642c1e2728",
+      "coverage": ["multi_clause", "condition_vs_constraint", "coordinated_requirements"]
+    },
+    {
+      "sample_id": "estg_000074",
+      "source_text_sha256": "15d82c8701741e84d97b6293d37c46fc96fe31a28109ad0da4edce061c69a848",
+      "coverage": ["pronoun_they", "unresolved_coreference", "passive_voice", "condition"]
+    },
+    {
+      "sample_id": "estg_000111",
+      "source_text_sha256": "88ce14fbcdb5afa65b6c0cbe883e0b834bba477975c0082eac4f693088772388",
+      "coverage": ["exception_except", "truncated_fragment", "multiple_actions"]
+    }
+  ],
+  "required_coverage": [
+    "explicit_actor",
+    "pronoun_it",
+    "pronoun_they",
+    "pronoun_this",
+    "such_determiner",
+    "unresolved_coreference",
+    "passive_voice",
+    "implicit_actor",
+    "coordinated_actors",
+    "multiple_actions",
+    "condition",
+    "constraint_scope",
+    "exception_unless",
+    "exception_except",
+    "missing_modality",
+    "multi_clause"
+  ]
+}

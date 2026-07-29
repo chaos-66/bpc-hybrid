@@ -1,0 +1,277 @@
+{
+  "schema_version": "sun_h1_s28_verification_manifest@1.2.0",
+  "task_id": "S2.8",
+  "status": "succeeded",
+  "created_at": "2026-07-19T12:19:56.751793+00:00",
+  "method": "sun_llm_fallback",
+  "claim_boundary": "S2.8 freezes and dry-run verifies H1 selection, Stage 2 extraction-contract v1 semantics, deterministic call allocation, actual repair-request rendering, field-level plus controlled uncertainty-metadata merge, scorable B0 fallback with H1 method identity, recovered-provider-error accounting, a pinned model/sampling contract, and 45-call/1.5-USD ceilings on locked synthetic B0 evidence. It is not an LLM quality test, a real API run, a pilot performance result, or a formal performance result.",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "artifacts": {
+    "config": {
+      "path": "configs/models/sun_h1_s28.json",
+      "sha256": "dd99e8c5b6ba3c858d505705bdf6144d57e462651c4d8be7c521007c2afd1bef"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/sun_style/h1_selective.py",
+      "sha256": "f8c647c9d4fb1c701319746ee09437f30147cb6955b68bb70bbff28a496269f3"
+    },
+    "runner": {
+      "path": "scripts/run_sun_llm_fallback.py",
+      "sha256": "d491c0a80357c76dd4b3cdec9bf5d706f5f31a916d5999976c9c305ee71f5167"
+    },
+    "verifier": {
+      "path": "scripts/verify_sun_h1_s28.py",
+      "sha256": "f9d63ea57bcb9624032476abca3c02e1222ede6392dda231e4c300d573b64382"
+    },
+    "prompt": {
+      "path": "prompts/sun_compat/rule_first_llm_fallback_prompt.md",
+      "sha256": "54e56c4bc52d0e5a83c2b45c3762a36ffb1356bd8190a1cd10d2b5dbd304b40c"
+    },
+    "extraction_contract": {
+      "path": "configs/stage2_extraction_contract_v1.json",
+      "sha256": "7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46"
+    },
+    "evaluator_config": {
+      "path": "configs/stage2_evaluator_s210.json",
+      "sha256": "2b6f7bd4269e475dc4b7bb0561a767a70baba49965c16c7f6b34b8a455badc16"
+    },
+    "evaluator_report_schema": {
+      "path": "configs/schemas/stage2_evaluation_report.schema.json",
+      "sha256": "9906dce85eaf72995e2a3381eed0e33a0c32f5cbf75d35425f7b97c50ea79c5a"
+    }
+  },
+  "baseline_binding": {
+    "s2_6_gate_ready": true,
+    "legacy_front_end_used": false,
+    "record_method": "sun_rule_only",
+    "verification_manifest": {
+      "path": "outputs/reports/s26_sun_b0_canonical_composition_v3.manifest.json",
+      "sha256": "30a19e8a6476f35eff8561ca35f72a3b3a772067c0128ff4c22ce6b6ddd2fb20"
+    }
+  },
+  "selection": {
+    "evidence_boundary": "inference_time_observations_only_no_gold_or_test_distribution",
+    "clean_plan": {
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+      "fallback_triggered": false,
+      "trigger_codes": [],
+      "repair_fields": []
+    },
+    "triggered_plan": {
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+      "fallback_triggered": true,
+      "trigger_codes": [
+        "tregex_field_conflict"
+      ],
+      "repair_fields": [
+        "actions",
+        "actor_action_map",
+        "order_relations"
+      ]
+    },
+    "gold_or_test_derived_trigger_used": false
+  },
+  "merge_verification": {
+    "accepted_patch": {
+      "accepted": true,
+      "status": "accepted",
+      "errors": []
+    },
+    "accepted_record": {
+      "schema_version": "1.0.0",
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "source_id": "s25_locked_live_fixture",
+      "source_text": "If notice is required, the company shall file within 30 days.",
+      "clauses": [
+        {
+          "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+          "clause_span": {
+            "text": "If notice is required, the company shall file within 30 days.",
+            "start": 0,
+            "end": 61
+          },
+          "modality": {
+            "label": "definition",
+            "evidence": [
+              {
+                "text": "shall",
+                "start": 35,
+                "end": 40
+              }
+            ]
+          },
+          "actors": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.actor.1",
+              "text": "the company",
+              "start": 23,
+              "end": 34,
+              "normalized": "the company"
+            }
+          ],
+          "actions": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.action.1",
+              "text": "file within 30 days",
+              "start": 41,
+              "end": 60,
+              "normalized": "file within 30 days"
+            }
+          ],
+          "conditions": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.condition.1",
+              "text": "If notice is required",
+              "start": 0,
+              "end": 21,
+              "normalized": "if notice is required"
+            }
+          ],
+          "constraints": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.constraint.1",
+              "text": "within 30 days",
+              "start": 46,
+              "end": 60,
+              "normalized": "within 30 days"
+            }
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {
+              "actor_id": "s26_synthetic_obligation_condition_constraint_v1.c1.actor.1",
+              "action_id": "s26_synthetic_obligation_condition_constraint_v1.c1.action.1"
+            }
+          ],
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "validation": {
+        "schema_valid": true,
+        "cross_field_valid": true,
+        "errors": []
+      },
+      "unsupported_or_ambiguous": []
+    },
+    "unrequested_fields_preserved": true,
+    "same_field_id_preserved": true,
+    "unauthorized_patch": {
+      "accepted": false,
+      "status": "rejected_unauthorized_field",
+      "errors": [
+        "unauthorized fields: ['modality']"
+      ]
+    },
+    "rejected_patch_returned_original_b0": true,
+    "controlled_uncertainty_metadata_preserved": true
+  },
+  "request_verification": {
+    "exact_model_id": "gpt-4.1-2025-04-14",
+    "sampling": {
+      "temperature": 0,
+      "top_p": 1,
+      "seed": null,
+      "seed_policy": "unsupported_or_omitted",
+      "max_output_tokens": 2048,
+      "response_format": "json_object",
+      "max_retries": 0
+    },
+    "rendered_request": {
+      "model": "gpt-4.1-2025-04-14",
+      "sampling_contract": {
+        "temperature": 0,
+        "top_p": 1,
+        "seed": null,
+        "seed_policy": "unsupported_or_omitted",
+        "max_output_tokens": 2048,
+        "response_format": "json_object",
+        "max_retries": 0
+      },
+      "api_request": {
+        "model": "gpt-4.1-2025-04-14",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a regulatory text analyst repairing selected fields of an existing\nSun-compatible Stage 2 B0 clause.\nReturn a repair patch, not a full replacement record.\n\nYou MUST follow stage2_extraction_contract@1.0.0 with contract SHA-256\n7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46.\nThe runner merges your patch and accepts it only if the complete result conforms\nto stage2_prediction.schema.json@1.0.0 and passes cross-field validation.\n\nOutput discipline:\n1. Return ONLY one valid JSON object. No Markdown, explanation, reasoning,\n   preamble, or trailing text.\n2. The object MUST have exactly these keys:\n   sample_id, clause_id, repair_fields, patches,\n   unsupported_or_ambiguous, reason.\n3. Copy sample_id, clause_id, and repair_fields exactly from the request.\n4. patches MUST be a non-empty object. Its keys MUST be a subset of\n   repair_fields. Any unrequested field rejects the complete patch.\n5. unsupported_or_ambiguous MUST be the complete replacement for the canonical\n   record's top-level list. Preserve unrelated existing entries exactly; add,\n   remove, or change an entry only when the requested repair changes that\n   uncertainty.\n\nInput and inference boundary:\n6. Use only source_text, the supplied B0 clause, the existing ambiguity list,\n   and the supplied inference-time repair reasons. No Gold, test statistics,\n   preceding/following sentence, statute, legal common sense, web knowledge, or\n   unstated world knowledge is available.\n7. Every evidence text MUST equal source_text[start:end], with zero-based start\n   and exclusive end, and MUST be inside the fixed clause_span.\n8. normalized may case-fold, fold whitespace, lemmatize without adding\n   arguments, or remove a non-identifying article. It MUST NOT replace a pronoun\n   with an antecedent absent from source_text.\n\nShared six-element semantics:\n9. modality is obligation/prohibition/permission/definition with the smallest\n   sufficient trigger evidence, including negation when it changes the class.\n10. actor is the smallest explicit noun phrase or pronominal mention that bears\n    or performs the norm. Subject it/they/this/these/such is a real actor\n    mention. If this/these/such modifies a noun, extract the complete minimal NP.\n11. action is the smallest verb-centred phrase that identifies the regulated\n    act, including necessary object/complement/particle, excluding modality,\n    condition, constraint, and exception material.\n12. condition activates or determines whether/when the norm applies;\n    constraint limits how/how much/where/by when an applicable act is performed;\n    exception removes a case from an otherwise applicable norm. Include each\n    marker and its complete governed proposition.\n\nPatch value rules:\n13. modality patch value is {\"label\":<fixed class>,\"evidence\":[exact spans]}.\n14. actors/actions/conditions/constraints/exceptions patch value is a complete\n    replacement list of {id,text,start,end,normalized}. IDs must be unique in\n    the record and cannot collide with an unpatched span field.\n15. actor_action_map is a complete replacement list of {actor_id,action_id};\n    actor_id may be null only when no actor is expressed. order_relations is a\n    complete replacement list of {before_action_id,after_action_id,evidence}.\n16. If a requested element truly has no span, use {\"absent\":true}; the runner\n    deterministically converts it to an empty list. Empty means absent, not\n    uncertain. modality cannot be absent.\n17. If a surface mention exists but its reference/scope is uncertain, preserve\n    the defensible exact span and use only these reason strings in\n    unsupported_or_ambiguous:\n    - reference_status=unresolved_coreference;independence_status=context_required\n    - semantic_scope_ambiguous_in_target\n    - clause_boundary_ambiguous\n    - context_required\n18. For unresolved subject It, return actor text \"It\", normalized \"it\", and the\n    actor unresolved/context-required entry. Never substitute \"business year\"\n    unless that antecedent is present in the formal input.\n19. For passive voice without an expressed performer, use actors=[] (or\n    absent=true in an actors patch) and actor_id=null for affected actions. Do\n    not infer a controller, taxpayer, authority, or other legal actor.\n\nRepair boundary:\n20. A field patch replaces the complete selected clause field. Preserve same-\n    field IDs when appropriate; repair actor/action relation dependencies that\n    the runner included in repair_fields.\n21. Do not change source_text, sample/source IDs, clause count, clause_id,\n    clause_span, method, validation, or any field absent from repair_fields.\n22. Do not invent a new clause or repair an ambiguous clause boundary. Report\n    clause_boundary_ambiguous and let the runner retain B0.\n23. Add order relations only with exact textual order evidence. Do not treat\n    ordinary \"and\" as sequential or assume an actor-action cross-product when\n    scope is unclear.\n\nBoundary examples:\n- Unresolved actor repair: source starts \"It may cover ...\" and actors is\n  requested. Return an actors replacement containing exact span \"It\" with\n  normalized \"it\"; return the complete unsupported list containing\n  {\"field\":\"actor\",\"reason\":\"reference_status=unresolved_coreference;independence_status=context_required\"}.\n- Truly absent actor repair: \"The report must be filed.\" has no expressed\n  performer. Return {\"actors\":{\"absent\":true}} and, when requested, an\n  actor_action_map replacement with actor_id=null. Do not add an uncertainty\n  entry merely because an actor is absent."
+          },
+          {
+            "role": "user",
+            "content": "Input mode: target_text_only\nsample_id: s26_synthetic_obligation_condition_constraint_v1\nsource_id: s25_locked_live_fixture\nsource_text:\nIf notice is required, the company shall file within 30 days.\n\nExisting B0 clause (clause_id: s26_synthetic_obligation_condition_constraint_v1.c1):\n{\n  \"clause_id\": \"s26_synthetic_obligation_condition_constraint_v1.c1\",\n  \"clause_span\": {\n    \"text\": \"If notice is required, the company shall file within 30 days.\",\n    \"start\": 0,\n    \"end\": 61\n  },\n  \"modality\": {\n    \"label\": \"definition\",\n    \"evidence\": [\n      {\n        \"text\": \"shall\",\n        \"start\": 35,\n        \"end\": 40\n      }\n    ]\n  },\n  \"actors\": [\n    {\n      \"id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.actor.1\",\n      \"text\": \"the company\",\n      \"start\": 23,\n      \"end\": 34,\n      \"normalized\": \"the company\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.action.1\",\n      \"text\": \"file\",\n      \"start\": 41,\n      \"end\": 45,\n      \"normalized\": \"file\"\n    }\n  ],\n  \"conditions\": [\n    {\n      \"id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.condition.1\",\n      \"text\": \"If notice is required\",\n      \"start\": 0,\n      \"end\": 21,\n      \"normalized\": \"if notice is required\"\n    }\n  ],\n  \"constraints\": [\n    {\n      \"id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.constraint.1\",\n      \"text\": \"within 30 days\",\n      \"start\": 46,\n      \"end\": 60,\n      \"normalized\": \"within 30 days\"\n    }\n  ],\n  \"exceptions\": [],\n  \"actor_action_map\": [\n    {\n      \"actor_id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.actor.1\",\n      \"action_id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.action.1\"\n    }\n  ],\n  \"order_relations\": []\n}\n\nExisting complete top-level unsupported_or_ambiguous list:\n[]\n\nRepair ONLY these fields:\nrepair_fields: actions, actor_action_map, order_relations\nrepair_reasons: tregex_field_conflict\n\nReturn exactly:\n{\n  \"sample_id\": \"s26_synthetic_obligation_condition_constraint_v1\",\n  \"clause_id\": \"s26_synthetic_obligation_condition_constraint_v1.c1\",\n  \"repair_fields\": [...exact requested list...],\n  \"patches\": {\"<requested_field>\": <complete replacement>, ...},\n  \"unsupported_or_ambiguous\": [...complete replacement list...],\n  \"reason\": \"<brief evidence-based repair summary>\"\n}"
+          }
+        ],
+        "temperature": 0,
+        "top_p": 1,
+        "max_completion_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        }
+      },
+      "system_prompt_sha256": "aca8193ac3613a4c50167834cd182736d23ca08a45286dd2c3f5ba6d39cf0b29",
+      "user_prompt_sha256": "abc573488bb853d31728eaf5ddd9a15bdd0f384ef097e2bc87dfcfa596b774f0",
+      "system_prompt_char_count": 5560,
+      "user_prompt_char_count": 2315,
+      "repair_fields": [
+        "actions",
+        "actor_action_map",
+        "order_relations"
+      ]
+    },
+    "prompt_file_sha256_matches": true,
+    "unrendered_placeholder_detected": false
+  },
+  "allocation_verification": {
+    "candidate_order": "ascending_sample_id_then_clause_id",
+    "input_array_order_invariant": true,
+    "candidate_count": 48,
+    "reserved_call_count": 45,
+    "first_45_unique_reserved": true,
+    "call_46_and_later_rejected": true,
+    "duplicate_sample_rejected": true
+  },
+  "budget_verification": {
+    "target_dataset_size": 150,
+    "max_call_fraction": 0.3,
+    "hard_call_limit": 45,
+    "input_token_ceiling_per_request": 8192,
+    "output_token_ceiling_per_request": 2048,
+    "total_token_ceiling": 460800,
+    "estimated_worst_case_cost_usd": 1.47456,
+    "hard_cost_ceiling_usd": 1.5,
+    "max_retries": 0
+  },
+  "fallback_attempt_verification": {
+    "request_status": "ok",
+    "record_method": "sun_llm_fallback",
+    "semantic_b0_content_preserved": true,
+    "recovered_runtime_error_category": "timeout",
+    "schema_valid_rate": 1.0,
+    "terminal_api_error_rate": 0.0,
+    "recovered_api_error_rate": 1.0,
+    "any_api_error_rate": 1.0,
+    "scored_as_h1": true
+  },
+  "prompt": {
+    "role": "repair_patch",
+    "name": "rule_first_llm_fallback_prompt",
+    "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\prompts\\sun_compat\\rule_first_llm_fallback_prompt.md",
+    "sha256": "54e56c4bc52d0e5a83c2b45c3762a36ffb1356bd8190a1cd10d2b5dbd304b40c",
+    "sampling_policy": "temperature=0, top_p=1, max_tokens=2048"
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "performance_evaluation": false,
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "test_split_read_or_evaluated": false,
+    "formal_predictions_written": false
+  }
+}

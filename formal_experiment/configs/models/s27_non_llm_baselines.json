@@ -1,0 +1,133 @@
+{
+  "schema_version": "s27_non_llm_baselines@1.0.0",
+  "task_id": "S2.7-M",
+  "scope": "modality_component_baselines_plus_phrase_track_blocker",
+  "status": "preregistered_before_versioned_run",
+  "dataset_binding": {
+    "dataset_id": "sun_modality_v1",
+    "language": "de",
+    "dataset_contract": {
+      "path": "configs/datasets/sun_modality_dataset.json",
+      "sha256": "ba7544f0df8b7c78cea2308a9ff64c4ec836bd84bbc875c308814620cfff8bfd"
+    },
+    "dataset_manifest": {
+      "path": "data/development/modality/sun_estg_modality_v1/manifest.json",
+      "sha256": "21a3390c8356053832041d626563910328952097f0c011ece0ec07a229dba534"
+    },
+    "split_summary": {
+      "path": "data/development/modality/sun_estg_modality_v1/split_summary.json",
+      "sha256": "a5b0a828d95eae21fb3ba57d9c59bc34f44a4e997cbb455a7d08ea4be4b08bbc"
+    },
+    "splits": {
+      "train": {
+        "path": "data/development/modality/sun_estg_modality_v1/splits/train.jsonl",
+        "sha256": "a7367cd35e3a5ce7263ad5b0fae4881a989761d4fba21b75bdc75b6e2b83c142",
+        "count": 1985
+      },
+      "dev": {
+        "path": "data/development/modality/sun_estg_modality_v1/splits/dev.jsonl",
+        "sha256": "ad541915d16aaef6119cb3769e6da0b89e8e8af5ec9069ac3a25680040e5a8d6",
+        "count": 420
+      },
+      "test": {
+        "path": "data/development/modality/sun_estg_modality_v1/splits/test.jsonl",
+        "sha256": "2f67edad05e3a4d315d9ac65fc0ffd1d83dbaffd2d77a55916d6aa9a6919e871",
+        "count": 426
+      }
+    },
+    "local_research_use_decision": {
+      "path": "configs/datasets/sun_modality_local_research_use.json",
+      "sha256": "b92cd0845ef5d71b396f2e78da44640e3a000dc3e345d9e77eadd6a06857e70b"
+    },
+    "sun_original_split_claim_forbidden": true,
+    "redistribution_forbidden": true
+  },
+  "labels": ["definition", "obligation", "permission", "prohibition"],
+  "methods": {
+    "train_majority": {
+      "type": "unsupervised_prediction_rule_with_train_only_label_frequency",
+      "tie_break": "configured_label_order",
+      "expected_train_majority": "obligation"
+    },
+    "german_keyword": {
+      "type": "fixed_language_rule_lower_bound",
+      "normalization": "unicode_casefold",
+      "precedence": ["prohibition", "permission", "obligation", "definition"],
+      "default": "train_majority",
+      "patterns": {
+        "prohibition": [
+          "\\bdarf(?:en)?\\s+(?:nicht|kein\\w*)\\b",
+          "\\bnicht\\s+zulässig\\b",
+          "\\bunzulässig\\b",
+          "\\bverboten\\b"
+        ],
+        "permission": [
+          "\\bdarf\\b",
+          "\\bdürfen\\b",
+          "\\bkann\\b",
+          "\\bkönnen\\b",
+          "\\bist\\s+berechtigt\\b"
+        ],
+        "obligation": [
+          "\\bmuss\\b",
+          "\\bmüssen\\b",
+          "\\bhat\\b.{0,120}\\bzu\\b",
+          "\\bhaben\\b.{0,120}\\bzu\\b",
+          "\\bist\\b.{0,120}\\bzu\\b",
+          "\\bsind\\b.{0,120}\\bzu\\b",
+          "\\bverpflichtet\\b"
+        ],
+        "definition": [
+          "\\bgilt\\b",
+          "\\bgelten\\b",
+          "\\bbedeutet\\b",
+          "\\bim\\s+sinne\\b",
+          "\\bist\\b",
+          "\\bsind\\b"
+        ]
+      }
+    },
+    "word_ngram_multinomial_nb": {
+      "type": "supervised_non_neural_baseline",
+      "tokenization": "unicode_word_regex_[^\\W_]+_after_casefold",
+      "ngram_range": [1, 2],
+      "feature_value": "term_frequency",
+      "min_document_frequency": 2,
+      "max_features": null,
+      "likelihood_smoothing_alpha": 1.0,
+      "class_prior": "empirical_with_add_one_smoothing",
+      "hyperparameter_search": false,
+      "external_ml_dependency": false,
+      "tie_break": "configured_label_order"
+    }
+  },
+  "metrics": {
+    "primary": "macro_f1",
+    "secondary": ["accuracy", "per_class_precision_recall_f1_support", "confusion_matrix"],
+    "macro_f1_includes_zero_for_missing_predictions": true,
+    "row_level_predictions_may_be_persisted": false
+  },
+  "test_execution_disclosure": {
+    "development_smoke_accessed_test_labels_before_versioned_run": true,
+    "smoke_configuration_identical_to_locked_nb_contract": true,
+    "hyperparameter_or_model_selection_on_test": false,
+    "reason": "An unversioned implementation smoke computed the fixed word 1-2 gram NB aggregates once before the versioned runner was created; no alternative configuration was tried or selected.",
+    "versioned_test_run_limit": 1,
+    "known_total_test_evaluations_after_versioned_run": 2
+  },
+  "phrase_track": {
+    "status": "blocked_pending_s2_2_human_phrase_gold",
+    "reason": "The representative phrase baseline and full Rule Record comparison require the same frozen EStG-150 phrase Gold as B0/H1/D1. No token classifier or CRF may be trained from placeholders.",
+    "formal_method_id_and_shared_evaluator_extension": "defer_until_phrase_baseline_is_selected_before_formal_run",
+    "synthetic_fixture_performance_may_not_substitute_for_gold": true
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_called": false,
+    "env_file_read": false,
+    "human_gold_read_or_modified": false,
+    "formal_predictions_written": false,
+    "raw_or_row_level_derived_data_persisted": false
+  },
+  "claim_boundary": "S2.7-M evaluates three non-LLM modality component baselines on the same reconstructed development split used by S2.4 and discloses one identical-config unversioned smoke access to test labels. It does not complete the phrase/full-Stage-2 baseline, use Sun's original split, or establish any B0/H1/D1 comparison."
+}

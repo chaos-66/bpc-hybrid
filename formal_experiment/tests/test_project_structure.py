@@ -17,6 +17,7 @@ def test_chinese_navigation_and_logs_are_canonical() -> None:
         ROOT / "docs/FILE_CATALOG.md",
         ROOT / "docs/EXPERIMENT_LOG.md",
         ROOT / "docs/EXPERIMENT_EVENTS.jsonl",
+        ROOT / "docs/REAL_WORLD_ISSUE_REGISTER.md",
         ROOT / "_retired/README.md",
         ROOT / "_retired/MANIFEST.md",
         ROOT / "paper/README.md",
@@ -26,6 +27,38 @@ def test_chinese_navigation_and_logs_are_canonical() -> None:
     assert all(path.is_file() for path in required)
     assert not (ROOT / "docs/AUDIT_LOG.md").exists()
     assert not (ROOT / "docs/AUDIT_EVENTS.jsonl").exists()
+
+
+def test_real_world_issue_register_tracks_open_and_resolved_problems() -> None:
+    register = (ROOT / "docs/REAL_WORLD_ISSUE_REGISTER.md").read_text(encoding="utf-8")
+    agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+    protocol = (ROOT / "docs/AI_CHANGE_PROTOCOL.md").read_text(encoding="utf-8")
+    required = (
+        "唯一实际问题登记册",
+        "`open` / `mitigated` / `resolved` / `accepted_risk`",
+        "RWI-0001",
+        "句级抽样造成跨句上下文和代词先行词丢失",
+        "解决方法**：尚无",
+        "RWI-0002",
+        "对应事件**：Event 73",
+        "RWI-0003",
+        "对应事件**：Event 72",
+        "RWI-0004",
+        "对应事件**：Event 71",
+        "RWI-0005",
+        "对应事件**：Event 74",
+        "RWI-0006",
+        "对应事件**：Event 75",
+        "RWI-0007",
+        "非德语审核者无法独立验证德文到英文",
+        "RWI-0008",
+        "人工、D1 与 H1 的六要素操作语义未统一",
+        "对应事件**：Event 78",
+    )
+    for marker in required:
+        assert marker in register, marker
+    assert "REAL_WORLD_ISSUE_REGISTER.md" in agents
+    assert "发现即登记" in protocol
 
 
 def test_machine_event_history_was_not_lost() -> None:
@@ -69,6 +102,8 @@ def test_generated_file_catalog_matches_current_file_set() -> None:
         [sys.executable, str(ROOT / "scripts/generate_file_catalog.py"), "--check"],
         cwd=ROOT,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         check=False,

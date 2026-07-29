@@ -1,35 +1,35 @@
 {
-  "config_version": "2.0.0",
+  "config_version": "2.4.0",
   "methods": [
     {
       "id": "sun_rule_only",
       "canonical_label": "sun_stage2_baseline",
       "role": "baseline",
       "llm_used": false,
-      "formal_status": "blocked_final_sun_stage2_reimplementation_required",
+      "formal_status": "blocked_pending_s2_2_phrase_gold_and_formal_input_freeze",
       "current_command": "python scripts/run_sun_rule_only.py",
-      "command_status": "development_only_not_formal",
-      "notes": "Legacy ID retained. The intended baseline is the complete final Sun Stage 2 (BERT-TextCNN plus CoreNLP/Tregex/Tsurgeon phrase extraction). The current runner is a marker/heuristic approximation and must not be reported as the formal Sun baseline."
+      "command_status": "verified_s2_6_locked_synthetic_composition_not_formal_batch",
+      "notes": "Legacy ID retained. S2.4 classifier, S2.5 CoreNLP/Tregex/Tsurgeon extractor, S2.6 canonical composition, and the shared S2.10-E evaluator are technically verified without an LLM. The current command is restricted to the locked bilingual synthetic composition; formal batch prediction and performance claims remain blocked on frozen human Gold/input readiness."
     },
     {
       "id": "sun_llm_fallback",
       "canonical_label": "sun_stage2_plus_llm_fallback",
       "role": "main_method",
       "llm_used": true,
-      "formal_status": "blocked_until_faithful_baseline_data_and_triggers_are_locked",
+      "formal_status": "blocked_pending_s2_2_formal_input_freeze_and_explicit_llm_authorization",
       "current_command": "python scripts/run_sun_llm_fallback.py",
-      "command_status": "development_only_not_formal",
-      "notes": "Must reuse the complete formal Sun Stage 2 baseline and modify only pre-registered failed/uncertain outputs. A real run additionally requires explicit --allow-llm and a hard call budget."
+      "command_status": "verified_s2_8_offline_plan_and_mock_merge_not_real_llm",
+      "notes": "S2.8 binds H1 v5 to stage2_extraction_contract@1.0.0 and the verified S2.6 canonical B0; freezes inference-visible triggers, field-level replacement with dependency closure, complete unsupported_or_ambiguous replacement, gpt-4.1-2025-04-14 request rendering, deterministic sample_id/clause_id allocation, scorable B0 fallback with H1 identity, recovered-provider-error accounting, and 45-call/460800-token/1.5-USD ceilings. S2.10-E v2 supplies the shared evaluator. The current command is offline plan-only and rejects --allow-llm; formal prediction still requires frozen human Gold/input readiness plus separate explicit real-LLM authorization."
     },
     {
       "id": "direct_llm",
       "canonical_label": "direct_llm_stage2_replacement",
       "role": "replacement_method",
       "llm_used": true,
-      "formal_status": "blocked_until_official_data_output_contract_and_evaluator_are_locked",
+      "formal_status": "blocked_pending_formal_input_freeze_and_explicit_llm_authorization",
       "current_command": "python scripts/run_direct_llm.py",
-      "command_status": "development_only_not_formal",
-      "notes": "Replaces the whole Stage 2 without running the Sun pipeline or reading Gold. It must use the same frozen inputs, output contract, evaluator, and Stage 3 as the other two methods. Real calls require explicit authorization."
+      "command_status": "verified_s2_9_offline_prompt_model_budget_and_attempt_contract_not_real_llm",
+      "notes": "S2.9 locks D1 to stage2_extraction_contract@1.0.0 and the complete four-example v5 prompt, gpt-4.1-2025-04-14, temperature 0, five independent repeats, 750 calls maximum, 37 USD worst-case ceiling, no Gold/B0/H1/context visibility, and S2.10-E-compatible failure-preserving attempts. The current command is offline plan-only and rejects --allow-llm. Formal prediction still requires the same frozen inputs/Gold/Stage 3 as B0 and H1 plus separate explicit real-LLM authorization."
     }
   ]
 }

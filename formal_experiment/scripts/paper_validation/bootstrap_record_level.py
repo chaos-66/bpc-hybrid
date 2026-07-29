@@ -204,6 +204,8 @@ def parse_args():
     ap.add_argument('--methods', nargs='+',
                     default=['d1_unprimed', 'h1_selective_primed', 'h1_selective_empty'])
     ap.add_argument('--repeats', nargs='+', type=int, default=[1, 2, 3])
+    ap.add_argument('--invalid-repeats', nargs='+', type=int, default=[],
+                    help='repeats to EXCLUDE from paired comparisons (e.g. invalid repeats)')
     return ap.parse_args()
 
 
@@ -213,12 +215,27 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     gold = load_gold(Path(args.gold_path))
     record_ids = sorted(gold.keys())
-    # Pre-load predictions for each method/repeat
+    # Pre-load predictions for each method/repeat; mark invalid repeats
     preds = {}
+    invalid_per_method = {}
     for m in args.methods:
         preds[m] = {}
+        invalid_per_method[m] = set()
         for r in args.repeats:
             preds[m][r] = load_pred(Path(args.runs_root), m, r)
+            # A repeat is invalid if any batch is missing or failed; check by
+            # inspecting the metrics file in the repeat dir.
+            mpath = Path(args.runs_root) / m / f'repeat_{r:02d}' / 'metrics_token_iou_0.3.json'
+            if mpath.exists():
+                try:
+                    with open(mpath, 'r', encoding='utf-8') as f:
+                        mdata = json.load(f)
+                    if not mdata.get('coverage_ok', False):
+                        invalid_per_method[m].add(r)
+                except Exception:
+                    pass
+            elif r in args.invalid_repeats:
+                invalid_per_method[m].add(r)
 
     summary = {
         'experiment_id': 'paper_validation_r1_20260728',
@@ -230,15 +247,28 @@ def main():
         'per_repeat': {},
     }
 
-    # Pairs
+    # Pairs: ONLY use repeats that are valid for BOTH methods in the pair.
+    # This is the strict paired-repeats rule (no cross-repeat pairing).
     pairs = []
     for i in range(len(args.methods)):
         for j in range(len(args.methods)):
             if i < j:
                 pairs.append((args.methods[i], args.methods[j]))
 
+    # Per-repeat valid_repeats[method] = sorted list of repeats where this method
+    # has a valid run (coverage_ok=True).
+    valid_per_method = {
+        m: sorted(set(args.repeats) - invalid_per_method[m])
+        for m in args.methods
+    }
+
     rng = np.random.default_rng(BOOTSTRAP_SEED)
     for rid in args.repeats:
+        # Only run the per-repeat analysis for repeats that are valid for ALL
+        # methods in the pair set. If a repeat is invalid for any method, skip
+        # the pairwise comparison for that repeat (the per-method base metrics
+        # for valid methods are still recorded).
+        rep_invalid_methods = {m: rid in invalid_per_method[m] for m in args.methods}
         rep_summary = {
             'methods': {},
             'pairwise': {},
@@ -246,9 +276,19 @@ def main():
         # Precompute IoU matrices per method/repeat (one-time cost)
         caches = {}
         for m in args.methods:
+            if rep_invalid_methods[m]:
+                # If invalid, store empty cache (record-level bootstrap will skip)
+                caches[m] = {}
+                continue
             caches[m] = precompute_iou_matrices(gold, preds[m][rid], iou_threshold=args.iou_threshold)
         # Per-method base metrics (no bootstrap, deterministic)
         for m in args.methods:
+            if rep_invalid_methods[m]:
+                rep_summary['methods'][m] = {
+                    'base_p': None, 'base_r': None, 'base_f1': None, 'base_f2': None,
+                    'note': f'repeat_{rid:02d}_invalid',
+                }
+                continue
             base = fast_metrics_for_records(record_ids, caches[m], iou_threshold=args.iou_threshold)
             rep_summary['methods'][m] = {
                 'base_p': round(base['p'], 4),
@@ -256,8 +296,16 @@ def main():
                 'base_f1': round(base['f1'], 4),
                 'base_f2': round(base['f2'], 4),
             }
-        # Pairwise bootstrap
+        # Pairwise bootstrap: only for pairs where BOTH methods are valid on
+        # this repeat_id. This is the strict "no cross-repeat pairing" rule.
         for a, b in pairs:
+            if rep_invalid_methods[a] or rep_invalid_methods[b]:
+                rep_summary['pairwise'][f'{a}__vs__{b}'] = {
+                    'note': 'skipped_due_to_invalid_repeat',
+                    'invalid_method': a if rep_invalid_methods[a] else b,
+                    'repeat_id': rid,
+                }
+                continue
             deltas_p = np.empty(BOOTSTRAP_REPS)
             deltas_r = np.empty(BOOTSTRAP_REPS)
             deltas_f1 = np.empty(BOOTSTRAP_REPS)

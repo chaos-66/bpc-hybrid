@@ -1,0 +1,58 @@
+{
+  "schema_version": "sun_corenlp_fixture@1.0.0",
+  "fixture_id": "obligation_condition_constraint_v1",
+  "source_text": "If notice is required, the company shall file within 30 days.",
+  "annotation": {
+    "sentences": [
+      {
+        "index": 0,
+        "parse": "(ROOT (S (SBAR (IN If) (S (NP (NN notice)) (VP (VBZ is) (ADJP (VBN required))))) (, ,) (NP (DT the) (NN company)) (VP (MD shall) (VP (VB file) (PP (IN within) (NP (CD 30) (NNS days))))) (. .)))",
+        "tokens": [
+          {"index": 1, "word": "If", "originalText": "If", "lemma": "if", "pos": "IN", "characterOffsetBegin": 0, "characterOffsetEnd": 2},
+          {"index": 2, "word": "notice", "originalText": "notice", "lemma": "notice", "pos": "NN", "characterOffsetBegin": 3, "characterOffsetEnd": 9},
+          {"index": 3, "word": "is", "originalText": "is", "lemma": "be", "pos": "VBZ", "characterOffsetBegin": 10, "characterOffsetEnd": 12},
+          {"index": 4, "word": "required", "originalText": "required", "lemma": "require", "pos": "VBN", "characterOffsetBegin": 13, "characterOffsetEnd": 21},
+          {"index": 5, "word": ",", "originalText": ",", "lemma": ",", "pos": ",", "characterOffsetBegin": 21, "characterOffsetEnd": 22},
+          {"index": 6, "word": "the", "originalText": "the", "lemma": "the", "pos": "DT", "characterOffsetBegin": 23, "characterOffsetEnd": 26},
+          {"index": 7, "word": "company", "originalText": "company", "lemma": "company", "pos": "NN", "characterOffsetBegin": 27, "characterOffsetEnd": 34},
+          {"index": 8, "word": "shall", "originalText": "shall", "lemma": "shall", "pos": "MD", "characterOffsetBegin": 35, "characterOffsetEnd": 40},
+          {"index": 9, "word": "file", "originalText": "file", "lemma": "file", "pos": "VB", "characterOffsetBegin": 41, "characterOffsetEnd": 45},
+          {"index": 10, "word": "within", "originalText": "within", "lemma": "within", "pos": "IN", "characterOffsetBegin": 46, "characterOffsetEnd": 52},
+          {"index": 11, "word": "30", "originalText": "30", "lemma": "30", "pos": "CD", "characterOffsetBegin": 53, "characterOffsetEnd": 55},
+          {"index": 12, "word": "days", "originalText": "days", "lemma": "day", "pos": "NNS", "characterOffsetBegin": 56, "characterOffsetEnd": 60},
+          {"index": 13, "word": ".", "originalText": ".", "lemma": ".", "pos": ".", "characterOffsetBegin": 60, "characterOffsetEnd": 61}
+        ],
+        "basicDependencies": [
+          {"dep": "ROOT", "governor": 0, "governorGloss": "ROOT", "dependent": 9, "dependentGloss": "file"},
+          {"dep": "mark", "governor": 4, "governorGloss": "required", "dependent": 1, "dependentGloss": "If"},
+          {"dep": "nsubj:pass", "governor": 4, "governorGloss": "required", "dependent": 2, "dependentGloss": "notice"},
+          {"dep": "aux:pass", "governor": 4, "governorGloss": "required", "dependent": 3, "dependentGloss": "is"},
+          {"dep": "advcl", "governor": 9, "governorGloss": "file", "dependent": 4, "dependentGloss": "required"},
+          {"dep": "det", "governor": 7, "governorGloss": "company", "dependent": 6, "dependentGloss": "the"},
+          {"dep": "nsubj", "governor": 9, "governorGloss": "file", "dependent": 7, "dependentGloss": "company"},
+          {"dep": "aux", "governor": 9, "governorGloss": "file", "dependent": 8, "dependentGloss": "shall"},
+          {"dep": "case", "governor": 12, "governorGloss": "days", "dependent": 10, "dependentGloss": "within"},
+          {"dep": "nummod", "governor": 12, "governorGloss": "days", "dependent": 11, "dependentGloss": "30"},
+          {"dep": "obl", "governor": 9, "governorGloss": "file", "dependent": 12, "dependentGloss": "days"}
+        ]
+      }
+    ]
+  },
+  "expected_spans": {
+    "modality": {"begin": 35, "end": 40, "text": "shall"},
+    "condition": {"begin": 0, "end": 21, "text": "If notice is required"},
+    "constraint": {"begin": 46, "end": 60, "text": "within 30 days"},
+    "exception": null,
+    "action": {"begin": 41, "end": 45, "text": "file"},
+    "actor": {"begin": 23, "end": 34, "text": "the company"}
+  },
+  "extraction_order": [
+    "modality",
+    "condition",
+    "constraint",
+    "exception",
+    "action",
+    "actor"
+  ],
+  "boundary": "synthetic_contract_fixture_not_gold_not_evaluation"
+}

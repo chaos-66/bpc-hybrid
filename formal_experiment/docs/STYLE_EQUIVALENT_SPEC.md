@@ -1,10 +1,13 @@
-# Style-Equivalent Alignment Spec (Wave 1.1 v2)
+# Style-Equivalent Alignment Spec (S2.10-E v3)
 
-> **版本**：v2 (2026-07-12)
+> **版本**：v3 (2026-07-17)
 > **依据**：`docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` §3.1 + Wave 1.1 §6 修正
 > **目的**：明确"什么是 style-equivalent" 和 "如何测"
-> **范围**：仅 spec；**不**实现 evaluator（Wave 2 才开始）
+> **范围**：strict/safe evaluator 与 deterministic 空白人工复核模板已实现
 > **配套**：`docs/EVAL_3DIM_SPEC.md` §4.5 副表 D
+
+> **实现边界**：`safe-legal-v1` 已冻结；高风险 loose 规则未进入正式实现。人工
+> style-equivalent decision 仍必须由评审者填写，机器不得代填。
 
 ---
 
@@ -169,12 +172,12 @@ v1 的：
 
 ---
 
-## 7. Wave 2 实施优先级
+## 7. 实施状态
 
-1. strict 模式（最简单）—— 复用 `evaluator.py` 的现有 span P/R/F1
-2. safe 模式（默认开 4 条低风险规则）—— 加 1 个 `Normalizer` 类
-3. 抽样人工 style-equivalent 协议—— 文档化抽样方法 + 评分表
-4. loose 模式（敏感性分析）—— 加 article removal + plural collapse
+1. strict 模式：已在 `stage2_evaluation.py` 实现，text/start/end 全等
+2. safe 模式：已按 `safe-legal-v1` 实现并单独报告 lift
+3. 人工 style-equivalent：已实现固定 seed、默认 40 条、三分类且禁止自动填值的模板
+4. loose 模式：未实现；article removal、plural、lemma、同义词与数字换算继续显式关闭
 
 ---
 
@@ -187,9 +190,10 @@ v1 的：
 
 ---
 
-## 9. 未解决的设计决策
+## 9. 冻结决策与后续人工步骤
 
-- **safe 模式是否包含 trailing punctuation strip？** 当前规划是 on
+- **safe 模式是否包含 trailing punctuation strip？** 已冻结为 on
 - **article removal 何时开启？** 仅在用户明确 "ignore article differences" 时
-- **样本人工 style-equivalent 协议 N 值？** 默认 30-50 条，看 reviewer 时间
-- **loose 模式的报告位置？** 附录或 supplementary，不进主表
+- **样本人工 style-equivalent 协议 N 值？** 默认固定为 40；候选不足时全取，并报告 selected
+- **人工判定**：正式预测产生后再由评审者填写 full/style/partial；当前 synthetic 模板保持 0 个决定
+- **loose 模式的报告位置？** 若以后另行版本化，只能进附录或 supplementary，不进主表

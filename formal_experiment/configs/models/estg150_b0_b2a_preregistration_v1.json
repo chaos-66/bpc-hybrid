@@ -1,0 +1,144 @@
+{
+  "schema_version": "b0_enhanced_b2a_preregistration@1.0.0",
+  "preregistration_id": "s27_estg150_b0_b2a_prereg_v1",
+  "created_at_utc": "2026-07-22T21:29:03.073454+00:00",
+  "status": "preregistered_frozen_before_all150",
+  "parent_run": "s27_estg150_b0_enhanced_v10a",
+  "change_only": "definition_modality_disambiguation",
+  "forbidden": [
+    "segmentation",
+    "alignment",
+    "scope",
+    "tregex",
+    "lexicon_files",
+    "actor_action",
+    "bert",
+    "prohibition_permission_special",
+    "b1"
+  ],
+  "definition_classifier_only_min_conf": 0.55,
+  "definition_classifier_only_min_conf_source": "a_priori_mid_high_band_fixed_before_all150_not_tuned_on_estg_gold",
+  "diagnostic": {
+    "path": "outputs/development/s27_estg150_b0_b2a_definition_diagnostic_v1/manifest.json",
+    "sha256": "37d395c9ff32a3a5de8356a363525ac9c6c25aa76c13a913671d101975c05dc0",
+    "bytes": 4528
+  },
+  "baselines": {
+    "v10a": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/manifest.json",
+      "sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315",
+      "bytes": 14659
+    }
+  },
+  "promotion_gates": {
+    "definition_tp_min": 18,
+    "definition_fp_max": 34,
+    "definition_fn_max": 21,
+    "definition_p_min": 0.34,
+    "definition_r_min": 0.46,
+    "definition_f1_min": 0.39,
+    "overall_tp_min": 154,
+    "modality_p_min": 0.605,
+    "modality_r_min": 0.667,
+    "modality_f1_min": 0.635,
+    "other_class_f1_drop_max": 0.015,
+    "predicted_clauses": 256,
+    "aligned_clauses": 195,
+    "table8_presence_complete_hallu_must_match_v10a_within_float": true
+  },
+  "module_bindings": {
+    "src/bpc_hybrid/b0_v10/definition_resolver.py": {
+      "path": "src/bpc_hybrid/b0_v10/definition_resolver.py",
+      "sha256": "af1bab874fa2084561f99c0baf8e34248b207d688e1765e08de26b51ddc9a246",
+      "bytes": 9153
+    },
+    "src/bpc_hybrid/estg150_b0_development_b2a.py": {
+      "path": "src/bpc_hybrid/estg150_b0_development_b2a.py",
+      "sha256": "e9ecbeb0840f2fdfeb50bc1d02fa1a29cde52a5376a26e8edc1baf9a128f5d72",
+      "bytes": 24480
+    },
+    "scripts/run_estg150_b0_enhanced_b2a_development.py": {
+      "path": "scripts/run_estg150_b0_enhanced_b2a_development.py",
+      "sha256": "7fc8005fc506e1224639f66589e655e88940d9cb9b483dbb0ca13a2482c8b48b",
+      "bytes": 12188
+    },
+    "src/bpc_hybrid/b0_v10/modality.py": {
+      "path": "src/bpc_hybrid/b0_v10/modality.py",
+      "sha256": "6dd2c74bbd5894353b921ff2f29506a950e6e6b2453b426ee451a042c0fc1246",
+      "bytes": 3239
+    },
+    "src/bpc_hybrid/b0_v10/alignment.py": {
+      "path": "src/bpc_hybrid/b0_v10/alignment.py",
+      "sha256": "957aa591927139ae3f37dbaf8634ba1e5be04beaa7e54e9597d2b6f57db2c2fe",
+      "bytes": 7919
+    },
+    "src/bpc_hybrid/b0_v10/scope.py": {
+      "path": "src/bpc_hybrid/b0_v10/scope.py",
+      "sha256": "3c13d2d73d49476cd3449f50775c6b4b63ac68f5baa2f95a4b564e5ca8b30887",
+      "bytes": 14235
+    },
+    "src/bpc_hybrid/b0_v10/actor_action.py": {
+      "path": "src/bpc_hybrid/b0_v10/actor_action.py",
+      "sha256": "5d31f28243c814d363185bf1eec842fd27bf8d201f5f4f2a3bf5a2a593fbb574",
+      "bytes": 6652
+    },
+    "src/bpc_hybrid/b0_v10/pipeline.py": {
+      "path": "src/bpc_hybrid/b0_v10/pipeline.py",
+      "sha256": "ce3153f75d28369954ed7e0a0e0ca1fa3e44f56b5f7e35724f8034d523a15d79",
+      "bytes": 1038
+    }
+  },
+  "resource_bindings": {
+    "layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+      "bytes": 1301626
+    },
+    "membership": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b",
+      "bytes": 30276
+    },
+    "evaluator": {
+      "path": "configs/stage2_evaluator_s210_v3.json",
+      "sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f",
+      "bytes": 6566
+    },
+    "s26": {
+      "path": "configs/models/sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126",
+      "bytes": 3807
+    },
+    "checkpoint": {
+      "path": "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt",
+      "sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1",
+      "bytes": 441559200
+    },
+    "patterns": {
+      "path": "resources/corenlp/sun_phrase_patterns_v3_enhanced.json",
+      "sha256": "f49bad50fb6236137f1208aeef572d2a78c789726363897c637dc464c780e142",
+      "bytes": 4425
+    },
+    "lexicon_manifest": {
+      "path": "resources/lexicon/public_marker_lexicon_en_v2.manifest.json",
+      "sha256": "3f7e6108c1e66de37377abc2e9b9f4d0344ff2d1eca20b49ebf90e38aff7b462",
+      "bytes": 3179
+    },
+    "bridge": {
+      "path": "tools/corenlp/SunPhraseRuleBatchBridgeMulti.java",
+      "sha256": "1a084befaf1a863889a26b58c5a049f2df846834e26c5643fe5a535c5c13f2a3",
+      "bytes": 5934
+    },
+    "diagnostic": {
+      "path": "outputs/development/s27_estg150_b0_b2a_definition_diagnostic_v1/manifest.json",
+      "sha256": "37d395c9ff32a3a5de8356a363525ac9c6c25aa76c13a913671d101975c05dc0",
+      "bytes": 4528
+    }
+  },
+  "config_path": "configs/models/estg150_b0_enhanced_s27_b2a.json",
+  "safety": {
+    "gold_read_only": true,
+    "llm_api_called": false,
+    "network_called": false
+  }
+}

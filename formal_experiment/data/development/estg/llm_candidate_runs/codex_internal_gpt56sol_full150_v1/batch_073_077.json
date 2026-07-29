@@ -1,0 +1,200 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 73,
+  "end_index_exclusive": 78,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000507",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "July 1988 - No. 400 2945 (8) At the tax rate which, according to the tax scale, corresponds to the wages of the last full calendar year, the following shall be taxed:\n— payments for the waiver of work performance for future wage payment periods,\n— payments for pension commutations, to the extent that they are not to be taxed pursuant to subsection (6) at the tax rates of subsection (1),\n— back payments and subsequent payments of current and other emoluments for expired calendar years, which are made alongside current wages from the same employer or in bankruptcy proceedings and are not based on an arbitrary deferral of the payment date,\n— settlement sums, regardless of whether they are based on judicial or extrajudicial settlements, and also in cases where they are not granted alongside current wages from the same employer.",
+        "issues": ["Subsections (1) and (6) are not supplied, and the initial publication header is non-normative." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(8) At the tax rate which, according to the tax scale, corresponds to the wages of the last full calendar year, the following shall be taxed:\n— payments for the waiver of work performance for future wage payment periods,\n— payments for pension commutations, to the extent that they are not to be taxed pursuant to subsection (6) at the tax rates of subsection (1),\n— back payments and subsequent payments of current and other emoluments for expired calendar years, which are made alongside current wages from the same employer or in bankruptcy proceedings and are not based on an arbitrary deferral of the payment date,\n— settlement sums, regardless of whether they are based on judicial or extrajudicial settlements, and also in cases where they are not granted alongside current wages from the same employer.", "start": 25, "end": 835},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be taxed", "start": 151, "end": 165}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be taxed", "start": 157, "end": 165, "normalized": "tax listed payments"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "which are made alongside current wages from the same employer or in bankruptcy proceedings", "start": 490, "end": 580, "normalized": "payments made with current wages by same employer or in bankruptcy"},
+            {"id": "c1_condition_2", "text": "are not based on an arbitrary deferral of the payment date", "start": 585, "end": 643, "normalized": "not based on arbitrary payment deferral"}
+          ],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "At the tax rate which, according to the tax scale, corresponds to the wages of the last full calendar year", "start": 29, "end": 135, "normalized": "rate corresponding to prior full calendar year's wages"},
+            {"id": "c1_constraint_2", "text": "payments for the waiver of work performance for future wage payment periods", "start": 169, "end": 244, "normalized": "payments for waiving future work"},
+            {"id": "c1_constraint_3", "text": "payments for pension commutations", "start": 248, "end": 281, "normalized": "pension commutation payments"},
+            {"id": "c1_constraint_4", "text": "back payments and subsequent payments of current and other emoluments for expired calendar years", "start": 392, "end": 488, "normalized": "back or subsequent payments for expired calendar years"},
+            {"id": "c1_constraint_5", "text": "settlement sums", "start": 647, "end": 662, "normalized": "settlement sums"}
+          ],
+          "exceptions": [
+            {"id": "c1_exception_1", "text": "to the extent that they are not to be taxed pursuant to subsection (6) at the tax rates of subsection (1)", "start": 283, "end": 388, "normalized": "only pension commutations not already taxed under referenced rates"},
+            {"id": "c1_exception_2", "text": "regardless of whether they are based on judicial or extrajudicial settlements", "start": 664, "end": 741, "normalized": "judicial or extrajudicial settlement basis immaterial"},
+            {"id": "c1_exception_3", "text": "also in cases where they are not granted alongside current wages from the same employer", "start": 747, "end": 834, "normalized": "include sums not granted with current wages by same employer"}
+          ],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The referenced subsection (1) and subsection (6) tax treatments are unavailable and are not expanded."}],
+      "confidence": "medium",
+      "rationale_summary": "One umbrella obligation taxes four listed payment categories at the prior-year wage-corresponding rate, subject to the express pension, back-payment, and settlement qualifications. No liable taxpayer or withholding actor is explicit."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000509",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(10) Other remuneration that does not fall under subsections 1 to 8 shall be taxed like a current payment in accordance with the wage tax rate schedule; for this purpose, a monthly wage payment period shall be assumed.",
+        "issues": ["Subsections 1 to 8 are not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(10) Other remuneration that does not fall under subsections 1 to 8 shall be taxed like a current payment in accordance with the wage tax rate schedule", "start": 0, "end": 151},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be taxed", "start": 68, "end": 82}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be taxed", "start": 74, "end": 82, "normalized": "tax other remuneration"}],
+          "conditions": [{"id": "c1_condition_1", "text": "Other remuneration that does not fall under subsections 1 to 8", "start": 5, "end": 67, "normalized": "other remuneration outside subsections 1 to 8"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "like a current payment", "start": 83, "end": 105, "normalized": "as current payment"},
+            {"id": "c1_constraint_2", "text": "in accordance with the wage tax rate schedule", "start": 106, "end": 151, "normalized": "under wage tax rate schedule"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "for this purpose, a monthly wage payment period shall be assumed.", "start": 153, "end": 218},
+          "modality": {"label": "definition", "evidence": [{"text": "shall be assumed", "start": 201, "end": 217}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be assumed", "start": 207, "end": 217, "normalized": "assume wage payment period"}],
+          "conditions": [{"id": "c2_condition_1", "text": "for this purpose", "start": 153, "end": 169, "normalized": "for taxation under preceding clause"}],
+          "constraints": [{"id": "c2_constraint_1", "text": "a monthly wage payment period", "start": 171, "end": 200, "normalized": "monthly wage payment period"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The excluded remuneration categories in subsections 1 to 8 are unavailable."}],
+      "confidence": "medium",
+      "rationale_summary": "The semicolon separates an obligation to tax residual other remuneration like a current payment from a distinct deeming rule that assumes a monthly wage payment period. The remuneration is not treated as an actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000522",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(7) Pursuant to paragraphs 1 to 5, the following shall also be treated as such — allowances and supplementary payments included in the remuneration continued to be paid to released members of the works council, — similar allowances and supplementary payments to staff representatives within the meaning of the Federal Staff Representation Act (Bundes-Personalvertretungsgesetz) and similar state legislation, — allowances and supplementary payments included in wages continued to be paid to the employee in the event of illness.",
+        "issues": ["The treatment denoted by 'as such' is defined only in missing paragraphs 1 to 5." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(7) Pursuant to paragraphs 1 to 5, the following shall also be treated as such — allowances and supplementary payments included in the remuneration continued to be paid to released members of the works council, — similar allowances and supplementary payments to staff representatives within the meaning of the Federal Staff Representation Act (Bundes-Personalvertretungsgesetz) and similar state legislation, — allowances and supplementary payments included in wages continued to be paid to the employee in the event of illness.", "start": 0, "end": 528},
+          "modality": {"label": "definition", "evidence": [{"text": "shall also be treated", "start": 49, "end": 70}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be treated", "start": 60, "end": 70, "normalized": "apply missing paragraphs 1 to 5 treatment"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "Pursuant to paragraphs 1 to 5", "start": 4, "end": 33, "normalized": "under paragraphs 1 to 5"},
+            {"id": "c1_constraint_2", "text": "allowances and supplementary payments included in the remuneration continued to be paid to released members of the works council", "start": 81, "end": 209, "normalized": "allowances in continued remuneration for released works-council members"},
+            {"id": "c1_constraint_3", "text": "similar allowances and supplementary payments to staff representatives within the meaning of the Federal Staff Representation Act (Bundes-Personalvertretungsgesetz) and similar state legislation", "start": 213, "end": 407, "normalized": "similar allowances to staff representatives under federal or state law"},
+            {"id": "c1_constraint_4", "text": "allowances and supplementary payments included in wages continued to be paid to the employee in the event of illness", "start": 411, "end": 527, "normalized": "allowances in wages continued during illness"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Paragraphs 1 to 5 are unavailable, leaving the substantive treatment referenced by 'as such' unresolved."},
+        {"field": "action", "reason": "The excerpt states that the listed allowances receive the same treatment but does not reveal what that treatment is."}
+      ],
+      "confidence": "low",
+      "rationale_summary": "One umbrella classification extends an unavailable prior treatment to three listed allowance categories. The categories are preserved exactly, but the missing substantive treatment is not invented."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000525",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(1) The Federal Minister of Finance may exempt certain groups of — exclusively manual workers, — employees who carry out statistical surveys for regional authorities, — employees in the occupational categories of musicians, stage performers, artists and film makers who are employed continuously for not more than one week, from the obligation to submit a wage tax card and, deviating from Sections 57 to 66, 71, 74 and 75, permit the withholding and remittance of wage tax at a flat-rate amount.",
+        "issues": ["The ordinary withholding and remittance rules in Sections 57-66, 71, 74, and 75 are not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(1) The Federal Minister of Finance may exempt certain groups of — exclusively manual workers, — employees who carry out statistical surveys for regional authorities, — employees in the occupational categories of musicians, stage performers, artists and film makers who are employed continuously for not more than one week, from the obligation to submit a wage tax card and, deviating from Sections 57 to 66, 71, 74 and 75, permit the withholding and remittance of wage tax at a flat-rate amount.", "start": 0, "end": 496},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 36, "end": 39}]},
+          "actors": [{"id": "c1_actor_1", "text": "The Federal Minister of Finance", "start": 4, "end": 35, "normalized": "Federal Minister of Finance"}],
+          "actions": [
+            {"id": "c1_action_1", "text": "exempt", "start": 40, "end": 46, "normalized": "exempt specified employee groups"},
+            {"id": "c1_action_2", "text": "permit", "start": 424, "end": 430, "normalized": "permit flat-rate wage-tax withholding and remittance"}
+          ],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "exclusively manual workers", "start": 67, "end": 93, "normalized": "exclusively manual workers"},
+            {"id": "c1_constraint_2", "text": "employees who carry out statistical surveys for regional authorities", "start": 97, "end": 165, "normalized": "employees conducting public-authority statistical surveys"},
+            {"id": "c1_constraint_3", "text": "employees in the occupational categories of musicians, stage performers, artists and film makers who are employed continuously for not more than one week", "start": 169, "end": 322, "normalized": "listed performers and film workers employed continuously no more than one week"},
+            {"id": "c1_constraint_4", "text": "from the obligation to submit a wage tax card", "start": 324, "end": 369, "normalized": "from wage-tax-card submission duty"},
+            {"id": "c1_constraint_5", "text": "deviating from Sections 57 to 66, 71, 74 and 75", "start": 375, "end": 422, "normalized": "deviation from listed sections"},
+            {"id": "c1_constraint_6", "text": "the withholding and remittance of wage tax", "start": 431, "end": 473, "normalized": "wage-tax withholding and remittance"},
+            {"id": "c1_constraint_7", "text": "at a flat-rate amount", "start": 474, "end": 495, "normalized": "at flat-rate amount"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": "c1_actor_1", "action_id": "c1_action_1"},
+            {"actor_id": "c1_actor_1", "action_id": "c1_action_2"}
+          ],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The ordinary wage-tax procedures displaced by the listed sections are unavailable."}],
+      "confidence": "medium",
+      "rationale_summary": "One authorization gives the Federal Minister two coordinated powers for three specified employee groups: exemption from the wage-tax-card duty and permission for flat-rate withholding and remittance under a statutory deviation."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000539",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) If the conditions for carrying out an ex officio annual adjustment (paragraph 3) are not met, the tax office shall carry out an annual adjustment upon application of the employee if\n1. the employer is not responsible pursuant to paragraph 1 or the employer issued a wage tax statement (Section 84) before carrying out an annual adjustment, or\n2. the employee did not claim the sole earner deduction in due time, or\n3. an allowance notice was issued or the employee claims income-related expenses, special expenses or extraordinary burdens, or\n4. the child supplements to the sole earner deduction were not taken into account or not taken into full account.",
+        "issues": ["Paragraphs 1 and 3 and Section 84 are not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) If the conditions for carrying out an ex officio annual adjustment (paragraph 3) are not met, the tax office shall carry out an annual adjustment upon application of the employee if\n1. the employer is not responsible pursuant to paragraph 1 or the employer issued a wage tax statement (Section 84) before carrying out an annual adjustment, or\n2. the employee did not claim the sole earner deduction in due time, or\n3. an allowance notice was issued or the employee claims income-related expenses, special expenses or extraordinary burdens, or\n4. the child supplements to the sole earner deduction were not taken into account or not taken into full account.", "start": 0, "end": 660},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 113, "end": 118}]},
+          "actors": [{"id": "c1_actor_1", "text": "the tax office", "start": 98, "end": 112, "normalized": "tax office"}],
+          "actions": [{"id": "c1_action_1", "text": "carry out an annual adjustment", "start": 119, "end": 149, "normalized": "carry out annual adjustment"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "If the conditions for carrying out an ex officio annual adjustment (paragraph 3) are not met", "start": 4, "end": 96, "normalized": "ex officio annual-adjustment conditions not met"},
+            {"id": "c1_condition_2", "text": "upon application of the employee", "start": 150, "end": 182, "normalized": "on employee application"},
+            {"id": "c1_condition_3", "text": "the employer is not responsible pursuant to paragraph 1 or the employer issued a wage tax statement (Section 84) before carrying out an annual adjustment", "start": 189, "end": 342, "normalized": "employer lacks responsibility or issued wage-tax statement before adjustment"},
+            {"id": "c1_condition_4", "text": "the employee did not claim the sole earner deduction in due time", "start": 350, "end": 414, "normalized": "sole-earner deduction not timely claimed"},
+            {"id": "c1_condition_5", "text": "an allowance notice was issued or the employee claims income-related expenses, special expenses or extraordinary burdens", "start": 422, "end": 542, "normalized": "allowance notice issued or employee claims listed expenses or burdens"},
+            {"id": "c1_condition_6", "text": "the child supplements to the sole earner deduction were not taken into account or not taken into full account", "start": 550, "end": 659, "normalized": "child supplements omitted or incompletely considered"}
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The referenced ex officio conditions, employer responsibility rule, and wage-tax statement provision are unavailable."}],
+      "confidence": "medium",
+      "rationale_summary": "One tax-office obligation is triggered by an employee application when ex officio conditions fail and any one of four listed grounds holds. Nested alternatives within grounds 1 and 3 are preserved without inventing further actors or procedures."
+    }
+  ]
+}

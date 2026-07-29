@@ -1797,3 +1797,55 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Final exact-state verification after removing one Markdown trailing-space issue. The Stage 2 inventory, modality-only scope correction, and retrospective partial-run log remain unchanged in meaning. Full audit: 1480 passed, 23 skipped; integrity true; Gold and experiment artifacts unchanged.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-29T10:15:32.308020+00:00 - 整理长期未版本化实验资产并修复活动根目录临时文件泄漏
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1480 passed, 23 skipped in 176.60s (0:02:56)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b0d5f1c20629ffd5eab19399ccc728a8fcfcd558`；相关未提交路径：456 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0031：C2 离线测试临时目录改入 .tmp；根目录 Stage 2 v0.1 草稿迁入退役区；历史 Gold、预测、结果和 manifest 未移动、删除或覆盖；1480 passed, 23 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-29T10:34:53.461784+00:00 - 更正 RWI-0031 的 Git checkpoint 状态并确认整理后的完整验证结果
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1480 passed, 23 skipped in 190.54s (0:03:10)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b0d5f1c20629ffd5eab19399ccc728a8fcfcd558`；相关未提交路径：458 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Event 160 后发现统一暂存 458 个跨任务路径会混入历史未提交工作；已将 RWI-0031 从 resolved 更正为 mitigated，明确完整审计 1480 passed、23 skipped、0 integrity errors，但未建立或推送统一 checkpoint。未移动、删除或覆盖 Gold、预测、结果或 manifest；未读取 .env，未调用真实 LLM/API。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-29T10:45:42.485714+00:00 - 记录 RWI-0031 的 ignored ACL cache 残留与最终整理验证
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1480 passed, 23 skipped in 168.22s (0:02:48)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b0d5f1c20629ffd5eab19399ccc728a8fcfcd558`；相关未提交路径：458 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：精确清理 formal_experiment/.tmp 中可正常访问的可再生缓存，删除 2947 个文件和 2368 个目录；仍有 6414 个文件和 5071 个目录受旧 ACL 保护，全部保持 Git ignored/隔离。未扩大系统权限范围，未移动、删除或覆盖 Gold、预测、结果或 manifest。最终 audit_project.py --with-tests 为 1480 passed、23 skipped、0 integrity errors。458 个跨任务 Git 路径仍未统一暂存、提交或推送，等待用户明确批准。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-29T11:18:16.057333+00:00 - 保存经用户授权筛选后的完整实验资产 checkpoint
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1480 passed, 23 skipped in 169.96s (0:02:49)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b0d5f1c20629ffd5eab19399ccc728a8fcfcd558`；相关未提交路径：458 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户授权重要实验文件推送、垃圾文件清理。458 个精确 Git 路径已筛选并暂存：64 modified、394 new，约 12.5 MiB；无 .env、references、archive、cache、raw restricted ZIP 或真实 credential。一次非必要空白清理触发 G0.5 与 Stage 1 exact-hash fail-closed（4 failed），随后从已验证 index blob 逐字节恢复；聚焦回归 25 passed，最终 audit_project.py --with-tests 为 1480 passed、23 skipped、0 integrity errors。hash-locked whitespace 保持原字节。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

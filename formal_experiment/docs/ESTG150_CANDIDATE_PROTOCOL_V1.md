@@ -766,3 +766,59 @@ The offline budget is 6 calls / 78,000 tokens / 3.60 CA at 17.5/70 CA per
 million input/output tokens. Offline API calls, billed tokens, and billed cost
 are zero; C2 is not started by this dry-run, evaluation remains zero, and P/R
 remain null.
+
+### 7.19 GPT-4o v1.8 runtime failure and v1.9 schema-guided mitigation
+
+The authorized no-overwrite v1.8 live run
+`c2_relay_gpt4o_portable_v1_8_pilot3_live_v1` stopped fail-closed after three
+of six content calls. Sample 0 Pass A/B validated, but sample 1 Pass A emitted
+`clauses[2].conditions[0].text` with the internal parenthetical citation
+`(Section 7(1) no. 1 of the Turnover Tax Act 1972)` omitted. The emitted text
+therefore had zero exact contiguous matches inside its parent clause and could
+not be repaired by coordinate canonicalization. Totals were 7,155 input
+tokens, 3,494 output tokens, zero retries, and 0.3697925 CA. One complete
+sample was locally valid, but no `candidates.json` or success manifest was
+written, so the candidate set was not frozen. Evaluation remained zero and
+P/R remained null; Layer D, Layer E, and Gold were not read.
+
+Portable adapter v1.9 preserves the v1.8 coordinate policy and makes two
+transport-only, non-repair changes. First, the strict transport schema adds
+JSON Schema `description` annotations to exact span text/start/end fields,
+normalization, and optional six-element span arrays. These descriptions tell
+the model to copy a single contiguous substring including all intervening
+parentheticals, citations, bullet markers, modifiers, and punctuation, or to
+omit an optional span. Descriptions do not add validation keywords and do not
+change the set of JSON instances accepted by the schema. Second, the existing
+output guard adds an explicit parent-clause containment self-check equivalent
+to `clause_span.text.find(span.text) >= 0`. Response repair and content retry
+remain forbidden.
+
+The canonical schema and serializer remain frozen at
+`fbbb628ad0f25639958c6d02db9bac90ed06865e634bd4e8eeb7b50ac7108ca9`
+and `d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef`.
+The v1.9 transport schema is versioned separately as v1.2 with SHA-256
+`cf1ee3e48b822bfe7cb84fa69e85190553f733647e49f96ec29ffe7d0f7f16db`.
+Adapter v1.9 config SHA is
+`460ec218cfe8cb4a6ff264bcf30ee2793eceb55dc604847762c4a178daf6d90f`;
+guard SHA is
+`f1fa23b201a4fbed4ccafea5ba40bc29b0b336f89836213a44383fb06cc57841`.
+Canonical prompt assets, B0, and D1/H1 are unchanged. Historical v1.8 remains
+loadable for immutable receipt replay.
+
+The no-overwrite offline preparation
+`c2_relay_gpt4o_portable_v1_9_pilot3_dry_run_v1` covers indices 0, 1, and 2,
+each with Pass A and Pass B. All six strict transport preflights passed with
+`request_downgrade_applied=false`. Frozen transport request SHA-256 values are:
+
+1. `d3b913e0f4a6c86e0269709e0fb95f52248e81723a676a06bfee6b2658aab71f`
+2. `47f074196eb1de68e2ad507891e5c8f6662c2d3b9b27cda5fae6fb91521912f5`
+3. `1ced0aed961804fba6ce162599d032997150fda1ff06f86d2e494f4643365d16`
+4. `2ae8244a8a50d0c2a48e392cdfd78219943eb23668253c0d49045da81177e972`
+5. `8312595649ae0a663388bd14e3dd573c3cdb30604dc010c643dcd1053e7c81c0`
+6. `f541226aa2a4672b090b4c1018263ed6f5c8f4c73959b2c0fa93e54b886842ab`
+
+The offline budget is 6 calls / 78,000 tokens / 3.60 CA at 17.5/70 CA per
+million input/output tokens; the combined worst-case guard cost is 3.4125 CA.
+No credential or network was used: real API calls=0, billed tokens=0, billed
+cost=0, C2=false, evaluation=0, and P/R=null. Layer D, Layer E, and Gold were
+not read.

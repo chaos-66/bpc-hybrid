@@ -1,5 +1,5 @@
 {
-  "contract_version": "2.0.2",
+  "contract_version": "2.15.0",
   "reopened_at": "2026-07-11",
   "route": {
     "id": "sun_2024_final_version_stage2_reconstruction",
@@ -19,14 +19,785 @@
     "primary_comparison": "baseline vs hybrid vs replacement on identical frozen data and Gold",
     "downstream_question": "Whether Stage 2 changes improve the unchanged Stage 3 matching and violation-detection results."
   },
+  "stage1_structural_gate": {
+    "task_ids": ["S1.1", "S1.2", "S1.4"],
+    "status": "verified_offline_structural_contract",
+    "ready": true,
+    "canonical_process_record_schema": "process_record@1.0.0",
+    "deterministic_structural_parser_verified": true,
+    "control_flow_reachability_verified": true,
+    "cycle_and_unreachable_detection_verified": true,
+    "label_semantics_inferred": false,
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "llm_api_called": false,
+    "performance_evaluation": false,
+    "config": {
+      "path": "configs/stage1_structural_s11_s14.json",
+      "sha256": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48"
+    },
+    "schema": {
+      "path": "configs/schemas/process_record.schema.json",
+      "sha256": "9f2dc77a5386c472f9ea27fcf256a2e47195ed66e70ea5f9550caeccdf26bfef"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage1_process.py",
+      "sha256": "d81bde594190c96bd3f3e1d7a0d943847809b20500044f12a401d6aee822c396"
+    },
+    "runner": {
+      "path": "scripts/run_stage1_structural.py",
+      "sha256": "2f98953ceeea8a1fd2f329c22859b58bf139e938122459e67a40a0e8739c65f6"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage1_structural_s11_s14.py",
+      "sha256": "07e98a7d1af49655a78df618b74f5bfe0a555c4c0159f88d92b0af4615ed5b84"
+    },
+    "branch_fixture": {
+      "path": "tests/fixtures/stage1/s11_branch_parallel.bpmn",
+      "sha256": "b60067cb414af04e87f8cf0d1b050466920fdfeee8d65e7299ae256f79da4314"
+    },
+    "cycle_fixture": {
+      "path": "tests/fixtures/stage1/s14_cycle_unreachable.bpmn",
+      "sha256": "f4c4e455deb634a002a72f6ebed884e948c60b668ce193a04c43cff89a6e4513"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json",
+      "sha256": "4f0121b621c0fe648dc93d743ef11f8be93367b18db35c7a430c95cf6950366e"
+    }
+  },
+  "stage1_label_semantics_gate": {
+    "task_ids": ["S1.3"],
+    "status": "verified_offline_p0_p1_contract",
+    "ready": true,
+    "output_schema_version": "stage1_label_semantics@1.0.0",
+    "p0_raw_no_inference_verified": true,
+    "p1_deterministic_surface_split_verified": true,
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "learned_model_used": false,
+    "performance_evaluation": false,
+    "config": {
+      "path": "configs/stage1_label_semantics_s13.json",
+      "sha256": "94a76a365b6662a2051ed1fe0d0e9a08bb9582055475b5b6cb796489917d2a88"
+    },
+    "schema": {
+      "path": "configs/schemas/stage1_label_semantics.schema.json",
+      "sha256": "32b7f6685c3931dce677924456618231563f253c39b2a6a7441acc63e55feda6"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage1_label_semantics.py",
+      "sha256": "069e005731b1481656be05c8e38a6bfdaafe7fbaa20caae081607f73d9d271ca"
+    },
+    "runner": {
+      "path": "scripts/run_stage1_label_semantics.py",
+      "sha256": "b11e670fbcf9e22378025677a6f532dc0bbc21181e4e9eace9cc09d6cf2c9697"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage1_label_semantics_s13.py",
+      "sha256": "573f48189b2d288b64f22ae458c8c9e9ca2ecacead6224d121c316b2b6eeac39"
+    },
+    "fixture": {
+      "path": "tests/fixtures/stage1/s13_label_edge_cases.bpmn",
+      "sha256": "95076fbcd21bd3d9619dcace6f3ddec8fceaa97d9dee887e7dfd9b86924dcc43"
+    },
+    "upstream_structural_manifest": {
+      "path": "outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json",
+      "sha256": "4f0121b621c0fe648dc93d743ef11f8be93367b18db35c7a430c95cf6950366e"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json",
+      "sha256": "21df677087988a63454e572f994899674ee9eacf63352d2d063b103ad668bb69"
+    }
+  },
+  "stage1_annotation_protocol_gate": {
+    "task_ids": ["S1.5"],
+    "status": "verified_offline_protocol_formal_membership_blocked",
+    "protocol_ready": true,
+    "formal_membership_ready": false,
+    "human_gold_freeze_ready": false,
+    "active_formal_bpmn_count": 0,
+    "provenance_candidate_count": 57,
+    "promotion_requires_user_approval": true,
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "gold_auto_filled": false,
+    "performance_evaluation": false,
+    "config": {
+      "path": "configs/stage1_annotation_protocol_s15.json",
+      "sha256": "f2fa99945151b2a7fba5df7dec2c7c07868fa936ecc9f89419d20a4bd8cc815d"
+    },
+    "schema": {
+      "path": "configs/schemas/stage1_human_annotation.schema.json",
+      "sha256": "4d97de0430cce10c5f28c038447472db599b8efccec191801db7aabde1b59744"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage1_human_annotation.py",
+      "sha256": "33cc64895c3bcb085262138f345640f8a26cd8ae43ae82d25248e1164551f52b"
+    },
+    "runner": {
+      "path": "scripts/build_stage1_annotation_protocol.py",
+      "sha256": "0b98177b62cb032d8f140b603d081a7637fd27c6e0935b8666f478b0cf714bbd"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage1_annotation_protocol_s15.py",
+      "sha256": "bd2cb320312263d229438afc896398bf43b5e0b67fb0f50052bdce85265a8359"
+    },
+    "guide": {
+      "path": "docs/STAGE1_HUMAN_GOLD_GUIDE.md",
+      "sha256": "37b9eb045872084489c82ad186874df3712ba2e58568a7924b92ffd6ac0d9924"
+    },
+    "fixture": {
+      "path": "tests/fixtures/stage1/s13_label_edge_cases.bpmn",
+      "sha256": "95076fbcd21bd3d9619dcace6f3ddec8fceaa97d9dee887e7dfd9b86924dcc43"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s15_stage1_annotation_protocol_synthetic_v1.manifest.json",
+      "sha256": "e94b28bd0a14eaa79e6d7c459aad181c0f8a908257f2d9feccdfcc718a64a2a6"
+    }
+  },
+  "stage1_formal_membership_gate": {
+    "task_ids": ["S1.5", "S3.1"],
+    "status": "locked_all_seven_extension_membership",
+    "formal_membership_ready": true,
+    "active_formal_bpmn_count": 7,
+    "shared_stage1_stage3_membership": true,
+    "claim_label": "all-seven GDPR BPMN extension",
+    "sun_original_four_identified": false,
+    "user_approval_recorded": true,
+    "user_approval_date": "2026-07-18",
+    "human_gold_freeze_ready": false,
+    "editable_annotation_path": "data/development/human_review/stage1_gdpr7_human_correction_v1.json",
+    "config": {
+      "path": "configs/datasets/stage1_stage3_gdpr7_v1.json",
+      "sha256": "7b31a8643ac5d1e9c25dc4cc9bee665f234fdb512db4bae35a680dad6fe58f90"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage1_formal_dataset.py",
+      "sha256": "86a33bc6f4da6cd40feda9ea7ec65a74cbae1b5c09366c5bdcdf65e59d7e8486"
+    },
+    "builder": {
+      "path": "scripts/build_stage1_gdpr7.py",
+      "sha256": "a542a0062166e90edfa6d1059f486b9f9952eecef7ba03f0f7c2f62ba736426c"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage1_stage3_gdpr7.py",
+      "sha256": "74f06c2ea7d58b263a0ebddb304494fa2ad7c24510861b2a9d63491936dfcfd0"
+    },
+    "process_records": {
+      "path": "data/development/human_review/stage1_gdpr7_process_records_v1.json",
+      "sha256": "c22ea332c3e0e40348093b7d23fc1ce0d83f5d6ad629007e9ba99e75516668f7"
+    },
+    "blank_template": {
+      "path": "data/development/human_review/stage1_gdpr7_annotation_blank_v1.json",
+      "sha256": "e55fa1d9e60dadfb407f4471ffbdb46bea107f6d8ef8306bac76a75e224140c5"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s15_s31_gdpr7_membership_v1.manifest.json",
+      "sha256": "c29f16c3e506f42f2557e2858ae970abc929af63ee605aa07160afb50d902b60"
+    }
+  },
+  "stage1_evaluator_gate": {
+    "task_ids": ["S1.6"],
+    "status": "verified_offline_evaluator_formal_results_blocked",
+    "evaluator_ready": true,
+    "formal_results_ready": false,
+    "structure_component_count": 8,
+    "semantic_field_count": 3,
+    "synthetic_reference_is_human_gold": false,
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "formal_performance_evaluation": false,
+    "config": {
+      "path": "configs/stage1_evaluator_s16.json",
+      "sha256": "c1286b19ab9ce27acc9814d21bbe17b269bfec9ab868adf6c12ff20ce0e81ff7"
+    },
+    "schema": {
+      "path": "configs/schemas/stage1_evaluation_report.schema.json",
+      "sha256": "7f8c5c997689ef0e9e8e3eeedb5b4838e88faa8b1e72606cac35131c9d4b8e19"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage1_evaluation.py",
+      "sha256": "d3c91fab221c3c31bc243c08c3eb995424407ba7287df24b08373a645734c82a"
+    },
+    "runner": {
+      "path": "scripts/evaluate_stage1_s16.py",
+      "sha256": "cf708987a29a8cb5043ba2af7ce6cce9de157486f95ddba58bd50020fbde7381"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage1_evaluator_s16.py",
+      "sha256": "8ceff6cb62b90d7738a3f379551f170b45270650e511a3cfa4df80e0ed635b5c"
+    },
+    "fixture": {
+      "path": "tests/fixtures/stage1/s16_synthetic_semantic_reference.json",
+      "sha256": "8a86eacc9737efd1b391edb7c754bdfc522e9dfc4b53b5eca14a50ca62b16604"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s16_stage1_evaluator_contract_synthetic_v1.manifest.json",
+      "sha256": "3eb4effe0acd340e681103a42686969ef08fb6832d26aa2527719e3b30c51c95"
+    }
+  },
+  "complexity_gate": {
+    "task_id": "G0.5",
+    "status": "verified_pre_result_complexity_contract",
+    "ready": true,
+    "text_indicator_count": 11,
+    "bpmn_indicator_count": 12,
+    "strata": ["low", "medium", "high"],
+    "method_outputs_used": false,
+    "test_results_used": false,
+    "complex_dataset_selected": false,
+    "formal_profiles_generated": false,
+    "contract": {
+      "path": "configs/complexity_contract.json",
+      "sha256": "0a0e4f809897f22179b752c3c92ddcbf208aced1176c9ac77fb27816c9ac3b7a"
+    },
+    "profile_schema": {
+      "path": "configs/schemas/complexity_profile.schema.json",
+      "sha256": "1cbe678bef8833ef331816d5d08e3f897c368766a393e7a25a008684946cb615"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/complexity.py",
+      "sha256": "eec0cebc2784346e4b11eb3ac2649fde0013ab986a06db5350ded282bdd8aaa4"
+    },
+    "verifier": {
+      "path": "scripts/verify_complexity_contract_g05.py",
+      "sha256": "1028bb033f45282505b755b73fc9d68ccabdf189c99ca78475f26265fcfe7b42"
+    },
+    "text_fixture": {
+      "path": "tests/fixtures/complexity/text_two_sentence_fixture.json",
+      "sha256": "6aee616ccccd2ddaf4923c5770f3cada3b7be932c3c2122c3e311b4b117fd252"
+    },
+    "bpmn_fixture": {
+      "path": "tests/fixtures/complexity/bpmn_cycle_fixture.bpmn",
+      "sha256": "dc0c6e6db0e0c98ce353ccc4a652ac780d68333561daff763e10ead0f51453cc"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/g05_complexity_contract_synthetic_v1.manifest.json",
+      "sha256": "e1494f64bbf413a5eb9c4e2414d5fe9b0678733e25b34f2e8be29aaea9fb5cc3"
+    }
+  },
+  "complex_legal_dataset_gate": {
+    "task_id": "S2.11",
+    "status": "verified_source_membership_and_gold_protocol",
+    "ready": true,
+    "input_ready": true,
+    "human_gold_freeze_ready": false,
+    "dataset_id": "gdpr_2016_679_articles_5_50_seeded50_v1",
+    "source_celex": "32016R0679",
+    "source_unit_count": 200,
+    "selected_count": 50,
+    "article_coverage_count": 46,
+    "coverage_supplement_count": 4,
+    "membership_sha256": "9a6a2c892e6e9ef86877066fb3c88ad03d06ca999c41ecbd91c6df35d09c28b9",
+    "reviewed": 0,
+    "adjudicated": 0,
+    "method_outputs_used": false,
+    "test_results_used": false,
+    "formal_complexity_profiles_generated": false,
+    "performance_evaluation": false,
+    "config": {
+      "path": "configs/datasets/gdpr_articles_5_50_s211.json",
+      "sha256": "041b6269f3da6bdf67b3d06408d9664be5c4fe84e0c9ff4576726a460a6a563c"
+    },
+    "source_metadata": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/source/DOC_1_metadata.xml",
+      "sha256": "3c13d7d5dc2012e9a290575405639aba1d56cd09b47be6b3f8f4297c11c2af72"
+    },
+    "source_body": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/source/DOC_2_body.xml",
+      "sha256": "fce6e6ea8724e66a1c4f98c584cafdc9dfbae26aa83c44b43423b8c7f6aa0295"
+    },
+    "reuse_evidence": {
+      "path": "configs/datasets/gdpr_eurlex_reuse_evidence_s211.json",
+      "sha256": "95a20a93b5f90c2282c9c9db760747ac1caa57833f51673d74e6877b0eccb8af"
+    },
+    "dataset": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/gdpr_articles_5_50_seeded50_v1.jsonl",
+      "sha256": "f6093f37e1e716a5edf07dd0653d2904f11c0fe3945de1e3b083ecc761e6d1e4"
+    },
+    "membership": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/gdpr_articles_5_50_seeded50_v1.membership.json",
+      "sha256": "adbbb4d0556c0542597d43295f8e5e4531ccbec5005ca725d6020af827e4f6c7"
+    },
+    "blank_human_gold": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/gdpr_articles_5_50_seeded50_human_gold_v1.json",
+      "sha256": "9476947d8bcd460249a7ddab73599d18d9b2d59ee479f94360e1c3e7c2c9dab8"
+    },
+    "human_gold_schema": {
+      "path": "configs/schemas/complex_legal_human_gold.schema.json",
+      "sha256": "a98b6196626e990472b71d1d514929ab37ca8a85a417f6fd3279d5224d63a88a"
+    },
+    "mapping_guide": {
+      "path": "docs/COMPLEX_LEGAL_GOLD_GUIDE.md",
+      "sha256": "ef9f557ccd3b56e3f86c6520c40dc1b7676892e010dbf47bdf0bfab066a18237"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/complex_legal.py",
+      "sha256": "0de00566c0bd9e0ed685ceed4f72e99bcb3214a9228f16876a2ee2f60e0d1fa6"
+    },
+    "builder": {
+      "path": "scripts/build_complex_legal_s211.py",
+      "sha256": "d577a5027d57c049e67f04aa2960b845075ca1503d83c6353eca0877a19f8f3a"
+    },
+    "validator": {
+      "path": "scripts/validate_complex_legal_human_gold.py",
+      "sha256": "02f76b027c3c27a6c1c29678d6298d231f8fe05b00c1ad98a2f029dc9cd08faa"
+    },
+    "verifier": {
+      "path": "scripts/verify_complex_legal_s211.py",
+      "sha256": "8b2fa44723587b1eac50207bf729109297e42f6174c016dd3caabe2dd485b9ec"
+    },
+    "gate_module": {
+      "path": "src/formal_experiment/s2_11_gate.py",
+      "sha256": "d0d4c22afb47b71831a012628f8720431381795ab7e213969acbbbc092b81e55"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s211_gdpr_complex_dataset_freeze_v1.manifest.json",
+      "sha256": "215dae3ebe0378652337d2839f62ea4dbf9787f921cdbbae3ac394c36f5c486b"
+    },
+    "claim_boundary": "S2.11 verifies official-source input membership and a blank human-Gold/mapping protocol. Semantic Gold remains 0/50 and no method or performance result has been produced."
+  },
+  "stage2_evaluator_gate": {
+    "task_id": "S2.10-E",
+    "status": "verified_offline_unified_evaluator_contract",
+    "ready": true,
+    "main_data_results_ready": false,
+    "formal_performance_evaluation_run": false,
+    "formal_gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "methods": [
+      "sun_rule_only",
+      "sun_llm_fallback",
+      "direct_llm"
+    ],
+    "contract": {
+      "path": "configs/stage2_evaluator_s210.json",
+      "sha256": "2b6f7bd4269e475dc4b7bb0561a767a70baba49965c16c7f6b34b8a455badc16"
+    },
+    "report_schema": {
+      "path": "configs/schemas/stage2_evaluation_report.schema.json",
+      "sha256": "9906dce85eaf72995e2a3381eed0e33a0c32f5cbf75d35425f7b97c50ea79c5a"
+    },
+    "style_review_schema": {
+      "path": "configs/schemas/style_equivalent_review.schema.json",
+      "sha256": "9348a8a267137306b700f88b0f56c03db792c41bc7815ea85ee9969a1211d499"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage2_evaluation.py",
+      "sha256": "86be001f6eb956fbb1e743eb4efc9c571f8da30208628c6683934157cf359938"
+    },
+    "runner": {
+      "path": "scripts/evaluate_stage2_s210.py",
+      "sha256": "92104261557dd9655d477af42ab88d2ef56345e9c6d388751554faad27062316"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage2_evaluator_s210.py",
+      "sha256": "4724f614b37e5422c72ea48ec9945251f401ee7f5362e71bb52f3431d5eb42e0"
+    },
+    "synthetic_fixture": {
+      "path": "tests/fixtures/stage2_evaluator/s210_contract_fixture.json",
+      "sha256": "549c11ce259ed1a754e7ae99845a09318bcbdefd48426784880cd11fe8164c62"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s210_stage2_evaluator_contract_synthetic_v2.manifest.json",
+      "sha256": "58d65b256225942593b853b0b5f1777de56caca4b9059a28d128e001a933f89b"
+    },
+    "claim_boundary": "S2.10-E verifies evaluator mechanics, fail-closed denominators, and the distinction between terminal API errors and scored H1 fallback after a recovered provider error on synthetic evidence only. Formal B0/H1/D1 results remain blocked until frozen human Gold and the remaining method/data gates are ready."
+  },
+  "stage2_analysis_gate": {
+    "task_id": "S2.12-P",
+    "status": "verified_pre_result_analysis_protocol",
+    "ready": true,
+    "formal_results_ready": false,
+    "formal_gold_read_or_modified": false,
+    "formal_predictions_read_or_created": false,
+    "formal_complexity_profiles_generated": false,
+    "formal_performance_evaluation": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "primary_endpoint_count": 6,
+    "contrast_count": 2,
+    "hypotheses_per_dataset_family": 12,
+    "bootstrap_iterations": 10000,
+    "randomization_iterations": 10000,
+    "multiplicity_control": "Holm step-down separately per dataset track over 12 primary hypotheses",
+    "protocol": {
+      "path": "configs/s212_analysis_protocol.json",
+      "sha256": "d3e2d7e38d97e71d60ffc07cc3cae18335881b0d00d3ab8b4dc4fb3f25cfc860"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/s212_analysis.py",
+      "sha256": "efbc068e0d90facedd7e39069a9f6db0ab5d46afe785a82c7b99a4328a42b788"
+    },
+    "verifier": {
+      "path": "scripts/verify_s212_analysis_protocol.py",
+      "sha256": "566b447bf75945c5683bfe3aef86544c66e7cdebaa230e41acf08dabce7230df"
+    },
+    "synthetic_fixture": {
+      "path": "tests/fixtures/s212_analysis/s212_synthetic_counts.json",
+      "sha256": "0e75e6b52b995dda85fcdff2726ea786defdb83d1b766b0a3d6518bf277e2d47"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s212_analysis_protocol_synthetic_v2.manifest.json",
+      "sha256": "46f73c07ba7e3f86459787985d53775dc187390c55960254978c8e1a50dc3cbd"
+    },
+    "gate_module": {
+      "path": "src/formal_experiment/s2_12_analysis_gate.py",
+      "sha256": "1871fb5a1ac7cc5d33e24acd33b70baba394e0535a49596be1e36cb92991ac27"
+    },
+    "claim_boundary": "S2.12-P freezes the analysis design and verifies mechanics on synthetic counts only. Formal S2.12 results remain blocked on EStG 150/150, GDPR 50/50, and exact-membership B0/H1/D1 predictions."
+  },
+  "stage2_extraction_contract_gate": {
+    "contract_id": "stage2_extraction_contract@1.0.0",
+    "bundle_id": "stage2_extraction_bundle@1.0.0",
+    "status": "frozen_static_sentence_only_pilot",
+    "ready": true,
+    "canonical_schema_changed": false,
+    "pilot_sample_count": 12,
+    "pilot_is_gold": false,
+    "pilot_is_few_shot": false,
+    "method_predictions_created": false,
+    "performance_evaluation": false,
+    "human_gold_modified": false,
+    "llm_api_called": false,
+    "machine_contract": {
+      "path": "configs/stage2_extraction_contract_v1.json",
+      "sha256": "7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46"
+    },
+    "bundle": {
+      "path": "configs/stage2_extraction_bundle_v1.json",
+      "sha256": "9de618048c45fa2d591acdfe1e6aaa5f16915c85df54ecb6e958e9b4310416b2"
+    },
+    "canonical_schema": {
+      "path": "configs/schemas/stage2_prediction.schema.json",
+      "sha256": "7485ac4a3a42b976d87e63a7d2ead88cc3df1f810b14dd066bc1f63c15599d1b"
+    },
+    "human_contract": {
+      "path": "docs/STAGE2_EXTRACTION_CONTRACT_V1.md",
+      "sha256": "949d6a738cac11c0c8828b2c7cc3630b1ab37caa0bd1806c205e0295dba4838f"
+    },
+    "annotation_protocol": {
+      "path": "docs/ANNOTATION_PROTOCOL.md",
+      "sha256": "fe029822a65f0113b24bca82c85c3e4a37bf0718897cae8a8e64343564c1240b"
+    },
+    "human_gold_guide": {
+      "path": "docs/HUMAN_GOLD_GUIDE.md",
+      "sha256": "2b4251c9cdb282f059f6c07357b061ed4a4a9449a7323e371aa59dd5a70c7975"
+    },
+    "pilot": {
+      "path": "configs/stage2_extraction_pilot_v1.json",
+      "sha256": "25a5184ebc0f7a72a08b8c0b190d48158842f2bf73183a271e35dec10b09b80d"
+    },
+    "method_registry": {
+      "path": "configs/methods.json",
+      "sha256": "38e42398900ddc642c7147dec71c0ab53d634f1f97b63ec36b5998b97a26f66e"
+    },
+    "formal_gold_blockers_preserved": [
+      "RWI-0001 context sidecar and evaluation-track decision",
+      "RWI-0007 language QA or native-English phrase-track decision",
+      "150/150 human adjudication and existing route/data/Stage 3 gates"
+    ]
+  },
   "sun_stage2_method": {
     "statement_level": "Final version identifies a BERT-TextCNN modality classifier for definition, obligation, prohibition, and permission.",
     "phrase_level": "Stanford CoreNLP preprocessing plus Tregex/Tsurgeon tree rules and a domain marker lexicon for modality, actor, action, condition, constraint, and exception.",
     "rule_order_constraint": "Extract action only after modality, condition, constraint, and exception spans are identified/removed.",
-    "current_implementation_faithful": false,
+    "current_implementation_faithful": true,
+    "statement_classifier_gate": {
+      "task_id": "S2.4",
+      "status": "verified_training_dev_selection_single_test_evaluation",
+      "reason": "The project-owner local noncommercial research decision unlocked S2.4, and the preregistered Legal-BERT + TextCNN reconstruction completed seven epochs with best dev macro-F1 at epoch 5, followed by exactly one test evaluation. Rights remain unknown_pending_confirmation; redistribution and all other locked boundaries remain forbidden.",
+      "ready": true,
+      "training_authorized": true,
+      "evaluation_authorized": true,
+      "license_evidence_review_complete": true,
+      "license_evidence_status": "verified_no_explicit_license_training_evaluation_not_authorized",
+      "license_evidence": {
+        "path": "configs/datasets/sun_modality_license_evidence.json",
+        "sha256": "5a4d6ee78007cbc81c611b4ad1164328589ed6bb323394342d6808a15e11df7e",
+        "human_record_path": "docs/research/SUN_OFFICIAL_LICENSE_RECORD.md",
+        "human_record_sha256": "68f1b0471add747faf95d11691dd324080cdf512924e8ac4a9574c1aa45d902f"
+      },
+      "local_research_use_decision": {
+        "path": "configs/datasets/sun_modality_local_research_use.json",
+        "sha256": "b92cd0845ef5d71b396f2e78da44640e3a000dc3e345d9e77eadd6a06857e70b",
+        "authorization_basis": "project_owner_research_use_decision_not_rightsholder_license"
+      },
+      "training_config": {
+        "path": "configs/models/sun_bert_textcnn_s24.json",
+        "sha256": "82f950bce605e405ee1600bca90a961337f30f2933ab807f33998464bb7af498",
+        "status": "verified_training_dev_selection_single_test_evaluation",
+        "hyperparameter_search": false,
+        "test_evaluation_count": 1,
+        "run_manifest": {
+          "path": "outputs/reports/s24_legal_bert_textcnn_seed20260717_v1.manifest.json",
+          "sha256": "4aa8fcf4ea8a33301d949b38474415468a2ca169c1e9363e30e3f5effbd5963e",
+          "run_id": "s24_legal_bert_textcnn_seed20260717_v1"
+        },
+        "checkpoint": {
+          "path": "outputs/development/s24_legal_bert_textcnn_seed20260717_v1/best_model.pt",
+          "sha256": "cf071dc96de5794b3da43bd3810b570038a762c6ca4b989b2d54c8ec87fe605a",
+          "bytes": 441559008,
+          "versioned": false
+        },
+        "aggregate_metrics": {
+          "best_epoch": 5,
+          "epochs_completed": 7,
+          "dev_macro_f1": 0.8562634380932774,
+          "test_accuracy": 0.9248826291079812,
+          "test_macro_f1": 0.8510709392388781
+        }
+      },
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "separate_license_closure_required": false,
+      "permission_confirmation_required_to_unlock": false
+    },
+    "baseline_composition_gate": {
+      "task_id": "S2.6",
+      "status": "verified_classifier_extractor_canonical_composition",
+      "ready": true,
+      "classifier_verified": true,
+      "phrase_extractor_verified": true,
+      "canonical_composition_verified": true,
+      "actual_s2_4_checkpoint_loaded": true,
+      "s2_4_test_re_evaluated": false,
+      "bilingual_routing": "de_classifier_en_phrase_and_canonical_parallel_text",
+      "synthetic_fixture_only": true,
+      "formal_performance_evaluation": false,
+      "config": {
+        "path": "configs/models/sun_b0_s26.json",
+        "sha256": "47566def9b7f8e403fd784b23c9cec0c55a64d4b5d10cd62c60dd4ab87442d46"
+      },
+      "implementation": {
+        "path": "src/bpc_hybrid/sun_style/sun_b0.py",
+        "sha256": "51df4f86359ecbc8a6f156371c62f115dfe4952e2e17c8cdc7a72aef77187b66"
+      },
+      "runner": {
+        "path": "scripts/run_sun_rule_only.py",
+        "sha256": "1a3d0d4116e2f3d80d6e7bb03f74d6fd795bfa075551cc83691e4e1381f72232"
+      },
+      "verifier": {
+        "path": "scripts/verify_sun_b0_s26.py",
+        "sha256": "64a79636cfefc9e6799f060ff17e9d61d1fdeec46604123fc500b303b02b44c7"
+      },
+      "verification_manifest": {
+        "path": "outputs/reports/s26_sun_b0_canonical_composition_v3.manifest.json",
+        "sha256": "30a19e8a6476f35eff8561ca35f72a3b3a772067c0128ff4c22ce6b6ddd2fb20"
+      },
+      "llm_api_called": false
+    },
+    "s2_7_modality_baseline_gate": {
+      "task_id": "S2.7-M",
+      "status": "verified_modality_component_phrase_track_blocked",
+      "modality_component_ready": true,
+      "s2_7_overall_ready": false,
+      "phrase_track_ready": false,
+      "dataset_id": "sun_modality_v1",
+      "split_origin": "project_reconstructed_deterministic_split_not_sun_original",
+      "methods": ["train_majority", "german_keyword", "word_ngram_multinomial_nb"],
+      "test_nb_accuracy": 0.784037558685446,
+      "test_nb_macro_f1": 0.5688485721495562,
+      "test_execution_smoke_disclosed": true,
+      "hyperparameter_or_model_selection_on_test": false,
+      "row_level_predictions_persisted": false,
+      "human_gold_read_or_modified": false,
+      "llm_api_called": false,
+      "config": {
+        "path": "configs/models/s27_non_llm_baselines.json",
+        "sha256": "32705a57fcba88cfcdf76d9ff3a2fb79b918ea77f2664ec52e4e2986c62ad676"
+      },
+      "implementation": {
+        "path": "src/bpc_hybrid/sun_style/non_llm_modality_baselines.py",
+        "sha256": "1982b8a7e263fc9d9fa57d9c3f2ce294a10146e51b0d1a5f6a142befe33109df"
+      },
+      "runner": {
+        "path": "scripts/run_s27_modality_baselines.py",
+        "sha256": "09b5754fd338e31eda69de88ab6f8e4731af68090e62d5fe8b19c4661f025a51"
+      },
+      "run_manifest": {
+        "path": "outputs/reports/s27_non_llm_modality_baselines_seed20260717_v1.manifest.json",
+        "sha256": "171ba1e7074169c0b89f1a277d2330d24e0a9745387a8c400d50d271fa218638"
+      }
+    },
+    "h1_preregistration_gate": {
+      "task_id": "S2.8",
+      "status": "verified_offline_preregistration_no_real_llm",
+      "ready": true,
+      "s2_6_baseline_bound": true,
+      "legacy_front_end_allowed": false,
+      "inference_visible_triggers_only": true,
+      "field_level_merge_verified": true,
+      "controlled_uncertainty_metadata_merge_verified": true,
+      "fail_closed_to_original_b0": true,
+      "exact_model_id": "gpt-4.1-2025-04-14",
+      "temperature": 0,
+      "max_output_tokens": 2048,
+      "deterministic_allocation_verified": true,
+      "recovered_provider_error_scorable": true,
+      "s2_10_evaluator_bound": true,
+      "target_dataset_size": 150,
+      "max_call_fraction": 0.3,
+      "hard_call_limit": 45,
+      "total_token_ceiling": 460800,
+      "estimated_worst_case_cost_usd": 1.47456,
+      "hard_cost_ceiling_usd": 1.5,
+      "max_requests_per_sample": 1,
+      "max_retries": 0,
+      "real_llm_authorized": false,
+      "llm_api_called": false,
+      "formal_performance_evaluation": false,
+      "config": {
+        "path": "configs/models/sun_h1_s28.json",
+        "sha256": "dd99e8c5b6ba3c858d505705bdf6144d57e462651c4d8be7c521007c2afd1bef"
+      },
+      "implementation": {
+        "path": "src/bpc_hybrid/sun_style/h1_selective.py",
+        "sha256": "f8c647c9d4fb1c701319746ee09437f30147cb6955b68bb70bbff28a496269f3"
+      },
+      "runner": {
+        "path": "scripts/run_sun_llm_fallback.py",
+        "sha256": "d491c0a80357c76dd4b3cdec9bf5d706f5f31a916d5999976c9c305ee71f5167"
+      },
+      "verifier": {
+        "path": "scripts/verify_sun_h1_s28.py",
+        "sha256": "f9d63ea57bcb9624032476abca3c02e1222ede6392dda231e4c300d573b64382"
+      },
+      "prompt": {
+        "path": "prompts/sun_compat/rule_first_llm_fallback_prompt.md",
+        "sha256": "54e56c4bc52d0e5a83c2b45c3762a36ffb1356bd8190a1cd10d2b5dbd304b40c"
+      },
+      "extraction_contract": {
+        "path": "configs/stage2_extraction_contract_v1.json",
+        "sha256": "7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46"
+      },
+      "extraction_bundle": {
+        "path": "configs/stage2_extraction_bundle_v1.json",
+        "sha256": "9de618048c45fa2d591acdfe1e6aaa5f16915c85df54ecb6e958e9b4310416b2"
+      },
+      "verification_manifest": {
+        "path": "outputs/reports/s28_sun_h1_selective_dry_run_v6.manifest.json",
+        "sha256": "f50d89297a5547beb7d4a65526568724419d475af6b829c6bb209082c39d085c"
+      }
+    },
+    "d1_preregistration_gate": {
+      "task_id": "S2.9",
+      "status": "verified_offline_preregistration_no_real_llm",
+      "ready": true,
+      "same_future_frozen_input_as_b0_h1": true,
+      "gold_visible_to_method": false,
+      "b0_or_h1_prediction_visible": false,
+      "rule_front_end_used": false,
+      "exact_model_id": "gpt-4.1-2025-04-14",
+      "few_shot_count": 4,
+      "temperature": 0,
+      "repeat_count": 5,
+      "hard_call_limit": 750,
+      "max_retries": 0,
+      "failed_attempts_retained": true,
+      "s2_10_evaluator_bound": true,
+      "real_llm_authorized": false,
+      "llm_api_called": false,
+      "env_file_read": false,
+      "formal_performance_evaluation": false,
+      "config": {
+        "path": "configs/models/sun_d1_s29.json",
+        "sha256": "c891e8a0e64a5c60a5bf7e8d0e7330a656e9535f3e069737e5d7ee657066178f"
+      },
+      "implementation": {
+        "path": "src/bpc_hybrid/sun_style/d1_direct.py",
+        "sha256": "0fb1861b09766cade085cd74cf2a3a726d817a0557a4dbe2b6d203752fa396db"
+      },
+      "runner": {
+        "path": "scripts/run_direct_llm.py",
+        "sha256": "3d65c305eafbcfcdd5c62a1ec6e95a9f3ca7792dbaa4c59ff74941c826d43ec3"
+      },
+      "verifier": {
+        "path": "scripts/verify_sun_d1_s29.py",
+        "sha256": "72ba22c7eccb6c98d49f40702a71a54394c7c22e69b39f6a1999f7baaf8a3f63"
+      },
+      "prompt": {
+        "path": "prompts/sun_compat/direct_llm_sun_record_prompt.md",
+        "sha256": "79f6f76fc9779abb87fc919e4384386ac812d40fcedaf73df0ea8ea1377af62e"
+      },
+      "fixture": {
+        "path": "tests/fixtures/d1_s29/s29_offline_contract_fixture.json",
+        "sha256": "729ccc98d83c128d1feed7f9cc86a05befeb89ef2da4dd95dc1dc6ced588f4d9"
+      },
+      "extraction_contract": {
+        "path": "configs/stage2_extraction_contract_v1.json",
+        "sha256": "7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46"
+      },
+      "extraction_bundle": {
+        "path": "configs/stage2_extraction_bundle_v1.json",
+        "sha256": "9de618048c45fa2d591acdfe1e6aaa5f16915c85df54ecb6e958e9b4310416b2"
+      },
+      "verification_manifest": {
+        "path": "outputs/reports/s29_sun_d1_offline_prereg_v5.manifest.json",
+        "sha256": "a9c4fa7f25f9d566bb1b8d06ac8f272269de20c439eaf5946c0e985794e066c3"
+      }
+    },
+    "phrase_extractor_contract": {
+      "task_id": "S2.5",
+      "status": "verified_external_runtime_and_synthetic_live_fixtures",
+      "runtime_config": {
+        "path": "configs/sun_corenlp_runtime.json",
+        "sha256": "30bddb43bdb6f5ec477d9445b413f5e0891675c3855226a5b04747178336e74c"
+      },
+      "pattern_registry": {
+        "path": "resources/corenlp/sun_phrase_patterns_v1.json",
+        "sha256": "7cd1f3d590871111724f9fbcc8bbbd34ea83a544226db35845d11602eae24d1c"
+      },
+      "fixture": {
+        "path": "tests/fixtures/corenlp/obligation_condition_constraint.json",
+        "sha256": "df5860316ad927e2513f40497c3793b965c627218872300fa080b53f2e65495b"
+      },
+      "runtime_verification_manifest": {
+        "path": "resources/corenlp/s25b_runtime_verification_manifest.json",
+        "sha256": "c3b1ee5a42c13cbc80447a62a957c3c1ef3e9ddd6ef46c36f8754d907f646aa3"
+      },
+      "live_smoke_input": {
+        "path": "tests/fixtures/corenlp/s25b_smoke_input.txt",
+        "sha256": "25f6cacb3e09ddfa7f380e5a9aa3657ea6c0db16baa23a0e62f35efc61ba1560"
+      },
+      "live_expected": {
+        "path": "tests/fixtures/corenlp/s25b_live_expected.json",
+        "sha256": "bd8576f7b41a3b6af70937da63c2062cd68089925c0cec2f569eece0dabdd857"
+      },
+      "java_bridge": {
+        "path": "tools/corenlp/SunPhraseRuleBridge.java",
+        "sha256": "ff3cbd1cffbada086f36cb8238005578c5f19a9a971d25daa8da8613cbb32306"
+      },
+      "live_verifier": {
+        "path": "scripts/verify_corenlp_s25b.py",
+        "sha256": "35e1dfcffe355757be913dcc0b79177ad33b07c4f7c45afde89a4dd7c98c41c0"
+      },
+      "corenlp_version": "4.5.10",
+      "extraction_order": [
+        "modality",
+        "condition",
+        "constraint",
+        "exception",
+        "action",
+        "actor"
+      ],
+      "contract_verified": true,
+      "runtime_ready": true,
+      "s2_5_verified": true,
+      "training_run": false,
+      "evaluation_run": false,
+      "formal_gold_modified": false,
+      "live_java_tregex_executed": true,
+      "live_tsurgeon_surgery_count": 7,
+      "live_fixture_sentences": 2,
+      "external_binary_vendored": false
+    },
     "missing_for_lock": [
       "Final-version full method text and hyperparameters must be reconciled with the older local manuscript.",
-      "The current formal runner uses marker/heuristic replacements rather than the final BERT-TextCNN and CoreNLP/Tregex/Tsurgeon pipeline.",
+      "S2.6 technical composition is verified on locked synthetic evidence; formal batch inputs, phrase Gold, evaluator, and result manifests remain pending.",
       "The authors' complete Stage 2 source, trained model, full marker lexicon, and original 150-sentence phrase Gold are not present."
     ]
   },
@@ -125,8 +896,8 @@
       "paper_reference": "Michel et al. (2022) reports 2,833 hand-labelled EStG sentences with four modality classes.",
       "source_manifest": {
         "path": "data/development/sun_modality/source_manifest.json",
-        "version": "sun_modality_source_manifest@1.0.1",
-        "sha256": "cc7b4112c9fc0827a5227939a836c0e08ef68bc640fbf7d03ed91e8ce5b91982"
+        "version": "sun_modality_source_manifest@1.0.2",
+        "sha256": "e4c3e591f56b1611fc3c989d00a2cb4d95d725cb7fda8abee8bd0dc56174036f"
       },
       "source": {
         "zip_path": "data/development/sun_modality/raw/Decision_Logic_data.zip",
@@ -292,6 +1063,50 @@
     },
     "freeze_policy": "The Sun modality development schema, 2,831-row analysis population, quarantine policy, and project-reconstructed split are locked by the S2.1-D machine gate. Do not write formal input or Gold: the independently reconstructed phrase Gold still requires human freeze, and the route, Stage 3, freeze/publication policy, and exact publication-status whitelist must each be re-locked separately."
   },
+  "stage2_annotation_freeze_gate": {
+    "task_id": "S2.2",
+    "status": "verified_annotation_frozen_route_qa_pending",
+    "ready": true,
+    "annotation_frozen": true,
+    "formal_gold_published": false,
+    "formal_stage2_method_run_authorized": false,
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "records": 150,
+    "approved_text_en": 150,
+    "resolved_field_decisions": 900,
+    "adjudicated": 150,
+    "clause_count": 231,
+    "membership_payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
+    "human_correction_layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c"
+    },
+    "membership_hashes": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b"
+    },
+    "human_review_schema": {
+      "path": "configs/schemas/human_gold_review.schema.json",
+      "sha256": "abcccdb420bdf4304279270b8971cdd785d89e14c551842d305033314e128503"
+    },
+    "validator": {
+      "path": "src/formal_experiment/estg150_validator.py",
+      "sha256": "68a2aa6de3c04256ca91c5e164d4644a47f2a0d992ca7a78b33ee9758b14d2c4"
+    },
+    "verifier": {
+      "path": "scripts/verify_estg150_s22_freeze.py",
+      "sha256": "2d0bd1a03c7d9bc56978bca666bcfd5107994d3e9b5017cc8accc264bc4fe8c3"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json",
+      "sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961"
+    },
+    "annotation_scope": "sentence_only_approved_english_working_text",
+    "german_to_english_fidelity_human_verified": false,
+    "context_sidecar_used": false,
+    "open_route_issues": ["RWI-0001", "RWI-0007"],
+    "claim_boundary": "S2.2 records an LLM-assisted, human-adjudicated annotation freeze only. It is not Sun's original 150, not an exact reproduction, not formal Gold publication, and not authorization for a formal Stage 2 method run."
+  },
   "methods": [
     "sun_rule_only",
     "sun_llm_fallback",
@@ -360,6 +1175,11 @@
     "status": "pending_final_subset_configuration_and_violation_gold_lock",
     "official_inputs_available": true,
     "official_input_summary": "Seven Agostinelli GDPR BPMN models, GDPR Articles 5-50, and four Winter configuration files.",
+    "all_seven_extension_membership_status": "locked",
+    "all_seven_extension_dataset_id": "stage1_stage3_gdpr7_extension_v1",
+    "all_seven_extension_count": 7,
+    "all_seven_extension_membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d",
+    "sun_original_four_membership_status": "unresolved_filenames_not_reported",
     "sun_paper_gap": "The paper reports four GDPR models but does not identify the four filenames in the available manuscript; all-seven evaluation may be reported only as an explicit extension.",
     "metrics": ["AP", "MAP", "precision", "recall", "F1"],
     "violation_types": ["missing_action", "incorrect_actor", "out_of_order"],

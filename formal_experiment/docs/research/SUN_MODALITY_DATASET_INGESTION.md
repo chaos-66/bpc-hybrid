@@ -2,8 +2,11 @@
 
 **任务 ID**：S2.1-A（官方数据来源、许可与原始文件证据）
 **文档状态**：**verified**（raw 字节已核验通过，许可仍 `unknown_pending_confirmation`）
-**最后更新**：2026-07-16
-**关联机器 manifest**：`data/development/sun_modality/source_manifest.json@1.0.0`
+**最后更新**：2026-07-17
+**关联机器 manifest**：`data/development/sun_modality/source_manifest.json@1.0.2`
+**S2.4-L 许可证据**：`configs/datasets/sun_modality_license_evidence.json`、
+`docs/research/SUN_OFFICIAL_LICENSE_RECORD.md`
+**S2.4-U 本地研究决定**：`configs/datasets/sun_modality_local_research_use.json`
 **字节级核验脚本**：`scripts/verify_sun_modality_zip.py`
 **对应 Pipeline 任务**：`docs/MASTER_PIPELINE.md` §8.5 S2.1 + `docs/AGENT_RUNBOOK.md` §4.1
 **对应审计底稿**：`docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md`、`docs/research/SUN_REFERENCE_SNOWBALL_AND_MARKER_AUDIT.md`
@@ -237,17 +240,21 @@ group 整体强制放入 train、禁止进入 dev/test，并尽可能保持其�
 
 ## 4. 许可与再分发状态
 
-- `archive.org/details/input-2` 的 license/rights 元数据**未**在本地工作环境核实（archive.org fetch failed，web_search 也未返回 rights 页直证）。
-- 2026-07-15 用户提供的 archive.org metadata 中 `licenseurl=null` 且 `rights=null`，**不能**解释为"自由再分发许可"。
-- 论文页脚声明（`https://link.springer.com/article/10.1007/s11227-023-05626-0`）：数据集可向通讯作者索取 + 给出 Archive.org 链接。这条声明**不是**对自由再分发的许可。
+- 2026-07-15 的首次外部访问失败；当时用户提供的 Archive.org metadata 已显示
+  `licenseurl=null` 与 `rights=null`。
+- 2026-07-16 的 S2.4-L 使用官方 `https://archive.org/metadata/input-2` 实时只读复核：
+  `licenseurl` 和 `rights` 仍为 `null`，文件身份与本地 ZIP 一致。
+- 同日复核 Springer 正式论文页：数据可向通讯作者合理请求并给出 Archive.org 链接；
+  这属于数据可用性声明，不是明确的数据集训练、评价或再分发许可。
+- 本地 ZIP 只有三个数据/原文成员，没有 LICENSE/RIGHTS 文件。
 - 因此，**许可状态**在 `source_manifest.json` 与本文档中均登记为 `unknown_pending_confirmation`。
 
-### 4.1 2026-07-15 用户授权的本地使用范围
+### 4.1 用户授权的本地使用范围（2026-07-15，2026-07-17 扩展）
 
 用户在任务提示中明确：
 
 - **可**读取、校验、安全解压 raw 内的官方 ZIP，用于本地论文实验；
-- **仅**允许本地科研使用；
+- **仅**允许本地非商业科研使用；2026-07-17 的明确决定进一步覆盖模型训练、开发集选择、评价和论文中的不可逆聚合指标；
 - **不得**重新发布、上传或提交原始 ZIP/CSV；
 - 许可状态**继续**记录为 `unknown_pending_confirmation`；
 - 许可未知**只阻止**原始数据再分发和公开发布，**不阻止**本地 hash、schema 和数据结构核验；
@@ -259,32 +266,47 @@ group 整体强制放入 train、禁止进入 dev/test，并尽可能保持其�
 |---|---|
 | 读取、计算 hash、做 ZIP 完整性 testzip | 重新发布、上传、提交原始 ZIP/CSV 到任何 Git remote / 公网云盘 / 公开数据集托管平台 |
 | 在 `data/development/sun_modality/raw/` 范围内安全解压（路径穿越 + 覆盖保护） | 写入 `references/`、`paper/`、`data/{input,gold,predictions,results}/`、`outputs/`、`_retired/` 之外的任何非 `raw/` 路径 |
-| 在 S2.1-C 中做本地流式 schema/hash/聚合统计，并在无数据冲突时生成 Git-ignored development records/splits（不训练、不评价） | 在论文中声称 "official license permits free use" / "已取得官方授权可直接发布" |
+| 在 S2.1-C 中做本地流式 schema/hash/聚合统计，并生成 Git-ignored development records/splits；在 S2.4 中做本地非商业训练、dev 选择和评价 | 在论文中声称 "official license permits free use" / "已取得官方授权可直接发布" |
 | 复现 `verify_sun_modality_zip.py` 做回归保护 | 调用任何 LLM/API 处理 raw/ 内的字节 |
 
-### 4.2 在许可复核为 `redistribution_and_reuse_allowed` 之前
+### 4.2 在权利人许可证仍为 `unknown_pending_confirmation` 期间
 
 - 不得把 `EStG_sent_vec.csv` 复制到 `data/input/`、`data/gold/`、`data/predictions/`、`data/results/`、`references/`、`paper/`、`outputs/`；
 - 不得把 raw/ 下的字节上传到任何外部仓库；
 - 不得在论文主张里写"official license permits free use"、"已取得官方授权可直接发布"等；
-- 不得用官方 CSV 直接训练 BERT-TextCNN，不得运行模型评价；
+- 可以依据 `sun_modality_local_research_use.json` 在本机运行 BERT-TextCNN 训练、dev 选择和评价，并在论文中发布不可逆聚合指标；
 - 许可未知**不阻止**本地 hash、完整流式 schema、不可逆聚合统计和 Git-ignored
   development 导入；它继续阻止原始 ZIP/CSV、records/splits、文本、向量的公开
   再分发。版本化 audit/manifest 只能包含不可重建原始数据的 hash、schema 和聚合统计。
 
+### 4.3 S2.4-L 证据与 S2.4-U 项目决定分层锁定
+
+`configs/datasets/sun_modality_license_evidence.json` 和
+`docs/research/SUN_OFFICIAL_LICENSE_RECORD.md` 是 2026-07-16 的官方证据快照，仍如实记录
+没有发现显式许可证。`configs/datasets/sun_modality_local_research_use.json` 则单独记录
+2026-07-17 的项目使用决定。机器门 `src/formal_experiment/s2_4_license_gate.py` 将两层分开：
+
+- `s2_4_license_evidence_verified=true`：说明本次官方证据复核和 exact hash 通过；
+- `s2_4_ready=true`：说明项目所有者已允许本地非商业训练、dev 选择和评价；这不改变
+  rights status，也不解锁再分发、商业使用、外部上传、Gold 修改或 LLM/API 调用。
+
 ---
 
-## 5. 已写入的活动资产（本轮 S2.1-A 全部动作）
+## 5. 已写入的活动资产
 
 | 路径 | 状态 | 说明 |
 |---|---|---|
-| `data/development/sun_modality/source_manifest.json` | 写入并更新 | 机器可读来源/许可 manifest；版本 `sun_modality_source_manifest@1.0.1`；来源路径已项目相对化，状态为 `manifest_verified_and_assets_byte_matched` |
+| `data/development/sun_modality/source_manifest.json` | 写入并更新 | 机器可读来源/许可 manifest；版本 `sun_modality_source_manifest@1.0.2`；增加 S2.4-L 官方实时许可观察，数据身份不变 |
 | `data/development/sun_modality/raw/Decision_Logic_data.zip` | 用户提供；本会话**未**下载、**未**重发布 | 191,874,718 字节；SHA-1 已与 archive.org metadata byte-match |
 | `data/development/sun_modality/raw/.gitignore` | 写入 | 目录级 ignore 策略；只保留 .gitignore 自身，ignore 其他所有文件 |
 | `data/development/sun_modality/raw/_extract/` | 未创建 | S2.1-B 解压前禁止覆盖；当前为空或不存在 |
 | `docs/research/SUN_MODALITY_DATASET_INGESTION.md` | 写入并更新 | 本文件；人类可读 ingestion 记录；状态从 in_progress 升级为 verified |
 | `scripts/verify_sun_modality_zip.py` | 写入 | 字节级核验脚本；离线、本地、不读 .env、不调 LLM、不动 Gate |
-| `tests/test_sun_modality_source_manifest.py` | 写入并更新 | 最小回归测试：原 28 个用例 + 新增 6 个核验用例（size/SHA-1/成员 hash/_extract 状态/.gitignore 内容/许可诚实）共 34 个 |
+| `configs/datasets/sun_modality_license_evidence.json` | 新建 | S2.4-L 机器可读官方许可证据与 fail-closed 决定 |
+| `configs/datasets/sun_modality_local_research_use.json` | 新建 | S2.4-U 项目所有者本地非商业训练/评价决定；与权利人许可证据分离 |
+| `docs/research/SUN_OFFICIAL_LICENSE_RECORD.md` | 新建 | 人类可读结论、重新打开门禁所需证据和未发送的确认请求要点 |
+| `src/formal_experiment/s2_4_license_gate.py` | 新建并更新 | exact-hash 验证官方证据和本地研究决定；不会联网、训练或评价 |
+| `tests/test_sun_modality_source_manifest.py`、`tests/test_s24_license_gate.py` | 写入并更新 | 来源身份、官方实时 null 许可字段、hash 篡改和伪造授权负测试 |
 | `.gitignore`（仓库根） | 追加条目 | `formal_experiment/data/development/sun_modality/raw/**` + `formal_experiment/data/development/sun_modality/_extract/` 兜底忽略 |
 | `docs/EXPERIMENT_LOG.md` + `docs/EXPERIMENT_EVENTS.jsonl` | 通过 `record_change.py` 追加 | S2.1-A 一次性 change 事件（中文人类日志 + 机器事件） |
 | `docs/PROJECT_AUDIT.md` §4 S2.1-A 段 | 更新 | 把 S2.1-A 状态由"in_progress"明确写为"verified, S2.1-B 可解锁（仍不实际进入）" |
@@ -299,11 +321,12 @@ group 整体强制放入 train、禁止进入 dev/test，并尽可能保持其�
 | Blocker | 状态 | 解锁条件 |
 |---|---|---|
 | **B1**：本地无任何官方包字节；外部 archive.org 入口在本会话不可达 | **resolved**（2026-07-15） | 已在用户授权下提供 raw ZIP；size + SHA-1 + 3 成员 + EStG_raw.txt SHA-256 全部 byte-match |
-| **B2**：官方 license / rights 元数据未核实 | **open** | 取得 `https://archive.org/details/input-2` 的完整 license / rights statement 文本（archive.org metadata 自报 licenseurl=null 与 rights=null 不足），留档到 `docs/research/SUN_OFFICIAL_LICENSE_RECORD.md`（S2.1-B 任务卡范围内） |
+| **B2**：明确训练/评价许可缺失 | **evidence reviewed；external permission required** | 取得适用许可证全文或作者/权利人书面许可，明确覆盖本地模型训练和评价；如需发布/再分发，再单独取得对应授权 |
 | **B3**：许可仍 unknown，原始及可重建数据不得公开再分发 | **open** | 本地 S2.1-C schema/hash/聚合审计与 Git-ignored development 运行已获用户授权；但 ZIP、CSV、records、splits、文本、向量仍不得上传、提交或公开。取得明确 rights statement 后再决定发布边界 |
 | **B4**：一个 raw-text-identical group 存在 permission / obligation 源标签冲突 | **governed for main import；raw inconsistency retained**（2026-07-16） | 用户在任何模型结果前选择精确 group quarantine：不判断正确标签、不改 raw；2 行整体排除于 2,831 主数据。任意非锁定冲突仍 fail closed；未来 full-source sensitivity 仅预注册未运行 |
 
-> B1 已解决；B2/B3 继续限制公开再分发但不阻止已授权的本地 development import。
+> B1 已解决；B2 的证据复核已完成但外部许可仍缺失，B3 继续限制公开再分发；二者不
+> 阻止已经授权并完成的本地 schema/hash/development import。
 > B4 没有从 raw source 消失，只通过用户预结果、精确锁定且可追溯的 quarantine 规则
 > 解除主 analysis population 的导入阻塞；它不得被描述为“源标签已纠正”。
 
@@ -311,7 +334,7 @@ group 整体强制放入 train、禁止进入 dev/test，并尽可能保持其�
 
 ## 7. 是否解锁 S2.1-B
 
-**可以解锁 S2.1-B 的派发，但仍受 B2/B3 限制。**
+**S2.1-B 已完成；其历史派发边界仍受 B2/B3 限制。**
 
 S2.1-B 的任务卡原文（`AGENT_RUNBOOK.md` §5）要求"依赖：S2.1-A 的来源事实已固定；真实 CSV 可以仍缺失"。本任务满足：
 
@@ -349,6 +372,8 @@ S2.1-B 的任务卡原文（`AGENT_RUNBOOK.md` §5）要求"依赖：S2.1-A 的�
 - 快速 audit 只流式计算 ZIP SHA-1/SHA-256、读取 ZIP 中央目录并扫描约 2.3 MB 的
   records/splits；不解压或重扫 470 MB CSV、不重建 split、不训练；
 - `sun_modality_development_data_verified=true` 只代表本地 development 数据门禁通过。
-  许可仍 `unknown_pending_confirmation`，B2/B3 均未解决，formal Gold、正式训练/评价、
+  许可仍 `unknown_pending_confirmation`；B2 证据复核完成但外部许可缺失，B3 仍开放，
+  formal Gold、正式训练/评价、
   Stage 3 与 final experiment 仍未解锁；
-- S2.1 整体 **verified**；下一工程任务建议为 S2.3，但本批次没有进入 S2.3/S2.4。
+- S2.1、S2.3、S2.5 整体 **verified**；S2.4-L evidence verified，但 S2.4 本体仍
+  blocked，S2.6 未进入。

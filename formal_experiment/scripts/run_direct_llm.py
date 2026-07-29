@@ -1,15 +1,9 @@
-"""Guarded direct-LLM control runner for the frozen formal input.
+"""Build the locked S2.9 direct-LLM request plan without calling an API.
 
-Wave 1.1 §3 update: the prompt is loaded from
-``prompts/sun_compat/direct_llm_sun_record_prompt.md`` (v3) via
-``bpc_hybrid.prompt_loader``; the parser consumes the canonical
-Stage 2 prediction record; the prompt SHA-256 is recorded in the
-manifest; the runner refuses to write to formal artifact directories
-when the route / methods are blocked; ``--development`` is required
-for any write outside development paths.
-
-Real API calls require explicit user authorization and ``--allow-llm``.
-No real call is made here.
+This entry point is intentionally offline.  It renders the exact v4 prompt,
+including all four few-shot examples, and emits only a request plan.  Passing
+``--allow-llm`` fails closed; a real run needs a later explicit authorization
+and a separately audited transport task.
 """
 
 from __future__ import annotations
@@ -17,40 +11,31 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from bpc_hybrid.llm_client import LLMClientError, LLMRequest, RealAPITransport
-from bpc_hybrid.llm_config import LLMConfig
-from bpc_hybrid.prompt_loader import build_manifest_entry, load_prompt
-from bpc_hybrid.stage2_canonical import validate_canonical
-
-# Status reads — these are read-only, not LLM calls
-from formal_experiment.audit import collect_project_audit
-from formal_experiment.paths import (
-    FORMAL_PREDICTIONS_DIR,
-    FORMAL_RESULTS_DIR,
-    FROZEN_GOLD_DIR,
-    FROZEN_INPUT_DIR,
-    OUTPUTS_DEVELOPMENT_DIR,
+from bpc_hybrid.prompt_loader import load_prompt  # noqa: E402
+from bpc_hybrid.sun_style.d1_direct import (  # noqa: E402
+    D1ContractError,
+    assert_input_path_allowed,
+    build_request_plan,
+    load_s29_config,
+    sha256_file,
 )
 
-PROMPTName = "direct_llm_sun_record_prompt"
 
-DEFAULT_INPUT = ROOT / "data/input/estg150_input_v1.jsonl"
-DEFAULT_OUTPUT = ROOT / "data/predictions/direct_llm_predictions.jsonl"
-DEFAULT_MANIFEST = ROOT / "data/predictions/direct_llm_manifest.json"
-
-FORMAL_DIRS = (
-    FROZEN_INPUT_DIR,
-    FROZEN_GOLD_DIR,
-    FORMAL_PREDICTIONS_DIR,
-    FORMAL_RESULTS_DIR,
+PromptName = "direct_llm_sun_record_prompt"
+DEFAULT_CONFIG = ROOT / "configs" / "models" / "sun_d1_s29.json"
+DEFAULT_INPUT = ROOT / "tests" / "fixtures" / "d1_s29" / "s29_offline_contract_fixture.json"
+DEVELOPMENT_ROOTS = (
+    ROOT / "outputs" / "development",
+    ROOT / "data" / "development",
 )
 
 
@@ -62,214 +47,96 @@ def _is_under(path: Path, root: Path) -> bool:
         return False
 
 
-def _gate_formal_write(target: Path) -> tuple[bool, str]:
-    """Return (allowed, reason). False when the write must be refused.
-
-    Formal artifact directories refuse writes unless (a) the route is
-    locked, (b) the method is ready, and (c) explicit ``--development``
-    is **not** in effect. Development paths are always allowed but
-    flagged as development in the manifest.
-    """
-    is_formal = any(_is_under(target, fd) for fd in FORMAL_DIRS)
-    if not is_formal:
-        return True, "non-formal path"
-    audit = collect_project_audit()
-    if not audit["integrity_pass"]:
-        return False, "audit integrity_pass is false"
-    if audit["final_experiment_ready"]:
-        return True, "audit final_experiment_ready is true"
-    return False, (
-        "formal write refused: route is not final-ready. "
-        "Pass --development and write to outputs/development or "
-        "data/development instead."
-    )
-
-
-def _load_input(path: Path) -> list[dict]:
-    rows: list[dict] = []
-    with path.open("r", encoding="utf-8") as handle:
-        for line_number, raw in enumerate(handle, 1):
-            if not raw.strip():
-                continue
-            row = json.loads(raw)
-            if not isinstance(row.get("sample_id"), str) or not isinstance(row.get("text"), str):
-                raise ValueError(f"line {line_number}: expected sample_id and text")
-            rows.append(row)
-    if not rows:
-        raise ValueError("input is empty")
-    if len({row["sample_id"] for row in rows}) != len(rows):
-        raise ValueError("duplicate sample IDs")
-    return rows
+def _load_rows(path: Path) -> list[dict[str, Any]]:
+    try:
+        if path.suffix.lower() == ".jsonl":
+            rows: list[dict[str, Any]] = []
+            with path.open("r", encoding="utf-8") as stream:
+                for line_number, line in enumerate(stream, start=1):
+                    if not line.strip():
+                        continue
+                    value = json.loads(line)
+                    if not isinstance(value, dict):
+                        raise D1ContractError(f"input line {line_number} is not an object")
+                    rows.append(value)
+            return rows
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except D1ContractError:
+        raise
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise D1ContractError(f"invalid D1 input: {path}") from exc
+    if isinstance(value, dict) and isinstance(value.get("rows"), list):
+        return value["rows"]
+    if isinstance(value, list):
+        return value
+    raise D1ContractError("D1 JSON input must be an array or an object containing rows")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
-    parser.add_argument(
-        "--allow-llm",
-        action="store_true",
-        help="Explicitly authorize real LLM calls; required for any non-mock run.",
-    )
+    parser.add_argument("--plan-out", type=Path)
     parser.add_argument(
         "--max-calls",
         type=int,
-        default=150,
-        help="Hard upper bound on LLM calls (default 150).",
+        default=750,
+        help="Offline hard ceiling; must be in 1..750 and cover the rendered request plan.",
     )
+    parser.add_argument("--development", action="store_true")
     parser.add_argument(
-        "--overwrite",
+        "--allow-llm",
         action="store_true",
-        help="Explicitly allow replacing existing output and manifest files.",
-    )
-    parser.add_argument(
-        "--development",
-        action="store_true",
-        help="Run as development-only; manifest records dev mode. Required for any "
-        "write to outputs/development or data/development.",
+        help="Reserved for a later separately authorized task; S2.9 always refuses it.",
     )
     args = parser.parse_args()
 
-    # 1. Load prompt from disk (v3 canonical)
-    prompt = load_prompt(PromptName)
-
-    # 2. Refuse to overwrite existing artifacts unless --overwrite
-    for path in (args.output, args.manifest):
-        if path.exists() and not args.overwrite:
-            print(f"Refusing to overwrite existing artifact: {path}")
-            return 2
-
-    # 3. Gate formal writes
-    for path in (args.output, args.manifest):
-        allowed, reason = _gate_formal_write(path)
-        if not allowed:
-            print(f"Refusing to write {path}: {reason}")
-            return 2
-        if not allowed and not args.development:
-            print(f"Refusing to write formal path {path} without --development.")
-            return 2
-
-    # 4. LLM authorization gate
-    if not args.allow_llm:
-        print("Refusing to run: real LLM calls require explicit authorization and --allow-llm.")
+    if args.allow_llm:
+        print("Refusing real LLM use: S2.9 verifies only offline prompt and request planning.")
         return 2
-    if args.max_calls < 1:
-        print("Refusing to run: --max-calls must be positive.")
-        return 2
-
-    # 5. Load and validate input
     try:
-        rows = _load_input(args.input)
-    except (OSError, ValueError, json.JSONDecodeError) as exc:
-        print(f"Invalid frozen input: {exc}")
-        return 3
-    if len(rows) > args.max_calls:
-        print(f"Refusing to run: {len(rows)} records exceed --max-calls={args.max_calls}.")
-        return 3
-
-    # 6. LLM config
-    config = LLMConfig.from_env(project_root=ROOT)
-    if not config.enabled or config.provider == "mock":
-        print("Refusing to run: a real LLM provider is not enabled.")
-        return 3
-    transport = RealAPITransport(config, timeout_seconds=60.0)
-
-    # 7. Process samples
-    results: list[dict] = []
-    validation_failures: list[dict] = []
-    llm_errors: list[dict] = []
-    # Build the prompt body ONCE and reuse for all rows
-    from bpc_hybrid.llm_client import OpenAICompatibleRequestBuilder
-    builder = OpenAICompatibleRequestBuilder(config)
-    sent_sampling = builder.sent_sampling_params()
-    for row in rows:
-        sample_id = row["sample_id"]
-        source_text = row["text"]
-        user_prompt = prompt.user_prompt_template.format(
-            sample_id=sample_id,
-            source_text=source_text,
-            few_shot_block="(omitted at runtime; prompt file is the source of truth)",
-        )
-        request = LLMRequest(
-            source_id=sample_id,
-            source_text=source_text,
-            system_prompt=prompt.system_prompt,
-            user_prompt=user_prompt,
-        )
-        try:
-            response = transport.send(request)
-        except LLMClientError as exc:
-            llm_errors.append({"sample_id": sample_id, "error": str(exc)})
-            continue
-
-        raw_text = response.content.strip()
-        if raw_text.startswith("```"):
-            lines = raw_text.splitlines()
-            raw_text = "\n".join(lines[1:-1])
-        try:
-            payload = json.loads(raw_text)
-        except json.JSONDecodeError as exc:
-            llm_errors.append({"sample_id": sample_id, "error": f"non-JSON: {exc}"})
-            continue
-        if not isinstance(payload, dict):
-            llm_errors.append({"sample_id": sample_id, "error": "payload not a dict"})
-            continue
-
-        # Inject source_id if the LLM omitted it
-        payload.setdefault("source_id", sample_id)
-        payload.setdefault("sample_id", sample_id)
-        payload.setdefault("source_text", source_text)
-        payload.setdefault("schema_version", "1.0.0")
-        payload.setdefault("method", {"name": "direct_llm", "schema_source": "stage2_prediction.schema.json@1.0.0"})
-        payload.setdefault("unsupported_or_ambiguous", [])
-
-        # Validate against canonical schema + cross-field rules
-        report = validate_canonical(payload)
-        if not (report.schema_valid and report.cross_field_valid):
-            validation_failures.append(
-                {"sample_id": sample_id, "errors": list(report.errors)}
+        config_path = args.config.resolve()
+        input_path = args.input.resolve()
+        config = load_s29_config(config_path)
+        assert_input_path_allowed(input_path, config)
+        prompt = load_prompt(PromptName)
+        if prompt.sha256 != config["prompt"]["sha256"]:
+            raise D1ContractError("D1 prompt SHA-256 changed")
+        rows = _load_rows(input_path)
+        plan = build_request_plan(rows, prompt, config)
+        plan["gold_read_by_runner"] = False
+        if not 1 <= args.max_calls <= config["budget"]["absolute_max_calls"]:
+            raise D1ContractError("--max-calls must be between 1 and the locked ceiling 750")
+        if plan["request_count"] > args.max_calls:
+            raise D1ContractError(
+                f"request plan has {plan['request_count']} calls, exceeding --max-calls={args.max_calls}"
             )
-            continue
-        results.append(payload)
-
-    # 8. Write outputs
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    with args.output.open("w", encoding="utf-8", newline="\n") as handle:
-        for record in results:
-            handle.write(json.dumps(record, ensure_ascii=False) + "\n")
-
-    manifest = {
-        "schema_version": "1.0.0",
-        "stage": "formal_stage2",
-        "method": "direct_llm",
-        "mode": "development" if args.development else "formal",
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
-        "input_path": str(args.input),
-        "output_path": str(args.output),
-        "sample_count_input": len(rows),
-        "sample_count_written": len(results),
-        "sample_count_validation_failed": len(validation_failures),
-        "sample_count_llm_error": len(llm_errors),
-        "llm_calls": len(rows),
-        "max_calls": args.max_calls,
-        "llm_provider": config.provider,
-        "llm_model": config.model,
-        "sampling": sent_sampling,
-        "prompts": [build_manifest_entry(prompt)],
-        "real_api": True,
-        "gold_read_by_runner": False,
-        "rule_front_end_used": False,
-        "validation_failures": validation_failures,
-        "llm_errors": llm_errors,
-    }
-    args.manifest.write_text(
-        json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8"
-    )
-
-    print(f"Wrote {len(results)} direct-LLM predictions (canonical v1.0.0) and manifest.")
-    print(f"Validation failures: {len(validation_failures)}; LLM errors: {len(llm_errors)}.")
-    print(f"Prompt SHA-256: {prompt.sha256}")
+        plan["config"] = {
+            "path": config_path.relative_to(ROOT).as_posix(),
+            "sha256": sha256_file(config_path),
+        }
+        plan["prompt"] = {
+            "path": prompt.path.relative_to(ROOT).as_posix(),
+            "sha256": prompt.sha256,
+            "few_shot_count": len(prompt.few_shot_examples),
+        }
+        rendered = json.dumps(plan, ensure_ascii=False, indent=2) + "\n"
+        if args.plan_out:
+            target = args.plan_out.resolve()
+            if not args.development:
+                raise D1ContractError("--development is required for --plan-out")
+            if not any(_is_under(target, root) for root in DEVELOPMENT_ROOTS):
+                raise D1ContractError("S2.9 plans may be written only under a development directory")
+            if target.exists():
+                raise D1ContractError(f"refusing to overwrite: {target}")
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(rendered, encoding="utf-8")
+            print(json.dumps({"status": "succeeded", "plan": str(target)}, ensure_ascii=False))
+        else:
+            print(rendered, end="")
+    except (D1ContractError, ValueError) as exc:
+        print(f"S2.9 D1 plan failed closed: {exc}")
+        return 2
     return 0
 
 

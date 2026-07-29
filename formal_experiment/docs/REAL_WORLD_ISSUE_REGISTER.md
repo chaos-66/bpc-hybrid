@@ -54,9 +54,63 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0026 | 2026-07-26 | EStG-150 candidate protocol / C2 | preregistration/provenance | C2 的 Pass B 请求内嵌同次运行新产生的 Pass A 输出，因此三条未来真实 Pass B request SHA 不可能在调用前诚实计算；旧 dry-run 还只预检第一条 Pass A | `mitigated` | 六槽位离线预检现全部落盘并锁 SHA；三条 Pass B 明确使用已验证历史 Pass A fixture、仅作 offline envelope preflight，未来真实 SHA 保持 deferred；C2=false、API=0；Event 122 |
 | RWI-0027 | 2026-07-26 | EStG-150 candidate protocol / C1–C2 | accounting/provenance | 可计费 response 在 canonical candidate 或 finish-reason 校验失败时，usage 可能未进入 failure receipt | `resolved` | 两份原 failure/raw response 均不改写；SHA-bound corrections 分别恢复 C1 的 2956 tokens/0.01728755 CA 与 C2 的 7839 tokens/0.282373 CA；runner 先计 envelope usage，再检查 finish reason/candidate；mocked invalid/length 回归；Events 123–124 |
 | RWI-0028 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/validation | GPT-4o Pass B 把逐字不变的译文标为 `edited`；runner 又错误地用原始英文而非同次 Pass A 文本校验 Pass B translation decision | `mitigated` | v1.5 增加 decision/text 生成前自检并让 Pass B 校验绑定同次 Pass A；旧响应仍 fail closed，57 项聚焦回归和六槽位离线 preflight 通过；真实 runtime 待新授权；Event 134 |
-| RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o 对重复 modality cue 持续给出不可直接切片的错误坐标；v1.6/v1.7 的生成前约束均未被稳定遵守 | `mitigated` | v1.7 真实运行在 3/6 calls 后因重复 `may` 坐标偏差 23>8 fail closed；v1.8 仅对相同 modality evidence cue 使用无距离上限的唯一最近精确匹配，其他重复语义 span 仍限 8 字符，零匹配/并列仍拒绝，并强化 absolute-offset/action 逐字指令；65 项聚焦回归和六槽位离线 preflight 通过；Events 135–138，后续事件待记录 |
+| RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o 对重复 cue、坐标和逐字连续 span 的生成约束均未稳定遵守 | `mitigated` | v1.8 真实运行在 3/6 calls 后因 condition 省略内部括号引文而零精确匹配并 fail closed；v1.9 保留 fail-closed validator，仅在 strict transport schema 增加非验证性 span descriptions 和父 clause containment 自检；66 项聚焦回归与六槽位离线 preflight 通过；Event 139，后续事件待记录 |
+| RWI-0030 | 2026-07-29 | S2.7–S2.10 / paper validation | provenance/evaluation | modality-only DeepSeek pilot、canonical 六要素路线、无效/未聚合 repeat 和人工候选被文档混写，可能误导 B0/H1/D1 主表 | `mitigated` | 新增人读/机器运行清单；修正 modality-only scope；D1 repeat 02 标 invalid、repeat 04 标 partial，旧 secondary analyses 标需过滤重算；未删除或覆盖产物，实验事件待本批次追加 |
+| RWI-0031 | 2026-07-29 | project governance / candidate protocol tests | provenance/directory hygiene | 数百项已验证资产长期未版本化，且 C2 离线测试在活动根目录遗留 ACL 异常临时目录 | `mitigated` | 临时目录改入 `.tmp/`、可访问缓存已清理、旧根目录合同草稿退役；部分 ignored cache 仍受旧 ACL 保护；完整验证通过，统一 Git checkpoint 待用户明确批准；Events 160–162 |
 
 ## 3. 详细记录
+
+### RWI-0031 — 已验证资产未版本化与活动根目录临时文件泄漏
+
+- **首次发现**：2026-07-29，用户要求整理 Minimax/Agent 运行后的文件状态时。
+- **阶段/范围**：全项目 Git provenance、活动目录边界，以及 EStG-150 candidate protocol
+  C2 离线测试的临时文件生命周期。
+- **观察事实**：当前完整性检查虽为绿色，但 Git 工作区仍有数百项自 2026-07-17 起累积的
+  代码、配置、schema、测试、manifest 和授权运行证据未进入版本控制；最近实验日志也明确
+  记录 449–459 个 dirty paths。项目根另有被活动 v1 合同取代的
+  `STAGE2_CONTRACT_v0.1_DRAFT.md`。`test_c2_offline_preparation...` 把
+  `TemporaryDirectory` 直接建在 `formal_experiment/` 根部，一次 Windows 清理失败留下
+  `estg150_c2_offline_opcdx7az/`，其 ACL 甚至阻止普通只读检查和 Git 遍历。
+- **影响**：有效实验资产没有远端 checkpoint，Agent 交接时容易误判为临时文件；根目录草稿
+  形成第二合同入口；异常临时目录污染 `git status`/catalog 检查并可能反复残留。现有 Layer E、
+  Gold、历史预测、结果和 manifest 经机器门禁核验未损坏。
+- **处置方法**：将 C2 测试临时父目录固定为已忽略的 `formal_experiment/.tmp/` 并断言父目录；
+  精确删除异常临时目录与可正常访问的可再生缓存；把根目录旧草稿迁入 `_retired/docs/2026-07/`
+  并登记迁移；旧测试生成且 ACL 封闭的 `.tmp/` 残留保持 ignored/隔离；
+  不移动、不删除、不覆盖任何历史实验输出；对全部活动状态运行完整测试。由于当前工作树混合了
+  458 个跨任务路径，统一 checkpoint 在获得用户明确批准前不建立、不推送。
+- **验证证据**：候选协议聚焦测试、`audit_project.py --with-tests`、文件目录检查和
+  暂存范围安全复核；两份 hash-locked prompt 的 5 处 Markdown
+  hard-break 双空格保持原字节，并作为 `git diff --check` 的已解释例外；Event 160。
+- **状态**：`mitigated`。临时目录产生位置与旧草稿入口已经修正；受旧 ACL 保护的 ignored
+  `.tmp/` 缓存仍有残留；累计资产完整验证通过，
+  但统一 Git checkpoint 因混合工作树需用户明确批准，尚未建立或推送。
+- **对应事件**：Events 160–162。
+
+### RWI-0030 — modality-only 与 canonical 六要素结果口径混用
+
+- **首次发现**：2026-07-29，复核 `paper_validation_r1` 输出与用户目标时。
+- **阶段/范围**：EStG-150 Stage 2 B0/H1/D1 结果与运行 provenance。
+- **观察事实**：`paper_validation_r1` 的冻结 D1 prompt 只要求 clause/modality/evidence/
+  actor/action，H1 prompt 只要求 clause/modality；聚合预测统一只保留 clause/modality。
+  但后加的 scope 文档错误引用 canonical `prompts/sun_compat/`，声称本轮 prompt 已输出
+  完整六要素。其 threshold/bootstrap 又读取了缺 30 条的 D1 repeat 02。随后出现的 D1
+  repeat 04 完成 5 个 batch 和 token receipt，却没有合并 prediction/metrics，也未进入原
+  experiment event；其 provider host 与根 manifest 记录不一致。
+- **影响**：modality F1 可能被误称为六要素 extraction P/R；H1 keep/correct/remove/add
+  可能被误称为预注册 field-level fallback；无效/partial repeat 可能污染均值和显著性。
+  这属于结果治理问题，不代表 Gold、canonical contract 或 B0 attempts 已损坏。
+- **当前处置**：不删除、不移动、不覆盖任何历史产物。新增
+  `docs/experiments/STAGE2_RUN_INVENTORY.md` 与机器清单，将 canonical six-field、
+  modality-only、offline-only、invalid、partial 和 candidate-only 分开；重写
+  `11_MODALITY_ONLY_SCOPE.md`，以冻结运行 prompt/预测为事实源。旧 threshold/bootstrap
+  保留为 provenance，但在过滤 invalid repeat 02 前不得引用其 D1 secondary conclusion。
+- **剩余工作**：目标 DeepSeek V4 Pro canonical 六要素 D1/H1 尚未实际运行；需另行冻结
+  provider/model/budget/run ID，并获得真实 API 明确授权。D1 repeat 04 若要使用，必须先
+  解释 provider 差异、合并并验证 150 predictions，再单独记录，不可静默替换 repeat 02。
+- **状态**：`mitigated`。口径与索引已整理，历史 secondary metrics 尚未重算，目标
+  canonical 六要素比较尚未运行。
+- **对应事件**：本批次实验清单与日志补全事件。
 
 ### RWI-0029 — 重复 modality cue 使错误坐标无法唯一重锚
 
@@ -117,8 +171,19 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
   保持 8 字符界限。guard 另明确所有坐标是全 translation 的 absolute offset、不得复用 actor.start，
   action.text 不得删除中间修饰语或宾语。canonical prompt/schema/serializer/transport schema、B0、D1/H1
   均未改变；旧 v1.7 仍可只读回放。65 项聚焦回归和 v1.8 六槽位 strict preflight 通过。
-- **状态**：`mitigated`。v1.8 离线边界已验证，但尚需在已明确授权的 35 CA 累计预算内完成真实复验。
-- **对应事件**：Events 135–138；v1.7 失败与 v1.8 事件待追加。
+- **v1.8 真实复现**：新授权运行在 3/6 calls 后 fail closed。样本 0 Pass A/B 通过；样本 1 Pass A
+  的 `clauses[2].conditions[0].text` 省略了源 clause 中间的括号引文
+  `(Section 7(1) no. 1 of the Turnover Tax Act 1972)`，因此不再是连续逐字子串且零精确匹配。
+  运行消耗 7,155 input、3,494 output tokens、0.3697925 CA、0 retry；候选集未冻结、
+  evaluation=0、P/R=null，Layer D/E/Gold 未读取。
+- **v1.9 最小修复**：v1.8 坐标策略、canonical validator、prompt、schema、serializer、B0、D1/H1
+  均保持不变。strict transport schema v1.2 仅为 span text/start/end、normalized 和五类可选数组增加
+  非验证性 `description`，明确内部括号、引文、bullet、修饰语和标点必须逐字保留，否则留空；guard
+  增加 `clause_span.text.find(span.text) >= 0` 等价自检。未增加本地 fuzzy/content repair 或内容重试。
+  66 项聚焦回归和 v1.9 六槽位 strict preflight 通过，`request_downgrade_applied=false`；离线
+  API/token/cost=0，C2=false，evaluation=0、P/R=null，Layer D/E/Gold 未读取。
+- **状态**：`mitigated`。v1.9 离线边界已验证，真实复验仍须在用户已明确授权的 35 CA 累计预算内执行。
+- **对应事件**：Events 135–139；v1.8 失败与 v1.9 离线准备事件待追加。
 
 ### RWI-0028 — C2 Pass B translation decision 与实际候选文本不一致
 

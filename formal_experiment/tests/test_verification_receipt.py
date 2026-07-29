@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import audit_project
 
 
@@ -53,3 +55,19 @@ def test_failed_tests_do_not_leave_a_reusable_receipt(tmp_path, monkeypatch) -> 
     )
 
     assert not audit_project.VERIFICATION_RECEIPT.exists()
+
+
+def test_test_harness_forces_utf8_for_nested_windows_processes(tmp_path, monkeypatch) -> None:
+    monkeypatch.setattr(audit_project, "PROJECT_ROOT", tmp_path)
+    observed = {}
+
+    def fake_run(command, **kwargs):
+        observed.update(kwargs)
+        return SimpleNamespace(returncode=0, stdout="1 passed\n")
+
+    monkeypatch.setattr(audit_project.subprocess, "run", fake_run)
+    result = audit_project._run_tests()
+
+    assert result["passed"] is True
+    assert observed["encoding"] == "utf-8"
+    assert observed["env"]["PYTHONUTF8"] == "1"

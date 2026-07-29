@@ -1,0 +1,154 @@
+{
+  "schema_version": "sun_tregex_rule_registry@1.1.0",
+  "rule_set_id": "sun_phrase_patterns_en_v4_expanded",
+  "status": "development_expanded_v6_not_s25_locked",
+  "language": "en",
+  "parent_rule_set_id": "sun_phrase_patterns_en_v3_enhanced",
+  "parser": {
+    "name": "Stanford CoreNLP",
+    "version": "4.5.10",
+    "tree_representation": "constituency_parse"
+  },
+  "lexicon": {
+    "id": "public_marker_lexicon_en_v2",
+    "combined_payload_sha256": "f2e54ddfa1820bfb7eb583b6b6ea1fe80a6e54efdac26afeed492478353ebc8c"
+  },
+  "extraction_order": [
+    "modality",
+    "condition",
+    "constraint",
+    "exception",
+    "action",
+    "actor"
+  ],
+  "ordering_policy": {
+    "action_after_removed_context": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "actor_after_action": true,
+    "overlap_resolution": "smallest_sufficient_then_leftmost",
+    "test_time_rule_edits_forbidden": true,
+    "multi_match_per_field": true,
+    "collect_then_resolve": true
+  },
+  "fields": [
+    {
+      "field": "modality",
+      "order": 1,
+      "candidate_source": "v2_definition_first_marker_set",
+      "tregex_patterns": [
+        "VP=modality << /(?i)^(shall)$/ << /(?i)^(mean|means)$/",
+        "VP=modality << /(?i)^(means|denotes|amounts)$/",
+        "VP=modality << /(?i)^(is|are)$/ << /(?i)^(defined|understood|construed)$/",
+        "VP=modality << /(?i)^(refers)$/ << /(?i)^(to)$/",
+        "/^(MD|VB|VBP|VBZ)$/=modality < /(?i)^(shall|must|may|should|can|need)$/",
+        "VP=modality << /(?i)^(shall|must|may)$/ << /(?i)^(not)$/",
+        "VP=modality << /(?i)^(is|are)$/ << /(?i)^(required|obliged|allowed|permitted|authorized|prohibited)$/",
+        "VP=modality < /(?i)^(have|has|need)$/ < /(?i)^(to)$/"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "condition",
+      "order": 2,
+      "candidate_source": "v2_expanded_public_markers",
+      "tregex_patterns": [
+        "SBAR=condition << /(?i)^(if|when|whenever|unless|provided|where|once|insofar|whilst|while|whether)$/",
+        "PP=condition << /(?i)^(in|upon|on|after|before|to)$/ << /(?i)^(case|event|condition|extent|purpose)$/",
+        "PP=condition << /(?i)^(subject)$/ << /(?i)^(to)$/",
+        "PP=condition << /(?i)^(in)$/ << /(?i)^(the)$/ << /(?i)^(context|event)$/",
+        "PP=condition << /(?i)^(in)$/ << /(?i)^(case)$/",
+        "ADVP=condition << /(?i)^(where|when|whenever|once)$/",
+        "PP=condition << /(?i)^(for)$/ << /(?i)^(business|tax)$/",
+        "PP=condition << /(?i)^(as|so)$/ << /(?i)^(long)$/",
+        "PP=condition << /(?i)^(on)$/ << /(?i)^(condition)$/",
+        "SBAR=condition < (WHNP=rel < /(?i)^(who|whose|which|that)$/)"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "constraint",
+      "order": 3,
+      "candidate_source": "v2_expanded_temporal_quantitative_legal",
+      "tregex_patterns": [
+        "/^(PP|ADVP)$/=constraint << /(?i)^(within|before|after|during|until|throughout|prior|between|through)$/",
+        "/^(PP|NP|ADJP)$/=constraint << /(?i)^(at|no|least|later|more|most|than|only|minimum|maximum|up|equal)$/",
+        "PP=constraint << /(?i)^(in|pursuant|accordance|compliance|consistent)$/ << /(?i)^(with|to)$/",
+        "PP=constraint << /(?i)^(for)$/ << /(?i)^(purpose|period|duration|year|annual)$/",
+        "ADVP=constraint << /(?i)^(only|solely|exclusively|generally|exactly)$/",
+        "PP=constraint << /(?i)^(without)$/",
+        "PP=constraint << /(?i)^(under|pursuant)$/",
+        "PP=constraint << /(?i)^(to)$/ << /(?i)^(an|the)$/",
+        "NP=constraint << /(?i)^(meaning|purposes)$/ << /(?i)^(of)$/",
+        "PP=constraint << /(?i)^(by)$/ << /(?i)^(double|means|way|reference)$/",
+        "PP=constraint << /(?i)^(under)$/ << /(?i)^(section|paragraph|article)$/",
+        "ADVP=constraint << /(?i)^(greater|less|equal)$/ << /(?i)^(than)$/",
+        "PP=constraint << /(?i)^(no)$/ << /(?i)^(more|less|earlier|later)$/ << /(?i)^(than)$/",
+        "PP=constraint << /(?i)^(as)$/ << /(?i)^(defined)$/ << /(?i)^(in)$/"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "exception",
+      "order": 4,
+      "candidate_source": "v2_expanded_exception_cues",
+      "tregex_patterns": [
+        "/^(SBAR|PP|ADVP)$/=exception << /(?i)^(except|excluding|notwithstanding|save|apart|regardless|other)$/",
+        "SBAR=exception << /(?i)^(unless|even)$/",
+        "PP=exception << /(?i)^(other)$/ << /(?i)^(than)$/",
+        "PP=exception << /(?i)^(with)$/ << /(?i)^(exception)$/",
+        "PP=exception << /(?i)^(in)$/ << /(?i)^(derogation)$/",
+        "VP=exception << /(?i)^(shall|does|do)$/ << /(?i)^(not)$/ << /(?i)^(apply)$/",
+        "PP=exception << /(?i)^(apart)$/ << /(?i)^(from)$/",
+        "PP=exception << /(?i)^(save)$/",
+        "PP=exception << /(?i)^(regardless)$/ << /(?i)^(of)$/"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "action",
+      "order": 5,
+      "candidate_source": "v2_dependency_prefer_python_resolver",
+      "tregex_patterns": [
+        "S=clause !> SBAR < (VP=action !<< MD)",
+        "VP=action < /^(VB|VBD|VBG|VBN|VBP|VBZ)$/ !<< MD",
+        "VP=action < (VP=passive < /^(VB|VBN)$/ < /^(VBN|VBD)$/ < (PP=byagent < (IN < /(?i)^by$/) < NP))",
+        "VP=action < (VP < (NP=obj !<< PRP))",
+        "VP=action < (CC=coord < /^(and|or)$/)"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "actor",
+      "order": 6,
+      "candidate_source": "v2_dependency_prefer_python_resolver",
+      "tregex_patterns": [
+        "S=clause !> SBAR < (NP=actor $++ VP)",
+        "PP=actor < (IN < /(?i)^by$/) < NP",
+        "NP=actor < (NNP|NN < /(?i)^(taxpayer|taxpayers|employee|employees|employer|employers|authority|authorities|fund|funds|person|persons|company|companies|operator|minister|office|association|associations|farmer|farmers|forester|foresters|trader|traders|controller|processor|recipient|board|court|inspector|driver|officer|expert|physician|judge|prosecutor|insured)$/)",
+        "NP=actor < (NP < (NNP|NN < /^(taxpayer|employee|employer|authority|person|operator|minister|office|association|fund|trader|farmer|forester|board|court|controller|processor)$/))",
+        "NP=actor < (PRP < /^(He|She|They|It)$/)"
+      ],
+      "tsurgeon_operations": []
+    }
+  ],
+  "pattern_count_summary": {
+    "modality": 8,
+    "condition": 10,
+    "constraint": 14,
+    "exception": 9,
+    "action": 5,
+    "actor": 5
+  },
+  "boundaries": {
+    "fixture_accuracy_is_evaluation": false,
+    "formal_gold_used": false,
+    "paper_faithful_only": false,
+    "method_id": "b0_enhanced_v6",
+    "training_or_evaluation_run": false,
+    "wiktionary_actor_expansion_included": false
+  }
+}

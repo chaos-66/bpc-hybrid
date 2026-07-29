@@ -1,0 +1,282 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 28,
+  "end_index_exclusive": 33,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000786",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Administrative expenses that are unrelated to the purpose of the bank and do not benefit any board member, managing director, or supervisory board member through disproportionately high remuneration. d) In the event of the dissolution of the bank, the owners or shareholders may not recover those capital contributions that are needed to cover losses from obligations arising from guarantees and other liabilities existing at the time of dissolution; the remaining assets of the bank may only be used within the scope of the approved business purpose. 4.",
+        "issues": ["The opening administrative-expenses fragment lacks its governing predicate and cannot be assigned an independent modality or action."]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "In the event of the dissolution of the bank, the owners or shareholders may not recover those capital contributions that are needed to cover losses from obligations arising from guarantees and other liabilities existing at the time of dissolution", "start": 203, "end": 449},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 275, "end": 282}]},
+          "actors": [{"id": "c1_actor_1", "text": "the owners or shareholders", "start": 248, "end": 274, "normalized": "owners or shareholders"}],
+          "actions": [{"id": "c1_action_1", "text": "recover those capital contributions", "start": 283, "end": 318, "normalized": "recover capital contributions"}],
+          "conditions": [{"id": "c1_condition_1", "text": "In the event of the dissolution of the bank", "start": 203, "end": 246, "normalized": "upon bank dissolution"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "that are needed to cover losses from obligations arising from guarantees and other liabilities existing at the time of dissolution", "start": 319, "end": 449, "normalized": "capital needed for losses from existing guarantee and other liabilities"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "the remaining assets of the bank may only be used within the scope of the approved business purpose", "start": 451, "end": 550},
+          "modality": {"label": "permission", "evidence": [{"text": "may only", "start": 484, "end": 492}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be used", "start": 493, "end": 500, "normalized": "use remaining bank assets"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "within the scope of the approved business purpose", "start": 501, "end": 550, "normalized": "within approved business purpose"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The opening text is a syntactic fragment whose governing provision precedes the supplied excerpt."},
+        {"field": "action", "reason": "No governing action is supplied for the opening administrative-expenses fragment, so none is invented."},
+        {"field": "modality", "reason": "The opening fragment cannot be assigned a modality without its missing governing text."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The two complete dissolution rules are extracted separately; the preceding administrative-expenses fragment is preserved but not converted into a fabricated clause."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000800",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "This does not apply as long as the sponsoring undertaking suspends the contribution payments (Section 4(4) no. 2 of the Income Tax Act 1988).\nd) The pension commitments of the fund may not exceed 80% of the last current active remuneration.\ne) The beneficiary must also have a legal entitlement to the pension upon termination of the employment relationship (vesting) if he/she has been a beneficiary for more than five years.\nf) Upon termination of the employment relationship before the insured event occurs, the beneficiary's entitlements from own contributions and from employer contributions that have become vested may be settled or transferred to another pension fund.\ng) After the insured event has occurred, the following may be settled:\n— minor benefits and\n— benefits for survivors' provision.\nh) The entitled employees must have the right to participate in the administration of all amounts that flow to the fund.\n2.",
+        "issues": ["The antecedent of 'This' and the content incorporated through Section 4(4) no. 2 are not supplied."]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "This does not apply as long as the sponsoring undertaking suspends the contribution payments (Section 4(4) no. 2 of the Income Tax Act 1988)", "start": 0, "end": 140},
+          "modality": {"label": "definition", "evidence": [{"text": "does not apply", "start": 5, "end": 19}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "does not apply", "start": 5, "end": 19, "normalized": "exclude antecedent rule"}],
+          "conditions": [{"id": "c1_condition_1", "text": "as long as the sponsoring undertaking suspends the contribution payments", "start": 20, "end": 92, "normalized": "while sponsoring undertaking suspends contribution payments"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "(Section 4(4) no. 2 of the Income Tax Act 1988)", "start": 93, "end": 140, "normalized": "Section 4(4) no. 2 cross-reference"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "d) The pension commitments of the fund may not exceed 80% of the last current active remuneration", "start": 142, "end": 239},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 181, "end": 188}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "exceed 80% of the last current active remuneration", "start": 189, "end": 239, "normalized": "exceed pension-commitment ceiling"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "80% of the last current active remuneration", "start": 196, "end": 239, "normalized": "80 percent of last current active remuneration"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "e) The beneficiary must also have a legal entitlement to the pension upon termination of the employment relationship (vesting) if he/she has been a beneficiary for more than five years", "start": 241, "end": 425},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 260, "end": 264}]},
+          "actors": [{"id": "c3_actor_1", "text": "The beneficiary", "start": 244, "end": 259, "normalized": "beneficiary"}],
+          "actions": [{"id": "c3_action_1", "text": "have a legal entitlement to the pension", "start": 270, "end": 309, "normalized": "retain legal pension entitlement"}],
+          "conditions": [{"id": "c3_condition_1", "text": "if he/she has been a beneficiary for more than five years", "start": 368, "end": 425, "normalized": "beneficiary for more than five years"}],
+          "constraints": [
+            {"id": "c3_constraint_1", "text": "upon termination of the employment relationship", "start": 310, "end": 357, "normalized": "upon employment termination"},
+            {"id": "c3_constraint_2", "text": "(vesting)", "start": 358, "end": 367, "normalized": "vesting"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c3_actor_1", "action_id": "c3_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c4",
+          "clause_span": {"text": "f) Upon termination of the employment relationship before the insured event occurs, the beneficiary's entitlements from own contributions and from employer contributions that have become vested may be settled or transferred to another pension fund", "start": 427, "end": 674},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 621, "end": 624}]},
+          "actors": [],
+          "actions": [
+            {"id": "c4_action_1", "text": "be settled", "start": 625, "end": 635, "normalized": "settle vested entitlements"},
+            {"id": "c4_action_2", "text": "transferred to another pension fund", "start": 639, "end": 674, "normalized": "transfer entitlements to another pension fund"}
+          ],
+          "conditions": [{"id": "c4_condition_1", "text": "Upon termination of the employment relationship before the insured event occurs", "start": 430, "end": 509, "normalized": "employment ends before insured event"}],
+          "constraints": [
+            {"id": "c4_constraint_1", "text": "from own contributions", "start": 542, "end": 564, "normalized": "entitlements from own contributions"},
+            {"id": "c4_constraint_2", "text": "from employer contributions that have become vested", "start": 569, "end": 620, "normalized": "entitlements from vested employer contributions"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": null, "action_id": "c4_action_1"},
+            {"actor_id": null, "action_id": "c4_action_2"}
+          ],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c5",
+          "clause_span": {"text": "g) After the insured event has occurred, the following may be settled:\n— minor benefits and\n— benefits for survivors' provision.", "start": 676, "end": 804},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 731, "end": 734}]},
+          "actors": [],
+          "actions": [{"id": "c5_action_1", "text": "be settled", "start": 735, "end": 745, "normalized": "settle listed benefits"}],
+          "conditions": [{"id": "c5_condition_1", "text": "After the insured event has occurred", "start": 679, "end": 715, "normalized": "after insured event"}],
+          "constraints": [
+            {"id": "c5_constraint_1", "text": "minor benefits", "start": 749, "end": 763, "normalized": "minor benefits"},
+            {"id": "c5_constraint_2", "text": "benefits for survivors' provision", "start": 770, "end": 803, "normalized": "survivors' benefits"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c5_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c6",
+          "clause_span": {"text": "h) The entitled employees must have the right to participate in the administration of all amounts that flow to the fund", "start": 805, "end": 924},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 831, "end": 835}]},
+          "actors": [{"id": "c6_actor_1", "text": "The entitled employees", "start": 808, "end": 830, "normalized": "entitled employees"}],
+          "actions": [{"id": "c6_action_1", "text": "have the right to participate in the administration of all amounts that flow to the fund", "start": 836, "end": 924, "normalized": "participate in administration of fund inflows"}],
+          "conditions": [],
+          "constraints": [{"id": "c6_constraint_1", "text": "all amounts that flow to the fund", "start": 891, "end": 924, "normalized": "all amounts flowing to fund"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c6_actor_1", "action_id": "c6_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The antecedent of 'This' and the substantive content of Section 4(4) no. 2 are absent from the excerpt."},
+        {"field": "actor", "reason": "The passive settlement permissions do not state who may settle or transfer the entitlements, so no actor is inferred."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Six explicit normative units are preserved: one exclusion, one ceiling, one vesting duty, two settlement permissions, and one participation-right duty."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000020",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale. 20.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale", "start": 0, "end": 177},
+          "modality": {"label": "definition", "evidence": [{"text": "A prerequisite for the tax exemption", "start": 0, "end": 36}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale", "start": 37, "end": 177, "normalized": "define tax-exemption prerequisite"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "the free drink allowance may not be sold by the employee", "start": 45, "end": 101, "normalized": "employee does not sell free drink allowance"},
+            {"id": "c1_condition_2", "text": "it is only granted in such quantity as to actually preclude a sale", "start": 111, "end": 177, "normalized": "quantity granted must preclude sale"}
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "the free drink allowance may not be sold by the employee", "start": 45, "end": 101},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 70, "end": 77}]},
+          "actors": [{"id": "c2_actor_1", "text": "the employee", "start": 89, "end": 101, "normalized": "employee"}],
+          "actions": [{"id": "c2_action_1", "text": "be sold", "start": 78, "end": 85, "normalized": "sell free drink allowance"}],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c2_actor_1", "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "it is only granted in such quantity as to actually preclude a sale", "start": 111, "end": 177},
+          "modality": {"label": "obligation", "evidence": [{"text": "is only granted", "start": 114, "end": 129}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "is only granted", "start": 114, "end": 129, "normalized": "limit quantity granted"}],
+          "conditions": [],
+          "constraints": [{"id": "c3_constraint_1", "text": "in such quantity as to actually preclude a sale", "start": 130, "end": 177, "normalized": "quantity that precludes sale"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The exemption prerequisite is represented as a definition and its two constituent requirements are also separated into the explicit no-sale prohibition and quantity restriction."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000021",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Free tobacco, free cigars and free cigarettes to employees in tobacco processing establishments, if the products granted may not be sold and are granted only in such a quantity that actually precludes a sale. 21.",
+        "issues": ["The excerpt is a noun-phrase list item whose governing tax treatment or other main predicate is missing."]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "if the products granted may not be sold", "start": 97, "end": 136},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 121, "end": 128}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be sold", "start": 129, "end": 136, "normalized": "sell granted products"}],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "are granted only in such a quantity that actually precludes a sale", "start": 141, "end": 207},
+          "modality": {"label": "obligation", "evidence": [{"text": "are granted only", "start": 141, "end": 157}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "are granted only", "start": 141, "end": 157, "normalized": "limit quantity granted"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "in such a quantity that actually precludes a sale", "start": 158, "end": 207, "normalized": "quantity that precludes sale"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The governing predicate for the free-tobacco list item is not present, so its overarching tax treatment cannot be extracted."},
+        {"field": "modality", "reason": "Only the two explicit subordinate restrictions are classified; no modality is invented for the missing main rule."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The no-sale and quantity restrictions are explicit and extracted, while the absent governing rule for the noun-phrase list item remains unresolved."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000035",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(3) The excess of business receipts over business expenses may be recognised as profit if there is no statutory obligation to keep books and books are not kept voluntarily.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(3) The excess of business receipts over business expenses may be recognised as profit if there is no statutory obligation to keep books and books are not kept voluntarily", "start": 0, "end": 171},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 59, "end": 62}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be recognised as profit", "start": 63, "end": 86, "normalized": "recognize receipts surplus as profit"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "there is no statutory obligation to keep books", "start": 90, "end": 136, "normalized": "no statutory bookkeeping duty"},
+            {"id": "c1_condition_2", "text": "books are not kept voluntarily", "start": 141, "end": 171, "normalized": "books not kept voluntarily"}
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The provision contains one permission conditioned jointly on the absence of both mandatory and voluntary bookkeeping."
+    }
+  ]
+}

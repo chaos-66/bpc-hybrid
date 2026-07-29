@@ -1,0 +1,73 @@
+{
+  "schema_version": "sun_modality_license_evidence@1.0.0",
+  "task_id": "S2.4-L",
+  "checked_at_utc": "2026-07-16T12:17:35Z",
+  "status": "verified_no_explicit_license_training_evaluation_not_authorized",
+  "scope": "License-evidence closure for the Sun modality dataset before S2.4. This record does not authorize training, evaluation, formal use, publication, or redistribution.",
+  "sources": {
+    "archive_org_metadata": {
+      "url": "https://archive.org/metadata/input-2",
+      "retrieval_mode": "live_read_only_official_endpoint",
+      "identifier": "input-2",
+      "title": "paper dataset",
+      "publicdate": "2023-06-15 07:54:35",
+      "collections": [
+        "opensource_media",
+        "community"
+      ],
+      "licenseurl": null,
+      "rights": null,
+      "access_restricted": null,
+      "asset": {
+        "name": "Decision_Logic_data.zip",
+        "size_bytes": 191874718,
+        "sha1": "0346f84a246b7049d5aef58bcb33471435bee106",
+        "source": "original"
+      }
+    },
+    "springer_article": {
+      "url": "https://link.springer.com/article/10.1007/s11227-023-05626-0",
+      "doi": "10.1007/s11227-023-05626-0",
+      "retrieval_mode": "live_read_only_official_publisher_page",
+      "data_availability_paraphrase": "The datasets are available from the corresponding author on reasonable request; the notes also link the Archive.org item.",
+      "explicit_dataset_license_observed": false,
+      "explicit_training_permission_observed": false,
+      "explicit_evaluation_permission_observed": false,
+      "explicit_redistribution_permission_observed": false
+    },
+    "local_archive": {
+      "path": "data/development/sun_modality/raw/Decision_Logic_data.zip",
+      "sha256": "ada231f092927813ba9f1cd32a44a3d30d96b57fc463d042dfd76c652b6d58f2",
+      "member_names": [
+        "EStG_sent_vec.csv",
+        "EStG_raw.txt",
+        "estg.html"
+      ],
+      "license_member_present": false
+    }
+  },
+  "decision": {
+    "rights_status": "unknown_pending_confirmation",
+    "evidence_review_complete": true,
+    "training_authorized": false,
+    "evaluation_authorized": false,
+    "formal_use_allowed": false,
+    "publication_allowed": false,
+    "redistribution_allowed": false,
+    "reason": "Public accessibility and a reasonable-request data-availability statement do not provide an explicit dataset license or written permission for model training and evaluation.",
+    "required_to_reopen": [
+      "An explicit license whose text covers the dataset and permits the intended local model training and evaluation, or written permission from the authors/rightsholder covering those uses.",
+      "A separately recorded redistribution/publication grant before any raw or derived data are released; training permission alone must not imply redistribution permission.",
+      "A new exact-hash evidence record, contract update, negative tests, full offline audit, and experiment-provenance event before S2.4 ready may become true."
+    ]
+  },
+  "boundaries": {
+    "training_run": false,
+    "evaluation_run": false,
+    "gold_modified": false,
+    "formal_artifact_written": false,
+    "llm_api_called": false,
+    "s2_4_ready": false,
+    "s2_6_entered": false
+  }
+}

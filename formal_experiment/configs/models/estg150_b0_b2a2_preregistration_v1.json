@@ -1,0 +1,309 @@
+{
+  "schema_version": "b0_enhanced_b2a2_preregistration@1.0.0",
+  "preregistration_id": "s27_estg150_b0_b2a2_prereg_v1",
+  "created_at_utc": "2026-07-23T05:28:57.8005136+00:00",
+  "status": "preregistered_frozen_before_single_all150",
+  "run_id": "s27_estg150_b0_enhanced_b2a2",
+  "method": "b0_enhanced_b2a2",
+  "claim_scope": "development",
+  "paper_faithful_b0": false,
+  "parent_run": "s27_estg150_b0_enhanced_v10a",
+  "negative_evidence_run": "s27_estg150_b0_enhanced_b2a",
+  "single_all150_run_max": 1,
+  "single_run_command": "python formal_experiment/scripts/run_estg150_b0_enhanced_b2a2_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_b2a2.json --runtime-home D:\\environment\\stanford-corenlp-4.5.10 --device cpu",
+  "single_hypothesis": "definition_constrained_clause_local_decoding",
+  "fixed_algorithm": [
+    "call unchanged v10-A parent first",
+    "preserve strong English definition structure",
+    "preserve validated DE-EN plus German definition anchor",
+    "preserve explicit prohibition, permission, and obligation priority",
+    "accept classifier definition only under the B2a strict validated copular structure rule at the existing 0.55 threshold",
+    "when a supported clause classifier definition is rejected, choose argmax over obligation, permission, and prohibition from the same clause probability vector without another threshold",
+    "when unsupported or without legal clause probabilities, preserve exact v10-A label, route, confidence, and uses-clause-classifier semantics",
+    "never use the record classifier for a supported rejected-definition clause",
+    "do not add definition phrases, markers, regexes, language rules, or sample-specific logic",
+    "keep non-definition parent decisions unchanged outside the fixed evidence-priority branches"
+  ],
+  "diagnostic_finding": {
+    "new_b2a_record_fallback_rows": 40,
+    "same_clause_full_probability_vectors_valid": 40,
+    "same_clause_full_probability_vectors_total": 40,
+    "b2a_both_definition_contradiction_rows": 29,
+    "record_text_used_for_clause_probability": false,
+    "manifest": {
+      "path": "outputs/development/s27_estg150_b0_b2a2_route_diagnostic_v1/manifest.json",
+      "sha256": "cf5d8d860fc43fc0420e9c4b4518a060707b4cd029d824bfb772b390b9ca1b3e",
+      "bytes": 4070
+    }
+  },
+  "promotion_gates": {
+    "A_route_honesty": {
+      "record_level_classifier_fallback_max": 20,
+      "fallback_set_must_be_v10a_subset": true,
+      "supported_new_record_fallback_max": 0,
+      "placeholder_classifier_count": 0,
+      "contradictory_record_fallback_path_max": 0
+    },
+    "B_definition": {
+      "tp_min": 16,
+      "fp_max": 30,
+      "fn_max": 23,
+      "precision_min": 0.35,
+      "recall_min": 0.41,
+      "f1_min": 0.38
+    },
+    "C_overall_modality": {
+      "tp_min": 154,
+      "precision_min": 0.602,
+      "recall_min": 0.667,
+      "f1_min": 0.634
+    },
+    "D_other_class_f1_drop_max": 0.015,
+    "E_exact_v10a_lock": {
+      "predicted_clauses": 256,
+      "aligned_clauses": 195,
+      "alignment_f1": "exact",
+      "exact_segmentation_f1": "exact",
+      "table8_all_fields_and_overall": "exact",
+      "primary_field_metrics": "exact",
+      "presence_complete_hallucination": "exact",
+      "actor_action_edges": "exact",
+      "schema_valid_rate": 1.0
+    }
+  },
+  "config": {
+    "path": "configs/models/estg150_b0_enhanced_s27_b2a2.json",
+    "sha256": "a544a8eebd4de39d8d0c74d7a00681ad224c3f0b6f3da47afb02f84232d5fc31",
+    "bytes": 5377
+  },
+  "module_bindings": {
+    "clause_probability_adapter_b2a2": {
+      "path": "src/bpc_hybrid/b0_v10/clause_probability_adapter_b2a2.py",
+      "sha256": "6cbac8b4ae75b12595e82e3b4bc26ad8a2e98d91bffc7a196aecfddb4d44877d",
+      "bytes": 5242
+    },
+    "definition_resolver_b2a2": {
+      "path": "src/bpc_hybrid/b0_v10/definition_resolver_b2a2.py",
+      "sha256": "3bc9aaf24ed07cef4627c9c47bed320e592553161e823e97c58a503462a3fcdb",
+      "bytes": 9698
+    },
+    "development_batch_b2a2": {
+      "path": "src/bpc_hybrid/estg150_b0_development_b2a2.py",
+      "sha256": "6d908f2739f11e97f6bda04aeff5cb06d5e572b033ebfda6020de7f958826011",
+      "bytes": 13936
+    },
+    "development_runner_b2a2": {
+      "path": "scripts/run_estg150_b0_enhanced_b2a2_development.py",
+      "sha256": "c2bb56494a9bbf5e60aeba885f12b7307462fead6308ae032fdfec6a9d9853b6",
+      "bytes": 21301
+    },
+    "focused_tests_b2a2": {
+      "path": "tests/test_b0_b2a2_definition_constrained_decoding.py",
+      "sha256": "b3ed2825444397dfb907b6ca06cbc85c17b51f53c3247d2910c71cb4a64948b3",
+      "bytes": 12465
+    },
+    "b2a_definition_evidence": {
+      "path": "src/bpc_hybrid/b0_v10/definition_resolver.py",
+      "sha256": "af1bab874fa2084561f99c0baf8e34248b207d688e1765e08de26b51ddc9a246",
+      "bytes": 9153
+    },
+    "v10_modality": {
+      "path": "src/bpc_hybrid/b0_v10/modality.py",
+      "sha256": "6dd2c74bbd5894353b921ff2f29506a950e6e6b2453b426ee451a042c0fc1246",
+      "bytes": 3239
+    },
+    "v10_alignment": {
+      "path": "src/bpc_hybrid/b0_v10/alignment.py",
+      "sha256": "957aa591927139ae3f37dbaf8634ba1e5be04beaa7e54e9597d2b6f57db2c2fe",
+      "bytes": 7919
+    },
+    "v10_scope": {
+      "path": "src/bpc_hybrid/b0_v10/scope.py",
+      "sha256": "3c13d2d73d49476cd3449f50775c6b4b63ac68f5baa2f95a4b564e5ca8b30887",
+      "bytes": 14235
+    },
+    "v10_actor_action": {
+      "path": "src/bpc_hybrid/b0_v10/actor_action.py",
+      "sha256": "5d31f28243c814d363185bf1eec842fd27bf8d201f5f4f2a3bf5a2a593fbb574",
+      "bytes": 6652
+    },
+    "v10_pipeline": {
+      "path": "src/bpc_hybrid/b0_v10/pipeline.py",
+      "sha256": "ce3153f75d28369954ed7e0a0e0ca1fa3e44f56b5f7e35724f8034d523a15d79",
+      "bytes": 1038
+    },
+    "v10_profile": {
+      "path": "src/bpc_hybrid/b0_v10/profile.py",
+      "sha256": "6df47c23e5d1049462c28fb0f05783d7c3593e01389db8ee20a90ed672dc9353",
+      "bytes": 1393
+    },
+    "v10_composition": {
+      "path": "src/bpc_hybrid/estg150_b0_development_v10.py",
+      "sha256": "540a51b9faccfbb3e4a046ad9f8cbd177f4e01fca5dc0f11bddfbad594a1b674",
+      "bytes": 24378
+    },
+    "v3_segmentation": {
+      "path": "src/bpc_hybrid/estg150_b0_development_v3.py",
+      "sha256": "82e3cd6daf69a982eeeb38c3a83e97acb5f49f3745912f7f7818ec967272fcbb",
+      "bytes": 48765
+    },
+    "v2_table8": {
+      "path": "src/bpc_hybrid/estg150_b0_development_v2.py",
+      "sha256": "32f8bd61e18ea2aab80bc54159abbc43fed5cda5f38a5e32525c7569b8232d69",
+      "bytes": 39892
+    },
+    "development_gold_loader": {
+      "path": "src/bpc_hybrid/estg150_b0_development.py",
+      "sha256": "2199d8cca4da25d05cf2e9635d571ca035683bc9217f692809878db3c116a580",
+      "bytes": 21154
+    },
+    "evaluator_implementation": {
+      "path": "src/bpc_hybrid/stage2_evaluation_v3.py",
+      "sha256": "d7df11f86908b68424ed36afe3386a5c4d8a24f93dfb5cdb1d60333f48d7a9db",
+      "bytes": 32347
+    },
+    "bert_textcnn": {
+      "path": "src/bpc_hybrid/sun_style/bert_textcnn.py",
+      "sha256": "37b6d569526f8547972fe27da860bdfb29b356a4a3ac6ae5d3855078c482eb92",
+      "bytes": 11287
+    },
+    "sun_b0_inference": {
+      "path": "src/bpc_hybrid/sun_style/sun_b0.py",
+      "sha256": "51df4f86359ecbc8a6f156371c62f115dfe4952e2e17c8cdc7a72aef77187b66",
+      "bytes": 17048
+    },
+    "corenlp_runtime": {
+      "path": "src/bpc_hybrid/sun_style/corenlp_runtime.py",
+      "sha256": "62319973631e260b9c7247efd3cdcfb306cdf06d02e4ef56e0389032e27687a6",
+      "bytes": 13443
+    },
+    "lexicon_runtime": {
+      "path": "src/bpc_hybrid/sun_style/lexicon_v2_runtime.py",
+      "sha256": "98258e94e38a1b9e1bafb65f23767b6837eb5f35eb1226afec9bb3458a1e2a7c",
+      "bytes": 8282
+    }
+  },
+  "resource_bindings": {
+    "layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+      "bytes": 1301626
+    },
+    "membership": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b",
+      "bytes": 30276
+    },
+    "freeze_receipt": {
+      "path": "outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json",
+      "sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961",
+      "bytes": 3678
+    },
+    "evaluator_contract": {
+      "path": "configs/stage2_evaluator_s210_v3.json",
+      "sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f",
+      "bytes": 6566
+    },
+    "s26_binding": {
+      "path": "configs/models/sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126",
+      "bytes": 3807
+    },
+    "classifier_config": {
+      "path": "configs/models/sun_bert_textcnn_s24.json",
+      "sha256": "82f950bce605e405ee1600bca90a961337f30f2933ab807f33998464bb7af498",
+      "bytes": 4369
+    },
+    "checkpoint": {
+      "path": "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt",
+      "sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1",
+      "bytes": 441559200
+    },
+    "patterns_v3": {
+      "path": "resources/corenlp/sun_phrase_patterns_v3_enhanced.json",
+      "sha256": "f49bad50fb6236137f1208aeef572d2a78c789726363897c637dc464c780e142",
+      "bytes": 4425
+    },
+    "corenlp_verification": {
+      "path": "resources/corenlp/s25b_runtime_verification_manifest.json",
+      "sha256": "c3b1ee5a42c13cbc80447a62a957c3c1ef3e9ddd6ef46c36f8754d907f646aa3",
+      "bytes": 5742
+    },
+    "corenlp_config": {
+      "path": "configs/sun_corenlp_runtime.json",
+      "sha256": "30bddb43bdb6f5ec477d9445b413f5e0891675c3855226a5b04747178336e74c",
+      "bytes": 3053
+    },
+    "lexicon_manifest": {
+      "path": "resources/lexicon/public_marker_lexicon_en_v2.manifest.json",
+      "sha256": "3f7e6108c1e66de37377abc2e9b9f4d0344ff2d1eca20b49ebf90e38aff7b462",
+      "bytes": 3179
+    },
+    "corenlp_bridge": {
+      "path": "tools/corenlp/SunPhraseRuleBatchBridgeMulti.java",
+      "sha256": "1a084befaf1a863889a26b58c5a049f2df846834e26c5643fe5a535c5c13f2a3",
+      "bytes": 5934
+    },
+    "route_diagnostic_manifest": {
+      "path": "outputs/development/s27_estg150_b0_b2a2_route_diagnostic_v1/manifest.json",
+      "sha256": "cf5d8d860fc43fc0420e9c4b4518a060707b4cd029d824bfb772b390b9ca1b3e",
+      "bytes": 4070
+    },
+    "v10a_manifest": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/manifest.json",
+      "sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315",
+      "bytes": 14659
+    },
+    "v10a_attempts": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/b0_attempts.json",
+      "sha256": "79dc457cdf933cb9fbb29030bab3673b9af645dd0138d8e97f5d1b6dfa6b4792",
+      "bytes": 957397
+    },
+    "v10a_evaluation": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/evaluation_all150.json",
+      "sha256": "fe0c5ec8f7f7dca15b9b4fec3361473b76d29e83a80622870ff1a73a9cabf971",
+      "bytes": 11437
+    },
+    "v10a_table8": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/sun_table8_any_overlap_diagnostic.json",
+      "sha256": "726ef0e59568e46187c14364f590229cb283255e2de6309e3dc8d5fe7f6b66b9",
+      "bytes": 1467
+    },
+    "b2a_negative_manifest": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_b2a/manifest.json",
+      "sha256": "60283d2309f01e3b93ea76bde6eabc97919ccd305d1e00e6115b0d80d9e564b1",
+      "bytes": 14622
+    }
+  },
+  "stop_conditions": {
+    "any_gate_failure": "record negative evidence, do not adjust threshold/rule, do not rerun",
+    "bound_file_drift": "fail closed before All150",
+    "all150_attempt_after_first": "forbidden",
+    "active_registry_update": "forbidden without a separate user decision",
+    "next_stage": "not authorized"
+  },
+  "forbidden": [
+    "modify_v10a_b2a_b1",
+    "modify_gold_layer_e_membership_evaluator_alignment_threshold",
+    "modify_segmentation_scope_tregex_tsurgeon_lexicon_actor_action_edges",
+    "bert_retraining_or_weight_change",
+    "s2_4_test_read_or_evaluation_for_selection",
+    "independent82_read_or_use",
+    "sweep_or_multiple_candidate_or_multiple_all150",
+    "sample_id_hardcode",
+    "gold_at_inference",
+    "record_level_override_for_supported_clause",
+    "placeholder_classifier_input",
+    "evaluator_change",
+    "active_registry_auto_update",
+    "next_stage"
+  ],
+  "safety": {
+    "gold_read_only": true,
+    "llm_api_called": false,
+    "network_called": false,
+    "independent82_read_or_used": false,
+    "s2_4_test_read": false,
+    "active_registry_modified": false
+  }
+}

@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import subprocess
 from dataclasses import dataclass, field
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
@@ -40,6 +41,20 @@ from formal_experiment.paths import (
     WINTER_2020_REFERENCE_DIR,
 )
 from formal_experiment.status import collect_status
+from formal_experiment.estg150_candidate_protocol import (
+    load_protocol_assets,
+    sha256_path,
+    validate_candidate,
+    verify_c0_lock,
+)
+from formal_experiment.estg150_c1_transport import load_strict_transport_adapter
+
+
+C1_RUNTIME_RUN_DIR = (
+    REPO_ROOT
+    / "data/development/estg/llm_candidate_runs"
+    / "c1_relay_gpt56_luna_strict_v1_1_pilot_v1"
+)
 
 
 REQUIRED_DOCS = (
@@ -55,13 +70,28 @@ REQUIRED_DOCS = (
     REPO_ROOT / "docs/AI_CHANGE_PROTOCOL.md",
     REPO_ROOT / "docs/ROUTE_LOCK.md",
     REPO_ROOT / "docs/HUMAN_GOLD_GUIDE.md",
+    REPO_ROOT / "docs/COMPLEX_LEGAL_GOLD_GUIDE.md",
     REPO_ROOT / "docs/EXPERIMENT_LOG.md",
     REPO_ROOT / "docs/EXPERIMENT_EVENTS.jsonl",
+    REPO_ROOT / "docs/ESTG150_CANDIDATE_PROTOCOL_V1.md",
     REPO_ROOT / "_retired/README.md",
     REPO_ROOT / "_retired/MANIFEST.md",
     REPO_ROOT / "paper/README.md",
     REPO_ROOT / "paper/THESIS_DRAFT.md",
     REPO_ROOT / "paper/CLAIM_EVIDENCE_MATRIX.md",
+    REPO_ROOT / "configs/estg150_candidate_protocol_v1.json",
+    REPO_ROOT / "configs/estg150_candidate_protocol_v1.lock.json",
+    REPO_ROOT / "configs/estg150_candidate_preregistration_template_v1.json",
+    REPO_ROOT / "configs/estg150_candidate_preregistration_template_v1_1.json",
+    REPO_ROOT / "configs/estg150_openai_strict_transport_schema_adapter_v1_1.json",
+    REPO_ROOT / "configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json",
+    REPO_ROOT / "src/formal_experiment/estg150_candidate_protocol.py",
+    REPO_ROOT / "src/formal_experiment/estg150_c1_transport.py",
+    REPO_ROOT / "scripts/run_estg150_candidate_protocol.py",
+    REPO_ROOT / "tests/fixtures/estg150_candidate_protocol/synthetic_record_v1.json",
+    REPO_ROOT / "tests/fixtures/estg150_candidate_protocol/canonical_semantic_request_v1.json",
+    REPO_ROOT / "tests/fixtures/estg150_candidate_protocol/strict_transport_valid_candidate_v1.json",
+    REPO_ROOT / "tests/fixtures/estg150_candidate_protocol/strict_transport_invalid_candidate_v1.json",
     REPO_ROOT / "docs/ESTG150_DATA_MAP.md",
     REPO_ROOT / "data" / "development" / "human_review" / "ESTG150_REVIEW_WORKFLOW_V1.md",
     EXPERIMENT_CONTRACT,
@@ -71,10 +101,131 @@ REQUIRED_DOCS = (
     REPO_ROOT / "src" / "bpc_hybrid" / "stage2_canonical.py",
     REPO_ROOT / "src" / "bpc_hybrid" / "prompt_loader.py",
     REPO_ROOT / "src" / "formal_experiment" / "sun_modality_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s2_2_freeze_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s2_4_license_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "corenlp_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s2_6_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s2_7_modality_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s2_8_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s2_9_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "g05_complexity_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s2_11_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s2_10_evaluator_gate.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s2_12_analysis_gate.py",
+    REPO_ROOT / "src" / "bpc_hybrid" / "sun_style" / "h1_selective.py",
+    REPO_ROOT / "src" / "bpc_hybrid" / "sun_style" / "d1_direct.py",
+    REPO_ROOT / "src" / "bpc_hybrid" / "sun_style" / "non_llm_modality_baselines.py",
+    REPO_ROOT / "src" / "bpc_hybrid" / "complexity.py",
+    REPO_ROOT / "src" / "bpc_hybrid" / "complex_legal.py",
     REPO_ROOT / "src" / "bpc_hybrid" / "sun_style" / "public_marker_lexicon.py",
+    REPO_ROOT / "src" / "bpc_hybrid" / "sun_style" / "corenlp_runtime.py",
     REPO_ROOT / "scripts" / "build_public_marker_lexicon.py",
     REPO_ROOT / "resources" / "lexicon" / "public_marker_sources_en_v1.json",
     REPO_ROOT / "resources" / "lexicon" / "public_marker_lexicon_en_v1.manifest.json",
+    REPO_ROOT / "configs" / "sun_corenlp_runtime.json",
+    REPO_ROOT / "resources" / "corenlp" / "sun_phrase_patterns_v1.json",
+    REPO_ROOT / "resources" / "corenlp" / "s25b_runtime_verification_manifest.json",
+    REPO_ROOT / "tests" / "fixtures" / "corenlp" / "obligation_condition_constraint.json",
+    REPO_ROOT / "tests" / "fixtures" / "corenlp" / "s25b_smoke_input.txt",
+    REPO_ROOT / "tests" / "fixtures" / "corenlp" / "s25b_live_expected.json",
+    REPO_ROOT / "tools" / "corenlp" / "SunPhraseRuleBridge.java",
+    REPO_ROOT / "scripts" / "verify_corenlp_s25b.py",
+    REPO_ROOT / "docs" / "research" / "SUN_CORENLP_RUNTIME_ALIGNMENT.md",
+    REPO_ROOT / "docs" / "research" / "SUN_OFFICIAL_LICENSE_RECORD.md",
+    REPO_ROOT / "configs" / "datasets" / "sun_modality_license_evidence.json",
+    REPO_ROOT / "configs" / "datasets" / "sun_modality_local_research_use.json",
+    REPO_ROOT / "configs" / "models" / "sun_bert_textcnn_s24.json",
+    REPO_ROOT / "configs" / "models" / "sun_h1_s28.json",
+    REPO_ROOT / "configs" / "complexity_contract.json",
+    REPO_ROOT / "configs" / "schemas" / "complexity_profile.schema.json",
+    REPO_ROOT / "configs" / "datasets" / "gdpr_articles_5_50_s211.json",
+    REPO_ROOT / "configs" / "datasets" / "gdpr_eurlex_reuse_evidence_s211.json",
+    REPO_ROOT / "configs" / "schemas" / "complex_legal_human_gold.schema.json",
+    REPO_ROOT / "configs" / "stage2_evaluator_s210.json",
+    REPO_ROOT / "configs" / "schemas" / "stage2_evaluation_report.schema.json",
+    REPO_ROOT / "configs" / "schemas" / "style_equivalent_review.schema.json",
+    REPO_ROOT / "src" / "bpc_hybrid" / "stage2_evaluation.py",
+    REPO_ROOT / "scripts" / "evaluate_stage2_s210.py",
+    REPO_ROOT / "scripts" / "verify_stage2_evaluator_s210.py",
+    REPO_ROOT / "tests" / "fixtures" / "stage2_evaluator" / "s210_contract_fixture.json",
+    REPO_ROOT / "outputs" / "reports" / "s210_stage2_evaluator_contract_synthetic_v2.manifest.json",
+    REPO_ROOT / "configs" / "stage2_evaluator_s210_v3.json",
+    REPO_ROOT / "configs" / "schemas" / "stage2_evaluation_report_v3.schema.json",
+    REPO_ROOT / "src" / "bpc_hybrid" / "stage2_evaluation_v3.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s2_10_evaluator_v3_gate.py",
+    REPO_ROOT / "scripts" / "verify_stage2_evaluator_s210_v3.py",
+    REPO_ROOT / "scripts" / "reevaluate_estg150_b0_v3.py",
+    REPO_ROOT / "outputs" / "reports" / "s210_stage2_evaluator_contract_synthetic_v3.manifest.json",
+    REPO_ROOT / "outputs" / "development" / "s27_estg150_b0_v3_evaluation_v1" / "manifest.json",
+    REPO_ROOT / "configs" / "s212_analysis_protocol.json",
+    REPO_ROOT / "src" / "bpc_hybrid" / "s212_analysis.py",
+    REPO_ROOT / "scripts" / "verify_s212_analysis_protocol.py",
+    REPO_ROOT / "tests" / "fixtures" / "s212_analysis" / "s212_synthetic_counts.json",
+    REPO_ROOT / "outputs" / "reports" / "s212_analysis_protocol_synthetic_v2.manifest.json",
+    REPO_ROOT / "configs" / "stage1_structural_s11_s14.json",
+    REPO_ROOT / "configs" / "schemas" / "process_record.schema.json",
+    REPO_ROOT / "src" / "bpc_hybrid" / "stage1_process.py",
+    REPO_ROOT / "scripts" / "run_stage1_structural.py",
+    REPO_ROOT / "scripts" / "verify_stage1_structural_s11_s14.py",
+    REPO_ROOT / "tests" / "fixtures" / "stage1" / "s11_branch_parallel.bpmn",
+    REPO_ROOT / "tests" / "fixtures" / "stage1" / "s14_cycle_unreachable.bpmn",
+    REPO_ROOT / "outputs" / "reports" / "s11_s14_stage1_structural_synthetic_v1.manifest.json",
+    REPO_ROOT / "configs" / "stage1_label_semantics_s13.json",
+    REPO_ROOT / "configs" / "schemas" / "stage1_label_semantics.schema.json",
+    REPO_ROOT / "src" / "bpc_hybrid" / "stage1_label_semantics.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s1_label_semantics_gate.py",
+    REPO_ROOT / "scripts" / "run_stage1_label_semantics.py",
+    REPO_ROOT / "scripts" / "verify_stage1_label_semantics_s13.py",
+    REPO_ROOT / "tests" / "fixtures" / "stage1" / "s13_label_edge_cases.bpmn",
+    REPO_ROOT / "outputs" / "reports" / "s13_stage1_label_semantics_synthetic_v1.manifest.json",
+    REPO_ROOT / "configs" / "stage1_annotation_protocol_s15.json",
+    REPO_ROOT / "configs" / "schemas" / "stage1_human_annotation.schema.json",
+    REPO_ROOT / "src" / "bpc_hybrid" / "stage1_human_annotation.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s1_annotation_gate.py",
+    REPO_ROOT / "scripts" / "build_stage1_annotation_protocol.py",
+    REPO_ROOT / "scripts" / "verify_stage1_annotation_protocol_s15.py",
+    REPO_ROOT / "docs" / "STAGE1_HUMAN_GOLD_GUIDE.md",
+    REPO_ROOT / "outputs" / "reports" / "s15_stage1_annotation_protocol_synthetic_v1.manifest.json",
+    REPO_ROOT / "configs" / "datasets" / "stage1_stage3_gdpr7_v1.json",
+    REPO_ROOT / "src" / "bpc_hybrid" / "stage1_formal_dataset.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s1_membership_gate.py",
+    REPO_ROOT / "scripts" / "build_stage1_gdpr7.py",
+    REPO_ROOT / "scripts" / "verify_stage1_stage3_gdpr7.py",
+    REPO_ROOT / "data" / "development" / "human_review" / "stage1_gdpr7_process_records_v1.json",
+    REPO_ROOT / "data" / "development" / "human_review" / "stage1_gdpr7_annotation_blank_v1.json",
+    REPO_ROOT / "data" / "development" / "human_review" / "stage1_gdpr7_human_correction_v1.json",
+    REPO_ROOT / "outputs" / "reports" / "s15_s31_gdpr7_membership_v1.manifest.json",
+    REPO_ROOT / "data" / "input" / "stage1_stage3" / "gdpr7" / "gdpr_1_data_breach.bpmn",
+    REPO_ROOT / "data" / "input" / "stage1_stage3" / "gdpr7" / "gdpr_2_consent_to_use_the_data.bpmn",
+    REPO_ROOT / "data" / "input" / "stage1_stage3" / "gdpr7" / "gdpr_3_right_to_access.bpmn",
+    REPO_ROOT / "data" / "input" / "stage1_stage3" / "gdpr7" / "gdpr_4_right_of_portability.bpmn",
+    REPO_ROOT / "data" / "input" / "stage1_stage3" / "gdpr7" / "gdpr_5_right_to_withdraw.bpmn",
+    REPO_ROOT / "data" / "input" / "stage1_stage3" / "gdpr7" / "gdpr_6_right_to_rectify.bpmn",
+    REPO_ROOT / "data" / "input" / "stage1_stage3" / "gdpr7" / "gdpr_7_right_to_be_forgotten.bpmn",
+    REPO_ROOT / "configs" / "stage1_evaluator_s16.json",
+    REPO_ROOT / "configs" / "schemas" / "stage1_evaluation_report.schema.json",
+    REPO_ROOT / "src" / "bpc_hybrid" / "stage1_evaluation.py",
+    REPO_ROOT / "src" / "formal_experiment" / "s1_evaluator_gate.py",
+    REPO_ROOT / "scripts" / "evaluate_stage1_s16.py",
+    REPO_ROOT / "scripts" / "verify_stage1_evaluator_s16.py",
+    REPO_ROOT / "tests" / "fixtures" / "stage1" / "s16_synthetic_semantic_reference.json",
+    REPO_ROOT / "outputs" / "reports" / "s16_stage1_evaluator_contract_synthetic_v1.manifest.json",
+    REPO_ROOT / "scripts" / "build_complex_legal_s211.py",
+    REPO_ROOT / "scripts" / "validate_complex_legal_human_gold.py",
+    REPO_ROOT / "scripts" / "verify_complex_legal_s211.py",
+    REPO_ROOT / "data" / "development" / "complex_legal" / "gdpr_2016_679_oj_en" / "source" / "DOC_1_metadata.xml",
+    REPO_ROOT / "data" / "development" / "complex_legal" / "gdpr_2016_679_oj_en" / "source" / "DOC_2_body.xml",
+    REPO_ROOT / "data" / "development" / "complex_legal" / "gdpr_2016_679_oj_en" / "gdpr_articles_5_50_seeded50_v1.jsonl",
+    REPO_ROOT / "data" / "development" / "complex_legal" / "gdpr_2016_679_oj_en" / "gdpr_articles_5_50_seeded50_v1.membership.json",
+    REPO_ROOT / "data" / "development" / "complex_legal" / "gdpr_2016_679_oj_en" / "gdpr_articles_5_50_seeded50_human_gold_v1.json",
+    REPO_ROOT / "outputs" / "reports" / "s211_gdpr_complex_dataset_freeze_v1.manifest.json",
+    REPO_ROOT / "src" / "bpc_hybrid" / "sun_style" / "bert_textcnn.py",
+    REPO_ROOT / "scripts" / "train_sun_bert_textcnn.py",
+    REPO_ROOT / "configs" / "models" / "sun_b0_s26.json",
+    REPO_ROOT / "src" / "bpc_hybrid" / "sun_style" / "sun_b0.py",
+    REPO_ROOT / "scripts" / "verify_sun_b0_s26.py",
+    REPO_ROOT / "scripts" / "run_sun_rule_only.py",
+    REPO_ROOT / "outputs" / "reports" / "s26_sun_b0_canonical_composition_v3.manifest.json",
     REPO_ROOT / "prompts" / "sun_compat" / "direct_llm_sun_record_prompt.md",
     REPO_ROOT / "prompts" / "sun_compat" / "rule_first_llm_fallback_prompt.md",
     CANONICAL_REVIEW_FILE,
@@ -84,6 +235,8 @@ REQUIRED_DOCS = (
     REPO_ROOT / "scripts" / "validate_human_correction.py",
     REPO_ROOT / "scripts" / "estg150_review_tool.py",
     REPO_ROOT / "scripts" / "build_estg150_review_layers.py",
+    REPO_ROOT / "scripts" / "verify_estg150_s22_freeze.py",
+    REPO_ROOT / "outputs" / "reports" / "s22_estg150_human_annotation_freeze_v1.manifest.json",
     REPO_ROOT / "data" / "development" / "human_review" / "estg_150_translation_en_v1.jsonl",
     REPO_ROOT / "data" / "development" / "human_review" / "estg_150_llm_six_element_candidates_v1.jsonl",
     REPO_ROOT / "data" / "development" / "human_review" / "estg_150_review_aids_zh_v1.jsonl",
@@ -165,6 +318,166 @@ def _valid_event_log(path: Path) -> tuple[int, list[int]]:
     return report.valid_json, report.invalid_lines
 
 
+def _verify_estg150_c1_runtime(
+    candidate_assets: Any,
+    candidate_lock: dict[str, Any],
+    strict_transport_adapter: Any,
+) -> dict[str, Any]:
+    """Verify the frozen one-record C1 runtime receipt without network access."""
+
+    paths = {
+        "manifest": C1_RUNTIME_RUN_DIR / "manifest.json",
+        "preregistration": C1_RUNTIME_RUN_DIR / "preregistration.json",
+        "candidates": C1_RUNTIME_RUN_DIR / "candidates.json",
+        "request_manifest": C1_RUNTIME_RUN_DIR / "request_manifest.jsonl",
+        "semantic_request": C1_RUNTIME_RUN_DIR
+        / "requests/001_synthetic_c1_utf8_full_extract.semantic.json",
+        "transport_request": C1_RUNTIME_RUN_DIR
+        / "requests/001_synthetic_c1_utf8_full_extract.transport.json",
+        "response": C1_RUNTIME_RUN_DIR
+        / "responses/001_synthetic_c1_utf8_full_extract.json",
+    }
+    missing = [name for name, path in paths.items() if not path.is_file()]
+    if missing:
+        raise ValueError(f"missing frozen C1 runtime artifacts: {missing}")
+
+    manifest = _load_json(paths["manifest"])
+    preregistration = _load_json(paths["preregistration"])
+    candidates = _load_json(paths["candidates"])
+    semantic_request = _load_json(paths["semantic_request"])
+    transport_request = _load_json(paths["transport_request"])
+    response = _load_json(paths["response"])
+    request_report = inspect_jsonl(paths["request_manifest"])
+    if request_report.total_lines != 1 or request_report.invalid_json or len(request_report.records) != 1:
+        raise ValueError("frozen C1 request manifest must contain exactly one valid record")
+    request_record = request_report.records[0]
+
+    expected_manifest = {
+        "schema_version": "estg150_candidate_run_manifest@1.1.0",
+        "run_id": "c1_relay_gpt56_luna_strict_v1_1_pilot_v1",
+        "status": "succeeded_frozen",
+        "stage": "c1",
+        "provider_adapter": "relay_openai_compatible",
+        "model": "gpt-5.6-luna",
+        "endpoint_host": "api.chatanywhere.tech",
+        "canonical_protocol_version": strict_transport_adapter.canonical_protocol_version,
+        "canonical_schema_sha256": strict_transport_adapter.canonical_schema_sha256,
+        "transport_adapter_id": strict_transport_adapter.adapter_id,
+        "transport_adapter_version": strict_transport_adapter.adapter_version,
+        "transport_adapter_config_sha256": strict_transport_adapter.config_sha256,
+        "transport_schema_sha256": strict_transport_adapter.transport_schema_sha256,
+        "canonical_serializer_sha256": candidate_lock["serializer_sha256"],
+        "transport_request_sha256": "ac24297d027074b147bc41ddc08bbbaa55b232be337838a6d6180aa47fbc282f",
+        "request_count": 1,
+        "retry_count": 0,
+        "input_tokens": 1167,
+        "output_tokens": 829,
+        "total_cost": "0.042987",
+        "cost_currency": "CA",
+        "real_api_call": True,
+        "candidate_count": 1,
+        "evaluation_count": 0,
+        "precision": None,
+        "recall": None,
+        "c1_passed": True,
+        "c2_started": False,
+        "automatic_c2_forbidden": True,
+        "request_downgrade_applied": False,
+        "layer_d_read_during_generation": False,
+        "layer_e_read_during_generation": False,
+        "gold_visible_during_generation": False,
+    }
+    drift = {
+        key: (manifest.get(key), expected)
+        for key, expected in expected_manifest.items()
+        if manifest.get(key) != expected
+    }
+    if drift:
+        raise ValueError(f"frozen C1 manifest identity drifted: {drift}")
+
+    authorization = preregistration.get("authorization", {})
+    if authorization != {
+        "provider_authorized": True,
+        "maximum_calls": 1,
+        "maximum_total_tokens": 13000,
+        "maximum_cost": "0.32",
+        "cost_currency": "CA",
+    }:
+        raise ValueError("frozen C1 authorization receipt drifted")
+    if manifest["input_tokens"] + manifest["output_tokens"] > authorization["maximum_total_tokens"]:
+        raise ValueError("frozen C1 token budget exceeded")
+    try:
+        if Decimal(manifest["total_cost"]) > Decimal(authorization["maximum_cost"]):
+            raise ValueError("frozen C1 cost budget exceeded")
+    except (InvalidOperation, TypeError) as exc:
+        raise ValueError("frozen C1 cost receipt is not decimal") from exc
+
+    if sha256_path(paths["semantic_request"]) != request_record.get("semantic_request_sha256"):
+        raise ValueError("frozen C1 semantic request hash drifted")
+    if sha256_path(paths["transport_request"]) != manifest["transport_request_sha256"]:
+        raise ValueError("frozen C1 transport request hash drifted")
+    if request_record.get("transport_request_sha256") != manifest["transport_request_sha256"]:
+        raise ValueError("frozen C1 request-manifest transport hash drifted")
+    if sha256_path(paths["response"]) != request_record.get("response_sha256"):
+        raise ValueError("frozen C1 provider response hash drifted")
+
+    if transport_request.get("response_format", {}).get("json_schema", {}).get("schema") != (
+        strict_transport_adapter.transport_schema
+    ):
+        raise ValueError("frozen C1 transport request no longer embeds the locked adapter schema")
+    if semantic_request.get("output_schema_text") != candidate_assets.schema_text:
+        raise ValueError("frozen C1 semantic request no longer embeds canonical schema bytes")
+
+    records = candidates.get("records")
+    if not isinstance(records, list) or len(records) != 1 or not isinstance(records[0], dict):
+        raise ValueError("frozen C1 candidate artifact must contain exactly one record")
+    user_messages = [item for item in semantic_request.get("messages", []) if item.get("role") == "user"]
+    if len(user_messages) != 1:
+        raise ValueError("frozen C1 semantic request must contain exactly one user message")
+    try:
+        user_payload = json.loads(user_messages[0]["content"])
+        provider_candidate = json.loads(response["choices"][0]["message"]["content"])
+    except (KeyError, IndexError, TypeError, json.JSONDecodeError) as exc:
+        raise ValueError("frozen C1 request/response content is malformed") from exc
+    if provider_candidate != records[0]:
+        raise ValueError("frozen C1 candidate differs from archived provider response")
+    validation = validate_candidate(
+        records[0],
+        expected_sample_id=user_payload["sample_id"],
+        frozen_candidate_text_en=user_payload["frozen_candidate_text_en"],
+        schema=candidate_assets.schema,
+    )
+    if validation != {
+        "schema_valid": True,
+        "exact_span_valid": True,
+        "normative_cue_coverage_valid": True,
+    }:
+        raise ValueError("frozen C1 canonical validation receipt drifted")
+
+    usage = response.get("usage", {})
+    if (
+        usage.get("prompt_tokens") != manifest["input_tokens"]
+        or usage.get("completion_tokens") != manifest["output_tokens"]
+        or usage.get("total_tokens") != manifest["input_tokens"] + manifest["output_tokens"]
+    ):
+        raise ValueError("frozen C1 provider usage disagrees with manifest")
+    if response.get("choices", [{}])[0].get("finish_reason") != "stop":
+        raise ValueError("frozen C1 provider response did not finish with stop")
+
+    return {
+        "run_id": manifest["run_id"],
+        "provider_reported_model": request_record.get("provider_reported_model"),
+        "input_tokens": manifest["input_tokens"],
+        "output_tokens": manifest["output_tokens"],
+        "total_tokens": usage["total_tokens"],
+        "total_cost": manifest["total_cost"],
+        "cost_currency": manifest["cost_currency"],
+        "candidate_count": manifest["candidate_count"],
+        "precision": manifest["precision"],
+        "recall": manifest["recall"],
+    }
+
+
 def _git_check(args: list[str]) -> bool | None:
     completed = subprocess.run(
         ["git", *args], cwd=REPO_ROOT.parent, stdout=subprocess.DEVNULL,
@@ -178,7 +491,9 @@ def _git_check(args: list[str]) -> bool | None:
 
 
 def _meaningful_count(path: Path) -> int:
-    return sum(1 for item in path.glob("*") if item.is_file() and item.name != ".gitkeep") if path.exists() else 0
+    return sum(
+        1 for item in path.rglob("*") if item.is_file() and item.name != ".gitkeep"
+    ) if path.exists() else 0
 
 
 def _review_structure_errors(report: JsonlReport) -> list[str]:
@@ -215,6 +530,84 @@ def collect_project_audit() -> dict[str, Any]:
     else:
         _add(findings, "passes", "audit_event_log_valid", f"Append-only event log contains {event_count} valid event(s).")
 
+    candidate_protocol_c0_verified = False
+    try:
+        candidate_assets = load_protocol_assets()
+        candidate_lock = verify_c0_lock(candidate_assets)
+    except Exception as exc:
+        _add(
+            findings,
+            "errors",
+            "estg150_candidate_protocol_c0_not_verified",
+            f"Canonical external candidate protocol C0 failed closed: {type(exc).__name__}: {exc}",
+        )
+    else:
+        candidate_protocol_c0_verified = True
+        _add(
+            findings,
+            "passes",
+            "estg150_candidate_protocol_c0_verified",
+            "Canonical external serializer v1, Layer-A-order routing (0-2 Pass A/B; 3-149 full extract), "
+            f"four provider adapters, strict validation, and offline fixture are hash-locked; serializer="
+            f"{candidate_lock['serializer_sha256'][:16]}...; historical hidden Codex transport was not archived; "
+            "Layer D/E/Gold are excluded; C0 itself is offline, while separately logged C1 runs do not alter this gate.",
+        )
+
+    candidate_transport_adapter_offline_ready = False
+    try:
+        strict_transport_adapter = load_strict_transport_adapter()
+    except Exception as exc:
+        _add(
+            findings,
+            "errors",
+            "estg150_c1_transport_adapter_not_ready",
+            f"C1 strict transport adapter failed closed: {type(exc).__name__}: {exc}",
+        )
+    else:
+        candidate_transport_adapter_offline_ready = True
+        _add(
+            findings,
+            "passes",
+            "estg150_c1_transport_adapter_offline_ready",
+            "OpenAI strict transport schema adapter v1.1 is an exact six-type derivation of canonical v1; "
+            f"canonical schema={strict_transport_adapter.canonical_schema_sha256[:16]}..., transport schema="
+            f"{strict_transport_adapter.transport_schema_sha256[:16]}...; recursive Structured Outputs preflight "
+            "passes offline. Known incompatible reasoning/message/response-format profiles fail before credentials "
+            "or network; no request downgrade is enabled. This offline gate alone does not claim C1 passed; "
+            "the separately verified frozen runtime receipt controls that claim.",
+        )
+
+    candidate_c1_runtime_verified = False
+    candidate_c1_runtime: dict[str, Any] | None = None
+    if candidate_protocol_c0_verified and candidate_transport_adapter_offline_ready:
+        try:
+            candidate_c1_runtime = _verify_estg150_c1_runtime(
+                candidate_assets,
+                candidate_lock,
+                strict_transport_adapter,
+            )
+        except Exception as exc:
+            _add(
+                findings,
+                "errors",
+                "estg150_c1_runtime_not_verified",
+                f"Frozen C1 runtime receipt failed closed: {type(exc).__name__}: {exc}",
+            )
+        else:
+            candidate_c1_runtime_verified = True
+            _add(
+                findings,
+                "passes",
+                "estg150_c1_runtime_verified",
+                "Authorized ChatAnywhere gpt-5.6-luna C1 generated one candidate that passed the original "
+                "canonical schema/span/cue validation; provider usage="
+                f"{candidate_c1_runtime['input_tokens']}+{candidate_c1_runtime['output_tokens']}="
+                f"{candidate_c1_runtime['total_tokens']} tokens, recorded cost="
+                f"{candidate_c1_runtime['total_cost']} {candidate_c1_runtime['cost_currency']}. "
+                "P/R remain null because evaluation did not start; C2 remains false; relay model identity is "
+                "provider-reported and not independently attested.",
+            )
+
     contract = _load_json(EXPERIMENT_CONTRACT)
     route = contract.get("route", {})
     dataset = contract.get("stage2_dataset", {})
@@ -239,7 +632,7 @@ def collect_project_audit() -> dict[str, Any]:
             findings,
             "blockers",
             "stage2_dataset_route_relock_pending",
-            "Sun modality development data are verified, but the top-level Stage 2 data route is not re-locked; the independently reconstructed phrase Gold is not frozen and its separate human-review/publication gates remain incomplete.",
+            "Sun modality development data and the S2.2 annotation snapshot are verified, but the top-level Stage 2 data route is not re-locked; context/language QA, formal input, and Gold publication gates remain incomplete.",
         )
     else:
         _add(findings, "errors", "stage2_dataset_contract_invalid", "Stage 2 dataset route has an unrecognized status or target size.")
@@ -270,7 +663,8 @@ def collect_project_audit() -> dict[str, Any]:
             "public_marker_lexicon_verified",
             "S2.3 public marker lexicon verified offline: "
             f"language=en, counts={counts}, extensions=0; development-only, "
-            "no training/evaluation and not activated for S2.4+.",
+            "no training/evaluation; verified S2.5 binds its exact payload and "
+            "has passed synthetic live CoreNLP/Tregex/Tsurgeon fixtures.",
         )
     else:
         _add(
@@ -279,6 +673,424 @@ def collect_project_audit() -> dict[str, Any]:
             "public_marker_lexicon_gate_failed",
             "S2.3 public marker lexicon gate failed closed: "
             f"{public_marker_gate.get('blockers', [])[:8]}",
+        )
+
+    statement_classifier_gate = contract.get("sun_stage2_method", {}).get(
+        "statement_classifier_gate", {}
+    )
+    s2_4_license_gate = status.get("s2_4_license_gate", {})
+    if s2_4_license_gate.get("evidence_verified") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_4_license_evidence_verified",
+            "S2.4-L license evidence is hash-locked and verified: the live official "
+            "Archive.org metadata has licenseurl=null and rights=null, the Springer "
+            "data-availability statement contains no explicit dataset training/evaluation "
+            "permission, and the local ZIP has no license member.",
+        )
+    else:
+        _add(
+            findings,
+            "errors",
+            "s2_4_license_evidence_gate_failed",
+            "S2.4-L evidence failed closed: "
+            f"{s2_4_license_gate.get('errors', [])[:8]}",
+        )
+    if (
+        s2_4_license_gate.get("evidence_verified") is True
+        and s2_4_license_gate.get("ready") is True
+        and s2_4_license_gate.get("training_authorized") is True
+        and s2_4_license_gate.get("evaluation_authorized") is True
+        and s2_4_license_gate.get("redistribution_allowed") is False
+        and s2_4_license_gate.get("authorization_basis")
+        == "project_owner_research_use_decision_not_rightsholder_license"
+        and statement_classifier_gate.get("status")
+        == "verified_training_dev_selection_single_test_evaluation"
+        and statement_classifier_gate.get("ready") is True
+        and statement_classifier_gate.get("training_authorized") is True
+        and statement_classifier_gate.get("evaluation_authorized") is True
+        and statement_classifier_gate.get("redistribution_allowed") is False
+        and status.get("sun_modality_license_status")
+        == "unknown_pending_confirmation"
+    ):
+        _add(
+            findings,
+            "passes",
+            "s2_4_local_research_use_ready",
+            "S2.4 local noncommercial thesis training, development selection, and "
+            "evaluation are unlocked by the exact-hash project-owner decision. The "
+            "rightsholder license remains unknown; the single no-search BERT-TextCNN "
+            "training config is preregistered; redistribution, commercial use, external "
+            "data upload, Gold modification, and LLM/API calls remain forbidden.",
+        )
+    else:
+        _add(
+            findings,
+            "errors",
+            "s2_4_license_gate_inconsistent",
+            "S2.4 readiness does not fail closed against the separate license-evidence "
+            "and local-research-use boundaries.",
+        )
+
+    if (
+        s2_4_license_gate.get("training_completed") is True
+        and s2_4_license_gate.get("test_evaluation_count") == 1
+    ):
+        _add(
+            findings,
+            "passes",
+            "s2_4_bert_textcnn_verified",
+            "S2.4 Legal-BERT + TextCNN training is verified by the exact-hash run "
+            "manifest: dev-selected epoch 5, seven epochs completed, and exactly one "
+            "test evaluation; no row-level predictions were persisted.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "s2_4_bert_textcnn_not_verified",
+            "S2.4 training and its single-test run manifest are not verified.",
+        )
+
+    corenlp_gate = status.get("corenlp_gate", {})
+    if corenlp_gate.get("contract_ready") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_5_corenlp_contract_verified",
+            "S2.5 verified: CoreNLP 4.5.10 exact archive/JAR/artifact hashes, six-field "
+            "ordering, S2.3 lexicon binding, 12 compiled patterns, 11 synthetic field "
+            "matches, and 7 live Tsurgeon surgeries; no training/evaluation.",
+        )
+    else:
+        _add(
+            findings,
+            "errors",
+            "s2_5_corenlp_contract_failed",
+            "S2.5-A contract failed closed: "
+            f"{corenlp_gate.get('errors', [])[:6]}",
+        )
+    if corenlp_gate.get("runtime_ready") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_5_corenlp_runtime_ready",
+            "The external CoreNLP 4.5.10 runtime is hash-verified and activated by a "
+            "locked synthetic live-smoke manifest; the 508,444,875-byte third-party "
+            "archive remains outside formal_experiment and is not redistributed.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "s2_5_corenlp_runtime_missing",
+            "S2.5 remains incomplete: the CoreNLP 4.5.10 distribution has not been "
+            "acquired, hashed, live-smoke-tested, or activated; no Java Tregex/Tsurgeon "
+            "extraction was run.",
+        )
+
+    s2_6_gate = status.get("s2_6_gate", {})
+    if s2_6_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_6_canonical_b0_composition_verified",
+            "S2.6 verified the no-LLM B0 component seam: the exact S2.4 checkpoint "
+            "and attested S2.5 live phrase observations produced one schema-valid "
+            "canonical record with German classifier input and aligned English "
+            "phrase/canonical text. This synthetic check is not performance evaluation.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "s2_6_canonical_b0_composition_not_verified",
+            "S2.6 classifier/extractor/canonical composition failed closed: "
+            f"{s2_6_gate.get('errors', [])[:6]}",
+        )
+
+    stage1_gate = status.get("stage1_structural_gate", {})
+    if stage1_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "stage1_structural_process_record_verified",
+            "S1.1/S1.2/S1.4 verified the canonical Process Record v1 schema, "
+            "deterministic BPMN activity/event/gateway/flow/lane/pool parsing, direct "
+            "and transitive control flow, activity order, branch/parallel classification, "
+            "cycle detection, and unreachable-node accounting on two synthetic BPMN "
+            "fixtures. No label semantics, human Gold, formal BPMN, network, LLM, or "
+            "performance evaluation was used.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "stage1_structural_process_record_not_verified",
+            "S1.1/S1.2/S1.4 structural Process Record gate failed closed: "
+            f"{stage1_gate.get('errors', [])[:6]}",
+        )
+
+    stage1_label_gate = status.get("stage1_label_semantics_gate", {})
+    if stage1_label_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "stage1_label_semantics_p0_p1_verified",
+            "S1.3 verified two deterministic label baselines on synthetic BPMN: "
+            "P0 preserves raw activity/lane labels without actor/action/object inference; "
+            "P1 uses one unambiguous lane label as the actor surface and a fixed first-token/"
+            "remainder split for action/business-object surfaces. Empty, punctuation-only, "
+            "single-token, no-lane, and ambiguous-lane cases fail or report explicitly. No "
+            "lemmatizer, tagger, learned model, human Gold, formal BPMN, network, LLM, or "
+            "performance evaluation was used.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "stage1_label_semantics_p0_p1_not_verified",
+            "S1.3 P0/P1 label-semantics gate failed closed: "
+            f"{stage1_label_gate.get('errors', [])[:6]}",
+        )
+
+    stage1_annotation_gate = status.get("stage1_annotation_gate", {})
+    if stage1_annotation_gate.get("protocol_ready") is True:
+        _add(
+            findings,
+            "passes",
+            "stage1_annotation_protocol_verified",
+            "S1.5 verified a blank human-annotation schema, exact BPMN/Process-Record "
+            "source binding, activity label/lane context, three-field review states, "
+            "and fail-closed freeze summaries on one synthetic process with 6 activities "
+            "and 18 unresolved label fields. No candidate value was copied into Gold; "
+            "formal membership is reported by the separate GDPR7 gate.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "stage1_annotation_protocol_not_verified",
+            "S1.5 annotation protocol failed closed: "
+            f"{stage1_annotation_gate.get('errors', [])[:6]}",
+        )
+    stage1_membership_gate = status.get("stage1_membership_gate", {})
+    if stage1_membership_gate.get("membership_ready") is True:
+        summary = stage1_membership_gate.get("annotation_summary", {})
+        _add(
+            findings,
+            "passes",
+            "stage1_formal_bpmn_membership_locked",
+            "S1.5/S3.1 locked seven byte-exact Winter-provenance GDPR BPMN files as "
+            "the shared all-seven extension membership. All seven parsed into unique "
+            "dataset-level Process Records; the formal annotation input has "
+            f"{summary.get('records', 0)} records and {summary.get('label_fields', 0)} "
+            "blank label fields. This is not Sun's unidentified original four-model set, "
+            "and no human Gold or performance result was created.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "stage1_formal_bpmn_membership_not_promoted",
+            "S1.5/S3.1 formal GDPR7 membership gate failed closed: "
+            f"{stage1_membership_gate.get('errors', [])[:6]}",
+        )
+
+    stage1_evaluator_gate = status.get("stage1_evaluator_gate", {})
+    if stage1_evaluator_gate.get("evaluator_ready") is True:
+        _add(
+            findings,
+            "passes",
+            "stage1_evaluator_contract_verified",
+            "S1.6 verified exact method/process membership, eight structural set "
+            "components, actor/action/business-object exact-value P/R/F1, triple "
+            "accuracy, coverage, and terminal/invalid denominators on one synthetic "
+            "reference. The constants are not human Gold or formal performance; formal "
+            "scope remains refused until S1.5 membership and Gold are ready.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "stage1_evaluator_contract_not_verified",
+            "S1.6 evaluator contract failed closed: "
+            f"{stage1_evaluator_gate.get('errors', [])[:6]}",
+        )
+
+    s2_7m_gate = status.get("s2_7_modality_gate", {})
+    if s2_7m_gate.get("modality_component_ready") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_7_modality_component_baselines_verified",
+            "S2.7-M ran train-majority, fixed German keyword, and pure-standard-library "
+            "word 1-2 gram Multinomial NB baselines on the exact S2.1 reconstructed "
+            "1985/420/426 split. The NB test accuracy=0.784038 and macro-F1=0.568849; "
+            "only aggregate metrics were persisted. One identical-config unversioned "
+            "test-label smoke access is disclosed; no hyperparameter/model selection used "
+            "test. Phrase/full-Stage-2 S2.7 remains blocked on the formal context/language/input and Gold-publication route.",
+        )
+    else:
+        _add(
+            findings,
+            "warnings",
+            "s2_7_modality_component_baselines_not_verified",
+            "S2.7-M modality component baseline gate is not verified: "
+            f"{s2_7m_gate.get('errors', [])[:6]}",
+        )
+
+    s2_8_gate = status.get("s2_8_gate", {})
+    if s2_8_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_8_h1_preregistration_verified",
+            "S2.8 verified H1's exact S2.6 B0 binding, inference-visible trigger "
+            "boundary, extraction-contract v1, field dependency closure, strict field and "
+            "controlled-uncertainty metadata merge, deterministic allocation, "
+            "exact gpt-4.1-2025-04-14 request rendering, scorable recovered-error B0 fallback, "
+            "and 45-call/460800-token/1.5-USD ceilings on synthetic evidence. No real LLM, Gold, "
+            "test split, network, or performance evaluation was used.",
+        )
+    else:
+        _add(
+            findings,
+            "warnings",
+            "s2_8_h1_preregistration_not_verified",
+            "S2.8 H1 preregistration is not verified: "
+            f"{s2_8_gate.get('errors', [])[:6]}",
+        )
+
+    s2_9_gate = status.get("s2_9_gate", {})
+    if s2_9_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_9_d1_preregistration_verified",
+            "S2.9 verified D1 input isolation, extraction-contract v1, the complete "
+            "four-example v5 prompt "
+            "as actually rendered, pinned gpt-4.1-2025-04-14 sampling, five-repeat "
+            "request planning, a 750-call/37-USD ceiling, and failure-preserving "
+            "S2.10-E attempt envelopes on synthetic evidence. No .env, Gold, B0/H1 "
+            "prediction, network, real LLM, or performance evaluation was used.",
+        )
+    else:
+        _add(
+            findings,
+            "warnings",
+            "s2_9_d1_preregistration_not_verified",
+            "S2.9 D1 preregistration is not verified: "
+            f"{s2_9_gate.get('errors', [])[:6]}",
+        )
+
+    g05_gate = status.get("g05_complexity_gate", {})
+    if g05_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "g05_pre_result_complexity_contract_verified",
+            "G0.5 verified method-independent text and BPMN complexity profiles, "
+            "11/12 fixed score indicators, low/medium/high strata, and fail-closed "
+            "leakage guards on synthetic fixtures before any complex-dataset result.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "g05_pre_result_complexity_contract_not_verified",
+            "G0.5 complexity contract failed closed: "
+            f"{g05_gate.get('errors', [])[:6]}",
+        )
+
+    s2_11_gate = status.get("s2_11_gate", {})
+    if s2_11_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_11_complex_legal_source_membership_protocol_verified",
+            "S2.11 verified the official CELEX 32016R0679 English Formex source, "
+            "EUR-Lex reuse evidence, deterministic 50-record membership covering "
+            "Articles 5-50, and a schema-valid blank human-Gold/canonical mapping "
+            "protocol. The old heuristic gdpr50 pack was not imported; semantic Gold "
+            "remains 0/50 and no method result or complexity profile was produced.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "s2_11_complex_legal_source_membership_protocol_not_verified",
+            "S2.11 complex legal source/membership/protocol failed closed: "
+            f"{s2_11_gate.get('errors', [])[:6]}",
+        )
+
+    s2_10_evaluator_gate = status.get("s2_10_evaluator_gate", {})
+    if s2_10_evaluator_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_10_unified_evaluator_contract_verified",
+            "S2.10-E verified one offline evaluator for B0/H1/D1: exact membership, "
+            "clause-level four-class modality, strict/safe/token span metrics, coverage "
+            "and hallucination denominators, structural edges, invalid/API accounting, "
+            "costs, and a blank human-only style-equivalence protocol. The five-attempt "
+            "fixture is synthetic and no formal performance result was produced.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "s2_10_unified_evaluator_contract_not_verified",
+            "S2.10 evaluator contract failed closed: "
+            f"{s2_10_evaluator_gate.get('errors', [])[:6]}",
+        )
+
+    s2_10_evaluator_v3_gate = status.get("s2_10_evaluator_v3_gate", {})
+    s2_7_b0_v3_gate = status.get("s2_7_b0_v3_gate", {})
+    if (
+        s2_10_evaluator_v3_gate.get("ready") is True
+        and s2_7_b0_v3_gate.get("ready") is True
+    ):
+        _add(
+            findings,
+            "passes",
+            "s2_10_method_independent_alignment_and_b0_v3_verified",
+            "S2.10-E v1.2 fixes method-local-ID/exact-boundary undercounting with a "
+            "pre-result 0.5 character-span-IoU global one-to-one alignment, preserves "
+            "exact segmentation separately, and locks the immutable B0 re-evaluation. "
+            "No model/API was rerun and paper-score targeting remains forbidden.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "s2_10_method_independent_alignment_or_b0_v3_not_verified",
+            "S2.10-E v1.2 or the immutable B0 v3 re-evaluation failed closed: "
+            f"evaluator={s2_10_evaluator_v3_gate.get('blockers', [])[:6]}, "
+            f"b0={s2_7_b0_v3_gate.get('blockers', [])[:6]}",
+        )
+
+    s2_12_analysis_gate = status.get("s2_12_analysis_gate", {})
+    if s2_12_analysis_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_12_pre_result_analysis_protocol_verified",
+            "S2.12-P froze six primary endpoints, two B0-referenced contrasts, "
+            "10,000-sample paired cluster bootstrap intervals, 10,000-sign-swap "
+            "randomization tests, per-dataset 12-hypothesis Holm control, fixed "
+            "low/medium/high strata, fail-closed error taxonomy, and deterministic "
+            "qualitative case selection on synthetic counts. Formal S2.12 results "
+            "remain blocked on formal Gold publication and exact-membership predictions.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "s2_12_pre_result_analysis_protocol_not_verified",
+            "S2.12-P analysis protocol failed closed: "
+            f"{s2_12_analysis_gate.get('errors', [])[:6]}",
         )
 
     supplement = contract.get("official_supplement", {})
@@ -568,8 +1380,8 @@ def collect_project_audit() -> dict[str, Any]:
              "are format-valid; membership_payload_sha256 matches; schema + "
              "review tool + validator are in place. The 150 records are the "
              "project-self-sampled EStG-150 dataset (NOT Sun's original 150, "
-             "NOT an exact reproduction). The user can begin editing "
-             "data/development/human_review/estg_150_human_correction_v1.json NOW.")
+             "NOT an exact reproduction). The input gate remains valid; the current "
+             "Layer E version is already 150/150 adjudicated and S2.2-frozen.")
     else:
         # Distinguish "contract says paused" from "preconditions missing".
         if not contract_authorizes:
@@ -601,9 +1413,31 @@ def collect_project_audit() -> dict[str, Any]:
         _add(findings, "passes", "annotation_freeze_ready",
              f"All 150 records adjudicated; v2 human_correction freeze_ready=True. "
              f"Annotation is frozen. Note: this is a NECESSARY but NOT "
-             f"SUFFICIENT condition for formal_gold_publication_ready — "
+             f"SUFFICIENT condition for formal_gold_publication_ready; "
              f"the route, data, stage3, and freeze_policy gates must also "
              f"be re-locked before formal Gold can be published.")
+    s2_2_freeze_gate = status.get("stage2_annotation_freeze_gate", {})
+    if s2_2_freeze_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "s2_2_annotation_freeze_verified",
+            "S2.2 deterministic receipt verified the exact Layer E bytes: "
+            "150/150 approved English texts, 900/900 resolved six-element "
+            "decisions, 150/150 adjudicated records, and 231 final clauses. "
+            "This freezes the sentence-level English annotation snapshot only; "
+            "RWI-0001 and RWI-0007 remain open, formal Gold is not published, "
+            "and no formal Stage 2 method run is authorized.",
+        )
+    elif human_review_freeze_ready:
+        _add(
+            findings,
+            "errors",
+            "s2_2_annotation_freeze_receipt_invalid",
+            "The strict validator says Layer E is freeze-ready, but the S2.2 "
+            "receipt gate failed closed: "
+            f"{s2_2_freeze_gate.get('errors', [])[:6]}",
+        )
     # The formal_gold_publication_paused blocker must be present as
     # long as formal_gold_publication_ready is false. The blocker
     # message must NOT promise that formal Gold can be declared when
@@ -650,8 +1484,8 @@ def collect_project_audit() -> dict[str, Any]:
              ". Even when annotation is frozen, the route / data / stage3 / "
              "freeze_policy / exact publication status whitelist must each "
              "individually be re-locked before formal Gold can be declared. "
-             "The user can still continue the human review; this blocker "
-             "only prevents publishing formal Gold.")
+             "The frozen Layer E annotation remains intact; this blocker only "
+             "prevents publishing formal Gold and running formal methods.")
     else:
         _add(findings, "passes", "formal_gold_publication_ready",
              "All formal Gold publication preconditions are satisfied: "
@@ -691,7 +1525,32 @@ def collect_project_audit() -> dict[str, Any]:
 
     rule = (REPO_ROOT / "scripts/run_sun_rule_only.py").read_text(encoding="utf-8")
     hybrid = (REPO_ROOT / "scripts/run_sun_llm_fallback.py").read_text(encoding="utf-8")
-    if "SemanticExtractor()" in rule and "SemanticExtractor()" in hybrid:
+    s2_6_ready = status.get("s2_6_verified") is True
+    if s2_6_ready and "verify_sun_b0_s26" in rule:
+        _add(
+            findings,
+            "passes",
+            "sun_rule_only_uses_verified_s2_6_entry",
+            "sun_rule_only now enters the verified S2.6 canonical composition; "
+            "formal batch prediction remains separately gated.",
+        )
+        if status.get("s2_8_verified") is True and "h1_selective" in hybrid:
+            _add(
+                findings,
+                "passes",
+                "h1_uses_verified_s2_6_front_end",
+                "The H1 runner consumes verified canonical S2.6 B0 records and no "
+                "longer instantiates the legacy heuristic front end.",
+            )
+        elif "SemanticExtractor()" in hybrid:
+            _add(
+                findings,
+                "warnings",
+                "h1_still_uses_legacy_front_end",
+                "The H1 development runner still uses the legacy heuristic front end; "
+                "S2.8 must rebase it on the verified B0 before H1 can run.",
+            )
+    elif "SemanticExtractor()" in rule and "SemanticExtractor()" in hybrid:
         _add(findings, "warnings", "legacy_shared_front_end_only", "Current development M1/M2 share one heuristic front end, but it is not the final published Sun Stage 2 baseline.")
     else:
         _add(findings, "errors", "rule_front_end_mismatch", "M1/M2 shared rule front end is not demonstrable.")
@@ -739,7 +1598,14 @@ def collect_project_audit() -> dict[str, Any]:
     if not frozen_counts["input"] or not frozen_counts["gold"]:
         _add(findings, "blockers", "formal_capsule_not_frozen", f"Artifact counts: {frozen_counts}")
     if contract.get("stage3", {}).get("status") != "locked":
-        _add(findings, "blockers", "stage3_benchmark_not_locked", "Formal BPMN set, matching configuration, and violation Gold still require a later lock.")
+        _add(
+            findings,
+            "blockers",
+            "stage3_benchmark_not_locked",
+            "The all-seven GDPR BPMN extension membership is locked, but Sun's "
+            "unidentified original four-model subset, matching configuration, and "
+            "violation Gold still require a later lock.",
+        )
 
     tracked = _git_check(["ls-files", "--error-unmatch", "formal_experiment/AGENTS.md"])
     if tracked is False:
@@ -840,11 +1706,12 @@ def collect_project_audit() -> dict[str, Any]:
                  f"Could not verify few-shot fixtures: {exc}")
 
     # B0 still has no BERT-TextCNN / CoreNLP / Tregex — keep blocker.
-    # Stricter check: require import statements or class definitions,
-    # not bare word matches (which can be triggered by docstring edits).
-    b0_has_textcnn = False
-    b0_has_corenlp = False
-    b0_has_tregex = False
+    # Readiness must come from executable component gates, not class names or
+    # command strings. S2.5-A intentionally contains CoreNLP/Tregex contract
+    # text while its external runtime and live extractor remain unavailable.
+    b0_has_textcnn_source = False
+    b0_has_corenlp = bool(corenlp_gate.get("runtime_ready"))
+    b0_has_tregex = bool(corenlp_gate.get("ready"))
     sun_style = REPO_ROOT / "src" / "bpc_hybrid" / "sun_style"
     if sun_style.exists():
         for path in sun_style.rglob("*.py"):
@@ -853,36 +1720,33 @@ def collect_project_audit() -> dict[str, Any]:
                 stripped = line.strip()
                 if not stripped or stripped.startswith("#"):
                     continue
-                if not b0_has_textcnn and (
+                if not b0_has_textcnn_source and (
                     "class BertTextCNN" in stripped
                     or "BertTextCNN(" in stripped
                     or "import textcnn" in stripped.lower()
                     or "from .textcnn" in stripped.lower()
                 ):
-                    b0_has_textcnn = True
-                if not b0_has_corenlp and (
-                    "import corenlp" in stripped.lower()
-                    or "from corenlp" in stripped.lower()
-                    or "from stanfordnlp" in stripped.lower()
-                    or "StanfordCoreNLP" in stripped
-                ):
-                    b0_has_corenlp = True
-                if not b0_has_tregex and (
-                    "import tregex" in stripped.lower()
-                    or "from tregex" in stripped.lower()
-                    or "TregexPattern" in stripped
-                    or "Tsurgeon" in stripped
-                ):
-                    b0_has_tregex = True
-    if b0_has_textcnn and b0_has_corenlp and b0_has_tregex:
+                    b0_has_textcnn_source = True
+    training_contract = statement_classifier_gate.get("training_config", {})
+    b0_has_textcnn = bool(
+        b0_has_textcnn_source
+        and isinstance(training_contract, dict)
+        and training_contract.get("status")
+        == "verified_training_dev_selection_single_test_evaluation"
+        and training_contract.get("test_evaluation_count") == 1
+    )
+    b0_has_composition = status.get("s2_6_verified") is True
+    if b0_has_textcnn and b0_has_corenlp and b0_has_tregex and b0_has_composition:
         _add(findings, "passes", "b0_paper_faithful_components_present",
-             "B0 paper-faithful components (TextCNN + CoreNLP + Tregex) are present in code.")
+             "B0 paper-faithful components are verified: trained TextCNN checkpoint "
+             "and single-test run manifest + CoreNLP + Tregex/Tsurgeon.")
     else:
         missing = [
             n for n, p in (
-                ("TextCNN", b0_has_textcnn),
+                ("TextCNN trained checkpoint and S2.4 run manifest", b0_has_textcnn),
                 ("CoreNLP", b0_has_corenlp),
                 ("Tregex/Tsurgeon", b0_has_tregex),
+                ("S2.6 classifier-extractor canonical composition", b0_has_composition),
             ) if not p
         ]
         _add(findings, "blockers", "sun_stage2_baseline_not_paper_faithful",
@@ -904,11 +1768,12 @@ def collect_project_audit() -> dict[str, Any]:
         "and the sorted legacy_record_ids in "
         "data/development/estg/estg_150_membership_hashes.json ; they CANNOT be "
         "re-sampled, re-seeded, or swapped with the legacy reconstruction. "
-        "(3) After the user finishes 150/150 adjudication, this 150 becomes the "
-        "project's INDEPENDENTLY RECONSTRUCTED EStG-150 BENCHMARK "
-        "(independently_reconstructed_estg_150_v1), named "
-        "'LLM-assisted, human-adjudicated Gold' ; it is NOT Sun's original 150 "
-        "and is NOT an exact reproduction of any external dataset. "
+        "(3) The user has finished 150/150 adjudication and S2.2 has frozen the "
+        "sentence-level English annotation snapshot for the project's "
+        "INDEPENDENTLY RECONSTRUCTED EStG-150 benchmark "
+        "(independently_reconstructed_estg_150_v1). This is not yet formal Gold "
+        "publication; it is NOT Sun's original 150 and is NOT an exact "
+        "reproduction of any external dataset. "
         "(4) The official Sun Archive.org supplement (Decision_Logic_data.zip, "
         "input 2.zip) is reserved for METHOD, MODALITY DATA, and BASELINE "
         "ALIGNMENT use only ; it MAY NOT be used to replace any of the 150 "
@@ -918,8 +1783,9 @@ def collect_project_audit() -> dict[str, Any]:
         "FORBIDDEN. "
         "(6) The four orthogonal gates (human_review_input_ready / "
         "human_review_freeze_ready / formal_gold_publication_ready / "
-        "final_experiment_ready) are unchanged by this reminder ; only the "
-        "input gate is currently true at 0/150.",
+        "final_experiment_ready) remain distinct; input and annotation-freeze "
+        "gates are currently true, while formal publication and final-run gates "
+        "remain false.",
     )
 
     integrity_pass = not findings["errors"]
@@ -949,16 +1815,16 @@ def collect_project_audit() -> dict[str, Any]:
     # formal_gold_publication_ready or final_experiment_ready.
     human_review_ready = human_review_input_ready
     return {
-        "audit_version": "3.6",
+        "audit_version": "4.0",
         "integrity_pass": integrity_pass,
         # Backward-compatible field: semantics = "input is ready to
-        # start the human review". True at 0/150 once the data,
+        # start the human review". Independent of progress once the data,
         # schema, tool, v2 file, and authoritative contract gate
         # status are all in place.
         "human_review_ready": human_review_ready,
         "human_review_ready_semantics": (
-            "DEPRECATED alias. Equals human_review_input_ready (true "
-            "once the user can start the human review at 0/150). New "
+            "DEPRECATED alias. Equals human_review_input_ready "
+            "(independent of annotation progress). New "
             "code that needs 'ready to publish Gold' must use "
             "human_review_freeze_ready, formal_gold_publication_ready, "
             "or final_experiment_ready."
@@ -966,6 +1832,19 @@ def collect_project_audit() -> dict[str, Any]:
         # Four orthogonal gates:
         "human_review_input_ready": human_review_input_ready,
         "human_review_freeze_ready": human_review_freeze_ready,
+        "stage2_annotation_freeze_verified": bool(
+            status.get("stage2_annotation_freeze_verified") and integrity_pass
+        ),
+        "estg150_candidate_protocol_c0_verified": bool(
+            candidate_protocol_c0_verified and integrity_pass
+        ),
+        "estg150_c1_transport_adapter_offline_ready": bool(
+            candidate_transport_adapter_offline_ready and integrity_pass
+        ),
+        "estg150_c1_runtime_verified": bool(
+            candidate_c1_runtime_verified and integrity_pass
+        ),
+        "estg150_c1_runtime": candidate_c1_runtime,
         "formal_gold_publication_ready": formal_gold_publication_ready,
         "final_experiment_ready": final_ready,
         "sun_modality_development_data_verified": bool(
@@ -986,6 +1865,10 @@ def collect_project_audit() -> dict[str, Any]:
         "sun_modality_license_status": status.get(
             "sun_modality_license_status"
         ),
+        "s2_4_license_evidence_verified": bool(
+            status.get("s2_4_license_evidence_verified")
+        ),
+        "s2_4_ready": bool(status.get("s2_4_ready")),
         "sun_modality_formal_use_ready": bool(
             status.get("sun_modality_formal_use_ready")
         ),
@@ -998,13 +1881,53 @@ def collect_project_audit() -> dict[str, Any]:
         "public_marker_lexicon_combined_payload_sha256": status.get(
             "public_marker_gate", {}
         ).get("combined_payload_sha256"),
+        "s2_5_contract_verified": bool(status.get("s2_5_contract_verified")),
+        "s2_5_runtime_ready": bool(status.get("s2_5_runtime_ready")),
+        "s2_5_verified": bool(status.get("s2_5_verified")),
+        "s2_6_verified": bool(status.get("s2_6_verified")),
+        "s2_7_modality_baselines_verified": bool(
+            status.get("s2_7_modality_baselines_verified")
+        ),
+        "s2_7_overall_ready": bool(status.get("s2_7_overall_ready")),
+        "s2_8_verified": bool(status.get("s2_8_verified")),
+        "s2_9_verified": bool(status.get("s2_9_verified")),
+        "g05_complexity_verified": bool(status.get("g05_complexity_verified")),
+        "s2_11_verified": bool(status.get("s2_11_verified")),
+        "s2_11_input_ready": bool(status.get("s2_11_input_ready")),
+        "s2_11_human_gold_freeze_ready": bool(
+            status.get("s2_11_human_gold_freeze_ready")
+        ),
+        "s2_10_evaluator_verified": bool(status.get("s2_10_evaluator_verified")),
+        "s2_10_main_data_results_ready": bool(
+            status.get("s2_10_main_data_results_ready")
+        ),
+        "s2_10_evaluator_v3_verified": bool(
+            status.get("s2_10_evaluator_v3_verified")
+        ),
+        "s2_7_b0_v3_development_verified": bool(
+            status.get("s2_7_b0_v3_development_verified")
+        ),
+        "s2_12_analysis_protocol_verified": bool(
+            status.get("s2_12_analysis_protocol_verified")
+        ),
+        "s2_12_formal_results_ready": bool(
+            status.get("s2_12_formal_results_ready")
+        ),
+        "s2_5_corenlp_version": status.get("corenlp_gate", {}).get(
+            "corenlp_version"
+        ),
         "claim_boundary": (
             "Route v2 is reopened for final-version and official-data alignment. "
             "The EStG-150 dataset is the project-self-sampled 150 (NOT Sun's original 150, "
-            "NOT an exact reproduction). The user is authorized to begin editing the v2 "
-            "human_correction file NOW; formal Gold publication remains paused until "
-            "all 150 records are adjudicated AND route / data / stage3 / freeze_policy "
-            "are each individually re-locked."
+            "NOT an exact reproduction). All 150 Layer E records are adjudicated and "
+            "the S2.2 annotation snapshot is frozen; formal Gold publication remains "
+            "paused until route / data / stage3 / freeze_policy are each individually "
+            "re-locked. The separate S2.11 GDPR complex input "
+            "membership and annotation protocol are verified, while its semantic Gold "
+            "remains 0/50. S2.7 modality component baselines, the S2.9 D1 "
+            "preregistration, the S2.10 evaluator contract, and the S2.12 pre-result "
+            "analysis protocol are verified; S2.7 phrase and all formal B0/H1/D1 "
+            "comparisons remain unrun."
         ),
         "findings": findings,
         "formal_status": status,
@@ -1029,6 +1952,7 @@ def print_human(audit: dict[str, Any]) -> None:
     # readiness states are never confused.
     print(f"Human review input ready       : {audit.get('human_review_input_ready')}")
     print(f"Human review freeze ready      : {audit.get('human_review_freeze_ready')}")
+    print(f"S2.2 freeze receipt verified   : {audit.get('stage2_annotation_freeze_verified')}")
     print(f"Formal Gold publication ready : {audit.get('formal_gold_publication_ready')}")
     print(f"Final experiment ready         : {audit.get('final_experiment_ready')}")
     print(f"(human_review_ready alias = {audit.get('human_review_ready')}; "

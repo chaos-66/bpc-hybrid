@@ -1,0 +1,26 @@
+{
+  "schema_version": "estg150_internal_sol_manifest@1.0.0",
+  "run_id": "codex_internal_gpt56sol_full150_v1",
+  "status": "succeeded",
+  "candidate_count": 150,
+  "validated_candidate_count": 150,
+  "candidate_bundle_sha256": "98fdda3e51622b39acb9c53a5f15059c5c40b8257bcdccc5dc84969172737c93",
+  "total_clause_count": 232,
+  "translation_decision_counts": {
+    "accepted": 138,
+    "edited": 11,
+    "uncertain": 1
+  },
+  "context_sufficiency_counts": {
+    "insufficient": 26,
+    "sufficient": 51,
+    "uncertain": 73
+  },
+  "confidence_counts": {
+    "high": 50,
+    "low": 11,
+    "medium": 89
+  },
+  "external_api_called": false,
+  "layer_e_changed": false
+}

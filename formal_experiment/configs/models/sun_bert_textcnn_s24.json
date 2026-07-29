@@ -1,0 +1,129 @@
+{
+  "schema_version": "sun_bert_textcnn_s24@1.0.0",
+  "task_id": "S2.4",
+  "status": "preregistered_implementation_ready_not_run",
+  "claim_boundary": "Paper-faithful independent reconstruction of the final published BERT-TextCNN architecture; no Sun code, checkpoint, unpublished hyperparameters, or exact-reproduction claim.",
+  "paper_evidence": {
+    "source": "Sun et al. (2024), DOI 10.1007/s11227-023-05626-0, final-version Figure 3 and modality-classification evaluation",
+    "verified_components": [
+      "BERT contextual token representations",
+      "TextCNN convolution and max-pooling head",
+      "four labels: definition, obligation, permission, prohibition",
+      "Legal-BERT is the reported best pretrained model family"
+    ],
+    "project_reconstruction_parameters_not_reported_by_sun": [
+      "kernel widths and filter count",
+      "dropout",
+      "optimizer parameter groups",
+      "batch size and gradient accumulation",
+      "maximum sequence length",
+      "early-stopping patience",
+      "random seed"
+    ]
+  },
+  "labels": [
+    "definition",
+    "obligation",
+    "permission",
+    "prohibition"
+  ],
+  "local_research_use_gate": {
+    "path": "configs/datasets/sun_modality_local_research_use.json",
+    "sha256": "b92cd0845ef5d71b396f2e78da44640e3a000dc3e345d9e77eadd6a06857e70b",
+    "required_ready": true,
+    "redistribution_allowed": false
+  },
+  "pretrained_model": {
+    "repository_id": "nlpaueb/legal-bert-base-uncased",
+    "revision": "15b570cbf88259610b082a167dacc190124f60f6",
+    "local_files_only": true,
+    "hidden_size": 768,
+    "required_files": {
+      "config.json": "716ea70c3c3e74bfe8496cc04cba7cd52f4ca45401e74042bb1058fe0390a1b6",
+      "pytorch_model.bin": "6b4f1da798ff101a66ad5cb11c6daa7f99cd41e7909277e01398576e8bd789bd",
+      "vocab.txt": "3aaa02f2e3a397eee0f813caa567c87cddab1045a4a6b8ac6261f0cc799efb8f"
+    }
+  },
+  "architecture": {
+    "bert_output": "last_hidden_state",
+    "kernel_sizes": [2, 3, 4],
+    "filters_per_kernel": 128,
+    "activation": "relu",
+    "pooling": "attention-mask-aware global max",
+    "dropout": 0.1,
+    "include_special_tokens": true,
+    "num_labels": 4
+  },
+  "tokenization": {
+    "max_length": 192,
+    "padding": "dynamic_per_batch",
+    "truncation": true,
+    "observed_full_population_token_length": {
+      "rows": 2831,
+      "p50": 56,
+      "p95": 122,
+      "p99": 151,
+      "max": 186,
+      "rows_over_max_length": 0
+    }
+  },
+  "optimization": {
+    "loss": "unweighted_cross_entropy",
+    "optimizer": "AdamW",
+    "encoder_learning_rate": 0.00002,
+    "head_learning_rate": 0.001,
+    "weight_decay": 0.01,
+    "batch_size": 16,
+    "gradient_accumulation_steps": 1,
+    "effective_batch_size": 16,
+    "max_epochs": 8,
+    "warmup_ratio": 0.1,
+    "gradient_clip_norm": 1.0,
+    "early_stopping_metric": "macro_f1",
+    "early_stopping_patience": 2,
+    "early_stopping_min_delta": 0.0,
+    "seed": 20260717,
+    "encoder_trainable": true,
+    "hyperparameter_search": false
+  },
+  "dataset": {
+    "split_origin": "project_reconstructed_deterministic_group_aware_split_not_sun_original_split",
+    "train": {
+      "path": "data/development/modality/sun_estg_modality_v1/splits/train.jsonl",
+      "rows": 1985,
+      "sha256": "a7367cd35e3a5ce7263ad5b0fae4881a989761d4fba21b75bdc75b6e2b83c142"
+    },
+    "dev": {
+      "path": "data/development/modality/sun_estg_modality_v1/splits/dev.jsonl",
+      "rows": 420,
+      "sha256": "ad541915d16aaef6119cb3769e6da0b89e8e8af5ec9069ac3a25680040e5a8d6"
+    },
+    "test": {
+      "path": "data/development/modality/sun_estg_modality_v1/splits/test.jsonl",
+      "rows": 426,
+      "sha256": "2f67edad05e3a4d315d9ac65fc0ffd1d83dbaffd2d77a55916d6aa9a6919e871"
+    }
+  },
+  "evaluation": {
+    "selection_split": "dev",
+    "selection_metric": "macro_f1",
+    "test_policy": "single_evaluation_after_best_dev_checkpoint",
+    "metrics": [
+      "accuracy",
+      "macro_precision",
+      "macro_recall",
+      "macro_f1",
+      "per_class_precision_recall_f1_support",
+      "confusion_matrix"
+    ],
+    "persist_row_level_predictions": false
+  },
+  "safety": {
+    "no_overwrite": true,
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_allowed_by_runner": false,
+    "raw_or_row_level_data_redistribution": false,
+    "aggregate_metrics_manifest_allowed": true
+  }
+}

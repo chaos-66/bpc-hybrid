@@ -1,0 +1,76 @@
+{
+  "schema_version": "estg150_b0_enhanced_development@1.0.0",
+  "task_id": "S2.7-B0-ENHANCED-DEV",
+  "run_id": "s27_estg150_b0_enhanced_v3",
+  "status": "preregistered_development_evaluation",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "claim_scope": "development",
+  "inputs": {
+    "human_correction_layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c"
+    },
+    "membership_hashes": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b"
+    },
+    "annotation_freeze_receipt": {
+      "path": "outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json",
+      "sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961"
+    },
+    "independence_audit": {
+      "path": "outputs/development/estg150_independence_audit_v1/estg_150_independence_audit_v1.jsonl",
+      "sha256": "d32a60727e0470c94a8ceeb8f5a0703af68903c5e92b997ffee094d7d6fccc6a"
+    }
+  },
+  "method": {
+    "method_id": "b0_enhanced",
+    "paper_faithful_b0": false,
+    "s2_6_config": {
+      "path": "configs/models/sun_b0_s26.json",
+      "sha256": "47566def9b7f8e403fd784b23c9cec0c55a64d4b5d10cd62c60dd4ab87442d46"
+    },
+    "classifier_input": "German sentence/clause units aligned to planned English clause units",
+    "classifier_label_mapping": "English public-marker modality when present; otherwise S2.4 German unit prediction; one prediction per planned clause unit",
+    "phrase_input": "approved_text_en",
+    "phrase_extractor": "CoreNLP 4.5.10 plus sun_phrase_patterns_en_v2_enhanced with multi-match bridge",
+    "clause_segmentation": "merge CoreNLP list fragments; optional coordinated-modality split",
+    "canonical_mapping": "build_canonical_record_enhanced multi-span fields",
+    "canonical_method_name": "sun_rule_only"
+  },
+  "evaluator": {
+    "path": "configs/stage2_evaluator_s210_v3.json",
+    "sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f",
+    "tracks": [
+      "all_150_sentence_only_english",
+      "independent_82_sentence_only_english_sensitivity",
+      "sun_table8_any_overlap_diagnostic"
+    ]
+  },
+  "output": {
+    "directory": "outputs/development/s27_estg150_b0_enhanced_v3",
+    "no_overwrite": true,
+    "persist_row_level_predictions": true,
+    "persist_canonical_gold_copy": false
+  },
+  "route_boundaries": {
+    "formal_gold_published": false,
+    "formal_performance_result": false,
+    "context_sidecar_used": false,
+    "german_to_english_fidelity_human_verified": false,
+    "same_sentence_only_approved_english_phrase_input_for_future_b0_h1_d1": true,
+    "open_issue_ids": [
+      "RWI-0001",
+      "RWI-0007"
+    ],
+    "interpretation": "Development evidence for method-defect repairs on B0. Not formal Gold publication. Tracks remain sentence-only English with independent-82 sensitivity."
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_allowed": false,
+    "human_decisions_modified": false,
+    "data_gold_written": false,
+    "data_input_written": false,
+    "formal_predictions_or_results_written": false
+  }
+}

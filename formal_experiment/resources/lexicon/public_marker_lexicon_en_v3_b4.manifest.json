@@ -1,0 +1,49 @@
+{
+  "schema_version": "public_marker_manifest_b4@1.0.0",
+  "lexicon_id": "public_marker_lexicon_en_v3_b4",
+  "parent_lexicon": {
+    "path": "resources/lexicon/public_marker_lexicon_en_v2.manifest.json",
+    "sha256": "3f7e6108c1e66de37377abc2e9b9f4d0344ff2d1eca20b49ebf90e38aff7b462",
+    "lexicon_id": "public_marker_lexicon_en_v2"
+  },
+  "artifact_scope": "development_only",
+  "single_change": "append exactly 25 active constraint markers; all other marker categories and runtime behavior remain parent v2",
+  "constraint_extension": {
+    "path": "resources/lexicon/constraint_markers_en_v3_b4.json",
+    "sha256": "ce2bac2129a79b28a96e5ca5cf416ab642a43cc8ae3f56cc881042a44b126b11",
+    "bytes": 20773,
+    "new_active_entry_count": 25,
+    "parent_active_entry_count": 45,
+    "combined_active_entry_count": 70
+  },
+  "source_snapshot": {
+    "path": "resources/lexicon/public_marker_sources_en_v3_b4.json",
+    "sha256": "7ce816ac6a171f2c00514fe8732436b1527cce57371b88d7b43637783eba249a",
+    "bytes": 2463,
+    "snapshot_id": "public_marker_sources_en_v3_b4"
+  },
+  "unchanged_parent_category_sha256": {
+    "actor": "fdf026e92d9ddc4ca3b3dbe068e5440bf4c0bffd72aad9b204c5c8bc63edc44d",
+    "condition": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a",
+    "exception": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e",
+    "modality": "cb6fae1292e3601b0bf10ca21459e37f63957a1e34f58d8155bc7bee74b69095"
+  },
+  "parent_constraint": {
+    "path": "resources/lexicon/constraint_markers_en_v2.json",
+    "sha256": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1",
+    "active_entry_count": 45
+  },
+  "combined_payload_sha256": "20f24f28929bda3ed2f47d5897be35e9557fe6ec782ce95bf2332ab17384d407",
+  "combined_payload_rule": "sha256(utf8(parent_manifest_sha256 + LF + constraint_extension_sha256 + LF + source_snapshot_sha256 + LF))",
+  "boundaries": {
+    "constraint_only": true,
+    "tregex_modified": false,
+    "resolver_modified": false,
+    "span_boundary_modified": false,
+    "modality_modified": false,
+    "gold_used_for_marker_derivation": false,
+    "network_called": false,
+    "llm_api_called": false,
+    "formal_use_allowed": false
+  }
+}

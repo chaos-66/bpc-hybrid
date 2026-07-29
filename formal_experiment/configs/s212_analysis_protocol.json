@@ -1,0 +1,255 @@
+{
+  "schema_version": "s212_analysis_protocol@1.1.0",
+  "task_id": "S2.12-P",
+  "status": "preregistered_locked_before_formal_results",
+  "upstream_bindings": {
+    "complexity_contract": {
+      "path": "configs/complexity_contract.json",
+      "sha256": "0a0e4f809897f22179b752c3c92ddcbf208aced1176c9ac77fb27816c9ac3b7a"
+    },
+    "complexity_verification_manifest": {
+      "path": "outputs/reports/g05_complexity_contract_synthetic_v1.manifest.json",
+      "sha256": "e1494f64bbf413a5eb9c4e2414d5fe9b0678733e25b34f2e8be29aaea9fb5cc3"
+    },
+    "evaluator_contract": {
+      "path": "configs/stage2_evaluator_s210.json",
+      "sha256": "2b6f7bd4269e475dc4b7bb0561a767a70baba49965c16c7f6b34b8a455badc16"
+    },
+    "evaluator_verification_manifest": {
+      "path": "outputs/reports/s210_stage2_evaluator_contract_synthetic_v2.manifest.json",
+      "sha256": "58d65b256225942593b853b0b5f1777de56caca4b9059a28d128e001a933f89b"
+    },
+    "complex_dataset_contract": {
+      "path": "configs/datasets/gdpr_articles_5_50_s211.json",
+      "sha256": "041b6269f3da6bdf67b3d06408d9664be5c4fe84e0c9ff4576726a460a6a563c"
+    },
+    "complex_dataset_verification_manifest": {
+      "path": "outputs/reports/s211_gdpr_complex_dataset_freeze_v1.manifest.json",
+      "sha256": "215dae3ebe0378652337d2839f62ea4dbf9787f921cdbbae3ac394c36f5c486b"
+    }
+  },
+  "dataset_tracks": [
+    {
+      "dataset_id": "independently_reconstructed_estg_150_v1",
+      "target_count": 150,
+      "membership_payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
+      "formal_analysis_preconditions": [
+        "150_of_150_human_adjudicated",
+        "formal_gold_publication_ready",
+        "exact_membership_predictions_for_all_methods"
+      ]
+    },
+    {
+      "dataset_id": "gdpr_2016_679_articles_5_50_seeded50_v1",
+      "target_count": 50,
+      "membership_payload_sha256": "9a6a2c892e6e9ef86877066fb3c88ad03d06ca999c41ecbd91c6df35d09c28b9",
+      "formal_analysis_preconditions": [
+        "50_of_50_human_adjudicated",
+        "complex_gold_freeze_ready",
+        "exact_membership_predictions_for_all_methods"
+      ]
+    }
+  ],
+  "methods": {
+    "formal": [
+      "sun_rule_only",
+      "sun_llm_fallback",
+      "direct_llm"
+    ],
+    "reference_method": "sun_rule_only",
+    "contrasts": [
+      {
+        "id": "h1_minus_b0",
+        "candidate": "sun_llm_fallback",
+        "reference": "sun_rule_only"
+      },
+      {
+        "id": "d1_minus_b0",
+        "candidate": "direct_llm",
+        "reference": "sun_rule_only"
+      }
+    ],
+    "modality_only_context_baselines": [
+      "train_majority",
+      "fixed_german_keyword",
+      "word12_multinomial_nb"
+    ],
+    "context_baselines_in_primary_hypothesis_family": false,
+    "d1_primary_metrics_repeat_index": 1,
+    "d1_remaining_repeats_use": "stability_only_not_significance_replication"
+  },
+  "analysis_units": {
+    "resampling_cluster": "sample_id",
+    "modality_evaluation_unit": "clause",
+    "span_evaluation_unit": "sample_aggregated_exact_span_counts",
+    "edge_evaluation_unit": "sample_aggregated_exact_edge_counts",
+    "array_position_alignment_forbidden": true,
+    "missing_invalid_and_api_error_records_remain_in_denominator": true,
+    "complete_case_analysis_forbidden": true
+  },
+  "complexity_stratification": {
+    "source": "G0.5 fixed_indicator_score from human-approved Gold only",
+    "profile_source_roles": [
+      "synthetic_fixture",
+      "human_approved_gold"
+    ],
+    "strata_order": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "text_score_ranges": {
+      "low": [0, 3],
+      "medium": [4, 7],
+      "high": [8, 11]
+    },
+    "method_specific_rebinning_allowed": false,
+    "post_result_threshold_tuning_allowed": false,
+    "minimum_cluster_count_for_interval": 10,
+    "small_stratum_policy": "report_n_and_point_estimate_mark_ci_not_estimable_do_not_merge_or_drop"
+  },
+  "primary_endpoints": [
+    {
+      "id": "modality_macro_f1",
+      "aggregation": "macro_f1",
+      "components": [
+        "obligation",
+        "prohibition",
+        "permission",
+        "definition"
+      ]
+    },
+    {
+      "id": "actor_strict_exact_f1",
+      "aggregation": "micro_f1",
+      "components": ["actor"]
+    },
+    {
+      "id": "action_strict_exact_f1",
+      "aggregation": "micro_f1",
+      "components": ["action"]
+    },
+    {
+      "id": "condition_strict_exact_f1",
+      "aggregation": "micro_f1",
+      "components": ["condition"]
+    },
+    {
+      "id": "constraint_strict_exact_f1",
+      "aggregation": "micro_f1",
+      "components": ["constraint"]
+    },
+    {
+      "id": "exception_strict_exact_f1",
+      "aggregation": "micro_f1",
+      "components": ["exception"]
+    }
+  ],
+  "statistics": {
+    "point_estimate": "recompute_metric_from_sample_level_tp_fp_fn_sufficient_statistics",
+    "confidence_interval": {
+      "method": "paired_sample_cluster_percentile_bootstrap",
+      "iterations": 10000,
+      "seed": "s212-paired-bootstrap-20260717-v1",
+      "level": 0.95,
+      "percentile_definition": "Hyndman-Fan type 7 linear interpolation",
+      "resample_size": "number_of_unique_sample_ids_with_replacement"
+    },
+    "hypothesis_test": {
+      "method": "paired_sample_cluster_randomization_sign_swap",
+      "iterations": 10000,
+      "seed": "s212-paired-randomization-20260717-v1",
+      "alternative": "two_sided",
+      "monte_carlo_correction": "plus_one_numerator_and_denominator"
+    },
+    "multiplicity": {
+      "method": "Holm step-down family-wise error control",
+      "alpha": 0.05,
+      "family": "separate_per_dataset_track_across_2_contrasts_x_6_primary_endpoints",
+      "hypotheses_per_family": 12,
+      "stratum_specific_and_secondary_metrics": "descriptive_with_ci_not_in_primary_Holm_family"
+    },
+    "random_method_policy": "primary metrics use each method's preregistered primary run; additional D1 repeats quantify stability only",
+    "rounding": "retain_full_precision_in_machine_reports_round_only_for_paper_display"
+  },
+  "secondary_reporting": {
+    "by_stratum": [
+      "absolute_metric",
+      "delta_to_sun_rule_only",
+      "coverage",
+      "schema_invalid_rate",
+      "api_error_rate",
+      "recovered_api_error_rate",
+      "any_api_error_rate",
+      "unsupported_or_ambiguous_rate",
+      "mean_cost_usd",
+      "mean_latency_ms",
+      "h1_trigger_rate"
+    ],
+    "curves": [
+      "fixed_low_medium_high_degradation_curve",
+      "coverage_failure_operating_points",
+      "quality_cost_frontier_at_preregistered_method_settings"
+    ],
+    "threshold_sweep_or_post_result_method_selection_allowed": false
+  },
+  "error_analysis": {
+    "multi_label_counts_retained": true,
+    "one_primary_category_for_stacked_figures": true,
+    "primary_priority": [
+      "runtime_api_error",
+      "schema_invalid",
+      "cross_field_invalid",
+      "unsupported_or_ambiguous",
+      "clause_segmentation",
+      "modality_misclassification",
+      "actor_boundary_or_role",
+      "action_boundary_or_omission",
+      "condition_scope",
+      "constraint_scope",
+      "exception_scope_or_omission",
+      "actor_action_edge",
+      "order_relation_edge",
+      "hallucinated_extra",
+      "missed_required",
+      "translation_or_alignment",
+      "complexity_nested_scope",
+      "complexity_passive_or_implicit_actor",
+      "complexity_cross_reference",
+      "other_predeclared"
+    ],
+    "unknown_category_policy": "fail_closed",
+    "qualitative_case_selection": {
+      "cases_per_dataset_method_primary_category": 3,
+      "rank": "ascending_sha256_of_seed_dataset_method_category_sample_id",
+      "seed": "s212-qualitative-cases-20260717-v1",
+      "method_labels_blinded_during_human_interpretation": true,
+      "manual_cherry_picking_or_replacement_forbidden": true
+    }
+  },
+  "leakage_boundary": {
+    "strata_must_exist_before_method_output_join": true,
+    "forbidden_stratification_inputs": [
+      "model_prediction",
+      "method_id",
+      "method_error",
+      "test_metric",
+      "test_result",
+      "predicted_complexity",
+      "post_result_manual_bin_edit"
+    ],
+    "formal_analysis_requires_exact_membership": true,
+    "missing_sample_policy": "fail_closed_no_analysis"
+  },
+  "safety": {
+    "synthetic_verification_only": true,
+    "formal_gold_read_or_modified": false,
+    "formal_predictions_read_or_created": false,
+    "formal_complexity_profiles_generated": false,
+    "formal_performance_evaluation": false,
+    "method_comparison_claim_generated": false,
+    "llm_api_called": false,
+    "network_called": false
+  },
+  "claim_boundary": "S2.12-P freezes complexity strata, sample-cluster inference, Holm families, error taxonomy, and deterministic case selection before formal results. Synthetic verification is not a method comparison; formal S2.12 remains blocked until both human Gold tracks and exact-membership predictions are ready."
+}

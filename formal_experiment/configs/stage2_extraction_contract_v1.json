@@ -1,0 +1,229 @@
+{
+  "contract_id": "stage2_extraction_contract@1.0.0",
+  "status": "frozen_for_sentence_only_pilot",
+  "frozen_at": "2026-07-19",
+  "task_scope": "Sun-compatible Stage 2 six-element extraction shared by human Gold, B0, H1, and D1",
+  "evidence_boundary": {
+    "sun_role": "semantic basis for the four modality classes and six extraction targets",
+    "barrientos_role": "engineering discipline only: strict JSON, controlled labels, schema validation, deterministic normalization, traceability, and separation of semantic from style-equivalent differences",
+    "rc4pc_schema_adopted": false,
+    "publicly_supported": [
+      "four modality classes: obligation, prohibition, permission, definition",
+      "six targets: modality, actor, action, condition, constraint, exception",
+      "phrase extraction uses source evidence",
+      "action extraction follows removal or identification of modality, condition, constraint, and exception spans"
+    ],
+    "project_operational_decisions": [
+      "minimum sufficient exact-span boundaries",
+      "pronoun mentions are extracted rather than silently resolved",
+      "implicit passive actors are absent, not invented",
+      "condition, constraint, and exception scope tests",
+      "multi-clause and coordination segmentation",
+      "controlled unresolved-coreference status encoding",
+      "Stage 3 admission rules for unresolved references"
+    ],
+    "still_requires_user_decision_before_formal_gold": [
+      "whether to keep a sentence-only primary track or add a hash-locked context-assisted track",
+      "the context sidecar source and provenance for the 68 context-dependent or non-independent EStG records",
+      "the German-to-English QA route or an alternative native-English primary phrase track"
+    ]
+  },
+  "canonical_schema": {
+    "schema_source": "stage2_prediction.schema.json@1.0.0",
+    "path": "configs/schemas/stage2_prediction.schema.json",
+    "sha256": "7485ac4a3a42b976d87e63a7d2ead88cc3df1f810b14dd066bc1f63c15599d1b",
+    "schema_change_required": false,
+    "compatibility_reason": "The existing schema already separates exact evidence text from normalized values and provides unsupported_or_ambiguous for transparent status reporting."
+  },
+  "input_contract": {
+    "extraction_unit": "one approved English target text with one stable sample_id",
+    "current_context_mode": "target_text_only",
+    "target_offsets_apply_to": "source_text",
+    "context_may_supply_target_spans": false,
+    "context_resolution_allowed_only_if": [
+      "the antecedent is included in the formally versioned model input",
+      "the same context payload and visibility are provided to every compared method",
+      "the context source and payload hash are recorded"
+    ],
+    "human_aids": "German source, Chinese gloss, and back-translation may help review the English working text but may not add a legal fact or antecedent absent from the frozen method input."
+  },
+  "fields": {
+    "modality": {
+      "representation": "one clause-level label plus one or more exact trigger spans",
+      "labels": ["obligation", "prohibition", "permission", "definition"],
+      "minimum_span": "the smallest surface trigger sufficient to justify the label, including negation when it changes the class"
+    },
+    "actor": {
+      "representation": "actors array",
+      "definition": "the smallest explicit noun phrase or pronominal mention that grammatically bears or performs the norm",
+      "minimum_span": "exclude determiners or modifiers only when their removal does not change identity; keep coordinated actors as separate spans",
+      "implicit_value_allowed": false
+    },
+    "action": {
+      "representation": "actions array",
+      "definition": "the smallest verb-centred phrase sufficient to distinguish the regulated act, including a necessary object or complement",
+      "minimum_span": "exclude modality, conditions, constraints, and exceptions; retain particles or objects needed for identity"
+    },
+    "condition": {
+      "representation": "conditions array",
+      "definition": "an antecedent state or event that activates or determines applicability of the norm",
+      "scope_test": "If removing the phrase changes whether or when the norm applies, it is a condition.",
+      "minimum_span": "include the condition marker and its complete governed proposition"
+    },
+    "constraint": {
+      "representation": "constraints array",
+      "definition": "a time, quantity, manner, scope, destination, or legal-reference limit on performance after applicability is established",
+      "scope_test": "If the phrase limits how, how much, where, or by when an applicable act is performed, it is a constraint.",
+      "minimum_span": "include the limiting marker and the smallest complete limit"
+    },
+    "exception": {
+      "representation": "exceptions array",
+      "definition": "a carve-out that defeats or narrows a rule that would otherwise apply",
+      "scope_test": "If the phrase withdraws an otherwise applicable norm for a case, it is an exception.",
+      "minimum_span": "include the exception marker and its complete governed proposition"
+    }
+  },
+  "span_and_normalization": {
+    "offset_semantics": "zero-based Unicode character offsets with exclusive end, equivalent to Python source_text[start:end]",
+    "exact_span_rule": "Every emitted evidence text must be a byte-for-character substring of source_text at the declared offsets.",
+    "normalized_rule": "normalized is downstream matching metadata and never replaces or edits the exact evidence span.",
+    "allowed_normalization": [
+      "case folding",
+      "whitespace folding",
+      "lemmatization without added arguments",
+      "removal of non-identifying articles"
+    ],
+    "forbidden_normalization": [
+      "resolving a pronoun to an antecedent not visible in the formal input",
+      "adding an implicit legal actor",
+      "adding an object, condition, exception, or limit from legal common knowledge"
+    ]
+  },
+  "pronoun_and_reference_policy": {
+    "pronoun_forms": ["it", "they", "this", "these", "such"],
+    "subject_pronoun_rule": "When a listed form is the explicit grammatical subject or regulated mention, extract its exact surface span as actor even if its antecedent is unresolved.",
+    "demonstrative_determiner_rule": "When this, these, or such modifies an expressed noun, extract the complete minimal noun phrase rather than the determiner alone.",
+    "sentence_only_normalization": "Use a surface-preserving normalized value such as it, they, this, these, or such; do not substitute an antecedent.",
+    "resolved_normalization": "An antecedent-normalized value is allowed only when the antecedent is part of the formally versioned visible input.",
+    "unresolved_status": {
+      "reference_status": "unresolved_coreference",
+      "independence_status": "context_required",
+      "canonical_encoding": {
+        "field": "actor",
+        "reason": "reference_status=unresolved_coreference;independence_status=context_required"
+      }
+    },
+    "it_example": {
+      "text": "It may cover a shorter period if ...",
+      "actor_exact_span": "It",
+      "actor_normalized_without_context": "it",
+      "antecedent_substitution_without_context": false,
+      "stage2_exact_span_scorable": true,
+      "stage3_actor_matching_allowed": false
+    }
+  },
+  "implicit_and_passive_policy": {
+    "passive_without_agent": "Do not invent an actor. Emit actors=[] and map each expressed action with actor_id=null.",
+    "passive_with_agent": "Extract the explicit by-phrase participant only when it is the performer or bearer relevant to the norm.",
+    "external_actor_inference_allowed": false
+  },
+  "clause_and_coordination_policy": {
+    "separate_clause_when": "a segment has its own normative force, modality trigger, actor assignment, or independently evaluable legal consequence",
+    "same_clause_when": "one modality scopes coordinated actors or actions that form one normative proposition",
+    "coordinated_actors": "store separate actor spans",
+    "coordinated_actions": "store separate action spans",
+    "mapping_rule": "Add only actor-action edges licensed by the syntax; do not assume a cross-product when scope is ambiguous.",
+    "order_rule": "Add an order relation only when an exact textual cue or construction establishes order.",
+    "hybrid_clause_boundary_change_allowed": false
+  },
+  "missing_and_uncertain_policy": {
+    "missing": "The element has no source span in the target clause. Use an empty array; in an H1 patch, absent=true deterministically becomes an empty array.",
+    "uncertain": "A surface mention or scope exists but its identity, reference, or boundary cannot be determined from visible input. Preserve any defensible exact span and add a controlled unsupported_or_ambiguous entry.",
+    "empty_array_does_not_mean_uncertain": true,
+    "uncertainty_must_not_delete_observed_pronoun": true,
+    "unsupported_reason_codes": [
+      "reference_status=unresolved_coreference;independence_status=context_required",
+      "semantic_scope_ambiguous_in_target",
+      "clause_boundary_ambiguous",
+      "context_required"
+    ]
+  },
+  "forbidden_inference_sources": [
+    "legal common sense",
+    "external statutes or commentary not included in the formal input",
+    "web search or unstated world knowledge",
+    "Gold labels or Gold spans",
+    "another method's prediction except the explicit B0 record supplied to H1"
+  ],
+  "method_visibility": {
+    "human_gold": "approved English target text and immutable review aids; semantic additions from absent context are forbidden",
+    "sun_rule_only": "locked German text for the reconstructed modality classifier and the aligned approved English target text for phrase extraction; no LLM and no Gold",
+    "sun_llm_fallback": "the same aligned target input, the existing B0 clause, and preregistered inference-time repair reasons; no Gold",
+    "direct_llm": "the approved English target text and identifiers only; no B0, H1, Gold, external context, or legal knowledge"
+  },
+  "hybrid_repair_contract": {
+    "full_record_replacement": false,
+    "repairable_clause_fields": [
+      "modality",
+      "actors",
+      "actions",
+      "conditions",
+      "constraints",
+      "exceptions",
+      "actor_action_map",
+      "order_relations"
+    ],
+    "metadata_replacement_required": "unsupported_or_ambiguous is returned as a complete top-level replacement list so unresolved-reference status survives the merge",
+    "immutable_fields": [
+      "schema_version",
+      "sample_id",
+      "source_id",
+      "source_text",
+      "clause_id",
+      "clause_span",
+      "clause_count",
+      "validation"
+    ],
+    "dependency_closure": {
+      "actors": ["actor_action_map"],
+      "actions": ["actor_action_map", "order_relations"]
+    },
+    "post_merge_requirement": "The complete merged record must pass canonical schema and cross-field validation; otherwise preserve B0 unchanged."
+  },
+  "evaluation_contract": {
+    "primary_modality_metric": "four-class clause-level macro-F1",
+    "primary_phrase_metric": "strict exact-span precision, recall, and F1 for actor, action, condition, constraint, and exception",
+    "secondary_phrase_metrics": ["safe-normalized span F1", "token-overlap diagnostics"],
+    "structure_metrics": ["clause segmentation", "actor_action_map", "order_relations"],
+    "status_metrics": ["unsupported_or_ambiguous rate", "unresolved coreference count", "context-required count"],
+    "shared_requirements": [
+      "same sample IDs",
+      "same target text and context visibility",
+      "same Gold",
+      "same canonical schema",
+      "same normalization",
+      "same evaluator"
+    ],
+    "unresolved_pronoun_scoring": "The pronoun exact span is scored normally in Stage 2; unresolved reference status is reported separately."
+  },
+  "stage3_admission": {
+    "required": [
+      "schema_valid=true",
+      "cross_field_valid=true",
+      "all spans match the frozen target text",
+      "no unresolved_coreference for any actor used in participant matching",
+      "no unresolved clause boundary required by the Stage 3 adapter"
+    ],
+    "it_sentence_policy": "A record containing actor span It with unresolved_coreference is valid and scorable in Stage 2 but is not eligible for actor-to-participant matching in Stage 3."
+  },
+  "version_binding": {
+    "human_document": "docs/STAGE2_EXTRACTION_CONTRACT_V1.md",
+    "annotation_protocol": "docs/ANNOTATION_PROTOCOL.md",
+    "human_gold_guide": "docs/HUMAN_GOLD_GUIDE.md",
+    "direct_prompt": "prompts/sun_compat/direct_llm_sun_record_prompt.md",
+    "hybrid_prompt": "prompts/sun_compat/rule_first_llm_fallback_prompt.md",
+    "pilot": "configs/stage2_extraction_pilot_v1.json",
+    "bundle_lock": "configs/stage2_extraction_bundle_v1.json",
+    "rule": "Prompts bind this file's SHA-256; the bundle lock binds the contract, schema, prompts, protocols, and pilot by SHA-256. Gold publication must record the same bundle ID and hashes."
+  }
+}

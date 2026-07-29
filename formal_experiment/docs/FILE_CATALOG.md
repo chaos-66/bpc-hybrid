@@ -2,7 +2,7 @@
 
 **生成日期**：2026-07-29
 
-**收录文件**：1709 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
+**收录文件**：1710 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
 
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
@@ -35,6 +35,7 @@
 | `_retired/docs/2026-07/EStG_150_SAMPLING_PROTOCOL.md` | 退役归档 | 说明、规范或研究文档 |
 | `_retired/docs/2026-07/EXPERIMENT_FOR_BEGINNER.md` | 退役归档 | 说明、规范或研究文档 |
 | `_retired/docs/2026-07/REORGANIZATION_PLAN.md` | 退役归档 | 说明、规范或研究文档 |
+| `_retired/docs/2026-07/STAGE2_CONTRACT_v0.1_DRAFT.md` | 退役归档 | 说明、规范或研究文档 |
 | `_retired/docs/2026-07/STATUS_REPORT.md` | 退役归档 | 说明、规范或研究文档 |
 | `_retired/docs/2026-07/STATUS_SNAPSHOT_2026-07-12.md` | 退役归档 | 说明、规范或研究文档 |
 | `_retired/docs/2026-07/SUN2024_FINAL_GAP_AND_ROADMAP.md` | 退役归档 | 说明、规范或研究文档 |

@@ -1,0 +1,198 @@
+{
+  "schema_version": "s212_synthetic_counts@1.0.0",
+  "dataset_id": "synthetic_s212_protocol_fixture",
+  "observations": [
+    {
+      "sample_id": "syn-01",
+      "profile_source_role": "synthetic_fixture",
+      "stratum": "low",
+      "methods": {
+        "sun_rule_only": {
+          "modality_macro_f1": {"obligation": [1, 0, 0], "prohibition": [0, 0, 1], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 1]},
+          "constraint_strict_exact_f1": {"constraint": [0, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 0]}
+        },
+        "sun_llm_fallback": {
+          "modality_macro_f1": {"obligation": [1, 0, 0], "prohibition": [1, 0, 0], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [1, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [0, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 0]}
+        },
+        "direct_llm": {
+          "modality_macro_f1": {"obligation": [1, 0, 0], "prohibition": [1, 0, 0], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [1, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [0, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 0]}
+        }
+      }
+    },
+    {
+      "sample_id": "syn-02",
+      "profile_source_role": "synthetic_fixture",
+      "stratum": "low",
+      "methods": {
+        "sun_rule_only": {
+          "modality_macro_f1": {"obligation": [0, 1, 1], "prohibition": [0, 0, 0], "permission": [0, 0, 1], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [0, 1, 1]},
+          "action_strict_exact_f1": {"action": [0, 0, 1]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [0, 0, 1]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 0]}
+        },
+        "sun_llm_fallback": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [0, 0, 0], "permission": [1, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [1, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 0]}
+        },
+        "direct_llm": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [0, 0, 0], "permission": [1, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [1, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 0]}
+        }
+      }
+    },
+    {
+      "sample_id": "syn-03",
+      "profile_source_role": "synthetic_fixture",
+      "stratum": "medium",
+      "methods": {
+        "sun_rule_only": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [1, 0, 0], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [0, 1, 1]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [1, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 1]}
+        },
+        "sun_llm_fallback": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [1, 0, 0], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [1, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [1, 0, 0]}
+        },
+        "direct_llm": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [1, 0, 0], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [1, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [1, 0, 0]}
+        }
+      }
+    },
+    {
+      "sample_id": "syn-04",
+      "profile_source_role": "synthetic_fixture",
+      "stratum": "medium",
+      "methods": {
+        "sun_rule_only": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [0, 0, 0], "permission": [0, 0, 0], "definition": [0, 1, 1]},
+          "actor_strict_exact_f1": {"actor": [0, 0, 1]},
+          "action_strict_exact_f1": {"action": [0, 0, 1]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 1]},
+          "constraint_strict_exact_f1": {"constraint": [0, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 0]}
+        },
+        "sun_llm_fallback": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [0, 0, 0], "permission": [0, 0, 0], "definition": [1, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [1, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [0, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 0]}
+        },
+        "direct_llm": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [0, 0, 0], "permission": [0, 0, 0], "definition": [1, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [1, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [0, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 0]}
+        }
+      }
+    },
+    {
+      "sample_id": "syn-05",
+      "profile_source_role": "synthetic_fixture",
+      "stratum": "high",
+      "methods": {
+        "sun_rule_only": {
+          "modality_macro_f1": {"obligation": [0, 1, 1], "prohibition": [0, 0, 0], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [0, 0, 1]},
+          "action_strict_exact_f1": {"action": [0, 0, 1]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 1]},
+          "constraint_strict_exact_f1": {"constraint": [0, 0, 1]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 1]}
+        },
+        "sun_llm_fallback": {
+          "modality_macro_f1": {"obligation": [1, 0, 0], "prohibition": [0, 0, 0], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [0, 0, 1]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 1]},
+          "constraint_strict_exact_f1": {"constraint": [1, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 1]}
+        },
+        "direct_llm": {
+          "modality_macro_f1": {"obligation": [1, 0, 0], "prohibition": [0, 0, 0], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [1, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [1, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [1, 0, 0]}
+        }
+      }
+    },
+    {
+      "sample_id": "syn-06",
+      "profile_source_role": "synthetic_fixture",
+      "stratum": "high",
+      "methods": {
+        "sun_rule_only": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [0, 1, 1], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [0, 0, 1]},
+          "action_strict_exact_f1": {"action": [0, 0, 1]},
+          "condition_strict_exact_f1": {"condition": [0, 0, 1]},
+          "constraint_strict_exact_f1": {"constraint": [0, 0, 1]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 1]}
+        },
+        "sun_llm_fallback": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [1, 0, 0], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [1, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [0, 0, 1]},
+          "exception_strict_exact_f1": {"exception": [0, 0, 1]}
+        },
+        "direct_llm": {
+          "modality_macro_f1": {"obligation": [0, 0, 0], "prohibition": [1, 0, 0], "permission": [0, 0, 0], "definition": [0, 0, 0]},
+          "actor_strict_exact_f1": {"actor": [1, 0, 0]},
+          "action_strict_exact_f1": {"action": [1, 0, 0]},
+          "condition_strict_exact_f1": {"condition": [1, 0, 0]},
+          "constraint_strict_exact_f1": {"constraint": [1, 0, 0]},
+          "exception_strict_exact_f1": {"exception": [1, 0, 0]}
+        }
+      }
+    }
+  ],
+  "error_cases": [
+    {"dataset_id": "synthetic_s212_protocol_fixture", "method": "direct_llm", "primary_category": "runtime_api_error", "sample_id": "syn-01"},
+    {"dataset_id": "synthetic_s212_protocol_fixture", "method": "direct_llm", "primary_category": "runtime_api_error", "sample_id": "syn-02"},
+    {"dataset_id": "synthetic_s212_protocol_fixture", "method": "direct_llm", "primary_category": "runtime_api_error", "sample_id": "syn-03"},
+    {"dataset_id": "synthetic_s212_protocol_fixture", "method": "direct_llm", "primary_category": "runtime_api_error", "sample_id": "syn-04"}
+  ]
+}

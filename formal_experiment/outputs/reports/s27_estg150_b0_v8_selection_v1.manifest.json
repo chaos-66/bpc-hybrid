@@ -1,0 +1,180 @@
+{
+  "schema_version": "b0_enhanced_v8_selection_report@1.0.0",
+  "preregistration": "configs/models/estg150_b0_v8_preregistration_v1.json",
+  "preregistration_sha256": "7b8eadd20fd996d7025abcd3f9f54780b5417157865950cb7c57be2e40ddfa48",
+  "candidates": [
+    "v8a",
+    "v8b",
+    "v8c"
+  ],
+  "promoted": null,
+  "provisional_best_remains": "s27_estg150_b0_enhanced_v7",
+  "reason": "No candidate met modality F1 +0.010 vs v7 (all +0.004 / +1 TP). v8b/c raise Table8 F1 but increase hallucinated-field rate.",
+  "metrics": {
+    "v5": {
+      "modality_micro": {
+        "f1": 0.6242299794661191,
+        "fn": 79.0,
+        "fp": 104.0,
+        "precision": 0.59375,
+        "recall": 0.658008658008658,
+        "tp": 152.0
+      },
+      "alignment_f1": 0.8008213552361396,
+      "exact_f1": 0.1437371663244353,
+      "table8_overall": {
+        "f1": 0.4920894708128751,
+        "fn": 373,
+        "fp": 558,
+        "precision": 0.44697720515361744,
+        "recall": 0.5473300970873787,
+        "tp": 451
+      },
+      "hallucinated_field_rate": 0.40632411067193674,
+      "actor_action_edges": {
+        "f1": 0.0,
+        "fn": 245,
+        "fp": 185,
+        "gold_count": 245,
+        "jaccard_iou": 0.0,
+        "precision": 0.0,
+        "predicted_count": 185,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "manifest_sha256": "e1bd642aa55c9bdc3a6a01b600b48910c643b1c270ab718f37f7980d4b776533"
+    },
+    "v7": {
+      "modality_micro": {
+        "f1": 0.6283367556468172,
+        "fn": 78.0,
+        "fp": 103.0,
+        "precision": 0.59765625,
+        "recall": 0.6623376623376623,
+        "tp": 153.0
+      },
+      "alignment_f1": 0.8008213552361396,
+      "exact_f1": 0.1437371663244353,
+      "table8_overall": {
+        "f1": 0.4920894708128751,
+        "fn": 373,
+        "fp": 558,
+        "precision": 0.44697720515361744,
+        "recall": 0.5473300970873787,
+        "tp": 451
+      },
+      "hallucinated_field_rate": 0.40632411067193674,
+      "actor_action_edges": {
+        "f1": 0.0,
+        "fn": 245,
+        "fp": 185,
+        "gold_count": 245,
+        "jaccard_iou": 0.0,
+        "precision": 0.0,
+        "predicted_count": 185,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "manifest_sha256": "6099da41cf3c8708d544da3657ccdd0d6d680e5fc87c9b80fb99e01db821b9a4"
+    },
+    "v8a": {
+      "modality_micro": {
+        "f1": 0.6324435318275154,
+        "fn": 77.0,
+        "fp": 102.0,
+        "precision": 0.6015625,
+        "recall": 0.6666666666666666,
+        "tp": 154.0
+      },
+      "alignment_f1": 0.8008213552361396,
+      "exact_f1": 0.1437371663244353,
+      "table8_overall": {
+        "f1": 0.4920894708128751,
+        "fn": 373,
+        "fp": 558,
+        "precision": 0.44697720515361744,
+        "recall": 0.5473300970873787,
+        "tp": 451
+      },
+      "hallucinated_field_rate": 0.40632411067193674,
+      "actor_action_edges": {
+        "f1": 0.0,
+        "fn": 245,
+        "fp": 185,
+        "gold_count": 245,
+        "jaccard_iou": 0.0,
+        "precision": 0.0,
+        "predicted_count": 185,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "manifest_sha256": "2e8c4a4a10ceb95cf03a3fb0226123ac6c037d90bd2240c3c0aec88b0fbec5e5"
+    },
+    "v8b": {
+      "modality_micro": {
+        "f1": 0.6324435318275154,
+        "fn": 77.0,
+        "fp": 102.0,
+        "precision": 0.6015625,
+        "recall": 0.6666666666666666,
+        "tp": 154.0
+      },
+      "alignment_f1": 0.8008213552361396,
+      "exact_f1": 0.1437371663244353,
+      "table8_overall": {
+        "f1": 0.5060750132065504,
+        "fn": 345,
+        "fp": 590,
+        "precision": 0.44808231992516373,
+        "recall": 0.5813106796116505,
+        "tp": 479
+      },
+      "hallucinated_field_rate": 0.41660377358490563,
+      "actor_action_edges": {
+        "f1": 0.0,
+        "fn": 245,
+        "fp": 185,
+        "gold_count": 245,
+        "jaccard_iou": 0.0,
+        "precision": 0.0,
+        "predicted_count": 185,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "manifest_sha256": "678eccbfb14146bc1a7dc7465b0660ed645fccef32a215aa46119751cd3a2311"
+    },
+    "v8c": {
+      "modality_micro": {
+        "f1": 0.6324435318275154,
+        "fn": 77.0,
+        "fp": 102.0,
+        "precision": 0.6015625,
+        "recall": 0.6666666666666666,
+        "tp": 154.0
+      },
+      "alignment_f1": 0.8008213552361396,
+      "exact_f1": 0.1437371663244353,
+      "table8_overall": {
+        "f1": 0.5060750132065504,
+        "fn": 345,
+        "fp": 590,
+        "precision": 0.44808231992516373,
+        "recall": 0.5813106796116505,
+        "tp": 479
+      },
+      "hallucinated_field_rate": 0.41660377358490563,
+      "actor_action_edges": {
+        "f1": 0.0,
+        "fn": 245,
+        "fp": 185,
+        "gold_count": 245,
+        "jaccard_iou": 0.0,
+        "precision": 0.0,
+        "predicted_count": 185,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "manifest_sha256": "6a86c84860c4529ebb3b38df5ae57d91c379543eca709b7f54d0e2f435234848"
+    }
+  }
+}

@@ -147,6 +147,18 @@ class TestManifestShape:
         assert meta["licenseurl"] is None
         assert meta["rights"] is None
 
+    def test_archive_org_metadata_live_license_check_recorded(self):
+        manifest = _load_manifest()
+        meta = manifest["official_landing_page"][
+            "archive_org_metadata_live_verified_2026_07_16"
+        ]
+        assert meta["identifier"] == "input-2"
+        assert meta["filename"] == "Decision_Logic_data.zip"
+        assert meta["size"] == EXPECTED_SIZE
+        assert meta["sha1"] == EXPECTED_SHA1
+        assert meta["licenseurl"] is None
+        assert meta["rights"] is None
+
     def test_primary_modality_asset_block_present(self):
         manifest = _load_manifest()
         asset = manifest.get("primary_modality_asset", {})
@@ -372,8 +384,8 @@ class TestGitignorePolicy:
 # ---------------------------------------------------------------------------
 
 class TestCompletionGuard:
-    """S2.1-A is verified; B1 (raw bytes) is resolved; B2 (license) is
-    still open."""
+    """S2.1-A is verified; the S2.4-L evidence review is complete, while
+    external permission is still required."""
 
     def test_s2_1_a_marked_verified(self):
         manifest = _load_manifest()
@@ -381,12 +393,22 @@ class TestCompletionGuard:
         assert check["s2_1_a_completed"] is True
         assert check["s2_1_a_completed_reason"]
 
-    def test_b1_resolved_b2_open(self):
+    def test_b1_resolved_b2_requires_external_permission(self):
         manifest = _load_manifest()
         blockers = {b["id"]: b for b in manifest["blockers_2026_07_15"]}
         assert blockers["B1"]["status"] == "resolved"
-        assert blockers["B2"]["status"] == "open"
+        assert blockers["B2"]["status"] == "external_permission_required"
         assert blockers["B3"]["status"] == "open"
+
+    def test_s2_4_license_closure_remains_blocked(self):
+        manifest = _load_manifest()
+        closure = manifest["s2_4_license_closure_2026_07_16"]
+        assert closure["evidence_review_complete"] is True
+        assert closure["rights_status"] == "unknown_pending_confirmation"
+        assert closure["training_authorized"] is False
+        assert closure["evaluation_authorized"] is False
+        assert closure["s2_4_ready"] is False
+        assert closure["s2_6_entered"] is False
 
     def test_status_field_reflects_byte_match(self):
         manifest = _load_manifest()
@@ -446,6 +468,8 @@ class TestVerifyScript:
             [sys.executable, str(_VERIFY_SCRIPT), "--zip", str(_ZIP_PATH)],
             cwd=_PROJECT_ROOT,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             check=False,

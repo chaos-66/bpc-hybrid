@@ -144,9 +144,13 @@ def main() -> int:
     manifest_path = None
     if args.run_dir is not None:
         manifest_path = args.run_dir / "manifest.jsonl"
-    elif v2_path.parent.name == "llm_candidate_runs":
+    elif (v2_path.parent / "manifest.jsonl").exists():
         manifest_path = v2_path.parent / "manifest.jsonl"
-    run_config_path = v2_path.parent / "run_config.json" if v2_path.parent.name == "llm_candidate_runs" else None
+    if args.run_dir is not None:
+        run_config_path = args.run_dir / "run_config.json"
+    else:
+        candidate_run_config = v2_path.parent / "run_config.json"
+        run_config_path = candidate_run_config if candidate_run_config.exists() else None
     if run_config_path is not None and not run_config_path.exists():
         run_config_path = None
 
@@ -388,13 +392,14 @@ def main() -> int:
         cfg = json.loads(run_config_path.read_text(encoding="utf-8"))
         required_fields = (
             "provider", "model", "base_url", "base_url_sha256",
-            "temperature", "max_tokens", "membership_payload_sha256",
+            "temperature", "max_tokens", "thinking_mode",
+            "membership_payload_sha256",
             "layer_a_sha256", "layer_b_sha256", "layer_c_sha256",
             "prompt_a_sha256", "prompt_b_sha256", "layer_e_sha256",
         )
         missing = [f for f in required_fields if f not in cfg]
         add("run_config_locked_fields_present", len(missing) == 0,
-            f"missing fields: {missing}" if missing else "all 13 required fields present")
+            f"missing fields: {missing}" if missing else "all 14 required fields present")
 
     n_pass = sum(1 for c in check_results if c["ok"])
     n_fail = sum(1 for c in check_results if not c["ok"])

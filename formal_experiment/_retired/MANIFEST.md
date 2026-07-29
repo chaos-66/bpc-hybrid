@@ -28,7 +28,7 @@
 | `data/development/human_review/estg150_review_pack_user_audit_v1.jsonl` | `_retired/data/human_review_user_audit/estg150_review_pack_user_audit_v1.jsonl` | 被五层 Layer E 审核面取代 |
 | `scripts/build_user_override_review_pack.py` | `_retired/scripts/build_user_override_review_pack.py` | 只生成已退役熟悉用副本 |
 | `docs/AUDIT_LOG.md` | `_retired/logs/AUDIT_LOG_legacy_through_event_29.md` | 迁移前旧人类日志；新入口为 `docs/EXPERIMENT_LOG.md` |
+| `../STAGE2_CONTRACT_v0.1_DRAFT.md` | `_retired/docs/2026-07/STAGE2_CONTRACT_v0.1_DRAFT.md` | 根目录旧候选标注草稿；已由活动 `docs/STAGE2_EXTRACTION_CONTRACT_V1.md` 与机器合同取代 |
 
 机器事件日志没有归档或重写：`docs/AUDIT_EVENTS.jsonl` 原样迁移为
 `docs/EXPERIMENT_EVENTS.jsonl`，其中事件 1—29 保持原始 JSONL 内容。
-

@@ -1,0 +1,258 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 13,
+  "end_index_exclusive": 18,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000208",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Similarly, amounts for which the reclaim of refunded income tax (wage tax) is waived pursuant to Section 108(7)(2) may not be taken into account as special expenses under subsection (1)(3), b) Subsection (1)(3) shall also apply if, within the group of persons referred to in point 1, the lender or loan debtor on the one hand and the developer (owner) or housing applicant (beneficiary, tenant) on the other hand are not identical. 4. a) Young shares within the meaning of subsection (1)(4) are shares, aa) which are acquired upon formation for cash payment with immediate full payment of the issue amount (par value and premium) within three months of the entry of the company in the commercial register, bb) which are newly issued in the course of a capital increase for cash payment with immediate full payment of the issue amount (par value and premium) and which, in the course of an ordinary or authorised capital increase, are acquired within three months of the entry of the implementation of the increase of the share capital in the commercial register, or where, in the course of a contingent capital increase, the exercise of the irrevocable subscription right is declared.",
+        "issues": [
+          "The substantive content of Section 108(7)(2), subsection (1)(3), point 1, and subsection (1)(4) is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Similarly, amounts for which the reclaim of refunded income tax (wage tax) is waived pursuant to Section 108(7)(2) may not be taken into account as special expenses under subsection (1)(3)", "start": 0, "end": 188},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 115, "end": 122}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be taken into account as special expenses under subsection (1)(3)", "start": 123, "end": 188, "normalized": "take amounts into account as special expenses under subsection (1)(3)"}],
+          "conditions": [{"id": "c1_condition_1", "text": "for which the reclaim of refunded income tax (wage tax) is waived", "start": 19, "end": 84, "normalized": "reclaim of refunded income tax is waived"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "pursuant to Section 108(7)(2)", "start": 85, "end": 114, "normalized": "under Section 108(7)(2)"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "Subsection (1)(3) shall also apply if, within the group of persons referred to in point 1, the lender or loan debtor on the one hand and the developer (owner) or housing applicant (beneficiary, tenant) on the other hand are not identical", "start": 193, "end": 430},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall also apply", "start": 211, "end": 227}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "apply", "start": 222, "end": 227, "normalized": "apply subsection (1)(3)"}],
+          "conditions": [{"id": "c2_condition_1", "text": "if, within the group of persons referred to in point 1, the lender or loan debtor on the one hand and the developer (owner) or housing applicant (beneficiary, tenant) on the other hand are not identical", "start": 228, "end": 430, "normalized": "specified financing and housing parties within point 1 are not identical"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "Young shares within the meaning of subsection (1)(4) are shares, aa) which are acquired upon formation for cash payment with immediate full payment of the issue amount (par value and premium) within three months of the entry of the company in the commercial register", "start": 438, "end": 704},
+          "modality": {"label": "definition", "evidence": [{"text": "are shares", "start": 491, "end": 501}]},
+          "actors": [],
+          "actions": [
+            {"id": "c3_action_1", "text": "are shares", "start": 491, "end": 501, "normalized": "define young shares"},
+            {"id": "c3_action_2", "text": "are acquired", "start": 513, "end": 525, "normalized": "acquire qualifying shares"}
+          ],
+          "conditions": [{"id": "c3_condition_1", "text": "upon formation", "start": 526, "end": 540, "normalized": "upon company formation"}],
+          "constraints": [
+            {"id": "c3_constraint_1", "text": "for cash payment with immediate full payment of the issue amount (par value and premium)", "start": 541, "end": 629, "normalized": "cash payment with immediate full payment of par value and premium"},
+            {"id": "c3_constraint_2", "text": "within three months of the entry of the company in the commercial register", "start": 630, "end": 704, "normalized": "within three months after company registration"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": null, "action_id": "c3_action_1"},
+            {"actor_id": null, "action_id": "c3_action_2"}
+          ],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c4",
+          "clause_span": {"text": "which are newly issued in the course of a capital increase for cash payment with immediate full payment of the issue amount (par value and premium) and which, in the course of an ordinary or authorised capital increase, are acquired within three months of the entry of the implementation of the increase of the share capital in the commercial register, or where, in the course of a contingent capital increase, the exercise of the irrevocable subscription right is declared", "start": 710, "end": 1183},
+          "modality": {"label": "definition", "evidence": [
+            {"text": "are newly issued", "start": 716, "end": 732},
+            {"text": "are acquired", "start": 930, "end": 942},
+            {"text": "is declared", "start": 1172, "end": 1183}
+          ]},
+          "actors": [],
+          "actions": [
+            {"id": "c4_action_1", "text": "are newly issued", "start": 716, "end": 732, "normalized": "newly issue qualifying shares"},
+            {"id": "c4_action_2", "text": "are acquired", "start": 930, "end": 942, "normalized": "acquire qualifying shares"},
+            {"id": "c4_action_3", "text": "is declared", "start": 1172, "end": 1183, "normalized": "declare exercise of subscription right"}
+          ],
+          "conditions": [
+            {"id": "c4_condition_1", "text": "in the course of a capital increase", "start": 733, "end": 768, "normalized": "during a capital increase"},
+            {"id": "c4_condition_2", "text": "in the course of an ordinary or authorised capital increase", "start": 869, "end": 928, "normalized": "during an ordinary or authorised capital increase"},
+            {"id": "c4_condition_3", "text": "in the course of a contingent capital increase", "start": 1073, "end": 1119, "normalized": "during a contingent capital increase"}
+          ],
+          "constraints": [
+            {"id": "c4_constraint_1", "text": "for cash payment with immediate full payment of the issue amount (par value and premium)", "start": 769, "end": 857, "normalized": "cash payment with immediate full payment of par value and premium"},
+            {"id": "c4_constraint_2", "text": "within three months of the entry of the implementation of the increase of the share capital in the commercial register", "start": 943, "end": 1061, "normalized": "within three months after registration of the implemented share-capital increase"},
+            {"id": "c4_constraint_3", "text": "irrevocable subscription right", "start": 1141, "end": 1171, "normalized": "irrevocable subscription right"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": null, "action_id": "c4_action_1"},
+            {"actor_id": null, "action_id": "c4_action_2"},
+            {"actor_id": null, "action_id": "c4_action_3"}
+          ],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The cross-referenced provisions that determine the underlying expense category, relevant persons, tax reclaim, and statutory term are not included, so their content cannot be expanded beyond the excerpt."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Four normative units are retained: the prohibition on recognizing specified amounts, the additional applicability rule, and the two alternative qualification paths in the young-share definition. The second definition path keeps its ordinary or authorised acquisition branch and contingent-capital subscription-right branch without converting their textual alternative into an exception."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000220",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The building developers referred to in paragraph (1), number 3, letter a are obliged to notify the tax office of residence of the home purchaser, within one month and without official request, of the circumstances that give rise to a subsequent taxation. (b) A subsequent taxation of expenditure on the construction of single-family homes or owner-occupied apartments shall be carried out if the conditions of paragraph (1), number 3, letter b are not met.",
+        "issues": [
+          "The content of paragraph (1), number 3, letters a and b is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The building developers referred to in paragraph (1), number 3, letter a are obliged to notify the tax office of residence of the home purchaser, within one month and without official request, of the circumstances that give rise to a subsequent taxation", "start": 0, "end": 253},
+          "modality": {"label": "obligation", "evidence": [{"text": "are obliged", "start": 73, "end": 84}]},
+          "actors": [{"id": "c1_actor_1", "text": "The building developers referred to in paragraph (1), number 3, letter a", "start": 0, "end": 72, "normalized": "building developers under paragraph (1), number 3, letter a"}],
+          "actions": [{"id": "c1_action_1", "text": "notify the tax office of residence of the home purchaser", "start": 88, "end": 144, "normalized": "notify the home purchaser's residence tax office"}],
+          "conditions": [{"id": "c1_condition_1", "text": "the circumstances that give rise to a subsequent taxation", "start": 196, "end": 253, "normalized": "circumstances triggering subsequent taxation"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "within one month", "start": 146, "end": 162, "normalized": "within one month"},
+            {"id": "c1_constraint_2", "text": "without official request", "start": 167, "end": 191, "normalized": "without an official request"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "A subsequent taxation of expenditure on the construction of single-family homes or owner-occupied apartments shall be carried out if the conditions of paragraph (1), number 3, letter b are not met", "start": 259, "end": 455},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be carried out", "start": 368, "end": 388}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be carried out", "start": 374, "end": 388, "normalized": "carry out subsequent taxation of construction expenditure"}],
+          "conditions": [{"id": "c2_condition_1", "text": "if the conditions of paragraph (1), number 3, letter b are not met", "start": 389, "end": 455, "normalized": "paragraph (1), number 3, letter b conditions are not met"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Paragraph (1), number 3, letters a and b is unavailable, so the referenced developer class and substantive conditions cannot be verified from the excerpt."},
+        {"field": "actor", "reason": "The second duty is stated in the passive voice and does not expressly identify the actor responsible for carrying out the subsequent taxation."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The notification duty and the separately stated conditional duty to carry out subsequent taxation are extracted as two clauses. Only the first has an explicit actor; the second remains actorless rather than inferring the tax authority."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000230",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "To the extent that the special expense deduction related to the acquisition of new shares, recapture taxation cannot be avoided by acquiring participation certificates.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "To the extent that the special expense deduction related to the acquisition of new shares, recapture taxation cannot be avoided by acquiring participation certificates", "start": 0, "end": 167},
+          "modality": {"label": "prohibition", "evidence": [{"text": "cannot", "start": 110, "end": 116}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be avoided", "start": 117, "end": 127, "normalized": "avoid recapture taxation"}],
+          "conditions": [{"id": "c1_condition_1", "text": "To the extent that the special expense deduction related to the acquisition of new shares", "start": 0, "end": 89, "normalized": "special-expense deduction related to acquiring new shares"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "by acquiring participation certificates", "start": 128, "end": 167, "normalized": "through acquisition of participation certificates"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "actor", "reason": "The prohibition is expressed through a passive result and no acting taxpayer or other responsible person is explicit."}
+      ],
+      "confidence": "high",
+      "rationale_summary": "The single visible rule prohibits avoiding recapture taxation through participation-certificate acquisition to the extent the earlier special-expense deduction concerned new shares. No taxpayer is inferred from the passive wording."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000231",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The bank shall certify acquisitions by which subsequent taxation can be avoided, applying paragraph 1, no. 4.",
+        "issues": [
+          "The substantive content of paragraph 1, no. 4 is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The bank shall certify acquisitions by which subsequent taxation can be avoided, applying paragraph 1, no. 4", "start": 0, "end": 108},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 9, "end": 14}]},
+          "actors": [{"id": "c1_actor_1", "text": "The bank", "start": 0, "end": 8, "normalized": "bank"}],
+          "actions": [{"id": "c1_action_1", "text": "certify acquisitions", "start": 15, "end": 35, "normalized": "certify qualifying acquisitions"}],
+          "conditions": [{"id": "c1_condition_1", "text": "by which subsequent taxation can be avoided", "start": 36, "end": 79, "normalized": "acquisitions enable avoidance of subsequent taxation"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "applying paragraph 1, no. 4", "start": 81, "end": 108, "normalized": "under paragraph 1, no. 4"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Paragraph 1, no. 4 is not included, so the governing certification criteria cannot be expanded beyond the supplied wording."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The bank has one certification duty. The relative phrase stating that subsequent taxation can be avoided identifies the acquisitions to be certified; it is retained as a qualifying condition rather than treated as a free-standing permission with an invented beneficiary."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000232",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Expenditure for the acquisition of such profit participation certificates or shares may not be deducted under Section 1(4); in these cases, the ten-year period for subsequent taxation runs from the time of the deposit of those profit participation certificates or shares whose acquisition costs were deducted as special expenses.",
+        "issues": [
+          "The content of the referenced Section 1(4) is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Expenditure for the acquisition of such profit participation certificates or shares may not be deducted under Section 1(4)", "start": 0, "end": 122},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may not", "start": 84, "end": 91}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deducted", "start": 92, "end": 103, "normalized": "deduct acquisition expenditure"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "under Section 1(4)", "start": 104, "end": 122, "normalized": "under Section 1(4)"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "in these cases, the ten-year period for subsequent taxation runs from the time of the deposit of those profit participation certificates or shares whose acquisition costs were deducted as special expenses", "start": 124, "end": 328},
+          "modality": {"label": "definition", "evidence": [{"text": "runs", "start": 184, "end": 188}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "runs", "start": 184, "end": 188, "normalized": "start ten-year subsequent-taxation period"}],
+          "conditions": [{"id": "c2_condition_1", "text": "in these cases", "start": 124, "end": 138, "normalized": "where the preceding deduction prohibition applies"}],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "from the time of the deposit of those profit participation certificates or shares", "start": 189, "end": 270, "normalized": "from deposit of the relevant participation certificates or shares"},
+            {"id": "c2_constraint_2", "text": "whose acquisition costs were deducted as special expenses", "start": 271, "end": 328, "normalized": "securities whose acquisition costs were deducted as special expenses"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 1(4) and the antecedent of 'such' are not included, so the referenced deduction category and complete security class cannot be independently resolved."},
+        {"field": "actor", "reason": "The deduction prohibition is passive and does not expressly identify the person claiming the deduction."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Two normative units are explicit: a prohibition on deducting acquisition expenditure and a separate rule defining when the ten-year recapture-taxation period begins. The deposited securities are limited to those whose acquisition costs were previously deducted as special expenses."
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "schema_version": "sun_h1_s28@1.2.0",
+  "task_id": "S2.8",
+  "method_id": "sun_llm_fallback",
+  "status": "preregistered_locked_offline_dry_run",
+  "baseline_binding": {
+    "task_id": "S2.6",
+    "config": {
+      "path": "configs/models/sun_b0_s26.json",
+      "sha256": "47566def9b7f8e403fd784b23c9cec0c55a64d4b5d10cd62c60dd4ab87442d46"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s26_sun_b0_canonical_composition_v3.manifest.json",
+      "sha256": "30a19e8a6476f35eff8561ca35f72a3b3a772067c0128ff4c22ce6b6ddd2fb20"
+    },
+    "required_method_name": "sun_rule_only",
+    "legacy_front_end_allowed": false
+  },
+  "prompt": {
+    "name": "rule_first_llm_fallback_prompt",
+    "path": "prompts/sun_compat/rule_first_llm_fallback_prompt.md",
+    "sha256": "54e56c4bc52d0e5a83c2b45c3762a36ffb1356bd8190a1cd10d2b5dbd304b40c",
+    "version": 5
+  },
+  "extraction_contract": {
+    "contract_id": "stage2_extraction_contract@1.0.0",
+    "path": "configs/stage2_extraction_contract_v1.json",
+    "sha256": "7f17ecba78cfa1acf1bbc488942f1c85c37d08ece7662c622bab4226bd2dbd46",
+    "input_policy": "target_text_plus_current_b0_record_only",
+    "method_visibility": "no_gold_no_test_metrics_no_external_legal_context"
+  },
+  "model": {
+    "provider": "openai_compatible",
+    "api_family": "chat_completions",
+    "exact_model_id": "gpt-4.1-2025-04-14",
+    "pin_type": "dated_snapshot",
+    "official_model_source": "https://developers.openai.com/api/docs/models/gpt-4.1",
+    "official_release_and_price_source": "https://openai.com/index/gpt-4-1/",
+    "real_api_authorized": false
+  },
+  "sampling": {
+    "temperature": 0,
+    "top_p": 1,
+    "seed": null,
+    "seed_policy": "unsupported_or_omitted",
+    "max_output_tokens": 2048,
+    "response_format": "json_object",
+    "max_retries": 0
+  },
+  "trigger_policy": {
+    "evidence_boundary": "inference_time_observations_only_no_gold_or_test_distribution",
+    "modality_confidence_below": 0.6,
+    "modality_margin_below": 0.15,
+    "allowed_codes": [
+      "parser_timeout",
+      "parser_failure",
+      "tregex_field_conflict",
+      "canonical_invalid_field",
+      "non_definition_missing_action",
+      "low_modality_confidence",
+      "low_modality_margin",
+      "marker_scope_missing",
+      "unresolved_actor_candidates",
+      "stage3_adapter_rejection"
+    ],
+    "telemetry_fields": [
+      "parser_status",
+      "tregex_conflict_fields",
+      "canonical_invalid_fields",
+      "modality_confidence",
+      "modality_margin",
+      "marker_scope_missing_fields",
+      "unresolved_actor_candidate_count",
+      "stage3_adapter_rejected_fields"
+    ],
+    "forbidden_inputs": [
+      "gold_labels",
+      "gold_spans",
+      "test_metrics",
+      "test_error_distribution",
+      "downstream_gold_violations"
+    ]
+  },
+  "repair_policy": {
+    "canonical_field_order": [
+      "modality",
+      "actors",
+      "actions",
+      "conditions",
+      "constraints",
+      "exceptions",
+      "actor_action_map",
+      "order_relations"
+    ],
+    "repairable_fields": [
+      "modality",
+      "actors",
+      "actions",
+      "conditions",
+      "constraints",
+      "exceptions",
+      "actor_action_map",
+      "order_relations"
+    ],
+    "dependency_closure": {
+      "actors": ["actor_action_map"],
+      "actions": ["actor_action_map", "order_relations"]
+    },
+    "merge": "replace_only_authorized_fields_then_validate_full_canonical_record",
+    "unrequested_clause_fields": "preserve_byte_equivalent_json_value",
+    "same_field_id_preservation_allowed": true,
+    "cross_field_id_collision_allowed": false,
+    "envelope_keys_exact": [
+      "sample_id",
+      "clause_id",
+      "repair_fields",
+      "patches",
+      "unsupported_or_ambiguous",
+      "reason"
+    ],
+    "unsupported_or_ambiguous_merge": "replace_complete_top_level_list_then_validate_full_canonical_record",
+    "on_provider_error": "return_original_b0",
+    "on_non_json": "return_original_b0",
+    "on_envelope_mismatch": "return_original_b0",
+    "on_unauthorized_field": "return_original_b0",
+    "on_invalid_span_or_reference": "return_original_b0",
+    "on_post_merge_validation_failure": "return_original_b0",
+    "on_budget_exhausted": "return_original_b0"
+  },
+  "budget": {
+    "target_dataset_size": 150,
+    "max_call_fraction": 0.3,
+    "absolute_max_calls": 45,
+    "derived_max_calls": 45,
+    "max_requests_per_sample": 1,
+    "max_retries": 0,
+    "input_token_ceiling_per_request": 8192,
+    "output_token_ceiling_per_request": 2048,
+    "total_input_token_ceiling": 368640,
+    "total_output_token_ceiling": 92160,
+    "total_token_ceiling": 460800,
+    "price_snapshot_usd_per_million": {
+      "input": 2.0,
+      "output": 8.0,
+      "cached_input_discount_assumed": false
+    },
+    "estimated_worst_case_cost_usd": 1.47456,
+    "hard_cost_ceiling_usd": 1.5,
+    "real_api_authorized": false
+  },
+  "allocation_policy": {
+    "candidate_order": "ascending_sample_id_then_clause_id",
+    "one_request_per_sample": true,
+    "multiple_triggered_clauses": "only_first_clause_in_candidate_order_can_reserve_the_sample",
+    "global_limit": 45,
+    "budget_exhausted": "return_semantically_identical_b0_with_h1_method_tag",
+    "confidence_reranking_allowed": false,
+    "gold_or_test_reranking_allowed": false,
+    "input_array_order_affects_allocation": false
+  },
+  "attempt_envelope": {
+    "no_trigger_or_budget_exhausted": "request_status=ok; llm_call_performed=false; semantic B0 content; method name sun_llm_fallback",
+    "provider_error": "request_status=ok; recovered_runtime_error_category set; semantic B0 content; method name sun_llm_fallback",
+    "invalid_or_rejected_patch": "request_status=ok; semantic B0 content; method name sun_llm_fallback; rejection retained in method manifest",
+    "accepted_patch": "request_status=ok; merged canonical H1 record",
+    "terminal_api_error_record_null_for_provider_recovery": false,
+    "failed_or_untriggered_samples_may_not_be_dropped": true
+  },
+  "evaluator_binding": {
+    "task_id": "S2.10-E",
+    "config": {
+      "path": "configs/stage2_evaluator_s210.json",
+      "sha256": "2b6f7bd4269e475dc4b7bb0561a767a70baba49965c16c7f6b34b8a455badc16"
+    },
+    "report_schema": {
+      "path": "configs/schemas/stage2_evaluation_report.schema.json",
+      "sha256": "9906dce85eaf72995e2a3381eed0e33a0c32f5cbf75d35425f7b97c50ea79c5a"
+    },
+    "verification_manifest": {
+      "path": "outputs/reports/s210_stage2_evaluator_contract_synthetic_v2.manifest.json",
+      "sha256": "58d65b256225942593b853b0b5f1777de56caca4b9059a28d128e001a933f89b"
+    },
+    "recovered_provider_error_keeps_fallback_record_scorable": true
+  },
+  "verification": {
+    "mode": "locked_s2_6_record_plus_deterministic_mock_patch",
+    "fixture_is_gold": false,
+    "fixture_is_performance_evaluation": false,
+    "expected_clean_plan_calls": 0,
+    "expected_triggered_plan_calls": 1,
+    "expected_accepted_patch_count": 1,
+    "expected_rejected_patch_count": 1
+  },
+  "safety": {
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_allowed": false,
+    "test_split_read_or_evaluated": false,
+    "formal_predictions_written": false,
+    "no_overwrite": true
+  },
+  "claim_boundary": "S2.8 freezes and dry-run verifies H1 selection, Stage 2 extraction-contract v1 semantics, deterministic call allocation, actual repair-request rendering, field-level plus controlled uncertainty-metadata merge, scorable B0 fallback with H1 method identity, recovered-provider-error accounting, a pinned model/sampling contract, and 45-call/1.5-USD ceilings on locked synthetic B0 evidence. It is not an LLM quality test, a real API run, a pilot performance result, or a formal performance result."
+}

@@ -1,0 +1,174 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 83,
+  "end_index_exclusive": 88,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000635",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(4) The person required to make the deduction shall issue to the recipient a certificate indicating the amount of the capital yields and the tax amount, the payment date, and the period for which the capital yields have been paid, and shall state therein the tax office to which the tax amount has been remitted.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(4) The person required to make the deduction shall issue to the recipient a certificate indicating the amount of the capital yields and the tax amount, the payment date, and the period for which the capital yields have been paid, and shall state therein the tax office to which the tax amount has been remitted", "start": 0, "end": 311},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 46, "end": 51}, {"text": "shall", "start": 235, "end": 240}]},
+          "actors": [{"id": "c1_actor_1", "text": "The person required to make the deduction", "start": 4, "end": 45, "normalized": "person required to make the deduction"}],
+          "actions": [
+            {"id": "c1_action_1", "text": "issue to the recipient a certificate", "start": 52, "end": 88, "normalized": "issue certificate to recipient"},
+            {"id": "c1_action_2", "text": "state therein the tax office to which the tax amount has been remitted", "start": 241, "end": 311, "normalized": "identify in the certificate the tax office receiving the remitted tax"}
+          ],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "indicating the amount of the capital yields and the tax amount, the payment date, and the period for which the capital yields have been paid", "start": 89, "end": 229, "normalized": "certificate states capital income, tax amount, payment date, and payment period"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}, {"actor_id": "c1_actor_1", "action_id": "c1_action_2"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The deduction agent has two coordinated duties: issue the specified certificate and identify the tax office that received the remittance."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000659",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(1) Persons with limited tax liability shall be assessed for income tax on their income from which no withholding of tax on wages, on capital yield, or under Sections 99 to 101 is to be made.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(1) Persons with limited tax liability shall be assessed for income tax on their income from which no withholding of tax on wages, on capital yield, or under Sections 99 to 101 is to be made", "start": 0, "end": 190},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 39, "end": 44}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be assessed for income tax", "start": 45, "end": 71, "normalized": "assess persons with limited tax liability for income tax"}],
+          "conditions": [{"id": "c1_condition_1", "text": "on their income from which no withholding of tax on wages, on capital yield, or under Sections 99 to 101 is to be made", "start": 72, "end": 190, "normalized": "income not subject to the listed withholding regimes"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "actor", "reason": "The assessment rule is passive; persons with limited tax liability are the assessment subjects, not an expressly stated assessing actor."}],
+      "confidence": "high",
+      "rationale_summary": "The mandatory income-tax assessment is extracted with its income-scope condition and without treating the assessment subject as the actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000704",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The building society is obliged to notify the taxpayer within two weeks, by transmitting the second copy of the declaration, of the cessation of the additional amounts.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The building society is obliged to notify the taxpayer within two weeks, by transmitting the second copy of the declaration, of the cessation of the additional amounts", "start": 0, "end": 167},
+          "modality": {"label": "obligation", "evidence": [{"text": "is obliged to", "start": 21, "end": 34}]},
+          "actors": [{"id": "c1_actor_1", "text": "The building society", "start": 0, "end": 20, "normalized": "building society"}],
+          "actions": [{"id": "c1_action_1", "text": "notify the taxpayer", "start": 35, "end": 54, "normalized": "notify taxpayer of cessation of additional amounts"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "within two weeks", "start": 55, "end": 71, "normalized": "within two weeks"},
+            {"id": "c1_constraint_2", "text": "by transmitting the second copy of the declaration", "start": 73, "end": 123, "normalized": "by transmitting second declaration copy"},
+            {"id": "c1_constraint_3", "text": "of the cessation of the additional amounts", "start": 125, "end": 167, "normalized": "notification concerns cessation of additional amounts"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The building society's notification duty is extracted with its two-week deadline, transmission method, and subject matter."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000713",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(6) The building society shall be obliged to notify the tax authority, without any official request, if contributions that were paid as the basis for a tax refund and the refunded tax itself are repaid in whole or in part, or if claims under the home savings contract serve as security.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(6) The building society shall be obliged to notify the tax authority, without any official request, if contributions that were paid as the basis for a tax refund and the refunded tax itself are repaid in whole or in part, or if claims under the home savings contract serve as security", "start": 0, "end": 285},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be obliged", "start": 25, "end": 41}]},
+          "actors": [{"id": "c1_actor_1", "text": "The building society", "start": 4, "end": 24, "normalized": "building society"}],
+          "actions": [{"id": "c1_action_1", "text": "notify the tax authority", "start": 45, "end": 69, "normalized": "notify tax authority"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "if contributions that were paid as the basis for a tax refund and the refunded tax itself are repaid in whole or in part", "start": 101, "end": 221, "normalized": "qualifying contributions and refunded tax are repaid wholly or partly"},
+            {"id": "c1_condition_2", "text": "if claims under the home savings contract serve as security", "start": 226, "end": 285, "normalized": "home-savings-contract claims serve as security"}
+          ],
+          "constraints": [{"id": "c1_constraint_1", "text": "without any official request", "start": 71, "end": 99, "normalized": "without official request"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The building society must notify the tax authority without prompting when either of the two expressly stated triggering events occurs."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000716",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "edited",
+        "proposed_text_en": "However, recovery shall not take place if: 1. the building society transfers the amount to be recovered, with the consent of the taxpayer, to the competent Regional Finance Directorate; 2. in the cases of paragraph (6), the repaid contributions or the security serve for favored measures within the meaning of Section 18(1) item 3, in which case recovery shall also not take place if the measures are implemented by or for the persons referred to in paragraph (2).",
+        "issues": ["Corrected Finanzlandesdirektion from Regional Tax Office to Regional Finance Directorate and rendered begünstigte Maßnahmen as favored measures rather than subsidised measures."]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "However, recovery shall not take place if: 1. the building society transfers the amount to be recovered, with the consent of the taxpayer, to the competent Regional Finance Directorate; 2. in the cases of paragraph (6), the repaid contributions or the security serve for favored measures within the meaning of Section 18(1) item 3", "start": 0, "end": 330},
+          "modality": {"label": "prohibition", "evidence": [{"text": "shall not", "start": 18, "end": 27}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "take place", "start": 28, "end": 38, "normalized": "carry out recovery"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "1. the building society transfers the amount to be recovered, with the consent of the taxpayer, to the competent Regional Finance Directorate", "start": 43, "end": 184, "normalized": "building society transfers recoverable amount to competent Regional Finance Directorate with taxpayer consent"},
+            {"id": "c1_condition_2", "text": "2. in the cases of paragraph (6), the repaid contributions or the security serve for favored measures within the meaning of Section 18(1) item 3", "start": 186, "end": 330, "normalized": "in paragraph 6 cases, repaid contributions or security serve Section 18(1) item 3 favored measures"}
+          ],
+          "constraints": [{"id": "c1_constraint_1", "text": "with the consent of the taxpayer", "start": 105, "end": 137, "normalized": "with taxpayer consent"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "in which case recovery shall also not take place if the measures are implemented by or for the persons referred to in paragraph (2)", "start": 332, "end": 463},
+          "modality": {"label": "prohibition", "evidence": [{"text": "shall also not", "start": 355, "end": 369}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "take place", "start": 370, "end": 380, "normalized": "carry out recovery"}],
+          "conditions": [
+            {"id": "c2_condition_1", "text": "in which case", "start": 332, "end": 345, "normalized": "within the item 2 circumstances"},
+            {"id": "c2_condition_2", "text": "if the measures are implemented by or for the persons referred to in paragraph (2)", "start": 381, "end": 463, "normalized": "measures implemented by or for persons listed in paragraph 2"}
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The contents of paragraph (6), Section 18(1) item 3, and paragraph (2) are incorporated by reference but not supplied."},
+        {"field": "actor", "reason": "Both recovery prohibitions use an impersonal construction and do not identify the entity otherwise responsible for recovery."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The two alternative bars on recovery and the nested extension for measures involving paragraph (2) persons are separated without expanding missing cross-references."
+    }
+  ]
+}

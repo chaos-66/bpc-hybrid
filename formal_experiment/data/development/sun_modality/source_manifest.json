@@ -1,14 +1,14 @@
 {
-  "manifest_version": "sun_modality_source_manifest@1.0.1",
+  "manifest_version": "sun_modality_source_manifest@1.0.2",
   "task_id": "S2.1-A",
   "purpose": "固定 Sun 官方 Stage 2 modality 数据集(Decision_Logic_data.zip / EStG_sent_vec.csv)与 Stage 3 补充包(input 2.zip)的来源、文件元数据、官方 hash、本地 hash、当前本地状态和许可/再分发证据,作为 S2.1-B/C/D 的唯一机器可读来源/许可入口。",
   "scope": [
     "本 manifest 只覆盖 Sun et al. (2024) 官方 Archive.org 补充包, 不包含 Winter/Barrientos/导师包等其他来源。",
     "本 manifest 不写 EStG-150 五层审核工作流(那是项目独立重建的 150, 与官方 150 句 phrase Gold 不可互换)。"
   ],
-  "last_updated": "2026-07-15",
-  "last_updated_event": "S2.1-A byte verification: official ZIP size + SHA-1 + ZIP integrity + 3 required members + EStG_raw.txt SHA-256 all matched; local-use authorization recorded; license remains unknown_pending_confirmation.",
-  "verified_by": "Agent-E1 / S2.1-A",
+  "last_updated": "2026-07-16",
+  "last_updated_event": "S2.4-L license-evidence closure: the live official Archive.org endpoint still reports licenseurl=null and rights=null; the Springer data-availability statement supplies access information but no explicit dataset training/evaluation permission. License remains unknown_pending_confirmation and S2.4 remains blocked.",
+  "verified_by": "Agent-E1 / S2.1-A; coordinating Agent / S2.4-L",
   "status": "manifest_verified_and_assets_byte_matched",
 
   "official_landing_page": {
@@ -16,7 +16,7 @@
     "archive_org_metadata_url": "https://archive.org/metadata/input-2",
     "archive_org_identifier": "input-2",
     "type": "archive_org_item",
-    "verification_basis": "docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md §1-§3 (2026-07-11 audit) + user-supplied 2026-07-15 archive.org metadata",
+    "verification_basis": "docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md §1-§3 (2026-07-11 audit) + user-supplied 2026-07-15 metadata + live read-only official Archive.org metadata verification on 2026-07-16",
     "archive_org_metadata_user_supplied_2026_07_15": {
       "identifier": "input-2",
       "filename": "Decision_Logic_data.zip",
@@ -25,7 +25,21 @@
       "licenseurl": null,
       "rights": null
     },
-    "external_url_reachable_from_local_environment_2026_07_15": "fetch failed at 2026-07-15 via local web_fetch; web_search did not surface the archive.org item page. Reachability still not independently re-confirmed; size + SHA-1 + member SHA-256 byte match serve as the authoritative provenance for now."
+    "archive_org_metadata_live_verified_2026_07_16": {
+      "identifier": "input-2",
+      "title": "paper dataset",
+      "publicdate": "2023-06-15 07:54:35",
+      "collections": ["opensource_media", "community"],
+      "filename": "Decision_Logic_data.zip",
+      "size": 191874718,
+      "sha1": "0346f84a246b7049d5aef58bcb33471435bee106",
+      "source": "original",
+      "licenseurl": null,
+      "rights": null,
+      "access_restricted": null
+    },
+    "external_url_reachable_from_local_environment_2026_07_15": "fetch failed at 2026-07-15 via local web_fetch; web_search did not surface the archive.org item page.",
+    "external_url_live_verified_2026_07_16": true
   },
 
   "primary_modality_asset": {
@@ -91,13 +105,23 @@
 
     "license": {
       "official_url_in_paper": "https://link.springer.com/article/10.1007/s11227-023-05626-0",
-      "archive_org_rights_statement_url": "https://archive.org/details/input-2 (rights/license statement, not retrievable from local environment at 2026-07-15)",
+      "archive_org_rights_statement_url": "https://archive.org/metadata/input-2 (live read-only verification completed 2026-07-16)",
       "archive_org_metadata_user_supplied_2026_07_15": {
         "licenseurl": null,
         "rights": null
       },
+      "archive_org_metadata_live_verified_2026_07_16": {
+        "licenseurl": null,
+        "rights": null
+      },
       "rights_status": "unknown_pending_confirmation",
-      "rights_status_reason": "archive.org metadata 中 licenseurl=null 且 rights=null, 配合 Springer 论文页脚'数据集可向通讯作者索取, 同时给出 Archive.org 链接'并不能确认为自由再分发许可; 同时本会话未取得 archive.org 项目的 rights/license 完整文本。在明确许可为 redistribution_and_reuse_allowed 之前, 不得假设可自由再分发、不得在论文中声明 official-license-permitted, 也不得把官方包或其解压副本上传/重发布到任何外部仓库 (references/, paper/, outputs/, formal 数据目录, 公共 Git remote 等)。",
+      "rights_status_reason": "2026-07-16 对 Archive.org 官方元数据做了实时只读核对，licenseurl=null 且 rights=null；Springer 正式论文页只给出可向通讯作者合理请求数据并链接 Archive.org，没有明确数据集训练、评价或再分发授权。本地 ZIP 也没有 LICENSE/RIGHTS 成员。因此 rights_status 继续为 unknown_pending_confirmation；公开可下载不能推导出训练/评价或再分发许可。",
+      "license_evidence_record": {
+        "path": "configs/datasets/sun_modality_license_evidence.json",
+        "sha256": "5a4d6ee78007cbc81c611b4ad1164328589ed6bb323394342d6808a15e11df7e",
+        "human_record": "docs/research/SUN_OFFICIAL_LICENSE_RECORD.md",
+        "status": "verified_no_explicit_license_training_evaluation_not_authorized"
+      },
       "local_use_authorization_2026_07_15": {
         "granted_by": "user (task prompt on 2026-07-15)",
         "scope": [
@@ -165,6 +189,8 @@
       "docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md",
       "docs/research/SUN_REFERENCE_SNOWBALL_AND_MARKER_AUDIT.md",
       "docs/research/SUN_WINTER_CODE_SEPARATION_AUDIT.md",
+      "docs/research/SUN_OFFICIAL_LICENSE_RECORD.md",
+      "configs/datasets/sun_modality_license_evidence.json",
       "configs/paths.json"
     ],
     "internal_s2_1_a_artifacts": [
@@ -191,9 +217,9 @@
     },
     {
       "id": "B2",
-      "summary": "官方 license / rights 元数据未核实 (archive.org metadata 显示 licenseurl=null 且 rights=null, 本会话未取得 license 完整文本), 任何'已可自由复用'/'可正式发布'的表述都不得出现。",
-      "required_action": "由用户/导师向通讯作者或 Archive.org 取得 license / rights statement 完整文本, 留档到 docs/research/SUN_OFFICIAL_LICENSE_RECORD.md (S2.1-B 任务卡范围内) 后, 把 license.rights_status 升级为 redistribution_and_reuse_allowed 或明确禁止。",
-      "status": "open"
+      "summary": "2026-07-16 已实时核对 Archive.org 官方元数据和 Springer 正式论文页，仍没有明确数据集许可证或训练/评价授权。证据复核已完成，但外部许可缺口没有消失。",
+      "required_action": "取得明确覆盖本地模型训练和评价的数据许可证全文，或作者/权利人的书面许可；若需发布/再分发，还必须单独取得对应授权。新证据必须重新进入 exact-hash 机器门禁。",
+      "status": "external_permission_required"
     },
     {
       "id": "B3",
@@ -202,6 +228,18 @@
       "status": "open"
     }
   ],
+
+  "s2_4_license_closure_2026_07_16": {
+    "task_id": "S2.4-L",
+    "evidence_review_complete": true,
+    "evidence_record": "configs/datasets/sun_modality_license_evidence.json",
+    "human_record": "docs/research/SUN_OFFICIAL_LICENSE_RECORD.md",
+    "rights_status": "unknown_pending_confirmation",
+    "training_authorized": false,
+    "evaluation_authorized": false,
+    "s2_4_ready": false,
+    "s2_6_entered": false
+  },
 
   "s2_1_a_definition_of_done_check_2026_07_15": {
     "verified_local_status": true,

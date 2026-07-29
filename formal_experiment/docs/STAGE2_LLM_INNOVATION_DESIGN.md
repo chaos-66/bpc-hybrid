@@ -3,6 +3,11 @@
 **日期**：2026-07-12  
 **研究目标**：只改变 Sun Stage 2；Stage 3 在三组实验中冻结一致。
 
+> **统一语义源**：人工、B0、H1 与 D1 的六要素操作语义以
+> `STAGE2_EXTRACTION_CONTRACT_V1.md` / `stage2_extraction_contract@1.0.0` 为准。
+> 本文负责方法比较设计；遇到最小 span、代词、隐含 actor、missing/uncertain、
+> scope 或 clause/coordination 冲突时，不在本文另建一套规则。
+
 ## 1. 必须比较的三组方法
 
 | 组 | 输入 | Stage 2 | 输出 | 研究问题 |
@@ -78,6 +83,16 @@ Barrientos/RC4PC **不是**直接提取 Sun 的六个 span。其实际结构是�
 不得使用“该样本在 Gold 上错了”“该类别测试集表现差”或 test distribution 来触发
 LLM。阈值只在 development split 确定并冻结。
 
+S2.8 已于 2026-07-17 把该设计冻结为可执行合同。模态 top-1 confidence 严格低于
+0.60 或 top1-top2 margin 严格低于 0.15 才触发；parser timeout/failure、已命名的
+Tregex 字段冲突、canonical invalid 字段、非 definition 缺 action、marker 命中但
+scope 缺失、多 actor 候选未解和固定 Stage 3 adapter 拒绝也可触发。修复 `actors`
+必须同时授权 `actor_action_map`，修复 `actions` 必须同时授权 `actor_action_map` 与
+`order_relations`。patch 只能整字段替换，未授权字段保持 JSON 值不变；envelope、span、
+ID 引用或合并后 canonical validation 任一失败时，返回原 B0。正式 150 条输入的上限为
+45 次请求、每条最多 1 次、0 重试、temperature=0、max output=2048。该冻结由 synthetic
+mock dry-run 验证，不构成真实 LLM 调用授权或性能证据。
+
 ## 5. D1 纯 LLM 的 Sun-compatible schema
 
 每个字段至少包含：
@@ -148,7 +163,9 @@ PET（actor/activity/condition）、MGTC（action/SRL）、AI Act obligations re
 - Stage 3：相同冻结输入下的 matching AP/MAP 和 violation P/R/F1；
 - error propagation：Stage 2 各字段错误对 Stage 3 的条件错误率。
 
-缺失/invalid/API-error 必须计入 coverage，不能从分母删除。真实 LLM 调用前必须
+缺失、invalid、terminal API error 与 recovered provider error 必须分别计入 coverage，
+不能从分母删除。H1 的 recovered provider error 保留 canonical B0 fallback，并以 H1
+method identity 继续计分；不能伪装成成功调用，也不能把样本丢掉。真实 LLM 调用前必须
 获得用户明确授权。
 
 ## 8. 创新点优先级

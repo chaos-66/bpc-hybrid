@@ -1,0 +1,104 @@
+{
+  "schema_version": "b3a_constraint_tregex_decision@1.0.0",
+  "decision_id": "s27_estg150_b0_b3a_not_instantiated_v1",
+  "created_at_utc": "2026-07-24T03:59:11.074716+00:00",
+  "decision": "not_instantiated",
+  "parent_run": "s27_estg150_b0_enhanced_v10a",
+  "parent_manifest_sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315",
+  "diagnostic_path": "outputs/development/s27_estg150_b0_b3a_constraint_tregex_diagnostic_v1/manifest.json",
+  "diagnostic_sha256": "bf1c81808c6c919d19e64048d95831ab7c0bd5a090a58311904f2d6db7976f35",
+  "instantiation_thresholds": {
+    "fn_recovered_min": 8,
+    "new_fp_max": 10,
+    "new_spans_range": [
+      8,
+      20
+    ],
+    "patterns_range": [
+      1,
+      6
+    ],
+    "precision_min": 0.55
+  },
+  "union_result": {
+    "estimated_fn_recovered_unique_gold_spans": 7,
+    "estimated_new_fp": 0,
+    "estimated_new_unique_spans": 0,
+    "estimated_precision": 1.0,
+    "instantiate": false,
+    "selected_count": 2,
+    "thresholds": {
+      "fn_recovered_min": 8,
+      "new_fp_max": 10,
+      "new_spans_range": [
+        8,
+        20
+      ],
+      "patterns_range": [
+        1,
+        6
+      ],
+      "precision_min": 0.55
+    }
+  },
+  "per_pattern_floor_pass": [
+    "b3a_c_temp_within_pp",
+    "b3a_c_legal_pursuant_accordance"
+  ],
+  "per_pattern_floor_fail": [
+    "b3a_c_temp_before_after_pp",
+    "b3a_c_temp_no_later_than",
+    "b3a_c_quant_at_least",
+    "b3a_c_quant_no_more_than"
+  ],
+  "why_not_instantiated": [
+    "union estimated_fn_recovered_unique_gold_spans=7 < 8",
+    "estimated_new_unique_spans=0 not in [8,20] (proxy matches largely overlap existing parent constraint spans)",
+    "only 2 of 6 candidate patterns met per-pattern floor (fn>=3, records>=3, prec>=0.60)",
+    "protocol forbids relaxing floors, adding 7th pattern, or expanding lexicon anchors"
+  ],
+  "actions_not_taken": [
+    "no production registry v5 created",
+    "no b3a runner/config",
+    "no All-150 candidate run",
+    "no preregistration for production candidate",
+    "active registry unchanged",
+    "B3b not started"
+  ],
+  "fn_fp_summary": {
+    "fn_buckets": {
+      "11_legal_scope_purpose": 3,
+      "12_other_non_generalizable": 147,
+      "1_clause_unaligned_unrecoverable": 25,
+      "2_aligned_no_constraint_candidate": 27,
+      "3_candidate_exists_but_no_overlap": 40,
+      "4_extracted_as_condition": 26,
+      "5_extracted_as_exception": 1,
+      "6_extracted_as_action_or_actor": 57,
+      "7_has_parent_anchor_but_tregex_undercover": 41,
+      "8_no_parent_lexicon_anchor_out_of_scope": 57,
+      "9_temporal": 1
+    },
+    "fp_buckets": {
+      "10_other": 46,
+      "1_overlaps_gold_condition": 100,
+      "2_overlaps_gold_exception": 2,
+      "3_overlaps_gold_action_or_actor": 13,
+      "4_generic_pp": 16,
+      "5_marker_only_fragment": 12,
+      "8_clause_no_gold_constraint": 34,
+      "8_clause_no_gold_constraint_context": 47,
+      "9_boundary_or_other": 20
+    },
+    "fn_with_parent_anchor": 94,
+    "fn_without_parent_anchor": 57
+  },
+  "safety": {
+    "gold_read_only": true,
+    "llm_api_called": false,
+    "network_called": false,
+    "s24_test_not_read": true,
+    "independent82_not_used_for_selection": true,
+    "estimation_is_surface_proxy_not_live_tregex": true
+  }
+}

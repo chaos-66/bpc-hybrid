@@ -1,0 +1,213 @@
+{
+  "schema_version": "sun_bert_textcnn_run_manifest@1.0.0",
+  "task_id": "S2.4",
+  "run_id": "s24_legal_bert_textcnn_seed20260717_v1",
+  "status": "succeeded",
+  "created_at": "2026-07-17T07:37:06.737527+00:00",
+  "method": "paper_faithful_independent_legal_bert_textcnn_reconstruction",
+  "claim_boundary": "Paper-faithful independent reconstruction of the final published BERT-TextCNN architecture; no Sun code, checkpoint, unpublished hyperparameters, or exact-reproduction claim.",
+  "config": {
+    "path": "configs/models/sun_bert_textcnn_s24.json",
+    "sha256": "82f950bce605e405ee1600bca90a961337f30f2933ab807f33998464bb7af498",
+    "schema_version": "sun_bert_textcnn_s24@1.0.0"
+  },
+  "runtime": {
+    "python": "3.14.6",
+    "torch": "2.12.1+cpu",
+    "transformers": "5.12.1",
+    "device": "cpu",
+    "cuda_available": false
+  },
+  "pretrained_model": {
+    "repository_id": "nlpaueb/legal-bert-base-uncased",
+    "revision": "15b570cbf88259610b082a167dacc190124f60f6",
+    "verified_files": {
+      "config.json": "716ea70c3c3e74bfe8496cc04cba7cd52f4ca45401e74042bb1058fe0390a1b6",
+      "pytorch_model.bin": "6b4f1da798ff101a66ad5cb11c6daa7f99cd41e7909277e01398576e8bd789bd",
+      "vocab.txt": "3aaa02f2e3a397eee0f813caa567c87cddab1045a4a6b8ac6261f0cc799efb8f"
+    },
+    "local_files_only": true
+  },
+  "dataset": {
+    "train": {
+      "path": "data/development/modality/sun_estg_modality_v1/splits/train.jsonl",
+      "rows": 1985,
+      "sha256": "a7367cd35e3a5ce7263ad5b0fae4881a989761d4fba21b75bdc75b6e2b83c142"
+    },
+    "dev": {
+      "path": "data/development/modality/sun_estg_modality_v1/splits/dev.jsonl",
+      "rows": 420,
+      "sha256": "ad541915d16aaef6119cb3769e6da0b89e8e8af5ec9069ac3a25680040e5a8d6"
+    },
+    "test": {
+      "path": "data/development/modality/sun_estg_modality_v1/splits/test.jsonl",
+      "rows": 426,
+      "sha256": "2f67edad05e3a4d315d9ac65fc0ffd1d83dbaffd2d77a55916d6aa9a6919e871"
+    }
+  },
+  "selection": {
+    "split": "dev",
+    "metric": "macro_f1",
+    "best_epoch": 5,
+    "epochs_completed": 7,
+    "best_dev": {
+      "n": 420,
+      "accuracy": 0.9166666666666666,
+      "macro_precision": 0.9045459368870934,
+      "macro_recall": 0.8275689031390676,
+      "macro_f1": 0.8562634380932774,
+      "per_class": {
+        "definition": {
+          "precision": 0.9209039548022598,
+          "recall": 0.9209039548022598,
+          "f1": 0.9209039548022597,
+          "support": 177
+        },
+        "obligation": {
+          "precision": 0.9222797927461139,
+          "recall": 0.9518716577540107,
+          "f1": 0.9368421052631578,
+          "support": 187
+        },
+        "permission": {
+          "precision": 0.875,
+          "recall": 0.875,
+          "f1": 0.875,
+          "support": 40
+        },
+        "prohibition": {
+          "precision": 0.9,
+          "recall": 0.5625,
+          "f1": 0.6923076923076923,
+          "support": 16
+        }
+      },
+      "confusion_matrix": {
+        "label_order": [
+          "definition",
+          "obligation",
+          "permission",
+          "prohibition"
+        ],
+        "rows_gold_columns_predicted": [
+          [
+            163,
+            9,
+            4,
+            1
+          ],
+          [
+            8,
+            178,
+            1,
+            0
+          ],
+          [
+            4,
+            1,
+            35,
+            0
+          ],
+          [
+            2,
+            5,
+            0,
+            9
+          ]
+        ]
+      },
+      "loss": 0.5770746547196592
+    }
+  },
+  "test": {
+    "policy": "single_evaluation_after_best_dev_checkpoint",
+    "evaluation_count": 1,
+    "metrics": {
+      "n": 426,
+      "accuracy": 0.9248826291079812,
+      "macro_precision": 0.8600872541158495,
+      "macro_recall": 0.8441981747066493,
+      "macro_f1": 0.8510709392388781,
+      "per_class": {
+        "definition": {
+          "precision": 0.9310344827586207,
+          "recall": 0.9152542372881356,
+          "f1": 0.923076923076923,
+          "support": 177
+        },
+        "obligation": {
+          "precision": 0.9595959595959596,
+          "recall": 0.9743589743589743,
+          "f1": 0.9669211195928753,
+          "support": 195
+        },
+        "permission": {
+          "precision": 0.7804878048780488,
+          "recall": 0.8205128205128205,
+          "f1": 0.8,
+          "support": 39
+        },
+        "prohibition": {
+          "precision": 0.7692307692307693,
+          "recall": 0.6666666666666666,
+          "f1": 0.7142857142857142,
+          "support": 15
+        }
+      },
+      "confusion_matrix": {
+        "label_order": [
+          "definition",
+          "obligation",
+          "permission",
+          "prohibition"
+        ],
+        "rows_gold_columns_predicted": [
+          [
+            162,
+            6,
+            8,
+            1
+          ],
+          [
+            3,
+            190,
+            0,
+            2
+          ],
+          [
+            6,
+            1,
+            32,
+            0
+          ],
+          [
+            3,
+            1,
+            1,
+            10
+          ]
+        ]
+      },
+      "loss": 0.35591032546852003
+    }
+  },
+  "checkpoint": {
+    "path": "outputs/development/s24_legal_bert_textcnn_seed20260717_v1/best_model.pt",
+    "sha256": "cf071dc96de5794b3da43bd3810b570038a762c6ca4b989b2d54c8ec87fe605a",
+    "bytes": 441559008,
+    "versioned": false
+  },
+  "artifacts": {
+    "aggregate_history_path": "outputs/development/s24_legal_bert_textcnn_seed20260717_v1/aggregate_history.json",
+    "row_level_predictions_persisted": false
+  },
+  "safety": {
+    "rights_status": "unknown_pending_confirmation",
+    "local_noncommercial_training_and_evaluation_authorized": true,
+    "redistribution_allowed": false,
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "test_evaluation_count": 1
+  }
+}

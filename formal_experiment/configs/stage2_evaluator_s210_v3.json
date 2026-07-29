@@ -1,0 +1,189 @@
+{
+  "schema_version": "stage2_evaluator_contract@1.2.0",
+  "task_id": "S2.10-E",
+  "status": "development_candidate_frozen_pending_exact_gate",
+  "supersedes_for_future_development": "configs/stage2_evaluator_s210.json",
+  "prior_contract_results_remain_immutable_provenance": true,
+  "canonical_schema": {
+    "path": "configs/schemas/stage2_prediction.schema.json",
+    "sha256": "7485ac4a3a42b976d87e63a7d2ead88cc3df1f810b14dd066bc1f63c15599d1b",
+    "version": "1.0.0"
+  },
+  "methods": [
+    "sun_rule_only",
+    "sun_llm_fallback",
+    "direct_llm"
+  ],
+  "modality": {
+    "unit": "clause",
+    "labels": [
+      "obligation",
+      "prohibition",
+      "permission",
+      "definition"
+    ],
+    "missing_class_policy": {
+      "precision": null,
+      "precision_display": "N/A",
+      "recall": 0.0,
+      "f1": 0.0,
+      "included_in_macro_f1": true
+    }
+  },
+  "fields": [
+    "actor",
+    "action",
+    "condition",
+    "constraint",
+    "exception"
+  ],
+  "alignment": {
+    "record": "exact_sample_id",
+    "clause": "maximum_total_character_span_iou",
+    "clause_minimum_iou": 0.5,
+    "clause_threshold_rationale": "A pair must share at least majority character-span overlap; the threshold is fixed before v3 development-result generation.",
+    "assignment": "global_maximum_total_weight_one_to_one",
+    "tie_break": "stable_start_end_text_id_then_ascending_hungarian_columns",
+    "entity": "metric_specific_method_local_ids_ignored",
+    "prediction_ids_are_method_local": true,
+    "strict_entity": "maximum_total_exact_raw_span",
+    "safe_entity": "maximum_total_exact_safe_normalized_text",
+    "token_entity": "maximum_total_positive_token_iou",
+    "array_position_alignment_forbidden": true,
+    "cross_method_strategy_mixing_forbidden": true,
+    "paper_score_targeting_forbidden": true,
+    "threshold_search_forbidden": true
+  },
+  "normalization": {
+    "rule_set_version": "safe-legal-v1",
+    "profiles": {
+      "strict": [],
+      "safe": [
+        "unicode_nfc",
+        "lowercase",
+        "whitespace_collapse",
+        "trailing_punctuation_strip"
+      ]
+    },
+    "disabled_high_risk_rules": [
+      "article_removal",
+      "plural_collapse",
+      "verb_lemmatization",
+      "abbreviation_expansion",
+      "synonym_replacement",
+      "number_or_unit_conversion"
+    ],
+    "safe_is_secondary_sensitivity_metric": true,
+    "human_style_equivalent_is_not_auto_normalization": true
+  },
+  "metrics": {
+    "primary": [
+      "modality_per_class_precision_recall_f1",
+      "modality_macro_f1",
+      "modality_micro_precision_recall_f1",
+      "field_strict_exact_precision_recall_f1",
+      "field_token_overlap_micro_precision_recall_f1",
+      "field_token_overlap_macro_precision_recall_f1"
+    ],
+    "semantic_coverage": [
+      "gold_required_presence_recall",
+      "predicted_field_precision",
+      "hallucinated_field_rate",
+      "complete_record_rate",
+      "schema_valid_rate",
+      "unsupported_or_ambiguous_rate",
+      "invalid_record_rate",
+      "api_error_rate",
+      "recovered_api_error_rate",
+      "any_api_error_rate",
+      "invalid_or_api_error_rate"
+    ],
+    "structural": [
+      "actor_action_edge_precision_recall_f1_jaccard",
+      "order_relation_edge_precision_recall_f1_jaccard",
+      "clause_segmentation_exact_precision_recall_f1",
+      "clause_alignment_precision_recall_f1",
+      "mean_gold_clause_span_iou",
+      "mean_matched_clause_span_iou"
+    ],
+    "secondary": [
+      "safe_normalized_precision_recall_f1",
+      "normalized_f1_lift",
+      "human_style_equivalent_distribution"
+    ],
+    "token_overlap_definition": "fractional true positive mass equals aligned span token-set Jaccard; fp=predicted_count-tp_mass; fn=gold_count-tp_mass",
+    "macro_policy": "average only samples where the field exists in Gold or prediction; report evaluated_sample_count",
+    "edge_zero_union_policy": "jaccard_iou=1.0 only when both edge sets are empty",
+    "coverage_identity_policy": "presence is counted by clause IoU alignment and metric-specific entity matching independently of method-local IDs"
+  },
+  "attempt_envelope": {
+    "required": [
+      "sample_id",
+      "request_status",
+      "record",
+      "error_category",
+      "runtime"
+    ],
+    "request_status_values": [
+      "ok",
+      "api_error"
+    ],
+    "runtime_required": [
+      "llm_call_performed",
+      "prompt_tokens",
+      "completion_tokens",
+      "total_tokens",
+      "estimated_cost_usd",
+      "latency_ms"
+    ],
+    "api_errors_remain_in_denominator": true,
+    "invalid_records_remain_in_denominator": true,
+    "recovered_api_error_category": {
+      "key": "recovered_runtime_error_category",
+      "nullable": true,
+      "semantics": "an LLM/provider error occurred but the method produced a scorable fallback record",
+      "allowed_only_when": "request_status=ok, record is canonical-valid, and runtime.llm_call_performed=true",
+      "rate_name": "recovered_api_error_rate",
+      "terminal_api_error_rate_excludes_recovered_fallbacks": true
+    },
+    "missing_attempts_forbidden": true,
+    "extra_attempts_forbidden": true
+  },
+  "style_equivalent_review": {
+    "human_only": true,
+    "default_sample_size": 40,
+    "seed": "s210-style-review-seed-20260717-v1",
+    "allowed_decisions": [
+      "full_alignment",
+      "style_equivalent_alignment",
+      "partial_misalignment"
+    ],
+    "auto_fill_forbidden": true,
+    "normalized_aware_score_is_not_style_equivalent_judgment": true
+  },
+  "literature_comparison": {
+    "reference": "Sun et al. Stage 3 violation checking, locally recorded Table 12",
+    "reference_precision": 0.77,
+    "reference_recall": 0.83,
+    "reference_f1": 0.80,
+    "comparable_to_this_stage2_extraction_evaluation": false,
+    "maximum_absolute_difference_is_acceptance_criterion": false,
+    "difference_over_0_10_is_diagnostic_alert_only": true,
+    "reason": "The locally available values are for another task stage, and the original Sun phrase-level Gold and exact 150-record membership are unavailable."
+  },
+  "safety": {
+    "allowed_claim_scopes": [
+      "synthetic_contract",
+      "development",
+      "formal"
+    ],
+    "formal_scope_requires_external_final_readiness_gate": true,
+    "evaluator_calls_network": false,
+    "evaluator_calls_llm": false,
+    "evaluator_modifies_gold": false,
+    "row_level_predictions_in_aggregate_report": false,
+    "synthetic_verification_is_performance_evaluation": false,
+    "synthetic_verification_is_method_comparison": false,
+    "paper_score_targeting_forbidden": true
+  }
+}

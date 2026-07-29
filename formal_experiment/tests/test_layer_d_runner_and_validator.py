@@ -85,12 +85,22 @@ SIX_ELEM_PATH = REPO / "data" / "development" / "human_review" / "estg_150_llm_s
 # 1. Layer D config file exists and declares the v1 placeholder as
 #    the current active path.
 # ---------------------------------------------------------------------------
-def test_layer_d_config_exists_and_default_active_is_v1():
+def test_layer_d_config_exists_and_active_path_is_declared_layer():
     assert CONFIG_PATH.exists(), f"missing: {CONFIG_PATH}"
     cfg = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
-    assert cfg["active_path"] == "data/development/human_review/estg_150_review_aids_zh_v1.jsonl"
+    assert cfg["active_path"] in {
+        "data/development/human_review/estg_150_review_aids_zh_v1.jsonl",
+        V2_FILLED_REL,
+    }
     assert cfg["placeholder_path"] == "data/development/human_review/estg_150_review_aids_zh_v1.jsonl"
     assert cfg["filled_path"] == V2_FILLED_REL
+    if cfg["active_path"] == V2_FILLED_REL:
+        assert V2_FILLED_PATH.exists()
+        assert cfg["active_filled_path_status"] == "active"
+        assert cfg["active_run_id"]
+        assert cfg["active_v2_sha256"] == hashlib.sha256(
+            V2_FILLED_PATH.read_bytes()
+        ).hexdigest()
     # Membership payload is locked
     assert cfg["membership_payload_sha256"] == (
         "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7"
@@ -132,7 +142,7 @@ def test_runner_dry_run_does_not_call_llm():
     completed = subprocess.run(
         [sys.executable, str(RUNNER_PATH),
          "--start-index", "0", "--end-index", "3"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode == 0, (
         f"dry-run failed: returncode={completed.returncode}\n"
@@ -157,7 +167,7 @@ def test_runner_real_run_refuses_without_provider():
          "--max-calls", "6",
          "--start-index", "0", "--end-index", "1",
          "--run-id", "run_x"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=30,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
     )
     assert completed.returncode != 0
     assert "--provider is required" in (completed.stderr + completed.stdout)
@@ -172,7 +182,7 @@ def test_runner_real_run_refuses_placeholder_model():
          "--max-calls", "6",
          "--start-index", "0", "--end-index", "1",
          "--run-id", "run_x"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=30,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
     )
     assert completed.returncode != 0
     assert "placeholder" in (completed.stderr + completed.stdout)
@@ -188,7 +198,7 @@ def test_runner_real_run_refuses_missing_run_id():
          "--start-index", "0", "--end-index", "1",
          "--api-key-env-name", "MY_TEST_KEY_THAT_DOES_NOT_EXIST",
          ],
-        cwd=str(REPO), capture_output=True, text=True, timeout=30,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
     )
     assert completed.returncode != 0
     assert "--run-id is required" in (completed.stderr + completed.stdout)
@@ -203,7 +213,7 @@ def test_runner_real_run_refuses_unsupported_provider():
          "--max-calls", "6",
          "--start-index", "0", "--end-index", "1",
          "--run-id", "run_x"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=30,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
     )
     assert completed.returncode != 0
     combined = completed.stderr + completed.stdout
@@ -229,7 +239,7 @@ def test_runner_refuses_forbidden_output_dir(tmp_path: Path):
          "--api-key-env-name", "MY_TEST_KEY_THAT_DOES_NOT_EXIST",
          "--run-id", "run_x",
          "--output-dir", str(forbidden)],
-        cwd=str(REPO), capture_output=True, text=True, timeout=30,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
     )
     assert completed.returncode != 0, (
         f"runner accepted forbidden output dir {forbidden}\n"
@@ -418,6 +428,7 @@ def _build_synthetic_run_dir(tmp_path: Path, *, n_records: int | None = None,
             ).hexdigest(),
             "temperature": 0.0,
             "max_tokens": 2048,
+            "thinking_mode": "provider_default",
             "membership_payload_sha256": hashes["selected_membership"]["membership_payload_sha256"],
             "layer_a_sha256": hashlib.sha256(DE_SOURCE_PATH.read_bytes()).hexdigest(),
             "layer_b_sha256": hashlib.sha256(EN_TRANS_PATH.read_bytes()).hexdigest(),
@@ -450,7 +461,7 @@ def test_validator_full_pass(tmp_path: Path):
     completed = subprocess.run(
         [sys.executable, str(VALIDATOR_PATH),
          "--run-dir", str(run_dir)],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode == 0, (
         f"validator full-pass failed:\nreturncode={completed.returncode}\n"
@@ -493,7 +504,7 @@ def test_validator_catches_missing_records(tmp_path: Path):
     completed = subprocess.run(
         [sys.executable, str(VALIDATOR_PATH),
          "--run-dir", str(run_dir)],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode == 2
     out = completed.stdout
@@ -506,7 +517,7 @@ def test_validator_catches_missing_manifest(tmp_path: Path):
     completed = subprocess.run(
         [sys.executable, str(VALIDATOR_PATH),
          "--run-dir", str(run_dir)],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode == 2
     out = completed.stdout
@@ -522,7 +533,7 @@ def test_validator_partial_pilot_3_passes(tmp_path: Path):
         [sys.executable, str(VALIDATOR_PATH),
          "--run-dir", str(run_dir),
          "--allow-partial-pilot", "3"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode == 0, (
         f"partial-pilot 3 failed:\nstdout={completed.stdout}\nstderr={completed.stderr}"
@@ -564,7 +575,7 @@ def test_validator_catches_bad_modality_class(tmp_path: Path):
     completed = subprocess.run(
         [sys.executable, str(VALIDATOR_PATH),
          "--v2-path", str(bad_v2)],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode == 2
     assert "modality_class" in (completed.stdout + completed.stderr)
@@ -573,12 +584,18 @@ def test_validator_catches_bad_modality_class(tmp_path: Path):
 # ---------------------------------------------------------------------------
 # 8. Audit reads the active path from configs/estg150_layer_d.json.
 # ---------------------------------------------------------------------------
-def test_audit_active_path_v1_emits_warning():
+def test_audit_reports_current_layer_d_activation_state():
     from formal_experiment.audit import collect_project_audit
     a = collect_project_audit()
+    cfg = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
     codes = {w["code"] for w in a["findings"]["warnings"]}
-    assert "review_aids_zh_not_generated" in codes
-    assert "review_aids_zh_v2_active" not in {p["code"] for p in a["findings"]["passes"]}
+    pass_codes = {p["code"] for p in a["findings"]["passes"]}
+    if cfg["active_path"] == V2_FILLED_REL:
+        assert "review_aids_zh_not_generated" not in codes
+        assert "review_aids_zh_v2_active" in pass_codes
+    else:
+        assert "review_aids_zh_not_generated" in codes
+        assert "review_aids_zh_v2_active" not in pass_codes
 
 
 # ---------------------------------------------------------------------------
@@ -793,7 +810,7 @@ def test_promote_refuses_partial(tmp_path: Path):
         [sys.executable, str(PROMOTER_PATH),
          "--run-dir", str(run_dir),
          "--yes"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode != 0
     out = completed.stdout + completed.stderr
@@ -828,7 +845,7 @@ def test_promote_refuses_extra_record(tmp_path: Path):
     completed = subprocess.run(
         [sys.executable, str(PROMOTER_PATH),
          "--run-dir", str(run_dir), "--yes"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode != 0
 
@@ -838,7 +855,7 @@ def test_promote_refuses_missing_manifest(tmp_path: Path):
     completed = subprocess.run(
         [sys.executable, str(PROMOTER_PATH),
          "--run-dir", str(run_dir), "--yes"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode != 0
 
@@ -857,7 +874,7 @@ def test_promote_refuses_mixed_run_id(tmp_path: Path):
     completed = subprocess.run(
         [sys.executable, str(PROMOTER_PATH),
          "--run-dir", str(run_dir), "--yes"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode != 0
     out = completed.stdout + completed.stderr
@@ -876,7 +893,7 @@ def test_promote_refuses_mixed_model(tmp_path: Path):
     completed = subprocess.run(
         [sys.executable, str(PROMOTER_PATH),
          "--run-dir", str(run_dir), "--yes"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
     )
     assert completed.returncode != 0
     out = completed.stdout + completed.stderr
@@ -960,31 +977,31 @@ def test_audit_event_log_preserved():
 
 
 # ---------------------------------------------------------------------------
-# 16. Layer E is still pristine.
+# 16. Layer E keeps its fixed membership while user-owned progress may advance.
 # ---------------------------------------------------------------------------
-def test_layer_e_pristine():
+def test_layer_e_preserves_user_owned_review_progress():
     doc = json.loads(LAYER_E_PATH.read_text(encoding="utf-8"))
-    n_reviewed = sum(
-        1 for r in doc.get("records", [])
-        if isinstance(r, dict) and r.get("review_state", {}).get("status") == "reviewed"
-    )
-    n_adjudicated = sum(
-        1 for r in doc.get("records", [])
-        if isinstance(r, dict) and r.get("review_state", {}).get("status") == "adjudicated"
-    )
-    assert n_reviewed == 0
-    assert n_adjudicated == 0
-    assert len(doc.get("records", [])) == 150
+    records = doc.get("records", [])
+    statuses = [
+        r.get("review_state", {}).get("status")
+        for r in records
+        if isinstance(r, dict)
+    ]
+    assert len(records) == 150
+    assert len(statuses) == 150
+    assert set(statuses) <= {"needs_review", "in_progress", "reviewed", "adjudicated"}
+    assert len({r.get("sample_id") for r in records}) == 150
 
 
 # ---------------------------------------------------------------------------
-# 17. The four orthogonal gates are at the baseline values.
+# 17. The four orthogonal gates reflect the current frozen annotation state.
 # ---------------------------------------------------------------------------
-def test_four_orthogonal_gates_baseline():
+def test_four_orthogonal_gates_current_state():
     from formal_experiment.audit import collect_project_audit
     a = collect_project_audit()
     assert a["human_review_input_ready"] is True
-    assert a["human_review_freeze_ready"] is False
+    assert a["human_review_freeze_ready"] is True
+    assert a["stage2_annotation_freeze_verified"] is True
     assert a["formal_gold_publication_ready"] is False
     assert a["final_experiment_ready"] is False
 
@@ -1110,7 +1127,7 @@ def test_runner_real_run_refuses_http_base_url():
          "--api-key-env-name", "MY_TEST_KEY_THAT_DOES_NOT_EXIST",
          "--base-url", "http://api.openai.com/v1",
          "--run-id", "run_x"],
-        cwd=str(REPO), capture_output=True, text=True, timeout=30,
+        cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
     )
     assert completed.returncode != 0
     combined = (completed.stdout + completed.stderr).lower()
@@ -1264,6 +1281,128 @@ def test_runner_http_api_key_not_in_error_message():
             )
     finally:
         urllib.request.urlopen = real_urlopen
+
+
+def test_runner_can_disable_thinking_without_leaking_key():
+    """DeepSeek V4 structured-output runs can explicitly disable thinking.
+
+    The provider extension must be placed in the JSON body while the API key
+    remains confined to the Authorization header.
+    """
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "run_inline_thinking_disabled", RUNNER_PATH
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    captured = {}
+    sentinel = "sk-deepseek-thinking-test"
+
+    def fake_urlopen(req, timeout=None):
+        captured["Authorization"] = req.get_header("Authorization")
+        captured["body"] = json.loads(req.data.decode("utf-8"))
+        return _MockHTTPResponse(json.dumps({
+            "choices": [{"message": {"content": "{}"}}],
+            "usage": {"prompt_tokens": 1, "completion_tokens": 1},
+        }).encode("utf-8"))
+
+    import urllib.request
+    real_urlopen = urllib.request.urlopen
+    urllib.request.urlopen = fake_urlopen
+    try:
+        mod.call_chat_completion(
+            base_url="https://api.deepseek.com",
+            api_key=sentinel,
+            model="deepseek-v4-flash",
+            system_prompt="sys",
+            user_message="user",
+            max_tokens=2048,
+            temperature=0.0,
+            timeout_seconds=10,
+            thinking_mode="disabled",
+        )
+    finally:
+        urllib.request.urlopen = real_urlopen
+
+    assert captured["Authorization"] == f"Bearer {sentinel}"
+    assert captured["body"]["thinking"] == {"type": "disabled"}
+    assert sentinel not in json.dumps(captured["body"])
+
+
+def test_run_config_refuses_thinking_mode_change():
+    """Thinking mode is result-affecting and must be immutable on resume."""
+    import importlib.util
+    import tempfile
+    spec = importlib.util.spec_from_file_location(
+        "run_inline_thinking_lock", RUNNER_PATH
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    with tempfile.TemporaryDirectory(dir=RUNNER_PATH.parent.parent) as td:
+        rd = Path(td)
+        cfg = mod.build_run_config(
+            provider="openai_compatible", model="deepseek-v4-flash",
+            base_url="https://api.deepseek.com", temperature=0.0,
+            max_tokens=2048, run_id="r1", expected_sample_count=150,
+            expected_max_calls=300, thinking_mode="disabled",
+        )
+        mod.write_or_verify_run_config(rd, cfg)
+        changed = dict(cfg)
+        changed["thinking_mode"] = "enabled"
+        try:
+            mod.write_or_verify_run_config(rd, changed)
+        except SystemExit as exc:
+            assert "thinking_mode" in str(exc)
+        else:
+            raise AssertionError("expected thinking_mode drift refusal")
+
+
+def test_resume_normalizes_v2_rows_to_source_order(tmp_path):
+    """A successful late retry must not leave the v2 row at EOF."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "run_inline_resume_order", RUNNER_PATH
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    path = tmp_path / "layer_d_v2.jsonl"
+    rows = [
+        {"sample_id": "estg_000161", "legacy_record_id": 161},
+        {"sample_id": "estg_000002", "legacy_record_id": 2},
+    ]
+    path.write_text(
+        "".join(json.dumps(row) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+    mod.normalize_v2_order(path)
+    normalized = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    assert [row["legacy_record_id"] for row in normalized] == [2, 161]
+
+
+def test_resume_normalizer_refuses_duplicate_sample_ids(tmp_path):
+    """Ordering repair must never hide duplicate successful rows."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "run_inline_resume_duplicates", RUNNER_PATH
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    path = tmp_path / "layer_d_v2.jsonl"
+    path.write_text(
+        json.dumps({"sample_id": "estg_000002", "legacy_record_id": 2}) + "\n" +
+        json.dumps({"sample_id": "estg_000002", "legacy_record_id": 2}) + "\n",
+        encoding="utf-8",
+    )
+    try:
+        mod.normalize_v2_order(path)
+    except RuntimeError as exc:
+        assert "duplicate sample_id" in str(exc)
+    else:
+        raise AssertionError("expected duplicate sample_id refusal")
 
 
 def _make_http_error(req, code: int, body: bytes):
@@ -1487,7 +1626,7 @@ def test_layer_e_sha256_lock_refuses_approved_text_en_edit():
         completed = subprocess.run(
             [sys.executable, str(PROMOTER_PATH),
              "--run-dir", str(run_dir), "--yes"],
-            cwd=str(REPO), capture_output=True, text=True, timeout=60,
+            cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
         )
         assert completed.returncode != 0
         out = (completed.stdout + completed.stderr).lower()
@@ -1499,11 +1638,11 @@ def test_layer_e_sha256_lock_refuses_decision_change():
     Layer E bytes, so the SHA-256 lock catches it too."""
     real_layer_e_bytes = LAYER_E_PATH.read_bytes()
     fake = bytearray(real_layer_e_bytes)
-    # Find a 'unreviewed' string and replace it with 'accepted'
+    # Change an existing resolved decision; do not assume a zero-progress state.
     s = bytes(fake)
-    idx = s.find(b'"unreviewed"')
+    idx = s.find(b'"accepted"')
     assert idx >= 0
-    fake[idx:idx+len(b'"unreviewed"')] = b'"accepted"'
+    fake[idx:idx+len(b'"accepted"')] = b'"edited"'
     fake = bytes(fake)
     assert fake != real_layer_e_bytes
     with _TempLayerE(real_layer_e_bytes) as tmpdir:
@@ -1513,7 +1652,7 @@ def test_layer_e_sha256_lock_refuses_decision_change():
         completed = subprocess.run(
             [sys.executable, str(PROMOTER_PATH),
              "--run-dir", str(run_dir), "--yes"],
-            cwd=str(REPO), capture_output=True, text=True, timeout=60,
+            cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
         )
         assert completed.returncode != 0
 
@@ -1524,9 +1663,9 @@ def test_layer_e_sha256_lock_refuses_review_state_change():
     real_layer_e_bytes = LAYER_E_PATH.read_bytes()
     fake = bytearray(real_layer_e_bytes)
     s = bytes(fake)
-    idx = s.find(b'"needs_review"')
+    idx = s.find(b'"adjudicated"')
     assert idx >= 0
-    fake[idx:idx+len(b'"needs_review"')] = b'"in_progress"'
+    fake[idx:idx+len(b'"adjudicated"')] = b'"reviewed"'
     fake = bytes(fake)
     with _TempLayerE(real_layer_e_bytes) as tmpdir:
         run_dir = _build_synthetic_run_dir_with_layer_e(
@@ -1535,7 +1674,7 @@ def test_layer_e_sha256_lock_refuses_review_state_change():
         completed = subprocess.run(
             [sys.executable, str(PROMOTER_PATH),
              "--run-dir", str(run_dir), "--yes"],
-            cwd=str(REPO), capture_output=True, text=True, timeout=60,
+            cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
         )
         assert completed.returncode != 0
 
@@ -1774,6 +1913,10 @@ def test_promote_idempotent_on_already_promoted_run(monkeypatch):
         )
         # 1st call
         with monkeypatch.context() as m:
+            # This test targets promoter idempotency. Strict validator
+            # behavior is covered independently; its subprocess cannot
+            # see this test's monkey-patched temporary Layer E path.
+            m.setattr(mod, "call_validator", lambda _run_dir: 0)
             m.setattr("sys.argv", ["promote_layer_d_v2.py",
                                     "--run-dir", str(run_dir), "--yes"])
             rc1 = mod.main()
@@ -1848,6 +1991,10 @@ def test_promote_refuses_cross_run_overwrite(monkeypatch):
             )
         # 1st: promote run_dir_a
         with monkeypatch.context() as m:
+            # Isolate the cross-run overwrite guard from the validator
+            # subprocess, which intentionally resolves the production
+            # Layer E path rather than this test's temporary path.
+            m.setattr(mod, "call_validator", lambda _run_dir: 0)
             m.setattr("sys.argv", ["promote_layer_d_v2.py",
                                     "--run-dir", str(run_dir_a), "--yes"])
             rc1 = mod.main()

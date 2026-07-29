@@ -38,15 +38,18 @@ import formal_experiment.estg150_candidate_protocol as candidate_protocol  # noq
 from formal_experiment.estg150_c1_transport import (  # noqa: E402
     CapabilityPreflightError,
     EXPECTED_CANONICAL_SCHEMA_SHA256,
+    EXPECTED_SPAN_GUIDANCE_PATCHES,
     EXPECTED_STRING_TYPE_PATCHES,
     SPAN_TEXT_GUARD_INSTRUCTION,
     SPAN_TEXT_GUARD_V1_5_INSTRUCTION,
     SPAN_TEXT_GUARD_V1_6_INSTRUCTION,
     SPAN_TEXT_GUARD_V1_7_INSTRUCTION,
+    SPAN_TEXT_GUARD_V1_8_INSTRUCTION,
     SPAN_TEXT_GUARD_MODE,
     StructuredOutputsPreflightError,
     derive_strict_transport_schema,
     load_portable_transport_adapter,
+    load_portable_transport_adapter_v1_8,
     load_portable_transport_adapter_v1_7,
     load_portable_transport_adapter_v1_6,
     load_portable_transport_adapter_v1_5,
@@ -195,6 +198,26 @@ def test_transport_schema_is_exactly_the_six_allowed_type_additions() -> None:
     assert tuple(strict_adapter.config["transformation"]["allowed_json_pointers"]) == EXPECTED_STRING_TYPE_PATCHES
 
 
+def test_v1_9_transport_schema_adds_only_locked_nonvalidating_span_descriptions() -> None:
+    portable = load_portable_transport_adapter()
+    assert derive_strict_transport_schema(
+        portable.canonical_schema, add_span_guidance=True
+    ) == portable.transport_schema
+    assert tuple(
+        portable.config["transformation"]["span_guidance_description_patches"]
+    ) == tuple(EXPECTED_SPAN_GUIDANCE_PATCHES)
+    for pointer, expected_description in EXPECTED_SPAN_GUIDANCE_PATCHES.items():
+        parts = pointer[1:].split("/")
+        canonical_node = portable.canonical_schema
+        transport_node = portable.transport_schema
+        for part in parts:
+            canonical_node = canonical_node[part]
+            transport_node = transport_node[part]
+        assert "description" not in canonical_node
+        assert transport_node["description"] == expected_description
+    assert preflight_openai_structured_outputs_schema(portable.transport_schema)["passed"] is True
+
+
 def test_canonical_and_transport_schema_are_validation_equivalent_on_fixtures() -> None:
     strict_adapter = load_strict_transport_adapter()
     valid = load_json_bytes(VALID_CANDIDATE)
@@ -328,10 +351,10 @@ def test_modern_chatanywhere_models_use_the_explicit_transport_adapter(model: st
 def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen() -> None:
     assets, semantic, prepared = _portable_prepared("gpt-4o")
     lock = verify_c0_lock(assets)
-    assert prepared.strict_adapter.adapter_version == "1.8.0"
+    assert prepared.strict_adapter.adapter_version == "1.9.0"
     assert prepared.strict_adapter.canonical_schema_sha256 == EXPECTED_CANONICAL_SCHEMA_SHA256
     assert prepared.strict_adapter.transport_schema_sha256 == (
-        "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
+        "cf1ee3e48b822bfe7cb84fa69e85190553f733647e49f96ec29ffe7d0f7f16db"
     )
     assert lock["serializer_sha256"] == (
         "d20ae560a627c4d3faa88439908c517e7726aabb1121128af7b9013f5512edef"
@@ -361,6 +384,8 @@ def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen()
         SPAN_TEXT_GUARD_INSTRUCTION
     )
     assert "do not reuse actor.start" in SPAN_TEXT_GUARD_INSTRUCTION
+    assert "clause_span.text.find(span.text)" in SPAN_TEXT_GUARD_INSTRUCTION
+    assert "parenthetical, citation, bullet marker" in SPAN_TEXT_GUARD_INSTRUCTION
     assert prepared.capability_profile["response_coordinate_mode"] == (
         RESPONSE_COORDINATE_MODE_PATH_SCOPED_NEAREST
     )
@@ -370,6 +395,14 @@ def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen()
     assert prepared.strict_adapter.config["response_coordinate_policy"][
         "modality_evidence_maximum_start_displacement"
     ] is None
+    historical_v1_8 = load_portable_transport_adapter_v1_8()
+    assert historical_v1_8.adapter_version == "1.8.0"
+    assert historical_v1_8.config["response_span_text_guard"]["instruction"] == (
+        SPAN_TEXT_GUARD_V1_8_INSTRUCTION
+    )
+    assert historical_v1_8.transport_schema_sha256 == (
+        "ef8c684b2456196eac14cc7748bb687aef5ef32fd8a405c3003bd831ad380af7"
+    )
     historical_v1_7 = load_portable_transport_adapter_v1_7()
     assert historical_v1_7.adapter_version == "1.7.0"
     assert historical_v1_7.config["response_span_text_guard"]["instruction"] == (
@@ -408,7 +441,7 @@ def test_portable_adapter_keeps_canonical_prompts_schema_and_serializer_frozen()
     historical = load_portable_transport_adapter_v1_2()
     assert historical.adapter_version == "1.2.0"
     assert historical.canonical_schema_sha256 == prepared.strict_adapter.canonical_schema_sha256
-    assert historical.transport_schema_sha256 == prepared.strict_adapter.transport_schema_sha256
+    assert historical.transport_schema_sha256 == historical_v1_8.transport_schema_sha256
 
 
 def test_v1_5_real_gpt4o_repeated_modality_cue_replay_remains_fail_closed() -> None:

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_S11"
+                  targetNamespace="https://example.org/synthetic/stage1">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Pool_Claims" name="Claims pool" processRef="Process_Claims" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Claims" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Clerk" name="Claims clerk">
+        <bpmn:flowNodeRef>Start_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Receive</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Decide</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Reject</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Merge</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Supervisor" name="Supervisor">
+        <bpmn:flowNodeRef>Task_Approve</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ParallelSplit</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Archive</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Notify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ParallelJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_1" name="Claim received" />
+    <bpmn:userTask id="Task_Receive" name="Receive claim" />
+    <bpmn:exclusiveGateway id="Gateway_Decide" name="Claim valid?" default="Flow_Decide_Reject" />
+    <bpmn:serviceTask id="Task_Approve" name="Approve claim" />
+    <bpmn:task id="Task_Reject" name="Reject claim" />
+    <bpmn:exclusiveGateway id="Gateway_Merge" name="Decision merged" />
+    <bpmn:parallelGateway id="Gateway_ParallelSplit" name="Publish outcome" />
+    <bpmn:manualTask id="Task_Archive" name="Archive decision" />
+    <bpmn:sendTask id="Task_Notify" name="Notify claimant" />
+    <bpmn:parallelGateway id="Gateway_ParallelJoin" name="Publication complete" />
+    <bpmn:endEvent id="End_1" name="Done" />
+
+    <bpmn:sequenceFlow id="Flow_Start_Receive" sourceRef="Start_1" targetRef="Task_Receive" />
+    <bpmn:sequenceFlow id="Flow_Receive_Decide" sourceRef="Task_Receive" targetRef="Gateway_Decide" />
+    <bpmn:sequenceFlow id="Flow_Decide_Approve" sourceRef="Gateway_Decide" targetRef="Task_Approve">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">approved = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Decide_Reject" sourceRef="Gateway_Decide" targetRef="Task_Reject" />
+    <bpmn:sequenceFlow id="Flow_Approve_Merge" sourceRef="Task_Approve" targetRef="Gateway_Merge" />
+    <bpmn:sequenceFlow id="Flow_Reject_Merge" sourceRef="Task_Reject" targetRef="Gateway_Merge" />
+    <bpmn:sequenceFlow id="Flow_Merge_Split" sourceRef="Gateway_Merge" targetRef="Gateway_ParallelSplit" />
+    <bpmn:sequenceFlow id="Flow_Split_Archive" sourceRef="Gateway_ParallelSplit" targetRef="Task_Archive" />
+    <bpmn:sequenceFlow id="Flow_Split_Notify" sourceRef="Gateway_ParallelSplit" targetRef="Task_Notify" />
+    <bpmn:sequenceFlow id="Flow_Archive_Join" sourceRef="Task_Archive" targetRef="Gateway_ParallelJoin" />
+    <bpmn:sequenceFlow id="Flow_Notify_Join" sourceRef="Task_Notify" targetRef="Gateway_ParallelJoin" />
+    <bpmn:sequenceFlow id="Flow_Join_End" sourceRef="Gateway_ParallelJoin" targetRef="End_1" />
+  </bpmn:process>
+</bpmn:definitions>

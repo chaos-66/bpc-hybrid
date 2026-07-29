@@ -38,7 +38,10 @@ Hard rules (enforced in code, not just by validator):
      the llm_candidate block; never writes to layer A / B / C / D.
   2. Does NOT pre-fill human_correction from old auto-Gold files.
   3. Never auto-changes `unreviewed` to `accepted` / `reviewed` /
-     `adjudicated`. The user must click the buttons.
+     `adjudicated`. The user must click the buttons.  Clicking a field's
+     `accepted` button copies that immutable LLM candidate (including exact
+     spans) into the editable result; the record-level accept-all button does
+     the same for all six fields only after an explicit confirmation.
   4. Modality is required 4-way choice (obligation / prohibition /
      permission / definition); there is NO default of "obligation".
   5. Adding a new clause starts with an EMPTY clause (no modality
@@ -159,6 +162,50 @@ REVIEW_STATUS_ZH = {
 }
 
 
+def _candidate_display_height(value: str | None) -> int:
+    """Return a compact wrapped height for a six-element candidate cell.
+
+    The review window has several control groups below this table, so candidate
+    cells should grow enough to expose ordinary legal phrases without allowing
+    one unusually long phrase to push the remaining controls off-screen.  The
+    full text is always available in a double-click popup.
+    """
+    text = value or ""
+    visual_lines = 0
+    for line in text.splitlines() or [""]:
+        visual_lines += max(1, (len(line) + 47) // 48)
+    return max(1, min(3, visual_lines))
+
+
+def _human_field_display_state(
+    clause: dict,
+    record_decisions: dict,
+    field: str,
+) -> tuple[str, str]:
+    """Return the value/decision shown by one six-element editor row.
+
+    The persisted span fields use plural array keys (``actors``, ``actions``,
+    ...), while the UI and record-level decisions use singular field names.
+    Keeping that mapping in one helper prevents a saved span from appearing
+    blank after the reviewer navigates away and then returns.
+    """
+    if field == "modality":
+        modality = clause.get("modality") or {}
+        return (
+            modality.get("value") or "",
+            modality.get("decision") or "unreviewed",
+        )
+
+    spans = clause.get(f"{field}s") or []
+    if spans:
+        first = spans[0]
+        return (
+            first.get("text") or "",
+            first.get("decision") or "unreviewed",
+        )
+    return "", record_decisions.get(field) or "unreviewed"
+
+
 def _load_jsonl(path: Path) -> dict:
     out: dict = {}
     if not path.exists():
@@ -217,19 +264,17 @@ class ReviewerApp:
         )
         self.root.geometry("1480x900")
 
-        # Chinese aid banner
-        banner = ttk.Label(
+        # Chinese aid banner. Its text reflects the active Layer D instead of
+        # permanently showing the historical all-null placeholder warning.
+        self.banner_label = ttk.Label(
             self.root,
-            text=(
-                "⚠ 中文翻译和英文回译默认未生成；激活后请在下方点击「重新加载中文辅助」"
-                "按钮刷新本窗口（无需重启 GUI）。当前所有 Layer D 字段为 null 时工具不会"
-                "自动填充，也绝不会自动写入人工答案。"
-            ),
-            foreground="#a00",
+            text="",
+            foreground="#444",
             background="#fff5d8",
             padding=4,
         )
-        banner.pack(side=tk.TOP, fill=tk.X)
+        self.banner_label.pack(side=tk.TOP, fill=tk.X)
+        self._refresh_layer_d_banner()
 
         bar = ttk.Frame(self.root, padding=6)
         bar.pack(side=tk.TOP, fill=tk.X)
@@ -289,7 +334,7 @@ class ReviewerApp:
             pane,
             text=(
                 "左侧四块（德文原文、英文候选、中文翻译、英文回译）一律只读；"
-                "中间 Layer D 的中文辅助和回译尚未生成。"
+                "中文辅助只帮助理解，不作为人工答案。"
                 "右侧「人工最终英文」是本文件唯一可编辑区域；"
                 "修改英文将清空所有现有 span 并把本条 review_state 重置为 needs_review。"
             ),
@@ -306,8 +351,8 @@ class ReviewerApp:
         headers = [
             "德文原文（只读）",
             "英文候选（只读）",
-            "中文翻译（只读，pending）",
-            "英文回译（只读，pending）",
+            "中文翻译（只读）",
+            "英文回译（只读）",
             "人工最终英文（可编辑）",
         ]
         for c, h in enumerate(headers):
@@ -351,9 +396,9 @@ class ReviewerApp:
         info = ttk.Label(
             pane,
             text=(
-                "左侧：LLM 六要素候选（只读）。右侧：人工修正（可编辑）。\n"
-                "每条记录的每个六要素字段必须显式选择 accepted / edited / rejected / needs_adjudication，"
-                "复制不等于批准。"
+                "左侧：LLM 六要素候选（只读）。右侧：人工结果预览（只读）。\n"
+                "先核对候选；正确时点击“接受本条全部 LLM 候选”或逐字段“已接受”，"
+                "错误时在下方人工值/Span 编辑器修正。复制动作必须由你点击，复制不等于自动批准。"
             ),
             foreground="#444",
         )
@@ -366,10 +411,14 @@ class ReviewerApp:
         cols.columnconfigure(1, weight=1, uniform="col")
         cols.rowconfigure(1, weight=1)
         ttk.Label(cols, text="LLM 候选（只读）").grid(row=0, column=0, sticky="w")
-        ttk.Label(cols, text="人工修正（可编辑）").grid(row=0, column=1, sticky="w")
-        self.t_llm_view = tk.Text(cols, wrap="word", background="#f4f4f4", state="disabled")
+        ttk.Label(cols, text="人工结果预览（只读；请用下方控件修改）").grid(row=0, column=1, sticky="w")
+        self.t_llm_view = tk.Text(
+            cols, wrap="word", background="#f4f4f4", state="disabled", height=14
+        )
         self.t_llm_view.grid(row=1, column=0, sticky="nsew", padx=4)
-        self.t_human_view = tk.Text(cols, wrap="word", background="#fffce8", height=24)
+        self.t_human_view = tk.Text(
+            cols, wrap="word", background="#f4f4f4", state="disabled", height=14
+        )
         self.t_human_view.grid(row=1, column=1, sticky="nsew", padx=4)
 
         # Clause controls
@@ -378,6 +427,11 @@ class ReviewerApp:
         ttk.Label(cl, text="clause_id:").pack(side=tk.LEFT)
         self.clause_id_var = tk.StringVar()
         ttk.Entry(cl, textvariable=self.clause_id_var, width=14).pack(side=tk.LEFT)
+        ttk.Button(
+            cl,
+            text="接受本条全部 LLM 候选",
+            command=self.on_accept_all_candidates,
+        ).pack(side=tk.LEFT, padx=4)
         ttk.Button(cl, text="添加空白条款（无默认 modality）",
                    command=self.on_add_blank_clause).pack(side=tk.LEFT, padx=4)
         ttk.Button(cl, text="删除当前条款", command=self.on_delete_clause).pack(side=tk.LEFT, padx=4)
@@ -386,10 +440,16 @@ class ReviewerApp:
         ttk.Button(cl, text="本条已裁决", command=self.on_mark_adjudicated).pack(side=tk.LEFT, padx=4)
 
         # Six-element per-clause editor
-        six = ttk.LabelFrame(pane, text="六要素编辑（按字段分别决策）", padding=6)
-        six.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=6, pady=4)
-        for c in range(4):
-            six.columnconfigure(c, weight=1, uniform="c")
+        six = ttk.LabelFrame(
+            pane,
+            text="六要素编辑（候选自动换行；双击候选可查看全文；按字段分别决策）",
+            padding=6,
+        )
+        six.pack(side=tk.TOP, fill=tk.X, expand=False, padx=6, pady=4)
+        six.columnconfigure(0, weight=0, minsize=80)
+        six.columnconfigure(1, weight=5, minsize=360)
+        six.columnconfigure(2, weight=4, minsize=320)
+        six.columnconfigure(3, weight=5, minsize=400)
         headers = ["字段", "LLM 候选值", "人工值（可编辑）", "决策"]
         for c, h in enumerate(headers):
             ttk.Label(six, text=h).grid(row=0, column=c, sticky="w")
@@ -404,8 +464,25 @@ class ReviewerApp:
                 "exception": "例外",
             }[fld]
             ttk.Label(six, text=zh).grid(row=i, column=0, sticky="w")
-            cand_var = tk.StringVar(value="")
-            ttk.Label(six, textvariable=cand_var, foreground="#555").grid(row=i, column=1, sticky="w")
+            cand_widget = tk.Text(
+                six,
+                wrap="word",
+                height=1,
+                background="#f4f4f4",
+                foreground="#333",
+                relief="flat",
+                borderwidth=0,
+                padx=3,
+                pady=2,
+                font="TkDefaultFont",
+                state="disabled",
+                cursor="arrow",
+            )
+            cand_widget.grid(row=i, column=1, sticky="nsew", padx=(0, 8), pady=1)
+            cand_widget.bind(
+                "<Double-Button-1>",
+                lambda _event, field=fld: self._show_full_candidate(field),
+            )
             if fld == "modality":
                 mod_var = tk.StringVar(value="")
                 cb = ttk.Combobox(
@@ -435,19 +512,21 @@ class ReviewerApp:
                 rb.pack(side=tk.LEFT)
                 rb_widgets.append(rb)
             self._six_widgets[fld] = {
-                "cand_var": cand_var,
+                "cand_widget": cand_widget,
                 "val_widget": val_widget,
                 "dec_var": dec_var,
             }
         # actor-action map and order relations
         map_box = ttk.LabelFrame(pane, text="actor-action 对应 / action 顺序（JSON 手动编辑）", padding=6)
-        map_box.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=6, pady=4)
+        map_box.pack(side=tk.TOP, fill=tk.X, expand=False, padx=6, pady=4)
         ttk.Label(map_box, text="actor_action_map JSON:").grid(row=0, column=0, sticky="nw")
-        self.actor_action_map_text = tk.Text(map_box, height=4, background="#fffce8")
+        self.actor_action_map_text = tk.Text(map_box, height=2, background="#fffce8")
         self.actor_action_map_text.grid(row=0, column=1, sticky="we", padx=4)
+        self.actor_action_map_text.bind("<FocusOut>", self._on_relations_focus_out)
         ttk.Label(map_box, text="order_relations JSON:").grid(row=1, column=0, sticky="nw")
-        self.order_relations_text = tk.Text(map_box, height=4, background="#fffce8")
+        self.order_relations_text = tk.Text(map_box, height=2, background="#fffce8")
         self.order_relations_text.grid(row=1, column=1, sticky="we", padx=4)
+        self.order_relations_text.bind("<FocusOut>", self._on_relations_focus_out)
         for c in range(2):
             map_box.columnconfigure(c, weight=1)
 
@@ -475,7 +554,7 @@ class ReviewerApp:
         # Span listbox
         slb = ttk.LabelFrame(pane, text="本 clause 已添加的 span（双击删除）", padding=6)
         slb.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=6, pady=4)
-        self.span_listbox = tk.Listbox(slb, height=6)
+        self.span_listbox = tk.Listbox(slb, height=4)
         self.span_listbox.pack(fill=tk.BOTH, expand=True)
         self.span_listbox.bind("<Double-Button-1>", lambda e: self.on_delete_span())
 
@@ -504,7 +583,7 @@ class ReviewerApp:
         widget.configure(state="normal")
         widget.delete("1.0", tk.END)
         widget.insert("1.0", content or "")
-        if widget is not self.t_appr and widget is not self.t_human_view:
+        if widget is not self.t_appr:
             widget.configure(state="disabled")
 
     def _load_record(self):
@@ -551,7 +630,7 @@ class ReviewerApp:
         active_clause = self._active_clause()
         if active_clause is None:
             for fld, w in self._six_widgets.items():
-                w["cand_var"].set("")
+                self._set_candidate_text(w["cand_widget"], "")
                 if fld == "modality":
                     w["val_widget"].set("")
                 else:
@@ -561,20 +640,20 @@ class ReviewerApp:
         cand_clause = self._candidate_clause_for_active()
         for fld, w in self._six_widgets.items():
             cand_val = self._field_candidate_value(cand_clause, fld) if cand_clause else None
-            w["cand_var"].set(cand_val or "（LLM 候选为空）")
-            cur = active_clause.get(fld)
+            self._set_candidate_text(
+                w["cand_widget"], cand_val or "（LLM 候选为空）"
+            )
+            value, decision = _human_field_display_state(
+                active_clause,
+                r.get("decisions") or {},
+                fld,
+            )
             if fld == "modality":
-                w["val_widget"].set(cur.get("value") or "")
-                w["dec_var"].set(cur.get("decision") or "unreviewed")
+                w["val_widget"].set(value)
             else:
-                arr = cur if isinstance(cur, list) else []
-                if arr:
-                    w["val_widget"].delete(0, tk.END)
-                    w["val_widget"].insert(0, arr[0].get("text") or "")
-                    w["dec_var"].set(arr[0].get("decision") or "unreviewed")
-                else:
-                    w["val_widget"].delete(0, tk.END)
-                    w["dec_var"].set("unreviewed")
+                w["val_widget"].delete(0, tk.END)
+                w["val_widget"].insert(0, value)
+            w["dec_var"].set(decision)
         # actor_action_map and order_relations
         self.actor_action_map_text.delete("1.0", tk.END)
         self.actor_action_map_text.insert(
@@ -589,6 +668,46 @@ class ReviewerApp:
         self.confidence_var.set(str(rs.get("confidence", "") or ""))
         self.review_notes_text.delete("1.0", tk.END)
         self.review_notes_text.insert("1.0", rs.get("notes") or "")
+
+    @staticmethod
+    def _set_candidate_text(widget: tk.Text, content: str) -> None:
+        widget.configure(state="normal", height=_candidate_display_height(content))
+        widget.delete("1.0", tk.END)
+        widget.insert("1.0", content)
+        widget.configure(state="disabled")
+
+    def _show_full_candidate(self, field: str) -> None:
+        """Open one complete LLM candidate value in a selectable popup."""
+        cand_clause = self._candidate_clause_for_active()
+        value = self._field_candidate_value(cand_clause, field) if cand_clause else None
+        content = value or "（LLM 候选为空）"
+        field_zh = {
+            "modality": "规范类型",
+            "actor": "主体",
+            "action": "行为",
+            "condition": "条件",
+            "constraint": "约束",
+            "exception": "例外",
+        }.get(field, field)
+
+        popup = tk.Toplevel(self.root)
+        popup.title(f"LLM 候选全文 — {field_zh}")
+        popup.geometry("760x260")
+        popup.transient(self.root)
+
+        body = ttk.Frame(popup, padding=10)
+        body.pack(fill=tk.BOTH, expand=True)
+        ttk.Label(
+            body,
+            text=f"{field_zh}（只读，可选中复制）",
+        ).pack(anchor="w", pady=(0, 6))
+        text_box = tk.Text(body, wrap="word", background="#f4f4f4")
+        scrollbar = ttk.Scrollbar(body, orient=tk.VERTICAL, command=text_box.yview)
+        text_box.configure(yscrollcommand=scrollbar.set)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        text_box.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        text_box.insert("1.0", content)
+        text_box.configure(state="disabled")
 
     def _reload_clause_text_widgets(self):
         r = self._current_record()
@@ -695,6 +814,37 @@ class ReviewerApp:
             f"base_url(cfg)={base_url}   路径：{active_rel}"
         )
 
+    def _layer_d_is_complete(self) -> bool:
+        if len(self._zh_aid) != 150:
+            return False
+        return all(
+            isinstance(row.get("text_zh"), str)
+            and bool(row["text_zh"].strip())
+            and isinstance(row.get("back_translation_en"), str)
+            and bool(row["back_translation_en"].strip())
+            for row in self._zh_aid.values()
+        )
+
+    def _refresh_layer_d_banner(self) -> None:
+        if not hasattr(self, "banner_label"):
+            return
+        if self._layer_d_is_complete():
+            self.banner_label.configure(
+                text=(
+                    "✓ 中文翻译与英文回译已加载 150/150。它们只用于帮助核对英文；"
+                    "不会自动写入人工答案或批准任何六要素。"
+                ),
+                foreground="#087c2c",
+            )
+        else:
+            self.banner_label.configure(
+                text=(
+                    "⚠ 中文翻译或英文回译尚未完整加载；请点击下方“重新加载中文辅助”。"
+                    "工具不会用空值自动填充人工答案。"
+                ),
+                foreground="#a00",
+            )
+
     def on_reload_layer_d(self):
         """Reload configs/estg150_layer_d.json, run the STRICT
         Layer D v2 validator (the SAME pure function used by
@@ -763,6 +913,7 @@ class ReviewerApp:
             self._load_record()
             if hasattr(self, "layer_d_label"):
                 self.layer_d_label.configure(text=self._format_layer_d_status())
+            self._refresh_layer_d_banner()
             self._set_status(
                 f"中文辅助尚未生成（active_path = v1 placeholder；v2 未生成，不视为错误）",
                 color="#444",
@@ -936,6 +1087,7 @@ class ReviewerApp:
         self._load_record()
         if hasattr(self, "layer_d_label"):
             self.layer_d_label.configure(text=self._format_layer_d_status())
+        self._refresh_layer_d_banner()
         self._set_status(
             f"已重新加载：{active_rel} (150/150 完整；model={v2_model or '?'}；run_id={v2_run or '?'})；"
             f"严格验证通过 (membership / modality / Call B / SHA 一致)；"
@@ -958,19 +1110,22 @@ class ReviewerApp:
 
     # ---------------- actions: navigation ----------------
     def on_prev(self):
-        self._collect_appr()
+        if self._save_current_edits() is None:
+            return
         if self.idx > 0:
             self.idx -= 1
             self._load_record()
 
     def on_next(self):
-        self._collect_appr()
+        if self._save_current_edits() is None:
+            return
         if self.idx < len(self.service.records) - 1:
             self.idx += 1
             self._load_record()
 
     def on_next_pending(self):
-        self._collect_appr()
+        if self._save_current_edits() is None:
+            return
         for j in list(range(self.idx + 1, len(self.service.records))) + list(range(0, self.idx)):
             r = self.service.records[j]
             if r["decisions"].get("translation", "unreviewed") == "unreviewed" or \
@@ -1121,20 +1276,116 @@ class ReviewerApp:
         self.service.save_draft()
 
     # ---------------- actions: six-element ----------------
-    def _on_six_value_change(self, fld: str):
+    def on_accept_all_candidates(self):
+        r = self._current_record()
+        if not messagebox.askyesno(
+            "接受本条全部 LLM 候选",
+            "确认你已核对本条 LLM 六要素候选？\n\n"
+            "点击“是”会把候选值及精确 span 复制到人工结果，并把六个字段标为已接受。"
+            "这不会自动把本条标为已复核或已裁决。",
+        ):
+            return
+        result = self.service.accept_all_candidate_fields(r["sample_id"])
+        if not result.get("ok"):
+            errors = result.get("errors", [])
+            shown = errors[:8]
+            extra = len(errors) - len(shown)
+            detail = "\n  - ".join(shown)
+            if extra > 0:
+                detail += f"\n  - 其余 {extra} 项省略"
+            messagebox.showerror(
+                "无法整条接受",
+                "候选中存在无法安全复制的字段：\n  - " + detail +
+                "\n\n请逐字段接受，或用人工值/Span 编辑器修正。",
+            )
+            return
+        clauses = r["human_correction"].get("clauses") or []
+        self.clause_id_var.set(clauses[0]["clause_id"] if clauses else "")
+        self._reload_six_widgets()
+        self._reload_clause_text_widgets()
+        self._refresh_idx_label()
+        self._refresh_progress()
+        self.service.save_draft()
+        self._set_status(
+            f"已由人工点击接受并复制全部 LLM 候选：{r['sample_id']}；尚未标记 reviewed/adjudicated",
+            color="#080",
+        )
+
+    def _collect_six_value(self, fld: str, *, show_errors: bool = True) -> bool:
+        """Commit one visible six-element value into the service.
+
+        Navigation calls this explicitly instead of relying on Tk's
+        ``FocusOut`` ordering.  Unchanged rows are skipped so visiting a
+        record cannot turn accepted/rejected decisions into edited ones.
+        """
         clause = self._active_clause()
         if clause is None:
-            return
+            return True
         r = self._current_record()
         w = self._six_widgets[fld]
         new_val = w["val_widget"].get().strip() or None
+        stored_value, _stored_decision = _human_field_display_state(
+            clause,
+            r.get("decisions") or {},
+            fld,
+        )
+        if new_val == (stored_value or None):
+            return True
+
         res = self.service.edit_field(r["sample_id"], clause["clause_id"], fld, new_val)
         if not res.get("ok"):
-            messagebox.showerror("错误", "; ".join(res.get("errors", [])))
-            return
+            if show_errors:
+                messagebox.showerror("人工值无法保存", "; ".join(res.get("errors", [])))
+            try:
+                w["val_widget"].focus_set()
+            except (AttributeError, tk.TclError):
+                pass
+            return False
         self._reload_clause_text_widgets()
         self._refresh_span_listbox()
+        return True
+
+    def _on_six_value_change(self, fld: str):
+        if not self._collect_six_value(fld, show_errors=True):
+            return
         self.service.save_draft()
+
+    def _collect_current_edits(self, *, show_errors: bool = True) -> bool:
+        """Collect every editable control on the current record.
+
+        This is the navigation/save barrier: a record is never replaced in
+        the UI until its English text, six-element values, relations, and
+        notes have been collected successfully.  Invalid exact-span text
+        keeps the reviewer on the same record for correction.
+        """
+        self._collect_appr()
+        for fld in ("modality", "actor", "action", "condition", "constraint", "exception"):
+            if not self._collect_six_value(fld, show_errors=show_errors):
+                self._set_status(
+                    f"未切换记录：请先修正 {fld} 的人工值",
+                    color="#a00",
+                )
+                return False
+        if not self._collect_relations(show_errors=show_errors):
+            self._set_status(
+                "未切换记录：请先修正 actor-action / order relation JSON",
+                color="#a00",
+            )
+            return False
+        self._on_review_notes_change()
+        return True
+
+    def _save_current_edits(self) -> dict | None:
+        """Collect and persist the current record, returning the save result."""
+        if not self._collect_current_edits(show_errors=True):
+            return None
+        try:
+            result = self.service.save_draft()
+        except Exception as exc:
+            self._set_status(f"保存失败，未切换记录: {exc}", color="#a00")
+            return None
+        self._dirty = False
+        return result
 
     def _on_six_decision_change(self, fld: str, dec: str):
         clause = self._active_clause()
@@ -1154,6 +1405,41 @@ class ReviewerApp:
         self._refresh_idx_label()
         self._refresh_progress()
         self.service.save_draft()
+
+    def _collect_relations(self, *, show_errors: bool = True) -> bool:
+        clause = self._active_clause()
+        if clause is None:
+            return True
+        try:
+            actor_action_map = json.loads(
+                self.actor_action_map_text.get("1.0", "end-1c").strip() or "[]"
+            )
+            order_relations = json.loads(
+                self.order_relations_text.get("1.0", "end-1c").strip() or "[]"
+            )
+        except json.JSONDecodeError as exc:
+            if show_errors:
+                messagebox.showerror("关系 JSON 无效", str(exc))
+            return False
+        r = self._current_record()
+        result = self.service.edit_relations(
+            r["sample_id"],
+            clause["clause_id"],
+            actor_action_map,
+            order_relations,
+        )
+        if not result.get("ok"):
+            if show_errors:
+                messagebox.showerror("关系引用无效", "\n".join(result.get("errors", [])))
+            return False
+        if result.get("changed"):
+            self._reload_clause_text_widgets()
+            self._refresh_progress()
+        return True
+
+    def _on_relations_focus_out(self, _event=None):
+        if self._collect_relations(show_errors=True):
+            self.service.save_draft()
 
     def on_add_blank_clause(self):
         r = self._current_record()
@@ -1304,6 +1590,8 @@ class ReviewerApp:
 
     # ---------------- actions: mark reviewed / adjudicated ----------------
     def on_mark_reviewed(self):
+        if self._save_current_edits() is None:
+            return
         r = self._current_record()
         # Use the per-record eligibility check, NOT the global
         # review_ready. The first record can be marked while the
@@ -1332,6 +1620,8 @@ class ReviewerApp:
         self._set_status(f"已标记 reviewed: {r['sample_id']}", color="#080")
 
     def on_mark_adjudicated(self):
+        if self._save_current_edits() is None:
+            return
         r = self._current_record()
         # Per-record eligibility (NOT global freeze_ready).
         eligibility = self.service.validate_current_record(r["sample_id"])
@@ -1384,11 +1674,8 @@ class ReviewerApp:
              production path
           3. show the validation result in the post-save status bar
         """
-        self._collect_appr()
-        try:
-            save_res = self.service.save_draft()
-        except Exception as exc:
-            self._set_status(f"保存失败: {exc}", color="#a00")
+        save_res = self._save_current_edits()
+        if save_res is None:
             return
         report = save_res.get("validation") or {}
         # Update per-record eligibility + global counters

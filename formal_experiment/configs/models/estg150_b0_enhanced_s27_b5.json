@@ -1,0 +1,202 @@
+{
+  "schema_version": "estg150_b0_enhanced_b5_development@1.0.0",
+  "task_id": "S2.7-B0-ENHANCED-B5-DEV",
+  "run_id": "s27_estg150_b0_enhanced_b5",
+  "status": "preregistered_frozen_before_single_all150",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "claim_scope": "development",
+  "inputs": {
+    "human_correction_layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c"
+    },
+    "membership_hashes": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b"
+    },
+    "annotation_freeze_receipt": {
+      "path": "outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json",
+      "sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961"
+    },
+    "v10a_parent_manifest": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/manifest.json",
+      "sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315"
+    },
+    "v10a_parent_attempts": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/b0_attempts.json",
+      "sha256": "79dc457cdf933cb9fbb29030bab3673b9af645dd0138d8e97f5d1b6dfa6b4792"
+    },
+    "v10a_parent_evaluation": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/evaluation_all150.json",
+      "sha256": "fe0c5ec8f7f7dca15b9b4fec3361473b76d29e83a80622870ff1a73a9cabf971"
+    },
+    "v10a_parent_table8": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/sun_table8_any_overlap_diagnostic.json",
+      "sha256": "726ef0e59568e46187c14364f590229cb283255e2de6309e3dc8d5fe7f6b66b9"
+    },
+    "b4_negative_manifest": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_b4/manifest.json",
+      "sha256": "1e6dfa2c16cb1e133405b005f4396db0187068ea576a2684f5326bbf222cea4c",
+      "inheritance": "none_negative_evidence_only"
+    }
+  },
+  "method": {
+    "method_id": "sun_rule_only",
+    "method_variant": "b0_enhanced_b5_tsurgeon_post_surgery_tregex_consumed",
+    "paper_faithful_b0": false,
+    "parent_run": "s27_estg150_b0_enhanced_v10a",
+    "single_hypothesis": "sequential_context_tsurgeon_then_post_surgery_tregex_actor_action",
+    "single_candidate": true,
+    "field_order": ["modality", "condition", "constraint", "exception", "action", "actor"],
+    "hypothesis_boundary": "Context spans are emitted before pruning; Tsurgeon directly targets later actor/action context pollution and overall precision. Constraint metrics are side-effect observations, not the attributable B5 target.",
+    "s2_6_config": {
+      "path": "configs/models/sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126"
+    },
+    "v3_parent_tregex": {
+      "path": "resources/corenlp/sun_phrase_patterns_v3_enhanced.json",
+      "sha256": "f49bad50fb6236137f1208aeef572d2a78c789726363897c637dc464c780e142"
+    },
+    "b5_operation_registry": {
+      "path": "resources/corenlp/sun_phrase_patterns_v5_b5_tsurgeon.json",
+      "sha256": "61da8c3418d0402776c3ea2a4e6c6434a82bb7543e105c31c0b130bdfe3d35a6"
+    },
+    "v2_lexicon_manifest": {
+      "path": "resources/lexicon/public_marker_lexicon_en_v2.manifest.json",
+      "sha256": "3f7e6108c1e66de37377abc2e9b9f4d0344ff2d1eca20b49ebf90e38aff7b462"
+    },
+    "fixed_scope_resolver": {
+      "path": "src/bpc_hybrid/b0_v10/scope.py",
+      "sha256": "3c13d2d73d49476cd3449f50775c6b4b63ac68f5baa2f95a4b564e5ca8b30887"
+    },
+    "unchanged_production_multi_bridge": {
+      "path": "tools/corenlp/SunPhraseRuleBatchBridgeMulti.java",
+      "sha256": "1a084befaf1a863889a26b58c5a049f2df846834e26c5643fe5a535c5c13f2a3"
+    },
+    "active_registry_read_only": {
+      "path": "configs/models/estg150_b0_active_registry_v4.json",
+      "sha256": "1673188cd3aa8a75d4a99862ff9b8b2f6cfdc79e8c9710fba83c47ae7f1d3d00"
+    },
+    "preregistration": {
+      "path": "configs/models/estg150_b0_b5_preregistration_v1.json"
+    }
+  },
+  "evaluator": {
+    "path": "configs/stage2_evaluator_s210_v3.json",
+    "sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f",
+    "tracks": ["all_150_sentence_only_english", "sun_table8_any_overlap_diagnostic"]
+  },
+  "synthetic_gate": {
+    "fixture": {
+      "path": "tests/fixtures/corenlp/b5_tsurgeon_synthetic_v1.json",
+      "sha256": "b65888746cd705bcec2c4f8036c6b2225921d87c2ce53bff2ae524c4a2f6f381"
+    },
+    "test_path": "tests/test_b0_b5_tsurgeon_tregex_consumed.py",
+    "required_gate_count": 15,
+    "status": "passed_before_preregistration"
+  },
+  "output": {
+    "directory": "outputs/development/s27_estg150_b0_enhanced_b5",
+    "no_overwrite": true,
+    "persist_row_level_predictions": true,
+    "persist_canonical_gold_copy": false
+  },
+  "promotion_gates": {
+    "A_authenticity": {
+      "pattern_count": 29,
+      "pattern_identity_order_exact_v3": true,
+      "accepted_surgery_min": 1,
+      "terminal_tree_removal_max": 0,
+      "post_surgery_action_matches_min": 1,
+      "post_surgery_actor_matches_min": 1,
+      "final_tregex_action_spans_min": 1,
+      "final_tregex_actor_spans_min": 1,
+      "dependency_candidate_span_count_max": 0,
+      "dependency_fallback_count_max": 0,
+      "source_slice_failures_max": 0,
+      "placeholder_classifier_count_max": 0
+    },
+    "B_actor_action": {
+      "combined_tp_min": 192,
+      "combined_fp_max": 77,
+      "combined_fn_max": 103,
+      "actor_f1_min": 0.497,
+      "action_f1_min": 0.680,
+      "mean_f1_min": 0.6087,
+      "actor_f1_improvement_min": 0.010,
+      "action_f1_improvement_min": 0.010,
+      "combined_fp_reduction_min": 15
+    },
+    "C_overall": {
+      "tp_min": 458,
+      "fp_max": 405,
+      "fn_max": 366,
+      "precision_min": 0.528,
+      "recall_min": 0.556,
+      "f1_min": 0.543
+    },
+    "D_context": {
+      "condition_f1_drop_max": 0.010,
+      "constraint_f1_drop_max": 0.010,
+      "exception_f1_drop_max": 0.010
+    },
+    "E_full_regression": {
+      "modality_predictions_exact_parent": true,
+      "modality_route_counts_exact_parent": true,
+      "predicted_clause_count": 256,
+      "aligned_clause_count": 195,
+      "alignment_f1": 0.8008213552361396,
+      "exact_segmentation_f1": 0.1437371663244353,
+      "presence_recall_min": 0.695,
+      "complete_record_rate_min": 0.350,
+      "hallucinated_field_rate_max": 0.350,
+      "edge_fp_max": 34,
+      "schema_valid_rate": 1.0,
+      "llm_api_network_calls_max": 0
+    },
+    "F_main_evaluator": {
+      "actor_token_f1_drop_max": 0.010,
+      "action_token_f1_drop_max": 0.010,
+      "complete_record_rate_min": 0.350,
+      "schema_valid_rate": 1.0,
+      "token_f1_metric": "token_overlap_micro.f1"
+    },
+    "fixed_parent": {
+      "actor": {"tp": 21, "fp": 13, "fn": 27, "precision": 0.6176470588235294, "recall": 0.4375, "f1": 0.5121951219512195},
+      "action": {"tp": 171, "fp": 74, "fn": 76, "precision": 0.6979591836734694, "recall": 0.6923076923076923, "f1": 0.6951219512195121},
+      "condition": {"tp": 130, "fp": 115, "fn": 84, "f1": 0.5664488017429194},
+      "constraint": {"tp": 126, "fp": 209, "fn": 176, "f1": 0.39560439560439564},
+      "exception": {"tp": 10, "fp": 4, "fn": 3, "f1": 0.7407407407407408},
+      "overall": {"tp": 458, "fp": 415, "fn": 366, "precision": 0.5246277205040092, "recall": 0.5558252427184466, "f1": 0.5397760754272246},
+      "actor_token_f1": 0.42305844561942124,
+      "action_token_f1": 0.20067389836692515
+    }
+  },
+  "route_boundaries": {
+    "formal_gold_published": false,
+    "formal_performance_result": false,
+    "context_sidecar_used": false,
+    "german_to_english_fidelity_human_verified": false,
+    "interpretation": "One preregistered development All-150 run of the fixed B5 sequential-Tsurgeon/post-surgery-Tregex candidate; no automatic active-registry promotion."
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_allowed": false,
+    "human_decisions_modified": false,
+    "gold_read_only": true,
+    "data_gold_written": false,
+    "data_input_written": false,
+    "formal_predictions_or_results_written": false,
+    "independent_82_read": false,
+    "s2_4_test_read": false,
+    "bert_retrained": false,
+    "b4_lexicon_loaded": false,
+    "tregex_pattern_strings_modified": false,
+    "scope_resolver_modified": false,
+    "span_boundary_policy_modified": false,
+    "modality_modified": false,
+    "segmentation_modified": false,
+    "active_registry_modified": false,
+    "b6_bert_started": false
+  }
+}

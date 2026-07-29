@@ -1,0 +1,142 @@
+{
+  "schema_version": "b0_enhanced_b1_preregistration@1.0.0",
+  "preregistration_id": "s27_estg150_b0_b1_prereg_v1",
+  "created_at_utc": "2026-07-22T19:27:16.633334+00:00",
+  "status": "preregistered_frozen_before_all150",
+  "claim_scope": "development_only",
+  "parent": "s27_estg150_b0_enhanced_v10a",
+  "change_only": "deontic_nucleus_clause_segmentation",
+  "forbidden_changes": [
+    "scope",
+    "tregex",
+    "lexicon",
+    "actor_action",
+    "bert",
+    "gold",
+    "evaluator"
+  ],
+  "baselines": {
+    "v7": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v7/manifest.json",
+      "sha256": "6099da41cf3c8708d544da3657ccdd0d6d680e5fc87c9b80fb99e01db821b9a4",
+      "bytes": 13956
+    },
+    "v10a": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/manifest.json",
+      "sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315",
+      "bytes": 14659
+    }
+  },
+  "pre_correction": {
+    "path": "outputs/reports/s27_estg150_b0_b1_pre_correction_v1.manifest.json",
+    "sha256": "744ec479c61158041b7fb30e12cb598a437d049d6e68a1eb96f825da83b7315a",
+    "bytes": 1676
+  },
+  "promotion_gates": {
+    "alignment_f1_min": 0.81,
+    "exact_segmentation_f1_min": 0.17,
+    "modality_precision_min": 0.598,
+    "modality_recall_min": 0.662,
+    "modality_f1_min": 0.635,
+    "predicted_clauses_max": 260,
+    "table8_f1_min": 0.53,
+    "presence_recall_min": 0.69,
+    "hallu_max": 0.36,
+    "schema_valid": 1.0
+  },
+  "module_bindings": {
+    "src/bpc_hybrid/b0_v10/segmentation.py": {
+      "path": "src/bpc_hybrid/b0_v10/segmentation.py",
+      "sha256": "ba4fc92c9841627db86968b55b8fca661fef12cb9f453d0c16f95f0337175319",
+      "bytes": 8773
+    },
+    "src/bpc_hybrid/estg150_b0_development_b1.py": {
+      "path": "src/bpc_hybrid/estg150_b0_development_b1.py",
+      "sha256": "66c44d987f3a67fa62c66b1c20ca739027889a634af1bca51b1f11453c149b9e",
+      "bytes": 24846
+    },
+    "scripts/run_estg150_b0_enhanced_b1_development.py": {
+      "path": "scripts/run_estg150_b0_enhanced_b1_development.py",
+      "sha256": "d7689f6f9414ab87c1ea8ef7ba6cf053c94856d7d1dc6e0c652f0e8d6c5d35fa",
+      "bytes": 12516
+    },
+    "src/bpc_hybrid/b0_v10/scope.py": {
+      "path": "src/bpc_hybrid/b0_v10/scope.py",
+      "sha256": "3c13d2d73d49476cd3449f50775c6b4b63ac68f5baa2f95a4b564e5ca8b30887",
+      "bytes": 14235
+    },
+    "src/bpc_hybrid/b0_v10/modality.py": {
+      "path": "src/bpc_hybrid/b0_v10/modality.py",
+      "sha256": "6dd2c74bbd5894353b921ff2f29506a950e6e6b2453b426ee451a042c0fc1246",
+      "bytes": 3239
+    },
+    "src/bpc_hybrid/b0_v10/alignment.py": {
+      "path": "src/bpc_hybrid/b0_v10/alignment.py",
+      "sha256": "957aa591927139ae3f37dbaf8634ba1e5be04beaa7e54e9597d2b6f57db2c2fe",
+      "bytes": 7919
+    },
+    "src/bpc_hybrid/b0_v10/actor_action.py": {
+      "path": "src/bpc_hybrid/b0_v10/actor_action.py",
+      "sha256": "5d31f28243c814d363185bf1eec842fd27bf8d201f5f4f2a3bf5a2a593fbb574",
+      "bytes": 6652
+    },
+    "src/bpc_hybrid/b0_v10/pipeline.py": {
+      "path": "src/bpc_hybrid/b0_v10/pipeline.py",
+      "sha256": "ce3153f75d28369954ed7e0a0e0ca1fa3e44f56b5f7e35724f8034d523a15d79",
+      "bytes": 1038
+    },
+    "src/bpc_hybrid/b0_v10/diagnostics.py": {
+      "path": "src/bpc_hybrid/b0_v10/diagnostics.py",
+      "sha256": "4ae5a6108918314ea9231bc646419ac32c8b32f0abfe24fb8e52fd015c1b86eb",
+      "bytes": 5375
+    }
+  },
+  "resource_bindings": {
+    "layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+      "bytes": 1301626
+    },
+    "membership": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b",
+      "bytes": 30276
+    },
+    "evaluator": {
+      "path": "configs/stage2_evaluator_s210_v3.json",
+      "sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f",
+      "bytes": 6566
+    },
+    "s26": {
+      "path": "configs/models/sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126",
+      "bytes": 3807
+    },
+    "checkpoint": {
+      "path": "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt",
+      "sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1",
+      "bytes": 441559200
+    },
+    "lexicon_manifest": {
+      "path": "resources/lexicon/public_marker_lexicon_en_v2.manifest.json",
+      "sha256": "3f7e6108c1e66de37377abc2e9b9f4d0344ff2d1eca20b49ebf90e38aff7b462",
+      "bytes": 3179
+    },
+    "patterns": {
+      "path": "resources/corenlp/sun_phrase_patterns_v3_enhanced.json",
+      "sha256": "f49bad50fb6236137f1208aeef572d2a78c789726363897c637dc464c780e142",
+      "bytes": 4425
+    },
+    "bridge": {
+      "path": "tools/corenlp/SunPhraseRuleBatchBridgeMulti.java",
+      "sha256": "1a084befaf1a863889a26b58c5a049f2df846834e26c5643fe5a535c5c13f2a3",
+      "bytes": 5934
+    }
+  },
+  "config_path": "configs/models/estg150_b0_enhanced_s27_b1.json",
+  "safety": {
+    "llm_api_called": false,
+    "network_called": false,
+    "gold_read_only": true
+  }
+}

@@ -173,9 +173,9 @@ def _write_freeze_ready_v2(tmp_path: Path) -> tuple[Path, Path]:
 
 
 # ---------------------------------------------------------------------------
-# 1. Current 0/150 state: all four booleans
+# 1. Current frozen state: all four booleans
 # ---------------------------------------------------------------------------
-def test_current_state_four_gates_reported_at_zero_progress() -> None:
+def test_current_state_four_gates_reported_after_annotation_freeze() -> None:
     audit = collect_project_audit()
     assert audit["integrity_pass"] is True
     # All four booleans must be present
@@ -186,9 +186,18 @@ def test_current_state_four_gates_reported_at_zero_progress() -> None:
         "final_experiment_ready",
     ):
         assert k in audit, f"missing gate: {k}"
-    # Current 0/150 expected values:
+    # S2.2 is frozen, while formal publication and final execution remain blocked.
     assert audit["human_review_input_ready"] is True
-    assert audit["human_review_freeze_ready"] is False
+    assert audit["human_review_freeze_ready"] is True
+    assert audit["stage2_annotation_freeze_verified"] is True
+    assert audit["estg150_candidate_protocol_c0_verified"] is True
+    assert audit["estg150_c1_transport_adapter_offline_ready"] is True
+    assert audit["estg150_c1_runtime_verified"] is True
+    assert audit["estg150_c1_runtime"]["candidate_count"] == 1
+    assert audit["estg150_c1_runtime"]["total_tokens"] == 1996
+    assert audit["estg150_c1_runtime"]["total_cost"] == "0.042987"
+    assert audit["estg150_c1_runtime"]["precision"] is None
+    assert audit["estg150_c1_runtime"]["recall"] is None
     assert audit["formal_gold_publication_ready"] is False
     assert audit["final_experiment_ready"] is False
     # The deprecated alias equals gate 1
@@ -197,16 +206,16 @@ def test_current_state_four_gates_reported_at_zero_progress() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 2. --require-human-review-ready passes at 0/150
+# 2. --require-human-review-ready remains progress-independent
 # ---------------------------------------------------------------------------
-def test_require_human_review_ready_flag_passes_at_zero_progress() -> None:
+def test_require_human_review_ready_flag_passes_after_freeze() -> None:
     res = subprocess.run(
         [sys.executable, str(PROJECT_ROOT / "scripts" / "audit_project.py"),
          "--require-human-review-ready"],
-        cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
+        cwd=PROJECT_ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
     )
     assert res.returncode == 0, (
-        f"--require-human-review-ready should pass at 0/150 (input "
+        f"--require-human-review-ready should pass whenever input is "
         f"ready), got exit {res.returncode}\n{res.stdout}\n{res.stderr}"
     )
 
@@ -218,7 +227,7 @@ def test_require_final_ready_flag_still_fails_at_zero_progress() -> None:
     res = subprocess.run(
         [sys.executable, str(PROJECT_ROOT / "scripts" / "audit_project.py"),
          "--require-final-ready"],
-        cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
+        cwd=PROJECT_ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
     )
     assert res.returncode == 2, (
         f"--require-final-ready must fail at 0/150, got exit {res.returncode}"
@@ -601,20 +610,23 @@ def test_no_formal_runner_uses_human_review_ready_alone() -> None:
 # ---------------------------------------------------------------------------
 # Validator CLI consistency
 # ---------------------------------------------------------------------------
-def test_validate_human_correction_cli_still_shows_review_freeze_false() -> None:
+def test_validate_human_correction_cli_allows_user_progress_and_keeps_gates_consistent() -> None:
     import subprocess
     cli = PROJECT_ROOT / "scripts" / "validate_human_correction.py"
     res = subprocess.run(
         [sys.executable, str(cli), "--json"],
-        cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
+        cwd=PROJECT_ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
     )
     assert res.returncode in (0, 2), res.stderr
     report = json.loads(res.stdout)
     assert report["n_records"] == 150
-    assert report["n_reviewed"] == 0
-    assert report["n_adjudicated"] == 0
-    assert report["review_ready"] is False
-    assert report["freeze_ready"] is False
+    assert 0 <= report["n_reviewed"] <= 150
+    assert 0 <= report["n_adjudicated"] <= 150
+    assert report["n_reviewed"] + report["n_adjudicated"] <= 150
+    assert not report["review_ready"] or report["n_records_incomplete"] == 0
+    assert not report["freeze_ready"] or report["n_adjudicated"] == 150
+    if report["n_adjudicated"] < 150:
+        assert report["freeze_ready"] is False
 
 
 # ---------------------------------------------------------------------------
@@ -646,14 +658,22 @@ def test_audit_keeps_later_experiment_phases_blocked() -> None:
     assert "formal_methods_not_ready" in blockers
     assert "stage2_dataset_route_relock_pending" in blockers
     assert "stage2_dataset_alignment_pending" not in blockers
-    assert "sun_stage2_baseline_not_paper_faithful" in blockers
+    assert "sun_stage2_baseline_not_paper_faithful" not in blockers
+    passes = _codes(audit, "passes")
+    assert "s2_6_canonical_b0_composition_verified" in passes
+    assert "b0_paper_faithful_components_present" in passes
     assert "direct_llm_runner_missing" not in blockers
     # Old contradictory blocker is removed
     assert "formal_human_review_paused" not in blockers
-    # New explicit blockers exist
+    # Formal route blockers remain, but the annotation freeze is now verified.
     assert "formal_gold_publication_paused" in blockers
-    assert "annotation_freeze_pending" in blockers
+    assert "annotation_freeze_pending" not in blockers
     assert "final_experiment_not_ready" in blockers
+    assert "annotation_freeze_ready" in passes
+    assert "s2_2_annotation_freeze_verified" in passes
+    assert "estg150_candidate_protocol_c0_verified" in passes
+    assert "estg150_c1_transport_adapter_offline_ready" in passes
+    assert "estg150_c1_runtime_verified" in passes
 
 
 def test_audit_checks_governance_controls() -> None:

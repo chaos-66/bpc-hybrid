@@ -1,0 +1,46 @@
+{
+  "schema_version": "b0_enhanced_b1_correction@1.0.0",
+  "correction_id": "s27_estg150_b0_b1_pre_correction_v1",
+  "created_at_utc": "2026-07-22T19:21:44.966400+00:00",
+  "claim_scope": "development_diagnostic_only",
+  "does_not_change_predictions": true,
+  "items": [
+    {
+      "id": "config_input_binding_full_v9_residue",
+      "action": "will_rewrite_B1_config_with_v10_bindings_only",
+      "evidence": "estg150_b0_enhanced_s27_v10a.json input_binding_full still had v9_module/v8_status_correction keys"
+    },
+    {
+      "id": "runner_prereg_module_hash_check",
+      "action": "B1 runner will verify prereg module/resource hashes before run"
+    },
+    {
+      "id": "tregex_final_affected_pre_dedupe",
+      "action": "measurement_note_only_for_v10a; B1 reports after_dedupe from final spans",
+      "v10a_reported_tregex_final_affected": 453,
+      "note": "v10a incremented before field dedupe; may overcount vs final spans"
+    },
+    {
+      "id": "endpoint_diagnostic_rename",
+      "action": "renamed exact_mapped -> any_overlap_mapped in diagnostics API",
+      "file": "src/bpc_hybrid/b0_v10/diagnostics.py"
+    }
+  ],
+  "parent_runs": {
+    "v7": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v7/manifest.json",
+      "sha256": "6099da41cf3c8708d544da3657ccdd0d6d680e5fc87c9b80fb99e01db821b9a4",
+      "bytes": 13956
+    },
+    "v10a": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v10a/manifest.json",
+      "sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315",
+      "bytes": 14659
+    }
+  },
+  "safety": {
+    "gold_read_only": true,
+    "llm_api_called": false,
+    "network_called": false
+  }
+}

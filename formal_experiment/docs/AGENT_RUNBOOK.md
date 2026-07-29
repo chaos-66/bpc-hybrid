@@ -25,7 +25,9 @@ S2.1-A 来源/许可/原始文件证据
   → S2.1-B 数据合同、schema 与离线 importer
   → S2.1-C 真实 CSV 核查、canonicalization 与 split
   → S2.1-D 自动门禁与状态收口
-  → S2.3 → S2.4 → S2.5 → S2.6（完整 B0）
+  → S2.3 → S2.5-A（离线合同）→ S2.5-B（外部 runtime）
+  → S2.1 + S2.4-L 许可证据复核 + 本地研究使用决定 → S2.4
+  → S2.4 + S2.5 verified → S2.6（完整 B0）
   → S2.7/S2.8/S2.9 → S2.10
   → G0.5/S2.11 → S2.12 → S2.13
   → Stage 1 → Stage 3 → 端到端消融
@@ -45,10 +47,16 @@ PW0 骨架/主张账本
 当前事实：`Decision_Logic_data.zip` 已在本地通过来源身份核验；S2.1-A、
 S2.1-B-R1、S2.1-C-R1 和 S2.1-D 均已 verified，2,831 行 development analysis
 population 及其 project-reconstructed split 已由独立机器门禁锁定。许可仍为
-`unknown_pending_confirmation`，因此不得再分发、提升为 formal Gold 或直接进入训练/
-评价。S2.3 已 verified 并严格停在 public marker resource；S2.4 只有在另行派发且
-单独收口许可未知与 ready 的现有矛盾后才能启动。论文 PW1 可以在不写任何结果性
-主张的前提下开始。
+`unknown_pending_confirmation`，因此不得再分发或提升为 formal Gold；项目所有者已另行
+决定允许本地非商业训练、dev 选择、评价和发布不可逆聚合指标。S2.3 已 verified。
+S2.4 Legal-BERT + TextCNN 已完成训练、dev 选择与唯一一次 test 评价，运行 manifest 与
+checkpoint hash 已锁定。S2.5-A/B 和 S2.5 整体已 verified：CoreNLP 4.5.10 外部发行包、
+archive/JAR hash、六字段顺序、12 条 Tregex pattern、Java 8 bridge 和 7 次 Tsurgeon
+live surgery 已锁定。第三方二进制未进入项目或公开产物。S2.6 已用真实 checkpoint、
+attested live phrase observations 和双语路由完成 canonical B0 技术组合。S2.8 也已
+完成：H1 已重基到 verified B0，推理时 trigger、字段级 merge、确定性名额分配、可计分失败回退、固定模型/请求渲染和 45 次/46.08 万 token/1.5 USD 上限
+硬预算均由 exact-hash gate 锁定。真实 LLM/API 仍未授权。
+论文 PW1 可以在不写任何结果性主张的前提下开始。
 
 ## 3. 所有工作 Agent 共用的 Prompt 前缀
 
@@ -229,20 +237,21 @@ Sun、是否把 LLM-assisted Gold 写成纯人工、是否把 C2/C3/C4 写成 C1
 |---|---|---|---|
 | S2.2-V | 只验证用户 Layer E 进度 | validator 报告；不得改记录 | 用户自行达到 150/150 |
 | S2.3 | public marker 重建 | 来源表、生成规则、hash、版本化词表、fixtures | 来源/语言/扩展策略固定 |
-| S2.4 | BERT-TextCNN | 可重建训练、dev 选择、test evaluator、manifest | S2.1 verified；无 test 调参 |
+| S2.4 | BERT-TextCNN | 可重建训练、dev 选择、test evaluator、manifest | **verified**；S2.1 与本地研究使用决定已锁定；test 只评价一次且未调参 |
 | S2.5 | CoreNLP/Tregex/Tsurgeon | 版本固定、规则、顺序约束、六字段 fixtures | S2.3 verified |
-| S2.6 | 完整 B0 | 分类+抽取组合、canonical Rule Record、no-LLM 证明 | S2.4/S2.5 verified |
-| S2.7 | 代表性非 LLM baseline | 简单规则 + 强监督代表，统一 evaluator | S2.1/S2.2 满足依赖 |
-| S2.8 | H1 预注册 | trigger、merge、失败策略、硬预算；不看 test | S2.6 verified |
-| S2.9 | D1 锁定 | prompt/few-shot/model/temperature/budget hash | S2.2 frozen；API另授权 |
-| S2.10 | 主数据评价 | modality、六字段、完整记录分开报告 | B0/H1/D1 同 IDs/Gold/eval |
-| G0.5 | 复杂度合同 | 结果前冻结文本/BPMN复杂度字段和 bins | 不得看复杂集 test 结果 |
-| S2.11 | 复杂语料冻结 | 来源/许可/hash/标签映射/人工协议 | G0.5 verified |
-| S2.12 | 复杂度与错误分析 | 退化曲线、预注册错误类型、覆盖/失败数 | S2.10/S2.11 verified |
+| S2.6 | 完整 B0 | **verified**；真实 checkpoint + attested extractor observation + canonical Rule Record、no-LLM 证明 | S2.4/S2.5 verified |
+| S2.7 | 代表性非 LLM baseline | **modality component verified**：多数类 + 固定德文 keyword + word 1–2 gram Multinomial NB；phrase/full Stage 2 仍 blocked | modality 已绑定 S2.1 split；phrase 需 S2.2 frozen 后共用 S2.10-E evaluator |
+| S2.8 | H1 预注册 | **verified-offline**；exact B0 绑定、trigger、merge、固定模型与请求、确定性 45-call 分配、recovered-error 可计分回退、46.08 万 token/1.5 USD 硬预算；不看 Gold/test、不调用真实 LLM | S2.6 verified + S2.10-E v2 |
+| S2.9 | D1 锁定 | **verified-offline**：v4 prompt/4 few-shot/dated model/temperature/5 repeats/750-call 与失败保留 exact-hash 合同 | 正式运行仍需 S2.2 frozen；API另授权 |
+| S2.10 | 统一 evaluator + 主数据评价 | **S2.10-E evaluator verified-offline**：modality、五类 span、coverage、结构、失败、成本分开；formal results blocked | B0/H1/D1 同 IDs/Gold/eval；API/invalid 不得删分母 |
+| G0.5 | 复杂度合同 | **verified**；文本 11/BPMN 12 个固定指标、low/medium/high bins、禁止预测/结果泄漏 | synthetic fixtures 与 exact-hash gate 通过 |
+| S2.11 | 复杂语料冻结 | **verified-input/protocol**；官方 CELEX/Formex、EUR-Lex reuse、50 条 membership、空白人工 Gold/schema/canonical 映射 exact-hash 锁定；语义 Gold 0/50 | G0.5 verified |
+| S2.12-P | 复杂度与错误分析协议 | **verified-offline**：固定 strata、6 endpoints、2 contrasts、10k bootstrap、10k sign-swap、12-hypothesis Holm family、错误 taxonomy/case selection | G0.5 + S2.10-E + S2.11 input/protocol |
+| S2.12-R | 复杂度与错误正式结果 | 退化曲线、覆盖/失败/成本与错误构成 | EStG 150/150 + GDPR 50/50 + exact-membership formal predictions |
 | S2.13 | Stage 2 冻结 | 数据/Gold/方法/指标/成本/manifests | S2.1–S2.12 全部通过 |
 
-补充边界：S2.8/S2.9 只是预注册不等于授权真实 LLM；真实运行必须另有用户明确
-授权、模型和硬调用预算。S2.10/S2.12 的论文数字只能来自 `experiment_run` 事件和
+补充边界：S2.8/S2.9 只是已验证的离线预注册，不等于授权真实 LLM；真实运行必须另有用户明确
+授权，并严格使用已锁定模型和硬调用预算。S2.10/S2.12 的论文数字只能来自 `experiment_run` 事件和
 formal manifest。不同数据、split、Gold 或 evaluator 的论文值只属于 C2/C3/C4，
 不能写成 C1 严格优劣。
 
@@ -250,6 +259,39 @@ S2.3 当前状态（2026-07-16）：`public_marker_lexicon_en_v1` 已 verified�
 public seed 共 64 个，development 扩展 count=0；source/manifest/combined payload
 hash 已由机器门禁锁定。Wiktionary actor dump 未在本轮伪造或补取，旧 heuristic
 词表未被当成 S2.3 产物。后续任务不得静默覆盖 v1 或用 test/Gold/结果补词。
+
+### EStG-150 candidate protocol C0–C4
+
+C0 已 verified-offline。唯一活动入口为
+`python formal_experiment/scripts/run_estg150_candidate_protocol.py`；旧
+`run_estg150_ai_review.py` 只保留历史回归，真实执行已退役。后续必须串行：C1 单条
+synthetic → C2 索引 0–2 六次调用 → C3 DeepSeek/Qwen 单次 All-150 development →
+C4 xAI 官方单次 All-150。所有阶段复用 `ESTG150_CANDIDATE_PROTOCOL_V1.md` 的 serializer、
+prompt/schema、A/B/C、分流和 validation。真实调用前必须由用户在同一句授权中明确
+provider/model、最大调用数、最大总 token、最大费用和币种；否则停在 API 前。C1–C4
+均不得读取 Layer D/E、Gold 派生材料、Independent-82 或 S2.4 test，输出冻结后才可由
+独立 evaluator 只读评测。
+
+2026-07-26 C1 strict transport v1.1 已完成最小 runtime 验证，C1 passed=true：canonical
+schema/serializer/semantic fixture 不变；派生 schema 只补 6 个显式字符串 type，并由递归
+preflight 与七模型 capability allowlist 在 key/network 前验证。获授权的 ChatAnywhere
+`gpt-5.6-luna` 单条 synthetic 生成 1 个 canonical-valid candidate，1996 tokens、0.042987 CA、
+0 retry；evaluation 未开始、P/R=null、C2=false。当前只允许
+ChatAnywhere `gpt-5.6-luna`、`gpt-5.4-nano`、`gpt-5-nano` 构建该派生 strict request；
+4.1-nano/gpt-4o 需要删除 reasoning 时必须另获明确批准的版本化 profile，3.5-turbo 与
+DeepSeek canonical incompatible，禁止 json_object、消息合并或 tool-call 降级。该离线修复
+不自动进入 C2；任何后续 API 调用仍需新的完整授权。
+
+2026-07-26 C2 只完成离线准备：索引 0–2 的 Pass A/B 六份 request 均通过 strict preflight，
+无 downgrade，预算护栏配置为 6 calls / 78,000 tokens / 1.92 CA。三个 Pass-A hash 可在同一
+锁定输入/model/profile 下精确重建；三个 Pass-B hash 只绑定 historical validated Pass-A
+fixture，真实运行必须在各自 Pass A 后记录新的 live hash。离线 run ID 不得复用于真实 C2；
+当前 provider_authorized=false、API=0、billed tokens=0、evaluation=0、P/R=null、C2=false。
+
+同日为降低成本另行授权的 ChatAnywhere `gpt-5.4-nano` 单条 C1 已执行：1 call、0 retry、
+2956 tokens、0.01728755 CA；返回候选的整句 span end 超出 proposed text 1 个字符，canonical
+validator fail closed，0 valid candidates、C1=false、C2=false。禁止修复输出或把该失败当作
+C2 授权；原 failure 的 usage 漏记由 RWI-0027 correction 修正，无 API 重跑。
 
 ## 7. Stage 1、Stage 3 与端到端 Prompt 卡
 
@@ -262,6 +304,12 @@ S1.5 人工 Gold → S1.6 baseline 评价 → S1.7 冻结串行推进。不得�
 冻结组件，不得在 S1.5 中自动产生人工 Gold。每个方法共享 Process Record schema、
 fixtures、normalization 和 evaluator。
 ```
+
+当前状态（2026-07-17）：Stage 2 不依赖人工 Gold/真实 API 的 core 合同已收口；
+S1.1/S1.2/S1.4 结构合同和 S1.3 P0/P1 标签合同均已完成 synthetic exact-hash 验证。
+S1.5 的空白人工协议和 S1.6 evaluator 离线合同也已验证；formal scope 会在 BPMN
+membership=0、人工 Gold=0 时拒绝。Stage 1 可离线工作已收口，S1.7 只能在用户明确
+批准 provenance BPMN 提升、共享 Stage 3 subset 锁定和人工 adjudication 后继续。
 
 ### Stage 3：S3.1—S3.11
 

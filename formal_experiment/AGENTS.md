@@ -9,10 +9,11 @@ This directory is the only active experiment surface.
 3. `docs/AGENT_RUNBOOK.md`
 4. `docs/DIRECTORY_GUIDE.md`
 5. `docs/EXPERIMENT_LOG.md`（至少阅读最新事件）
-6. `docs/AI_CHANGE_PROTOCOL.md`
-7. `docs/ROUTE_LOCK.md`
-8. `configs/experiment_contract.json`
-9. `configs/methods.json`
+6. `docs/REAL_WORLD_ISSUE_REGISTER.md`
+7. `docs/AI_CHANGE_PROTOCOL.md`
+8. `docs/ROUTE_LOCK.md`
+9. `configs/experiment_contract.json`
+10. `configs/methods.json`
 
 `docs/MASTER_PIPELINE.md` is the sole whole-project roadmap and work-breakdown
 structure. `docs/PROJECT_AUDIT.md` is the sole live status page. Update those two
@@ -28,6 +29,13 @@ an active task entry.
 status remains only in `docs/PROJECT_AUDIT.md`. When writing the paper, also
 read `paper/README.md` and `paper/CLAIM_EVIDENCE_MATRIX.md`; results without a
 formal manifest must remain explicit TODOs.
+
+Every practical problem observed in real data, annotation, method behavior,
+runtime, provider output, or evaluation MUST be recorded in
+`docs/REAL_WORLD_ISSUE_REGISTER.md`, even when it is fixed in the same batch.
+Resolved entries must include the implemented method, validation evidence, and
+the corresponding experiment event. Unresolved entries remain explicit and
+must never be deleted or silently treated as solved.
 
 Before editing human-review data, also read `docs/HUMAN_GOLD_GUIDE.md`.
 
@@ -143,8 +151,12 @@ NOT claim it is "from-scratch human Gold" or "without LLM assistance".
 The v1 canonical review file
 `data/development/human_review/estg_150_canonical_review_v1.json` is
 **retired as workflow draft** and kept as provenance only. The old
-single-pane tool has been replaced by a two-tab v2 tool that opens
-the human_correction file by default.
+single-pane tool was replaced by a two-tab v2 tool. The current recommended
+review surface is the still simpler `scripts/estg150_simple_review_tool.py`:
+internal Sol candidates are prefilled, the user edits only the six elements,
+and one explicit “保存并下一条” click performs the existing internal state
+transitions. Exact spans remain mandatory but are located and validated in the
+background. The two-tab v2 tool remains available only as an advanced fallback.
 
 ### Four orthogonal integrity gates (2026-07-13 4-gate split, Event 22; Event 23 harden)
 
@@ -227,8 +239,11 @@ python scripts/audit_project.py --require-final-ready         # checks gate 4
 ```
 
 Only a human may change review states to `approved`, `reviewed`, or
-`adjudicated`. Agents may validate, explain, and import explicitly supplied
-human decisions, but may not infer them.
+`adjudicated`. In the simple tool, the user's “保存并下一条” click is the one
+explicit final decision for that displayed record; the service may complete the
+two legacy internal state transitions during that single click. Agents may
+validate, explain, and import explicitly supplied human decisions, but may not
+infer them or write an unconfirmed Sol candidate into Layer E.
 
 The three final methods must share frozen input IDs, locked human Gold, output
 schema, normalization, evaluator, and Stage 3 configuration:

@@ -1,0 +1,166 @@
+{
+  "schema_version": "complex_legal_s211_verification_manifest@1.0.0",
+  "task_id": "S2.11",
+  "status": "succeeded",
+  "created_at": "2026-07-17T09:25:43.897082+00:00",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "dataset_id": "gdpr_2016_679_articles_5_50_seeded50_v1",
+  "artifacts": {
+    "config": {
+      "path": "configs/datasets/gdpr_articles_5_50_s211.json",
+      "sha256": "041b6269f3da6bdf67b3d06408d9664be5c4fe84e0c9ff4576726a460a6a563c"
+    },
+    "metadata": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/source/DOC_1_metadata.xml",
+      "sha256": "3c13d7d5dc2012e9a290575405639aba1d56cd09b47be6b3f8f4297c11c2af72"
+    },
+    "body": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/source/DOC_2_body.xml",
+      "sha256": "fce6e6ea8724e66a1c4f98c584cafdc9dfbae26aa83c44b43423b8c7f6aa0295"
+    },
+    "reuse_evidence": {
+      "path": "configs/datasets/gdpr_eurlex_reuse_evidence_s211.json",
+      "sha256": "95a20a93b5f90c2282c9c9db760747ac1caa57833f51673d74e6877b0eccb8af"
+    },
+    "dataset": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/gdpr_articles_5_50_seeded50_v1.jsonl",
+      "sha256": "f6093f37e1e716a5edf07dd0653d2904f11c0fe3945de1e3b083ecc761e6d1e4"
+    },
+    "membership": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/gdpr_articles_5_50_seeded50_v1.membership.json",
+      "sha256": "adbbb4d0556c0542597d43295f8e5e4531ccbec5005ca725d6020af827e4f6c7"
+    },
+    "blank_human_gold": {
+      "path": "data/development/complex_legal/gdpr_2016_679_oj_en/gdpr_articles_5_50_seeded50_human_gold_v1.json",
+      "sha256": "9476947d8bcd460249a7ddab73599d18d9b2d59ee479f94360e1c3e7c2c9dab8"
+    },
+    "human_gold_schema": {
+      "path": "configs/schemas/complex_legal_human_gold.schema.json",
+      "sha256": "a98b6196626e990472b71d1d514929ab37ca8a85a417f6fd3279d5224d63a88a"
+    },
+    "mapping_guide": {
+      "path": "docs/COMPLEX_LEGAL_GOLD_GUIDE.md",
+      "sha256": "ef9f557ccd3b56e3f86c6520c40dc1b7676892e010dbf47bdf0bfab066a18237"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/complex_legal.py",
+      "sha256": "0de00566c0bd9e0ed685ceed4f72e99bcb3214a9228f16876a2ee2f60e0d1fa6"
+    },
+    "builder": {
+      "path": "scripts/build_complex_legal_s211.py",
+      "sha256": "d577a5027d57c049e67f04aa2960b845075ca1503d83c6353eca0877a19f8f3a"
+    },
+    "g05_contract": {
+      "path": "configs/complexity_contract.json",
+      "sha256": "0a0e4f809897f22179b752c3c92ddcbf208aced1176c9ac77fb27816c9ac3b7a"
+    },
+    "validator": {
+      "path": "scripts/validate_complex_legal_human_gold.py",
+      "sha256": "02f76b027c3c27a6c1c29678d6298d231f8fe05b00c1ad98a2f029dc9cd08faa"
+    },
+    "verifier": {
+      "path": "scripts/verify_complex_legal_s211.py",
+      "sha256": "8b2fa44723587b1eac50207bf729109297e42f6174c016dd3caabe2dd485b9ec"
+    }
+  },
+  "source": {
+    "celex": "32016R0679",
+    "cellar_work_uuid": "3e485e15-11bd-11e6-ba9a-01aa75ed71a1",
+    "metadata_identity": {
+      "product_id": "20160425012",
+      "document_number": "679",
+      "document_year": "2016",
+      "document_community": "EU",
+      "oj_number": "119",
+      "oj_date": "20160504",
+      "oj_language": "EN",
+      "body_ref": "L_2016119EN.01000101.xml"
+    },
+    "reuse_qualified": true
+  },
+  "verification": {
+    "source_unit_count": 200,
+    "selected_count": 50,
+    "unique_sample_ids": 50,
+    "unique_source_text_hashes": 50,
+    "article_coverage": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+    ],
+    "article_coverage_count": 46,
+    "coverage_supplement_count": 4,
+    "membership_sha256": "9a6a2c892e6e9ef86877066fb3c88ad03d06ca999c41ecbd91c6df35d09c28b9",
+    "token_count_min": 18,
+    "token_count_max": 635,
+    "token_count_mean": 88.98,
+    "human_review": {
+      "format_valid": true,
+      "input_ready": true,
+      "freeze_ready": false,
+      "reviewed": 0,
+      "adjudicated": 0,
+      "canonical_rule_present": 0,
+      "errors": []
+    },
+    "legacy_gdpr50_imported": false,
+    "g05_contract_bound": true,
+    "formal_complexity_profiles_generated": false
+  },
+  "safety": {
+    "method_outputs_read": false,
+    "test_results_read": false,
+    "formal_gold_created": false,
+    "human_gold_modified": false,
+    "source_acquisition_network_used": true,
+    "offline_verification_network_called": false,
+    "llm_api_called": false,
+    "performance_evaluation": false
+  },
+  "claim_boundary": "S2.11 freezes an official-source complex legal input membership and a blank human-Gold/mapping protocol before method results. It does not freeze semantic Gold, generate complexity profiles, run an LLM, or provide performance evidence."
+}

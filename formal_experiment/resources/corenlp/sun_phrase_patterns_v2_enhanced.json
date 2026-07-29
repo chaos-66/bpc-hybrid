@@ -1,0 +1,126 @@
+{
+  "schema_version": "sun_tregex_rule_registry@1.0.0",
+  "rule_set_id": "sun_phrase_patterns_en_v2_enhanced",
+  "status": "development_enhanced_not_s25_locked",
+  "language": "en",
+  "parent_rule_set_id": "sun_phrase_patterns_en_v1",
+  "parser": {
+    "name": "Stanford CoreNLP",
+    "version": "4.5.10",
+    "tree_representation": "constituency_parse"
+  },
+  "lexicon": {
+    "id": "public_marker_lexicon_en_v1",
+    "combined_payload_sha256": "8c3a27b2aa62025ff266b4cb19a1c89984e967539188ccf96820836c2eef7b91"
+  },
+  "extraction_order": [
+    "modality",
+    "condition",
+    "constraint",
+    "exception",
+    "action",
+    "actor"
+  ],
+  "ordering_policy": {
+    "action_after_removed_context": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "actor_after_action": true,
+    "overlap_resolution": "longest_span_then_leftmost",
+    "test_time_rule_edits_forbidden": true,
+    "multi_match_per_field": true
+  },
+  "fields": [
+    {
+      "field": "modality",
+      "order": 1,
+      "candidate_source": "locked_public_marker_lexicon_plus_prohibition_cues",
+      "tregex_patterns": [
+        "/^(MD|VB|VBP|VBZ)$/=modality < /(?i)^(shall|must|may)$/",
+        "VP=modality << /(?i)^(shall|must|may)$/ << /(?i)^(not)$/",
+        "VP=modality << /(?i)^(is|are|means)$/ << /(?i)^(defined|means|understood)$/"
+      ],
+      "tsurgeon_operations": [
+        "prune modality"
+      ]
+    },
+    {
+      "field": "condition",
+      "order": 2,
+      "candidate_source": "public_marker_plus_constituency_scope",
+      "tregex_patterns": [
+        "SBAR=condition << /(?i)^(if|when|whenever|unless|provided|where|once|insofar)$/",
+        "PP=condition << /(?i)^(in|upon|on|after|before)$/ << /(?i)^(case|event|condition|extent)$/",
+        "PP=condition << /(?i)^(subject)$/ << /(?i)^(to)$/",
+        "ADVP=condition << /(?i)^(where|when|whenever)$/"
+      ],
+      "tsurgeon_operations": [
+        "prune condition"
+      ]
+    },
+    {
+      "field": "constraint",
+      "order": 3,
+      "candidate_source": "public_marker_plus_constituency_scope",
+      "tregex_patterns": [
+        "/^(PP|ADVP)$/=constraint << /(?i)^(within|before|after|during|until|throughout|prior)$/",
+        "/^(PP|NP|ADJP)$/=constraint << /(?i)^(at|no|least|later|more|most|than|only|minimum|maximum)$/",
+        "PP=constraint << /(?i)^(in|pursuant|accordance|compliance|consistent)$/ << /(?i)^(with|to)$/",
+        "PP=constraint << /(?i)^(for)$/ << /(?i)^(purpose|period|duration)$/",
+        "ADVP=constraint << /(?i)^(only|solely|exclusively)$/",
+        "PP=constraint << /(?i)^(without)$/ << /(?i)^(undue|delay)$/"
+      ],
+      "tsurgeon_operations": [
+        "prune constraint"
+      ]
+    },
+    {
+      "field": "exception",
+      "order": 4,
+      "candidate_source": "public_marker_plus_constituency_scope",
+      "tregex_patterns": [
+        "/^(SBAR|PP|ADVP)$/=exception << /(?i)^(except|excluding|notwithstanding|save|apart)$/",
+        "SBAR=exception << /(?i)^(unless)$/",
+        "PP=exception << /(?i)^(other)$/ << /(?i)^(than)$/",
+        "VP=exception << /(?i)^(shall|does|do)$/ << /(?i)^(not)$/ << /(?i)^(apply)$/"
+      ],
+      "tsurgeon_operations": [
+        "prune exception"
+      ]
+    },
+    {
+      "field": "action",
+      "order": 5,
+      "candidate_source": "constituency_verb_phrase_after_context_removal",
+      "tregex_patterns": [
+        "S=clause !> SBAR < (VP=action !<< MD)",
+        "SINV=clause < (VP=action !<< MD)",
+        "VP=action < /^(VB|VBD|VBG|VBN|VBP|VBZ)$/ !<< MD",
+        "VP=action << /^(VB|VBD|VBG|VBN|VBP|VBZ)$/ !<< MD"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "actor",
+      "order": 6,
+      "candidate_source": "subject_np_or_passive_by_pp",
+      "tregex_patterns": [
+        "S=clause !> SBAR < (NP=actor $++ VP)",
+        "SINV=clause < (NP=actor $-- VP)",
+        "PP=actor < (IN < /(?i)^by$/) < NP",
+        "NP=actor < /^(NNP|NNPS|NN|NNS)$/ $++ VP"
+      ],
+      "tsurgeon_operations": []
+    }
+  ],
+  "boundaries": {
+    "fixture_accuracy_is_evaluation": false,
+    "formal_gold_used": false,
+    "paper_faithful_only": false,
+    "method_id": "b0_enhanced",
+    "training_or_evaluation_run": false
+  }
+}

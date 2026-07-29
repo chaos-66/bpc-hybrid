@@ -736,7 +736,7 @@ def test_precheck_identifies_v2_layer_e_and_stays_read_only() -> None:
     pre_sha = hashlib.sha256(REAL_V2.read_bytes()).hexdigest()
     res = subprocess.run(
         [sys.executable, str(REAL_PRECHECK)],
-        cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
+        cwd=PROJECT_ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
     )
     assert res.returncode == 0, res.stderr
     out = res.stdout

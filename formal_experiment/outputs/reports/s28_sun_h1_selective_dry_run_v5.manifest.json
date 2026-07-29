@@ -1,0 +1,271 @@
+{
+  "schema_version": "sun_h1_s28_verification_manifest@1.1.0",
+  "task_id": "S2.8",
+  "status": "succeeded",
+  "created_at": "2026-07-17T12:14:00.824298+00:00",
+  "method": "sun_llm_fallback",
+  "claim_boundary": "S2.8 freezes and dry-run verifies H1 selection, deterministic call allocation, actual repair-request rendering, field-level merge, scorable B0 fallback with H1 method identity, recovered-provider-error accounting, a pinned model/sampling contract, and 45-call/1.5-USD ceilings on locked synthetic B0 evidence. It is not an LLM quality test, a real API run, or a formal performance result.",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "artifacts": {
+    "config": {
+      "path": "configs/models/sun_h1_s28.json",
+      "sha256": "8d37bdf58fec677d59bb83111d8a7b9ce20f8e896ab6964836d6ae04d3488fd4"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/sun_style/h1_selective.py",
+      "sha256": "7d04296ea1bb3e9a22ee00e8103bd41ba407e9c4618df0b5444b40060d850d2b"
+    },
+    "runner": {
+      "path": "scripts/run_sun_llm_fallback.py",
+      "sha256": "d491c0a80357c76dd4b3cdec9bf5d706f5f31a916d5999976c9c305ee71f5167"
+    },
+    "verifier": {
+      "path": "scripts/verify_sun_h1_s28.py",
+      "sha256": "524056f938de3036e942d5ed78d92c84cf89fbd14df8a0e047d3cb71712f6775"
+    },
+    "prompt": {
+      "path": "prompts/sun_compat/rule_first_llm_fallback_prompt.md",
+      "sha256": "a0b243bec327d2cb77de3744886e5e1842e850bad54c81e1b8731f714e135d96"
+    },
+    "evaluator_config": {
+      "path": "configs/stage2_evaluator_s210.json",
+      "sha256": "2b6f7bd4269e475dc4b7bb0561a767a70baba49965c16c7f6b34b8a455badc16"
+    },
+    "evaluator_report_schema": {
+      "path": "configs/schemas/stage2_evaluation_report.schema.json",
+      "sha256": "9906dce85eaf72995e2a3381eed0e33a0c32f5cbf75d35425f7b97c50ea79c5a"
+    }
+  },
+  "baseline_binding": {
+    "s2_6_gate_ready": true,
+    "legacy_front_end_used": false,
+    "record_method": "sun_rule_only",
+    "verification_manifest": {
+      "path": "outputs/reports/s26_sun_b0_canonical_composition_v3.manifest.json",
+      "sha256": "30a19e8a6476f35eff8561ca35f72a3b3a772067c0128ff4c22ce6b6ddd2fb20"
+    }
+  },
+  "selection": {
+    "evidence_boundary": "inference_time_observations_only_no_gold_or_test_distribution",
+    "clean_plan": {
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+      "fallback_triggered": false,
+      "trigger_codes": [],
+      "repair_fields": []
+    },
+    "triggered_plan": {
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+      "fallback_triggered": true,
+      "trigger_codes": [
+        "tregex_field_conflict"
+      ],
+      "repair_fields": [
+        "actions",
+        "actor_action_map",
+        "order_relations"
+      ]
+    },
+    "gold_or_test_derived_trigger_used": false
+  },
+  "merge_verification": {
+    "accepted_patch": {
+      "accepted": true,
+      "status": "accepted",
+      "errors": []
+    },
+    "accepted_record": {
+      "schema_version": "1.0.0",
+      "sample_id": "s26_synthetic_obligation_condition_constraint_v1",
+      "source_id": "s25_locked_live_fixture",
+      "source_text": "If notice is required, the company shall file within 30 days.",
+      "clauses": [
+        {
+          "clause_id": "s26_synthetic_obligation_condition_constraint_v1.c1",
+          "clause_span": {
+            "text": "If notice is required, the company shall file within 30 days.",
+            "start": 0,
+            "end": 61
+          },
+          "modality": {
+            "label": "definition",
+            "evidence": [
+              {
+                "text": "shall",
+                "start": 35,
+                "end": 40
+              }
+            ]
+          },
+          "actors": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.actor.1",
+              "text": "the company",
+              "start": 23,
+              "end": 34,
+              "normalized": "the company"
+            }
+          ],
+          "actions": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.action.1",
+              "text": "file within 30 days",
+              "start": 41,
+              "end": 60,
+              "normalized": "file within 30 days"
+            }
+          ],
+          "conditions": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.condition.1",
+              "text": "If notice is required",
+              "start": 0,
+              "end": 21,
+              "normalized": "if notice is required"
+            }
+          ],
+          "constraints": [
+            {
+              "id": "s26_synthetic_obligation_condition_constraint_v1.c1.constraint.1",
+              "text": "within 30 days",
+              "start": 46,
+              "end": 60,
+              "normalized": "within 30 days"
+            }
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {
+              "actor_id": "s26_synthetic_obligation_condition_constraint_v1.c1.actor.1",
+              "action_id": "s26_synthetic_obligation_condition_constraint_v1.c1.action.1"
+            }
+          ],
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "validation": {
+        "schema_valid": true,
+        "cross_field_valid": true,
+        "errors": []
+      }
+    },
+    "unrequested_fields_preserved": true,
+    "same_field_id_preserved": true,
+    "unauthorized_patch": {
+      "accepted": false,
+      "status": "rejected_unauthorized_field",
+      "errors": [
+        "unauthorized fields: ['modality']"
+      ]
+    },
+    "rejected_patch_returned_original_b0": true
+  },
+  "request_verification": {
+    "exact_model_id": "gpt-4.1-2025-04-14",
+    "sampling": {
+      "temperature": 0,
+      "top_p": 1,
+      "seed": null,
+      "seed_policy": "unsupported_or_omitted",
+      "max_output_tokens": 2048,
+      "response_format": "json_object",
+      "max_retries": 0
+    },
+    "rendered_request": {
+      "model": "gpt-4.1-2025-04-14",
+      "sampling_contract": {
+        "temperature": 0,
+        "top_p": 1,
+        "seed": null,
+        "seed_policy": "unsupported_or_omitted",
+        "max_output_tokens": 2048,
+        "response_format": "json_object",
+        "max_retries": 0
+      },
+      "api_request": {
+        "model": "gpt-4.1-2025-04-14",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a regulatory text analyst specializing in GDPR / EStG compliance.\n\nYou are NOT producing a full prediction. You are producing a **repair\npatch** for selected fields of an existing Stage 2 canonical\nprediction. The runner applies your patch to a B0 rule prediction,\nruns the canonical validator, and only then writes a final\nprediction. Your patch must conform to the repair patch contract\ndefined in the user prompt.\n\nHard rules:\n\n1. Output ONLY a single JSON object. No markdown, no code fences, no\n   commentary, no preamble, no postscript.\n2. The JSON object MUST have these keys and no others:\n   sample_id, clause_id, repair_fields, patches, reason.\n3. repair_fields MUST list exactly the canonical field names the runner asked\n   you to repair. Anything outside this list causes the entire patch\n   to be REJECTED (defensive measure against over-reach).\n4. patches MUST be a non-empty object whose keys are a subset of\n   repair_fields. For each field:\n   - For modality: the value MUST be {\"label\": <one of 4 classes>,\n     \"evidence\": [{\"text\": \"...\", \"start\": ..., \"end\": ...}]}.\n     Replace the clause's modality in place.\n   - For actors / actions / conditions / constraints / exceptions:\n     the value MUST be a list of supportedSpan dicts (id, text,\n     start, end, normalized). The patch REPLACES the entire list\n     for that field. The runner validates ID uniqueness and\n     cross-field references after replacement.\n   - For actor_action_map: a list of {actor_id, action_id} edges\n     (actor_id may be null). REPLACES the entire list.\n   - For order_relations: a list of {before_action_id,\n     after_action_id, evidence} entries. REPLACES the entire list.\n5. IDs in supplied arrays MUST be unique within the patched clause.\n   Because a field patch replaces that whole field, an ID already in\n   the same B0 field may be preserved. It MUST NOT collide with an ID\n   in a different, unpatched span field.\n6. The patch must keep all span offsets valid against the original\n   source_text. The runner will reject the patch if any span's text\n   does not match source_text[start:end] or any span falls outside\n   the clause's clause_span.\n7. You are forbidden from setting `validation` or `unsupported_or\n   _ambiguous` fields. The runner manages those.\n8. If a repair field genuinely cannot be determined, return\n   `\"absent\": true` in that field's patch entry (not an empty list\n   and not a fabricated span).\n9. Keep the patch minimal: do not touch fields the runner did not\n   ask you to repair.\n10. After the runner applies the patch, the merged record MUST\n    conform to ``stage2_prediction.schema.json@1.0.0``. The runner\n    runs the canonical validator and rejects the merge if validation\n    fails. You do not need to set the ``validation`` field in your\n    output."
+          },
+          {
+            "role": "user",
+            "content": "Source text (sample_id: s26_synthetic_obligation_condition_constraint_v1, source_id: s25_locked_live_fixture):\n\nIf notice is required, the company shall file within 30 days.\n\nExisting B0 canonical prediction for the matching clause\n(clause_id: s26_synthetic_obligation_condition_constraint_v1.c1):\n\n{\n  \"clause_id\": \"s26_synthetic_obligation_condition_constraint_v1.c1\",\n  \"clause_span\": {\n    \"text\": \"If notice is required, the company shall file within 30 days.\",\n    \"start\": 0,\n    \"end\": 61\n  },\n  \"modality\": {\n    \"label\": \"definition\",\n    \"evidence\": [\n      {\n        \"text\": \"shall\",\n        \"start\": 35,\n        \"end\": 40\n      }\n    ]\n  },\n  \"actors\": [\n    {\n      \"id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.actor.1\",\n      \"text\": \"the company\",\n      \"start\": 23,\n      \"end\": 34,\n      \"normalized\": \"the company\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.action.1\",\n      \"text\": \"file\",\n      \"start\": 41,\n      \"end\": 45,\n      \"normalized\": \"file\"\n    }\n  ],\n  \"conditions\": [\n    {\n      \"id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.condition.1\",\n      \"text\": \"If notice is required\",\n      \"start\": 0,\n      \"end\": 21,\n      \"normalized\": \"if notice is required\"\n    }\n  ],\n  \"constraints\": [\n    {\n      \"id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.constraint.1\",\n      \"text\": \"within 30 days\",\n      \"start\": 46,\n      \"end\": 60,\n      \"normalized\": \"within 30 days\"\n    }\n  ],\n  \"exceptions\": [],\n  \"actor_action_map\": [\n    {\n      \"actor_id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.actor.1\",\n      \"action_id\": \"s26_synthetic_obligation_condition_constraint_v1.c1.action.1\"\n    }\n  ],\n  \"order_relations\": []\n}\n\nThe runner detected the following problems with the B0 prediction\nand asks you to repair ONLY these fields:\n\nrepair_fields: actions, actor_action_map, order_relations\nrepair_reasons: tregex_field_conflict\n\nEmit a single JSON object with the schema:\n\n{\n  \"sample_id\": \"s26_synthetic_obligation_condition_constraint_v1\",\n  \"clause_id\": \"s26_synthetic_obligation_condition_constraint_v1.c1\",\n  \"repair_fields\": [...list same as the runner's request...],\n  \"patches\": {\n    \"<field_name>\": <replacement value>,\n    ...\n  },\n  \"reason\": \"<short human-readable explanation of the patch>\"\n}\n\nRules recap:\n- Only modify the fields listed in repair_fields.\n- Use real character offsets into source_text. Every span's text\n  must equal source_text[start:end].\n- The new modality, if you patch it, replaces the old modality\n  entirely (label + evidence).\n- The new actors / actions / conditions / constraints / exceptions\n  arrays replace the old arrays entirely. Preserve ids that you\n  want to keep; add new ids; drop ids you want to remove.\n- IDs MUST be unique within the patched clause. Existing IDs may be\n  preserved only when replacing the same canonical field.\n- Return \"absent\": true in a field's patch entry if the field is\n  genuinely absent in the source text. Do not fabricate spans."
+          }
+        ],
+        "temperature": 0,
+        "top_p": 1,
+        "max_completion_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        }
+      },
+      "system_prompt_sha256": "04746c63c3245083d49d0ab03e879aa0354619fac80da714c206b49084bd21db",
+      "user_prompt_sha256": "87afde7d6699be616de3a4fd2ac9c41f5f276497d13788444fe01f466360065c",
+      "system_prompt_char_count": 2804,
+      "user_prompt_char_count": 3042,
+      "repair_fields": [
+        "actions",
+        "actor_action_map",
+        "order_relations"
+      ]
+    },
+    "prompt_file_sha256_matches": true,
+    "unrendered_placeholder_detected": false
+  },
+  "allocation_verification": {
+    "candidate_order": "ascending_sample_id_then_clause_id",
+    "input_array_order_invariant": true,
+    "candidate_count": 48,
+    "reserved_call_count": 45,
+    "first_45_unique_reserved": true,
+    "call_46_and_later_rejected": true,
+    "duplicate_sample_rejected": true
+  },
+  "budget_verification": {
+    "target_dataset_size": 150,
+    "max_call_fraction": 0.3,
+    "hard_call_limit": 45,
+    "input_token_ceiling_per_request": 8192,
+    "output_token_ceiling_per_request": 2048,
+    "total_token_ceiling": 460800,
+    "estimated_worst_case_cost_usd": 1.47456,
+    "hard_cost_ceiling_usd": 1.5,
+    "max_retries": 0
+  },
+  "fallback_attempt_verification": {
+    "request_status": "ok",
+    "record_method": "sun_llm_fallback",
+    "semantic_b0_content_preserved": true,
+    "recovered_runtime_error_category": "timeout",
+    "schema_valid_rate": 1.0,
+    "terminal_api_error_rate": 0.0,
+    "recovered_api_error_rate": 1.0,
+    "any_api_error_rate": 1.0,
+    "scored_as_h1": true
+  },
+  "prompt": {
+    "role": "repair_patch",
+    "name": "rule_first_llm_fallback_prompt",
+    "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\prompts\\sun_compat\\rule_first_llm_fallback_prompt.md",
+    "sha256": "a0b243bec327d2cb77de3744886e5e1842e850bad54c81e1b8731f714e135d96",
+    "sampling_policy": "temperature=0, top_p=1, max_tokens=2048"
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "performance_evaluation": false,
+    "gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "test_split_read_or_evaluated": false,
+    "formal_predictions_written": false
+  }
+}

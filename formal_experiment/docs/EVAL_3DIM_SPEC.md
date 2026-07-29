@@ -1,11 +1,30 @@
-# Stage 2 Evaluation Spec (Wave 1.1 v2)
+# Stage 2 Evaluation Spec (S2.10-E v3)
 
-> **版本**：v2 (2026-07-12)
+> **版本**：v3.1 (2026-07-21)
 > **依据**：`docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` §3.1 + Wave 1.1 §5 修正
 > **目的**：定义 Stage 2 输出的评估指标体系，包括主指标、3 维度的准确拆分、和语义等价性测试方式
-> **范围**：仅 spec；**不**实现 `three_dim_eval.py`（Wave 2 才开始）
+> **范围**：spec + 未来 development 候选实现 `src/bpc_hybrid/stage2_evaluation_v3.py`
 > **配套**：`docs/STYLE_EQUIVALENT_SPEC.md`（评估体系内的 normalization-aware matching 部分）
-> **Wave**：Wave 1.1 spec 阶段
+> **状态**：S2.10-E v1.2 offline evaluator 与 immutable B0 development re-evaluation verified；正式主数据结果尚未运行
+
+## 0. 实现与证据状态
+
+S2.10-E 已把本规范落成统一 evaluator。未来 B0/H1/D1 development 运行共用
+`configs/stage2_evaluator_s210_v3.json`、canonical prediction schema 和 v1.2 aggregate report
+schema。评价器按 exact `sample_id` membership 拒绝缺行/多行，terminal API error、
+recovered provider error 与 schema-invalid 记录均保留在请求分母；其中 H1 recovered error
+可携带 canonical-valid B0 fallback，并保持 H1 method identity 继续计分。输出包含 clause-level 四类 modality、五类 span 的 strict/safe/token
+指标、coverage/hallucination、结构边、错误与成本。`safe-legal-v1` 仅启用 Unicode NFC、
+lowercase、空白折叠和尾部标点删除。
+
+验收证据是 `s210_stage2_evaluator_contract_synthetic_v3.manifest.json` 的 5 条 synthetic
+attempt 和 method-local-ID/boundary adversarial case。其中的分数只是合同回归常数，不是
+B0/H1/D1 性能。v1.2 已复用 immutable B0 attempts 生成 development-only 重算报告；它不
+等于 formal 主数据结果。formal scope 仍必须等待 Gold/输入和方法门禁，无命令行绕过开关。
+
+v1.1 的 exact-ID/exact-span evaluator 及旧 B0 报告保留为 provenance，但 RWI-0014 已确认
+其对 independently generated method IDs 和近似 clause boundary 存在系统性低计。以后不得
+把旧报告当作 B0 性能估计，也不得覆盖或删除它。
 
 ---
 
@@ -90,7 +109,10 @@ micro 和 macro **分别报告**：
 | **Complete-record rate** | (# records where all gold-required fields are present) / (# records) | 整条记录完整 |
 | **Schema-valid rate** | (# records passing schema) / (# records) | 记录格式合法 |
 | **Unsupported/ambiguous rate** | (# records with non-empty `unsupported_or_ambiguous`) / (# records) | 系统说"不知道"的比例 |
-| **Invalid/API-error rate** | (# API errors) / (# requests) | 调用失败率 |
+| **Terminal API-error rate** | (# terminal API errors with `record=null`) / (# requests) | 无可计分记录的调用失败率 |
+| **Recovered API-error rate** | (# provider errors recovered by a canonical fallback) / (# requests) | 调用失败但记录仍可计分的比例 |
+| **Any API-error rate** | (# terminal + # recovered API errors) / (# requests) | 任意调用失败率；两类不重复 |
+| **Invalid/API-error rate** | (# invalid records + # terminal API errors) / (# requests) | 无有效可计分记录的比例；recovered fallback 不重复算 invalid |
 
 **关键**：Gold 中**不适用的字段**不计入 gold-required。**系统决定不输出**不算 hallucination（如果它在 `unsupported_or_ambiguous` 里说明）。
 
@@ -125,12 +147,21 @@ clause_id uniqueness 是 **validation invariant**，不是准确率：
 **clause/entity 对齐算法**（明确规则）：
 - **不**按预测数组位置直接对齐
 - **不**要求预测 ID 和 Gold ID 字面相同
-- 允许的匹配策略（多选一，spec 锁定）：
-  1. **Gold-id first**：Gold 用自己的 actor_id/action_id，预测按 Gold ID 匹配（需要 prompt 输出一致 ID 风格）
-  2. **Span-based**：忽略 ID，按 span（text + start + end）与 Gold 对齐
-  3. **Hybrid**：先 ID，ID 缺失则 span
-- **未决议题**：实现时**只选一种**并明确报告，**不**混合多策略
-- 锁定的默认选择：**Hybrid**（先 ID，ID 不存在时退到 span）
+- record：exact `sample_id`
+- clause：按 `(start,end)` 字符区间 IoU 建权重矩阵，用全局最大总权重的一对一 assignment；
+  IoU≥0.5 才允许匹配。0.5 是“至少多数区间重叠”的预结果固定阈值，不得以论文分数或
+  当前结果搜索。排序和 Hungarian 列优先规则保证确定性。
+- exact clause segmentation：另按完全相同 `(text,start,end)` 计算，不因 semantic alignment
+  放宽而消失。
+- entity ID：均视为 method-local，禁止直接作为 Gold 身份。strict 指标按 exact raw span；
+  safe 指标按 frozen safe-normalized text；token 指标按全局最大正 token-IoU 一对一匹配。
+- shared ID 不能覆盖不相交 span；数组位置不能决定匹配；三种 entity metric 不得相互混用。
+- v1.2 之后如需改 threshold/alignment，必须新建版本、先做 synthetic/adversarial gate，再读
+  主数据结果；不得在同一结果上反复调节。
+
+**文献数字边界**：本地已核 Sun P/R/F1=0.77/0.83/0.80 属 Stage 3 violation checking，
+不是本 Stage 2 六要素 extraction evaluator 的可比 target。差异超过 0.10 只能触发任务/数据/
+实现诊断，不能作为调 evaluator、改 Gold、删困难样本或搜索阈值的验收条件。
 
 ### 3.3 Deontic Correctness（道义正确性）— 单元改
 
@@ -174,20 +205,22 @@ clause_id uniqueness 是 **validation invariant**，不是准确率：
 
 ---
 
-## 5. Wave 2 实施优先级
+## 5. 实施完成顺序
 
-1. 主表（§2）最先做
-2. 副表 A（§3.1）第二
-3. 副表 C（§3.3）第三
-4. 副表 B（§3.2）第四（需要 clause/entity 对齐算法决策）
-5. 副表 D（§4.5）最后
+1. 主表（§2）：已实现
+2. 副表 A（§3.1）：已实现
+3. 副表 C（§3.3）：已实现
+4. 副表 B（§3.2）：已实现，固定 Hybrid 对齐
+5. 副表 D（§4.5）：strict/safe 自动指标与空白人工复核模板已实现；人工判断待正式预测后填写
 
 ---
 
-## 6. 仍未解决的设计决策（unresolved）
+## 6. 已冻结决策与仍在其他任务中的事项
 
-- **clause/entity 对齐算法**：选择 Hybrid（先 ID 后 span）作为默认
-- **缺失类 macro-F1**：F1=0 还是不计入？目前定为 F1=0 + 报告 N/A
+- **clause/entity 对齐算法**：已冻结 Hybrid（exact ID，未匹配项再 exact raw span）；禁止按数组位置对齐
+- **缺失类 macro-F1**：已冻结 F1=0、recall=0、precision=null/N/A，仍计入四类 macro-F1
+- **失败分母**：API error、schema-invalid 和 cross-field-invalid 均保留；缺/多 attempt 直接拒绝整批
+- **归一化**：strict 是主结果；safe 是 secondary；高风险 loose 规则未进入冻结实现
 - **stage 3 是否需要单独 1 张表**：B0/H1/D1 三组分别送入同一冻结 Stage 3，看下游增量。这是另一个 spec（`docs/ROUTE_LOCK.md` 提到）— 跟本 spec 分开
 
 ---

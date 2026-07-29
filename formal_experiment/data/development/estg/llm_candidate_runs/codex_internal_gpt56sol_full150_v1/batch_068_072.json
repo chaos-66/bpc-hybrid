@@ -1,0 +1,165 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 68,
+  "end_index_exclusive": 73,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000452",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) The employee shall be obliged to request the correction of the entries on the wage tax card if 1. the sole earner tax credit is entered, but the conditions for granting this credit have ceased, or 2. the conditions for the notation of children have ceased.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) The employee shall be obliged to request the correction of the entries on the wage tax card if 1. the sole earner tax credit is entered, but the conditions for granting this credit have ceased, or 2. the conditions for the notation of children have ceased", "start": 0, "end": 259},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be obliged", "start": 17, "end": 33}]},
+          "actors": [{"id": "c1_actor_1", "text": "The employee", "start": 4, "end": 16, "normalized": "employee"}],
+          "actions": [{"id": "c1_action_1", "text": "request the correction of the entries on the wage tax card", "start": 37, "end": 95, "normalized": "request correction of wage-tax-card entries"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if 1. the sole earner tax credit is entered, but the conditions for granting this credit have ceased, or 2. the conditions for the notation of children have ceased", "start": 96, "end": 259, "normalized": "sole-earner credit eligibility or child-notation eligibility has ceased"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The employee's correction-request duty is extracted with the two express alternative triggering circumstances preserved together."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000457",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) If the amendment or supplementation of the wage tax card by entering a past date has retroactive effect (subsection 1), then, apart from cases of an assessment, in the course of carrying out an annual adjustment (Section 72), the wage tax withheld in excess shall be refunded and the wage tax withheld insufficiently shall be subsequently demanded.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) If the amendment or supplementation of the wage tax card by entering a past date has retroactive effect (subsection 1), then, apart from cases of an assessment, in the course of carrying out an annual adjustment (Section 72), the wage tax withheld in excess shall be refunded and the wage tax withheld insufficiently shall be subsequently demanded", "start": 0, "end": 351},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 262, "end": 267}, {"text": "shall", "start": 321, "end": 326}]},
+          "actors": [],
+          "actions": [
+            {"id": "c1_action_1", "text": "be refunded", "start": 268, "end": 279, "normalized": "refund excess wage tax withheld"},
+            {"id": "c1_action_2", "text": "be subsequently demanded", "start": 327, "end": 351, "normalized": "subsequently demand insufficient wage tax withheld"}
+          ],
+          "conditions": [{"id": "c1_condition_1", "text": "If the amendment or supplementation of the wage tax card by entering a past date has retroactive effect (subsection 1)", "start": 4, "end": 122, "normalized": "wage-tax-card amendment or supplementation for a past date has retroactive effect"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "in the course of carrying out an annual adjustment (Section 72)", "start": 165, "end": 228, "normalized": "during the Section 72 annual adjustment"}],
+          "exceptions": [{"id": "c1_exception_1", "text": "apart from cases of an assessment", "start": 130, "end": 163, "normalized": "exclude assessment cases"}],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}, {"actor_id": null, "action_id": "c1_action_2"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "actor", "reason": "Both operative verbs are passive and the responsible refunding or collecting entity is not stated."}],
+      "confidence": "high",
+      "rationale_summary": "One retroactivity-triggered obligation contains two coordinated passive actions, subject to the assessment exception and annual-adjustment constraint."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000458",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "In the cases of Section 56(2), the competent authority shall ensure that the changes are noted in the household list.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "In the cases of Section 56(2), the competent authority shall ensure that the changes are noted in the household list", "start": 0, "end": 116},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 55, "end": 60}]},
+          "actors": [{"id": "c1_actor_1", "text": "the competent authority", "start": 31, "end": 54, "normalized": "competent authority"}],
+          "actions": [{"id": "c1_action_1", "text": "ensure that the changes are noted in the household list", "start": 61, "end": 116, "normalized": "ensure changes are entered in the household list"}],
+          "conditions": [{"id": "c1_condition_1", "text": "In the cases of Section 56(2)", "start": 0, "end": 29, "normalized": "cases under Section 56(2)"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The provision states one explicit duty of the competent authority, conditioned on the cases covered by Section 56(2)."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000465",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If the employee has retired during the calendar year or if unlimited tax liability did not exist throughout the full calendar year, the pensioner deduction shall be taken into account with the corresponding monthly portions.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If the employee has retired during the calendar year or if unlimited tax liability did not exist throughout the full calendar year, the pensioner deduction shall be taken into account with the corresponding monthly portions", "start": 0, "end": 223},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 156, "end": 161}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be taken into account", "start": 162, "end": 183, "normalized": "take pensioner deduction into account"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "If the employee has retired during the calendar year", "start": 0, "end": 52, "normalized": "employee retired during the calendar year"},
+            {"id": "c1_condition_2", "text": "if unlimited tax liability did not exist throughout the full calendar year", "start": 56, "end": 130, "normalized": "unlimited tax liability did not cover the full calendar year"}
+          ],
+          "constraints": [{"id": "c1_constraint_1", "text": "with the corresponding monthly portions", "start": 184, "end": 223, "normalized": "use corresponding monthly portions"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "actor", "reason": "The provision uses a passive construction and does not identify who must take the deduction into account."}],
+      "confidence": "high",
+      "rationale_summary": "The monthly apportionment duty is extracted with its two disjunctive triggering conditions and no invented passive actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000505",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "To the extent the limits of the first and second sentences are exceeded, such other emoluments shall be taxed like current emoluments according to the wage tax scale; in this respect, a monthly wage payment period shall be assumed.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "To the extent the limits of the first and second sentences are exceeded, such other emoluments shall be taxed like current emoluments according to the wage tax scale", "start": 0, "end": 165},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 95, "end": 100}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be taxed", "start": 101, "end": 109, "normalized": "tax other emoluments"}],
+          "conditions": [{"id": "c1_condition_1", "text": "To the extent the limits of the first and second sentences are exceeded", "start": 0, "end": 71, "normalized": "limits in the preceding first and second sentences are exceeded"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "like current emoluments according to the wage tax scale", "start": 110, "end": 165, "normalized": "apply wage-tax scale as for current emoluments"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "in this respect, a monthly wage payment period shall be assumed", "start": 167, "end": 230},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 214, "end": 219}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be assumed", "start": 220, "end": 230, "normalized": "assume a monthly wage payment period"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "a monthly wage payment period", "start": 184, "end": 213, "normalized": "monthly wage payment period"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The first and second sentences that define the referenced limits are outside the excerpt."},
+        {"field": "constraint", "reason": "The numerical or substantive content of the referenced limits cannot be recovered from this excerpt."},
+        {"field": "actor", "reason": "Both operative rules are passive and do not identify the responsible taxing entity."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The taxation rule and the separate monthly-period assumption are extracted independently; the absent preceding limits are not reconstructed."
+    }
+  ]
+}

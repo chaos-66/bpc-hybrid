@@ -1,0 +1,173 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 63,
+  "end_index_exclusive": 68,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000393",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) If the other income in total does not exceed the amount of 10,000 S, the carrying out of an assessment may be applied for if\n1. the sum of the other income results in a loss (loss assessment), or\n2. a loss deduction pursuant to Section 18(6) and (7) is available, or\n3. in order to avoid double taxation, a foreign income tax paid is to be credited against the domestic income tax, or\n4. the income includes income within the meaning of Section 3(1) item 10 or 11, or\n5. the income includes income from capital subject to withholding tax.",
+        "issues": ["The substantive scope of Sections 18(6)-(7) and 3(1) items 10-11 is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) If the other income in total does not exceed the amount of 10,000 S, the carrying out of an assessment may be applied for if\n1. the sum of the other income results in a loss (loss assessment), or\n2. a loss deduction pursuant to Section 18(6) and (7) is available, or\n3. in order to avoid double taxation, a foreign income tax paid is to be credited against the domestic income tax, or\n4. the income includes income within the meaning of Section 3(1) item 10 or 11, or\n5. the income includes income from capital subject to withholding tax.", "start": 0, "end": 542},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 107, "end": 110}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be applied for", "start": 111, "end": 125, "normalized": "apply for assessment"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "If the other income in total does not exceed the amount of 10,000 S", "start": 4, "end": 71, "normalized": "other income totals at most 10,000 S"},
+            {"id": "c1_condition_2", "text": "the sum of the other income results in a loss (loss assessment)", "start": 132, "end": 195, "normalized": "other income produces loss"},
+            {"id": "c1_condition_3", "text": "a loss deduction pursuant to Section 18(6) and (7) is available", "start": 203, "end": 266, "normalized": "Section 18 loss deduction available"},
+            {"id": "c1_condition_4", "text": "in order to avoid double taxation, a foreign income tax paid is to be credited against the domestic income tax", "start": 274, "end": 384, "normalized": "foreign income tax credit needed to avoid double taxation"},
+            {"id": "c1_condition_5", "text": "the income includes income within the meaning of Section 3(1) item 10 or 11", "start": 392, "end": 467, "normalized": "income includes Section 3(1) item 10 or 11 income"},
+            {"id": "c1_condition_6", "text": "the income includes income from capital subject to withholding tax", "start": 475, "end": 541, "normalized": "income includes withholding-tax capital income"}
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The cross-referenced loss-deduction and exempt-income provisions are unavailable and are not expanded."}],
+      "confidence": "medium",
+      "rationale_summary": "One permission allows an assessment application when the 10,000 S ceiling and any one of five listed grounds hold. The assessment is the application object, not an actor, and the foreign-tax-credit wording is retained as one qualifying ground."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000396",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "July 1988 — No. 400 2937 (3) If the income includes earnings subject to wage tax, an assessment allowance of up to 10,000 S shall be deducted from the other earnings.",
+        "issues": ["The initial publication header is treated as non-normative source material." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(3) If the income includes earnings subject to wage tax, an assessment allowance of up to 10,000 S shall be deducted from the other earnings.", "start": 25, "end": 166},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be deducted", "start": 124, "end": 141}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deducted", "start": 130, "end": 141, "normalized": "deduct assessment allowance"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If the income includes earnings subject to wage tax", "start": 29, "end": 80, "normalized": "income includes wage-tax earnings"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "up to 10,000 S", "start": 109, "end": 123, "normalized": "maximum 10,000 S"},
+            {"id": "c1_constraint_2", "text": "from the other earnings", "start": 142, "end": 165, "normalized": "from other earnings"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "One conditional obligation requires deduction of an assessment allowance, capped at 10,000 S, from other earnings when wage-tax earnings are included. No taxpayer actor is stated in the passive clause."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000414",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(3) If neither an assessment under Section 39 nor under Section 41 takes place, the income tax attributable to income subject to withholding tax shall be deemed discharged for the taxpayer if he can neither be held liable under Section 83(2) nor under Section 95(2), nor is an annual adjustment under Section 72 to be carried out.",
+        "issues": ["The contents of Sections 39, 41, 72, 83(2), and 95(2) are not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(3) If neither an assessment under Section 39 nor under Section 41 takes place, the income tax attributable to income subject to withholding tax shall be deemed discharged for the taxpayer if he can neither be held liable under Section 83(2) nor under Section 95(2), nor is an annual adjustment under Section 72 to be carried out.", "start": 0, "end": 330},
+          "modality": {"label": "definition", "evidence": [{"text": "shall be deemed", "start": 145, "end": 160}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deemed discharged", "start": 151, "end": 171, "normalized": "deem withholding-attributable income tax discharged"}],
+          "conditions": [
+            {"id": "c1_condition_1", "text": "If neither an assessment under Section 39 nor under Section 41 takes place", "start": 4, "end": 78, "normalized": "no assessment under Section 39 or 41"},
+            {"id": "c1_condition_2", "text": "if he can neither be held liable under Section 83(2) nor under Section 95(2)", "start": 189, "end": 265, "normalized": "taxpayer cannot be held liable under specified sections"},
+            {"id": "c1_condition_3", "text": "nor is an annual adjustment under Section 72 to be carried out", "start": 267, "end": 329, "normalized": "no Section 72 annual adjustment required"}
+          ],
+          "constraints": [{"id": "c1_constraint_1", "text": "for the taxpayer", "start": 172, "end": 188, "normalized": "for taxpayer"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The multiple cross-referenced assessment, liability, and annual-adjustment provisions are unavailable."}],
+      "confidence": "medium",
+      "rationale_summary": "One conditional deeming rule treats withholding-attributable income tax as discharged for the taxpayer only when all stated negative conditions hold. The taxpayer is the beneficiary of the deeming, not an acting actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000417",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "This is the case when the person performing the activity, in the exercise of their business will, is subject to the direction of the employer or is obligated to follow the employer's instructions within the business organization of the employer.",
+        "issues": ["The antecedent of 'This' is missing, so the legal status defined by the two alternative tests cannot be identified." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "This is the case when the person performing the activity, in the exercise of their business will, is subject to the direction of the employer or is obligated to follow the employer's instructions within the business organization of the employer.", "start": 0, "end": 245},
+          "modality": {"label": "definition", "evidence": [{"text": "is the case", "start": 5, "end": 16}]},
+          "actors": [{"id": "c1_actor_1", "text": "the person performing the activity", "start": 22, "end": 56, "normalized": "person performing activity"}],
+          "actions": [
+            {"id": "c1_action_1", "text": "is the case", "start": 5, "end": 16, "normalized": "satisfy missing legal status"},
+            {"id": "c1_action_2", "text": "is subject", "start": 98, "end": 108, "normalized": "be subject to employer direction"},
+            {"id": "c1_action_3", "text": "is obligated to follow", "start": 145, "end": 167, "normalized": "follow employer instructions"}
+          ],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "in the exercise of their business will", "start": 58, "end": 96, "normalized": "in exercise of business will"},
+            {"id": "c1_constraint_2", "text": "to the direction of the employer", "start": 109, "end": 141, "normalized": "to employer direction"},
+            {"id": "c1_constraint_3", "text": "the employer's instructions", "start": 168, "end": 195, "normalized": "employer instructions"},
+            {"id": "c1_constraint_4", "text": "within the business organization of the employer", "start": 196, "end": 244, "normalized": "within employer business organization"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": null, "action_id": "c1_action_1"},
+            {"actor_id": "c1_actor_1", "action_id": "c1_action_2"},
+            {"actor_id": "c1_actor_1", "action_id": "c1_action_3"}
+          ],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The demonstrative 'This' refers to an unavailable preceding legal category or test."}],
+      "confidence": "low",
+      "rationale_summary": "The excerpt visibly supplies two alternative factual tests—employer direction or an instruction-following obligation—but not the status those tests define. The person is the actor of the two explicit subordinate predicates; 'This' is not an actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000433",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) If the municipality has entered the sole-earner tax credit (Section 57(2)) on the employee’s first wage tax card, it must be cancelled simultaneously with the issuance of a wage tax card for the spouse.",
+        "issues": ["The content of the referenced Section 57(2) tax credit is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) If the municipality has entered the sole-earner tax credit (Section 57(2)) on the employee’s first wage tax card, it must be cancelled simultaneously with the issuance of a wage tax card for the spouse.", "start": 0, "end": 206},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 121, "end": 125}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be cancelled", "start": 126, "end": 138, "normalized": "cancel sole-earner tax credit entry"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If the municipality has entered the sole-earner tax credit (Section 57(2)) on the employee’s first wage tax card", "start": 4, "end": 116, "normalized": "municipality entered credit on employee's first wage tax card"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "simultaneously with the issuance of a wage tax card for the spouse", "start": 139, "end": 205, "normalized": "when spouse wage tax card is issued"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 57(2) is unavailable, so the internal eligibility criteria for the sole-earner tax credit are not expanded."},
+        {"field": "actor", "reason": "The main cancellation duty is passive; the municipality is explicit only as the actor of the triggering entry and is not inferred as the cancellation actor."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "One conditional obligation requires cancellation of the credit entry when the spouse's wage tax card is issued. The municipality appears in the triggering condition, but the passive main clause leaves the cancellation actor unstated."
+    }
+  ]
+}

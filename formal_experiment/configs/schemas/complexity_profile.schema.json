@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "complexity_profile.schema.json@1.0.0",
+  "title": "Pre-result text or BPMN complexity profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "item_id",
+    "domain",
+    "source_role",
+    "metrics",
+    "indicator_flags",
+    "complexity_score",
+    "complexity_stratum",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": "complexity_profile@1.0.0"},
+    "item_id": {"type": "string", "minLength": 1},
+    "domain": {"enum": ["text", "bpmn"]},
+    "source_role": {"type": "string", "minLength": 1},
+    "metrics": {"type": "object"},
+    "indicator_flags": {
+      "type": "object",
+      "additionalProperties": {"type": "boolean"},
+      "minProperties": 1
+    },
+    "complexity_score": {"type": "integer", "minimum": 0, "maximum": 12},
+    "complexity_stratum": {"enum": ["low", "medium", "high"]},
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_schema", "method_output_used", "result_used"],
+      "properties": {
+        "contract_schema": {"const": "complexity_contract@1.0.0"},
+        "method_output_used": {"const": false},
+        "result_used": {"const": false}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"domain": {"const": "text"}}},
+      "then": {
+        "properties": {
+          "source_role": {"enum": ["synthetic_fixture", "human_approved_gold"]},
+          "metrics": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "character_count", "token_count", "sentence_count", "clause_count",
+              "max_dependency_depth", "actor_count", "action_count", "condition_count",
+              "constraint_count", "exception_count", "semantic_span_count",
+              "scope_nesting_depth", "passive_voice_present",
+              "implicit_actor_action_count", "cross_sentence_reference_count",
+              "source_language", "analysis_language", "translation_status"
+            ],
+            "properties": {
+              "character_count": {"type": "integer", "minimum": 1},
+              "token_count": {"type": "integer", "minimum": 1},
+              "sentence_count": {"type": "integer", "minimum": 1},
+              "clause_count": {"type": "integer", "minimum": 1},
+              "max_dependency_depth": {"type": "integer", "minimum": 1},
+              "actor_count": {"type": "integer", "minimum": 0},
+              "action_count": {"type": "integer", "minimum": 0},
+              "condition_count": {"type": "integer", "minimum": 0},
+              "constraint_count": {"type": "integer", "minimum": 0},
+              "exception_count": {"type": "integer", "minimum": 0},
+              "semantic_span_count": {"type": "integer", "minimum": 0},
+              "scope_nesting_depth": {"type": "integer", "minimum": 0},
+              "passive_voice_present": {"type": "boolean"},
+              "implicit_actor_action_count": {"type": "integer", "minimum": 0},
+              "cross_sentence_reference_count": {"type": "integer", "minimum": 0},
+              "source_language": {"type": "string", "minLength": 2},
+              "analysis_language": {"type": "string", "minLength": 2},
+              "translation_status": {"enum": ["original", "human_translation", "llm_candidate_human_approved"]}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"domain": {"const": "bpmn"}}},
+      "then": {
+        "properties": {
+          "source_role": {"enum": ["synthetic_fixture", "frozen_bpmn_input"]},
+          "metrics": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "flow_node_count", "activity_count", "event_count", "gateway_count",
+              "lane_count", "participant_count", "sequence_flow_count",
+              "message_flow_count", "subprocess_count", "boundary_event_count",
+              "weak_component_count", "cyclomatic_complexity", "branching_node_count",
+              "joining_node_count", "cycle_present", "condensation_dag_depth"
+            ],
+            "properties": {
+              "flow_node_count": {"type": "integer", "minimum": 1},
+              "activity_count": {"type": "integer", "minimum": 0},
+              "event_count": {"type": "integer", "minimum": 0},
+              "gateway_count": {"type": "integer", "minimum": 0},
+              "lane_count": {"type": "integer", "minimum": 0},
+              "participant_count": {"type": "integer", "minimum": 0},
+              "sequence_flow_count": {"type": "integer", "minimum": 0},
+              "message_flow_count": {"type": "integer", "minimum": 0},
+              "subprocess_count": {"type": "integer", "minimum": 0},
+              "boundary_event_count": {"type": "integer", "minimum": 0},
+              "weak_component_count": {"type": "integer", "minimum": 1},
+              "cyclomatic_complexity": {"type": "integer", "minimum": 0},
+              "branching_node_count": {"type": "integer", "minimum": 0},
+              "joining_node_count": {"type": "integer", "minimum": 0},
+              "cycle_present": {"type": "boolean"},
+              "condensation_dag_depth": {"type": "integer", "minimum": 1}
+            }
+          }
+        }
+      }
+    }
+  ]
+}

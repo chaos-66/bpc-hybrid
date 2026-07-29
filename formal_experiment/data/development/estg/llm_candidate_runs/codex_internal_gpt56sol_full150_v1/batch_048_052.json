@@ -1,0 +1,216 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 48,
+  "end_index_exclusive": 53,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000222",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "No subsequent taxation shall take place if the taxpayer has died in the meantime. c) A subsequent taxation of loan repayments (Section 1, no. 3, lit. d) must be carried out if it is determined that the statutory requirements for recognition as special expenses are not met.",
+        "issues": [
+          "The substantive content of Section 1, no. 3, lit. d is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "No subsequent taxation shall take place if the taxpayer has died in the meantime", "start": 0, "end": 80},
+          "modality": {"label": "prohibition", "evidence": [{"text": "No subsequent taxation shall", "start": 0, "end": 28}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "take place", "start": 29, "end": 39, "normalized": "carry out subsequent taxation"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the taxpayer has died in the meantime", "start": 40, "end": 80, "normalized": "taxpayer has died in the meantime"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "A subsequent taxation of loan repayments (Section 1, no. 3, lit. d) must be carried out if it is determined that the statutory requirements for recognition as special expenses are not met", "start": 85, "end": 272},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 153, "end": 157}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be carried out", "start": 158, "end": 172, "normalized": "carry out subsequent taxation of loan repayments"}],
+          "conditions": [{"id": "c2_condition_1", "text": "if it is determined that the statutory requirements for recognition as special expenses are not met", "start": 173, "end": 272, "normalized": "statutory requirements for special-expense recognition are found unmet"}],
+          "constraints": [{"id": "c2_constraint_1", "text": "Section 1, no. 3, lit. d", "start": 127, "end": 151, "normalized": "loan repayments under Section 1, no. 3, lit. d"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The referenced provision governing the loan repayments is unavailable, so its internal scope cannot be verified from this excerpt."},
+        {"field": "actor", "reason": "Neither the authority barred from the first taxation nor the authority responsible for the second passive taxation duty is expressly identified."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Two distinct recapture-taxation rules are preserved: taxation is barred after the taxpayer's intervening death, while taxation of specified loan repayments is mandatory when the special-expense requirements are found unmet. No tax authority is inferred from the passive wording."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000223",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "A recapture of tax on expenses for the acquisition of participation certificates and new shares (paragraph (1) subparagraph 4) shall be effected if the participation certificates or shares are removed from the deposit or withdrawn, transferred for consideration or gratuitously, or transferred to business assets before the expiry of ten years from their deposit.",
+        "issues": [
+          "The substantive content of paragraph (1), subparagraph 4 is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "A recapture of tax on expenses for the acquisition of participation certificates and new shares (paragraph (1) subparagraph 4) shall be effected if the participation certificates or shares are removed from the deposit or withdrawn, transferred for consideration or gratuitously, or transferred to business assets before the expiry of ten years from their deposit", "start": 0, "end": 362},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall", "start": 127, "end": 132}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be effected", "start": 133, "end": 144, "normalized": "effect tax recapture on acquisition expenses"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the participation certificates or shares are removed from the deposit or withdrawn, transferred for consideration or gratuitously, or transferred to business assets before the expiry of ten years from their deposit", "start": 145, "end": 362, "normalized": "securities leave the deposit, are withdrawn or transferred, or enter business assets before ten years expire"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "paragraph (1) subparagraph 4", "start": 97, "end": 125, "normalized": "under paragraph (1), subparagraph 4"},
+            {"id": "c1_constraint_2", "text": "before the expiry of ten years from their deposit", "start": 313, "end": 362, "normalized": "before ten years have elapsed since deposit"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Paragraph (1), subparagraph 4 is not included, so the referenced acquisition-expense category cannot be expanded beyond the supplied wording."},
+        {"field": "actor", "reason": "The tax-recapture duty is passive and the responsible authority is not explicit."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The excerpt states one mandatory recapture rule with a single disjunctive triggering condition covering removal, withdrawal, transfer, or allocation to business assets within ten years. The alternatives remain together so their textual 'or' relationship is not converted into cumulative requirements."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000245",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(2) Furthermore, in determining income, expenses and expenditures shall not be deducted to the extent that they are directly economically connected with non-taxable receipts.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(2) Furthermore, in determining income, expenses and expenditures shall not be deducted to the extent that they are directly economically connected with non-taxable receipts", "start": 0, "end": 173},
+          "modality": {"label": "prohibition", "evidence": [{"text": "shall not", "start": 66, "end": 75}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deducted", "start": 76, "end": 87, "normalized": "deduct expenses and expenditures"}],
+          "conditions": [{"id": "c1_condition_1", "text": "to the extent that they are directly economically connected with non-taxable receipts", "start": 88, "end": 173, "normalized": "expenses directly economically connected with non-taxable receipts"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "in determining income", "start": 17, "end": 38, "normalized": "when determining income"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "actor", "reason": "The deduction prohibition is passive and does not expressly identify the person performing the income determination."}
+      ],
+      "confidence": "high",
+      "rationale_summary": "The single prohibition bars deduction, in income determination, to the extent expenses are directly economically connected with non-taxable receipts. The financial items are not treated as legal actors."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000247",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "edited",
+        "proposed_text_en": "Otherwise, expenses and outlays that are not deductible from the individual categories of income may, if the statutory requirements are met, be deducted as special expenses or extraordinary burdens. 9.",
+        "issues": [
+          "Moved the trailing '9.' back to the end because the German source places it after the completed sentence and it begins an unavailable following provision."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Otherwise, expenses and outlays that are not deductible from the individual categories of income may, if the statutory requirements are met, be deducted as special expenses or extraordinary burdens", "start": 0, "end": 197},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 97, "end": 100}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deducted", "start": 141, "end": 152, "normalized": "deduct otherwise non-deductible expenses and outlays"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the statutory requirements are met", "start": 102, "end": 139, "normalized": "statutory requirements are met"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "Otherwise", "start": 0, "end": 9, "normalized": "in other respects"},
+            {"id": "c1_constraint_2", "text": "as special expenses or extraordinary burdens", "start": 153, "end": 197, "normalized": "as special expenses or extraordinary burdens"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The preceding rules qualified by 'Otherwise' and the provision beginning with the trailing item number 9 are not supplied."},
+        {"field": "actor", "reason": "The permission is passive and no claimant is expressly identified."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The sentence grants a conditional permission to deduct otherwise non-deductible expenses or outlays as special expenses or extraordinary burdens. The misplaced next-item marker is minimally restored to its source position without changing the rule text."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000271",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The building must have been the taxpayer's main residence up to the cessation of the business, 2. the building may neither \u2014 be disposed of in whole or in part, \u2014 be left in whole or in part to another person for the generation of business income, nor \u2014 be predominantly used by the taxpayer themselves for the generation of income, and 3. no hidden reserves may have been transferred to the building.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The building must have been the taxpayer's main residence up to the cessation of the business", "start": 0, "end": 93},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 13, "end": 17}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "have been the taxpayer's main residence", "start": 18, "end": 57, "normalized": "serve as the taxpayer's main residence"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "up to the cessation of the business", "start": 58, "end": 93, "normalized": "through cessation of the business"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "the building may neither \u2014 be disposed of in whole or in part, \u2014 be left in whole or in part to another person for the generation of business income, nor \u2014 be predominantly used by the taxpayer themselves for the generation of income", "start": 98, "end": 331},
+          "modality": {"label": "prohibition", "evidence": [{"text": "may neither", "start": 111, "end": 122}]},
+          "actors": [],
+          "actions": [
+            {"id": "c2_action_1", "text": "be disposed of", "start": 125, "end": 139, "normalized": "dispose of the building"},
+            {"id": "c2_action_2", "text": "be left", "start": 163, "end": 170, "normalized": "leave the building to another person"},
+            {"id": "c2_action_3", "text": "be predominantly used", "start": 254, "end": 275, "normalized": "predominantly use the building to generate income"}
+          ],
+          "conditions": [],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "in whole or in part", "start": 140, "end": 159, "normalized": "in whole or in part"},
+            {"id": "c2_constraint_2", "text": "in whole or in part to another person for the generation of business income", "start": 171, "end": 246, "normalized": "in whole or in part to another person for generating business income"},
+            {"id": "c2_constraint_3", "text": "by the taxpayer themselves for the generation of income", "start": 276, "end": 331, "normalized": "predominantly by the taxpayer to generate income"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": null, "action_id": "c2_action_1"},
+            {"actor_id": null, "action_id": "c2_action_2"},
+            {"actor_id": null, "action_id": "c2_action_3"}
+          ],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "no hidden reserves may have been transferred to the building", "start": 340, "end": 400},
+          "modality": {"label": "prohibition", "evidence": [{"text": "no hidden reserves may", "start": 340, "end": 362}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "have been transferred", "start": 363, "end": 384, "normalized": "transfer hidden reserves"}],
+          "conditions": [],
+          "constraints": [{"id": "c3_constraint_1", "text": "to the building", "start": 385, "end": 400, "normalized": "to the building"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "actor", "reason": "The building and hidden reserves are regulated objects, while the persons responsible for disposal, letting, use, or reserve transfer are not expressly identified."}
+      ],
+      "confidence": "high",
+      "rationale_summary": "Three normative units are explicit: the historical main-residence requirement, a coordinated prohibition covering disposal, letting for business income, and predominant income-producing self-use, and a separate prohibition on transferred hidden reserves. The three actions governed by 'may neither ... nor' remain in one clause to preserve their shared modality."
+    }
+  ]
+}

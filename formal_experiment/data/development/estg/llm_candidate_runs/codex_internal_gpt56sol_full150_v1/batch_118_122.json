@@ -1,0 +1,190 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 118,
+  "end_index_exclusive": 123,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000079",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The taxpayer must provide evidence or render plausible, by means of suitable documents, that the conditions for such depreciation are met. 8. a) Upon the opening of a business, the assets shall be recognized at acquisition or production cost.",
+        "issues": ["The antecedent of 'such depreciation' is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The taxpayer must provide evidence or render plausible, by means of suitable documents, that the conditions for such depreciation are met.", "start": 0, "end": 138},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 13, "end": 17}]},
+          "actors": [{"id": "c1_actor_1", "text": "The taxpayer", "start": 0, "end": 12, "normalized": "taxpayer"}],
+          "actions": [
+            {"id": "c1_action_1", "text": "provide evidence", "start": 18, "end": 34, "normalized": "provide evidence of depreciation conditions"},
+            {"id": "c1_action_2", "text": "render plausible", "start": 38, "end": 54, "normalized": "substantiate depreciation conditions"}
+          ],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "by means of suitable documents", "start": 56, "end": 86, "normalized": "using suitable documents"},
+            {"id": "c1_constraint_2", "text": "that the conditions for such depreciation are met", "start": 88, "end": 137, "normalized": "that depreciation conditions hold"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": "c1_actor_1", "action_id": "c1_action_1"},
+            {"actor_id": "c1_actor_1", "action_id": "c1_action_2"}
+          ],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "8. a) Upon the opening of a business, the assets shall be recognized at acquisition or production cost.", "start": 139, "end": 242},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be recognized", "start": 188, "end": 207}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be recognized", "start": 194, "end": 207, "normalized": "recognize assets"}],
+          "conditions": [{"id": "c2_condition_1", "text": "Upon the opening of a business", "start": 145, "end": 175, "normalized": "when business opens"}],
+          "constraints": [{"id": "c2_constraint_1", "text": "at acquisition or production cost", "start": 208, "end": 241, "normalized": "at acquisition or production cost"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The depreciation whose conditions must be substantiated is defined outside the excerpt."}],
+      "confidence": "medium",
+      "rationale_summary": "The excerpt contains a taxpayer evidentiary duty with two alternative proof actions and a separate opening-balance valuation obligation. The passive valuation clause does not identify the accounting actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000082",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "To the extent that the input tax can be deducted (Section 12(1) of the Value Added Tax Act 1972), it does not form part of the acquisition or production costs of the asset on the acquisition or production of which it is incurred, and shall be reported as a receivable.",
+        "issues": ["The content of Section 12(1) of the Value Added Tax Act 1972 is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "To the extent that the input tax can be deducted (Section 12(1) of the Value Added Tax Act 1972), it does not form part of the acquisition or production costs of the asset on the acquisition or production of which it is incurred", "start": 0, "end": 228},
+          "modality": {"label": "definition", "evidence": [{"text": "does not form part", "start": 101, "end": 119}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "not form part", "start": 106, "end": 119, "normalized": "exclude deductible input tax from asset cost"}],
+          "conditions": [{"id": "c1_condition_1", "text": "To the extent that the input tax can be deducted", "start": 0, "end": 48, "normalized": "input tax deductible"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "Section 12(1) of the Value Added Tax Act 1972", "start": 50, "end": 95, "normalized": "under VAT Act Section 12(1)"},
+            {"id": "c1_constraint_2", "text": "of the acquisition or production costs of the asset on the acquisition or production of which it is incurred", "start": 120, "end": 228, "normalized": "cost of asset to which input tax relates"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "To the extent that the input tax can be deducted (Section 12(1) of the Value Added Tax Act 1972), it does not form part of the acquisition or production costs of the asset on the acquisition or production of which it is incurred, and shall be reported as a receivable.", "start": 0, "end": 268},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be reported", "start": 234, "end": 251}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be reported", "start": 240, "end": 251, "normalized": "report deductible input tax"}],
+          "conditions": [{"id": "c2_condition_1", "text": "To the extent that the input tax can be deducted", "start": 0, "end": 48, "normalized": "input tax deductible"}],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "Section 12(1) of the Value Added Tax Act 1972", "start": 50, "end": 95, "normalized": "under VAT Act Section 12(1)"},
+            {"id": "c2_constraint_2", "text": "as a receivable", "start": 252, "end": 267, "normalized": "as receivable"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The cross-referenced VAT deduction rule is unavailable and its eligibility conditions are not expanded."}],
+      "confidence": "medium",
+      "rationale_summary": "Deductible input tax is both excluded from the related asset's acquisition or production cost and required to be reported as a receivable. These are separate definition and reporting clauses sharing the same statutory condition."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000087",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "In the exchange of shares in a company or cooperative, no exchange shall be deemed to exist if the exchange takes place on the basis of a merger that does not result in liquidation taxation.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "In the exchange of shares in a company or cooperative, no exchange shall be deemed to exist if the exchange takes place on the basis of a merger that does not result in liquidation taxation.", "start": 0, "end": 190},
+          "modality": {"label": "definition", "evidence": [{"text": "shall be deemed", "start": 67, "end": 82}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be deemed to exist", "start": 73, "end": 91, "normalized": "deem no taxable exchange"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the exchange takes place on the basis of a merger that does not result in liquidation taxation", "start": 92, "end": 189, "normalized": "share exchange caused by merger without liquidation taxation"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "In the exchange of shares in a company or cooperative", "start": 0, "end": 53, "normalized": "company or cooperative share exchange"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "One negative deeming definition states that a qualifying merger-based share exchange is not treated as an exchange when it produces no liquidation taxation. The exchange is the defined object, not an actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000091",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(3) Taxpayers who determine profit in accordance with Section 4(3) must maintain a register (asset card file) of the assets of the depreciable fixed assets used in the business.",
+        "issues": ["The Section 4(3) profit-determination method is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(3) Taxpayers who determine profit in accordance with Section 4(3) must maintain a register (asset card file) of the assets of the depreciable fixed assets used in the business.", "start": 0, "end": 177},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 67, "end": 71}]},
+          "actors": [{"id": "c1_actor_1", "text": "Taxpayers", "start": 4, "end": 13, "normalized": "taxpayers"}],
+          "actions": [{"id": "c1_action_1", "text": "maintain a register (asset card file)", "start": 72, "end": 109, "normalized": "maintain asset register"}],
+          "conditions": [{"id": "c1_condition_1", "text": "who determine profit in accordance with Section 4(3)", "start": 14, "end": 66, "normalized": "determine profit under Section 4(3)"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "of the assets of the depreciable fixed assets used in the business", "start": 110, "end": 176, "normalized": "depreciable fixed assets used in business"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "Section 4(3) is unavailable, so the qualifying profit-determination method is not expanded."}],
+      "confidence": "medium",
+      "rationale_summary": "One obligation requires taxpayers using the referenced profit-determination method to maintain an asset-card register for depreciable fixed assets used in the business."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000092",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The register shall contain, under the precise designation of each individual fixed asset:  \n— date of acquisition,  \n— acquisition or production costs,  \n— name and address of the supplier,  \n— estimated useful life,  \n— amount of annual depreciation, and  \n— the remaining depreciable amount (residual book value).",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The register shall contain, under the precise designation of each individual fixed asset:  \n— date of acquisition,  \n— acquisition or production costs,  \n— name and address of the supplier,  \n— estimated useful life,  \n— amount of annual depreciation, and  \n— the remaining depreciable amount (residual book value).", "start": 0, "end": 315},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall contain", "start": 13, "end": 26}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "contain", "start": 19, "end": 26, "normalized": "contain required asset fields"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "under the precise designation of each individual fixed asset", "start": 28, "end": 88, "normalized": "precisely identify each fixed asset"},
+            {"id": "c1_constraint_2", "text": "date of acquisition", "start": 94, "end": 113, "normalized": "acquisition date"},
+            {"id": "c1_constraint_3", "text": "acquisition or production costs", "start": 119, "end": 150, "normalized": "acquisition or production costs"},
+            {"id": "c1_constraint_4", "text": "name and address of the supplier", "start": 156, "end": 188, "normalized": "supplier name and address"},
+            {"id": "c1_constraint_5", "text": "estimated useful life", "start": 194, "end": 215, "normalized": "estimated useful life"},
+            {"id": "c1_constraint_6", "text": "amount of annual depreciation", "start": 221, "end": 250, "normalized": "annual depreciation amount"},
+            {"id": "c1_constraint_7", "text": "the remaining depreciable amount (residual book value)", "start": 260, "end": 314, "normalized": "remaining depreciable amount or residual book value"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "One register-content obligation requires precise asset designation and all six enumerated data elements. The register is the required record, not an acting actor."
+    }
+  ]
+}

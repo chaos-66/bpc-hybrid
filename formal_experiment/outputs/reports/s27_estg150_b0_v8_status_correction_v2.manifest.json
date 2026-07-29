@@ -1,0 +1,109 @@
+{
+  "schema_version": "b0_enhanced_v8_status_correction@2.0.0",
+  "correction_id": "s27_estg150_b0_v8_status_correction_v2",
+  "created_at_utc": "2026-07-22T15:16:57.298195+00:00",
+  "claim_scope": "development_diagnostic_only",
+  "supersedes_for_status_interpretation": "outputs/reports/s27_estg150_b0_v8_selection_v1.manifest.json",
+  "does_not_overwrite_prior_artifacts": true,
+  "frozen_facts": {
+    "v5": {
+      "status": "trusted_development_baseline",
+      "modality_micro_f1": 0.6242299794661191,
+      "manifest": {
+        "path": "outputs/development/s27_estg150_b0_enhanced_v5/manifest.json",
+        "sha256": "e1bd642aa55c9bdc3a6a01b600b48910c643b1c270ab718f37f7980d4b776533",
+        "bytes": 12863
+      }
+    },
+    "v7": {
+      "status": "provisional_development_best_not_significant",
+      "modality_micro_f1": 0.6283367556468172,
+      "manifest": {
+        "path": "outputs/development/s27_estg150_b0_enhanced_v7/manifest.json",
+        "sha256": "6099da41cf3c8708d544da3657ccdd0d6d680e5fc87c9b80fb99e01db821b9a4",
+        "bytes": 13956
+      },
+      "note": "Only +1 TP vs v5; not a significant improvement claim"
+    },
+    "v6": {
+      "status": "negative_evidence_old_phase_a_invalid",
+      "manifest": {
+        "path": "outputs/development/s27_estg150_b0_enhanced_v6/manifest.json",
+        "sha256": "cab0f881ba6d1139589dc3863f766c7bd3319a36db9f33db78b46be681f9a333",
+        "bytes": 13518
+      },
+      "must_not_use_old_phase_a_ablations": true
+    }
+  },
+  "v8_candidates_corrected_status": {
+    "v8a": {
+      "run_id": "s27_estg150_b0_enhanced_v8a",
+      "status": "invalid_for_alignment_performance_attribution",
+      "manifest": {
+        "path": "outputs/development/s27_estg150_b0_enhanced_v8a/manifest.json",
+        "sha256": "2e8c4a4a10ceb95cf03a3fb0226123ac6c037d90bd2240c3c0aec88b0fbec5e5",
+        "bytes": 14021
+      },
+      "defects": [
+        "alignment_unsupported used BERT input placeholder '.' (estg150_b0_development_v6.py de_for_clf.append('.'))",
+        "classifier labels from placeholder still used in hybrid route (alignment_unsupported_classifier_fallback)",
+        "cannot attribute modality delta to genuine DE-EN alignment improvement"
+      ],
+      "valid_for_performance_comparison": false
+    },
+    "v8b": {
+      "run_id": "s27_estg150_b0_enhanced_v8b",
+      "status": "valid_negative_development_candidate",
+      "manifest": {
+        "path": "outputs/development/s27_estg150_b0_enhanced_v8b/manifest.json",
+        "sha256": "678eccbfb14146bc1a7dc7465b0660ed645fccef32a215aa46119751cd3a2311",
+        "bytes": 13994
+      },
+      "defects": [],
+      "notes": [
+        "Table8 overall F1 rose 0.492->0.506",
+        "hallucinated_field_rate rose 0.406->0.417",
+        "modality F1 only +0.004 vs v7 (+1 TP); fails +0.010 promotion gate"
+      ],
+      "valid_for_performance_comparison": true,
+      "promoted": false
+    },
+    "v8c": {
+      "run_id": "s27_estg150_b0_enhanced_v8c",
+      "status": "not_instantiated_no_op_duplicate",
+      "manifest": {
+        "path": "outputs/development/s27_estg150_b0_enhanced_v8c/manifest.json",
+        "sha256": "6a86c84860c4529ebb3b38df5ae57d91c379543eca709b7f54d0e2f435234848",
+        "bytes": 13991
+      },
+      "defects": [
+        "production code uses V8_CANDIDATE_MODE in {B, C} with identical branches",
+        "no independent Tregex/resolver path for C vs B",
+        "metrics identical to v8b by construction of shared code path"
+      ],
+      "valid_for_performance_comparison": false,
+      "not_a_distinct_candidate": true
+    }
+  },
+  "active_policy_after_correction": {
+    "provisional_best": "s27_estg150_b0_enhanced_v7",
+    "trusted_baseline": "s27_estg150_b0_enhanced_v5",
+    "do_not_cite_as_valid_comparison": [
+      "v8a",
+      "v8c",
+      "v6_old_phase_a"
+    ],
+    "s24_test": "exposed_by_B_and_C_forbidden_for_further_training_selection_evaluation"
+  },
+  "code_evidence": {
+    "placeholder_line": "src/bpc_hybrid/estg150_b0_development_v6.py:de_for_clf.append('.')",
+    "shared_bc_branch": "V8_CANDIDATE_MODE in {B, C}",
+    "global_mutable_mode": "global V8_CANDIDATE_MODE"
+  },
+  "safety": {
+    "prior_artifacts_not_overwritten": true,
+    "gold_read_only": true,
+    "llm_api_called": false,
+    "network_called": false
+  }
+}

@@ -187,9 +187,12 @@ development 扩展表为空；完整来源与 hash 见
 
 ---
 
-## 9. 与当前 heuristic runner 的差异
+## 9. 与旧 heuristic runner 的差异及当前状态
 
-`scripts/run_sun_rule_only.py` 当前用**关键词 + spaCy 启发式**抽取六要素，**不是**最终论文描述的 BERT-TextCNN + CoreNLP/Tregex/Tsurgeon。重构后将：
+2026-07-17 以前的 `scripts/run_sun_rule_only.py` 使用**关键词 + spaCy 启发式**抽取
+六要素，不是最终论文描述的 BERT-TextCNN + CoreNLP/Tregex/Tsurgeon。S2.6 已替换活动
+入口并完成下表“重构后”组件的 synthetic canonical 技术联调；旧 heuristic 模块只保留
+development provenance，正式 batch 与性能评价仍待 S2.2/S2.10。
 
 | 项 | 当前 | 重构后 |
 |---|---|---|
@@ -199,7 +202,9 @@ development 扩展表为空；完整来源与 hash 见
 | 词典 | 内置 keyword 列表 | 公开来源重建 + provenance |
 | 训练 | 无 | 自训 + checkpoint hash |
 
-**正式 baseline = 重构后版本**。当前 runner 标 `development_only_not_formal`。
+**正式 baseline = 重构后版本**。当前 runner 标
+`verified_s2_6_locked_synthetic_composition_not_formal_batch`，不得把 synthetic 联调写成
+phrase 性能或 Stage 2 正式结果。
 
 ---
 

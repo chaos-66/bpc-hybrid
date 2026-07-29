@@ -1,0 +1,250 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 143,
+  "end_index_exclusive": 150,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000134",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(7) Hidden reserves may be allocated to a tax-free reserve in the year of their disclosure, provided that no transfer is effected in the same business year.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(7) Hidden reserves may be allocated to a tax-free reserve in the year of their disclosure, provided that no transfer is effected in the same business year", "start": 0, "end": 155},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 20, "end": 23}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be allocated to a tax-free reserve", "start": 24, "end": 58, "normalized": "allocate hidden reserves to tax-free reserve"}],
+          "conditions": [{"id": "c1_condition_1", "text": "provided that no transfer is effected in the same business year", "start": 92, "end": 155, "normalized": "no transfer effected in same business year"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "in the year of their disclosure", "start": 59, "end": 90, "normalized": "in year hidden reserves are disclosed"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "actor", "reason": "Hidden reserves are the allocation object, and no taxpayer or accounting actor is expressly identified."}
+      ],
+      "confidence": "high",
+      "rationale_summary": "Hidden reserves may be allocated to a tax-free reserve in their disclosure year only to the extent no transfer is effected during that same business year. The financial reserve is not treated as an actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000135",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(8) The reserve (the tax-free amount) may be transferred in the following three financial years in accordance with the preceding provisions to the acquisition or production costs or the partial amounts of the acquisition or production costs within the meaning of Section 10(7), second sentence, of fixed assets.",
+        "issues": [
+          "The preceding transfer provisions and Section 10(7), second sentence are not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(8) The reserve (the tax-free amount) may be transferred in the following three financial years in accordance with the preceding provisions to the acquisition or production costs or the partial amounts of the acquisition or production costs within the meaning of Section 10(7), second sentence, of fixed assets", "start": 0, "end": 310},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 38, "end": 41}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be transferred", "start": 42, "end": 56, "normalized": "transfer reserve"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "in the following three financial years", "start": 57, "end": 95, "normalized": "within following three financial years"},
+            {"id": "c1_constraint_2", "text": "in accordance with the preceding provisions", "start": 96, "end": 139, "normalized": "under preceding provisions"},
+            {"id": "c1_constraint_3", "text": "to the acquisition or production costs or the partial amounts of the acquisition or production costs", "start": 140, "end": 240, "normalized": "to acquisition or production costs or their partial amounts"},
+            {"id": "c1_constraint_4", "text": "within the meaning of Section 10(7), second sentence", "start": 241, "end": 293, "normalized": "within Section 10(7), second sentence"},
+            {"id": "c1_constraint_5", "text": "of fixed assets", "start": 295, "end": 310, "normalized": "fixed assets"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The preceding provisions and Section 10(7), second sentence are unavailable, so the incorporated transfer mechanics and cost categories cannot be expanded."},
+        {"field": "actor", "reason": "The transfer permission is passive and no taxpayer or accounting actor is explicit."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The reserve may be transferred during the next three financial years under the preceding rules to the specified fixed-asset cost amounts. All visible timing, destination, and cross-reference limitations are retained without treating the reserve as an actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000136",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The assets to which the reserves (tax-free amounts) may be transferred shall be determined by the assets in respect of which the hidden reserves were disclosed (paragraph 3).",
+        "issues": [
+          "The substantive content of paragraph 3 is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The assets to which the reserves (tax-free amounts) may be transferred shall be determined by the assets in respect of which the hidden reserves were disclosed (paragraph 3)", "start": 0, "end": 173},
+          "modality": {"label": "definition", "evidence": [{"text": "shall be determined", "start": 71, "end": 90}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be determined", "start": 77, "end": 90, "normalized": "determine eligible transferee assets"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "by the assets in respect of which the hidden reserves were disclosed (paragraph 3)", "start": 91, "end": 173, "normalized": "according to assets whose hidden reserves were disclosed under paragraph 3"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "The assets to which the reserves (tax-free amounts) may be transferred", "start": 0, "end": 70},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 52, "end": 55}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be transferred", "start": 56, "end": 70, "normalized": "transfer reserves to eligible assets"}],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Paragraph 3, which governs the relationship between disclosed hidden reserves and eligible transferee assets, is unavailable."},
+        {"field": "actor", "reason": "Both the determination rule and embedded transfer permission are passive; no responsible person is explicit."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The main rule defines eligible transferee assets by reference to assets whose hidden reserves were disclosed under paragraph 3. The embedded phrase independently states that reserves may be transferred to those assets, so its express permission is retained as a second clause."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000143",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(5) At the end of each financial year, bearer partial debentures of domestic debtors with a nominal amount of at least 50% of the provision amount shown in the balance sheet at the end of the preceding financial year must be present in the business assets (securities cover).",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(5) At the end of each financial year, bearer partial debentures of domestic debtors with a nominal amount of at least 50% of the provision amount shown in the balance sheet at the end of the preceding financial year must be present in the business assets (securities cover)", "start": 0, "end": 274},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 217, "end": 221}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be present", "start": 222, "end": 232, "normalized": "hold required securities cover"}],
+          "conditions": [{"id": "c1_condition_1", "text": "bearer partial debentures of domestic debtors", "start": 39, "end": 84, "normalized": "bearer partial debentures issued by domestic debtors"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "At the end of each financial year", "start": 4, "end": 37, "normalized": "at each financial year end"},
+            {"id": "c1_constraint_2", "text": "with a nominal amount of at least 50% of the provision amount shown in the balance sheet at the end of the preceding financial year", "start": 85, "end": 216, "normalized": "nominal amount at least 50 percent of prior year-end balance-sheet provision"},
+            {"id": "c1_constraint_3", "text": "in the business assets", "start": 233, "end": 255, "normalized": "held in business assets"},
+            {"id": "c1_constraint_4", "text": "securities cover", "start": 257, "end": 273, "normalized": "securities cover"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "actor", "reason": "The securities-cover requirement does not expressly identify the person responsible for maintaining the debentures in business assets."}
+      ],
+      "confidence": "high",
+      "rationale_summary": "At every financial year end, qualifying domestic-debtor bearer debentures with the specified minimum nominal amount must be present in business assets as securities cover. The debentures are regulated assets, not actors."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000145",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(6) Taxpayers who determine their profit in accordance with Section 4(3) may apply in the tax return for an amount to be left tax-free for the notional severance pay claims existing at the end of the business year.",
+        "issues": [
+          "The substantive content of Section 4(3) is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(6) Taxpayers who determine their profit in accordance with Section 4(3) may apply in the tax return for an amount to be left tax-free for the notional severance pay claims existing at the end of the business year", "start": 0, "end": 213},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 73, "end": 76}]},
+          "actors": [{"id": "c1_actor_1", "text": "Taxpayers", "start": 4, "end": 13, "normalized": "taxpayers"}],
+          "actions": [{"id": "c1_action_1", "text": "apply", "start": 77, "end": 82, "normalized": "apply for tax-free severance-pay amount"}],
+          "conditions": [{"id": "c1_condition_1", "text": "who determine their profit in accordance with Section 4(3)", "start": 14, "end": 72, "normalized": "taxpayers determining profit under Section 4(3)"}],
+          "constraints": [
+            {"id": "c1_constraint_1", "text": "in the tax return", "start": 83, "end": 100, "normalized": "in tax return"},
+            {"id": "c1_constraint_2", "text": "for an amount to be left tax-free for the notional severance pay claims existing at the end of the business year", "start": 101, "end": 213, "normalized": "tax-free amount for year-end notional severance-pay claims"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "Section 4(3), which identifies the relevant profit-determination method, is unavailable."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Taxpayers determining profit under Section 4(3) may apply in their return for a tax-free amount covering notional severance-pay claims existing at business year end."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000146",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The benefit may only be claimed if the tax-exempt amounts are shown in a continuously maintained record submitted to the tax office together with the profit declaration for the relevant business year.",
+        "issues": [
+          "The preceding provision defining 'The benefit' is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The benefit may only be claimed if the tax-exempt amounts are shown in a continuously maintained record submitted to the tax office together with the profit declaration for the relevant business year", "start": 0, "end": 199},
+          "modality": {"label": "permission", "evidence": [{"text": "may only", "start": 12, "end": 20}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be claimed", "start": 21, "end": 31, "normalized": "claim referenced benefit"}],
+          "conditions": [{"id": "c1_condition_1", "text": "if the tax-exempt amounts are shown in a continuously maintained record submitted to the tax office together with the profit declaration for the relevant business year", "start": 32, "end": 199, "normalized": "tax-free amounts recorded continuously and submitted with relevant profit declaration"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The benefit's antecedent and surrounding eligibility rules are unavailable."},
+        {"field": "actor", "reason": "The claiming permission is passive and no claimant is expressly identified in this sentence."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "The referenced benefit may be claimed only when the tax-free amounts appear in a continuously maintained record submitted with the relevant business-year profit declaration. The missing antecedent is not inferred."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000148",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "(7) Taxpayers who determine their profit pursuant to Section 4(1) or Section 5 may form pension provisions for written, legally binding, and irrevocable pension commitments.",
+        "issues": [
+          "The substantive content of Section 4(1) and Section 5 is not supplied."
+        ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "(7) Taxpayers who determine their profit pursuant to Section 4(1) or Section 5 may form pension provisions for written, legally binding, and irrevocable pension commitments", "start": 0, "end": 172},
+          "modality": {"label": "permission", "evidence": [{"text": "may", "start": 79, "end": 82}]},
+          "actors": [{"id": "c1_actor_1", "text": "Taxpayers", "start": 4, "end": 13, "normalized": "taxpayers"}],
+          "actions": [{"id": "c1_action_1", "text": "form pension provisions", "start": 83, "end": 106, "normalized": "form pension provisions"}],
+          "conditions": [{"id": "c1_condition_1", "text": "who determine their profit pursuant to Section 4(1) or Section 5", "start": 14, "end": 78, "normalized": "taxpayers determining profit under Section 4(1) or Section 5"}],
+          "constraints": [{"id": "c1_constraint_1", "text": "for written, legally binding, and irrevocable pension commitments", "start": 107, "end": 172, "normalized": "for written, binding, irrevocable pension commitments"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": "c1_actor_1", "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The two cited profit-determination provisions are unavailable, so their internal taxpayer qualifications cannot be expanded."}
+      ],
+      "confidence": "medium",
+      "rationale_summary": "Taxpayers using either referenced profit-determination method may form pension provisions, but only for pension commitments that are written, legally binding, and irrevocable."
+    }
+  ]
+}

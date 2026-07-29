@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / "docs" / "FILE_CATALOG.md"
 IGNORED_DIRS = {".pytest_cache", "__pycache__", ".tmp"}
+IGNORED_DIR_PREFIXES = ("pytest_",)
 IGNORED_FILES = {".env"}
 
 
@@ -83,7 +84,10 @@ def collect_files() -> list[Path]:
         relative = path.relative_to(ROOT)
         if relative.name in IGNORED_FILES:
             continue
-        if any(part in IGNORED_DIRS for part in relative.parts):
+        if any(
+            part in IGNORED_DIRS or part.startswith(IGNORED_DIR_PREFIXES)
+            for part in relative.parts
+        ):
             continue
         files.append(relative)
     return sorted(files, key=lambda item: item.as_posix().lower())
@@ -96,8 +100,10 @@ def render(files: list[Path]) -> str:
     lines = [
         "# 项目逐文件目录",
         "",
-        f"**生成日期**：{date.today().isoformat()}  ",
-        f"**收录文件**：{len(files)} 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`__pycache__/`）  ",
+        f"**生成日期**：{date.today().isoformat()}",
+        "",
+        f"**收录文件**：{len(files)} 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）",
+        "",
         "**生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`",
         "",
         "本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”",

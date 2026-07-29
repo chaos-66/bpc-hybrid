@@ -419,7 +419,7 @@ class TestRunRuleBaseline:
     def test_script_runs(self):
         result = subprocess.run(
             [str(_PYTHON), str(_RUN_BASELINE), "--input", str(_LEGAL_JSONL)],
-            capture_output=True, text=True, cwd=str(_PROJECT),
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(_PROJECT),
         )
         assert result.returncode == 0, f"stderr: {result.stderr}"
         lines = [l for l in result.stdout.strip().split("\n") if l.strip()]
@@ -443,7 +443,7 @@ class TestEvaluateMultiClause:
                 "--gold", str(_GOLD_JSONL),
                 "--input", str(_LEGAL_JSONL),
             ],
-            capture_output=True, text=True, cwd=str(_PROJECT),
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(_PROJECT),
         )
         assert result.returncode == 0, f"stderr: {result.stderr}"
         report = json.loads(result.stdout)
@@ -468,7 +468,7 @@ class TestEvaluateMultiClause:
                 "--gold", str(_GOLD_JSONL),
                 "--pred", str(_GOLD_JSONL),
             ],
-            capture_output=True, text=True, cwd=str(_PROJECT),
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(_PROJECT),
         )
         assert result.returncode == 0
         report = json.loads(result.stdout)
@@ -579,7 +579,7 @@ class TestCLINoPythonPath:
         env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
         result = subprocess.run(
             [str(_PYTHON), str(_RUN_BASELINE), "--input", str(_LEGAL_JSONL)],
-            capture_output=True, text=True, cwd=str(_PROJECT), env=env,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(_PROJECT), env=env,
         )
         assert result.returncode == 0, (
             f"stderr: {result.stderr}\nstdout: {result.stdout[:500]}"
@@ -596,7 +596,7 @@ class TestCLINoPythonPath:
                 "--gold", str(_GOLD_JSONL),
                 "--input", str(_LEGAL_JSONL),
             ],
-            capture_output=True, text=True, cwd=str(_PROJECT), env=env,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(_PROJECT), env=env,
         )
         assert result.returncode == 0, f"stderr: {result.stderr}"
         report = json.loads(result.stdout)

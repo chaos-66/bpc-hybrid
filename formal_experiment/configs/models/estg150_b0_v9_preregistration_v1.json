@@ -1,0 +1,109 @@
+{
+  "schema_version": "b0_enhanced_v9_preregistration@1.0.0",
+  "preregistration_id": "s27_estg150_b0_v9_prereg_v1",
+  "created_at_utc": "2026-07-22T16:05:13.535567+00:00",
+  "status": "preregistered_before_any_v9_run",
+  "claim_scope": "development_only",
+  "baselines": {
+    "v5": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v5/manifest.json",
+      "sha256": "e1bd642aa55c9bdc3a6a01b600b48910c643b1c270ab718f37f7980d4b776533",
+      "bytes": 12863
+    },
+    "v7_provisional_best": {
+      "path": "outputs/development/s27_estg150_b0_enhanced_v7/manifest.json",
+      "sha256": "6099da41cf3c8708d544da3657ccdd0d6d680e5fc87c9b80fb99e01db821b9a4",
+      "bytes": 13956
+    }
+  },
+  "v8_status_correction": {
+    "path": "outputs/reports/s27_estg150_b0_v8_status_correction_v2.manifest.json",
+    "sha256": "363fdc2808660657f9c0ebfe5fc6493eeb31972ad1ffd20a7435c4c6fce8eabd",
+    "bytes": 4304
+  },
+  "active_registry": {
+    "path": "configs/models/estg150_b0_active_registry_v1.json",
+    "sha256": "8c8395e020b0bfe09750202dbf32c1291be55710fac7ff7ead73e45dff8ec3ad",
+    "bytes": 4150
+  },
+  "profiles": {
+    "v9-A": {
+      "id": "v9-A_clean_core",
+      "instantiated_if": "always_after_tests_green",
+      "description": "no placeholder; honest alignment; lexicon production; ownership edges; no new tregex"
+    },
+    "v9-B": {
+      "id": "v9-B_clean_core_plus_verified_tregex",
+      "instantiated_if": "only_if_verified_new_tregex_fixtures_exist",
+      "default": "not_instantiated"
+    }
+  },
+  "forbidden": [
+    "placeholder_classifier_input",
+    "global_mutable_candidate_mode",
+    "s24_test_read_for_training_or_selection",
+    "overwrite_v1_to_v8_artifacts",
+    "noop_duplicate_candidates",
+    "comment_only_SafeV2"
+  ],
+  "promotion_gates_vs_v7": {
+    "modality_f1_min_delta": 0.01,
+    "min_additional_aligned_correct_clauses": 3,
+    "placeholder_classifier_count_must_be_0": true,
+    "table8_f1_min_delta": 0.02,
+    "hallucinated_field_rate_not_up": true,
+    "evidence_free_edges_must_be_0": true
+  },
+  "modules": [
+    "src/bpc_hybrid/b0_v9/profile.py",
+    "src/bpc_hybrid/b0_v9/alignment.py",
+    "src/bpc_hybrid/b0_v9/modality.py",
+    "src/bpc_hybrid/b0_v9/scope.py",
+    "src/bpc_hybrid/b0_v9/actor_action.py",
+    "src/bpc_hybrid/b0_v9/pipeline.py",
+    "src/bpc_hybrid/b0_v9/diagnostics.py"
+  ],
+  "safety": {
+    "gold_read_only": true,
+    "llm_api_called": false,
+    "network_called": false,
+    "v9_full_batch_not_yet_run": true
+  },
+  "module_bindings": {
+    "src/bpc_hybrid/b0_v9/profile.py": {
+      "path": "src/bpc_hybrid/b0_v9/profile.py",
+      "sha256": "ee89c8ba7f309df1e6de0b1adc2add27c4c77823f60a3566d9b19e112fcc0be2",
+      "bytes": 2167
+    },
+    "src/bpc_hybrid/b0_v9/alignment.py": {
+      "path": "src/bpc_hybrid/b0_v9/alignment.py",
+      "sha256": "1b74ed7a6ab01301b82feba5f2a407649969e962d4bc350c6532da2fb4989234",
+      "bytes": 5731
+    },
+    "src/bpc_hybrid/b0_v9/modality.py": {
+      "path": "src/bpc_hybrid/b0_v9/modality.py",
+      "sha256": "1213146f54ed80320c751a3e748ad83df55e1a7c6fdfc387e8736ea84a2e14c7",
+      "bytes": 4474
+    },
+    "src/bpc_hybrid/b0_v9/scope.py": {
+      "path": "src/bpc_hybrid/b0_v9/scope.py",
+      "sha256": "b21ae536b8f6202ffffd4e1cc456d27b01a10ce28585c728a8724ab327c18035",
+      "bytes": 10684
+    },
+    "src/bpc_hybrid/b0_v9/actor_action.py": {
+      "path": "src/bpc_hybrid/b0_v9/actor_action.py",
+      "sha256": "5d31f28243c814d363185bf1eec842fd27bf8d201f5f4f2a3bf5a2a593fbb574",
+      "bytes": 6652
+    },
+    "src/bpc_hybrid/b0_v9/pipeline.py": {
+      "path": "src/bpc_hybrid/b0_v9/pipeline.py",
+      "sha256": "54b17d4379c80fb8e17f118c439922580f738d8606920deeed23384e09581520",
+      "bytes": 2601
+    },
+    "src/bpc_hybrid/b0_v9/diagnostics.py": {
+      "path": "src/bpc_hybrid/b0_v9/diagnostics.py",
+      "sha256": "af30f29285b3f246af6b9ccb564ee20b3c50c1311ab09fc1e56787789d699314",
+      "bytes": 4151
+    }
+  }
+}

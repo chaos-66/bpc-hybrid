@@ -1,0 +1,209 @@
+{
+  "schema_version": "estg150_internal_batch@1.0.0",
+  "model": "gpt-5.6-sol",
+  "start_index": 103,
+  "end_index_exclusive": 108,
+  "records": [
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000038",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "If an additional disability pension is granted, a legal entitlement to this pension must also exist.  \ncc) The establishment of, accession to, and administration of the fund must be governed by a works agreement.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "If an additional disability pension is granted, a legal entitlement to this pension must also exist.", "start": 0, "end": 100},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 84, "end": 88}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "also exist", "start": 89, "end": 99, "normalized": "ensure legal entitlement exists"}],
+          "conditions": [{"id": "c1_condition_1", "text": "If an additional disability pension is granted", "start": 0, "end": 46, "normalized": "additional disability pension granted"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "cc) The establishment of, accession to, and administration of the fund must be governed by a works agreement.", "start": 103, "end": 212},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 174, "end": 178}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "be governed", "start": 179, "end": 190, "normalized": "govern fund establishment, accession, and administration"}],
+          "conditions": [],
+          "constraints": [{"id": "c2_constraint_1", "text": "by a works agreement", "start": 191, "end": 211, "normalized": "by works agreement"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "Two obligations are explicit: a legal entitlement must accompany any additional disability pension, and a works agreement must govern establishment, accession, and administration of the fund. Both main predicates lack an acting person."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000039",
+      "context_sufficiency": "sufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The agreement must provide that the taxpayer’s ongoing contribution payments may only be suspended or restricted for compelling economic reasons and only after consultation with the works council. dd) The contributions are deductible to the extent that they are required under the articles of association for benefit entitlements of current and former members of the taxpayer’s enterprises.",
+        "issues": []
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The agreement must provide that the taxpayer’s ongoing contribution payments may only be suspended or restricted for compelling economic reasons and only after consultation with the works council.", "start": 0, "end": 196},
+          "modality": {"label": "obligation", "evidence": [{"text": "must", "start": 14, "end": 18}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "provide", "start": 19, "end": 26, "normalized": "require agreement to specify contribution-suspension rule"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "that the taxpayer’s ongoing contribution payments may only be suspended or restricted for compelling economic reasons and only after consultation with the works council", "start": 27, "end": 195, "normalized": "agreement must contain restricted contribution-suspension terms"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "the taxpayer’s ongoing contribution payments may only be suspended or restricted for compelling economic reasons and only after consultation with the works council", "start": 32, "end": 195},
+          "modality": {"label": "permission", "evidence": [{"text": "may only", "start": 77, "end": 85}]},
+          "actors": [],
+          "actions": [
+            {"id": "c2_action_1", "text": "be suspended", "start": 86, "end": 98, "normalized": "suspend ongoing contributions"},
+            {"id": "c2_action_2", "text": "restricted", "start": 102, "end": 112, "normalized": "restrict ongoing contributions"}
+          ],
+          "conditions": [{"id": "c2_condition_1", "text": "the taxpayer’s ongoing contribution payments", "start": 32, "end": 76, "normalized": "taxpayer ongoing contribution payments"}],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "for compelling economic reasons", "start": 113, "end": 144, "normalized": "only compelling economic reasons"},
+            {"id": "c2_constraint_2", "text": "only after consultation with the works council", "start": 149, "end": 195, "normalized": "only after works-council consultation"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [
+            {"actor_id": null, "action_id": "c2_action_1"},
+            {"actor_id": null, "action_id": "c2_action_2"}
+          ],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c3",
+          "clause_span": {"text": "dd) The contributions are deductible to the extent that they are required under the articles of association for benefit entitlements of current and former members of the taxpayer’s enterprises.", "start": 197, "end": 390},
+          "modality": {"label": "permission", "evidence": [{"text": "are deductible", "start": 219, "end": 233}]},
+          "actors": [],
+          "actions": [{"id": "c3_action_1", "text": "are deductible", "start": 219, "end": 233, "normalized": "deduct contributions"}],
+          "conditions": [{"id": "c3_condition_1", "text": "to the extent that they are required under the articles of association for benefit entitlements of current and former members of the taxpayer’s enterprises", "start": 234, "end": 389, "normalized": "contributions required by articles for current and former enterprise members' benefits"}],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c3_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [],
+      "confidence": "high",
+      "rationale_summary": "The text contains an agreement-content obligation, the embedded narrowly conditioned permission to suspend or restrict contributions, and a separate conditional deductibility rule. Passive contribution actions do not identify the deciding actor."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000040",
+      "context_sufficiency": "uncertain",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "Dependants also include spouses and children (Section 106). (ee) The contributions, together with direct benefits within the meaning of Section 3(1) item 15, must not exceed 10% of the total wages and salaries of the beneficiaries.",
+        "issues": ["Sections 106 and 3(1) item 15 are not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "Dependants also include spouses and children (Section 106).", "start": 0, "end": 59},
+          "modality": {"label": "definition", "evidence": [{"text": "also include", "start": 11, "end": 23}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "include", "start": 16, "end": 23, "normalized": "include as dependants"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "spouses and children", "start": 24, "end": 44, "normalized": "spouses and children"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        },
+        {
+          "clause_id": "c2",
+          "clause_span": {"text": "(ee) The contributions, together with direct benefits within the meaning of Section 3(1) item 15, must not exceed 10% of the total wages and salaries of the beneficiaries.", "start": 60, "end": 231},
+          "modality": {"label": "prohibition", "evidence": [{"text": "must not", "start": 158, "end": 166}]},
+          "actors": [],
+          "actions": [{"id": "c2_action_1", "text": "exceed", "start": 167, "end": 173, "normalized": "exceed contribution ceiling"}],
+          "conditions": [],
+          "constraints": [
+            {"id": "c2_constraint_1", "text": "together with direct benefits within the meaning of Section 3(1) item 15", "start": 84, "end": 156, "normalized": "combined with referenced direct benefits"},
+            {"id": "c2_constraint_2", "text": "10% of the total wages and salaries of the beneficiaries", "start": 174, "end": 230, "normalized": "10 percent of beneficiaries' total wages and salaries"}
+          ],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c2_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [{"field": "context", "reason": "The referenced dependant and direct-benefit provisions are unavailable and are not expanded."}],
+      "confidence": "medium",
+      "rationale_summary": "A definition includes spouses and children among dependants, followed by a separate prohibition capping contributions and referenced direct benefits at 10% of beneficiaries' total pay. The monetary subjects are not actors."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000043",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "The actuarial reserve shall be calculated in accordance with the Annex to this Federal Act. — In the case of funds that do not provide ongoing benefits, the average annual requirement of the fund.",
+        "issues": ["The second dash item is a noun-phrase fragment whose governing calculation predicate is not supplied." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "The actuarial reserve shall be calculated in accordance with the Annex to this Federal Act.", "start": 0, "end": 91},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be calculated", "start": 22, "end": 41}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be calculated", "start": 28, "end": 41, "normalized": "calculate actuarial reserve"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "in accordance with the Annex to this Federal Act", "start": 42, "end": 90, "normalized": "under Federal Act Annex"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The fragment concerning funds without ongoing benefits lacks the list heading or predicate that would connect 'the average annual requirement of the fund' to a legal operation."},
+        {"field": "action", "reason": "No action or modality is locally stated for the second dash item, so none is fabricated."}
+      ],
+      "confidence": "low",
+      "rationale_summary": "Only the actuarial-reserve calculation obligation is syntactically complete. The following fund-specific noun phrase is retained in the translation but not misclassified as a condition of the first sentence."
+    },
+    {
+      "schema_version": "estg150_ai_review_model_output@1.0.0",
+      "sample_id": "estg_000044",
+      "context_sufficiency": "insufficient",
+      "translation": {
+        "decision": "accepted",
+        "proposed_text_en": "This shall be assessed on the basis of the average benefits granted by the fund to the recipients during the three years preceding the date of the allocation. 3.",
+        "issues": ["The antecedent of 'This' is not supplied; the trailing '3.' is an incomplete enumeration marker." ]
+      },
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {"text": "This shall be assessed on the basis of the average benefits granted by the fund to the recipients during the three years preceding the date of the allocation.", "start": 0, "end": 158},
+          "modality": {"label": "obligation", "evidence": [{"text": "shall be assessed", "start": 5, "end": 22}]},
+          "actors": [],
+          "actions": [{"id": "c1_action_1", "text": "be assessed", "start": 11, "end": 22, "normalized": "assess unidentified amount"}],
+          "conditions": [],
+          "constraints": [{"id": "c1_constraint_1", "text": "on the basis of the average benefits granted by the fund to the recipients during the three years preceding the date of the allocation", "start": 23, "end": 157, "normalized": "based on three-year average benefits before allocation"}],
+          "exceptions": [],
+          "actor_action_map": [{"actor_id": null, "action_id": "c1_action_1"}],
+          "order_relations": []
+        }
+      ],
+      "unsupported_or_ambiguous": [
+        {"field": "context", "reason": "The pronoun 'This' refers to an amount or requirement defined outside the excerpt."},
+        {"field": "actor", "reason": "The pronoun is the assessment object, not an actor, and no assessor is explicit."}
+      ],
+      "confidence": "low",
+      "rationale_summary": "The assessment basis and three-year look-back are explicit, but the assessed object is missing. No antecedent or assessor is inferred from the adjacent source fragments."
+    }
+  ]
+}
