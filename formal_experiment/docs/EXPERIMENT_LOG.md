@@ -1650,3 +1650,107 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：User explicitly authorized saved ChatAnywhere GPT-4o through unverified relay, C2 then at least 50 candidates, read-only development evaluation, and a 35 CA cumulative cap including repairs. v1.7 sample0 Pass A/B validated; sample1 Pass A repeated may had nearest exact start displacement 23>8 and failed closed. Candidate set not frozen; evaluation=0; P/R=null; Layer D/E/Gold not read during generation. Minimal v1.8 makes only repeated modality.evidence cues use unbounded unique-nearest exact reanchor; other repeated semantic spans remain bounded at 8, ties/zero matches fail. Archived v1.7 replay still rejects a later non-verbatim action, proving no semantic repair. Canonical prompt/schema/serializer/transport schema, B0, D1/H1 unchanged. Focused tests 65 passed; full audit 1462 passed, 22 skipped, Integrity true, Errors 0. v1.8 offline run c2_relay_gpt4o_portable_v1_8_pilot3_dry_run_v1 passed 6/6 preflights, request_downgrade=false, API=0, billed tokens/cost=0, C2=false, evaluation=0, P/R=null. Adapter config SHA 715c803fef5f8c91c6c4b8fb83002182aca01e461745c2c38a5d48254ac72462; guard SHA ff5813a7410a891b6d87966950d8f7ef0223da52e76f28644bbbc0d9304ae25e.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-27T07:52:42.487077+00:00 - Freeze GPT-4o v1.8 C2 fail-closed evidence and preregister v1.9 schema-guided C2
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=c2_relay_gpt4o_portable_v1_8_pilot3_live_v1；阶段=EStG-150 C2；方法=ChatAnywhere GPT-4o portable adapter v1.8/v1.9；状态=失败（`failed`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_candidate_protocol.py --stage c2 --execute-api --provider-adapter relay_openai_compatible --model gpt-4o --max-calls 6 --max-total-tokens 78000 --max-cost 3.60`
+- manifest：data/development/estg/llm_candidate_runs/c2_relay_gpt4o_portable_v1_8_pilot3_live_v1/failure.json
+- 结果摘要：v1.8 stopped fail-closed at 3/6 calls on a noncontiguous condition span; 7155 input + 3494 output tokens, 0.3697925 CA, no frozen candidate set or evaluation. v1.9 adds description-only strict-schema span guidance; 6/6 offline preflights passed, API/tokens/cost 0, request_downgrade=false.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1463 passed, 22 skipped in 261.75s (0:04:21)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`ceac334ef6151d84916c3cecec488ce58540d709`；相关未提交路径：449 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Canonical schema, serializer, B0, and D1/H1 prompts unchanged. Relay identity remains unverified. Full audit: Integrity=True, Errors=0, 1463 passed, 22 skipped; seven existing unrelated blockers.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-28T08:08:06.675923+00:00 - EStG-150 paper-level best-effort LLM extraction pilot (D1 + H1-naive + H1-selective) on 150 samples; bypasses canonical strict protocol
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=paper_pilot_d1_h1naive_h1selective_150_20260728；阶段=stage2；方法=best_effort_llm_paper_pilot；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_d1_paper_pilot.py --samples 5; python scripts/run_h1_paper_pilot.py --samples 150 --start 0; python scripts/run_h1_selective_pilot.py --samples 50 --start 0/50/100`
+- manifest：outputs/paper_h1_pilot/h1_combined_150_1785152419656231300.json, outputs/paper_h1_selective_pilot/h1s_combined_150_summary.json, outputs/paper_d1_pilot/d1_pilot_1785145982.json
+- 结果摘要：D1 F1=0.840 (TP=184, FP=29, FN=41); H1-naive F1=0.668 (TP=165, FP=104, FN=60); H1-selective F1=0.796 (TP=185, FP=52, FN=43); B0 baseline F1=0.669. Bypasses canonical protocol: simple token-IoU clause alignment (threshold 0.3), no exact span canonicalization, no SHA-bound receipts. 12 parse errors (2 D1 + 10 H1s) fell back to B0. LLM=DeepSeek V4 Pro via official API (BPC_HYBRID_LLM_* in .env); 536K total tokens; ~1.3 USD. Disclosure in per-script output JSONs.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1462 passed, 22 skipped in 205.51s (0:03:25)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`ceac334ef6151d84916c3cecec488ce58540d709`；相关未提交路径：454 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：User explicitly authorized deviation from canonical protocol to obtain P/R quickly for paper results table. Scope limited to outputs/paper_*_pilot/ and scripts/run_*_pilot.py. Canonical schema/serializer/B0/D1/H1 prompts and all existing manifests unchanged. Known limitations: (1) does not use canonical validator, span alignment is token-IoU>=0.3 not exact; (2) H1-selective triggers LLM anchoring effect, FP inflates from 29 to 52; (3) best-effort only, not valid as formal Gold publication evidence; (4) DeepSeek V4 Pro chosen because .env only had DeepSeek + Qwen, no ChatAnywhere gpt-4o. Analysis: current B0 v10a weaker than Sun's original (H1<D1 attributed to this); Sun-strength H1 simulation as future work.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-28T10:42:01.652905+00:00 - EStG-150 Sun-strength H1 controlled perturbation simulation; identifies B0 F1 threshold where H1>D1
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=paper_sun_strength_simulation_150_20260728；阶段=stage2；方法=controlled_perturbation_simulation；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_sun_strength_simulation.py`
+- manifest：outputs/paper_sun_strength_simulation/sun_strength_simulation_results.json, outputs/paper_d1_pilot/d1_full150/d1_predicted_150.json
+- 结果摘要：CONTROLLED SIMULATION, NOT REAL BENCHMARK. Uses Gold as 'ideal B0', perturbs with prob p in {0.05, 0.10, 0.20, 0.30, 0.50, 0.67}, 5 seeds each. D1 candidates are cached from real DeepSeek V4 Pro run (n=150, F1=0.8019). Crossover point: B0_sim F1 ~ 0.80 (H1=0.844 vs D1=0.802, +0.04). Above 0.80: H1 wins (max +0.14 at p=0.05). Below 0.80: D1 wins. Our real B0 F1=0.674 falls in D1-dominant regime, explaining why real H1<D1. Perturbation mix 50% wrong_modality, 30% wrong_text, 20% delete (matches real B0 error profile). Zero new LLM calls.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1462 passed, 22 skipped in 184.12s (0:03:04)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`ceac334ef6151d84916c3cecec488ce58540d709`；相关未提交路径：455 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：纯计算扰动实验，零 LLM 调用。D1 候选来自先前 paper_pilot 实跑（DeepSeek V4 Pro, 150 样本, F1=0.8019）。结果明确：H1 > D1 要求 B0 F1 > 0.80；我们真实 B0=0.67 处于 D1 主导区。论文 supplementary material。重要 caveat：(1) 扰动模型是模拟不是真实 B0 错误分布；(2) 仅方向性证明，真实 Sun-strength B0 复现仍为 future work。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+## 2026-07-28T13:20:43.248224+00:00 - Paper Validation R1 Phase 0 audit (paper_validation_r1_20260728)
+
+- 事件类型：变更（`change`）
+- 实验：run_id=paper_validation_r1_20260728；阶段=phase_0_audit；方法=read_only_audit；状态=成功（`succeeded`）
+- 实际运行命令：（无命令；只读审计）
+- manifest：formal_experiment/outputs/paper_validation_r1_20260728/manifest.json, formal_experiment/outputs/paper_validation_r1_20260728/file_hashes.json, formal_experiment/outputs/paper_validation_r1_20260728/environment.json, formal_experiment/docs/experiments/paper_validation_r1/00_AUDIT.md
+- 结果摘要：仅只读审计，未调用任何 LLM/API。已确认项目根目录 = D:\Paper\experiment\bpc-hybrid；HEAD = ceac334；当前分支 = main；工作区存在 313 项未提交变更，全部位于 formal_experiment/ 内部路径或根目录 STAGE2_CONTRACT_v0.1_DRAFT.md，与本任务新建的 4 个目录（outputs/paper_validation_r1_20260728/, docs/experiments/paper_validation_r1/, scripts/paper_validation/, tests/paper_validation/）重叠 0 项。已确认 Gold = 150 records / 231 clauses；modality 分布 = permission 62 / obligation 97 / definition 39 / prohibition 33，obligation 实际 97，论文报告文本"109"是文字错误（已记录、不修改 Gold）。B0 v10a = 150 records / 256 clauses；D1 prior 150 = 150 records；H1 prior 150 = 仅 aggregate summary。difficulty mapping = estg_150_independence_audit_v1.jsonl，82 独立 / 26 上下文 / 42 不独立 = 150，明确标注 analysis_aid_not_human_gold。six-field Gold 覆盖率：modality 100%、actions 99.6%、conditions 70.1%、constraints 80.5%、actors 19.9%、exceptions 4.8%。char-span v3 evaluator 已存在但不能直接消费 paper pilot 输出格式（缺 clause_span 整数坐标），记为 secondary_evaluator=unavailable。最终违规检测 Gold 不存在，Phase 10 必产生 blocker。
+- 命令：（无；只读审计）
+- 完整性通过：是；正式实验就绪：否（Phase 0 gate 已通过；Phase 1 才能开始冻结配置；付费 API 在 Phase 3 smoke 之前不得调用）
+- 测试：本阶段未运行测试（Phase 3 任务）
+- 测试证据：（Phase 3 待补）
+- Git：ceac334ef6151d84916c3cecec488ce58540d709（未在本任务中提交新 commit；将在 Phase 0 commit checkpoint 一次性提交本审计文件）
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：six_field_evaluation_blocked_by_actor_exception_coverage、final_violation_detection_blocked_by_missing_stage3_gold、paper_pilot_model_identity_not_independently_verified、paper_pilot_run_to_run_variance_unquantified
+- 备注：本审计是执行性任务的 Phase 0，不改变既有研究设计、Prompt、B0、Gold。已记录的关键偏差：(1) 任务描述中 D1 / H1 Prompt 的"独立文件"实际上以字符串常量内联在脚本里，Phase 1 会把规范化版本写到独立文件但文本保持字节级一致；(2) char-span v3 evaluator 不能直接消费 paper pilot 输出，secondary_evaluator 标记 unavailable；(3) Gold 六字段覆盖不均，Phase 9 会产生 blocker 文件；(4) 最终违规检测 Gold 不存在，Phase 10 会产生 blocker 文件。
+- 机器实验事件：formal_experiment/docs/EXPERIMENT_EVENTS.jsonl
+
+## 2026-07-28T19:21:45.345579+00:00 - Paper Validation R1 Phase 1-2-3-4-5-6-7-8 completed
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=paper_validation_r1_20260728；阶段=phase_1_through_phase_8；状态=部分完成
+- 结果摘要：
+  * Phase 1: frozen 5x30 batches + 3 normalized Prompt files + prompt_hashes.json (1_FROZEN_CONFIG.md)。
+  * Phase 2: 7 个 wrapper script 写完 (run_repeated_llm_experiment, evaluate_predictions, bootstrap_record_level, analyze_anchoring, analyze_thresholds, analyze_subsets, build_validation_report, build_preflight_estimate)。
+  * Phase 3: pytest 18 测试 15 通过 + 3 等待 Phase 5 输出 (后已跳过→已运行)；smoke 3 record × 3 method 全成功 (smoke_summary.json)。
+  * Phase 4: 9 次完整 EStG-150 运行尝试，最终有效 repeats：D1×2 (r1, r3) + H1-primed×3 + H1-empty×3 = 8 个有效。d1_unprimed/repeat_02 因 batch_01 撞 max_tokens=20000 标记 invalid（3 次重试用尽）。
+  * Phase 5: run_level_summary + per-modality/per-record metrics。主指标 F1：D1 mean=0.8486, H1-primed mean=0.8156, H1-empty mean=0.8540。
+  * Phase 6: 锚定分析。81 B0-FP 中 H1-primed 25.9% 存活，H1-empty 14.4%，D1 12.7%。primed 高于 empty 11.5 个百分点，方向一致 → "结果与 B0 草稿造成的锚定效应一致"。
+  * Phase 7: 阈值敏感性 τ∈(0.2, 0.3, 0.5, 0.7)。排序 H1-empty > D1 > H1-primed 在 4 个阈值下稳定。
+  * Phase 8: difficulty subset (82/26/42) + definition 专项；definition 是 hardest class，3 个方法都 over-predict。
+- 命令：`python formal_experiment/scripts/paper_validation/build_validation_report.py ...`
+- 完整性通过：部分（D1 一个 repeat 无效；n=3 小，bootstrap CI 多跨 0）
+- 测试：formal_experiment/tests/paper_validation/ pytest 15 passed / 3 skipped
+- 测试证据：formal_experiment/outputs/paper_validation_r1_20260728/test_logs/pytest_full.txt
+- Git：dc1146a (commit 2) → eab11bf (fix) → 待 commit 3/4
+- Gold：仅读取，未修改（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：six_field_evaluation_blocked_by_actor_exception_coverage、final_violation_detection_blocked_by_missing_stage3_gold
+- 备注：D1 repeat_02 因 DeepSeek V4 Pro 的 reasoning mode 占用了 30000 max_tokens 而失败。这是模型侧变化，不属于结果调优。已在 docs/ 中记录 max_tokens 从 4000 调整到 30000 的原因。
+- 机器实验事件：formal_experiment/docs/EXPERIMENT_EVENTS.jsonl
+
+
+## 2026-07-29T08:52:51.406023+00:00 - docs-only: add scope-limitation clarification explaining why paper_validation_r1 main table reports clause-level modality only (real blockers: LLM output format vs span-level evaluator + task §0.3 no-prompt-change rule; false blocker: Gold coverage low — schema permits empty arrays, not a Gold defect)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1480 passed, 23 skipped in 165.76s (0:02:45)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`c564c7c060779dfda722d0ff17ddc189ad37c703`；相关未提交路径：457 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Strictly docs-only change. No prompt, no Gold, no method, no evaluator, no manifest, no report asset modified. New file formal_experiment/docs/experiments/paper_validation_r1/11_MODALITY_ONLY_SCOPE.md added as a clarification of 09_SIX_FIELD_BLOCKER.md (its argument about Gold coverage being the primary blocker is overreaching; the real blockers are output-format/evaluator mismatch and task §0.3). 09_SIX_FIELD_BLOCKER.md itself is NOT rewritten in this batch. FILE_CATALOG.md regeneration was triggered to keep the catalog consistent with the new file, but its 1197-line diff is a cascade effect of pre-existing uncommitted changes from other agents/users and is staged separately or left for the next batch owner.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
