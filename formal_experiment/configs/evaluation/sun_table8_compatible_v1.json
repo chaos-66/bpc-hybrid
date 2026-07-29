@@ -1,0 +1,22 @@
+{
+  "assignment": "maximum_cardinality_one_to_one",
+  "clause_alignment_required": false,
+  "evaluation_unit": "statement",
+  "evaluator_id": "sun_table8_compatible_v1",
+  "fields": [
+    "modality",
+    "actor",
+    "action",
+    "condition",
+    "constraint",
+    "exception"
+  ],
+  "match_rule": "same_semantic_field_any_nonempty_character_span_intersection",
+  "modality_policy": "evidence_span_extraction_only_label_ignored",
+  "reporting_role": "Sun Table 8 comparison view for B0/H1/D1; shared strict evaluator remains a boundary-quality view",
+  "schema_version": "sun_table8_compatible_evaluator_config@1.0.0",
+  "sun_table8_accounting_invariants": [
+    "extracted = matched + misclassified",
+    "ground_truth = matched + missed"
+  ]
+}

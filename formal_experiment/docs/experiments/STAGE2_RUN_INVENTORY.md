@@ -22,7 +22,35 @@
 | Paper Validation R1 | `partial-paper-level` | 8 个有效 repeat；clause text + modality | 否，modality-only；D1 repeat 02 invalid |
 | internal Sol candidate 150 | `validated-development-candidate` | 150/150、232 clauses、完整六要素 exact spans | 否，它是人工审核候选；可见性与正式 D1/H1 不同，未适配为方法 attempt |
 
-## 3. 当前唯一完整六要素性能产物
+## 3. Sun Table 8 同口径六要素视图
+
+用户在看到严格 token-overlap 结果后，明确要求 B0/H1/D1 与 Sun Table 8 使用同一
+phrase matching 口径。为避免只对 B0 放宽，现冻结共同的
+`sun_table8_compatible_v1`：以整条 statement 为单位，同一语义字段的预测 span 与
+Gold span 只要存在非空字符交集即可匹配；用最大一对一匹配同时保持
+`Extracted = Matched + Misclassified` 和 `Ground Truth = Matched + Missed`；不再先做
+clause alignment。Modality 本行只评价 evidence span 是否抽到，四分类标签正确性继续
+由独立 modality 指标评价。
+
+当前 B0 v10a 的离线只读重算位于
+`outputs/development/s27_estg150_b0_sun_table8_compatible_v1/`：
+
+| 语义要素 | Ground Truth | Extracted | Matched | Misclassified | Missed | P | R |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Modality | 231 | 256 | 211 | 45 | 20 | 0.824219 | 0.913420 |
+| Actor | 48 | 34 | 25 | 9 | 23 | 0.735294 | 0.520833 |
+| Action | 247 | 245 | 203 | 42 | 44 | 0.828571 | 0.821862 |
+| Condition | 214 | 245 | 147 | 98 | 67 | 0.600000 | 0.686916 |
+| Constraint | 302 | 335 | 144 | 191 | 158 | 0.429851 | 0.476821 |
+| Exception | 13 | 14 | 11 | 3 | 2 | 0.785714 | 0.846154 |
+| Overall | 1055 | 1129 | 741 | 388 | 314 | 0.656333 | 0.702370 |
+
+这套视图是后见到 B0 严格分数后、由用户选择的 Sun-paper comparison view，不伪装成
+结果前预注册指标；但 H1/D1 尚未运行，因此它已在两者生成结果前固定，未来三方法必须
+共享同一实现和配置。Gold 中 231 个 modality 中有 3 个没有显式 trigger span，canonical
+adapter 使用 clause-span fallback，故 modality phrase P/R 的直接可比性略弱于其余五项。
+
+## 4. 严格边界质量视图
 
 `outputs/development/s27_estg150_b0_enhanced_v10a/` 是当前最完整、可直接读取的
 development 六要素性能产物：
@@ -40,7 +68,10 @@ development 六要素性能产物：
 边界：`paper_faithful_b0=false`、`is_formal_performance_result=false`，RWI-0001/RWI-0007
 仍开放。该结果不能冒充 Sun 原始实现或最终 B0。
 
-## 4. Modality-only 结果隔离区
+这些严格 token-overlap 与 clause-aligned 指标继续保留为边界质量和结构诊断，不再用来
+冒充 Sun Table 8 的 phrase P/R。
+
+## 5. Modality-only 结果隔离区
 
 `paper_validation_r1_20260728` 的已聚合有效结果：
 
@@ -54,7 +85,7 @@ development 六要素性能产物：
 `H1-selective-primed` 是整条 keep/correct/remove/add，不是预注册 field-level fallback；
 `H1-selective-empty` 是锚定对照，不是目标三方法之一。
 
-## 5. 无效、未完成和诊断产物
+## 6. 无效、未完成和诊断产物
 
 | 产物 | 分类 | 处置 |
 |---|---|---|
@@ -68,11 +99,12 @@ development 六要素性能产物：
 没有证据表明名为 MiniMax 的外部模型覆盖了 Gold、canonical prompt 或 B0 attempts。
 当前风险是结果口径混用和缺失日志，不是核心数据被破坏。
 
-## 6. 下一次真实运行前的冻结清单
+## 7. 下一次真实运行前的冻结清单
 
 1. 新建唯一 run ID，不复用 `paper_validation_r1` 或旧 pilot 目录。
 2. 明确标记 `development`，直到 formal Gold/publication gate 解锁。
-3. 绑定 150 sample IDs、Layer E hash、extraction-contract、schema、evaluator 和 B0 attempts hash。
+3. 绑定 150 sample IDs、Layer E hash、extraction-contract、schema、严格 evaluator、
+   `sun_table8_compatible_v1` 和 B0 attempts hash。
 4. 固定 DeepSeek provider、exact model ID、transport profile、temperature、token/call/cost ceiling。
 5. D1 不得看 B0、H1、Gold、Layer C；H1 只看 B0、trigger 和授权修复字段。
 6. 每条 sample 独立 attempt；网络错误只允许 identical-byte retry，内容/schema 错误保留分母。

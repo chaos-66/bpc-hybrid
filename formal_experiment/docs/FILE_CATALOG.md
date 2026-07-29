@@ -2,7 +2,7 @@
 
 **生成日期**：2026-07-29
 
-**收录文件**：1710 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
+**收录文件**：1716 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
 
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
@@ -78,6 +78,7 @@
 | `configs/estg150_openai_strict_transport_schema_adapter_v1_7.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_openai_strict_transport_schema_adapter_v1_8.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_openai_strict_transport_schema_adapter_v1_9.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/evaluation/sun_table8_compatible_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/experiment_contract.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_active_registry_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -995,6 +996,8 @@
 | `outputs/development/s27_estg150_b0_phase_a_residual_v3/report_gold_seg_v5_routing_fixed.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_phase_a_residual_v3/report_gold_seg_v8_hypothetical.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_phase_a_residual_v3/report_hybrid_stored.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_sun_table8_compatible_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_sun_table8_compatible_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_v3_error_analysis_v1/error_analysis.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_v3_evaluation_v1/evaluation_all150.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_v3_evaluation_v1/evaluation_independent82.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1475,6 +1478,7 @@
 | `scripts/dry_run_llm_estimate.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/estg150_review_tool.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/estg150_simple_review_tool.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/evaluate_estg150_b0_sun_table8_compatible.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_stage1_s16.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_stage2_s210.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/generate_file_catalog.py` | 活动 | 重建本逐文件目录 |
@@ -1617,6 +1621,7 @@
 | `src/bpc_hybrid/stage2_canonical.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_evaluation_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage2_sun_table8_compatible.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/clause_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/schema.py` | 活动 | Python 实现、脚本或测试 |
@@ -1792,6 +1797,7 @@
 | `tests/test_splitter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_extraction_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage2_sun_table8_compatible.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_compat.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_gate.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_ingestion.py` | 活动 | Python 实现、脚本或测试 |

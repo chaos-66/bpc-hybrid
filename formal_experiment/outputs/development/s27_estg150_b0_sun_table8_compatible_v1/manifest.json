@@ -1,0 +1,37 @@
+{
+  "artifacts": {
+    "metrics": {
+      "path": "metrics.json",
+      "sha256": "95eea784794d995b8f461dae331bc8154362c60378568a65b7e5ebd3d0f34747"
+    }
+  },
+  "claim_scope": "development_sun_table8_comparison_view",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "evaluation": {
+    "assignment": "maximum_cardinality_one_to_one",
+    "clause_alignment_required": false,
+    "gold_modality_clause_fallback_count": 3,
+    "match_rule": "same_semantic_field_any_nonempty_character_span_intersection",
+    "modality_policy": "evidence_span_extraction_only_label_ignored",
+    "note": "Three Gold clauses lack an explicit modality trigger span and use the canonical clause-span fallback; modality phrase P/R is therefore slightly less directly comparable than the other five fields.",
+    "unit": "statement"
+  },
+  "gold_modified": false,
+  "historical_attempts_modified": false,
+  "input_binding": {
+    "b0_attempts_sha256": "79dc457cdf933cb9fbb29030bab3673b9af645dd0138d8e97f5d1b6dfa6b4792",
+    "b0_source_manifest_sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315",
+    "canonical_gold_membership_sha256": "e8e6268644cbc9b7ed42bef19f2e2e2432633a306eab9bf009725ef9571785d7",
+    "evaluator_config_sha256": "69790faa9b31d5352bcc036dbaea32267bed3b06bf841c11fe01378534bc7213",
+    "layer_e_sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+    "membership_sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b"
+  },
+  "llm_call_count": 0,
+  "method_id": "sun_rule_only",
+  "method_variant": "b0_enhanced_v10a",
+  "network_called": false,
+  "paper_faithful_b0": false,
+  "run_id": "s27_estg150_b0_sun_table8_compatible_v1",
+  "schema_version": "sun_table8_compatible_run_manifest@1.0.0",
+  "status": "succeeded_development_not_formal"
+}

@@ -57,8 +57,38 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o 对重复 cue、坐标和逐字连续 span 的生成约束均未稳定遵守 | `mitigated` | v1.8 真实运行在 3/6 calls 后因 condition 省略内部括号引文而零精确匹配并 fail closed；v1.9 保留 fail-closed validator，仅在 strict transport schema 增加非验证性 span descriptions 和父 clause containment 自检；66 项聚焦回归与六槽位离线 preflight 通过；Event 139，后续事件待记录 |
 | RWI-0030 | 2026-07-29 | S2.7–S2.10 / paper validation | provenance/evaluation | modality-only DeepSeek pilot、canonical 六要素路线、无效/未聚合 repeat 和人工候选被文档混写，可能误导 B0/H1/D1 主表 | `mitigated` | 新增人读/机器运行清单；修正 modality-only scope；D1 repeat 02 标 invalid、repeat 04 标 partial，旧 secondary analyses 标需过滤重算；未删除或覆盖产物，实验事件待本批次追加 |
 | RWI-0031 | 2026-07-29 | project governance / candidate protocol tests | provenance/directory hygiene | 数百项已验证资产长期未版本化，且 C2 离线测试在活动根目录遗留 ACL 异常临时目录 | `mitigated` | 临时目录改入 `.tmp/`、可访问缓存已清理、旧根目录合同草稿退役；完整验证通过，458 个重要路径已由 checkpoint `56d2b03` 推送；部分 ignored cache 仍受旧 ACL 保护；Events 160–164 |
+| RWI-0032 | 2026-07-29 | S2.10-E / B0-H1-D1 comparison | evaluation/measurement | token-overlap 与 clause-aligned any-overlap 被拿来直接对照 Sun Table 8，额外边界和子句门槛使 B0 phrase P/R 看起来远低于论文同口径结果 | `resolved` | 新增 statement-level 同字段任意非空交集最大一对一 evaluator；B0 六字段只读重算、6 项聚焦回归和全量检查通过；Gold/attempts/API 均未改变；Event 165 |
 
 ## 3. 详细记录
+
+### RWI-0032 — 严格边界指标被误作 Sun Table 8 同口径比较
+
+- **首次发现**：2026-07-29，用户复核 B0 Action P/R 并要求与 Sun 原表同口径比较时。
+- **阶段/范围**：S2.10-E、B0 development evaluation，以及未来 H1/D1 六要素主表。
+- **观察事实**：当前严格 evaluator 先做 clause span-IoU≥0.5 alignment，再按
+  token-overlap 或 exact boundary 计分；旧 `sun_table8_any_overlap_diagnostic` 虽允许字段
+  span 任意交集，仍保留了 clause alignment。Sun §5.2/Table 8 的 phrase 规则则是在同一
+  statement 内，同 semantic concept 的计算 span 与 Gold span 有非空交集即 matched。
+  因此 B0 Action 的严格 token P/R=0.201493/0.199861、旧 clause-aligned overlap
+  P/R=0.697959/0.692308，都不是直接的 Sun Table 8 口径。
+- **影响**：把严格边界质量分数直接与 Sun Action 0.986/0.986 横比，会把 evaluator
+  差异误称为 baseline 方法差距，并使后续 B0/H1/D1 主表无法回答“在 Sun 的 phrase
+  定义下三种方法谁抽到了语义要素”。
+- **解决方法**：新增独立 `sun_table8_compatible_v1`，不覆盖 v1.2 严格 evaluator：
+  以整条 statement 为单位，六字段分别做任意非空字符交集的最大基数一对一匹配；一对一
+  使 Table 8 的 `Extracted=Matched+Misclassified` 与 `Ground Truth=Matched+Missed`
+  同时成立。Modality 只评价 evidence span，不混入四分类标签正确性；invalid attempt
+  作为零预测留在分母。该视图是在看到 B0 严格结果后、由用户明确选择的 Sun-paper
+  comparison view，不伪装为事前预注册；尚未运行的 H1/D1 将共享同一固定实现与配置。
+- **验证证据**：6 项聚焦测试覆盖跨 clause 匹配、1 字符交集、duplicate 一对一、
+  modality label 隔离、invalid attempt 和 membership fail-closed；150 条 B0 只读重算
+  产物 `s27_estg150_b0_sun_table8_compatible_v1` 绑定 Layer E、membership、旧 attempts、
+  旧 manifest 与 evaluator hash，LLM/API=0、Gold modified=false。B0 overall
+  P/R=0.656333/0.702370，Action P/R=0.828571/0.821862。完整测试与目录检查由 Event 165
+  绑定。
+- **状态**：`resolved`。Sun 同口径视图已实现并生成 B0 development 结果；严格 evaluator
+  继续作为边界/结构诊断，历史结果未覆盖。
+- **对应事件**：Event 165。
 
 ### RWI-0031 — 已验证资产未版本化与活动根目录临时文件泄漏
 

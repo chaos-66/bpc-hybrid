@@ -1862,3 +1862,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：重要实验资产 checkpoint 56d2b03a1fb4e206db5bb92a8eb5ed51b942b650 已推送至 origin/experiment/paper-validation-r1。RWI-0031 与 PROJECT_AUDIT 已更新：458 个重要路径远端保存完成；ignored .tmp ACL cache 残留继续隔离，因此 RWI 保持 mitigated。收尾 audit_project.py --with-tests 为 1480 passed、23 skipped、0 integrity errors；未调用真实 LLM/API，未读取 .env，未提交 restricted raw data 或 provenance stores。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-29T14:17:02.729940+00:00 - 新增并验证 Sun Table 8 同口径六要素评价器，离线重算 B0 v10a
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_sun_table8_compatible_v1；阶段=stage2；方法=sun_rule_only:b0_enhanced_v10a；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/evaluate_estg150_b0_sun_table8_compatible.py`
+- manifest：outputs/development/s27_estg150_b0_sun_table8_compatible_v1/manifest.json
+- 结果摘要：development only; 150/150; overall P/R=0.656333/0.702370; Action P/R=0.828571/0.821862; six-field metrics in manifest artifact
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1487 passed, 23 skipped in 186.57s (0:03:06)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`6b41f9f16eccd58fda55fe933a583b9866c65ca7`；相关未提交路径：9 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0032 resolved. Added statement-level same-field any-nonempty-span-intersection maximum one-to-one view matching Sun Table 8 accounting; no clause alignment. Modality row evaluates evidence spans, not four-class labels. This comparison view was selected after observing B0 strict metrics and is not claimed as preregistered; it is frozen prospectively for H1/D1. Historical attempts and Gold were not modified. Full audit: 1487 passed, 23 skipped.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
