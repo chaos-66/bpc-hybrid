@@ -2,7 +2,7 @@
 
 **生成日期**：2026-07-29
 
-**收录文件**：1707 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
+**收录文件**：1709 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
 
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
@@ -517,6 +517,7 @@
 | `docs/experiments/paper_validation_r1/10_DOWNSTREAM_BLOCKER.md` | 活动 | 说明、规范或研究文档 |
 | `docs/experiments/paper_validation_r1/11_MODALITY_ONLY_SCOPE.md` | 活动 | 说明、规范或研究文档 |
 | `docs/experiments/paper_validation_r1/FINAL_REPORT.md` | 活动 | 说明、规范或研究文档 |
+| `docs/experiments/STAGE2_RUN_INVENTORY.md` | 活动 | 说明、规范或研究文档 |
 | `docs/FILE_CATALOG.md` | 活动 | 自动生成的逐文件目录 |
 | `docs/HUMAN_GOLD_GUIDE.md` | 活动 | 说明、规范或研究文档 |
 | `docs/HUMAN_GOLD_REVIEW_PACK_SCHEMA_v2.md` | 活动 | 说明、规范或研究文档 |
@@ -1367,6 +1368,7 @@
 | `outputs/reports/s29_sun_d1_offline_prereg_v3.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s29_sun_d1_offline_prereg_v4.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s29_sun_d1_offline_prereg_v5.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage2_run_inventory_20260729.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `paper`
 

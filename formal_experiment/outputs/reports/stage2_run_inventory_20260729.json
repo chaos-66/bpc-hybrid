@@ -1,0 +1,80 @@
+{
+  "schema_version": "stage2_run_inventory@1.0.0",
+  "created_date": "2026-07-29",
+  "claim_scope": "artifact_inventory_only",
+  "gold_modified": false,
+  "api_called_by_inventory": false,
+  "target_comparison": {
+    "methods": ["sun_rule_only", "sun_llm_fallback", "direct_llm"],
+    "llm_model_requested_by_user": "deepseek-v4-pro",
+    "shared_contract": "stage2_extraction_contract@1.0.0",
+    "shared_schema": "stage2_prediction.schema.json@1.0.0",
+    "shared_evaluator": "S2.10-E v1.2",
+    "status": "not_yet_run_as_one_canonical_six_field_comparison"
+  },
+  "runs": [
+    {
+      "id": "s27_estg150_b0_enhanced_v10a",
+      "method": "sun_rule_only",
+      "status": "succeeded_development",
+      "evaluation_scope": "canonical_six_field",
+      "sample_count": 150,
+      "prediction_path": "outputs/development/s27_estg150_b0_enhanced_v10a/b0_attempts.json",
+      "metrics_path": "outputs/development/s27_estg150_b0_enhanced_v10a/evaluation_all150.json",
+      "manifest_path": "outputs/development/s27_estg150_b0_enhanced_v10a/manifest.json",
+      "formal_result": false,
+      "paper_faithful_b0": false
+    },
+    {
+      "id": "s28_sun_h1_selective_dry_run_v6",
+      "method": "sun_llm_fallback",
+      "status": "verified_offline_only",
+      "evaluation_scope": "synthetic_contract_no_performance",
+      "manifest_path": "outputs/reports/s28_sun_h1_selective_dry_run_v6.manifest.json",
+      "real_api_calls": 0,
+      "performance_metrics_available": false
+    },
+    {
+      "id": "s29_sun_d1_offline_prereg_v5",
+      "method": "direct_llm",
+      "status": "verified_offline_only",
+      "evaluation_scope": "synthetic_contract_no_performance",
+      "manifest_path": "outputs/reports/s29_sun_d1_offline_prereg_v5.manifest.json",
+      "real_api_calls": 0,
+      "performance_metrics_available": false
+    },
+    {
+      "id": "paper_validation_r1_20260728",
+      "method": "multiple_noncanonical_controls",
+      "status": "partial_paper_level",
+      "evaluation_scope": "clause_level_modality_only_token_iou_0.3",
+      "manifest_path": "outputs/paper_validation_r1_20260728/manifest.json",
+      "summary_path": "outputs/paper_validation_r1_20260728/statistics/run_level_summary.json",
+      "valid_repeats_in_published_summary": 8,
+      "planned_repeats_in_published_summary": 9,
+      "additional_partial_repeat_count": 1,
+      "canonical_six_field": false,
+      "formal_result": false,
+      "known_invalid": ["d1_unprimed/repeat_02"],
+      "known_partial_unaggregated": ["d1_unprimed/repeat_04"]
+    },
+    {
+      "id": "codex_internal_gpt56sol_full150_v1",
+      "method": "human_review_candidate_generator",
+      "status": "validated_development_candidate",
+      "evaluation_scope": "canonical_candidate_not_method_performance",
+      "sample_count": 150,
+      "clause_count": 232,
+      "candidate_path": "data/development/estg/llm_candidate_runs/codex_internal_gpt56sol_full150_v1/ai_review_candidates.json",
+      "manifest_path": "data/development/estg/llm_candidate_runs/codex_internal_gpt56sol_full150_v1/manifest.json",
+      "performance_metrics_available": false
+    }
+  ],
+  "safety_conclusion": {
+    "core_gold_intact": true,
+    "canonical_contract_intact": true,
+    "b0_attempts_intact": true,
+    "external_minimax_provider_run_found": false,
+    "primary_problem": "noncanonical_modality_outputs_and_partial_runs_were_mixed_with_the_planned_canonical_six_field_comparison"
+  }
+}

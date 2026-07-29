@@ -1754,3 +1754,46 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Strictly docs-only change. No prompt, no Gold, no method, no evaluator, no manifest, no report asset modified. New file formal_experiment/docs/experiments/paper_validation_r1/11_MODALITY_ONLY_SCOPE.md added as a clarification of 09_SIX_FIELD_BLOCKER.md (its argument about Gold coverage being the primary blocker is overreaching; the real blockers are output-format/evaluator mismatch and task §0.3). 09_SIX_FIELD_BLOCKER.md itself is NOT rewritten in this batch. FILE_CATALOG.md regeneration was triggered to keep the catalog consistent with the new file, but its 1197-line diff is a cascade effect of pre-existing uncommitted changes from other agents/users and is staged separately or left for the next batch owner.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-29T09:16:58.872614+00:00 - 补录 Paper Validation R1 D1 repeat 04 未完成运行
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=paper_validation_r1_20260728_d1_repeat_04；阶段=stage2_paper_validation；方法=d1_unprimed；状态=部分完成（`partial`）
+- 实际运行命令：`unknown_not_preserved_retrospective_inventory_only`
+- manifest：outputs/paper_validation_r1_20260728/runs/d1_unprimed/repeat_04/run_manifest.json, outputs/paper_validation_r1_20260728/runs/d1_unprimed/repeat_04/token_usage.json
+- 结果摘要：Historical authorized DeepSeek V4 Pro run found on disk: 5/5 batches report success, 48292 input + 90218 output = 138510 tokens, parse_failures=0; however no all_predictions.json or metrics files exist, provider host differs from the root audit manifest, and the original command was not preserved. Status remains partial; it does not replace invalid repeat 02 and contributes no P/R/F1.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1480 passed, 23 skipped in 175.26s (0:02:55)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`11af2c15750c643e5a29002e74165839926e9f55`；相关未提交路径：457 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Retrospective log repair only. No API was called in this inventory batch; authorized_called describes the historical run evidenced by its receipts. Existing run files were not edited or re-evaluated.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-29T09:20:29.479333+00:00 - 整理 Stage 2 B0 H1 D1 运行资产并隔离 modality-only 结果
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1480 passed, 23 skipped in 153.51s (0:02:33)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`11af2c15750c643e5a29002e74165839926e9f55`；相关未提交路径：459 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Added human and machine-readable Stage 2 run inventories; corrected paper_validation_r1 scope against its frozen prompts and predictions; registered RWI-0030; marked D1 repeat 02 invalid and repeat 04 partial; preserved all historical outputs without deletion or overwrite. Gold, canonical extraction contract, prompts, evaluator, predictions, and metrics were not modified. The target DeepSeek V4 Pro canonical six-field B0/H1/D1 comparison remains unrun and requires a separately frozen provider/model/budget plus explicit API authorization.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-29T09:28:21.995888+00:00 - 完成 Stage 2 运行清单 checkpoint 精确状态验证
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1480 passed, 23 skipped in 239.05s (0:03:59)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`11af2c15750c643e5a29002e74165839926e9f55`；相关未提交路径：459 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Final exact-state verification after removing one Markdown trailing-space issue. The Stage 2 inventory, modality-only scope correction, and retrospective partial-run log remain unchanged in meaning. Full audit: 1480 passed, 23 skipped; integrity true; Gold and experiment artifacts unchanged.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
