@@ -56,7 +56,7 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0028 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/validation | GPT-4o Pass B 把逐字不变的译文标为 `edited`；runner 又错误地用原始英文而非同次 Pass A 文本校验 Pass B translation decision | `mitigated` | v1.5 增加 decision/text 生成前自检并让 Pass B 校验绑定同次 Pass A；旧响应仍 fail closed，57 项聚焦回归和六槽位离线 preflight 通过；真实 runtime 待新授权；Event 134 |
 | RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o 对重复 cue、坐标和逐字连续 span 的生成约束均未稳定遵守 | `mitigated` | v1.8 真实运行在 3/6 calls 后因 condition 省略内部括号引文而零精确匹配并 fail closed；v1.9 保留 fail-closed validator，仅在 strict transport schema 增加非验证性 span descriptions 和父 clause containment 自检；66 项聚焦回归与六槽位离线 preflight 通过；Event 139，后续事件待记录 |
 | RWI-0030 | 2026-07-29 | S2.7–S2.10 / paper validation | provenance/evaluation | modality-only DeepSeek pilot、canonical 六要素路线、无效/未聚合 repeat 和人工候选被文档混写，可能误导 B0/H1/D1 主表 | `mitigated` | 新增人读/机器运行清单；修正 modality-only scope；D1 repeat 02 标 invalid、repeat 04 标 partial，旧 secondary analyses 标需过滤重算；未删除或覆盖产物，实验事件待本批次追加 |
-| RWI-0031 | 2026-07-29 | project governance / candidate protocol tests | provenance/directory hygiene | 数百项已验证资产长期未版本化，且 C2 离线测试在活动根目录遗留 ACL 异常临时目录 | `mitigated` | 临时目录改入 `.tmp/`、可访问缓存已清理、旧根目录合同草稿退役；部分 ignored cache 仍受旧 ACL 保护；完整验证通过，统一 Git checkpoint 待用户明确批准；Events 160–162 |
+| RWI-0031 | 2026-07-29 | project governance / candidate protocol tests | provenance/directory hygiene | 数百项已验证资产长期未版本化，且 C2 离线测试在活动根目录遗留 ACL 异常临时目录 | `mitigated` | 临时目录改入 `.tmp/`、可访问缓存已清理、旧根目录合同草稿退役；完整验证通过，458 个重要路径已由 checkpoint `56d2b03` 推送；部分 ignored cache 仍受旧 ACL 保护；Events 160–164 |
 
 ## 3. 详细记录
 
@@ -77,15 +77,15 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 - **处置方法**：将 C2 测试临时父目录固定为已忽略的 `formal_experiment/.tmp/` 并断言父目录；
   精确删除异常临时目录与可正常访问的可再生缓存；把根目录旧草稿迁入 `_retired/docs/2026-07/`
   并登记迁移；旧测试生成且 ACL 封闭的 `.tmp/` 残留保持 ignored/隔离；
-  不移动、不删除、不覆盖任何历史实验输出；对全部活动状态运行完整测试。由于当前工作树混合了
-  458 个跨任务路径，统一 checkpoint 在获得用户明确批准前不建立、不推送。
-- **验证证据**：候选协议聚焦测试、`audit_project.py --with-tests`、文件目录检查和
-  暂存范围安全复核；两份 hash-locked prompt 的 5 处 Markdown
-  hard-break 双空格保持原字节，并作为 `git diff --check` 的已解释例外；Event 160。
+  不移动、不删除、不覆盖任何历史实验输出；对全部活动状态运行完整测试。用户明确授权后，
+  458 个跨任务重要路径经精确清单暂存为 checkpoint `56d2b03` 并推送到当前 upstream；
+  `.env`、restricted raw data、provenance stores 和 ignored cache 未进入提交。
+- **验证证据**：候选协议聚焦测试、`audit_project.py --with-tests`、文件目录检查、
+  暂存范围安全复核、commit `56d2b03` 与远端 push 结果；hash-locked prompt/合同/实现中的
+  Markdown hard-break、尾随空格和 EOF 空行保持原字节，并作为 `git diff --check` 的已解释例外。
 - **状态**：`mitigated`。临时目录产生位置与旧草稿入口已经修正；受旧 ACL 保护的 ignored
-  `.tmp/` 缓存仍有残留；累计资产完整验证通过，
-  但统一 Git checkpoint 因混合工作树需用户明确批准，尚未建立或推送。
-- **对应事件**：Events 160–162。
+  `.tmp/` 缓存仍有残留；累计资产完整验证通过，统一 Git checkpoint `56d2b03` 已建立并推送。
+- **对应事件**：Events 160–164。
 
 ### RWI-0030 — modality-only 与 canonical 六要素结果口径混用
 

@@ -127,8 +127,8 @@ validated Pass-A fixture，未来 live hash 必须在同次运行的 Pass A 后�
 RWI-0031 记录了长期未版本化资产与 C2 离线测试临时目录泄漏：测试临时父目录现固定为
 `.tmp/`，根目录旧 Stage 2 草稿已迁入退役区，可访问的可再生缓存已清理；部分旧 `.tmp/`
 条目因异常 ACL 保持 ignored/隔离。现有 Gold、预测、结果和 manifest 未移动、删除或覆盖，
-完整活动状态已通过验证，但统一 Git checkpoint
-因 458 个跨任务路径构成混合工作树而待用户明确批准，尚未建立或推送。
+完整活动状态已通过验证；458 个跨任务重要路径已由 checkpoint `56d2b03` 提交并推送到
+`origin/experiment/paper-validation-r1`，ignored cache、restricted raw data 与 provenance stores 未提交。
 
 ## 2. 当前门禁
 
