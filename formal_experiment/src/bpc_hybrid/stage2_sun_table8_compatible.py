@@ -19,6 +19,7 @@ from typing import Any
 
 
 SCHEMA_VERSION = "sun_table8_compatible_evaluation@1.0.0"
+LITERAL_SCHEMA_VERSION = "sun_table8_literal_overlap_evaluation@2.0.0"
 FIELDS = ("modality", "actor", "action", "condition", "constraint", "exception")
 PLURAL_KEYS = {
     "actor": "actors",
@@ -216,5 +217,136 @@ def evaluate_sun_table8_compatible(
             "ground_truth": sum(values["ground_truth"] for values in counts.values()),
             "extracted": sum(values["extracted"] for values in counts.values()),
             **_prf(overall_matched, overall_misclassified, overall_missed),
+        },
+    }
+
+
+def evaluate_sun_table8_literal_overlap(
+    gold_records: Sequence[Mapping[str, Any]],
+    attempts: Sequence[Mapping[str, Any]],
+    *,
+    dataset_id: str,
+    method_id: str,
+) -> dict[str, Any]:
+    """Apply Sun's literal independent any-overlap rule to all six fields.
+
+    Precision counts every predicted phrase that intersects at least one Gold
+    phrase of the same type. Recall counts every Gold phrase that intersects at
+    least one predicted phrase of the same type. There is no clause alignment,
+    overlap threshold, boundary penalty, or one-to-one assignment.
+    """
+
+    gold_by_id: dict[str, Mapping[str, Any]] = {}
+    for row in gold_records:
+        sample_id = row.get("sample_id")
+        if not isinstance(sample_id, str) or not sample_id or sample_id in gold_by_id:
+            raise SunTable8EvaluationError("Gold sample_ids must be unique non-empty strings")
+        gold_by_id[sample_id] = row
+
+    attempt_by_id: dict[str, Mapping[str, Any]] = {}
+    for attempt in attempts:
+        sample_id = attempt.get("sample_id")
+        if not isinstance(sample_id, str) or not sample_id or sample_id in attempt_by_id:
+            raise SunTable8EvaluationError("attempt sample_ids must be unique non-empty strings")
+        attempt_by_id[sample_id] = attempt
+    if set(attempt_by_id) != set(gold_by_id):
+        missing = sorted(set(gold_by_id) - set(attempt_by_id))[:5]
+        extra = sorted(set(attempt_by_id) - set(gold_by_id))[:5]
+        raise SunTable8EvaluationError(
+            f"attempt membership differs from Gold: missing={missing}, extra={extra}"
+        )
+
+    counts = {
+        field: {
+            "ground_truth": 0,
+            "extracted": 0,
+            "matched_predictions": 0,
+            "matched_ground_truth": 0,
+        }
+        for field in FIELDS
+    }
+    invalid_attempt_count = 0
+    for sample_id, gold in gold_by_id.items():
+        attempt = attempt_by_id[sample_id]
+        predicted = attempt.get("record")
+        if attempt.get("request_status") != "ok" or not isinstance(predicted, Mapping):
+            invalid_attempt_count += 1
+            predicted = {"clauses": []}
+        for field in FIELDS:
+            gold_spans = _field_spans(gold, field)
+            predicted_spans = _field_spans(predicted, field)
+            counts[field]["ground_truth"] += len(gold_spans)
+            counts[field]["extracted"] += len(predicted_spans)
+            counts[field]["matched_predictions"] += sum(
+                any(_intersects(predicted_span, gold_span) for gold_span in gold_spans)
+                for predicted_span in predicted_spans
+            )
+            counts[field]["matched_ground_truth"] += sum(
+                any(_intersects(gold_span, predicted_span) for predicted_span in predicted_spans)
+                for gold_span in gold_spans
+            )
+
+    per_field: dict[str, dict[str, float | int]] = {}
+    for field, values in counts.items():
+        matched_predictions = values["matched_predictions"]
+        matched_ground_truth = values["matched_ground_truth"]
+        extracted = values["extracted"]
+        ground_truth = values["ground_truth"]
+        precision = matched_predictions / extracted if extracted else 0.0
+        recall = matched_ground_truth / ground_truth if ground_truth else 0.0
+        f1 = (
+            2.0 * precision * recall / (precision + recall)
+            if precision + recall
+            else 0.0
+        )
+        per_field[field] = {
+            "ground_truth": ground_truth,
+            "extracted": extracted,
+            "matched_predictions": matched_predictions,
+            "matched_ground_truth": matched_ground_truth,
+            "misclassified": extracted - matched_predictions,
+            "missed": ground_truth - matched_ground_truth,
+            "precision": precision,
+            "recall": recall,
+            "f1": f1,
+        }
+
+    total_extracted = sum(values["extracted"] for values in counts.values())
+    total_ground_truth = sum(values["ground_truth"] for values in counts.values())
+    total_matched_predictions = sum(
+        values["matched_predictions"] for values in counts.values()
+    )
+    total_matched_ground_truth = sum(
+        values["matched_ground_truth"] for values in counts.values()
+    )
+    precision = total_matched_predictions / total_extracted if total_extracted else 0.0
+    recall = total_matched_ground_truth / total_ground_truth if total_ground_truth else 0.0
+    f1 = (
+        2.0 * precision * recall / (precision + recall)
+        if precision + recall
+        else 0.0
+    )
+    return {
+        "schema_version": LITERAL_SCHEMA_VERSION,
+        "dataset_id": dataset_id,
+        "method_id": method_id,
+        "sample_count": len(gold_by_id),
+        "invalid_attempt_count": invalid_attempt_count,
+        "evaluation_unit": "statement",
+        "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+        "assignment": "none_independent_overlap_coverage",
+        "clause_alignment_required": False,
+        "modality_policy": "evidence_span_extraction_only_label_ignored",
+        "per_field": per_field,
+        "overall": {
+            "ground_truth": total_ground_truth,
+            "extracted": total_extracted,
+            "matched_predictions": total_matched_predictions,
+            "matched_ground_truth": total_matched_ground_truth,
+            "misclassified": total_extracted - total_matched_predictions,
+            "missed": total_ground_truth - total_matched_ground_truth,
+            "precision": precision,
+            "recall": recall,
+            "f1": f1,
         },
     }

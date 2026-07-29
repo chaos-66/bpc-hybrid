@@ -1879,3 +1879,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：RWI-0032 resolved. Added statement-level same-field any-nonempty-span-intersection maximum one-to-one view matching Sun Table 8 accounting; no clause alignment. Modality row evaluates evidence spans, not four-class labels. This comparison view was selected after observing B0 strict metrics and is not claimed as preregistered; it is frozen prospectively for H1/D1. Historical attempts and Gold were not modified. Full audit: 1487 passed, 23 skipped.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-29T14:29:23.908848+00:00 - 按 Sun 原文字面任意交集规则重算 B0 全部六要素
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_sun_table8_literal_v2；阶段=stage2；方法=sun_rule_only:b0_enhanced_v10a；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/evaluate_estg150_b0_sun_table8_literal_v2.py`
+- manifest：outputs/development/s27_estg150_b0_sun_table8_literal_v2/manifest.json
+- 结果摘要：development only; all six fields use independent statement-level any-overlap; overall P/R=0.681134/0.741232; Action P/R=0.857143/0.858300
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1490 passed, 23 skipped in 163.45s (0:02:43)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`ca7452458df42d3235f98f91151753868fa01fdc`；相关未提交路径：9 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0032 v2 correction: removed the extra one-to-one assignment from Event 165. Precision independently counts predicted spans overlapping any same-field Gold; recall independently counts Gold spans overlapping any same-field prediction. No clause alignment or overlap-ratio threshold. v1 retained only as provenance. Full audit: 1490 passed, 23 skipped.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

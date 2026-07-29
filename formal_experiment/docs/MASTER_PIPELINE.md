@@ -207,13 +207,13 @@ condition/constraint/exception 的数量与嵌套、被动语态、隐含 actor�
 | S2.7 | 实现代表性非 LLM baseline | S2.1/S2.2 | **modality component verified；phrase/full Stage 2 blocked pending formal route/input publication** | 同一 1985/420/426 split 上 train-majority、固定德文 keyword、word 1–2 gram Multinomial NB 已 aggregate-only 运行并 exact-hash；NB test accuracy=0.784038、macro-F1=0.568849。S2.2 annotation 已冻结，phrase baseline 仍须 route/language/context QA 与 formal input/Gold publication gate |
 | S2.8 | 预注册 H1 trigger/merge/call budget | S2.6 + S2.10-E | **verified-offline** | v5 prompt 绑定 extraction-contract v1；exact S2.6 B0、推理时 trigger、字段与受控 ambiguity metadata merge、45-call 名额、每条最多 1 次/0 重试、46.08 万 token/1.5 USD 上限及可计分 B0 回退由 v6 manifest 锁定；未调用真实 LLM |
 | S2.9 | 锁定 D1 prompt/few-shot/model/budget | S2.10-E；正式运行另依赖 S2.2 | **verified-offline** | v5 prompt 绑定 extraction-contract v1，并插入 4 个覆盖代词/被动/多行为/例外/多 clause 的手工 synthetic canonical few-shot；模型、temperature=0、5 repeats、0 retry、750 次/921.6 万 token/37 USD 上限与失败保留由 v5 manifest 锁定；真实 API 未授权 |
-| S2.10 | 统一 evaluator + 主数据组件评价 | S2.2/S2.6-S2.9 | **v1.2严格 evaluator + Sun Table 8 comparison view verified；B0 development evidence locked；formal results blocked** | S2.10-E v1.2 保留 method-independent global span-IoU alignment（阈值0.5）与 exact segmentation 作为边界/结构诊断；另按用户明确选择新增 statement-level、同字段任意非空交集、最大一对一的 `sun_table8_compatible_v1`，供 B0/H1/D1 与 Sun Table 8 同口径比较。immutable B0 已离线重算，模型/API 未重跑；该比较视图是在看到 B0 严格分数后增加，不冒充结果前预注册。正式主表仍等待 route QA、formal Gold/input publication 与 H1/D1 运行 |
+| S2.10 | 统一 evaluator + 主数据组件评价 | S2.2/S2.6-S2.9 | **v1.2严格 evaluator + Sun Table 8 literal-overlap view verified；B0 development evidence locked；formal results blocked** | S2.10-E v1.2 只保留作边界/结构诊断；主论文同口径视图为 `sun_table8_literal_overlap_v2`：statement-level、同字段任意非空交集，precision 独立统计命中的预测 span，recall 独立统计命中的 Gold span，不做一对一、clause alignment 或比例阈值。immutable B0 已离线重算，模型/API 未重跑；该视图是在看到 B0 严格分数后增加，不冒充结果前预注册。正式主表仍等待 H1/D1 运行 |
 | S2.11 | 复杂法律语料集冻结 | G0.5 | **verified-input/protocol：官方 GDPR Articles 5–50 的 50 条成员已锁定** | CELEX/Formex 来源、EUR-Lex reuse、source hashes、覆盖优先 deterministic membership、空白人工 Gold/schema/canonical mapping 与 exact-hash gate 通过；语义 Gold 仍 0/50，未生成复杂度 profile 或方法结果 |
 | S2.12 | 复杂度分层与误差分析 | S2.10/S2.11 | **protocol verified-offline；formal results blocked** | S2.12-P 已冻结 6 个主 endpoint、2 个 B0 对照、每数据轨道 12 假设 Holm family、10,000 次 sample-cluster bootstrap、10,000 次 sign-swap、固定 strata、错误 taxonomy 与 deterministic case selection；EStG annotation 已 150/150 冻结，真实曲线仍等待其 formal route/input、GDPR 50/50 与 exact-membership predictions |
 | S2.13 | Stage 2 冻结 | S2.1-S2.12 | blocked | 方法、数据、Gold、指标、成本、manifest 完整 |
 
 Stage 2 完成时，B0/H1/D1 和选定 baseline 必须共享 test IDs、Gold、schema、
-normalization、严格 evaluator 和 `sun_table8_compatible_v1`，并分别报告 modality
+normalization、严格 evaluator 和 `sun_table8_literal_overlap_v2`，并分别报告 modality
 四分类、Sun Table 8 phrase P/R、严格边界质量和完整 Rule Record 指标。
 
 ## 9. Stage 3：匹配、违规检测与分类

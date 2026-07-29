@@ -13,6 +13,7 @@ from bpc_hybrid.estg150_b0_development import (
 from bpc_hybrid.stage2_sun_table8_compatible import (
     SunTable8EvaluationError,
     evaluate_sun_table8_compatible,
+    evaluate_sun_table8_literal_overlap,
 )
 
 
@@ -165,6 +166,85 @@ def test_versioned_b0_result_recomputes_from_bound_inputs() -> None:
     )
     assert manifest["input_binding"]["layer_e_sha256"] == sha256_file(layer_e)
     assert manifest["input_binding"]["b0_attempts_sha256"] == sha256_file(attempts_path)
+    assert manifest["artifacts"]["metrics"]["sha256"] == sha256_file(
+        output / "metrics.json"
+    )
+
+
+def test_literal_overlap_has_no_one_to_one_restriction() -> None:
+    gold = record("s1", [(0, 20)])
+    predicted = copy.deepcopy(gold)
+    gold["clauses"][0]["actions"] = [span(2, 5), span(5, 8)]
+    predicted["clauses"][0]["actions"] = [span(2, 8), span(3, 7)]
+
+    report = evaluate_sun_table8_literal_overlap(
+        [gold],
+        [attempt(predicted)],
+        dataset_id="fixture",
+        method_id="fixture_method",
+    )
+    values = report["per_field"]["action"]
+
+    assert report["assignment"] == "none_independent_overlap_coverage"
+    assert values["matched_predictions"] == 2
+    assert values["matched_ground_truth"] == 2
+    assert values["precision"] == 1.0
+    assert values["recall"] == 1.0
+
+
+def test_literal_overlap_applies_to_every_semantic_field() -> None:
+    gold = record("s1", [(0, 30)])
+    predicted = copy.deepcopy(gold)
+    for key in ("actors", "actions", "conditions", "constraints", "exceptions"):
+        gold["clauses"][0][key] = [span(4, 8)]
+        predicted["clauses"][0][key] = [span(7, 12)]
+    gold["clauses"][0]["modality"]["evidence"] = [span(4, 8)]
+    predicted["clauses"][0]["modality"]["evidence"] = [span(7, 12)]
+
+    report = evaluate_sun_table8_literal_overlap(
+        [gold],
+        [attempt(predicted)],
+        dataset_id="fixture",
+        method_id="fixture_method",
+    )
+
+    for field in ("modality", "actor", "action", "condition", "constraint", "exception"):
+        assert report["per_field"][field]["precision"] == 1.0
+        assert report["per_field"][field]["recall"] == 1.0
+
+
+def test_versioned_b0_literal_result_recomputes_from_bound_inputs() -> None:
+    config = json.loads(
+        (ROOT / "configs/models/estg150_b0_enhanced_s27_v10a.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    layer_e = ROOT / config["inputs"]["human_correction_layer_e"]["path"]
+    membership = ROOT / config["inputs"]["membership_hashes"]["path"]
+    attempts_path = (
+        ROOT / "outputs/development/s27_estg150_b0_enhanced_v10a/b0_attempts.json"
+    )
+    output = ROOT / "outputs/development/s27_estg150_b0_sun_table8_literal_v2"
+    manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
+    expected = json.loads((output / "metrics.json").read_text(encoding="utf-8"))
+    attempts = json.loads(attempts_path.read_text(encoding="utf-8"))
+    gold, _ = build_canonical_gold_records(layer_e, membership)
+
+    actual = evaluate_sun_table8_literal_overlap(
+        gold,
+        attempts,
+        dataset_id=config["dataset_id"],
+        method_id="sun_rule_only:b0_enhanced_v10a",
+    )
+
+    assert actual == expected
+    assert expected["per_field"]["action"]["precision"] == pytest.approx(
+        0.8571428571428571
+    )
+    assert expected["per_field"]["action"]["recall"] == pytest.approx(
+        0.8582995951417004
+    )
+    assert manifest["input_binding"]["layer_e_sha256"] == sha256_file(layer_e)
     assert manifest["artifacts"]["metrics"]["sha256"] == sha256_file(
         output / "metrics.json"
     )

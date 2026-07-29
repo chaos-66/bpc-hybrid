@@ -57,7 +57,7 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0029 | 2026-07-26 | EStG-150 candidate protocol / C2 | generation/coordinates | GPT-4o 对重复 cue、坐标和逐字连续 span 的生成约束均未稳定遵守 | `mitigated` | v1.8 真实运行在 3/6 calls 后因 condition 省略内部括号引文而零精确匹配并 fail closed；v1.9 保留 fail-closed validator，仅在 strict transport schema 增加非验证性 span descriptions 和父 clause containment 自检；66 项聚焦回归与六槽位离线 preflight 通过；Event 139，后续事件待记录 |
 | RWI-0030 | 2026-07-29 | S2.7–S2.10 / paper validation | provenance/evaluation | modality-only DeepSeek pilot、canonical 六要素路线、无效/未聚合 repeat 和人工候选被文档混写，可能误导 B0/H1/D1 主表 | `mitigated` | 新增人读/机器运行清单；修正 modality-only scope；D1 repeat 02 标 invalid、repeat 04 标 partial，旧 secondary analyses 标需过滤重算；未删除或覆盖产物，实验事件待本批次追加 |
 | RWI-0031 | 2026-07-29 | project governance / candidate protocol tests | provenance/directory hygiene | 数百项已验证资产长期未版本化，且 C2 离线测试在活动根目录遗留 ACL 异常临时目录 | `mitigated` | 临时目录改入 `.tmp/`、可访问缓存已清理、旧根目录合同草稿退役；完整验证通过，458 个重要路径已由 checkpoint `56d2b03` 推送；部分 ignored cache 仍受旧 ACL 保护；Events 160–164 |
-| RWI-0032 | 2026-07-29 | S2.10-E / B0-H1-D1 comparison | evaluation/measurement | token-overlap 与 clause-aligned any-overlap 被拿来直接对照 Sun Table 8，额外边界和子句门槛使 B0 phrase P/R 看起来远低于论文同口径结果 | `resolved` | 新增 statement-level 同字段任意非空交集最大一对一 evaluator；B0 六字段只读重算、6 项聚焦回归和全量检查通过；Gold/attempts/API 均未改变；Event 165 |
+| RWI-0032 | 2026-07-29 | S2.10-E / B0-H1-D1 comparison | evaluation/measurement | token-overlap、clause alignment 与后加的一对一分配都比 Sun 原文的独立 any-overlap coverage 更严 | `resolved` | v2 对六字段分别统计预测命中率与 Gold 覆盖率；无一对一/子句对齐/比例阈值；B0 重算、10 项聚焦回归和全量检查通过；Events 165–166 |
 
 ## 3. 详细记录
 
@@ -74,21 +74,25 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 - **影响**：把严格边界质量分数直接与 Sun Action 0.986/0.986 横比，会把 evaluator
   差异误称为 baseline 方法差距，并使后续 B0/H1/D1 主表无法回答“在 Sun 的 phrase
   定义下三种方法谁抽到了语义要素”。
-- **解决方法**：新增独立 `sun_table8_compatible_v1`，不覆盖 v1.2 严格 evaluator：
-  以整条 statement 为单位，六字段分别做任意非空字符交集的最大基数一对一匹配；一对一
-  使 Table 8 的 `Extracted=Matched+Misclassified` 与 `Ground Truth=Matched+Missed`
-  同时成立。Modality 只评价 evidence span，不混入四分类标签正确性；invalid attempt
+- **解决方法**：最终活动视图为 `sun_table8_literal_overlap_v2`，不覆盖 v1.2 严格
+  evaluator：以整条 statement 为单位，precision 对每个预测 span 独立判断是否碰到任一
+  同字段 Gold span，recall 对每个 Gold span 独立判断是否碰到任一同字段预测 span；不做
+  一对一分配、clause alignment 或重叠比例阈值。Modality 只评价 evidence span，不混入
+  四分类标签正确性；invalid attempt
   作为零预测留在分母。该视图是在看到 B0 严格结果后、由用户明确选择的 Sun-paper
   comparison view，不伪装为事前预注册；尚未运行的 H1/D1 将共享同一固定实现与配置。
-- **验证证据**：6 项聚焦测试覆盖跨 clause 匹配、1 字符交集、duplicate 一对一、
-  modality label 隔离、invalid attempt 和 membership fail-closed；150 条 B0 只读重算
-  产物 `s27_estg150_b0_sun_table8_compatible_v1` 绑定 Layer E、membership、旧 attempts、
+- **验证证据**：10 项聚焦测试覆盖六字段统一松口径、跨 clause 匹配、1 字符交集、
+  many-to-many 不受一对一限制、modality label 隔离、invalid attempt 和 membership
+  fail-closed；150 条 B0 只读重算产物 `s27_estg150_b0_sun_table8_literal_v2` 绑定
+  Layer E、membership、旧 attempts、
   旧 manifest 与 evaluator hash，LLM/API=0、Gold modified=false。B0 overall
-  P/R=0.656333/0.702370，Action P/R=0.828571/0.821862。完整测试与目录检查由 Event 165
+  P/R=0.681134/0.741232，Action P/R=0.857143/0.858300。完整测试与目录检查由 Event 166
   绑定。
 - **状态**：`resolved`。Sun 同口径视图已实现并生成 B0 development 结果；严格 evaluator
   继续作为边界/结构诊断，历史结果未覆盖。
-- **对应事件**：Event 165。
+- **状态历史**：Event 165 的 v1 仍加了最大一对一；用户随后明确指出这仍比 Sun 原文
+  严，同日由 literal v2 取代，v1 只保留 provenance、不进入主表。
+- **对应事件**：Events 165–166。
 
 ### RWI-0031 — 已验证资产未版本化与活动根目录临时文件泄漏
 

@@ -1,0 +1,21 @@
+{
+  "assignment": "none_independent_overlap_coverage",
+  "clause_alignment_required": false,
+  "evaluation_unit": "statement",
+  "evaluator_id": "sun_table8_literal_overlap_v2",
+  "fields": [
+    "modality",
+    "actor",
+    "action",
+    "condition",
+    "constraint",
+    "exception"
+  ],
+  "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+  "modality_policy": "evidence_span_extraction_only_label_ignored",
+  "precision_rule": "predicted phrase is matched when it intersects any Gold phrase of the same field",
+  "recall_rule": "Gold phrase is recovered when it intersects any predicted phrase of the same field",
+  "reporting_role": "active Sun Table 8 literal-overlap comparison view for B0/H1/D1",
+  "schema_version": "sun_table8_literal_overlap_evaluator_config@2.0.0",
+  "supersedes": "sun_table8_compatible_v1 maximum-one-to-one view"
+}

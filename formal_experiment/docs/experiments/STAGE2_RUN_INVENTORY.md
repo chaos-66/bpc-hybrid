@@ -26,28 +26,29 @@
 
 用户在看到严格 token-overlap 结果后，明确要求 B0/H1/D1 与 Sun Table 8 使用同一
 phrase matching 口径。为避免只对 B0 放宽，现冻结共同的
-`sun_table8_compatible_v1`：以整条 statement 为单位，同一语义字段的预测 span 与
-Gold span 只要存在非空字符交集即可匹配；用最大一对一匹配同时保持
-`Extracted = Matched + Misclassified` 和 `Ground Truth = Matched + Missed`；不再先做
-clause alignment。Modality 本行只评价 evidence span 是否抽到，四分类标签正确性继续
-由独立 modality 指标评价。
+`sun_table8_literal_overlap_v2`：以整条 statement 为单位，每个预测 span 只要与任一
+同字段 Gold span 有非空字符交集就计入 precision 命中；每个 Gold span 只要与任一
+同字段预测 span 有非空字符交集就计入 recall 命中。不做一对一分配、不先做 clause
+alignment、不设重叠比例阈值。Modality 本行只评价 evidence span 是否抽到，四分类标签
+正确性继续由独立 modality 指标评价。
 
 当前 B0 v10a 的离线只读重算位于
-`outputs/development/s27_estg150_b0_sun_table8_compatible_v1/`：
+`outputs/development/s27_estg150_b0_sun_table8_literal_v2/`：
 
-| 语义要素 | Ground Truth | Extracted | Matched | Misclassified | Missed | P | R |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Modality | 231 | 256 | 211 | 45 | 20 | 0.824219 | 0.913420 |
-| Actor | 48 | 34 | 25 | 9 | 23 | 0.735294 | 0.520833 |
-| Action | 247 | 245 | 203 | 42 | 44 | 0.828571 | 0.821862 |
-| Condition | 214 | 245 | 147 | 98 | 67 | 0.600000 | 0.686916 |
-| Constraint | 302 | 335 | 144 | 191 | 158 | 0.429851 | 0.476821 |
-| Exception | 13 | 14 | 11 | 3 | 2 | 0.785714 | 0.846154 |
-| Overall | 1055 | 1129 | 741 | 388 | 314 | 0.656333 | 0.702370 |
+| 语义要素 | Ground Truth | Extracted | P | R |
+|---|---:|---:|---:|---:|
+| Modality | 231 | 256 | 0.835938 | 0.930736 |
+| Actor | 48 | 34 | 0.735294 | 0.541667 |
+| Action | 247 | 245 | 0.857143 | 0.858300 |
+| Condition | 214 | 245 | 0.636735 | 0.742991 |
+| Constraint | 302 | 335 | 0.456716 | 0.526490 |
+| Exception | 13 | 14 | 0.785714 | 0.846154 |
+| Overall | 1055 | 1129 | 0.681134 | 0.741232 |
 
 这套视图是后见到 B0 严格分数后、由用户选择的 Sun-paper comparison view，不伪装成
 结果前预注册指标；但 H1/D1 尚未运行，因此它已在两者生成结果前固定，未来三方法必须
-共享同一实现和配置。Gold 中 231 个 modality 中有 3 个没有显式 trigger span，canonical
+共享同一实现和配置。先前增加最大一对一限制的 v1 已由本 literal v2 取代，不进入主表。
+Gold 中 231 个 modality 中有 3 个没有显式 trigger span，canonical
 adapter 使用 clause-span fallback，故 modality phrase P/R 的直接可比性略弱于其余五项。
 
 ## 4. 严格边界质量视图
@@ -104,7 +105,7 @@ development 六要素性能产物：
 1. 新建唯一 run ID，不复用 `paper_validation_r1` 或旧 pilot 目录。
 2. 明确标记 `development`，直到 formal Gold/publication gate 解锁。
 3. 绑定 150 sample IDs、Layer E hash、extraction-contract、schema、严格 evaluator、
-   `sun_table8_compatible_v1` 和 B0 attempts hash。
+   `sun_table8_literal_overlap_v2` 和 B0 attempts hash。
 4. 固定 DeepSeek provider、exact model ID、transport profile、temperature、token/call/cost ceiling。
 5. D1 不得看 B0、H1、Gold、Layer C；H1 只看 B0、trigger 和授权修复字段。
 6. 每条 sample 独立 attempt；网络错误只允许 identical-byte retry，内容/schema 错误保留分母。
