@@ -1,0 +1,1196 @@
+[
+  {
+    "error_category": null,
+    "merge": {
+      "accepted": true,
+      "errors": [],
+      "status": "accepted"
+    },
+    "model": "deepseek-v4-pro",
+    "parsed_patch": {
+      "clause_id": "estg_000051.c1",
+      "patches": {
+        "clause_span": null,
+        "modality": {
+          "evidence": [
+            {
+              "end": 61,
+              "start": 56,
+              "text": "shall"
+            }
+          ],
+          "label": "obligation"
+        }
+      },
+      "reason": "Modality is obligation triggered by 'shall' at [56:61]; no ambiguity.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000051",
+      "unsupported_or_ambiguous": []
+    },
+    "parsed_patch_after_adapter": {
+      "clause_id": "estg_000051.c1",
+      "patches": {
+        "modality": {
+          "evidence": [
+            {
+              "end": 61,
+              "start": 56,
+              "text": "shall"
+            }
+          ],
+          "label": "obligation"
+        }
+      },
+      "reason": "Modality is obligation triggered by 'shall' at [56:61]; no ambiguity.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000051",
+      "unsupported_or_ambiguous": []
+    },
+    "postprocess": [
+      "discarded_unrequested_nonsemantic_patch:clause_span"
+    ],
+    "record": {
+      "clauses": [
+        {
+          "actions": [
+            {
+              "end": 145,
+              "id": "estg_000051.c1.action.1",
+              "normalized": "published once a year by the federal minister for science and research in the of",
+              "start": 65,
+              "text": "published once a year by the Federal Minister for Science and Research in the of"
+            }
+          ],
+          "actor_action_map": [],
+          "actors": [],
+          "clause_id": "estg_000051.c1",
+          "clause_span": {
+            "end": 182,
+            "start": 0,
+            "text": "All institutions to which such a notice has been issued shall be published once a year by the Federal Minister for Science and Research in the official gazette of the Wiener Zeitung."
+          },
+          "conditions": [
+            {
+              "end": 120,
+              "id": "estg_000051.c1.condition.1",
+              "normalized": "which such a notice has been issued shall be published once a year by the federal minister for scien",
+              "start": 20,
+              "text": "which such a notice has been issued shall be published once a year by the Federal Minister for Scien"
+            }
+          ],
+          "constraints": [],
+          "exceptions": [],
+          "modality": {
+            "evidence": [
+              {
+                "end": 61,
+                "start": 56,
+                "text": "shall"
+              }
+            ],
+            "label": "obligation"
+          },
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "sample_id": "estg_000051",
+      "schema_version": "1.0.0",
+      "source_id": "estg_legacy_51",
+      "source_text": "All institutions to which such a notice has been issued shall be published once a year by the Federal Minister for Science and Research in the official gazette of the Wiener Zeitung.",
+      "unsupported_or_ambiguous": [],
+      "validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      }
+    },
+    "repair_plan": {
+      "clause_id": "estg_000051.c1",
+      "fallback_triggered": true,
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000051",
+      "trigger_codes": [
+        "low_modality_confidence"
+      ]
+    },
+    "request_sha256": "423358aa70e65f485377b67773ff63b34d4b0dbe1450122a714df5f5dedb7cb4",
+    "request_status": "ok",
+    "response_sha256": "0148545741909652bb48f13aa7ef8bf1cf963c113dc7efd19b74906cb8754980",
+    "runtime": {
+      "completion_tokens": 128,
+      "estimated_cost_usd": 0.0,
+      "latency_ms": 2378.7492000265047,
+      "llm_call_performed": true,
+      "prompt_tokens": 1817,
+      "total_tokens": 1945
+    },
+    "sample_id": "estg_000051",
+    "thinking_mode": "disabled"
+  },
+  {
+    "error_category": null,
+    "merge": {
+      "accepted": true,
+      "errors": [],
+      "status": "accepted"
+    },
+    "model": "deepseek-v4-pro",
+    "parsed_patch": {
+      "clause_id": "estg_000118.c1",
+      "patches": {
+        "clause_span": null,
+        "modality": {
+          "evidence": [
+            {
+              "end": 93,
+              "start": 90,
+              "text": "may"
+            }
+          ],
+          "label": "permission"
+        }
+      },
+      "reason": "Modality is permission based on 'may' with no negation; evidence span is exact.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000118",
+      "unsupported_or_ambiguous": []
+    },
+    "parsed_patch_after_adapter": {
+      "clause_id": "estg_000118.c1",
+      "patches": {
+        "modality": {
+          "evidence": [
+            {
+              "end": 93,
+              "start": 90,
+              "text": "may"
+            }
+          ],
+          "label": "permission"
+        }
+      },
+      "reason": "Modality is permission based on 'may' with no negation; evidence span is exact.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000118",
+      "unsupported_or_ambiguous": []
+    },
+    "postprocess": [
+      "discarded_unrequested_nonsemantic_patch:clause_span"
+    ],
+    "record": {
+      "clauses": [
+        {
+          "actions": [
+            {
+              "end": 167,
+              "id": "estg_000118.c1.action.1",
+              "normalized": "claimed for those assets that are recorded in a special register.",
+              "start": 102,
+              "text": "claimed for those assets that are recorded in a special register."
+            }
+          ],
+          "actor_action_map": [],
+          "actors": [],
+          "clause_id": "estg_000118.c1",
+          "clause_span": {
+            "end": 167,
+            "start": 0,
+            "text": "(10) If the profit is determined in accordance with Section 4(3), an investment allowance may only be claimed for those assets that are recorded in a special register."
+          },
+          "conditions": [
+            {
+              "end": 64,
+              "id": "estg_000118.c1.condition.1",
+              "normalized": "if the profit is determined in accordance with section 4(3)",
+              "start": 5,
+              "text": "If the profit is determined in accordance with Section 4(3)"
+            },
+            {
+              "end": 166,
+              "id": "estg_000118.c1.condition.2",
+              "normalized": "that are recorded in a special register",
+              "start": 127,
+              "text": "that are recorded in a special register"
+            }
+          ],
+          "constraints": [
+            {
+              "end": 61,
+              "id": "estg_000118.c1.constraint.1",
+              "normalized": "with section 4",
+              "start": 47,
+              "text": "with Section 4"
+            },
+            {
+              "end": 98,
+              "id": "estg_000118.c1.constraint.2",
+              "normalized": "only",
+              "start": 94,
+              "text": "only"
+            }
+          ],
+          "exceptions": [],
+          "modality": {
+            "evidence": [
+              {
+                "end": 93,
+                "start": 90,
+                "text": "may"
+              }
+            ],
+            "label": "permission"
+          },
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "sample_id": "estg_000118",
+      "schema_version": "1.0.0",
+      "source_id": "estg_legacy_118",
+      "source_text": "(10) If the profit is determined in accordance with Section 4(3), an investment allowance may only be claimed for those assets that are recorded in a special register.",
+      "unsupported_or_ambiguous": [],
+      "validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      }
+    },
+    "repair_plan": {
+      "clause_id": "estg_000118.c1",
+      "fallback_triggered": true,
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000118",
+      "trigger_codes": [
+        "low_modality_confidence"
+      ]
+    },
+    "request_sha256": "cbdca8928aaa6495770ac369e025533ffa4295ff6e39a2e906ce6f8491ffafc7",
+    "request_status": "ok",
+    "response_sha256": "928d809219b4f7e7f46c415d9e54c8cd3443b94ceae21fc472e9b5dce547adea",
+    "runtime": {
+      "completion_tokens": 127,
+      "estimated_cost_usd": 0.0,
+      "latency_ms": 2058.2978000165895,
+      "llm_call_performed": true,
+      "prompt_tokens": 1963,
+      "total_tokens": 2090
+    },
+    "sample_id": "estg_000118",
+    "thinking_mode": "disabled"
+  },
+  {
+    "error_category": null,
+    "merge": {
+      "accepted": true,
+      "errors": [],
+      "status": "accepted"
+    },
+    "model": "deepseek-v4-pro",
+    "parsed_patch": {
+      "clause_id": "estg_000143.c1",
+      "patches": {
+        "clause_span": null,
+        "modality": {
+          "evidence": [
+            {
+              "end": 221,
+              "start": 217,
+              "text": "must"
+            }
+          ],
+          "label": "obligation"
+        }
+      },
+      "reason": "Modality is obligation based on explicit 'must' in source text.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000143",
+      "unsupported_or_ambiguous": []
+    },
+    "parsed_patch_after_adapter": {
+      "clause_id": "estg_000143.c1",
+      "patches": {
+        "modality": {
+          "evidence": [
+            {
+              "end": 221,
+              "start": 217,
+              "text": "must"
+            }
+          ],
+          "label": "obligation"
+        }
+      },
+      "reason": "Modality is obligation based on explicit 'must' in source text.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000143",
+      "unsupported_or_ambiguous": []
+    },
+    "postprocess": [
+      "discarded_unrequested_nonsemantic_patch:clause_span"
+    ],
+    "record": {
+      "clauses": [
+        {
+          "actions": [
+            {
+              "end": 275,
+              "id": "estg_000143.c1.action.1",
+              "normalized": "present in the business assets (securities cover).",
+              "start": 225,
+              "text": "present in the business assets (securities cover)."
+            }
+          ],
+          "actor_action_map": [],
+          "actors": [],
+          "clause_id": "estg_000143.c1",
+          "clause_span": {
+            "end": 275,
+            "start": 0,
+            "text": "(5) At the end of each financial year, bearer partial debentures of domestic debtors with a nominal amount of at least 50% of the provision amount shown in the balance sheet at the end of the preceding financial year must be present in the business assets (securities cover)."
+          },
+          "conditions": [],
+          "constraints": [
+            {
+              "end": 37,
+              "id": "estg_000143.c1.constraint.1",
+              "normalized": "at the end of each financial year",
+              "start": 4,
+              "text": "At the end of each financial year"
+            },
+            {
+              "end": 210,
+              "id": "estg_000143.c1.constraint.2",
+              "normalized": "at least 50% of the provision amount shown in the balance sheet at the end of the preceding financia",
+              "start": 110,
+              "text": "at least 50% of the provision amount shown in the balance sheet at the end of the preceding financia"
+            }
+          ],
+          "exceptions": [],
+          "modality": {
+            "evidence": [
+              {
+                "end": 221,
+                "start": 217,
+                "text": "must"
+              }
+            ],
+            "label": "obligation"
+          },
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "sample_id": "estg_000143",
+      "schema_version": "1.0.0",
+      "source_id": "estg_legacy_143",
+      "source_text": "(5) At the end of each financial year, bearer partial debentures of domestic debtors with a nominal amount of at least 50% of the provision amount shown in the balance sheet at the end of the preceding financial year must be present in the business assets (securities cover).",
+      "unsupported_or_ambiguous": [],
+      "validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      }
+    },
+    "repair_plan": {
+      "clause_id": "estg_000143.c1",
+      "fallback_triggered": true,
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000143",
+      "trigger_codes": [
+        "low_modality_confidence"
+      ]
+    },
+    "request_sha256": "bcad6b6adb927aa07dc78a5f0ebba9dbeb2c22c21774b627623bb2bd8f84e61d",
+    "request_status": "ok",
+    "response_sha256": "65cfd9c1be9b7fae2954af4b9ff1856982393c16645ededd2ad74e909cd95255",
+    "runtime": {
+      "completion_tokens": 124,
+      "estimated_cost_usd": 0.0,
+      "latency_ms": 2104.8097999300808,
+      "llm_call_performed": true,
+      "prompt_tokens": 1921,
+      "total_tokens": 2045
+    },
+    "sample_id": "estg_000143",
+    "thinking_mode": "disabled"
+  },
+  {
+    "error_category": null,
+    "merge": {
+      "accepted": true,
+      "errors": [],
+      "status": "accepted"
+    },
+    "model": "deepseek-v4-pro",
+    "parsed_patch": {
+      "clause_id": "estg_000271.c1",
+      "patches": {
+        "clause_span": null,
+        "modality": {
+          "evidence": [
+            {
+              "end": 17,
+              "start": 13,
+              "text": "must"
+            }
+          ],
+          "label": "obligation"
+        }
+      },
+      "reason": "Modality is obligation triggered by 'must' with no negation; evidence span is exact.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000271",
+      "unsupported_or_ambiguous": []
+    },
+    "parsed_patch_after_adapter": {
+      "clause_id": "estg_000271.c1",
+      "patches": {
+        "modality": {
+          "evidence": [
+            {
+              "end": 17,
+              "start": 13,
+              "text": "must"
+            }
+          ],
+          "label": "obligation"
+        }
+      },
+      "reason": "Modality is obligation triggered by 'must' with no negation; evidence span is exact.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000271",
+      "unsupported_or_ambiguous": []
+    },
+    "postprocess": [
+      "discarded_unrequested_nonsemantic_patch:clause_span"
+    ],
+    "record": {
+      "clauses": [
+        {
+          "actions": [
+            {
+              "end": 97,
+              "id": "estg_000271.c1.action.1",
+              "normalized": "residence up to the cessation of the business, 2.",
+              "start": 48,
+              "text": "residence up to the cessation of the business, 2."
+            }
+          ],
+          "actor_action_map": [],
+          "actors": [],
+          "clause_id": "estg_000271.c1",
+          "clause_span": {
+            "end": 97,
+            "start": 0,
+            "text": "The building must have been the taxpayer's main residence up to the cessation of the business, 2."
+          },
+          "conditions": [],
+          "constraints": [
+            {
+              "end": 96,
+              "id": "estg_000271.c1.constraint.1",
+              "normalized": "to the cessation of the business, 2",
+              "start": 61,
+              "text": "to the cessation of the business, 2"
+            }
+          ],
+          "exceptions": [],
+          "modality": {
+            "evidence": [
+              {
+                "end": 17,
+                "start": 13,
+                "text": "must"
+              }
+            ],
+            "label": "obligation"
+          },
+          "order_relations": []
+        },
+        {
+          "actions": [
+            {
+              "end": 208,
+              "id": "estg_000271.c2.action.1",
+              "normalized": "disposed of in whole or in part, — be left in whole or in part to another person",
+              "start": 128,
+              "text": "disposed of in whole or in part, — be left in whole or in part to another person"
+            }
+          ],
+          "actor_action_map": [],
+          "actors": [],
+          "clause_id": "estg_000271.c2",
+          "clause_span": {
+            "end": 339,
+            "start": 98,
+            "text": "the building may neither — be disposed of in whole or in part, — be left in whole or in part to another person for the generation of business income, nor — be predominantly used by the taxpayer themselves for the generation of income, and 3."
+          },
+          "conditions": [
+            {
+              "end": 239,
+              "id": "estg_000271.c2.condition.1",
+              "normalized": "to another person for the generation of business",
+              "start": 191,
+              "text": "to another person for the generation of business"
+            }
+          ],
+          "constraints": [
+            {
+              "end": 239,
+              "id": "estg_000271.c2.constraint.1",
+              "normalized": "to another person for the generation of business",
+              "start": 191,
+              "text": "to another person for the generation of business"
+            }
+          ],
+          "exceptions": [],
+          "modality": {
+            "evidence": [
+              {
+                "end": 114,
+                "start": 111,
+                "text": "may"
+              }
+            ],
+            "label": "permission"
+          },
+          "order_relations": []
+        },
+        {
+          "actions": [
+            {
+              "end": 401,
+              "id": "estg_000271.c3.action.1",
+              "normalized": "no hidden reserves may have been transferred to the building.",
+              "start": 340,
+              "text": "no hidden reserves may have been transferred to the building."
+            }
+          ],
+          "actor_action_map": [],
+          "actors": [],
+          "clause_id": "estg_000271.c3",
+          "clause_span": {
+            "end": 401,
+            "start": 340,
+            "text": "no hidden reserves may have been transferred to the building."
+          },
+          "conditions": [],
+          "constraints": [
+            {
+              "end": 358,
+              "id": "estg_000271.c3.constraint.1",
+              "normalized": "no hidden reserves",
+              "start": 340,
+              "text": "no hidden reserves"
+            },
+            {
+              "end": 400,
+              "id": "estg_000271.c3.constraint.2",
+              "normalized": "to the building",
+              "start": 385,
+              "text": "to the building"
+            }
+          ],
+          "exceptions": [],
+          "modality": {
+            "evidence": [
+              {
+                "end": 362,
+                "start": 359,
+                "text": "may"
+              }
+            ],
+            "label": "permission"
+          },
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "sample_id": "estg_000271",
+      "schema_version": "1.0.0",
+      "source_id": "estg_legacy_271",
+      "source_text": "The building must have been the taxpayer's main residence up to the cessation of the business, 2. the building may neither — be disposed of in whole or in part, — be left in whole or in part to another person for the generation of business income, nor — be predominantly used by the taxpayer themselves for the generation of income, and 3. no hidden reserves may have been transferred to the building.",
+      "unsupported_or_ambiguous": [],
+      "validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      }
+    },
+    "repair_plan": {
+      "clause_id": "estg_000271.c1",
+      "fallback_triggered": true,
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000271",
+      "trigger_codes": [
+        "low_modality_confidence"
+      ]
+    },
+    "request_sha256": "0b6fba7ed1b48fd6bcb711c2630af669a89f5cb9dc2a86dbeebd61b1195ffee5",
+    "request_status": "ok",
+    "response_sha256": "8caadb4930b4f779130cb461b465da6c9a60e7a43c79dcd1dc4d449246b978cc",
+    "runtime": {
+      "completion_tokens": 128,
+      "estimated_cost_usd": 0.0,
+      "latency_ms": 2005.2421999862418,
+      "llm_call_performed": true,
+      "prompt_tokens": 1823,
+      "total_tokens": 1951
+    },
+    "sample_id": "estg_000271",
+    "thinking_mode": "disabled"
+  },
+  {
+    "error_category": null,
+    "merge": {
+      "accepted": true,
+      "errors": [],
+      "status": "accepted"
+    },
+    "model": "deepseek-v4-pro",
+    "parsed_patch": {
+      "clause_id": "estg_000414.c1",
+      "patches": {
+        "clause_span": null,
+        "modality": {
+          "evidence": [
+            {
+              "end": 150,
+              "start": 145,
+              "text": "shall"
+            }
+          ],
+          "label": "definition"
+        }
+      },
+      "reason": "Modality changed from obligation to definition because 'shall be deemed discharged' establishes a legal fiction rather than imposing a duty; the smallest trigger evidence remains 'shall'.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000414",
+      "unsupported_or_ambiguous": []
+    },
+    "parsed_patch_after_adapter": {
+      "clause_id": "estg_000414.c1",
+      "patches": {
+        "modality": {
+          "evidence": [
+            {
+              "end": 150,
+              "start": 145,
+              "text": "shall"
+            }
+          ],
+          "label": "definition"
+        }
+      },
+      "reason": "Modality changed from obligation to definition because 'shall be deemed discharged' establishes a legal fiction rather than imposing a duty; the smallest trigger evidence remains 'shall'.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000414",
+      "unsupported_or_ambiguous": []
+    },
+    "postprocess": [
+      "discarded_unrequested_nonsemantic_patch:clause_span"
+    ],
+    "record": {
+      "clauses": [
+        {
+          "actions": [
+            {
+              "end": 234,
+              "id": "estg_000414.c1.action.1",
+              "normalized": "deemed discharged for the taxpayer if he can neither be held liable under sectio",
+              "start": 154,
+              "text": "deemed discharged for the taxpayer if he can neither be held liable under Sectio"
+            },
+            {
+              "end": 290,
+              "id": "estg_000414.c1.action.2",
+              "normalized": "held liable under section 83(2) nor under section 95(2), nor is an annual adjust",
+              "start": 210,
+              "text": "held liable under Section 83(2) nor under Section 95(2), nor is an annual adjust"
+            }
+          ],
+          "actor_action_map": [],
+          "actors": [],
+          "clause_id": "estg_000414.c1",
+          "clause_span": {
+            "end": 330,
+            "start": 0,
+            "text": "(3) If neither an assessment under Section 39 nor under Section 41 takes place, the income tax attributable to income subject to withholding tax shall be deemed discharged for the taxpayer if he can neither be held liable under Section 83(2) nor under Section 95(2), nor is an annual adjustment under Section 72 to be carried out."
+          },
+          "conditions": [
+            {
+              "end": 78,
+              "id": "estg_000414.c1.condition.1",
+              "normalized": "if neither an assessment under section 39 nor under section 41 takes place",
+              "start": 4,
+              "text": "If neither an assessment under Section 39 nor under Section 41 takes place"
+            },
+            {
+              "end": 125,
+              "id": "estg_000414.c1.condition.2",
+              "normalized": "to income subject",
+              "start": 108,
+              "text": "to income subject"
+            },
+            {
+              "end": 262,
+              "id": "estg_000414.c1.condition.3",
+              "normalized": "if he can neither be held liable under section 83(2) nor under section 95",
+              "start": 189,
+              "text": "if he can neither be held liable under Section 83(2) nor under Section 95"
+            }
+          ],
+          "constraints": [
+            {
+              "end": 66,
+              "id": "estg_000414.c1.constraint.1",
+              "normalized": "under section 39 nor under section 41",
+              "start": 29,
+              "text": "under Section 39 nor under Section 41"
+            },
+            {
+              "end": 125,
+              "id": "estg_000414.c1.constraint.2",
+              "normalized": "to income subject",
+              "start": 108,
+              "text": "to income subject"
+            },
+            {
+              "end": 140,
+              "id": "estg_000414.c1.constraint.3",
+              "normalized": "to withholding",
+              "start": 126,
+              "text": "to withholding"
+            },
+            {
+              "end": 241,
+              "id": "estg_000414.c1.constraint.4",
+              "normalized": "under section 83(2)",
+              "start": 222,
+              "text": "under Section 83(2)"
+            },
+            {
+              "end": 262,
+              "id": "estg_000414.c1.constraint.5",
+              "normalized": "under section 95",
+              "start": 246,
+              "text": "under Section 95"
+            },
+            {
+              "end": 311,
+              "id": "estg_000414.c1.constraint.6",
+              "normalized": "under section 72",
+              "start": 295,
+              "text": "under Section 72"
+            }
+          ],
+          "exceptions": [],
+          "modality": {
+            "evidence": [
+              {
+                "end": 150,
+                "start": 145,
+                "text": "shall"
+              }
+            ],
+            "label": "definition"
+          },
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "sample_id": "estg_000414",
+      "schema_version": "1.0.0",
+      "source_id": "estg_legacy_414",
+      "source_text": "(3) If neither an assessment under Section 39 nor under Section 41 takes place, the income tax attributable to income subject to withholding tax shall be deemed discharged for the taxpayer if he can neither be held liable under Section 83(2) nor under Section 95(2), nor is an annual adjustment under Section 72 to be carried out.",
+      "unsupported_or_ambiguous": [],
+      "validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      }
+    },
+    "repair_plan": {
+      "clause_id": "estg_000414.c1",
+      "fallback_triggered": true,
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000414",
+      "trigger_codes": [
+        "low_modality_confidence"
+      ]
+    },
+    "request_sha256": "32be311550959d2e169d258c24b392288f568f4b9fda6756246a4cd2d8b995f2",
+    "request_status": "ok",
+    "response_sha256": "0ffbfa41df6242e04a4fcd005c5b7a22140ac64d1bdc641865282c0e433718ac",
+    "runtime": {
+      "completion_tokens": 141,
+      "estimated_cost_usd": 0.0,
+      "latency_ms": 2380.384400021285,
+      "llm_call_performed": true,
+      "prompt_tokens": 2459,
+      "total_tokens": 2600
+    },
+    "sample_id": "estg_000414",
+    "thinking_mode": "disabled"
+  },
+  {
+    "error_category": null,
+    "merge": {
+      "accepted": true,
+      "errors": [],
+      "status": "accepted"
+    },
+    "model": "deepseek-v4-pro",
+    "parsed_patch": {
+      "clause_id": "estg_000572.c1",
+      "patches": {
+        "clause_span": null,
+        "modality": {
+          "evidence": [
+            {
+              "end": 152,
+              "start": 147,
+              "text": "shall"
+            }
+          ],
+          "label": "obligation"
+        }
+      },
+      "reason": "Modality is obligation triggered by 'shall' with no negation altering the class; evidence span is exact.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000572",
+      "unsupported_or_ambiguous": []
+    },
+    "parsed_patch_after_adapter": {
+      "clause_id": "estg_000572.c1",
+      "patches": {
+        "modality": {
+          "evidence": [
+            {
+              "end": 152,
+              "start": 147,
+              "text": "shall"
+            }
+          ],
+          "label": "obligation"
+        }
+      },
+      "reason": "Modality is obligation triggered by 'shall' with no negation altering the class; evidence span is exact.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000572",
+      "unsupported_or_ambiguous": []
+    },
+    "postprocess": [
+      "discarded_unrequested_nonsemantic_patch:clause_span"
+    ],
+    "record": {
+      "clauses": [
+        {
+          "actions": [
+            {
+              "end": 121,
+              "id": "estg_000572.c1.action.1",
+              "normalized": "cannot exceptionally be determined",
+              "start": 87,
+              "text": "cannot exceptionally be determined"
+            },
+            {
+              "end": 213,
+              "id": "estg_000572.c1.action.2",
+              "normalized": "deemed to be at least the actually expended working time.",
+              "start": 156,
+              "text": "deemed to be at least the actually expended working time."
+            }
+          ],
+          "actor_action_map": [],
+          "actors": [],
+          "clause_id": "estg_000572.c1",
+          "clause_span": {
+            "end": 213,
+            "start": 0,
+            "text": "If, due to the special nature of the remuneration, a period for which the wage is paid cannot exceptionally be determined, the wage payment period shall be deemed to be at least the actually expended working time."
+          },
+          "conditions": [
+            {
+              "end": 121,
+              "id": "estg_000572.c1.condition.1",
+              "normalized": "if, due to the special nature of the remuneration, a period for which the wage is paid cannot exceptionally be determined",
+              "start": 0,
+              "text": "If, due to the special nature of the remuneration, a period for which the wage is paid cannot exceptionally be determined"
+            }
+          ],
+          "constraints": [
+            {
+              "end": 49,
+              "id": "estg_000572.c1.constraint.1",
+              "normalized": "due to the special nature of the remuneration",
+              "start": 4,
+              "text": "due to the special nature of the remuneration"
+            },
+            {
+              "end": 212,
+              "id": "estg_000572.c1.constraint.2",
+              "normalized": "at least the actually expended working time",
+              "start": 169,
+              "text": "at least the actually expended working time"
+            }
+          ],
+          "exceptions": [],
+          "modality": {
+            "evidence": [
+              {
+                "end": 152,
+                "start": 147,
+                "text": "shall"
+              }
+            ],
+            "label": "obligation"
+          },
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "sample_id": "estg_000572",
+      "schema_version": "1.0.0",
+      "source_id": "estg_legacy_572",
+      "source_text": "If, due to the special nature of the remuneration, a period for which the wage is paid cannot exceptionally be determined, the wage payment period shall be deemed to be at least the actually expended working time.",
+      "unsupported_or_ambiguous": [],
+      "validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      }
+    },
+    "repair_plan": {
+      "clause_id": "estg_000572.c1",
+      "fallback_triggered": true,
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000572",
+      "trigger_codes": [
+        "low_modality_confidence"
+      ]
+    },
+    "request_sha256": "3cb8b41d8f27ad6fd99806af59c1be888417ee292ed84fa1c95db2e699b2e991",
+    "request_status": "ok",
+    "response_sha256": "373641cc8b675007e532747f8ed0e3f817e2c98969cc5888810fa56a1220f45f",
+    "runtime": {
+      "completion_tokens": 131,
+      "estimated_cost_usd": 0.0,
+      "latency_ms": 2116.4040999719873,
+      "llm_call_performed": true,
+      "prompt_tokens": 2010,
+      "total_tokens": 2141
+    },
+    "sample_id": "estg_000572",
+    "thinking_mode": "disabled"
+  },
+  {
+    "error_category": null,
+    "merge": {
+      "accepted": true,
+      "errors": [],
+      "status": "accepted"
+    },
+    "model": "deepseek-v4-pro",
+    "parsed_patch": {
+      "clause_id": "estg_000720.c1",
+      "patches": {
+        "clause_span": null,
+        "modality": {
+          "evidence": [
+            {
+              "end": 120,
+              "start": 45,
+              "text": "the building savings contract can no longer form the basis for a tax refund"
+            }
+          ],
+          "label": "prohibition"
+        }
+      },
+      "reason": "Modality corrected to prohibition based on 'can no longer' in the clause, which negates permission. Evidence span captures the core prohibition phrase.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000720",
+      "unsupported_or_ambiguous": []
+    },
+    "parsed_patch_after_adapter": {
+      "clause_id": "estg_000720.c1",
+      "patches": {
+        "modality": {
+          "evidence": [
+            {
+              "end": 120,
+              "start": 45,
+              "text": "the building savings contract can no longer form the basis for a tax refund"
+            }
+          ],
+          "label": "prohibition"
+        }
+      },
+      "reason": "Modality corrected to prohibition based on 'can no longer' in the clause, which negates permission. Evidence span captures the core prohibition phrase.",
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000720",
+      "unsupported_or_ambiguous": []
+    },
+    "postprocess": [
+      "coordinate_repaired:clauses[0].modality.evidence[0]",
+      "discarded_unrequested_nonsemantic_patch:clause_span"
+    ],
+    "record": {
+      "clauses": [
+        {
+          "actions": [
+            {
+              "end": 169,
+              "id": "estg_000720.c1.action.1",
+              "normalized": "form the basis for a tax refund, it being irrelevant whether a reclaim within th",
+              "start": 89,
+              "text": "form the basis for a tax refund, it being irrelevant whether a reclaim within th"
+            }
+          ],
+          "actor_action_map": [],
+          "actors": [],
+          "clause_id": "estg_000720.c1",
+          "clause_span": {
+            "end": 215,
+            "start": 0,
+            "text": "July 1988 — No. 400 2961 serving the status, the building savings contract can no longer form the basis for a tax refund, it being irrelevant whether a reclaim within the meaning of paragraphs 7 to 9 has to be made."
+          },
+          "conditions": [
+            {
+              "end": 120,
+              "id": "estg_000720.c1.condition.1",
+              "normalized": "for a tax refund",
+              "start": 104,
+              "text": "for a tax refund"
+            }
+          ],
+          "constraints": [
+            {
+              "end": 194,
+              "id": "estg_000720.c1.constraint.1",
+              "normalized": "within the meaning of paragraphs 7",
+              "start": 160,
+              "text": "within the meaning of paragraphs 7"
+            },
+            {
+              "end": 199,
+              "id": "estg_000720.c1.constraint.2",
+              "normalized": "to 9",
+              "start": 195,
+              "text": "to 9"
+            }
+          ],
+          "exceptions": [],
+          "modality": {
+            "evidence": [
+              {
+                "end": 120,
+                "start": 45,
+                "text": "the building savings contract can no longer form the basis for a tax refund"
+              }
+            ],
+            "label": "prohibition"
+          },
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "sun_llm_fallback",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "sample_id": "estg_000720",
+      "schema_version": "1.0.0",
+      "source_id": "estg_legacy_720",
+      "source_text": "July 1988 — No. 400 2961 serving the status, the building savings contract can no longer form the basis for a tax refund, it being irrelevant whether a reclaim within the meaning of paragraphs 7 to 9 has to be made.",
+      "unsupported_or_ambiguous": [],
+      "validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      }
+    },
+    "repair_plan": {
+      "clause_id": "estg_000720.c1",
+      "fallback_triggered": true,
+      "repair_fields": [
+        "modality"
+      ],
+      "sample_id": "estg_000720",
+      "trigger_codes": [
+        "low_modality_confidence"
+      ]
+    },
+    "request_sha256": "d3623c50f4529b0bda6fdaf0a86cf7b6a3d377a79068719e306922a0b9253760",
+    "request_status": "ok",
+    "response_sha256": "f346c35ed17a26fdf37e188e84050fed65557afbbeb449cc4c83cacf4092e0f9",
+    "runtime": {
+      "completion_tokens": 151,
+      "estimated_cost_usd": 0.0,
+      "latency_ms": 2723.8102999981493,
+      "llm_call_performed": true,
+      "prompt_tokens": 1989,
+      "total_tokens": 2140
+    },
+    "sample_id": "estg_000720",
+    "thinking_mode": "disabled"
+  }
+]

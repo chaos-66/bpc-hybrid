@@ -174,8 +174,8 @@ Tregex/Tsurgeon + reconstructed markers、token classifier/CRF（仅在训练 Go
 | ID | 正式含义 | 当前状态 |
 |---|---|---|
 | B0 / `sun_rule_only` | BERT-TextCNN + CoreNLP/Tregex/Tsurgeon | S2.4/S2.5/S2.6 已 verified：真实 checkpoint 与 attested extractor 输出已生成 schema-valid canonical record；S2.10-E evaluator 已验证；S2.2 annotation 已冻结，正式 batch/性能评价仍待 route/language/context QA 与正式 input/Gold publication |
-| H1 / `sun_llm_fallback` | 同一 B0，仅按预注册 trigger 修复失败/不确定字段 | S2.8 verified-offline：已重基到 S2.6 B0，并冻结 trigger/merge、gpt-4.1 快照请求、确定性 45-call 分配、可计分 recovered-error 回退及 46.08 万 token/1.5 USD budget；真实 LLM 未授权 |
-| D1 / `direct_llm` | LLM 直接生成同一 Rule Record | development-only；真实调用未授权 |
+| H1 / `sun_llm_fallback` | 同一 B0，仅按预注册 trigger 修复失败/不确定字段 | S2.8 verified-offline + DeepSeek V4 Pro development live：7个低置信样本的最终补丁7/7接受；Sun literal v2 六字段 overall P/R=0.681134/0.741232，与 B0 相同；另7次 adapter 诊断调用保留，非 formal |
+| D1 / `direct_llm` | LLM 直接生成同一 Rule Record | DeepSeek V4 Pro development live 已完成150/150 mixed-transport attempts；Sun literal v2 overall P/R=0.906769/0.664455，Action P/R=0.950226/0.850202；因 RWI-0033 的104条恢复批次不属于原单条 transport，非 formal |
 
 正式主表的最低方法覆盖为：简单规则下限、一个强监督学习 baseline、完整 B0、H1、
 D1。模态分类与六要素抽取分别选方法，不能用一个只做分类的 baseline 冒充完整
@@ -205,8 +205,8 @@ condition/constraint/exception 的数量与嵌套、被动语态、隐含 actor�
 | S2.5 | 完成 CoreNLP/Tregex/Tsurgeon extractor | S2.3 | **verified：A/B、外部 runtime、live fixtures 全部通过** | 4.5.10 archive/JAR/artifact hash、12 patterns、六字段顺序和 7 surgeries 锁定 |
 | S2.6 | 组合并验证完整 B0 | S2.4-S2.5 | **verified-technical + development batch measured**：真实 S2.4 checkpoint + attested S2.5 输出已组成 canonical B0；另在冻结 Layer E 上完成 sentence-only English development batch | 150/150 immutable attempts、schema-valid=100%、LLM=0；v1 exact-ID/span 结果因 RWI-0014 被替代。v1.2 重算全量 modality micro P/R/F1=0.394737/0.454545/0.422535、macro-F1=0.406801、clause alignment P/R/F1=0.680451/0.783550/0.728370；独立82 modality micro P/R/F1=0.433071/0.504587/0.466102。结果只属 development，不解除 route/language/formal publication 门禁 |
 | S2.7 | 实现代表性非 LLM baseline | S2.1/S2.2 | **modality component verified；phrase/full Stage 2 blocked pending formal route/input publication** | 同一 1985/420/426 split 上 train-majority、固定德文 keyword、word 1–2 gram Multinomial NB 已 aggregate-only 运行并 exact-hash；NB test accuracy=0.784038、macro-F1=0.568849。S2.2 annotation 已冻结，phrase baseline 仍须 route/language/context QA 与 formal input/Gold publication gate |
-| S2.8 | 预注册 H1 trigger/merge/call budget | S2.6 + S2.10-E | **verified-offline** | v5 prompt 绑定 extraction-contract v1；exact S2.6 B0、推理时 trigger、字段与受控 ambiguity metadata merge、45-call 名额、每条最多 1 次/0 重试、46.08 万 token/1.5 USD 上限及可计分 B0 回退由 v6 manifest 锁定；未调用真实 LLM |
-| S2.9 | 锁定 D1 prompt/few-shot/model/budget | S2.10-E；正式运行另依赖 S2.2 | **verified-offline** | v5 prompt 绑定 extraction-contract v1，并插入 4 个覆盖代词/被动/多行为/例外/多 clause 的手工 synthetic canonical few-shot；模型、temperature=0、5 repeats、0 retry、750 次/921.6 万 token/37 USD 上限与失败保留由 v5 manifest 锁定；真实 API 未授权 |
+| S2.8 | 预注册 H1 trigger/merge/call budget | S2.6 + S2.10-E | **verified-offline + succeeded-development-live** | 原v5/v6离线锁不改；用户另行授权 DeepSeek V4 Pro 一次development运行。7个低置信样本最终补丁7/7接受，另7次非语义 `clause_span` adapter诊断保留；150/150 attempts、Sun literal v2 overall P/R=0.681134/0.741232；非 formal |
+| S2.9 | 锁定 D1 prompt/few-shot/model/budget | S2.10-E；正式运行另依赖 S2.2 | **verified-offline + succeeded-development-live-mixed-transport** | 原v5离线锁不改；DeepSeek V4 Pro development运行150/150。主请求150次后因本地异常丢失104条返回，另用26个4条恢复批补齐；overall P/R=0.906769/0.664455，Action P/R=0.950226/0.850202。RWI-0033 mitigated；不得当作原预注册单条/formal结果 |
 | S2.10 | 统一 evaluator + 主数据组件评价 | S2.2/S2.6-S2.9 | **v1.2严格 evaluator + Sun Table 8 literal-overlap view verified；B0 development evidence locked；formal results blocked** | S2.10-E v1.2 只保留作边界/结构诊断；主论文同口径视图为 `sun_table8_literal_overlap_v2`：statement-level、同字段任意非空交集，precision 独立统计命中的预测 span，recall 独立统计命中的 Gold span，不做一对一、clause alignment 或比例阈值。immutable B0 已离线重算，模型/API 未重跑；该视图是在看到 B0 严格分数后增加，不冒充结果前预注册。正式主表仍等待 H1/D1 运行 |
 | S2.11 | 复杂法律语料集冻结 | G0.5 | **verified-input/protocol：官方 GDPR Articles 5–50 的 50 条成员已锁定** | CELEX/Formex 来源、EUR-Lex reuse、source hashes、覆盖优先 deterministic membership、空白人工 Gold/schema/canonical mapping 与 exact-hash gate 通过；语义 Gold 仍 0/50，未生成复杂度 profile 或方法结果 |
 | S2.12 | 复杂度分层与误差分析 | S2.10/S2.11 | **protocol verified-offline；formal results blocked** | S2.12-P 已冻结 6 个主 endpoint、2 个 B0 对照、每数据轨道 12 假设 Holm family、10,000 次 sample-cluster bootstrap、10,000 次 sign-swap、固定 strata、错误 taxonomy 与 deterministic case selection；EStG annotation 已 150/150 冻结，真实曲线仍等待其 formal route/input、GDPR 50/50 与 exact-membership predictions |
@@ -319,7 +319,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 | P1 | Stage 2 数据、Gold、复杂度合同 | in progress；统一六要素合同与 EStG-150 annotation snapshot 已冻结，正式 Gold publication/input capsule 仍待 RWI-0001/RWI-0007 与 route/data gate 重锁 |
 | P2 | 完整 B0 | verified-technical + measured-development；全量150与独立82 development evaluator 结果已 exact-hash，正式 batch/主张仍待 route QA 与正式输入/Gold publication |
 | P3 | Stage 2 多 baseline | partial：S2.7-M modality 三 baseline 已验证；phrase/full Stage 2 仍 blocked on P1 formal route/input publication |
-| P4 | H1/D1 与 Stage 2 复杂集 | partial：H1 S2.8、D1 S2.9 均已离线预注册；正式运行待 P1 formal route/input、总门禁与真实 LLM 授权，复杂集语义 Gold 仍 0/50 |
+| P4 | H1/D1 与 Stage 2 复杂集 | partial：H1/D1 已完成一次 DeepSeek V4 Pro development Sun-literal比较；D1因RWI-0033为mixed transport，仅作诊断。正式运行仍待 P1 formal route/input、总门禁、重新预注册与授权；复杂集语义 Gold 仍0/50 |
 | P5 | Stage 1 完整实现与评价 | planned after Stage 2 core |
 | P6 | Sun/Winter Stage 3 复现 | blocked on P5 and Stage 3 Gold |
 | P7 | Stage 3 多 baseline 与复杂扩展 | blocked on P6 |
@@ -460,6 +460,7 @@ tokens，按锁定价格记录 0.01728755 CA。模型返回 schema-shaped JSON�
 
 | 版本 | 日期 | 变更 | 依据 |
 |---|---|---|---|
+| 4.9.0 | 2026-07-29 | 用户授权 DeepSeek V4 Pro 跑EStG-150 H1/D1一次development比较：共享extraction contract、canonical schema与Sun literal v2。H1最终7/7 patch接受，150/150 overall P/R=0.681134/0.741232；D1 150/150 overall P/R=0.906769/0.664455、Action=0.950226/0.850202。调用账本190：H1 14、D1主请求150、RWI-0033恢复批26；104条D1因本地validator异常以4条批恢复，透明标为mixed transport且不提升为formal | run manifest/attempts/metrics、RWI-0033/0034、聚焦回归与完整验证、本批次experiment event |
 | 4.8.6 | 2026-07-26 | 获授权的 ChatAnywhere gpt-5.4-nano 单条 C1：strict v1.1 preflight/request 通过，1 call、0 retry；provider 返回 1167+1789=2956 tokens、0.01728755 CA，但 clause_span.end=58 超出 57 字符 proposed text，canonical validator fail closed，0 candidate、C1/C2=false、无评价/P/R。原 failure 在校验后才取 usage 而误记 0，保留原证据并新增 SHA-bound accounting correction；runner 改为先计 usage 后校验，无 API 重跑 | frozen failure/request/raw response、accounting correction、RWI-0027、聚焦回归、完整验证、Event 123 |
 | 4.8.5 | 2026-07-26 | 冻结 C2 索引 0–2 × Pass A/B 的六请求离线准备：relay gpt-5.6-luna strict v1.1 全 preflight pass、无 downgrade；锁定 3 个 exact Pass-A hash 与 3 个 historical-fixture-only Pass-B hash，未来 live Pass-B hash deferred；canonical/serializer/adapter/transport hash 无漂移；fail-closed 配置 6 calls / 78,000 tokens / 1.92 CA。provider_authorized=false、API=0、billed tokens=0、evaluation=0、P/R=null、C2=false | no-overwrite dry-run receipt/preregistration、RWI-0026、聚焦回归、完整验证、Event 122 |
 | 4.8.4 | 2026-07-26 | 获新授权的 ChatAnywhere gpt-5.6-luna 单条 C1 runtime：strict transport v1.1 请求生成 1 个候选，原始 canonical schema/exact-span/cue 验证通过；0 retry，1167 input + 829 output = 1996 tokens，0.042987 CA；C1=true、evaluation=0、P/R=null、C2=false | frozen run manifest/request/response/candidate、runtime audit gate、RWI-0025 resolved、Event 121 |

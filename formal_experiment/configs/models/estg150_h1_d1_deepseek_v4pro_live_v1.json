@@ -1,0 +1,78 @@
+{
+  "schema_version": "estg150_h1_d1_deepseek_v4pro_live@1.0.0",
+  "task_ids": ["S2.8-DEV-LIVE-V1", "S2.9-DEV-LIVE-V1"],
+  "status": "authorized_development_run",
+  "claim_scope": "development_one_repeat_not_formal",
+  "authorization": {
+    "authorized_by_user": true,
+    "authorized_date": "2026-07-29",
+    "authorized_model": "deepseek-v4-pro",
+    "authorized_methods": ["sun_llm_fallback", "direct_llm"]
+  },
+  "shared_runtime": {
+    "provider": "deepseek_openai_compatible",
+    "endpoint": "https://api.deepseek.com/chat/completions",
+    "api_key_environment_variable": "DEEPSEEK_API_KEY",
+    "model": "deepseek-v4-pro",
+    "temperature": 0,
+    "top_p": 1,
+    "response_format": "json_object",
+    "thinking_mode": "disabled",
+    "max_tokens": 12000,
+    "timeout_seconds": 180,
+    "max_retries": 0,
+    "repeat_count": 1
+  },
+  "shared_semantic_protocol": {
+    "contract": "configs/stage2_extraction_contract_v1.json",
+    "canonical_schema": "configs/schemas/stage2_prediction.schema.json",
+    "evaluation": "configs/evaluation/sun_table8_literal_overlap_v2.json",
+    "json_cleanup": [
+      "strip_utf8_bom",
+      "strip_markdown_code_fence",
+      "strip_non_json_prefix_suffix"
+    ],
+    "span_coordinate_repair": "exact_surface_text_occurrence_nearest_reported_start",
+    "h1_nonsemantic_patch_cleanup": "discard_unrequested_clause_span_only",
+    "gold_used_for_request_or_repair": false
+  },
+  "inputs": {
+    "b0_attempts": "outputs/development/s27_estg150_b0_enhanced_v10a/b0_attempts.json",
+    "h1_trigger_selection": "configs/models/estg150_h1_d1_low_quota_pilot_v1.json",
+    "human_gold_evaluation_only": "data/development/human_review/estg_150_human_correction_v1.json",
+    "membership": "data/development/estg/estg_150_membership_hashes.json"
+  },
+  "methods": {
+    "H1": {
+      "method_id": "sun_llm_fallback",
+      "prompt": "prompts/sun_compat/rule_first_llm_fallback_prompt.md",
+      "protocol_config": "configs/models/sun_h1_s28.json",
+      "selection": "seven preregistered inference-time low-confidence samples",
+      "target_calls": 14,
+      "evaluated_calls": 7,
+      "diagnostic_adapter_calls": 7,
+      "hard_max_calls": 45,
+      "on_any_single_call_or_patch_failure": "preserve_b0_and_continue"
+    },
+    "D1": {
+      "method_id": "direct_llm",
+      "prompt": "prompts/sun_compat/direct_llm_sun_record_prompt.md",
+      "protocol_config": "configs/models/sun_d1_s29.json",
+      "target_calls": 150,
+      "hard_max_calls": 150,
+      "incident_recovery": {
+        "batch_size": 4,
+        "hard_max_recovery_calls": 31,
+        "reason": "primary thread pool submitted all 150 calls but a local validation exception prevented 104 results from being persisted"
+      },
+      "on_any_single_call_failure": "retain_empty_attempt_and_continue"
+    }
+  },
+  "budget": {
+    "h1_hard_max_calls": 45,
+    "d1_hard_max_calls": 150,
+    "combined_hard_max_calls": 195,
+    "max_retries": 0
+  },
+  "output": "outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1"
+}

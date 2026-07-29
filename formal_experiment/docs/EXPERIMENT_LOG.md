@@ -1896,3 +1896,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：RWI-0032 v2 correction: removed the extra one-to-one assignment from Event 165. Precision independently counts predicted spans overlapping any same-field Gold; recall independently counts Gold spans overlapping any same-field prediction. No clause alignment or overlap-ratio threshold. v1 retained only as provenance. Full audit: 1490 passed, 23 skipped.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-29T15:10:50.128077+00:00 - 运行DeepSeek V4 Pro的H1/D1六要素development比较并用Sun literal v2评价
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s28_s29_deepseek_v4pro_sun_literal_v1；阶段=stage2；方法=sun_llm_fallback+direct_llm；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_h1_d1_deepseek_v4pro.py --method all --workers 12; incident recovery: --method D1 --recover-d1 --workers 12`
+- manifest：outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/manifest.json
+- 结果摘要：development only; H1 overall P/R=0.681134/0.741232; D1=0.906769/0.664455; D1 Action=0.950226/0.850202; 150/150 each
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1492 passed, 23 skipped in 125.40s (0:02:05)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`1e8507e8c6233f320ff3763b71f9e0c4b77839bc`；相关未提交路径：7 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：User authorized deepseek-v4-pro H1/D1. Actual calls=190: H1 14, D1 primary 150 plus 26 four-record recovery batches. RWI-0033 mixed-transport incident is mitigated and prevents formal interpretation; RWI-0034 resolved. No .env read, no Gold modification.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

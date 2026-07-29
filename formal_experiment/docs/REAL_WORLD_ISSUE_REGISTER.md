@@ -58,8 +58,47 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0030 | 2026-07-29 | S2.7–S2.10 / paper validation | provenance/evaluation | modality-only DeepSeek pilot、canonical 六要素路线、无效/未聚合 repeat 和人工候选被文档混写，可能误导 B0/H1/D1 主表 | `mitigated` | 新增人读/机器运行清单；修正 modality-only scope；D1 repeat 02 标 invalid、repeat 04 标 partial，旧 secondary analyses 标需过滤重算；未删除或覆盖产物，实验事件待本批次追加 |
 | RWI-0031 | 2026-07-29 | project governance / candidate protocol tests | provenance/directory hygiene | 数百项已验证资产长期未版本化，且 C2 离线测试在活动根目录遗留 ACL 异常临时目录 | `mitigated` | 临时目录改入 `.tmp/`、可访问缓存已清理、旧根目录合同草稿退役；完整验证通过，458 个重要路径已由 checkpoint `56d2b03` 推送；部分 ignored cache 仍受旧 ACL 保护；Events 160–164 |
 | RWI-0032 | 2026-07-29 | S2.10-E / B0-H1-D1 comparison | evaluation/measurement | token-overlap、clause alignment 与后加的一对一分配都比 Sun 原文的独立 any-overlap coverage 更严 | `resolved` | v2 对六字段分别统计预测命中率与 Gold 覆盖率；无一对一/子句对齐/比例阈值；B0 重算、10 项聚焦回归和全量检查通过；Events 165–166 |
+| RWI-0033 | 2026-07-29 | S2.9 DeepSeek D1 live runner | runtime/provenance | 150 个 future 一次性提交后，单条缺失 `normalized` 使本地 validator 抛出 KeyError；executor 仍发完请求，但104条返回未落盘 | `mitigated` | validator 异常降级为逐条 warning；104条按4条/批用26次恢复，批回执先于样本拆分落盘；原104个单条返回不可恢复，manifest 显式记录混合 transport 与190次总调用 |
+| RWI-0034 | 2026-07-29 | S2.8 DeepSeek H1 live runner | provider output/merge | 7/7 H1 响应都在允许的 modality 补丁外附带 `clause_span:null`，旧 strict merge 因非六要素冗余成员全量回退 B0 | `resolved` | 只删除未请求且非语义的 `clause_span`，不放宽任何六要素 patch；保存前后两轮与解析补丁，离线重合并7/7 accepted，Gold/指标未参与修复 |
 
 ## 3. 详细记录
+
+### RWI-0034 — H1 的非语义 `clause_span` 冗余成员触发全量严格回退
+
+- **首次发现**：2026-07-29，DeepSeek V4 Pro H1 development live run。
+- **阶段/范围**：S2.8 H1 低置信 trigger 的7个 modality patch；不涉及 Gold 修改。
+- **观察事实**：模型7/7均返回合法的 requested `modality`，但同时在 `patches` 中增加
+  `clause_span:null`。旧合并器把任何未请求键视为整条补丁无效，因此7条最初全部
+  `rejected_unauthorized_field` 并回退 B0。
+- **影响**：这不是六要素语义冲突，却会让成功返回的语义补丁全部失效，形成用户指出的
+  “格式过严导致方法无法前进”。
+- **解决方法**：transport adapter 只删除未请求且不属于六要素的 `clause_span`；不删除或
+  改写 modality/actor/action/condition/constraint/exception，不读取 Gold 或测试指标。
+  第二轮已保存解析补丁，故修正后纯离线重合并，无额外 API 调用。
+- **验证证据**：7/7 adapter 后 `accepted`；1条 evidence 坐标仅按原文精确表面串纠正；
+  第一轮 rejected、第二轮原始解析与 adapter 后结果全部保留。对应本批次 experiment event。
+- **状态**：`resolved`。
+
+### RWI-0033 — D1 并发 future 的局部后处理异常导致已调用结果未落盘
+
+- **首次发现**：2026-07-29，DeepSeek V4 Pro D1 150条 development live run。
+- **阶段/范围**：S2.9 live runner 的并发执行、失败保留和调用账本。
+- **观察事实**：runner 一次性向 `ThreadPoolExecutor` 提交剩余148条；第46个已落盘样本后，
+  一个模型记录漏写 actor 的 `normalized`，旧 validator 在 cross-field 阶段抛出未捕获
+  `KeyError`。context manager 退出时仍等待所有已排队 future，因此主请求累计150次，
+  但104条内存结果随进程退出丢失。
+- **影响**：不能安全把104条当作“未调用”逐条重跑，否则会隐瞒费用并突破调用预算；直接
+  记为空又无法完成用户要求的150条六要素比较。
+- **当前处置**：所有 validator 结构异常现在只标记当前 attempt 为
+  `canonical_validation_warning`，不再终止整批。利用总195次上限内剩余31次额度，把104条
+  每4条一批用26个同模型/同六要素 prompt-core 请求恢复；每批先持久化含全部拆分结果的
+  receipt，再追加逐样本 attempts，可在中断后无调用地重放。实际总调用为 D1 150+26、
+  H1 14，共190。
+- **验证证据**：恢复后H1/D1均150/150 exact membership；26份 batch receipt；D1 attempts
+  133 canonical-valid、16 validation-warning、1 non-JSON；聚焦回归覆盖 validator KeyError
+  继续运行和 H1 非语义成员清理。manifest 明示单条/批量混合，不冒充原150个单条返回。
+- **状态**：`mitigated`。未来 runner 已修复，但原104个单条响应不可恢复，本次 D1 是透明
+  标记的 development mixed-transport 结果，不能提升为 formal/preregistered 单条结果。
 
 ### RWI-0032 — 严格边界指标被误作 Sun Table 8 同口径比较
 
@@ -691,6 +730,7 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 - **对应事件**：Event 71。
 - **状态历史**：
   - 2026-07-18：首轮失败后定位；第二轮禁用 thinking 并验证，状态 `resolved`。
+  - 2026-07-29：D1首条因新runner漏传开关而复现12,000 completion-token截断；该条保留在分母，后续H1/D1显式统一 `thinking_mode=disabled`，同一模型恢复为秒级完整JSON。本次复现不改变既有解决方法。
 
 ### RWI-0005 — 活动测试把人工审核进度错误写死为 0/150
 

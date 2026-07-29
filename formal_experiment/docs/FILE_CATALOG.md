@@ -2,7 +2,7 @@
 
 **生成日期**：2026-07-29
 
-**收录文件**：1720 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
+**收录文件**：1734 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
 
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
@@ -112,6 +112,7 @@
 | `configs/models/estg150_b0_v10_preregistration_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_v8_preregistration_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_v9_preregistration_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/models/estg150_h1_d1_deepseek_v4pro_live_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_h1_d1_low_quota_pilot_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/s24_bert_textcnn_candidate_registry_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/s27_non_llm_baselines.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1029,6 +1030,17 @@
 | `outputs/development/s27_estg150_b0_v6_phase_a_diagnostic_v5/report_v6_hybrid_missing_marker_only.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_v6_phase_a_diagnostic_v5/route_confusion.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_s24_overlap_audit_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_primary_call_incident.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_recovery_batches.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_attempts_v1_rejected.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_evaluated_responses.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_responses_v1_rejected.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/paper_d1_pilot/d1_full150/d1_pilot_1785232222.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/paper_d1_pilot/d1_full150/d1_pilot_1785232897.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/paper_d1_pilot/d1_full150/d1_pilot_1785233677.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1516,6 +1528,7 @@
 | `scripts/run_estg150_b0_enhanced_v8_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v9_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_estg150_h1_d1_deepseek_v4pro.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_h1_paper_pilot.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_h1_selective_pilot.py` | 活动 | Python 实现、脚本或测试 |
@@ -1750,6 +1763,7 @@
 | `tests/test_estg150_b0_enhanced_v8.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_estg150_h1_d1_deepseek_live_runner.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_simple_review.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg_150_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg_150_review_tool.py` | 活动 | Python 实现、脚本或测试 |

@@ -1,0 +1,112 @@
+{
+  "artifacts": {
+    "d1_attempts": {
+      "path": "d1_attempts.json",
+      "sha256": "4ab4fbb90173fe7deb2a517150b4ab1ec9454bbd5b7955133bfda579def1d3f5"
+    },
+    "d1_primary_call_incident": {
+      "path": "d1_primary_call_incident.json",
+      "sha256": "46f25ffca932510ed6e0c2bcddc7641e2d39851b06471372d83510383959d412"
+    },
+    "d1_recovery_batches": {
+      "path": "d1_recovery_batches.jsonl",
+      "sha256": "a9bd9e748837b94d6440d5e2a3de47ca7f53a5659806ec8dc224120dbba82cd3"
+    },
+    "h1_attempts": {
+      "path": "h1_attempts.json",
+      "sha256": "45634895fae300f8e0e63370e29b337ee1c624e275efb6468d5503a4e160a276"
+    },
+    "metrics": {
+      "path": "metrics.json",
+      "sha256": "25628188f17eae054b2537aa1f1bef562bcd6a35995b7b03f263e0a1836ab4bc"
+    }
+  },
+  "claim_scope": "development_one_repeat_not_formal",
+  "completed_at_utc": "2026-07-29T15:00:49.963214+00:00",
+  "d1_runtime_incident": {
+    "cause": "uncaught local validator KeyError after all ThreadPoolExecutor futures had been submitted; executor shutdown waited for queued calls",
+    "lost_result_count": 104,
+    "persisted_before_recovery_count": 46,
+    "planned_recovery_call_count": 26,
+    "primary_calls_retried_individually": false,
+    "primary_submitted_call_count": 150,
+    "recorded_at_utc": "2026-07-29T14:59:24.160550+00:00",
+    "recovery_batch_size": 4,
+    "schema_version": "d1_primary_call_incident@1.0.0"
+  },
+  "failure_policy": {
+    "D1": "API/non-JSON failure stays as an empty attempt",
+    "H1": "provider or rejected patch preserves B0",
+    "max_retries": 0
+  },
+  "h1_adapter_round": {
+    "diagnostic_outcome": "all seven patches contained an extra nonsemantic clause_span member",
+    "diagnostic_response_path": "h1_responses_v1_rejected.jsonl",
+    "evaluated_round_adjustment": "discard only the unrequested clause_span member before the unchanged six-element patch merge",
+    "gold_or_test_metrics_used": false
+  },
+  "input_bindings": {
+    "b0_attempts_sha256": "79dc457cdf933cb9fbb29030bab3673b9af645dd0138d8e97f5d1b6dfa6b4792",
+    "config_sha256": "c77e0a7ecc194f4bf51224583fd6864016b468262408502318262610cd2f1f2e",
+    "layer_e_sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+    "membership_sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b"
+  },
+  "llm_call_budget": {
+    "combined_hard_max_calls": 195,
+    "d1_hard_max_calls": 150,
+    "h1_hard_max_calls": 45,
+    "max_retries": 0
+  },
+  "llm_call_count": {
+    "D1": 176,
+    "D1_incident_recovery_batches": 26,
+    "D1_primary_submitted": 150,
+    "H1": 14,
+    "H1_diagnostic_adapter_round": 7,
+    "H1_evaluated": 7,
+    "combined": 190
+  },
+  "model": "deepseek-v4-pro",
+  "prompt_bindings": {
+    "D1": {
+      "path": "prompts/sun_compat/direct_llm_sun_record_prompt.md",
+      "sha256": "79f6f76fc9779abb87fc919e4384386ac812d40fcedaf73df0ea8ea1377af62e"
+    },
+    "H1": {
+      "path": "prompts/sun_compat/rule_first_llm_fallback_prompt.md",
+      "sha256": "54e56c4bc52d0e5a83c2b45c3762a36ffb1356bd8190a1cd10d2b5dbd304b40c"
+    }
+  },
+  "repeat_count": 1,
+  "run_id": "s28_s29_deepseek_v4pro_sun_literal_v1",
+  "safety": {
+    "env_file_read": false,
+    "gold_modified": false,
+    "gold_visible_to_requests": false,
+    "network_called": true,
+    "raw_provider_response_persisted": false,
+    "real_llm_api_called": true
+  },
+  "schema_version": "estg150_h1_d1_deepseek_v4pro_run_manifest@1.0.0",
+  "shared_protocol": {
+    "canonical_schema": "configs/schemas/stage2_prediction.schema.json",
+    "contract": "configs/stage2_extraction_contract_v1.json",
+    "evaluation": "configs/evaluation/sun_table8_literal_overlap_v2.json",
+    "gold_used_for_request_or_repair": false,
+    "h1_nonsemantic_patch_cleanup": "discard_unrequested_clause_span_only",
+    "json_cleanup": [
+      "strip_utf8_bom",
+      "strip_markdown_code_fence",
+      "strip_non_json_prefix_suffix"
+    ],
+    "span_coordinate_repair": "exact_surface_text_occurrence_nearest_reported_start"
+  },
+  "status": "succeeded_development_not_formal",
+  "transport_variance": {
+    "preflight_outcome": "completion_token_limit_non_json_failure_retained_in_D1_denominator",
+    "preflight_retried": false,
+    "preflight_sample_id": "estg_000002",
+    "preflight_thinking_mode": "provider_default_enabled",
+    "remaining_requests_thinking_mode": "disabled"
+  }
+}
