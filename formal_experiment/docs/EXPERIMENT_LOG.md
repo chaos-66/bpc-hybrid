@@ -1986,3 +1986,33 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：RWI-0036: Condition 歧义 marker 与 Constraint marker 覆盖不足；Constraint 多匹配候选使 R 0.1071→0.1429 但 P 0.4286→0.4000，其他五字段不变，故撤回候选。活动代码、marker、Gold、预测和全量运行均未改变；audit --with-tests 通过，1499 passed/23 skipped。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-30T12:35:20.083332+00:00 - 重建可逐项复核的六要素 marker v3 并完成完整 B0 零回归对比
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_marker_lexicon_v3_paired_v1；阶段=S2.3/S2.7-B0；方法=sun_rule_only:b0_sun_paper_spec_v1; marker v2 versus source-only v3；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_marker_lexicon_v3_paired.py --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_marker_lexicon_v3_paired_v1/manifest.json
+- 结果摘要：development negative candidate; 150/150 paired arms; Condition precision improved but 8/12 field P/R checks regressed; reject v3 and keep active v2
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1513 passed, 23 skipped in 280.70s (0:04:40)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`a94e19a26e0a4ea781f9a1bf2e4c7be6c7c560ca`；相关未提交路径：23 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0037. v3 was built only from pinned Sun/Sleimi/LexNLP primary evidence and hash-frozen before metrics: 7/8/0/26/41/5, total 87, runtime-bound 80. Same in-memory Gold/input, B0 function, CPU, CoreNLP 4.5.10, classifier, patterns, bridge, and evaluator; only marker category files differ. First orchestration attempt hit the command timeout and produced no final output; its ignored .tmp files were not reused. Successful rerun preserved both arms and exact comparison. Gold/parser/rules/classifier/evaluator/active v2 unchanged.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-30T12:41:16.898623+00:00 - Finalize source-only marker v3 negative candidate checkpoint
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1513 passed, 23 skipped in 140.25s (0:02:20)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`a94e19a26e0a4ea781f9a1bf2e4c7be6c7c560ca`；相关未提交路径：31 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Formatting-only cleanup after the experiment event; no experiment rerun and no semantic artifact change. Final state audit passed with 1513 passed/23 skipped. Paired decision remains reject_candidate_keep_active_v2; active v2, Gold, parser, rules, classifier, and evaluator remain unchanged.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

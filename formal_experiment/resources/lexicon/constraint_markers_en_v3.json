@@ -1,0 +1,1314 @@
+{
+  "_meta": {
+    "artifact_scope": "development_parameter_candidate",
+    "category": "constraint",
+    "entry_payload_sha256": "74f48905a2e4dd9fbfda5b37791b794bfd75dcf7f2dc0994029e16f3627fdf8f",
+    "generation_policy_sha256": "4af1442fcf260fab54fa5aac96ddc483f3d51ac4aafa5ef84f539b625d495885",
+    "language": "en",
+    "lexicon_id": "public_marker_lexicon_en_v3",
+    "parent_lexicon_id": "public_marker_lexicon_en_v2",
+    "source_file_sha256": "94f98d01bc4e11877dbaf318d290c1fca86ef749f0d875200652c333c30041c7",
+    "source_payload_sha256": "f620ca29a6e1326af153517cdc33f2a4fa44fcfbc51095c8eb520cb07f81408a",
+    "source_snapshot_id": "public_marker_sources_en_v3",
+    "source_table": "resources/lexicon/public_marker_sources_en_v3.json"
+  },
+  "class_counts": {},
+  "entries": [
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "greater than or equal to",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 20; constraints.py lines 26-31, item 'greater than or equal to'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "greater than or equal to"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "less than or equal to",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 28; constraints.py lines 26-31, item 'less than or equal to'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "less than or equal to"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "more than or equal to",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 34; constraints.py lines 26-31, item 'more than or equal to'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "more than or equal to"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "no earlier than",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 35; constraints.py lines 26-31, item 'no earlier than'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "no earlier than"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "no later than",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 36; constraints.py lines 26-31, item 'no later than'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "no later than"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "not to exceed",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 40; constraints.py lines 26-31, item 'not to exceed'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "not to exceed"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "no less than",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 37; constraints.py lines 26-31, item 'no less than'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "no less than"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "no more than",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 38; constraints.py lines 26-31, item 'no more than'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "no more than"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "not equal to",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 39; constraints.py lines 26-31, item 'not equal to'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "not equal to"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "earlier than",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 41; constraints.py lines 26-31, item 'earlier than'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "earlier than"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "greater than",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 19; constraints.py lines 26-31, item 'greater than'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "greater than"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "greatest of",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 21; constraints.py lines 26-31, item 'greatest of'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "greatest of"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "lesser than",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 26; constraints.py lines 26-31, item 'lesser than'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "lesser than"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "greater of",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 18; constraints.py lines 26-31, item 'greater of'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "greater of"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "later than",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 42; constraints.py lines 26-31, item 'later than'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "later than"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "maximum of",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 29; constraints.py lines 26-31, item 'maximum of'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "maximum of"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "minimum of",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 31; constraints.py lines 26-31, item 'minimum of'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "minimum of"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "less than",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 27; constraints.py lines 26-31, item 'less than'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "less than"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "lesser of",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 25; constraints.py lines 26-31, item 'lesser of'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "lesser of"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "more than",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 33; constraints.py lines 26-31, item 'more than'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "more than"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "at least",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 11; constraints.py lines 26-31, item 'at least'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Constraint row, item 'at least'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "at least"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "equal to",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 14; constraints.py lines 26-31, item 'equal to'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Constraint row, item 'equal to'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "equal to"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "first of",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 16; constraints.py lines 26-31, item 'first of'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "first of"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "least of",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 23; constraints.py lines 26-31, item 'least of'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Constraint row, item 'least of'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "least of"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "prior to",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 46; constraints.py lines 26-31, item 'prior to'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "prior to"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "at most",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 12; constraints.py lines 26-31, item 'at most'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Constraint row, item 'at most'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "at most"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "last of",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 22; constraints.py lines 26-31, item 'last of'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Constraint row, item 'last of'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "last of"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "greatest",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Constraint row, item 'greatest'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "greatest"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "smallest",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Constraint row, item 'smallest'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "smallest"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "exactly",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 15; constraints.py lines 26-31, item 'exactly'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "exactly"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "exceeds",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 45; constraints.py lines 26-31, item 'exceeds'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "exceeds"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "greater",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 17; constraints.py lines 26-31, item 'greater'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "greater"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "highest",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 47; constraints.py lines 26-31, item 'highest'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "highest"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "maximum",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 30; constraints.py lines 26-31, item 'maximum'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "maximum"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "minimum",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 32; constraints.py lines 26-31, item 'minimum'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "minimum"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "before",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 13; constraints.py lines 26-31, item 'before'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Constraint row, item 'before'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "before"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "exceed",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 44; constraints.py lines 26-31, item 'exceed'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "exceed"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "lesser",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 24; constraints.py lines 26-31, item 'lesser'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "lesser"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "within",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 43; constraints.py lines 26-31, item 'within'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "within"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "after",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 10; constraints.py lines 26-31, item 'after'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Constraint row, item 'after'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "after"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "constraint",
+      "is_derived": false,
+      "normalized": "least",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+          "item_location": "constraints.rst line 48; constraints.py lines 26-31, item 'least'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+            "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html"
+        }
+      ],
+      "surface": "least"
+    }
+  ],
+  "schema_version": "public_marker_category@2.0.0"
+}

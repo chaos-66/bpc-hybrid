@@ -1,0 +1,82 @@
+{
+  "artifact_scope": "development_parameter_candidate",
+  "boundaries": {
+    "corpus_or_gold_used_for_construction": false,
+    "derived_markers_included": false,
+    "evaluation_run_during_construction": false,
+    "formal_use_allowed": false,
+    "gold_modified": false,
+    "llm_api_called": false,
+    "source_files_redistributed": false,
+    "training_run": false
+  },
+  "candidate_status": "frozen_pre_evaluation",
+  "category_files": {
+    "action": {
+      "entry_count": 0,
+      "entry_payload_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "path": "resources/lexicon/action_markers_en_v3.json",
+      "sha256": "ec2fab94d3f75e4bcc000a0500c1e3a90e6712ac2abccea5cf27c989feb2ad43"
+    },
+    "actor": {
+      "entry_count": 8,
+      "entry_payload_sha256": "9347e4fc2e8f20f47e73281952a1540808c5b16a3b980a38dd98fb10d4bda02a",
+      "path": "resources/lexicon/actor_markers_en_v3.json",
+      "sha256": "252133a5c2876325623317013089f0b39a5964ad19e74b6445e8486e4010060a"
+    },
+    "condition": {
+      "entry_count": 26,
+      "entry_payload_sha256": "17e2806390f610a1be1959c5386c1d1802b329255bafca17be03a2bb168a592c",
+      "path": "resources/lexicon/condition_markers_en_v3.json",
+      "sha256": "fe830314980d96eb2d9e1884e6e9faf9d74583ecee753392b93c8b88b17f7a4b"
+    },
+    "constraint": {
+      "entry_count": 41,
+      "entry_payload_sha256": "74f48905a2e4dd9fbfda5b37791b794bfd75dcf7f2dc0994029e16f3627fdf8f",
+      "path": "resources/lexicon/constraint_markers_en_v3.json",
+      "sha256": "ae6d863afb2a83ecc444047bbafbfb53a9a6e7c5c85756cdc60cb15d9114cccc"
+    },
+    "exception": {
+      "entry_count": 5,
+      "entry_payload_sha256": "ce75f6ba714cd3970525f6d68c2ed5eaadfced1271240707aad7331a9238b305",
+      "path": "resources/lexicon/exception_markers_en_v3.json",
+      "sha256": "1e84bc3b401dc197beab638abc20bf968444b3a856208b2046058483be3d62f1"
+    },
+    "modality": {
+      "entry_count": 7,
+      "entry_payload_sha256": "aafaf79399cc3bd28bedbd6f148d304d2bbf42bd24e1f5e60aeaf345155108c7",
+      "path": "resources/lexicon/modality_markers_en_v3.json",
+      "sha256": "d678035faf41ae58da0a538746b4637e405a4acefc6db2876292aa77735656d2"
+    }
+  },
+  "combined_payload_sha256": "4c6b7737f6d11b6405e5b5375fa35f452a81920782a789507b7756d3fa881846",
+  "generation": {
+    "duplicate_policy": "Merge identical field plus normalized surface entries and retain every independently verified provenance record.",
+    "generation_policy_sha256": "4af1442fcf260fab54fa5aac96ddc483f3d51ac4aafa5ef84f539b625d495885",
+    "normalization": "NFKC, strip, collapse internal whitespace, Unicode casefold",
+    "ordering": "descending token count, descending character count, normalized surface, modality class",
+    "selection_rule": "Use only verbatim marker items in a public primary paper table or items present in both the pinned LexNLP official documentation list and the corresponding official code constant."
+  },
+  "language": "en",
+  "lexicon_id": "public_marker_lexicon_en_v3",
+  "parent_lexicon_id": "public_marker_lexicon_en_v2",
+  "runtime_binding": {
+    "action": "syntax_only_no_action_marker_lexicon",
+    "bound_entry_count": 80,
+    "bound_fields": [
+      "actor",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "modality": "Sun B0 extracts MD nodes; the modality marker file is provenance-only and is not bound by the current B0 runtime."
+  },
+  "schema_version": "public_marker_manifest@2.0.0",
+  "source_snapshot": {
+    "evidence_cutoff": "2026-07-30",
+    "file_sha256": "94f98d01bc4e11877dbaf318d290c1fca86ef749f0d875200652c333c30041c7",
+    "path": "resources/lexicon/public_marker_sources_en_v3.json",
+    "payload_sha256": "f620ca29a6e1326af153517cdc33f2a4fa44fcfbc51095c8eb520cb07f81408a",
+    "snapshot_id": "public_marker_sources_en_v3"
+  }
+}

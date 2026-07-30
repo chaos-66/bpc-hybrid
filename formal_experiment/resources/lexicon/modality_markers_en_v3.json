@@ -1,0 +1,219 @@
+{
+  "_meta": {
+    "artifact_scope": "development_parameter_candidate",
+    "category": "modality",
+    "entry_payload_sha256": "aafaf79399cc3bd28bedbd6f148d304d2bbf42bd24e1f5e60aeaf345155108c7",
+    "generation_policy_sha256": "4af1442fcf260fab54fa5aac96ddc483f3d51ac4aafa5ef84f539b625d495885",
+    "language": "en",
+    "lexicon_id": "public_marker_lexicon_en_v3",
+    "parent_lexicon_id": "public_marker_lexicon_en_v2",
+    "source_file_sha256": "94f98d01bc4e11877dbaf318d290c1fca86ef749f0d875200652c333c30041c7",
+    "source_payload_sha256": "f620ca29a6e1326af153517cdc33f2a4fa44fcfbc51095c8eb520cb07f81408a",
+    "source_snapshot_id": "public_marker_sources_en_v3",
+    "source_table": "resources/lexicon/public_marker_sources_en_v3.json"
+  },
+  "class_counts": {
+    "obligation": 3,
+    "permission": 3,
+    "prohibition": 1
+  },
+  "entries": [
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "modality",
+      "is_derived": false,
+      "modality_class": "prohibition",
+      "normalized": "is prohibited from",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Modality row, item 'is prohibited from'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "may, must, shall, can, need to, is authorized to, is prohibited from, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        }
+      ],
+      "surface": "is prohibited from"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "modality",
+      "is_derived": false,
+      "modality_class": "permission",
+      "normalized": "is authorized to",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Modality row, item 'is authorized to'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "may, must, shall, can, need to, is authorized to, is prohibited from, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        }
+      ],
+      "surface": "is authorized to"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "modality",
+      "is_derived": false,
+      "modality_class": "obligation",
+      "normalized": "need to",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Modality row, item 'need to'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "may, must, shall, can, need to, is authorized to, is prohibited from, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        }
+      ],
+      "surface": "need to"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "modality",
+      "is_derived": false,
+      "modality_class": "obligation",
+      "normalized": "shall",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Modality row, item 'shall'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "may, must, shall, can, need to, is authorized to, is prohibited from, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        }
+      ],
+      "surface": "shall"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "modality",
+      "is_derived": false,
+      "modality_class": "obligation",
+      "normalized": "must",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Modality row, item 'must'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "may, must, shall, can, need to, is authorized to, is prohibited from, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        }
+      ],
+      "surface": "must"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "modality",
+      "is_derived": false,
+      "modality_class": "permission",
+      "normalized": "can",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Modality row, item 'can'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "may, must, shall, can, need to, is authorized to, is prohibited from, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        }
+      ],
+      "surface": "can"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "modality",
+      "is_derived": false,
+      "modality_class": "permission",
+      "normalized": "may",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Modality row, item 'may'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "may, must, shall, can, need to, is authorized to, is prohibited from, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        }
+      ],
+      "surface": "may"
+    }
+  ],
+  "schema_version": "public_marker_category@2.0.0"
+}

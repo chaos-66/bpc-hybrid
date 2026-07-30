@@ -1,0 +1,382 @@
+{
+  "field_order": [
+    "modality",
+    "actor",
+    "action",
+    "condition",
+    "constraint",
+    "exception"
+  ],
+  "gate": {
+    "all_strict_improvements": [
+      "action.recall",
+      "condition.precision"
+    ],
+    "decision": "reject_candidate_keep_active_v2",
+    "regressions": [
+      "actor.precision",
+      "actor.recall",
+      "action.precision",
+      "condition.recall",
+      "constraint.precision",
+      "constraint.recall",
+      "exception.precision",
+      "exception.recall"
+    ],
+    "replacement_allowed": false,
+    "required_no_regression_checks": 12,
+    "target_improvement_passed": true,
+    "target_improvements": [
+      "condition.precision"
+    ],
+    "target_metrics": [
+      "condition.precision",
+      "constraint.recall"
+    ],
+    "zero_regression_passed": false
+  },
+  "metric_semantics": {
+    "comparison_arithmetic": "exact rational counts; decimals are presentation only",
+    "precision": "matched_predictions / extracted",
+    "recall": "matched_ground_truth / ground_truth"
+  },
+  "per_field": {
+    "action": {
+      "baseline_counts": {
+        "extracted": 655,
+        "ground_truth": 247,
+        "matched_ground_truth": 213,
+        "matched_predictions": 441,
+        "misclassified": 214,
+        "missed": 34
+      },
+      "candidate_counts": {
+        "extracted": 821,
+        "ground_truth": 247,
+        "matched_ground_truth": 225,
+        "matched_predictions": 475,
+        "misclassified": 346,
+        "missed": 22
+      },
+      "precision": {
+        "baseline": {
+          "decimal": 0.6732824427480916,
+          "denominator": 655,
+          "numerator": 441
+        },
+        "candidate": {
+          "decimal": 0.5785627283800243,
+          "denominator": 821,
+          "numerator": 475
+        },
+        "delta": {
+          "decimal": -0.09471971436806724,
+          "denominator": 537755,
+          "numerator": -50936
+        },
+        "no_regression": false,
+        "strict_improvement": false
+      },
+      "recall": {
+        "baseline": {
+          "decimal": 0.8623481781376519,
+          "denominator": 247,
+          "numerator": 213
+        },
+        "candidate": {
+          "decimal": 0.9109311740890689,
+          "denominator": 247,
+          "numerator": 225
+        },
+        "delta": {
+          "decimal": 0.048582995951417005,
+          "denominator": 247,
+          "numerator": 12
+        },
+        "no_regression": true,
+        "strict_improvement": true
+      }
+    },
+    "actor": {
+      "baseline_counts": {
+        "extracted": 91,
+        "ground_truth": 48,
+        "matched_ground_truth": 24,
+        "matched_predictions": 29,
+        "misclassified": 62,
+        "missed": 24
+      },
+      "candidate_counts": {
+        "extracted": 6,
+        "ground_truth": 48,
+        "matched_ground_truth": 0,
+        "matched_predictions": 0,
+        "misclassified": 6,
+        "missed": 48
+      },
+      "precision": {
+        "baseline": {
+          "decimal": 0.31868131868131866,
+          "denominator": 91,
+          "numerator": 29
+        },
+        "candidate": {
+          "decimal": 0.0,
+          "denominator": 1,
+          "numerator": 0
+        },
+        "delta": {
+          "decimal": -0.31868131868131866,
+          "denominator": 91,
+          "numerator": -29
+        },
+        "no_regression": false,
+        "strict_improvement": false
+      },
+      "recall": {
+        "baseline": {
+          "decimal": 0.5,
+          "denominator": 2,
+          "numerator": 1
+        },
+        "candidate": {
+          "decimal": 0.0,
+          "denominator": 1,
+          "numerator": 0
+        },
+        "delta": {
+          "decimal": -0.5,
+          "denominator": 2,
+          "numerator": -1
+        },
+        "no_regression": false,
+        "strict_improvement": false
+      }
+    },
+    "condition": {
+      "baseline_counts": {
+        "extracted": 193,
+        "ground_truth": 214,
+        "matched_ground_truth": 150,
+        "matched_predictions": 135,
+        "misclassified": 58,
+        "missed": 64
+      },
+      "candidate_counts": {
+        "extracted": 135,
+        "ground_truth": 214,
+        "matched_ground_truth": 121,
+        "matched_predictions": 103,
+        "misclassified": 32,
+        "missed": 93
+      },
+      "precision": {
+        "baseline": {
+          "decimal": 0.6994818652849741,
+          "denominator": 193,
+          "numerator": 135
+        },
+        "candidate": {
+          "decimal": 0.762962962962963,
+          "denominator": 135,
+          "numerator": 103
+        },
+        "delta": {
+          "decimal": 0.06348109767798887,
+          "denominator": 26055,
+          "numerator": 1654
+        },
+        "no_regression": true,
+        "strict_improvement": true
+      },
+      "recall": {
+        "baseline": {
+          "decimal": 0.7009345794392523,
+          "denominator": 107,
+          "numerator": 75
+        },
+        "candidate": {
+          "decimal": 0.5654205607476636,
+          "denominator": 214,
+          "numerator": 121
+        },
+        "delta": {
+          "decimal": -0.13551401869158877,
+          "denominator": 214,
+          "numerator": -29
+        },
+        "no_regression": false,
+        "strict_improvement": false
+      }
+    },
+    "constraint": {
+      "baseline_counts": {
+        "extracted": 79,
+        "ground_truth": 302,
+        "matched_ground_truth": 78,
+        "matched_predictions": 54,
+        "misclassified": 25,
+        "missed": 224
+      },
+      "candidate_counts": {
+        "extracted": 40,
+        "ground_truth": 302,
+        "matched_ground_truth": 31,
+        "matched_predictions": 24,
+        "misclassified": 16,
+        "missed": 271
+      },
+      "precision": {
+        "baseline": {
+          "decimal": 0.6835443037974683,
+          "denominator": 79,
+          "numerator": 54
+        },
+        "candidate": {
+          "decimal": 0.6,
+          "denominator": 5,
+          "numerator": 3
+        },
+        "delta": {
+          "decimal": -0.08354430379746836,
+          "denominator": 395,
+          "numerator": -33
+        },
+        "no_regression": false,
+        "strict_improvement": false
+      },
+      "recall": {
+        "baseline": {
+          "decimal": 0.2582781456953642,
+          "denominator": 151,
+          "numerator": 39
+        },
+        "candidate": {
+          "decimal": 0.10264900662251655,
+          "denominator": 302,
+          "numerator": 31
+        },
+        "delta": {
+          "decimal": -0.15562913907284767,
+          "denominator": 302,
+          "numerator": -47
+        },
+        "no_regression": false,
+        "strict_improvement": false
+      }
+    },
+    "exception": {
+      "baseline_counts": {
+        "extracted": 3,
+        "ground_truth": 13,
+        "matched_ground_truth": 3,
+        "matched_predictions": 3,
+        "misclassified": 0,
+        "missed": 10
+      },
+      "candidate_counts": {
+        "extracted": 0,
+        "ground_truth": 13,
+        "matched_ground_truth": 0,
+        "matched_predictions": 0,
+        "misclassified": 0,
+        "missed": 13
+      },
+      "precision": {
+        "baseline": {
+          "decimal": 1.0,
+          "denominator": 1,
+          "numerator": 1
+        },
+        "candidate": {
+          "decimal": 0.0,
+          "denominator": 1,
+          "numerator": 0
+        },
+        "delta": {
+          "decimal": -1.0,
+          "denominator": 1,
+          "numerator": -1
+        },
+        "no_regression": false,
+        "strict_improvement": false
+      },
+      "recall": {
+        "baseline": {
+          "decimal": 0.23076923076923078,
+          "denominator": 13,
+          "numerator": 3
+        },
+        "candidate": {
+          "decimal": 0.0,
+          "denominator": 1,
+          "numerator": 0
+        },
+        "delta": {
+          "decimal": -0.23076923076923078,
+          "denominator": 13,
+          "numerator": -3
+        },
+        "no_regression": false,
+        "strict_improvement": false
+      }
+    },
+    "modality": {
+      "baseline_counts": {
+        "extracted": 266,
+        "ground_truth": 231,
+        "matched_ground_truth": 196,
+        "matched_predictions": 194,
+        "misclassified": 72,
+        "missed": 35
+      },
+      "candidate_counts": {
+        "extracted": 266,
+        "ground_truth": 231,
+        "matched_ground_truth": 196,
+        "matched_predictions": 194,
+        "misclassified": 72,
+        "missed": 35
+      },
+      "precision": {
+        "baseline": {
+          "decimal": 0.7293233082706767,
+          "denominator": 133,
+          "numerator": 97
+        },
+        "candidate": {
+          "decimal": 0.7293233082706767,
+          "denominator": 133,
+          "numerator": 97
+        },
+        "delta": {
+          "decimal": 0.0,
+          "denominator": 1,
+          "numerator": 0
+        },
+        "no_regression": true,
+        "strict_improvement": false
+      },
+      "recall": {
+        "baseline": {
+          "decimal": 0.8484848484848485,
+          "denominator": 33,
+          "numerator": 28
+        },
+        "candidate": {
+          "decimal": 0.8484848484848485,
+          "denominator": 33,
+          "numerator": 28
+        },
+        "delta": {
+          "decimal": 0.0,
+          "denominator": 1,
+          "numerator": 0
+        },
+        "no_regression": true,
+        "strict_improvement": false
+      }
+    }
+  },
+  "schema_version": "marker_lexicon_zero_regression_comparison@1.0.0"
+}

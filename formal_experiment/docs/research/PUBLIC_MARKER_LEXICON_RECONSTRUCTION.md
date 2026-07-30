@@ -90,3 +90,29 @@ hash、manifest、空扩展表、机器合同和未进入 S2.4+ 的边界。
 代码为后续 S2.5 提供显式 `MarkerLexicon.from_public_v1()` 入口，但 S2.3 没有把它
 静默设为现有 heuristic 的默认资源，也没有运行 extractor、训练或评价。
 
+## 6. 2026-07-30 v2 溯源复核与 v3 负候选
+
+v1 的原机器门禁与历史状态不变。本轮针对后续活动 B0 参数
+`public_marker_lexicon_en_v2` 重新回到一手来源逐条复核，结论是：
+
+- Sun Table 4 仅明示 Actor/Condition/Constraint/Exception 的初始例项；完整扩展未公开；
+- Sleimi Section 5.1/Table 5 没有 Constraint 行，不能支持 v2 声称的 19 个 Constraint
+  项；v2 另有多组 Actor/Condition/Exception/Modality 项并非表中逐字条目；
+- LexNLP 固定到 2.3.0、commit
+  `330b4e113c9bced0cc06f2c864c5015bb5ed2199` 后，保留文档与代码常量交集；
+  `equal to`、`less than`、`no later than`、`not equal to` 不得截断，文档示例中额外
+  自定义的 `smallest among` 不进入候选；
+- 按新严格来源规则，v2 有 106/161 个 surface 不受支持；全部 161 条至少缺一个
+  逐 marker provenance 必需字段。完整分组见
+  `PUBLIC_MARKER_LEXICON_V3_PROVENANCE_AUDIT.md`。
+
+新建 v3 时禁止读取 EStG-150、Gold、预测、FP/FN、评价结果和 LLM 建议，不做未记录
+派生。评测前冻结六类计数为 7/8/0/26/41/5，总计 87，当前 B0 绑定 Actor/Condition/
+Constraint/Exception 共 80；combined payload SHA-256 为
+`4c6b7737f6d11b6405e5b5375fa35f452a81920782a789507b7756d3fa881846`。
+
+冻结后执行完整 150-record v2/v3 paired B0，唯一变量为四个运行时 marker 文件。
+Condition P 从 0.699482 升到 0.762963，但六字段 12 项 P/R 中 8 项下降，故严格门禁
+决定 `reject_candidate_keep_active_v2`。v3 与完整负结果永久保留，不替换活动 v2，
+也不回写 Gold、规则、parser、分类器或 evaluator。详见
+`PUBLIC_MARKER_LEXICON_V3_PAIRED_EVALUATION.md` 与 RWI-0037。

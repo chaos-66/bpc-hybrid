@@ -90,3 +90,24 @@ Tregex patterns、439 次 Tsurgeon surgery。这里的“150”是记录数，�
 
 exact reproduction 仍缺：作者完整 marker lexicon、完整 Stage 2 源码、训练权重和原
 150-sentence phrase Gold。
+
+## 5. source-only marker v3 完整 paired 结果
+
+2026-07-30 在不改变本文件所列 parser、规则、bridge、分类器、输入、Gold 或 evaluator
+的前提下，新增一次只替换 marker 参数的完整 paired development 运行。候选在任何
+指标生成前已冻结；v2 baseline 的六字段 counts/P/R 与上表完全一致。
+
+| 字段 | v2 P | v3 P | ΔP | v2 R | v3 R | ΔR |
+|---|---:|---:|---:|---:|---:|---:|
+| Modality | 0.729323 | 0.729323 | 0.000000 | 0.848485 | 0.848485 | 0.000000 |
+| Actor | 0.318681 | 0.000000 | -0.318681 | 0.500000 | 0.000000 | -0.500000 |
+| Action | 0.673282 | 0.578563 | -0.094720 | 0.862348 | 0.910931 | +0.048583 |
+| Condition | 0.699482 | 0.762963 | +0.063481 | 0.700935 | 0.565421 | -0.135514 |
+| Constraint | 0.683544 | 0.600000 | -0.083544 | 0.258278 | 0.102649 | -0.155629 |
+| Exception | 1.000000 | 0.000000 | -1.000000 | 0.230769 | 0.000000 | -0.230769 |
+
+虽然优先目标 Condition precision 严格改善，但 12 项零回归检查中 8 项失败；因此
+候选被拒绝，活动 v2 保持。Action 也会随 Condition/Constraint/Exception 的顺序
+Tsurgeon 剪枝变化而变化，所以其 precision 回归属于 marker 参数的下游效应，不是
+额外方法改动。完整精确分数、counts、两臂 attempts 和 hash 清单位于
+`outputs/development/s27_estg150_b0_marker_lexicon_v3_paired_v1/`。

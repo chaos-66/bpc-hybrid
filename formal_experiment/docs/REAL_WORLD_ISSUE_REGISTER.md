@@ -25,6 +25,7 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 
 | ID | 首次发现 | 阶段 | 类别 | 问题摘要 | 状态 | 当前处置/解决事件 |
 |---|---|---|---|---|---|---|
+| RWI-0037 | 2026-07-30 | S2.3 / S2.7-B0 | marker provenance/performance | 活动 v2 的逐条来源声明不可复核；严格 source-only v3 又在完整 B0 中发生多字段回归 | `open` | 逐源重核并在评测前冻结 87 条 v3；完整 150-record paired B0 的 12 项 P/R 门禁有 8 项回归，拒绝候选并保留活动 v2；所有负结果与 v2 旧产物均保留 |
 | RWI-0036 | 2026-07-30 | S2.7-B0 / Sun mini v2 | marker/runtime boundary | Condition 歧义 marker 与 Constraint marker 覆盖不足主导误差；多 match 记录修正会以 Constraint P 换 R | `open` | 13 条面板只读诊断；候选因 Constraint P 下降被零退化门禁拒绝，活动代码/Gold/六字段输出均未改变；marker 限制作为论文披露项保留 |
 | RWI-0035 | 2026-07-30 | S2.7-B0 / Sun reproduction | method/reproduction | `v10a` 与后续 paper-spec v1 都不能支撑“几乎相同的方法级 Sun”表述 | `open` | 新建 13 条六字段 mini pipeline；v2 已修复 Actor/Exception 回归但 Constraint P/R 下降，门禁阻断全量运行；完整原 marker/代码/权重/Gold 仍不可得 |
 | RWI-0001 | 2026-07-18 | S2.2 / S2.7–S2.10 | data/method/evaluation | 句级抽样丢失跨句先行词，人工与模型可能获得不对等上下文 | `open` | 150/150 句级盘点完成：独立 82、需上下文核实 26、不独立 42；上下文 sidecar 与公平输入合同尚未锁定 |
@@ -64,6 +65,40 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0034 | 2026-07-29 | S2.8 DeepSeek H1 live runner | provider output/merge | 7/7 H1 响应都在允许的 modality 补丁外附带 `clause_span:null`，旧 strict merge 因非六要素冗余成员全量回退 B0 | `resolved` | 只删除未请求且非语义的 `clause_span`，不放宽任何六要素 patch；保存前后两轮与解析补丁，离线重合并7/7 accepted，Gold/指标未参与修复 |
 
 ## 3. 详细记录
+
+### RWI-0037 — 活动 v2 溯源不可复核且 source-only v3 未通过完整零回归门禁
+
+- **首次发现**：2026-07-30，逐项回到 Sun Table 4、Sleimi Table 5 与固定版本
+  LexNLP 文档/代码核验 v2 的 `source_ids` 时。
+- **阶段/范围**：S2.3 public marker lexicon 与 S2.7-B0 Sun paper-spec development；
+  冻结 Gold 只读；未修改 parser、Tregex/Tsurgeon、分类器、evaluator 或人工决定；
+  未调用 LLM/API。
+- **观察事实**：Sun Table 4 只明确列出 Actor/Condition/Constraint/Exception 的初始
+  例项，并说明后续完整扩展未公开；Sleimi Section 5.1 明示不为 Constraint 推导规则，
+  Table 5 没有 Constraint 行。v2 却把 19 个 Constraint 条目标为来自 Sleimi，并把
+  19 个未出现在 Sleimi Actor 行、9 个未出现在其 Condition 行、8 个未出现在其
+  Exception 行的表面串归给 Table 5。另有 10 个未记录复数派生、24 个非 Table 5
+  Modality 项、LexNLP 截断词组和缺精确版本/位置的条目。按本轮严格来源选择规则，
+  106/161 个 v2 surface 不受支持；全部 161 条又至少缺一个逐 marker 必需字段（精确
+  item 位置、原始证据、固定版本/hash、访问日期、许可/再分发状态或派生规则）。
+- **解决尝试**：从一手表格逐字转录 Sun/Sleimi；LexNLP 固定到 2.3.0、commit
+  `330b4e113c9bced0cc06f2c864c5015bb5ed2199`，只取官方文档与代码常量交集；不使用
+  语料、Gold、预测、FP/FN、评测结果或 LLM 建词。评测前冻结 v3 六类
+  Modality/Actor/Action/Condition/Constraint/Exception=7/8/0/26/41/5，总计 87，
+  B0 实际绑定 80，combined payload SHA-256 为
+  `4c6b7737f6d11b6405e5b5375fa35f452a81920782a789507b7756d3fa881846`。
+- **完整验证结果**：同一 150 records、同一内存 Gold/输入、同一 B0 函数、CoreNLP
+  4.5.10、分类器、规则、bridge 与 Sun literal v2 evaluator 各跑 v2/v3 一臂。
+  baseline 与既有 paper-spec v1 指标完全一致。v3 使 Condition P
+  0.699482→0.762963，但 Condition R 0.700935→0.565421；Constraint P/R
+  0.683544/0.258278→0.600000/0.102649；Actor P/R、Action P、Exception P/R 也下降。
+  12 项检查共 8 项回归，决定为 `reject_candidate_keep_active_v2`。
+- **影响**：活动 v2 可继续作为已有 development 参数维持结果可比性，但不得再称其
+  161 条均有可复核的一手来源；v3 是可复核的负候选，不得因 Condition P 改善而越过
+  全字段门禁。两版本、完整 paired attempts/metrics/comparison/manifest 均保留。
+- **状态**：`open`。当前活动指针保持 v2；只有新的来源独立、评测前冻结候选通过
+  六字段全部 P/R 不下降且 Condition P 或 Constraint R 至少一项严格改善，才允许只改
+  活动指针。完整原作者扩展 marker 仍不可得。
 
 ### RWI-0036 — Condition/Constraint marker 边界与多匹配剪枝候选未通过零退化门禁
 

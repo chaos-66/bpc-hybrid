@@ -1,0 +1,228 @@
+{
+  "artifacts": {
+    "baseline_attempts": {
+      "path": "baseline_attempts.json",
+      "sha256": "5af0d71e2fd7efda2cd6aec077162c0837dec3006e4af49b6000ffcaa1f975dd"
+    },
+    "baseline_metrics": {
+      "path": "baseline_metrics.json",
+      "sha256": "6d70e6677010d578a067ff5d4f1b658d0e3c601006b85328e6ca9c050fbfd9b8"
+    },
+    "candidate_attempts": {
+      "path": "candidate_attempts.json",
+      "sha256": "0267e3422ef8b96b30acde6cf61bfd4a1fa60b74dc9242e91cafed34f84bc4f8"
+    },
+    "candidate_metrics": {
+      "path": "candidate_metrics.json",
+      "sha256": "f6e77905e652c278a2480f98dbb534f5c12ebbdce150d10f869e84d5153187bf"
+    },
+    "comparison": {
+      "path": "comparison.json",
+      "sha256": "62cb42c60eba5802261adaddb3b4b6b0cfafd623670db35a72d0faf4975c13a4"
+    }
+  },
+  "claim_scope": "development_paired_marker_parameter_comparison",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "gate": {
+    "all_strict_improvements": [
+      "action.recall",
+      "condition.precision"
+    ],
+    "decision": "reject_candidate_keep_active_v2",
+    "regressions": [
+      "actor.precision",
+      "actor.recall",
+      "action.precision",
+      "condition.recall",
+      "constraint.precision",
+      "constraint.recall",
+      "exception.precision",
+      "exception.recall"
+    ],
+    "replacement_allowed": false,
+    "required_no_regression_checks": 12,
+    "target_improvement_passed": true,
+    "target_improvements": [
+      "condition.precision"
+    ],
+    "target_metrics": [
+      "condition.precision",
+      "constraint.recall"
+    ],
+    "zero_regression_passed": false
+  },
+  "input_binding": {
+    "baseline_config_sha256": "b7e31aa37c08340baada5ac7e9be96ea6d3d03fc534b6567e3534c512e1106c1",
+    "bridge_sha256": "82b504e51be06f8e018226fb642093782ef9f750ea0ac50bad8eb65ee8119593",
+    "candidate_manifest_sha256": "f31e7ce439d00d563047d8781839b4492c371f60525eb8a0230df49deb5a2e7a",
+    "candidate_provenance_report_sha256": "c8df014b0ae2f792febfa59453cae3b18954f9e517141ef33f5562be6168c23a",
+    "candidate_source_sha256": "94f98d01bc4e11877dbaf318d290c1fca86ef749f0d875200652c333c30041c7",
+    "canonical_gold_membership_sha256": "e8e6268644cbc9b7ed42bef19f2e2e2432633a306eab9bf009725ef9571785d7",
+    "config_sha256": "520a2a4af6637ddb053e2b9a73fceac177ae0160eba22563b095df521c412a57",
+    "evaluator_sha256": "e743808ed5b5acb68128f5fd2d9f108cfeaef1aa4fc6c667264f8114ba0a939d",
+    "freeze_receipt_sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961",
+    "layer_e_sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+    "literature_source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+    "membership_hashes_sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b",
+    "pattern_registry_sha256": "406a5f7b9671dc4d39a198bfa1f0af3c45e919ccb858cbf6fbf3e885793d57ee",
+    "s2_6_config_sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126"
+  },
+  "pair_binding": {
+    "baseline_marker_id": "public_marker_lexicon_en_v2",
+    "baseline_marker_sha256": {
+      "actor": "fdf026e92d9ddc4ca3b3dbe068e5440bf4c0bffd72aad9b204c5c8bc63edc44d",
+      "condition": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a",
+      "constraint": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1",
+      "exception": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e"
+    },
+    "candidate_marker_id": "public_marker_lexicon_en_v3",
+    "candidate_marker_sha256": {
+      "actor": "252133a5c2876325623317013089f0b39a5964ad19e74b6445e8486e4010060a",
+      "condition": "fe830314980d96eb2d9e1884e6e9faf9d74583ecee753392b93c8b88b17f7a4b",
+      "constraint": "ae6d863afb2a83ecc444047bbafbfb53a9a6e7c5c85756cdc60cb15d9114cccc",
+      "exception": "1e84bc3b401dc197beab638abc20bf968444b3a856208b2046058483be3d62f1"
+    },
+    "non_marker_method_components_identical": true,
+    "shared_b0_function": "run_b0_batch_sun_paper",
+    "shared_device": "cpu",
+    "shared_evaluator": "evaluate_sun_table8_literal_overlap",
+    "shared_gold_object": true,
+    "shared_source_records_object": true
+  },
+  "run_id": "s27_estg150_b0_marker_lexicon_v3_paired_v1",
+  "runtime": {
+    "baseline": {
+      "bridge_class": "SunPaperPhraseRuleBatchBridge",
+      "bridge_seconds": 1.5037095000734553,
+      "bridge_source": "tools/corenlp/SunPaperPhraseRuleBatchBridge.java",
+      "classifier_label_counts_by_record": {
+        "definition": 51,
+        "obligation": 58,
+        "permission": 29,
+        "prohibition": 12
+      },
+      "classifier_mean_confidence": 0.9256417185068131,
+      "classifier_seconds": 41.277025300078094,
+      "compose_seconds": 0.22260909993201494,
+      "corenlp_seconds": 579.6265862999717,
+      "custom_v10_modules_used": [],
+      "device": "cpu",
+      "exact_original_reproduction": false,
+      "marker_parameter_sha256": {
+        "actor": "fdf026e92d9ddc4ca3b3dbe068e5440bf4c0bffd72aad9b204c5c8bc63edc44d",
+        "condition": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a",
+        "constraint": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1",
+        "exception": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e"
+      },
+      "match_count": 1238,
+      "method_id": "sun_rule_only",
+      "method_variant": "b0_sun_paper_spec_v1",
+      "paper_faithful_reconstruction": true,
+      "paper_order": [
+        "modality",
+        "condition",
+        "constraint",
+        "exception",
+        "actor",
+        "action"
+      ],
+      "pattern_count": 247,
+      "patterns_path": "resources/corenlp/sun_phrase_patterns_paper_spec_v1.json",
+      "patterns_sha256": "406a5f7b9671dc4d39a198bfa1f0af3c45e919ccb858cbf6fbf3e885793d57ee",
+      "predicted_clause_count": 266,
+      "record_count": 150,
+      "runtime_identity": {
+        "code_jar": {
+          "bytes": 9118725,
+          "name": "stanford-corenlp-4.5.10.jar",
+          "sha256": "f813ce4ed7319d79225f2a520d40733075c6b3500dd0b81ee069229e461aab43"
+        },
+        "models_jar": {
+          "bytes": 474409531,
+          "name": "stanford-corenlp-4.5.10-models.jar",
+          "sha256": "a5da9f6feb35a0fd2ea2cbe8909bede3952965b238a68c833ae3e031ed9026a0"
+        }
+      },
+      "sentence_count": 266,
+      "surgery_count": 439,
+      "terminal_tree_removal_count": 4,
+      "total_seconds": 622.6299302000552,
+      "tsurgeon_enabled": true
+    },
+    "candidate": {
+      "bridge_class": "SunPaperPhraseRuleBatchBridge",
+      "bridge_seconds": 1.3751381000038236,
+      "bridge_source": "tools/corenlp/SunPaperPhraseRuleBatchBridge.java",
+      "classifier_label_counts_by_record": {
+        "definition": 51,
+        "obligation": 58,
+        "permission": 29,
+        "prohibition": 12
+      },
+      "classifier_mean_confidence": 0.9256417185068131,
+      "classifier_seconds": 27.460017399978824,
+      "compose_seconds": 0.2250495000043884,
+      "corenlp_seconds": 582.9309555999935,
+      "custom_v10_modules_used": [],
+      "device": "cpu",
+      "exact_original_reproduction": false,
+      "marker_parameter_sha256": {
+        "actor": "252133a5c2876325623317013089f0b39a5964ad19e74b6445e8486e4010060a",
+        "condition": "fe830314980d96eb2d9e1884e6e9faf9d74583ecee753392b93c8b88b17f7a4b",
+        "constraint": "ae6d863afb2a83ecc444047bbafbfb53a9a6e7c5c85756cdc60cb15d9114cccc",
+        "exception": "1e84bc3b401dc197beab638abc20bf968444b3a856208b2046058483be3d62f1"
+      },
+      "match_count": 1174,
+      "method_id": "sun_rule_only",
+      "method_variant": "b0_sun_paper_spec_v1",
+      "paper_faithful_reconstruction": true,
+      "paper_order": [
+        "modality",
+        "condition",
+        "constraint",
+        "exception",
+        "actor",
+        "action"
+      ],
+      "pattern_count": 161,
+      "patterns_path": "resources/corenlp/sun_phrase_patterns_paper_spec_v1.json",
+      "patterns_sha256": "406a5f7b9671dc4d39a198bfa1f0af3c45e919ccb858cbf6fbf3e885793d57ee",
+      "predicted_clause_count": 266,
+      "record_count": 150,
+      "runtime_identity": {
+        "code_jar": {
+          "bytes": 9118725,
+          "name": "stanford-corenlp-4.5.10.jar",
+          "sha256": "f813ce4ed7319d79225f2a520d40733075c6b3500dd0b81ee069229e461aab43"
+        },
+        "models_jar": {
+          "bytes": 474409531,
+          "name": "stanford-corenlp-4.5.10-models.jar",
+          "sha256": "a5da9f6feb35a0fd2ea2cbe8909bede3952965b238a68c833ae3e031ed9026a0"
+        }
+      },
+      "sentence_count": 266,
+      "surgery_count": 339,
+      "terminal_tree_removal_count": 1,
+      "total_seconds": 611.9911605999805,
+      "tsurgeon_enabled": true
+    }
+  },
+  "safety": {
+    "created_no_overwrite": true,
+    "data_gold_written": false,
+    "data_input_written": false,
+    "estimated_cost_usd": 0.0,
+    "formal_predictions_or_results_written": false,
+    "gold_read_only": true,
+    "human_decisions_modified": false,
+    "llm_api_called": false,
+    "llm_call_count": 0,
+    "network_allowed": false,
+    "network_called": false
+  },
+  "schema_version": "estg150_b0_marker_lexicon_paired_manifest@1.0.0",
+  "sole_variable": "marker_parameter_category_files",
+  "status": "succeeded_development_not_formal",
+  "task_id": "S2.7-B0-MARKER-LEXICON-V3-PAIR"
+}

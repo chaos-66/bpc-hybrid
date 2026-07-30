@@ -1,0 +1,909 @@
+{
+  "_meta": {
+    "artifact_scope": "development_parameter_candidate",
+    "category": "condition",
+    "entry_payload_sha256": "17e2806390f610a1be1959c5386c1d1802b329255bafca17be03a2bb168a592c",
+    "generation_policy_sha256": "4af1442fcf260fab54fa5aac96ddc483f3d51ac4aafa5ef84f539b625d495885",
+    "language": "en",
+    "lexicon_id": "public_marker_lexicon_en_v3",
+    "parent_lexicon_id": "public_marker_lexicon_en_v2",
+    "source_file_sha256": "94f98d01bc4e11877dbaf318d290c1fca86ef749f0d875200652c333c30041c7",
+    "source_payload_sha256": "f620ca29a6e1326af153517cdc33f2a4fa44fcfbc51095c8eb520cb07f81408a",
+    "source_snapshot_id": "public_marker_sources_en_v3",
+    "source_table": "resources/lexicon/public_marker_sources_en_v3.json"
+  },
+  "class_counts": {},
+  "entries": [
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "in the context of",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Condition row, item 'in the context of'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, limit, who, whose, which ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Condition row, item 'in the context of'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, who, whose, which ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "in the context of"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "as soon as not",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 22; conditions.py lines 25-28, item 'as soon as not'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "as soon as not"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "upon the occurrence",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 27; conditions.py lines 25-28, item 'upon the occurrence'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "upon the occurrence"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "provided that not",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 24; conditions.py lines 25-28, item 'provided that not'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "provided that not"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "unless and until",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 16; conditions.py lines 25-28, item 'unless and until'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "unless and until"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "not subject to",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 26; conditions.py lines 25-28, item 'not subject to'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "not subject to"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "as soon as",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 21; conditions.py lines 25-28, item 'as soon as'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "as soon as"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "in case of",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Condition row, item 'in case of'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, limit, who, whose, which ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Condition row, item 'in case of'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, who, whose, which ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "in case of"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim_normalized_whitespace",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "conditioned upon",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 30; conditions.py lines 25-28, item 'conditioned  upon'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "raw_source_surface": "conditioned  upon",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "conditioned upon"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim_normalized_whitespace",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "conditioned on",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 29; conditions.py lines 25-28, item 'conditioned  on'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "raw_source_surface": "conditioned  on",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "conditioned on"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "provided that",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 23; conditions.py lines 25-28, item 'provided that'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Condition row, item 'provided that'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, limit, who, whose, which ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Condition row, item 'provided that'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, who, whose, which ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "provided that"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "subject to",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst lines 25 and 28; conditions.py lines 25-28, duplicated item 'subject to'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "subject to"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "unless not",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 18; conditions.py lines 25-28, item 'unless not'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "unless not"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "until not",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 20; conditions.py lines 25-28, item 'until not'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "until not"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "where not",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 15; conditions.py lines 25-28, item 'where not'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "where not"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "when not",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 13; conditions.py lines 25-28, item 'when not'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "when not"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "if not",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 11; conditions.py lines 25-28, item 'if not'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "if not"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "unless",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 17; conditions.py lines 25-28, item 'unless'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "unless"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "limit",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Condition row, item 'limit'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, limit, who, whose, which ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        }
+      ],
+      "surface": "limit"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "until",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 19; conditions.py lines 25-28, item 'until'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "until"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "where",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 14; conditions.py lines 25-28, item 'where'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "where"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "which",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Condition row, item 'which'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, limit, who, whose, which ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Condition row, item 'which'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, who, whose, which ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "which"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "whose",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Condition row, item 'whose'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, limit, who, whose, which ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Condition row, item 'whose'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, who, whose, which ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "whose"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "when",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 12; conditions.py lines 25-28, item 'when'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        }
+      ],
+      "surface": "when"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "who",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Condition row, item 'who'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, limit, who, whose, which ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Condition row, item 'who'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, who, whose, which ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "who"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "condition",
+      "is_derived": false,
+      "normalized": "if",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+          "item_location": "conditions.rst line 10; conditions.py lines 25-28, CONDITION_PHRASES item 'if'",
+          "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+          "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+          "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+          "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+          "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+          "source_sha256": {
+            "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+            "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+          },
+          "source_type": "official_documentation_and_code_intersection",
+          "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+          "title_or_project": "LexNLP 2.3.0",
+          "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Condition row, item 'if'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, limit, who, whose, which ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Condition row, item 'if'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "if, in case of, provided that, in the context of, who, whose, which ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "if"
+    }
+  ],
+  "schema_version": "public_marker_category@2.0.0"
+}

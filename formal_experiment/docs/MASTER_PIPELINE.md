@@ -200,7 +200,7 @@ condition/constraint/exception 的数量与嵌套、被动语态、隐含 actor�
 |---|---|---|---|---|
 | S2.1 | 官方 modality 数据 ingestion/schema/license/split | G0.2 | **verified；A/B-R1/C-R1/D 全部通过** | development machine gate 交叉验证来源、合同、schema、quarantine、hash 与 split；本地非商业训练/评价已由项目决定解锁，再分发仍禁止 |
 | S2.2 | EStG-150 人工裁决 | human-owned | **verified annotation freeze / formal Gold publication blocked**：Layer E 150/150 approved、900/900 六字段决策已闭合、150/150 adjudicated，共 231 个最终 clauses；deterministic receipt 与 exact-hash gate 已通过。该 receipt 只冻结 sentence-only approved English annotation，不声称德译英经人工验证，不发布 formal Gold，不授权正式方法运行 | S2.2 人工裁决与 annotation freeze 已完成；下一步闭合 RWI-0001 context sidecar/公平输入合同和 RWI-0007 语言 QA/主次数据轨道，再重锁 route/data/publication gate |
-| S2.3 | 重建 public marker lexicon | S2.1 | **verified；英文 public-source v1 已锁定** | 来源、规则、hash、dev-only 扩展策略固定 |
+| S2.3 | 重建 public marker lexicon | S2.1 | **v1 verified；v3 source-only candidate frozen and rejected** | v3 逐条重核 Sun/Sleimi/LexNLP 后在评测前冻结 87 条；完整 150-record paired B0 的 12 项 P/R 有 8 项回归，故不替换活动 v2；v2 溯源限制按 RWI-0037 披露 |
 | S2.4 | 完成 BERT-TextCNN | S2.1 + 本地研究使用决定 | **verified：Legal-BERT + TextCNN 已完成训练、dev 选择和唯一一次 test 评价** | 运行 `s24_legal_bert_textcnn_seed20260717_v1`；best epoch 5；test accuracy=0.924883、macro-F1=0.851071；只发布聚合指标，不外传原始或逐条派生数据 |
 | S2.5 | 完成 CoreNLP/Tregex/Tsurgeon extractor | S2.3 | **verified：A/B、外部 runtime、live fixtures 全部通过** | 4.5.10 archive/JAR/artifact hash、12 patterns、六字段顺序和 7 surgeries 锁定 |
 | S2.6 | 组合并验证完整 B0 | S2.4-S2.5 | **verified-technical + development batch measured**：真实 S2.4 checkpoint + attested S2.5 输出已组成 canonical B0；另在冻结 Layer E 上完成 sentence-only English development batch | 150/150 immutable attempts、schema-valid=100%、LLM=0；v1 exact-ID/span 结果因 RWI-0014 被替代。v1.2 重算全量 modality micro P/R/F1=0.394737/0.454545/0.422535、macro-F1=0.406801、clause alignment P/R/F1=0.680451/0.783550/0.728370；独立82 modality micro P/R/F1=0.433071/0.504587/0.466102。结果只属 development，不解除 route/language/formal publication 门禁 |
@@ -317,7 +317,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 |---|---|---|
 | P0 | Pipeline、文档入口与目录治理 | verified；日志/检查制度已有回归测试保护 |
 | P1 | Stage 2 数据、Gold、复杂度合同 | in progress；统一六要素合同与 EStG-150 annotation snapshot 已冻结，正式 Gold publication/input capsule 仍待 RWI-0001/RWI-0007 与 route/data gate 重锁 |
-| P2 | 完整 B0 | technical components verified，方法级对齐重新开放；历史 paper-spec v1 的 150 条 development 结果保留但撤回 paper-faithful 活动表述。13 条六字段 mini pipeline 已阻断 v2 全量：Actor/Exception 改善且 Action/Condition/Modality 不降，但 Constraint P/R 从 0.8000/0.2500 降至 0.4286/0.1071。须先在不引入非 Sun resolver 的前提下通过同面板六字段 P/R 不下降门禁；完整 marker/代码/权重/原Gold仍缺 |
+| P2 | 完整 B0 | technical components verified，方法级对齐重新开放；历史 paper-spec v1 的 150 条 development 结果保留但撤回 paper-faithful 活动表述。来源独立的 v3 已完成 150-record paired B0：Condition P 改善但 Actor P/R、Action P、Condition R、Constraint P/R、Exception P/R 共 8 项回归，零回归门禁拒绝，活动 v2 不变。须先在不引入非 Sun resolver 的前提下通过六字段 P/R 不下降门禁；完整原作者 marker/代码/权重/原Gold仍缺 |
 | P3 | Stage 2 多 baseline | partial：S2.7-M modality 三 baseline 已验证；phrase/full Stage 2 仍 blocked on P1 formal route/input publication |
 | P4 | H1/D1 与 Stage 2 复杂集 | partial：H1/D1 已完成一次 DeepSeek V4 Pro development Sun-literal比较；D1因RWI-0033为mixed transport，仅作诊断。正式运行仍待 P1 formal route/input、总门禁、重新预注册与授权；复杂集语义 Gold 仍0/50 |
 | P5 | Stage 1 完整实现与评价 | planned after Stage 2 core |
@@ -460,6 +460,7 @@ tokens，按锁定价格记录 0.01728755 CA。模型返回 schema-shaped JSON�
 
 | 版本 | 日期 | 变更 | 依据 |
 |---|---|---|---|
+| 4.9.4 | 2026-07-30 | 逐项重核 Sun Table 4、Sleimi Table 5 与 LexNLP 2.3.0/commit `330b4e11` 后确认活动 v2 的 106/161 个 surface 不受严格来源规则支持，且全部 161 条缺至少一项新逐 marker provenance 字段。评测前冻结 source-only v3 六类 7/8/0/26/41/5（总 87、B0 绑定 80），随后在同一 150 records/Gold/B0/CoreNLP/classifier/rules/evaluator 下完整 paired 运行。Condition P 0.699482→0.762963，但 12 项 P/R 有 8 项回归，故拒绝 v3、保留活动 v2；0 LLM/API，Gold/解析器/规则/分类器/evaluator 均未改 | v3 source/manifest/provenance report；paired comparison/manifest；RWI-0037 |
 | 4.9.3 | 2026-07-30 | 对 mini v2 的低 Condition P / Constraint R 做只读归因并试验单一 Constraint 多匹配记录候选。Condition 11 个 FP 中 10 个跨其他 Gold 字段、8 个含歧义 marker；Constraint 25 个 FN 中 22 个不含当前 marker。候选保持其他五字段完全不变并将 Constraint R 0.1071→0.1429，但 P 0.4286→0.4000，故零退化门禁拒绝并撤回代码；未改 Gold/marker/活动输出，未跑全量、未调用 API | Sun PDF pp.12–13、17；13 条 mini A/B；RWI-0036 |
 | 4.9.2 | 2026-07-30 | 重新核查 paper-spec v1 后发现 Actor/Constraint 的 `<` 被实现为 `<<`，且顺序破坏性上下文剪枝可在 Exception 前删除其范围，故撤回 v1 的 paper-faithful 活动表述。新增隔离 v2 与 13 条六字段 mini pipeline：同时跑旧 v1 对照、方法契约、schema、零 LLM、六字段 P/R 和 full-150-not-run；任一字段 P/R 下降即非零阻断。当前 Actor/Exception 明显改善，Action/Condition/Modality 不降，但 Constraint 回归，未运行新全量 | Sun PDF pp.11–12 Section 4.2.2、Table 3、Figure 7；mini manifest；RWI-0035 reopened |
 | 4.9.1 | 2026-07-30 | 纠正把非 paper-faithful `v10a` 当作方法级 Sun 的口径：按 Section 4.2.2 新建 B0 paper-spec v1，移除五类项目自定义 resolver/segmentation/alignment，启用真实 Tsurgeon、依存 actor、上下文移除后 every-VP action，并共享 Sun literal v2。150 records development overall P/R=0.665113/0.629384；Constraint extracted=79、P/R=0.683544/0.258278。完整作者 marker/代码/权重/原Gold仍不可得，不声称 exact reproduction | Sun PDF pp.10–13、17–18；run manifest/metrics；RWI-0035；聚焦与完整验证 |

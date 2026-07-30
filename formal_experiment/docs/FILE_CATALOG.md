@@ -2,7 +2,7 @@
 
 **生成日期**：2026-07-30
 
-**收录文件**：1751 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
+**收录文件**：1774 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
 
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
@@ -108,6 +108,7 @@
 | `configs/models/estg150_b0_enhanced_s27_v8b.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_enhanced_s27_v8c.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_enhanced_s27_v9a.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/models/estg150_b0_marker_lexicon_v3_paired_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_sun_mini_pipeline_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_sun_paper_s27_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_v10_preregistration_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -536,6 +537,8 @@
 | `docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/BARRIENTOS_LLM_ROLE.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/PUBLIC_MARKER_LEXICON_RECONSTRUCTION.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/PUBLIC_MARKER_LEXICON_V3_PAIRED_EVALUATION.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/PUBLIC_MARKER_LEXICON_V3_PROVENANCE_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_BASELINE_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_CORENLP_RUNTIME_ALIGNMENT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
@@ -946,6 +949,12 @@
 | `outputs/development/s27_estg150_b0_enhanced_v9a/evaluation_independent82.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_enhanced_v9a/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_enhanced_v9a/sun_table8_any_overlap_diagnostic.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_marker_lexicon_v3_paired_v1/baseline_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_marker_lexicon_v3_paired_v1/baseline_metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_marker_lexicon_v3_paired_v1/candidate_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_marker_lexicon_v3_paired_v1/candidate_metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_marker_lexicon_v3_paired_v1/comparison.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_marker_lexicon_v3_paired_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_phase_a_correction_v1/attempts_gold_seg_hybrid.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_phase_a_correction_v1/attempts_gold_seg_marker.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_phase_a_correction_v1/attempts_gold_seg_real_classifier.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1450,23 +1459,31 @@
 | `resources/corenlp/sun_phrase_patterns_v3_enhanced.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/corenlp/sun_phrase_patterns_v4_expanded.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/corenlp/sun_phrase_patterns_v5_b5_tsurgeon.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/action_markers_en_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/actor_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/actor_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/actor_markers_en_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/condition_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/condition_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/condition_markers_en_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/constraint_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/constraint_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/constraint_markers_en_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/constraint_markers_en_v3_b4.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/development_extensions_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/exception_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/exception_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/exception_markers_en_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/modality_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/modality_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/modality_markers_en_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/public_marker_lexicon_en_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/public_marker_lexicon_en_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/public_marker_lexicon_en_v3.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/public_marker_lexicon_en_v3_b4.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/public_marker_sources_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/public_marker_sources_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/public_marker_sources_en_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/public_marker_sources_en_v3_b4.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/sun_marker_lexicon.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
@@ -1494,6 +1511,7 @@
 | `scripts/build_estg_human_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_public_marker_lexicon_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
@@ -1536,6 +1554,7 @@
 | `scripts/run_estg150_b0_enhanced_v7_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v8_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v9_development.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_estg150_b0_marker_lexicon_v3_paired.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_sun_paper_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_h1_d1_deepseek_v4pro.py` | 活动 | Python 实现、脚本或测试 |
@@ -1635,6 +1654,7 @@
 | `src/bpc_hybrid/llm_client.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_config.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_provider.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/marker_lexicon_v3_pair.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/mini_pilot_evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/normalization.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/prompt_loader.py` | 活动 | Python 实现、脚本或测试 |
@@ -1669,6 +1689,7 @@
 | `src/bpc_hybrid/sun_style/modality_classifier.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/non_llm_modality_baselines.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/public_marker_lexicon_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/rule_record.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/semantic_extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/spacy_semantic_extractor.py` | 活动 | Python 实现、脚本或测试 |
@@ -1795,12 +1816,14 @@
 | `tests/test_lexicon_v2_and_tsurgeon_honesty.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_llm_client.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_llm_config.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_marker_lexicon_v3_pair.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_master_pipeline_and_layout.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_normalization.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_phase_a_correction_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_project_structure.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_prompt_contract.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_public_marker_lexicon_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g1_lexicon_classifier.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g2_extraction_rules.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g3_bpmn_violation.py` | 活动 | Python 实现、脚本或测试 |

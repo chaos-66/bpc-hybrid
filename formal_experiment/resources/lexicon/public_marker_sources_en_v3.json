@@ -1,0 +1,302 @@
+{
+  "schema_version": "public_marker_sources@2.0.0",
+  "snapshot_id": "public_marker_sources_en_v3",
+  "language": "en",
+  "evidence_cutoff": "2026-07-30",
+  "construction_policy": {
+    "selection_rule": "Use only verbatim marker items in a public primary paper table or items present in both the pinned LexNLP official documentation list and the corresponding official code constant.",
+    "normalization": "NFKC, strip, collapse internal whitespace, Unicode casefold",
+    "duplicate_policy": "Merge identical field plus normalized surface entries and retain every independently verified provenance record.",
+    "forbidden_inputs": [
+      "EStG-150 text",
+      "Gold annotations",
+      "predictions",
+      "FP/FN or evaluation results",
+      "LLM synonym suggestions",
+      "unrecorded inflectional or phrase derivation"
+    ],
+    "derived_markers_included": false,
+    "action_strategy": "syntax_only_no_action_marker_lexicon",
+    "modality_runtime_strategy": "Sun B0 extracts MD nodes; the modality marker file is provenance-only and is not bound by the current B0 runtime.",
+    "lexnlp_cross_verification": "Documentation-only item 'smallest among' is excluded because it is absent from CONSTRAINT_PHRASES and the official documentation example explicitly adds it as a customization.",
+    "freeze_rule": "The generated manifest and every category SHA-256 must be frozen before any paired B0 metric is produced. No marker may be added, removed, or relabeled after the paired run starts.",
+    "artifact_scope": "development_parameter_candidate",
+    "redistribution_policy": "Do not redistribute source PDFs or upstream source files; retain only short factual marker lists, hashes, citations, and audit metadata."
+  },
+  "sources": [
+    {
+      "source_id": "sun_2024_table4_explicit_markers",
+      "source_type": "public_paper_explicit_marker_table",
+      "title_or_project": "Design-time business process compliance assessment",
+      "doi": "10.1007/s11227-023-05626-0",
+      "url": "https://doi.org/10.1007/s11227-023-05626-0",
+      "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+      "source_version": "local publisher PDF",
+      "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+      "access_date": "2026-07-30",
+      "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+      "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+      "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+      "raw_evidence_text": {
+        "actor": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+        "condition": "if, in case of, provided that, in the context of, who, whose, which ...",
+        "constraint": "before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+        "exception": "with the exception of, except for, derogation, apart from, other than, ..."
+      },
+      "markers": [
+        {"field": "actor", "surface": "physician", "item_location": "Table 4 Actor row, item 'physician'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "expert", "item_location": "Table 4 Actor row, item 'expert'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "company", "item_location": "Table 4 Actor row, item 'company'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "judge", "item_location": "Table 4 Actor row, item 'judge'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "prosecutor", "item_location": "Table 4 Actor row, item 'prosecutor'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "driver", "item_location": "Table 4 Actor row, item 'driver'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "officer", "item_location": "Table 4 Actor row, item 'officer'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "inspector", "item_location": "Table 4 Actor row, item 'inspector'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "if", "item_location": "Table 4 Condition row, item 'if'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "in case of", "item_location": "Table 4 Condition row, item 'in case of'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "provided that", "item_location": "Table 4 Condition row, item 'provided that'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "in the context of", "item_location": "Table 4 Condition row, item 'in the context of'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "who", "item_location": "Table 4 Condition row, item 'who'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "whose", "item_location": "Table 4 Condition row, item 'whose'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "which", "item_location": "Table 4 Condition row, item 'which'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "before", "item_location": "Table 4 Constraint row, item 'before'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "after", "item_location": "Table 4 Constraint row, item 'after'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "at least", "item_location": "Table 4 Constraint row, item 'at least'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "at most", "item_location": "Table 4 Constraint row, item 'at most'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "equal to", "item_location": "Table 4 Constraint row, item 'equal to'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "greatest", "item_location": "Table 4 Constraint row, item 'greatest'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "smallest", "item_location": "Table 4 Constraint row, item 'smallest'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "last of", "item_location": "Table 4 Constraint row, item 'last of'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "least of", "item_location": "Table 4 Constraint row, item 'least of'", "entry_kind": "verbatim"},
+        {"field": "exception", "surface": "with the exception of", "item_location": "Table 4 Exception row, item 'with the exception of'", "entry_kind": "verbatim"},
+        {"field": "exception", "surface": "except for", "item_location": "Table 4 Exception row, item 'except for'", "entry_kind": "verbatim"},
+        {"field": "exception", "surface": "derogation", "item_location": "Table 4 Exception row, item 'derogation'", "entry_kind": "verbatim"},
+        {"field": "exception", "surface": "apart from", "item_location": "Table 4 Exception row, item 'apart from'", "entry_kind": "verbatim"},
+        {"field": "exception", "surface": "other than", "item_location": "Table 4 Exception row, item 'other than'", "entry_kind": "verbatim"}
+      ]
+    },
+    {
+      "source_id": "sleimi_2020_table5_explicit_markers",
+      "source_type": "public_paper_explicit_marker_table",
+      "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+      "doi": null,
+      "url": "https://arxiv.org/pdf/2001.11245",
+      "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+      "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+      "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+      "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+      "access_date": "2026-07-30",
+      "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+      "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+      "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+      "raw_evidence_text": {
+        "constraint_absence": "We do not derive extraction rules for result and constraint, since the study did not yield a sufficient number of occurrences for these two concepts.",
+        "actor": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+        "condition": "if, in case of, provided that, in the context of, limit, who, whose, which ...",
+        "exception": "with the exception of, except for, derogation, apart from, other than, ...",
+        "modality": "may, must, shall, can, need to, is authorized to, is prohibited from, ..."
+      },
+      "markers": [
+        {"field": "actor", "surface": "physician", "item_location": "Table 5 Actor row, item 'physician'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "expert", "item_location": "Table 5 Actor row, item 'expert'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "company", "item_location": "Table 5 Actor row, item 'company'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "judge", "item_location": "Table 5 Actor row, item 'judge'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "prosecutor", "item_location": "Table 5 Actor row, item 'prosecutor'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "driver", "item_location": "Table 5 Actor row, item 'driver'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "officer", "item_location": "Table 5 Actor row, item 'officer'", "entry_kind": "verbatim"},
+        {"field": "actor", "surface": "inspector", "item_location": "Table 5 Actor row, item 'inspector'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "if", "item_location": "Table 5 Condition row, item 'if'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "in case of", "item_location": "Table 5 Condition row, item 'in case of'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "provided that", "item_location": "Table 5 Condition row, item 'provided that'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "in the context of", "item_location": "Table 5 Condition row, item 'in the context of'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "limit", "item_location": "Table 5 Condition row, item 'limit'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "who", "item_location": "Table 5 Condition row, item 'who'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "whose", "item_location": "Table 5 Condition row, item 'whose'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "which", "item_location": "Table 5 Condition row, item 'which'", "entry_kind": "verbatim"},
+        {"field": "exception", "surface": "with the exception of", "item_location": "Table 5 Exception row, item 'with the exception of'", "entry_kind": "verbatim"},
+        {"field": "exception", "surface": "except for", "item_location": "Table 5 Exception row, item 'except for'", "entry_kind": "verbatim"},
+        {"field": "exception", "surface": "derogation", "item_location": "Table 5 Exception row, item 'derogation'", "entry_kind": "verbatim"},
+        {"field": "exception", "surface": "apart from", "item_location": "Table 5 Exception row, item 'apart from'", "entry_kind": "verbatim"},
+        {"field": "exception", "surface": "other than", "item_location": "Table 5 Exception row, item 'other than'", "entry_kind": "verbatim"},
+        {"field": "modality", "surface": "may", "modality_class": "permission", "item_location": "Table 5 Modality row, item 'may'", "entry_kind": "verbatim"},
+        {"field": "modality", "surface": "must", "modality_class": "obligation", "item_location": "Table 5 Modality row, item 'must'", "entry_kind": "verbatim"},
+        {"field": "modality", "surface": "shall", "modality_class": "obligation", "item_location": "Table 5 Modality row, item 'shall'", "entry_kind": "verbatim"},
+        {"field": "modality", "surface": "can", "modality_class": "permission", "item_location": "Table 5 Modality row, item 'can'", "entry_kind": "verbatim"},
+        {"field": "modality", "surface": "need to", "modality_class": "obligation", "item_location": "Table 5 Modality row, item 'need to'", "entry_kind": "verbatim"},
+        {"field": "modality", "surface": "is authorized to", "modality_class": "permission", "item_location": "Table 5 Modality row, item 'is authorized to'", "entry_kind": "verbatim"},
+        {"field": "modality", "surface": "is prohibited from", "modality_class": "prohibition", "item_location": "Table 5 Modality row, item 'is prohibited from'", "entry_kind": "verbatim"}
+      ]
+    },
+    {
+      "source_id": "lexnlp_conditions_2_3_0_330b4e11",
+      "source_type": "official_documentation_and_code_intersection",
+      "title_or_project": "LexNLP 2.3.0",
+      "doi": null,
+      "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/conditions.html",
+      "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+      "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+      "source_sha256": {
+        "documentation/docs/source/modules/extract/en/conditions.rst": "bb25e9164484867e36c12bb11cad90c2b6e15eb3eeda09914e85abe85b8f78db",
+        "lexnlp/extract/en/conditions.py": "5f063d6b7e38c6ed80a1c49388784a6e6858f6b6025d273f3ad680b2c1ee388b"
+      },
+      "access_date": "2026-07-30",
+      "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+      "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+      "exact_location": "conditions.rst lines 10-30; conditions.py CONDITION_PHRASES lines 25-28",
+      "raw_evidence_text": "Official docs and CONDITION_PHRASES both enumerate the retained items; duplicated 'subject to' is deduplicated and the two spaces in 'conditioned  on/upon' are collapsed by the declared normalization.",
+      "markers": [
+        {"field": "condition", "surface": "if", "item_location": "conditions.rst line 10; conditions.py lines 25-28, CONDITION_PHRASES item 'if'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "if not", "item_location": "conditions.rst line 11; conditions.py lines 25-28, item 'if not'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "when", "item_location": "conditions.rst line 12; conditions.py lines 25-28, item 'when'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "when not", "item_location": "conditions.rst line 13; conditions.py lines 25-28, item 'when not'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "where", "item_location": "conditions.rst line 14; conditions.py lines 25-28, item 'where'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "where not", "item_location": "conditions.rst line 15; conditions.py lines 25-28, item 'where not'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "unless and until", "item_location": "conditions.rst line 16; conditions.py lines 25-28, item 'unless and until'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "unless", "item_location": "conditions.rst line 17; conditions.py lines 25-28, item 'unless'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "unless not", "item_location": "conditions.rst line 18; conditions.py lines 25-28, item 'unless not'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "until", "item_location": "conditions.rst line 19; conditions.py lines 25-28, item 'until'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "until not", "item_location": "conditions.rst line 20; conditions.py lines 25-28, item 'until not'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "as soon as", "item_location": "conditions.rst line 21; conditions.py lines 25-28, item 'as soon as'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "as soon as not", "item_location": "conditions.rst line 22; conditions.py lines 25-28, item 'as soon as not'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "provided that", "item_location": "conditions.rst line 23; conditions.py lines 25-28, item 'provided that'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "provided that not", "item_location": "conditions.rst line 24; conditions.py lines 25-28, item 'provided that not'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "subject to", "item_location": "conditions.rst lines 25 and 28; conditions.py lines 25-28, duplicated item 'subject to'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "not subject to", "item_location": "conditions.rst line 26; conditions.py lines 25-28, item 'not subject to'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "upon the occurrence", "item_location": "conditions.rst line 27; conditions.py lines 25-28, item 'upon the occurrence'", "entry_kind": "verbatim"},
+        {"field": "condition", "surface": "conditioned on", "raw_source_surface": "conditioned  on", "item_location": "conditions.rst line 29; conditions.py lines 25-28, item 'conditioned  on'", "entry_kind": "verbatim_normalized_whitespace"},
+        {"field": "condition", "surface": "conditioned upon", "raw_source_surface": "conditioned  upon", "item_location": "conditions.rst line 30; conditions.py lines 25-28, item 'conditioned  upon'", "entry_kind": "verbatim_normalized_whitespace"}
+      ]
+    },
+    {
+      "source_id": "lexnlp_constraints_2_3_0_330b4e11",
+      "source_type": "official_documentation_and_code_intersection",
+      "title_or_project": "LexNLP 2.3.0",
+      "doi": null,
+      "url": "https://lexpredict-lexnlp.readthedocs.io/en/latest/modules/extract/en/constraints.html",
+      "official_repository_url": "https://github.com/LexPredict/lexpredict-lexnlp",
+      "source_version": "2.3.0; commit 330b4e113c9bced0cc06f2c864c5015bb5ed2199",
+      "source_sha256": {
+        "documentation/docs/source/modules/extract/en/constraints.rst": "1e37db97077c92348e4f910bb12c6afeee136ad504a43b1d424e6fa62e133b0f",
+        "lexnlp/extract/en/constraints.py": "cbfe64b3462d52ed13dfeb58eb5cfb4589f06a951d93e36b8fdbb1795b0fc636"
+      },
+      "access_date": "2026-07-30",
+      "license_status": "LexNLP repository states AGPL-3.0 default dual licensing",
+      "redistribution_status": "upstream files not redistributed; short factual trigger list and hashes only",
+      "exact_location": "constraints.rst lines 10-49; constraints.py CONSTRAINT_PHRASES lines 26-31",
+      "raw_evidence_text": "Only items present in both the official docs list and CONSTRAINT_PHRASES are retained. The docs-only 'smallest among' is excluded.",
+      "markers": [
+        {"field": "constraint", "surface": "after", "item_location": "constraints.rst line 10; constraints.py lines 26-31, item 'after'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "at least", "item_location": "constraints.rst line 11; constraints.py lines 26-31, item 'at least'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "at most", "item_location": "constraints.rst line 12; constraints.py lines 26-31, item 'at most'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "before", "item_location": "constraints.rst line 13; constraints.py lines 26-31, item 'before'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "equal to", "item_location": "constraints.rst line 14; constraints.py lines 26-31, item 'equal to'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "exactly", "item_location": "constraints.rst line 15; constraints.py lines 26-31, item 'exactly'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "first of", "item_location": "constraints.rst line 16; constraints.py lines 26-31, item 'first of'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "greater", "item_location": "constraints.rst line 17; constraints.py lines 26-31, item 'greater'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "greater of", "item_location": "constraints.rst line 18; constraints.py lines 26-31, item 'greater of'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "greater than", "item_location": "constraints.rst line 19; constraints.py lines 26-31, item 'greater than'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "greater than or equal to", "item_location": "constraints.rst line 20; constraints.py lines 26-31, item 'greater than or equal to'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "greatest of", "item_location": "constraints.rst line 21; constraints.py lines 26-31, item 'greatest of'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "last of", "item_location": "constraints.rst line 22; constraints.py lines 26-31, item 'last of'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "least of", "item_location": "constraints.rst line 23; constraints.py lines 26-31, item 'least of'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "lesser", "item_location": "constraints.rst line 24; constraints.py lines 26-31, item 'lesser'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "lesser of", "item_location": "constraints.rst line 25; constraints.py lines 26-31, item 'lesser of'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "lesser than", "item_location": "constraints.rst line 26; constraints.py lines 26-31, item 'lesser than'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "less than", "item_location": "constraints.rst line 27; constraints.py lines 26-31, item 'less than'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "less than or equal to", "item_location": "constraints.rst line 28; constraints.py lines 26-31, item 'less than or equal to'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "maximum of", "item_location": "constraints.rst line 29; constraints.py lines 26-31, item 'maximum of'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "maximum", "item_location": "constraints.rst line 30; constraints.py lines 26-31, item 'maximum'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "minimum of", "item_location": "constraints.rst line 31; constraints.py lines 26-31, item 'minimum of'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "minimum", "item_location": "constraints.rst line 32; constraints.py lines 26-31, item 'minimum'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "more than", "item_location": "constraints.rst line 33; constraints.py lines 26-31, item 'more than'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "more than or equal to", "item_location": "constraints.rst line 34; constraints.py lines 26-31, item 'more than or equal to'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "no earlier than", "item_location": "constraints.rst line 35; constraints.py lines 26-31, item 'no earlier than'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "no later than", "item_location": "constraints.rst line 36; constraints.py lines 26-31, item 'no later than'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "no less than", "item_location": "constraints.rst line 37; constraints.py lines 26-31, item 'no less than'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "no more than", "item_location": "constraints.rst line 38; constraints.py lines 26-31, item 'no more than'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "not equal to", "item_location": "constraints.rst line 39; constraints.py lines 26-31, item 'not equal to'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "not to exceed", "item_location": "constraints.rst line 40; constraints.py lines 26-31, item 'not to exceed'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "earlier than", "item_location": "constraints.rst line 41; constraints.py lines 26-31, item 'earlier than'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "later than", "item_location": "constraints.rst line 42; constraints.py lines 26-31, item 'later than'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "within", "item_location": "constraints.rst line 43; constraints.py lines 26-31, item 'within'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "exceed", "item_location": "constraints.rst line 44; constraints.py lines 26-31, item 'exceed'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "exceeds", "item_location": "constraints.rst line 45; constraints.py lines 26-31, item 'exceeds'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "prior to", "item_location": "constraints.rst line 46; constraints.py lines 26-31, item 'prior to'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "highest", "item_location": "constraints.rst line 47; constraints.py lines 26-31, item 'highest'", "entry_kind": "verbatim"},
+        {"field": "constraint", "surface": "least", "item_location": "constraints.rst line 48; constraints.py lines 26-31, item 'least'", "entry_kind": "verbatim"}
+      ]
+    }
+  ],
+  "known_v2_provenance_defects": {
+    "v2_total_entries": 161,
+    "v2_entries_not_supported_by_the_v3_source_rule": 106,
+    "global_metadata_failure": "All v2 entries lack at least one newly required per-marker field such as exact item location, raw evidence, pinned upstream revision/hash, access date, license/redistribution status, or a recorded derivation rule. Surface forms that are reverified in v3 are therefore new provenance records, not repaired v2 records.",
+    "groups": [
+      {
+        "field": "actor",
+        "finding": "not_in_sleimi_table5_actor_row",
+        "markers": ["taxpayer", "employee", "employer", "authority", "person", "operator", "minister", "office", "association", "fund", "trader", "farmer", "forester", "board", "court", "insured", "recipient", "controller", "processor"]
+      },
+      {
+        "field": "actor",
+        "finding": "unrecorded_plural_or_inflection_derivation",
+        "markers": ["taxpayers", "employees", "employers", "authorities", "persons", "associations", "funds", "traders", "farmers", "foresters"]
+      },
+      {
+        "field": "condition",
+        "finding": "not_in_sleimi_table5_condition_row",
+        "markers": ["in the event of", "in the event that", "to the extent", "to the extent that", "insofar as", "as long as", "so long as", "on condition that", "once"]
+      },
+      {
+        "field": "condition",
+        "finding": "not_in_sun_table4_or_sleimi_table5_and_no_precise_source",
+        "markers": ["whenever", "insofar", "that"]
+      },
+      {
+        "field": "constraint",
+        "finding": "sleimi_table5_has_no_constraint_row",
+        "markers": ["under", "under section", "by double-entry", "by means of", "in such quantity", "to an annual", "for a period", "between", "throughout", "until", "during", "as defined in", "within the meaning", "only", "solely", "exclusively", "generally", "without undue", "up to"]
+      },
+      {
+        "field": "constraint",
+        "finding": "truncated_lexnlp_phrase_not_an_official_item",
+        "markers": ["no less", "no more", "less", "equal", "not equal"]
+      },
+      {
+        "field": "constraint",
+        "finding": "not_in_sun_table4_constraint_row_and_no_precise_constraint_source",
+        "markers": ["for the purpose of", "for the purposes of", "for purposes of", "in accordance with", "pursuant to"]
+      },
+      {
+        "field": "exception",
+        "finding": "not_in_sleimi_table5_exception_row",
+        "markers": ["except", "excluding", "notwithstanding", "regardless of", "even if", "shall not apply", "does not apply", "do not apply"]
+      },
+      {
+        "field": "exception",
+        "finding": "unrecorded_derivation_from_table_item_derogation",
+        "markers": ["in derogation of"]
+      },
+      {
+        "field": "exception",
+        "finding": "wyner_peters_local_audit_lacks_required_exact_location_version_and_evidence",
+        "markers": ["save where", "save", "unless"]
+      },
+      {
+        "field": "modality",
+        "finding": "not_an_exact_sleimi_table5_modality_item_or_is_a_truncated_form",
+        "markers": ["shall mean", "means", "is defined as", "are defined as", "refers to", "denotes", "is understood as", "shall be construed as", "amounts to", "also include", "is required to", "is obliged to", "has to", "should", "is prohibited", "shall not", "must not", "may not", "is not permitted", "is not allowed", "must never", "is authorized", "is allowed to", "is permitted to"]
+      }
+    ]
+  },
+  "expected_candidate_counts": {
+    "modality": 7,
+    "actor": 8,
+    "action": 0,
+    "condition": 26,
+    "constraint": 41,
+    "exception": 5,
+    "total": 87,
+    "runtime_bound_total": 80
+  }
+}

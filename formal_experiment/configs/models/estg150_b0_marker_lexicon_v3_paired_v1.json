@@ -1,0 +1,95 @@
+{
+  "schema_version": "estg150_b0_marker_lexicon_paired@1.0.0",
+  "task_id": "S2.7-B0-MARKER-LEXICON-V3-PAIR",
+  "run_id": "s27_estg150_b0_marker_lexicon_v3_paired_v1",
+  "status": "preregistered_development_paired_evaluation",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "claim_scope": "development",
+  "baseline_config": {
+    "path": "configs/models/estg150_b0_sun_paper_s27_v1.json",
+    "sha256": "b7e31aa37c08340baada5ac7e9be96ea6d3d03fc534b6567e3534c512e1106c1"
+  },
+  "candidate_freeze": {
+    "lexicon_id": "public_marker_lexicon_en_v3",
+    "source_snapshot": {
+      "path": "resources/lexicon/public_marker_sources_en_v3.json",
+      "sha256": "94f98d01bc4e11877dbaf318d290c1fca86ef749f0d875200652c333c30041c7"
+    },
+    "manifest": {
+      "path": "resources/lexicon/public_marker_lexicon_en_v3.manifest.json",
+      "sha256": "f31e7ce439d00d563047d8781839b4492c371f60525eb8a0230df49deb5a2e7a"
+    },
+    "provenance_report": {
+      "path": "docs/research/PUBLIC_MARKER_LEXICON_V3_PROVENANCE_AUDIT.md",
+      "sha256": "c8df014b0ae2f792febfa59453cae3b18954f9e517141ef33f5562be6168c23a"
+    },
+    "combined_payload_sha256": "4c6b7737f6d11b6405e5b5375fa35f452a81920782a789507b7756d3fa881846",
+    "category_files": {
+      "modality": {
+        "path": "resources/lexicon/modality_markers_en_v3.json",
+        "sha256": "d678035faf41ae58da0a538746b4637e405a4acefc6db2876292aa77735656d2",
+        "entry_count": 7,
+        "runtime_bound": false
+      },
+      "actor": {
+        "path": "resources/lexicon/actor_markers_en_v3.json",
+        "sha256": "252133a5c2876325623317013089f0b39a5964ad19e74b6445e8486e4010060a",
+        "entry_count": 8,
+        "runtime_bound": true
+      },
+      "action": {
+        "path": "resources/lexicon/action_markers_en_v3.json",
+        "sha256": "ec2fab94d3f75e4bcc000a0500c1e3a90e6712ac2abccea5cf27c989feb2ad43",
+        "entry_count": 0,
+        "runtime_bound": false
+      },
+      "condition": {
+        "path": "resources/lexicon/condition_markers_en_v3.json",
+        "sha256": "fe830314980d96eb2d9e1884e6e9faf9d74583ecee753392b93c8b88b17f7a4b",
+        "entry_count": 26,
+        "runtime_bound": true
+      },
+      "constraint": {
+        "path": "resources/lexicon/constraint_markers_en_v3.json",
+        "sha256": "ae6d863afb2a83ecc444047bbafbfb53a9a6e7c5c85756cdc60cb15d9114cccc",
+        "entry_count": 41,
+        "runtime_bound": true
+      },
+      "exception": {
+        "path": "resources/lexicon/exception_markers_en_v3.json",
+        "sha256": "1e84bc3b401dc197beab638abc20bf968444b3a856208b2046058483be3d62f1",
+        "entry_count": 5,
+        "runtime_bound": true
+      }
+    }
+  },
+  "paired_protocol": {
+    "sole_variable": "method.marker_parameter.category_files",
+    "baseline_marker_parameter_id": "public_marker_lexicon_en_v2",
+    "candidate_marker_parameter_id": "public_marker_lexicon_en_v3",
+    "same_gold_object_in_memory": true,
+    "same_source_records_object_in_memory": true,
+    "same_b0_runtime_function": "bpc_hybrid.estg150_b0_sun_paper.run_b0_batch_sun_paper",
+    "same_evaluator_function": "bpc_hybrid.stage2_sun_table8_compatible.evaluate_sun_table8_literal_overlap",
+    "comparison_arithmetic": "exact rational counts",
+    "zero_regression_fields": ["modality", "actor", "action", "condition", "constraint", "exception"],
+    "zero_regression_metrics": ["precision", "recall"],
+    "strict_improvement_targets": ["condition.precision", "constraint.recall"],
+    "promotion_rule": "all 12 P/R checks non-decreasing and at least one strict target improvement",
+    "failure_rule": "reject candidate; preserve active v2 pointer and all artifacts"
+  },
+  "output": {
+    "directory": "outputs/development/s27_estg150_b0_marker_lexicon_v3_paired_v1",
+    "no_overwrite": true,
+    "persist_row_level_predictions": true,
+    "persist_canonical_gold_copy": false
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_allowed": false,
+    "human_decisions_modified": false,
+    "data_gold_written": false,
+    "data_input_written": false,
+    "formal_predictions_or_results_written": false
+  }
+}

@@ -1,0 +1,363 @@
+{
+  "_meta": {
+    "artifact_scope": "development_parameter_candidate",
+    "category": "actor",
+    "entry_payload_sha256": "9347e4fc2e8f20f47e73281952a1540808c5b16a3b980a38dd98fb10d4bda02a",
+    "generation_policy_sha256": "4af1442fcf260fab54fa5aac96ddc483f3d51ac4aafa5ef84f539b625d495885",
+    "language": "en",
+    "lexicon_id": "public_marker_lexicon_en_v3",
+    "parent_lexicon_id": "public_marker_lexicon_en_v2",
+    "source_file_sha256": "94f98d01bc4e11877dbaf318d290c1fca86ef749f0d875200652c333c30041c7",
+    "source_payload_sha256": "f620ca29a6e1326af153517cdc33f2a4fa44fcfbc51095c8eb520cb07f81408a",
+    "source_snapshot_id": "public_marker_sources_en_v3",
+    "source_table": "resources/lexicon/public_marker_sources_en_v3.json"
+  },
+  "class_counts": {},
+  "entries": [
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "actor",
+      "is_derived": false,
+      "normalized": "prosecutor",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Actor row, item 'prosecutor'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Actor row, item 'prosecutor'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "prosecutor"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "actor",
+      "is_derived": false,
+      "normalized": "inspector",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Actor row, item 'inspector'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Actor row, item 'inspector'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "inspector"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "actor",
+      "is_derived": false,
+      "normalized": "physician",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Actor row, item 'physician'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Actor row, item 'physician'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "physician"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "actor",
+      "is_derived": false,
+      "normalized": "company",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Actor row, item 'company'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Actor row, item 'company'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "company"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "actor",
+      "is_derived": false,
+      "normalized": "officer",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Actor row, item 'officer'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Actor row, item 'officer'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "officer"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "actor",
+      "is_derived": false,
+      "normalized": "driver",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Actor row, item 'driver'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Actor row, item 'driver'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "driver"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "actor",
+      "is_derived": false,
+      "normalized": "expert",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Actor row, item 'expert'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Actor row, item 'expert'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "expert"
+    },
+    {
+      "derivation": null,
+      "entry_kind": "verbatim",
+      "field": "actor",
+      "is_derived": false,
+      "normalized": "judge",
+      "provenance": [
+        {
+          "access_date": "2026-07-30",
+          "doi": null,
+          "exact_location": "arXiv PDF pages 15-17, Section 5.1 and Table 5; ORBilu Rev.3 PDF pages 15-18, Section 5.1 and Table 5",
+          "institutional_mirror_sha256": "6bc6724876fc36c9dc0f8470c453d0913239b5b8cdd8594945f751795c4b7c0c",
+          "institutional_mirror_url": "https://orbilu.uni.lu/bitstream/10993/46243/1/SSSBCD-EMSE2020Rev.3.pdf",
+          "item_location": "Table 5 Actor row, item 'judge'",
+          "license_status": "publicly accessible preprint; no reusable content license identified in the inspected PDFs",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdfs_not_redistributed; short factual marker metadata only",
+          "source_id": "sleimi_2020_table5_explicit_markers",
+          "source_sha256": "3a598c1121ab29a382b2d9f3743c5c3b0a9cb4f8bc3a6a9ad22a02283dc6bd95",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "arXiv:2001.11245v1 plus author-institution ORBilu Rev.3 visual cross-check",
+          "title_or_project": "An Automated Framework for the Extraction of Semantic Legal Metadata from Legal Texts",
+          "url": "https://arxiv.org/pdf/2001.11245"
+        },
+        {
+          "access_date": "2026-07-30",
+          "doi": "10.1007/s11227-023-05626-0",
+          "exact_location": "PDF page 11, Section 4.2.2, Table 4 'Markers for different concepts'",
+          "item_location": "Table 4 Actor row, item 'judge'",
+          "license_status": "publisher article copyright; no open redistribution license identified in the inspected PDF",
+          "local_primary_source_path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+          "raw_evidence_text": "physician, expert, company, judge, prosecutor, driver, officer, inspector, ...",
+          "redistribution_status": "source_pdf_not_redistributed; short factual marker metadata only",
+          "source_id": "sun_2024_table4_explicit_markers",
+          "source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+          "source_type": "public_paper_explicit_marker_table",
+          "source_version": "local publisher PDF",
+          "title_or_project": "Design-time business process compliance assessment",
+          "url": "https://doi.org/10.1007/s11227-023-05626-0"
+        }
+      ],
+      "surface": "judge"
+    }
+  ],
+  "schema_version": "public_marker_category@2.0.0"
+}
