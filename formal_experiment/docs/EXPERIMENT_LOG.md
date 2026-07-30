@@ -1973,3 +1973,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：User-requested small pipeline. Exact zero-tolerance per-field P/R regression gate compares fixed 13-row panel to immutable v1 development attempts. v2 Actor P/R=0.8333/0.7143, Exception=1.0000/0.6364; Constraint=0.4286/0.1071 vs v1 0.8000/0.2500, so command intentionally returned nonzero. No row-level v2 predictions persisted; RWI-0035 reopened.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-30T10:26:41.557000+00:00 - 记录 Sun mini v2 Condition/Constraint 根因与零退化候选拒绝
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1499 passed, 23 skipped in 187.54s (0:03:07)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`caf991e5cea006e80f29b0faf16cd8a42936746f`；相关未提交路径：3 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：RWI-0036: Condition 歧义 marker 与 Constraint marker 覆盖不足；Constraint 多匹配候选使 R 0.1071→0.1429 但 P 0.4286→0.4000，其他五字段不变，故撤回候选。活动代码、marker、Gold、预测和全量运行均未改变；audit --with-tests 通过，1499 passed/23 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -25,6 +25,7 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 
 | ID | 首次发现 | 阶段 | 类别 | 问题摘要 | 状态 | 当前处置/解决事件 |
 |---|---|---|---|---|---|---|
+| RWI-0036 | 2026-07-30 | S2.7-B0 / Sun mini v2 | marker/runtime boundary | Condition 歧义 marker 与 Constraint marker 覆盖不足主导误差；多 match 记录修正会以 Constraint P 换 R | `open` | 13 条面板只读诊断；候选因 Constraint P 下降被零退化门禁拒绝，活动代码/Gold/六字段输出均未改变；marker 限制作为论文披露项保留 |
 | RWI-0035 | 2026-07-30 | S2.7-B0 / Sun reproduction | method/reproduction | `v10a` 与后续 paper-spec v1 都不能支撑“几乎相同的方法级 Sun”表述 | `open` | 新建 13 条六字段 mini pipeline；v2 已修复 Actor/Exception 回归但 Constraint P/R 下降，门禁阻断全量运行；完整原 marker/代码/权重/Gold 仍不可得 |
 | RWI-0001 | 2026-07-18 | S2.2 / S2.7–S2.10 | data/method/evaluation | 句级抽样丢失跨句先行词，人工与模型可能获得不对等上下文 | `open` | 150/150 句级盘点完成：独立 82、需上下文核实 26、不独立 42；上下文 sidecar 与公平输入合同尚未锁定 |
 | RWI-0002 | 2026-07-18 | S2.2 | tool | 六要素长 LLM 候选被单行界面裁切 | `resolved` | 自动换行 + 双击全文；Event 73 |
@@ -63,6 +64,33 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0034 | 2026-07-29 | S2.8 DeepSeek H1 live runner | provider output/merge | 7/7 H1 响应都在允许的 modality 补丁外附带 `clause_span:null`，旧 strict merge 因非六要素冗余成员全量回退 B0 | `resolved` | 只删除未请求且非语义的 `clause_span`，不放宽任何六要素 patch；保存前后两轮与解析补丁，离线重合并7/7 accepted，Gold/指标未参与修复 |
 
 ## 3. 详细记录
+
+### RWI-0036 — Condition/Constraint marker 边界与多匹配剪枝候选未通过零退化门禁
+
+- **首次发现**：2026-07-30，用户要求只修复低分字段且不得使任何其他语义要素退化时。
+- **阶段/范围**：S2.7 B0 Sun mini v2 的 13 条固定诊断面板；只读使用冻结 Gold，
+  未运行全量 150，未调用 LLM/API。
+- **原文边界**：Sun PDF p.12 Section 4.2.2 只公开 Condition 的
+  `SBAR << marker` / `PP << marker` 与 Constraint 的 `NP < marker` /
+  `PP < (IN < marker) $ NP` 规则；p.13 明示 marker 集在初始列表后又被扩展，但未公布
+  完整扩展清单；p.17 的评价口径是同字段非空 span overlap。原文没有公布可据以删除
+  Condition 歧义命中的跨字段互斥器，也没有公布四类上下文之间的破坏性优先级。
+- **只读诊断**：Condition 有 18 个预测、7 个预测命中和 15 个 Gold、9 个 Gold 被覆盖，
+  P/R=0.3889/0.6000；11 个假阳性中 10 个与其他 Gold 字段重叠，8 个含
+  `that/which/who/where`。Constraint 有 28 个 Gold、25 个漏检，其中 22 个不含当前
+  Constraint marker；其余 3 个中，两个不满足论文公布的 `$ NP` sister 结构，一个句子
+  同时含 3 个 `maximum`，暴露 bridge 只记录首个 match、随后 Tsurgeon 处理全部 match
+  的记录/剪枝差异。
+- **候选验证**：仅在 Constraint 路径上先记录同轮全部 match，再执行相同 Tsurgeon
+  operation。Modality、Actor、Action、Condition、Exception 的预测及 P/R 与活动 v2
+  逐项完全相同；Constraint extracted 7→10、预测命中 3→4、Gold 覆盖 3→4，R
+  0.1071→0.1429，但 P 0.4286→0.4000。
+- **处置**：候选未通过“目标字段 P/R 均不下降、其他五字段逐项不变”的门禁，代码已
+  撤回，不写入活动配置或产物。当前 marker 覆盖不足按用户允许作为数据/参数限制记录；
+  不根据这 13 条 Gold 反向删增 marker，不添加无 Sun 原文依据的互斥器，也不冒充已提升
+  P/R。若以后采用其他文献的 marker-specific scope，只能作为单独命名、预先批准的
+  extension，不得并入 Sun baseline。
+- **状态**：`open`。已确认没有零退化的 Sun-only 候选；RWI-0035 的 full-150 阻断保持。
 
 ### RWI-0035 — 非 paper-faithful 的 `v10a` 被用于“方法级复现 Sun”比较
 
