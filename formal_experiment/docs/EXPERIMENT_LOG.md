@@ -1913,3 +1913,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：User authorized deepseek-v4-pro H1/D1. Actual calls=190: H1 14, D1 primary 150 plus 26 four-record recovery batches. RWI-0033 mixed-transport incident is mitigated and prevents formal interpretation; RWI-0034 resolved. No .env read, no Gold modification.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-30T07:00:39.676801+00:00 - 新增强制文献依据与方法不擅改规则
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1492 passed, 23 skipped in 110.64s (0:01:50)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b5f05b8a0cfe8be9a364239d3f0e52011128a922`；相关未提交路径：2 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户明确要求：任何方法意见必须核验前人原始文献并给出具体页码及章节、表格、图或公式位置；无依据时只执行既定任务，不得自行增加bootstrap、重复次数、阈值、门禁或更改方法。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

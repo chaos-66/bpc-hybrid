@@ -45,6 +45,35 @@ Winter et al. (2020) supplies a Stage 3 comparison baseline. Barrientos et al.
 validation, controlled-vocabulary, and normalization ideas; its labels must not
 be treated as Sun-compatible without an explicit adapter and provenance check.
 
+## Mandatory Literature-Grounded Method Control
+
+- When the user asks to execute an existing method, execute that method as
+  specified. Do not independently add, remove, or change prompts, models,
+  thresholds, matching rules, metrics, statistical tests, bootstrap or other
+  resampling, repeat counts, stopping rules, validation gates, datasets, or
+  reporting requirements.
+- Every methodological opinion, recommendation, or proposed change MUST first
+  cite a verified prior publication and give the exact supporting location:
+  page number plus section, table, figure, or equation as applicable. A vague
+  appeal to "common practice", "greater rigor", or the agent's own judgment is
+  not evidence and MUST NOT be used to alter or delay the requested task.
+- The agent MUST inspect the cited primary source before relying on it. Project
+  configuration, an earlier agent's plan, or a secondary summary does not prove
+  that a method appeared in the cited paper.
+- If no verified literature basis and exact location can be supplied, do not
+  offer the methodological opinion and do not change the method. Continue by
+  executing the user's requested method unchanged. If execution is impossible,
+  report only the concrete blocker; do not invent a replacement method.
+- Reproduction and extension claims MUST remain separate. A procedure may be
+  described as Sun-compatible or paper-faithful only when the Sun paper itself
+  supports it at a cited exact location. A method borrowed from other prior work
+  is an extension, must be labelled as such, and requires explicit user approval
+  before implementation or use in an experiment.
+- Method changes discovered or suggested after seeing results are forbidden
+  unless the user explicitly requests them and the required primary-literature
+  citation and exact location are recorded before implementation. Never turn an
+  optional extension into a prerequisite for reporting the requested results.
+
 ## Mandatory Check and Experiment Log
 
 The legacy `audit_*` filenames refer to automated offline integrity checks and
