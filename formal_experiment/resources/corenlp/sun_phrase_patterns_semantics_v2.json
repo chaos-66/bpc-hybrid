@@ -1,0 +1,105 @@
+{
+  "schema_version": "sun_paper_phrase_rule_registry@2.0.0",
+  "rule_set_id": "sun_phrase_patterns_semantics_v2",
+  "status": "development_correction_pending_mini_pipeline",
+  "language": "en",
+  "primary_source": {
+    "citation": "Sun et al. (2024), Design-time business process compliance assessment",
+    "section": "4.2.2 Phrase-level: Semantic Classification",
+    "pdf_pages": [10, 11, 12, 13],
+    "rule_locations": {
+      "actor": "PDF pp.11-12, Actor rules and Figure 7",
+      "action": "PDF pp.11-12, Action rule",
+      "condition": "PDF p.12, Condition rules",
+      "constraint": "PDF p.12, Constraint rules",
+      "exception": "PDF p.12, Exception rules"
+    }
+  },
+  "parser": {
+    "name": "Stanford CoreNLP",
+    "version": "4.5.10",
+    "tree_representation": "constituency_parse",
+    "dependency_representation": "basicDependencies"
+  },
+  "marker_parameter": {
+    "id": "public_marker_lexicon_en_v2",
+    "is_original_sun_marker_inventory": false,
+    "gold_or_test_tuned": false
+  },
+  "extraction_order": [
+    "modality",
+    "condition",
+    "constraint",
+    "exception",
+    "actor",
+    "action"
+  ],
+  "execution_semantics": {
+    "context_capture_tree": "independent_fresh_copy_of_original_tree_per_field",
+    "within_field_behavior": "capture_then_prune_repeatedly_on_the_field_copy",
+    "actor_capture_tree": "original_tree",
+    "action_tree": "copy_after_modality_condition_constraint_exception_pruning",
+    "basis": "Sun PDF p.12 only requires action to run after removal of the four context concepts; it does not prescribe destructive precedence among those concepts"
+  },
+  "fields": {
+    "modality": {
+      "source_location": "Sun 2024, PDF p.11, Section 4.2.2, Modality",
+      "tregex_patterns": [
+        "S < (VP << (MD=modality))",
+        "SINV << S < (VP << (MD=modality))",
+        "SBAR << S < (VP << (MD=modality))"
+      ],
+      "tsurgeon_operation": "prune modality"
+    },
+    "actor": {
+      "source_location": "Sun 2024, PDF pp.11-12, Section 4.2.2, Actor and Figure 7",
+      "published_relation": "NP < (actor marker)",
+      "candidate_template": "NP=actor < (__{first_marker_leaf}){remaining_marker_predicates}",
+      "dependency_gate": [
+        "subject_dependency",
+        "object_dependency_and_passive_voice_and_PP_with_IN_sister_NP",
+        "object_dependency_and_active_voice"
+      ],
+      "tsurgeon_operation": null
+    },
+    "action": {
+      "source_location": "Sun 2024, PDF pp.11-12, Section 4.2.2, Action",
+      "tregex_patterns": ["VP=action"],
+      "tsurgeon_operation": null
+    },
+    "condition": {
+      "source_location": "Sun 2024, PDF p.12, Section 4.2.2, Condition",
+      "published_relation": "SBAR/PP << (condition marker)",
+      "tregex_templates": [
+        "SBAR=condition{marker_predicates}",
+        "PP=condition{marker_predicates}"
+      ],
+      "tsurgeon_operation": "prune condition"
+    },
+    "constraint": {
+      "source_location": "Sun 2024, PDF p.12, Section 4.2.2, Constraint",
+      "published_relation": "NP < marker; PP < (IN < marker) $ NP",
+      "tregex_templates": [
+        "NP=constraint < (__{first_marker_leaf}){remaining_marker_predicates}",
+        "PP=constraint < (IN{first_marker_leaf}) $ NP{remaining_marker_predicates}"
+      ],
+      "tsurgeon_operation": "prune constraint"
+    },
+    "exception": {
+      "source_location": "Sun 2024, PDF p.12, Section 4.2.2, Exception",
+      "published_relation": "SBAR/PP << marker; NP << (IN < marker)",
+      "tregex_templates": [
+        "SBAR=exception{marker_predicates}",
+        "PP=exception{marker_predicates}",
+        "NP=exception << (IN{first_marker_leaf}){remaining_marker_predicates}"
+      ],
+      "tsurgeon_operation": "prune exception"
+    }
+  },
+  "reproduction_boundary": {
+    "paper_rule_semantics_under_test": true,
+    "exact_original_reproduction": false,
+    "complete_original_marker_inventory_available": false,
+    "full_150_run_authorized_by_this_registry": false
+  }
+}

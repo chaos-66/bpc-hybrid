@@ -4,9 +4,11 @@
 
 **范围**：EStG-150 development B0；不修改 Gold；不调用 LLM/API
 
-**结论**：已把论文公开说明的 Stage 2 组件从项目 `v10a` 增强路线中独立出来并实际
-运行；这是 paper-specification-faithful reconstruction，不是作者原始代码的 exact
-reproduction。
+**状态更正（2026-07-30）**：本文件最初给出的
+`paper-specification-faithful reconstruction` 结论已撤回。逐字符复查后发现 v1 将
+Actor/Constraint 的直接支配 `<` 操作化为任意后代 `<<`，并使用论文未公布的四类
+上下文跨字段破坏性优先级。以下 v1 运行结果保留为历史 development 证据，不再作为
+方法忠实性证明。当前方法对齐状态及 13 条 mini pipeline 阻断见 RWI-0035。
 
 ## 1. 原文依据
 
@@ -44,7 +46,8 @@ PDF p.13 明确说明 Table 4 只是初始 marker 集，作者又扩展了 marke
 保留为增强方法开发证据，但不能再作为“除数据和参数外都与 Sun 相同”的 B0。
 
 新版本 `b0_sun_paper_spec_v1` 完全不导入上述五个模块；使用 CoreNLP 4.5.10、真实
-Tregex/Tsurgeon、论文规则依赖和相同 Sun literal evaluator。旧结果没有覆盖。
+Tregex/Tsurgeon 和相同 Sun literal evaluator。随后复核确认其 `<`/`<<` 与跨字段
+剪枝仍有实质偏差，所以本段只说明它与 `v10a` 的隔离，不再说明它已忠实实现论文。
 
 ## 3. 运行结果与数据口径
 
@@ -69,16 +72,18 @@ Tregex patterns、439 次 Tsurgeon surgery。这里的“150”是记录数，�
 
 ## 4. 可声明与不可声明
 
-可以声明：
+当前可以声明：
 
-- 论文公开的 parser、Tregex/Tsurgeon 规则族、依存 actor、action 执行顺序和 Table 8
-  评价规则已形成独立、可执行、版本化 reconstruction；
+- 论文公开的 parser、Tregex/Tsurgeon 规则族、依存 actor、action 执行依赖和 Table 8
+  评价规则已形成独立、可执行、版本化的对齐候选与回归流水线；该候选尚未通过六字段
+  无回归门禁；
 - 数据、classifier weights/训练参数和 marker 参数与作者原实验不同；
 - 当前 development 结果证明 `v10a` 的 335 个 Constraint 不是 Sun 论文规则的直接输出。
 
 不可声明：
 
 - exact/original Sun reproduction；
+- v1 或当前 mini v2 已是 paper-faithful reconstruction；
 - 当前 150 records 等同于 Sun 原 150 sentences；
 - 当前 1055 Gold phrases 与 Sun 原 443 phrases 标签分布相同；
 - 仅凭当前 P/R 高低判断实现是否忠实，或反向修改 Gold/规则追论文数字。

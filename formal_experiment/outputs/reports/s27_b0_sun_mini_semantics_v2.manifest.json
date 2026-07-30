@@ -1,0 +1,336 @@
+{
+  "bindings": {
+    "bridge_sha256": "46e25e2adce4376e95e71f5b293faace3803b0fbb7c050d8b7a32654937d44fd",
+    "config_sha256": "8f1d3b87b63c331208b294aa7a18b7eeff78e815d6376689e71f3b9caa2555d0",
+    "freeze_receipt_sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961",
+    "implementation_sha256": "e178b1b2830ddc8a73e25643ac43d583145e9f75693b41bce9dfd4a8ade29ac3",
+    "layer_e_sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+    "membership_sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b",
+    "registry_sha256": "827677a8f1d4c300774e1aa036ca965f1ef5ad3f61d6b0bd255e050eaea3bb17"
+  },
+  "claim_scope": "diagnostic_only_not_performance",
+  "diagnostic_metrics": {
+    "v1": {
+      "overall": {
+        "extracted": 93,
+        "f1": 0.5286185196284089,
+        "ground_truth": 101,
+        "matched_ground_truth": 49,
+        "matched_predictions": 54,
+        "misclassified": 39,
+        "missed": 52,
+        "precision": 0.5806451612903226,
+        "recall": 0.48514851485148514
+      },
+      "per_field": {
+        "action": {
+          "extracted": 35,
+          "f1": 0.6623655913978495,
+          "ground_truth": 20,
+          "matched_ground_truth": 14,
+          "matched_predictions": 22,
+          "precision": 0.6285714285714286,
+          "recall": 0.7
+        },
+        "actor": {
+          "extracted": 5,
+          "f1": 0.3333333333333333,
+          "ground_truth": 7,
+          "matched_ground_truth": 2,
+          "matched_predictions": 2,
+          "precision": 0.4,
+          "recall": 0.2857142857142857
+        },
+        "condition": {
+          "extracted": 18,
+          "f1": 0.47191011235955055,
+          "ground_truth": 15,
+          "matched_ground_truth": 9,
+          "matched_predictions": 7,
+          "precision": 0.3888888888888889,
+          "recall": 0.6
+        },
+        "constraint": {
+          "extracted": 5,
+          "f1": 0.38095238095238093,
+          "ground_truth": 28,
+          "matched_ground_truth": 7,
+          "matched_predictions": 4,
+          "precision": 0.8,
+          "recall": 0.25
+        },
+        "exception": {
+          "extracted": 2,
+          "f1": 0.3076923076923077,
+          "ground_truth": 11,
+          "matched_ground_truth": 2,
+          "matched_predictions": 2,
+          "precision": 1.0,
+          "recall": 0.18181818181818182
+        },
+        "modality": {
+          "extracted": 28,
+          "f1": 0.6710526315789472,
+          "ground_truth": 20,
+          "matched_ground_truth": 15,
+          "matched_predictions": 17,
+          "precision": 0.6071428571428571,
+          "recall": 0.75
+        }
+      }
+    },
+    "v2": {
+      "overall": {
+        "extracted": 105,
+        "f1": 0.5752103930059645,
+        "ground_truth": 101,
+        "matched_ground_truth": 55,
+        "matched_predictions": 64,
+        "misclassified": 41,
+        "missed": 46,
+        "precision": 0.6095238095238096,
+        "recall": 0.5445544554455446
+      },
+      "per_field": {
+        "action": {
+          "extracted": 39,
+          "f1": 0.7117437722419929,
+          "ground_truth": 20,
+          "matched_ground_truth": 16,
+          "matched_predictions": 25,
+          "precision": 0.6410256410256411,
+          "recall": 0.8
+        },
+        "actor": {
+          "extracted": 6,
+          "f1": 0.7692307692307692,
+          "ground_truth": 7,
+          "matched_ground_truth": 5,
+          "matched_predictions": 5,
+          "precision": 0.8333333333333334,
+          "recall": 0.7142857142857143
+        },
+        "condition": {
+          "extracted": 18,
+          "f1": 0.47191011235955055,
+          "ground_truth": 15,
+          "matched_ground_truth": 9,
+          "matched_predictions": 7,
+          "precision": 0.3888888888888889,
+          "recall": 0.6
+        },
+        "constraint": {
+          "extracted": 7,
+          "f1": 0.17142857142857143,
+          "ground_truth": 28,
+          "matched_ground_truth": 3,
+          "matched_predictions": 3,
+          "precision": 0.42857142857142855,
+          "recall": 0.10714285714285714
+        },
+        "exception": {
+          "extracted": 7,
+          "f1": 0.7777777777777778,
+          "ground_truth": 11,
+          "matched_ground_truth": 7,
+          "matched_predictions": 7,
+          "precision": 1.0,
+          "recall": 0.6363636363636364
+        },
+        "modality": {
+          "extracted": 28,
+          "f1": 0.6710526315789472,
+          "ground_truth": 20,
+          "matched_ground_truth": 15,
+          "matched_predictions": 17,
+          "precision": 0.6071428571428571,
+          "recall": 0.75
+        }
+      }
+    },
+    "v2_minus_v1": {
+      "action": {
+        "extracted": 4,
+        "f1": 0.04937818084414347,
+        "precision": 0.012454212454212521,
+        "recall": 0.10000000000000009
+      },
+      "actor": {
+        "extracted": 1,
+        "f1": 0.43589743589743585,
+        "precision": 0.43333333333333335,
+        "recall": 0.4285714285714286
+      },
+      "condition": {
+        "extracted": 0,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "constraint": {
+        "extracted": 2,
+        "f1": -0.2095238095238095,
+        "precision": -0.3714285714285715,
+        "recall": -0.14285714285714285
+      },
+      "exception": {
+        "extracted": 5,
+        "f1": 0.4700854700854701,
+        "precision": 0.0,
+        "recall": 0.45454545454545453
+      },
+      "modality": {
+        "extracted": 0,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    }
+  },
+  "field_prediction_counts": {
+    "action": 39,
+    "actor": 6,
+    "condition": 18,
+    "constraint": 7,
+    "exception": 7,
+    "modality": 28
+  },
+  "full_150_run_performed": false,
+  "gates": {
+    "all_attempts_valid": true,
+    "full_150_not_run": true,
+    "independent_context_runtime": true,
+    "method_contract": true,
+    "no_llm": true,
+    "panel_membership": true,
+    "six_field_surface_present": true
+  },
+  "is_formal_performance_result": false,
+  "overlap_duplicate_counts": {
+    "actor_v1": 3,
+    "actor_v2": 0,
+    "exception_v1": 0,
+    "exception_v2": 0
+  },
+  "panel": {
+    "metric_regression_tolerance": 0.0,
+    "metric_threshold_used_as_gate": true,
+    "sample_count": 13,
+    "sample_ids": [
+      "estg_000002",
+      "estg_000003",
+      "estg_000020",
+      "estg_000037",
+      "estg_000055",
+      "estg_000083",
+      "estg_000109",
+      "estg_000111",
+      "estg_000206",
+      "estg_000273",
+      "estg_000293",
+      "estg_000507",
+      "estg_000773"
+    ],
+    "selection_role": "fixed_error_regression_panel_not_performance_sample"
+  },
+  "regressed_fields": [
+    "constraint"
+  ],
+  "regression_gates": {
+    "action": {
+      "precision_not_lower": true,
+      "recall_not_lower": true
+    },
+    "actor": {
+      "precision_not_lower": true,
+      "recall_not_lower": true
+    },
+    "condition": {
+      "precision_not_lower": true,
+      "recall_not_lower": true
+    },
+    "constraint": {
+      "precision_not_lower": false,
+      "recall_not_lower": false
+    },
+    "exception": {
+      "precision_not_lower": true,
+      "recall_not_lower": true
+    },
+    "modality": {
+      "precision_not_lower": true,
+      "recall_not_lower": true
+    }
+  },
+  "run_id": "s27_b0_sun_mini_semantics_v2",
+  "runtime": {
+    "bridge_class": "SunPaperIndependentContextBridge",
+    "bridge_seconds": 0.9264661999186501,
+    "bridge_source": "tools/corenlp/SunPaperIndependentContextBridge.java",
+    "classifier_label_counts_by_record": {
+      "definition": 8,
+      "obligation": 4,
+      "permission": 1
+    },
+    "classifier_mean_confidence": 0.9538000226020813,
+    "classifier_seconds": 10.206112100044265,
+    "compose_seconds": 0.020177700091153383,
+    "corenlp_seconds": 58.121608099900186,
+    "custom_v10_modules_used": [],
+    "device": "cpu",
+    "exact_original_reproduction": false,
+    "marker_parameter_sha256": {
+      "actor": "fdf026e92d9ddc4ca3b3dbe068e5440bf4c0bffd72aad9b204c5c8bc63edc44d",
+      "condition": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a",
+      "constraint": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1",
+      "exception": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e"
+    },
+    "match_count": 105,
+    "method_id": "sun_rule_only",
+    "method_variant": "b0_sun_paper_semantics_v2",
+    "paper_faithful_reconstruction": false,
+    "paper_order": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception",
+      "actor",
+      "action"
+    ],
+    "pattern_count": 247,
+    "patterns_path": "resources/corenlp/sun_phrase_patterns_semantics_v2.json",
+    "patterns_sha256": "827677a8f1d4c300774e1aa036ca965f1ef5ad3f61d6b0bd255e050eaea3bb17",
+    "predicted_clause_count": 28,
+    "record_count": 13,
+    "runtime_identity": {
+      "code_jar": {
+        "bytes": 9118725,
+        "name": "stanford-corenlp-4.5.10.jar",
+        "sha256": "f813ce4ed7319d79225f2a520d40733075c6b3500dd0b81ee069229e461aab43"
+      },
+      "models_jar": {
+        "bytes": 474409531,
+        "name": "stanford-corenlp-4.5.10-models.jar",
+        "sha256": "a5da9f6feb35a0fd2ea2cbe8909bede3952965b238a68c833ae3e031ed9026a0"
+      }
+    },
+    "sentence_count": 28,
+    "surgery_count": 84,
+    "terminal_tree_removal_count": 0,
+    "total_seconds": 69.27436409995425,
+    "tsurgeon_enabled": true
+  },
+  "safety": {
+    "data_gold_written": false,
+    "formal_predictions_or_results_written": false,
+    "gold_read_only": true,
+    "human_decisions_modified": false,
+    "llm_api_called": false,
+    "llm_call_count": 0,
+    "network_allowed": false,
+    "row_level_predictions_persisted": false
+  },
+  "schema_version": "sun_b0_mini_pipeline_manifest@1.0.0",
+  "status": "blocked_field_regression",
+  "task_id": "S2.7-B0-SUN-MINI-V2"
+}

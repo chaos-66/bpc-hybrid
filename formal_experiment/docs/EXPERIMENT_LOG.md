@@ -1956,3 +1956,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Paired experiment run s27_estg150_b0_sun_paper_v1 is already recorded. Final state: 1495 passed, 23 skipped; RWI-0035 mitigated; staged output hashes match manifest; only documentation whitespace changed after the experiment event.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-30T09:33:41.348994+00:00 - 建立 Sun B0 六字段小流水线并在字段退化时阻断全量
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_b0_sun_mini_semantics_v2；阶段=S2.7-B0-SUN-MINI-V2；方法=sun_rule_only:b0_sun_paper_semantics_v2；状态=失败（`failed`）
+- 实际运行命令：`python formal_experiment/scripts/run_sun_b0_mini_pipeline.py --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu --write-manifest`
+- manifest：formal_experiment/outputs/reports/s27_b0_sun_mini_semantics_v2.manifest.json
+- 结果摘要：diagnostic only; structural gates passed; Actor and Exception improved; Constraint P/R regressed; full 150 blocked
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1499 passed, 23 skipped in 208.48s (0:03:28)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`f112e1dccf07c81f887786bbd1fa79b035eaa853`；相关未提交路径：13 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：User-requested small pipeline. Exact zero-tolerance per-field P/R regression gate compares fixed 13-row panel to immutable v1 development attempts. v2 Actor P/R=0.8333/0.7143, Exception=1.0000/0.6364; Constraint=0.4286/0.1071 vs v1 0.8000/0.2500, so command intentionally returned nonzero. No row-level v2 predictions persisted; RWI-0035 reopened.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

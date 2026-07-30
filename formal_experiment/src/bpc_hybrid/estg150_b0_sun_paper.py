@@ -15,7 +15,7 @@ import re
 import shutil
 import time
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 
 from bpc_hybrid.estg150_b0_development import (
     Estg150B0DevelopmentError,
@@ -273,6 +273,9 @@ def build_canonical_record_sun_paper(
     annotation: Mapping[str, Any],
     phrase_cases: Sequence[Mapping[str, Any]],
     predictions: Sequence[ModalityPrediction],
+    actor_dependency_gate: Callable[
+        [Mapping[str, Any], Mapping[str, Any]], bool
+    ] = _actor_dependency_supported,
 ) -> dict[str, Any]:
     try:
         validate_annotation(annotation, source_text)
@@ -305,7 +308,7 @@ def build_canonical_record_sun_paper(
             for observation in observations:
                 if not isinstance(observation, Mapping):
                     continue
-                if field == "actor" and not _actor_dependency_supported(sentence, observation):
+                if field == "actor" and not actor_dependency_gate(sentence, observation):
                     continue
                 raw_spans[field].append(
                     _span_from_observation(source_text, sentence, observation)
@@ -371,6 +374,11 @@ def run_corenlp_batch_sun_paper(
     work_dir: Path,
     registry_rel: str,
     marker_specs: Mapping[str, Mapping[str, Any]],
+    rule_plan_writer: Callable[
+        [Mapping[str, Any], Mapping[str, Sequence[str]], Path], int
+    ] = write_paper_rule_plan,
+    bridge_class: str = BRIDGE_CLASS,
+    bridge_rel: str = BRIDGE_REL,
 ) -> tuple[dict[str, dict[str, Any]], dict[str, list[dict[str, Any]]], dict[str, Any]]:
     root = Path(project_root).resolve()
     runtime_home = Path(runtime_home).resolve()
@@ -452,8 +460,8 @@ def run_corenlp_batch_sun_paper(
     registry_path = root / registry_rel
     registry = load_object(registry_path)
     plan_path = work_dir / "paper-rule-plan.tsv"
-    pattern_count = write_paper_rule_plan(registry, markers, plan_path)
-    bridge_path = root / BRIDGE_REL
+    pattern_count = rule_plan_writer(registry, markers, plan_path)
+    bridge_path = root / bridge_rel
     _run(
         [
             javac,
@@ -479,7 +487,7 @@ def run_corenlp_batch_sun_paper(
             probe.java_executable,
             "-cp",
             bridge_classpath,
-            BRIDGE_CLASS,
+            bridge_class,
             str(plan_path),
             str(tree_path),
         ],
@@ -510,8 +518,8 @@ def run_corenlp_batch_sun_paper(
         "match_count": bridge_summary["match_count"],
         "surgery_count": bridge_summary["surgery_count"],
         "terminal_tree_removal_count": bridge_summary["terminal_tree_removal_count"],
-        "bridge_class": BRIDGE_CLASS,
-        "bridge_source": BRIDGE_REL,
+        "bridge_class": bridge_class,
+        "bridge_source": bridge_rel,
         "patterns_path": registry_rel,
         "patterns_sha256": sha256_file(registry_path),
         "marker_parameter_sha256": marker_hashes,
@@ -530,6 +538,16 @@ def run_b0_batch_sun_paper(
     registry_rel: str,
     marker_specs: Mapping[str, Mapping[str, Any]],
     device: str = "cpu",
+    actor_dependency_gate: Callable[
+        [Mapping[str, Any], Mapping[str, Any]], bool
+    ] = _actor_dependency_supported,
+    rule_plan_writer: Callable[
+        [Mapping[str, Any], Mapping[str, Sequence[str]], Path], int
+    ] = write_paper_rule_plan,
+    bridge_class: str = BRIDGE_CLASS,
+    bridge_rel: str = BRIDGE_REL,
+    method_variant: str = METHOD_VARIANT,
+    paper_faithful_reconstruction: bool = True,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     root = Path(project_root).resolve()
     s26_config = load_s26_config(root / s26_config_rel)
@@ -540,6 +558,9 @@ def run_b0_batch_sun_paper(
         work_dir=work_dir,
         registry_rel=registry_rel,
         marker_specs=marker_specs,
+        rule_plan_writer=rule_plan_writer,
+        bridge_class=bridge_class,
+        bridge_rel=bridge_rel,
     )
     classifier_started = time.perf_counter()
     try:
@@ -566,6 +587,7 @@ def run_b0_batch_sun_paper(
             annotation=annotation,
             phrase_cases=cases_by_id[sample_id],
             predictions=predictions,
+            actor_dependency_gate=actor_dependency_gate,
         )
         canonical_records.append(canonical)
         label_counts[record_prediction.label] = label_counts.get(record_prediction.label, 0) + 1
@@ -601,8 +623,8 @@ def run_b0_batch_sun_paper(
             "classifier_label_counts_by_record": dict(sorted(label_counts.items())),
             "classifier_mean_confidence": confidence_sum / max(len(record_predictions), 1),
             "method_id": METHOD_ID,
-            "method_variant": METHOD_VARIANT,
-            "paper_faithful_reconstruction": True,
+            "method_variant": method_variant,
+            "paper_faithful_reconstruction": paper_faithful_reconstruction,
             "exact_original_reproduction": False,
             "custom_v10_modules_used": [],
         }

@@ -2,7 +2,7 @@
 
 **生成日期**：2026-07-30
 
-**收录文件**：1744 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
+**收录文件**：1751 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
 
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
@@ -108,6 +108,7 @@
 | `configs/models/estg150_b0_enhanced_s27_v8b.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_enhanced_s27_v8c.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_enhanced_s27_v9a.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/models/estg150_b0_sun_mini_pipeline_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_sun_paper_s27_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_v10_preregistration_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_v10_preregistration_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1372,6 +1373,7 @@
 | `outputs/reports/s26_sun_b0_canonical_composition_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s26_sun_b0_canonical_composition_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s26_sun_b0_canonical_composition_v3.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s27_b0_sun_mini_semantics_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s27_estg150_b0_b1_pre_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s27_estg150_b0_b3a_not_instantiated_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s27_estg150_b0_b3a_status_correction_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1442,6 +1444,7 @@
 |---|---|---|
 | `resources/corenlp/s25b_runtime_verification_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/corenlp/sun_phrase_patterns_paper_spec_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/corenlp/sun_phrase_patterns_semantics_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/corenlp/sun_phrase_patterns_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/corenlp/sun_phrase_patterns_v2_enhanced.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/corenlp/sun_phrase_patterns_v3_enhanced.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1544,6 +1547,7 @@
 | `scripts/run_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_structural.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_fixture_harness.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sun_b0_mini_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_llm_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_rule_only.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_strength_simulation.py` | 活动 | Python 实现、脚本或测试 |
@@ -1622,6 +1626,7 @@
 | `src/bpc_hybrid/estg150_b0_development_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/estg150_b0_development_v9.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/estg150_b0_sun_paper.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/estg150_b0_sun_paper_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/evaluation/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/evaluation/concept_level_eval.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/evaluator.py` | 活动 | Python 实现、脚本或测试 |
@@ -1769,6 +1774,7 @@
 | `tests/test_estg150_b0_enhanced_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_b0_enhanced_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_b0_enhanced_v8.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_estg150_b0_sun_mini_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_b0_sun_paper.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
@@ -1836,6 +1842,7 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `tools/corenlp/SunPaperIndependentContextBridge.java` | 活动 | 项目文件 |
 | `tools/corenlp/SunPaperPhraseRuleBatchBridge.java` | 活动 | 项目文件 |
 | `tools/corenlp/SunPhraseRuleBatchBridge.java` | 活动 | 项目文件 |
 | `tools/corenlp/SunPhraseRuleBatchBridgeMulti.java` | 活动 | 项目文件 |

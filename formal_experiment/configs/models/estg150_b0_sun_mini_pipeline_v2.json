@@ -1,0 +1,120 @@
+{
+  "schema_version": "estg150_b0_sun_mini_pipeline@1.0.0",
+  "task_id": "S2.7-B0-SUN-MINI-V2",
+  "run_id": "s27_b0_sun_mini_semantics_v2",
+  "status": "development_regression_pipeline",
+  "claim_scope": "diagnostic_only_not_performance",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "literature_basis": {
+    "citation": "Sun et al. (2024), Design-time business process compliance assessment",
+    "method_location": "Section 4.2.2, PDF pages 10-13; Tables 2-4 and Figures 6-7",
+    "evaluation_location": "Section 5.2.1, PDF page 17; Table 8 on PDF page 18"
+  },
+  "inputs": {
+    "human_correction_layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c"
+    },
+    "membership_hashes": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b"
+    },
+    "annotation_freeze_receipt": {
+      "path": "outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json",
+      "sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961"
+    },
+    "v1_development_attempts": {
+      "path": "outputs/development/s27_estg150_b0_sun_paper_v1/b0_attempts.json",
+      "sha256": "d8badd6c13fd010d255b7021664af6eb9eb90f0b5b91748f5a159d4c5990c514"
+    },
+    "v1_development_manifest": {
+      "path": "outputs/development/s27_estg150_b0_sun_paper_v1/manifest.json",
+      "sha256": "f881a37de2237759fa47714b00405f602885b545b349afb9fc042e0eb0203c54"
+    }
+  },
+  "method": {
+    "method_id": "sun_rule_only",
+    "method_variant": "b0_sun_paper_semantics_v2",
+    "exact_original_reproduction": false,
+    "full_150_run_enabled": false,
+    "s2_6_config": {
+      "path": "configs/models/sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126"
+    },
+    "pattern_registry": {
+      "path": "resources/corenlp/sun_phrase_patterns_semantics_v2.json",
+      "sha256": "827677a8f1d4c300774e1aa036ca965f1ef5ad3f61d6b0bd255e050eaea3bb17"
+    },
+    "bridge": {
+      "path": "tools/corenlp/SunPaperIndependentContextBridge.java",
+      "sha256": "46e25e2adce4376e95e71f5b293faace3803b0fbb7c050d8b7a32654937d44fd"
+    },
+    "marker_parameter": {
+      "id": "public_marker_lexicon_en_v2",
+      "is_original_sun_marker_inventory": false,
+      "is_gold_or_test_tuned": false,
+      "category_files": {
+        "actor": {
+          "path": "resources/lexicon/actor_markers_en_v2.json",
+          "sha256": "fdf026e92d9ddc4ca3b3dbe068e5440bf4c0bffd72aad9b204c5c8bc63edc44d"
+        },
+        "condition": {
+          "path": "resources/lexicon/condition_markers_en_v2.json",
+          "sha256": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a"
+        },
+        "constraint": {
+          "path": "resources/lexicon/constraint_markers_en_v2.json",
+          "sha256": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1"
+        },
+        "exception": {
+          "path": "resources/lexicon/exception_markers_en_v2.json",
+          "sha256": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e"
+        }
+      }
+    }
+  },
+  "evaluator": {
+    "path": "configs/evaluation/sun_table8_literal_overlap_v2.json",
+    "sha256": "e743808ed5b5acb68128f5fd2d9f108cfeaef1aa4fc6c667264f8114ba0a939d"
+  },
+  "panel": {
+    "selection_role": "fixed_error_regression_panel_not_performance_sample",
+    "sample_ids": [
+      "estg_000002",
+      "estg_000003",
+      "estg_000020",
+      "estg_000037",
+      "estg_000055",
+      "estg_000083",
+      "estg_000109",
+      "estg_000111",
+      "estg_000206",
+      "estg_000273",
+      "estg_000293",
+      "estg_000507",
+      "estg_000773"
+    ],
+    "gate_policy": "structural_plus_exact_per_field_precision_recall_no_decrease_against_v1_panel",
+    "metric_regression_tolerance": 0.0,
+    "required_fields": [
+      "modality",
+      "actor",
+      "action",
+      "condition",
+      "constraint",
+      "exception"
+    ]
+  },
+  "output": {
+    "manifest": "outputs/reports/s27_b0_sun_mini_semantics_v2.manifest.json",
+    "no_overwrite": true,
+    "persist_row_level_predictions": false
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_allowed": false,
+    "human_decisions_modified": false,
+    "data_gold_written": false,
+    "formal_predictions_or_results_written": false
+  }
+}
