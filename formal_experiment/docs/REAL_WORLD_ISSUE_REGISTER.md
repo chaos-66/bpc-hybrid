@@ -25,6 +25,7 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 
 | ID | 首次发现 | 阶段 | 类别 | 问题摘要 | 状态 | 当前处置/解决事件 |
 |---|---|---|---|---|---|---|
+| RWI-0035 | 2026-07-30 | S2.7-B0 / Sun reproduction | method/reproduction | `v10a` 明确为非 paper-faithful 增强方法，却被用于“方法级 Sun”比较 | `mitigated` | 新建并运行 paper-spec B0：依存 actor、真实 Tsurgeon、上下文删除后 every-VP action、Sun literal evaluator；完整原 marker/代码/权重/Gold 仍不可得 |
 | RWI-0001 | 2026-07-18 | S2.2 / S2.7–S2.10 | data/method/evaluation | 句级抽样丢失跨句先行词，人工与模型可能获得不对等上下文 | `open` | 150/150 句级盘点完成：独立 82、需上下文核实 26、不独立 42；上下文 sidecar 与公平输入合同尚未锁定 |
 | RWI-0002 | 2026-07-18 | S2.2 | tool | 六要素长 LLM 候选被单行界面裁切 | `resolved` | 自动换行 + 双击全文；Event 73 |
 | RWI-0003 | 2026-07-18 | S2.2 | tool/data-flow | 点击“已接受”只改状态、未把候选值和 span 物化到人工结果 | `resolved` | 显式复制/fail-closed/关系校验；Event 72 |
@@ -62,6 +63,35 @@ handoff：任务顺序仍以 `MASTER_PIPELINE.md` 为准，实时进度仍以
 | RWI-0034 | 2026-07-29 | S2.8 DeepSeek H1 live runner | provider output/merge | 7/7 H1 响应都在允许的 modality 补丁外附带 `clause_span:null`，旧 strict merge 因非六要素冗余成员全量回退 B0 | `resolved` | 只删除未请求且非语义的 `clause_span`，不放宽任何六要素 patch；保存前后两轮与解析补丁，离线重合并7/7 accepted，Gold/指标未参与修复 |
 
 ## 3. 详细记录
+
+### RWI-0035 — 非 paper-faithful 的 `v10a` 被用于“方法级复现 Sun”比较
+
+- **首次发现**：2026-07-30，用户要求除数据和参数外全部按 Sun 方法复现时。
+- **阶段/范围**：S2.7 EStG-150 B0、H1 的 B0 输入，以及六字段 Sun Table 8
+  development comparison；不涉及 Gold 修改。
+- **观察事实**：旧 `estg150_b0_enhanced_s27_v10a.json` 已明确记录
+  `paper_faithful_b0=false`、`tsurgeon_enabled=false`，并使用 typed scope、德英
+  heuristic alignment、自定义 segmentation、definition resolver 和 actor-action
+  ownership resolver。这些 extension 不在 Sun Section 4.2.2，却被此前 B0/H1 比较
+  当作 Sun baseline。旧版本 Constraint 抽出 335 个，不能解释成 Sun 的
+  `NP/PP + marker` 规则直接产物。
+- **影响**：方法变化与数据/参数变化混在一起，无法回答“同一 Sun 方法在本地数据上
+  的六字段 P/R”；也会把增强规则带来的字段数量误认为 evaluator 严格或 Gold 文件数异常。
+- **当前处置**：保留 `v10a` 历史产物，另建 `b0_sun_paper_spec_v1`。新版本只使用
+  PDF pp.10–13 的公开方法：CoreNLP 4.5.10；三类 modality Tregex；依存门控 actor；
+  condition/constraint/exception Tregex + 实际 Tsurgeon prune；随后枚举所有剩余 VP；
+  最后用 PDF p.17 的同类型任意非空交集评价。完整作者 marker 未公开，故
+  `public_marker_lexicon_en_v2` 明示为允许变化的参数替代，不冒充原清单。
+- **验证证据**：150/150 records、266 CoreNLP sentences、247 展开 patterns、439 次
+  surgery、0 API；overall P/R=0.665113/0.629384。Constraint Gold/Extracted=302/79、
+  P/R=0.683544/0.258278；旧 `v10a` 的 335 Constraint 因而确认属于扩展方法口径。
+  13 项聚焦测试覆盖规则顺序、真实 context surgery、every-VP action、actor 依存门控
+  与 Sun literal evaluator。完整审计与事件在本批次结束时绑定。
+- **状态**：`mitigated`。论文公开的方法组件已独立实现；但作者完整 marker、完整
+  Stage 2 源码、训练权重和原 150-sentence/443-phrase Gold 不可得，故不能改为
+  `resolved` 或声称 exact/original reproduction。
+- **状态历史**：
+  - 2026-07-30：登记问题并完成 paper-spec development run；原始不可得资产保持限制。
 
 ### RWI-0034 — H1 的非语义 `clause_span` 冗余成员触发全量严格回退
 

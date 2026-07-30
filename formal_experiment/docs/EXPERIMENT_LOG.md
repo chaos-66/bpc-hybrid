@@ -1926,3 +1926,33 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：用户明确要求：任何方法意见必须核验前人原始文献并给出具体页码及章节、表格、图或公式位置；无依据时只执行既定任务，不得自行增加bootstrap、重复次数、阈值、门禁或更改方法。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-30T08:35:53.538859+00:00 - 按 Sun 论文 Section 4.2.2 修复方法级 B0 复现并在冻结 EStG-150 上运行
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_sun_paper_v1；阶段=S2.7-B0-SUN-PAPER-DEV；方法=sun_rule_only:b0_sun_paper_spec_v1；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_estg150_b0_sun_paper_development.py --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu`
+- manifest：formal_experiment/outputs/development/s27_estg150_b0_sun_paper_v1/manifest.json
+- 结果摘要：development only; 150/150 records; 266 CoreNLP sentences; overall P/R=0.665113/0.629384; Constraint extracted=79 P/R=0.683544/0.258278; 0 LLM/API; not exact/original
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1495 passed, 23 skipped in 185.05s (0:03:05)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c8563c7c86c66f4684f3b8bf952836a5175bd56`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Primary method basis: Sun PDF pp.10-13 Section 4.2.2; evaluation pp.17-18. Actual Tsurgeon surgery=439; published components aligned; public_marker_lexicon_en_v2 is a disclosed substituted parameter because the authors' complete markers/source/weights/original phrase Gold are unavailable. RWI-0035 mitigated; old v10a preserved as project enhancement.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-30T08:42:56.503192+00:00 - 完成 Sun paper-spec B0 方法对齐、运行凭证与最终验证
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1495 passed, 23 skipped in 197.38s (0:03:17)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3c8563c7c86c66f4684f3b8bf952836a5175bd56`；相关未提交路径：16 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Paired experiment run s27_estg150_b0_sun_paper_v1 is already recorded. Final state: 1495 passed, 23 skipped; RWI-0035 mitigated; staged output hashes match manifest; only documentation whitespace changed after the experiment event.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,0 +1,105 @@
+{
+  "schema_version": "sun_paper_phrase_rule_registry@1.0.0",
+  "rule_set_id": "sun_phrase_patterns_paper_spec_v1",
+  "status": "published_method_specification_reconstruction",
+  "language": "en",
+  "primary_source": {
+    "path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+    "section": "4.2.2 Phrase-level: Semantic Classification",
+    "pdf_pages": [10, 11, 12, 13],
+    "evaluation_section": "5.2.1 Experimental Setup",
+    "evaluation_pdf_page": 17
+  },
+  "parser": {
+    "name": "Stanford CoreNLP",
+    "version": "4.5.10",
+    "tree_representation": "constituency_parse",
+    "dependency_representation": "basicDependencies"
+  },
+  "marker_parameter": {
+    "id": "public_marker_lexicon_en_v2",
+    "reason": "Sun reports extending its initial markers but does not publish the complete marker inventory; the marker inventory is therefore an explicit substituted parameter, not claimed as original.",
+    "gold_or_test_tuned": false
+  },
+  "extraction_order": [
+    "modality",
+    "condition",
+    "constraint",
+    "exception",
+    "actor",
+    "action"
+  ],
+  "ordering_policy": {
+    "action_after_removed_context": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "actor_is_non_destructive": true,
+    "action_candidate": "every_remaining_VP",
+    "test_time_rule_edits_forbidden": true
+  },
+  "fields": {
+    "modality": {
+      "source_location": "Sun 2024, PDF p.11, Section 4.2.2, Modality",
+      "tregex_patterns": [
+        "S < (VP << (MD=modality))",
+        "SINV << S < (VP << (MD=modality))",
+        "SBAR << S < (VP << (MD=modality))"
+      ],
+      "tsurgeon_operation": "prune modality"
+    },
+    "actor": {
+      "source_location": "Sun 2024, PDF pp.11-12, Section 4.2.2, Actor and Figure 7",
+      "candidate_template": "NP=actor{marker_predicates}",
+      "dependency_gate": [
+        "subject_dependency",
+        "object_dependency_and_passive_voice_and_PP_with_IN_sister_NP",
+        "object_dependency_and_active_voice"
+      ],
+      "tsurgeon_operation": null
+    },
+    "action": {
+      "source_location": "Sun 2024, PDF pp.11-12, Section 4.2.2, Action",
+      "tregex_patterns": ["VP=action"],
+      "tsurgeon_operation": null
+    },
+    "condition": {
+      "source_location": "Sun 2024, PDF p.12, Section 4.2.2, Condition",
+      "tregex_templates": [
+        "SBAR=condition{marker_predicates}",
+        "PP=condition{marker_predicates}"
+      ],
+      "tsurgeon_operation": "prune condition"
+    },
+    "constraint": {
+      "source_location": "Sun 2024, PDF p.12, Section 4.2.2, Constraint",
+      "tregex_templates": [
+        "NP=constraint{marker_predicates}",
+        "PP=constraint < ((IN{first_marker_predicate}) $ NP){remaining_marker_predicates}"
+      ],
+      "tsurgeon_operation": "prune constraint"
+    },
+    "exception": {
+      "source_location": "Sun 2024, PDF p.12, Section 4.2.2, Exception",
+      "tregex_templates": [
+        "SBAR=exception{marker_predicates}",
+        "PP=exception{marker_predicates}",
+        "NP=exception << (IN{first_marker_predicate}){remaining_marker_predicates}"
+      ],
+      "tsurgeon_operation": "prune exception"
+    }
+  },
+  "reproduction_boundary": {
+    "paper_faithful_reconstruction": true,
+    "exact_original_reproduction": false,
+    "unavailable_original_assets": [
+      "complete extended marker lexicon",
+      "complete Stage 2 source code",
+      "trained original classifier weights",
+      "original phrase-level 150-sentence Gold"
+    ],
+    "custom_v10_scope_alignment_definition_resolvers_used": false
+  }
+}

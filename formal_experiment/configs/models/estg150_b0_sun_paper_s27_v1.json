@@ -1,0 +1,121 @@
+{
+  "schema_version": "estg150_b0_sun_paper_development@1.0.0",
+  "task_id": "S2.7-B0-SUN-PAPER-DEV",
+  "run_id": "s27_estg150_b0_sun_paper_v1",
+  "status": "preregistered_development_evaluation",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "claim_scope": "development",
+  "literature_source": {
+    "path": "../references/papers/Sun_2024_Design_time_BPC.pdf",
+    "sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+    "method_location": "Section 4.2.2, PDF pages 10-13, Tables 2-4 and Figures 6-7",
+    "evaluation_location": "Section 5.2.1, PDF page 17; Table 8 on PDF page 18"
+  },
+  "inputs": {
+    "human_correction_layer_e": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c"
+    },
+    "membership_hashes": {
+      "path": "data/development/estg/estg_150_membership_hashes.json",
+      "sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b"
+    },
+    "annotation_freeze_receipt": {
+      "path": "outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json",
+      "sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961"
+    }
+  },
+  "method": {
+    "method_id": "sun_rule_only",
+    "method_variant": "b0_sun_paper_spec_v1",
+    "paper_faithful_reconstruction": true,
+    "exact_original_reproduction": false,
+    "s2_6_config": {
+      "path": "configs/models/sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126"
+    },
+    "pattern_registry": {
+      "path": "resources/corenlp/sun_phrase_patterns_paper_spec_v1.json",
+      "sha256": "406a5f7b9671dc4d39a198bfa1f0af3c45e919ccb858cbf6fbf3e885793d57ee"
+    },
+    "bridge": {
+      "path": "tools/corenlp/SunPaperPhraseRuleBatchBridge.java",
+      "sha256": "82b504e51be06f8e018226fb642093782ef9f750ea0ac50bad8eb65ee8119593"
+    },
+    "classifier_input": "one raw German reconstructed EStG record; prediction repeated only when CoreNLP sentence segmentation yields multiple English sentences",
+    "phrase_input": "approved_text_en",
+    "phrase_extractor": "CoreNLP 4.5.10 constituency/dependency parse plus published Section 4.2.2 Tregex/Tsurgeon rule families",
+    "extraction_order": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception",
+      "actor",
+      "action"
+    ],
+    "marker_parameter": {
+      "id": "public_marker_lexicon_en_v2",
+      "is_original_sun_marker_inventory": false,
+      "is_gold_or_test_tuned": false,
+      "reason": "Sun PDF page 13 says the initial markers were extended, but the full extended inventory is not published. This public, versioned inventory is an explicit parameter substitution.",
+      "category_files": {
+        "actor": {
+          "path": "resources/lexicon/actor_markers_en_v2.json",
+          "sha256": "fdf026e92d9ddc4ca3b3dbe068e5440bf4c0bffd72aad9b204c5c8bc63edc44d"
+        },
+        "condition": {
+          "path": "resources/lexicon/condition_markers_en_v2.json",
+          "sha256": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a"
+        },
+        "constraint": {
+          "path": "resources/lexicon/constraint_markers_en_v2.json",
+          "sha256": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1"
+        },
+        "exception": {
+          "path": "resources/lexicon/exception_markers_en_v2.json",
+          "sha256": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e"
+        }
+      }
+    },
+    "excluded_project_extensions": [
+      "v10 typed-scope resolver",
+      "German-English heuristic clause alignment",
+      "custom deontic-nucleus segmentation",
+      "definition resolver",
+      "custom actor-action ownership resolver"
+    ]
+  },
+  "evaluator": {
+    "path": "configs/evaluation/sun_table8_literal_overlap_v2.json",
+    "sha256": "e743808ed5b5acb68128f5fd2d9f108cfeaef1aa4fc6c667264f8114ba0a939d",
+    "unit": "statement",
+    "match_rule": "same type and any non-empty character-span intersection",
+    "assignment": "none"
+  },
+  "output": {
+    "directory": "outputs/development/s27_estg150_b0_sun_paper_v1",
+    "no_overwrite": true,
+    "persist_row_level_predictions": true,
+    "persist_canonical_gold_copy": false
+  },
+  "reproduction_boundary": {
+    "data_difference_allowed": true,
+    "parameter_difference_allowed": true,
+    "published_method_components_aligned": true,
+    "unavailable_original_assets": [
+      "complete extended marker lexicon",
+      "complete Stage 2 source code",
+      "trained original classifier weights",
+      "original 150-sentence phrase Gold"
+    ],
+    "formal_performance_result": false
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_allowed": false,
+    "human_decisions_modified": false,
+    "data_gold_written": false,
+    "data_input_written": false,
+    "formal_predictions_or_results_written": false
+  }
+}

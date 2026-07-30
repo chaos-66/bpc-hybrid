@@ -317,7 +317,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 |---|---|---|
 | P0 | Pipeline、文档入口与目录治理 | verified；日志/检查制度已有回归测试保护 |
 | P1 | Stage 2 数据、Gold、复杂度合同 | in progress；统一六要素合同与 EStG-150 annotation snapshot 已冻结，正式 Gold publication/input capsule 仍待 RWI-0001/RWI-0007 与 route/data gate 重锁 |
-| P2 | 完整 B0 | verified-technical + measured-development；全量150与独立82 development evaluator 结果已 exact-hash，正式 batch/主张仍待 route QA 与正式输入/Gold publication |
+| P2 | 完整 B0 | verified-technical + measured-development；新增 Sun paper-spec B0 v1：150 records/266 CoreNLP sentences，真实 Tsurgeon 与论文 rule order，Sun-literal overall P/R=0.665113/0.629384；不是 exact/original，完整 marker/代码/权重/原Gold仍缺。正式 batch/主张仍待 route QA 与正式输入/Gold publication |
 | P3 | Stage 2 多 baseline | partial：S2.7-M modality 三 baseline 已验证；phrase/full Stage 2 仍 blocked on P1 formal route/input publication |
 | P4 | H1/D1 与 Stage 2 复杂集 | partial：H1/D1 已完成一次 DeepSeek V4 Pro development Sun-literal比较；D1因RWI-0033为mixed transport，仅作诊断。正式运行仍待 P1 formal route/input、总门禁、重新预注册与授权；复杂集语义 Gold 仍0/50 |
 | P5 | Stage 1 完整实现与评价 | planned after Stage 2 core |
@@ -460,6 +460,7 @@ tokens，按锁定价格记录 0.01728755 CA。模型返回 schema-shaped JSON�
 
 | 版本 | 日期 | 变更 | 依据 |
 |---|---|---|---|
+| 4.9.1 | 2026-07-30 | 纠正把非 paper-faithful `v10a` 当作方法级 Sun 的口径：按 Section 4.2.2 新建 B0 paper-spec v1，移除五类项目自定义 resolver/segmentation/alignment，启用真实 Tsurgeon、依存 actor、上下文移除后 every-VP action，并共享 Sun literal v2。150 records development overall P/R=0.665113/0.629384；Constraint extracted=79、P/R=0.683544/0.258278。完整作者 marker/代码/权重/原Gold仍不可得，不声称 exact reproduction | Sun PDF pp.10–13、17–18；run manifest/metrics；RWI-0035；聚焦与完整验证 |
 | 4.9.0 | 2026-07-29 | 用户授权 DeepSeek V4 Pro 跑EStG-150 H1/D1一次development比较：共享extraction contract、canonical schema与Sun literal v2。H1最终7/7 patch接受，150/150 overall P/R=0.681134/0.741232；D1 150/150 overall P/R=0.906769/0.664455、Action=0.950226/0.850202。调用账本190：H1 14、D1主请求150、RWI-0033恢复批26；104条D1因本地validator异常以4条批恢复，透明标为mixed transport且不提升为formal | run manifest/attempts/metrics、RWI-0033/0034、聚焦回归与完整验证、本批次experiment event |
 | 4.8.6 | 2026-07-26 | 获授权的 ChatAnywhere gpt-5.4-nano 单条 C1：strict v1.1 preflight/request 通过，1 call、0 retry；provider 返回 1167+1789=2956 tokens、0.01728755 CA，但 clause_span.end=58 超出 57 字符 proposed text，canonical validator fail closed，0 candidate、C1/C2=false、无评价/P/R。原 failure 在校验后才取 usage 而误记 0，保留原证据并新增 SHA-bound accounting correction；runner 改为先计 usage 后校验，无 API 重跑 | frozen failure/request/raw response、accounting correction、RWI-0027、聚焦回归、完整验证、Event 123 |
 | 4.8.5 | 2026-07-26 | 冻结 C2 索引 0–2 × Pass A/B 的六请求离线准备：relay gpt-5.6-luna strict v1.1 全 preflight pass、无 downgrade；锁定 3 个 exact Pass-A hash 与 3 个 historical-fixture-only Pass-B hash，未来 live Pass-B hash deferred；canonical/serializer/adapter/transport hash 无漂移；fail-closed 配置 6 calls / 78,000 tokens / 1.92 CA。provider_authorized=false、API=0、billed tokens=0、evaluation=0、P/R=null、C2=false | no-overwrite dry-run receipt/preregistration、RWI-0026、聚焦回归、完整验证、Event 122 |

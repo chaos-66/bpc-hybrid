@@ -1,0 +1,225 @@
+{
+  "artifacts": {
+    "attempts": {
+      "path": "b0_attempts.json",
+      "sha256": "d8badd6c13fd010d255b7021664af6eb9eb90f0b5b91748f5a159d4c5990c514"
+    },
+    "metrics": {
+      "path": "metrics.json",
+      "sha256": "6d70e6677010d578a067ff5d4f1b658d0e3c601006b85328e6ca9c050fbfd9b8"
+    }
+  },
+  "claim_scope": "development_sun_table8_literal_overlap_view",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "exact_original_reproduction": false,
+  "input_binding": {
+    "bridge_sha256": "82b504e51be06f8e018226fb642093782ef9f750ea0ac50bad8eb65ee8119593",
+    "canonical_gold_membership_sha256": "e8e6268644cbc9b7ed42bef19f2e2e2432633a306eab9bf009725ef9571785d7",
+    "config_sha256": "b7e31aa37c08340baada5ac7e9be96ea6d3d03fc534b6567e3534c512e1106c1",
+    "evaluator_sha256": "e743808ed5b5acb68128f5fd2d9f108cfeaef1aa4fc6c667264f8114ba0a939d",
+    "freeze_receipt_sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961",
+    "layer_e_sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+    "literature_source_sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+    "membership_hashes_sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b",
+    "pattern_registry_sha256": "406a5f7b9671dc4d39a198bfa1f0af3c45e919ccb858cbf6fbf3e885793d57ee"
+  },
+  "is_formal_performance_result": false,
+  "method_alignment": {
+    "all_remaining_vp_action_extraction": true,
+    "dependency_gated_actor": true,
+    "evaluation_location": "Section 5.2.1, PDF page 17; Table 8 on PDF page 18",
+    "excluded_project_extensions": [
+      "v10 typed-scope resolver",
+      "German-English heuristic clause alignment",
+      "custom deontic-nucleus segmentation",
+      "definition resolver",
+      "custom actor-action ownership resolver"
+    ],
+    "marker_parameter_is_original": false,
+    "published_rule_order": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception",
+      "actor",
+      "action"
+    ],
+    "real_tsurgeon_context_removal": true,
+    "same_field_any_nonempty_overlap_evaluation": true,
+    "source_location": "Section 4.2.2, PDF pages 10-13, Tables 2-4 and Figures 6-7",
+    "unavailable_original_assets": [
+      "complete extended marker lexicon",
+      "complete Stage 2 source code",
+      "trained original classifier weights",
+      "original 150-sentence phrase Gold"
+    ]
+  },
+  "method_id": "sun_rule_only",
+  "method_variant": "b0_sun_paper_spec_v1",
+  "metrics": {
+    "assignment": "none_independent_overlap_coverage",
+    "clause_alignment_required": false,
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "evaluation_unit": "statement",
+    "invalid_attempt_count": 0,
+    "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+    "method_id": "sun_rule_only:b0_sun_paper_spec_v1",
+    "modality_policy": "evidence_span_extraction_only_label_ignored",
+    "overall": {
+      "extracted": 1287,
+      "f1": 0.6467552092341584,
+      "ground_truth": 1055,
+      "matched_ground_truth": 664,
+      "matched_predictions": 856,
+      "misclassified": 431,
+      "missed": 391,
+      "precision": 0.6651126651126651,
+      "recall": 0.6293838862559241
+    },
+    "per_field": {
+      "action": {
+        "extracted": 655,
+        "f1": 0.7561764918975052,
+        "ground_truth": 247,
+        "matched_ground_truth": 213,
+        "matched_predictions": 441,
+        "misclassified": 214,
+        "missed": 34,
+        "precision": 0.6732824427480916,
+        "recall": 0.8623481781376519
+      },
+      "actor": {
+        "extracted": 91,
+        "f1": 0.38926174496644295,
+        "ground_truth": 48,
+        "matched_ground_truth": 24,
+        "matched_predictions": 29,
+        "misclassified": 62,
+        "missed": 24,
+        "precision": 0.31868131868131866,
+        "recall": 0.5
+      },
+      "condition": {
+        "extracted": 193,
+        "f1": 0.7002074688796681,
+        "ground_truth": 214,
+        "matched_ground_truth": 150,
+        "matched_predictions": 135,
+        "misclassified": 58,
+        "missed": 64,
+        "precision": 0.6994818652849741,
+        "recall": 0.7009345794392523
+      },
+      "constraint": {
+        "extracted": 79,
+        "f1": 0.37489986648865153,
+        "ground_truth": 302,
+        "matched_ground_truth": 78,
+        "matched_predictions": 54,
+        "misclassified": 25,
+        "missed": 224,
+        "precision": 0.6835443037974683,
+        "recall": 0.2582781456953642
+      },
+      "exception": {
+        "extracted": 3,
+        "f1": 0.375,
+        "ground_truth": 13,
+        "matched_ground_truth": 3,
+        "matched_predictions": 3,
+        "misclassified": 0,
+        "missed": 10,
+        "precision": 1.0,
+        "recall": 0.23076923076923078
+      },
+      "modality": {
+        "extracted": 266,
+        "f1": 0.784404332129964,
+        "ground_truth": 231,
+        "matched_ground_truth": 196,
+        "matched_predictions": 194,
+        "misclassified": 72,
+        "missed": 35,
+        "precision": 0.7293233082706767,
+        "recall": 0.8484848484848485
+      }
+    },
+    "sample_count": 150,
+    "schema_version": "sun_table8_literal_overlap_evaluation@2.0.0"
+  },
+  "paper_faithful_reconstruction": true,
+  "run_id": "s27_estg150_b0_sun_paper_v1",
+  "runtime": {
+    "bridge_class": "SunPaperPhraseRuleBatchBridge",
+    "bridge_seconds": 1.4850154999876395,
+    "bridge_source": "tools/corenlp/SunPaperPhraseRuleBatchBridge.java",
+    "classifier_label_counts_by_record": {
+      "definition": 51,
+      "obligation": 58,
+      "permission": 29,
+      "prohibition": 12
+    },
+    "classifier_mean_confidence": 0.9256417185068131,
+    "classifier_seconds": 20.648794100037776,
+    "compose_seconds": 0.17748000007122755,
+    "corenlp_seconds": 231.5334602999501,
+    "custom_v10_modules_used": [],
+    "device": "cpu",
+    "exact_original_reproduction": false,
+    "marker_parameter_sha256": {
+      "actor": "fdf026e92d9ddc4ca3b3dbe068e5440bf4c0bffd72aad9b204c5c8bc63edc44d",
+      "condition": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a",
+      "constraint": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1",
+      "exception": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e"
+    },
+    "match_count": 1238,
+    "method_id": "sun_rule_only",
+    "method_variant": "b0_sun_paper_spec_v1",
+    "paper_faithful_reconstruction": true,
+    "paper_order": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception",
+      "actor",
+      "action"
+    ],
+    "pattern_count": 247,
+    "patterns_path": "resources/corenlp/sun_phrase_patterns_paper_spec_v1.json",
+    "patterns_sha256": "406a5f7b9671dc4d39a198bfa1f0af3c45e919ccb858cbf6fbf3e885793d57ee",
+    "predicted_clause_count": 266,
+    "record_count": 150,
+    "runtime_identity": {
+      "code_jar": {
+        "bytes": 9118725,
+        "name": "stanford-corenlp-4.5.10.jar",
+        "sha256": "f813ce4ed7319d79225f2a520d40733075c6b3500dd0b81ee069229e461aab43"
+      },
+      "models_jar": {
+        "bytes": 474409531,
+        "name": "stanford-corenlp-4.5.10-models.jar",
+        "sha256": "a5da9f6feb35a0fd2ea2cbe8909bede3952965b238a68c833ae3e031ed9026a0"
+      }
+    },
+    "sentence_count": 266,
+    "surgery_count": 439,
+    "terminal_tree_removal_count": 4,
+    "total_seconds": 253.84474990004674,
+    "tsurgeon_enabled": true
+  },
+  "safety": {
+    "data_gold_written": false,
+    "data_input_written": false,
+    "estimated_cost_usd": 0.0,
+    "formal_predictions_or_results_written": false,
+    "gold_read_only": true,
+    "human_decisions_modified": false,
+    "llm_api_called": false,
+    "llm_call_count": 0,
+    "network_allowed": false,
+    "network_called": false
+  },
+  "schema_version": "estg150_b0_sun_paper_development_manifest@1.0.0",
+  "status": "succeeded_development_not_formal",
+  "task_id": "S2.7-B0-SUN-PAPER-DEV"
+}

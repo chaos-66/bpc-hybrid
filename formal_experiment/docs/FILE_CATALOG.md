@@ -2,7 +2,7 @@
 
 **生成日期**：2026-07-30
 
-**收录文件**：1734 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
+**收录文件**：1744 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`pytest_*/`、`__pycache__/`）
 
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
@@ -108,6 +108,7 @@
 | `configs/models/estg150_b0_enhanced_s27_v8b.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_enhanced_s27_v8c.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_enhanced_s27_v9a.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/models/estg150_b0_sun_paper_s27_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_v10_preregistration_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_v10_preregistration_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_v8_preregistration_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -540,6 +541,7 @@
 | `docs/research/SUN_MODALITY_DATASET_INGESTION.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_OFFICIAL_LICENSE_RECORD.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_REFERENCE_SNOWBALL_AND_MARKER_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/SUN_STAGE2_METHOD_ALIGNMENT_V1.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_WINTER_CODE_SEPARATION_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/ROUTE_LOCK.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STAGE1_HUMAN_GOLD_GUIDE.md` | 活动 | 说明、规范或研究文档 |
@@ -998,6 +1000,9 @@
 | `outputs/development/s27_estg150_b0_phase_a_residual_v3/report_gold_seg_v5_routing_fixed.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_phase_a_residual_v3/report_gold_seg_v8_hypothetical.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_phase_a_residual_v3/report_hybrid_stored.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_sun_paper_v1/b0_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_sun_paper_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_sun_paper_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_sun_table8_compatible_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_sun_table8_compatible_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_sun_table8_literal_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1436,6 +1441,7 @@
 | 文件 | 状态 | 用途 |
 |---|---|---|
 | `resources/corenlp/s25b_runtime_verification_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/corenlp/sun_phrase_patterns_paper_spec_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/corenlp/sun_phrase_patterns_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/corenlp/sun_phrase_patterns_v2_enhanced.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/corenlp/sun_phrase_patterns_v3_enhanced.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1527,6 +1533,7 @@
 | `scripts/run_estg150_b0_enhanced_v7_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v8_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v9_development.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_estg150_b0_sun_paper_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_h1_d1_deepseek_v4pro.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
@@ -1614,6 +1621,7 @@
 | `src/bpc_hybrid/estg150_b0_development_v5.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/estg150_b0_development_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/estg150_b0_development_v9.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/estg150_b0_sun_paper.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/evaluation/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/evaluation/concept_level_eval.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/evaluator.py` | 活动 | Python 实现、脚本或测试 |
@@ -1761,6 +1769,7 @@
 | `tests/test_estg150_b0_enhanced_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_b0_enhanced_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_b0_enhanced_v8.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_estg150_b0_sun_paper.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_h1_d1_deepseek_live_runner.py` | 活动 | Python 实现、脚本或测试 |
@@ -1827,6 +1836,7 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `tools/corenlp/SunPaperPhraseRuleBatchBridge.java` | 活动 | 项目文件 |
 | `tools/corenlp/SunPhraseRuleBatchBridge.java` | 活动 | 项目文件 |
 | `tools/corenlp/SunPhraseRuleBatchBridgeMulti.java` | 活动 | 项目文件 |
 | `tools/corenlp/SunPhraseRuleBatchBridgeSafeV2.java` | 活动 | 项目文件 |
