@@ -1650,3 +1650,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：User explicitly authorized saved ChatAnywhere GPT-4o through unverified relay, C2 then at least 50 candidates, read-only development evaluation, and a 35 CA cumulative cap including repairs. v1.7 sample0 Pass A/B validated; sample1 Pass A repeated may had nearest exact start displacement 23>8 and failed closed. Candidate set not frozen; evaluation=0; P/R=null; Layer D/E/Gold not read during generation. Minimal v1.8 makes only repeated modality.evidence cues use unbounded unique-nearest exact reanchor; other repeated semantic spans remain bounded at 8, ties/zero matches fail. Archived v1.7 replay still rejects a later non-verbatim action, proving no semantic repair. Canonical prompt/schema/serializer/transport schema, B0, D1/H1 unchanged. Focused tests 65 passed; full audit 1462 passed, 22 skipped, Integrity true, Errors 0. v1.8 offline run c2_relay_gpt4o_portable_v1_8_pilot3_dry_run_v1 passed 6/6 preflights, request_downgrade=false, API=0, billed tokens/cost=0, C2=false, evaluation=0, P/R=null. Adapter config SHA 715c803fef5f8c91c6c4b8fb83002182aca01e461745c2c38a5d48254ac72462; guard SHA ff5813a7410a891b6d87966950d8f7ef0223da52e76f28644bbbc0d9304ae25e.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-30T16:01:22.494231+00:00 - S2.8 H1 development wiring repair: bind persisted B0, atomically validate field patches, and expose effective fallback telemetry
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：10 failed, 992 passed, 22 skipped in 128.33s (0:02:08)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`ceac334ef6151d84916c3cecec488ce58540d709`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：Focused H1/prompt tests: 31 passed. B0 v10a plan-only: 150 samples, 135 triggered, 50 clauses/41 samples selected, 0 API calls, 0 semantic changes by design. Full suite: 993 passed, 22 skipped, 9 failed from pre-existing modality source-manifest hash mismatch and populated production review-backup directory; checkpoint is not formal-ready.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-07-16  
+**更新时间**：2026-07-30
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -31,11 +31,11 @@ manifest 解锁。论文工作稿位于 `paper/`，不能反向定义实验状�
 
 | 门禁 | 当前值 | 含义 |
 |---|---:|---|
-| `integrity_pass` | true | 可以继续受控开发，不代表实验完成 |
+| `integrity_pass` | false | 2026-07-30 机器检查发现既存 `source_manifest.json` artifact/source-manifest hash mismatch；本次 H1 修复未改该 provenance，正式流程继续 fail closed |
 | `formal_capsule_versioned` | true | `formal_experiment/` 已进入 Git checkpoint `bfb0b8a`；不代表 input/Gold/结果已冻结 |
-| `sun_modality_development_data_verified` | true | 2,833→2,831 development 数据、quarantine 与重建 split 已通过独立机器门禁；不是 formal Gold |
+| `sun_modality_development_data_verified` | false | 当前机器检查因 source manifest 哈希不一致而拒绝既有 development 验证状态；2,833→2,831 统计未在本次任务中重写 |
 | `public_marker_lexicon_verified` | true | S2.3 英文 public-source v1 的 64 个 marker、来源/生成/hash/空扩展表通过离线机器门禁；development-only，未激活 S2.4+ |
-| `human_review_input_ready` | true | 用户可以审核 Layer E |
+| `human_review_input_ready` | false | Layer E 结构仍可读，但顶层机器门禁因 integrity failure 暂时 fail closed；不在本次 H1 修复中绕过 |
 | `human_review_freeze_ready` | false | EStG-150 仍是 0/150 adjudicated |
 | `formal_gold_publication_ready` | false | route/data/stage3/Gold 尚未共同重锁 |
 | `final_experiment_ready` | false | 正式方法、冻结数据与最终实验均未就绪 |
@@ -50,7 +50,7 @@ manifest 解锁。论文工作稿位于 `paper/`，不能反向定义实验状�
 | EStG-150 五层审核工作流 | input-ready，0/150 | LLM-assisted、human-adjudicated 候选 Gold 工作流 |
 | 现有 `sun_rule_only` | development heuristic | 不是完整或 exact Sun Stage 2 |
 | B0（BERT-TextCNN + CoreNLP/Tregex/Tsurgeon） | blocked | 论文级独立重建尚未完成 |
-| H1（Sun + LLM fallback） | blocked on B0 | 真实 LLM 未授权 |
+| H1（Sun + LLM fallback） | formal blocked；development mechanism repaired | runner 强制读取并 SHA 绑定落盘 B0，不再内部重跑；field-level patch 原子应用并记录 accepted/rejected/no-op；真实 LLM 未授权，尚无新性能结果 |
 | D1（direct LLM） | prompt/fixture development only | 真实 LLM 未授权，不能报告正式指标 |
 | Stage 1 | 部分解析代码/历史资产 | 尚无冻结的正式组件结果 |
 | Stage 3 | fixture/scaffold only | 尚无完整 Sun/Winter 多 baseline 比较 |
@@ -74,7 +74,7 @@ Sun 最终版、公开数据、引用链和代码来源证据统一放在 `docs/
 | 5 | S2.2 | 用户并行完成人工裁决；Agent 只验证 | 150/150 adjudicated，freeze validator 通过 |
 | 6 | S2.3 | **verified**：`public_marker_lexicon_en_v1` 已离线锁定；64 个 marker、source/manifest/payload hash、空扩展表和机器门禁通过 | 来源、规则、语言、hash 与 dev-only 扩展策略固定 |
 | 6.1 | S2.4-S2.6 | 本轮严格未启动；许可未知与 S2.4 ready 的现有矛盾不在 S2.3 绕过，留待 S2.4 单独派发前收口 | 非 LLM canonical Rule Record 可复现 |
-| 7 | S2.7-S2.12 | 多 baseline、H1/D1、复杂语料和错误分析 | 同 IDs/Gold/evaluator 的完整比较 |
+| 7 | S2.7-S2.12 | H1 development wiring 已修复并在 B0 v10a 的 150 条上完成 plan-only：135 条触发、50 clauses/41 samples 入硬预算、0 API calls；formal H1/D1、复杂语料和错误分析仍 blocked | 同 IDs/Gold/evaluator 的完整比较；真实 H1 run 后报告 called/accepted/rejected/changed 四层计数 |
 | 8 | S2.13 | 冻结 Stage 2 | 数据、方法、指标、成本、manifest 完整 |
 | 9 | PW1 | **下一论文任务**：引言与 RQ0–RQ4 | 无结果性过度主张；主张矩阵同步 |
 

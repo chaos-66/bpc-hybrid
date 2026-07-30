@@ -691,10 +691,23 @@ def collect_project_audit() -> dict[str, Any]:
 
     rule = (REPO_ROOT / "scripts/run_sun_rule_only.py").read_text(encoding="utf-8")
     hybrid = (REPO_ROOT / "scripts/run_sun_llm_fallback.py").read_text(encoding="utf-8")
-    if "SemanticExtractor()" in rule and "SemanticExtractor()" in hybrid:
+    rule_has_legacy_front_end = "SemanticExtractor()" in rule
+    hybrid_reuses_persisted_b0 = (
+        "--b0-predictions" in hybrid
+        and "load_b0_predictions" in hybrid
+        and "SemanticExtractor()" not in hybrid
+    )
+    if rule_has_legacy_front_end and hybrid_reuses_persisted_b0:
+        _add(
+            findings,
+            "passes",
+            "h1_explicit_b0_artifact_binding",
+            "The development H1 runner consumes a persisted B0 artifact and does not recreate the rule front end internally.",
+        )
+    elif "SemanticExtractor()" in rule and "SemanticExtractor()" in hybrid:
         _add(findings, "warnings", "legacy_shared_front_end_only", "Current development M1/M2 share one heuristic front end, but it is not the final published Sun Stage 2 baseline.")
     else:
-        _add(findings, "errors", "rule_front_end_mismatch", "M1/M2 shared rule front end is not demonstrable.")
+        _add(findings, "errors", "rule_front_end_mismatch", "H1 does not demonstrably reuse either the persisted B0 artifact or the same legacy rule front end.")
     # NOTE: the actual `sun_stage2_baseline_not_paper_faithful` blocker is
     # emitted later as a precise code-level check (see below), not here.
     # Keeping only one canonical message avoids duplicate blocker rows.

@@ -17,9 +17,9 @@
       "role": "main_method",
       "llm_used": true,
       "formal_status": "blocked_until_faithful_baseline_data_and_triggers_are_locked",
-      "current_command": "python scripts/run_sun_llm_fallback.py",
+      "current_command": "python scripts/run_sun_llm_fallback.py --b0-predictions <persisted-b0> --plan-only --development",
       "command_status": "development_only_not_formal",
-      "notes": "Must reuse the complete formal Sun Stage 2 baseline and modify only pre-registered failed/uncertain outputs. A real run additionally requires explicit --allow-llm and a hard call budget."
+      "notes": "The development runner now requires and SHA-binds a persisted B0 artifact, applies only Gold-blind field-level repair plans, records accepted/rejected patches, and retains B0 atomically on rejection. Formal use remains blocked until the complete B0 and trigger budget are locked. A real run additionally requires explicit --allow-llm authorization."
     },
     {
       "id": "direct_llm",

@@ -78,6 +78,19 @@ Barrientos/RC4PC **不是**直接提取 Sun 的六个 span。其实际结构是�
 不得使用“该样本在 Gold 上错了”“该类别测试集表现差”或 test distribution 来触发
 LLM。阈值只在 development split 确定并冻结。
 
+### H1 运行与 merge 合同（development v4）
+
+- H1 必须读取与 B0 实验臂相同的落盘 prediction artifact，并在 manifest 记录其
+  SHA-256；禁止在 H1 runner 内重新实例化或重跑 B0 extractor。
+- trigger 输出 canonical 复数字段名；LLM 对每个被请求字段给出完整 replacement，
+  不能混用 `action`/`actor` 等单数别名或 `keep/correct/remove/add` clause 操作。
+- patch envelope、字段授权、verbatim span、ID 引用与整条 canonical record 必须全部
+  通过校验后才原子提交；任一失败均保留该样本的精确 B0 语义预测。
+- telemetry 分开记录 triggered、selected、called、proposed、accepted、rejected、
+  no-op 与 changed，不能再以 runner 未抛异常等价于 fallback 生效。
+- 该合同只修复 development wiring。正式阈值和 call budget 仍需在不看 test Gold
+  的 development split 上预注册，并在真实运行前取得 API 授权。
+
 ## 5. D1 纯 LLM 的 Sun-compatible schema
 
 每个字段至少包含：

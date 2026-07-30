@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import argparse
+import subprocess
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
@@ -76,8 +77,31 @@ def _role(path: Path) -> str:
 
 
 def collect_files() -> list[Path]:
+    """Return tracked and non-ignored untracked files in the formal capsule.
+
+    The workspace may contain large ignored development runs and local review
+    backups.  A reproducible catalog must not change merely because those
+    machine-local artifacts exist.
+    """
     files: list[Path] = []
-    for path in ROOT.rglob("*"):
+    completed = subprocess.run(
+        [
+            "git",
+            "ls-files",
+            "--cached",
+            "--others",
+            "--exclude-standard",
+            "--",
+            ROOT.name,
+        ],
+        cwd=ROOT.parent,
+        check=True,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+    )
+    for item in completed.stdout.splitlines():
+        path = ROOT.parent / item
         if not path.is_file():
             continue
         relative = path.relative_to(ROOT)
@@ -96,8 +120,8 @@ def render(files: list[Path]) -> str:
     lines = [
         "# 项目逐文件目录",
         "",
-        f"**生成日期**：{date.today().isoformat()}  ",
-        f"**收录文件**：{len(files)} 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`__pycache__/`）  ",
+        f"**生成日期**：{date.today().isoformat()}",
+        f"**收录文件**：{len(files)} 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）",
         "**生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`",
         "",
         "本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”",

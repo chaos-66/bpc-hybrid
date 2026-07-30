@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-07-27  
-**收录文件**：519 个（不含 `.env`、`.tmp/`、`.pytest_cache/`、`__pycache__/`）  
+**生成日期**：2026-07-31
+**收录文件**：520 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -587,6 +587,7 @@
 | `tests/test_fallback_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_h1_fallback_runner.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_layer_d_runner_and_validator.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_llm_client.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_llm_config.py` | 活动 | Python 实现、脚本或测试 |

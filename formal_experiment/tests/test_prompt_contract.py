@@ -196,6 +196,7 @@ _spec = importlib.util.spec_from_file_location(
     PROJECT_ROOT / "scripts" / "run_sun_llm_fallback.py",
 )
 _mod = importlib.util.module_from_spec(_spec)
+sys.modules[_spec.name] = _mod
 _spec.loader.exec_module(_mod)
 apply_repair_patch = _mod.apply_repair_patch
 
@@ -237,11 +238,20 @@ def test_h1_patch_replaces_entire_modality_block():
     assert new_clause["modality"]["label"] == "prohibition"
 
 
-def test_h1_patch_actor_id_collision_rejected():
+def test_h1_patch_may_preserve_id_inside_replaced_field():
     clause = _clause_fixture()
-    patch = {"actors": [{"id": "a01", "text": "the controller", "start": 0, "end": 15, "normalized": "controller"}]}
+    patch = {"actors": [{"id": "a01", "text": "The controller", "start": 0, "end": 14, "normalized": "controller"}]}
     new_clause, errors = apply_repair_patch(clause, patch, ["actors"])
-    assert any("collides" in e for e in errors)
+    assert not errors
+    assert new_clause["actors"] == patch["actors"]
+
+
+def test_h1_patch_rejects_singular_field_alias():
+    clause = _clause_fixture()
+    patch = {"action": {"absent": True}}
+    new_clause, errors = apply_repair_patch(clause, patch, ["action"])
+    assert any("non-canonical names" in e for e in errors)
+    assert new_clause == clause
 
 
 def test_h1_patch_absent_drops_field():

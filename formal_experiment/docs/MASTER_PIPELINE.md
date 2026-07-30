@@ -1,8 +1,8 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.4.3
+**文档版本**：3.4.4
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
-**最后更新**：2026-07-16  
+**最后更新**：2026-07-30
 **方法学主干**：Sun et al. (2024)  
 **当前实施优先级**：实验先完成 Stage 2，再补 Stage 1 和 Stage 3；论文非结果章节从现在并行写作
 
@@ -172,7 +172,7 @@ Tregex/Tsurgeon + reconstructed markers、token classifier/CRF（仅在训练 Go
 | ID | 正式含义 | 当前状态 |
 |---|---|---|
 | B0 / `sun_rule_only` | BERT-TextCNN + CoreNLP/Tregex/Tsurgeon | blocked；现有 runner 只是 heuristic |
-| H1 / `sun_llm_fallback` | 同一 B0，仅按预注册 trigger 修复失败/不确定字段 | blocked；需先完成 B0 |
+| H1 / `sun_llm_fallback` | 同一 B0，仅按预注册 trigger 修复失败/不确定字段 | formal blocked；development runner 已强制绑定落盘 B0，并具备原子 merge 与逐 patch telemetry |
 | D1 / `direct_llm` | LLM 直接生成同一 Rule Record | development-only；真实调用未授权 |
 
 正式主表的最低方法覆盖为：简单规则下限、一个强监督学习 baseline、完整 B0、H1、
@@ -203,7 +203,7 @@ condition/constraint/exception 的数量与嵌套、被动语态、隐含 actor�
 | S2.5 | 完成 CoreNLP/Tregex/Tsurgeon extractor | S2.3 | blocked | 六要素规则和 fixtures 通过 |
 | S2.6 | 组合并验证完整 B0 | S2.4-S2.5 | blocked | 不调用 LLM，输出 canonical Rule Record |
 | S2.7 | 实现代表性非 LLM baseline | S2.1/S2.2 | blocked | 相同输入和 evaluator 可运行 |
-| S2.8 | 预注册 H1 trigger/merge/call budget | S2.6 | blocked | 不看 test 结果锁定 trigger |
+| S2.8 | 预注册 H1 trigger/merge/call budget | S2.6 | blocked；development wiring repaired 2026-07-30 | H1 强制复用同一落盘 B0；Gold-blind trigger、原子 merge、拒绝原因与硬预算可审计；正式 trigger 仍须在不看 test 结果时锁定 |
 | S2.9 | 锁定 D1 prompt/few-shot/model/budget | S2.2 | partial | Gold 不可见、prompt hash 固定 |
 | S2.10 | 主数据组件评价 | S2.2/S2.6-S2.9 | blocked | 模态与六字段指标分别报告 |
 | S2.11 | 复杂法律语料集冻结 | G0.5 | blocked | 数据资格门禁 + Gold/映射协议 |
