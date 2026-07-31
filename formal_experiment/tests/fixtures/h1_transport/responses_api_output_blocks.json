@@ -1,0 +1,22 @@
+{
+  "id": "resp_s2d8r1_responses_api",
+  "object": "response",
+  "model": "deepseek-v4-flash",
+  "output": [
+    {
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "output_text",
+          "text": "{\"sample_id\": \"estg_000002\", \"patches\": {}}"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "input_tokens": 812,
+    "output_tokens": 20,
+    "total_tokens": 832
+  }
+}

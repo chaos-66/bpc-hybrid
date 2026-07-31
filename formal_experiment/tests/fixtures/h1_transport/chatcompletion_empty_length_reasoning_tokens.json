@@ -1,0 +1,23 @@
+{
+  "id": "chatcmpl-s2d8r1-length",
+  "object": "chat.completion",
+  "model": "deepseek-v4-flash",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "length",
+      "message": {
+        "role": "assistant",
+        "content": ""
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 812,
+    "completion_tokens": 1024,
+    "total_tokens": 1836,
+    "completion_tokens_details": {
+      "reasoning_tokens": 980
+    }
+  }
+}

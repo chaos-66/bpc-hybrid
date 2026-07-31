@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-07-31
-**收录文件**：530 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：542 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -509,6 +509,7 @@
 | `src/bpc_hybrid/extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_context.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/h1_transport.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_client.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_config.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_provider.py` | 活动 | Python 实现、脚本或测试 |
@@ -562,6 +563,17 @@
 | `tests/fixtures/estg150_candidate_protocol/strict_transport_invalid_candidate_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/estg150_candidate_protocol/strict_transport_valid_candidate_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/estg150_candidate_protocol/synthetic_record_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/h1_transport/chatcompletion_array_content.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/h1_transport/chatcompletion_effective_patch.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/h1_transport/chatcompletion_empty_length_reasoning_tokens.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/h1_transport/chatcompletion_empty_with_reasoning.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/h1_transport/chatcompletion_missing_content.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/h1_transport/chatcompletion_null_content.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/h1_transport/chatcompletion_tool_calls_only.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/h1_transport/invalid_json_body.txt` | 活动 | 文本清单或依赖说明 |
+| `tests/fixtures/h1_transport/responses_api_output_blocks.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/h1_transport/sensitive_envelope.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/h1_transport/sse_delta_body.txt` | 活动 | 文本清单或依赖说明 |
 | `tests/fixtures/public_marker_lexicon/marker_cases_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/sun_compat_incorrect_actor.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/sun_compat_missing_action.json` | 活动 | 机器可读配置、数据、事件或产物 |

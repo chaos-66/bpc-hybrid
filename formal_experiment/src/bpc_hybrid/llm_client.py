@@ -21,6 +21,12 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from bpc_hybrid.fallback import FallbackRequest, FallbackResult
+from bpc_hybrid.h1_transport import (
+    H1RequestPolicy,
+    decode_chat_completion_envelope,
+    describe_endpoint_safe,
+    sha256_bytes,
+)
 from bpc_hybrid.llm_config import (
     LLMConfig,
     LLMConfigError,
@@ -307,6 +313,11 @@ class RealAPITransport(LLMTransport):
         Must have ``api_key``, ``base_url``, and ``model`` populated.
     timeout_seconds : float
         HTTP timeout in seconds.
+    policy : H1RequestPolicy | None
+        Optional explicit transport request policy (S2.8D-R1).  When set,
+        the body is extended with ``stream``/``thinking``/
+        ``response_format`` before sending.  The generic builder default
+        behavior is unchanged when ``None``.
 
     Safety guarantees:
 
@@ -317,29 +328,54 @@ class RealAPITransport(LLMTransport):
     * No raw response is written to disk.
     * Each instance is single-use by convention; the caller must ensure
       only one request is sent.
+    * Response extraction goes through the shared pure decoder
+      ``decode_chat_completion_envelope``; the decoded audit is exposed
+      on ``last_decode`` (status, hashes, usage, reasoning/tool
+      diagnostics) and empty/missing/invalid content does NOT raise —
+      the caller decides based on the stable extraction status.
     """
 
-    def __init__(self, config: LLMConfig, timeout_seconds: float = 30.0) -> None:
+    def __init__(
+        self,
+        config: LLMConfig,
+        timeout_seconds: float = 30.0,
+        policy: H1RequestPolicy | None = None,
+    ) -> None:
         self._config = config
         self._timeout = timeout_seconds
+        self._policy = policy
         self._builder = OpenAICompatibleRequestBuilder(config)
+        self.last_decode: dict[str, Any] | None = None
+        self.last_request_body_sha256: str | None = None
+        self.last_request_policy: dict[str, Any] | None = None
+        self.last_endpoint_descriptor: dict[str, Any] = describe_endpoint_safe(
+            self._builder.build_url()
+        )
 
     def send(self, request: LLMRequest) -> LLMResponse:
         """Execute a single real API call via ``urllib.request``.
 
-        Returns an :class:`LLMResponse` on success (HTTP 200 with valid
-        JSON body).  Raises :class:`LLMClientError` on any failure.
+        Returns an :class:`LLMResponse` on HTTP 200.  Raises
+        :class:`LLMClientError` only for transport/network/HTTP-level
+        failures; envelope-level extraction problems are reported through
+        ``self.last_decode["status"]`` with the stable status code.
         """
         payload = self._builder.build_payload(
             system_prompt=request.system_prompt,
             user_prompt=request.user_prompt,
         )
+        if self._policy is not None:
+            payload["body"] = self._policy.apply_to_body(payload["body"])
+            self.last_request_policy = self._policy.to_dict()
+        else:
+            self.last_request_policy = None
 
         # Inject real API key into headers (redacted by builder)
         headers = dict(payload["headers"])
         headers["Authorization"] = f"Bearer {self._config.api_key}"
 
         body_bytes = json.dumps(payload["body"]).encode("utf-8")
+        self.last_request_body_sha256 = sha256_bytes(body_bytes)
 
         http_req = urllib.request.Request(
             payload["url"],
@@ -350,8 +386,9 @@ class RealAPITransport(LLMTransport):
 
         try:
             with urllib.request.urlopen(http_req, timeout=self._timeout) as resp:
-                raw_body = resp.read().decode("utf-8")
+                raw_body = resp.read()
                 status = resp.status
+                content_type = resp.headers.get("Content-Type")
         except urllib.error.HTTPError as exc:
             # HTTP 4xx/5xx — status redacted, body not saved
             raise LLMClientError(
@@ -387,35 +424,18 @@ class RealAPITransport(LLMTransport):
                 f"Real API returned non-200 status (details redacted)"
             )
 
-        # Parse the OpenAI chat-completions response
-        try:
-            data = json.loads(raw_body)
-        except json.JSONDecodeError as exc:
-            raise LLMClientError(
-                "Real API response is not valid JSON"
-            ) from exc
-
-        # Extract content from choices[0].message.content
-        try:
-            content = data["choices"][0]["message"]["content"]
-        except (KeyError, IndexError, TypeError) as exc:
-            raise LLMClientError(
-                "Real API response missing choices[0].message.content"
-            ) from exc
-
-        finish_reason = None
-        try:
-            finish_reason = data["choices"][0].get("finish_reason")
-        except (KeyError, IndexError, TypeError):
-            pass
-
-        model_used = data.get("model", self._config.model)
-
+        # Shared pure decoder: identical extraction on the real path and
+        # on offline transport replay.  Envelope-level problems never
+        # raise; the runner acts on the stable extraction status.
+        self.last_decode = decode_chat_completion_envelope(
+            raw_body, content_type
+        )
+        decode = self.last_decode
         return LLMResponse(
-            content=content,
+            content=decode["content"],
             provider=self._config.provider,
-            model=model_used,
-            finish_reason=finish_reason,
+            model=decode.get("model") or self._config.model,
+            finish_reason=decode.get("finish_reason"),
         )
 
     def __repr__(self) -> str:

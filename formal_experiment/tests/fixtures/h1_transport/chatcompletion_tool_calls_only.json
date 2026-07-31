@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-s2d8r1-toolcalls",
+  "object": "chat.completion",
+  "model": "deepseek-v4-flash",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "tool_calls",
+      "message": {
+        "role": "assistant",
+        "tool_calls": [
+          {
+            "id": "call_abc123",
+            "type": "function",
+            "function": {
+              "name": "apply_patch",
+              "arguments": "{\"sample_id\": \"estg_000002\", \"patches\": {\"modality\": {\"label\": \"prohibition\"}}}"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 812,
+    "completion_tokens": 55,
+    "total_tokens": 867
+  }
+}

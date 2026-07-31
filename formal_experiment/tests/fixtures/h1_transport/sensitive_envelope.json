@@ -1,0 +1,33 @@
+{
+  "id": "chatcmpl-s2d8r1-sensitive",
+  "object": "chat.completion",
+  "model": "deepseek-v4-flash",
+  "headers": {
+    "Authorization": "Bearer sk-super-secret-key",
+    "Content-Type": "application/json",
+    "Cookie": "session=abc123"
+  },
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"sample_id\": \"estg_000002\", \"patches\": {}}"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 812,
+    "completion_tokens": 96,
+    "total_tokens": 908,
+    "completion_tokens_details": {
+      "reasoning_tokens": 10
+    }
+  },
+  "nested": {
+    "api_key": "sk-nested-secret",
+    "refresh_token": "rt-xyz",
+    "password": "hunter2"
+  }
+}

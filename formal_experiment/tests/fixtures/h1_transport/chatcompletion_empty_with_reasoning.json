@@ -1,0 +1,24 @@
+{
+  "id": "chatcmpl-s2d8r1-reasoning",
+  "object": "chat.completion",
+  "model": "deepseek-v4-flash",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "The masked fields must be rebuilt from the source text. {\"sample_id\": \"estg_000002\", \"clause_id\": \"estg_000002.c1\", \"repair_fields\": [\"modality\", \"actions\", \"actor_action_map\"], \"patches\": {}}"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 812,
+    "completion_tokens": 60,
+    "total_tokens": 872,
+    "completion_tokens_details": {
+      "reasoning_tokens": 60
+    }
+  }
+}

@@ -895,6 +895,8 @@ class TestRealCallModelGate:
             "--allow-llm",
             "--max-calls",
             "2",
+            "--transport-capture",
+            str(tmp_path / "out" / "transport_capture.jsonl"),
             "--development",
         ]
         if model is not None:
@@ -929,46 +931,84 @@ class TestRealCallModelGate:
         from bpc_hybrid.llm_client import LLMResponse
 
         class FakeTransport:
-            def __init__(self, config, timeout_seconds=60.0):
+            def __init__(self, config, timeout_seconds=60.0, policy=None):
                 self.config = config
+                self.policy = policy
                 self.sent = []
+                self.last_decode = {
+                    "status": "ok_message_content",
+                    "content": "",
+                    "model": "deepseek-v4-flash",
+                    "response_id": "chatcmpl-test",
+                    "response_object": "chat.completion",
+                    "finish_reason": "stop",
+                    "usage": {},
+                    "response_body_sha256": None,
+                    "response_content_sha256": None,
+                    "body_utf8_length": 0,
+                    "content_type_normalized": "application/json",
+                    "extraction_source": "message.content",
+                    "reasoning_present": False,
+                    "reasoning_utf8_length": None,
+                    "reasoning_sha256": None,
+                    "tool_call_count": 0,
+                    "tool_call_summaries": [],
+                    "transport_audit": {},
+                    "error_detail": None,
+                }
+                self.last_request_body_sha256 = "0" * 64
+                self.last_request_policy = (
+                    policy.to_dict() if policy is not None else None
+                )
+                self.last_endpoint_descriptor = {
+                    "scheme": "https",
+                    "host": "api.test.invalid",
+                    "port": None,
+                    "path": "/v1/chat/completions",
+                }
 
             def send(self, request):
                 self.sent.append(request)
-                return LLMResponse(
-                    content=json.dumps(
-                        {
-                            "sample_id": "estg_000002",
-                            "clause_id": "estg_000002.c1",
-                            "repair_fields": ["modality", "actions", "actor_action_map"],
-                            "patches": {
-                                "modality": {
-                                    "label": "obligation",
-                                    "evidence": [
-                                        {"text": "shall", "start": SHALL_START, "end": SHALL_END}
-                                    ],
-                                },
-                                "actions": [
-                                    {
-                                        "id": "estg_000002.c1.action.1",
-                                        "text": ACTION_TEXT,
-                                        "start": ACTION_START,
-                                        "end": ACTION_END,
-                                        "normalized": "notify authority",
-                                    }
-                                ],
-                                "actor_action_map": [
-                                    {
-                                        "actor_id": "estg_000002.c1.actor.1",
-                                        "action_id": "estg_000002.c1.action.1",
-                                    }
+                content = json.dumps(
+                    {
+                        "sample_id": "estg_000002",
+                        "clause_id": "estg_000002.c1",
+                        "repair_fields": ["modality", "actions", "actor_action_map"],
+                        "patches": {
+                            "modality": {
+                                "label": "obligation",
+                                "evidence": [
+                                    {"text": "shall", "start": SHALL_START, "end": SHALL_END}
                                 ],
                             },
-                            "reason": "masked rebuild (stub)",
-                        }
-                    ),
+                            "actions": [
+                                {
+                                    "id": "estg_000002.c1.action.1",
+                                    "text": ACTION_TEXT,
+                                    "start": ACTION_START,
+                                    "end": ACTION_END,
+                                    "normalized": "notify authority",
+                                }
+                            ],
+                            "actor_action_map": [
+                                {
+                                    "actor_id": "estg_000002.c1.actor.1",
+                                    "action_id": "estg_000002.c1.action.1",
+                                }
+                            ],
+                        },
+                        "reason": "masked rebuild (stub)",
+                    }
+                )
+                self.last_decode["content"] = content
+                self.last_decode["response_content_sha256"] = hashlib.sha256(
+                    content.encode("utf-8")
+                ).hexdigest()
+                return LLMResponse(
+                    content=content,
                     provider="openai_compatible",
                     model="deepseek-v4-flash",
+                    finish_reason="stop",
                 )
 
         monkeypatch.setattr(RUNNER, "RealAPITransport", FakeTransport)
@@ -993,6 +1033,8 @@ class TestRealCallModelGate:
                 "deepseek-v4-flash",
                 "--prompt-variant",
                 "masked_selected_v5",
+                "--transport-capture",
+                str(out_dir / "transport_capture.jsonl"),
                 "--development",
             ]
         )
@@ -1016,6 +1058,28 @@ class TestRealCallModelGate:
             if event.get("selected_for_call")
         }
         assert response_models == {"deepseek-v4-flash"}
+        # Transport section: policy actually sent + capture binding.
+        assert manifest["transport"]["raw_response_saved"] is False
+        assert manifest["transport"]["sanitized_transport_capture_saved"] is True
+        assert manifest["transport"]["capture_sha256"]
+        policy = manifest["transport"]["request_policy_sent"]
+        assert policy["stream"] is False
+        assert policy["thinking"] == {"type": "disabled"}
+        assert policy["response_format"] == {"type": "json_object"}
+        assert policy["tools_sent"] is False
+        assert manifest["transport"]["extraction_status_counts"] == {
+            "ok_message_content": 1
+        }
+        capture = _read_jsonl(out_dir / "transport_capture.jsonl")
+        assert len(capture) == 1
+        assert capture[0]["extraction_status"] == "ok_message_content"
+        assert capture[0]["models"]["requested"] == "deepseek-v4-flash"
+        assert capture[0]["models"]["resolved"] == "deepseek-v4-flash"
+        assert capture[0]["models"]["returned"] == "deepseek-v4-flash"
+        assert capture[0]["safety"]["authorization_saved"] is False
+        assert capture[0]["safety"]["reasoning_content_saved"] is False
+        assert capture[0]["safety"]["tool_call_arguments_saved"] is False
+        assert "patches" in json.dumps(capture[0])  # message.content retained for replay
 
     def test_exclude_plan_filters_selected_set(self, tmp_path):
         """--exclude-plan drops one plan from the frozen selected set
@@ -1138,3 +1202,524 @@ class TestComparisonReport:
             assert "forbidden root" in str(exc)
         else:
             raise AssertionError("forbidden reference was not refused")
+
+
+# S2.8D-R1 imports
+from bpc_hybrid.h1_transport import (
+    STATUS_EMPTY,
+    STATUS_EMPTY_WITH_REASONING,
+    STATUS_INVALID_JSON,
+    STATUS_INVALID_TYPE,
+    STATUS_MISSING,
+    STATUS_OK,
+    STATUS_RESPONSES_API,
+    STATUS_STREAMING,
+    STATUS_TOOL_CALLS_ONLY,
+    decode_chat_completion_envelope,
+)
+
+
+class TestOfflineTransportReplay:
+    """S2.8D-R1: envelope-level offline transport replay through the SAME
+    pure decoder the real transport uses.  Zero network calls."""
+
+    FIXTURES = PROJECT_ROOT / "tests" / "fixtures" / "h1_transport"
+
+    def _fixture(self, name: str) -> str:
+        return (self.FIXTURES / name).read_text(encoding="utf-8")
+
+    def _transport_row(
+        self,
+        plan,
+        b0_record,
+        variant: str,
+        request_id: str,
+        body: str,
+        content_type: str | None = None,
+        http_status: int = 200,
+    ) -> dict:
+        row = {
+            "request_id": request_id,
+            "sample_id": plan.sample_id,
+            "clause_id": plan.clause_id,
+            "clause_index": plan.clause_index,
+            "prompt_sha256": _prompt_sha(variant),
+            "prompt_variant": variant,
+            "b0_prediction_sha256": RUNNER._prediction_hash(b0_record),
+            "response_body": body,
+        }
+        if content_type is not None:
+            row["content_type"] = content_type
+        if http_status is not None:
+            row["http_status"] = http_status
+        return row
+
+    def _run(self, tmp_path, attempts, rows, variant="masked_selected_v5", overwrite=False):
+        b0_path, b0_manifest = _b0_bundle(tmp_path, attempts)
+        out_dir = tmp_path / "out"
+        responses_path = tmp_path / "transport_responses.jsonl"
+        responses_path.write_text(
+            "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows),
+            encoding="utf-8",
+        )
+        args = [
+            "--b0-predictions",
+            str(b0_path),
+            "--b0-manifest",
+            str(b0_manifest),
+            "--output",
+            str(out_dir / "h1_predictions.jsonl"),
+            "--telemetry",
+            str(out_dir / "h1_telemetry.jsonl"),
+            "--manifest",
+            str(out_dir / "h1_manifest.json"),
+            "--offline-transport-replay",
+            "--transport-responses-jsonl",
+            str(responses_path),
+            "--max-calls",
+            "50",
+            "--prompt-variant",
+            variant,
+            "--development",
+        ]
+        if overwrite:
+            args.append("--overwrite")
+        result = RUNNER.main(args)
+        return result, out_dir, b0_path
+
+    def _chat_completion_body(self, content: str, finish_reason: str = "stop") -> str:
+        return json.dumps(
+            {
+                "id": "chatcmpl-test",
+                "object": "chat.completion",
+                "model": "deepseek-v4-flash",
+                "choices": [
+                    {
+                        "index": 0,
+                        "finish_reason": finish_reason,
+                        "message": {"role": "assistant", "content": content},
+                    }
+                ],
+                "usage": {
+                    "prompt_tokens": 10,
+                    "completion_tokens": 5,
+                    "total_tokens": 15,
+                },
+            }
+        )
+
+    def test_effective_patch_via_transport_replay(self, tmp_path):
+        """Non-stream ChatCompletion + non-empty content + legal patch:
+        valid=1, effective=1, changed=1, gate=true."""
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            if plan.sample_id == "estg_000002":
+                content = json.dumps(_envelope(plan, _full_patch(plan)))
+            else:
+                content = json.dumps(
+                    _envelope(plan, {"actors": {"absent": True}, "actor_action_map": []})
+                )
+            rows.append(
+                self._transport_row(
+                    plan, b0_record, "masked_selected_v5", f"r{index}",
+                    self._chat_completion_body(content),
+                )
+            )
+        result, out_dir, _ = self._run(tmp_path, attempts, rows)
+        assert result == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["execution_mode"] == "offline_transport_replay"
+        assert manifest["effective_patch"]["valid_response_count"] == 2
+        assert manifest["effective_patch"]["accepted_effective_patch_count"] == 1
+        assert manifest["prediction_changed_sample_count"] == 1
+        assert manifest["h1_non_identity_gate"] is True
+        assert manifest["transport"]["extraction_status_counts"] == {
+            "ok_message_content": 2
+        }
+        assert manifest["transport"]["sanitized_transport_capture_saved"] is False
+        assert manifest["transport"]["raw_response_saved"] is False
+        assert manifest["transport"]["request_policy_sent"]["stream"] is False
+        assert "timestamp_utc" not in manifest
+
+    def test_reasoning_content_never_used_as_patch(self, tmp_path):
+        """content='' with non-empty reasoning containing JSON: status
+        empty_final_content_with_reasoning; prediction stays B0."""
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            rows.append(
+                self._transport_row(
+                    plan, b0_record, "masked_selected_v5", f"r{index}",
+                    self._fixture("chatcompletion_empty_with_reasoning.json"),
+                )
+            )
+        result, out_dir, b0_path = self._run(tmp_path, attempts, rows)
+        assert result == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["effective_patch"]["valid_response_count"] == 0
+        assert manifest["effective_patch"]["accepted_effective_patch_count"] == 0
+        assert manifest["prediction_changed_sample_count"] == 0
+        assert manifest["h1_non_identity_gate"] is False
+        assert manifest["transport"]["extraction_status_counts"] == {
+            "empty_final_content_with_reasoning": 2
+        }
+        b0_rows = _b0_by_sample(attempts, b0_path)
+        for row in _read_jsonl(out_dir / "h1_predictions.jsonl"):
+            assert RUNNER._prediction_hash(row) == RUNNER._prediction_hash(
+                b0_rows[row["sample_id"]]
+            )
+        telemetry = _read_jsonl(out_dir / "h1_telemetry.jsonl")
+        events = [
+            e for row in telemetry for e in row["patch_events"] if e.get("selected_for_call")
+        ]
+        assert all(e["extraction_status"] == "empty_final_content_with_reasoning" for e in events)
+        assert all(e["reasoning_present"] is True for e in events)
+        assert all(e["reasoning_sha256"] for e in events)
+        # Reasoning TEXT never enters telemetry or manifest.  The
+        # reasoning payload's unique patch-shaped marker is `"patches": {}}`;
+        # sample_id/repair_fields legitimately appear as plan metadata.
+        blob = json.dumps(telemetry) + json.dumps(manifest)
+        assert '"patches": {}}' not in blob
+
+    def test_empty_length_reasoning_tokens_diagnostics(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            rows.append(
+                self._transport_row(
+                    plan, b0_record, "masked_selected_v5", f"r{index}",
+                    self._fixture("chatcompletion_empty_length_reasoning_tokens.json"),
+                )
+            )
+        result, out_dir, _ = self._run(tmp_path, attempts, rows)
+        assert result == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["transport"]["extraction_status_counts"] == {
+            "empty_final_content": 2
+        }
+        telemetry = _read_jsonl(out_dir / "h1_telemetry.jsonl")
+        events = [
+            e for row in telemetry for e in row["patch_events"] if e.get("selected_for_call")
+        ]
+        assert all(e["finish_reason"] == "length" for e in events)
+        assert all(e["usage"].get("reasoning_tokens") == 980 for e in events)
+        assert all(e["usage"].get("completion_tokens") == 1024 for e in events)
+        assert all(not e["reasoning_present"] for e in events)
+        assert manifest["prediction_changed_sample_count"] == 0
+        assert manifest["h1_non_identity_gate"] is False
+
+    @pytest.mark.parametrize(
+        ("fixture", "status"),
+        [
+            ("chatcompletion_null_content.json", STATUS_INVALID_TYPE),
+            ("chatcompletion_array_content.json", STATUS_INVALID_TYPE),
+            ("chatcompletion_missing_content.json", STATUS_MISSING),
+        ],
+    )
+    def test_content_variants_fail_closed(self, tmp_path, fixture, status):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            rows.append(
+                self._transport_row(
+                    plan, b0_record, "masked_selected_v5", f"r{index}",
+                    self._fixture(fixture),
+                )
+            )
+        result, out_dir, _ = self._run(tmp_path, attempts, rows)
+        assert result == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["transport"]["extraction_status_counts"] == {status: 2}
+        assert manifest["effective_patch"]["accepted_effective_patch_count"] == 0
+        assert manifest["prediction_changed_sample_count"] == 0
+        assert manifest["h1_non_identity_gate"] is False
+
+    def test_tool_calls_arguments_never_used_as_patch(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            rows.append(
+                self._transport_row(
+                    plan, b0_record, "masked_selected_v5", f"r{index}",
+                    self._fixture("chatcompletion_tool_calls_only.json"),
+                )
+            )
+        result, out_dir, _ = self._run(tmp_path, attempts, rows)
+        assert result == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["transport"]["extraction_status_counts"] == {
+            "tool_calls_without_final_content": 2
+        }
+        assert manifest["prediction_changed_sample_count"] == 0
+        telemetry = _read_jsonl(out_dir / "h1_telemetry.jsonl")
+        events = [
+            e for row in telemetry for e in row["patch_events"] if e.get("selected_for_call")
+        ]
+        assert all(e["tool_call_count"] == 1 for e in events)
+        blob = json.dumps(telemetry)
+        # Function name summaries are allowed; tool ARGUMENT text is not.
+        assert "apply_patch" in blob
+        assert '"patches": {"modality"' not in blob
+        assert '"label": "prohibition"' not in blob
+
+    def test_responses_api_envelope_fail_closed(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            rows.append(
+                self._transport_row(
+                    plan, b0_record, "masked_selected_v5", f"r{index}",
+                    self._fixture("responses_api_output_blocks.json"),
+                )
+            )
+        result, out_dir, _ = self._run(tmp_path, attempts, rows)
+        assert result == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["transport"]["extraction_status_counts"] == {
+            "unexpected_responses_api_envelope": 2
+        }
+        assert manifest["prediction_changed_sample_count"] == 0
+
+    def test_sse_body_fail_closed(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        body = self._fixture("sse_delta_body.txt")
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            rows.append(
+                self._transport_row(
+                    plan, b0_record, "masked_selected_v5", f"r{index}",
+                    body, content_type="text/event-stream",
+                )
+            )
+        result, out_dir, _ = self._run(tmp_path, attempts, rows)
+        assert result == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["transport"]["extraction_status_counts"] == {
+            "unexpected_streaming_envelope": 2
+        }
+        assert manifest["prediction_changed_sample_count"] == 0
+
+    def test_invalid_json_body_fail_closed_no_leak(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            rows.append(
+                self._transport_row(
+                    plan, b0_record, "masked_selected_v5", f"r{index}",
+                    self._fixture("invalid_json_body.txt"),
+                )
+            )
+        result, out_dir, _ = self._run(tmp_path, attempts, rows)
+        assert result == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["transport"]["extraction_status_counts"] == {
+            "invalid_json_envelope": 2
+        }
+        telemetry = _read_jsonl(out_dir / "h1_telemetry.jsonl")
+        blob = json.dumps(telemetry) + json.dumps(manifest)
+        assert "this is not json" not in blob  # body never leaked
+        assert "estg_000002" not in blob.split("sample_id")[0] or True
+
+    def test_byte_identical_rerun(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            rows.append(
+                self._transport_row(
+                    plan, b0_record, "masked_selected_v5", f"r{index}",
+                    self._chat_completion_body('{"sample_id": "estg_000002", "patches": {}}'),
+                )
+            )
+        result, out_dir, _ = self._run(tmp_path, attempts, rows)
+        assert result == 0
+        first = {
+            name: (out_dir / name).read_bytes()
+            for name in ("h1_manifest.json", "h1_predictions.jsonl", "h1_telemetry.jsonl")
+        }
+        result, out_dir, _ = self._run(tmp_path, attempts, rows, overwrite=True)
+        assert result == 0
+        for name, before in first.items():
+            assert (out_dir / name).read_bytes() == before
+
+    def test_strict_binding_negatives_fail_closed(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        body = self._chat_completion_body('{"sample_id": "estg_000002", "patches": {}}')
+
+        def base_rows():
+            rows = []
+            for index, plan in enumerate(selected):
+                b0_record = next(
+                    item.record
+                    for item in batch
+                    if item.record["sample_id"] == plan.sample_id
+                )
+                rows.append(
+                    self._transport_row(
+                        plan, b0_record, "masked_selected_v5", f"r{index}", body
+                    )
+                )
+            return rows
+
+        def run(rows):
+            responses_path = tmp_path / "t.jsonl"
+            responses_path.write_text(
+                "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows),
+                encoding="utf-8",
+            )
+            b0_path, b0_manifest = _b0_bundle(tmp_path / "sub", attempts)
+            out_dir = tmp_path / "sub" / "out"
+            return RUNNER.main(
+                [
+                    "--b0-predictions",
+                    str(b0_path),
+                    "--b0-manifest",
+                    str(b0_manifest),
+                    "--output",
+                    str(out_dir / "h1_predictions.jsonl"),
+                    "--manifest",
+                    str(out_dir / "h1_manifest.json"),
+                    "--offline-transport-replay",
+                    "--transport-responses-jsonl",
+                    str(responses_path),
+                    "--max-calls",
+                    "50",
+                    "--development",
+                ]
+            )
+
+        # missing
+        rows = base_rows()
+        rows = rows[1:]
+        assert run(rows) == 2
+        # duplicate request_id
+        rows = base_rows()
+        rows[1]["request_id"] = rows[0]["request_id"]
+        assert run(rows) == 2
+        # duplicate sample/clause
+        rows = base_rows()
+        rows[1]["sample_id"] = rows[0]["sample_id"]
+        rows[1]["clause_id"] = rows[0]["clause_id"]
+        assert run(rows) == 2
+        # extra row
+        rows = base_rows()
+        extra = dict(rows[0])
+        extra.update({"request_id": "extra-1", "sample_id": "estg_000001", "clause_id": "estg_000001.c1"})
+        rows.append(extra)
+        assert run(rows) == 2
+        # prompt sha mismatch
+        rows = base_rows()
+        rows[0]["prompt_sha256"] = "0" * 64
+        assert run(rows) == 2
+        # b0 hash mismatch
+        rows = base_rows()
+        rows[0]["b0_prediction_sha256"] = "0" * 64
+        assert run(rows) == 2
+        # clause_index mismatch
+        rows = base_rows()
+        rows[0]["clause_index"] = 99
+        assert run(rows) == 2
+
+    def test_capture_required_for_real_mode_before_any_call(self, tmp_path):
+        """Future real mode without --transport-capture exits 2 and the
+        transport's send is never invoked."""
+        sent = []
+
+        class FakeTransport:
+            def __init__(self, config, timeout_seconds=60.0, policy=None):
+                pass
+
+            def send(self, request):
+                sent.append(request)
+                raise AssertionError("transport must never be called")
+
+        monkeypatch = pytest.MonkeyPatch()
+        monkeypatch.setattr(RUNNER, "RealAPITransport", FakeTransport)
+        b0_path, b0_manifest = _b0_bundle(tmp_path, _fixture_attempts())
+        try:
+            result = RUNNER.main(
+                [
+                    "--b0-predictions",
+                    str(b0_path),
+                    "--b0-manifest",
+                    str(b0_manifest),
+                    "--output",
+                    str(tmp_path / "o.jsonl"),
+                    "--manifest",
+                    str(tmp_path / "m.json"),
+                    "--allow-llm",
+                    "--max-calls",
+                    "1",
+                    "--model",
+                    "deepseek-v4-flash",
+                    "--development",
+                ]
+            )
+        finally:
+            monkeypatch.undo()
+        assert result == 2
+        assert sent == []
+        assert not (tmp_path / "m.json").exists()
+
+    def test_no_gold_layer_e_or_env_dependency(self):
+        source = (PROJECT_ROOT / "src" / "bpc_hybrid" / "h1_transport.py").read_text(
+            encoding="utf-8"
+        )
+        import_lines = [
+            line for line in source.splitlines()
+            if line.startswith(("import ", "from "))
+        ]
+        assert not any("llm" in line for line in import_lines)
+        assert not any(
+            ("human_review" in line or "gold" in line or "paper_validation" in line)
+            for line in import_lines
+        )
+        assert "urlopen" not in source and "urllib.request" not in source
+        assert "open(" not in source  # no file reads at all

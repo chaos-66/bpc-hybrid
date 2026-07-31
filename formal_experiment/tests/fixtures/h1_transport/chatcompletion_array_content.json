@@ -1,0 +1,20 @@
+{
+  "id": "chatcmpl-s2d8r1-array",
+  "object": "chat.completion",
+  "model": "deepseek-v4-flash",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": ["not", "a", "string"]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 812,
+    "completion_tokens": 3,
+    "total_tokens": 815
+  }
+}

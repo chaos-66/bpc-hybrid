@@ -73,6 +73,13 @@ from bpc_hybrid.h1_context import (  # noqa: E402
     audit_masked_context,
     build_masked_clause_context,
 )
+from bpc_hybrid.h1_transport import (  # noqa: E402
+    DEEPSEEK_V4_FLASH_H1_POLICY,
+    STATUS_OK,
+    build_transport_capture_row,
+    decode_chat_completion_envelope,
+    describe_endpoint_safe,
+)
 from bpc_hybrid.llm_config import LLMConfig
 from bpc_hybrid.llm_client import (
     LLMClientError,
@@ -518,11 +525,17 @@ def _derive_telemetry_path(output: Path) -> Path:
 
 
 def _rejection_codes(reasons: Sequence[str]) -> tuple[str, ...]:
-    """Normalize human rejection messages into stable audit codes."""
+    """Normalize human rejection messages into stable audit codes.
+
+    Extraction failures from the transport decoder map to their stable
+    status code (e.g. ``empty_final_content``), never a generic "other".
+    """
     codes: list[str] = []
     for reason in reasons:
         lowered = reason.lower()
-        if "no semantic change" in lowered:
+        if lowered.startswith("extraction_status:"):
+            code = lowered[len("extraction_status:"):].split(":")[0].strip()
+        elif "no semantic change" in lowered:
             code = "no_semantic_change"
         elif "canonical validation" in lowered or "post-patch" in lowered:
             code = "canonical_invalid"
@@ -721,6 +734,151 @@ def load_replay_responses(
     return responses
 
 
+def load_transport_replay_rows(
+    path: Path,
+    selected_plans: Sequence[RepairPlan],
+    records: Mapping[str, Mapping[str, Any]],
+    prompt_sha256: str,
+    variant: str,
+) -> dict[tuple[str, str], dict[str, Any]]:
+    """Load and bind an offline transport-replay row file (S2.8D-R1).
+
+    Same strict binding as :func:`load_replay_responses` (request_id
+    unique, (sample_id, clause_id) set exactly equal to the selected
+    plans, clause_index / prompt_sha256 / prompt_variant /
+    b0_prediction_sha256 each verified), plus a full response envelope in
+    ``response_body`` with optional ``content_type`` / ``http_status``.
+    Any missing, duplicate, extra, or mismatched row fails closed.
+    """
+    required_keys = {
+        "request_id",
+        "sample_id",
+        "clause_id",
+        "clause_index",
+        "prompt_sha256",
+        "prompt_variant",
+        "b0_prediction_sha256",
+        "response_body",
+    }
+    rows: dict[tuple[str, str], dict[str, Any]] = {}
+    request_ids: set[str] = set()
+    for index, row in enumerate(_read_json_values(path)):
+        if not required_keys.issubset(set(row)):
+            raise H1RunnerError(
+                f"transport replay row {index} must contain keys "
+                f"{sorted(required_keys)}; got {sorted(row)}"
+            )
+        request_id = row.get("request_id")
+        if not isinstance(request_id, str) or not request_id:
+            raise H1RunnerError(f"transport replay row {index} request_id must be a non-empty string")
+        if request_id in request_ids:
+            raise H1RunnerError(f"duplicate transport replay request_id: {request_id!r}")
+        request_ids.add(request_id)
+        body = row.get("response_body")
+        if not isinstance(body, str):
+            raise H1RunnerError(f"transport replay row {index} response_body must be a string")
+        content_type = row.get("content_type")
+        if content_type is not None and not isinstance(content_type, str):
+            raise H1RunnerError(f"transport replay row {index} content_type must be a string or absent")
+        http_status = row.get("http_status")
+        if http_status is not None and (
+            isinstance(http_status, bool) or not isinstance(http_status, int)
+        ):
+            raise H1RunnerError(f"transport replay row {index} http_status must be an int or absent")
+        key = (str(row.get("sample_id")), str(row.get("clause_id")))
+        if not all(key):
+            raise H1RunnerError(f"transport replay row {index} lacks sample_id or clause_id")
+        if key in rows:
+            raise H1RunnerError(f"duplicate transport replay row for sample/clause: {key}")
+        rows[key] = row
+
+    expected_plan_keys = {plan.key for plan in selected_plans}
+    missing = sorted(expected_plan_keys - set(rows))
+    extra = sorted(set(rows) - expected_plan_keys)
+    if missing:
+        raise H1RunnerError(f"transport replay rows missing for selected plans: {missing}")
+    if extra:
+        raise H1RunnerError(f"transport replay rows contain unselected plans: {extra}")
+
+    for plan in selected_plans:
+        row = rows[plan.key]
+        if row.get("clause_index") != plan.clause_index:
+            raise H1RunnerError(
+                f"transport replay row for {plan.sample_id}/{plan.clause_id} clause_index "
+                f"{row.get('clause_index')!r} != plan {plan.clause_index}"
+            )
+        if row.get("prompt_variant") != variant:
+            raise H1RunnerError(
+                f"transport replay row for {plan.sample_id}/{plan.clause_id} prompt_variant "
+                f"{row.get('prompt_variant')!r} != run variant {variant!r}"
+            )
+        if row.get("prompt_sha256") != prompt_sha256:
+            raise H1RunnerError(
+                f"transport replay row for {plan.sample_id}/{plan.clause_id} prompt SHA "
+                f"mismatch: expected {prompt_sha256}, got {row.get('prompt_sha256')!r}"
+            )
+        expected_b0 = _prediction_hash(records[plan.sample_id])
+        if row.get("b0_prediction_sha256") != expected_b0:
+            raise H1RunnerError(
+                f"transport replay row for {plan.sample_id}/{plan.clause_id} B0 prediction "
+                f"hash mismatch: expected {expected_b0}, got {row.get('b0_prediction_sha256')!r}"
+            )
+    return rows
+
+
+_TRANSPORT_EVENT_KEYS = (
+    "response_body_sha256",
+    "response_content_sha256",
+    "response_id",
+    "response_object",
+    "finish_reason",
+    "usage",
+    "extraction_status",
+    "extraction_source",
+    "reasoning_present",
+    "reasoning_utf8_length",
+    "reasoning_sha256",
+    "tool_call_count",
+    "tool_call_summaries",
+    "transport_http_status",
+    "transport_request_policy",
+    "safe_endpoint",
+)
+
+
+def _attach_transport_fields(
+    event: dict[str, Any],
+    decode: Mapping[str, Any],
+    *,
+    request_policy: Mapping[str, Any] | None,
+    endpoint_descriptor: Mapping[str, Any] | None,
+    http_status: int | None,
+) -> None:
+    """Attach the decoded transport audit fields to a plan event (S2.8D-R1).
+
+    Only hashes, statuses, lengths, and booleans -- never reasoning text,
+    tool-call arguments, headers, or credentials.
+    """
+    event["response_body_sha256"] = decode.get("response_body_sha256")
+    event["response_content_sha256"] = decode.get("response_content_sha256")
+    event["response_id"] = decode.get("response_id")
+    event["response_object"] = decode.get("response_object")
+    event["finish_reason"] = decode.get("finish_reason")
+    event["usage"] = dict(decode.get("usage") or {})
+    event["extraction_status"] = decode.get("status")
+    event["extraction_source"] = decode.get("extraction_source")
+    event["reasoning_present"] = decode.get("reasoning_present")
+    event["reasoning_utf8_length"] = decode.get("reasoning_utf8_length")
+    event["reasoning_sha256"] = decode.get("reasoning_sha256")
+    event["tool_call_count"] = decode.get("tool_call_count")
+    event["tool_call_summaries"] = list(decode.get("tool_call_summaries") or [])
+    event["transport_http_status"] = http_status
+    if request_policy is not None:
+        event["transport_request_policy"] = dict(request_policy)
+    if endpoint_descriptor is not None:
+        event["safe_endpoint"] = dict(endpoint_descriptor)
+
+
 def _build_user_prompt(
     prompt: Any,
     record: Mapping[str, Any],
@@ -836,6 +994,7 @@ def _make_parser() -> argparse.ArgumentParser:
     mode.add_argument("--plan-only", action="store_true")
     mode.add_argument("--offline-patches", type=Path)
     mode.add_argument("--offline-replay", action="store_true")
+    mode.add_argument("--offline-transport-replay", action="store_true")
     mode.add_argument("--allow-llm", action="store_true")
     parser.add_argument(
         "--responses-jsonl",
@@ -843,6 +1002,22 @@ def _make_parser() -> argparse.ArgumentParser:
         help="Offline replay responses (required with --offline-replay); "
         "each response must bind request_id/sample_id/clause_id/clause_index/"
         "prompt_sha256/prompt_variant/b0_prediction_sha256/response_content.",
+    )
+    parser.add_argument(
+        "--transport-responses-jsonl",
+        type=Path,
+        help="Offline transport replay rows (required with "
+        "--offline-transport-replay): same strict binding as "
+        "--responses-jsonl, plus a full response envelope in 'response_body' "
+        "and optional 'content_type'/'http_status'. Decoded with the SAME "
+        "pure decoder used by the real transport.",
+    )
+    parser.add_argument(
+        "--transport-capture",
+        type=Path,
+        help="Sanitized transport capture JSONL (REQUIRED for --allow-llm "
+        "real runs; refused before any call otherwise). Never contains "
+        "headers, credentials, reasoning text, or tool arguments.",
     )
     parser.add_argument(
         "--model",
@@ -882,8 +1057,22 @@ def main(argv: Sequence[str] | None = None) -> int:
     if not args.offline_replay and args.responses_jsonl is not None:
         print("Refusing to run: --responses-jsonl requires --offline-replay.")
         return 2
+    if args.offline_transport_replay and args.transport_responses_jsonl is None:
+        print("Refusing to run: --offline-transport-replay requires --transport-responses-jsonl.")
+        return 2
+    if not args.offline_transport_replay and args.transport_responses_jsonl is not None:
+        print("Refusing to run: --transport-responses-jsonl requires --offline-transport-replay.")
+        return 2
+    if args.allow_llm and args.transport_capture is None:
+        print("Refusing to run: --allow-llm requires --transport-capture (no call was made).")
+        return 2
+    if not args.allow_llm and args.transport_capture is not None:
+        print("Refusing to run: --transport-capture requires --allow-llm.")
+        return 2
     telemetry_path = args.telemetry or _derive_telemetry_path(args.output)
     targets = (args.output, telemetry_path, args.manifest)
+    if args.transport_capture is not None:
+        targets = (*targets, args.transport_capture)
     for target in targets:
         allowed, reason = _gate_write(target, args.development)
         if not allowed:
@@ -943,6 +1132,17 @@ def main(argv: Sequence[str] | None = None) -> int:
             if args.offline_replay
             else {}
         )
+        transport_replay_rows = (
+            load_transport_replay_rows(
+                args.transport_responses_jsonl,
+                selected,
+                original_records,
+                prompt.sha256,
+                args.prompt_variant,
+            )
+            if args.offline_transport_replay
+            else {}
+        )
     except (B0ArtifactError, OSError, json.JSONDecodeError) as exc:
         print(f"Refusing to run: {exc}")
         return 2
@@ -984,17 +1184,30 @@ def main(argv: Sequence[str] | None = None) -> int:
                 f"required {REAL_CALL_REQUIRED_MODEL!r}. No API call was made."
             )
             return 3
-        llm_transport = RealAPITransport(config, timeout_seconds=60.0)
+        llm_transport = RealAPITransport(
+            config, timeout_seconds=60.0, policy=DEEPSEEK_V4_FLASH_H1_POLICY
+        )
         sampling = OpenAICompatibleRequestBuilder(config).sent_sampling_params()
         print(
             f"Real LLM config: provider={config.provider}, "
             f"model={config.model}, model_source=cli_override"
         )
 
-    execution_mode = "real_llm" if args.allow_llm else "offline_replay" if args.offline_replay else "offline_patch_replay" if args.offline_patches else "plan_only"
+    execution_mode = (
+        "real_llm"
+        if args.allow_llm
+        else "offline_transport_replay"
+        if args.offline_transport_replay
+        else "offline_replay"
+        if args.offline_replay
+        else "offline_patch_replay"
+        if args.offline_patches
+        else "plan_only"
+    )
     events: list[dict[str, Any]] = []
     llm_errors: list[dict[str, Any]] = []
     llm_calls = 0
+    capture_rows: list[dict[str, Any]] = []
     started = time.time()
 
     for plan in plans:
@@ -1026,6 +1239,47 @@ def main(argv: Sequence[str] | None = None) -> int:
             event["llm_call_performed"] = True
             event["response_sha256"] = _sha256_bytes(response_content.encode("utf-8"))
             envelope = _parse_patch_response(response_content)
+        elif args.offline_transport_replay:
+            row = transport_replay_rows[plan.key]
+            body = row["response_body"]
+            llm_calls += 1
+            event["llm_call_performed"] = True
+            event["response_sha256"] = _sha256_bytes(body.encode("utf-8"))
+            decode = decode_chat_completion_envelope(body, row.get("content_type"))
+            event["response_model"] = decode.get("model") or args.model or "offline_transport_replay"
+            event["response_provider"] = "openai_compatible"
+            _attach_transport_fields(
+                event,
+                decode,
+                request_policy=DEEPSEEK_V4_FLASH_H1_POLICY.to_dict(),
+                endpoint_descriptor={"offline": True, "network": False},
+                http_status=row.get("http_status"),
+            )
+            if decode.get("status") != STATUS_OK:
+                event["status"] = "llm_error"
+                event["rejection_reasons"] = [
+                    f"extraction_status:{decode.get('status')}: "
+                    f"{decode.get('error_detail') or 'no usable message.content'}"
+                ]
+                llm_errors.append(
+                    {
+                        "sample_id": plan.sample_id,
+                        "clause_id": plan.clause_id,
+                        "error": event["rejection_reasons"][0],
+                    }
+                )
+                event["effective_patch_audit"] = _effective_patch_audit(
+                    plan,
+                    original_records[plan.sample_id],
+                    records[plan.sample_id],
+                    records[plan.sample_id],
+                    event,
+                    None,
+                )
+                events.append(event)
+                continue
+            # Only non-empty message.content reaches the H1 JSON parser.
+            envelope = _parse_patch_response(decode["content"])
         elif args.offline_patches:
             envelope = offline_patches.get(plan.key)
             if envelope is None:
@@ -1059,6 +1313,59 @@ def main(argv: Sequence[str] | None = None) -> int:
                 event["response_sha256"] = _sha256_bytes(response.content.encode("utf-8"))
                 event["response_model"] = response.model
                 event["response_provider"] = response.provider
+                decode = llm_transport.last_decode or {}
+                _attach_transport_fields(
+                    event,
+                    decode,
+                    request_policy=llm_transport.last_request_policy,
+                    endpoint_descriptor=llm_transport.last_endpoint_descriptor,
+                    http_status=200,
+                )
+                if llm_transport.last_request_body_sha256 is not None:
+                    capture_rows.append(
+                        build_transport_capture_row(
+                            request_id=f"{plan.sample_id}/{plan.clause_id}",
+                            sample_id=plan.sample_id,
+                            clause_id=plan.clause_id,
+                            clause_index=plan.clause_index,
+                            prompt_sha256=prompt.sha256,
+                            prompt_variant=args.prompt_variant,
+                            b0_prediction_sha256=_prediction_hash(
+                                original_records[plan.sample_id]
+                            ),
+                            request_body_sha256=llm_transport.last_request_body_sha256,
+                            request_policy=llm_transport.last_request_policy or {},
+                            http_status=200,
+                            endpoint_descriptor=llm_transport.last_endpoint_descriptor,
+                            requested_model=args.model,
+                            resolved_model=config.model,
+                            decode=decode,
+                            sanitized_response_envelope=dict(decode),
+                        )
+                    )
+                if decode.get("status") != STATUS_OK:
+                    event["status"] = "llm_error"
+                    event["rejection_reasons"] = [
+                        f"extraction_status:{decode.get('status')}: "
+                        f"{decode.get('error_detail') or 'no usable message.content'}"
+                    ]
+                    llm_errors.append(
+                        {
+                            "sample_id": plan.sample_id,
+                            "clause_id": plan.clause_id,
+                            "error": event["rejection_reasons"][0],
+                        }
+                    )
+                    event["effective_patch_audit"] = _effective_patch_audit(
+                        plan,
+                        original_records[plan.sample_id],
+                        records[plan.sample_id],
+                        records[plan.sample_id],
+                        event,
+                        None,
+                    )
+                    events.append(event)
+                    continue
                 envelope = _parse_patch_response(response.content)
             except (LLMClientError, H1RunnerError) as exc:
                 if not event["llm_call_performed"]:
@@ -1087,6 +1394,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         if "response_model" in event:
             merge_event["response_model"] = event["response_model"]
             merge_event["response_provider"] = event["response_provider"]
+        for transport_key in _TRANSPORT_EVENT_KEYS:
+            if transport_key in event:
+                merge_event[transport_key] = event[transport_key]
         merge_event["patch_envelope"] = copy.deepcopy(envelope)
         if merge_event["patch_accepted"]:
             records[plan.sample_id] = merged
@@ -1116,6 +1426,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         _atomic_write_text(args.output, output_text, args.overwrite)
         _atomic_write_text(telemetry_path, telemetry_text, args.overwrite)
+        if capture_rows:
+            capture_text = "".join(
+                json.dumps(row, ensure_ascii=False) + "\n" for row in capture_rows
+            )
+            _atomic_write_text(args.transport_capture, capture_text, args.overwrite)
     except H1RunnerError as exc:
         print(f"Refusing to write output: {exc}")
         return 2
@@ -1165,6 +1480,38 @@ def main(argv: Sequence[str] | None = None) -> int:
         and len(accepted_effective) > 0
         and len(changed_samples) > 0
     )
+    # S2.8D-R1 transport section: request policy actually sent, safe
+    # endpoint descriptor, capture binding, and extraction status counts.
+    extraction_status_counts: dict[str, int] = {}
+    for event in events:
+        status = event.get("extraction_status")
+        if status:
+            extraction_status_counts[str(status)] = (
+                extraction_status_counts.get(str(status), 0) + 1
+            )
+    if args.offline_transport_replay:
+        transport_request_policy = DEEPSEEK_V4_FLASH_H1_POLICY.to_dict()
+        transport_endpoint = {"offline": True, "network": False}
+    elif llm_transport is not None:
+        transport_request_policy = llm_transport.last_request_policy
+        transport_endpoint = llm_transport.last_endpoint_descriptor
+    else:
+        transport_request_policy = None
+        transport_endpoint = None
+    transport_section = {
+        "request_policy_sent": transport_request_policy,
+        "safe_endpoint": transport_endpoint,
+        "capture_path": str(args.transport_capture) if args.transport_capture else None,
+        "capture_sha256": (
+            _sha256_file(args.transport_capture)
+            if capture_rows and args.transport_capture is not None
+            else None
+        ),
+        "raw_response_saved": False,
+        "sanitized_transport_capture_saved": bool(capture_rows),
+        "extraction_status_counts": extraction_status_counts,
+        "historical_endpoint_unknown_not_captured": True,
+    }
     manifest = {
         "schema_version": "h1_selective_manifest@2.0.0",
         "stage": "stage2",
@@ -1191,6 +1538,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             "valid_response_count": valid_response_count,
         },
         "h1_non_identity_gate": h1_non_identity_gate,
+        "transport": transport_section,
         "replayed_response_count": (
             len(replay_responses) if args.offline_replay else 0
         ),
@@ -1252,7 +1600,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "elapsed_seconds": elapsed,
         "claim_boundary": "development mechanism verification; not a formal performance result",
     }
-    if execution_mode != "offline_replay":
+    if execution_mode not in ("offline_replay", "offline_transport_replay"):
         # Offline replay manifests are intentionally timestamp-free so
         # identical inputs replay byte-identically.
         manifest["timestamp_utc"] = datetime.now(timezone.utc).isoformat()

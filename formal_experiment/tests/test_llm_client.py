@@ -698,3 +698,330 @@ class TestPromptContainsExactSchemaInstructions:
         assert "clause_id" in user
         assert "MultiClauseExtractionResponse" in user
         assert "source_text" in user
+
+
+# S2.8D-R1 imports
+from pathlib import Path
+from typing import Any
+
+from bpc_hybrid.h1_transport import (
+    DEEPSEEK_V4_FLASH_H1_POLICY,
+    H1RequestPolicy,
+    REDACTED,
+    STATUS_EMPTY,
+    STATUS_EMPTY_WITH_REASONING,
+    STATUS_INVALID_JSON,
+    STATUS_INVALID_TYPE,
+    STATUS_MISSING,
+    STATUS_NO_CHOICES,
+    STATUS_OK,
+    STATUS_RESPONSES_API,
+    STATUS_STREAMING,
+    STATUS_TOOL_CALLS_ONLY,
+    build_transport_capture_row,
+    decode_chat_completion_envelope,
+    describe_endpoint_safe,
+    sanitize_for_capture,
+    sha256_text,
+)
+
+
+# ---------------------------------------------------------------------------
+# S2.8D-R1: DeepSeek H1 transport contract (request policy, envelope
+# decoder, sanitized capture).  All tests are fully offline.
+# ---------------------------------------------------------------------------
+
+class TestH1TransportContract:
+    """Pure-function tests for bpc_hybrid.h1_transport + the transport's
+    use of the shared decoder."""
+
+    FIXTURES = Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "h1_transport"
+
+    def _load(self, name: str) -> str:
+        return (self.FIXTURES / name).read_text(encoding="utf-8")
+
+    # -- decoder: statuses --------------------------------------------------
+
+    def test_ok_message_content_decoded(self):
+        decode = decode_chat_completion_envelope(
+            self._load("chatcompletion_effective_patch.json")
+        )
+        assert decode["status"] == STATUS_OK
+        assert decode["content"].startswith('{"sample_id"')
+        assert decode["model"] == "deepseek-v4-flash"
+        assert decode["response_id"] == "chatcmpl-s2d8r1-effective"
+        assert decode["response_object"] == "chat.completion"
+        assert decode["finish_reason"] == "stop"
+        assert decode["usage"] == {
+            "prompt_tokens": 812,
+            "completion_tokens": 96,
+            "total_tokens": 908,
+        }
+        assert decode["extraction_source"] == "message.content"
+        assert decode["reasoning_present"] is False
+        assert decode["tool_call_count"] == 0
+        assert decode["response_content_sha256"] == sha256_text(decode["content"])
+
+    def test_empty_content_with_reasoning_never_used_as_patch(self):
+        decode = decode_chat_completion_envelope(
+            self._load("chatcompletion_empty_with_reasoning.json")
+        )
+        assert decode["status"] == STATUS_EMPTY_WITH_REASONING
+        assert decode["content"] == ""
+        assert decode["reasoning_present"] is True
+        assert decode["reasoning_utf8_length"] > 0
+        assert len(decode["reasoning_sha256"]) == 64
+        assert decode["usage"]["reasoning_tokens"] == 60
+        blob = json.dumps(decode)
+        # The reasoning TEXT (which looks like a patch) must never be
+        # stored; only presence/length/hash diagnostics survive.
+        assert '"patches": {}' not in blob
+        assert '"sample_id": "estg_000002"' not in blob
+
+    def test_empty_length_reasoning_tokens_diagnostics(self):
+        decode = decode_chat_completion_envelope(
+            self._load("chatcompletion_empty_length_reasoning_tokens.json")
+        )
+        assert decode["status"] == STATUS_EMPTY
+        assert decode["finish_reason"] == "length"
+        assert decode["content"] == ""
+        assert decode["usage"]["reasoning_tokens"] == 980
+        assert decode["reasoning_present"] is False
+
+    @pytest.mark.parametrize(
+        ("fixture", "status"),
+        [
+            ("chatcompletion_null_content.json", STATUS_INVALID_TYPE),
+            ("chatcompletion_array_content.json", STATUS_INVALID_TYPE),
+            ("chatcompletion_missing_content.json", STATUS_MISSING),
+        ],
+    )
+    def test_content_variants_stable_statuses(self, fixture, status):
+        decode = decode_chat_completion_envelope(self._load(fixture))
+        assert decode["status"] == status
+        assert decode["content"] == ""
+
+    def test_tool_calls_only_fail_closed(self):
+        decode = decode_chat_completion_envelope(
+            self._load("chatcompletion_tool_calls_only.json")
+        )
+        assert decode["status"] == STATUS_TOOL_CALLS_ONLY
+        assert decode["content"] == ""
+        assert decode["tool_call_count"] == 1
+        summary = decode["tool_call_summaries"][0]
+        assert summary["name"] == "apply_patch"
+        assert summary["arguments_utf8_length"] > 0
+        assert len(summary["arguments_sha256"]) == 64
+        blob = json.dumps(decode)
+        assert '"patches"' not in blob  # tool arguments text never stored
+
+    def test_responses_api_envelope_fail_closed(self):
+        decode = decode_chat_completion_envelope(
+            self._load("responses_api_output_blocks.json")
+        )
+        assert decode["status"] == STATUS_RESPONSES_API
+        assert decode["content"] == ""
+
+    def test_sse_body_fail_closed(self):
+        body = self._load("sse_delta_body.txt")
+        with_ct = decode_chat_completion_envelope(body, "text/event-stream")
+        assert with_ct["status"] == STATUS_STREAMING
+        without_ct = decode_chat_completion_envelope(body)
+        assert without_ct["status"] == STATUS_STREAMING
+        assert with_ct["content"] == "" and without_ct["content"] == ""
+
+    def test_invalid_json_body_fail_closed_without_leak(self):
+        decode = decode_chat_completion_envelope(self._load("invalid_json_body.txt"))
+        assert decode["status"] == STATUS_INVALID_JSON
+        assert decode["response_body_sha256"]
+        assert decode["body_utf8_length"] > 0
+        blob = json.dumps(decode)
+        assert "sample_id" not in blob  # body content never leaked
+
+    def test_missing_choices_stable_status(self):
+        decode = decode_chat_completion_envelope('{"id": "x"}')
+        assert decode["status"] == STATUS_NO_CHOICES
+        decode2 = decode_chat_completion_envelope(
+            '{"choices": [{"message": {"content": "ok"}}]}'
+        )
+        assert decode2["status"] == STATUS_OK
+
+    def test_empty_content_hash_matches_observed_constant(self):
+        decode = decode_chat_completion_envelope(
+            '{"choices": [{"message": {"content": ""}}]}'
+        )
+        assert decode["response_content_sha256"] == (
+            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        )
+
+    def test_decode_byte_deterministic(self):
+        raw = self._load("chatcompletion_effective_patch.json")
+        assert decode_chat_completion_envelope(raw) == decode_chat_completion_envelope(raw)
+
+    # -- request policy -----------------------------------------------------
+
+    def test_h1_policy_applied_only_where_requested(self):
+        builder = OpenAICompatibleRequestBuilder(
+            LLMConfig(
+                enabled=False,
+                provider="mock",
+                model="m",
+                base_url="https://api.test.invalid/v1",
+            )
+        )
+        body = builder.build_body("sys", "user")
+        assert "stream" not in body
+        assert "thinking" not in body
+        assert "response_format" not in body
+        assert "tools" not in body
+        policy = H1RequestPolicy()
+        applied = policy.apply_to_body(body)
+        assert applied["stream"] is False
+        assert applied["thinking"] == {"type": "disabled"}
+        assert applied["response_format"] == {"type": "json_object"}
+        assert "tools" not in applied
+        # input body is not mutated
+        assert "stream" not in body
+        assert "thinking" not in body
+
+    # -- sanitized capture --------------------------------------------------
+
+    def test_sanitize_capture_redacts_sensitive_keys(self):
+        envelope = json.loads(self._load("sensitive_envelope.json"))
+        cleaned = sanitize_for_capture(envelope)
+        blob = json.dumps(cleaned)
+        for secret in ("sk-super-secret-key", "sk-nested-secret", "rt-xyz", "hunter2", "abc123"):
+            assert secret not in blob
+        assert cleaned["headers"]["Authorization"] == REDACTED
+        assert cleaned["headers"]["Cookie"] == REDACTED
+        assert cleaned["nested"]["api_key"] == REDACTED
+        assert cleaned["nested"]["refresh_token"] == REDACTED
+        assert cleaned["nested"]["password"] == REDACTED
+        # numeric usage survives redaction
+        assert cleaned["usage"]["prompt_tokens"] == 812
+        assert cleaned["usage"]["completion_tokens"] == 96
+        assert cleaned["usage"]["completion_tokens_details"]["reasoning_tokens"] == 10
+        # message.content retained for exact replay
+        assert "patches" in cleaned["choices"][0]["message"]["content"]
+
+    def test_capture_row_never_contains_reasoning_or_tool_arguments(self):
+        decode = decode_chat_completion_envelope(
+            self._load("chatcompletion_tool_calls_only.json")
+        )
+        row = build_transport_capture_row(
+            request_id="r1",
+            sample_id="estg_000002",
+            clause_id="estg_000002.c1",
+            clause_index=0,
+            prompt_sha256="p" * 64,
+            prompt_variant="masked_selected_v5",
+            b0_prediction_sha256="b" * 64,
+            request_body_sha256="rb" * 32,
+            request_policy=DEEPSEEK_V4_FLASH_H1_POLICY.to_dict(),
+            http_status=200,
+            endpoint_descriptor={"offline": True},
+            requested_model="deepseek-v4-flash",
+            resolved_model="deepseek-v4-flash",
+            decode=decode,
+            sanitized_response_envelope={
+                "message": {
+                    "content": "",
+                    "tool_calls": [
+                        {"function": {"name": "apply_patch", "arguments": "secret-args"}}
+                    ],
+                }
+            },
+        )
+        blob = json.dumps(row)
+        assert "secret-args" not in blob
+        assert row["safety"]["tool_call_arguments_saved"] is False
+        assert row["safety"]["reasoning_content_saved"] is False
+        assert row["safety"]["authorization_saved"] is False
+        assert row["tool_calls"]["count"] == 1
+
+    def test_capture_row_retains_message_content_for_replay(self):
+        decode = decode_chat_completion_envelope(
+            self._load("chatcompletion_effective_patch.json")
+        )
+        row = build_transport_capture_row(
+            request_id="r1",
+            sample_id="estg_000002",
+            clause_id="estg_000002.c1",
+            clause_index=0,
+            prompt_sha256="p" * 64,
+            prompt_variant="masked_selected_v5",
+            b0_prediction_sha256="b" * 64,
+            request_body_sha256="rb" * 32,
+            request_policy=DEEPSEEK_V4_FLASH_H1_POLICY.to_dict(),
+            http_status=200,
+            endpoint_descriptor={"offline": True},
+            requested_model="deepseek-v4-flash",
+            resolved_model="deepseek-v4-flash",
+            decode=decode,
+            sanitized_response_envelope={"message": {"content": decode["content"]}},
+        )
+        assert "patches" in json.dumps(row)
+
+    def test_endpoint_descriptor_no_credentials(self):
+        desc = describe_endpoint_safe("https://api.example.com/v1/chat/completions")
+        assert desc == {
+            "scheme": "https",
+            "host": "api.example.com",
+            "port": None,
+            "path": "/v1/chat/completions",
+        }
+
+    # -- transport integration (offline, urlopen stubbed) --------------------
+
+    def test_real_transport_uses_decoder_and_policy_offline(self, monkeypatch):
+        import urllib.request as ur
+        from bpc_hybrid.llm_client import RealAPITransport
+
+        cfg = LLMConfig(
+            enabled=True,
+            provider="openai_compatible",
+            model="deepseek-v4-flash",
+            api_key="sk-test-should-not-leak",
+            base_url="https://api.test.invalid/v1",
+        )
+        transport = RealAPITransport(cfg, policy=H1RequestPolicy())
+        captured: dict[str, Any] = {}
+
+        class FakeResp:
+            status = 200
+            headers = {"Content-Type": "application/json"}
+            body = b""
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                return False
+
+            def read(self):
+                return self.body
+
+        def fake_urlopen(req, timeout=None):
+            captured["url"] = req.full_url
+            captured["body"] = req.data
+            resp = FakeResp()
+            resp.body = self._load("chatcompletion_effective_patch.json").encode("utf-8")
+            return resp
+
+        monkeypatch.setattr(ur, "urlopen", fake_urlopen)
+        response = transport.send(
+            LLMRequest(
+                source_id="s", source_text="t", system_prompt="sys", user_prompt="user"
+            )
+        )
+        sent = json.loads(captured["body"])
+        assert sent["stream"] is False
+        assert sent["thinking"] == {"type": "disabled"}
+        assert sent["response_format"] == {"type": "json_object"}
+        assert transport.last_decode["status"] == STATUS_OK
+        assert transport.last_request_body_sha256 is not None
+        assert transport.last_request_policy["tools_sent"] is False
+        assert response.model == "deepseek-v4-flash"
+        sent_text = captured["body"].decode("utf-8")
+        assert "sk-test-should-not-leak" not in sent_text
+        assert captured["url"].endswith("/v1/chat/completions")
