@@ -1689,3 +1689,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：输入：s27_estg150_b0_enhanced_v10a/b0_attempts.json（sha256=79dc457cdf93...）；输出：outputs/development/s28a_h1_trigger_diagnostics_v1/h1_trigger_diagnostics.jsonl（rows=256，sha256=d79a449e942e...）+ manifest.json（sha256=93f70f904f0c...）；coverage：expected=150/loaded=150/clause_rows=256/excluded=0/complete=true；候选信号计数（描述性，非 trigger 策略）：rows_with_any=221、missing_actor=171、disagreement=85、conf<0.65=118、scope_rejected=9、stage3 adapter 全部 ok；未报告任何 Gold 性能。新增 15 项 S2.8A 测试；既有 H1/prompt 31 项全绿；全量 1034 passed, 1 failed, 22 skipped（唯一失败 test_tests_do_not_touch_real_backup_dir 为既有环境问题，同上一任务，未删除用户数据）
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-31T10:18:57.305202+00:00 - G0-TEST-REAL-BACKUP-SNAPSHOT: review-tool 测试改为 session 级只读树快照守卫，允许真实备份目录预先非空、要求整个 session 前后 byte-identical；修复 action-log 恒真断言与'目录必须为空'错误断言；全量测试首次 0 failed
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1048 passed, 24 skipped in 154.71s (0:02:34)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`5ad19cc3b4dc6af4f2b8f240332682855e534977`；相关未提交路径：3 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：新增通用纯只读 helper：tree_snapshot（missing sentinel/文件 sha256+size/目录递归/确定性排序/symlink 不跟随、越界 fail closed）、snapshot_diff（added/removed/modified，rename=removed+added，missing->created 检测）、format_diff（只列路径不输出内容）；session-scoped autouse fixture 在 session 起止对 backup_dir/action_log/7 个真实源文件各做快照比较；275 个用户合法备份（283MB）原样保留；新增 14 项 tmp_path 单元测试（含 symlink 越界 fail closed 模拟测试，真实 symlink 测试在本机因 WinError 1314 显式 skip）；focused 50 passed 2 skipped；全量 1048 passed 24 skipped 0 failed；未删除/移动/覆盖任何真实备份，未改 Layer E/Gold/action log
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

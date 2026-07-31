@@ -44,10 +44,12 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -83,6 +85,127 @@ def sha256_file(p: Path) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Generic read-only tree snapshot helper (G0-TEST-REAL-BACKUP-SNAPSHOT)
+#
+# ``tree_snapshot`` records the full state of a path WITHOUT modifying it:
+#   * missing path      -> {"": {"type": "missing"}}
+#   * file              -> {"type": "file", "size": ..., "sha256": ...}
+#   * directory         -> {"type": "dir"} plus one entry per descendant
+#   * symlink           -> {"type": "symlink", "target": ...}
+# Symlinks are NEVER followed.  A symlink whose resolved target lies
+# outside the snapshot root raises SnapshotError (fail closed).  File
+# contents are read only to compute the SHA-256; they are never stored,
+# returned, or printed by this helper or by ``format_diff``.
+# ---------------------------------------------------------------------------
+
+
+class SnapshotError(ValueError):
+    """Raised when a snapshot root contains an out-of-bounds symlink."""
+
+
+def _within(child: Path, root: Path) -> bool:
+    try:
+        child.relative_to(root)
+        return True
+    except ValueError:
+        return False
+
+
+def tree_snapshot(path: Path) -> dict[str, Any]:
+    """Recursive read-only snapshot of *path*.
+
+    Returns a ``{relative_posix_path: entry}`` mapping in deterministic
+    (sorted) key order.  The root itself is keyed ``""``.
+    """
+    if not os.path.lexists(path):
+        return {"": {"type": "missing"}}
+    root_marker = path.resolve(strict=False)
+    entries: dict[str, Any] = {}
+
+    def walk(current: Path, rel: str) -> None:
+        if current.is_symlink():
+            resolved = current.resolve(strict=False)
+            if not _within(resolved, root_marker):
+                raise SnapshotError(
+                    f"symlink escapes snapshot root: {current} -> {resolved}"
+                )
+            entries[rel] = {"type": "symlink", "target": str(resolved)}
+            return
+        if current.is_dir():
+            entries[rel] = {"type": "dir"}
+            for child in sorted(current.iterdir(), key=lambda p: p.name):
+                walk(child, f"{rel}/{child.name}" if rel else child.name)
+        elif current.is_file():
+            data = current.read_bytes()
+            entries[rel] = {
+                "type": "file",
+                "size": len(data),
+                "sha256": hashlib.sha256(data).hexdigest(),
+            }
+        else:
+            entries[rel] = {"type": "other"}
+
+    walk(path, "")
+    return {key: entries[key] for key in sorted(entries)}
+
+
+def snapshot_diff(before: dict[str, Any], after: dict[str, Any]) -> dict[str, list[str]]:
+    """Compare two snapshots; report added / removed / modified paths.
+
+    A path whose ``before`` entry was ``{"type": "missing"}`` and that
+    exists in ``after`` is reported as added; the reverse is reported as
+    removed.  Renames naturally appear as removed + added pairs.
+    """
+    added: list[str] = []
+    removed: list[str] = []
+    modified: list[str] = []
+    for key, entry in after.items():
+        if entry.get("type") == "missing":
+            continue
+        prior = before.get(key)
+        if prior is None or prior.get("type") == "missing":
+            added.append(key)
+        elif prior != entry:
+            modified.append(key)
+    for key, entry in before.items():
+        if entry.get("type") == "missing":
+            continue
+        after_entry = after.get(key)
+        if after_entry is None or after_entry.get("type") == "missing":
+            removed.append(key)
+    return {"added": sorted(added), "removed": sorted(removed), "modified": sorted(modified)}
+
+
+def _change_reason(before: dict[str, Any], after: dict[str, Any]) -> str:
+    if before.get("type") != after.get("type"):
+        return f"type {before.get('type')!r} -> {after.get('type')!r}"
+    if after.get("type") == "file":
+        reasons = []
+        if before.get("size") != after.get("size"):
+            reasons.append("size")
+        if before.get("sha256") != after.get("sha256"):
+            reasons.append("sha256")
+        return f"changed ({', '.join(reasons)})" if reasons else "changed"
+    if after.get("type") == "symlink" and before.get("target") != after.get("target"):
+        return "symlink target changed"
+    return "changed"
+
+
+def format_diff(diff: dict[str, list[str]], label: str, before: dict[str, Any] | None = None, after: dict[str, Any] | None = None) -> str:
+    """Human-readable diff report listing paths only, never file contents."""
+    lines = [label]
+    for kind in ("added", "removed", "modified"):
+        for key in diff[kind]:
+            detail = ""
+            if kind == "modified" and before is not None and after is not None:
+                detail = f" ({_change_reason(before.get(key, {}), after.get(key, {}))})"
+            lines.append(f"  {kind}: {key}{detail}")
+    if not any(diff.values()):
+        lines.append("  (no differences)")
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
 # Anti-pollution: real files must stay byte-identical across the
 # entire test session.
 # ---------------------------------------------------------------------------
@@ -101,6 +224,59 @@ def real_hashes() -> dict[str, str]:
         "membership": sha256_file(REAL_MEMBERSHIP),
         "zh_aid": sha256_file(REAL_ZH_AID),
     }
+
+
+# Real review state guarded across the WHOLE session.  The backup
+# directory is allowed to be non-empty before the tests start: those are
+# the user's legitimate backups and are never touched.  The invariant is
+# that the ENTIRE tree (including the action log and the real source /
+# human-review files) is byte-identical from session start to session end.
+_REAL_SNAPSHOT_TARGETS: tuple[tuple[str, Path], ...] = (
+    ("backup_dir", REAL_BACKUP_DIR),
+    ("action_log", REAL_ACTION_LOG),
+    ("human_correction", REAL_HUMAN_CORRECTION),
+    ("canonical_review", REAL_CANONICAL_REVIEW),
+    ("de_source", REAL_DE),
+    ("en_translation", REAL_EN),
+    ("llm_draft", REAL_LLM_DRAFT),
+    ("membership", REAL_MEMBERSHIP),
+    ("zh_aid", REAL_ZH_AID),
+)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def real_data_session_snapshot() -> dict[str, dict[str, Any]]:
+    """Snapshot every real review-data target at session start and
+    re-check it after the FULL session finishes.
+
+    The teardown (after ``yield``) runs after all tests in this module
+    have completed, so detection never depends on test execution order.
+    Pre-existing legitimate backups are expected and preserved: the check
+    only fails if the tree changed DURING the session (added, removed,
+    renamed, or modified files, or the action log being appended,
+    truncated, or replaced).
+    """
+    before = {name: tree_snapshot(path) for name, path in _REAL_SNAPSHOT_TARGETS}
+    yield before
+    after = {name: tree_snapshot(path) for name, path in _REAL_SNAPSHOT_TARGETS}
+    problems: list[str] = []
+    for name, path in _REAL_SNAPSHOT_TARGETS:
+        diff = snapshot_diff(before[name], after[name])
+        if diff["added"] or diff["removed"] or diff["modified"]:
+            problems.append(
+                format_diff(
+                    diff,
+                    f"real {name} changed during the test session: {path}",
+                    before[name],
+                    after[name],
+                )
+            )
+    if problems:
+        raise AssertionError(
+            "Real review data was modified during the test session (test "
+            "isolation failure; no user data was touched by this check):\n"
+            + "\n".join(problems)
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -243,30 +419,38 @@ def test_tool_help_runs():
     assert "EStG-150 LLM 辅助人工修正工具" in res.stdout
 
 
-def test_tests_do_not_touch_real_backup_dir(real_hashes):
-    """If a test wrote to REAL_BACKUP_DIR, the directory would have
-    grown. Snapshot the directory listing and compare to a fresh
-    empty listing (the real dir was empty before tests started)."""
-    if not REAL_BACKUP_DIR.exists():
-        return
-    files = sorted(p.name for p in REAL_BACKUP_DIR.glob("*.json"))
-    # The real backup dir must contain zero production backups. Any
-    # test that writes here would have left files behind; this would
-    # have been caught by the SHA-256 snapshot of the source files
-    # too, but this is an explicit belt-and-suspenders check.
-    assert files == [], f"real backup dir was touched: {files}"
+def test_tests_do_not_touch_real_backup_dir(real_data_session_snapshot):
+    """The real backup directory may legitimately contain the user's
+    backups BEFORE the session starts.  The invariant is that its full
+    tree is byte-identical to the session-start snapshot right now:
+    any added, removed, renamed, or modified backup is a test-isolation
+    failure."""
+    before = real_data_session_snapshot["backup_dir"]
+    diff = snapshot_diff(before, tree_snapshot(REAL_BACKUP_DIR))
+    assert not diff["added"] and not diff["removed"] and not diff["modified"], (
+        format_diff(
+            diff,
+            "real backup dir changed during the test session "
+            "(pre-existing legitimate backups are expected and preserved)",
+            before,
+            tree_snapshot(REAL_BACKUP_DIR),
+        )
+    )
 
 
-def test_tests_do_not_touch_real_action_log(real_hashes):
-    """The real action log is append-only; if a test wrote to it,
-    the file would have grown past the snapshot."""
-    if not REAL_ACTION_LOG.exists():
-        return
-    pre_size = REAL_ACTION_LOG.stat().st_size
-    # Snapshot the current SHA from session start
-    assert sha256_file(REAL_ACTION_LOG) == sha256_file(REAL_ACTION_LOG), \
-        "real action log SHA-256 mismatch"
-    assert pre_size >= 0  # existence already checked above
+def test_tests_do_not_touch_real_action_log(real_data_session_snapshot):
+    """The real action log is append-only; a real comparison against the
+    session-start snapshot detects any append, truncate, or replace."""
+    before = real_data_session_snapshot["action_log"]
+    diff = snapshot_diff(before, tree_snapshot(REAL_ACTION_LOG))
+    assert not diff["added"] and not diff["removed"] and not diff["modified"], (
+        format_diff(
+            diff,
+            "real action log changed during the test session",
+            before,
+            tree_snapshot(REAL_ACTION_LOG),
+        )
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -962,3 +1146,227 @@ def test_idempotent_validator_run(workspace):
     )
     b = json.loads(res2.stdout)
     assert a == b
+
+
+# ---------------------------------------------------------------------------
+# C. Snapshot helper unit tests (all tmp_path; never touch real data)
+# ---------------------------------------------------------------------------
+
+class TestTreeSnapshot:
+    """Pure unit tests for tree_snapshot / snapshot_diff / format_diff.
+
+    Every test uses ``tmp_path`` and covers the S2.8/G0 requirement that
+    the session guard detects added, removed, modified, and renamed files,
+    action-log appends, and missing -> created paths, while pre-existing
+    (legitimate) content is preserved and never echoed.
+    """
+
+    SECRET = "TOP-SECRET-REVIEW-CONTENT"
+
+    def _build_tree(self, root: Path) -> Path:
+        backups = root / "backups"
+        (backups / "nested").mkdir(parents=True)
+        (backups / "legit_20260718_n0001.json").write_text(
+            f"old-{self.SECRET}-1", encoding="utf-8"
+        )
+        (backups / "legit_20260719_n0002.json").write_text(
+            f"old-{self.SECRET}-2", encoding="utf-8"
+        )
+        (backups / "nested" / "deep.json").write_text("deep", encoding="utf-8")
+        return backups
+
+    def test_nonempty_existing_tree_unchanged_passes(self, tmp_path):
+        target = self._build_tree(tmp_path)
+        before = tree_snapshot(target)
+        after = tree_snapshot(target)
+        diff = snapshot_diff(before, after)
+        assert diff == {"added": [], "removed": [], "modified": []}
+        # Files carry type/size/sha256; directories and nested entries exist.
+        entry = before["legit_20260718_n0001.json"]
+        assert entry["type"] == "file"
+        assert entry["size"] == len(f"old-{self.SECRET}-1")
+        assert len(entry["sha256"]) == 64
+        assert before["nested"]["type"] == "dir"
+        assert "nested/deep.json" in before
+        # The root directory itself is recorded.
+        assert before[""]["type"] == "dir"
+
+    def test_added_file_detected(self, tmp_path):
+        target = self._build_tree(tmp_path)
+        before = tree_snapshot(target)
+        (target / "new_backup.json").write_text("new", encoding="utf-8")
+        diff = snapshot_diff(before, tree_snapshot(target))
+        assert diff["added"] == ["new_backup.json"]
+        assert diff["removed"] == []
+        assert diff["modified"] == []
+
+    def test_deleted_file_detected(self, tmp_path):
+        target = self._build_tree(tmp_path)
+        before = tree_snapshot(target)
+        (target / "legit_20260718_n0001.json").unlink()
+        diff = snapshot_diff(before, tree_snapshot(target))
+        assert diff["removed"] == ["legit_20260718_n0001.json"]
+
+    def test_modified_file_detected(self, tmp_path):
+        target = self._build_tree(tmp_path)
+        before = tree_snapshot(target)
+        (target / "legit_20260718_n0001.json").write_text("tampered", encoding="utf-8")
+        diff = snapshot_diff(before, tree_snapshot(target))
+        assert diff["modified"] == ["legit_20260718_n0001.json"]
+        # The human-readable report names the path but never the content.
+        report = format_diff(diff, "label", before, tree_snapshot(target))
+        assert "legit_20260718_n0001.json" in report
+        assert self.SECRET not in report
+        assert "tampered" not in report
+
+    def test_rename_detected_as_removed_plus_added(self, tmp_path):
+        target = self._build_tree(tmp_path)
+        before = tree_snapshot(target)
+        (target / "legit_20260718_n0001.json").rename(
+            target / "renamed_20260720_n0003.json"
+        )
+        diff = snapshot_diff(before, tree_snapshot(target))
+        assert diff["removed"] == ["legit_20260718_n0001.json"]
+        assert diff["added"] == ["renamed_20260720_n0003.json"]
+        assert diff["modified"] == []
+
+    def test_action_log_append_detected(self, tmp_path):
+        log = tmp_path / "estg_150_review_actions_v1.jsonl"
+        log.write_text('{"action": "a"}\n', encoding="utf-8")
+        before = tree_snapshot(log)
+        with log.open("a", encoding="utf-8") as stream:
+            stream.write('{"action": "b"}\n')
+        diff = snapshot_diff(before, tree_snapshot(log))
+        assert diff["modified"] == [""]
+
+    def test_action_log_truncate_detected(self, tmp_path):
+        log = tmp_path / "estg_150_review_actions_v1.jsonl"
+        log.write_text('{"action": "a"}\n', encoding="utf-8")
+        before = tree_snapshot(log)
+        log.write_text("", encoding="utf-8")
+        diff = snapshot_diff(before, tree_snapshot(log))
+        assert diff["modified"] == [""]
+
+    def test_missing_path_created_detected(self, tmp_path):
+        target = tmp_path / "review_backups" / "created_later.json"
+        before = tree_snapshot(target)
+        assert before == {"": {"type": "missing"}}
+        target.parent.mkdir(parents=True)
+        target.write_text("created", encoding="utf-8")
+        diff = snapshot_diff(before, tree_snapshot(target))
+        assert diff["added"] == [""]
+        # And the reverse: a file that disappears is removed.
+        diff_back = snapshot_diff(tree_snapshot(target), before)
+        assert diff_back["removed"] == [""]
+
+    def test_missing_to_missing_is_no_diff(self, tmp_path):
+        missing = tmp_path / "does_not_exist"
+        diff = snapshot_diff(tree_snapshot(missing), tree_snapshot(missing))
+        assert diff == {"added": [], "removed": [], "modified": []}
+
+    def test_snapshot_order_is_deterministic(self, tmp_path):
+        target = self._build_tree(tmp_path)
+        first = tree_snapshot(target)
+        second = tree_snapshot(target)
+        assert first == second
+        assert list(first) == sorted(first)
+        # A change does not disturb the sorted order of the new snapshot.
+        (target / "aaa_new.json").write_text("x", encoding="utf-8")
+        assert list(tree_snapshot(target)) == sorted(tree_snapshot(target))
+
+    def test_snapshot_and_report_never_embed_content(self, tmp_path):
+        target = self._build_tree(tmp_path)
+        before = tree_snapshot(target)
+        blob = json.dumps(before)
+        assert self.SECRET not in blob
+        assert "old-" not in blob
+        marker = "LEAKED-CONTENT-MARKER"
+        (target / "legit_20260718_n0001.json").write_text(marker, encoding="utf-8")
+        after = tree_snapshot(target)
+        diff = snapshot_diff(before, after)
+        assert not diff["added"] and not diff["removed"]
+        assert diff["modified"] == ["legit_20260718_n0001.json"]
+        report = format_diff(diff, "label", before, after)
+        assert marker not in report
+        assert self.SECRET not in report
+
+    def test_out_of_root_symlink_fails_closed(self, tmp_path):
+        root = tmp_path / "root"
+        outside = tmp_path / "outside"
+        outside.mkdir()
+        (outside / "payload.json").write_text("secret", encoding="utf-8")
+        root.mkdir()
+        try:
+            os.symlink(outside, root / "escape_link", target_is_directory=True)
+        except (OSError, NotImplementedError, PermissionError) as exc:
+            pytest.skip(f"symlink creation unsupported on this platform: {exc}")
+        with pytest.raises(SnapshotError):
+            tree_snapshot(root)
+
+    def test_in_root_symlink_recorded_not_followed(self, tmp_path):
+        root = tmp_path / "root"
+        (root / "real").mkdir(parents=True)
+        (root / "real" / "payload.json").write_text("v1", encoding="utf-8")
+        try:
+            os.symlink(root / "real", root / "inside_link", target_is_directory=True)
+        except (OSError, NotImplementedError, PermissionError) as exc:
+            pytest.skip(f"symlink creation unsupported on this platform: {exc}")
+        snapshot = tree_snapshot(root)
+        assert snapshot["inside_link"]["type"] == "symlink"
+        # The symlink is never followed: no duplicated subtree under it.
+        assert not any(key.startswith("inside_link/") for key in snapshot)
+        # The real directory is still walked directly through its own path.
+        assert "real/payload.json" in snapshot
+
+    def test_out_of_root_symlink_fails_closed_simulated(self, monkeypatch, tmp_path):
+        """Platform-independent simulation of an escaping symlink, so the
+        fail-closed branch is verified even where symlink creation is not
+        permitted (e.g. Windows without developer mode)."""
+        root = tmp_path / "root"
+        root.mkdir()
+        (root / "fake_link").write_text("x", encoding="utf-8")
+        outside = tmp_path / "outside"
+        outside.mkdir()
+        real_is_symlink = Path.is_symlink
+        real_resolve = Path.resolve
+
+        def fake_is_symlink(self):
+            if self.name == "fake_link" and self.parent == root:
+                return True
+            return real_is_symlink(self)
+
+        def fake_resolve(self, strict=False):
+            if self.name == "fake_link" and self.parent == root:
+                return outside
+            return real_resolve(self, strict=strict)
+
+        monkeypatch.setattr(Path, "is_symlink", fake_is_symlink)
+        monkeypatch.setattr(Path, "resolve", fake_resolve)
+        with pytest.raises(SnapshotError):
+            tree_snapshot(root)
+
+    def test_in_root_symlink_recorded_simulated(self, monkeypatch, tmp_path):
+        """Platform-independent simulation of an in-root symlink: it is
+        recorded as a symlink and never followed."""
+        root = tmp_path / "root"
+        root.mkdir()
+        (root / "fake_link").write_text("x", encoding="utf-8")
+        real_is_symlink = Path.is_symlink
+        real_resolve = Path.resolve
+
+        def fake_is_symlink(self):
+            if self.name == "fake_link" and self.parent == root:
+                return True
+            return real_is_symlink(self)
+
+        def fake_resolve(self, strict=False):
+            if self.name == "fake_link" and self.parent == root:
+                return root / "real"
+            return real_resolve(self, strict=strict)
+
+        monkeypatch.setattr(Path, "is_symlink", fake_is_symlink)
+        monkeypatch.setattr(Path, "resolve", fake_resolve)
+        snapshot = tree_snapshot(root)
+        assert snapshot["fake_link"]["type"] == "symlink"
+        # Never followed: no subtree is recorded under the symlink path.
+        assert not any(key.startswith("fake_link/") for key in snapshot)
