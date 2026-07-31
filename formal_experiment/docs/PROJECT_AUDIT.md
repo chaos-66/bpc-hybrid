@@ -74,7 +74,7 @@ Sun 最终版、公开数据、引用链和代码来源证据统一放在 `docs/
 | 5 | S2.2 | 用户并行完成人工裁决；Agent 只验证 | 150/150 adjudicated，freeze validator 通过 |
 | 6 | S2.3 | **verified**：`public_marker_lexicon_en_v1` 已离线锁定；64 个 marker、source/manifest/payload hash、空扩展表和机器门禁通过 | 来源、规则、语言、hash 与 dev-only 扩展策略固定 |
 | 6.1 | S2.4-S2.6 | 本轮严格未启动；许可未知与 S2.4 ready 的现有矛盾不在 S2.3 绕过，留待 S2.4 单独派发前收口 | 非 LLM canonical Rule Record 可复现 |
-| 7 | S2.7-S2.12 | H1 development wiring 已修复；S2.8A/B/C development verified；S2.8D v4-flash pilot 未达 non-identity 门（20 次调用全部空 content，如实失败，40 次历史调用均无有效 patch）；S2.8D-R1 transport 离线修复 verified（0 API calls）：显式 request policy、稳定 extraction status codes、脱敏 capture、envelope 级 offline transport replay，合法 synthetic content 经同一 decoder→merge 路径产生 effective patch 且 gate=true；**formal S2.8 仍 blocked on S2.6；canary 待用户单独授权** | 同 IDs/Gold/evaluator 的完整比较；真实 H1 run 后报告 called/accepted/rejected/changed 四层计数 |
+| 7 | S2.7-S2.12 | H1 development wiring 已修复；S2.8A/B/C development verified；S2.8D-R1 transport 离线修复 verified。用户随后授权 1 次 v4-flash canary（硬上限 1、0 retry）：transport/extraction 成功，收到非空 schema-valid envelope，但 patch 的 span text/offset reference mismatch，原子 canonical 校验拒绝；valid=1、proposed=1、accepted=0、effective=0、changed=0、gate=false，H1 仍等于 B0。历史真实调用累计 41 次；**formal S2.8 仍 blocked on S2.6；不得自动重试或进入完整 pilot** | 下一步仅做 Gold-blind 离线 prompt/offset-contract 诊断；任何新 canary/pilot 均需新的明确授权与硬调用上限；P/R 仍 not_computed |
 | 8 | S2.13 | 冻结 Stage 2 | 数据、方法、指标、成本、manifest 完整 |
 | 9 | PW1 | **下一论文任务**：引言与 RQ0–RQ4 | 无结果性过度主张；主张矩阵同步 |
 
