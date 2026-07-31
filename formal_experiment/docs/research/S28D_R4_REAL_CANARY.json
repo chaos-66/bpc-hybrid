@@ -1,0 +1,203 @@
+{
+  "schema_version": "s28d_r4_report@1.0.0",
+  "task": "S2.8D-R4",
+  "title": "Single real deepseek-v4-flash canary with coordinate canonicalization enabled",
+  "start_commit": "e9c3bd521a06c323d5854c22b5a842fb35717a7c",
+  "run_id": "s28d_r4_h1_canary_v1",
+  "files": [
+    "formal_experiment/docs/research/S28D_R4_REAL_CANARY.md",
+    "formal_experiment/docs/research/S28D_R4_REAL_CANARY.json"
+  ],
+  "canary": {
+    "output_dir": "formal_experiment/outputs/development/s28d_r4_h1_canary_v1",
+    "manifest_sha256": "9734c2edc3a7c0bc6170f83d6553cc385b426b3d649233c1be1497082e8a338c",
+    "transport_capture_sha256": "92df6817fcb410bbe7a9054527cee61d3c46c280c09bad1149cecd25eb86c6e4",
+    "b0_prediction_sha256": "57f3564baa573735b55bc252554698236b3eb744a657090abe849cd772b4bcb4",
+    "prompt_variant": "masked_selected_v5",
+    "prompt_sha256": "065005189ced3179ff4069d016c7d0ca892ce4992707834e09142efc0472c391",
+    "sample_id": "estg_000021",
+    "clause_id": "estg_000021.c1",
+    "clause_span": {
+      "start": 0,
+      "end": 212
+    },
+    "requested_model": "deepseek-v4-flash",
+    "resolved_model": "deepseek-v4-flash",
+    "provider_returned_model": "deepseek-v4-flash",
+    "api_call_count": 1,
+    "retry_count": 0,
+    "http_status": 200,
+    "extraction_status": "ok_message_content",
+    "extraction_source": "message.content",
+    "finish_reason": "stop",
+    "reasoning_present": false,
+    "tool_call_count": 0,
+    "usage_tokens": {
+      "prompt_tokens": 1305,
+      "completion_tokens": 405,
+      "total_tokens": 1710
+    },
+    "response_body_sha256": "5a6681bbe35c90d0f12dfdd12e0dacf5adb03194942c1045033bba1c0cea299e",
+    "message_content_sha256": "e7514386e8a9f8e5025c716de51bfbf2459d4723df3c0094561c604001e2599d",
+    "message_content_char_length": 1531,
+    "message_content_utf8_length": 1531,
+    "request_policy_sent": {
+      "stream": false,
+      "thinking": {
+        "type": "disabled"
+      },
+      "response_format": {
+        "type": "json_object"
+      },
+      "tools_sent": false
+    },
+    "patch_proposed": 1,
+    "patch_accepted": 1,
+    "patch_rejected": 0,
+    "effective_patch": true,
+    "prediction_changed_sample_count": 1
+  },
+  "coordinate_canonicalization": {
+    "status": "reanchored",
+    "attempted_patch_count": 1,
+    "unchanged_patch_count": 0,
+    "reanchored_patch_count": 1,
+    "failed_patch_count": 0,
+    "span_count": 3,
+    "already_valid_span_count": 0,
+    "reanchored_span_count": 3,
+    "zero_match_count": 0,
+    "ambiguous_match_count": 0,
+    "contract_violation_count": 0,
+    "original_patch_sha256": "810a433c78c6dcb7803c45628b6102f2d5c19f7dd34cf1bc9ae6be7e63fc9024",
+    "canonicalized_patch_sha256": "c9014f7ca4c0b670d9a82afdd1d495f195746974c29e0faa70b6dfe5bbde30b0",
+    "corrections": [
+      {
+        "field_path": "modality.evidence[0]",
+        "proposed_start": 0,
+        "proposed_end": 99,
+        "corrected_start": 0,
+        "corrected_end": 95,
+        "text_char_length": 95,
+        "text_utf8_length": 95,
+        "text_sha256": "147907cf5fcb67cee97ae2dcdbf6b4d9329af48908268baa211e755b496e63ff",
+        "clause_start": 0,
+        "clause_end": 212,
+        "exact_occurrence_count": 1
+      },
+      {
+        "field_path": "actors[0]",
+        "proposed_start": 55,
+        "proposed_end": 99,
+        "corrected_start": 49,
+        "corrected_end": 95,
+        "text_char_length": 46,
+        "text_utf8_length": 46,
+        "text_sha256": "381a79d89fcb60ac9fbb6610a83bc0ca4b7af1922f43172e2fe4d584f922275c",
+        "clause_start": 0,
+        "clause_end": 212,
+        "exact_occurrence_count": 1
+      },
+      {
+        "field_path": "conditions[0]",
+        "proposed_start": 100,
+        "proposed_end": 211,
+        "corrected_start": 97,
+        "corrected_end": 207,
+        "text_char_length": 110,
+        "text_utf8_length": 110,
+        "text_sha256": "aa23d19d34b6d46454d08b3d00172a4b916cfbc6b59e0958dd1147ba3757b95e",
+        "clause_start": 0,
+        "clause_end": 212,
+        "exact_occurrence_count": 1
+      }
+    ]
+  },
+  "validator_merge": {
+    "canonical_validator_passed": true,
+    "merge_status": "accepted",
+    "rejection_codes": [],
+    "semantic_changed": true,
+    "effective_patch": true,
+    "changed_fields": [
+      "actor_action_map",
+      "actors",
+      "conditions",
+      "constraints",
+      "modality"
+    ],
+    "requested_fields": [
+      "actor_action_map",
+      "actors",
+      "conditions",
+      "constraints",
+      "exceptions",
+      "modality"
+    ],
+    "accepted_fields": [
+      "actor_action_map",
+      "actors",
+      "conditions",
+      "constraints",
+      "modality"
+    ],
+    "rejected_fields": [
+      "exceptions"
+    ],
+    "h1_prediction_sha256": "5bcf26d797d8ca2f894e74827393961546bdd1f6b890a64f44ee930f2126e609",
+    "h1_equals_b0": false,
+    "identity_fields_unchanged": true,
+    "h1_non_identity_gate": true
+  },
+  "offline_replay": {
+    "output_dir": "formal_experiment/outputs/development/s28d_r4_h1_canary_replay_v1",
+    "input_rows": "transport_responses.jsonl (rebuilt from the sanitized canary capture; message.content byte-identical sha256 e7514386...)",
+    "extraction_status": "ok_message_content",
+    "patch_proposed": 1,
+    "patch_accepted": 1,
+    "patch_rejected": 0,
+    "effective_patch": true,
+    "prediction_changed_sample_count": 1,
+    "h1_non_identity_gate": true,
+    "h1_prediction_sha256": "5bcf26d797d8ca2f894e74827393961546bdd1f6b890a64f44ee930f2126e609",
+    "b0_prediction_sha256": "57f3564baa573735b55bc252554698236b3eb744a657090abe849cd772b4bcb4",
+    "h1_matches_real_run": true,
+    "canonicalization": {
+      "status": "reanchored",
+      "reanchored_span_count": 3,
+      "zero_match_count": 0,
+      "ambiguous_match_count": 0,
+      "contract_violation_count": 0
+    },
+    "byte_identical_rerun": true,
+    "note": "same-target rerun byte-identical for h1_predictions.jsonl, h1_telemetry.jsonl, manifest.json"
+  },
+  "safety": {
+    "api_calls": 1,
+    "authorization": "user explicitly authorized exactly 1 deepseek-v4-flash call; retry 0; no pilot",
+    "retry": 0,
+    "pilot_entered": false,
+    "gold_read": false,
+    "layer_e_read": false,
+    "env_read": false,
+    "prompt_modified": false,
+    "validator_weakened": false,
+    "schema_modified": false,
+    "b0_trigger_risk_budget_modified": false,
+    "model_gate_modified": false,
+    "r3_r1_historical_results_modified": false,
+    "pr_f1": "not_computed",
+    "claim_boundary": "single real canary; mechanism + transport verification only; no formal evaluation, no P/R, no pilot"
+  },
+  "interpretation_boundary": [
+    "transport works and the pinned model returned a non-empty, parseable patch envelope",
+    "coordinate canonicalizer executed and reanchored 3 spans with zero/ambiguous/contract = 0",
+    "existing validator and atomic merge accepted the canonicalized patch",
+    "H1 != B0 with an effective patch and unchanged identity fields",
+    "no P/R, no formal evaluation, no pilot, no claims about future model stability",
+    "formal S2.8 remains blocked on S2.6"
+  ],
+  "next_steps": [
+    "S2.8D-R5: freeze a small-scale pilot plan and call budget (user authorization required)"
+  ]
+}
