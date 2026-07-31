@@ -80,6 +80,12 @@ from bpc_hybrid.h1_transport import (  # noqa: E402
     decode_chat_completion_envelope,
     describe_endpoint_safe,
 )
+from bpc_hybrid.h1_span_canonicalizer import (  # noqa: E402
+    STATUS_FAILED,
+    STATUS_REANCHORED,
+    STATUS_UNCHANGED,
+    canonicalize_patch_coordinates,
+)
 from bpc_hybrid.llm_config import LLMConfig
 from bpc_hybrid.llm_client import (
     LLMClientError,
@@ -535,6 +541,8 @@ def _rejection_codes(reasons: Sequence[str]) -> tuple[str, ...]:
         lowered = reason.lower()
         if lowered.startswith("extraction_status:"):
             code = lowered[len("extraction_status:"):].split(":")[0].strip()
+        elif lowered.startswith("coordinate_canonicalization_"):
+            code = lowered.split(":", 1)[0].strip()
         elif "no semantic change" in lowered:
             code = "no_semantic_change"
         elif "canonical validation" in lowered or "post-patch" in lowered:
@@ -1386,6 +1394,48 @@ def main(argv: Sequence[str] | None = None) -> int:
                 continue
 
         record_before = records[plan.sample_id]
+        # S2.8D-R3: fail-closed unique exact-text coordinate canonicalization.
+        # Runs on the SINGLE shared path for every execution mode (real API,
+        # offline patches, offline replay, offline transport replay) between
+        # the parser and the existing validator/atomic merge.
+        clause_for_plan = record_before["clauses"][plan.clause_index]
+        canonicalized, canonicalization_audit = canonicalize_patch_coordinates(
+            envelope,
+            str(record_before.get("source_text", "")),
+            clause_for_plan.get("clause_span"),
+        )
+        if canonicalization_audit.get("status") == STATUS_FAILED:
+            merge_event = _patch_event_base(plan)
+            merge_event["selected_for_call"] = True
+            merge_event["llm_call_performed"] = event["llm_call_performed"]
+            if "response_sha256" in event:
+                merge_event["response_sha256"] = event["response_sha256"]
+            if "response_model" in event:
+                merge_event["response_model"] = event["response_model"]
+                merge_event["response_provider"] = event["response_provider"]
+            for transport_key in _TRANSPORT_EVENT_KEYS:
+                if transport_key in event:
+                    merge_event[transport_key] = event[transport_key]
+            merge_event["patch_proposed"] = True
+            merge_event["patch_envelope"] = copy.deepcopy(envelope)
+            merge_event["status"] = "rejected"
+            merge_event["coordinate_canonicalization"] = canonicalization_audit
+            reason_codes = canonicalization_audit.get("reason_codes") or []
+            merge_event["rejection_reasons"] = [
+                "; ".join(reason_codes) or "coordinate_canonicalization_failed"
+            ]
+            record_after = records[plan.sample_id]
+            merge_event["effective_patch_audit"] = _effective_patch_audit(
+                plan,
+                original_records[plan.sample_id],
+                record_before,
+                record_after,
+                merge_event,
+                envelope,
+            )
+            events.append(merge_event)
+            continue
+        envelope = canonicalized
         merged, merge_event = apply_patch_envelope(record_before, envelope, plan)
         merge_event["selected_for_call"] = True
         merge_event["llm_call_performed"] = event["llm_call_performed"]
@@ -1397,6 +1447,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         for transport_key in _TRANSPORT_EVENT_KEYS:
             if transport_key in event:
                 merge_event[transport_key] = event[transport_key]
+        merge_event["coordinate_canonicalization"] = canonicalization_audit
         merge_event["patch_envelope"] = copy.deepcopy(envelope)
         if merge_event["patch_accepted"]:
             records[plan.sample_id] = merged
@@ -1489,6 +1540,41 @@ def main(argv: Sequence[str] | None = None) -> int:
             extraction_status_counts[str(status)] = (
                 extraction_status_counts.get(str(status), 0) + 1
             )
+    # S2.8D-R3: aggregate coordinate-canonicalization audit statistics.
+    canonicalization_summary: dict[str, int] = {
+        "attempted_patch_count": 0,
+        "unchanged_patch_count": 0,
+        "reanchored_patch_count": 0,
+        "failed_patch_count": 0,
+        "already_valid_span_count": 0,
+        "reanchored_span_count": 0,
+        "zero_match_count": 0,
+        "ambiguous_match_count": 0,
+        "contract_violation_count": 0,
+    }
+    for event in events:
+        audit = event.get("coordinate_canonicalization")
+        if not isinstance(audit, dict) or not audit.get("attempted"):
+            continue
+        canonicalization_summary["attempted_patch_count"] += 1
+        status = audit.get("status")
+        if status in (STATUS_UNCHANGED, STATUS_REANCHORED, STATUS_FAILED):
+            canonicalization_summary[f"{status}_patch_count"] += 1
+        canonicalization_summary["already_valid_span_count"] += int(
+            audit.get("already_valid_count") or 0
+        )
+        canonicalization_summary["reanchored_span_count"] += int(
+            audit.get("reanchored_count") or 0
+        )
+        canonicalization_summary["zero_match_count"] += int(
+            audit.get("zero_match_count") or 0
+        )
+        canonicalization_summary["ambiguous_match_count"] += int(
+            audit.get("ambiguous_match_count") or 0
+        )
+        canonicalization_summary["contract_violation_count"] += int(
+            audit.get("contract_violation_count") or 0
+        )
     if args.offline_transport_replay:
         transport_request_policy = DEEPSEEK_V4_FLASH_H1_POLICY.to_dict()
         transport_endpoint = {"offline": True, "network": False}
@@ -1538,6 +1624,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             "valid_response_count": valid_response_count,
         },
         "h1_non_identity_gate": h1_non_identity_gate,
+        "coordinate_canonicalization": canonicalization_summary,
         "transport": transport_section,
         "replayed_response_count": (
             len(replay_responses) if args.offline_replay else 0

@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-07-31
-**收录文件**：546 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：550 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -372,6 +372,8 @@
 | `docs/research/PUBLIC_MARKER_LEXICON_RECONSTRUCTION.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/S28D_R2_CANARY_OFFSET_FORENSICS.json` | 研究证据 | 机器可读配置、数据、事件或产物 |
 | `docs/research/S28D_R2_CANARY_OFFSET_FORENSICS.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/S28D_R3_COORDINATE_CANONICALIZATION.json` | 研究证据 | 机器可读配置、数据、事件或产物 |
+| `docs/research/S28D_R3_COORDINATE_CANONICALIZATION.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_BASELINE_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_MODALITY_DATASET_INGESTION.md` | 研究证据 | 说明、规范或研究文档 |
@@ -512,6 +514,7 @@
 | `src/bpc_hybrid/extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_context.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/h1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_transport.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_client.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_config.py` | 活动 | Python 实现、脚本或测试 |
@@ -617,6 +620,7 @@
 | `tests/test_h1_effective_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_fallback_runner.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_masked_context.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_h1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_layer_d_runner_and_validator.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_llm_client.py` | 活动 | Python 实现、脚本或测试 |

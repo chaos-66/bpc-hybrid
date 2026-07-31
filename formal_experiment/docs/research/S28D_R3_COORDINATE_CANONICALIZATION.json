@@ -1,0 +1,116 @@
+{
+  "schema_version": "s28d_r3_report@1.0.0",
+  "task": "S2.8D-R3",
+  "title": "Fail-closed unique exact-text coordinate canonicalization",
+  "start_commit": "ef3fe486824fd0491c4deed7361acf0a47cdfea6",
+  "implementation_commit": null,
+  "files": [
+    "formal_experiment/src/bpc_hybrid/h1_span_canonicalizer.py",
+    "formal_experiment/scripts/run_sun_llm_fallback.py",
+    "formal_experiment/tests/test_h1_span_canonicalizer.py",
+    "formal_experiment/tests/test_h1_effective_fallback.py",
+    "formal_experiment/docs/research/S28D_R3_COORDINATE_CANONICALIZATION.md",
+    "formal_experiment/docs/research/S28D_R3_COORDINATE_CANONICALIZATION.json"
+  ],
+  "algorithm": {
+    "coordinate_system": "Python/Unicode code points, 0-based, end-exclusive, relative to the full source_text",
+    "search_window": "strictly source_text[clause_span.start:clause_span.end]",
+    "matching": "exact only: case, space, punctuation, Unicode identical; no strip/normalize/lower/token/fuzzy/semantic matching",
+    "case_already_valid": "clause_start <= start <= end <= clause_end and source_text[start:end] == text -> untouched, status unchanged",
+    "case_unique_match": "exactly one exact occurrence inside the clause window -> ONLY start/end reanchored, status reanchored",
+    "case_zero_match": "no exact occurrence inside the clause window -> whole patch fails closed",
+    "case_ambiguous_match": "more than one exact occurrence (overlapping occurrences count) -> whole patch fails closed",
+    "case_contract_violation": "invalid span/clause_span/source_text/container structure, non-int or bool offsets, start > end, empty text -> whole patch fails closed",
+    "atomicity": "any single span failure rejects the entire patch; no partial correction is ever produced",
+    "modified_fields": "only start and end; text/id/label/relations/absent markers/order and every other value untouched",
+    "relation_fields": "actor_action_map and order_relations are never examined or modified"
+  },
+  "reason_codes": [
+    "coordinate_canonicalization_zero_match",
+    "coordinate_canonicalization_ambiguous_match",
+    "coordinate_canonicalization_contract_violation"
+  ],
+  "integration_point": "single shared path after parser and before apply_patch_envelope, for all execution modes (--offline-patches, --offline-replay, --offline-transport-replay, --allow-llm)",
+  "validator_unchanged": true,
+  "prompt_unchanged": true,
+  "canonical_schema_unchanged": true,
+  "tests": {
+    "new_test_file": "formal_experiment/tests/test_h1_span_canonicalizer.py",
+    "new_test_count": 26,
+    "coverage_notes": "already-valid unchanged; unique reanchor; zero/ambiguous/contract fail closed; bool/non-int offsets; start>end; non-zero clause_start global coords; outside-window matches excluded; Unicode code points; UTF-8 byte vs char length; overlapping occurrences; multi-span all-unique; one-ambiguous-blocks-all; modality evidence + span fields; relations untouched; only start/end semantic change; byte-identical determinism; absent markers skipped; illegal container; illegal clause_span; offline replay + offline transport replay share the canonicalizer; reanchored-but-relation-ID-error still rejected by validator; unauthorized field still rejected by merge; unchanged hash recorded"
+  },
+  "evidence": {
+    "canary_run_id": "s28d_r1_h1_canary_v1",
+    "canary_manifest_sha256": "022d31a16a4fc2c93e0d22bde43d92bd688964a9ab2fd57e4623afe5c3eeb0cc",
+    "transport_capture_sha256": "f880784114d41e76944a6c69948297301904bd1e6f86b3cdcb86c70efcd2ad1d",
+    "replay_row_sha256": "96f8bbdc399ffc0fbaca039d29db31d266a98750b5152e2976d066e166cf1f7f",
+    "sample_id": "estg_000021",
+    "clause_id": "estg_000021.c1",
+    "clause_span": {"start": 0, "end": 212},
+    "b0_prediction_sha256": "57f3564baa573735b55bc252554698236b3eb744a657090abe849cd772b4bcb4"
+  },
+  "strict_historical_result": {
+    "mode": "real canary (R1) + offline strict replay (R2), unchanged",
+    "accepted": 0,
+    "effective_patch": 0,
+    "changed_predictions": 0,
+    "h1_non_identity_gate": false,
+    "h1_equals_b0": true,
+    "rejection_codes": ["canonical_invalid", "reference_mismatch"],
+    "r1_artifacts_untouched": true
+  },
+  "r3_offline_replay": {
+    "mode": "offline_transport_replay",
+    "output_dir": "formal_experiment/outputs/development/s28d_r3_coordinate_canonicalization_replay_v1",
+    "extraction_status": "ok_message_content",
+    "proposed": 1,
+    "canonicalization_status": "reanchored",
+    "reanchored_span_count": 3,
+    "zero_match_count": 0,
+    "ambiguous_match_count": 0,
+    "contract_violation_count": 0,
+    "corrections": [
+      {"field_path": "modality.evidence[0]", "proposed": [0, 99], "corrected": [0, 95], "exact_occurrence_count": 1},
+      {"field_path": "actors[0]", "proposed": [55, 99], "corrected": [49, 95], "exact_occurrence_count": 1},
+      {"field_path": "conditions[0]", "proposed": [100, 211], "corrected": [97, 207], "exact_occurrence_count": 1}
+    ],
+    "canonical_validator_passed": true,
+    "accepted": 1,
+    "effective_patch": true,
+    "changed_predictions": 1,
+    "changed_fields": ["actor_action_map", "actors", "conditions", "constraints", "modality"],
+    "h1_non_identity_gate": true,
+    "h1_equals_b0": false,
+    "h1_prediction_sha256": "5bcf26d797d8ca2f894e74827393961546bdd1f6b890a64f44ee930f2126e609",
+    "identity_fields_unchanged": true,
+    "manifest_sha256": "f2c8c1fd4820fd26b4bd633e2cdc2b3711dde410ab33183d6ef6061dfb94f9b9",
+    "byte_identical_reruns": true,
+    "original_patch_sha256": "e5079e29aa4fa148b58bc00a1c3080b58529c92fad51ddec72042644c49f5b13",
+    "canonicalized_patch_sha256": "8f2842be150ead9c"
+  },
+  "safety": {
+    "api_calls": 0,
+    "gold_read": false,
+    "layer_e_read": false,
+    "env_read": false,
+    "real_canary_rerun": false,
+    "r1_r2_artifacts_modified": false,
+    "prompt_modified": false,
+    "validator_weakened": false,
+    "b0_trigger_risk_budget_modified": false,
+    "pr_f1": "not_computed",
+    "claim_boundary": "mechanism verification only; no formal evaluation, no P/R, no pilot authorization"
+  },
+  "interpretation_boundary": [
+    "H1 fallback now accepts this mechanical coordinate error",
+    "the same capture yields H1 != B0 with an effective patch",
+    "no claim about P/R superiority over B0",
+    "no claim about future model stability",
+    "formal S2.8 remains blocked on S2.6",
+    "no automatic pilot"
+  ],
+  "next_steps": [
+    "user decides whether to authorize a single real canary (hard cap 1, 0 retry) with the canonicalizer enabled",
+    "if accepted, record a new experiment_run event and manifest"
+  ]
+}

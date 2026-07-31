@@ -503,6 +503,9 @@ class TestEffectiveReplay:
         assert any("unauthorized" in r for r in reasons)
 
     def test_span_text_mismatch_rejected_atomically(self, tmp_path):
+        """A span text that does not exist in the clause is a zero match:
+        S2.8D-R3 canonicalization fails the WHOLE patch closed before the
+        merge, and the prediction stays exactly B0."""
         attempts = _fixture_attempts()
         b0_path, _ = _b0_bundle(tmp_path, attempts)
         batch, _, selected = _selected_plans(attempts, b0_path)
@@ -529,7 +532,12 @@ class TestEffectiveReplay:
         manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
         assert manifest["patch_accepted_count"] == 0
         assert manifest["prediction_changed_sample_count"] == 0
-        assert "reference_mismatch" in manifest["effective_patch"]["rejection_reason_counts"]
+        assert (
+            "coordinate_canonicalization_zero_match"
+            in manifest["effective_patch"]["rejection_reason_counts"]
+        )
+        assert manifest["coordinate_canonicalization"]["failed_patch_count"] == 1
+        assert manifest["coordinate_canonicalization"]["zero_match_count"] == 1
         b0_rows = _b0_by_sample(attempts, b0_path)
         for row in _read_jsonl(output):
             assert row["clauses"] == b0_rows[row["sample_id"]]["clauses"]
