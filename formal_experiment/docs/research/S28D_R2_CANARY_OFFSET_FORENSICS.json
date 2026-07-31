@@ -1,0 +1,159 @@
+{
+  "schema_version": "s28d_r2_report@1.0.0",
+  "task": "S2.8D-R2",
+  "analysis_type": "gold_blind_offline_forensics",
+  "git_commit": "4e4e655a520d47605522e83c973132f94e05871c",
+  "evidence": {
+    "canary_run_id": "s28d_r1_h1_canary_v1",
+    "canary_manifest_sha256": "022d31a16a4fc2c93e0d22bde43d92bd688964a9ab2fd57e4623afe5c3eeb0cc",
+    "transport_capture_sha256": "f880784114d41e76944a6c69948297301904bd1e6f86b3cdcb86c70efcd2ad1d",
+    "response_body_sha256_recorded": "2917f41308e0845e0c0f94fa2f12b7d9c6dba60ec89a710e4e201f98d71970b9",
+    "message_content_sha256": "0d076122c0d7367fe667ac2f1626e86a97e415fab89af886e015b1aa4590b779",
+    "source_text_sha256": "92b044cdc7b580cc5cd3f671d01a90f9c1ed0a402b87f43f236b6119cad9fd84",
+    "source_text_char_length": 212,
+    "source_text_all_ascii": true,
+    "b0_prediction_sha256": "57f3564baa573735b55bc252554698236b3eb744a657090abe849cd772b4bcb4",
+    "prompt_sha256": "065005189ced3179ff4069d016c7d0ca892ce4992707834e09142efc0472c391",
+    "prompt_variant": "masked_selected_v5",
+    "model": {
+      "requested": "deepseek-v4-flash",
+      "resolved": "deepseek-v4-flash",
+      "provider_returned": "deepseek-v4-flash"
+    },
+    "api_call_count": 1,
+    "retries": 0,
+    "usage_tokens": {"prompt": 1305, "completion": 436, "total": 1741},
+    "raw_response_saved": false
+  },
+  "sample_id": "estg_000021",
+  "clause_id": "estg_000021.c1",
+  "clause_span": {"start": 0, "end": 212},
+  "rejected_spans": [
+    {
+      "field_path": "modality.evidence[0]",
+      "proposed_start": 0,
+      "proposed_end": 99,
+      "proposed_text_char_length": 95,
+      "proposed_text_utf8_length": 95,
+      "proposed_text_sha256": "147907cf5fcb67cee97ae2dcdbf6b4d9329af48908268baa211e755b496e63ff",
+      "slice_matches": false,
+      "full_source_occurrences": 1,
+      "clause_window_occurrences": 1,
+      "unique_exact_match": {"start": 0, "end": 95},
+      "start_delta": 0,
+      "end_delta": 4,
+      "classification": "correct_text_wrong_coordinates",
+      "unicode_byte_confusion": false
+    },
+    {
+      "field_path": "actors[0]",
+      "proposed_start": 55,
+      "proposed_end": 99,
+      "proposed_text_char_length": 46,
+      "proposed_text_utf8_length": 46,
+      "proposed_text_sha256": "381a79d89fcb60ac9fbb6610a83bc0ca4b7af1922f43172e2fe4d584f922275c",
+      "slice_matches": false,
+      "full_source_occurrences": 1,
+      "clause_window_occurrences": 1,
+      "unique_exact_match": {"start": 49, "end": 95},
+      "start_delta": 6,
+      "end_delta": 4,
+      "classification": "correct_text_wrong_coordinates",
+      "unicode_byte_confusion": false
+    },
+    {
+      "field_path": "conditions[0]",
+      "proposed_start": 100,
+      "proposed_end": 211,
+      "proposed_text_char_length": 110,
+      "proposed_text_utf8_length": 110,
+      "proposed_text_sha256": "aa23d19d34b6d46454d08b3d00172a4b916cfbc6b59e0958dd1147ba3757b95e",
+      "slice_matches": false,
+      "full_source_occurrences": 1,
+      "clause_window_occurrences": 1,
+      "unique_exact_match": {"start": 97, "end": 207},
+      "start_delta": 3,
+      "end_delta": 4,
+      "classification": "correct_text_wrong_coordinates",
+      "unicode_byte_confusion": false
+    }
+  ],
+  "strict_replay": {
+    "mode": "offline_transport_replay",
+    "decoder": "bpc_hybrid.h1_transport.decode_chat_completion_envelope",
+    "response_body_reconstruction": "chat.completion envelope rebuilt around the byte-identical captured message.content; original raw body never saved by design",
+    "schema_valid": false,
+    "cross_field_valid": false,
+    "rejection_codes": {"canonical_invalid": 1, "reference_mismatch": 1},
+    "accepted": 0,
+    "effective_patch": 0,
+    "changed_predictions": 0,
+    "h1_non_identity_gate": false,
+    "h1_equals_b0": true,
+    "identity_fields_unchanged": true,
+    "manifest_sha256": "8f6459b75deb18750ab45df5f6555f9b4354750f5943240754945f2df34d9580"
+  },
+  "diagnostic_counterfactual": {
+    "diagnostic_only": true,
+    "never_a_real_canary_result": true,
+    "rule": "reanchor ONLY start/end to the unique exact match inside the original clause window; text/ids/fields/labels/relations untouched",
+    "fail_closed": false,
+    "corrections": {
+      "modality.evidence[0]": [0, 95],
+      "actors[0]": [49, 95],
+      "conditions[0]": [97, 207]
+    },
+    "schema_valid": true,
+    "cross_field_valid": true,
+    "merge_status": "accepted",
+    "effective_patch": true,
+    "changed_fields": ["actor_action_map", "actors", "conditions", "constraints", "modality"],
+    "prediction_changed": true,
+    "h1_non_identity_gate": true,
+    "identity_fields_unchanged": true,
+    "merged_prediction_sha256": "5bcf26d797d8ca2f",
+    "manifest_sha256": "543d030f2ead50240f8c7f88274255050095d033ad69e5c98deea09344575746"
+  },
+  "coordinate_contract_review": {
+    "prompt": "rule_first_llm_fallback_masked_prompt (v5)",
+    "explicit_present": [
+      "every span must be inside the existing clause_span",
+      "every span must satisfy text == source_text[start:end]",
+      "evidence/span text must be verbatim source text"
+    ],
+    "explicit_missing": [
+      "coordinate unit (Python/Unicode code points)",
+      "0-based offsets as an explicit statement",
+      "end-exclusive as an explicit statement",
+      "frame composition rule (global source_text offsets vs clause-local membership; clause_span.start addition)",
+      "per-span output self-check instruction"
+    ],
+    "implied_only_by_example": ["0-based offsets", "end-exclusive"],
+    "ambiguous": ["coordinate frame: 'inside clause_span' (clause-local language) vs 'source_text[start:end]' (global frame)"],
+    "masked_fields_hide_offset_info": false,
+    "note": "source_text and immutable clause_span remain visible unmasked; masking hides only B0's own assignments (anti-anchoring design)"
+  },
+  "limitations": [
+    "n=1 canary sample / 1 clause / 3 spans; pattern evidence is consistent but small",
+    "clause_span.start == 0 on this sample, so a clause-local/global frame confusion is indistinguishable from plain offset arithmetic error here",
+    "the +4 end overshoot on all three spans (including one with an exact start) supports an end-boundary inclusion hypothesis but is not provable from one sample",
+    "counterfactual proves the pipeline accepts corrected coordinates; it does not prove the model can produce them"
+  ],
+  "conclusion": {
+    "all_rejected_spans_clause_unique_reanchor": true,
+    "counterfactual_schema_valid": true,
+    "counterfactual_merge_succeeded": true,
+    "counterfactual_effective_patch": true,
+    "situation": "A",
+    "recommended_next_task": "S2.8D-R3: implement fail-closed unique exact-text coordinate canonicalization (reanchor spans to the unique exact clause-internal match before the atomic merge; zero-match / ambiguous-match spans still rejected)",
+    "not_implemented_this_round": true,
+    "prompt_unmodified": true,
+    "validator_unmodified": true,
+    "prediction_unmodified": true,
+    "api_calls": 0,
+    "gold_read": false,
+    "layer_e_read": false,
+    "real_canary_unchanged": true,
+    "pr_f1": "not_computed"
+  }
+}

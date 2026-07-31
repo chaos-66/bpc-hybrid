@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-07-31
-**收录文件**：542 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：546 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -370,6 +370,8 @@
 | `docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/BARRIENTOS_LLM_ROLE.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/PUBLIC_MARKER_LEXICON_RECONSTRUCTION.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/S28D_R2_CANARY_OFFSET_FORENSICS.json` | 研究证据 | 机器可读配置、数据、事件或产物 |
+| `docs/research/S28D_R2_CANARY_OFFSET_FORENSICS.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_BASELINE_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_MODALITY_DATASET_INGESTION.md` | 研究证据 | 说明、规范或研究文档 |
@@ -484,6 +486,7 @@
 | `scripts/run_stage3_fixture_harness.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_llm_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_rule_only.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/status.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_estg_human_review.py` | 活动 | Python 实现、脚本或测试 |
@@ -627,6 +630,7 @@
 | `tests/test_r15_sun_style_g2_extraction_rules.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g3_bpmn_violation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g4_outputs_overclaim.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |

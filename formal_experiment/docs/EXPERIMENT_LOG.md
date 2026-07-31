@@ -1784,3 +1784,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：用户明确授权最多 1 次 deepseek-v4-flash、硬上限 1、0 retry；实际调用 1，无 retry。requested/resolved/returned model 均为 deepseek-v4-flash；HTTP 200，chat.completion，finish_reason=stop，extraction=ok_message_content，reasoning_present=false，tool_calls=0，usage prompt=1305/completion=436/total=1741。响应为非空 schema-valid patch envelope，但 modality evidence、actor、condition 的 span text/offset 与 source reference 不一致；原子 canonical 校验以 canonical_invalid + reference_mismatch 拒绝。transport capture sha256=f880784114d41e76944a6c69948297301904bd1e6f86b3cdcb86c70efcd2ad1d，未含凭据；raw response 未保存。未自动重试、未进入完整 pilot；历史真实调用累计 41 次。未改 B0/trigger/risk/budget/prompt/schema/Gold/Layer E/formal gates；P/R=not_computed。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-31T14:29:35.858349+00:00 - S2.8D-R2 canary span/offset 离线取证（Gold-blind、forensic-only；0 real API calls）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1154 passed, 24 skipped in 109.01s (0:01:49)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`4e4e655a520d47605522e83c973132f94e05871c`；相关未提交路径：7 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：task=S2.8D-R2；llm_api=not_called，0 real API calls。结论：3/3 被拒 span 均为正确文本+错误坐标（clause 窗口内唯一 exact match，无 zero/ambiguous；end 全部超界 +4 字符，start Δ 0/+6/+3；纯 ASCII 排除 Unicode/byte 混淆；clause_span.start==0 使 frame 混淆不可区分，列为限制）。Strict replay（同一 decoder→parser→validator→merge）复现真实 canary 拒绝：canonical_invalid=1、reference_mismatch=1、accepted=0、effective=0、changed=0、gate=false、H1==B0。Diagnostic-only counterfactual（仅修正 start/end，文本/id/field/label/relation 不动；zero/ambiguous fail closed）通过同一 canonical validator 与 atomic merge：merge=accepted、effective_patch=true、changed_fields=actor_action_map/actors/conditions/constraints/modality、gate=true、identity 字段不变；counterfactual 仅诊断、未覆盖 strict 结果、未写入真实 prediction。Prompt coordinate contract 审查（未修改）：text==source_text[start:end] 明确存在；0-based/end-exclusive/code-point 单位仅示例隐含、自检指令缺失、frame 表述歧义；masked 字段未隐藏 offset 所需信息。最终判断=情况 A：唯一推荐 S2.8D-R3 = fail-closed unique exact-text coordinate canonicalization（本轮未实现）。新增 scripts/s28d_r2_canary_forensics.py（纯离线、确定性、默认拒覆盖、不读 .env/Gold）+ 17 项合成测试 + docs/research/S28D_R2_CANARY_OFFSET_FORENSICS.md/.json。证据：Gold 未读；Layer E 未读；真实 canary 未改变；P/R=not_computed。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

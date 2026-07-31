@@ -74,7 +74,7 @@ Sun 最终版、公开数据、引用链和代码来源证据统一放在 `docs/
 | 5 | S2.2 | 用户并行完成人工裁决；Agent 只验证 | 150/150 adjudicated，freeze validator 通过 |
 | 6 | S2.3 | **verified**：`public_marker_lexicon_en_v1` 已离线锁定；64 个 marker、source/manifest/payload hash、空扩展表和机器门禁通过 | 来源、规则、语言、hash 与 dev-only 扩展策略固定 |
 | 6.1 | S2.4-S2.6 | 本轮严格未启动；许可未知与 S2.4 ready 的现有矛盾不在 S2.3 绕过，留待 S2.4 单独派发前收口 | 非 LLM canonical Rule Record 可复现 |
-| 7 | S2.7-S2.12 | H1 development wiring 已修复；S2.8A/B/C development verified；S2.8D-R1 transport 离线修复 verified。用户随后授权 1 次 v4-flash canary（硬上限 1、0 retry）：transport/extraction 成功，收到非空 schema-valid envelope，但 patch 的 span text/offset reference mismatch，原子 canonical 校验拒绝；valid=1、proposed=1、accepted=0、effective=0、changed=0、gate=false，H1 仍等于 B0。历史真实调用累计 41 次；**formal S2.8 仍 blocked on S2.6；不得自动重试或进入完整 pilot** | 下一步仅做 Gold-blind 离线 prompt/offset-contract 诊断；任何新 canary/pilot 均需新的明确授权与硬调用上限；P/R 仍 not_computed |
+| 7 | S2.7-S2.12 | H1 development wiring 已修复；S2.8A/B/C development verified；S2.8D-R1 transport 离线修复 verified。用户随后授权 1 次 v4-flash canary（硬上限 1、0 retry）：transport/extraction 成功，收到非空 schema-valid envelope，但 patch 的 span text/offset reference mismatch，原子 canonical 校验拒绝；valid=1、proposed=1、accepted=0、effective=0、changed=0、gate=false，H1 仍等于 B0。历史真实调用累计 41 次。**S2.8D-R2 离线取证已完成**（0 real API calls）：3/3 被拒 span 均为正确文本+错误坐标（clause 内唯一 exact match；end 全部超界 +4 字符）；strict replay 复现 canary 拒绝（canonical_invalid+reference_mismatch、accepted=0、gate=false）；diagnostic-only counterfactual（只改坐标）通过同一 validator/merge → effective_patch=true、gate=true、identity 不变。结论=情况 A：**下一步 S2.8D-R3 = fail-closed unique exact-text coordinate canonicalization（未实现）**；prompt 未改。**formal S2.8 仍 blocked on S2.6；不得自动重试或进入完整 pilot** | 任何新 canary/pilot 均需新的明确授权与硬调用上限；P/R 仍 not_computed |
 | 8 | S2.13 | 冻结 Stage 2 | 数据、方法、指标、成本、manifest 完整 |
 | 9 | PW1 | **下一论文任务**：引言与 RQ0–RQ4 | 无结果性过度主张；主张矩阵同步 |
 
@@ -110,6 +110,7 @@ Stage 1 和 Stage 3 的后续任务已经在主 Pipeline 中排好依赖，不�
 - 目录职责与逐文件清单：`docs/DIRECTORY_GUIDE.md`、`docs/FILE_CATALOG.md`
 - Sun 数据与最终版审计：`docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md`
 - S2.3 public marker 重建：`docs/research/PUBLIC_MARKER_LEXICON_RECONSTRUCTION.md`
+- S2.8D-R2 canary span/offset 取证：`docs/research/S28D_R2_CANARY_OFFSET_FORENSICS.md`、`docs/research/S28D_R2_CANARY_OFFSET_FORENSICS.json`
 - Sun baseline 边界：`docs/research/SUN_BASELINE_AUDIT.md`
 - Winter/Sun 代码分离：`docs/research/SUN_WINTER_CODE_SEPARATION_AUDIT.md`
 - Barrientos 借用边界：`docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`
