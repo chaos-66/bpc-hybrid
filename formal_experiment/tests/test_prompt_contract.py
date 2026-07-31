@@ -295,7 +295,8 @@ def test_run_sun_llm_fallback_imports_prompt_loader():
     runner_path = PROJECT_ROOT / "scripts" / "run_sun_llm_fallback.py"
     text = runner_path.read_text(encoding="utf-8")
     assert "from bpc_hybrid.prompt_loader import" in text
-    assert "load_prompt(PromptName)" in text
+    assert "load_prompt(" in text
+    assert 'SYSTEM_PROMPT = """' not in text  # no hardcoded multi-line system prompt constant
 
 
 def test_runners_fail_loudly_on_missing_prompt(tmp_path, monkeypatch):

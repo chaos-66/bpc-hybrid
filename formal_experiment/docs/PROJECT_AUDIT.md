@@ -74,7 +74,7 @@ Sun 最终版、公开数据、引用链和代码来源证据统一放在 `docs/
 | 5 | S2.2 | 用户并行完成人工裁决；Agent 只验证 | 150/150 adjudicated，freeze validator 通过 |
 | 6 | S2.3 | **verified**：`public_marker_lexicon_en_v1` 已离线锁定；64 个 marker、source/manifest/payload hash、空扩展表和机器门禁通过 | 来源、规则、语言、hash 与 dev-only 扩展策略固定 |
 | 6.1 | S2.4-S2.6 | 本轮严格未启动；许可未知与 S2.4 ready 的现有矛盾不在 S2.3 绕过，留待 S2.4 单独派发前收口 | 非 LLM canonical Rule Record 可复现 |
-| 7 | S2.7-S2.12 | H1 development wiring 已修复；S2.8A Gold-blind 诊断表生成器已在 B0 v10a（150 samples/256 clauses）上完成 development-only 离线生成：0 excluded、coverage complete、重复运行 byte-identical；候选信号计数 221/256 rows 含至少一个信号（non_definition_missing_actor=171、classifier_marker_disagreement=85、alignment_confidence<0.65=118、scope_rejected=9），未报告任何 Gold 性能；formal H1/D1、复杂语料和错误分析仍 blocked | 同 IDs/Gold/evaluator 的完整比较；真实 H1 run 后报告 called/accepted/rejected/changed 四层计数 |
+| 7 | S2.7-S2.12 | H1 development wiring 已修复；S2.8A Gold-blind 诊断表生成器已在 B0 v10a 上完成（150 samples/256 clauses，0 excluded、byte-identical）；S2.8B masked-selected-fields repair 合同 development verified：full_b0_v4（v4 prompt SHA 不变）与 masked_selected_v5 两臂 plan-only 在 B0 v10a 上 221 triggered/50 selected plans/41 samples 完全一致，predictions 与 B0 semantic hash 全等且两臂 byte-identical，50/50 context audits 通过、0 leak、0 API calls；**formal S2.8 仍 blocked on S2.6** | 同 IDs/Gold/evaluator 的完整比较；真实 H1 run 后报告 called/accepted/rejected/changed 四层计数 |
 | 8 | S2.13 | 冻结 Stage 2 | 数据、方法、指标、成本、manifest 完整 |
 | 9 | PW1 | **下一论文任务**：引言与 RQ0–RQ4 | 无结果性过度主张；主张矩阵同步 |
 

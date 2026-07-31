@@ -1702,3 +1702,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：新增通用纯只读 helper：tree_snapshot（missing sentinel/文件 sha256+size/目录递归/确定性排序/symlink 不跟随、越界 fail closed）、snapshot_diff（added/removed/modified，rename=removed+added，missing->created 检测）、format_diff（只列路径不输出内容）；session-scoped autouse fixture 在 session 起止对 backup_dir/action_log/7 个真实源文件各做快照比较；275 个用户合法备份（283MB）原样保留；新增 14 项 tmp_path 单元测试（含 symlink 越界 fail closed 模拟测试，真实 symlink 测试在本机因 WinError 1314 显式 skip）；focused 50 passed 2 skipped；全量 1048 passed 24 skipped 0 failed；未删除/移动/覆盖任何真实备份，未改 Layer E/Gold/action log
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-31T10:35:09.820189+00:00 - S2.8B masked-selected-fields repair 合同（development）：新增 --prompt-variant full_b0_v4|masked_selected_v5（默认 full_b0_v4，v4 prompt SHA 钉住不变）；h1_context.py 纯函数遮蔽+依赖闭包+泄漏审计；v5 masked prompt；plan-only 亦记录 context audit；B0 v10a 两臂 plan-only 一致性验证完成
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1073 passed, 24 skipped in 128.31s (0:02:08)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`8e870d3e458ba796b1be695ddcecdfa0ac54e2a0`；相关未提交路径：8 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：full_b0_v4（prompt sha 00fe02996914e17f...）与 masked_selected_v5（prompt sha 065005189ced3179...）在 B0 v10a 上 plan-only max_calls=50：150 samples/256 clauses；triggered=221 plans（两臂相同）、selected=50 plans/41 samples（两臂 key 集合完全相同）；两臂 predictions 全部等于对应 B0 semantic prediction hash 且两臂 byte-identical；masked 臂 50/50 context audits 通过、selected_ids_exposed_in_unselected_relations 全 false、0 leak；llm_calls=0、0 proposed patches、0 changed；context audit 仅含 hash/字段名/布尔，无 source text/prompt/masked 值；未报告任何 Gold 性能。新增 25 项测试（prompt SHA 钉住、遮蔽语义、依赖闭包、泄漏审计、确定性、两臂一致性、offline replay merge 不受 variant 影响、未知 variant fail closed、无 Gold/Layer E/API 依赖）；既有 H1/prompt 套件全绿；全量 1073 passed 24 skipped 0 failed
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

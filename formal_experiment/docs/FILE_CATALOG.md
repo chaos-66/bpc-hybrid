@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-07-31
-**收录文件**：525 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：528 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -413,6 +413,7 @@
 | `prompts/sun_compat/dry_run_back_translation.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/dry_run_six_element.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/dry_run_zh_gloss.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/rule_first_llm_fallback_masked_prompt.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/rule_first_llm_fallback_prompt.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/zh_aid/en_back_translation.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/zh_aid/zh_translation.md` | 活动 | 说明、规范或研究文档 |
@@ -506,6 +507,7 @@
 | `src/bpc_hybrid/evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/fallback.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/h1_context.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_client.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_config.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_provider.py` | 活动 | Python 实现、脚本或测试 |
@@ -597,6 +599,7 @@
 | `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_fallback_runner.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_h1_masked_context.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_layer_d_runner_and_validator.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_llm_client.py` | 活动 | Python 实现、脚本或测试 |

@@ -10,6 +10,13 @@ Three execution modes are supported:
 * ``--offline-patches``: replay stored patch envelopes without network access;
 * ``--allow-llm``: explicitly authorize real API calls for selected plans.
 
+``--prompt-variant`` selects the context policy shown to the model:
+``full_b0_v4`` (default, historical prompt, byte-identical rendered
+requests) or ``masked_selected_v5`` (the requested repair fields are
+removed from the B0 clause context and replaced by a masking sentinel so
+the model cannot anchor on B0's assignment).  A leak audit runs for every
+selected plan in every mode, including ``--plan-only``.
+
 Every trigger and patch attempt is written to a telemetry sidecar.  Patch
 application is atomic: an unauthorized, malformed, no-op, or canonical-invalid
 patch is rejected in full and the exact B0 prediction is retained.
@@ -44,6 +51,11 @@ from bpc_hybrid.b0_artifact import (  # noqa: E402
     sha256_file,
     verify_b0_manifest,
 )
+from bpc_hybrid.h1_context import (  # noqa: E402
+    CONTEXT_POLICY_VERSION,
+    audit_masked_context,
+    build_masked_clause_context,
+)
 from bpc_hybrid.llm_config import LLMConfig
 from bpc_hybrid.llm_client import (
     LLMClientError,
@@ -72,6 +84,17 @@ _read_json_values = read_json_values
 _clean_b0_entry = clean_b0_entry
 
 PromptName = "rule_first_llm_fallback_prompt"
+MaskedPromptName = "rule_first_llm_fallback_masked_prompt"
+
+# S2.8B anchoring-ablation variants.  full_b0_v4 keeps the historical
+# prompt and rendered request byte-for-byte; masked_selected_v5 masks the
+# requested repair fields out of the B0 context before rendering.
+DEFAULT_PROMPT_VARIANT = "full_b0_v4"
+PROMPT_VARIANTS = ("full_b0_v4", "masked_selected_v5")
+_PROMPT_NAME_BY_VARIANT = {
+    "full_b0_v4": PromptName,
+    "masked_selected_v5": MaskedPromptName,
+}
 
 _DEFAULT_OUTPUT = _PROJECT_ROOT / "data" / "predictions" / "sun_llm_fallback_predictions.jsonl"
 _DEFAULT_MANIFEST = _PROJECT_ROOT / "data" / "predictions" / "sun_llm_fallback_manifest.json"
@@ -472,8 +495,22 @@ def _derive_telemetry_path(output: Path) -> Path:
     return output.with_suffix(".telemetry" + suffix)
 
 
-def _build_user_prompt(prompt: Any, record: Mapping[str, Any], plan: RepairPlan) -> str:
-    clause = record["clauses"][plan.clause_index]
+def _build_user_prompt(
+    prompt: Any,
+    record: Mapping[str, Any],
+    plan: RepairPlan,
+    context_clause: Mapping[str, Any] | None = None,
+) -> str:
+    """Render the user prompt for one repair plan.
+
+    ``context_clause`` is the (possibly masked) clause context shown to the
+    model; when None, the plain B0 clause is used (full_b0_v4 behavior).
+    """
+    clause = (
+        context_clause
+        if context_clause is not None
+        else record["clauses"][plan.clause_index]
+    )
     return prompt.user_prompt_template.format(
         sample_id=plan.sample_id,
         source_id=record["source_id"],
@@ -483,6 +520,41 @@ def _build_user_prompt(prompt: Any, record: Mapping[str, Any], plan: RepairPlan)
         repair_fields_csv=", ".join(plan.repair_fields),
         repair_reasons_csv=", ".join(plan.reasons),
     )
+
+
+def _build_context_audit(
+    clause: Mapping[str, Any],
+    plan: RepairPlan,
+    variant: str,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Build the (possibly masked) clause context and its leak audit.
+
+    Returns ``(context_clause, audit)``.  For ``masked_selected_v5`` the
+    requested repair fields are replaced by the masking sentinel; for
+    ``full_b0_v4`` the context is the plain clause.  The audit records
+    only hashes, field names, and booleans -- never source text, prompt
+    text, or masked values.  A leak (selected IDs exposed through an
+    unmasked relation) raises ``H1RunnerError`` so no request is built.
+    """
+    pre_hash = _json_hash(dict(clause))
+    if variant == "masked_selected_v5":
+        context_clause, masked_fields, dependency_fields = build_masked_clause_context(
+            clause, plan.repair_fields
+        )
+    else:
+        context_clause, masked_fields, dependency_fields = dict(clause), (), ()
+    audit = audit_masked_context(
+        clause, context_clause, masked_fields, dependency_fields
+    )
+    audit["original_record_unchanged"] = _json_hash(dict(clause)) == pre_hash
+    audit["variant"] = variant
+    if audit["selected_ids_exposed_in_unselected_relations"]:
+        raise H1RunnerError(
+            f"masked context leak for {plan.sample_id}/{plan.clause_id}: "
+            f"selected IDs exposed in unselected relations: "
+            f"{audit['exposed_relation_entries']}"
+        )
+    return context_clause, audit
 
 
 def _summary_by_sample(
@@ -526,6 +598,14 @@ def _make_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output", type=Path, default=_DEFAULT_OUTPUT)
     parser.add_argument("--manifest", type=Path, default=_DEFAULT_MANIFEST)
     parser.add_argument("--telemetry", type=Path)
+    parser.add_argument(
+        "--prompt-variant",
+        choices=PROMPT_VARIANTS,
+        default=DEFAULT_PROMPT_VARIANT,
+        help="full_b0_v4 keeps the historical unmasked prompt; "
+        "masked_selected_v5 masks the requested repair fields out of the "
+        "B0 context before rendering (anchoring ablation).",
+    )
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--plan-only", action="store_true")
     mode.add_argument("--offline-patches", type=Path)
@@ -557,7 +637,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             return 2
 
     try:
-        prompt = load_prompt(PromptName)
+        prompt = load_prompt(_PROMPT_NAME_BY_VARIANT[args.prompt_variant])
         b0_manifest = verify_b0_manifest(args.b0_predictions, args.b0_manifest)
         batch = load_b0_predictions(args.b0_predictions)
         offline_patches = load_offline_patches(args.offline_patches) if args.offline_patches else {}
@@ -575,6 +655,23 @@ def main(argv: Sequence[str] | None = None) -> int:
     for record in records.values():
         record["method"] = {"name": "sun_llm_fallback", "schema_source": SCHEMA_SOURCE}
         validate_canonical(record)
+
+    # S2.8B: build the (possibly masked) clause context and leak audit for
+    # every selected plan, in ALL execution modes, so plan-only runs can be
+    # verified fully offline.  A context leak refuses the whole run.
+    context_clauses: dict[tuple[str, str], dict[str, Any]] = {}
+    context_audits: dict[tuple[str, str], dict[str, Any]] = {}
+    try:
+        for plan in selected:
+            clause = records[plan.sample_id]["clauses"][plan.clause_index]
+            context_clause, audit = _build_context_audit(
+                clause, plan, args.prompt_variant
+            )
+            context_clauses[plan.key] = context_clause
+            context_audits[plan.key] = audit
+    except (B0ArtifactError, ValueError) as exc:
+        print(f"Refusing to run: {exc}")
+        return 2
 
     llm_transport = None
     config = None
@@ -600,6 +697,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             events.append(event)
             continue
         event["selected_for_call"] = True
+        event["context_audit"] = context_audits[plan.key]
         if args.plan_only:
             event["status"] = "planned_not_executed"
             events.append(event)
@@ -619,7 +717,9 @@ def main(argv: Sequence[str] | None = None) -> int:
                 source_id=record["source_id"],
                 source_text=record["source_text"],
                 system_prompt=prompt.system_prompt,
-                user_prompt=_build_user_prompt(prompt, record, plan),
+                user_prompt=_build_user_prompt(
+                    prompt, record, plan, context_clauses.get(plan.key)
+                ),
                 schema_name="H1RepairPatchEnvelope",
             )
             try:
@@ -686,6 +786,18 @@ def main(argv: Sequence[str] | None = None) -> int:
         "status": "development_not_formal" if args.development else "formal",
         "execution_mode": execution_mode,
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "prompt_variant": args.prompt_variant,
+        "context_policy": {
+            "policy_version": CONTEXT_POLICY_VERSION,
+            "masked_sentinel": {"masked_selected_field": True},
+            "dependency_closure": [
+                "actors|actions -> actor_action_map",
+                "actions -> order_relations",
+            ],
+            "audits_computed": len(context_audits),
+            "audits_passed": len(context_audits),
+            "selected_ids_leak_count": 0,
+        },
         "b0_binding": {
             "path": str(args.b0_predictions),
             "sha256": _sha256_file(args.b0_predictions),
@@ -748,7 +860,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 2
 
     print(
-        f"H1 {execution_mode}: samples={len(batch)}, triggered={len(triggered_samples)}, "
+        f"H1 {execution_mode} [{args.prompt_variant}]: samples={len(batch)}, "
+        f"triggered={len(triggered_samples)}, "
         f"selected={len(selected_samples)}, calls={llm_calls}, changed={len(changed_samples)}, "
         f"accepted={len(accepted_events)}, rejected={len(rejected_events)}"
     )
