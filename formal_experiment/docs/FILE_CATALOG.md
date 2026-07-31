@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-07-31
-**收录文件**：522 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：525 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -462,6 +462,7 @@
 | `scripts/build_estg150_review_layers.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg_human_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/clean_estg150_german.py` | 活动 | Python 实现、脚本或测试 |
@@ -496,6 +497,7 @@
 | 文件 | 状态 | 用途 |
 |---|---|---|
 | `src/bpc_hybrid/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_artifact.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/datasets/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/datasets/sun_modality_importer.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/datasets/sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
@@ -595,6 +597,7 @@
 | `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_fallback_runner.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_layer_d_runner_and_validator.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_llm_client.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_llm_config.py` | 活动 | Python 实现、脚本或测试 |

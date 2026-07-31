@@ -1676,3 +1676,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：source_manifest.json 原始 CRLF 字节 SHA-256=ded52b1f...，LF 归一化后=cc7b4112... 与合同一致（已自行复核）；未声明 hash_mode 的资产（ZIP/JSONL/JSON aggregates）仍按原始字节验证；新增 18 项策略测试；focused 相关套件全绿。全量测试 1019 passed, 1 failed, 22 skipped：唯一失败 test_tests_do_not_touch_real_backup_dir 为既有环境问题（用户 07-18~07-21 人工审核真实备份文件在正式备份目录，pristine HEAD 复跑通过），与本任务无关，未删除任何用户数据
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-31T09:58:43.050691+00:00 - S2.8A Gold-blind H1 诊断表生成器：抽取共享 B0 绑定模块 bpc_hybrid/b0_artifact.py（H1 runner 行为不变），新增 build_h1_trigger_diagnostics.py 逐 clause 输出确定性、inference-visible 特征行与独立 manifest；B0 v10a 上 150 samples/256 clauses development-only 离线生成，重复运行 byte-identical
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1034 passed, 22 skipped in 153.01s (0:02:33)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`fcfea55be2dd5cbb4527e019061fa25e8cb90602`；相关未提交路径：7 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：输入：s27_estg150_b0_enhanced_v10a/b0_attempts.json（sha256=79dc457cdf93...）；输出：outputs/development/s28a_h1_trigger_diagnostics_v1/h1_trigger_diagnostics.jsonl（rows=256，sha256=d79a449e942e...）+ manifest.json（sha256=93f70f904f0c...）；coverage：expected=150/loaded=150/clause_rows=256/excluded=0/complete=true；候选信号计数（描述性，非 trigger 策略）：rows_with_any=221、missing_actor=171、disagreement=85、conf<0.65=118、scope_rejected=9、stage3 adapter 全部 ok；未报告任何 Gold 性能。新增 15 项 S2.8A 测试；既有 H1/prompt 31 项全绿；全量 1034 passed, 1 failed, 22 skipped（唯一失败 test_tests_do_not_touch_real_backup_dir 为既有环境问题，同上一任务，未删除用户数据）
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
