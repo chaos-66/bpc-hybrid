@@ -1728,3 +1728,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：effective_patch 五条件：schema 合法+仅 requested 字段+merge 后 canonical+至少一个 requested 字段 semantic hash 与 B0 不同+identity 字段不变；no-op 拒绝为 no_semantic_change 且不计 effective。replay 绑定：request_id 唯一、(sample,clause) 集合与 selected plans 精确一致、clause_index/prompt_sha/prompt_variant/b0_hash 逐条核对，缺失/重复/错配/额外/非 JSON 全 fail closed（exit 2）；replay manifest 无 timestamp/elapsed，同命令重放 byte-identical。B0 v10a：plan-only full/masked 两臂 135 triggered samples/221 plans/50 selected/41 samples 一致，0 calls、0 proposed、0 changed、gate=false；no-op replay 50/50 no_semantic_change、valid=50、gate=false（components: llm_calls=true, valid=true, effective=false, changed=false）；fixture 合法 modality patch 与 actor/action+依赖 patch 均 effective、gate=true、changed_field_counts 逐字段核对；mixed/unrequested/text-mismatch patch 原子拒绝、prediction==B0；rejection reasons：no_semantic_change/unauthorized_fields/reference_mismatch 等。P/R：not_computed——仓库内无可导入的 development evaluator/reference（v10a evaluation 为外部产物），报告脚本拒绝 Layer E/正式 Gold，未自行选择标签。新增 25 项测试（含报告脚本 gate/forbidden-reference 测试）；全量 1098 passed 24 skipped 0 failed；0 real API calls
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-31T11:39:39.348201+00:00 - S2.8D 真实 pilot：模型偏差记录 + fail-closed --model 钉死（deepseek-v4-flash）；20 次 v4-pro 调用作为 exploratory deviation 原样保留；preflight v2 就绪，canary 待再次授权
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1102 passed, 24 skipped in 147.71s (0:02:27)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`d857d6946a89901e8a7b6d7caf2ec6a4db349ea5`；相关未提交路径：3 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：偏差：20 次真实调用使用 deepseek-v4-pro（.env 的 BPC_HYBRID_DeepSeek_MODEL 按 profile 优先级覆盖了 flat env 覆盖），非授权的 v4-flash；manifest 记录 model=deepseek-v4-pro，20 calls/1 valid/1 effective（modality）/1 changed/gate=true；19/20 responses 为空/不可解析 JSON；runner 未计量 provider usage，实际 token/成本未记录（偏差记录注明）。修复：--allow-llm 必须显式 --model，CLI 覆盖 profile/.env 选择，解析值 != deepseek-v4-flash 时调用前中止（exit 3），控制台与 manifest 记录 resolved model + model_source；新增 4 项门禁测试。preflight v2：同冻结 20 plans/16 samples，masked_selected_v5 prompt sha 065005189c...，B0 sha 79dc457c...，est max cost ~USD 0.103。全量 1102 passed 24 skipped 0 failed。canary→剩余 19 次调用按用户指示待再次授权后再执行
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

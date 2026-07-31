@@ -19,6 +19,12 @@ removed from the B0 clause context and replaced by a masking sentinel so
 the model cannot anchor on B0's assignment).  A leak audit runs for every
 selected plan in every mode, including ``--plan-only``.
 
+Real runs (``--allow-llm``) are fail-closed on the model: ``--model`` is
+required, overrides profile/.env selection, and the resolved value must
+equal :data:`REAL_CALL_REQUIRED_MODEL`; otherwise the run aborts before
+any API call.  The resolved model ID and its source are printed and
+recorded in the manifest.
+
 Every selected plan also carries an effective-patch audit (S2.8C):
 ``effective_patch=true`` only when the response was schema-valid, the
 patch touched only the requested fields, the merged prediction is
@@ -40,7 +46,7 @@ import copy
 import json
 import sys
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
@@ -106,6 +112,11 @@ _PROMPT_NAME_BY_VARIANT = {
     "full_b0_v4": PromptName,
     "masked_selected_v5": MaskedPromptName,
 }
+
+# S2.8D fail-closed real-call model gate: real runs require an explicit
+# --model whose resolved value (after the CLI override) must equal exactly
+# this model ID; anything else aborts BEFORE any API call is made.
+REAL_CALL_REQUIRED_MODEL = "deepseek-v4-flash"
 
 _DEFAULT_OUTPUT = _PROJECT_ROOT / "data" / "predictions" / "sun_llm_fallback_predictions.jsonl"
 _DEFAULT_MANIFEST = _PROJECT_ROOT / "data" / "predictions" / "sun_llm_fallback_manifest.json"
@@ -833,6 +844,13 @@ def _make_parser() -> argparse.ArgumentParser:
         "each response must bind request_id/sample_id/clause_id/clause_index/"
         "prompt_sha256/prompt_variant/b0_prediction_sha256/response_content.",
     )
+    parser.add_argument(
+        "--model",
+        type=str,
+        help="Model ID for --allow-llm real runs. REQUIRED for real runs; "
+        "overrides profile/.env model selection. The resolved value must "
+        f"equal {REAL_CALL_REQUIRED_MODEL!r} or the run aborts before any call.",
+    )
     parser.add_argument("--max-calls", type=int, default=50)
     parser.add_argument("--inter-call-delay", type=float, default=0.5)
     parser.add_argument("--overwrite", action="store_true")
@@ -927,12 +945,28 @@ def main(argv: Sequence[str] | None = None) -> int:
     config = None
     sampling: dict[str, Any] = {}
     if args.allow_llm:
+        if args.model is None:
+            print("Refusing to run: --allow-llm requires --model.")
+            return 2
         config = LLMConfig.from_env(project_root=_PROJECT_ROOT)
         if not config.enabled or config.provider == "mock":
             print("Refusing to run: real LLM configuration is not enabled.")
             return 3
+        # CLI model pinning (S2.8D): the explicit --model overrides
+        # profile/.env model selection BEFORE the fail-closed gate.
+        config = replace(config, model=args.model)
+        if config.model != REAL_CALL_REQUIRED_MODEL:
+            print(
+                f"Refusing to run: resolved real-call model {config.model!r} != "
+                f"required {REAL_CALL_REQUIRED_MODEL!r}. No API call was made."
+            )
+            return 3
         llm_transport = RealAPITransport(config, timeout_seconds=60.0)
         sampling = OpenAICompatibleRequestBuilder(config).sent_sampling_params()
+        print(
+            f"Real LLM config: provider={config.provider}, "
+            f"model={config.model}, model_source=cli_override"
+        )
 
     execution_mode = "real_llm" if args.allow_llm else "offline_replay" if args.offline_replay else "offline_patch_replay" if args.offline_patches else "plan_only"
     events: list[dict[str, Any]] = []
@@ -1180,6 +1214,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         "llm_used": bool(args.allow_llm and llm_calls),
         "llm_provider": config.provider if config else "none",
         "llm_model": config.model if config else "none",
+        "llm_model_source": "cli_override" if config else "none",
+        "real_call_model_gate": {
+            "required_model": REAL_CALL_REQUIRED_MODEL,
+            "resolved_model": config.model if config else "none",
+            "passed": bool(config and config.model == REAL_CALL_REQUIRED_MODEL),
+        },
         "elapsed_seconds": elapsed,
         "claim_boundary": "development mechanism verification; not a formal performance result",
     }

@@ -867,6 +867,139 @@ class TestNoGoldOrApiDependency:
         assert "load_b0_predictions" in report_source
 
 
+class TestRealCallModelGate:
+    """S2.8D fail-closed model pinning for --allow-llm real runs."""
+
+    def _allow_llm_args(self, tmp_path, model: str | None) -> list[str]:
+        b0_path, b0_manifest = _b0_bundle(tmp_path, _fixture_attempts())
+        args = [
+            "--b0-predictions",
+            str(b0_path),
+            "--b0-manifest",
+            str(b0_manifest),
+            "--output",
+            str(tmp_path / "out" / "h1_predictions.jsonl"),
+            "--telemetry",
+            str(tmp_path / "out" / "h1_telemetry.jsonl"),
+            "--manifest",
+            str(tmp_path / "out" / "h1_manifest.json"),
+            "--allow-llm",
+            "--max-calls",
+            "2",
+            "--development",
+        ]
+        if model is not None:
+            args.extend(["--model", model])
+        return args
+
+    def test_allow_llm_requires_explicit_model(self, tmp_path):
+        result = RUNNER.main(self._allow_llm_args(tmp_path, None))
+        assert result == 2
+        assert not (tmp_path / "out" / "h1_manifest.json").exists()
+
+    def test_allow_llm_rejects_unauthorized_model_before_any_call(self, tmp_path):
+        result = RUNNER.main(self._allow_llm_args(tmp_path, "deepseek-v4-pro"))
+        assert result == 3
+        assert not (tmp_path / "out" / "h1_manifest.json").exists()
+
+    def test_allow_llm_gate_blocks_missing_config(self, tmp_path, monkeypatch):
+        from bpc_hybrid.llm_config import LLMConfig
+
+        def fake_from_env(**kwargs):
+            return LLMConfig(enabled=False, provider="mock", model="mock")
+
+        monkeypatch.setattr(RUNNER, "LLMConfig", type("FakeLLMConfig", (), {"from_env": staticmethod(fake_from_env)}))
+        result = RUNNER.main(self._allow_llm_args(tmp_path, "deepseek-v4-flash"))
+        assert result == 3
+        assert not (tmp_path / "out" / "h1_manifest.json").exists()
+
+    def test_allow_llm_flash_passes_gate_and_manifests_pinning(self, tmp_path, monkeypatch):
+        """With the exact authorized model the gate passes; a stubbed
+        transport consumes the run without any network call and the
+        manifest records the CLI-pinned model + gate."""
+        from bpc_hybrid.llm_client import LLMResponse
+
+        class FakeTransport:
+            def __init__(self, config, timeout_seconds=60.0):
+                self.config = config
+                self.sent = []
+
+            def send(self, request):
+                self.sent.append(request)
+                return LLMResponse(
+                    content=json.dumps(
+                        {
+                            "sample_id": "estg_000002",
+                            "clause_id": "estg_000002.c1",
+                            "repair_fields": ["modality", "actions", "actor_action_map"],
+                            "patches": {
+                                "modality": {
+                                    "label": "obligation",
+                                    "evidence": [
+                                        {"text": "shall", "start": SHALL_START, "end": SHALL_END}
+                                    ],
+                                },
+                                "actions": [
+                                    {
+                                        "id": "estg_000002.c1.action.1",
+                                        "text": ACTION_TEXT,
+                                        "start": ACTION_START,
+                                        "end": ACTION_END,
+                                        "normalized": "notify authority",
+                                    }
+                                ],
+                                "actor_action_map": [
+                                    {
+                                        "actor_id": "estg_000002.c1.actor.1",
+                                        "action_id": "estg_000002.c1.action.1",
+                                    }
+                                ],
+                            },
+                            "reason": "masked rebuild (stub)",
+                        }
+                    ),
+                    provider="openai_compatible",
+                    model="deepseek-v4-flash",
+                )
+
+        monkeypatch.setattr(RUNNER, "RealAPITransport", FakeTransport)
+        b0_path, b0_manifest = _b0_bundle(tmp_path, _fixture_attempts())
+        out_dir = tmp_path / "out"
+        result = RUNNER.main(
+            [
+                "--b0-predictions",
+                str(b0_path),
+                "--b0-manifest",
+                str(b0_manifest),
+                "--output",
+                str(out_dir / "h1_predictions.jsonl"),
+                "--telemetry",
+                str(out_dir / "h1_telemetry.jsonl"),
+                "--manifest",
+                str(out_dir / "h1_manifest.json"),
+                "--allow-llm",
+                "--max-calls",
+                "1",
+                "--model",
+                "deepseek-v4-flash",
+                "--prompt-variant",
+                "masked_selected_v5",
+                "--development",
+            ]
+        )
+        assert result == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["llm_model"] == "deepseek-v4-flash"
+        assert manifest["llm_model_source"] == "cli_override"
+        assert manifest["real_call_model_gate"] == {
+            "required_model": "deepseek-v4-flash",
+            "resolved_model": "deepseek-v4-flash",
+            "passed": True,
+        }
+        assert manifest["llm_calls"] == 1
+        assert manifest["h1_non_identity_gate"] is True
+
+
 class TestComparisonReport:
     """The read-only development comparison report (S2.8C)."""
 
