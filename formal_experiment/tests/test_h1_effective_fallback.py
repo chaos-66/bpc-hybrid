@@ -1,0 +1,935 @@
+"""S2.8C: effective H1 fallback path verification.
+
+Proves the merge channel is NOT a dead path:
+
+* a valid modality patch changes the prediction (effective_patch=true);
+* a valid actor/action patch plus relation dependencies changes the
+  prediction;
+* a no-op (B0-JSON-equivalent) patch is rejected as no_semantic_change and
+  never counts as effective;
+* unauthorized-field, span/text-mismatch, and mixed (partially invalid)
+  patches are rejected atomically -- the prediction stays exactly B0;
+* malformed / duplicate / mismatched / missing / extra replay responses
+  fail closed;
+* plan-only keeps 0 calls, 0 patches, predictions == B0, gate=false;
+* full/masked trigger membership is unchanged;
+* offline-replay manifests are timestamp-free and byte-identical across
+  reruns, and the manifest changed_predictions matches a per-row check.
+
+The tests never read .env, never call any LLM/API, and never touch Gold,
+Layer E, or real review data.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import importlib.util
+import json
+import sys
+from pathlib import Path
+
+import pytest
+
+from bpc_hybrid.stage2_canonical import SCHEMA_SOURCE, SCHEMA_VERSION
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SRC = PROJECT_ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+SPEC = importlib.util.spec_from_file_location(
+    "h1_effective_fallback_runner_module",
+    PROJECT_ROOT / "scripts" / "run_sun_llm_fallback.py",
+)
+RUNNER = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = RUNNER
+SPEC.loader.exec_module(RUNNER)
+
+SPEC_REPORT = importlib.util.spec_from_file_location(
+    "compare_h1_fallback_paths_module",
+    PROJECT_ROOT / "scripts" / "compare_h1_fallback_paths.py",
+)
+REPORT = importlib.util.module_from_spec(SPEC_REPORT)
+sys.modules[SPEC_REPORT.name] = REPORT
+SPEC_REPORT.loader.exec_module(REPORT)
+
+SOURCE_TEXT = "The controller shall notify the authority within 72 hours."
+SHALL_START = SOURCE_TEXT.index("shall")
+SHALL_END = SHALL_START + len("shall")
+ACTION_TEXT = "notify the authority"
+ACTION_START = SOURCE_TEXT.index(ACTION_TEXT)
+ACTION_END = ACTION_START + len(ACTION_TEXT)
+
+
+def _clause(
+    clause_id: str,
+    *,
+    with_actors: bool = True,
+    with_actions: bool = True,
+    with_relations: bool = True,
+    disagreement: bool = False,
+) -> dict:
+    actors = (
+        [
+            {
+                "id": f"{clause_id}.actor.1",
+                "text": "The controller",
+                "start": 0,
+                "end": len("The controller"),
+                "normalized": "controller",
+            }
+        ]
+        if with_actors
+        else []
+    )
+    actions = (
+        [
+            {
+                "id": f"{clause_id}.action.1",
+                "text": ACTION_TEXT,
+                "start": ACTION_START,
+                "end": ACTION_END,
+                "normalized": "notify authority",
+            }
+        ]
+        if with_actions
+        else []
+    )
+    return {
+        "clause_id": clause_id,
+        "clause_span": {"text": SOURCE_TEXT, "start": 0, "end": len(SOURCE_TEXT)},
+        "modality": {
+            "label": "obligation",
+            "evidence": [{"text": "shall", "start": SHALL_START, "end": SHALL_END}],
+            "route": "marker_obligation",
+            "diagnostic": {
+                "clause_classifier_label": "definition" if disagreement else "obligation",
+                "marker_label": "permission" if disagreement else "obligation",
+                "marker_surface": "shall",
+                "record_classifier_label": "obligation",
+            },
+        },
+        "actors": actors,
+        "actions": actions,
+        "conditions": [],
+        "constraints": [],
+        "exceptions": [],
+        "actor_action_map": (
+            [
+                {
+                    "actor_id": f"{clause_id}.actor.1",
+                    "action_id": f"{clause_id}.action.1",
+                }
+            ]
+            if (with_actors and with_actions)
+            else []
+        ),
+        "order_relations": (
+            [
+                {
+                    "before_action_id": f"{clause_id}.action.1",
+                    "after_action_id": f"{clause_id}.action.1",
+                    "evidence": [
+                        {"text": ACTION_TEXT, "start": ACTION_START, "end": ACTION_END}
+                    ],
+                }
+            ]
+            if (with_relations and with_actions)
+            else []
+        ),
+        "alignment": {"confidence": 0.9, "status": "validated_split", "supported": True},
+        "scope_stats": {"scope_accepted": 1, "scope_rejected": 0},
+    }
+
+
+def _attempt(sample_id: str, clause: dict) -> dict:
+    return {
+        "request_status": "ok",
+        "sample_id": sample_id,
+        "record": {
+            "schema_version": SCHEMA_VERSION,
+            "sample_id": sample_id,
+            "source_id": "EStG synthetic",
+            "source_text": SOURCE_TEXT,
+            "clauses": [clause],
+            "method": {"name": "sun_rule_only", "schema_source": SCHEMA_SOURCE},
+            "validation": {"schema_valid": True, "cross_field_valid": True, "errors": []},
+        },
+    }
+
+
+def _fixture_attempts() -> list[dict]:
+    return [
+        # estg_000001: clean, no trigger.
+        _attempt("estg_000001", _clause("estg_000001.c1")),
+        # estg_000002: missing action + classifier/marker disagreement.
+        _attempt(
+            "estg_000002",
+            _clause("estg_000002.c1", with_actions=False, with_relations=False, disagreement=True),
+        ),
+        # estg_000003: missing actor, no disagreement.
+        _attempt("estg_000003", _clause("estg_000003.c1", with_actors=False)),
+    ]
+
+
+def _b0_bundle(tmp_path: Path, attempts: list[dict]) -> tuple[Path, Path]:
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    b0_path = tmp_path / "b0_attempts.json"
+    b0_path.write_text(json.dumps(attempts), encoding="utf-8")
+    digest = hashlib.sha256(b0_path.read_bytes()).hexdigest()
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "run_id": "fixture_b0",
+                "method_variant": "b0_fixture",
+                "claim_scope": "test",
+                "artifacts": {"attempts": {"sha256": digest}},
+            }
+        ),
+        encoding="utf-8",
+    )
+    return b0_path, manifest_path
+
+
+def _selected_plans(attempts: list[dict], b0_path: Path, max_calls: int = 50):
+    batch = RUNNER.load_b0_predictions(b0_path)
+    plans = RUNNER.build_repair_plans(batch)
+    selected = RUNNER.allocate_repair_calls(plans, max_calls)
+    return batch, plans, selected
+
+
+def _prompt_sha(variant: str) -> str:
+    from bpc_hybrid.prompt_loader import load_prompt
+
+    return load_prompt(RUNNER._PROMPT_NAME_BY_VARIANT[variant]).sha256
+
+
+def _response_row(
+    plan, b0_record, variant: str, request_id: str, content: dict
+) -> dict:
+    return {
+        "request_id": request_id,
+        "sample_id": plan.sample_id,
+        "clause_id": plan.clause_id,
+        "clause_index": plan.clause_index,
+        "prompt_sha256": _prompt_sha(variant),
+        "prompt_variant": variant,
+        "b0_prediction_sha256": RUNNER._prediction_hash(b0_record),
+        "response_content": json.dumps(content),
+    }
+
+
+def _modality_patch() -> dict:
+    return {
+        "label": "prohibition",
+        "evidence": [
+            {
+                "text": "shall",
+                "start": SHALL_START,
+                "end": SHALL_END,
+            }
+        ],
+    }
+
+
+def _action_span(plan) -> dict:
+    return {
+        "id": f"{plan.clause_id}.action.1",
+        "text": ACTION_TEXT,
+        "start": ACTION_START,
+        "end": ACTION_END,
+        "normalized": "notify authority",
+    }
+
+
+def _write_responses(tmp_path: Path, rows: list[dict]) -> Path:
+    path = tmp_path / "responses.jsonl"
+    path.write_text(
+        "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+    return path
+
+
+def _run(
+    tmp_path: Path,
+    attempts: list[dict],
+    responses_path: Path,
+    *,
+    variant: str = "full_b0_v4",
+    overwrite: bool = False,
+) -> tuple[int, Path, Path, Path]:
+    b0_path, b0_manifest = _b0_bundle(tmp_path, attempts)
+    out_dir = tmp_path / "out"
+    output = out_dir / "h1_predictions.jsonl"
+    telemetry = out_dir / "h1_telemetry.jsonl"
+    out_manifest = out_dir / "h1_manifest.json"
+    args = [
+        "--b0-predictions",
+        str(b0_path),
+        "--b0-manifest",
+        str(b0_manifest),
+        "--output",
+        str(output),
+        "--telemetry",
+        str(telemetry),
+        "--manifest",
+        str(out_manifest),
+        "--offline-replay",
+        "--responses-jsonl",
+        str(responses_path),
+        "--max-calls",
+        "50",
+        "--prompt-variant",
+        variant,
+        "--development",
+    ]
+    if overwrite:
+        args.append("--overwrite")
+    result = RUNNER.main(args)
+    return result, output, telemetry, out_manifest
+
+
+def _b0_by_sample(attempts: list[dict], b0_path: Path) -> dict:
+    batch = RUNNER.load_b0_predictions(b0_path)
+    return {item.record["sample_id"]: item.record for item in batch}
+
+
+def _read_jsonl(path: Path) -> list[dict]:
+    return [
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+
+
+def _envelope(plan, patches: dict, reason: str = "synthetic replay") -> dict:
+    return {
+        "sample_id": plan.sample_id,
+        "clause_id": plan.clause_id,
+        "repair_fields": list(plan.repair_fields),
+        "patches": patches,
+        "reason": reason,
+    }
+
+
+def _full_patch(plan) -> dict:
+    """A legal patch covering EVERY requested field (atomic contract):
+    modality flips to prohibition; missing actors/actions are filled with
+    legal source-derived spans; empty fields are replaced with []."""
+    patches: dict = {}
+    fields = set(plan.repair_fields)
+    if "modality" in fields:
+        patches["modality"] = _modality_patch()
+    if "actors" in fields:
+        patches["actors"] = [
+            {
+                "id": f"{plan.clause_id}.actor.1",
+                "text": "The controller",
+                "start": 0,
+                "end": len("The controller"),
+                "normalized": "controller",
+            }
+        ]
+    if "actions" in fields:
+        patches["actions"] = [_action_span(plan)]
+    for field in ("conditions", "constraints", "exceptions"):
+        if field in fields:
+            patches[field] = []
+    if "actor_action_map" in fields:
+        actor_id = f"{plan.clause_id}.actor.1"
+        action_id = f"{plan.clause_id}.action.1"
+        patches["actor_action_map"] = (
+            [{"actor_id": actor_id, "action_id": action_id}]
+            if "actors" in fields or "actions" in fields
+            else []
+        )
+    if "order_relations" in fields:
+        patches["order_relations"] = []
+    return patches
+
+
+class TestEffectiveReplay:
+    def test_legal_modality_patch_is_effective(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, plans, selected = _selected_plans(attempts, b0_path)
+        plan_b = next(p for p in selected if p.sample_id == "estg_000002")
+        assert set(plan_b.repair_fields) == {"modality", "actions", "actor_action_map"}
+        plan_c = next(p for p in selected if p.sample_id == "estg_000003")
+        rows = []
+        for index, plan in enumerate((plan_b, plan_c)):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            if plan.key == plan_b.key:
+                content = _envelope(plan, _full_patch(plan))
+            else:
+                # estg_000003 no-op: B0's own empty actors => no semantic change.
+                content = _envelope(
+                    plan, {"actors": {"absent": True}, "actor_action_map": []}
+                )
+            rows.append(
+                _response_row(plan, b0_record, "full_b0_v4", f"r{index}", content)
+            )
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, out_manifest = _run(tmp_path, attempts, responses_path)
+        assert result == 0
+        manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
+        assert manifest["effective_patch"]["accepted_effective_patch_count"] == 1
+        assert manifest["effective_patch"]["no_semantic_change_count"] == 1
+        assert manifest["prediction_changed_sample_count"] == 1
+        assert manifest["h1_non_identity_gate"] is True
+        rows_out = _read_jsonl(output)
+        estg2 = next(r for r in rows_out if r["sample_id"] == "estg_000002")
+        b0_record_b = next(
+            item.record for item in batch if item.record["sample_id"] == "estg_000002"
+        )
+        assert RUNNER._prediction_hash(estg2) != RUNNER._prediction_hash(b0_record_b)
+        assert estg2["clauses"][0]["modality"]["label"] == "prohibition"
+        assert len(estg2["clauses"][0]["actions"]) == 1
+
+    def test_legal_actor_action_patch_with_dependencies_is_effective(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, plans, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            rows.append(
+                _response_row(
+                    plan, b0_record, "full_b0_v4", f"r{index}", _envelope(plan, _full_patch(plan))
+                )
+            )
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, out_manifest = _run(tmp_path, attempts, responses_path)
+        assert result == 0
+        manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
+        assert manifest["effective_patch"]["accepted_effective_patch_count"] == 2
+        assert manifest["prediction_changed_sample_count"] == 2
+        assert manifest["h1_non_identity_gate"] is True
+        assert manifest["effective_patch"]["changed_field_counts"] == {
+            "actor_action_map": 2,
+            "actors": 1,
+            "actions": 1,
+            "modality": 1,
+        }
+        estg3 = next(r for r in _read_jsonl(output) if r["sample_id"] == "estg_000003")
+        assert estg3["clauses"][0]["actors"][0]["id"] == "estg_000003.c1.actor.1"
+
+    def test_noop_patch_rejected_as_no_semantic_change(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            clause = b0_record["clauses"][plan.clause_index]
+            # Replay B0's own values: JSON-equivalent => no semantic change.
+            patches = {field: clause.get(field) for field in plan.repair_fields}
+            rows.append(
+                _response_row(
+                    plan, b0_record, "full_b0_v4", f"r{index}", _envelope(plan, patches)
+                )
+            )
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, out_manifest = _run(tmp_path, attempts, responses_path)
+        assert result == 0
+        manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
+        assert manifest["effective_patch"]["accepted_effective_patch_count"] == 0
+        assert manifest["effective_patch"]["no_semantic_change_count"] == len(selected)
+        assert manifest["prediction_changed_sample_count"] == 0
+        assert manifest["h1_non_identity_gate"] is False
+        b0_rows = _b0_by_sample(attempts, b0_path)
+        for row in _read_jsonl(output):
+            assert RUNNER._prediction_hash(row) == RUNNER._prediction_hash(
+                b0_rows[row["sample_id"]]
+            )
+            assert row["clauses"] == b0_rows[row["sample_id"]]["clauses"]
+
+    def test_unrequested_field_patch_rejected_atomically(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            if plan.sample_id == "estg_000002":
+                envelope = _envelope(plan, _full_patch(plan))
+                # Try to smuggle an unrequested field into the patch.
+                envelope["patches"]["conditions"] = []
+                content = envelope
+            else:
+                content = _envelope(
+                    plan,
+                    {"actors": {"absent": True}, "actor_action_map": []},
+                )
+            rows.append(_response_row(plan, b0_record, "full_b0_v4", f"r{index}", content))
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, out_manifest = _run(tmp_path, attempts, responses_path)
+        assert result == 0
+        manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
+        assert manifest["patch_accepted_count"] == 0
+        assert manifest["effective_patch"]["accepted_effective_patch_count"] == 0
+        assert manifest["prediction_changed_sample_count"] == 0
+        b0_rows = _b0_by_sample(attempts, b0_path)
+        for row in _read_jsonl(output):
+            assert row["clauses"] == b0_rows[row["sample_id"]]["clauses"]
+        # The rejection reason mentions the unauthorized field.
+        telemetry = _read_jsonl(tmp_path / "out" / "h1_telemetry.jsonl")
+        reasons = [
+            reason
+            for row in telemetry
+            for event in row["patch_events"]
+            for reason in event.get("rejection_reasons", [])
+        ]
+        assert any("unauthorized" in r for r in reasons)
+
+    def test_span_text_mismatch_rejected_atomically(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            if plan.sample_id == "estg_000002":
+                patches = _full_patch(plan)
+                action = _action_span(plan)
+                action["text"] = "invented action text"
+                patches["actions"] = [action]
+                content = _envelope(plan, patches)
+            else:
+                content = _envelope(
+                    plan,
+                    {"actors": {"absent": True}, "actor_action_map": []},
+                )
+            rows.append(_response_row(plan, b0_record, "full_b0_v4", f"r{index}", content))
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, out_manifest = _run(tmp_path, attempts, responses_path)
+        assert result == 0
+        manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
+        assert manifest["patch_accepted_count"] == 0
+        assert manifest["prediction_changed_sample_count"] == 0
+        assert "reference_mismatch" in manifest["effective_patch"]["rejection_reason_counts"]
+        b0_rows = _b0_by_sample(attempts, b0_path)
+        for row in _read_jsonl(output):
+            assert row["clauses"] == b0_rows[row["sample_id"]]["clauses"]
+
+    def test_mixed_patch_all_rejected_atomically(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            if plan.sample_id == "estg_000002":
+                # One legal field (modality) + one illegal (action text
+                # mismatch): the whole patch must be rejected atomically.
+                patches = _full_patch(plan)
+                action = _action_span(plan)
+                action["text"] = "invented action text"
+                patches["actions"] = [action]
+                content = _envelope(plan, patches)
+            else:
+                content = _envelope(
+                    plan,
+                    {"actors": {"absent": True}, "actor_action_map": []},
+                )
+            rows.append(_response_row(plan, b0_record, "full_b0_v4", f"r{index}", content))
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, out_manifest = _run(tmp_path, attempts, responses_path)
+        assert result == 0
+        manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
+        assert manifest["patch_accepted_count"] == 0
+        assert manifest["effective_patch"]["accepted_effective_patch_count"] == 0
+        assert manifest["prediction_changed_sample_count"] == 0
+        estg2 = next(r for r in _read_jsonl(output) if r["sample_id"] == "estg_000002")
+        assert estg2["clauses"][0]["modality"]["label"] == "obligation"  # unchanged
+
+
+class TestReplayBindingFailClosed:
+    def _base_rows(self, tmp_path, attempts, mutate=None, omit=None, extra=None):
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            content = _envelope(
+                plan,
+                {"modality": _modality_patch()}
+                if plan.sample_id == "estg_000002"
+                else {"actors": {"absent": True}, "actor_action_map": []},
+            )
+            rows.append(
+                _response_row(plan, b0_record, "full_b0_v4", f"r{index}", content)
+            )
+        if omit is not None:
+            rows = [r for r in rows if r["sample_id"] != omit]
+        if extra is not None:
+            extra_row = dict(rows[0])
+            extra_row.update(
+                {
+                    "request_id": "extra-1",
+                    "sample_id": extra[0],
+                    "clause_id": extra[1],
+                }
+            )
+            rows.append(extra_row)
+        if mutate is not None:
+            rows = mutate(rows)
+        return rows
+
+    def test_malformed_response_content_fails_closed(self, tmp_path):
+        rows = self._base_rows(tmp_path, _fixture_attempts())
+        rows[0]["response_content"] = "this is not json {"
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, _ = _run(tmp_path, _fixture_attempts(), responses_path)
+        assert result == 2
+        assert not output.exists()
+
+    def test_duplicate_request_id_fails_closed(self, tmp_path):
+        rows = self._base_rows(tmp_path, _fixture_attempts())
+        rows[1]["request_id"] = rows[0]["request_id"]
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, _ = _run(tmp_path, _fixture_attempts(), responses_path)
+        assert result == 2
+        assert not output.exists()
+
+    def test_duplicate_sample_clause_fails_closed(self, tmp_path):
+        rows = self._base_rows(tmp_path, _fixture_attempts())
+        rows[1]["sample_id"] = rows[0]["sample_id"]
+        rows[1]["clause_id"] = rows[0]["clause_id"]
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, _ = _run(tmp_path, _fixture_attempts(), responses_path)
+        assert result == 2
+        assert not output.exists()
+
+    def test_prompt_sha_mismatch_fails_closed(self, tmp_path):
+        rows = self._base_rows(tmp_path, _fixture_attempts())
+        rows[0]["prompt_sha256"] = "0" * 64
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, _ = _run(tmp_path, _fixture_attempts(), responses_path)
+        assert result == 2
+        assert not output.exists()
+
+    def test_prompt_variant_mismatch_fails_closed(self, tmp_path):
+        rows = self._base_rows(tmp_path, _fixture_attempts())
+        rows[0]["prompt_variant"] = "masked_selected_v5"
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, _ = _run(tmp_path, _fixture_attempts(), responses_path)
+        assert result == 2
+        assert not output.exists()
+
+    def test_b0_hash_mismatch_fails_closed(self, tmp_path):
+        rows = self._base_rows(tmp_path, _fixture_attempts())
+        rows[0]["b0_prediction_sha256"] = "0" * 64
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, _ = _run(tmp_path, _fixture_attempts(), responses_path)
+        assert result == 2
+        assert not output.exists()
+
+    def test_clause_index_mismatch_fails_closed(self, tmp_path):
+        rows = self._base_rows(tmp_path, _fixture_attempts())
+        rows[0]["clause_index"] = 99
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, _ = _run(tmp_path, _fixture_attempts(), responses_path)
+        assert result == 2
+        assert not output.exists()
+
+    def test_missing_response_fails_closed(self, tmp_path):
+        rows = self._base_rows(tmp_path, _fixture_attempts(), omit="estg_000002")
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, _ = _run(tmp_path, _fixture_attempts(), responses_path)
+        assert result == 2
+        assert not output.exists()
+
+    def test_extra_response_fails_closed(self, tmp_path):
+        rows = self._base_rows(
+            tmp_path, _fixture_attempts(), extra=("estg_000001", "estg_000001.c1")
+        )
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, _ = _run(tmp_path, _fixture_attempts(), responses_path)
+        assert result == 2
+        assert not output.exists()
+
+    def test_wrong_keys_fails_closed(self, tmp_path):
+        rows = self._base_rows(tmp_path, _fixture_attempts())
+        rows[0].pop("response_content")
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, _ = _run(tmp_path, _fixture_attempts(), responses_path)
+        assert result == 2
+        assert not output.exists()
+
+
+class TestPlanOnlyAndDeterminism:
+    def _plan_only(self, tmp_path, variant):
+        attempts = _fixture_attempts()
+        b0_path, b0_manifest = _b0_bundle(tmp_path, attempts)
+        out_dir = tmp_path / variant
+        output = out_dir / "h1_predictions.jsonl"
+        telemetry = out_dir / "h1_telemetry.jsonl"
+        out_manifest = out_dir / "h1_manifest.json"
+        result = RUNNER.main(
+            [
+                "--b0-predictions",
+                str(b0_path),
+                "--b0-manifest",
+                str(b0_manifest),
+                "--output",
+                str(output),
+                "--telemetry",
+                str(telemetry),
+                "--manifest",
+                str(out_manifest),
+                "--plan-only",
+                "--max-calls",
+                "50",
+                "--prompt-variant",
+                variant,
+                "--development",
+            ]
+        )
+        return result, output, out_manifest, attempts, b0_path
+
+    def test_plan_only_keeps_b0_identity_and_gate_false(self, tmp_path):
+        result, output, out_manifest, attempts, b0_path = self._plan_only(
+            tmp_path / "p", "full_b0_v4"
+        )
+        assert result == 0
+        manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
+        assert manifest["llm_calls"] == 0
+        assert manifest["patch_proposed_count"] == 0
+        assert manifest["prediction_changed_sample_count"] == 0
+        assert manifest["effective_patch"]["valid_response_count"] == 0
+        assert manifest["h1_non_identity_gate"] is False
+        b0_rows = _b0_by_sample(attempts, b0_path)
+        for row in _read_jsonl(output):
+            assert RUNNER._prediction_hash(row) == RUNNER._prediction_hash(
+                b0_rows[row["sample_id"]]
+            )
+        # Every selected plan carries an effective audit (no merge).
+        telemetry = _read_jsonl(tmp_path / "p" / "full_b0_v4" / "h1_telemetry.jsonl")
+        audits = [
+            event.get("effective_patch_audit")
+            for row in telemetry
+            for event in row["patch_events"]
+            if event.get("selected_for_call")
+        ]
+        assert audits and all(audit["effective_patch"] is False for audit in audits)
+
+    def test_full_and_masked_trigger_membership_unchanged(self, tmp_path):
+        results = {}
+        for variant in ("full_b0_v4", "masked_selected_v5"):
+            result, _, out_manifest, _, _ = self._plan_only(tmp_path / variant, variant)
+            assert result == 0
+            manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
+            results[variant] = (
+                manifest["triggered_plan_count"],
+                manifest["selected_plan_count"],
+                manifest["selected_sample_count"],
+            )
+        assert results["full_b0_v4"] == results["masked_selected_v5"]
+
+    def test_replay_manifest_timestamp_free_and_byte_identical(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            content = (
+                _envelope(plan, _full_patch(plan))
+                if plan.sample_id == "estg_000002"
+                else _envelope(plan, {"actors": {"absent": True}, "actor_action_map": []})
+            )
+            rows.append(_response_row(plan, b0_record, "full_b0_v4", f"r{index}", content))
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, out_manifest = _run(tmp_path, attempts, responses_path)
+        assert result == 0
+        manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
+        assert "timestamp_utc" not in manifest
+        first_manifest = out_manifest.read_bytes()
+        first_output = output.read_bytes()
+        result, output, _, out_manifest = _run(
+            tmp_path, attempts, responses_path, overwrite=True
+        )
+        assert result == 0
+        assert out_manifest.read_bytes() == first_manifest
+        assert output.read_bytes() == first_output
+
+    def test_manifest_changed_predictions_matches_per_row_check(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            content = (
+                _envelope(plan, _full_patch(plan))
+                if plan.sample_id == "estg_000002"
+                else _envelope(plan, {"actors": {"absent": True}, "actor_action_map": []})
+            )
+            rows.append(_response_row(plan, b0_record, "full_b0_v4", f"r{index}", content))
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, _, out_manifest = _run(tmp_path, attempts, responses_path)
+        assert result == 0
+        manifest = json.loads(out_manifest.read_text(encoding="utf-8"))
+        b0_rows = _b0_by_sample(attempts, b0_path)
+        per_row_changed = sum(
+            1
+            for row in _read_jsonl(output)
+            if RUNNER._prediction_hash(row) != RUNNER._prediction_hash(
+                b0_rows[row["sample_id"]]
+            )
+        )
+        assert manifest["prediction_changed_sample_count"] == per_row_changed == 1
+
+    def test_replay_uses_same_merge_path_as_real_api(self, tmp_path):
+        """Replayed events carry the identical merge semantics: a legal
+        patch lands in field_diffs, a rejected one keeps B0 exactly."""
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            content = (
+                _envelope(plan, _full_patch(plan))
+                if plan.sample_id == "estg_000002"
+                else _envelope(plan, {"actors": {"absent": True}, "actor_action_map": []})
+            )
+            rows.append(_response_row(plan, b0_record, "full_b0_v4", f"r{index}", content))
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, telemetry, _ = _run(tmp_path, attempts, responses_path)
+        assert result == 0
+        events = [
+            event
+            for row in _read_jsonl(telemetry)
+            for event in row["patch_events"]
+            if event.get("selected_for_call")
+        ]
+        accepted = [e for e in events if e.get("patch_accepted")]
+        rejected = [e for e in events if not e.get("patch_accepted")]
+        assert len(accepted) == 1
+        assert len(rejected) == 1
+        # Same atomic-merge surface as the real-API path.
+        for event in events:
+            audit = event["effective_patch_audit"]
+            assert audit["requested_fields"] == event["repair_fields"]
+            assert "response_sha256" in event
+            assert audit["b0_prediction_sha256"]
+            assert audit["merged_prediction_sha256"]
+        assert accepted[0]["field_diffs"][0]["field"] == "modality"
+
+
+class TestNoGoldOrApiDependency:
+    def test_no_gold_layer_e_or_api_dependency(self, tmp_path):
+        source = (PROJECT_ROOT / "scripts" / "run_sun_llm_fallback.py").read_text(
+            encoding="utf-8"
+        )
+        import_lines = [
+            line for line in source.splitlines()
+            if line.startswith(("import ", "from "))
+        ]
+        assert not any(("human_review" in line or "gold" in line) for line in import_lines)
+        assert not any("paper_validation" in line for line in import_lines)
+        report_source = (
+            PROJECT_ROOT / "scripts" / "compare_h1_fallback_paths.py"
+        ).read_text(encoding="utf-8")
+        report_imports = [
+            line for line in report_source.splitlines()
+            if line.startswith(("import ", "from "))
+        ]
+        assert not any("llm" in line for line in report_imports)
+        assert not any(
+            ("human_review" in line or "paper_validation" in line) for line in report_imports
+        )
+        assert "load_b0_predictions" in report_source
+
+
+class TestComparisonReport:
+    """The read-only development comparison report (S2.8C)."""
+
+    def _legal_replay_run(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        batch, _, selected = _selected_plans(attempts, b0_path)
+        rows = []
+        for index, plan in enumerate(selected):
+            b0_record = next(
+                item.record for item in batch if item.record["sample_id"] == plan.sample_id
+            )
+            content = (
+                _envelope(plan, _full_patch(plan))
+                if plan.sample_id == "estg_000002"
+                else _envelope(plan, {"actors": {"absent": True}, "actor_action_map": []})
+            )
+            rows.append(_response_row(plan, b0_record, "full_b0_v4", f"r{index}", content))
+        responses_path = _write_responses(tmp_path, rows)
+        result, output, telemetry, out_manifest = _run(tmp_path, attempts, responses_path)
+        assert result == 0
+        return b0_path, output, telemetry, out_manifest
+
+    def test_report_effective_gate_and_counts(self, tmp_path):
+        b0_path, output, telemetry, out_manifest = self._legal_replay_run(tmp_path)
+        report = REPORT.build_report(b0_path, output, telemetry, out_manifest, None)
+        assert report["changed_predictions"] == 1
+        assert report["patch_counts"] == {
+            "proposed": 2,
+            "valid": 2,
+            "accepted": 1,
+            "effective": 1,
+            "rejected": 1,
+        }
+        assert report["rejection_reason_counts"] == {"no_semantic_change": 1}
+        assert report["h1_non_identity_gate"] is True
+        assert report["pr_f1"]["status"] == "not_computed"
+        assert report["safety"]["gold_read"] is False
+        assert report["safety"]["llm_api_called"] is False
+
+    def test_report_gate_false_for_plan_only(self, tmp_path):
+        attempts = _fixture_attempts()
+        b0_path, _ = _b0_bundle(tmp_path, attempts)
+        result, output, out_manifest, _, _ = (
+            TestPlanOnlyAndDeterminism()._plan_only(tmp_path / "r", "full_b0_v4")
+        )
+        assert result == 0
+        telemetry = tmp_path / "r" / "full_b0_v4" / "h1_telemetry.jsonl"
+        report = REPORT.build_report(b0_path, output, telemetry, out_manifest, None)
+        assert report["changed_predictions"] == 0
+        assert report["patch_counts"]["proposed"] == 0
+        assert report["h1_non_identity_gate"] is False
+
+    def test_report_refuses_forbidden_reference(self, tmp_path, monkeypatch):
+        b0_path, output, telemetry, out_manifest = self._legal_replay_run(tmp_path)
+        forbidden = tmp_path / "data" / "gold"
+        forbidden.mkdir(parents=True)
+        fake_ref = forbidden / "labels.json"
+        fake_ref.write_text("{}", encoding="utf-8")
+        monkeypatch.setattr(REPORT, "_PROJECT_ROOT", tmp_path)
+        try:
+            REPORT.build_report(b0_path, output, telemetry, out_manifest, fake_ref)
+        except ValueError as exc:
+            assert "forbidden root" in str(exc)
+        else:
+            raise AssertionError("forbidden reference was not refused")

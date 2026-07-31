@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-07-31
-**收录文件**：528 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：530 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -467,6 +467,7 @@
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/clean_estg150_german.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/compare_h1_fallback_paths.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compute_estg_membership_hashes.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/dry_run_llm_estimate.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/estg150_review_tool.py` | 活动 | Python 实现、脚本或测试 |
@@ -598,6 +599,7 @@
 | `tests/test_fallback_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_h1_effective_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_fallback_runner.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_masked_context.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |

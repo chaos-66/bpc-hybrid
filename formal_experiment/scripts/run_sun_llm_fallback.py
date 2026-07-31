@@ -8,6 +8,8 @@ Three execution modes are supported:
 
 * ``--plan-only``: detect and budget repair plans without evaluating patches;
 * ``--offline-patches``: replay stored patch envelopes without network access;
+* ``--offline-replay``: replay bound LLM responses (``--responses-jsonl``)
+  through the exact real-API parse/validate/merge path, without network;
 * ``--allow-llm``: explicitly authorize real API calls for selected plans.
 
 ``--prompt-variant`` selects the context policy shown to the model:
@@ -16,6 +18,15 @@ requests) or ``masked_selected_v5`` (the requested repair fields are
 removed from the B0 clause context and replaced by a masking sentinel so
 the model cannot anchor on B0's assignment).  A leak audit runs for every
 selected plan in every mode, including ``--plan-only``.
+
+Every selected plan also carries an effective-patch audit (S2.8C):
+``effective_patch=true`` only when the response was schema-valid, the
+patch touched only the requested fields, the merged prediction is
+canonical, at least one requested field's semantic hash differs from B0,
+and the source/identity fields are unchanged.  JSON-equivalent no-op
+patches are rejected as ``no_semantic_change`` and never counted as
+effective.  The manifest reports the ``h1_non_identity_gate`` so a
+plan-only run can never be mistaken for an effective fallback.
 
 Every trigger and patch attempt is written to a telemetry sidecar.  Patch
 application is atomic: an unauthorized, malformed, no-op, or canonical-invalid
@@ -495,6 +506,210 @@ def _derive_telemetry_path(output: Path) -> Path:
     return output.with_suffix(".telemetry" + suffix)
 
 
+def _rejection_codes(reasons: Sequence[str]) -> tuple[str, ...]:
+    """Normalize human rejection messages into stable audit codes."""
+    codes: list[str] = []
+    for reason in reasons:
+        lowered = reason.lower()
+        if "no semantic change" in lowered:
+            code = "no_semantic_change"
+        elif "canonical validation" in lowered or "post-patch" in lowered:
+            code = "canonical_invalid"
+        elif "unauthorized" in lowered or "not the registered plan" in lowered:
+            code = "unauthorized_fields"
+        elif "does not match" in lowered or "not in actors" in lowered or "not in actions" in lowered:
+            code = "reference_mismatch"
+        elif "duplicate" in lowered:
+            code = "duplicate"
+        elif "absent" in lowered and "modality" in lowered:
+            code = "absent_modality"
+        elif (
+            "missing" in lowered
+            or "must be" in lowered
+            or "not an object" in lowered
+            or "non-empty" in lowered
+        ):
+            code = "contract_violation"
+        else:
+            code = "other"
+        if code not in codes:
+            codes.append(code)
+    return tuple(codes)
+
+
+def _field_hashes(clause: Mapping[str, Any]) -> dict[str, str]:
+    return {field: _json_hash(clause.get(field)) for field in REPAIRABLE_FIELDS}
+
+
+def _effective_patch_audit(
+    plan: RepairPlan,
+    b0_record: Mapping[str, Any],
+    record_before: Mapping[str, Any],
+    record_after: Mapping[str, Any],
+    event: Mapping[str, Any],
+    envelope: Mapping[str, Any] | None,
+) -> dict[str, Any]:
+    """S2.8C effective-patch audit for one selected repair plan.
+
+    effective_patch=true only when ALL of the following hold:
+
+    1. the response envelope was schema-valid (merge path accepted it);
+    2. the patch touched only the requested fields (merge path enforces
+       the exact key set; the audit re-verifies it);
+    3. the merged prediction is canonical (schema + cross-field);
+    4. at least one requested field's canonical semantic hash differs
+       from B0 (changed_fields is non-empty);
+    5. source text and sample/clause identity are unchanged.
+
+    A JSON-equivalent (no-op) patch is rejected as
+    ``no_semantic_change`` and is NEVER counted as effective.
+    """
+    clause_before = record_before["clauses"][plan.clause_index]
+    clause_after = record_after["clauses"][plan.clause_index]
+    before_hashes = _field_hashes(clause_before)
+    after_hashes = _field_hashes(clause_after)
+    changed_fields = [
+        field for field in REPAIRABLE_FIELDS
+        if before_hashes[field] != after_hashes[field]
+    ]
+    proposed_fields = sorted(envelope.get("patches", {}).keys()) if envelope else []
+    requested_fields = list(plan.repair_fields)
+    accepted = bool(event.get("patch_accepted"))
+    if accepted:
+        accepted_fields = [f for f in requested_fields if f in changed_fields]
+        rejected_fields = [f for f in requested_fields if f not in changed_fields]
+    else:
+        accepted_fields = []
+        rejected_fields = list(requested_fields)
+
+    semantic_changed = _prediction_hash(record_before) != _prediction_hash(record_after)
+    merge_status = event.get("status")
+    rejection_reasons = list(event.get("rejection_reasons", []) or [])
+    fields_only_requested = set(proposed_fields) == set(requested_fields)
+    identity_unchanged = (
+        record_after.get("source_text") == record_before.get("source_text")
+        and record_after.get("sample_id") == record_before.get("sample_id")
+        and record_after.get("source_id") == record_before.get("source_id")
+        and clause_after.get("clause_id") == clause_before.get("clause_id")
+        and clause_after.get("clause_span") == clause_before.get("clause_span")
+    )
+    effective_patch = bool(
+        accepted
+        and semantic_changed
+        and fields_only_requested
+        and identity_unchanged
+        and bool(changed_fields)
+    )
+    return {
+        "b0_prediction_sha256": _prediction_hash(b0_record),
+        "proposed_patch_sha256": _json_hash(envelope) if envelope else None,
+        "merged_prediction_sha256": _prediction_hash(record_after),
+        "requested_fields": requested_fields,
+        "proposed_fields": proposed_fields,
+        "accepted_fields": sorted(accepted_fields),
+        "rejected_fields": sorted(rejected_fields),
+        "merge_status": merge_status,
+        "rejection_reasons": rejection_reasons,
+        "rejection_codes": list(_rejection_codes(rejection_reasons)),
+        "semantic_changed": semantic_changed,
+        "changed_fields": sorted(changed_fields),
+        "effective_patch": effective_patch,
+    }
+
+
+def load_replay_responses(
+    path: Path,
+    selected_plans: Sequence[RepairPlan],
+    records: Mapping[str, Mapping[str, Any]],
+    prompt_sha256: str,
+    variant: str,
+) -> dict[tuple[str, str], dict[str, Any]]:
+    """Load and bind an offline replay response file (S2.8C).
+
+    Every line must be an object with EXACTLY the keys: request_id,
+    sample_id, clause_id, clause_index, prompt_sha256, prompt_variant,
+    b0_prediction_sha256, response_content.  The (sample_id, clause_id)
+    set must EXACTLY match the selected plans (no missing, no extra),
+    request_ids must be unique, and each response must bind to the plan's
+    clause_index, the run's prompt SHA + variant, and the sample's B0
+    prediction hash.  Any violation fails closed.
+    """
+    expected_keys = {
+        "request_id",
+        "sample_id",
+        "clause_id",
+        "clause_index",
+        "prompt_sha256",
+        "prompt_variant",
+        "b0_prediction_sha256",
+        "response_content",
+    }
+    responses: dict[tuple[str, str], dict[str, Any]] = {}
+    request_ids: set[str] = set()
+    for index, row in enumerate(_read_json_values(path)):
+        if set(row) != expected_keys:
+            raise H1RunnerError(
+                f"replay response {index} keys must be exactly {sorted(expected_keys)}; "
+                f"got {sorted(row)}"
+            )
+        request_id = row.get("request_id")
+        if not isinstance(request_id, str) or not request_id:
+            raise H1RunnerError(f"replay response {index} request_id must be a non-empty string")
+        if request_id in request_ids:
+            raise H1RunnerError(f"duplicate replay request_id: {request_id!r}")
+        request_ids.add(request_id)
+        content = row.get("response_content")
+        if not isinstance(content, str):
+            raise H1RunnerError(f"replay response {index} response_content must be a string")
+        try:
+            parsed = json.loads(content)
+        except json.JSONDecodeError as exc:
+            raise H1RunnerError(
+                f"replay response {index} response_content is not valid JSON: {exc}"
+            ) from exc
+        if not isinstance(parsed, dict):
+            raise H1RunnerError(f"replay response {index} response_content must be a JSON object")
+        key = (str(row.get("sample_id")), str(row.get("clause_id")))
+        if not all(key):
+            raise H1RunnerError(f"replay response {index} lacks sample_id or clause_id")
+        if key in responses:
+            raise H1RunnerError(f"duplicate replay response for sample/clause: {key}")
+        responses[key] = row
+
+    expected_plan_keys = {plan.key for plan in selected_plans}
+    missing = sorted(expected_plan_keys - set(responses))
+    extra = sorted(set(responses) - expected_plan_keys)
+    if missing:
+        raise H1RunnerError(f"replay responses missing for selected plans: {missing}")
+    if extra:
+        raise H1RunnerError(f"replay responses contain unselected plans: {extra}")
+
+    for plan in selected_plans:
+        row = responses[plan.key]
+        if row.get("clause_index") != plan.clause_index:
+            raise H1RunnerError(
+                f"replay response for {plan.sample_id}/{plan.clause_id} clause_index "
+                f"{row.get('clause_index')!r} != plan {plan.clause_index}"
+            )
+        if row.get("prompt_variant") != variant:
+            raise H1RunnerError(
+                f"replay response for {plan.sample_id}/{plan.clause_id} prompt_variant "
+                f"{row.get('prompt_variant')!r} != run variant {variant!r}"
+            )
+        if row.get("prompt_sha256") != prompt_sha256:
+            raise H1RunnerError(
+                f"replay response for {plan.sample_id}/{plan.clause_id} prompt SHA mismatch: "
+                f"expected {prompt_sha256}, got {row.get('prompt_sha256')!r}"
+            )
+        expected_b0 = _prediction_hash(records[plan.sample_id])
+        if row.get("b0_prediction_sha256") != expected_b0:
+            raise H1RunnerError(
+                f"replay response for {plan.sample_id}/{plan.clause_id} B0 prediction hash "
+                f"mismatch: expected {expected_b0}, got {row.get('b0_prediction_sha256')!r}"
+            )
+    return responses
+
+
 def _build_user_prompt(
     prompt: Any,
     record: Mapping[str, Any],
@@ -609,7 +824,15 @@ def _make_parser() -> argparse.ArgumentParser:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--plan-only", action="store_true")
     mode.add_argument("--offline-patches", type=Path)
+    mode.add_argument("--offline-replay", action="store_true")
     mode.add_argument("--allow-llm", action="store_true")
+    parser.add_argument(
+        "--responses-jsonl",
+        type=Path,
+        help="Offline replay responses (required with --offline-replay); "
+        "each response must bind request_id/sample_id/clause_id/clause_index/"
+        "prompt_sha256/prompt_variant/b0_prediction_sha256/response_content.",
+    )
     parser.add_argument("--max-calls", type=int, default=50)
     parser.add_argument("--inter-call-delay", type=float, default=0.5)
     parser.add_argument("--overwrite", action="store_true")
@@ -624,6 +847,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 2
     if args.allow_llm and args.max_calls < 1:
         print("Refusing to run: real LLM mode requires --max-calls >= 1.")
+        return 2
+    if args.offline_replay and args.responses_jsonl is None:
+        print("Refusing to run: --offline-replay requires --responses-jsonl.")
+        return 2
+    if not args.offline_replay and args.responses_jsonl is not None:
+        print("Refusing to run: --responses-jsonl requires --offline-replay.")
         return 2
     telemetry_path = args.telemetry or _derive_telemetry_path(args.output)
     targets = (args.output, telemetry_path, args.manifest)
@@ -655,6 +884,27 @@ def main(argv: Sequence[str] | None = None) -> int:
     for record in records.values():
         record["method"] = {"name": "sun_llm_fallback", "schema_source": SCHEMA_SOURCE}
         validate_canonical(record)
+    # Immutable B0 snapshot used by the effective-patch audit, so the
+    # per-plan B0 hash never reflects earlier accepted patches.
+    original_records = {
+        sample_id: copy.deepcopy(record) for sample_id, record in records.items()
+    }
+
+    try:
+        replay_responses = (
+            load_replay_responses(
+                args.responses_jsonl,
+                selected,
+                original_records,
+                prompt.sha256,
+                args.prompt_variant,
+            )
+            if args.offline_replay
+            else {}
+        )
+    except (B0ArtifactError, OSError, json.JSONDecodeError) as exc:
+        print(f"Refusing to run: {exc}")
+        return 2
 
     # S2.8B: build the (possibly masked) clause context and leak audit for
     # every selected plan, in ALL execution modes, so plan-only runs can be
@@ -684,7 +934,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         llm_transport = RealAPITransport(config, timeout_seconds=60.0)
         sampling = OpenAICompatibleRequestBuilder(config).sent_sampling_params()
 
-    execution_mode = "real_llm" if args.allow_llm else "offline_replay" if args.offline_patches else "plan_only"
+    execution_mode = "real_llm" if args.allow_llm else "offline_replay" if args.offline_replay else "offline_patch_replay" if args.offline_patches else "plan_only"
     events: list[dict[str, Any]] = []
     llm_errors: list[dict[str, Any]] = []
     llm_calls = 0
@@ -700,15 +950,38 @@ def main(argv: Sequence[str] | None = None) -> int:
         event["context_audit"] = context_audits[plan.key]
         if args.plan_only:
             event["status"] = "planned_not_executed"
+            event["effective_patch_audit"] = _effective_patch_audit(
+                plan,
+                original_records[plan.sample_id],
+                records[plan.sample_id],
+                records[plan.sample_id],
+                event,
+                None,
+            )
             events.append(event)
             continue
 
         envelope: dict[str, Any] | None = None
-        if args.offline_patches:
+        if args.offline_replay:
+            response_row = replay_responses[plan.key]
+            response_content = response_row["response_content"]
+            llm_calls += 1
+            event["llm_call_performed"] = True
+            event["response_sha256"] = _sha256_bytes(response_content.encode("utf-8"))
+            envelope = _parse_patch_response(response_content)
+        elif args.offline_patches:
             envelope = offline_patches.get(plan.key)
             if envelope is None:
                 event["status"] = "offline_patch_missing"
                 event["rejection_reasons"] = ["no stored patch envelope for selected plan"]
+                event["effective_patch_audit"] = _effective_patch_audit(
+                    plan,
+                    original_records[plan.sample_id],
+                    records[plan.sample_id],
+                    records[plan.sample_id],
+                    event,
+                    None,
+                )
                 events.append(event)
                 continue
         else:
@@ -735,10 +1008,19 @@ def main(argv: Sequence[str] | None = None) -> int:
                 event["status"] = "llm_error"
                 event["rejection_reasons"] = [str(exc)]
                 llm_errors.append({"sample_id": plan.sample_id, "clause_id": plan.clause_id, "error": str(exc)})
+                event["effective_patch_audit"] = _effective_patch_audit(
+                    plan,
+                    original_records[plan.sample_id],
+                    records[plan.sample_id],
+                    records[plan.sample_id],
+                    event,
+                    None,
+                )
                 events.append(event)
                 continue
 
-        merged, merge_event = apply_patch_envelope(records[plan.sample_id], envelope, plan)
+        record_before = records[plan.sample_id]
+        merged, merge_event = apply_patch_envelope(record_before, envelope, plan)
         merge_event["selected_for_call"] = True
         merge_event["llm_call_performed"] = event["llm_call_performed"]
         if "response_sha256" in event:
@@ -746,6 +1028,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         merge_event["patch_envelope"] = copy.deepcopy(envelope)
         if merge_event["patch_accepted"]:
             records[plan.sample_id] = merged
+        record_after = records[plan.sample_id]
+        merge_event["effective_patch_audit"] = _effective_patch_audit(
+            plan,
+            original_records[plan.sample_id],
+            record_before,
+            record_after,
+            merge_event,
+            envelope,
+        )
         events.append(merge_event)
         if args.allow_llm and args.inter_call_delay > 0 and llm_calls < len(selected):
             time.sleep(args.inter_call_delay)
@@ -779,13 +1070,45 @@ def main(argv: Sequence[str] | None = None) -> int:
         for row in sample_rows
         if row["llm_called"] and not row["prediction_changed"]
     }
+    # S2.8C effective-patch aggregates over the per-plan audits.
+    effective_audits = [
+        event.get("effective_patch_audit", {})
+        for event in events
+        if isinstance(event.get("effective_patch_audit"), dict)
+    ]
+    accepted_effective = [
+        audit for audit in effective_audits if audit.get("effective_patch")
+    ]
+    no_semantic_change = [
+        audit
+        for audit in effective_audits
+        if "no_semantic_change" in audit.get("rejection_codes", [])
+    ]
+    rejection_counts: dict[str, int] = {}
+    for audit in effective_audits:
+        for code in audit.get("rejection_codes", []):
+            rejection_counts[code] = rejection_counts.get(code, 0) + 1
+    valid_response_count = sum(
+        1
+        for audit in effective_audits
+        if audit.get("merge_status") in ("accepted", "rejected")
+    )
+    changed_field_counts: dict[str, int] = {}
+    for audit in accepted_effective:
+        for field in audit.get("changed_fields", []):
+            changed_field_counts[field] = changed_field_counts.get(field, 0) + 1
+    h1_non_identity_gate = bool(
+        llm_calls > 0
+        and valid_response_count > 0
+        and len(accepted_effective) > 0
+        and len(changed_samples) > 0
+    )
     manifest = {
         "schema_version": "h1_selective_manifest@2.0.0",
         "stage": "stage2",
         "method": "sun_llm_fallback",
         "status": "development_not_formal" if args.development else "formal",
         "execution_mode": execution_mode,
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "prompt_variant": args.prompt_variant,
         "context_policy": {
             "policy_version": CONTEXT_POLICY_VERSION,
@@ -798,6 +1121,17 @@ def main(argv: Sequence[str] | None = None) -> int:
             "audits_passed": len(context_audits),
             "selected_ids_leak_count": 0,
         },
+        "effective_patch": {
+            "accepted_effective_patch_count": len(accepted_effective),
+            "no_semantic_change_count": len(no_semantic_change),
+            "rejection_reason_counts": rejection_counts,
+            "changed_field_counts": changed_field_counts,
+            "valid_response_count": valid_response_count,
+        },
+        "h1_non_identity_gate": h1_non_identity_gate,
+        "replayed_response_count": (
+            len(replay_responses) if args.offline_replay else 0
+        ),
         "b0_binding": {
             "path": str(args.b0_predictions),
             "sha256": _sha256_file(args.b0_predictions),
@@ -849,6 +1183,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         "elapsed_seconds": elapsed,
         "claim_boundary": "development mechanism verification; not a formal performance result",
     }
+    if execution_mode != "offline_replay":
+        # Offline replay manifests are intentionally timestamp-free so
+        # identical inputs replay byte-identically.
+        manifest["timestamp_utc"] = datetime.now(timezone.utc).isoformat()
+    else:
+        # Timing is non-deterministic and would break byte-identical replay.
+        manifest.pop("elapsed_seconds", None)
     try:
         _atomic_write_text(
             args.manifest,
@@ -863,7 +1204,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         f"H1 {execution_mode} [{args.prompt_variant}]: samples={len(batch)}, "
         f"triggered={len(triggered_samples)}, "
         f"selected={len(selected_samples)}, calls={llm_calls}, changed={len(changed_samples)}, "
-        f"accepted={len(accepted_events)}, rejected={len(rejected_events)}"
+        f"accepted={len(accepted_events)}, rejected={len(rejected_events)}, "
+        f"effective={len(accepted_effective)}, gate={h1_non_identity_gate}"
     )
     print(f"Predictions: {args.output}")
     print(f"Telemetry:   {telemetry_path}")

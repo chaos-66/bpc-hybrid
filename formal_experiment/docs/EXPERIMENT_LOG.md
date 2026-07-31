@@ -1715,3 +1715,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：full_b0_v4（prompt sha 00fe02996914e17f...）与 masked_selected_v5（prompt sha 065005189ced3179...）在 B0 v10a 上 plan-only max_calls=50：150 samples/256 clauses；triggered=221 plans（两臂相同）、selected=50 plans/41 samples（两臂 key 集合完全相同）；两臂 predictions 全部等于对应 B0 semantic prediction hash 且两臂 byte-identical；masked 臂 50/50 context audits 通过、selected_ids_exposed_in_unselected_relations 全 false、0 leak；llm_calls=0、0 proposed patches、0 changed；context audit 仅含 hash/字段名/布尔，无 source text/prompt/masked 值；未报告任何 Gold 性能。新增 25 项测试（prompt SHA 钉住、遮蔽语义、依赖闭包、泄漏审计、确定性、两臂一致性、offline replay merge 不受 variant 影响、未知 variant fail closed、无 Gold/Layer E/API 依赖）；既有 H1/prompt 套件全绿；全量 1073 passed 24 skipped 0 failed
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-31T11:07:19.147273+00:00 - S2.8C effective fallback 链路验证（development）：per-plan effective-patch audit、--offline-replay 绑定通道、h1_non_identity_gate、只读对比脚本；fixtures 证明合法 patch 改变 prediction、plan-only 保持 B0 identity
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1098 passed, 24 skipped in 167.45s (0:02:47)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`5246b9eb78d44ec9c088fce180ae5423ef6576c9`；相关未提交路径：6 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：effective_patch 五条件：schema 合法+仅 requested 字段+merge 后 canonical+至少一个 requested 字段 semantic hash 与 B0 不同+identity 字段不变；no-op 拒绝为 no_semantic_change 且不计 effective。replay 绑定：request_id 唯一、(sample,clause) 集合与 selected plans 精确一致、clause_index/prompt_sha/prompt_variant/b0_hash 逐条核对，缺失/重复/错配/额外/非 JSON 全 fail closed（exit 2）；replay manifest 无 timestamp/elapsed，同命令重放 byte-identical。B0 v10a：plan-only full/masked 两臂 135 triggered samples/221 plans/50 selected/41 samples 一致，0 calls、0 proposed、0 changed、gate=false；no-op replay 50/50 no_semantic_change、valid=50、gate=false（components: llm_calls=true, valid=true, effective=false, changed=false）；fixture 合法 modality patch 与 actor/action+依赖 patch 均 effective、gate=true、changed_field_counts 逐字段核对；mixed/unrequested/text-mismatch patch 原子拒绝、prediction==B0；rejection reasons：no_semantic_change/unauthorized_fields/reference_mismatch 等。P/R：not_computed——仓库内无可导入的 development evaluator/reference（v10a evaluation 为外部产物），报告脚本拒绝 Layer E/正式 Gold，未自行选择标签。新增 25 项测试（含报告脚本 gate/forbidden-reference 测试）；全量 1098 passed 24 skipped 0 failed；0 real API calls
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
