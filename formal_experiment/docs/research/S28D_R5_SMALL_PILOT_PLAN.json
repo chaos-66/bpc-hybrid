@@ -1,0 +1,308 @@
+{
+  "schema_version": "s28d_r5_report@1.0.0",
+  "task": "S2.8D-R5",
+  "title": "Freeze Gold-blind small-scale H1 pilot plan (10 calls), budget, and execution gates",
+  "start_commit": "a3045241867f8605e7f39cfb3b767bf037964a30",
+  "api_calls": 0,
+  "retry": 0,
+  "pilot_run": false,
+  "frozen_plan_config": {
+    "path": "formal_experiment/configs/s28d_r5_h1_small_pilot_plan_v1.json",
+    "sha256": "35dc6a752361b3876c4531a5e15c0bbfb37450d312ff705f3f791dbe903c1327",
+    "schema_version": "h1_small_pilot_plan@1.0.0",
+    "selected_plan_keys_sha256": "bb8d73b2af61964e0c2bb3142b0ec91a75653130a33e7270981984d6cd426d23"
+  },
+  "b0": {
+    "attempts_path": "outputs\\development\\s27_estg150_b0_enhanced_v10a\\b0_attempts.json",
+    "attempts_sha256": "79dc457cdf933cb9fbb29030bab3673b9af645dd0138d8e97f5d1b6dfa6b4792",
+    "manifest_path": "outputs\\development\\s27_estg150_b0_enhanced_v10a\\manifest.json",
+    "manifest_sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315"
+  },
+  "prompt": {
+    "variant": "masked_selected_v5",
+    "sha256": "065005189ced3179ff4069d016c7d0ca892ce4992707834e09142efc0472c391"
+  },
+  "model": "deepseek-v4-flash",
+  "historical_calls": {
+    "real_call_count": 42,
+    "unique_plan_key_count": 20,
+    "plan_keys_sha256": "c813a384265973dae416c6f458338caa08a2505d6c29b44b67cf7831ac2ed68a",
+    "per_run_counts": {
+      "s28d_h1_real_pilot/canary": 1,
+      "s28d_h1_real_pilot/pilot_v4flash": 19,
+      "s28d_h1_real_pilot_deviation/v4pro_exploratory_run": 20,
+      "s28d_r1_h1_canary_v1": 1,
+      "s28d_r4_h1_canary_v1": 1
+    }
+  },
+  "selection_policy": {
+    "ranking": "existing risk_score descending, sample_id, clause_index (allocate_repair_calls rule)",
+    "exclude_any_historical_real_call": true,
+    "max_one_plan_per_sample": true,
+    "selected_plan_count": 10,
+    "gold_visible": false
+  },
+  "budget": {
+    "hard_api_call_cap": 10,
+    "retry_per_plan": 0,
+    "max_calls_per_plan": 1,
+    "pilot_only": true,
+    "full_pilot": false
+  },
+  "early_stop_policy": {
+    "provider_model_mismatch": "abort_remaining",
+    "capture_binding_failure": "abort_remaining",
+    "authorization_or_call_count_violation": "abort_remaining",
+    "consecutive_transport_or_extraction_failures": 3,
+    "patch_level_rejection": "record_and_continue",
+    "not_called_status": "pilot_early_stop_not_called",
+    "replacement_plans": "forbidden"
+  },
+  "selected_plans": [
+    {
+      "execution_order": 1,
+      "sample_id": "estg_000118",
+      "clause_id": "estg_000118.c1",
+      "clause_index": 0,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "1b3fd305b16a1d39c5f17b799df0e119e4528d1e499cb89756f39f32861a73ca",
+      "historical_called": false
+    },
+    {
+      "execution_order": 2,
+      "sample_id": "estg_000133",
+      "clause_id": "estg_000133.c1",
+      "clause_index": 0,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "f5a7af080552f0ee818a3915f7abed0c77eb1f141bac397c758e41ab3794e3ee",
+      "historical_called": false
+    },
+    {
+      "execution_order": 3,
+      "sample_id": "estg_000164",
+      "clause_id": "estg_000164.c2",
+      "clause_index": 1,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "d702f06ca28ab530705c74fc712fe4e9797391b6333428d074b8890d3dfafcad",
+      "historical_called": false
+    },
+    {
+      "execution_order": 4,
+      "sample_id": "estg_000206",
+      "clause_id": "estg_000206.c2",
+      "clause_index": 1,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "ddf575bcd1b5dfa6ac8fc516154f9dc48f7e7807b17e3a9c08c9cff6312f0851",
+      "historical_called": false
+    },
+    {
+      "execution_order": 5,
+      "sample_id": "estg_000207",
+      "clause_id": "estg_000207.c2",
+      "clause_index": 1,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "0204666b6005528bb3a7f2293e293f3ef5ca89b5fe4d4f92ff2f58db09225ddd",
+      "historical_called": false
+    },
+    {
+      "execution_order": 6,
+      "sample_id": "estg_000232",
+      "clause_id": "estg_000232.c1",
+      "clause_index": 0,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "93bf9b83ea3fd00c2fe5abc1a88faefe2d197a3ecd7a2f0cae55a451fa894334",
+      "historical_called": false
+    },
+    {
+      "execution_order": 7,
+      "sample_id": "estg_000285",
+      "clause_id": "estg_000285.c1",
+      "clause_index": 0,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "f11a4aad1c159ad7ae2caa2aab87764ff930858f679b1aa5a36d5850f82a4d1c",
+      "historical_called": false
+    },
+    {
+      "execution_order": 8,
+      "sample_id": "estg_000302",
+      "clause_id": "estg_000302.c1",
+      "clause_index": 0,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "77048709e11be8d015ba1966a2415b99db0a776b04bd7221bc3f85489d760e96",
+      "historical_called": false
+    },
+    {
+      "execution_order": 9,
+      "sample_id": "estg_000414",
+      "clause_id": "estg_000414.c1",
+      "clause_index": 0,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "4bd40ec7b73a5b34624b46a7c9a689b6f2414e5a8b84edcda248fcc099a2e2dc",
+      "historical_called": false
+    },
+    {
+      "execution_order": 10,
+      "sample_id": "estg_000716",
+      "clause_id": "estg_000716.c3",
+      "clause_index": 2,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "379166a3fbaac1ea704add635d40a056c45b10cfd606670b6827cb6b5b013ea5",
+      "historical_called": false
+    }
+  ],
+  "selected_proof": {
+    "distinct_sample_count": 10,
+    "selected_keys_sha256": "bb8d73b2af61964e0c2bb3142b0ec91a75653130a33e7270981984d6cd426d23",
+    "historical_intersection": []
+  },
+  "verification": {
+    "frozen_plan_binding": "passed (B0 attempts/manifest sha, prompt variant/sha, model, plan keys, clause_index, risk_score, repair_fields, reasons, b0_prediction_sha256, clause_identity_hash, rendered_masked_context_hash, historical non-overlap)",
+    "plan_only": {
+      "output_dir": "formal_experiment/outputs/development/s28d_r5_h1_small_pilot_plan_check_v1",
+      "selected_plan_count": 10,
+      "selected_sample_count": 10,
+      "llm_calls": 0,
+      "real_api": false,
+      "patch_proposed": 0,
+      "patch_accepted": 0,
+      "patch_rejected": 0,
+      "prediction_changed_sample_count": 0,
+      "h1_non_identity_gate": false,
+      "h1_equals_b0": true,
+      "execution_order_matches_frozen": true,
+      "selected_keys_sha256_matches": true,
+      "historical_intersection_empty": true,
+      "byte_identical_rerun": true
+    },
+    "fail_closed_checks": [
+      "--frozen-plan with --max-calls != 10 rejected before any call",
+      "--frozen-plan with --exclude-plan rejected",
+      "B0 attempts sha mismatch rejected",
+      "B0 manifest sha mismatch rejected",
+      "prompt variant / prompt sha mismatch rejected",
+      "model != deepseek-v4-flash rejected",
+      "risk_score / repair_fields / reasons / clause_index mismatch rejected",
+      "plan count != 10, duplicate plan, duplicate sample rejected",
+      "historical called plan overlap rejected"
+    ],
+    "early_stop_contract_tested": true
+  },
+  "tests": {
+    "new_test_file": "formal_experiment/tests/test_h1_pilot_plan.py",
+    "test_count": 29,
+    "items_covered": 30,
+    "focused_result": "29 passed (test_h1_pilot_plan.py)",
+    "h1_suite_result": "106 passed (test_h1_effective_fallback, test_h1_span_canonicalizer, test_h1_fallback_runner, test_h1_pilot_plan)"
+  },
+  "pr_f1": "not_computed",
+  "interpretation_boundary": [
+    "pilot is frozen and verified offline only",
+    "no real API calls were made (API calls = 0)",
+    "no pilot was run and no P/R was computed",
+    "S2.8D-R6 real pilot execution requires a separate explicit user authorization"
+  ],
+  "next_steps": [
+    "S2.8D-R6: execute the 10-call pilot under the frozen plan (requires user authorization)"
+  ],
+  "r6_command_template": "python formal_experiment/scripts/run_sun_llm_fallback.py --b0-predictions formal_experiment/outputs/development/s27_estg150_b0_enhanced_v10a/b0_attempts.json --b0-manifest formal_experiment/outputs/development/s27_estg150_b0_enhanced_v10a/manifest.json --frozen-plan formal_experiment/configs/s28d_r5_h1_small_pilot_plan_v1.json --output formal_experiment/outputs/development/s28d_r6_h1_small_pilot_v1/h1_predictions.jsonl --telemetry formal_experiment/outputs/development/s28d_r6_h1_small_pilot_v1/h1_telemetry.jsonl --manifest formal_experiment/outputs/development/s28d_r6_h1_small_pilot_v1/manifest.json --transport-capture formal_experiment/outputs/development/s28d_r6_h1_small_pilot_v1/transport_capture.jsonl --prompt-variant masked_selected_v5 --allow-llm --model deepseek-v4-flash --max-calls 10 --inter-call-delay 0.5 --development  # NOT AUTHORIZED IN S2.8D-R5"
+}

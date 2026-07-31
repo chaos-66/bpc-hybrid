@@ -86,6 +86,14 @@ from bpc_hybrid.h1_span_canonicalizer import (  # noqa: E402
     STATUS_UNCHANGED,
     canonicalize_patch_coordinates,
 )
+from bpc_hybrid.h1_pilot_plan import (  # noqa: E402
+    EARLY_STOP_NOT_CALLED,
+    EXPECTED_HARD_CALL_CAP,
+    evaluate_early_stop,
+    load_frozen_plan,
+    plan_key_str,
+    selected_plan_keys_sha256,
+)
 from bpc_hybrid.llm_config import LLMConfig
 from bpc_hybrid.llm_client import (
     LLMClientError,
@@ -978,6 +986,136 @@ def _summary_by_sample(
     return rows
 
 
+def _bind_frozen_plan_keys(
+    config: Mapping[str, Any],
+    plans: Sequence[RepairPlan],
+) -> list[RepairPlan]:
+    """S2.8D-R5: resolve the frozen pilot selection against the CURRENT
+    repair plans (fail closed on any mismatch).  Returns the ordered
+    ``RepairPlan`` list for the frozen execution order."""
+    entries = list(config["selected_plans"])
+    by_key = {plan.key: plan for plan in plans}
+    errors: list[str] = []
+    selected: list[RepairPlan] = []
+    for entry in sorted(entries, key=lambda e: e["execution_order"]):
+        key = (str(entry["sample_id"]), str(entry["clause_id"]))
+        plan = by_key.get(key)
+        if plan is None:
+            errors.append(f"frozen plan not in current triggered plans: {plan_key_str(entry)}")
+            continue
+        if plan.clause_index != int(entry["clause_index"]):
+            errors.append(f"{plan_key_str(entry)} clause_index mismatch")
+        if list(plan.repair_fields) != list(entry["repair_fields"]):
+            errors.append(f"{plan_key_str(entry)} repair_fields mismatch")
+        if list(plan.reasons) != list(entry["reasons"]):
+            errors.append(f"{plan_key_str(entry)} reasons mismatch")
+        if plan.risk_score != int(entry["risk_score"]):
+            errors.append(f"{plan_key_str(entry)} risk_score mismatch")
+        if entry.get("historical_called") is not False:
+            errors.append(f"{plan_key_str(entry)} historical_called must be false")
+        selected.append(plan)
+    if len(selected) != len(entries):
+        errors.append(f"frozen plan resolved {len(selected)} != {len(entries)} plans")
+    if len({plan.key for plan in selected}) != len(selected):
+        errors.append("duplicate plan keys in frozen selection")
+    if len({plan.sample_id for plan in selected}) != len(selected):
+        errors.append("duplicate samples in frozen selection")
+    historical_keys = set(config.get("historical_calls", {}).get("plan_keys", []))
+    overlap = sorted(
+        f"{plan.sample_id}/{plan.clause_id}"
+        for plan in selected
+        if f"{plan.sample_id}/{plan.clause_id}" in historical_keys
+    )
+    if overlap:
+        errors.append(f"selected plans overlap historical called keys: {overlap}")
+    if errors:
+        raise H1RunnerError("frozen plan binding failed: " + "; ".join(errors))
+    return selected
+
+
+def _bind_frozen_plan_hashes(
+    config: Mapping[str, Any],
+    selected: Sequence[RepairPlan],
+    original_records: Mapping[str, Mapping[str, Any]],
+    context_audits: Mapping[tuple[str, str], dict[str, Any]],
+    prompt_sha256: str,
+) -> None:
+    """S2.8D-R5: verify per-plan record/context binding hashes.  Raises
+    ``H1RunnerError`` on any mismatch (caller fails closed)."""
+    entries_by_key = {
+        (str(e["sample_id"]), str(e["clause_id"])): e for e in config["selected_plans"]
+    }
+    errors: list[str] = []
+    for plan in selected:
+        entry = entries_by_key[plan.key]
+        record = original_records.get(plan.sample_id)
+        if record is None:
+            errors.append(f"frozen sample missing from B0: {plan.sample_id}")
+            continue
+        if _prediction_hash(record) != entry["b0_prediction_sha256"]:
+            errors.append(f"{plan_key_str(entry)} b0_prediction_sha256 mismatch")
+        clause = record["clauses"][plan.clause_index]
+        identity_hash = _json_hash(
+            {"clause_id": clause.get("clause_id"), "clause_span": clause.get("clause_span")}
+        )
+        if identity_hash != entry["clause_identity_hash"]:
+            errors.append(f"{plan_key_str(entry)} clause_identity_hash mismatch")
+        audit = context_audits.get(plan.key) or {}
+        if audit.get("masked_context_sha256") != entry["rendered_masked_context_hash"]:
+            errors.append(f"{plan_key_str(entry)} rendered_masked_context_hash mismatch")
+        if entry.get("prompt_sha256") != prompt_sha256:
+            errors.append(f"{plan_key_str(entry)} prompt_sha256 mismatch")
+    if errors:
+        raise H1RunnerError("frozen plan hash binding failed: " + "; ".join(errors))
+
+
+def _maybe_early_stop_events(
+    *,
+    plan: RepairPlan,
+    llm_calls: int,
+    consecutive_failures: int,
+    provider_model: str | None,
+    capture_bound: bool,
+    required_model: str,
+    hard_call_cap: int,
+    frozen_order: Sequence[tuple[str, str]],
+    frozen_order_set: set[tuple[str, str]],
+    frozen_processed: int,
+    selected_by_key: Mapping[tuple[str, str], RepairPlan],
+    events: list[dict[str, Any]],
+    not_called_keys: list[str],
+) -> str | None:
+    """S2.8D-R5: evaluate the frozen-pilot early-stop contract after one real
+    call.  On a violation, append ``pilot_early_stop_not_called`` events for
+    every remaining frozen plan and return the reason; otherwise ``None``."""
+    if plan.key not in frozen_order_set:
+        return None
+    expected_key = (
+        frozen_order[frozen_processed] if frozen_processed < len(frozen_order) else None
+    )
+    reason = evaluate_early_stop(
+        calls_made=llm_calls,
+        consecutive_failures=consecutive_failures,
+        provider_returned_model=provider_model,
+        required_model=required_model,
+        capture_bound=capture_bound,
+        plan_key_ok=expected_key == plan.key,
+        hard_call_cap=hard_call_cap,
+    )
+    if reason is None:
+        return None
+    index = frozen_order.index(plan.key)
+    for remaining_key in frozen_order[index + 1:]:
+        remaining_plan = selected_by_key[remaining_key]
+        not_event = _patch_event_base(remaining_plan)
+        not_event["selected_for_call"] = True
+        not_event["status"] = EARLY_STOP_NOT_CALLED
+        not_event["early_stop_reason"] = reason
+        events.append(not_event)
+        not_called_keys.append(f"{remaining_plan.sample_id}/{remaining_plan.clause_id}")
+    return reason
+
+
 def _make_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -1044,6 +1182,14 @@ def _make_parser() -> argparse.ArgumentParser:
         "it. Trigger/risk/budget allocation is unchanged; this only filters "
         "the final candidate set.",
     )
+    parser.add_argument(
+        "--frozen-plan",
+        type=Path,
+        help="S2.8D-R5 frozen small-pilot plan config path. When set, the "
+        "selected plan set is EXACTLY the frozen 10 plans in execution "
+        "order; --exclude-plan is forbidden, --max-calls must equal 10, and "
+        "every frozen entry must match the current B0/plans/context binding.",
+    )
     parser.add_argument("--max-calls", type=int, default=50)
     parser.add_argument("--inter-call-delay", type=float, default=0.5)
     parser.add_argument("--overwrite", action="store_true")
@@ -1077,6 +1223,27 @@ def main(argv: Sequence[str] | None = None) -> int:
     if not args.allow_llm and args.transport_capture is not None:
         print("Refusing to run: --transport-capture requires --allow-llm.")
         return 2
+    if args.frozen_plan is not None and args.exclude_plan:
+        print("Refusing to run: --frozen-plan cannot be combined with --exclude-plan.")
+        return 2
+    if args.frozen_plan is not None and args.max_calls != EXPECTED_HARD_CALL_CAP:
+        print(
+            f"Refusing to run: --frozen-plan requires --max-calls "
+            f"{EXPECTED_HARD_CALL_CAP} (no call was made)."
+        )
+        return 2
+    if args.frozen_plan is not None and (
+        args.offline_replay or args.offline_transport_replay or args.offline_patches is not None
+    ):
+        print("Refusing to run: --frozen-plan is only supported with --plan-only or --allow-llm.")
+        return 2
+    frozen_plan_config: dict[str, Any] | None = None
+    if args.frozen_plan is not None:
+        try:
+            frozen_plan_config = load_frozen_plan(args.frozen_plan)
+        except (OSError, ValueError) as exc:
+            print(f"Refusing to run: invalid frozen plan config: {exc}")
+            return 2
     telemetry_path = args.telemetry or _derive_telemetry_path(args.output)
     targets = (args.output, telemetry_path, args.manifest)
     if args.transport_capture is not None:
@@ -1099,8 +1266,32 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"Refusing to run: {exc}")
         return 2
 
+    if frozen_plan_config is not None:
+        b0_cfg = frozen_plan_config["b0"]
+        if _sha256_file(args.b0_predictions) != b0_cfg["attempts_sha256"]:
+            print("Refusing to run: frozen plan B0 attempts SHA-256 mismatch.")
+            return 2
+        if args.b0_manifest is None or _sha256_file(args.b0_manifest) != b0_cfg["manifest_sha256"]:
+            print("Refusing to run: frozen plan B0 manifest SHA-256 mismatch.")
+            return 2
+        if args.prompt_variant != frozen_plan_config["prompt_variant"]:
+            print("Refusing to run: frozen plan prompt variant mismatch.")
+            return 2
+        if prompt.sha256 != frozen_plan_config["prompt_sha256"]:
+            print("Refusing to run: frozen plan prompt SHA-256 mismatch.")
+            return 2
+
     plans = build_repair_plans(batch)
-    selected = allocate_repair_calls(plans, args.max_calls)
+    if args.frozen_plan is None:
+        selected = allocate_repair_calls(plans, args.max_calls)
+    else:
+        # S2.8D-R5: the frozen pilot plan is the source of truth for the
+        # selection.  Verified against the current repair plans below.
+        try:
+            selected = _bind_frozen_plan_keys(frozen_plan_config, plans)
+        except H1RunnerError as exc:
+            print(f"Refusing to run: {exc}")
+            return 2
     excluded_keys: set[tuple[str, str]] = set()
     for spec_key in args.exclude_plan:
         parts = spec_key.split("/", 1)
@@ -1172,6 +1363,26 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"Refusing to run: {exc}")
         return 2
 
+    if args.frozen_plan is not None:
+        # S2.8D-R5: semantic binding of every frozen plan against the current
+        # B0 record hashes, clause identity, masked context, and prompt.
+        try:
+            _bind_frozen_plan_hashes(
+                frozen_plan_config,
+                selected,
+                original_records,
+                context_audits,
+                prompt.sha256,
+            )
+        except H1RunnerError as exc:
+            print(f"Refusing to run: {exc}")
+            return 2
+        selected_keys = {plan.key for plan in selected}
+        selected_by_key = {plan.key: plan for plan in selected}
+        # Execute the frozen plans first in their frozen execution order; all
+        # other triggered plans are budget_not_selected.
+        plans = list(selected) + [p for p in plans if p.key not in selected_keys]
+
     llm_transport = None
     config = None
     sampling: dict[str, Any] = {}
@@ -1217,6 +1428,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     llm_calls = 0
     capture_rows: list[dict[str, Any]] = []
     started = time.time()
+    early_stop_reason: str | None = None
+    not_called_keys: list[str] = []
+    consecutive_failures = 0
+    frozen_order: list[tuple[str, str]] = (
+        [plan.key for plan in selected] if args.frozen_plan is not None else []
+    )
+    frozen_order_set: set[tuple[str, str]] = set(frozen_order)
+    frozen_processed = 0
 
     for plan in plans:
         event = _patch_event_base(plan)
@@ -1373,6 +1592,27 @@ def main(argv: Sequence[str] | None = None) -> int:
                         None,
                     )
                     events.append(event)
+                    if args.allow_llm and args.frozen_plan is not None:
+                        consecutive_failures += 1
+                        frozen_processed += 1
+                        _stop = _maybe_early_stop_events(
+                            plan=plan,
+                            llm_calls=llm_calls,
+                            consecutive_failures=consecutive_failures,
+                            provider_model=(llm_transport.last_decode or {}).get("model"),
+                            capture_bound=llm_transport.last_request_body_sha256 is not None,
+                            required_model=REAL_CALL_REQUIRED_MODEL,
+                            hard_call_cap=EXPECTED_HARD_CALL_CAP,
+                            frozen_order=frozen_order,
+                            frozen_order_set=frozen_order_set,
+                            frozen_processed=frozen_processed - 1,
+                            selected_by_key=selected_by_key,
+                            events=events,
+                            not_called_keys=not_called_keys,
+                        )
+                        if _stop is not None:
+                            early_stop_reason = _stop
+                            break
                     continue
                 envelope = _parse_patch_response(response.content)
             except (LLMClientError, H1RunnerError) as exc:
@@ -1391,6 +1631,31 @@ def main(argv: Sequence[str] | None = None) -> int:
                     None,
                 )
                 events.append(event)
+                if args.allow_llm and args.frozen_plan is not None:
+                    consecutive_failures += 1
+                    frozen_processed += 1
+                    _stop = _maybe_early_stop_events(
+                        plan=plan,
+                        llm_calls=llm_calls,
+                        consecutive_failures=consecutive_failures,
+                        provider_model=(llm_transport.last_decode or {}).get("model"),
+                        capture_bound=(
+                            llm_transport.last_request_body_sha256 is not None
+                            if llm_transport is not None
+                            else False
+                        ),
+                        required_model=REAL_CALL_REQUIRED_MODEL,
+                        hard_call_cap=EXPECTED_HARD_CALL_CAP,
+                        frozen_order=frozen_order,
+                        frozen_order_set=frozen_order_set,
+                        frozen_processed=frozen_processed - 1,
+                        selected_by_key=selected_by_key,
+                        events=events,
+                        not_called_keys=not_called_keys,
+                    )
+                    if _stop is not None:
+                        early_stop_reason = _stop
+                        break
                 continue
 
         record_before = records[plan.sample_id]
@@ -1461,6 +1726,27 @@ def main(argv: Sequence[str] | None = None) -> int:
             envelope,
         )
         events.append(merge_event)
+        if args.allow_llm and args.frozen_plan is not None:
+            consecutive_failures = 0
+            frozen_processed += 1
+            _stop = _maybe_early_stop_events(
+                plan=plan,
+                llm_calls=llm_calls,
+                consecutive_failures=consecutive_failures,
+                provider_model=(llm_transport.last_decode or {}).get("model"),
+                capture_bound=llm_transport.last_request_body_sha256 is not None,
+                required_model=REAL_CALL_REQUIRED_MODEL,
+                hard_call_cap=EXPECTED_HARD_CALL_CAP,
+                frozen_order=frozen_order,
+                frozen_order_set=frozen_order_set,
+                frozen_processed=frozen_processed - 1,
+                selected_by_key=selected_by_key,
+                events=events,
+                not_called_keys=not_called_keys,
+            )
+            if _stop is not None:
+                early_stop_reason = _stop
+                break
         if args.allow_llm and args.inter_call_delay > 0 and llm_calls < len(selected):
             time.sleep(args.inter_call_delay)
 
@@ -1626,6 +1912,25 @@ def main(argv: Sequence[str] | None = None) -> int:
         "h1_non_identity_gate": h1_non_identity_gate,
         "coordinate_canonicalization": canonicalization_summary,
         "transport": transport_section,
+        "frozen_plan": (
+            {
+                "path": str(args.frozen_plan),
+                "sha256": _sha256_file(args.frozen_plan),
+                "schema_version": frozen_plan_config["schema_version"],
+                "selected_plan_keys_sha256": selected_plan_keys_sha256(
+                    frozen_plan_config["selected_plans"]
+                ),
+                "hard_api_call_cap": frozen_plan_config["budget"]["hard_api_call_cap"],
+                "retry_per_plan": frozen_plan_config["budget"]["retry_per_plan"],
+            }
+            if args.frozen_plan is not None
+            else None
+        ),
+        "early_stop": {
+            "triggered": early_stop_reason is not None,
+            "reason": early_stop_reason,
+            "not_called_plan_keys": sorted(not_called_keys),
+        },
         "replayed_response_count": (
             len(replay_responses) if args.offline_replay else 0
         ),
@@ -1687,9 +1992,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         "elapsed_seconds": elapsed,
         "claim_boundary": "development mechanism verification; not a formal performance result",
     }
-    if execution_mode not in ("offline_replay", "offline_transport_replay"):
-        # Offline replay manifests are intentionally timestamp-free so
-        # identical inputs replay byte-identically.
+    frozen_plan_only = args.frozen_plan is not None and args.plan_only
+    if execution_mode not in ("offline_replay", "offline_transport_replay") and not frozen_plan_only:
+        # Offline replay and frozen plan-only manifests are intentionally
+        # timestamp-free so identical inputs replay byte-identically.
         manifest["timestamp_utc"] = datetime.now(timezone.utc).isoformat()
     else:
         # Timing is non-deterministic and would break byte-identical replay.

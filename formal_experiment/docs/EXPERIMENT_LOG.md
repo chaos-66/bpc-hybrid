@@ -1827,3 +1827,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：task=S2.8D-R4；用户明确授权最多 1 次 deepseek-v4-flash 真实调用；实际 API calls=1；retry=0；未进入 pilot；coordinate canonicalizer 已启用；R1/R3 历史结果未改；Gold/Layer E/.env 未读；prompt/validator/schema/B0/trigger/risk/budget 未改；P/R=not_computed；真实结果=成功（情况 1）：requested/resolved/returned=deepseek-v4-flash，HTTP 200、extraction=ok_message_content、reasoning=false、tool_calls=0、usage=1305/405/1710，非空 patch（content 1531 chars，sha e7514386…）→ canonicalizer reanchored 3/3（zero/ambiguous/contract=0，original patch sha 810a433c…→canonicalized sha c9014f7c…）→ canonical validator 通过 → atomic merge accepted → effective_patch=true、changed=1、h1_non_identity_gate=true、H1!=B0（B0 57f3564b…→H1 5bcf26d7…）、identity 不变；离线 replay（s28d_r4_h1_canary_replay_v1，0 API calls）与真实运行 H1 hash 一致且 byte-identical；manifest=formal_experiment/outputs/development/s28d_r4_h1_canary_v1/manifest.json（sha 9734c2ed…）、capture sha 92df6817…；唯一推荐下一任务 S2.8D-R5 冻结小规模 pilot 计划与调用预算（本轮不运行 pilot、不计算 P/R）
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-31T19:14:04.985735+00:00 - S2.8D-R5 冻结 Gold-blind 小规模 H1 pilot 计划（10 calls、预算与执行门禁；0 real API calls）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1209 passed, 24 skipped in 200.90s (0:03:20)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`a3045241867f8605e7f39cfb3b767bf037964a30`；相关未提交路径：9 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：task=S2.8D-R5；API calls=0；retry=0；pilot 未运行；Gold/Layer E/.env 未读；冻结 plan 数=10（10 个不同 sample）；历史已调用 plan 交集为空（历史真实调用 42 次、去重 20 个 plan keys、keys sha c813a384…）；hard call cap=10；retry=0；frozen-plan fail-closed 绑定已实现（B0/prompt/model/plan 各字段/hash 校验，--max-calls 必须 10、与 --exclude-plan 互斥）；early-stop 合同已实现并测试（provider model mismatch / capture binding failure / 调用计数越界 / plan key mismatch / 连续 3 次 transport-extraction 失败 abort_remaining，剩余标记 pilot_early_stop_not_called 不补选；patch 级拒绝 record_and_continue）；plan-only 验证 selected=10/10、llm_calls=0、real_api=false、patch 0/0/0、gate=false、H1==B0、execution order 与 keys hash 一致、byte-identical；新增 configs/s28d_r5_h1_small_pilot_plan_v1.json（sha 35dc6a75…）+ src/bpc_hybrid/h1_pilot_plan.py + runner --frozen-plan + 29 项测试（30 验收点）；H1 focused 106 passed、全量 1209 passed 24 skipped；B0/trigger/risk/repair-field 推导/prompt/validator/schema/model gate 未改；P/R=not_computed；下一步需用户单独授权 S2.8D-R6 十次真实 pilot（本轮未执行）
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-01
-**收录文件**：552 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：557 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -74,6 +74,7 @@
 | `configs/experiment_contract.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/paths.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/s28d_r5_h1_small_pilot_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/dataset_manifest.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_ai_review_model_output.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -376,6 +377,8 @@
 | `docs/research/S28D_R3_COORDINATE_CANONICALIZATION.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/S28D_R4_REAL_CANARY.json` | 研究证据 | 机器可读配置、数据、事件或产物 |
 | `docs/research/S28D_R4_REAL_CANARY.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/S28D_R5_SMALL_PILOT_PLAN.json` | 研究证据 | 机器可读配置、数据、事件或产物 |
+| `docs/research/S28D_R5_SMALL_PILOT_PLAN.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_BASELINE_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_MODALITY_DATASET_INGESTION.md` | 研究证据 | 说明、规范或研究文档 |
@@ -516,6 +519,7 @@
 | `src/bpc_hybrid/extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_context.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/h1_pilot_plan.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_transport.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_client.py` | 活动 | Python 实现、脚本或测试 |
@@ -622,6 +626,7 @@
 | `tests/test_h1_effective_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_fallback_runner.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_masked_context.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_h1_pilot_plan.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_layer_d_runner_and_validator.py` | 活动 | Python 实现、脚本或测试 |
