@@ -1663,3 +1663,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：Focused H1/prompt tests: 31 passed. B0 v10a plan-only: 150 samples, 135 triggered, 50 clauses/41 samples selected, 0 API calls, 0 semantic changes by design. Full suite: 993 passed, 22 skipped, 9 failed from pre-existing modality source-manifest hash mismatch and populated production review-backup directory; checkpoint is not formal-ready.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-31T09:38:25.010324+00:00 - G0-EOL-HASH-PORTABILITY: 合同显式声明受控文本哈希策略（source_manifest hash_mode=canonical_lf_utf8_text），S2.1-D gate 只对声明资产做 CRLF->LF 归一化验证，新增窄 .gitattributes 固定该资产 eol=lf；修复 Windows core.autocrlf=true 下 source_manifest 哈希误报，integrity/sun_modality/human-review-input 门禁恢复 true
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1019 passed, 22 skipped in 144.29s (0:02:24)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`a73076d071150a48a95ac0a26ab7fe3a122ba9e2`；相关未提交路径：7 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：source_manifest.json 原始 CRLF 字节 SHA-256=ded52b1f...，LF 归一化后=cc7b4112... 与合同一致（已自行复核）；未声明 hash_mode 的资产（ZIP/JSONL/JSON aggregates）仍按原始字节验证；新增 18 项策略测试；focused 相关套件全绿。全量测试 1019 passed, 1 failed, 22 skipped：唯一失败 test_tests_do_not_touch_real_backup_dir 为既有环境问题（用户 07-18~07-21 人工审核真实备份文件在正式备份目录，pristine HEAD 复跑通过），与本任务无关，未删除任何用户数据
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

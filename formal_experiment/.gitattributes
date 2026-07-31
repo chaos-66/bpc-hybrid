@@ -1,0 +1,8 @@
+# G0-EOL-HASH-PORTABILITY (2026-07-31): narrow line-ending pin for the only
+# artifact the experiment contract declares as LF-canonical UTF-8 text
+# (hash_mode=canonical_lf_utf8_text in configs/experiment_contract.json).
+# Keeping this file checked out with LF makes working-tree bytes match the
+# canonical digest regardless of core.autocrlf.  The rule is limited to the
+# declared asset path; it must never be extended into broad `text=auto`
+# patterns and must never trigger a renormalize of tracked content.
+data/development/sun_modality/source_manifest.json text eol=lf

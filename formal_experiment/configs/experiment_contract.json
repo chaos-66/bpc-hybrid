@@ -126,7 +126,16 @@
       "source_manifest": {
         "path": "data/development/sun_modality/source_manifest.json",
         "version": "sun_modality_source_manifest@1.0.1",
-        "sha256": "cc7b4112c9fc0827a5227939a836c0e08ef68bc640fbf7d03ed91e8ce5b91982"
+        "sha256": "cc7b4112c9fc0827a5227939a836c0e08ef68bc640fbf7d03ed91e8ce5b91982",
+        "hash_mode": "canonical_lf_utf8_text"
+      },
+      "artifact_hash_policy": {
+        "policy_version": "controlled_text_hash_policy@1.0.0",
+        "default_mode": "raw_bytes",
+        "policy": "Every versioned artifact is verified with raw-byte SHA-256 unless the artifact's own contract entry explicitly declares hash_mode=canonical_lf_utf8_text (G0-EOL-HASH-PORTABILITY). Only source_manifest.json is declared canonical LF UTF-8 text: its verification hash is computed on CRLF-to-LF normalized bytes, so LF and CRLF worktrees verify the same controlled text. Binary ZIP, CSV members, JSONL records/splits, and derived JSON aggregates without an explicit declaration remain raw-byte verified; nothing is guessed from file extensions. Normalization is limited to replacing CRLF pairs with LF; invalid UTF-8, NUL bytes, or a bare CR fail closed, and any one-character semantic change changes the canonical digest and fails the gate. New canonical-text declarations require an explicit contract entry plus matching gate code.",
+        "declared_canonical_text_assets": [
+          "data/development/sun_modality/source_manifest.json"
+        ]
       },
       "source": {
         "zip_path": "data/development/sun_modality/raw/Decision_Logic_data.zip",

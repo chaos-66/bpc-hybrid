@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-07-31
-**收录文件**：520 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：522 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -13,6 +13,12 @@
 | 文件 | 状态 | 用途 |
 |---|---|---|
 | `.env.example` | 活动 | 不含密钥的配置示例 |
+
+## `.gitattributes`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `.gitattributes` | 活动 | 项目文件 |
 
 ## `_retired`
 
@@ -574,6 +580,7 @@
 | `tests/fixtures/sun_modality/synthetic_small_class.csv` | 活动 | 项目文件 |
 | `tests/fixtures/sun_modality/synthetic_unknown_label.csv` | 活动 | 项目文件 |
 | `tests/test_audit.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_canonical_text_hash_policy.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |

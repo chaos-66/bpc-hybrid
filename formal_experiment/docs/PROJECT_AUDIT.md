@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-07-30
+**更新时间**：2026-07-31
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -31,11 +31,11 @@ manifest 解锁。论文工作稿位于 `paper/`，不能反向定义实验状�
 
 | 门禁 | 当前值 | 含义 |
 |---|---:|---|
-| `integrity_pass` | false | 2026-07-30 机器检查发现既存 `source_manifest.json` artifact/source-manifest hash mismatch；本次 H1 修复未改该 provenance，正式流程继续 fail closed |
+| `integrity_pass` | true | 2026-07-31 G0-EOL-HASH-PORTABILITY 后机器检查通过：合同显式声明 `source_manifest.hash_mode=canonical_lf_utf8_text`，gate 对该受控文本按 CRLF→LF 归一化验证，LF/CRLF 工作树均可验证同一受控内容；未声明资产仍按原始字节 |
 | `formal_capsule_versioned` | true | `formal_experiment/` 已进入 Git checkpoint `bfb0b8a`；不代表 input/Gold/结果已冻结 |
-| `sun_modality_development_data_verified` | false | 当前机器检查因 source manifest 哈希不一致而拒绝既有 development 验证状态；2,833→2,831 统计未在本次任务中重写 |
+| `sun_modality_development_data_verified` | true | S2.1-D 门禁恢复通过；2,831 行 analysis population、quarantine、split 与许可边界均未变 |
 | `public_marker_lexicon_verified` | true | S2.3 英文 public-source v1 的 64 个 marker、来源/生成/hash/空扩展表通过离线机器门禁；development-only，未激活 S2.4+ |
-| `human_review_input_ready` | false | Layer E 结构仍可读，但顶层机器门禁因 integrity failure 暂时 fail closed；不在本次 H1 修复中绕过 |
+| `human_review_input_ready` | true | Layer E 输入门禁恢复 true（0/150 即可开始人工审核）；freeze/pub/final 门禁不受影响 |
 | `human_review_freeze_ready` | false | EStG-150 仍是 0/150 adjudicated |
 | `formal_gold_publication_ready` | false | route/data/stage3/Gold 尚未共同重锁 |
 | `final_experiment_ready` | false | 正式方法、冻结数据与最终实验均未就绪 |

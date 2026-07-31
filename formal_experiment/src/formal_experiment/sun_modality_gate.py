@@ -5,6 +5,14 @@ official ZIP once for SHA-1/SHA-256, reads the ZIP central directory for member
 size/CRC, scans the small local records/splits, and cross-checks every aggregate
 artifact against the versioned experiment contract.
 
+Artifact hashing follows the contract-declared controlled-text hash policy
+(G0-EOL-HASH-PORTABILITY): every artifact is verified on raw bytes unless its
+contract entry explicitly declares ``hash_mode == "canonical_lf_utf8_text"``.
+Only such declared assets are verified on CRLF-to-LF normalized UTF-8 text
+bytes, so the same controlled text verifies identically in LF and CRLF
+worktrees.  Binary ZIP, JSONL records/splits, and undeclared JSON aggregates
+remain raw-byte verified; the mode is never guessed from a file extension.
+
 This module is stdlib-only, offline, and performs no training or evaluation.
 """
 
@@ -38,6 +46,16 @@ SPLIT_RELS = {
 }
 EXPERIMENT_CONTRACT_REL = "configs/experiment_contract.json"
 LOCAL_IGNORE_REL = f"{DEVELOPMENT_DIR_REL}/.gitignore"
+
+# Contract-declared artifact hash modes (G0-EOL-HASH-PORTABILITY).
+# The keys are the contract subtrees that carry each artifact's hash_mode;
+# an artifact without an entry here is verified on raw bytes.  Only the
+# explicit canonical_lf_utf8_text mode triggers CRLF-to-LF normalization;
+# no mode is ever inferred from a file extension.
+CANONICAL_TEXT_MODE = "canonical_lf_utf8_text"
+HASH_MODE_KEYS: dict[str, tuple[str, ...]] = {
+    SOURCE_MANIFEST_REL: ("source_manifest", "hash_mode"),
+}
 
 
 @dataclass(frozen=True)
@@ -142,6 +160,32 @@ def _sha256(path: Path, chunk_size: int = 1 << 20) -> str:
                 break
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _canonical_lf_digest(raw: bytes) -> str:
+    """SHA-256 of LF-canonical UTF-8 text bytes.
+
+    CRLF pairs are replaced with LF before hashing so the same controlled
+    text verifies identically in LF and CRLF worktrees.  Anything that is
+    not clean LF-canonical UTF-8 text -- invalid UTF-8, a NUL byte, or a
+    bare CR that is not part of a CRLF pair -- raises ``ValueError`` and
+    the gate fails closed.
+    """
+    if b"\x00" in raw:
+        raise ValueError("contains a NUL byte")
+    try:
+        raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise ValueError(f"not valid UTF-8 ({exc})") from exc
+    normalized = raw.replace(b"\r\n", b"\n")
+    if b"\r" in normalized:
+        raise ValueError("contains a bare CR (CR not part of a CRLF pair)")
+    return hashlib.sha256(normalized).hexdigest()
+
+
+def _canonical_lf_sha256(path: Path) -> str:
+    """Raw-byte read plus :func:`_canonical_lf_digest` for a declared asset."""
+    return _canonical_lf_digest(path.read_bytes())
 
 
 def _zip_hashes(path: Path, chunk_size: int = 1 << 20) -> tuple[str, str]:
@@ -301,6 +345,7 @@ def verify_sun_modality_development_data(
     )
     paths = {relative: root / relative for relative in relative_paths}
     checked_artifacts: list[dict[str, Any]] = []
+    artifact_items: dict[str, dict[str, Any]] = {}
     actual_sha256: dict[str, str] = {}
     zip_actual_sha1 = ""
     zip_actual_sha256 = ""
@@ -330,6 +375,7 @@ def verify_sun_modality_development_data(
                 f"Required modality artifact is missing: {relative}.",
             )
         checked_artifacts.append(item)
+        artifact_items[relative] = item
 
     json_artifacts: dict[str, dict[str, Any]] = {}
     for relative in (
@@ -360,6 +406,43 @@ def verify_sun_modality_development_data(
     modality = _nested(experiment, "stage2_dataset", "modality_dataset", default={})
     if not isinstance(modality, dict):
         modality = {}
+
+    # Controlled-text hash policy: read the contract-declared hash_mode for
+    # each artifact.  Only an explicit canonical_lf_utf8_text declaration
+    # switches an artifact to CRLF-to-LF normalized hashing; everything else
+    # stays raw-byte verified.  Unknown declared modes and unnormalizable
+    # text fail closed.
+    declared_modes: dict[str, str] = {}
+    canonical_digests: dict[str, str] = {}
+    for relative, mode_keys in HASH_MODE_KEYS.items():
+        mode = _nested(modality, *mode_keys)
+        if mode is None:
+            continue
+        declared_modes[relative] = str(mode)
+        if mode == CANONICAL_TEXT_MODE:
+            try:
+                canonical_digests[relative] = _canonical_lf_sha256(paths[relative])
+            except (OSError, ValueError) as exc:
+                canonical_digests[relative] = ""
+                checks.require(
+                    False,
+                    "artifact_hashes_ok",
+                    f"canonical_text_invalid:{relative}",
+                    f"Declared canonical LF UTF-8 text asset is not clean LF-canonical text: {relative} ({exc}).",
+                )
+        else:
+            checks.require(
+                False,
+                "artifact_hashes_ok",
+                f"unknown_hash_mode:{relative}",
+                f"Artifact {relative} declares an unsupported hash_mode {mode!r}; the only supported text mode is {CANONICAL_TEXT_MODE!r}.",
+            )
+    for relative, item in artifact_items.items():
+        mode = declared_modes.get(relative)
+        item["hash_mode"] = mode if mode is not None else "raw_bytes"
+        if item["hash_mode"] == CANONICAL_TEXT_MODE:
+            item["sha256_raw"] = actual_sha256.get(relative, "")
+            item["sha256"] = canonical_digests.get(relative, "")
 
     # Source identity: stream only the ZIP and inspect its central directory.
     checks.require(paths[SOURCE_ZIP_REL].is_file(), "source_identity_ok", "source_zip_missing", "The official source ZIP is missing.")
@@ -417,7 +500,6 @@ def verify_sun_modality_development_data(
 
     # Contract and artifact-hash cross-checks.
     contract_sha = actual_sha256.get(DATASET_CONTRACT_REL, "")
-    source_manifest_sha = actual_sha256.get(SOURCE_MANIFEST_REL, "")
     checks.require(dataset.get("contract_version") == expectations.contract_version, "contract_ok", "dataset_contract_version_mismatch", "Dataset contract patch version is not locked.")
     checks.require(manifest.get("schema_version") == expectations.manifest_schema_version, "contract_ok", "manifest_schema_version_mismatch", "Development manifest schema patch version is not locked.")
     checks.require(manifest.get("importer_version") == expectations.importer_version, "contract_ok", "official_importer_version_mismatch", "Official importer patch version is not locked.")
@@ -439,15 +521,24 @@ def verify_sun_modality_development_data(
         SPLIT_RELS["test"]: _nested(modality, "splits", "test", "sha256"),
     }
     for relative, expected_hash in expected_hash_entries.items():
+        if declared_modes.get(relative) == CANONICAL_TEXT_MODE:
+            actual = canonical_digests.get(relative)
+        else:
+            actual = actual_sha256.get(relative)
         checks.require(
             isinstance(expected_hash, str)
             and bool(_HEX64.fullmatch(expected_hash))
-            and actual_sha256.get(relative) == expected_hash,
+            and actual == expected_hash,
             "artifact_hashes_ok",
             f"artifact_hash_mismatch:{relative}",
             f"Artifact SHA-256 mismatch: {relative}.",
         )
     checks.require(_nested(modality, "source_manifest", "path") == SOURCE_MANIFEST_REL and _nested(modality, "dataset_contract", "path") == DATASET_CONTRACT_REL, "contract_ok", "contract_artifact_paths_invalid", "Experiment contract source/dataset contract paths are not canonical project-relative paths.")
+    source_manifest_sha = (
+        canonical_digests.get(SOURCE_MANIFEST_REL)
+        if declared_modes.get(SOURCE_MANIFEST_REL) == CANONICAL_TEXT_MODE
+        else actual_sha256.get(SOURCE_MANIFEST_REL, "")
+    )
     checks.require(source_manifest_sha == _nested(modality, "source_manifest", "sha256"), "artifact_hashes_ok", "source_manifest_hash_mismatch", "Source manifest SHA-256 does not match the experiment contract.")
 
     # Schema audit is trusted only after cross-checking immutable source facts.
@@ -747,6 +838,15 @@ def verify_sun_modality_development_data(
         "errors": checks.errors,
         "blockers": checks.blockers,
         "checked_artifacts": checked_artifacts,
+        "hash_policy": {
+            "default_mode": "raw_bytes",
+            "canonical_text_mode": CANONICAL_TEXT_MODE,
+            "declared_canonical_text_assets": sorted(
+                relative
+                for relative, mode in declared_modes.items()
+                if mode == CANONICAL_TEXT_MODE
+            ),
+        },
     }
 
 
