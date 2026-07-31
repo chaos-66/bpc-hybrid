@@ -74,7 +74,7 @@ Sun 最终版、公开数据、引用链和代码来源证据统一放在 `docs/
 | 5 | S2.2 | 用户并行完成人工裁决；Agent 只验证 | 150/150 adjudicated，freeze validator 通过 |
 | 6 | S2.3 | **verified**：`public_marker_lexicon_en_v1` 已离线锁定；64 个 marker、source/manifest/payload hash、空扩展表和机器门禁通过 | 来源、规则、语言、hash 与 dev-only 扩展策略固定 |
 | 6.1 | S2.4-S2.6 | 本轮严格未启动；许可未知与 S2.4 ready 的现有矛盾不在 S2.3 绕过，留待 S2.4 单独派发前收口 | 非 LLM canonical Rule Record 可复现 |
-| 7 | S2.7-S2.12 | H1 development wiring 已修复；S2.8A Gold-blind 诊断表、S2.8B masked-repair 合同（development verified）、S2.8C effective fallback 链路验证（development verified）：每 plan effective-patch audit + `--offline-replay` 绑定通道 + `h1_non_identity_gate`（plan-only=false，合法 replay fixture=true）；B0 v10a 上 plan-only 两臂 221 triggered/50 selected/41 samples 一致、0 calls/0 changed/gate=false；no-op replay 50/50 no_semantic_change、byte-identical 重放、0 API calls；**formal S2.8 仍 blocked on S2.6** | 同 IDs/Gold/evaluator 的完整比较；真实 H1 run 后报告 called/accepted/rejected/changed 四层计数 |
+| 7 | S2.7-S2.12 | H1 development wiring 已修复；S2.8A/B/C development verified；S2.8D v4-flash 真实 pilot 执行：20 次新调用（canary+19），模型身份全部验证为 deepseek-v4-flash，但 20/20 响应为空内容 → 0 valid/0 effective/0 changed/gate=false（**如实失败**）；另有 20 次 v4-pro 偏差调用已归档（exploratory deviation）；历史真实调用 40 次全部未产生有效 patch；**formal S2.8 仍 blocked on S2.6** | 同 IDs/Gold/evaluator 的完整比较；真实 H1 run 后报告 called/accepted/rejected/changed 四层计数 |
 | 8 | S2.13 | 冻结 Stage 2 | 数据、方法、指标、成本、manifest 完整 |
 | 9 | PW1 | **下一论文任务**：引言与 RQ0–RQ4 | 无结果性过度主张；主张矩阵同步 |
 

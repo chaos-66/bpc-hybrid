@@ -1741,3 +1741,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：偏差：20 次真实调用使用 deepseek-v4-pro（.env 的 BPC_HYBRID_DeepSeek_MODEL 按 profile 优先级覆盖了 flat env 覆盖），非授权的 v4-flash；manifest 记录 model=deepseek-v4-pro，20 calls/1 valid/1 effective（modality）/1 changed/gate=true；19/20 responses 为空/不可解析 JSON；runner 未计量 provider usage，实际 token/成本未记录（偏差记录注明）。修复：--allow-llm 必须显式 --model，CLI 覆盖 profile/.env 选择，解析值 != deepseek-v4-flash 时调用前中止（exit 3），控制台与 manifest 记录 resolved model + model_source；新增 4 项门禁测试。preflight v2：同冻结 20 plans/16 samples，masked_selected_v5 prompt sha 065005189c...，B0 sha 79dc457c...，est max cost ~USD 0.103。全量 1102 passed 24 skipped 0 failed。canary→剩余 19 次调用按用户指示待再次授权后再执行
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-07-31T12:07:34.310703+00:00 - S2.8D v4-flash 真实 pilot 执行完成：模型身份全部验证，但 20/20 响应为空内容，未达最低成功门（如实失败）；新增 --exclude-plan 与 response_model 记录
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1104 passed, 24 skipped in 131.13s (0:02:11)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`c9b557f5c6b94d94e024f273a5b2305990d1b7ee`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：新调用：canary 1 次（estg_000021.c1，rank-1 冻结 plan）+ pilot 19 次（--exclude-plan estg_000021/estg_000021.c1 --max-calls 20 冻结分配）= 20 次新调用，硬上限精确满足，无 retry。每次调用 requested/resolved/provider-returned 模型均 deepseek-v4-flash（canary 与 pilot 全部 response_model 验证通过）。结果：20/20 response_content 为空串（response_sha256 == sha256('')），_parse_patch_response 全部抛 'Expecting value: line 1 column 1' → llm_error，valid=0、accepted=0、effective=0、changed_predictions=0、h1_non_identity_gate=false。runner 未计量 provider usage，成本未记录（估计上限 canary ~USD 0.005 + pilot ~USD 0.098）。历史总调用 40 次（20 v4-pro 偏差已归档 + 20 v4-flash pilot），均未产生有效 patch。未改 B0/trigger/risk/budget/prompt/Gold/Layer E；P/R not_computed。新增 2 项测试（exclude-plan、response-model）；全量 1104 passed 24 skipped 0 failed
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

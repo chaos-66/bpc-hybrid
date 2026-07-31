@@ -851,6 +851,16 @@ def _make_parser() -> argparse.ArgumentParser:
         "overrides profile/.env model selection. The resolved value must "
         f"equal {REAL_CALL_REQUIRED_MODEL!r} or the run aborts before any call.",
     )
+    parser.add_argument(
+        "--exclude-plan",
+        action="append",
+        default=[],
+        metavar="SAMPLE/CLAUSE",
+        help="Drop a plan from the selected set (e.g. the canary plan) so a "
+        "follow-up run covers the remaining frozen plans without re-calling "
+        "it. Trigger/risk/budget allocation is unchanged; this only filters "
+        "the final candidate set.",
+    )
     parser.add_argument("--max-calls", type=int, default=50)
     parser.add_argument("--inter-call-delay", type=float, default=0.5)
     parser.add_argument("--overwrite", action="store_true")
@@ -894,6 +904,19 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     plans = build_repair_plans(batch)
     selected = allocate_repair_calls(plans, args.max_calls)
+    excluded_keys: set[tuple[str, str]] = set()
+    for spec_key in args.exclude_plan:
+        parts = spec_key.split("/", 1)
+        if len(parts) != 2 or not all(parts):
+            print(f"Refusing to run: invalid --exclude-plan {spec_key!r} (expected SAMPLE/CLAUSE).")
+            return 2
+        excluded_keys.add((parts[0], parts[1]))
+    unknown_excludes = sorted(excluded_keys - {plan.key for plan in plans})
+    if unknown_excludes:
+        print(f"Refusing to run: --exclude-plan keys are not triggered plans: {unknown_excludes}")
+        return 2
+    if excluded_keys:
+        selected = [plan for plan in selected if plan.key not in excluded_keys]
     selected_keys = {plan.key for plan in selected}
     records = {
         item.record["sample_id"]: copy.deepcopy(item.record)
@@ -1034,6 +1057,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                 llm_calls += 1
                 event["llm_call_performed"] = True
                 event["response_sha256"] = _sha256_bytes(response.content.encode("utf-8"))
+                event["response_model"] = response.model
+                event["response_provider"] = response.provider
                 envelope = _parse_patch_response(response.content)
             except (LLMClientError, H1RunnerError) as exc:
                 if not event["llm_call_performed"]:
@@ -1059,6 +1084,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         merge_event["llm_call_performed"] = event["llm_call_performed"]
         if "response_sha256" in event:
             merge_event["response_sha256"] = event["response_sha256"]
+        if "response_model" in event:
+            merge_event["response_model"] = event["response_model"]
+            merge_event["response_provider"] = event["response_provider"]
         merge_event["patch_envelope"] = copy.deepcopy(envelope)
         if merge_event["patch_accepted"]:
             records[plan.sample_id] = merged
@@ -1195,6 +1223,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "selected_plan_count": len(selected),
         "selected_sample_count": len(selected_samples),
         "selected_sample_rate": len(selected_samples) / len(batch),
+        "excluded_plan_keys": sorted(f"{s}/{c}" for s, c in excluded_keys),
         "llm_calls": llm_calls,
         "llm_called_sample_count": sum(1 for row in sample_rows if row["llm_called"]),
         "llm_errors": llm_errors,

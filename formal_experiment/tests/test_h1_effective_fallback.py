@@ -305,6 +305,15 @@ def _read_jsonl(path: Path) -> list[dict]:
     ]
 
 
+def _plan_keys_effective(telemetry_path: Path) -> list[tuple[str, str]]:
+    return sorted(
+        (event["sample_id"], event["clause_id"])
+        for row in _read_jsonl(telemetry_path)
+        for event in row["patch_events"]
+        if event.get("selected_for_call")
+    )
+
+
 def _envelope(plan, patches: dict, reason: str = "synthetic replay") -> dict:
     return {
         "sample_id": plan.sample_id,
@@ -998,6 +1007,69 @@ class TestRealCallModelGate:
         }
         assert manifest["llm_calls"] == 1
         assert manifest["h1_non_identity_gate"] is True
+        # Provider-returned model identity is recorded per response.
+        telemetry = _read_jsonl(out_dir / "h1_telemetry.jsonl")
+        response_models = {
+            event.get("response_model")
+            for row in telemetry
+            for event in row["patch_events"]
+            if event.get("selected_for_call")
+        }
+        assert response_models == {"deepseek-v4-flash"}
+
+    def test_exclude_plan_filters_selected_set(self, tmp_path):
+        """--exclude-plan drops one plan from the frozen selected set
+        without changing trigger/risk/budget allocation."""
+        attempts = _fixture_attempts()
+        b0_path, b0_manifest = _b0_bundle(tmp_path, attempts)
+        out_dir = tmp_path / "out"
+        result = RUNNER.main(
+            [
+                "--b0-predictions",
+                str(b0_path),
+                "--b0-manifest",
+                str(b0_manifest),
+                "--output",
+                str(out_dir / "h1_predictions.jsonl"),
+                "--telemetry",
+                str(out_dir / "h1_telemetry.jsonl"),
+                "--manifest",
+                str(out_dir / "h1_manifest.json"),
+                "--plan-only",
+                "--max-calls",
+                "50",
+                "--exclude-plan",
+                "estg_000002/estg_000002.c1",
+                "--development",
+            ]
+        )
+        assert result == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["triggered_plan_count"] == 2  # allocator input unchanged
+        assert manifest["selected_plan_count"] == 1  # canary plan filtered out
+        assert manifest["excluded_plan_keys"] == ["estg_000002/estg_000002.c1"]
+        keys = _plan_keys_effective(out_dir / "h1_telemetry.jsonl")
+        assert keys == [("estg_000003", "estg_000003.c1")]
+
+    def test_exclude_plan_rejects_unknown_key(self, tmp_path):
+        b0_path, b0_manifest = _b0_bundle(tmp_path, _fixture_attempts())
+        result = RUNNER.main(
+            [
+                "--b0-predictions",
+                str(b0_path),
+                "--b0-manifest",
+                str(b0_manifest),
+                "--output",
+                str(tmp_path / "o.jsonl"),
+                "--manifest",
+                str(tmp_path / "m.json"),
+                "--plan-only",
+                "--exclude-plan",
+                "estg_000001/estg_000001.c1",  # not a triggered plan
+                "--development",
+            ]
+        )
+        assert result == 2
 
 
 class TestComparisonReport:
