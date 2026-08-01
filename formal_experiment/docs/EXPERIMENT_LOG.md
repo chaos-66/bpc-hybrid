@@ -1874,3 +1874,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：task=S2.8D-R6C1；用户授权只补 order 6–10（estg_000232/000285/000302/000414/000716），模型 deepseek-v4-flash，新增 hard cap=5、每 plan 至多 1 次、retry=0，禁止重调 order 1–5、禁止重跑原 10-call 命令；新增 API calls=5；order 1–5 new calls=0；未冻结调用=0；重复调用=0；retry=0；无 early stop；requested/resolved/returned 均 deepseek-v4-flash（5/5）；transport/extraction 5/5；usage 总 9652（8000/1652）；proposed=5、accepted=1、rejected=4（canonical_invalid=4、reference_mismatch=4）、effective=1、changed=1、H1!=B0=1、gate=true、identity violation=0；canonicalizer reanchored 5/5（already-valid 1、reanchored spans 12、zero/amb/contract=0）；continuation 实现（--continuation-plan fail-closed 绑定 + 配置 s28d_r6c1_h1_remaining_pilot_plan_v1.json sha f0946bdd…）+ 29 项测试（30 验收点）；0-API plan-only 验证 selected=5、orders=6..10、byte-identical；continuation replay（0 API calls）逐项一致、byte-identical；合并 R6+R6C1 完整 10-plan capsule（s28d_r6_complete_h1_small_pilot_v1，combine_h1_pilot_runs.py）：10/10 覆盖、keys sha bb8d73b2…、每 plan 一次、10 不同 sample、identity 0、合并 byte-identical；合并指标 calls=10、proposed=10、accepted=4、rejected=6、effective=4、changed=4、H1!=B0=4、effective rate=0.40、usage 总 18628；完整覆盖=10/10（complete）；Gold/Layer E/.env 未读；父 frozen plan/B0/trigger/risk/prompt/validator/schema/model gate/early-stop 合同未改；R1–R6 历史产物未改；P/R=not_computed；下一步 S2.8D-R7 完整 10-plan Gold-blind 结果审计与受控 P/R 评价解锁准备
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-01T14:29:36.312761+00:00 - 建立 B0 方法级复现修复 Pipeline 并登记历史分支 D1 Precision/Recall
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1241 passed, 24 skipped in 104.23s (0:01:44)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`47b0399bcc9cef77de7ef6d5cc044773673036c0`；相关未提交路径：14 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：用户确认方法级独立复现可进入正式结论；新增 B0-R0 至 B0-R5，Sun literal overlap 为抽取主口径，严格指标仅诊断且不设最低分门槛；登记 experiment/paper-validation-r1@b5f05b8 的 D1 overall P=0.9067688378、R=0.6644549763，逐字段 P/R 见 PROJECT_AUDIT；指标仍为 development_one_repeat_not_formal，本轮未重跑模型、未调用 API、未修改 Gold；现有 H1/D1 产物与该分支字节一致并作为历史开发证据保存。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

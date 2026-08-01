@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-01
-**收录文件**：564 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：575 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -405,6 +405,17 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_primary_call_incident.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_recovery_batches.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_attempts_v1_rejected.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_evaluated_responses.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_responses_v1_rejected.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 
 ## `paper`

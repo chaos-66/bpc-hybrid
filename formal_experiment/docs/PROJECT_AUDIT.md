@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-07-31
+**更新时间**：2026-08-01
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -22,6 +22,11 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 实施顺序锁定为：**先完成 Stage 2，再补齐 Stage 1，最后复现并扩展 Stage 3**。
 当前机器合同仍是 Stage 2 优先、Stage 3 固定的阶段性合同；启动 Stage 3 改进前
 必须另行修改并审计合同。
+
+用户于 2026-08-01 确认：B0 采用 `method-level independent reconstruction` 口径，
+满足 Sun 核心组件、处理顺序、统一输入输出和统一 evaluator 后可进入正式结论；
+不再要求作者原代码、原权重、完整私有词典或论文绝对数值一致。当前仍先执行
+`MASTER_PIPELINE.md` §8.6 的 B0-R0–B0-R5，排除确定性代码错误后才重跑并解释低分。
 
 根据导师最新要求，论文非结果章节从现在与实验并行：先写引言、相关工作、方法、
 数据/标注流程和实验设计；结果、摘要结论和“LLM 优势”只保留显式 TODO，直到正式
@@ -49,9 +54,9 @@ manifest 解锁。论文工作稿位于 `paper/`，不能反向定义实验状�
 |---|---|---|
 | EStG-150 五层审核工作流 | input-ready，0/150 | LLM-assisted、human-adjudicated 候选 Gold 工作流 |
 | 现有 `sun_rule_only` | development heuristic | 不是完整或 exact Sun Stage 2 |
-| B0（BERT-TextCNN + CoreNLP/Tregex/Tsurgeon） | blocked | 论文级独立重建尚未完成 |
+| B0（BERT-TextCNN + CoreNLP/Tregex/Tsurgeon） | B0-R0 ready；完整方法仍 blocked | 允许方法级独立复现；作者原资产缺失不是单独 blocker，但实际实现尚未整合到当前主线 |
 | H1（Sun + LLM fallback） | formal blocked；development mechanism repaired | runner 强制读取并 SHA 绑定落盘 B0，不再内部重跑；field-level patch 原子应用并记录 accepted/rejected/no-op；真实 LLM 未授权，尚无新性能结果 |
-| D1（direct LLM） | prompt/fixture development only | 真实 LLM 未授权，不能报告正式指标 |
+| D1（direct LLM） | 历史分支 development run 已登记 P/R；当前 formal 仍 blocked | 可引用为历史开发证据，不得冒充当前冻结 capsule 的正式指标 |
 | Stage 1 | 部分解析代码/历史资产 | 尚无冻结的正式组件结果 |
 | Stage 3 | fixture/scaffold only | 尚无完整 Sun/Winter 多 baseline 比较 |
 | 正式结果目录 | 未冻结 | 当前不得声称最终实验结果 |
@@ -60,6 +65,28 @@ manifest 解锁。论文工作稿位于 `paper/`，不能反向定义实验状�
 
 Sun 最终版、公开数据、引用链和代码来源证据统一放在 `docs/research/`；历史路线和
 过期交接统一放在 `_retired/docs/2026-07/`，不得再作为实时指令。
+
+### 3.1 历史分支 D1 Precision/Recall 登记
+
+来源：`experiment/paper-validation-r1` 的 commit `b5f05b8`，run
+`s28_s29_deepseek_v4pro_sun_literal_v1`，150 samples，repeat=1。指标文件 canonical-LF
+SHA-256 为 `25628188f17eae054b2537aa1f1bef562bcd6a35995b7b03f263e0a1836ab4bc`。
+
+| 字段 | Precision | Recall |
+|---|---:|---:|
+| Overall | 90.68% | 66.45% |
+| Action | 95.02% | 85.02% |
+| Actor | 59.42% | 87.50% |
+| Condition | 91.11% | 69.16% |
+| Constraint | 84.54% | 28.81% |
+| Exception | 100.00% | 38.46% |
+| Modality evidence span | 97.27% | 90.48% |
+
+口径是 `sun_table8_literal_overlap_evaluation@2.0.0`：statement 级、同字段任意非空
+字符交叠、无 clause alignment、无一对一 assignment；`modality` 忽略类别标签，只看
+evidence span。Overall F1=76.69%，`invalid_attempt_count=1`。manifest 状态仍是
+`succeeded_development_not_formal`；本登记未重跑模型、未调用 API，也未将该结果提升为
+当前 formal capsule。
 
 ## 4. 当前工作队列
 
@@ -74,6 +101,7 @@ Sun 最终版、公开数据、引用链和代码来源证据统一放在 `docs/
 | 5 | S2.2 | 用户并行完成人工裁决；Agent 只验证 | 150/150 adjudicated，freeze validator 通过 |
 | 6 | S2.3 | **verified**：`public_marker_lexicon_en_v1` 已离线锁定；64 个 marker、source/manifest/payload hash、空扩展表和机器门禁通过 | 来源、规则、语言、hash 与 dev-only 扩展策略固定 |
 | 6.1 | S2.4-S2.6 | 本轮严格未启动；许可未知与 S2.4 ready 的现有矛盾不在 S2.3 绕过，留待 S2.4 单独派发前收口 | 非 LLM canonical Rule Record 可复现 |
+| 6.2 | B0-R0–B0-R5 | **新主线 ready**：先把实际 B0 方法实现整合到当前可审计分支，再修确定性代码错误；采用 Sun 宽松 overlap 主口径，strict/edge 指标只作诊断，不设最低分门槛 | B0 方法级实现可重放、无已知确定性代码错误、变更均有日志和 Git checkpoint；修复后低分可作为正式负结果 |
 | 7 | S2.7-S2.12 | H1 development wiring 已修复；S2.8A/B/C development verified；S2.8D-R1 transport 离线修复 verified；S2.8D-R1 单次 v4-flash canary（硬上限 1、0 retry）因 span reference mismatch 被原子拒绝（valid=1、accepted=0、effective=0、gate=false、H1==B0），历史真实调用累计 41 次。**S2.8D-R2 离线取证**（0 real API calls）：3/3 被拒 span 为正确文本+错误坐标（clause 内唯一 exact match），结论=情况 A。**S2.8D-R3 已实现**（0 real API calls）：fail-closed unique exact-text coordinate canonicalization（`bpc_hybrid/h1_span_canonicalizer.py`，单一共享路径接入四模式；zero/ambiguous/contract 整 patch 拒绝；只改 start/end；仍过现有 validator 与 atomic merge）；同一 R1 capture 的 R3 离线 transport replay：reanchored 3/3、validator 通过、merge accepted、effective_patch=true、changed=1、**gate=true、H1!=B0**、identity 不变；R1 历史 strict 结果未改。**S2.8D-R4 真实 canary 成功**（1 real API call、retry 0，用户明确授权）：requested/resolved/returned=deepseek-v4-flash；HTTP 200、ok_message_content、reasoning=false、tool_calls=0、usage=1305/405/1710；非空 patch→canonicalizer reanchored 3/3（zero/ambiguous/contract=0）→canonical validator 通过→merge accepted→effective_patch=true、changed=1、**gate=true、H1!=B0**、identity 不变；离线 replay（s28d_r4_h1_canary_replay_v1）H1 sha 与真实运行一致、byte-identical；R1/R3 历史结果未改。**S2.8D-R5 已冻结**（0 real API calls、retry 0、未运行 pilot）：历史真实调用集合恢复=42 calls / 20 唯一 plan keys（sha c813a384…）；Gold-blind 确定性选样 10 个不同 sample plan（排除全部历史已调用 keys，复用现有 risk 排序）；frozen plan 配置 `configs/s28d_r5_h1_small_pilot_plan_v1.json`（sha 35dc6a75…，cap=10/retry=0/early-stop 合同）；runner `--frozen-plan` 严格绑定 fail closed + early-stop 实现（provider model / capture / count / plan key / 连续 3 次失败 abort；patch 级拒绝 continue）；plan-only 验证：selected=10/10、llm_calls=0、gate=false、H1==B0、execution order 与 keys hash 一致、历史交集空、byte-identical；新增 29 项测试（30 验收点），H1 focused 106 passed；默认行为不变。**S2.8D-R6 已执行**（用户明确授权，主真实命令仅一次）：实际 API calls=5（冻结 order 1–5：estg_000118/000133/000164/000206/000207），每 plan 1 次、retry=0、模型/capture 全对、无未冻结 plan；proposed=5、accepted=3、rejected=2、effective=3、changed=3、gate=true、H1!=B0=3、identity violation=0；canonicalizer reanchored 4/failed 1；usage 总 8976。**early stop 于 order 5 后误报 plan_key_mismatch**（R5 runner 计数缺陷，已修复+回归测试；真实调用无违规）；未调用 order 6–10 保留 not-called、不补跑。离线 replay（s28d_r6_h1_small_pilot_replay_v1，0 API calls）与真实运行逐项一致、byte-identical；机制最低可用门 passed=true。**S2.8D-R6C1 已补完**（用户授权只补 order 6–10；新增 actual API calls=5、retry=0、order 1–5 新调用=0、无 early stop）：estg_000232/000285/000302/000414 被拒（canonical_invalid+reference_mismatch）、estg_000716 accepted/effective；proposed=5、accepted=1、rejected=4、effective=1、changed=1、gate=true、identity violation=0；continuation replay 一致且 byte-identical；合并 R6+R6C1 为完整 10-plan capsule（s28d_r6_complete_h1_small_pilot_v1）：**10/10 覆盖 complete**、keys sha=bb8d73b2…、每 plan 一次、10 不同 sample；合并指标 calls=10、accepted=4、rejected=6、effective=4、changed=4、H1!=B0=4、identity=0、usage 总 18628。**formal S2.8 仍 blocked on S2.6；不得自动重试或进入完整 pilot** | 具备申请 S2.8D-R7（完整 10-plan Gold-blind 结果审计与受控 P/R 评价解锁准备）；P/R 仍 not_computed |
 | 8 | S2.13 | 冻结 Stage 2 | 数据、方法、指标、成本、manifest 完整 |
 | 9 | PW1 | **下一论文任务**：引言与 RQ0–RQ4 | 无结果性过度主张；主张矩阵同步 |
