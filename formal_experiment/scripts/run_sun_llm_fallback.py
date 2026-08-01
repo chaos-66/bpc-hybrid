@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 import sys
 import time
@@ -88,8 +89,13 @@ from bpc_hybrid.h1_span_canonicalizer import (  # noqa: E402
 )
 from bpc_hybrid.h1_pilot_plan import (  # noqa: E402
     EARLY_STOP_NOT_CALLED,
+    EXPECTED_CONTINUATION_HARD_CALL_CAP,
     EXPECTED_HARD_CALL_CAP,
+    continuation_plan_key,
+    continuation_plan_key_str,
+    continuation_plan_keys_sha256,
     evaluate_early_stop,
+    load_continuation_plan,
     load_frozen_plan,
     plan_key_str,
     selected_plan_keys_sha256,
@@ -1163,6 +1169,203 @@ def _bind_frozen_plan_hashes(
         raise H1RunnerError("frozen plan hash binding failed: " + "; ".join(errors))
 
 
+def _verify_continuation_binding(
+    config: Mapping[str, Any],
+    args: argparse.Namespace,
+    prompt_sha256: str,
+) -> None:
+    """S2.8D-R6C1: fail-closed verification of the continuation plan against
+    the parent frozen plan, the prior R6 run evidence, B0, and prompt.
+
+    Raises :class:`H1RunnerError` on any mismatch (caller aborts before any
+    API call).  Reads only hashes/IDs/counts from the prior run artifacts.
+    """
+    errors: list[str] = []
+
+    def fail(msg: str) -> None:
+        errors.append(msg)
+
+    # 1. Parent frozen plan file hash + selected keys hash + full 1..10 set.
+    parent_path = Path(config["parent_frozen_plan_path"])
+    if not parent_path.exists():
+        fail(f"parent frozen plan missing: {parent_path}")
+    else:
+        parent_cfg = json.loads(parent_path.read_text(encoding="utf-8"))
+        if _sha256_file(parent_path) != config["parent_frozen_plan_sha256"]:
+            fail("parent frozen plan SHA-256 mismatch")
+        if selected_plan_keys_sha256(parent_cfg.get("selected_plans") or []) != config["parent_selected_plan_keys_sha256"]:
+            fail("parent selected plan keys SHA-256 mismatch")
+        parent_entries = parent_cfg.get("selected_plans") or []
+        parent_orders = sorted(e.get("execution_order") for e in parent_entries if isinstance(e, Mapping))
+        if parent_orders != list(range(1, 11)):
+            fail("parent frozen plan does not contain original orders 1..10")
+
+    # 2-3. Prior run manifest + capture hashes.
+    prior = config.get("prior_run") or {}
+    prior_manifest = Path(prior.get("manifest_path", ""))
+    if not prior_manifest.exists() or _sha256_file(prior_manifest) != prior.get("manifest_sha256"):
+        fail("prior R6 manifest SHA-256 mismatch or missing")
+    prior_capture = Path(prior.get("transport_capture_path", ""))
+    if not prior_capture.exists() or _sha256_file(prior_capture) != prior.get("transport_capture_sha256"):
+        fail("prior R6 transport capture SHA-256 mismatch or missing")
+    prior_telemetry = Path(prior.get("telemetry_path", ""))
+    if not prior_telemetry.exists():
+        fail("prior R6 telemetry missing")
+
+    # 4. Prior telemetry proves exactly orders 1..5 called, at most once each.
+    if parent_path.exists():
+        parent_cfg = json.loads(parent_path.read_text(encoding="utf-8"))
+        parent_entries = parent_cfg.get("selected_plans") or []
+        order_to_key = {
+            e["execution_order"]: (str(e["sample_id"]), str(e["clause_id"]))
+            for e in parent_entries
+            if isinstance(e, Mapping) and "execution_order" in e
+        }
+        prior_called = set()
+        if prior_telemetry.exists():
+            for line in prior_telemetry.read_text(encoding="utf-8").splitlines():
+                row = json.loads(line)
+                if row.get("llm_called"):
+                    events = row.get("patch_events") or []
+                    for ev in events:
+                        if ev.get("llm_call_performed"):
+                            prior_called.add((str(row.get("sample_id")), str(ev.get("clause_id"))))
+        expected_first = {order_to_key.get(o) for o in (1, 2, 3, 4, 5)}
+        if prior_called != expected_first:
+            fail(
+                f"prior R6 telemetry called set does not equal original orders 1..5: "
+                f"got {sorted(prior_called)}"
+            )
+        # 5. Each order 1..5 called at most once (unique capture request ids).
+        prior_request_ids = []
+        if prior_capture.exists():
+            for line in prior_capture.read_text(encoding="utf-8").splitlines():
+                prior_request_ids.append(json.loads(line).get("request_id"))
+        if len(prior_request_ids) != len(set(prior_request_ids)):
+            fail("prior R6 capture contains duplicate request ids (a plan called more than once)")
+        # 6. No order 6..10 in prior called set.
+        expected_remaining = {order_to_key.get(o) for o in (6, 7, 8, 9, 10)}
+        if prior_called & expected_remaining:
+            fail("prior R6 evidence shows order 6..10 were already called")
+        # prior called keys sha
+        called_key_list = sorted(f"{s}/{c}" for s, c in prior_called)
+        called_sha = hashlib.sha256("\n".join(called_key_list).encode("utf-8")).hexdigest()
+        if called_sha != prior.get("called_plan_keys_sha256"):
+            fail("prior called plan keys SHA-256 mismatch")
+
+    # 7. Continuation exactly original orders 6..10; union == parent 10.
+    entries = config.get("selected_plans") or []
+    if sorted(e.get("original_execution_order") for e in entries if isinstance(e, Mapping)) != [6, 7, 8, 9, 10]:
+        fail("continuation original orders must be exactly 6..10")
+    remaining_keys = {continuation_plan_key(e) for e in entries if isinstance(e, Mapping)}
+    if len(remaining_keys) != 5:
+        fail("continuation must contain exactly 5 distinct plans")
+    if len({s for s, _ in remaining_keys}) != 5:
+        fail("continuation samples must be distinct")
+    if parent_path.exists():
+        parent_cfg = json.loads(parent_path.read_text(encoding="utf-8"))
+        parent_keys = {
+            (str(e["sample_id"]), str(e["clause_id"]))
+            for e in parent_cfg.get("selected_plans", [])
+            if isinstance(e, Mapping)
+        }
+        if remaining_keys & prior_called:
+            fail("continuation overlaps prior called plans")
+        if (remaining_keys | prior_called) != parent_keys:
+            fail("continuation + prior called does not exactly cover the parent 10 plans")
+
+    # 8. B0 / prompt / model.
+    b0 = config.get("b0") or {}
+    if _sha256_file(args.b0_predictions) != b0.get("attempts_sha256"):
+        fail("continuation B0 attempts SHA-256 mismatch")
+    if args.b0_manifest is None or _sha256_file(args.b0_manifest) != b0.get("manifest_sha256"):
+        fail("continuation B0 manifest SHA-256 mismatch")
+    if args.prompt_variant != config.get("prompt_variant"):
+        fail("continuation prompt variant mismatch")
+    if prompt_sha256 != config.get("prompt_sha256"):
+        fail("continuation prompt SHA-256 mismatch")
+    if config.get("model") != REAL_CALL_REQUIRED_MODEL:
+        fail(f"continuation model must be {REAL_CALL_REQUIRED_MODEL!r}")
+
+    if errors:
+        raise H1RunnerError("continuation binding failed: " + "; ".join(errors))
+
+
+def _bind_continuation_plan_keys(
+    config: Mapping[str, Any],
+    plans: Sequence[RepairPlan],
+) -> list[RepairPlan]:
+    """S2.8D-R6C1: resolve the continuation selection against the CURRENT
+    repair plans (fail closed on any mismatch).  Returns the ordered
+    ``RepairPlan`` list in continuation execution order."""
+    entries = list(config["selected_plans"])
+    by_key = {plan.key: plan for plan in plans}
+    errors: list[str] = []
+    selected: list[RepairPlan] = []
+    for entry in sorted(entries, key=lambda e: e["continuation_execution_order"]):
+        key = (str(entry["sample_id"]), str(entry["clause_id"]))
+        plan = by_key.get(key)
+        if plan is None:
+            errors.append(f"continuation plan not in current triggered plans: {continuation_plan_key_str(entry)}")
+            continue
+        if plan.clause_index != int(entry["clause_index"]):
+            errors.append(f"{continuation_plan_key_str(entry)} clause_index mismatch")
+        if list(plan.repair_fields) != list(entry["repair_fields"]):
+            errors.append(f"{continuation_plan_key_str(entry)} repair_fields mismatch")
+        if list(plan.reasons) != list(entry["reasons"]):
+            errors.append(f"{continuation_plan_key_str(entry)} reasons mismatch")
+        if plan.risk_score != int(entry["risk_score"]):
+            errors.append(f"{continuation_plan_key_str(entry)} risk_score mismatch")
+        if entry.get("prior_called") is not False:
+            errors.append(f"{continuation_plan_key_str(entry)} prior_called must be false")
+        selected.append(plan)
+    if len(selected) != len(entries):
+        errors.append(f"continuation resolved {len(selected)} != {len(entries)} plans")
+    if len({plan.key for plan in selected}) != len(selected):
+        errors.append("duplicate continuation plan keys")
+    if len({plan.sample_id for plan in selected}) != len(selected):
+        errors.append("duplicate samples in continuation selection")
+    if errors:
+        raise H1RunnerError("continuation plan binding failed: " + "; ".join(errors))
+    return selected
+
+
+def _bind_continuation_plan_hashes(
+    config: Mapping[str, Any],
+    selected: Sequence[RepairPlan],
+    original_records: Mapping[str, Mapping[str, Any]],
+    context_audits: Mapping[tuple[str, str], dict[str, Any]],
+    prompt_sha256: str,
+) -> None:
+    """S2.8D-R6C1: verify per-plan record/context binding hashes.  Raises
+    ``H1RunnerError`` on any mismatch (caller fails closed)."""
+    entries_by_key = {
+        (str(e["sample_id"]), str(e["clause_id"])): e for e in config["selected_plans"]
+    }
+    errors: list[str] = []
+    for plan in selected:
+        entry = entries_by_key[plan.key]
+        record = original_records.get(plan.sample_id)
+        if record is None:
+            errors.append(f"continuation sample missing from B0: {plan.sample_id}")
+            continue
+        if _prediction_hash(record) != entry["b0_prediction_sha256"]:
+            errors.append(f"{continuation_plan_key_str(entry)} b0_prediction_sha256 mismatch")
+        clause = record["clauses"][plan.clause_index]
+        identity_hash = _json_hash(
+            {"clause_id": clause.get("clause_id"), "clause_span": clause.get("clause_span")}
+        )
+        if identity_hash != entry["clause_identity_hash"]:
+            errors.append(f"{continuation_plan_key_str(entry)} clause_identity_hash mismatch")
+        audit = context_audits.get(plan.key) or {}
+        if audit.get("masked_context_sha256") != entry["rendered_masked_context_hash"]:
+            errors.append(f"{continuation_plan_key_str(entry)} rendered_masked_context_hash mismatch")
+        if entry.get("prompt_sha256") != prompt_sha256:
+            errors.append(f"{continuation_plan_key_str(entry)} prompt_sha256 mismatch")
+    if errors:
+        raise H1RunnerError("continuation hash binding failed: " + "; ".join(errors))
+
+
 def _maybe_early_stop_events(
     *,
     plan: RepairPlan,
@@ -1286,6 +1489,15 @@ def _make_parser() -> argparse.ArgumentParser:
         "order; --exclude-plan is forbidden, --max-calls must equal 10, and "
         "every frozen entry must match the current B0/plans/context binding.",
     )
+    parser.add_argument(
+        "--continuation-plan",
+        type=Path,
+        help="S2.8D-R6C1 continuation-plan config path. When set, the "
+        "selected plan set is EXACTLY the remaining never-called plans of the "
+        "parent frozen plan (original orders 6-10); --frozen-plan and "
+        "--exclude-plan are forbidden, --max-calls must equal 5, and the "
+        "parent frozen plan + prior-run evidence must bind exactly.",
+    )
     parser.add_argument("--max-calls", type=int, default=50)
     parser.add_argument("--inter-call-delay", type=float, default=0.5)
     parser.add_argument("--overwrite", action="store_true")
@@ -1334,12 +1546,37 @@ def main(argv: Sequence[str] | None = None) -> int:
             "--allow-llm, or --offline-transport-replay."
         )
         return 2
+    if args.continuation_plan is not None and (args.frozen_plan is not None or args.exclude_plan):
+        print(
+            "Refusing to run: --continuation-plan cannot be combined with "
+            "--frozen-plan or --exclude-plan."
+        )
+        return 2
+    if args.continuation_plan is not None and args.max_calls != EXPECTED_CONTINUATION_HARD_CALL_CAP:
+        print(
+            f"Refusing to run: --continuation-plan requires --max-calls "
+            f"{EXPECTED_CONTINUATION_HARD_CALL_CAP} (no call was made)."
+        )
+        return 2
+    if args.continuation_plan is not None and (args.offline_replay or args.offline_patches is not None):
+        print(
+            "Refusing to run: --continuation-plan is only supported with "
+            "--plan-only, --allow-llm, or --offline-transport-replay."
+        )
+        return 2
     frozen_plan_config: dict[str, Any] | None = None
     if args.frozen_plan is not None:
         try:
             frozen_plan_config = load_frozen_plan(args.frozen_plan)
         except (OSError, ValueError) as exc:
             print(f"Refusing to run: invalid frozen plan config: {exc}")
+            return 2
+    continuation_plan_config: dict[str, Any] | None = None
+    if args.continuation_plan is not None:
+        try:
+            continuation_plan_config = load_continuation_plan(args.continuation_plan)
+        except (OSError, ValueError) as exc:
+            print(f"Refusing to run: invalid continuation plan config: {exc}")
             return 2
     telemetry_path = args.telemetry or _derive_telemetry_path(args.output)
     targets = (args.output, telemetry_path, args.manifest)
@@ -1378,10 +1615,21 @@ def main(argv: Sequence[str] | None = None) -> int:
             print("Refusing to run: frozen plan prompt SHA-256 mismatch.")
             return 2
 
+    if continuation_plan_config is not None:
+        # S2.8D-R6C1: verify parent frozen plan, prior-run evidence, B0 and
+        # prompt bindings BEFORE any selection/API call (fail closed).
+        try:
+            _verify_continuation_binding(
+                continuation_plan_config,
+                args,
+                prompt.sha256,
+            )
+        except H1RunnerError as exc:
+            print(f"Refusing to run: {exc}")
+            return 2
+
     plans = build_repair_plans(batch)
-    if args.frozen_plan is None:
-        selected = allocate_repair_calls(plans, args.max_calls)
-    else:
+    if args.frozen_plan is not None:
         # S2.8D-R5: the frozen pilot plan is the source of truth for the
         # selection.  Verified against the current repair plans below.
         try:
@@ -1389,6 +1637,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         except H1RunnerError as exc:
             print(f"Refusing to run: {exc}")
             return 2
+    elif args.continuation_plan is not None:
+        # S2.8D-R6C1: the continuation plan selects exactly the remaining
+        # never-called plans (original orders 6-10).
+        try:
+            selected = _bind_continuation_plan_keys(continuation_plan_config, plans)
+        except H1RunnerError as exc:
+            print(f"Refusing to run: {exc}")
+            return 2
+    else:
+        selected = allocate_repair_calls(plans, args.max_calls)
     excluded_keys: set[tuple[str, str]] = set()
     for spec_key in args.exclude_plan:
         parts = spec_key.split("/", 1)
@@ -1429,7 +1687,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             else {}
         )
         frozen_replay_missing: list[tuple[str, str]] = []
-        if args.offline_transport_replay and args.frozen_plan is not None:
+        if args.offline_transport_replay and (
+            args.frozen_plan is not None or args.continuation_plan is not None
+        ):
             # S2.8D-R6: a frozen pilot that stopped early only has captured
             # responses for the actually-called plans.  Rows may therefore be
             # a strict subset of the frozen selection; the missing plans are
@@ -1472,7 +1732,24 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"Refusing to run: {exc}")
         return 2
 
-    if args.frozen_plan is not None:
+    if args.continuation_plan is not None:
+        # S2.8D-R6C1: semantic binding of every continuation plan against the
+        # current B0 record hashes, clause identity, masked context, prompt.
+        try:
+            _bind_continuation_plan_hashes(
+                continuation_plan_config,
+                selected,
+                original_records,
+                context_audits,
+                prompt.sha256,
+            )
+        except H1RunnerError as exc:
+            print(f"Refusing to run: {exc}")
+            return 2
+        selected_keys = {plan.key for plan in selected}
+        selected_by_key = {plan.key: plan for plan in selected}
+        plans = list(selected) + [p for p in plans if p.key not in selected_keys]
+    elif args.frozen_plan is not None:
         # S2.8D-R5: semantic binding of every frozen plan against the current
         # B0 record hashes, clause identity, masked context, and prompt.
         try:
@@ -1540,8 +1817,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     early_stop_reason: str | None = None
     not_called_keys: list[str] = []
     consecutive_failures = 0
+    using_plan = args.frozen_plan is not None or args.continuation_plan is not None
     frozen_order: list[tuple[str, str]] = (
-        [plan.key for plan in selected] if args.frozen_plan is not None else []
+        [plan.key for plan in selected] if using_plan else []
     )
     frozen_order_set: set[tuple[str, str]] = set(frozen_order)
     frozen_processed = 0
@@ -1557,7 +1835,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         # plan up front, so the defensive plan_key_ok check can never drift
         # when a later pipeline branch (e.g. coordinate-canonicalization
         # failure) short-circuits without running the early-stop evaluator.
-        if args.allow_llm and args.frozen_plan is not None:
+        if args.allow_llm and using_plan:
             frozen_processed += 1
         event["context_audit"] = context_audits[plan.key]
         if args.plan_only:
@@ -1586,7 +1864,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 # S2.8D-R6: a frozen pilot that stopped early has no captured
                 # response for the remaining plans; preserve the real run's
                 # early-stop state instead of replaying (never fabricate).
-                if args.frozen_plan is None:
+                if not using_plan:
                     raise H1RunnerError(
                         f"missing transport replay row for selected plan: "
                         f"{plan.sample_id}/{plan.clause_id}"
@@ -1721,7 +1999,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                         None,
                     )
                     events.append(event)
-                    if args.allow_llm and args.frozen_plan is not None:
+                    if args.allow_llm and using_plan:
                         consecutive_failures += 1
                         _stop = _maybe_early_stop_events(
                             plan=plan,
@@ -1759,7 +2037,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                     None,
                 )
                 events.append(event)
-                if args.allow_llm and args.frozen_plan is not None:
+                if args.allow_llm and using_plan:
                     consecutive_failures += 1
                     _stop = _maybe_early_stop_events(
                         plan=plan,
@@ -1853,7 +2131,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             envelope,
         )
         events.append(merge_event)
-        if args.allow_llm and args.frozen_plan is not None:
+        if args.allow_llm and using_plan:
             consecutive_failures = 0
             _stop = _maybe_early_stop_events(
                 plan=plan,
@@ -2052,6 +2330,22 @@ def main(argv: Sequence[str] | None = None) -> int:
             if args.frozen_plan is not None
             else None
         ),
+        "continuation_plan": (
+            {
+                "path": str(args.continuation_plan),
+                "sha256": _sha256_file(args.continuation_plan),
+                "schema_version": continuation_plan_config["schema_version"],
+                "remaining_plan_keys_sha256": continuation_plan_keys_sha256(
+                    continuation_plan_config["selected_plans"]
+                ),
+                "hard_api_call_cap": continuation_plan_config["budget"]["hard_api_call_cap"],
+                "retry_per_plan": continuation_plan_config["budget"]["retry_per_plan"],
+                "prior_run_manifest_sha256": continuation_plan_config["prior_run"]["manifest_sha256"],
+                "prior_run_capture_sha256": continuation_plan_config["prior_run"]["transport_capture_sha256"],
+            }
+            if args.continuation_plan is not None
+            else None
+        ),
         "early_stop": {
             "triggered": early_stop_reason is not None,
             "reason": early_stop_reason,
@@ -2121,7 +2415,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         "elapsed_seconds": elapsed,
         "claim_boundary": "development mechanism verification; not a formal performance result",
     }
-    frozen_plan_only = args.frozen_plan is not None and args.plan_only
+    frozen_plan_only = (
+        (args.frozen_plan is not None or args.continuation_plan is not None)
+        and args.plan_only
+    )
     if execution_mode not in ("offline_replay", "offline_transport_replay") and not frozen_plan_only:
         # Offline replay and frozen plan-only manifests are intentionally
         # timestamp-free so identical inputs replay byte-identically.

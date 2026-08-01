@@ -269,6 +269,138 @@ def evaluate_early_stop(
     return None
 
 
+# ---------------------------------------------------------------------------
+# S2.8D-R6C1: frozen-pilot continuation contract
+# ---------------------------------------------------------------------------
+
+CONTINUATION_SCHEMA_VERSION = "h1_pilot_continuation@1.0.0"
+EXPECTED_CONTINUATION_PLAN_COUNT = 5
+EXPECTED_CONTINUATION_HARD_CALL_CAP = 5
+
+
+def continuation_plan_key(entry: Mapping[str, Any]) -> tuple[str, str]:
+    return str(entry["sample_id"]), str(entry["clause_id"])
+
+
+def continuation_plan_key_str(entry: Mapping[str, Any]) -> str:
+    sample_id, clause_id = continuation_plan_key(entry)
+    return f"{sample_id}/{clause_id}"
+
+
+def continuation_plan_keys_sha256(entries: Sequence[Mapping[str, Any]]) -> str:
+    keys = sorted(continuation_plan_key_str(e) for e in entries)
+    return sha256_text("\n".join(keys))
+
+
+def _continuation_errors(config: Mapping[str, Any]) -> list[str]:
+    """Structural validation errors for a continuation plan (empty == valid)."""
+    errors: list[str] = []
+
+    def need(path: str, cond: bool, message: str | None = None) -> None:
+        if not cond:
+            errors.append(message or f"missing/invalid field: {path}")
+
+    if config.get("schema_version") != CONTINUATION_SCHEMA_VERSION:
+        errors.append(f"schema_version must be {CONTINUATION_SCHEMA_VERSION!r}")
+    need("task_id", isinstance(config.get("task_id"), str) and bool(config["task_id"]))
+    need("parent_frozen_plan_path", isinstance(config.get("parent_frozen_plan_path"), str) and bool(config["parent_frozen_plan_path"]))
+    need("parent_frozen_plan_sha256", _is_hex64(config.get("parent_frozen_plan_sha256")))
+    need("parent_selected_plan_keys_sha256", _is_hex64(config.get("parent_selected_plan_keys_sha256")))
+    need("model", config.get("model") == REQUIRED_MODEL)
+    need("prompt_variant", isinstance(config.get("prompt_variant"), str) and bool(config["prompt_variant"]))
+    need("prompt_sha256", _is_hex64(config.get("prompt_sha256")))
+    need("remaining_original_orders", isinstance(config.get("remaining_original_orders"), list)
+         and config.get("remaining_original_orders") == [6, 7, 8, 9, 10])
+    need("remaining_plan_keys_sha256", _is_hex64(config.get("remaining_plan_keys_sha256")))
+
+    prior = config.get("prior_run")
+    if not isinstance(prior, Mapping):
+        errors.append("missing prior_run section")
+    else:
+        need("prior_run.run_id", isinstance(prior.get("run_id"), str) and bool(prior["run_id"]))
+        for key in ("manifest_path", "manifest_sha256", "transport_capture_path", "transport_capture_sha256", "telemetry_path"):
+            if key.endswith("_sha256"):
+                need(f"prior_run.{key}", _is_hex64(prior.get(key)))
+            else:
+                need(f"prior_run.{key}", isinstance(prior.get(key), str) and bool(prior[key]))
+        need("prior_run.actual_api_calls", isinstance(prior.get("actual_api_calls"), int) and prior.get("actual_api_calls") >= 0)
+        need("prior_run.called_original_orders", isinstance(prior.get("called_original_orders"), list)
+             and prior.get("called_original_orders") == [1, 2, 3, 4, 5])
+        need("prior_run.called_plan_keys_sha256", _is_hex64(prior.get("called_plan_keys_sha256")))
+
+    b0 = config.get("b0")
+    if not isinstance(b0, Mapping):
+        errors.append("missing b0 section")
+    else:
+        for key in ("attempts_path", "attempts_sha256", "manifest_path", "manifest_sha256"):
+            need(f"b0.{key}", _is_hex64(b0.get(key)) if key.endswith("_sha256") else (isinstance(b0.get(key), str) and bool(b0[key])))
+
+    budget = config.get("budget")
+    if not isinstance(budget, Mapping):
+        errors.append("missing budget section")
+    else:
+        need("budget.hard_api_call_cap", budget.get("hard_api_call_cap") == EXPECTED_CONTINUATION_HARD_CALL_CAP)
+        need("budget.retry_per_plan", budget.get("retry_per_plan") == EXPECTED_RETRY_PER_PLAN)
+        need("budget.max_calls_per_plan", budget.get("max_calls_per_plan") == EXPECTED_MAX_CALLS_PER_PLAN)
+
+    entries = config.get("selected_plans")
+    if not isinstance(entries, list):
+        errors.append("selected_plans must be a list")
+        return errors
+    if len(entries) != EXPECTED_CONTINUATION_PLAN_COUNT:
+        errors.append(f"selected_plans must contain exactly {EXPECTED_CONTINUATION_PLAN_COUNT} entries")
+    for index, entry in enumerate(entries):
+        prefix = f"selected_plans[{index}]"
+        if not isinstance(entry, Mapping):
+            errors.append(f"{prefix} must be an object")
+            continue
+        need(f"{prefix}.sample_id", isinstance(entry.get("sample_id"), str) and bool(entry["sample_id"]))
+        need(f"{prefix}.clause_id", isinstance(entry.get("clause_id"), str) and bool(entry["clause_id"]))
+        need(f"{prefix}.clause_index", isinstance(entry.get("clause_index"), int) and not isinstance(entry.get("clause_index"), bool))
+        need(f"{prefix}.risk_score", isinstance(entry.get("risk_score"), int) and not isinstance(entry.get("risk_score"), bool))
+        need(f"{prefix}.repair_fields", isinstance(entry.get("repair_fields"), list) and all(isinstance(f, str) for f in entry["repair_fields"]))
+        need(f"{prefix}.reasons", isinstance(entry.get("reasons"), list) and all(isinstance(r, str) for r in entry["reasons"]))
+        for hkey in ("b0_prediction_sha256", "clause_identity_hash", "rendered_masked_context_hash", "prompt_sha256"):
+            need(f"{prefix}.{hkey}", _is_hex64(entry.get(hkey)))
+        need(f"{prefix}.original_execution_order", isinstance(entry.get("original_execution_order"), int) and not isinstance(entry.get("original_execution_order"), bool))
+        need(f"{prefix}.continuation_execution_order", isinstance(entry.get("continuation_execution_order"), int) and not isinstance(entry.get("continuation_execution_order"), bool))
+        need(f"{prefix}.prior_called", entry.get("prior_called") is False)
+
+    if not errors:
+        orig_orders = sorted(e.get("original_execution_order") for e in entries if isinstance(e, Mapping))
+        if orig_orders != [6, 7, 8, 9, 10]:
+            errors.append("original_execution_order must be exactly 6..10")
+        cont_orders = sorted(e.get("continuation_execution_order") for e in entries if isinstance(e, Mapping))
+        if cont_orders != [1, 2, 3, 4, 5]:
+            errors.append("continuation_execution_order must be exactly 1..5")
+        keys = [continuation_plan_key(e) for e in entries if isinstance(e, Mapping)]
+        if len(set(keys)) != len(keys):
+            errors.append("duplicate continuation plan keys")
+        samples = [s for s, _ in keys]
+        if len(set(samples)) != len(samples):
+            errors.append("duplicate samples across continuation plans")
+    return errors
+
+
+def validate_continuation_structure(config: Mapping[str, Any]) -> list[str]:
+    return _continuation_errors(config)
+
+
+def load_continuation_plan(path: str | Path) -> dict[str, Any]:
+    """Load and structurally validate a continuation plan config.
+
+    Raises :class:`ValueError` on JSON/structural failure.  The caller must
+    fail closed (no API call) when this raises.
+    """
+    config = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(config, dict):
+        raise ValueError("continuation plan config must be a JSON object")
+    errors = validate_continuation_structure(config)
+    if errors:
+        raise ValueError("invalid continuation plan config: " + "; ".join(errors))
+    return config
+
+
 __all__ = [
     "SCHEMA_VERSION",
     "TASK_ID",
@@ -291,4 +423,12 @@ __all__ = [
     "verify_historical_keys_sha",
     "load_frozen_plan",
     "evaluate_early_stop",
+    "CONTINUATION_SCHEMA_VERSION",
+    "EXPECTED_CONTINUATION_PLAN_COUNT",
+    "EXPECTED_CONTINUATION_HARD_CALL_CAP",
+    "continuation_plan_key",
+    "continuation_plan_key_str",
+    "continuation_plan_keys_sha256",
+    "validate_continuation_structure",
+    "load_continuation_plan",
 ]

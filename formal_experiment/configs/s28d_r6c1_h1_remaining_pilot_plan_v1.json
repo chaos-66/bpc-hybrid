@@ -1,0 +1,171 @@
+{
+  "schema_version": "h1_pilot_continuation@1.0.0",
+  "task_id": "S2.8D-R6C1",
+  "start_commit": "37ab7efb4fe08603ac5a3c19f12bdf54dc287451",
+  "parent_frozen_plan_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\configs\\s28d_r5_h1_small_pilot_plan_v1.json",
+  "parent_frozen_plan_sha256": "35dc6a752361b3876c4531a5e15c0bbfb37450d312ff705f3f791dbe903c1327",
+  "parent_selected_plan_keys_sha256": "bb8d73b2af61964e0c2bb3142b0ec91a75653130a33e7270981984d6cd426d23",
+  "prior_run": {
+    "run_id": "s28d_r6_h1_small_pilot_v1",
+    "manifest_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s28d_r6_h1_small_pilot_v1\\manifest.json",
+    "manifest_sha256": "69ea63b295bf2c88f7732aa4e1f4b10a12e598d967cb59724156758f2ee8d7ca",
+    "transport_capture_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s28d_r6_h1_small_pilot_v1\\transport_capture.jsonl",
+    "transport_capture_sha256": "5c3db68b23bea0c832bef78427cd97497ddd51c2fd77b86b5dc4bb32692d4d8f",
+    "telemetry_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s28d_r6_h1_small_pilot_v1\\h1_telemetry.jsonl",
+    "actual_api_calls": 5,
+    "called_original_orders": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "called_plan_keys_sha256": "6f35d809d7fcfcc6c5ba4158ddd6cdd2f152a1dd94e2a82bbacff3c3c0a0ffc1"
+  },
+  "remaining_original_orders": [
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "remaining_plan_keys_sha256": "d7cebbb8971ddb380756ccaf192f8be99d217328d72a680b9a5ded3a495b8772",
+  "model": "deepseek-v4-flash",
+  "prompt_variant": "masked_selected_v5",
+  "prompt_sha256": "065005189ced3179ff4069d016c7d0ca892ce4992707834e09142efc0472c391",
+  "b0": {
+    "attempts_path": "outputs\\development\\s27_estg150_b0_enhanced_v10a\\b0_attempts.json",
+    "attempts_sha256": "79dc457cdf933cb9fbb29030bab3673b9af645dd0138d8e97f5d1b6dfa6b4792",
+    "manifest_path": "outputs\\development\\s27_estg150_b0_enhanced_v10a\\manifest.json",
+    "manifest_sha256": "88070fab4da3f7c708f055f6bc391b78cc888761c3d6fe117d17673c2c382315"
+  },
+  "budget": {
+    "hard_api_call_cap": 5,
+    "retry_per_plan": 0,
+    "max_calls_per_plan": 1
+  },
+  "early_stop_policy": {
+    "provider_model_mismatch": "abort_remaining",
+    "capture_binding_failure": "abort_remaining",
+    "authorization_or_call_count_violation": "abort_remaining",
+    "consecutive_transport_or_extraction_failures": 3,
+    "patch_level_rejection": "record_and_continue"
+  },
+  "selected_plans": [
+    {
+      "original_execution_order": 6,
+      "continuation_execution_order": 1,
+      "sample_id": "estg_000232",
+      "clause_id": "estg_000232.c1",
+      "clause_index": 0,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "93bf9b83ea3fd00c2fe5abc1a88faefe2d197a3ecd7a2f0cae55a451fa894334",
+      "clause_identity_hash": "1b52f1803126393a048d907ef569cdd6d35a3c7e641e754008d99087faf25c8a",
+      "rendered_masked_context_hash": "9c708d9c4f8995e3befd541388f7a4de64fe37d59d9da2a0ae37dbce0d1de62c",
+      "prompt_sha256": "065005189ced3179ff4069d016c7d0ca892ce4992707834e09142efc0472c391",
+      "prior_called": false
+    },
+    {
+      "original_execution_order": 7,
+      "continuation_execution_order": 2,
+      "sample_id": "estg_000285",
+      "clause_id": "estg_000285.c1",
+      "clause_index": 0,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "f11a4aad1c159ad7ae2caa2aab87764ff930858f679b1aa5a36d5850f82a4d1c",
+      "clause_identity_hash": "ee5115905a063b790732aadecf127a57cfaee4587de72121e252172ea173b87e",
+      "rendered_masked_context_hash": "27878f054651e5a0a40d97ddd094d7c5b8dfcf5ecf6424bd1e46f2aea5ee30d6",
+      "prompt_sha256": "065005189ced3179ff4069d016c7d0ca892ce4992707834e09142efc0472c391",
+      "prior_called": false
+    },
+    {
+      "original_execution_order": 8,
+      "continuation_execution_order": 3,
+      "sample_id": "estg_000302",
+      "clause_id": "estg_000302.c1",
+      "clause_index": 0,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "77048709e11be8d015ba1966a2415b99db0a776b04bd7221bc3f85489d760e96",
+      "clause_identity_hash": "8c75b294111db2b8f127b5f6bbc93d151f34195a85447f0c954ad2d7b46aba86",
+      "rendered_masked_context_hash": "f55a0cbd27080aa72d07530e8cd9e6987e67a41cfc9f42e769fdd29d28e43c8b",
+      "prompt_sha256": "065005189ced3179ff4069d016c7d0ca892ce4992707834e09142efc0472c391",
+      "prior_called": false
+    },
+    {
+      "original_execution_order": 9,
+      "continuation_execution_order": 4,
+      "sample_id": "estg_000414",
+      "clause_id": "estg_000414.c1",
+      "clause_index": 0,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "4bd40ec7b73a5b34624b46a7c9a689b6f2414e5a8b84edcda248fcc099a2e2dc",
+      "clause_identity_hash": "67e2127c04d226d15a280aea601ab2fd67d6021ac436efd14246f5967d7fee96",
+      "rendered_masked_context_hash": "9d11c5a16ea82e95307a93abb866be563006dc5df0e2286a269f9435d94fdf5d",
+      "prompt_sha256": "065005189ced3179ff4069d016c7d0ca892ce4992707834e09142efc0472c391",
+      "prior_called": false
+    },
+    {
+      "original_execution_order": 10,
+      "continuation_execution_order": 5,
+      "sample_id": "estg_000716",
+      "clause_id": "estg_000716.c3",
+      "clause_index": 2,
+      "risk_score": 160,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "b0_prediction_sha256": "379166a3fbaac1ea704add635d40a056c45b10cfd606670b6827cb6b5b013ea5",
+      "clause_identity_hash": "35f394dda3cabff09f57c8881f322d82396302836aecacc49634b306441c0331",
+      "rendered_masked_context_hash": "9120302f9cf488362a9ba62d4b02a8aa88e956802526899a4b34f08622fb7d70",
+      "prompt_sha256": "065005189ced3179ff4069d016c7d0ca892ce4992707834e09142efc0472c391",
+      "prior_called": false
+    }
+  ]
+}

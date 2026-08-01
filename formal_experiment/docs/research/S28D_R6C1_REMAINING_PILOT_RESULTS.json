@@ -1,0 +1,256 @@
+{
+  "schema_version": "s28d_r6c1_report@1.0.0",
+  "task": "S2.8D-R6C1",
+  "title": "Complete the remaining frozen pilot calls (orders 6-10) and form complete 10-plan evidence",
+  "start_commit": "37ab7efb4fe08603ac5a3c19f12bdf54dc287451",
+  "authorization": "user authorized ONLY the never-called frozen plans (original orders 6-10); model deepseek-v4-flash; hard cap 5 new calls; 1 call per plan; retry 0; no re-call of orders 1-5; no replacement; no expansion",
+  "continuation_plan": {
+    "path": "formal_experiment/configs/s28d_r6c1_h1_remaining_pilot_plan_v1.json",
+    "sha256": "f0946bdd71bed80a9d4173795a308070ed4d31f4f1783f03e5c725687b8dea85",
+    "schema_version": "h1_pilot_continuation@1.0.0",
+    "remaining_plan_keys_sha256": "d7cebbb8971ddb380756ccaf192f8be99d217328d72a680b9a5ded3a495b8772",
+    "hard_api_call_cap": 5,
+    "retry_per_plan": 0
+  },
+  "parent_frozen_plan": {
+    "path": "formal_experiment/configs/s28d_r5_h1_small_pilot_plan_v1.json",
+    "sha256": "35dc6a752361b3876c4531a5e15c0bbfb37450d312ff705f3f791dbe903c1327",
+    "selected_plan_keys_sha256": "bb8d73b2af61964e0c2bb3142b0ec91a75653130a33e7270981984d6cd426d23"
+  },
+  "prior_r6_evidence": {
+    "manifest_sha256": "69ea63b295bf2c88f7732aa4e1f4b10a12e598d967cb59724156758f2ee8d7ca",
+    "transport_capture_sha256": "5c3db68b23bea0c832bef78427cd97497ddd51c2fd77b86b5dc4bb32692d4d8f",
+    "called_original_orders": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "verified": true
+  },
+  "execution": {
+    "planned_remaining_calls": 5,
+    "actual_new_api_calls": 5,
+    "calls_to_original_orders_1_5": 0,
+    "calls_outside_orders_6_10": 0,
+    "retry": 0,
+    "max_calls_any_plan": 1,
+    "duplicate_calls": 0,
+    "early_stop": false,
+    "model": {
+      "requested": "deepseek-v4-flash",
+      "resolved": "deepseek-v4-flash",
+      "returned": "deepseek-v4-flash"
+    }
+  },
+  "continuation_results": {
+    "transport_success": "5/5",
+    "extraction_success": "5/5",
+    "proposed": 5,
+    "accepted": 1,
+    "rejected": 4,
+    "effective": 1,
+    "changed": 1,
+    "called_but_unchanged": 4,
+    "h1_ne_b0": 1,
+    "h1_non_identity_gate": true,
+    "identity_violation_count": 0,
+    "usage_tokens": {
+      "prompt": 8000,
+      "completion": 1652,
+      "total": 9652
+    },
+    "coordinate_canonicalization": {
+      "attempted": 5,
+      "unchanged": 0,
+      "reanchored": 5,
+      "failed": 0,
+      "already_valid_spans": 1,
+      "reanchored_spans": 12,
+      "zero": 0,
+      "ambiguous": 0,
+      "contract": 0
+    },
+    "rejection_codes": {
+      "canonical_invalid": 4,
+      "reference_mismatch": 4
+    }
+  },
+  "continuation_per_plan": [
+    {
+      "o": 6,
+      "c": 1,
+      "s": "estg_000232",
+      "cl": "estg_000232.c1",
+      "called": true,
+      "status": "rejected",
+      "http": 200,
+      "ext": "ok_message_content",
+      "mdl": "deepseek-v4-flash",
+      "usage": "1415/290/1705",
+      "clen": 1120,
+      "csha": "d1f6f0f91ae9",
+      "cc": "reanchored",
+      "spans": "2/0/2/0/0/0",
+      "merge": "rejected",
+      "rc": "canonical_invalid,reference_mismatch",
+      "eff": "0",
+      "chg": "0",
+      "fields": "–",
+      "b0": "93bf9b83ea3f",
+      "h1": "93bf9b83ea3f"
+    },
+    {
+      "o": 7,
+      "c": 2,
+      "s": "estg_000285",
+      "cl": "estg_000285.c1",
+      "called": true,
+      "status": "rejected",
+      "http": 200,
+      "ext": "ok_message_content",
+      "mdl": "deepseek-v4-flash",
+      "usage": "1526/350/1876",
+      "clen": 1153,
+      "csha": "05b874d56c48",
+      "cc": "reanchored",
+      "spans": "3/1/2/0/0/0",
+      "merge": "rejected",
+      "rc": "canonical_invalid,reference_mismatch",
+      "eff": "0",
+      "chg": "0",
+      "fields": "–",
+      "b0": "f11a4aad1c15",
+      "h1": "f11a4aad1c15"
+    },
+    {
+      "o": 8,
+      "c": 3,
+      "s": "estg_000302",
+      "cl": "estg_000302.c1",
+      "called": true,
+      "status": "rejected",
+      "http": 200,
+      "ext": "ok_message_content",
+      "mdl": "deepseek-v4-flash",
+      "usage": "1506/270/1776",
+      "clen": 915,
+      "csha": "dcf68b4510db",
+      "cc": "reanchored",
+      "spans": "2/0/2/0/0/0",
+      "merge": "rejected",
+      "rc": "canonical_invalid,reference_mismatch",
+      "eff": "0",
+      "chg": "0",
+      "fields": "–",
+      "b0": "77048709e11b",
+      "h1": "77048709e11b"
+    },
+    {
+      "o": 9,
+      "c": 4,
+      "s": "estg_000414",
+      "cl": "estg_000414.c1",
+      "called": true,
+      "status": "rejected",
+      "http": 200,
+      "ext": "ok_message_content",
+      "mdl": "deepseek-v4-flash",
+      "usage": "1967/255/2222",
+      "clen": 876,
+      "csha": "e5a283cf44b1",
+      "cc": "reanchored",
+      "spans": "2/0/2/0/0/0",
+      "merge": "rejected",
+      "rc": "canonical_invalid,reference_mismatch",
+      "eff": "0",
+      "chg": "0",
+      "fields": "–",
+      "b0": "4bd40ec7b73a",
+      "h1": "4bd40ec7b73a"
+    },
+    {
+      "o": 10,
+      "c": 5,
+      "s": "estg_000716",
+      "cl": "estg_000716.c3",
+      "called": true,
+      "status": "accepted",
+      "http": 200,
+      "ext": "ok_message_content",
+      "mdl": "deepseek-v4-flash",
+      "usage": "1586/487/2073",
+      "clen": 1693,
+      "csha": "62eb609f1f27",
+      "cc": "reanchored",
+      "spans": "4/0/4/0/0/0",
+      "merge": "accepted",
+      "rc": "–",
+      "eff": "1",
+      "chg": "1",
+      "fields": "modality,actors,actor_action_map",
+      "b0": "379166a3fbaa",
+      "h1": "05099c9697fd"
+    }
+  ],
+  "continuation_replay": {
+    "output_dir": "formal_experiment/outputs/development/s28d_r6c1_h1_remaining_pilot_replay_v1",
+    "api_calls": 0,
+    "per_plan_h1_b0_hash_match": true,
+    "accepted_effective_changed_match": true,
+    "identity_fields_match": true,
+    "aggregate_counts_match": true,
+    "byte_identical_rerun": true
+  },
+  "complete_10_plan_capsule": {
+    "output_dir": "formal_experiment/outputs/development/s28d_r6_complete_h1_small_pilot_v1",
+    "coverage_complete_10_of_10": true,
+    "called_plan_keys_sha256": "bb8d73b2af61964e0c2bb3142b0ec91a75653130a33e7270981984d6cd426d23",
+    "called_plan_count": 10,
+    "distinct_sample_count": 10,
+    "combined_predictions_sha256": "5b95329376bbdae090ce1f0ed1993a2ec43efa4a84feab93c2739fb0762edca5",
+    "byte_identical_rerun": true,
+    "merged_metrics": {
+      "total_calls": 10,
+      "proposed": 10,
+      "accepted": 4,
+      "rejected": 6,
+      "effective": 4,
+      "changed": 4,
+      "called_but_unchanged": 6,
+      "h1_ne_b0": 4,
+      "effective_patch_rate": 0.4,
+      "identity_violation_count": 0,
+      "coordinate_canonicalization": {
+        "unchanged": 0,
+        "reanchored": 9,
+        "failed": 1,
+        "already_valid_spans": 2,
+        "reanchored_spans": 19,
+        "zero": 1,
+        "ambiguous": 0,
+        "contract": 0
+      },
+      "rejection_codes": {
+        "coordinate_canonicalization_zero_match": 1,
+        "canonical_invalid": 5,
+        "reference_mismatch": 5
+      },
+      "changed_field_counts": {
+        "modality": 4,
+        "actors": 4,
+        "actor_action_map": 4
+      },
+      "usage_tokens": {
+        "prompt": 15634,
+        "completion": 2994,
+        "total": 18628
+      }
+    }
+  },
+  "pr_f1": "not_computed",
+  "next_steps": [
+    "S2.8D-R7: complete 10-plan Gold-blind results audit and controlled P/R evaluation unlock preparation"
+  ]
+}
