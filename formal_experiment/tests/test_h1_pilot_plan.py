@@ -573,6 +573,194 @@ class TestEarlyStop:
         assert len(source_ids) == len(set(source_ids))
 
 
+def _patch_for_plan(plan, valid: bool) -> str:
+    clause_id = plan.clause_id
+    if not valid:
+        return json.dumps({
+            "sample_id": plan.sample_id,
+            "clause_id": clause_id,
+            "repair_fields": ["modality", "actors", "actor_action_map"],
+            "patches": {"modality": {"label": "prohibition", "evidence": [{"text": "zzz not in source", "start": 0, "end": 3}]}},
+            "reason": "synthetic invalid",
+        })
+    return json.dumps({
+        "sample_id": plan.sample_id,
+        "clause_id": clause_id,
+        "repair_fields": ["modality", "actors", "actor_action_map"],
+        "patches": {
+            "modality": {"label": "prohibition", "evidence": [{"text": "shall", "start": SHALL_START, "end": SHALL_END}]},
+            "actors": [{"id": f"{clause_id}.actor.1", "text": "The controller", "start": 0, "end": len("The controller"), "normalized": "controller"}],
+            "actor_action_map": [{"actor_id": f"{clause_id}.actor.1", "action_id": f"{clause_id}.action.1"}],
+        },
+        "reason": "synthetic valid",
+    })
+
+
+class TestEarlyStopRegression:
+    """S2.8D-R6 regression: the frozen-order cursor must not drift when a
+    coordinate-canonicalization failure short-circuits mid-pilot, and the
+    frozen pilot replay must preserve the real run's early-stop state."""
+
+    def _seq_transport(self, monkeypatch, plan_by_sample, valid_for):
+        from bpc_hybrid.llm_client import LLMResponse
+
+        class SeqTransport:
+            total_calls = 0
+            sent_requests = []
+
+            def __init__(self, config, timeout_seconds=60.0, policy=None):
+                self.config = config
+                self.policy = policy
+                self.last_request_body_sha256 = "1" * 64
+                self.last_request_policy = policy.to_dict() if policy is not None else None
+                self.last_endpoint_descriptor = {"scheme": "https", "host": "api.test.invalid", "port": None, "path": "/v1/chat/completions"}
+
+            def send(self, request):
+                type(self).total_calls += 1
+                type(self).sent_requests.append(request)
+                plan = plan_by_sample[request.source_id]
+                content = _patch_for_plan(plan, valid=valid_for(plan))
+                self.last_decode = {
+                    "status": "ok_message_content", "content": content, "model": "deepseek-v4-flash",
+                    "response_id": "chatcmpl-seq", "response_object": "chat.completion", "finish_reason": "stop",
+                    "usage": {"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2},
+                    "response_body_sha256": None, "response_content_sha256": None, "body_utf8_length": len(content),
+                    "content_type_normalized": "application/json", "extraction_source": "message.content",
+                    "reasoning_present": False, "reasoning_utf8_length": None, "reasoning_sha256": None,
+                    "tool_call_count": 0, "tool_call_summaries": [], "transport_audit": {}, "error_detail": None,
+                }
+                return LLMResponse(content=content, provider="openai_compatible", model="deepseek-v4-flash", finish_reason="stop")
+
+        monkeypatch.setattr(RUNNER, "RealAPITransport", SeqTransport)
+        return SeqTransport
+
+    def test_early_stop_no_false_plan_key_mismatch_on_canonicalization_failure(self, tmp_path, monkeypatch):
+        # Reproduces the S2.8D-R6 scenario: plan #4 returns a patch that fails
+        # coordinate canonicalization (zero match) while later plans succeed.
+        # The frozen-order cursor must not drift; all 10 plans must be called
+        # and no early stop may trigger.
+        attempts = _pilot_attempts()
+        config, b0_path, b0_manifest = _build_frozen_config(tmp_path, attempts)
+        cp = _write_config(tmp_path, config)
+        batch = RUNNER.load_b0_predictions(b0_path)
+        plans = RUNNER.build_repair_plans(batch)
+        plan_by_sample = {p.sample_id: p for p in plans}
+        frozen = sorted(config["selected_plans"], key=lambda e: e["execution_order"])
+        bad = frozen[3]["sample_id"]  # 4th frozen plan fails canonicalization
+
+        def valid_for(plan):
+            return plan.sample_id != bad
+
+        fake = self._seq_transport(monkeypatch, plan_by_sample, valid_for)
+        rc, out_dir = _run(tmp_path, cp, b0_path, b0_manifest, mode="allow_llm")
+        assert rc == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["llm_calls"] == 10
+        assert manifest["early_stop"]["triggered"] is False
+        assert fake.total_calls == 10
+        # The plan that failed canonicalization is recorded as a rejection,
+        # and later plans still run.
+        assert manifest["patch_rejected_count"] == 1
+        assert manifest["patch_accepted_count"] == 9
+
+    def _replay_row(self, plan, record, variant, content_dict):
+        body = json.dumps({
+            "id": "chatcmpl-replay", "object": "chat.completion", "model": "deepseek-v4-flash",
+            "choices": [{"index": 0, "message": {"role": "assistant", "content": json.dumps(content_dict)}, "finish_reason": "stop"}],
+            "usage": {"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2},
+        })
+        return {
+            "request_id": f"{plan.sample_id}/{plan.clause_id}",
+            "sample_id": plan.sample_id,
+            "clause_id": plan.clause_id,
+            "clause_index": plan.clause_index,
+            "prompt_sha256": _prompt_sha(variant),
+            "prompt_variant": variant,
+            "b0_prediction_sha256": RUNNER._prediction_hash(record),
+            "response_body": body,
+            "content_type": "application/json",
+            "http_status": 200,
+        }
+
+    def test_frozen_replay_partial_rows_preserves_early_stop(self, tmp_path):
+        attempts = _pilot_attempts()
+        config, b0_path, b0_manifest = _build_frozen_config(tmp_path, attempts)
+        cp = _write_config(tmp_path, config)
+        batch = RUNNER.load_b0_predictions(b0_path)
+        records = {item.record["sample_id"]: item.record for item in batch}
+        entries = sorted(config["selected_plans"], key=lambda e: e["execution_order"])
+        # rows for the first 5 plans only (the "called" subset)
+        rows = []
+        for e in entries[:5]:
+            plan = RUNNER.build_repair_plans(batch)
+            p = next(x for x in RUNNER.build_repair_plans(batch) if x.sample_id == e["sample_id"])
+            content = {
+                "sample_id": p.sample_id, "clause_id": p.clause_id,
+                "repair_fields": p.repair_fields,
+                "patches": {"modality": {"label": "prohibition", "evidence": [{"text": "shall", "start": SHALL_START, "end": SHALL_END}]}},
+                "reason": "synthetic valid",
+            }
+            rows.append(self._replay_row(p, records[p.sample_id], "masked_selected_v5", content))
+        rows_path = tmp_path / "replay_rows.jsonl"
+        rows_path.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+        out_dir = tmp_path / "replay_out"
+        rc = RUNNER.main([
+            "--b0-predictions", str(b0_path),
+            "--b0-manifest", str(b0_manifest),
+            "--frozen-plan", str(cp),
+            "--output", str(out_dir / "h1_predictions.jsonl"),
+            "--telemetry", str(out_dir / "h1_telemetry.jsonl"),
+            "--manifest", str(out_dir / "h1_manifest.json"),
+            "--prompt-variant", "masked_selected_v5",
+            "--offline-transport-replay",
+            "--transport-responses-jsonl", str(rows_path),
+            "--max-calls", "10",
+            "--development",
+        ])
+        assert rc == 0
+        manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
+        assert manifest["llm_calls"] == 5
+        assert manifest["real_api"] is False
+        assert manifest["early_stop"]["triggered"] is False
+        assert sorted(manifest["early_stop"]["replay_preserved_not_called_plan_keys"]) == sorted(
+            f"{e['sample_id']}/{e['clause_id']}" for e in entries[5:]
+        )
+        telemetry = [json.loads(l) for l in (out_dir / "h1_telemetry.jsonl").read_text(encoding="utf-8").splitlines()]
+        not_called = [t for t in telemetry if any(ev.get("status") == hpp.EARLY_STOP_NOT_CALLED for ev in t["patch_events"])]
+        assert len(not_called) == 5
+
+    def test_frozen_replay_byte_identical_rerun(self, tmp_path):
+        attempts = _pilot_attempts()
+        config, b0_path, b0_manifest = _build_frozen_config(tmp_path, attempts)
+        cp = _write_config(tmp_path, config)
+        batch = RUNNER.load_b0_predictions(b0_path)
+        records = {item.record["sample_id"]: item.record for item in batch}
+        entries = sorted(config["selected_plans"], key=lambda e: e["execution_order"])
+        rows = []
+        for e in entries[:5]:
+            p = next(x for x in RUNNER.build_repair_plans(batch) if x.sample_id == e["sample_id"])
+            content = {"sample_id": p.sample_id, "clause_id": p.clause_id, "repair_fields": p.repair_fields, "patches": {}, "reason": "synthetic valid"}
+            rows.append(self._replay_row(p, records[p.sample_id], "masked_selected_v5", content))
+        rows_path = tmp_path / "replay_rows.jsonl"
+        rows_path.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+        out_dir = tmp_path / "replay_out"
+        base_args = [
+            "--b0-predictions", str(b0_path), "--b0-manifest", str(b0_manifest),
+            "--frozen-plan", str(cp),
+            "--output", str(out_dir / "h1_predictions.jsonl"),
+            "--telemetry", str(out_dir / "h1_telemetry.jsonl"),
+            "--manifest", str(out_dir / "h1_manifest.json"),
+            "--prompt-variant", "masked_selected_v5",
+            "--offline-transport-replay", "--transport-responses-jsonl", str(rows_path),
+            "--max-calls", "10", "--development",
+        ]
+        assert RUNNER.main(list(base_args)) == 0
+        first = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in out_dir.iterdir() if p.is_file()}
+        assert RUNNER.main(list(base_args) + ["--overwrite"]) == 0
+        second = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in out_dir.iterdir() if p.is_file()}
+        assert first == second
+
+
 class TestSanitization:
     def test_30_plan_contains_no_source_prompt_gold_credential(self, tmp_path):
         config, _, _ = _build_frozen_config(tmp_path, _pilot_attempts())

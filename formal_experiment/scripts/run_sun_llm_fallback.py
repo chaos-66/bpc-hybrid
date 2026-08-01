@@ -842,6 +842,100 @@ def load_transport_replay_rows(
     return rows
 
 
+def load_frozen_transport_replay_rows(
+    path: Path,
+    selected_plans: Sequence[RepairPlan],
+    records: Mapping[str, Mapping[str, Any]],
+    prompt_sha256: str,
+    variant: str,
+) -> tuple[dict[tuple[str, str], dict[str, Any]], list[tuple[str, str]]]:
+    """S2.8D-R6: load offline transport replay rows for a frozen pilot that
+    may have stopped early.
+
+    Every provided row must bind exactly like :func:`load_transport_replay_rows`
+    (request_id unique, sample/clause/index/prompt/B0 verified), and every row
+    must belong to the frozen selection.  Rows are allowed to be a strict
+    SUBSET of the frozen plans: the missing plans are returned as
+    ``missing_keys`` so the caller can preserve them as
+    ``pilot_early_stop_not_called`` (they are never replayed or fabricated).
+
+    Raises :class:`H1RunnerError` on any structural/binding violation or on an
+    extra (unfrozen) row.
+    """
+    required_keys = {
+        "request_id",
+        "sample_id",
+        "clause_id",
+        "clause_index",
+        "prompt_sha256",
+        "prompt_variant",
+        "b0_prediction_sha256",
+        "response_body",
+    }
+    rows: dict[tuple[str, str], dict[str, Any]] = {}
+    request_ids: set[str] = set()
+    expected_keys = {plan.key for plan in selected_plans}
+    for index, row in enumerate(_read_json_values(path)):
+        if not required_keys.issubset(set(row)):
+            raise H1RunnerError(
+                f"frozen transport replay row {index} must contain keys "
+                f"{sorted(required_keys)}; got {sorted(row)}"
+            )
+        request_id = row.get("request_id")
+        if not isinstance(request_id, str) or not request_id:
+            raise H1RunnerError(f"frozen transport replay row {index} request_id must be a non-empty string")
+        if request_id in request_ids:
+            raise H1RunnerError(f"duplicate frozen transport replay request_id: {request_id!r}")
+        request_ids.add(request_id)
+        body = row.get("response_body")
+        if not isinstance(body, str):
+            raise H1RunnerError(f"frozen transport replay row {index} response_body must be a string")
+        content_type = row.get("content_type")
+        if content_type is not None and not isinstance(content_type, str):
+            raise H1RunnerError(f"frozen transport replay row {index} content_type must be a string or absent")
+        http_status = row.get("http_status")
+        if http_status is not None and (isinstance(http_status, bool) or not isinstance(http_status, int)):
+            raise H1RunnerError(f"frozen transport replay row {index} http_status must be an int or absent")
+        key = (str(row.get("sample_id")), str(row.get("clause_id")))
+        if not all(key):
+            raise H1RunnerError(f"frozen transport replay row {index} lacks sample_id or clause_id")
+        if key in rows:
+            raise H1RunnerError(f"duplicate frozen transport replay row for sample/clause: {key}")
+        if key not in expected_keys:
+            raise H1RunnerError(
+                f"frozen transport replay row for unselected plan: {key[0]}/{key[1]}"
+            )
+        rows[key] = row
+
+    for plan in selected_plans:
+        if plan.key not in rows:
+            continue
+        row = rows[plan.key]
+        if row.get("clause_index") != plan.clause_index:
+            raise H1RunnerError(
+                f"frozen transport replay row for {plan.sample_id}/{plan.clause_id} clause_index "
+                f"{row.get('clause_index')!r} != plan {plan.clause_index}"
+            )
+        if row.get("prompt_variant") != variant:
+            raise H1RunnerError(
+                f"frozen transport replay row for {plan.sample_id}/{plan.clause_id} prompt_variant "
+                f"{row.get('prompt_variant')!r} != run variant {variant!r}"
+            )
+        if row.get("prompt_sha256") != prompt_sha256:
+            raise H1RunnerError(
+                f"frozen transport replay row for {plan.sample_id}/{plan.clause_id} prompt SHA "
+                f"mismatch: expected {prompt_sha256}, got {row.get('prompt_sha256')!r}"
+            )
+        expected_b0 = _prediction_hash(records[plan.sample_id])
+        if row.get("b0_prediction_sha256") != expected_b0:
+            raise H1RunnerError(
+                f"frozen transport replay row for {plan.sample_id}/{plan.clause_id} B0 prediction "
+                f"hash mismatch: expected {expected_b0}, got {row.get('b0_prediction_sha256')!r}"
+            )
+    missing_keys = [plan.key for plan in selected_plans if plan.key not in rows]
+    return rows, missing_keys
+
+
 _TRANSPORT_EVENT_KEYS = (
     "response_body_sha256",
     "response_content_sha256",
@@ -1091,7 +1185,9 @@ def _maybe_early_stop_events(
     if plan.key not in frozen_order_set:
         return None
     expected_key = (
-        frozen_order[frozen_processed] if frozen_processed < len(frozen_order) else None
+        frozen_order[frozen_processed - 1]
+        if 1 <= frozen_processed <= len(frozen_order)
+        else None
     )
     reason = evaluate_early_stop(
         calls_made=llm_calls,
@@ -1232,10 +1328,11 @@ def main(argv: Sequence[str] | None = None) -> int:
             f"{EXPECTED_HARD_CALL_CAP} (no call was made)."
         )
         return 2
-    if args.frozen_plan is not None and (
-        args.offline_replay or args.offline_transport_replay or args.offline_patches is not None
-    ):
-        print("Refusing to run: --frozen-plan is only supported with --plan-only or --allow-llm.")
+    if args.frozen_plan is not None and (args.offline_replay or args.offline_patches is not None):
+        print(
+            "Refusing to run: --frozen-plan is only supported with --plan-only, "
+            "--allow-llm, or --offline-transport-replay."
+        )
         return 2
     frozen_plan_config: dict[str, Any] | None = None
     if args.frozen_plan is not None:
@@ -1331,17 +1428,29 @@ def main(argv: Sequence[str] | None = None) -> int:
             if args.offline_replay
             else {}
         )
-        transport_replay_rows = (
-            load_transport_replay_rows(
+        frozen_replay_missing: list[tuple[str, str]] = []
+        if args.offline_transport_replay and args.frozen_plan is not None:
+            # S2.8D-R6: a frozen pilot that stopped early only has captured
+            # responses for the actually-called plans.  Rows may therefore be
+            # a strict subset of the frozen selection; the missing plans are
+            # preserved as pilot_early_stop_not_called (never replayed).
+            transport_replay_rows, frozen_replay_missing = load_frozen_transport_replay_rows(
                 args.transport_responses_jsonl,
                 selected,
                 original_records,
                 prompt.sha256,
                 args.prompt_variant,
             )
-            if args.offline_transport_replay
-            else {}
-        )
+        elif args.offline_transport_replay:
+            transport_replay_rows = load_transport_replay_rows(
+                args.transport_responses_jsonl,
+                selected,
+                original_records,
+                prompt.sha256,
+                args.prompt_variant,
+            )
+        else:
+            transport_replay_rows = {}
     except (B0ArtifactError, OSError, json.JSONDecodeError) as exc:
         print(f"Refusing to run: {exc}")
         return 2
@@ -1444,6 +1553,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             events.append(event)
             continue
         event["selected_for_call"] = True
+        # S2.8D-R6: advance the frozen-order cursor for EVERY selected frozen
+        # plan up front, so the defensive plan_key_ok check can never drift
+        # when a later pipeline branch (e.g. coordinate-canonicalization
+        # failure) short-circuits without running the early-stop evaluator.
+        if args.allow_llm and args.frozen_plan is not None:
+            frozen_processed += 1
         event["context_audit"] = context_audits[plan.key]
         if args.plan_only:
             event["status"] = "planned_not_executed"
@@ -1467,6 +1582,20 @@ def main(argv: Sequence[str] | None = None) -> int:
             event["response_sha256"] = _sha256_bytes(response_content.encode("utf-8"))
             envelope = _parse_patch_response(response_content)
         elif args.offline_transport_replay:
+            if plan.key not in transport_replay_rows:
+                # S2.8D-R6: a frozen pilot that stopped early has no captured
+                # response for the remaining plans; preserve the real run's
+                # early-stop state instead of replaying (never fabricate).
+                if args.frozen_plan is None:
+                    raise H1RunnerError(
+                        f"missing transport replay row for selected plan: "
+                        f"{plan.sample_id}/{plan.clause_id}"
+                    )
+                event["status"] = EARLY_STOP_NOT_CALLED
+                event["early_stop_reason"] = "replay_preserves_real_early_stop"
+                events.append(event)
+                not_called_keys.append(f"{plan.sample_id}/{plan.clause_id}")
+                continue
             row = transport_replay_rows[plan.key]
             body = row["response_body"]
             llm_calls += 1
@@ -1594,7 +1723,6 @@ def main(argv: Sequence[str] | None = None) -> int:
                     events.append(event)
                     if args.allow_llm and args.frozen_plan is not None:
                         consecutive_failures += 1
-                        frozen_processed += 1
                         _stop = _maybe_early_stop_events(
                             plan=plan,
                             llm_calls=llm_calls,
@@ -1605,7 +1733,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                             hard_call_cap=EXPECTED_HARD_CALL_CAP,
                             frozen_order=frozen_order,
                             frozen_order_set=frozen_order_set,
-                            frozen_processed=frozen_processed - 1,
+                            frozen_processed=frozen_processed,
                             selected_by_key=selected_by_key,
                             events=events,
                             not_called_keys=not_called_keys,
@@ -1633,7 +1761,6 @@ def main(argv: Sequence[str] | None = None) -> int:
                 events.append(event)
                 if args.allow_llm and args.frozen_plan is not None:
                     consecutive_failures += 1
-                    frozen_processed += 1
                     _stop = _maybe_early_stop_events(
                         plan=plan,
                         llm_calls=llm_calls,
@@ -1648,7 +1775,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                         hard_call_cap=EXPECTED_HARD_CALL_CAP,
                         frozen_order=frozen_order,
                         frozen_order_set=frozen_order_set,
-                        frozen_processed=frozen_processed - 1,
+                        frozen_processed=frozen_processed,
                         selected_by_key=selected_by_key,
                         events=events,
                         not_called_keys=not_called_keys,
@@ -1728,7 +1855,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         events.append(merge_event)
         if args.allow_llm and args.frozen_plan is not None:
             consecutive_failures = 0
-            frozen_processed += 1
             _stop = _maybe_early_stop_events(
                 plan=plan,
                 llm_calls=llm_calls,
@@ -1739,7 +1865,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 hard_call_cap=EXPECTED_HARD_CALL_CAP,
                 frozen_order=frozen_order,
                 frozen_order_set=frozen_order_set,
-                frozen_processed=frozen_processed - 1,
+                frozen_processed=frozen_processed,
                 selected_by_key=selected_by_key,
                 events=events,
                 not_called_keys=not_called_keys,
@@ -1930,6 +2056,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             "triggered": early_stop_reason is not None,
             "reason": early_stop_reason,
             "not_called_plan_keys": sorted(not_called_keys),
+            "replay_preserved_not_called_plan_keys": sorted(
+                f"{s}/{c}" for s, c in frozen_replay_missing
+            ),
         },
         "replayed_response_count": (
             len(replay_responses) if args.offline_replay else 0
