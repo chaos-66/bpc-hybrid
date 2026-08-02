@@ -390,11 +390,11 @@ class TestSafeActionSlice:
         # the slice extends to the rightmost safe boundary
         assert a1 >= head_token_end
 
-    def test_max_chars_smaller_than_head_token_fails_closed(self) -> None:
-        # When the cap (max_chars) is too small to even cover the head
-        # token, B0-R1-A-C2 fails closed: the helper refuses to
-        # extend past max_end. The caller observes the warning and
-        # drops the action. The head token must NOT be half-cut.
+    def test_max_chars_smaller_than_head_token_preserves_head_with_warning(self) -> None:
+        # max_chars is a slicing cap, not the clause boundary.  When the
+        # complete head token crosses that cap, keep the token and record
+        # the explicit backoff instead of misclassifying it as outside the
+        # clause and dropping the action.
         text = "process the personal data"
         head_pos = 0
         head_token_end = 7
@@ -406,13 +406,10 @@ class TestSafeActionSlice:
             head_token_end=head_token_end,
         )
         assert a0 == 0
-        # the slice collapses to start (empty); the head token is
-        # not half-cut
-        assert a1 == 0
+        assert a1 == head_token_end
+        assert text[a0:a1] == "process"
         assert warning is not None
-        # safe_action_slice translates the safe_window_end INVALID
-        # warning into the action-specific kind
-        assert warning.kind in {"action_no_safe_boundary", "safe_window_invalid"}
+        assert warning.kind == WARN_KIND_ACTION_CAP_BACKOFF
 
     def test_short_action_returns_full_action(self) -> None:
         text = "process the data"
@@ -1538,6 +1535,89 @@ class TestC2RequiredEvidenceGuard:
             # no half-word
             if e < len(sentence_text):
                 assert not (sentence_text[e - 1].isalpha() and sentence_text[e].isalpha())
+
+    def test_active_action_preserves_head_token_past_character_cap(self) -> None:
+        head = "x" * 100
+        sentence_text = head + " " + " ".join(f"w{i}" for i in range(16))
+        words = sentence_text.split()
+        tokens: list[dict[str, Any]] = []
+        cursor = 0
+        for idx, word in enumerate(words, start=1):
+            token_start = sentence_text.find(word, cursor)
+            token_end = token_start + len(word)
+            tokens.append(
+                {
+                    "index": idx,
+                    "word": word,
+                    "lemma": word.casefold(),
+                    "pos": "VB" if idx == 1 else "NN",
+                    "characterOffsetBegin": token_start,
+                    "characterOffsetEnd": token_end,
+                }
+            )
+            cursor = token_end
+        dependencies = [{"dep": "ROOT", "governor": 0, "dependent": 1}]
+        dependencies.extend(
+            {"dep": "dep", "governor": 1, "dependent": idx}
+            for idx in range(2, len(tokens) + 1)
+        )
+
+        class _StubLex:
+            actor_surfaces: set[str] = set()
+
+        _actors, actions, _edges, stats = extract_actors_actions_edges(
+            sentence={"tokens": tokens, "basicDependencies": dependencies},
+            source_text=sentence_text,
+            clause_start=0,
+            clause_end=len(sentence_text),
+            sentence_index=0,
+            lexicon=_StubLex(),  # type: ignore[arg-type]
+        )
+
+        assert len(actions) == 1
+        assert actions[0]["start"] == 0
+        assert actions[0]["end"] == len(head)
+        assert actions[0]["text"] == head
+        assert stats["action_cap_warnings"] == 1
+        assert stats["action_cap_drops"] == 0
+
+    def test_fatal_scope_expansion_is_rejected_in_ledger(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        import bpc_hybrid.b0_v10.scope as scope_module
+
+        def _marker_hits(_text: str, field: str, _lexicon: object) -> list[dict[str, Any]]:
+            if field != "condition":
+                return []
+            return [{"surface": "subject to", "start": 0, "end": 10}]
+
+        monkeypatch.setattr(scope_module, "match_field_markers", _marker_hits)
+
+        class _StubLexicon:
+            entries_by_field: dict[str, tuple[object, ...]] = {}
+
+        scope, decisions, stats = scope_module.resolve_scope_fields_v10(
+            clause_text="subject to processing",
+            clause_start=0,
+            source_text="short",
+            lexicon=_StubLexicon(),  # type: ignore[arg-type]
+            tregex_obs=None,
+        )
+
+        assert all(not spans for spans in scope.values())
+        assert stats["scope_accepted"] == 0
+        assert stats["scope_rejected"] == 1
+        assert stats["scope_expand_warnings"] == 1
+        warning_decisions = [
+            decision
+            for decision in decisions
+            if decision.source == "lexicon_expand_warning"
+        ]
+        assert len(warning_decisions) == 1
+        warning_decision = warning_decisions[0]
+        assert warning_decision.accepted is False
+        assert warning_decision.accepted_field is None
+        assert warning_decision.rejection_reason == "scope_expand_safe_window_invalid"
 
     # ---- 15) exhaustive enumeration over the contract ----
     @pytest.mark.parametrize(

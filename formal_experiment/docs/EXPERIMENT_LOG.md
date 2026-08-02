@@ -1952,3 +1952,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：Active v10-A path span correctness, third cut. safe_window_end now enforces a HARD minimum on required_end: hard-punctuation candidates (semicolon, period) at positions < required_end are SKIPPED (they are inside the caller's required evidence, not clause boundaries), only candidates with position >= required_end are eligible. Earliest such position in text order wins. Pre-validation fails closed on structurally invalid inputs (start<0, max_end<start, max_end>len(source), required_end<=start, required_end>max_end, required_end>len(source)) with stable INVALID or REQUIRED_OUTSIDE_CLAUSE warning kinds. The cap-vs-max_end distinction is now explicit: only cap >= len(source) short-circuits; cap == max_end no longer pretends to be a safe boundary. All return paths flow through _validate_safe_window_end_return which enforces postconditions (start <= returned_end <= max_end <= len(source) and returned_end >= required_end) with explicit if/return rather than bare assert. Docstring updated to remove stale 'first safe wins' and 'cap==max_end is a safe boundary' wording. Tests: 35 new test cases in TestC2RequiredEvidenceGuard covering the 15-item matrix. The user-reported 'Art. 6' regression (588cd8a returned end=3, slice='Art') is now end=17, slice='Art. 6 applies to' (full marker covered, hard-minimum contract satisfied). audit_project.py --with-tests: 1362 passed, 24 skipped, 0 failed; integrity_pass=True, ERRORS=0. 588cd8a was NOT amended, rebased, or reset; C2 forms a new commit on top.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-02T14:05:52.086036+00:00 - B0-R1-A-C3 restore action head-token cap semantics and reject fatal scope expansions
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1364 passed, 24 skipped in 157.31s (0:02:37)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`79bb2b536162eef762c45555b3c25bbddae9e8ab`；相关未提交路径：3 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：Focused boundary/scope/integration regression: 123 passed. Required full audit: integrity_pass=True, ERRORS=0, 1364 passed, 24 skipped, 9 expected blockers retained. No formal experiment or P/R evaluation was run.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

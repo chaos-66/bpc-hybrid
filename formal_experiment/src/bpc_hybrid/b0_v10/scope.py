@@ -7,7 +7,11 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Mapping, Sequence
 
-from bpc_hybrid.b0_v10.span_safety import safe_window_end
+from bpc_hybrid.b0_v10.span_safety import (
+    BoundaryWarning,
+    boundary_warning_requires_drop,
+    safe_window_end,
+)
 from bpc_hybrid.sun_style.lexicon_v2_runtime import LexiconV2Runtime, match_field_markers
 
 
@@ -306,11 +310,10 @@ def resolve_scope_fields_v10(
             except ScopeTestError:
                 stats["scope_rejected"] += 1
                 continue
-            decisions.append(dec)
             if not dec.accepted or not dec.accepted_field:
+                decisions.append(dec)
                 stats["scope_rejected"] += 1
                 continue
-            stats["scope_accepted"] += 1
             abs_s = clause_start + hit["start"]
             abs_e = clause_start + hit["end"]
             abs_s, abs_e, expand_warning = _expand_to_constituent_or_punct(
@@ -328,11 +331,12 @@ def resolve_scope_fields_v10(
                 )
                 key = f"scope_expand_warning_{kind}"
                 stats[key] = stats.get(key, 0) + 1
+                requires_drop = boundary_warning_requires_drop(expand_warning)
                 decisions.append(
                     ScopeDecision(
                         hit["surface"],
                         field,
-                        dec.accepted_field,
+                        None if requires_drop else dec.accepted_field,
                         dec.scope_type,
                         {
                             "match_start": expand_warning.start,
@@ -340,20 +344,41 @@ def resolve_scope_fields_v10(
                             "warning_kind": kind,
                             "warning_detail": expand_warning.detail,
                         },
-                        True,
-                        None,
+                        not requires_drop,
+                        f"scope_expand_{kind}" if requires_drop else None,
                         "lexicon_expand_warning",
                     )
                 )
+                if requires_drop:
+                    stats["scope_rejected"] += 1
+                    continue
             raw = source_text[abs_s:abs_e]
             frag = raw.strip()
             if not frag:
+                stats["scope_rejected"] += 1
+                decisions.append(
+                    ScopeDecision(
+                        hit["surface"], field, None, dec.scope_type,
+                        {"match_start": abs_s, "match_end": abs_e},
+                        False, "scope_expand_empty_span", "lexicon_expand_rejection",
+                    )
+                )
                 continue
             lead = len(raw) - len(raw.lstrip())
             trail = len(raw) - len(raw.rstrip())
             abs_s, abs_e = abs_s + lead, abs_e - trail
             if source_text[abs_s:abs_e] != frag:
+                stats["scope_rejected"] += 1
+                decisions.append(
+                    ScopeDecision(
+                        hit["surface"], field, None, dec.scope_type,
+                        {"match_start": abs_s, "match_end": abs_e},
+                        False, "scope_expand_source_mismatch", "lexicon_expand_rejection",
+                    )
+                )
                 continue
+            decisions.append(dec)
+            stats["scope_accepted"] += 1
             target = dec.accepted_field
             # prevent dual unless condition+exception overlap: exception wins for carveout
             if target == "exception":

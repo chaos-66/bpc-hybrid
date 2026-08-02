@@ -104,6 +104,18 @@ WARN_KIND_ACTION_HEAD_OUT_OF_CLAUSE = "action_head_out_of_clause"
 WARN_KIND_ACTION_NO_BOUNDARY = "action_no_safe_boundary"
 WARN_KIND_ACTION_CAP_BACKOFF = "action_cap_backoff_to_head_token_end"
 
+# Warnings in this set mean that no usable span may be emitted.  Cap
+# back-offs that still preserve the caller's required evidence are not
+# fatal: they remain observable, but the valid span may continue downstream.
+FATAL_BOUNDARY_WARNING_KINDS = frozenset({
+    WARN_KIND_INVALID,
+    WARN_KIND_REQUIRED_OUTSIDE_CLAUSE,
+    WARN_KIND_POSTCONDITION_FAILED,
+    WARN_KIND_NO_BOUNDARY_AT_ALL,
+    WARN_KIND_ACTION_HEAD_OUT_OF_CLAUSE,
+    WARN_KIND_ACTION_NO_BOUNDARY,
+})
+
 
 @dataclass(frozen=True, slots=True)
 class BoundaryWarning:
@@ -121,6 +133,12 @@ class BoundaryWarning:
     end: int
     max_len: int
     detail: str = ""
+
+
+def boundary_warning_requires_drop(warning: BoundaryWarning | None) -> bool:
+    """Return whether ``warning`` forbids emitting the associated span."""
+
+    return warning is not None and warning.kind in FATAL_BOUNDARY_WARNING_KINDS
 
 
 def _is_word_char(ch: str) -> bool:
@@ -563,11 +581,10 @@ def safe_action_slice(
     # required_end = head_token_end. The helper will never truncate
     # below this; if max_chars is too small to even include the head
     # token, it back-off-warns and returns the head_token_end.
-    cap_max_end = min(clause_end, head_pos + max_chars)
     end, warning = safe_window_end(
         source,
         head_pos,
-        cap_max_end,
+        clause_end,
         max_len=max_chars,
         prefer_clause_boundary=False,
         required_end=head_token_end,
