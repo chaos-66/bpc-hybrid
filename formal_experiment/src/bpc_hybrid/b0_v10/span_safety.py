@@ -11,24 +11,41 @@ Design contract
 ---------------
 * For every produced span ``(start, end)`` we must have
   ``0 <= start < end <= len(source)`` and ``source[start:end] == span_text``.
-* Char-window cuts must prefer the **rightmost** safe token/punctuation
-  boundary inside the cap so semantic coverage is maximised, not the
-  first one. The cap is a hard limit; the returned end never exceeds it
-  except when the caller passes a ``required_end`` that is itself
-  outside the cap (in which case the helper honours ``required_end`` and
-  records a ``required_evidence_exceeds_cap`` warning so the caller can
-  observe the trade-off).
-* Hard clause boundaries (``;`` and ``.``) inside the cap are special:
-  they end the slice at the **earliest** such boundary, because every
-  clause is independent and we do not want a single span to silently
-  consume a hard clause break.
-* Half-word spans are never silently emitted. When no safe boundary is
-  reachable and no ``required_end`` is provided, the helper returns
-  ``start`` (an empty span) together with a :class:`BoundaryWarning`
-  whose ``kind`` is stable and machine-readable.
-* Clause planning must never split a sentence at a character midpoint
-  when no connector is present; and the next clause must never start
-  with a leading semicolon, comma, or colon.
+* Char-window cuts prefer the **rightmost** safe token/punctuation
+  boundary inside the cap so semantic coverage is maximised. The first
+  safe position is never returned early.
+* ``required_end`` (when the caller passes one) is a **hard minimum**:
+  the helper NEVER returns a position below it. A punctuation character
+  whose position is strictly less than ``required_end`` lies inside
+  the caller's required evidence and is **silently skipped** during the
+  hard-clause-boundary search; only candidates with position
+  ``>= required_end`` are eligible.
+* Hard clause boundaries (``;`` and ``.``) inside the cap end the slice
+  at the **earliest** such position that is also ``>= required_end``;
+  the candidate is the absolute earliest occurrence in text order
+  across all hard-punctuation characters (the iteration order over
+  the ``;``/``.`` set is therefore irrelevant).
+* ``required_end`` is itself fail-closed: it must satisfy
+  ``start < required_end <= max_end <= len(source)``. Any other
+  combination (including ``required_end > max_end``,
+  ``required_end > len(source)``, or ``required_end <= start``) is
+  rejected with a stable :class:`BoundaryWarning` and the returned end
+  collapses to ``start``; the caller MUST observe the warning and
+  drop the span.
+* Half-word spans are never silently emitted. When no safe boundary
+  is reachable, the helper returns ``start`` (an empty span) together
+  with a stable :class:`BoundaryWarning` whose ``kind`` is
+  machine-readable.
+* Clause planning must never split a sentence at a character
+  midpoint when no connector is present; and the next clause must
+  never start with a leading semicolon, comma, or colon.
+
+Every return path in :func:`safe_window_end` flows through the
+postcondition helper :func:`_validate_safe_window_end_return` so a
+future early return cannot accidentally bypass the ``required_end``
+contract. The postcondition is enforced with explicit Python
+``if``/``return`` rather than bare ``assert`` so it survives Python
+``-O`` and the test build mode.
 
 The module is intentionally dependency-light: ``re`` and ``dataclasses``
 only. Importing it has no side effects.
@@ -45,10 +62,8 @@ from typing import Iterable
 
 _WHITESPACE = frozenset(" \t\n\r\f\v")
 # Hard clause-boundary punctuation. The slice ENDS at the position of
-# the character; the next span starts after it. A clause boundary in
-# ``[start, cap)`` always wins over token/phrase boundaries, and the
-# EARLIEST clause boundary wins (so we do not consume past one clause
-# into the next).
+# the character; the next span starts after it. ``p >= required_end``
+# is the only eligible candidate, where ``p`` is the character index.
 _CLAUSE_BOUNDARY_PUNCT = ";."
 # Soft punctuation that may terminate an inner phrase but not the clause.
 # The slice INCLUDES the punctuation (so the helper returns ``idx + 1``).
@@ -75,12 +90,16 @@ _CONNECTOR_REGEX = {"but": _RE_BUT, "and": _RE_AND, "or": _RE_OR}
 _CLAUSE_LEADING_SKIP = _WHITESPACE | {";", ",", ":"}
 
 
-# Stable warning kinds. Production code reads these strings to make
-# decisions; do not rename without updating callers and tests.
+# --- Stable warning kinds ---------------------------------------------------
+# Production code reads these strings to make decisions; do not rename
+# without updating callers, tests, and EXPERIMENT_LOG notes.
+
 WARN_KIND_INVALID = "safe_window_invalid"
 WARN_KIND_REQUIRED_EXCEEDS_CAP = "required_evidence_exceeds_cap"
+WARN_KIND_REQUIRED_OUTSIDE_CLAUSE = "required_outside_clause"
 WARN_KIND_CAP_NO_SAFE_BOUNDARY = "cap_reached_no_safe_boundary"
 WARN_KIND_NO_BOUNDARY_AT_ALL = "safe_window_no_boundary"
+WARN_KIND_POSTCONDITION_FAILED = "safe_window_postcondition_failed"
 WARN_KIND_ACTION_HEAD_OUT_OF_CLAUSE = "action_head_out_of_clause"
 WARN_KIND_ACTION_NO_BOUNDARY = "action_no_safe_boundary"
 WARN_KIND_ACTION_CAP_BACKOFF = "action_cap_backoff_to_head_token_end"
@@ -141,6 +160,70 @@ def _is_phrase_end(source: str, pos: int) -> bool:
     return source[pos - 1] in _PHRASE_BOUNDARY_PUNCT
 
 
+def _validate_safe_window_end_return(
+    *,
+    start: int,
+    returned_end: int,
+    max_end: int,
+    max_len: int,
+    required_end: int | None,
+    warning: BoundaryWarning | None,
+    source_len: int,
+) -> tuple[int, BoundaryWarning | None]:
+    """Postcondition check for every return path of ``safe_window_end``.
+
+    The check enforces the contract every normal return must satisfy:
+
+    * ``start <= returned_end`` (empty slice is allowed when no safe
+      boundary exists; ``start < returned_end`` is not required because
+      the ``WARN_KIND_NO_BOUNDARY_AT_ALL`` fallback is the canonical
+      "no usable boundary" signal);
+    * ``returned_end <= max_end`` (never cross the caller's clause);
+    * ``returned_end <= source_len`` (never exceed the source);
+    * when ``required_end`` is provided, ``returned_end >= required_end``
+      (the hard-minimum contract).
+
+    The check is implemented as explicit ``if``/``return`` rather than
+    bare ``assert`` so it survives Python ``-O`` optimisation and the
+    test build mode. If a postcondition fails the function returns
+    ``(start, BoundaryWarning(WARN_KIND_POSTCONDITION_FAILED, ...))``
+    so the caller can detect the violation and drop the span.
+    """
+    if returned_end < start:
+        return start, BoundaryWarning(
+            WARN_KIND_POSTCONDITION_FAILED, start, start, max_len,
+            detail=(
+                f"postcondition: returned_end={returned_end} < start={start}; "
+                "rejected; caller must observe the warning and drop the span"
+            ),
+        )
+    if returned_end > max_end:
+        return start, BoundaryWarning(
+            WARN_KIND_POSTCONDITION_FAILED, start, start, max_len,
+            detail=(
+                f"postcondition: returned_end={returned_end} > max_end={max_end}; "
+                "would cross clause; rejected"
+            ),
+        )
+    if returned_end > source_len:
+        return start, BoundaryWarning(
+            WARN_KIND_POSTCONDITION_FAILED, start, start, max_len,
+            detail=(
+                f"postcondition: returned_end={returned_end} > len(source)={source_len}; "
+                "out of source; rejected"
+            ),
+        )
+    if required_end is not None and returned_end < required_end:
+        return start, BoundaryWarning(
+            WARN_KIND_POSTCONDITION_FAILED, start, start, max_len,
+            detail=(
+                f"postcondition: returned_end={returned_end} < required_end={required_end}; "
+                "required-evidence contract violated; rejected"
+            ),
+        )
+    return returned_end, warning
+
+
 def safe_window_end(
     source: str,
     start: int,
@@ -150,101 +233,178 @@ def safe_window_end(
     prefer_clause_boundary: bool = True,
     required_end: int | None = None,
 ) -> tuple[int, BoundaryWarning | None]:
-    """Find a safe end position with the maximal-rightmost-boundary rule.
+    """Find a safe end position that satisfies the ``required_end`` contract.
 
-    Algorithm (in order):
+    Algorithm
+    ---------
+    The function routes every return through
+    :func:`_validate_safe_window_end_return` so a future early return
+    cannot accidentally bypass the postcondition. The stages below are
+    tried in order; the first one that yields a valid end (and passes
+    the postcondition) is the answer.
 
-    1. **Honour ``required_end`` first.** If the caller passed a
-       ``required_end`` and it lies past the cap, return ``required_end``
-       (clamped to ``len(source)``) together with a
-       ``WARN_KIND_REQUIRED_EXCEEDS_CAP`` warning. The caller has declared
-       that this evidence must be preserved; the helper must not silently
-       truncate it. This is the contract used by scope expansion: the
-       original Tregex / lexicon ``match_end`` is sacred.
+    0. **Pre-validation** (fail-closed on structurally invalid inputs):
+       * ``start < 0`` or ``max_end < start`` or ``max_end > len(source)``
+         returns ``(start, INVALID)``;
+       * ``required_end`` (when provided) must satisfy
+         ``start < required_end <= max_end <= len(source)``; any
+         violation returns ``(start, INVALID or REQUIRED_OUTSIDE_CLAUSE)``.
+         The helper does **not** silently clamp ``required_end`` to
+         ``len(source)`` and does **not** preserve evidence past
+         ``max_end``.
 
-    2. **Clause boundary (``;`` / ``.``)**. If a hard clause boundary is
-       present inside the cap, return the **earliest** such position.
-       We deliberately do not look at the rightmost clause boundary
-       because every clause is independent and the slice must not silently
-       consume past a hard break.
+    1. **Compute the search window**.
+       ``cap = min(max_end, start + max_len, len(source))``. The cap is
+       a *strict* upper bound on any position the helper may return
+       when the caller did not pass ``required_end``. When the caller
+       did pass ``required_end``, the helper is allowed to extend past
+       the cap to honour ``required_end`` (but not past ``max_end`` or
+       ``len(source)``).
+       ``minimum_end = required_end if required_end is not None else start``.
+       The hard-punctuation search restricts candidates to positions
+       ``p >= minimum_end``; this is the rule that fixes the
+       "Art. 6" regression where the internal period truncated the
+       marker.
 
-    3. **Rightmost safe token/phrase boundary**. Walk ``[start, cap)`` and
-       remember the rightmost safe position. A position is safe when it
-       is:
-       * a whitespace (``" \t\n\r\f\v"``);
-       * a position right after a phrase-punctuation character
-         (``,``, ``:``, em/en dash, parentheses);
-       * a word → non-word transition (the previous char is a word char
-         and the current char is not);
-       * a non-word → word transition (start of a new token).
+    2. **Hard clause boundary** (when ``prefer_clause_boundary``): for
+       each character in ``_CLAUSE_BOUNDARY_PUNCT`` (``;`` and ``.``),
+       iterate all occurrences in ``[minimum_end, cap)`` and keep the
+       earliest in text order. The result is independent of the
+       iteration order over the punct set. The returned end is the
+       position of the chosen character; the next span starts after
+       it (exclusive-end contract).
 
-       The first safe position that is also ``>= required_end`` (when the
-       caller asked for one) wins immediately; otherwise the helper
-       returns the rightmost safe position it saw.
+    3. **Rightmost safe token/phrase boundary**: walk
+       ``(start, cap)`` and remember the rightmost safe position. A
+       position is safe when it is a whitespace, a position right after
+       a phrase-punctuation character, or a word → non-word
+       transition. The first safe position is **never** returned
+       early; the helper always continues to the cap. When
+       ``required_end`` is provided, the rightmost safe boundary is
+       only accepted if it satisfies ``best_safe >= required_end``;
+       otherwise the helper extends to ``required_end`` with a
+       ``WARN_KIND_CAP_NO_SAFE_BOUNDARY`` warning.
 
-    4. **Cap itself**. If the cap is at the end of the source or at
-       ``max_end`` (i.e. the source actually ends at the cap), return
-       the cap. If the cap sits exactly on a word → non-word
-       transition, it is also a valid rightmost boundary.
+    4. **Cap at end of source**: when ``cap >= len(source)`` the helper
+       returns the cap (it is always a safe boundary). The cap being
+       at ``max_end`` alone is **not** enough — that would let a mid-word
+       ``max_end`` truncate the slice; we only short-circuit when the
+       source actually ends at the cap.
 
-    5. **No safe boundary inside the cap** and no ``required_end`` was
-       provided. Return ``start`` (an empty span) together with a
-       ``WARN_KIND_NO_BOUNDARY_AT_ALL`` warning. The caller can then
-       decide to drop the span rather than emit a half-word.
+    5. **No internal safe boundary**: if the walk in step 3 finds
+       nothing, the helper either extends to ``required_end`` (with
+       warning) when the caller passed one, or returns ``start`` (empty
+       slice) with ``WARN_KIND_NO_BOUNDARY_AT_ALL``.
+
+    Returns
+    -------
+    ``(returned_end, warning_or_None)``. ``returned_end`` is the
+    exclusive end of the slice. The postcondition helper guarantees:
+
+    * ``start <= returned_end <= max_end``;
+    * ``returned_end <= len(source)``;
+    * when ``required_end`` is provided, ``returned_end >= required_end``.
+
+    Any violation is replaced with a stable
+    ``WARN_KIND_POSTCONDITION_FAILED`` warning that the caller must
+    observe and drop the span. The helper never raises bare
+    ``ValueError`` in production paths.
     """
-    if start < 0 or max_end < start:
-        return start, BoundaryWarning(
-            WARN_KIND_INVALID, start, start, max_len,
-            detail=f"start={start} max_end={max_end} invalid",
+    # --- 0) Pre-validation: fail closed on structurally invalid inputs.
+    # These paths return directly (not through the finalize helper)
+    # because the pre-validation warning IS the contract signal; the
+    # postcondition helper would otherwise override the kind with a
+    # generic POSTCONDITION_FAILED on the empty slice. The returned
+    # end is always a non-negative position so the caller can compare
+    # ``start <= returned_end`` uniformly; the warning kind carries
+    # the diagnostic.
+    source_len = len(source)
+    safe_start = max(0, start) if start >= 0 else 0
+    if start < 0:
+        return 0, BoundaryWarning(
+            WARN_KIND_INVALID, 0, 0, max_len,
+            detail=f"start={start} < 0",
         )
-
-    cap = min(max_end, start + max_len, len(source))
-
-    # 1) Honour required_end that lies outside the cap. We never
-    # silently truncate evidence the caller has declared required.
-    if required_end is not None and required_end > cap:
-        preserved = min(required_end, len(source))
-        if preserved <= start:
-            # required_end collapsed to start because the source is
-            # shorter than the caller assumed. Treat as invalid.
-            return start, BoundaryWarning(
-                WARN_KIND_INVALID, start, start, max_len,
-                detail=f"required_end={required_end} <= start={start}",
-            )
-        return preserved, BoundaryWarning(
-            WARN_KIND_REQUIRED_EXCEEDS_CAP,
-            start=start,
-            end=preserved,
-            max_len=max_len,
+    if max_end < start:
+        return safe_start, BoundaryWarning(
+            WARN_KIND_INVALID, safe_start, safe_start, max_len,
+            detail=f"max_end={max_end} < start={start}",
+        )
+    if max_end > source_len:
+        return safe_start, BoundaryWarning(
+            WARN_KIND_INVALID, safe_start, safe_start, max_len,
             detail=(
-                f"required_end={required_end} > cap={cap}; "
-                f"preserved full evidence at {preserved} (no silent truncation)"
+                f"max_end={max_end} > len(source)={source_len}; "
+                "out-of-range; rejected"
             ),
         )
 
-    # 2) Hard clause boundary: the EARLIEST in [start, cap) wins.
-    if prefer_clause_boundary:
-        earliest_clause_idx: int | None = None
-        for ch in _CLAUSE_BOUNDARY_PUNCT:
-            idx = source.find(ch, start, cap)
-            if idx == -1:
-                continue
-            if earliest_clause_idx is None or idx < earliest_clause_idx:
-                earliest_clause_idx = idx
-        if earliest_clause_idx is not None:
-            return earliest_clause_idx, None
+    if required_end is not None:
+        if required_end <= start:
+            return safe_start, BoundaryWarning(
+                WARN_KIND_INVALID, safe_start, safe_start, max_len,
+                detail=(
+                    f"required_end={required_end} <= start={start}; "
+                    "empty evidence not allowed; rejected"
+                ),
+            )
+        if required_end > source_len:
+            return safe_start, BoundaryWarning(
+                WARN_KIND_INVALID, safe_start, safe_start, max_len,
+                detail=(
+                    f"required_end={required_end} > len(source)={source_len}; "
+                    "refuse to silently clamp"
+                ),
+            )
+        if required_end > max_end:
+            return safe_start, BoundaryWarning(
+                WARN_KIND_REQUIRED_OUTSIDE_CLAUSE, safe_start, safe_start, max_len,
+                detail=(
+                    f"required_end={required_end} > max_end={max_end}; "
+                    "would cross the caller's clause; rejected"
+                ),
+            )
 
-    # 3) Walk to find the RIGHTMOST safe token/phrase boundary strictly
-    # INSIDE the cap. We never stop at the first one; the slice must
-    # cover as much of the cap as possible. ``required_end`` is
-    # treated as a minimum only: the helper may return past it (up
-    # to the cap or to the original evidence, whichever is smaller)
-    # but never below it.
+    # --- 1) Compute cap and minimum_end.
+    cap = min(max_end, start + max_len, source_len)
+    # minimum_end is the lower bound for the hard-punctuation search.
+    # When the caller passed required_end we use it; otherwise we
+    # default to start (no candidate is "before" the slice start).
+    minimum_end = required_end if required_end is not None else start
+
+    # --- 2) Hard clause boundary: earliest occurrence in [minimum_end, cap)
+    # across both ';' and '.'. Iteration order over _CLAUSE_BOUNDARY_PUNCT
+    # is irrelevant because we take the minimum across all candidates.
+    if prefer_clause_boundary:
+        earliest_p: int | None = None
+        for ch in _CLAUSE_BOUNDARY_PUNCT:
+            search_from = minimum_end
+            while search_from < cap:
+                idx = source.find(ch, search_from, cap)
+                if idx == -1:
+                    break
+                if earliest_p is None or idx < earliest_p:
+                    earliest_p = idx
+                # advance past this occurrence to find the next one of
+                # the same character
+                search_from = idx + 1
+        if earliest_p is not None:
+            return _validate_safe_window_end_return(
+                start=start, returned_end=earliest_p, max_end=max_end,
+                max_len=max_len, required_end=required_end, warning=None,
+                source_len=source_len,
+            )
+
+    # --- 3) Rightmost safe token/phrase boundary strictly inside (start, cap).
+    # We never stop at the first safe position; the slice must cover as
+    # much of the cap as possible while staying at a token boundary.
+    # The walk does NOT visit ``cap`` itself: the cap-level checks
+    # below (end of source / word→non-word transition) extend the
+    # candidate set when the cap is itself a safe boundary.
     found_internal_safe = False
     best_safe = start
     best_safe_includes_punct = False
-    pos = start + 1  # skip the start position; endpoint is not
-                      # counted as an "internal" safe stop
+    pos = start + 1
     while pos < cap:
         ch = source[pos]
         is_safe = False
@@ -263,69 +423,84 @@ def safe_window_end(
             found_internal_safe = True
         pos += 1
 
-    # 4) If the helper did not find a single safe boundary inside the
-    # cap, fall back to required_end (if the caller passed one and
-    # it is reachable) or to start (empty slice) with a stable
-    # warning kind.
-    if not found_internal_safe:
-        if required_end is not None and required_end <= cap:
-            return required_end, BoundaryWarning(
-                WARN_KIND_CAP_NO_SAFE_BOUNDARY,
-                start=start,
-                end=required_end,
-                max_len=max_len,
-                detail=(
-                    f"no token/phrase boundary inside cap={cap}; "
-                    f"returned required_end={required_end}"
+    # Determine the rightmost safe candidate. The candidates are
+    # (in order of preference for "rightmost wins"):
+    #   1. cap if it sits at end of source (always a safe boundary)
+    #   2. cap if it sits at a word → non-word transition
+    #   3. best_safe from the walk (rightmost internal safe stop)
+    # If none of (1)-(3) is available, no safe boundary exists at all.
+    candidate_end: int | None = None
+    candidate_includes_punct = False
+    if cap >= source_len:
+        candidate_end = cap
+        candidate_includes_punct = False
+    elif cap > start and _is_word_char(source[cap - 1]) and not _is_word_char(source[cap]):
+        candidate_end = cap
+        candidate_includes_punct = False
+    elif found_internal_safe:
+        candidate_end = best_safe
+        candidate_includes_punct = best_safe_includes_punct
+
+    if candidate_end is None:
+        # --- 5) No safe boundary at all inside the cap.
+        if required_end is not None and required_end <= max_end:
+            return _validate_safe_window_end_return(
+                start=start, returned_end=required_end, max_end=max_end,
+                max_len=max_len, required_end=required_end,
+                warning=BoundaryWarning(
+                    WARN_KIND_REQUIRED_EXCEEDS_CAP, start, required_end, max_len,
+                    detail=(
+                        f"no token/phrase boundary inside cap={cap}; "
+                        f"returned required_end={required_end} (extends past cap)"
+                    ),
                 ),
+                source_len=source_len,
             )
-        return start, BoundaryWarning(
-            WARN_KIND_NO_BOUNDARY_AT_ALL,
-            start=start,
-            end=start,
-            max_len=max_len,
-            detail="no safe boundary inside max_len; backoff to start (empty span)",
-        )
-
-    # 5) Cap is at end of source. The slice is allowed to consume
-    # the full cap because the caller has no more room. We do NOT
-    # short-circuit on ``cap >= max_end`` alone: that would return
-    # the cap even when it lands mid-word (e.g. max_end was the
-    # arbitrary end of the search range, not the source end). The
-    # cap is a safe boundary only when the source actually ends at
-    # the cap.
-    if cap >= len(source):
-        return cap, None
-
-    # 6) Cap sits exactly on a word → non-word transition. Promote
-    # best_safe to cap because the transition itself is a rightmost
-    # safe stop that the caller might prefer.
-    if cap > start and _is_word_char(source[cap - 1]) and not _is_word_char(source[cap]):
-        return cap, None
-
-    # 7) required_end must be honoured. If the rightmost safe boundary
-    # we saw is still BELOW required_end, we have to extend to
-    # required_end (still a real, valid position in the caller's
-    # data) and surface a CAP warning so the trade-off is observable.
-    if required_end is not None and best_safe < required_end:
-        return required_end, BoundaryWarning(
-            WARN_KIND_CAP_NO_SAFE_BOUNDARY,
-            start=start,
-            end=required_end,
-            max_len=max_len,
-            detail=(
-                f"rightmost safe boundary={best_safe} < required_end={required_end}; "
-                f"extended to required_end; cap={cap} did not expose a deeper stop"
+        return _validate_safe_window_end_return(
+            start=start, returned_end=start, max_end=max_end,
+            max_len=max_len, required_end=required_end,
+            warning=BoundaryWarning(
+                WARN_KIND_NO_BOUNDARY_AT_ALL, start, start, max_len,
+                detail="no safe boundary inside max_len; backoff to start (empty span)",
             ),
+            source_len=source_len,
         )
 
-    # 8) Otherwise return the rightmost safe boundary. If it sits on
-    # a phrase-punctuation character, include the punctuation in the
-    # slice; the caller's original_match_end contract always wins
-    # over the cap once required_end is met.
-    if best_safe_includes_punct and best_safe < cap:
-        return best_safe + 1, None
-    return best_safe, None
+    # --- 4/6) Honour required_end. The rightmost safe candidate is
+    # acceptable only when it is >= required_end. Otherwise we
+    # extend to required_end (which may be past the cap, but never
+    # past max_end or len(source); the pre-validation guarantees that).
+    if required_end is not None and candidate_end < required_end:
+        return _validate_safe_window_end_return(
+            start=start, returned_end=required_end, max_end=max_end,
+            max_len=max_len, required_end=required_end,
+            warning=BoundaryWarning(
+                WARN_KIND_REQUIRED_EXCEEDS_CAP, start, required_end, max_len,
+                detail=(
+                    f"rightmost safe boundary={candidate_end} < required_end={required_end}; "
+                    f"extended to required_end; cap={cap} did not expose a deeper stop"
+                ),
+            ),
+            source_len=source_len,
+        )
+
+    # --- 7) Return the rightmost safe boundary. If it sits on a
+    # phrase-punctuation character, include the punctuation in the
+    # slice (the helper returns idx + 1). Note: a phrase-punctuation
+    # stop is only reachable from the walked best_safe, not from the
+    # cap-level candidates, so the +1 adjustment is only applied
+    # when best_safe is the chosen candidate.
+    if candidate_includes_punct and candidate_end < cap:
+        return _validate_safe_window_end_return(
+            start=start, returned_end=candidate_end + 1, max_end=max_end,
+            max_len=max_len, required_end=required_end, warning=None,
+            source_len=source_len,
+        )
+    return _validate_safe_window_end_return(
+        start=start, returned_end=candidate_end, max_end=max_end,
+        max_len=max_len, required_end=required_end, warning=None,
+        source_len=source_len,
+    )
 
 
 def safe_action_slice(
@@ -545,6 +720,13 @@ def assert_span_invariants(source: str, start: int, end: int, label: str) -> Non
 
     Intended for use in tests and at module boundaries. ``label`` is used
     in the error message so test failures point at the offending span.
+
+    This is a *test-only* helper that uses bare ``assert`` semantics
+    (so it is removed under ``python -O``); the production code path
+    never raises from this function. Production callers should
+    observe the :class:`BoundaryWarning` returned by the slicing
+    helpers and drop the span when the warning kind is one of the
+    fail-closed constants.
     """
     if start < 0 or end <= start or end > len(source):
         raise ValueError(
