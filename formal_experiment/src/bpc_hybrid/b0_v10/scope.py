@@ -151,30 +151,46 @@ def _expand_to_constituent_or_punct(
     clause_start: int,
     clause_end: int,
     max_len: int = 100,
-) -> tuple[int, int]:
+) -> tuple[int, int, BoundaryWarning | None]:
     """Prefer punctuation-bounded expansion; no blind +90 always.
 
-    B0-R1-A: the previous implementation walked character by character up
-    to ``max_len`` and stopped at the first ``;``/``.``/``\n`` it found —
-    or simply returned ``start + max_len`` when none was present, even if
-    that landed mid-word. The new implementation delegates to
-    :func:`safe_window_end`, which always falls back to a token boundary
-    (whitespace) and, if even that is impossible inside ``max_len``,
-    returns the *last safe* position together with a
-    :class:`BoundaryWarning` so the caller can decide whether to keep the
-    shorter span or drop it. ``clause_start`` is still honoured as a
-    left-clip.
+    B0-R1-A contract:
+
+    * ``start`` is the left-clip (clipped to ``clause_start``).
+    * ``end`` is the *original* match end (Tregex/lexicon observation).
+      This is the contract the helper must preserve: ``new_end >=
+      original end`` whenever possible. The helper will *extend past
+      the cap* to honour the original match end, and it surfaces a
+      ``required_evidence_exceeds_cap`` warning so the trade-off is
+      observable.
+    * Clause boundary (``;`` or ``.``) inside ``[start, cap)`` ends
+      the slice at the **earliest** such boundary.
+    * If the rightmost token/phrase boundary inside the cap is past
+      the original match end, the helper still returns the rightmost
+      boundary so the scope span covers as much of the cap as
+      possible without ever truncating the original evidence.
+    * When the cap is too small to even include the original match
+      end, the helper extends past the cap to honour the original
+      evidence and emits the ``required_evidence_exceeds_cap`` warning.
+
+    The returned ``BoundaryWarning`` is surfaced to the caller so it
+    can be recorded in the scope stats / decision evidence rather
+    than being silently discarded.
     """
-    end = min(end, clause_end)
+    original_match_end = min(end, clause_end)
     start = max(start, clause_start)
-    e, _warning = safe_window_end(
+    e, warning = safe_window_end(
         source_text,
         start,
         clause_end,
         max_len=max_len,
         prefer_clause_boundary=True,
+        required_end=original_match_end,
     )
-    return start, min(e, clause_end)
+    # safe_window_end never returns less than required_end; the cap
+    # here is purely defensive in case the helper produced something
+    # outside the clause.
+    return start, min(e, clause_end), warning
 
 
 def resolve_scope_fields_v10(
@@ -198,6 +214,7 @@ def resolve_scope_fields_v10(
         "tregex_candidates": 0,
         "tregex_accepted": 0,
         "tregex_final_affected": 0,
+        "scope_expand_warnings": 0,
         "scope_accepted": 0,
         "scope_rejected": 0,
         "final_affected_spans": 0,
@@ -296,9 +313,38 @@ def resolve_scope_fields_v10(
             stats["scope_accepted"] += 1
             abs_s = clause_start + hit["start"]
             abs_e = clause_start + hit["end"]
-            abs_s, abs_e = _expand_to_constituent_or_punct(
+            abs_s, abs_e, expand_warning = _expand_to_constituent_or_punct(
                 source_text, abs_s, abs_e, clause_start, clause_start + len(clause_text)
             )
+            if expand_warning is not None:
+                # Record the trade-off in the scope stats and on the
+                # decision so the caller (and downstream manifests) can
+                # see how often the cap was too small to include the
+                # original evidence. We must never silently drop the
+                # warning.
+                kind = expand_warning.kind
+                stats["scope_expand_warnings"] = (
+                    stats.get("scope_expand_warnings", 0) + 1
+                )
+                key = f"scope_expand_warning_{kind}"
+                stats[key] = stats.get(key, 0) + 1
+                decisions.append(
+                    ScopeDecision(
+                        hit["surface"],
+                        field,
+                        dec.accepted_field,
+                        dec.scope_type,
+                        {
+                            "match_start": expand_warning.start,
+                            "match_end": expand_warning.end,
+                            "warning_kind": kind,
+                            "warning_detail": expand_warning.detail,
+                        },
+                        True,
+                        None,
+                        "lexicon_expand_warning",
+                    )
+                )
             raw = source_text[abs_s:abs_e]
             frag = raw.strip()
             if not frag:

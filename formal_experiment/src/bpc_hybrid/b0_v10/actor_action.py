@@ -139,17 +139,27 @@ def extract_actors_actions_edges(
                 text = text2
         if len(text.split()) > 15:
             head_pos = tokens[head - 1]["characterOffsetBegin"]
+            head_token_end = tokens[head - 1]["characterOffsetEnd"]
             a0 = max(clause_start, head_pos)
-            # B0-R1-A: token-safe action slice. The old code took
-            # ``min(clause_end, a0 + 80)`` directly, which is a hard
-            # 80-char window that can land mid-word. The safe helper
-            # stops on the first token boundary (whitespace / punctuation)
-            # or, when none is reachable, returns a conservative
-            # last-safe position and a BoundaryWarning. We then honour
-            # the warning: if the slice is empty we drop the action
-            # rather than emit a half-word.
+            # B0-R1-A: token-safe action slice. The old a2383e9
+            # implementation delegated to ``safe_window_end`` which
+            # returned at the *first* whitespace inside the cap. For
+            # long actions that meant the slice collapsed to a single
+            # word ("process" instead of the full action). The new
+            # helper walks to the RIGHTMOST safe token/punctuation
+            # boundary inside the cap and never falls below the head
+            # token's own end. We pass ``head_token_end`` explicitly
+            # so the helper always covers the full action head token,
+            # even when the cap is too small. When no safe boundary
+            # exists at all, the helper returns start (empty) and a
+            # BoundaryWarning, and we drop the action rather than emit
+            # a half-word.
             new_a0, new_a1, warning = safe_action_slice(
-                source_text, a0, clause_end, max_chars=80
+                source_text,
+                a0,
+                clause_end,
+                max_chars=80,
+                head_token_end=head_token_end,
             )
             if warning is not None:
                 stats["action_cap_warnings"] += 1

@@ -1926,3 +1926,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：active v10-A path: plan_clause_units_v4 (connector priority, no character midpoint, leading semicolon skip), b0_v10/actor_action (cap+80 -> safe_action_slice with token-boundary fallback and warning counter), b0_v10/scope (char loop -> safe_window_end with word-end backoff). New shared helper bpc_hybrid.b0_v10.span_safety. 53 new tests in test_b0_r1_a_span_boundaries.py; full audit --with-tests 1317 passed / 24 skipped / 0 failed; errors=0, integrity_pass=True. B0-R1-B through R1-E not started in this commit.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-02T12:11:49.700787+00:00 - B0-R1-A-C1: maximal safe semantic spans — fix over-shrinkage, required_end contract, earliest clause boundary
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1326 passed, 24 skipped in 165.30s (0:02:45)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`a2383e97e30df346721c40fb6b9bccef6719b6ab`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：Active v10-A path span and clause-boundary correctness (no P/R run yet — CoreNLP runtime missing locally, see final report). Code-only fix: safe_window_end now walks to RIGHTMOST safe token/punctuation boundary inside the cap (not the FIRST one — a2383e9's regression), supports required_end as a hard minimum (scope path now passes the original Tregex/lexicon match end so 'subject to' / 'in accordance with' / 'for a period' are never truncated), earliest clause boundary wins over rightmost within the cap, step 5 no longer short-circuits on cap==max_end (was the source of the half-word). _expand_to_constituent_or_punct returns 3-tuple (start, end, warning); warning is surfaced into scope decisions and stats counters scope_expand_warnings / scope_expand_warning_<kind>. actor_action.py passes head_token_end explicitly to safe_action_slice. tests/test_b0_r1_a_span_boundaries.py rewritten to assert SEMANTIC COVERAGE (length / complete marker / rightmost boundary) — pre-fix demos for a2383e9's 'first whitespace' bug and the OLD scope char-loop mid-word bug are kept. 62 tests pass (53 previous + 9 new). audit_project.py --with-tests: 1326 passed, 24 skipped, 0 failed; integrity_pass=True, errors=0. B0-R1-B through R1-E and P/R arms not started (CoreNLP runtime missing locally; see final report blocker list).
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

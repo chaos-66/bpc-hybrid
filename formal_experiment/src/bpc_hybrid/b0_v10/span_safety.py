@@ -11,17 +11,24 @@ Design contract
 ---------------
 * For every produced span ``(start, end)`` we must have
   ``0 <= start < end <= len(source)`` and ``source[start:end] == span_text``.
-* Char-window cuts must fall back to a token boundary (whitespace) or a
-  punctuation boundary before they reach a hard ``max_len`` cap. They are
-  *never* allowed to land in the middle of a word.
-* When no safe boundary is reachable, the helper returns the full
-  ``[start, max_end)`` window and emits a ``BoundaryWarning`` so the caller
-  can decide whether to keep or drop the span. The caller is responsible
-  for honouring the warning. The helpers themselves never silently emit a
-  half-word span.
-* Clause planning must never split a sentence at a character midpoint when
-  no connector is present; and the next clause must never start with a
-  leading semicolon or comma.
+* Char-window cuts must prefer the **rightmost** safe token/punctuation
+  boundary inside the cap so semantic coverage is maximised, not the
+  first one. The cap is a hard limit; the returned end never exceeds it
+  except when the caller passes a ``required_end`` that is itself
+  outside the cap (in which case the helper honours ``required_end`` and
+  records a ``required_evidence_exceeds_cap`` warning so the caller can
+  observe the trade-off).
+* Hard clause boundaries (``;`` and ``.``) inside the cap are special:
+  they end the slice at the **earliest** such boundary, because every
+  clause is independent and we do not want a single span to silently
+  consume a hard clause break.
+* Half-word spans are never silently emitted. When no safe boundary is
+  reachable and no ``required_end`` is provided, the helper returns
+  ``start`` (an empty span) together with a :class:`BoundaryWarning`
+  whose ``kind`` is stable and machine-readable.
+* Clause planning must never split a sentence at a character midpoint
+  when no connector is present; and the next clause must never start
+  with a leading semicolon, comma, or colon.
 
 The module is intentionally dependency-light: ``re`` and ``dataclasses``
 only. Importing it has no side effects.
@@ -37,10 +44,14 @@ from typing import Iterable
 # --- Boundary classification ------------------------------------------------
 
 _WHITESPACE = frozenset(" \t\n\r\f\v")
-# Hard clause-boundary punctuation (stop at the *position* of the character,
-# not after it, so the next clause starts with the next real word).
+# Hard clause-boundary punctuation. The slice ENDS at the position of
+# the character; the next span starts after it. A clause boundary in
+# ``[start, cap)`` always wins over token/phrase boundaries, and the
+# EARLIEST clause boundary wins (so we do not consume past one clause
+# into the next).
 _CLAUSE_BOUNDARY_PUNCT = ";."
 # Soft punctuation that may terminate an inner phrase but not the clause.
+# The slice INCLUDES the punctuation (so the helper returns ``idx + 1``).
 _PHRASE_BOUNDARY_PUNCT = ",:—–-()"
 # Token boundary set: any character that is a legal token separator. Used as
 # the fallback when a hard cap is reached without a punctuation match.
@@ -64,17 +75,29 @@ _CONNECTOR_REGEX = {"but": _RE_BUT, "and": _RE_AND, "or": _RE_OR}
 _CLAUSE_LEADING_SKIP = _WHITESPACE | {";", ",", ":"}
 
 
+# Stable warning kinds. Production code reads these strings to make
+# decisions; do not rename without updating callers and tests.
+WARN_KIND_INVALID = "safe_window_invalid"
+WARN_KIND_REQUIRED_EXCEEDS_CAP = "required_evidence_exceeds_cap"
+WARN_KIND_CAP_NO_SAFE_BOUNDARY = "cap_reached_no_safe_boundary"
+WARN_KIND_NO_BOUNDARY_AT_ALL = "safe_window_no_boundary"
+WARN_KIND_ACTION_HEAD_OUT_OF_CLAUSE = "action_head_out_of_clause"
+WARN_KIND_ACTION_NO_BOUNDARY = "action_no_safe_boundary"
+WARN_KIND_ACTION_CAP_BACKOFF = "action_cap_backoff_to_head_token_end"
+
+
 @dataclass(frozen=True, slots=True)
 class BoundaryWarning:
-    """Recorded when a helper could not find a safe boundary inside ``max_len``.
+    """Recorded when a helper could not find a clean boundary inside the cap.
 
     The production code reads ``kind`` + ``start`` + ``end`` and decides
-    whether to keep the over-cap span, trim it, or drop it. The warning is
-    *not* raised as an exception because the caller often wants the
-    full constituent rather than nothing.
+    whether to keep the over-cap span, trim it, or drop it. The warning
+    is *not* raised as an exception because the caller often wants the
+    full constituent rather than nothing. The ``kind`` is a stable
+    machine-readable string.
     """
 
-    kind: str  # e.g. "action_cap", "scope_cap", "clause_midpoint"
+    kind: str
     start: int
     end: int
     max_len: int
@@ -104,6 +127,20 @@ def _is_token_boundary(source: str, pos: int) -> bool:
     return False
 
 
+def _is_phrase_end(source: str, pos: int) -> bool:
+    """True if ``pos`` is the position right after a phrase-punctuation char.
+
+    Used to decide whether a phrase-punctuation stop should also include
+    the punctuation in the slice. ``pos == idx + 1`` where ``source[idx]``
+    is a phrase-punctuation character.
+    """
+    if pos <= 0 or pos > len(source):
+        return False
+    if pos == len(source):
+        return False
+    return source[pos - 1] in _PHRASE_BOUNDARY_PUNCT
+
+
 def safe_window_end(
     source: str,
     start: int,
@@ -111,95 +148,184 @@ def safe_window_end(
     *,
     max_len: int,
     prefer_clause_boundary: bool = True,
+    required_end: int | None = None,
 ) -> tuple[int, BoundaryWarning | None]:
-    """Find a safe end position inside ``[start, max_end)``.
+    """Find a safe end position with the maximal-rightmost-boundary rule.
 
-    Algorithm:
+    Algorithm (in order):
 
-    1. If a hard clause boundary (``;`` or ``.``) is present inside the
-       cap, return its position. The boundary character itself belongs
-       to the slice; the next span starts after it.
-    2. If a phrase-boundary punctuation is present inside the cap,
-       return ``position + 1`` so the punctuation is included in the
-       slice.
-    3. If a token boundary (whitespace, or non-word → word transition)
-       is present inside the cap, return it. The cap is a hard limit
-       for this phase.
-    4. If the cap itself is a token boundary (word → non-word
-       transition right at the cap position, or ``cap`` is at
-       ``max_end`` / ``len(source)``), return the cap.
-    5. Conservative fallback: back off to the most recent position
-       inside the cap that is a safe word-end. If no such position
-       exists (e.g. a single 200-character word with cap=20), back off
-       to ``start`` so the caller can decide to drop the span.
+    1. **Honour ``required_end`` first.** If the caller passed a
+       ``required_end`` and it lies past the cap, return ``required_end``
+       (clamped to ``len(source)``) together with a
+       ``WARN_KIND_REQUIRED_EXCEEDS_CAP`` warning. The caller has declared
+       that this evidence must be preserved; the helper must not silently
+       truncate it. This is the contract used by scope expansion: the
+       original Tregex / lexicon ``match_end`` is sacred.
 
-    The cap is **strict**: we never return an end past
-    ``min(max_end, start + max_len)``. The function records a
-    :class:`BoundaryWarning` whenever the cap was reached without a
-    clean boundary so the caller can decide whether to keep the
-    shorter span or drop it.
+    2. **Clause boundary (``;`` / ``.``)**. If a hard clause boundary is
+       present inside the cap, return the **earliest** such position.
+       We deliberately do not look at the rightmost clause boundary
+       because every clause is independent and the slice must not silently
+       consume past a hard break.
+
+    3. **Rightmost safe token/phrase boundary**. Walk ``[start, cap)`` and
+       remember the rightmost safe position. A position is safe when it
+       is:
+       * a whitespace (``" \t\n\r\f\v"``);
+       * a position right after a phrase-punctuation character
+         (``,``, ``:``, em/en dash, parentheses);
+       * a word → non-word transition (the previous char is a word char
+         and the current char is not);
+       * a non-word → word transition (start of a new token).
+
+       The first safe position that is also ``>= required_end`` (when the
+       caller asked for one) wins immediately; otherwise the helper
+       returns the rightmost safe position it saw.
+
+    4. **Cap itself**. If the cap is at the end of the source or at
+       ``max_end`` (i.e. the source actually ends at the cap), return
+       the cap. If the cap sits exactly on a word → non-word
+       transition, it is also a valid rightmost boundary.
+
+    5. **No safe boundary inside the cap** and no ``required_end`` was
+       provided. Return ``start`` (an empty span) together with a
+       ``WARN_KIND_NO_BOUNDARY_AT_ALL`` warning. The caller can then
+       decide to drop the span rather than emit a half-word.
     """
     if start < 0 or max_end < start:
-        return start, BoundaryWarning("safe_window_invalid", start, start, max_len)
+        return start, BoundaryWarning(
+            WARN_KIND_INVALID, start, start, max_len,
+            detail=f"start={start} max_end={max_end} invalid",
+        )
 
     cap = min(max_end, start + max_len, len(source))
 
+    # 1) Honour required_end that lies outside the cap. We never
+    # silently truncate evidence the caller has declared required.
+    if required_end is not None and required_end > cap:
+        preserved = min(required_end, len(source))
+        if preserved <= start:
+            # required_end collapsed to start because the source is
+            # shorter than the caller assumed. Treat as invalid.
+            return start, BoundaryWarning(
+                WARN_KIND_INVALID, start, start, max_len,
+                detail=f"required_end={required_end} <= start={start}",
+            )
+        return preserved, BoundaryWarning(
+            WARN_KIND_REQUIRED_EXCEEDS_CAP,
+            start=start,
+            end=preserved,
+            max_len=max_len,
+            detail=(
+                f"required_end={required_end} > cap={cap}; "
+                f"preserved full evidence at {preserved} (no silent truncation)"
+            ),
+        )
+
+    # 2) Hard clause boundary: the EARLIEST in [start, cap) wins.
     if prefer_clause_boundary:
+        earliest_clause_idx: int | None = None
         for ch in _CLAUSE_BOUNDARY_PUNCT:
             idx = source.find(ch, start, cap)
-            if idx != -1:
-                return idx, None
+            if idx == -1:
+                continue
+            if earliest_clause_idx is None or idx < earliest_clause_idx:
+                earliest_clause_idx = idx
+        if earliest_clause_idx is not None:
+            return earliest_clause_idx, None
 
-    for ch in _PHRASE_BOUNDARY_PUNCT:
-        idx = source.find(ch, start, cap)
-        if idx != -1:
-            return idx + 1, None
-
-    # Track the most recent position that is a safe word-end
-    # (word → non-word transition). This is our back-off target if we
-    # reach the cap mid-word.
-    last_word_end = start
-    pos = start
+    # 3) Walk to find the RIGHTMOST safe token/phrase boundary strictly
+    # INSIDE the cap. We never stop at the first one; the slice must
+    # cover as much of the cap as possible. ``required_end`` is
+    # treated as a minimum only: the helper may return past it (up
+    # to the cap or to the original evidence, whichever is smaller)
+    # but never below it.
+    found_internal_safe = False
+    best_safe = start
+    best_safe_includes_punct = False
+    pos = start + 1  # skip the start position; endpoint is not
+                      # counted as an "internal" safe stop
     while pos < cap:
         ch = source[pos]
+        is_safe = False
+        includes_punct = False
         if ch in _TOKEN_BOUNDARY_CHARS:
-            return pos, None
-        if ch in _PHRASE_BOUNDARY_PUNCT:
-            return pos + 1, None
-        if pos > start and not _is_word_char(source[pos - 1]) and _is_word_char(ch):
-            # non-word → word transition: a safe start position for the
-            # next token, so we may cut here.
-            return pos, None
-        if pos > start and _is_word_char(source[pos - 1]) and not _is_word_char(ch):
-            # word → non-word transition: the slice is safe to end at
-            # ``pos`` (right after the word). We track this for back-off.
-            last_word_end = pos
+            is_safe = True
+        elif ch in _PHRASE_BOUNDARY_PUNCT:
+            is_safe = True
+            includes_punct = True
+        elif _is_word_char(source[pos - 1]) and not _is_word_char(ch):
+            # word → non-word transition
+            is_safe = True
+        if is_safe:
+            best_safe = pos
+            best_safe_includes_punct = includes_punct
+            found_internal_safe = True
         pos += 1
 
-    # Reached the cap. Check if cap itself is a clean boundary.
-    if cap >= len(source) or cap >= max_end:
-        return cap, None
-    if cap > start and _is_word_char(source[cap - 1]) and not _is_word_char(source[cap]):
-        # cap sits right after a word and right before a non-word char
-        # (whitespace, punctuation, end of source). Clean boundary.
+    # 4) If the helper did not find a single safe boundary inside the
+    # cap, fall back to required_end (if the caller passed one and
+    # it is reachable) or to start (empty slice) with a stable
+    # warning kind.
+    if not found_internal_safe:
+        if required_end is not None and required_end <= cap:
+            return required_end, BoundaryWarning(
+                WARN_KIND_CAP_NO_SAFE_BOUNDARY,
+                start=start,
+                end=required_end,
+                max_len=max_len,
+                detail=(
+                    f"no token/phrase boundary inside cap={cap}; "
+                    f"returned required_end={required_end}"
+                ),
+            )
+        return start, BoundaryWarning(
+            WARN_KIND_NO_BOUNDARY_AT_ALL,
+            start=start,
+            end=start,
+            max_len=max_len,
+            detail="no safe boundary inside max_len; backoff to start (empty span)",
+        )
+
+    # 5) Cap is at end of source. The slice is allowed to consume
+    # the full cap because the caller has no more room. We do NOT
+    # short-circuit on ``cap >= max_end`` alone: that would return
+    # the cap even when it lands mid-word (e.g. max_end was the
+    # arbitrary end of the search range, not the source end). The
+    # cap is a safe boundary only when the source actually ends at
+    # the cap.
+    if cap >= len(source):
         return cap, None
 
-    # No clean boundary inside the cap. Back off.
-    if last_word_end > start:
-        return last_word_end, BoundaryWarning(
-            kind="safe_window_cap",
+    # 6) Cap sits exactly on a word → non-word transition. Promote
+    # best_safe to cap because the transition itself is a rightmost
+    # safe stop that the caller might prefer.
+    if cap > start and _is_word_char(source[cap - 1]) and not _is_word_char(source[cap]):
+        return cap, None
+
+    # 7) required_end must be honoured. If the rightmost safe boundary
+    # we saw is still BELOW required_end, we have to extend to
+    # required_end (still a real, valid position in the caller's
+    # data) and surface a CAP warning so the trade-off is observable.
+    if required_end is not None and best_safe < required_end:
+        return required_end, BoundaryWarning(
+            WARN_KIND_CAP_NO_SAFE_BOUNDARY,
             start=start,
-            end=last_word_end,
+            end=required_end,
             max_len=max_len,
-            detail="no safe boundary inside max_len; backoff to last word-end",
+            detail=(
+                f"rightmost safe boundary={best_safe} < required_end={required_end}; "
+                f"extended to required_end; cap={cap} did not expose a deeper stop"
+            ),
         )
-    return start, BoundaryWarning(
-        kind="safe_window_no_boundary",
-        start=start,
-        end=start,
-        max_len=max_len,
-        detail="no safe boundary inside max_len; backoff to start (empty span)",
-    )
+
+    # 8) Otherwise return the rightmost safe boundary. If it sits on
+    # a phrase-punctuation character, include the punctuation in the
+    # slice; the caller's original_match_end contract always wins
+    # over the cap once required_end is met.
+    if best_safe_includes_punct and best_safe < cap:
+        return best_safe + 1, None
+    return best_safe, None
 
 
 def safe_action_slice(
@@ -208,40 +334,91 @@ def safe_action_slice(
     clause_end: int,
     *,
     max_chars: int = 80,
+    head_token_end: int | None = None,
 ) -> tuple[int, int, BoundaryWarning | None]:
     """Compute a token-safe ``(start, end)`` for an action span.
 
-    ``head_pos`` is the absolute character offset of the action head token
-    in ``source``. The slice is bounded by ``clause_end`` and never exceeds
-    ``max_chars`` characters beyond ``head_pos``. When the cap is reached
-    without a token or punctuation boundary, a :class:`BoundaryWarning` is
-    returned together with the *last safe* end position so the caller can
-    decide whether to keep the (smaller) span or drop it.
-
-    The start is the head position. We never include the leading modal
-    "shall/must/may/can/not" here — that is the caller's responsibility
-    (it needs to happen before this helper runs so we can take a precise
-    offset).
+    Contract
+    --------
+    * ``start == head_pos``. The slice always begins at the head.
+    * The slice **always covers the full head token** (i.e.
+      ``end >= head_token_end``). Pass ``head_token_end`` explicitly
+      when you have it; otherwise the helper uses the position of the
+      first whitespace after ``head_pos`` as a conservative proxy.
+    * If the head plus ``max_chars`` is still inside the clause
+      (``clause_end``), the slice extends to the rightmost safe token
+      / punctuation boundary up to that cap, never stopping at the
+      first whitespace.
+    * If ``clause_end`` itself is inside the cap, the slice may extend
+      to ``clause_end`` (the full clause / subtree).
+    * The slice never returns a half-word. When the cap is reached
+      without a safe boundary and ``head_token_end`` is already covered
+      (or no cap is set), a :class:`BoundaryWarning` is surfaced and
+      the end is the rightmost safe position; if no such position
+      exists at all, the end is ``head_pos`` and the caller is expected
+      to drop the action.
+    * ``max_chars`` is a hard cap **except** when the caller's
+      ``head_token_end`` itself lies outside the cap: the helper
+      honours ``head_token_end`` (so the head token is never half-cut)
+      and records a ``WARN_KIND_ACTION_CAP_BACKOFF`` warning.
     """
     if head_pos < 0 or clause_end <= head_pos:
         return head_pos, head_pos, BoundaryWarning(
-            kind="action_empty", start=head_pos, end=head_pos, max_len=max_chars,
-            detail="head outside clause; cannot slice",
+            WARN_KIND_ACTION_HEAD_OUT_OF_CLAUSE,
+            start=head_pos, end=head_pos, max_len=max_chars,
+            detail=f"head_pos={head_pos} clause_end={clause_end}",
         )
+
+    # Derive head_token_end if the caller did not provide it: the
+    # position of the first whitespace after head_pos. This guarantees
+    # the slice covers the full head token even when max_chars would
+    # have stopped inside the head.
+    if head_token_end is None:
+        ws = source.find(" ", head_pos, clause_end)
+        head_token_end = ws if ws != -1 else clause_end
+    # If head_token_end is mid-word (e.g. the caller passed a wrong
+    # value), clamp it forward to the next whitespace.
+    if head_token_end < head_pos:
+        head_token_end = head_pos
+    if head_token_end < clause_end and head_token_end > head_pos:
+        if source[head_token_end - 1].isalpha() and source[head_token_end].isalpha():
+            ws = source.find(" ", head_token_end, clause_end)
+            head_token_end = ws if ws != -1 else clause_end
+
+    # required_end = head_token_end. The helper will never truncate
+    # below this; if max_chars is too small to even include the head
+    # token, it back-off-warns and returns the head_token_end.
+    cap_max_end = min(clause_end, head_pos + max_chars)
     end, warning = safe_window_end(
         source,
         head_pos,
-        clause_end,
+        cap_max_end,
         max_len=max_chars,
         prefer_clause_boundary=False,
+        required_end=head_token_end,
     )
+
+    # Apply the action-specific warning semantics.
+    if warning is not None and warning.kind == WARN_KIND_REQUIRED_EXCEEDS_CAP:
+        # head_token_end is past the cap; the helper preserved it so
+        # the head token is not half-cut. Re-label the warning so the
+        # caller can see that the source was the cap, not bad input.
+        warning = BoundaryWarning(
+            WARN_KIND_ACTION_CAP_BACKOFF,
+            start=warning.start,
+            end=warning.end,
+            max_len=warning.max_len,
+            detail=(
+                f"head_token_end={head_token_end} > cap={head_pos + max_chars}; "
+                f"preserved full head token by extending past the action cap. "
+                f"original detail: {warning.detail}"
+            ),
+        )
     if end <= head_pos:
         return head_pos, head_pos, BoundaryWarning(
-            kind="action_no_boundary",
-            start=head_pos,
-            end=head_pos,
-            max_len=max_chars,
-            detail="no safe boundary found for action slice",
+            WARN_KIND_ACTION_NO_BOUNDARY,
+            start=head_pos, end=head_pos, max_len=max_chars,
+            detail="safe_window_end returned start (no safe boundary)",
         )
     return head_pos, end, warning
 
