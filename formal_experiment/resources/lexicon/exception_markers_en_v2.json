@@ -1,0 +1,33 @@
+{
+  "_meta": {
+    "artifact_scope": "development_only",
+    "category": "exception",
+    "generation_policy_sha256": "cebb4c64fdbd63339869169697438e3df6ac3612b819cf83b5a4c69a80ea9a59",
+    "language": "en",
+    "lexicon_id": "public_marker_lexicon_en_v2",
+    "parent_lexicon_id": "public_marker_lexicon_en_v1",
+    "policy_change": "v2 expands exception with public Wyner/Wikipedia carve-out patterns and the Sun paper examples; only patterns with public_doc or paper_example source are added",
+    "source_snapshot_id": "public_marker_sources_en_v2",
+    "source_table": "resources/lexicon/public_marker_sources_en_v2.json"
+  },
+  "class_counts": {},
+  "entries": [
+    {"ambiguity": "low", "normalized": "with the exception of", "source_ids": ["paper_examples_local_audit_2026_07_12", "sleimi_table5_exception_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example", "public_research_cited_exception_example"], "surface": "with the exception of", "syntactic_scope": "pp_or_sbar"},
+    {"ambiguity": "low", "normalized": "except for", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "except for", "syntactic_scope": "pp_or_sbar"},
+    {"ambiguity": "low", "normalized": "except", "source_ids": ["sleimi_table5_exception_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "except", "syntactic_scope": "pp_or_sbar"},
+    {"ambiguity": "low", "normalized": "excluding", "source_ids": ["sleimi_table5_exception_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "excluding", "syntactic_scope": "vp_anchor"},
+    {"ambiguity": "medium", "normalized": "in derogation of", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "in derogation of", "syntactic_scope": "pp_or_sbar"},
+    {"ambiguity": "medium", "normalized": "apart from", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "apart from", "syntactic_scope": "pp_or_sbar"},
+    {"ambiguity": "medium", "normalized": "other than", "source_ids": ["paper_examples_local_audit_2026_07_12"], "source_tiers": ["public_explicit_example"], "surface": "other than", "syntactic_scope": "pp_or_sbar"},
+    {"ambiguity": "medium", "normalized": "notwithstanding", "source_ids": ["sleimi_table5_exception_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "notwithstanding", "syntactic_scope": "pp_or_sbar"},
+    {"ambiguity": "medium", "normalized": "save where", "source_ids": ["wyner_peters_2011_exception_gazetteer_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "save where", "syntactic_scope": "pp_or_sbar"},
+    {"ambiguity": "medium", "normalized": "save", "source_ids": ["wyner_peters_2011_exception_gazetteer_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "save", "syntactic_scope": "pp_or_sbar"},
+    {"ambiguity": "medium", "normalized": "regardless of", "source_ids": ["sleimi_table5_exception_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "regardless of", "syntactic_scope": "pp_or_sbar"},
+    {"ambiguity": "medium", "normalized": "even if", "source_ids": ["sleimi_table5_exception_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "even if", "syntactic_scope": "sbar"},
+    {"ambiguity": "low", "normalized": "shall not apply", "source_ids": ["sleimi_table5_exception_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "shall not apply", "syntactic_scope": "vp_anchor"},
+    {"ambiguity": "low", "normalized": "does not apply", "source_ids": ["sleimi_table5_exception_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "does not apply", "syntactic_scope": "vp_anchor"},
+    {"ambiguity": "low", "normalized": "do not apply", "source_ids": ["sleimi_table5_exception_examples_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "do not apply", "syntactic_scope": "vp_anchor"},
+    {"ambiguity": "medium", "normalized": "unless", "source_ids": ["wyner_peters_2011_exception_gazetteer_local_audit_2026_07_12"], "source_tiers": ["public_research_cited_exception_example"], "surface": "unless", "syntactic_scope": "sbar", "ambiguity_notes": "scope test required: only carve-out use, not pure condition"}
+  ],
+  "schema_version": "public_marker_category@1.1.0"
+}

@@ -1887,3 +1887,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：用户确认方法级独立复现可进入正式结论；新增 B0-R0 至 B0-R5，Sun literal overlap 为抽取主口径，严格指标仅诊断且不设最低分门槛；登记 experiment/paper-validation-r1@b5f05b8 的 D1 overall P=0.9067688378、R=0.6644549763，逐字段 P/R 见 PROJECT_AUDIT；指标仍为 development_one_repeat_not_formal，本轮未重跑模型、未调用 API、未修改 Gold；现有 H1/D1 产物与该分支字节一致并作为历史开发证据保存。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-02T08:04:58.701097+00:00 - B0-R0：从 experiment/paper-validation-r1 选择性集成 B0-v10 实现及其最小依赖闭包（actor_action.py + 其它 12 个 b0_v10 模块 + sun_style/lexicon_v2_runtime.py + estg150_b0_development v1/v2/v3 + v10 runner + corenlp_runtime/sun_b0/bert_textcnn + stage2_evaluation v1/v3 + 7 个 v2 lexicon 资源 + 2 个 test fixture + test_b0_v10_scope_and_alignment.py）。Focused 8 passed；actor_action 算法语义、抽取阈值、运行参数、Gold、marker、evaluator、references/archive/D1 P-R/历史数据未改。未运行 CoreNLP 实际服务、未运行 ESTG-150 正式实验、未调用任何 LLM、未读取 .env；只读恢复并补完源码 + 最小 fixture，audit 端 sun_stage2_baseline_not_paper_faithful 状态因 v10 源码含 Tregex/Tsurgeon/BertTextCNN 关键字而从 blockers 转入 passes（heuristic 仍为 heuristic，已知 follow-up）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1248 passed, 24 skipped in 127.19s (0:02:07)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`4afa5d12dabe5ef0b1141af4e0647faab55d6a3b`；相关未提交路径：34 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Source commit SHA: 1cf59b86b5a5ffc493a3b51d77c479a2bb5ae50e (experiment/paper-validation-r1). B0 v10 源码与最小 fixture 已纳入 main；未对 actor_action 算法、阈值、模式做修改，不算 B0-R1。FILE_CATALOG.md 已按 scripts/generate_file_catalog.py 重新生成（608 个文件）。audit --with-tests 仍显示 1 个已知失败：test_audit_keeps_later_experiment_phases_blocked（因 v10 源码含组件关键字，audit 端判定 components present，原 blocker 消失）。该失败不阻塞 B0-R0 依赖闭包完成；后续如需保留旧 audit 行为，需对 sun_style 下的 b0_v10 引用做进一步隔离或修订 audit 关键字扫描条件（在后续 dispatch 中处理）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

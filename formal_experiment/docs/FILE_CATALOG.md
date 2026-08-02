@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-01
-**收录文件**：575 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-08-02
+**收录文件**：608 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -73,6 +73,7 @@
 | `configs/estg150_openai_strict_transport_schema_adapter_v1_8.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/experiment_contract.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/models/estg150_b0_active_registry_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/paths.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s28d_r5_h1_small_pilot_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s28d_r6c1_h1_remaining_pilot_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -417,6 +418,7 @@
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
+| `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `paper`
 
@@ -466,13 +468,20 @@
 | 文件 | 状态 | 用途 |
 |---|---|---|
 | `resources/lexicon/actor_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/actor_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/condition_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/condition_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/constraint_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/constraint_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/development_extensions_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/exception_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/exception_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/modality_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/modality_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/public_marker_lexicon_en_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/public_marker_lexicon_en_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/public_marker_sources_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/lexicon/public_marker_sources_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/sun_marker_lexicon.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `scripts`
@@ -527,9 +536,26 @@
 |---|---|---|
 | `src/bpc_hybrid/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/b0_artifact.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/actor_action.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/actor_action_tregex_b5.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/alignment.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/clause_probability_adapter_b2a2.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/definition_resolver.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/definition_resolver_b2a2.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/diagnostics.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/modality.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/pipeline.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/profile.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/scope.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/b0_v10/segmentation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/datasets/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/datasets/sun_modality_importer.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/datasets/sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/estg150_b0_development.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/estg150_b0_development_v10.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/estg150_b0_development_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/estg150_b0_development_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/evaluation/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/evaluation/concept_level_eval.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/evaluator.py` | 活动 | Python 实现、脚本或测试 |
@@ -550,6 +576,8 @@
 | `src/bpc_hybrid/smoke.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/splitter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_canonical.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage2_evaluation_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/clause_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/schema.py` | 活动 | Python 实现、脚本或测试 |
@@ -557,7 +585,10 @@
 | `src/bpc_hybrid/sun_compat/stage3_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/bert_modality_classifier.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/bert_textcnn.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/bpmn_semantics.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/corenlp_runtime.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/lexicon_v2_runtime.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/modality_classifier.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
@@ -565,6 +596,7 @@
 | `src/bpc_hybrid/sun_style/semantic_extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/spacy_semantic_extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/spacy_syntactic_rules.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_style/sun_b0.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/syntactic_rules.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/violation_detection.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/__init__.py` | 活动 | Python 实现、脚本或测试 |
@@ -626,6 +658,7 @@
 | `tests/fixtures/sun_modality/synthetic_small_class.csv` | 活动 | 项目文件 |
 | `tests/fixtures/sun_modality/synthetic_unknown_label.csv` | 活动 | 项目文件 |
 | `tests/test_audit.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_b0_v10_scope_and_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_canonical_text_hash_policy.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
