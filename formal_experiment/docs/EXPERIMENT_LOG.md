@@ -1913,3 +1913,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：Source commit SHA: 1cf59b86b5a5ffc493a3b51d77c479a2bb5ae50e (experiment/paper-validation-r1). 6341136 的 B0-R0-C0 仅搬运了 24 个 Python 源码 + 2 个无关 fixture，缺少 v10 runner 脚本、CoreNLP bridge、pattern registry、s26/s24 配置、v10 默认配置，且 audit 仍用旧的源码关键字扫描把 sun_stage2_baseline_not_paper_faithful blocker 当 pass。本次修正：(1) 补 12 个版本化运行时依赖（见 FILES_ADDED）；(2) audit.py 改写 B0 检查路径：component presence 仍触发 pass，但 method conformance 单独由 configs/methods.json 控制，缺 verified_method_level_independent_reconstruction 永远 blocker；(3) 新增 test_b0_v10_integration_contract.py 含 15 个验收点 + 2 个负例；(4) MASTER_PIPELINE.md §8.6 B0-R0 状态从 ready 改 verified，B0-R1 ready，B0-R2 加 method_conformance_status 变更说明；(5) PROJECT_AUDIT.md 已有资产行更新；(6) FILE_CATALOG.md 重新生成（620 个文件）。外部 runtime prerequisites（未下载、未提交、未复制）：CoreNLP 4.5.10 zip/jar（482MB）、best_model.pt checkpoint（441MB）、Legal-BERT 本地缓存。Full audit: 0 failed, 1264 passed, 24 skipped。Gold/Layer E/.env 未读；D1/H1 未改；历史 6341136 事件保留为可追踪历史。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-02T10:02:11.538544+00:00 - B0-R1-A: token-safe span and clause-boundary fixes for active v10-A path
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1317 passed, 24 skipped in 160.51s (0:02:40)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`49759212a149f759b27f6f13aa384c4cf25ca7eb`；相关未提交路径：6 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：active v10-A path: plan_clause_units_v4 (connector priority, no character midpoint, leading semicolon skip), b0_v10/actor_action (cap+80 -> safe_action_slice with token-boundary fallback and warning counter), b0_v10/scope (char loop -> safe_window_end with word-end backoff). New shared helper bpc_hybrid.b0_v10.span_safety. 53 new tests in test_b0_r1_a_span_boundaries.py; full audit --with-tests 1317 passed / 24 skipped / 0 failed; errors=0, integrity_pass=True. B0-R1-B through R1-E not started in this commit.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

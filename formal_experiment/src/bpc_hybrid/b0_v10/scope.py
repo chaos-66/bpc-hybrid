@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Mapping, Sequence
 
+from bpc_hybrid.b0_v10.span_safety import safe_window_end
 from bpc_hybrid.sun_style.lexicon_v2_runtime import LexiconV2Runtime, match_field_markers
 
 
@@ -151,20 +152,28 @@ def _expand_to_constituent_or_punct(
     clause_end: int,
     max_len: int = 100,
 ) -> tuple[int, int]:
-    """Prefer punctuation-bounded expansion; no blind +90 always."""
+    """Prefer punctuation-bounded expansion; no blind +90 always.
+
+    B0-R1-A: the previous implementation walked character by character up
+    to ``max_len`` and stopped at the first ``;``/``.``/``\n`` it found —
+    or simply returned ``start + max_len`` when none was present, even if
+    that landed mid-word. The new implementation delegates to
+    :func:`safe_window_end`, which always falls back to a token boundary
+    (whitespace) and, if even that is impossible inside ``max_len``,
+    returns the *last safe* position together with a
+    :class:`BoundaryWarning` so the caller can decide whether to keep the
+    shorter span or drop it. ``clause_start`` is still honoured as a
+    left-clip.
+    """
     end = min(end, clause_end)
     start = max(start, clause_start)
-    # expand right to comma/semicolon/period or max_len
-    e = end
-    while e < clause_end and (e - start) < max_len:
-        ch = source_text[e]
-        if ch in ".;\n":
-            break
-        if ch == "," and (e - start) > 12:
-            e += 1
-            break
-        e += 1
-    # expand left slightly over leading preposition already in match
+    e, _warning = safe_window_end(
+        source_text,
+        start,
+        clause_end,
+        max_len=max_len,
+        prefer_clause_boundary=True,
+    )
     return start, min(e, clause_end)
 
 

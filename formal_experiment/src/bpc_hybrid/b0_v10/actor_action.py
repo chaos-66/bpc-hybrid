@@ -6,6 +6,7 @@ import re
 from dataclasses import dataclass
 from typing import Any, Mapping, Sequence
 
+from bpc_hybrid.b0_v10.span_safety import safe_action_slice
 from bpc_hybrid.sun_style.lexicon_v2_runtime import LexiconV2Runtime
 
 
@@ -94,7 +95,13 @@ def extract_actors_actions_edges(
     actors: list[dict[str, Any]] = []
     actions: list[dict[str, Any]] = []
     edges: list[dict[str, Any]] = []
-    stats = {"owner_pairs": 0, "edges_emitted": 0, "actors_rejected_non_subject": 0}
+    stats = {
+        "owner_pairs": 0,
+        "edges_emitted": 0,
+        "actors_rejected_non_subject": 0,
+        "action_cap_warnings": 0,
+        "action_cap_drops": 0,
+    }
 
     def in_clause(idx: int) -> bool:
         a, b = _token_abs(sentence, idx)
@@ -133,7 +140,24 @@ def extract_actors_actions_edges(
         if len(text.split()) > 15:
             head_pos = tokens[head - 1]["characterOffsetBegin"]
             a0 = max(clause_start, head_pos)
-            a1 = min(clause_end, a0 + 80)
+            # B0-R1-A: token-safe action slice. The old code took
+            # ``min(clause_end, a0 + 80)`` directly, which is a hard
+            # 80-char window that can land mid-word. The safe helper
+            # stops on the first token boundary (whitespace / punctuation)
+            # or, when none is reachable, returns a conservative
+            # last-safe position and a BoundaryWarning. We then honour
+            # the warning: if the slice is empty we drop the action
+            # rather than emit a half-word.
+            new_a0, new_a1, warning = safe_action_slice(
+                source_text, a0, clause_end, max_chars=80
+            )
+            if warning is not None:
+                stats["action_cap_warnings"] += 1
+            if new_a1 <= new_a0:
+                # safe slice produced an empty window: skip this action
+                stats["action_cap_drops"] += 1
+                continue
+            a0, a1 = new_a0, new_a1
             text = source_text[a0:a1]
         action = {
             "text": text,

@@ -327,10 +327,30 @@ def plan_clause_units_v4(
     """Hybrid planner: stable sentence merge + conservative multi-modal split.
 
     Avoids aggressive under-segmentation that collapsed v4 recall.
+
+    B0-R1-A contract (deterministic, token-safe clause boundaries):
+
+    * A clause is split only when an explicit connector
+      (``;``, ``but``, ``and``, ``or``) is present between two deontic
+      anchors. The connector choice is deterministic and follows
+      ``;`` > ``but`` > ``and`` > ``or`` priority; the first occurrence of
+      the highest-priority connector inside the window wins.
+    * A character-midpoint split is **forbidden** — when no connector
+      exists, the function keeps the single unit instead of emitting a
+      half-word span.
+    * A clause text never starts with whitespace, ``;``, ``,``, or ``:``.
+      The cut position is the *position of the connector* and the
+      leading separator is stripped on the next side.
+    * The function never returns spans with
+      ``start >= end`` or ``end > len(source_text)``.
     """
     from bpc_hybrid.estg150_b0_development_v2 import (
         merge_corenlp_sentence_groups,
         english_marker_modality,
+    )
+    from bpc_hybrid.b0_v10.span_safety import (
+        connector_priority_cut,
+        skip_clause_leading_separators,
     )
 
     stats = {
@@ -339,6 +359,7 @@ def plan_clause_units_v4(
         "subordinate_suppressed": 0,
         "sentence_groups": 0,
         "coord_splits": 0,
+        "no_connector_no_split": 0,
     }
     sentences = list(annotation["sentences"])
     if not sentences:
@@ -385,24 +406,44 @@ def plan_clause_units_v4(
         # only split on 2+ non-definition forces OR definition+deontic that are far apart
         deontic = [(m, lab) for m, lab in forces if lab != "definition"]
         if len(indexes) == 1 and len(deontic) >= 2:
-            cuts = []
+            cuts: list[int] = []
             for (m1, _), (m2, _) in zip(deontic, deontic[1:]):
                 window = text[m1.end() : m2.start()]
-                cut = None
-                for cm in re.finditer(r";|\band\b|\bor\b|\bbut\b", window, re.I):
-                    cut = m1.end() + cm.start()
-                if cut is None:
-                    cut = (m1.end() + m2.start()) // 2
-                cuts.append(cut)
+                # B0-R1-A: deterministic connector cut; refuse to split
+                # mid-word when no connector is present.
+                local_cut = connector_priority_cut(window)
+                if local_cut is None:
+                    stats["no_connector_no_split"] += 1
+                    continue
+                cuts.append(m1.end() + local_cut)
+            if len(cuts) + 1 < len(deontic):
+                # at least one adjacent pair had no connector; fall back
+                # to a single unit for safety (midpoint cuts are banned).
+                units.append(
+                    {
+                        "sentence_indexes": indexes,
+                        "primary_index": indexes[0],
+                        "clause_char_span": (start, end),
+                        "reason": "sentence_group_no_connector",
+                    }
+                )
+                continue
             bounds = [0] + cuts + [len(text)]
             for j in range(len(bounds) - 1):
                 a = start + bounds[j]
                 b = start + bounds[j + 1]
-                while a < b and source_text[a].isspace():
-                    a += 1
+                # B0-R1-A: skip leading whitespace AND leading ``;``/``,``
+                # so the next clause never starts with a separator.
+                a = skip_clause_leading_separators(source_text, a)
                 while b > a and source_text[b - 1].isspace():
                     b -= 1
-                if b > a:
+                if b > a and source_text[a] == ";":
+                    # defensive: if the cut landed on a semicolon and
+                    # skip_clause_leading_separators somehow left it
+                    # (e.g. when called with the cut offset directly),
+                    # advance one more position.
+                    a = skip_clause_leading_separators(source_text, a + 1)
+                if b > a and b <= len(source_text) and a >= 0:
                     units.append(
                         {
                             "sentence_indexes": indexes,
@@ -411,7 +452,7 @@ def plan_clause_units_v4(
                             "reason": "multi_modal_split",
                         }
                     )
-            stats["multi_predicate_splits"] += max(0, len(deontic) - 1)
+            stats["multi_predicate_splits"] += max(0, len(cuts))
             continue
 
         units.append(
