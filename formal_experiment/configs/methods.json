@@ -7,9 +7,10 @@
       "role": "baseline",
       "llm_used": false,
       "formal_status": "blocked_final_sun_stage2_reimplementation_required",
+      "method_conformance_status": "blocked_until_b0_r2",
       "current_command": "python scripts/run_sun_rule_only.py",
       "command_status": "development_only_not_formal",
-      "notes": "Legacy ID retained. The intended baseline is the complete final Sun Stage 2 (BERT-TextCNN plus CoreNLP/Tregex/Tsurgeon phrase extraction). The current runner is a marker/heuristic approximation and must not be reported as the formal Sun baseline."
+      "notes": "Legacy ID retained. The intended baseline is the complete final Sun Stage 2 (BERT-TextCNN plus CoreNLP/Tregex/Tsurgeon phrase extraction). The current runner is a marker/heuristic approximation and must not be reported as the formal Sun baseline. method_conformance_status is the gate audit.py uses to distinguish component-source presence from method-level reconstruction: B0-R0/B0-R1 must keep it at 'blocked_until_b0_r2'; only B0-R2 (or later) may set it to 'verified_method_level_independent_reconstruction'."
     },
     {
       "id": "sun_llm_fallback",

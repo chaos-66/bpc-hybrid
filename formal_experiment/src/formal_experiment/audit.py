@@ -852,9 +852,26 @@ def collect_project_audit() -> dict[str, Any]:
             _add(findings, "errors", "few_shot_check_crashed",
                  f"Could not verify few-shot fixtures: {exc}")
 
-    # B0 still has no BERT-TextCNN / CoreNLP / Tregex — keep blocker.
-    # Stricter check: require import statements or class definitions,
-    # not bare word matches (which can be triggered by docstring edits).
+    # B0 component presence is now separated from method-conformance.
+    #   A. component presence: code under src/bpc_hybrid/sun_style (and
+    #      other B0 modules) actually references BertTextCNN, CoreNLP
+    #      and Tregex/Tsurgeon. This is a *static* check that the
+    #      paper-faithful components exist in the code base. It does
+    #      NOT imply that the B0 method-level reconstruction has
+    #      completed B0-R2 (component-vs-method conformance cross-
+    #      walk, BERT-TextCNN training on the frozen split, Tregex
+    #      patterns, end-to-end run on ESTG-150 frozen IDs).
+    #   B. method conformance: the formal Sun Stage 2 baseline is the
+    #      complete method, not a heuristic. The audit MUST keep
+    #      `sun_stage2_baseline_not_paper_faithful` as a blocker
+    #      until configs/methods.json explicitly states
+    #      `method_conformance_status == "verified_method_level_independent_reconstruction"`.
+    #      B0-R0 (component integration) and B0-R1 (deterministic
+    #      defect repair) do NOT satisfy that gate; only B0-R2 (or
+    #      later) may.
+    # Stricter check on (A): require import statements or class
+    # definitions, not bare word matches (which can be triggered by
+    # docstring edits).
     b0_has_textcnn = False
     b0_has_corenlp = False
     b0_has_tregex = False
@@ -889,7 +906,8 @@ def collect_project_audit() -> dict[str, Any]:
                     b0_has_tregex = True
     if b0_has_textcnn and b0_has_corenlp and b0_has_tregex:
         _add(findings, "passes", "b0_paper_faithful_components_present",
-             "B0 paper-faithful components (TextCNN + CoreNLP + Tregex) are present in code.")
+             "B0 paper-faithful components (TextCNN + CoreNLP + Tregex) are present in code. "
+             "This is a static source-presence check, NOT a B0-R2 method-conformance approval.")
     else:
         missing = [
             n for n, p in (
@@ -900,7 +918,41 @@ def collect_project_audit() -> dict[str, Any]:
         ]
         _add(findings, "blockers", "sun_stage2_baseline_not_paper_faithful",
              f"Formal baseline must be rebuilt with: {', '.join(missing)}; "
-             f"current implementation is heuristic only.")
+             f"current implementation is heuristic only. (Component presence is the only check the "
+             f"static source scan can do; method-level conformance must still be verified through B0-R2.)")
+
+    # (B) Method-level conformance gate. Only when
+    # `sun_rule_only.method_conformance_status` is exactly
+    # `verified_method_level_independent_reconstruction` may the
+    # `sun_stage2_baseline_not_paper_faithful` blocker be lifted. B0-R0
+    # explicitly does NOT set this status; it remains
+    # `blocked_until_b0_r2` until the B0-R2 component-vs-method cross-
+    # walk is complete. This decouples component-source-presence from
+    # method-conformance so that one pass cannot silently cancel the
+    # other.
+    methods_cfg = _load_json(METHODS_CONFIG).get("methods", [])
+    sun_rule_only = next(
+        (m for m in methods_cfg if isinstance(m, dict) and m.get("id") == "sun_rule_only"),
+        None,
+    )
+    method_conformance_status = (
+        str(sun_rule_only.get("method_conformance_status", ""))
+        if isinstance(sun_rule_only, dict)
+        else ""
+    )
+    if method_conformance_status != "verified_method_level_independent_reconstruction":
+        _add(
+            findings,
+            "blockers",
+            "sun_stage2_baseline_not_paper_faithful",
+            "B0 method-level conformance is not yet verified: "
+            f"configs/methods.json sun_rule_only.method_conformance_status="
+            f"{method_conformance_status!r} (required exact value: "
+            f"'verified_method_level_independent_reconstruction'). "
+            "B0-R0 integrates source components; B0-R1 repairs deterministic "
+            "defects; B0-R2 must complete the component-vs-method cross-walk "
+            "and ESTG-150 frozen-split run before this gate can be lifted.",
+        )
 
     _add(
         findings,

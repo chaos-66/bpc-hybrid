@@ -1,0 +1,112 @@
+{
+  "schema_version": "sun_tregex_rule_registry@1.0.0",
+  "rule_set_id": "sun_phrase_patterns_en_v1",
+  "status": "live_runtime_synthetic_fixtures_verified",
+  "language": "en",
+  "parser": {
+    "name": "Stanford CoreNLP",
+    "version": "4.5.10",
+    "tree_representation": "constituency_parse"
+  },
+  "lexicon": {
+    "id": "public_marker_lexicon_en_v1",
+    "combined_payload_sha256": "8c3a27b2aa62025ff266b4cb19a1c89984e967539188ccf96820836c2eef7b91"
+  },
+  "extraction_order": [
+    "modality",
+    "condition",
+    "constraint",
+    "exception",
+    "action",
+    "actor"
+  ],
+  "ordering_policy": {
+    "action_after_removed_context": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "actor_after_action": true,
+    "overlap_resolution": "longest_span_then_leftmost",
+    "test_time_rule_edits_forbidden": true
+  },
+  "fields": [
+    {
+      "field": "modality",
+      "order": 1,
+      "candidate_source": "locked_public_marker_lexicon",
+      "tregex_patterns": [
+        "/^(MD|VB|VBP|VBZ)$/=modality < /(?i)^(shall|must|may)$/",
+        "VP=modality << /(?i)^(is|are)$/ << /(?i)^(defined|means)$/"
+      ],
+      "tsurgeon_operations": [
+        "prune modality"
+      ]
+    },
+    {
+      "field": "condition",
+      "order": 2,
+      "candidate_source": "locked_marker_plus_constituency_scope",
+      "tregex_patterns": [
+        "SBAR=condition << /(?i)^(if|when|whenever|unless|provided)$/",
+        "PP=condition << /(?i)^(in|upon)$/ << /(?i)^(case|event)$/"
+      ],
+      "tsurgeon_operations": [
+        "prune condition"
+      ]
+    },
+    {
+      "field": "constraint",
+      "order": 3,
+      "candidate_source": "locked_marker_plus_constituency_scope",
+      "tregex_patterns": [
+        "/^(PP|ADVP)$/=constraint << /(?i)^(within|before|after|during|until)$/",
+        "/^(PP|NP)$/=constraint << /(?i)^(at|no|least|later|more|than)$/"
+      ],
+      "tsurgeon_operations": [
+        "prune constraint"
+      ]
+    },
+    {
+      "field": "exception",
+      "order": 4,
+      "candidate_source": "locked_marker_plus_constituency_scope",
+      "tregex_patterns": [
+        "/^(SBAR|PP|ADVP)$/=exception << /(?i)^(except|excluding|notwithstanding|save)$/",
+        "SBAR=exception << /(?i)^(unless)$/"
+      ],
+      "tsurgeon_operations": [
+        "prune exception"
+      ]
+    },
+    {
+      "field": "action",
+      "order": 5,
+      "candidate_source": "constituency_verb_phrase_after_context_removal",
+      "tregex_patterns": [
+        "S=clause !> SBAR < (VP=action !<< MD)",
+        "SINV=clause < (VP=action !<< MD)"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "actor",
+      "order": 6,
+      "candidate_source": "subject_np_after_action_resolution",
+      "tregex_patterns": [
+        "S=clause !> SBAR < (NP=actor $++ VP)",
+        "SINV=clause < (NP=actor $-- VP)"
+      ],
+      "tsurgeon_operations": []
+    }
+  ],
+  "boundaries": {
+    "fixture_accuracy_is_evaluation": false,
+    "formal_gold_used": false,
+    "live_java_tregex_executed": true,
+    "runtime_asset_present": true,
+    "live_verification_manifest": "resources/corenlp/s25b_runtime_verification_manifest.json",
+    "training_or_evaluation_run": false
+  }
+}

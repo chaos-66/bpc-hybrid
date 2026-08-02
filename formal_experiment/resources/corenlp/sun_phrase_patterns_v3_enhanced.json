@@ -1,0 +1,123 @@
+{
+  "schema_version": "sun_tregex_rule_registry@1.0.0",
+  "rule_set_id": "sun_phrase_patterns_en_v3_enhanced",
+  "status": "development_enhanced_v4_not_s25_locked",
+  "language": "en",
+  "parent_rule_set_id": "sun_phrase_patterns_en_v2_enhanced",
+  "parser": {
+    "name": "Stanford CoreNLP",
+    "version": "4.5.10",
+    "tree_representation": "constituency_parse"
+  },
+  "lexicon": {
+    "id": "public_marker_lexicon_en_v1",
+    "combined_payload_sha256": "8c3a27b2aa62025ff266b4cb19a1c89984e967539188ccf96820836c2eef7b91"
+  },
+  "extraction_order": [
+    "modality",
+    "condition",
+    "constraint",
+    "exception",
+    "action",
+    "actor"
+  ],
+  "ordering_policy": {
+    "action_after_removed_context": [
+      "modality",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "actor_after_action": true,
+    "overlap_resolution": "smallest_sufficient_then_leftmost",
+    "test_time_rule_edits_forbidden": true,
+    "multi_match_per_field": true,
+    "collect_then_resolve": true
+  },
+  "fields": [
+    {
+      "field": "modality",
+      "order": 1,
+      "candidate_source": "public_marker_definition_first",
+      "tregex_patterns": [
+        "VP=modality << /(?i)^(shall)$/ << /(?i)^(mean|means)$/",
+        "VP=modality << /(?i)^(means|denotes)$/",
+        "VP=modality << /(?i)^(is|are)$/ << /(?i)^(defined|understood)$/",
+        "/^(MD|VB|VBP|VBZ)$/=modality < /(?i)^(shall|must|may)$/",
+        "VP=modality << /(?i)^(shall|must|may)$/ << /(?i)^(not)$/"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "condition",
+      "order": 2,
+      "candidate_source": "expanded_public_markers",
+      "tregex_patterns": [
+        "SBAR=condition << /(?i)^(if|when|whenever|unless|provided|where|once|insofar|whilst|while)$/",
+        "PP=condition << /(?i)^(in|upon|on|after|before|to)$/ << /(?i)^(case|event|condition|extent|purpose)$/",
+        "PP=condition << /(?i)^(subject)$/ << /(?i)^(to)$/",
+        "ADVP=condition << /(?i)^(where|when|whenever)$/",
+        "PP=condition << /(?i)^(for)$/ << /(?i)^(business|tax)$/"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "constraint",
+      "order": 3,
+      "candidate_source": "expanded_temporal_quantitative_legal",
+      "tregex_patterns": [
+        "/^(PP|ADVP)$/=constraint << /(?i)^(within|before|after|during|until|throughout|prior|between)$/",
+        "/^(PP|NP|ADJP)$/=constraint << /(?i)^(at|no|least|later|more|most|than|only|minimum|maximum|up)$/",
+        "PP=constraint << /(?i)^(in|pursuant|accordance|compliance|consistent)$/ << /(?i)^(with|to)$/",
+        "PP=constraint << /(?i)^(for)$/ << /(?i)^(purpose|period|duration|year)$/",
+        "ADVP=constraint << /(?i)^(only|solely|exclusively|generally)$/",
+        "PP=constraint << /(?i)^(without)$/",
+        "PP=constraint << /(?i)^(under|pursuant)$/",
+        "PP=constraint << /(?i)^(to)$/ << /(?i)^(an|the)$/",
+        "NP=constraint << /(?i)^(meaning|purposes)$/ << /(?i)^(of)$/",
+        "PP=constraint << /(?i)^(by)$/ << /(?i)^(double|means|way)$/"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "exception",
+      "order": 4,
+      "candidate_source": "expanded_exception_cues",
+      "tregex_patterns": [
+        "/^(SBAR|PP|ADVP)$/=exception << /(?i)^(except|excluding|notwithstanding|save|apart|regardless)$/",
+        "SBAR=exception << /(?i)^(unless|even)$/",
+        "PP=exception << /(?i)^(other)$/ << /(?i)^(than)$/",
+        "PP=exception << /(?i)^(with)$/ << /(?i)^(exception)$/",
+        "VP=exception << /(?i)^(shall|does|do)$/ << /(?i)^(not)$/ << /(?i)^(apply)$/"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "action",
+      "order": 5,
+      "candidate_source": "dependency_prefer_python_resolver",
+      "tregex_patterns": [
+        "S=clause !> SBAR < (VP=action !<< MD)",
+        "VP=action < /^(VB|VBD|VBG|VBN|VBP|VBZ)$/ !<< MD"
+      ],
+      "tsurgeon_operations": []
+    },
+    {
+      "field": "actor",
+      "order": 6,
+      "candidate_source": "dependency_prefer_python_resolver",
+      "tregex_patterns": [
+        "S=clause !> SBAR < (NP=actor $++ VP)",
+        "PP=actor < (IN < /(?i)^by$/) < NP"
+      ],
+      "tsurgeon_operations": []
+    }
+  ],
+  "boundaries": {
+    "fixture_accuracy_is_evaluation": false,
+    "formal_gold_used": false,
+    "paper_faithful_only": false,
+    "method_id": "b0_enhanced_v4",
+    "training_or_evaluation_run": false
+  }
+}

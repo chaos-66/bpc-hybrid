@@ -1,0 +1,78 @@
+{
+  "schema_version": "sun_corenlp_runtime_contract@1.0.0",
+  "task_id": "S2.5-A",
+  "component_id": "sun_corenlp_tregex_contract_v1",
+  "status": "external_runtime_and_live_smoke_verified",
+  "runtime": {
+    "corenlp_version": "4.5.10",
+    "release_date": "2025-06-06",
+    "minimum_java_major": 8,
+    "home_environment_variable": "CORENLP_HOME",
+    "required_jars": [
+      "stanford-corenlp-4.5.10.jar",
+      "stanford-corenlp-4.5.10-models.jar"
+    ],
+    "annotators": [
+      "tokenize",
+      "ssplit",
+      "pos",
+      "lemma",
+      "parse",
+      "depparse"
+    ],
+    "output_format": "json",
+    "heap_megabytes": 4096,
+    "timeout_seconds": 120
+  },
+  "official_distribution": {
+    "download_page": "https://stanfordnlp.github.io/CoreNLP/download.html",
+    "release_url": "https://nlp.stanford.edu/software/stanford-corenlp-4.5.10.zip",
+    "reported_archive_size_mb": 482,
+    "acquisition_status": "verified_external_archive",
+    "archive_name": "stanford-corenlp-4.5.10.zip",
+    "archive_bytes": 508444875,
+    "archive_sha256": "76a04089069dad21176c02881f46e07c19ca148b71c8581de2b5b2e2855e042e",
+    "archive_entry_count": 63,
+    "unsafe_archive_entry_count": 0,
+    "vendored_in_formal_experiment": false,
+    "network_download_performed": true,
+    "download_scope": "agent_download_from_pinned_official_url_for_s2_5_b_only",
+    "future_storage_policy": "external_local_runtime_only_not_committed"
+  },
+  "external_runtime_identity": {
+    "code_jar": {
+      "name": "stanford-corenlp-4.5.10.jar",
+      "bytes": 9118725,
+      "sha256": "f813ce4ed7319d79225f2a520d40733075c6b3500dd0b81ee069229e461aab43"
+    },
+    "models_jar": {
+      "name": "stanford-corenlp-4.5.10-models.jar",
+      "bytes": 474409531,
+      "sha256": "a5da9f6feb35a0fd2ea2cbe8909bede3952965b238a68c833ae3e031ed9026a0"
+    },
+    "installation_policy": "explicit_cli_or_CORENLP_HOME_no_vendoring",
+    "live_verification_manifest": "resources/corenlp/s25b_runtime_verification_manifest.json"
+  },
+  "software_rights": {
+    "corenlp_license": "GNU General Public License v3 or later",
+    "corenlp_license_source": "https://stanfordnlp.github.io/CoreNLP/",
+    "tregex_tsurgeon_license": "GNU General Public License v2 or later",
+    "tregex_tsurgeon_license_source": "https://stanfordnlp.github.io/CoreNLP/tools_tregex.html",
+    "third_party_binary_redistributed_by_project": false
+  },
+  "project_boundaries": {
+    "artifact_scope": "development_runtime_verified_s2_6_component",
+    "activation_authorized": true,
+    "formal_use_allowed": false,
+    "training_run": false,
+    "evaluation_run": false,
+    "gold_modified": false,
+    "llm_api_called": false,
+    "network_called_by_implementation": false,
+    "external_distribution_downloaded_for_s2_5_b": true,
+    "sun_modality_dataset_license_dependency": "rights_unknown_local_research_use_ready_no_redistribution",
+    "s2_4_status": "verified_training_dev_selection_single_test_evaluation",
+    "s2_5_overall_verified": true,
+    "s2_6_component_composition_authorized": true
+  }
+}

@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-02
-**收录文件**：608 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：620 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -74,6 +74,10 @@
 | `configs/experiment_contract.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_active_registry_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/models/estg150_b0_enhanced_s27_v10a.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/models/estg150_b0_v10_preregistration_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/models/sun_b0_s26_candidate_B_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/models/sun_bert_textcnn_s24.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/paths.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s28d_r5_h1_small_pilot_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s28d_r6c1_h1_remaining_pilot_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -83,6 +87,8 @@
 | `configs/schemas/estg_150_canonical_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/human_gold_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage2_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage2_evaluator_s210_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sun_corenlp_runtime.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `data`
 
@@ -467,6 +473,9 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `resources/corenlp/s25b_runtime_verification_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/corenlp/sun_phrase_patterns_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `resources/corenlp/sun_phrase_patterns_v3_enhanced.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/actor_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/actor_markers_en_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `resources/lexicon/condition_markers_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -513,6 +522,7 @@
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
 | `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_ai_review.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_estg150_b0_enhanced_v10_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_llm_zh_aid.py` | 活动 | Python 实现、脚本或测试 |
@@ -658,6 +668,7 @@
 | `tests/fixtures/sun_modality/synthetic_small_class.csv` | 活动 | 项目文件 |
 | `tests/fixtures/sun_modality/synthetic_unknown_label.csv` | 活动 | 项目文件 |
 | `tests/test_audit.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_b0_v10_integration_contract.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_v10_scope_and_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_canonical_text_hash_policy.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
@@ -705,3 +716,9 @@
 | `tests/test_sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_source_manifest.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_verification_receipt.py` | 活动 | Python 实现、脚本或测试 |
+
+## `tools`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `tools/corenlp/SunPhraseRuleBatchBridgeMulti.java` | 活动 | 项目文件 |
