@@ -1965,3 +1965,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：Focused boundary/scope/integration regression: 123 passed. Required full audit: integrity_pass=True, ERRORS=0, 1364 passed, 24 skipped, 9 expected blockers retained. No formal experiment or P/R evaluation was run.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-02T14:29:30.184812+00:00 - B0-R1-A-C3 development P/R (failed at input-binding hash check)
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v10a_r1a_c3_f013fdb；阶段=B0-R1-A-C3；方法=sun_rule_only；状态=失败（`failed`）
+- 实际运行命令：`python -B formal_experiment/scripts/run_estg150_b0_enhanced_v10_development.py --config formal_experiment/configs/models/estg150_b0_enhanced_s27_v10a.json --runtime-home D:\environment\stanford-corenlp-4.5.10 --device cpu --output-dir formal_experiment/outputs/development/s27_estg150_b0_enhanced_v10a_r1a_c3_f013fdb_v1`
+- manifest：无
+- 结果摘要：not_computed. Pre-flight hash check failed closed at run_b0_batch_v10 wrapper: Layer E sha256 mismatch (config expected 7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c, on-disk d70857e0381ef1d4f068d9736d597ffa71340ce91e9d486200ece0188f439948). annotation_freeze_receipt outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json missing from working tree. All other bindings (CoreNLP 4.5.10 jars sha256 F813CE4E.../A5DA9F6F..., S2.6 best_model.pt c78cd18b..., S2.6 config, stage2_evaluator_v3, lexicon manifest+categories, membership hashes, independence audit) match. No LLM/API call, no Gold write, no new output directory created. P/R=not_computed. No retry performed per task protocol.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1364 passed, 24 skipped in 155.79s (0:02:35)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`f013fdbb6c60db4000b28c154a38ba9142ad5158`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：development only; not formal. Targets the same v10a config the prior v10a baseline used, but the v10a config's input_binding (Layer E snapshot taken 2026-07-22 18:22:45) no longer matches the current on-disk file because the user is actively editing Layer E (v2 human_correction workflow). Config is NOT modified per task boundary. Conclusion: a C3 code-only fix on f013fdb cannot be evaluated against a fixed-150 Gold until either (a) the human review progress is re-frozen and v10a config re-bound to the new Layer E sha256, or (b) a parallel worktree is set up with a copy of the v10a config that explicitly pins a historical Layer E snapshot.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
