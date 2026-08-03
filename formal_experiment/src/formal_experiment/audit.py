@@ -15,7 +15,9 @@ Wave 1.1 \u00a78 additions:
 
 from __future__ import annotations
 
+import hashlib
 import json
+import re
 import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -163,6 +165,210 @@ def _load_json(path: Path) -> dict[str, Any]:
 def _valid_event_log(path: Path) -> tuple[int, list[int]]:
     report = inspect_jsonl(path)
     return report.valid_json, report.invalid_lines
+
+
+# ---------------------------------------------------------------------------
+# Manifest artifact integrity gate (B0-R1-A-C3, 2026-08-03).
+#
+# Verifies that a development-only Stage-2 manifest's declared artifact
+# entries (relative `path` + 64-bit sha256) still match the actual
+# working-tree raw bytes of those artifacts. This is a pure read-only
+# helper:
+#
+#   * manifest must be a JSON object;
+#   * `artifacts` must be a JSON object;
+#   * every entry must have a relative `path` (no absolute, no `..`,
+#     no path that escapes the manifest's parent directory);
+#   * every entry must declare a 64-character lowercase hex sha256;
+#   * the file at the resolved path must exist, be a regular file, and
+#     its raw bytes must hash to the declared sha256.
+#
+# The helper is single-purpose and unit-testable. It does NOT read
+# `.env`, Gold, Layer E, or Layer B/C/D, and it never writes anything.
+# It returns a structured list of `{code, message, artifact}` errors
+# rather than printing file contents.
+# ---------------------------------------------------------------------------
+
+_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+_PASS_CODE = "b0_r1a_c3_development_artifacts_verified"
+_FAIL_CODE = "b0_r1a_c3_development_artifact_integrity_failed"
+
+
+@dataclass
+class ManifestArtifactError:
+    code: str
+    artifact: str
+    message: str
+
+    def to_finding(self) -> dict[str, str]:
+        return {"code": self.code, "artifact": self.artifact, "message": self.message}
+
+
+def _resolve_artifact_path(manifest_path: Path, declared: str) -> Path:
+    """Resolve a declared relative artifact path against the manifest's
+    parent directory and refuse anything that escapes it.
+    """
+
+    candidate = (manifest_path.parent / declared).resolve()
+    base = manifest_path.parent.resolve()
+    try:
+        candidate.relative_to(base)
+    except ValueError as exc:
+        raise ValueError(
+            f"artifact path {declared!r} resolves outside manifest directory {base}"
+        ) from exc
+    return candidate
+
+
+def verify_manifest_artifact_integrity(manifest_path: Path) -> list[ManifestArtifactError]:
+    """Return a (possibly empty) list of integrity errors for a manifest.
+
+    The helper never raises on integrity problems; it converts each
+    problem into a structured ``ManifestArtifactError`` so the audit
+    caller can decide how to surface it. Real exceptions are only
+    raised for programmer errors (e.g. ``manifest_path`` is not a
+    Path).
+    """
+
+    errors: list[ManifestArtifactError] = []
+    if not manifest_path.is_file():
+        return [
+            ManifestArtifactError(
+                code=_FAIL_CODE,
+                artifact=str(manifest_path),
+                message=f"manifest not found or not a regular file: {manifest_path}",
+            )
+        ]
+
+    try:
+        raw = manifest_path.read_bytes()
+    except OSError as exc:
+        return [
+            ManifestArtifactError(
+                code=_FAIL_CODE,
+                artifact=str(manifest_path),
+                message=f"manifest could not be read: {exc!r}",
+            )
+        ]
+
+    try:
+        doc = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        return [
+            ManifestArtifactError(
+                code=_FAIL_CODE,
+                artifact=str(manifest_path),
+                message=f"manifest is not valid UTF-8 JSON: {exc!r}",
+            )
+        ]
+
+    if not isinstance(doc, dict):
+        return [
+            ManifestArtifactError(
+                code=_FAIL_CODE,
+                artifact=str(manifest_path),
+                message="manifest must be a JSON object at the top level",
+            )
+        ]
+
+    artifacts = doc.get("artifacts")
+    if not isinstance(artifacts, dict):
+        return [
+            ManifestArtifactError(
+                code=_FAIL_CODE,
+                artifact=str(manifest_path),
+                message="manifest.artifacts must be a JSON object",
+            )
+        ]
+
+    for key, entry in artifacts.items():
+        artifact_label = f"{manifest_path.name}#artifacts.{key}"
+        if not isinstance(entry, dict):
+            errors.append(
+                ManifestArtifactError(
+                    code=_FAIL_CODE,
+                    artifact=artifact_label,
+                    message="artifact entry must be a JSON object",
+                )
+            )
+            continue
+        rel_path = entry.get("path")
+        declared_sha = entry.get("sha256")
+        if not isinstance(rel_path, str) or not rel_path:
+            errors.append(
+                ManifestArtifactError(
+                    code=_FAIL_CODE,
+                    artifact=artifact_label,
+                    message="artifact entry must declare a non-empty string `path`",
+                )
+            )
+            continue
+        if Path(rel_path).is_absolute():
+            errors.append(
+                ManifestArtifactError(
+                    code=_FAIL_CODE,
+                    artifact=artifact_label,
+                    message=f"artifact path must be relative (got absolute {rel_path!r})",
+                )
+            )
+            continue
+        try:
+            resolved = _resolve_artifact_path(manifest_path, rel_path)
+        except ValueError as exc:
+            errors.append(
+                ManifestArtifactError(
+                    code=_FAIL_CODE,
+                    artifact=artifact_label,
+                    message=str(exc),
+                )
+            )
+            continue
+        if not isinstance(declared_sha, str) or not _SHA256_RE.match(declared_sha):
+            errors.append(
+                ManifestArtifactError(
+                    code=_FAIL_CODE,
+                    artifact=artifact_label,
+                    message=(
+                        "artifact sha256 must be a 64-character lowercase hex string; "
+                        f"got {declared_sha!r}"
+                    ),
+                )
+            )
+            continue
+        if not resolved.exists() or not resolved.is_file():
+            errors.append(
+                ManifestArtifactError(
+                    code=_FAIL_CODE,
+                    artifact=artifact_label,
+                    message=f"artifact file missing: {resolved}",
+                )
+            )
+            continue
+        try:
+            data = resolved.read_bytes()
+        except OSError as exc:
+            errors.append(
+                ManifestArtifactError(
+                    code=_FAIL_CODE,
+                    artifact=artifact_label,
+                    message=f"artifact could not be read: {exc!r}",
+                )
+            )
+            continue
+        actual_sha = hashlib.sha256(data).hexdigest()
+        if actual_sha != declared_sha:
+            errors.append(
+                ManifestArtifactError(
+                    code=_FAIL_CODE,
+                    artifact=artifact_label,
+                    message=(
+                        f"sha256 mismatch for {rel_path}: declared={declared_sha} "
+                        f"actual={actual_sha} (file bytes={len(data)})"
+                    ),
+                )
+            )
+            continue
+    return errors
 
 
 def _git_check(args: list[str]) -> bool | None:
@@ -767,6 +973,42 @@ def collect_project_audit() -> dict[str, Any]:
         _add(findings, "errors", "formal_reports_gitignored", "Formal reports are ignored by Git.")
     else:
         _add(findings, "passes", "formal_reports_versionable", "Formal reports can be versioned.")
+
+    # ------------------------------------------------------------------
+    # B0-R1-A-C3 (2026-08-03): manifest artifact integrity gate.
+    #
+    # We register one specific development-only Stage-2 manifest that
+    # the project audit must verify by raw SHA-256. The gate never
+    # scans the entire ``outputs/development/`` history; older runs
+    # remain provenance and are not retroactively bound. Adding a new
+    # registered run requires an explicit correction event.
+    #
+    # ``REPO_ROOT`` already points at ``formal_experiment/``, so the
+    # registered path is the project-relative path MINUS that prefix.
+    # ------------------------------------------------------------------
+    _C3_MANIFEST_REL = (
+        "outputs/development/"
+        "s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/manifest.json"
+    )
+    c3_manifest = REPO_ROOT / _C3_MANIFEST_REL
+    c3_errors = verify_manifest_artifact_integrity(c3_manifest)
+    if c3_errors:
+        for err in c3_errors:
+            _add(
+                findings,
+                "errors",
+                err.code,
+                f"{err.artifact}: {err.message}",
+            )
+    else:
+        _add(
+            findings,
+            "passes",
+            _PASS_CODE,
+            "Registered C3 development manifest's four artifacts (b0_attempts.json + "
+            "three evaluation JSONs) all hash-match the declared raw SHA-256 against the "
+            "current working tree.",
+        )
 
     # ------------------------------------------------------------------
     # Wave 1.1 \u00a78: canonical schema / prompt loader / runner integration

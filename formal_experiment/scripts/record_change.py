@@ -68,7 +68,11 @@ def _git(args: list[str]) -> str:
         stderr=subprocess.DEVNULL,
         check=False,
     )
-    return completed.stdout.strip() if completed.returncode == 0 else "unavailable"
+    # Strip only the trailing newline so leading spaces inside
+    # porcelain status lines are preserved. Stripping the entire
+    # output (as a previous version did) silently corrupted the
+    # first line's status column.
+    return completed.stdout.rstrip("\r\n") if completed.returncode == 0 else "unavailable"
 
 
 def _changed_paths() -> list[str]:
@@ -87,6 +91,54 @@ def _changed_paths() -> list[str]:
     if output == "unavailable":
         return []
     return [line for line in output.splitlines() if line.strip()]
+
+
+def _parse_porcelain_to_paths(porcelain_output: str) -> list[str]:
+    """Convert ``git status --porcelain=v1`` lines into repo-relative paths.
+
+    The two-character status column is split off; for renames/copies the
+    *destination* path is returned (after the ``->`` arrow). Whitespace
+    inside paths is preserved; the result is a list of paths relative to
+    the repository root, with the leading ``"`` / ``"`` markers of
+    unmerged entries stripped.
+    """
+    paths: list[str] = []
+    for line in porcelain_output.splitlines():
+        if not line.strip():
+            continue
+        # Format: XY<space>PATH   (or XY<space>"OLD" -> "NEW" for renames)
+        if len(line) < 4:
+            continue
+        path_field = line[3:]
+        if " -> " in path_field:
+            path_field = path_field.split(" -> ", 1)[1]
+        path_field = path_field.strip().strip('"')
+        if path_field:
+            paths.append(path_field)
+    return paths
+
+
+def _enforce_expected_dirty(
+    actual_paths: list[str], expected_paths: list[str]
+) -> tuple[bool, str]:
+    """Compare the actual dirty-path set against the expected set.
+
+    Returns ``(ok, message)``. ``ok`` is False whenever the two sets
+    differ; the message describes the missing / extra paths in a way that
+    never reveals file contents.
+    """
+    actual_set = set(actual_paths)
+    expected_set = set(expected_paths)
+    missing = sorted(expected_set - actual_set)
+    extra = sorted(actual_set - expected_set)
+    if not missing and not extra:
+        return True, "ok"
+    parts: list[str] = []
+    if missing:
+        parts.append(f"missing={missing}")
+    if extra:
+        parts.append(f"extra={extra}")
+    return False, "; ".join(parts)
 
 
 def _test_summary(output: str) -> str:
@@ -212,7 +264,30 @@ def main() -> int:
         choices=("succeeded", "failed", "partial", "not_applicable"),
         default="not_applicable",
     )
+    # Strict dirty-path gate (B0-R1-A-C3, 2026-08-03). When enabled,
+    # the recorder refuses to append a new event unless the current
+    # ``git status --porcelain`` path set exactly matches the
+    # ``--expected-dirty-path`` allowlist. Any extra path or any
+    # missing path causes an immediate non-zero exit *before* any
+    # log file is touched. Default behavior is unchanged.
+    parser.add_argument(
+        "--fail-on-unexpected-dirty",
+        action="store_true",
+        help="Require the porcelain dirty-path set to match --expected-dirty-path exactly.",
+    )
+    parser.add_argument(
+        "--expected-dirty-path",
+        action="append",
+        default=None,
+        help="Repo-relative path that MUST be dirty. Repeatable. Only meaningful with --fail-on-unexpected-dirty. "
+        "An empty list means 'clean tree'.",
+    )
     args = parser.parse_args()
+    if args.expected_dirty_path is None:
+        args.expected_dirty_path = []
+    # Drop any empty-string entries the user may have used as a
+    # placeholder; they are not valid repo-relative paths.
+    args.expected_dirty_path = [p for p in args.expected_dirty_path if p]
     if args.event_type == "experiment_run":
         missing = [
             name
@@ -230,6 +305,34 @@ def main() -> int:
             parser.error(
                 "experiment_run requires " + ", ".join(missing)
             )
+
+    # Strict dirty-path gate is enforced BEFORE the audit / tests run
+    # so the strict refusal is observable even if the audit itself
+    # would otherwise pass.
+    if args.fail_on_unexpected_dirty:
+        porcelain = _git(
+            [
+                "status",
+                "--porcelain=v1",
+                "--untracked-files=all",
+                "--",
+                "formal_experiment",
+                "AGENTS.md",
+                "README.md",
+                ".gitignore",
+            ]
+        )
+        if porcelain == "unavailable":
+            print("strict dirty-path gate: git status unavailable; refusing to record", file=sys.stderr)
+            return 3
+        actual_paths = _parse_porcelain_to_paths(porcelain)
+        ok, diff_message = _enforce_expected_dirty(actual_paths, args.expected_dirty_path)
+        if not ok:
+            print(
+                f"strict dirty-path gate failed: {diff_message}",
+                file=sys.stderr,
+            )
+            return 3
 
     audit = collect_project_audit()
     tests = load_matching_verification_receipt()

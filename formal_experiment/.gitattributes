@@ -6,3 +6,15 @@
 # declared asset path; it must never be extended into broad `text=auto`
 # patterns and must never trigger a renormalize of tracked content.
 data/development/sun_modality/source_manifest.json text eol=lf
+
+# B0-R1-A-C3 (2026-08-03): narrow line-ending pin for the only registered
+# development B0 manifest that the project audit verifies by raw SHA-256.
+# The four C3 artifacts (b0_attempts.json + three evaluation JSONs) and
+# their manifest.json are versioned with LF bytes; without this rule a
+# Windows checkout (core.autocrlf=true) silently converts them to CRLF and
+# the working-tree raw SHA no longer matches the manifest's declared
+# SHA-256. The rule is intentionally scoped to the exact registered
+# development run output directory; it must not be widened into
+# `*.json text eol=lf`, `outputs/** text eol=lf`, or any `text=auto` form
+# that would renormalize the whole repository.
+outputs/development/s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/*.json text eol=lf

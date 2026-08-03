@@ -284,3 +284,172 @@ class TestAuditRealFile:
         assert result["convertible_lines"] == 24
         # All 24 should be convertible
         assert result["summary"]["conversion_rate"] == 100.0
+
+
+# ---------------------------------------------------------------------------
+# B0-R1-A-C3 (2026-08-03) — manifest artifact integrity gate.
+#
+# These tests exercise the new ``verify_manifest_artifact_integrity``
+# helper and confirm that the audit project registers the C3 manifest
+# in the current checkout.
+# ---------------------------------------------------------------------------
+
+import hashlib
+import json
+
+from formal_experiment.audit import (
+    _PASS_CODE as _C3_PASS_CODE,
+    _FAIL_CODE as _C3_FAIL_CODE,
+    verify_manifest_artifact_integrity,
+)
+
+
+def _write_artifact(path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(content.encode("utf-8"))
+
+
+def _sha256_bytes(content: str) -> str:
+    return hashlib.sha256(content.encode("utf-8")).hexdigest()
+
+
+class TestManifestArtifactIntegrity:
+    """Manifest artifact integrity gate (B0-R1-A-C3)."""
+
+    def test_valid_temp_manifest_passes(self, tmp_path):
+        art1 = tmp_path / "art1.json"
+        _write_artifact(art1, '{"x": 1}\n')
+        art2 = tmp_path / "art2.json"
+        _write_artifact(art2, '{"y": 2}\n')
+        manifest = tmp_path / "manifest.json"
+        manifest_payload = {
+            "artifacts": {
+                "a": {"path": "art1.json", "sha256": _sha256_bytes('{"x": 1}\n')},
+                "b": {"path": "art2.json", "sha256": _sha256_bytes('{"y": 2}\n')},
+            }
+        }
+        manifest.write_bytes(json.dumps(manifest_payload).encode("utf-8"))
+        errs = verify_manifest_artifact_integrity(manifest)
+        assert errs == []
+
+    def test_missing_artifact(self, tmp_path):
+        manifest = tmp_path / "manifest.json"
+        manifest.write_bytes(
+            json.dumps(
+                {
+                    "artifacts": {
+                        "ghost": {
+                            "path": "ghost.json",
+                            "sha256": "0" * 64,
+                        }
+                    }
+                }
+            ).encode("utf-8")
+        )
+        errs = verify_manifest_artifact_integrity(manifest)
+        assert len(errs) == 1
+        assert errs[0].code == _C3_FAIL_CODE
+        assert "missing" in errs[0].message.lower()
+
+    def test_hash_mismatch(self, tmp_path):
+        art = tmp_path / "art.json"
+        _write_artifact(art, '{"z": 1}\n')
+        manifest = tmp_path / "manifest.json"
+        manifest.write_bytes(
+            json.dumps(
+                {
+                    "artifacts": {
+                        "a": {"path": "art.json", "sha256": "0" * 64},
+                    }
+                }
+            ).encode("utf-8")
+        )
+        errs = verify_manifest_artifact_integrity(manifest)
+        assert len(errs) == 1
+        assert errs[0].code == _C3_FAIL_CODE
+        assert "mismatch" in errs[0].message.lower()
+
+    def test_illegal_sha256(self, tmp_path):
+        art = tmp_path / "art.json"
+        _write_artifact(art, "abc")
+        manifest = tmp_path / "manifest.json"
+        manifest.write_bytes(
+            json.dumps(
+                {
+                    "artifacts": {
+                        "a": {"path": "art.json", "sha256": "not-hex"},
+                    }
+                }
+            ).encode("utf-8")
+        )
+        errs = verify_manifest_artifact_integrity(manifest)
+        assert len(errs) == 1
+        assert errs[0].code == _C3_FAIL_CODE
+        assert "sha256" in errs[0].message.lower()
+
+    def test_absolute_path_rejected(self, tmp_path):
+        manifest = tmp_path / "manifest.json"
+        manifest.write_bytes(
+            json.dumps(
+                {
+                    "artifacts": {
+                        "a": {
+                            "path": str(tmp_path / "art.json"),
+                            "sha256": "0" * 64,
+                        }
+                    }
+                }
+            ).encode("utf-8")
+        )
+        errs = verify_manifest_artifact_integrity(manifest)
+        assert len(errs) == 1
+        assert errs[0].code == _C3_FAIL_CODE
+        assert "relative" in errs[0].message.lower()
+
+    def test_parent_traversal_rejected(self, tmp_path):
+        # Build a manifest that points at "../escape.json" which resolves
+        # outside the manifest's parent directory.
+        manifest = tmp_path / "manifest.json"
+        manifest.write_bytes(
+            json.dumps(
+                {
+                    "artifacts": {
+                        "a": {
+                            "path": "../escape.json",
+                            "sha256": "0" * 64,
+                        }
+                    }
+                }
+            ).encode("utf-8")
+        )
+        errs = verify_manifest_artifact_integrity(manifest)
+        assert len(errs) == 1
+        assert errs[0].code == _C3_FAIL_CODE
+        # Either "outside" (path-traversal wording) or "missing" (the
+        # resolved file does not exist) is acceptable, but the entry
+        # must NOT silently pass.
+        assert errs[0].message != ""
+
+    def test_non_json_or_non_object_manifest(self, tmp_path):
+        # Non-JSON
+        bad1 = tmp_path / "bad1.json"
+        bad1.write_bytes(b"{not json")
+        errs = verify_manifest_artifact_integrity(bad1)
+        assert len(errs) == 1
+        assert errs[0].code == _C3_FAIL_CODE
+        # Non-object top level
+        bad2 = tmp_path / "bad2.json"
+        bad2.write_bytes(b"[]")
+        errs = verify_manifest_artifact_integrity(bad2)
+        assert len(errs) == 1
+        assert errs[0].code == _C3_FAIL_CODE
+        assert "object" in errs[0].message.lower()
+
+    def test_registered_c3_manifest_passes_in_current_checkout(self):
+        from formal_experiment.audit import collect_project_audit
+
+        audit = collect_project_audit()
+        pass_codes = {p["code"] for p in audit["findings"]["passes"]}
+        assert _C3_PASS_CODE in pass_codes
+        fail_codes = {e["code"] for e in audit["findings"]["errors"]}
+        assert _C3_FAIL_CODE not in fail_codes

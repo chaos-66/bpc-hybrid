@@ -316,3 +316,120 @@ def test_blocker_remains_for_arbitrary_status_strings() -> None:
         audit_mod._load_json = real_load
     blockers = _codes(audit, "blockers")
     assert "sun_stage2_baseline_not_paper_faithful" in blockers
+
+
+# ---------------------------------------------------------------------------
+# 8. B0-R1-A-C3 (2026-08-03): narrow .gitattributes line-ending pin and
+#    manifest artifact integrity gate. These pin the contract so the
+#    B0-R1-A~C3 development run's raw working-tree bytes match its
+#    declared manifest hashes regardless of Windows CRLF checkout.
+# ---------------------------------------------------------------------------
+
+
+def test_gitattributes_pins_c3_output_to_text_eol_lf() -> None:
+    attrs_path = _workspace_path(".gitattributes")
+    assert attrs_path.is_file()
+    text = attrs_path.read_text(encoding="utf-8")
+    expected_rule = (
+        "outputs/development/"
+        "s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/*.json text eol=lf"
+    )
+    assert expected_rule in text, (
+        "C3 development output rule is missing or different from the narrow "
+        f"pin: {expected_rule!r}"
+    )
+
+
+def test_gitattributes_has_no_broad_json_or_outputs_rule() -> None:
+    text = _workspace_path(".gitattributes").read_text(encoding="utf-8")
+    # The fix must not introduce broad rules that would renormalize
+    # unrelated JSONs or the whole outputs tree. The 2026-07-31 Sun
+    # modality rule is allowed; the new C3 rule is allowed; nothing else.
+    # Only check the active rule lines, not the comments (which may
+    # name the banned patterns as a warning).
+    rules = [
+        line.strip()
+        for line in text.splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+    # Each forbidden token must NOT appear as the leading path-glob of
+    # any rule. We split on whitespace and check the first token only,
+    # so the C3 rule's full path does not match ``outputs/development/*``
+    # because its first token is a deeper path component.
+    forbidden_path_globs = {
+        "*.json",
+        "outputs/**",
+        "outputs/development",
+        "outputs/development/",
+        "outputs/development/*.json",
+    }
+    for rule in rules:
+        head = rule.split()[0]
+        assert head not in forbidden_path_globs, (
+            f"broad/banned line-ending path-glob present: {head!r} in rule {rule!r}"
+        )
+    forbidden_attrs = {"text=auto", "text -auto"}
+    for rule in rules:
+        for token in rule.split()[1:]:
+            assert token not in forbidden_attrs, (
+                f"banned attribute token present: {token!r} in rule {rule!r}"
+            )
+
+
+def test_c3_manifest_four_artifacts_hash_match() -> None:
+    """All four B0-R1-A-C3 artifacts (excluding manifest.json itself) must
+    hash-match the manifest's declared raw SHA-256 in the current
+    working tree. The C3 manifest does not bind its own SHA into
+    ``artifacts`` (it is the source of truth for the other four)."""
+    import hashlib
+
+    manifest_path = _workspace_path(
+        "outputs/development/"
+        "s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/manifest.json"
+    )
+    assert manifest_path.is_file()
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    artifacts = manifest.get("artifacts")
+    assert isinstance(artifacts, dict) and artifacts, "artifacts must be non-empty object"
+    expected_keys = {
+        "attempts",
+        "evaluation_all150",
+        "evaluation_independent82",
+        "sun_table8_any_overlap_diagnostic",
+    }
+    assert set(artifacts.keys()) >= expected_keys, (
+        f"manifest missing C3 artifacts: missing={sorted(expected_keys - set(artifacts.keys()))}"
+    )
+    for key in sorted(expected_keys):
+        entry = artifacts[key]
+        rel = entry["path"]
+        declared = entry["sha256"]
+        full = manifest_path.parent / rel
+        assert full.is_file(), f"missing C3 artifact: {full}"
+        actual = hashlib.sha256(full.read_bytes()).hexdigest()
+        assert actual == declared, (
+            f"C3 raw SHA mismatch for {rel}: declared={declared} actual={actual}"
+        )
+
+
+def test_c3_manifest_development_status_unchanged() -> None:
+    """The C3 manifest must still be flagged as development-only with
+    formal_gold_published=False and a non-formal status. The fix must
+    not silently promote the run to formal."""
+    manifest = json.loads(
+        (
+            _workspace_path(
+                "outputs/development/"
+                "s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/manifest.json"
+            )
+        ).read_text(encoding="utf-8")
+    )
+    assert manifest.get("claim_scope") == "development"
+    assert manifest.get("is_formal_performance_result") is False
+    assert manifest.get("safety", {}).get("formal_predictions_or_results_written") is False
+    assert manifest.get("safety", {}).get("gold_read_only") is True
+    assert manifest.get("safety", {}).get("llm_api_called") is False
+    routes = manifest.get("route_boundaries", {})
+    assert routes.get("formal_performance_result") is False
+    assert routes.get("formal_gold_published") is False
+    assert manifest.get("status") == "succeeded_development_not_formal"
