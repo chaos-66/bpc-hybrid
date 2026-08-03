@@ -1,0 +1,66 @@
+{
+  "claim_scope": "development_diagnostic_only",
+  "diagnostic_id": "sun_table8_any_overlap_diagnostic",
+  "is_formal_metric": false,
+  "match_rule": "same_field_any_nonempty_character_span_intersection",
+  "overall": {
+    "f1": 0.5326215895610913,
+    "fn": 375,
+    "fp": 413,
+    "precision": 0.5208816705336426,
+    "recall": 0.5449029126213593,
+    "tp": 449
+  },
+  "per_field": {
+    "action": {
+      "f1": 0.6720977596741344,
+      "fn": 82,
+      "fp": 79,
+      "gold": 247,
+      "precision": 0.6762295081967213,
+      "pred": 244,
+      "recall": 0.6680161943319838,
+      "tp": 165
+    },
+    "actor": {
+      "f1": 0.5060240963855421,
+      "fn": 27,
+      "fp": 14,
+      "gold": 48,
+      "precision": 0.6,
+      "pred": 35,
+      "recall": 0.4375,
+      "tp": 21
+    },
+    "condition": {
+      "f1": 0.5783664459161149,
+      "fn": 83,
+      "fp": 108,
+      "gold": 214,
+      "precision": 0.5481171548117155,
+      "pred": 239,
+      "recall": 0.6121495327102804,
+      "tp": 131
+    },
+    "constraint": {
+      "f1": 0.38607594936708856,
+      "fn": 180,
+      "fp": 208,
+      "gold": 302,
+      "precision": 0.3696969696969697,
+      "pred": 330,
+      "recall": 0.40397350993377484,
+      "tp": 122
+    },
+    "exception": {
+      "f1": 0.7407407407407408,
+      "fn": 3,
+      "fp": 4,
+      "gold": 13,
+      "precision": 0.7142857142857143,
+      "pred": 14,
+      "recall": 0.7692307692307693,
+      "tp": 10
+    }
+  }
+}
