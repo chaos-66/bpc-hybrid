@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-04
-**收录文件**：627 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：630 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -71,6 +71,7 @@
 | `configs/estg150_openai_strict_transport_schema_adapter_v1_6.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_openai_strict_transport_schema_adapter_v1_7.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_openai_strict_transport_schema_adapter_v1_8.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/evaluation/sun_table8_literal_overlap_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/experiment_contract.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_active_registry_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -594,6 +595,7 @@
 | `src/bpc_hybrid/stage2_canonical.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_evaluation_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage2_sun_literal_overlap.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/clause_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/schema.py` | 活动 | Python 实现、脚本或测试 |
@@ -717,6 +719,7 @@
 | `tests/test_smoke.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_splitter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage2_sun_literal_overlap.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_compat.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_gate.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_ingestion.py` | 活动 | Python 实现、脚本或测试 |

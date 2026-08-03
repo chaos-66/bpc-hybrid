@@ -1,8 +1,9 @@
 """Run EStG-150 B0 enhanced development evaluation (versioned, non-formal).
 
 Uses clause-level German modality routing, enhanced phrase patterns, multi-match
-bridge, and the frozen S2.10-E v3 evaluator. Does not overwrite v1 outputs,
-does not call LLM/API, and does not publish formal Gold.
+bridge, the Sun literal-overlap v2 primary evaluator, and the frozen S2.10-E v3
+strict diagnostic evaluator. Does not overwrite v1 outputs, call LLM/API, or
+publish formal Gold.
 """
 
 from __future__ import annotations
@@ -33,7 +34,6 @@ from bpc_hybrid.estg150_b0_development_v10 import (  # noqa: E402
     METHOD_ID,
     METHOD_VARIANT,
     run_b0_batch_v10,
-    sun_table8_any_overlap_diagnostic,
 )
 from bpc_hybrid.stage2_evaluation_v3 import (  # noqa: E402
     evaluate_stage2,
@@ -41,8 +41,14 @@ from bpc_hybrid.stage2_evaluation_v3 import (  # noqa: E402
     membership_sha256,
     validate_evaluation_report,
 )
+from bpc_hybrid.stage2_sun_literal_overlap import (  # noqa: E402
+    evaluate_sun_literal_overlap,
+)
 
 DEFAULT_CONFIG = ROOT / "configs/models/estg150_b0_enhanced_s27_v10a.json"
+SUN_LITERAL_CONFIG = (
+    ROOT / "configs/evaluation/sun_table8_literal_overlap_v2.json"
+)
 
 
 def _write_json(path: Path, value: Any) -> None:
@@ -101,6 +107,17 @@ def main() -> int:
             or config.get("safety", {}).get("llm_api_called") is not False
         ):
             raise Estg150B0DevelopmentError("enhanced development config identity or safety changed")
+        literal_evaluator = load_object(SUN_LITERAL_CONFIG)
+        if (
+            literal_evaluator.get("evaluator_id") != "sun_table8_literal_overlap_v2"
+            or literal_evaluator.get("evaluation_unit") != "statement"
+            or literal_evaluator.get("clause_alignment_required") is not False
+            or literal_evaluator.get("assignment")
+            != "none_independent_overlap_coverage"
+        ):
+            raise Estg150B0DevelopmentError(
+                "Sun literal-overlap primary evaluator identity changed"
+            )
         inputs = config["inputs"]
         layer_e = _check_spec(ROOT, inputs["human_correction_layer_e"], "Layer E")
         membership = _check_spec(ROOT, inputs["membership_hashes"], "membership hashes")
@@ -166,7 +183,12 @@ def main() -> int:
                 contract=evaluator_contract,
                 dataset_id=config["dataset_id"] + "_independent82_sensitivity",
             )
-            diagnostic = sun_table8_any_overlap_diagnostic(gold, attempts)
+            literal_overlap = evaluate_sun_literal_overlap(
+                gold,
+                attempts,
+                dataset_id=config["dataset_id"],
+                method_id=METHOD_ID,
+            )
 
             staging = output_dir.parent / f".{output_dir.name}.staging-{os.getpid()}"
             if staging.exists():
@@ -176,13 +198,13 @@ def main() -> int:
                 attempts_path = staging / "b0_attempts.json"
                 all_path = staging / "evaluation_all150.json"
                 independent_path = staging / "evaluation_independent82.json"
-                diag_path = staging / "sun_table8_any_overlap_diagnostic.json"
+                literal_path = staging / "sun_table8_literal_overlap_v2.json"
                 _write_json(attempts_path, attempts)
                 _write_json(all_path, report_all)
                 _write_json(independent_path, report_independent)
-                _write_json(diag_path, diagnostic)
+                _write_json(literal_path, literal_overlap)
                 manifest = {
-                    "schema_version": "estg150_b0_enhanced_development_manifest@1.0.0",
+                    "schema_version": "estg150_b0_enhanced_development_manifest@1.1.0",
                     "run_id": config["run_id"],
                     "task_id": config["task_id"],
                     "status": "succeeded_development_not_formal",
@@ -200,11 +222,32 @@ def main() -> int:
                         "canonical_gold_membership_sha256": membership_sha256(gold),
                         "canonical_gold_copy_persisted": False,
                         "config_sha256": sha256_file(config_path),
+                        "primary_evaluator_config_sha256": sha256_file(
+                            SUN_LITERAL_CONFIG
+                        ),
+                        "strict_diagnostic_evaluator_config_sha256": sha256_file(
+                            evaluator_path
+                        ),
                     },
                     "tracks": {
-                        "all150": summarize_evaluation(report_all),
-                        "independent82_sensitivity": summarize_evaluation(report_independent),
-                        "sun_table8_any_overlap_diagnostic": diagnostic["overall"],
+                        "sun_literal_overlap_primary": literal_overlap["overall"],
+                        "strict_clause_aligned_all150_diagnostic": summarize_evaluation(
+                            report_all
+                        ),
+                        "strict_clause_aligned_independent82_diagnostic": summarize_evaluation(
+                            report_independent
+                        ),
+                    },
+                    "evaluation_roles": {
+                        "primary": {
+                            "artifact": "sun_table8_literal_overlap_v2",
+                            "assignment": "none_independent_overlap_coverage",
+                            "clause_alignment_required": False,
+                        },
+                        "diagnostics": [
+                            "evaluation_all150",
+                            "evaluation_independent82",
+                        ],
                     },
                     "runtime": runtime,
                     "artifacts": {
@@ -220,9 +263,9 @@ def main() -> int:
                             "path": "evaluation_independent82.json",
                             "sha256": sha256_file(independent_path),
                         },
-                        "sun_table8_any_overlap_diagnostic": {
-                            "path": "sun_table8_any_overlap_diagnostic.json",
-                            "sha256": sha256_file(diag_path),
+                        "sun_table8_literal_overlap_v2": {
+                            "path": "sun_table8_literal_overlap_v2.json",
+                            "sha256": sha256_file(literal_path),
                         },
                     },
                     "route_boundaries": config["route_boundaries"],
@@ -247,9 +290,13 @@ def main() -> int:
                     "output_dir": str(output_dir),
                     "method_id": METHOD_ID,
                     "method_variant": str(config.get("method", {}).get("method_variant", METHOD_VARIANT)),
-                    "all150": manifest["tracks"]["all150"],
-                    "independent82_sensitivity": manifest["tracks"]["independent82_sensitivity"],
-                    "sun_table8_any_overlap_diagnostic": diagnostic["overall"],
+                    "sun_literal_overlap_primary": literal_overlap["overall"],
+                    "strict_clause_aligned_all150_diagnostic": manifest["tracks"][
+                        "strict_clause_aligned_all150_diagnostic"
+                    ],
+                    "strict_clause_aligned_independent82_diagnostic": manifest[
+                        "tracks"
+                    ]["strict_clause_aligned_independent82_diagnostic"],
                     "llm_calls": 0,
                     "formal": False,
                 },

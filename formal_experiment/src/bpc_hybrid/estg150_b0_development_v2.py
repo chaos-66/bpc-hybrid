@@ -930,85 +930,16 @@ def sun_table8_any_overlap_diagnostic(
     gold_records: Sequence[Mapping[str, Any]],
     attempts: Sequence[Mapping[str, Any]],
 ) -> dict[str, Any]:
-    """Read-only diagnostic: any non-empty same-type span intersection is TP."""
-    from bpc_hybrid.stage2_evaluation import _char_iou
-    from bpc_hybrid.stage2_evaluation_v3 import CLAUSE_MINIMUM_IOU, clause_iou_pairs
+    """Compatibility entry point for the authoritative literal-overlap view.
 
-    fields = ("actor", "action", "condition", "constraint", "exception")
-    plural = {
-        "actor": "actors",
-        "action": "actions",
-        "condition": "conditions",
-        "constraint": "constraints",
-        "exception": "exceptions",
-    }
-    counts = {field: {"tp": 0, "fp": 0, "fn": 0, "gold": 0, "pred": 0} for field in fields}
-    gold_by_id = {row["sample_id"]: row for row in gold_records}
-    for attempt in attempts:
-        sample_id = attempt["sample_id"]
-        gold = gold_by_id[sample_id]
-        pred = attempt["record"]
-        pairs, _, extra_pred, _ = clause_iou_pairs(
-            gold.get("clauses") or [],
-            pred.get("clauses") or [],
-            minimum_iou=CLAUSE_MINIMUM_IOU,
-        )
-        for g_idx, p_idx in pairs:
-            g_clause = gold["clauses"][g_idx]
-            p_clause = pred["clauses"][p_idx]
-            for field in fields:
-                g_spans = list(g_clause.get(plural[field]) or [])
-                p_spans = list(p_clause.get(plural[field]) or [])
-                counts[field]["gold"] += len(g_spans)
-                counts[field]["pred"] += len(p_spans)
-                used_p: set[int] = set()
-                for g_span in g_spans:
-                    hit = None
-                    for pi, p_span in enumerate(p_spans):
-                        if pi in used_p:
-                            continue
-                        if _char_iou(g_span, p_span) > 0.0:
-                            hit = pi
-                            break
-                    if hit is not None:
-                        counts[field]["tp"] += 1
-                        used_p.add(hit)
-                    else:
-                        counts[field]["fn"] += 1
-                counts[field]["fp"] += len(p_spans) - len(used_p)
-        for p_idx in extra_pred:
-            p_clause = pred["clauses"][p_idx]
-            for field in fields:
-                p_spans = list(p_clause.get(plural[field]) or [])
-                counts[field]["pred"] += len(p_spans)
-                counts[field]["fp"] += len(p_spans)
-        matched_gold = {g for g, _ in pairs}
-        for g_idx, g_clause in enumerate(gold.get("clauses") or []):
-            if g_idx in matched_gold:
-                continue
-            for field in fields:
-                g_spans = list(g_clause.get(plural[field]) or [])
-                counts[field]["gold"] += len(g_spans)
-                counts[field]["fn"] += len(g_spans)
+    The legacy name is retained for old callers only.  The implementation no
+    longer performs clause alignment or one-to-one assignment.
+    """
+    from bpc_hybrid.stage2_sun_literal_overlap import evaluate_sun_literal_overlap
 
-    def prf(tp: int, fp: int, fn: int) -> dict[str, float | int]:
-        precision = tp / (tp + fp) if tp + fp else 0.0
-        recall = tp / (tp + fn) if tp + fn else 0.0
-        f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
-        return {"precision": precision, "recall": recall, "f1": f1, "tp": tp, "fp": fp, "fn": fn}
-
-    per_field = {
-        field: prf(v["tp"], v["fp"], v["fn"]) | {"gold": v["gold"], "pred": v["pred"]}
-        for field, v in counts.items()
-    }
-    total_tp = sum(v["tp"] for v in counts.values())
-    total_fp = sum(v["fp"] for v in counts.values())
-    total_fn = sum(v["fn"] for v in counts.values())
-    return {
-        "diagnostic_id": "sun_table8_any_overlap_diagnostic",
-        "claim_scope": "development_diagnostic_only",
-        "is_formal_metric": False,
-        "match_rule": "same_field_any_nonempty_character_span_intersection",
-        "per_field": per_field,
-        "overall": prf(total_tp, total_fp, total_fn),
-    }
+    return evaluate_sun_literal_overlap(
+        gold_records,
+        attempts,
+        dataset_id="legacy_estg150_development_binding",
+        method_id="sun_rule_only",
+    )
