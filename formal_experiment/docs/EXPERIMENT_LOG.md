@@ -2068,3 +2068,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：用户逐字授权：'授权只读使用 56d2b03 历史 Layer E/Gold-equivalent 快照，离线重评已有 v10a 与 C3 attempts，生成不覆盖旧结果的新 metrics/manifest，并提交推送；不调用 LLM/API。' 历史输入经 git show 56d2b03:<path> 原始字节读入 formal_experiment/.tmp 临时目录（TemporaryDirectory，自动清理），未持久化、未修改、未进入输出。v10a attempts 在 56d2b03 中不存在（git cat-file -e 与窄范围 git ls-tree 均为负），仅以本地 ignored 原始 v10a baseline 产物存在（manifest 内部 4 件套 hash 自洽、绑定 layer_e_sha256=7fd55f98 与 freeze_receipt_sha256=aa316ed7、diagnostic 数值与已记录 R1-A baseline TP458/FP415/FN366 一致）；C3 attempts 为 tracked 注册产物（raw sha256 c694f7cd 与其 manifest 一致）。两边 sample_ids 与 Gold 完全一致且各 150。同一个 canonical Gold 对象在同一进程内评价两边（canonical_gold_semantic_sha256=5d7ec7f6...，canonical_membership_sha256=e8e62686... 与注册绑定一致）。comparable=true，依据逐项写入 manifest。evaluator=当前 HEAD stage2_sun_literal_overlap.py（config sha 352113b5，source sha a6df2346，gold builder sha 2199d8cc）。未运行 CoreNLP/B0/H1/D1/LLM/网络；methods.json method_conformance_status 仍为 blocked_until_b0_r2，本轮未解除；未声明 method correctness 或 formal performance。focused tests 9 passed；全量 audit --with-tests 1400 passed, 24 skipped, 0 failed, integrity_pass=True, ERRORS=0, BLOCKERS=9, PASSES=22。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-03T23:29:03.792698+00:00 - B0-R1-ERR failure-type analysis of B0 predictions and root-cause document
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1407 passed, 24 skipped in 140.39s (0:02:20)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`bcd3193a6f4e4766aa5bf1c237a44238974e8bc7`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：新增 scripts/analyze_b0_error_types.py + tests/test_analyze_b0_error_types.py + docs/B0_ERROR_ANALYSIS.md。分析基准确认：C3 注册 attempts（c694f7cd）与 56d2b03 历史 Layer E canonical Gold（用户已授权只读 Gold span；未读当前 Layer E；临时文件在 formal_experiment/.tmp 自动清理）。主要发现：79%（218/276）missed Gold span 内容在其它字段被抽到，80%（280/351）错误预测压到其它字段 Gold；最大成因 C1 action span 吞并（constraint missed 143 中 108 内容在别字段、57 仅被 action 覆盖，例 estg_000003 'a shorter period' 被 action 'It may cover a shorter period if …' 吞掉；代码 actor_action.py _subtree_span 含 nsubj/全部依赖），C2 constraint<->condition 字段混淆（extra constraint 114 压 condition Gold、condition 31 压 constraint），C3 modality label 准确率 79.3%（definition<->obligation 混淆），C4 actor missed 22（8 个含词典词=依赖失败可修，14 个词典无覆盖需决策），C5 clause 38/231 未配对（低优先级），C6 结构性限制（缺 Sun 原资产、词典规模、Gold 语义差异如代词 'It'、H1 回落 B0 与 B0 无关）。本轮仅分析与文档，未实施任何修复；修复路线见文档第 6 节。focused tests 16 passed；全量 audit --with-tests 1407 passed, 24 skipped, 0 failed, integrity_pass=True, ERRORS=0, BLOCKERS=9, PASSES=22。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

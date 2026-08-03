@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-04
-**收录文件**：636 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：639 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -361,6 +361,7 @@
 | `docs/AGENT_RUNBOOK.md` | 活动 | Agent 分阶段派工规则与可复制 Prompt |
 | `docs/AI_CHANGE_PROTOCOL.md` | 活动 | 实验日志与自动检查协议 |
 | `docs/ANNOTATION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
+| `docs/B0_ERROR_ANALYSIS.md` | 活动 | 说明、规范或研究文档 |
 | `docs/B0_RECONSTRUCTION_DESIGN.md` | 活动 | 说明、规范或研究文档 |
 | `docs/DIRECTORY_GUIDE.md` | 活动 | 中文目录职责地图 |
 | `docs/ESTG150_CANDIDATE_PROTOCOL_V1.md` | 活动 | 说明、规范或研究文档 |
@@ -508,6 +509,7 @@
 | 文件 | 状态 | 用途 |
 |---|---|---|
 | `scripts/_precheck_estg150.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_b0_error_types.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/audit_ingest_sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/audit_project.py` | 活动 | 离线项目完整性检查（兼容文件名） |
 | `scripts/audit_stage2_to_stage3.py` | 活动 | Python 实现、脚本或测试 |
@@ -680,6 +682,7 @@
 | `tests/fixtures/sun_modality/synthetic_one_hot_non_binary.csv` | 活动 | 项目文件 |
 | `tests/fixtures/sun_modality/synthetic_small_class.csv` | 活动 | 项目文件 |
 | `tests/fixtures/sun_modality/synthetic_unknown_label.csv` | 活动 | 项目文件 |
+| `tests/test_analyze_b0_error_types.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_a_span_boundaries.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_v10_integration_contract.py` | 活动 | Python 实现、脚本或测试 |
