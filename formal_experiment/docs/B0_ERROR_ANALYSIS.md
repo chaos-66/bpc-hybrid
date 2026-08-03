@@ -11,8 +11,9 @@ B0 在正确的 Sun literal-overlap v2 主口径下 **F1≈0.71**（P=0.684，R=
 
 | 编号 | 成因 | 量化证据 | 可修性 |
 |---|---|---|---|
-| C1 | **Action span 过度吞并**（动作 span 吞掉主语与句尾约束内容） | constraint 的 143 个 missed 中 108 个内容其实在别的字段里，其中 57 个被 action 覆盖 | **可修**（收益最大） |
+| C1 | **Action span 过度吞并**（动作 span 吞掉主语与句尾约束内容） | constraint 的 143 个 missed 中 108 个内容其实在别的字段里，其中 57 个被 action 覆盖；matched 的 212 个 action 中 **192 个为过长，中位超出 54 字符、最大 739** | **可修**（收益最大） |
 | C2 | **constraint↔condition 双向字段混淆** | constraint 的 178 个 misclassified 中 152 个压到别的字段 Gold 上，其中 114 个压在 condition 上 | 部分可修（消歧规则；有 P/R trade-off 风险） |
+| C7 | **Under-extension（span 过短）** | matched 的 779 个 Gold span 中 202 个被预测短于 Gold（中位短 14 字符）：modality evidence 80、constraint 51、condition 50、action 16 | 可修（边界/evidence 范围） |
 | C3 | **模态四分类 label 混淆**（独立面板） | evidence 匹配上的 clause label 准确率 79.3%；definition↔obligation 混淆 16+7 | 可修（B0-R1-ALIGN 路由） |
 | C4 | **Actor 抽取不足** | 22 个 missed：8 个含词典词（依赖句法失败，可修）、14 个词典无覆盖（需决策） | 部分可修 |
 | C5 | **Clause 规划失配** | 231 个 Gold clause 中 38 个（16%）无 pred clause 以 IoU≥0.5 配对 | 低优先级（v2 口径不依赖 clause 对齐） |
@@ -77,11 +78,19 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
   - `estg_000003`：Gold constraint `a shorter period`，预测 action 为整句 `It may cover a shorter period if …`（0-37）；
   - `estg_000021`：Gold constraint `in such a quantity that actually precludes a sale`，预测 action 为 `sold and are granted only in such a quantity that actually precludes a sale. 21.`；
   - 244 个 action 中 8 个以冠词开头（如 `The actuarial reserve shall be calculated in accordance with…`），即主语被包进 action；
-  - 定量：constraint 的 143 个 missed 中 57 个只被 action 覆盖（另 16 个被 action+condition、10 个被 modality 等），合计绝大多数 missed 与 action 吞并有关。
+  - 定量：constraint 的 143 个 missed 中 57 个只被 action 覆盖（另 16 个被 action+condition、10 个被 modality 等），合计绝大多数 missed 与 action 吞并有关；
+  - 边界方向：matched 的 212 个 action Gold span 中 **192 个（91%）预测长于 Gold，中位超出 54 字符、均值 69、最大 739**——这是全系统最稳定、量级最大的单一缺陷，不只是"偶尔吞 constraint"。
 - 代码位置：`b0_v10/actor_action.py:39-54`（`_subtree_span` 把 nsubj/obl 等**所有**依赖子树节点纳入 action 范围）、`actor_action.py:127-171`（head 子树 + `safe_action_slice` max_chars=80 向右取到最右安全边界）。
 - 为什么这样设计：动词子树天然包含宾语与状语；Sun 原方法的 action 是短语级（VP），而这里取整棵子树，超出发话短语。
 - 预期影响：修复后 constraint 的 missed 显著下降、action 的 P 上升；注意 action 的 containment 匹配（112 个）中部分会变成 partial/exact，需重评确认 trade-off。
 - 风险：需要真实 CoreNLP 输出验证子树边界；改动属于行为变化，必须重跑 v2 重评并记录 delta。
+
+### C7. Under-extension（span 过短）—— 【可修】
+
+- 现象：与 C1 相反，**202 个已匹配的 Gold span 被预测得比 Gold 短**（中位短 14 字符、均值 36、最大 307），主要分布在 modality evidence（80 个）、constraint（51）、condition（50）。
+- 代码位置：modality evidence 只取到情态词附近（`b0_v10/modality.py` evidence 范围、`definition_resolver.py` evidence 选择），condition/constraint 的 `safe_window_end`/scope 截断语义。
+- 预期影响：改善已匹配 span 的边界质量（containment/partial 占比下降、exact 上升）；不影响 matched 计数，但提升语义覆盖与诊断面板。
+- 风险：与 C1 相反方向，修改边界逻辑时需同时防止过修（C1）与不足（C7），用重评逐批验证。
 
 ### C2. constraint↔condition 双向字段混淆 —— 【部分可修，有 trade-off 风险】
 
@@ -111,7 +120,7 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
 
 - 现象：231 个 Gold clause，193 个（84%）有 pred clause 以 IoU≥0.5 配对，**38 个（16%）无配对**；pred 侧共 249 个 clause。
 - 代码位置：`b0_v10/segmentation.py`、`estg150_b0_development_v3.py plan_clause_units_v4`（B0-R0 的 v2→v3 clause-planner 换用曾导致旧 diagnostic 口径下的差异；v2 主口径不依赖 clause 对齐，影响被摊薄）。
-- 处理建议：v2 口径下优先级低；但 clause 边界影响 C1/C2 的 span 生成，修复 C1/C2 时一并观察。
+- 处理建议：v2 口径下优先级低；但 clause 边界影响 C1/C2 的 span 生成，修复 C1/C2 时一并观察。补充核查：58 个"完全没抽到"的 span 中仅 4 个位于未配对 clause（clause 失配不是漏抽主因）。
 
 ### C6. 结构性限制 —— 【需资产 / 需用户决策 / 需正式 Gold】
 
@@ -122,15 +131,18 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
 
 ## 6. 修复路线建议（按预期收益排序；本轮不实施）
 
+该路线已并入 `MASTER_PIPELINE.md` §8.6.1（B0-R1 子批次表），本处为速查：
+
 | 顺序 | 批次 | 内容 | 预期影响（定性） | 风险 |
 |---|---|---|---|---|
-| 1 | B0-R1-ACTOR/ACTION | 修复 action 子树吞并（排除 nsubj/obl，收紧到 VP 范围）；修复 actor 依赖边查找 | constraint missed 大降、action P 升、actor R 升 | 需 CoreNLP 运行验证；行为变化 |
+| 1 | B0-R1-ACTION | 修复 action 子树吞并（排除 nsubj/obl，收紧到 VP 范围） | constraint missed 大降、action P 升、actor R 升 | 需 CoreNLP 运行验证；行为变化 |
 | 2 | B0-R1-SCOPE-DISAMBIG | constraint↔condition 消歧规则（小步、逐次重评） | 字段混淆 114+31 部分回收 | P/R trade-off，需净收益验证 |
 | 3 | B0-R1-ALIGN | DE/EN cue 验证（equal-count/split 伪 validated 修复） | modality label 准确率升 | 影响 modality 路由计数 |
 | 4 | B0-R1-BRIDGE | `<`/`<<`、multi-match/Tsurgeon 消费 | 消除潜伏错误源 | 当前 registry 无 operation，风险潜伏 |
-| 5 | （决策项） | actor 词典扩展、clause 规划复核 | actor R、clause 匹配 | 需用户授权/正式 Gold |
+| 5 | B0-R1-ACTOR | 多词 Actor 生产路径测试 + 依赖边查找 + C7 过短边界 | actor R、modality/constraint/condition 边界质量 | 需 CoreNLP 运行验证 |
+| 6 | （决策项） | actor 词典扩展（LEXICON-DECISION）、clause 规划复核 | actor R、clause 匹配 | 需用户授权/正式 Gold |
 
-每个批次必须：focused tests → `audit_project.py --with-tests` → 用 B0-R1-E2 同一协议重评 → 记录前后 delta 与原因 → `record_change.py` → 独立 commit + push。
+每个批次必须：focused tests → `audit_project.py --with-tests` → 用 B0-R1-E2 同一协议重评（同一 canonical Gold、同一进程双评）→ 记录前后 delta 与原因 → `record_change.py` → 独立 commit + push。
 
 ## 7. 与 D1/H1 的关系（供导师汇报参考）
 
