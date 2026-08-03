@@ -18,3 +18,9 @@ data/development/sun_modality/source_manifest.json text eol=lf
 # `*.json text eol=lf`, `outputs/** text eol=lf`, or any `text=auto` form
 # that would renormalize the whole repository.
 outputs/development/s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/*.json text eol=lf
+
+# B0-R1-E2 (2026-08-04): narrow line-ending pin for the B0-R1-E2 Sun
+# literal-overlap re-evaluation artifacts. Same rationale and scope
+# discipline as the C3 rule above: exact registered development output
+# directory only, never a broad `*.json text eol=lf` or `text=auto`.
+outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/*.json text eol=lf

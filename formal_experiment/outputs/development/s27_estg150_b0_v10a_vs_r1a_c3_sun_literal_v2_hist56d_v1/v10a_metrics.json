@@ -1,0 +1,94 @@
+{
+  "assignment": "none_independent_overlap_coverage",
+  "clause_alignment_required": false,
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "evaluation_unit": "statement",
+  "invalid_attempt_count": 0,
+  "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+  "method_id": "sun_rule_only",
+  "method_variant": "b0_enhanced_v10a",
+  "modality_policy": "evidence_span_extraction_only_label_ignored",
+  "overall": {
+    "extracted": 1129,
+    "f1": 0.7099133323456341,
+    "ground_truth": 1055,
+    "matched_ground_truth": 782,
+    "matched_predictions": 769,
+    "misclassified": 360,
+    "missed": 273,
+    "precision": 0.6811337466784765,
+    "recall": 0.7412322274881517
+  },
+  "overlap_threshold": "strictly_greater_than_zero_characters",
+  "per_field": {
+    "action": {
+      "extracted": 245,
+      "f1": 0.8577208361429534,
+      "ground_truth": 247,
+      "matched_ground_truth": 212,
+      "matched_predictions": 210,
+      "misclassified": 35,
+      "missed": 35,
+      "precision": 0.8571428571428571,
+      "recall": 0.8582995951417004
+    },
+    "actor": {
+      "extracted": 34,
+      "f1": 0.6238003838771594,
+      "ground_truth": 48,
+      "matched_ground_truth": 26,
+      "matched_predictions": 25,
+      "misclassified": 9,
+      "missed": 22,
+      "precision": 0.7352941176470589,
+      "recall": 0.5416666666666666
+    },
+    "condition": {
+      "extracted": 245,
+      "f1": 0.6857711607846391,
+      "ground_truth": 214,
+      "matched_ground_truth": 159,
+      "matched_predictions": 156,
+      "misclassified": 89,
+      "missed": 55,
+      "precision": 0.636734693877551,
+      "recall": 0.7429906542056075
+    },
+    "constraint": {
+      "extracted": 335,
+      "f1": 0.489127484392436,
+      "ground_truth": 302,
+      "matched_ground_truth": 159,
+      "matched_predictions": 153,
+      "misclassified": 182,
+      "missed": 143,
+      "precision": 0.45671641791044776,
+      "recall": 0.5264900662251656
+    },
+    "exception": {
+      "extracted": 14,
+      "f1": 0.8148148148148148,
+      "ground_truth": 13,
+      "matched_ground_truth": 11,
+      "matched_predictions": 11,
+      "misclassified": 3,
+      "missed": 2,
+      "precision": 0.7857142857142857,
+      "recall": 0.8461538461538461
+    },
+    "modality": {
+      "extracted": 256,
+      "f1": 0.880793307425771,
+      "ground_truth": 231,
+      "matched_ground_truth": 215,
+      "matched_predictions": 214,
+      "misclassified": 42,
+      "missed": 16,
+      "precision": 0.8359375,
+      "recall": 0.9307359307359307
+    }
+  },
+  "reporting_role": "primary_sun_phrase_extraction_metric",
+  "sample_count": 150,
+  "schema_version": "sun_literal_overlap_evaluation@2.0.0"
+}

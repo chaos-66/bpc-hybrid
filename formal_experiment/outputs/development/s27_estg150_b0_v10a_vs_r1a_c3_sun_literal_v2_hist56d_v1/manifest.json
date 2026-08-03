@@ -1,0 +1,215 @@
+{
+  "artifacts": {
+    "c3_metrics": {
+      "path": "c3_metrics.json",
+      "sha256": "903e767eee7a5b5779efb0e40970374f7e7cae3eaeb2b191f032c4c3a7af1508"
+    },
+    "delta": {
+      "path": "delta.json",
+      "sha256": "860bf01f5046c48d02a0d879a9c6eaf62d872d33f14a973eaef710cb51c197ac"
+    },
+    "v10a_metrics": {
+      "path": "v10a_metrics.json",
+      "sha256": "0db64d8cbbf0f8712c3aabb30853f312bb2a1505ce848d9be55d332b1fdee9be"
+    }
+  },
+  "attempts": {
+    "c3": {
+      "blob_oid": "6d14a7fb28258ff3868fbee13a38d5ae373fe059",
+      "git_tracked": true,
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1\\b0_attempts.json",
+      "raw_sha256": "c694f7cd1f7b218eff8327c2451ac9a3d8c923da245a407ebb09eafd5d0a8f8a",
+      "registered_manifest_sha256": "c694f7cd1f7b218eff8327c2451ac9a3d8c923da245a407ebb09eafd5d0a8f8a"
+    },
+    "sample_id_sets": {
+      "c3_count": 150,
+      "c3_matches_gold": true,
+      "gold_count": 150,
+      "v10a_count": 150,
+      "v10a_matches_gold": true
+    },
+    "v10a": {
+      "blob_oid": null,
+      "git_tracked": false,
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s27_estg150_b0_enhanced_v10a\\b0_attempts.json",
+      "provenance_note": "original v10a baseline run output; NOT present in 56d2b03 (git cat-file -e and narrow git ls-tree both negative) and never versioned; survives only as a local ignored artifact; its manifest is internally consistent (all 4 artifact hashes self-match) and binds layer_e_sha256=7fd55f98 and freeze_receipt_sha256=aa316ed7; diagnostic values match the recorded R1-A baseline (TP458/FP415/FN366)",
+      "raw_sha256": "79dc457cdf933cb9fbb29030bab3673b9af645dd0138d8e97f5d1b6dfa6b4792"
+    }
+  },
+  "claim_scope": "development",
+  "comparable": {
+    "basis": [
+      "same canonical Gold object built once from 56d2b03 Layer E and evaluated for both attempt sets in one process",
+      "same dataset_id / method_id / evaluator version for both sides",
+      "C3 attempts are the tracked registered artifact whose raw SHA-256 matches its own manifest",
+      "v10a attempts are the original baseline run's artifact, locally ignored and unversioned; residual provenance caveat documented above"
+    ],
+    "value": true
+  },
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "delta": {
+    "basis": "c3_minus_v10a",
+    "old_clause_aligned_hungarian_diagnostic_not_used": true,
+    "overall": {
+      "extracted": -18,
+      "f1": 0.00027800450522796893,
+      "ground_truth": 0,
+      "matched_ground_truth": -3,
+      "matched_predictions": -9,
+      "misclassified": -9,
+      "missed": 3,
+      "precision": 0.0029346601622075585,
+      "recall": -0.0028436018957346265
+    },
+    "per_field": {
+      "action": {
+        "extracted": -1,
+        "f1": -0.0023515003266902923,
+        "ground_truth": 0,
+        "matched_ground_truth": 0,
+        "matched_predictions": -2,
+        "misclassified": 1,
+        "missed": 0,
+        "precision": -0.004683840749414525,
+        "recall": 0.0
+      },
+      "actor": {
+        "extracted": 1,
+        "f1": -0.0076866398013301085,
+        "ground_truth": 0,
+        "matched_ground_truth": 0,
+        "matched_predictions": 0,
+        "misclassified": 1,
+        "missed": 0,
+        "precision": -0.021008403361344574,
+        "recall": 0.0
+      },
+      "condition": {
+        "extracted": -6,
+        "f1": 0.019652311064302985,
+        "ground_truth": 0,
+        "matched_ground_truth": 4,
+        "matched_predictions": 1,
+        "misclassified": -7,
+        "missed": -4,
+        "precision": 0.020169071812825567,
+        "recall": 0.01869158878504673
+      },
+      "constraint": {
+        "extracted": -5,
+        "f1": 0.002221855880400414,
+        "ground_truth": 0,
+        "matched_ground_truth": 0,
+        "matched_predictions": -1,
+        "misclassified": -4,
+        "missed": 0,
+        "precision": 0.0038896426956128716,
+        "recall": 0.0
+      },
+      "exception": {
+        "extracted": 0,
+        "f1": 0.0,
+        "ground_truth": 0,
+        "matched_ground_truth": 0,
+        "matched_predictions": 0,
+        "misclassified": 0,
+        "missed": 0,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "modality": {
+        "extracted": -7,
+        "f1": -0.016293111660327986,
+        "ground_truth": 0,
+        "matched_ground_truth": -7,
+        "matched_predictions": -7,
+        "misclassified": 0,
+        "missed": 7,
+        "precision": -0.004612198795180711,
+        "recall": -0.030303030303030276
+      }
+    }
+  },
+  "evaluator": {
+    "assignment": "none_independent_overlap_coverage",
+    "clause_alignment_required": false,
+    "config_sha256": "352113b568c6075c8b01dafa5fdf2e5ab4a1454bb10933cd2f9c27f5c008cc3f",
+    "evaluation_unit": "statement",
+    "evaluator_id": "sun_table8_literal_overlap_v2",
+    "fields": [
+      "modality",
+      "actor",
+      "action",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "gold_builder_source_sha256": "2199d8cca4da25d05cf2e9635d571ca035683bc9217f692809878db3c116a580",
+    "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+    "modality_policy": "evidence_span_extraction_only_label_ignored",
+    "overlap_threshold": "strictly_greater_than_zero_characters",
+    "schema_version": "sun_literal_overlap_evaluation@2.0.0",
+    "source_sha256": "a6df234611ef63ab9d47a3d5e886c3a711ccce8c6e5d8e164e42826bef978de7",
+    "strict_diagnostics_not_primary": true
+  },
+  "gold": {
+    "canonical_gold_semantic_sha256": "5d7ec7f6d6611d9029840cbd92254f0b342c5b8ef8f5cd7f1d93493995d315a4",
+    "canonical_membership_sha256": "e8e6268644cbc9b7ed42bef19f2e2e2432633a306eab9bf009725ef9571785d7",
+    "canonical_records": 150,
+    "modified": false,
+    "persisted_copy": false,
+    "read_only": true,
+    "registered_binding_freeze_receipt_sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961",
+    "registered_binding_layer_e_sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+    "registered_binding_membership_sha256": "e8e6268644cbc9b7ed42bef19f2e2e2432633a306eab9bf009725ef9571785d7",
+    "source": "56d2b03 (commit 56d2b03a1fb4e206db5bb92a8eb5ed51b942b650) historical Layer E + membership, read-only via git show bytes"
+  },
+  "is_formal_gold": false,
+  "is_formal_performance_result": false,
+  "llm_api_called": false,
+  "method_id": "sun_rule_only",
+  "network_called": false,
+  "paper_faithful_b0": false,
+  "provenance": {
+    "git_blobs": {
+      "freeze_receipt": {
+        "blob_oid": "a63b85d12d34eb744414e1607301c1dd30f2a449",
+        "path": "formal_experiment/outputs/reports/s22_estg150_human_annotation_freeze_v1.manifest.json",
+        "raw_sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961",
+        "size_bytes": 3678
+      },
+      "layer_e": {
+        "blob_oid": "f7c3952a02d74c3673a8d9518d9166a79b1e41fb",
+        "path": "formal_experiment/data/development/human_review/estg_150_human_correction_v1.json",
+        "raw_sha256": "0984ac9f60a8d2923292bae1a7434c4b1db1b1393fc0fcdeb9c278c3713b7266",
+        "size_bytes": 1272289
+      },
+      "membership": {
+        "blob_oid": "f380f04c8d52b3080b1ff9abc558577ed8ec348d",
+        "path": "formal_experiment/data/development/estg/estg_150_membership_hashes.json",
+        "raw_sha256": "8bd0516350b170b88ee12c772dde2adef5eda99cda47fc3cf03c88b19feb8238",
+        "size_bytes": 29210
+      }
+    },
+    "source_commit": "56d2b03a1fb4e206db5bb92a8eb5ed51b942b650",
+    "source_commit_ref": "56d2b03"
+  },
+  "run_command": {
+    "argv": [
+      "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\scripts\\reevaluate_sun_literal_v2_v10a_vs_c3.py"
+    ],
+    "executable": "D:\\environment\\Python\\python.exe"
+  },
+  "run_id": "s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1",
+  "safety": {
+    "artifacts": "created_no_overwrite",
+    "existing_attempts": "read_only",
+    "gold": "audit_read_only",
+    "gold_bytes_in_outputs": false,
+    "llm_api": "not_called",
+    "network": "not_called"
+  },
+  "schema_version": "estg150_b0_v10a_vs_c3_sun_literal_reevaluation_manifest@1.0.0",
+  "status": "succeeded_development_not_formal",
+  "task_id": "B0-R1-E2"
+}

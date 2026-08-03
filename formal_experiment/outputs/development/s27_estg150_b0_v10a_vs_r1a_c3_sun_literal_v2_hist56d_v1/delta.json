@@ -1,0 +1,82 @@
+{
+  "basis": "c3_minus_v10a",
+  "overall": {
+    "extracted": -18,
+    "f1": 0.00027800450522796893,
+    "ground_truth": 0,
+    "matched_ground_truth": -3,
+    "matched_predictions": -9,
+    "misclassified": -9,
+    "missed": 3,
+    "precision": 0.0029346601622075585,
+    "recall": -0.0028436018957346265
+  },
+  "per_field": {
+    "action": {
+      "extracted": -1,
+      "f1": -0.0023515003266902923,
+      "ground_truth": 0,
+      "matched_ground_truth": 0,
+      "matched_predictions": -2,
+      "misclassified": 1,
+      "missed": 0,
+      "precision": -0.004683840749414525,
+      "recall": 0.0
+    },
+    "actor": {
+      "extracted": 1,
+      "f1": -0.0076866398013301085,
+      "ground_truth": 0,
+      "matched_ground_truth": 0,
+      "matched_predictions": 0,
+      "misclassified": 1,
+      "missed": 0,
+      "precision": -0.021008403361344574,
+      "recall": 0.0
+    },
+    "condition": {
+      "extracted": -6,
+      "f1": 0.019652311064302985,
+      "ground_truth": 0,
+      "matched_ground_truth": 4,
+      "matched_predictions": 1,
+      "misclassified": -7,
+      "missed": -4,
+      "precision": 0.020169071812825567,
+      "recall": 0.01869158878504673
+    },
+    "constraint": {
+      "extracted": -5,
+      "f1": 0.002221855880400414,
+      "ground_truth": 0,
+      "matched_ground_truth": 0,
+      "matched_predictions": -1,
+      "misclassified": -4,
+      "missed": 0,
+      "precision": 0.0038896426956128716,
+      "recall": 0.0
+    },
+    "exception": {
+      "extracted": 0,
+      "f1": 0.0,
+      "ground_truth": 0,
+      "matched_ground_truth": 0,
+      "matched_predictions": 0,
+      "misclassified": 0,
+      "missed": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    "modality": {
+      "extracted": -7,
+      "f1": -0.016293111660327986,
+      "ground_truth": 0,
+      "matched_ground_truth": -7,
+      "matched_predictions": -7,
+      "misclassified": 0,
+      "missed": 7,
+      "precision": -0.004612198795180711,
+      "recall": -0.030303030303030276
+    }
+  }
+}

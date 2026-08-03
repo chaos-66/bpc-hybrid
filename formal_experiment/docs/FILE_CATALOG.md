@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-04
-**收录文件**：630 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：636 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -418,6 +418,10 @@
 | `outputs/development/s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/evaluation_independent82.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/sun_table8_any_overlap_diagnostic.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/c3_metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/delta.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/v10a_metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_primary_call_incident.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_recovery_batches.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -526,6 +530,7 @@
 | `scripts/promote_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/rebuild_d1_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
+| `scripts/reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_ai_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v10_development.py` | 活动 | Python 实现、脚本或测试 |
@@ -712,6 +717,7 @@
 | `tests/test_r15_sun_style_g2_extraction_rules.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g3_bpmn_violation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g4_outputs_overclaim.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |

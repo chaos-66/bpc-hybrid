@@ -48,6 +48,14 @@ formal_experiment/outputs/*
 !formal_experiment/outputs/reports/
 !formal_experiment/outputs/reports/**
 
+# B0-R1-E2 (2026-08-04): narrow allowlist for the only versioned
+# development re-evaluation output directory. Everything else under
+# outputs/development stays ignored.
+!formal_experiment/outputs/development/
+formal_experiment/outputs/development/*
+!formal_experiment/outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/
+!formal_experiment/outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/*
+
 # OS / IDE
 .DS_Store
 Thumbs.db
