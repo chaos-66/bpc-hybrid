@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-04
-**收录文件**：662 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：663 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -362,6 +362,7 @@
 | `docs/AI_CHANGE_PROTOCOL.md` | 活动 | 实验日志与自动检查协议 |
 | `docs/ANNOTATION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
 | `docs/B0_ERROR_ANALYSIS.md` | 活动 | 说明、规范或研究文档 |
+| `docs/B0_R2_METHOD_CROSSWALK.md` | 活动 | 说明、规范或研究文档 |
 | `docs/B0_RECONSTRUCTION_DESIGN.md` | 活动 | 说明、规范或研究文档 |
 | `docs/DIRECTORY_GUIDE.md` | 活动 | 中文目录职责地图 |
 | `docs/ESTG150_CANDIDATE_PROTOCOL_V1.md` | 活动 | 说明、规范或研究文档 |

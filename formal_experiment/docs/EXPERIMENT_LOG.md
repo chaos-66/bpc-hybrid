@@ -2253,3 +2253,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：LEXICON-DECISION：13 个无词典覆盖 actor 名词（successor/spouse/child/developers/bank/body/society/owners/shareholders/beneficiary）的扩展经治理复核判定为当前约束下不可实施——public_marker_sources_en_v2.json construction_mode=offline_from_preexisting_local_research_audit_and_pinned_public_seed（9 个来源全为公开引证，无 local 层），且缺口选择由 56d2b03 开发 Gold 驱动，属 S2.3 禁止评测数据回流与不看 Gold 调规则硬约束；合规路径 a) 用户提供公开法律 actor 名词来源后按公开种子扩展 b) 用户显式授权 local-frozen 扩展并记录事件 c) 保持为已披露方法局限（Pipeline 允许词典规模差异仅披露）。CLAUUSE-REVIEW：38/231 未配对 clause 复核结论=不改动（v2 口径不依赖 clause 对齐；58 个真正漏抽中仅 4 个在未配对 clause）。C7 过短边界判定为质量类（any-overlap 主口径无收益）暂缓。文档同步（B0_ERROR_ANALYSIS C4 残余/治理、MASTER_PIPELINE 3.4.26）。全量 audit 1432 passed / 24 skipped。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T06:36:07.680050+00:00 - B0-R2 method cross-walk documentation (status gate unchanged)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1432 passed, 24 skipped in 143.31s (0:02:23)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`a8c5ae7cad3f7ef47708dba74d2c946d8f9d8eff`；相关未提交路径：2 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：新增 docs/B0_R2_METHOD_CROSSWALK.md：Sun 核心方法 11 元素逐一对照本项目实现/测试/适配披露（BERT-TextCNN、CoreNLP、Tregex、Tsurgeon 诚实非实现、抽取顺序、六字段 schema、主口径 evaluator、模态 label、词典、分句、actor/action）。不改变 method_conformance_status（仍 blocked_until_b0_r2，变更需用户显式授权）；B0-R3 亦待授权。全量 audit 1432 passed / 24 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
