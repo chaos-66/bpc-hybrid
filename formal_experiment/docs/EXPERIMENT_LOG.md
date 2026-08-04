@@ -2322,3 +2322,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：用户逐字决定：'之前怎么跑出来的P、R，就用那个作为formal gold'。据此：formal Gold 基准 = 56d2b03 历史冻结 Layer E（sha 7fd55f98 CRLF / blob f7c3952a，freeze receipt aa316ed7，canonical gold semantic sha 5d7ec7f6…，membership e8e62686…），即本会话全部 B0 运行（v10a/C3 重评、ACTION/ALIGN/ACTOR、B0-R3 快照 F1 0.71865）所使用的同一 Gold 对象——因此既有 P/R 与 formal Gold 按构造一致。当前 v2 编辑面（d70857e0）的 0/150 状态不再作为 formal Gold 前置（用户决定覆盖）。注意边界：audit 的 formal_gold_publication_gate 仍由 configs/experiment_contract.json 的 route/stage2_dataset/stage3 状态控制（当前 reopened/pending/blocked），该字段翻转属用户/协调 Agent 权限，Agent 不自行修改；本事件仅记录决定与依据。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T08:22:52.736616+00:00 - B0-R3 final-state error analysis completed + non-completable items documented
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1436 passed, 24 skipped in 188.67s (0:03:08)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`69fe73a0445e62603e012d1ad65ea956495f9970`；相关未提交路径：1 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：补完 B0-R3 正式错误分析（B0_ERROR_ANALYSIS.md §8）：最终态失败分布（constraint 143 missed/178 misclassified 为最大残余且与 C3 持平，证明 B0-R1 修复未触及 constraint）；constraint 26 个无Gold交叠的 marker 归因（only 17/under 12+8/pursuant to 11/within the meaning 8）；C2 gold cue 一致性量化（that 6:5、who 3:2、to the extent 14:2、only 2:3、when 3:1、after 1:1）；modality label 路由归因（marker_obligation 20 次过度应用、heuristic classifier 8 次、marker_permission 否定漏判 5 次）。不能补完两项及原因记录在案：①逐案 gold-vs-方法人工裁决——Agent 被硬约束禁止推断人工决策，需用户/正式 Gold 流程；②C7 过短修复——主口径无收益+方向不确定+成本收益不成立，留待正式 Gold 后。全量 audit 1436 passed / 24 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

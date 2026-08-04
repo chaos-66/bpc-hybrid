@@ -170,9 +170,73 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
 - H1 当前等于 B0：H1 的 LLM 修正从未被接受，属于 H1 管线问题，不是 B0 问题；若 H1 的 patch 通道修复，H1 才可能真正高于 B0。
 - 因此"B0 为什么只有 0.71"的直接答案是：**字段归属错误（C1+C2）占绝对主导**——修好这两项，B0 的 P 预计可显著回升；剩余的天花板由词典规模与 Gold 语义裁决（C4/C6）决定。
 
-## 8. 附录：复现与数据出处
+## 8. B0-R3 最终状态错误分析（2026-08-04，补完）
+
+基于 B0-R3 快照运行产物（`…r2_r3_lex_hist56d_v1/b0_attempts.json`）与同一 56d2b03 canonical Gold 的逐 span 复分析：
+
+### 8.1 最终状态失败分布（对比 C3 基线）
+
+| 字段 | gold | pred | matched | missed | 漏:别字段 | 漏:全无 | misclassified | 错:压别字段 | 错:无Gold |
+|---|---|---|---|---|---|---|---|---|---|
+| modality | 231 | 249 | 208 | 23 | 22 | 1 | 42 | 24 | 18 |
+| actor | 48 | 65 | 46 | 2 | 1 | 1 | 20 | 18 | 2 |
+| action | 247 | 244 | 211 | 36 | 32 | 4 | 35 | 32 | 3 |
+| condition | 214 | 239 | 163 | 51 | 42 | 9 | 82 | 64 | 18 |
+| constraint | 302 | 330 | 159 | 143 | 107 | 36 | 178 | 152 | 26 |
+| exception | 13 | 14 | 11 | 2 | 2 | 0 | 3 | 3 | 0 |
+
+- **修复效果**：actor 由 22→2 missed（R 0.958）；其余字段与 C3 基本持平（action/condition/modality 的残余由 gold 语义差异与字段归属主导）。
+- **最终态最大残余 = constraint**（与 C3 完全未变）：143 missed（107 内容在别字段、36 全无）+ 178 misclassified（152 压别字段、26 无 Gold）。这证明 B0-R1 的修复没有触及 constraint 字段，其残余完全落在 C2（gold 语义差异 + registry 重叠，规则层不可安全消歧）与 C6（词典/资产披露项）。
+
+### 8.2 constraint "无 Gold 交叠"过度抽取的 marker 归因（26 个，最终态）
+
+| marker | 出现次数（可重叠） |
+|---|---|
+| only | 17 |
+| under / under section | 12 + 8 |
+| pursuant to | 11 |
+| within the meaning / within | 8 + 3 |
+| after / during / in accordance with | 各 3 |
+| between / at least | 各 1 |
+
+→ 过度抽取主因是 **"only" 与法律引用类 marker（under/pursuant to/within the meaning）的宽泛触发**：这些 cue 在句中被 scope/tregex 广泛命中，而 gold 只对其中部分标注 constraint。若未来要收紧，方向是这些 marker 的上下文约束（需逐条实验，属 registry/scope 层，与 C2 同属"规则层不可安全消歧"范畴）。
+
+### 8.3 C2 "gold 语义差异"的量化证据（cue 一致性）
+
+统计 gold 自身以同一 cue 开头的 span 在 condition/constraint 两个字段的分布（最终态 gold，非预测）：
+
+| cue | gold-condition | gold-constraint |
+|---|---|---|
+| that | 6 | 5 |
+| who | 3 | 2 |
+| to the extent | 14 | 2 |
+| only | 2 | 3 |
+| when | 3 | 1 |
+| after | 1 | 1 |
+
+→ **gold 对关系代词（that/who）与 "only" 确实内部不一致**（同一 cue 被标注为两个字段）；"to the extent" 以 condition 为主但确有 2 例标 constraint。这就是 C2 规则层无法安全消歧的可复核统计基础（不依赖任何人工新裁决）。
+
+### 8.4 模态 label 混淆的路由归因（最终态，evidence 匹配的 208 clause，准确率 78.85%）
+
+| 路由 | 混淆 | 次数 |
+|---|---|---|
+| marker_obligation | gold=definition → pred=obligation | 13 |
+| heuristic_aligned_classifier | gold=obligation → pred=definition | 5 |
+| marker_permission | gold=prohibition → pred=permission（否定漏判） | 5 |
+| marker_obligation | gold=permission → pred=obligation | 4 |
+| heuristic_aligned_classifier | gold=permission → pred=definition | 3 |
+| marker_obligation | gold=prohibition → pred=obligation | 3 |
+
+→ label 面板残余的三条机制：**(a) marker_obligation 过度应用（20 次）**——"shall/must" 类词典标记把 definition/permission/prohibition 判成 obligation；**(b) heuristic 分类器路由误判（8 次）**；**(c) marker_permission 未处理否定（5 次）**——prohibition 被标成 permission。若后续修 label 面板，方向是这三条路由的规则/证据调整（本轮未实施）。
+
+### 8.5 不能补完的两项及原因（如实记录）
+
+1. **逐案"gold 还是方法对"的人工裁决**：不能由 Agent 补。原因：项目硬约束明文"只有人可以把 review 状态改为 approved/reviewed/adjudicated；Agent 不得推断人工决策"（AGENTS.md/协议）；gold-vs-方法在每个争议 span 上的最终对错是研究判断，需要你或正式 Gold 流程逐案定。Agent 能提供的是 §8.3 的统计证据与逐样本争议清单（可随时生成），不能代替裁决。
+2. **C7 span 过短修复**：技术上可修，但判定暂不实施。原因：(a) 主口径（any-overlap）对边界不敏感，实测无指标收益（与 C1 同类，C1 的修复也只是质量收益）；(b) 修复方向不确定——modality evidence 现为 clause 全文或 tregex VP span，改为"总是全 clause"会转为过度扩展，需要多轮实验迭代；(c) 成本/收益不成立。原因已记录，留待正式 Gold 冻结后按需再议。
+
+## 9. 附录：复现与数据出处
 
 - 分析脚本：`formal_experiment/scripts/analyze_b0_error_types.py`（只读；`git show 56d2b03:<path>` 取历史 Layer E/membership，临时目录在 `formal_experiment/.tmp/`，自动清理）。
 - 评价结果：`formal_experiment/outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/`（v10a_metrics.json / c3_metrics.json / delta.json / manifest.json，全部 tracked）。
 - 关键 hash：canonical Gold semantic `5d7ec7f6…`；canonical membership `e8e62686…`（与注册绑定一致）；C3 attempts `c694f7cd…`；56d2b03 = `56d2b03a1fb4e206db5bb92a8eb5ed51b942b650`。
-- 全部数字为 development only；正式结论需 B0-R3（固定快照运行）与正式 Gold 冻结后。
+- 全部数字为 development only；B0-R3 快照（F1 0.71865）已按用户条件授权标记为论文依据候选；formal 门禁（route/stage2/stage3 重锁）仍待用户/协调流程。
