@@ -98,6 +98,8 @@ def filter_actor_span(
     start: int,
     end: int,
     lexicon: LexiconV2Runtime,
+    *,
+    head_word: str | None = None,
 ) -> dict[str, Any] | None:
     span_text = text[start:end].strip()
     if not span_text:
@@ -110,6 +112,13 @@ def filter_actor_span(
     # lexicon surfaces are the sole positive actor lexicon source
     if not any(w in lexicon.actor_surfaces for w in words):
         # allow short title-case legal roles even without lexicon? NO: single source
+        return None
+    # B0-R1-ACTOR: when the NP head token is known (the nsubj/obl dependent),
+    # the head itself must be a lexicon surface.  This rejects modifier-only
+    # matches such as "the business year of a bookkeeping farmer" (head
+    # "year") while keeping "the Federal Minister for Science and Research"
+    # (head "minister").
+    if head_word is not None and head_word.casefold() not in lexicon.actor_surfaces:
         return None
     if len(span_text.split()) > 14:
         return None
@@ -262,7 +271,16 @@ def extract_actors_actions_edges(
             cand_s1 = _trim_trailing_punct(source_text, cand_s1)
             if cand_s1 <= cand_s0:
                 continue
-            if filter_actor_span(source_text, cand_s0, cand_s1, lexicon) is None:
+            if (
+                filter_actor_span(
+                    source_text,
+                    cand_s0,
+                    cand_s1,
+                    lexicon,
+                    head_word=tokens[cand_idx - 1].get("word"),
+                )
+                is None
+            ):
                 stats["actors_rejected_non_subject"] += 1
                 continue
             actor_idx_tok = cand_idx
@@ -275,7 +293,13 @@ def extract_actors_actions_edges(
         s1 = _trim_trailing_punct(source_text, s1)
         if s1 <= s0:
             continue
-        filtered = filter_actor_span(source_text, s0, s1, lexicon)
+        filtered = filter_actor_span(
+            source_text,
+            s0,
+            s1,
+            lexicon,
+            head_word=tokens[actor_idx_tok - 1].get("word"),
+        )
         if filtered is None:
             stats["actors_rejected_non_subject"] += 1
             continue
@@ -321,7 +345,13 @@ def extract_actors_actions_edges(
         s1 = _trim_trailing_punct(source_text, s1)
         if s1 <= s0:
             continue
-        filtered = filter_actor_span(source_text, s0, s1, lexicon)
+        filtered = filter_actor_span(
+            source_text,
+            s0,
+            s1,
+            lexicon,
+            head_word=tokens[dep_i - 1].get("word"),
+        )
         if filtered is None:
             stats["actors_rejected_non_subject"] += 1
             continue

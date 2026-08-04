@@ -204,7 +204,7 @@ def test_action_emitted_without_any_actor() -> None:
 def test_passive_by_agent_obl_is_actor_with_edge() -> None:
     # CoreNLP 4.5.10 basicDependencies labels "sold by the employee" as
     # obl + case "by", not obl:agent.
-    text = "It may be sold by the employee."
+    text = "It may be sold by the employee"
     # 1 It, 2 may, 3 be, 4 sold, 5 by, 6 the, 7 employee.
     actors, actions, edges, _ = run(
         text,
@@ -224,7 +224,7 @@ def test_passive_by_agent_obl_is_actor_with_edge() -> None:
 
 
 def test_dative_to_obl_is_actor() -> None:
-    text = "It is left to the employee."
+    text = "It is left to the employee"
     # 1 It, 2 is, 3 left, 4 to, 5 the, 6 employee.
     actors, actions, edges, _ = run(
         text,
