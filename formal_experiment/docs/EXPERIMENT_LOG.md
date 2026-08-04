@@ -2335,3 +2335,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：补完 B0-R3 正式错误分析（B0_ERROR_ANALYSIS.md §8）：最终态失败分布（constraint 143 missed/178 misclassified 为最大残余且与 C3 持平，证明 B0-R1 修复未触及 constraint）；constraint 26 个无Gold交叠的 marker 归因（only 17/under 12+8/pursuant to 11/within the meaning 8）；C2 gold cue 一致性量化（that 6:5、who 3:2、to the extent 14:2、only 2:3、when 3:1、after 1:1）；modality label 路由归因（marker_obligation 20 次过度应用、heuristic classifier 8 次、marker_permission 否定漏判 5 次）。不能补完两项及原因记录在案：①逐案 gold-vs-方法人工裁决——Agent 被硬约束禁止推断人工决策，需用户/正式 Gold 流程；②C7 过短修复——主口径无收益+方向不确定+成本收益不成立，留待正式 Gold 后。全量 audit 1436 passed / 24 skipped。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T08:54:11.165676+00:00 - B0-R3 status corrected to verified (B0 refinement phase complete)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1436 passed, 24 skipped in 139.83s (0:02:19)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`36d37010fb56e953532eebe555e37ab3b2e7b913`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：B0-R3 行改为 verified：快照运行 F1 0.71865 + 最终态错误分析（B0_ERROR_ANALYSIS §8）完成；changelog 3.4.29。B0-R0–B0-R3 全部 verified，B0 完善阶段结束；B0-R4/B0-R5 待 formal 门禁与后续轨道。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
