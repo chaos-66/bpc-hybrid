@@ -71,7 +71,7 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
 
 ## 5. 根因清单
 
-### C1. Action span 过度吞并 —— 【可修，预期收益最大】
+### C1. Action span 过度吞并 —— 【已修，实测为质量收益（主口径持平）】
 
 - 现象：action span 从主语开始、延伸到句尾，把 constraint/condition 内容一起吞掉。
 - 证据（注册 C3 产物 + 本分析）：
@@ -81,9 +81,8 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
   - 定量：constraint 的 143 个 missed 中 57 个只被 action 覆盖（另 16 个被 action+condition、10 个被 modality 等），合计绝大多数 missed 与 action 吞并有关；
   - 边界方向：matched 的 212 个 action Gold span 中 **192 个（91%）预测长于 Gold，中位超出 54 字符、均值 69、最大 739**——这是全系统最稳定、量级最大的单一缺陷，不只是"偶尔吞 constraint"。
 - 代码位置：`b0_v10/actor_action.py:39-54`（`_subtree_span` 把 nsubj/obl 等**所有**依赖子树节点纳入 action 范围）、`actor_action.py:127-171`（head 子树 + `safe_action_slice` max_chars=80 向右取到最右安全边界）。
-- 为什么这样设计：动词子树天然包含宾语与状语；Sun 原方法的 action 是短语级（VP），而这里取整棵子树，超出发话短语。
-- 预期影响：修复后 constraint 的 missed 显著下降、action 的 P 上升；注意 action 的 containment 匹配（112 个）中部分会变成 partial/exact，需重评确认 trade-off。
-- 风险：需要真实 CoreNLP 输出验证子树边界；改动属于行为变化，必须重跑 v2 重评并记录 delta。
+- **实测（2026-08-04，B0-R1-ACTION）**：修复 = `_subtree_span` 排除 nsubj/nsubj:pass/csubj/obl:agent/nmod:agent/advcl/ccomp/mark/discourse/parataxis/cc/conj。真实运行后主口径 F1 0.71019→0.71024（**+0.00005，持平**），delta 仅发生在 action 字段（+1 matched_p / −1 matched_gt），其余五字段全 0（隔离性验证）；**质量收益**：主语开头 action 8→0，strict-exact action F1 0.0122→0.0367（3.0×）。结论：**C1 是边界质量修复，不是 v2 any-overlap 主口径的指标驱动项**——主口径只对字段归属/抽到与否/invalid 敏感，对边界不敏感；修复产物 `outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actionfix_hist56d_v1/`。
+- 残余：`if 1.` 之类从句尾仍偶有进入 action（真实 parse 中编号/从句依赖关系不同），属小项。
 
 ### C7. Under-extension（span 过短）—— 【可修】
 
@@ -92,13 +91,13 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
 - 预期影响：改善已匹配 span 的边界质量（containment/partial 占比下降、exact 上升）；不影响 matched 计数，但提升语义覆盖与诊断面板。
 - 风险：与 C1 相反方向，修改边界逻辑时需同时防止过修（C1）与不足（C7），用重评逐批验证。
 
-### C2. constraint↔condition 双向字段混淆 —— 【部分可修，有 trade-off 风险】
+### C2. constraint↔condition 双向字段混淆 —— 【实测：候选被拒，记为方法局限】
 
 - 现象：同一段文本在 Gold 里是 condition、预测写成 constraint（114 个），或反之（31 个）。
-- 代码位置：`b0_v10/scope.py:37-49`（`_SURFACE_SCOPE` 打字：`within/before/after/until/prior to…` → TEMPORAL_LIMIT；`if/when/where/once/in case` → CONDITION_SUBORDINATOR）、`resources/corenlp/sun_phrase_patterns_v3_enhanced.json:56-60,69-78`（condition 与 constraint 的 Tregex 模式大量共享 `in/upon/on/after/before/to`、`subject to`、`for … purpose` 等 cue）。
-- 本质：法律条款中时间/条件边界在语义上就是模糊的（"within 30 days if…" 同时含两种语义）；Gold 的裁决是人工语义判定。
-- 预期影响：消歧规则（如连词优先、`if` 优先于 `within`）可减少 114+31 中的一部分；但**必然伴随 P/R trade-off**，MASTER_PIPELINE §8.6 允许字段间 trade-off，需逐次重评验证净收益。
-- 风险：可能伤及 constraint 的 R（它已是最弱字段）；需小步实验。
+- 代码位置：`b0_v10/scope.py:37-49`（`_SURFACE_SCOPE` 打字）、`resources/corenlp/sun_phrase_patterns_v3_enhanced.json:56-60,69-78`（condition 与 constraint 的 Tregex 模式大量共享 cue，如 `PP=constraint << to << an|the` 与 `PP=condition << to << extent|purpose|case` 同时捕获 "to the extent"）。
+- **实测（2026-08-04，B0-R1-SCOPE-DISAMBIG）**：候选规则 = 交叉字段同界 span 去重（恰好一侧 lexicon 时 lexicon 字段胜出）。真实运行后 F1 0.71019→0.70964（**−0.0005，负**）：规则在真实管线只触发 1 次（44 个同界双发中 43 个为双 tregex，按设计跳过），且移除的是 1 个**已匹配**的 condition 唯一覆盖。按 §8.6 迭代规则（固定主口径判定）**拒绝**，scope.py 已回退，运行产物保留为负面证据（`outputs/development/s27_estg150_b0_enhanced_v10a_r1b_scope_disambig_hist56d_v1/`）。
+- **拒绝的机制证据**：(1) 33 个已匹配 condition span 完全依赖 that/which/who 关系代词条件标记（删即失 R）；(2) gold 对 "to the extent"/关系从句语义内部不一致（同短语在不同样本分别标 condition/constraint，个别位置双标注）；(3) 双 tregex 同界对无论偏向哪边都对称损失匹配（估 −0.003 F1）。在不"看 Gold 反向调规则"的硬约束下，规则层无法安全消除。
+- 残余方向：registry 模式层复核（去掉 constraint 对 "to the extent" 的捕获，收益约 4-6 FP）需用户决策；其余为方法-vs-Gold 语义分歧，按 Pipeline 披露为方法局限（论文可写，与 D1 constraint R=0.288 同性质）。
 
 ### C3. 模态四分类 label 混淆 —— 【可修，独立面板】
 

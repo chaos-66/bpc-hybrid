@@ -2141,3 +2141,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：批次收尾：generate_file_catalog 重新生成（650 文件，纳入 C2 候选运行目录 4 件套 + scope.py 回退 + 测试删除）；全量 audit --with-tests 1413 passed / 24 skipped / 0 failed, integrity_pass=True。前一 experiment_run 事件（B0-R1-SCOPE-DISAMBIG，integrity_pass=False）记录的是 catalog 再生成前的中间状态测试结果（1 failed = catalog 未含新目录），以本事件为准收尾；两事件均不可变。C2 候选按实测负 delta 拒绝（见前一事件 notes），scope.py 与工作树一致（回退完成）。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T02:28:34.552292+00:00 - Record measured C1/C2 outcomes in error analysis and pipeline docs
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1413 passed, 24 skipped in 159.75s (0:02:39)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`2de85b04dd98c71d211d6a084eadb254e60c3200`；相关未提交路径：2 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：B0_ERROR_ANALYSIS.md：C1 改为【已修，实测质量收益】，C2 改为【实测候选被拒，记为方法局限】，含真实运行数字与机制证据。MASTER_PIPELINE 3.4.23：§8.6.1 ACTION/SCOPE-DISAMBIG 两行更新为实测结论；变更日志追加 3.4.23 行。无代码变更。全量 audit 1413 passed / 24 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
