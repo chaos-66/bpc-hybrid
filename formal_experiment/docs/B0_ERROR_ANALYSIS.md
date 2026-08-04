@@ -129,6 +129,12 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
 - **实测结果**：主口径 F1 0.71024→**0.71205（+0.0018，本系列首个正向主口径 delta）**，R +0.0066、P −0.0023；actor 字段 F1 0.616→0.670（R 0.542→0.688）；8 个漏抽全部找回；中心词校验把候选 FP 从 29 砍到 17。v1（无中心词校验）实测 −0.0021 被拒，v2 保留。
 - 产物：`outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actor_hist56d_v2/`。残余（B0-R1-LEXICON-DECISION 决策项）：ACTOR-v2 后仍漏 15 个——1 个代词 "It"（Gold 语义差异，需正式 Gold 裁决）、1 个 "the employee"（000504 结构残余，待查）、13 个无词典覆盖名词（successor/spouse/child/developers/bank/body/society/owners/shareholders/beneficiary）。
   - **治理结论**：13 个名词的词典扩展**不能在当前约束下实施**——(1) `public_marker_sources_en_v2.json` construction_mode=`offline_from_preexisting_local_research_audit_and_pinned_public_seed`，9 个来源全部为公开论文/文档引证，新增条目必须可溯源；(2) 缺口名词的选择由 56d2b03 开发 Gold 缺口驱动，属于 S2.3"禁止评测数据回流"与"不看最终 Gold 反向调规则"硬约束范畴。合规路径：a) 用户提供公开法律 actor 名词来源（如已发表词典/标注规范）后按公开种子扩展；b) 用户明确授权 local-frozen 扩展并记录事件（治理覆盖）；c) 保持缺口为已披露方法局限（Pipeline 允许：词典规模不同只需披露，不阻断方法级复现）。
+- **用户决定（2026-08-04）**：选择路径 b——授权"破例用答案反推词典，并且接受后果"，但要求严格记录并**分别报告词典覆盖/未覆盖的 P/R**。已实施：13 个名词（successor/spouse/child/developer(s)/bank/body/society/owner(s)/shareholder(s)/beneficiary）以 source `authorized_local_frozen_estg150_gap_2026_08_04`（tier `authorized_local_frozen_gap`）加入 v2 actor 词典；sources manifest、actor `_meta.policy_change`、manifest generation note 与实验事件均记录该治理覆盖；loader 校验字段（raw sha256/entry_count）精确更新。
+- **覆盖/未覆盖 P/R（B0-R3 快照运行实测，用户要求）**：
+  - **词典覆盖**（47/48 个 Gold actor span）：P=0.6923，R=0.9787，F1=0.8110（pred 65，matched 46）；
+  - **未覆盖**（1/48，代词 "It" estg_000003，Gold-vs-方法语义差异，需正式 Gold 裁决）：P=0，R=0。
+  - actor 字段整体：P=0.6923，R=0.9583，F1=0.8039（matched_gt 46/48）。
+- **B0-R3 快照运行（最终方法 + 授权词典，产物 `…r2_r3_lex_hist56d_v1/`）**：主口径 F1=**0.71865**（P 0.6845/R 0.7564），vs 原始 C3 0.71019（+0.0085）、vs ACTOR-v2 0.71205（+0.0066）；按用户条件授权（结果优于原）该数字标记为论文依据候选。
 
 ### C5. Clause 规划失配 —— 【低优先级】
 

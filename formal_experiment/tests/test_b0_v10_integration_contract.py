@@ -208,8 +208,9 @@ def test_v10_runner_help_succeeds_offline() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 5. Audit semantics: components present is a PASS, but method conformance
-#    MUST stay a BLOCKER until B0-R2 sets the explicit status.
+# 5. Audit semantics: components present is a PASS; method conformance was a
+#    BLOCKER until the user-authorized B0-R2 gate flip (2026-08-04), which
+#    clears the blocker by design (MASTER_PIPELINE 8.6 B0-R2 row).
 # ---------------------------------------------------------------------------
 
 
@@ -217,37 +218,40 @@ def _codes(audit: dict, level: str) -> set[str]:
     return {item["code"] for item in audit["findings"][level]}
 
 
-def test_audit_components_pass_and_method_conformance_blocker_both_present() -> None:
+def test_audit_components_pass_and_method_conformance_blocker_cleared() -> None:
     from formal_experiment.audit import collect_project_audit
 
     audit = collect_project_audit()
     passes = _codes(audit, "passes")
     blockers = _codes(audit, "blockers")
     assert "b0_paper_faithful_components_present" in passes
-    assert "sun_stage2_baseline_not_paper_faithful" in blockers
+    assert "sun_stage2_baseline_not_paper_faithful" not in blockers
 
 
-def test_methods_json_sun_rule_only_has_blocked_until_b0_r2() -> None:
+def test_methods_json_sun_rule_only_verified_after_user_authorization() -> None:
     doc = json.loads(
         _workspace_path("configs/methods.json").read_text(encoding="utf-8")
     )
     methods = {m["id"]: m for m in doc["methods"]}
     sun_rule = methods.get("sun_rule_only")
     assert sun_rule is not None
-    assert sun_rule.get("method_conformance_status") == "blocked_until_b0_r2"
+    assert (
+        sun_rule.get("method_conformance_status")
+        == "verified_method_level_independent_reconstruction"
+    )
 
 
 def test_audit_blocker_message_cites_b0_r2_gate() -> None:
     from formal_experiment.audit import collect_project_audit
 
     audit = collect_project_audit()
-    msg = next(
-        item["message"]
-        for item in audit["findings"]["blockers"]
-        if item["code"] == "sun_stage2_baseline_not_paper_faithful"
+    # After the user-authorized B0-R2 gate flip the blocker is cleared; the
+    # methods.json note still cites the gate vocabulary for auditability.
+    doc = json.loads(
+        _workspace_path("configs/methods.json").read_text(encoding="utf-8")
     )
-    # The blocker must reference the explicit method_conformance_status gate
-    # so the audit is auditable from the message alone.
+    sun_rule = {m["id"]: m for m in doc["methods"]}["sun_rule_only"]
+    msg = sun_rule.get("notes", "")
     assert "method_conformance_status" in msg
     assert "B0-R2" in msg
     assert "verified_method_level_independent_reconstruction" in msg

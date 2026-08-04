@@ -646,7 +646,12 @@ def test_audit_keeps_later_experiment_phases_blocked() -> None:
     assert "formal_methods_not_ready" in blockers
     assert "stage2_dataset_route_relock_pending" in blockers
     assert "stage2_dataset_alignment_pending" not in blockers
-    assert "sun_stage2_baseline_not_paper_faithful" in blockers
+    # B0-R2 (2026-08-04, user-authorized): method_conformance_status flipped to
+    # verified_method_level_independent_reconstruction, so the
+    # sun_stage2_baseline_not_paper_faithful blocker is cleared by design
+    # (MASTER_PIPELINE 8.6 B0-R2 row); the method-level pass must be present.
+    assert "sun_stage2_baseline_not_paper_faithful" not in blockers
+    assert "b0_paper_faithful_components_present" in _codes(audit, "passes")
     assert "direct_llm_runner_missing" not in blockers
     # Old contradictory blocker is removed
     assert "formal_human_review_paused" not in blockers

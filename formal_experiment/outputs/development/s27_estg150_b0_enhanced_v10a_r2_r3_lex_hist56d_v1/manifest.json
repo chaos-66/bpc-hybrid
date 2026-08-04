@@ -1,0 +1,452 @@
+{
+  "artifacts": {
+    "attempts": {
+      "path": "b0_attempts.json",
+      "sha256": "656545cec2fd6ca042d5253a1cc0d062d24e05d38d52288cb4f8ea67f7a55457"
+    },
+    "evaluation_all150": {
+      "path": "evaluation_all150.json",
+      "sha256": "ef780ffc6f43bb54bf1184fd1f70f1e76b5694667cf029cf7fea8b86658e4af9"
+    },
+    "evaluation_independent82": {
+      "path": "evaluation_independent82.json",
+      "sha256": "c593c998115c59ac1ed44056341a1d041ee1c9b77d3bcf4af1d4f2ade7d4c5e8"
+    },
+    "sun_table8_literal_overlap_v2": {
+      "path": "sun_table8_literal_overlap_v2.json",
+      "sha256": "3ed8c614b71eca50b9bc40de69c13ee67687a0f0f9c1c64e2683c1b792569df6"
+    }
+  },
+  "claim_scope": "development",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "evaluation_roles": {
+    "diagnostics": [
+      "evaluation_all150",
+      "evaluation_independent82"
+    ],
+    "primary": {
+      "artifact": "sun_table8_literal_overlap_v2",
+      "assignment": "none_independent_overlap_coverage",
+      "clause_alignment_required": false
+    }
+  },
+  "input_binding": {
+    "canonical_gold_copy_persisted": false,
+    "canonical_gold_membership_sha256": "e8e6268644cbc9b7ed42bef19f2e2e2432633a306eab9bf009725ef9571785d7",
+    "config_sha256": "9d1c7e97f1ddbec0efac384a1cd1bd9b35df4756089be457a31142b209f90e81",
+    "freeze_receipt_sha256": "aa316ed71751192cada9c3077ab1ebbba76081b20d102e9873c66ac315146961",
+    "layer_e_sha256": "7fd55f98a7dd6aeef58a93be825465c767f00feeab84c6d4215afc434a135b1c",
+    "membership_hashes_sha256": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b",
+    "primary_evaluator_config_sha256": "07bd50e1d8ec99268064d4c0bcde721c56458a48b3e74d6632b1cb677af7a263",
+    "strict_diagnostic_evaluator_config_sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f"
+  },
+  "is_formal_performance_result": false,
+  "method_id": "sun_rule_only",
+  "method_variant": "b0_enhanced_v10a",
+  "paper_faithful_b0": false,
+  "prior_v1_preserved": true,
+  "route_boundaries": {
+    "context_sidecar_used": false,
+    "formal_gold_published": false,
+    "formal_performance_result": false,
+    "german_to_english_fidelity_human_verified": false,
+    "interpretation": "Development evidence for method-defect repairs on B0. Not formal Gold publication. Tracks remain sentence-only English with independent-82 sensitivity.",
+    "open_issue_ids": [
+      "RWI-0001",
+      "RWI-0007"
+    ],
+    "same_sentence_only_approved_english_phrase_input_for_future_b0_h1_d1": true
+  },
+  "run_id": "s27_estg150_b0_enhanced_v10a",
+  "runtime": {
+    "alignment_summary": {
+      "by_status": {
+        "equal_count_candidate": 46,
+        "heuristic_monotone_pack_unvalidated": 82,
+        "unsupported": 72,
+        "validated_anchor_alignment": 49
+      },
+      "heuristic_supported": 177,
+      "note": "heuristic_supported is not verified alignment",
+      "total": 249,
+      "unsupported": 72,
+      "validated": 49
+    },
+    "bridge_class": "SunPhraseRuleBatchBridgeMulti",
+    "bridge_seconds": 0.9914925000630319,
+    "bridge_source": "tools/corenlp/SunPhraseRuleBatchBridgeMulti.java",
+    "classifier_mean_confidence": 0.7086173816857069,
+    "classifier_seconds": 27.92505110008642,
+    "compose_seconds": 0.445489700185135,
+    "corenlp_seconds": 242.3035160000436,
+    "device": "cpu",
+    "edge_stats": {
+      "edges": 45
+    },
+    "final_hybrid_label_counts_by_clause": {
+      "definition": 53,
+      "obligation": 120,
+      "permission": 55,
+      "prohibition": 21
+    },
+    "lexicon_v2": {
+      "active_counts": {
+        "actor": 50,
+        "condition": 34,
+        "constraint": 45,
+        "exception": 16,
+        "modality": 29
+      },
+      "category_file_sha256": {
+        "actor": "43e404d2a69c091e6b07ee2a474ab4f8bb3021403fc481ca2500952a6a6d8378",
+        "condition": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a",
+        "constraint": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1",
+        "exception": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e",
+        "modality": "cb6fae1292e3601b0bf10ca21459e37f63957a1e34f58d8155bc7bee74b69095"
+      },
+      "final_affected_spans": 583,
+      "legacy_broken_only_label_ignored": 241,
+      "lexicon_id": "public_marker_lexicon_en_v2",
+      "loaded_active_total": 174,
+      "manifest_sha256": "f89775fb228b8803274250fbcfe11b7f15b777b0dbc0931238b4dcc47e51833f",
+      "modality_patterns_compiled": 29,
+      "scope_accepted": 506,
+      "scope_invocations": 747,
+      "scope_raw_matches": 515,
+      "scope_rejected": 9,
+      "tregex_accepted": 448,
+      "tregex_candidates": 547,
+      "tregex_final_affected": 448
+    },
+    "match_count": 1401,
+    "method_id": "sun_rule_only",
+    "method_variant": "b0_enhanced_v10a",
+    "modality_route_counts": {
+      "definition_structure": 4,
+      "heuristic_aligned_classifier": 31,
+      "marker_obligation": 106,
+      "marker_permission": 49,
+      "prohibition_negation": 19,
+      "record_level_classifier_fallback": 28,
+      "validated_aligned_classifier": 12
+    },
+    "paper_faithful_b0": false,
+    "pattern_count": 29,
+    "patterns_path": "resources/corenlp/sun_phrase_patterns_v3_enhanced.json",
+    "placeholder_classifier_count": 0,
+    "predicted_clause_count": 249,
+    "profile_id": "v10-A_scope_tregex_recall_recovery",
+    "record_count": 150,
+    "runtime_identity": {
+      "code_jar": {
+        "bytes": 9118725,
+        "name": "stanford-corenlp-4.5.10.jar",
+        "sha256": "f813ce4ed7319d79225f2a520d40733075c6b3500dd0b81ee069229e461aab43"
+      },
+      "models_jar": {
+        "bytes": 474409531,
+        "name": "stanford-corenlp-4.5.10-models.jar",
+        "sha256": "a5da9f6feb35a0fd2ea2cbe8909bede3952965b238a68c833ae3e031ed9026a0"
+      }
+    },
+    "s26_config_rel": "configs/models/sun_b0_s26_candidate_B_v1.json",
+    "sentence_count": 266,
+    "surgery_count": 0,
+    "terminal_tree_removal_count": 0,
+    "total_seconds": 271.6655493003782,
+    "tsurgeon_enabled": false
+  },
+  "safety": {
+    "data_gold_written": false,
+    "data_input_written": false,
+    "estimated_cost_usd": 0.0,
+    "formal_predictions_or_results_written": false,
+    "gold_read_only": true,
+    "human_decisions_modified": false,
+    "llm_api_called": false,
+    "llm_call_count": 0,
+    "network_allowed": false,
+    "network_called": false,
+    "row_level_development_predictions_persisted": true
+  },
+  "schema_version": "estg150_b0_enhanced_development_manifest@1.1.0",
+  "status": "succeeded_development_not_formal",
+  "task_id": "S2.7-B0-ENHANCED-DEV",
+  "tracks": {
+    "strict_clause_aligned_all150_diagnostic": {
+      "clause_segmentation": {
+        "aligned_match_count": 189,
+        "alignment_f1": 0.7875000000000001,
+        "alignment_precision": 0.7590361445783133,
+        "alignment_recall": 0.8181818181818182,
+        "exact_f1": 0.1625,
+        "exact_match_count": 39,
+        "exact_precision": 0.1566265060240964,
+        "exact_recall": 0.16883116883116883,
+        "gold_count": 231,
+        "mean_gold_clause_span_iou": 0.763963223084991,
+        "mean_matched_clause_span_iou": 0.933732828214989,
+        "minimum_iou": 0.5,
+        "predicted_count": 249
+      },
+      "field_strict_exact": {
+        "action": {
+          "f1": 0.03665987780040733,
+          "precision": 0.036885245901639344,
+          "recall": 0.03643724696356275
+        },
+        "actor": {
+          "f1": 0.4601769911504425,
+          "precision": 0.4,
+          "recall": 0.5416666666666666
+        },
+        "condition": {
+          "f1": 0.28697571743929357,
+          "precision": 0.2719665271966527,
+          "recall": 0.3037383177570093
+        },
+        "constraint": {
+          "f1": 0.12974683544303797,
+          "precision": 0.12424242424242424,
+          "recall": 0.1357615894039735
+        },
+        "exception": {
+          "f1": 0.14814814814814817,
+          "precision": 0.14285714285714285,
+          "recall": 0.15384615384615385
+        }
+      },
+      "field_token_overlap_micro": {
+        "action": {
+          "f1": 0.2146617226597374,
+          "precision": 0.21598136439739973,
+          "recall": 0.21335810895937463
+        },
+        "actor": {
+          "f1": 0.5149627658477216,
+          "precision": 0.4476214810830196,
+          "recall": 0.606154088966589
+        },
+        "condition": {
+          "f1": 0.4801136694439031,
+          "precision": 0.4550031218788454,
+          "recall": 0.5081576921917946
+        },
+        "constraint": {
+          "f1": 0.2866599336467924,
+          "precision": 0.2744986031284436,
+          "recall": 0.2999488047430013
+        },
+        "exception": {
+          "f1": 0.4489175431874923,
+          "precision": 0.432884773787939,
+          "recall": 0.46618360254085733
+        }
+      },
+      "modality_clause_accuracy": 0.6363636363636364,
+      "modality_macro_f1": 0.5699314321333957,
+      "modality_per_class": {
+        "definition": {
+          "f1": 0.34782608695652173,
+          "fn": 23.0,
+          "fp": 37.0,
+          "precision": 0.3018867924528302,
+          "precision_display": 0.3018867924528302,
+          "recall": 0.41025641025641024,
+          "support": 39,
+          "tp": 16.0
+        },
+        "obligation": {
+          "f1": 0.7096774193548386,
+          "fn": 20.0,
+          "fp": 43.0,
+          "precision": 0.6416666666666667,
+          "precision_display": 0.6416666666666667,
+          "recall": 0.7938144329896907,
+          "support": 97,
+          "tp": 77.0
+        },
+        "permission": {
+          "f1": 0.6666666666666666,
+          "fn": 23.0,
+          "fp": 16.0,
+          "precision": 0.7090909090909091,
+          "precision_display": 0.7090909090909091,
+          "recall": 0.6290322580645161,
+          "support": 62,
+          "tp": 39.0
+        },
+        "prohibition": {
+          "f1": 0.5555555555555556,
+          "fn": 18.0,
+          "fp": 6.0,
+          "precision": 0.7142857142857143,
+          "precision_display": 0.7142857142857143,
+          "recall": 0.45454545454545453,
+          "support": 33,
+          "tp": 15.0
+        }
+      },
+      "sample_count": 150,
+      "semantic_coverage": {
+        "any_api_error_rate": 0.0,
+        "api_error_rate": 0.0,
+        "complete_record_rate": 0.37333333333333335,
+        "gold_required_count": 1055,
+        "gold_required_presence_recall": 0.6947867298578199,
+        "hallucinated_field_rate": 0.357581069237511,
+        "invalid_or_api_error_rate": 0.0,
+        "invalid_record_rate": 0.0,
+        "matched_presence_count": 733,
+        "predicted_count": 1141,
+        "predicted_field_precision": 0.642418930762489,
+        "recovered_api_error_rate": 0.0,
+        "schema_valid_rate": 1.0,
+        "unsupported_or_ambiguous_rate": 0.0
+      }
+    },
+    "strict_clause_aligned_independent82_diagnostic": {
+      "clause_segmentation": {
+        "aligned_match_count": 92,
+        "alignment_f1": 0.7796610169491526,
+        "alignment_precision": 0.7244094488188977,
+        "alignment_recall": 0.8440366972477065,
+        "exact_f1": 0.16949152542372883,
+        "exact_match_count": 20,
+        "exact_precision": 0.15748031496062992,
+        "exact_recall": 0.1834862385321101,
+        "gold_count": 109,
+        "mean_gold_clause_span_iou": 0.7930243273445621,
+        "mean_matched_clause_span_iou": 0.939561431310405,
+        "minimum_iou": 0.5,
+        "predicted_count": 127
+      },
+      "field_strict_exact": {
+        "action": {
+          "f1": 0.03333333333333333,
+          "precision": 0.031746031746031744,
+          "recall": 0.03508771929824561
+        },
+        "actor": {
+          "f1": 0.3939393939393939,
+          "precision": 0.3333333333333333,
+          "recall": 0.48148148148148145
+        },
+        "condition": {
+          "f1": 0.2878787878787879,
+          "precision": 0.2878787878787879,
+          "recall": 0.2878787878787879
+        },
+        "constraint": {
+          "f1": 0.13333333333333333,
+          "precision": 0.1242603550295858,
+          "recall": 0.14383561643835616
+        },
+        "exception": {
+          "f1": 0.13333333333333333,
+          "precision": 0.14285714285714285,
+          "recall": 0.125
+        }
+      },
+      "field_token_overlap_micro": {
+        "action": {
+          "f1": 0.19865645706950047,
+          "precision": 0.18919662578047666,
+          "recall": 0.2091120600731584
+        },
+        "actor": {
+          "f1": 0.4650120081938263,
+          "precision": 0.39347169924093,
+          "recall": 0.5683480100146766
+        },
+        "condition": {
+          "f1": 0.47933659592201133,
+          "precision": 0.47933659592201133,
+          "recall": 0.47933659592201133
+        },
+        "constraint": {
+          "f1": 0.2817624430886083,
+          "precision": 0.26258925909145453,
+          "recall": 0.3039560601812042
+        },
+        "exception": {
+          "f1": 0.3901944348803432,
+          "precision": 0.41806546594322486,
+          "recall": 0.36580728270032176
+        }
+      },
+      "modality_clause_accuracy": 0.6697247706422018,
+      "modality_macro_f1": 0.5915268324460318,
+      "modality_per_class": {
+        "definition": {
+          "f1": 0.3636363636363636,
+          "fn": 9.0,
+          "fp": 12.0,
+          "precision": 0.3333333333333333,
+          "precision_display": 0.3333333333333333,
+          "recall": 0.4,
+          "support": 15,
+          "tp": 6.0
+        },
+        "obligation": {
+          "f1": 0.631578947368421,
+          "fn": 12.0,
+          "fp": 30.0,
+          "precision": 0.5454545454545454,
+          "precision_display": 0.5454545454545454,
+          "recall": 0.75,
+          "support": 48,
+          "tp": 36.0
+        },
+        "permission": {
+          "f1": 0.7042253521126761,
+          "fn": 10.0,
+          "fp": 11.0,
+          "precision": 0.6944444444444444,
+          "precision_display": 0.6944444444444444,
+          "recall": 0.7142857142857143,
+          "support": 35,
+          "tp": 25.0
+        },
+        "prohibition": {
+          "f1": 0.6666666666666665,
+          "fn": 5.0,
+          "fp": 1.0,
+          "precision": 0.8571428571428571,
+          "precision_display": 0.8571428571428571,
+          "recall": 0.5454545454545454,
+          "support": 11,
+          "tp": 6.0
+        }
+      },
+      "sample_count": 82,
+      "semantic_coverage": {
+        "any_api_error_rate": 0.0,
+        "api_error_rate": 0.0,
+        "complete_record_rate": 0.3780487804878049,
+        "gold_required_count": 536,
+        "gold_required_presence_recall": 0.6958955223880597,
+        "hallucinated_field_rate": 0.3783333333333333,
+        "invalid_or_api_error_rate": 0.0,
+        "invalid_record_rate": 0.0,
+        "matched_presence_count": 373,
+        "predicted_count": 600,
+        "predicted_field_precision": 0.6216666666666667,
+        "recovered_api_error_rate": 0.0,
+        "schema_valid_rate": 1.0,
+        "unsupported_or_ambiguous_rate": 0.0
+      }
+    },
+    "sun_literal_overlap_primary": {
+      "extracted": 1141,
+      "f1": 0.7186482580011335,
+      "ground_truth": 1055,
+      "matched_ground_truth": 798,
+      "matched_predictions": 781,
+      "misclassified": 360,
+      "missed": 257,
+      "precision": 0.684487291849255,
+      "recall": 0.7563981042654029
+    }
+  }
+}

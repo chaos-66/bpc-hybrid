@@ -2266,3 +2266,33 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：新增 docs/B0_R2_METHOD_CROSSWALK.md：Sun 核心方法 11 元素逐一对照本项目实现/测试/适配披露（BERT-TextCNN、CoreNLP、Tregex、Tsurgeon 诚实非实现、抽取顺序、六字段 schema、主口径 evaluator、模态 label、词典、分句、actor/action）。不改变 method_conformance_status（仍 blocked_until_b0_r2，变更需用户显式授权）；B0-R3 亦待授权。全量 audit 1432 passed / 24 skipped。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T07:09:23.498132+00:00 - B0-R2 gate flip: method_conformance_status verified (user-authorized) + audit/test sync
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1436 passed, 24 skipped in 124.18s (0:02:04)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`0feb3c1a777b71b327d2ae5c2761312b2f7815d1`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户于 2026-08-04 显式授权：'授权宣布 B0 方法对照达标这个结论'。configs/methods.json sun_rule_only.method_conformance_status 由 blocked_until_b0_r2 改为 verified_method_level_independent_reconstruction（notes 记录授权与披露：Tsurgeon 诚实非实现 + fail-closed 守卫、词典规模/分句机制为披露适配；非 exact reproduction；正式性能结果仍需 formal Gold/route/stage3 锁）。按 MASTER_PIPELINE 8.6 B0-R2 行设计，sun_stage2_baseline_not_paper_faithful blocker 自动解除（BLOCKERS 9→8）；b0_paper_faithful_components_present pass 保持。同步更新两个审计测试（test_formal_project_audit / test_b0_v10_integration_contract）断言新状态。全量 audit 1436 passed / 24 skipped，BLOCKERS=8。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T07:11:50.080266+00:00 - B0-R3 fixed-snapshot run (final method + authorized lexicon); result better than original, paper-basis authorization exercised
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1；阶段=B0-R3；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python -m scripts.run_estg150_b0_enhanced_v10_development --runtime-home D:\environment\stanford-corenlp-4.5.10 --output-dir outputs/development/s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1 (cwd=isolated worktree D:\Paper\experiment\wt_b0_r1b, detached HEAD 0feb3c1)`
+- manifest：outputs/development/s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1/manifest.json
+- 结果摘要：Fixed-snapshot run on the 56d2b03 historical inputs with the final method state (ACTION+ALIGN+BRIDGE+ACTOR fixes + authorized actor lexicon extension). Primary sun_literal_overlap_evaluation@2.0.0: overall F1 0.718648 (P 0.68449, R 0.75640), GT=1055, extracted=1141, matched_p=781, matched_gt=798, misclassified=360, missed=257. vs original C3 baseline F1 0.710191 (+0.008457) and vs ACTOR-v2 0.712050 (+0.006598). Actor field: F1 0.803883 (P 0.69231, R 0.95833), matched_gt 46/48. COVERED vs UNCOVERED split (user-required): lexicon-covered gold actor spans (47/48) P=0.6923 R=0.9787 F1=0.8110; uncovered (1/48, the pronoun 'It' in estg_000003, gold-vs-method semantic difference requiring formal Gold adjudication) P=0 R=0. Per the user's conditional authorization (result better than original -> eligible as the paper's formal basis), this run's numbers are recorded as the paper-basis candidate for B0; the project's formal gates (formal Gold freeze, route/stage3 locks) remain locked and final_experiment_ready stays false. development-derived snapshot, not an exact reproduction claim.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1436 passed, 24 skipped in 120.09s (0:02:00)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`0feb3c1a777b71b327d2ae5c2761312b2f7815d1`；相关未提交路径：13 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：授权逐字：'1.授权破例用答案反推词典，并且接受后果。但必须严格记录下来并表明区别。也就是表明词典覆盖的和未覆盖得出来的P、R 2.授权宣布B0方法对照达标这个结论。 3.如果跑出来的结果要比原先好，授权把这次运行的结果当作论文正式依据。' 词典扩展（13 名词，source authorized_local_frozen_estg150_gap_2026_08_04）已按 #1 严格记录（sources manifest + actor _meta policy_change + manifest generation note + 事件），覆盖/未覆盖 P/R 已分别报告（见 result-summary）；#2 已执行（methods.json gate flip，前一 change 事件）；#3 条件成立（F1 0.71865 > 原 0.71019），本运行结果标记为论文依据候选。运行在隔离 worktree 恢复 56d2b03 历史输入（9 项 sha 核验一致，含扩展后 lexicon 5 类文件 raw sha 与 manifest 一致），无网络无 LLM。全量 audit 1436 passed / 24 skipped，BLOCKERS=8。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
