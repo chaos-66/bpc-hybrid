@@ -2184,3 +2184,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：B0_ERROR_ANALYSIS.md C3 更新为【已修（B0-R1-ALIGN），实测面板 -0.48pp，主口径不变】；MASTER_PIPELINE 3.4.24：§8.6.1 ALIGN 行更新为实测结论，变更日志追加。全量 audit 1422 passed / 24 skipped。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T03:09:52.427172+00:00 - B0-R1-BRIDGE: relation-operator semantics tests + operated multi-match fail-closed guard
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1428 passed, 24 skipped in 126.70s (0:02:06)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`ec281851c117b1f1647781f0b37442613b580ade`；相关未提交路径：3 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：新增 tests/test_b0_r1_bridge_semantics.py（6 项）：(1) registry 层面断言 v3-enhanced 同时刻意使用 <（child）与 <<（descendant）；(2) 真实编译运行 SunPhraseRuleBatchBridgeMulti（本地 CoreNLP 4.5.10 runtime + javac，无网络无 LLM）：'VP=modality < shall' 对 VP 下 MD 预终端不匹配而 '<<' 匹配、'MD=modality < shall'（POS 节点对词叶的直接子关系，即 registry 真实用法）匹配；无 operation 的多命中逐条记录；(3) 守卫：operated 规则多命中时 fail closed（Tsurgeon 会消费全部命中而 bridge 只记录一个）。SunPhraseRuleBatchBridgeMulti.java 增加守卫（operated 规则仅允许恰好一个非重叠命中，否则抛 IllegalStateException）。当前 registry tsurgeon_operations 全空、tsurgeon_enabled=false，守卫不改变任何现有运行行为（潜伏风险转 fail-closed 保证）。全量 audit 1428 passed / 24 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -97,6 +97,22 @@ public final class SunPhraseRuleBatchBridgeMulti {
             }
             if (named == null) { patternIndex++; continue; }
             boolean operated = rule.operation != null;
+            if (operated) {
+              // B0-R1-BRIDGE (2026-08-04): Tsurgeon.processPattern applies
+              // the operation to EVERY node matching the pattern, while this
+              // loop records only the first non-overlapping candidate.
+              // Recording one match while consuming several would silently
+              // drop spans from the output contract, so an operated rule is
+              // required to match exactly one node; otherwise fail closed.
+              int extraMatches = 0;
+              while (matcher.find()) extraMatches++;
+              if (extraMatches > 0) {
+                throw new IllegalStateException(
+                    "operated Tregex rule matched " + (extraMatches + 1)
+                        + " nodes in tree " + treeCount + " field " + field
+                        + "; one match would be recorded but Tsurgeon would consume all");
+              }
+            }
             System.out.printf("MATCH\t%d\t%s\t%d\t%d\t%s\t%d\t%s%n", treeCount, field, span[0], span[1], nodeText(named), patternIndex, operated ? "true" : "false");
             matchCount++; anyMatch = true; taken.add(span); progressed = true;
             if (operated) {
