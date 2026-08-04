@@ -86,13 +86,17 @@ def test_no_placeholder_classifier_inputs() -> None:
 
 
 def test_heuristic_pack_not_validated_status() -> None:
-    # multi DE multi EN unequal without anchors -> heuristic or unsupported
+    # multi DE multi EN unequal without anchors -> heuristic, never validated
+    # (B0-R1-ALIGN: cue-less or cue-mismatched packs must not be labelled
+    # validated)
     res = align_de_to_en_units("A. B. C.", ["one unit only"])
-    assert res[0].status in {
-        AlignmentStatus.HEURISTIC_MONOTONE_PACK_UNVALIDATED,
-        AlignmentStatus.EQUAL_COUNT_CANDIDATE,
-        AlignmentStatus.VALIDATED_ANCHOR_ALIGNMENT,
-    }
+    assert res[0].status == AlignmentStatus.HEURISTIC_MONOTONE_PACK_UNVALIDATED
+    # a cue-mismatched pair (de:darf vs en:must) must not be validated either
+    res2 = align_de_to_en_units(
+        "Der Steuerpflichtige darf absetzen.", ["The taxpayer must deduct."]
+    )
+    assert res2[0].status == AlignmentStatus.EQUAL_COUNT_CANDIDATE
+    assert res2[0].validated is False
 
 
 def test_v9_status_correction_marks_prereg_mismatch() -> None:

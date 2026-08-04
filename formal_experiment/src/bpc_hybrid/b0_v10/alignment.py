@@ -25,6 +25,83 @@ _EN_MODAL = re.compile(
 )
 _EN_NUM = re.compile(r"\b(?:section|paragraph|item)\s+\d+|\b\d+[\.\)]", re.I)
 
+# B0-R1-ALIGN (2026-08-04): cross-lingual DE<->EN cue correspondence.
+# The de:/en: anchor namespaces never intersect, so the previous "both sides
+# have some anchor" rule could label a semantically mismatched pair (e.g.
+# de:muss <-> en:may) as validated.  ``_cross_validates`` requires an actual
+# modal/definition cue correspondence plus matching negation polarity, or a
+# shared numeric anchor.  The mapping is a documented linguistic table
+# (dürfen->may, müssen->must, soll->shall, ...); it is NOT tuned on Gold or
+# on P/R.
+_DE_EN_MODAL: dict[str, str] = {
+    "darf": "may",
+    "dürfen": "may",
+    "duerfen": "may",
+    "muss": "must",
+    "müssen": "must",
+    "muessen": "must",
+    "soll": "shall",
+    "sollen": "shall",
+    "kann": "may",
+    "können": "may",
+    "koennen": "may",
+    "hat zu": "shall",
+    "ist verpflichtet": "must",
+    "bedeutet": "definition",
+    "bezeichnet": "definition",
+    "gilt als": "definition",
+    "ist definiert": "definition",
+}
+_EN_BASE: dict[str, tuple[str, bool]] = {
+    "shall": ("shall", False),
+    "must": ("must", False),
+    "may": ("may", False),
+    "can": ("may", False),
+    "shall not": ("shall", True),
+    "must not": ("must", True),
+    "may not": ("may", True),
+    "not": (None, True),
+    "no": (None, True),
+    "means": ("definition", False),
+    "shall mean": ("definition", False),
+    "is defined as": ("definition", False),
+    "refers to": ("definition", False),
+    "denotes": ("definition", False),
+}
+_DE_NEGATION = frozenset({"de:nicht", "de:kein", "de:keine", "de:keinen"})
+
+
+def _cross_validates(de_anchors: set[str], en_anchors: set[str]) -> bool:
+    """True when the DE and EN anchor sets correspond semantically.
+
+    Shared numeric anchors validate directly.  Otherwise a DE modal/definition
+    cue must map to an EN base of the same modality and the negation polarity
+    must match on both sides (darf <-> "may not" is a mismatch).
+    """
+    if de_anchors & en_anchors:
+        return True
+    de_neg = bool(de_anchors & _DE_NEGATION)
+    en_neg = any(
+        _EN_BASE.get(anchor[3:], (None, False))[1]
+        for anchor in en_anchors
+        if anchor.startswith("en:")
+    )
+    if de_neg != en_neg:
+        return False
+    de_bases = {
+        base
+        for anchor in de_anchors
+        if anchor.startswith("de:")
+        and (base := _DE_EN_MODAL.get(anchor[3:])) is not None
+    }
+    en_bases = {
+        base
+        for anchor in en_anchors
+        if anchor.startswith("en:")
+        and (base := _EN_BASE.get(anchor[3:], (None, False))[0]) is not None
+    }
+    return bool(de_bases and en_bases and (de_bases & en_bases))
+
 
 class AlignmentStatus(str, Enum):
     EQUAL_COUNT_CANDIDATE = "equal_count_candidate"
@@ -94,8 +171,11 @@ def align_de_to_en_units(
         for i in range(n_en):
             de_a = _de_anchors(de_units[i])
             en_a = _en_anchors(english_units[i])
-            # cross-lingual weak validation: both sides have some modal/num signal or neither
-            validated = bool(de_a and en_a) or (not de_a and not en_a and len(de_units[i].split()) <= 40)
+            # B0-R1-ALIGN: validated requires actual DE<->EN cue
+            # correspondence (modal/definition mapping + negation polarity)
+            # or a shared numeric anchor.  "Both sides have some anchor" or
+            # "neither side has an anchor" no longer counts as validated.
+            validated = _cross_validates(de_a, en_a)
             status = (
                 AlignmentStatus.VALIDATED_ANCHOR_ALIGNMENT
                 if validated and (de_a or en_a)
@@ -125,28 +205,49 @@ def align_de_to_en_units(
         ]
     if len(de_units) == 1:
         de = de_units[0]
-        cuts: list[int] = []
-        for m in list(_DE_MODAL.finditer(de)) + list(_DE_DEF.finditer(de)):
-            if m.start() > 0:
-                cuts.append(m.start())
-        for m in re.finditer(r";|\bund\b|\boder\b", de, re.I):
-            cuts.append(m.start())
-        cuts = sorted({c for c in cuts if 0 < c < len(de)})
+        # B0-R1-ALIGN: connectors (";", "und", "oder") are explicit clause
+        # boundaries and are preferred as split points over modal positions;
+        # the old code took the first n_en-1 cuts in position order, which
+        # usually picked the first modal and left a cue-less preamble piece.
+        connector_cuts = sorted(
+            {
+                m.start()
+                for m in re.finditer(r";|\bund\b|\boder\b", de, re.I)
+                if 0 < m.start() < len(de)
+            }
+        )
+        modal_cuts = sorted(
+            {
+                m.start()
+                for m in list(_DE_MODAL.finditer(de)) + list(_DE_DEF.finditer(de))
+                if 0 < m.start() < len(de)
+            }
+        )
+        cuts = sorted(set(connector_cuts + modal_cuts))
         if len(cuts) >= n_en - 1:
-            bounds = [0] + cuts[: n_en - 1] + [len(de)]
+            ordered = connector_cuts + [c for c in modal_cuts if c not in connector_cuts]
+            bounds = [0] + ordered[: n_en - 1] + [len(de)]
             pieces = [de[a:b].strip() for a, b in zip(bounds, bounds[1:])]
             if all(pieces) and len(pieces) == n_en:
-                return [
-                    AlignmentResult(
-                        pieces[i],
-                        AlignmentStatus.VALIDATED_SPLIT,
-                        0.85,
-                        {"piece": i, "char_span": [bounds[i], bounds[i + 1]]},
-                        (0,),
-                        i,
-                    )
+                # B0-R1-ALIGN: a split is only VALIDATED when every piece
+                # cross-validates against its corresponding EN unit; a pure
+                # mechanical split (modal/connector positions) without cue
+                # correspondence is not verified alignment.
+                if all(
+                    _cross_validates(_de_anchors(pieces[i]), _en_anchors(english_units[i]))
                     for i in range(n_en)
-                ]
+                ):
+                    return [
+                        AlignmentResult(
+                            pieces[i],
+                            AlignmentStatus.VALIDATED_SPLIT,
+                            0.85,
+                            {"piece": i, "char_span": [bounds[i], bounds[i + 1]]},
+                            (0,),
+                            i,
+                        )
+                        for i in range(n_en)
+                    ]
         return [
             AlignmentResult(
                 None,
@@ -197,7 +298,10 @@ def align_de_to_en_units(
         text = " ".join(de_units[j] for j in idxs)
         da = set().union(*(de_anchors[j] for j in idxs))
         ea = en_anchors[ei]
-        if da and ea and (da & ea or any(x.startswith("num:") for x in da & ea)):
+        # B0-R1-ALIGN: validated requires real DE<->EN cue correspondence
+        # (modal/definition mapping + negation polarity) or a shared numeric
+        # anchor; "any anchor on both sides" no longer validates.
+        if da and ea and _cross_validates(da, ea):
             st = AlignmentStatus.VALIDATED_ANCHOR_ALIGNMENT
             conf = 0.8
         else:
