@@ -37,10 +37,12 @@ from formal_experiment.paths import (
     FORMAL_RESULTS_DIR,
     FROZEN_GOLD_DIR,
     FROZEN_INPUT_DIR,
-    OUTPUTS_DEVELOPMENT_DIR,
+    DEVELOPMENT_DIR,
 )
 
 PROMPTName = "direct_llm_sun_record_prompt"
+PROMPT_V3_SNAPSHOT = "direct_llm_sun_record_prompt_v3_2026_07_12"
+ALLOWED_PROMPT_NAMES = (PROMPTName, PROMPT_V3_SNAPSHOT)
 
 DEFAULT_INPUT = ROOT / "data/input/estg150_input_v1.jsonl"
 DEFAULT_OUTPUT = ROOT / "data/predictions/direct_llm_predictions.jsonl"
@@ -129,10 +131,25 @@ def main() -> int:
         help="Run as development-only; manifest records dev mode. Required for any "
         "write to outputs/development or data/development.",
     )
+    parser.add_argument(
+        "--model",
+        type=str,
+        default=None,
+        help="Fail-closed model pin: the resolved provider model must equal this "
+        "exact value, otherwise the run aborts before any call. The returned model "
+        "is verified per response and recorded in the manifest.",
+    )
+    parser.add_argument(
+        "--prompt-name",
+        type=str,
+        default=PROMPTName,
+        choices=ALLOWED_PROMPT_NAMES,
+        help="Prompt file stem to load (allowlisted).",
+    )
     args = parser.parse_args()
 
-    # 1. Load prompt from disk (v3 canonical)
-    prompt = load_prompt(PromptName)
+    # 1. Load prompt from disk
+    prompt = load_prompt(args.prompt_name)
 
     # 2. Refuse to overwrite existing artifacts unless --overwrite
     for path in (args.output, args.manifest):
@@ -158,7 +175,20 @@ def main() -> int:
         print("Refusing to run: --max-calls must be positive.")
         return 2
 
-    # 5. Load and validate input
+    # 5. LLM config + fail-closed model pin (before any input I/O)
+    config = LLMConfig.from_env(project_root=ROOT)
+    if args.model is not None and config.model != args.model:
+        print(
+            f"Refusing to run: resolved model {config.model!r} != requested "
+            f"{args.model!r} (fail-closed model pin)."
+        )
+        return 2
+    if not config.enabled or config.provider == "mock":
+        print("Refusing to run: a real LLM provider is not enabled.")
+        return 2
+    transport = RealAPITransport(config, timeout_seconds=60.0)
+
+    # 6. Load and validate input
     try:
         rows = _load_input(args.input)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
@@ -168,17 +198,11 @@ def main() -> int:
         print(f"Refusing to run: {len(rows)} records exceed --max-calls={args.max_calls}.")
         return 3
 
-    # 6. LLM config
-    config = LLMConfig.from_env(project_root=ROOT)
-    if not config.enabled or config.provider == "mock":
-        print("Refusing to run: a real LLM provider is not enabled.")
-        return 3
-    transport = RealAPITransport(config, timeout_seconds=60.0)
-
     # 7. Process samples
     results: list[dict] = []
     validation_failures: list[dict] = []
     llm_errors: list[dict] = []
+    returned_models: set[str] = set()
     # Build the prompt body ONCE and reuse for all rows
     from bpc_hybrid.llm_client import OpenAICompatibleRequestBuilder
     builder = OpenAICompatibleRequestBuilder(config)
@@ -202,6 +226,16 @@ def main() -> int:
         except LLMClientError as exc:
             llm_errors.append({"sample_id": sample_id, "error": str(exc)})
             continue
+        returned = getattr(response, "model", None)
+        if returned:
+            returned_models.add(str(returned))
+            # Fail closed: every response must come back from the pinned model.
+            if args.model is not None and str(returned) != args.model:
+                print(
+                    f"Aborting: response model {returned!r} != pinned {args.model!r} "
+                    f"(sample {sample_id})."
+                )
+                return 3
 
         raw_text = response.content.strip()
         if raw_text.startswith("```"):
@@ -255,6 +289,11 @@ def main() -> int:
         "max_calls": args.max_calls,
         "llm_provider": config.provider,
         "llm_model": config.model,
+        "llm_models": {
+            "requested": args.model,
+            "resolved": config.model,
+            "returned": sorted(returned_models),
+        },
         "sampling": sent_sampling,
         "prompts": [build_manifest_entry(prompt)],
         "real_api": True,

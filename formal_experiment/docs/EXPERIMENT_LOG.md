@@ -2374,3 +2374,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：按 §8.7.1 第一子批次（D1-R1-FIELD-TYPING）实施候选：direct_llm_sun_record_prompt.md v3→v4——新增硬规则 15-17（constraint 类别定义：法律引用/时间/数量/目的/排他；constraint 内容禁止并入 action span；condition 与 constraint 分字段，嵌套约束两处都报）；用户指令增加穷尽扫描；新增 Example 5（法律引用 constraint 'in accordance with Section 11(1)'，偏移 52-84 已程序验证）与 Example 6（condition 'if ... within two years' 39-83 + 嵌套 constraint 'within two years' 67-83）。fixtures JSON（4→6）与 build 脚本同步；test_prompt_contract 新增 2 项（规则存在性 + 新例子覆盖 constraint/condition）。27 项 prompt 测试通过（含 6 例子 canonical validator 校验）；verify_d1_few_shot_fixtures 6/6 OK；全量 audit 1438 passed / 24 skipped。本批次未做任何真实 LLM 调用；pilot 待用户授权+预算。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T11:30:54.558306+00:00 - D1-R1 runner hardening: fail-closed model pin, prompt-name switch, v3 snapshot, fixed import defect
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1443 passed, 24 skipped in 172.97s (0:02:52)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`ff320ee690354c452ce8b1978627127219ac93c6`；相关未提交路径：5 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：run_direct_llm.py 加固（pilot 前置）：①新增 --model fail-closed 钉死（解析模型必须等于请求值，否则调用前中止；response 返回模型逐条校验，不一致即 abort）且检查顺序提前到输入 I/O 之前；②新增 --prompt-name（allowlist：active v4 + v3 快照）支持配对比较；③manifest 记录 requested/resolved/returned 三态模型；④修复真实缺陷：import 了不存在的 OUTPUTS_DEVELOPMENT_DIR（当前分支 runner 此前无法导入运行，改用 paths.DEVELOPMENT_DIR）；⑤v3 prompt 字节精确快照（git ff320ee^ 提取，sha 37d1edd7）落盘 prompts/sun_compat/direct_llm_sun_record_prompt_v3_2026_07_12.md；⑥新增 5 项测试（allowlist/快照身份/新规则存在性/未知 prompt 拒绝/模型钉死 fail-closed）。全量 audit 1443 passed / 24 skipped。未做任何真实 LLM 调用。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

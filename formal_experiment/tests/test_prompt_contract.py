@@ -317,7 +317,7 @@ def test_run_direct_llm_imports_prompt_loader():
     text = runner_path.read_text(encoding="utf-8")
     assert "from bpc_hybrid.prompt_loader import" in text
     assert 'SYSTEM_PROMPT = """' not in text  # no hardcoded multi-line system prompt constant
-    assert "load_prompt(PromptName)" in text
+    assert "load_prompt(args.prompt_name)" in text  # prompt version is switchable (D1-R1)
 
 
 def test_run_sun_llm_fallback_imports_prompt_loader():
