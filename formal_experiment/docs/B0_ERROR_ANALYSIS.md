@@ -127,7 +127,8 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
 - **取证（2026-08-04，真实 CoreNLP 解析）**：8 个词典内漏抽的机制——(a) 5/8 的 nsubj 弧挂在无情态、非 ROOT 的动词上（分词/从句内普通动词/无情态被动谓词），被 action-head 门控挡住；(b) 3/8 是被动 by-agent/与格 to-recipient，CoreNLP 4.5.10 basicDependencies 标为 `obl`+case by/to，且"首个弧优先"让非词典主语遮蔽了 by-agent。
 - **实测修复**：候选扩展为 clause 内全部 nsubj/nsubj:pass 弧（无 action head 时也发 actor，不发边）+ action head 的 obl/nmod with by/to case；首个通过过滤器的候选胜出；actor 子树排除自身 case 介词与尾部标点；**中心词（nsubj 依赖 token）必须为词典 surface**（拒绝"the business year of a bookkeeping farmer"这类修饰词命中）。
 - **实测结果**：主口径 F1 0.71024→**0.71205（+0.0018，本系列首个正向主口径 delta）**，R +0.0066、P −0.0023；actor 字段 F1 0.616→0.670（R 0.542→0.688）；8 个漏抽全部找回；中心词校验把候选 FP 从 29 砍到 17。v1（无中心词校验）实测 −0.0021 被拒，v2 保留。
-- 产物：`outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actor_hist56d_v2/`。残余：14 个无词典覆盖的 actor（spouse/successor/bank 等）仍需 LEXICON-DECISION。
+- 产物：`outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actor_hist56d_v2/`。残余（B0-R1-LEXICON-DECISION 决策项）：ACTOR-v2 后仍漏 15 个——1 个代词 "It"（Gold 语义差异，需正式 Gold 裁决）、1 个 "the employee"（000504 结构残余，待查）、13 个无词典覆盖名词（successor/spouse/child/developers/bank/body/society/owners/shareholders/beneficiary）。
+  - **治理结论**：13 个名词的词典扩展**不能在当前约束下实施**——(1) `public_marker_sources_en_v2.json` construction_mode=`offline_from_preexisting_local_research_audit_and_pinned_public_seed`，9 个来源全部为公开论文/文档引证，新增条目必须可溯源；(2) 缺口名词的选择由 56d2b03 开发 Gold 缺口驱动，属于 S2.3"禁止评测数据回流"与"不看最终 Gold 反向调规则"硬约束范畴。合规路径：a) 用户提供公开法律 actor 名词来源（如已发表词典/标注规范）后按公开种子扩展；b) 用户明确授权 local-frozen 扩展并记录事件（治理覆盖）；c) 保持缺口为已披露方法局限（Pipeline 允许：词典规模不同只需披露，不阻断方法级复现）。
 
 ### C5. Clause 规划失配 —— 【低优先级】
 
