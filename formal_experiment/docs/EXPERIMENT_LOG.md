@@ -2309,3 +2309,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：B0-R1 行由 ready 改为 verified（七个 8.6.1 子批次全部闭环，DoD 三条验收线达成）；B0-R3 行由 blocked 改为进行中（56d2b03 快照运行完成 F1 0.71865 + manifest，正式错误分析待补）；changelog 3.4.28。B0-R4/R5 仍 blocked on formal Gold（人工裁决 0/150）。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T07:48:16.711457+00:00 - User decision: formal Gold = historical 56d2b03 freeze-ready Layer E (the Gold basis of all B0 P/R runs)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1436 passed, 24 skipped in 124.07s (0:02:04)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`f798fc6bc299433b3b632e184e81c595850badae`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户逐字决定：'之前怎么跑出来的P、R，就用那个作为formal gold'。据此：formal Gold 基准 = 56d2b03 历史冻结 Layer E（sha 7fd55f98 CRLF / blob f7c3952a，freeze receipt aa316ed7，canonical gold semantic sha 5d7ec7f6…，membership e8e62686…），即本会话全部 B0 运行（v10a/C3 重评、ACTION/ALIGN/ACTOR、B0-R3 快照 F1 0.71865）所使用的同一 Gold 对象——因此既有 P/R 与 formal Gold 按构造一致。当前 v2 编辑面（d70857e0）的 0/150 状态不再作为 formal Gold 前置（用户决定覆盖）。注意边界：audit 的 formal_gold_publication_gate 仍由 configs/experiment_contract.json 的 route/stage2_dataset/stage3 状态控制（当前 reopened/pending/blocked），该字段翻转属用户/协调 Agent 权限，Agent 不自行修改；本事件仅记录决定与依据。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
