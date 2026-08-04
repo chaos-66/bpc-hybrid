@@ -1,25 +1,37 @@
 # B0 错误分析报告（为什么 B0 的 P/R 不高）
 
-> 任务：B0-R1-ERR（错误分析与成因文档；本轮不实施修复）
+> 任务：B0-R1-ERR（错误分析与成因文档）；B0-R1-ACTION/SCOPE-DISAMBIG/ALIGN/BRIDGE/ACTOR 已按 §8.6.1 逐批实测（2026-08-04）
 > 状态：development only，非正式结果
 > 数据基准：C3 注册 attempts（`s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/b0_attempts.json`，tracked，SHA-256=c694f7cd…），与 56d2b03 历史 Layer E 构建的同一 canonical Gold（用户授权只读；不读当前 Layer E）
 > 复现：`python -m scripts.analyze_b0_error_types`（`scripts/analyze_b0_error_types.py`）
 
 ## 1. 摘要
 
-B0 在正确的 Sun literal-overlap v2 主口径下 **F1≈0.71**（P=0.684，R=0.738）。对全部 1055 个 Gold span 与 1111 个预测 span 做逐 span 失败分类后，低分原因可归结为 **5 个量化成因 + 1 组结构性限制**：
+B0 在正确的 Sun literal-overlap v2 主口径下基线 **F1≈0.710**（P=0.684，R=0.738）；经 B0-R1 五批修复后当前 **F1≈0.712**（P=0.683，R=0.744）。对全部 1055 个 Gold span 与 1111 个预测 span 做逐 span 失败分类后，低分原因可归结为 **5 个量化成因 + 1 组结构性限制**：
 
 | 编号 | 成因 | 量化证据 | 可修性 |
 |---|---|---|---|
-| C1 | **Action span 过度吞并**（动作 span 吞掉主语与句尾约束内容） | constraint 的 143 个 missed 中 108 个内容其实在别的字段里，其中 57 个被 action 覆盖；matched 的 212 个 action 中 **192 个为过长，中位超出 54 字符、最大 739** | **可修**（收益最大） |
-| C2 | **constraint↔condition 双向字段混淆** | constraint 的 178 个 misclassified 中 152 个压到别的字段 Gold 上，其中 114 个压在 condition 上 | 部分可修（消歧规则；有 P/R trade-off 风险） |
-| C7 | **Under-extension（span 过短）** | matched 的 779 个 Gold span 中 202 个被预测短于 Gold（中位短 14 字符）：modality evidence 80、constraint 51、condition 50、action 16 | 可修（边界/evidence 范围） |
-| C3 | **模态四分类 label 混淆**（独立面板） | evidence 匹配上的 clause label 准确率 79.3%；definition↔obligation 混淆 16+7 | 可修（B0-R1-ALIGN 路由） |
-| C4 | **Actor 抽取不足** | 22 个 missed：8 个含词典词（依赖句法失败，可修）、14 个词典无覆盖（需决策） | 部分可修 |
+| C1 | **Action span 过度吞并**（动作 span 吞掉主语与句尾约束内容） | constraint 的 143 个 missed 中 108 个内容其实在别的字段里，其中 57 个被 action 覆盖；matched 的 212 个 action 中 **192 个为过长，中位超出 54 字符、最大 739** | **已修**（质量收益；主口径持平） |
+| C2 | **constraint↔condition 双向字段混淆** | constraint 的 178 个 misclassified 中 152 个压到别的字段 Gold 上，其中 114 个压在 condition 上 | **实测候选被拒**（gold 语义差异+registry 重叠，记局限） |
+| C7 | **Under-extension（span 过短）** | matched 的 779 个 Gold span 中 202 个被预测短于 Gold（中位短 14 字符）：modality evidence 80、constraint 51、condition 50、action 16 | 待修（边界/evidence 范围） |
+| C3 | **模态四分类 label 混淆**（独立面板） | evidence 匹配上的 clause label 准确率 79.3%；definition↔obligation 混淆 16+7 | **已修**（伪 validated 消除；主口径不变；面板 −0.48pp） |
+| C4 | **Actor 抽取不足** | 22 个 missed：8 个含词典词（依赖句法失败，可修）、14 个词典无覆盖（需决策） | **已修 8/8**（主口径 F1 +0.0018）；14 个待 LEXICON-DECISION |
 | C5 | **Clause 规划失配** | 231 个 Gold clause 中 38 个（16%）无 pred clause 以 IoU≥0.5 配对 | 低优先级（v2 口径不依赖 clause 对齐） |
 | C6 | **结构性限制**（缺 Sun 原资产、词典规模、Gold 语义差异、H1 回落 B0） | 见 §5.6 | 需资产/需用户决策/需正式 Gold |
 
 **最重要结论：constraint 字段（F1=0.489）之所以是短板，不是因为"抽不到"，而是因为"抽错地方"——被 action 吞掉（C1）和被 condition 抢走（C2）合计解释了其绝大多数错误。**
+
+### 1.1 修复结果总表（原因 → 修复 → 实测影响）
+
+| 成因 | 根因（file:line 证据） | 修复方法 | 实测影响（主口径 v2，同 Gold） | 为什么是这个结果 |
+|---|---|---|---|---|
+| C1 action 吞并 | `actor_action.py` `_subtree_span` 把 nsubj/全部依赖纳入 action 子树 | 排除 nsubj/agent/clausal 依赖（12 类）；`safe_action_slice` 保持 | F1 持平（+0.00005）；主语开头 action 8→0；strict-exact 3.0× | any-overlap 口径对边界不敏感：被吞内容本就不计入 constraint recall，修复只改善边界质量（诊断面板可见） |
+| C2 字段混淆 | scope/registry 双发：44 个同界双发（43 个双 tregex，`to<<an|the` vs `to<<extent|purpose` 重叠）；gold 对 "to the extent"/关系从句语义内部不一致（33 个 condition 匹配依赖 that/which/who 标记） | 候选：交叉字段同界去重（lexicon 优先） | **F1 −0.0005，拒绝回退** | 规则在真实管线只触发 1 次且移除的是已匹配唯一覆盖；任何偏向都对称损失匹配；不读 Gold 前提下规则层无法安全消歧 → 方法局限 |
+| C3 伪 validated | `alignment.py` equal-count/split 路径"两侧任意锚即 validated"（de:/en: 命名空间永不交集） | `_cross_validates`：语言学 DE→EN 情态映射表 + 否定极性一致 + 数字锚；split 连接词优先切点+逐片验证 | validated 107→49（DoD"无伪 validated"达成）；主口径不变；label 面板 −0.48pp | 修复的是正确性缺陷（路由输入不再伪验证）；label 面板微降因 unsupported +8 落回 record 级路由（1-2 clause 噪声级），validated_split 42→0 为记录副作用 |
+| C4 actor 漏抽 | ①actor 提取被 action-head 门控（5/8 的 nsubj 挂在无情态动词）；②只认 obl:agent/nmod:agent，而 CoreNLP 4.5.10 标 obl+case by/to（3/8）；③首个弧优先遮蔽 by-agent；④修饰词命中（"business year of a bookkeeping farmer"） | ①clause 内全 nsubj/nsubj:pass 弧候选；②obl/nmod+case by/to；③首个通过过滤器的候选胜出；④actor 中心词必须为词典 surface；排除自身 case 介词与尾部标点 | **F1 +0.0018（0.71024→0.71205，系列首个正向）**；actor F1 0.616→0.670；8/8 漏抽找回；FP 29→17 | 直接改变字段内"抽到与否"（主口径敏感项）：+7 matched_gt；中心词校验把修饰词 FP 砍半；v1 无校验 −0.0021 被拒（迭代验证） |
+| C5 clause 失配 | `plan_clause_units_v4` 输出 249 vs Gold 231，38 个 Gold clause 无 IoU≥0.5 配对 | 未实施（低优先级） | — | v2 口径不依赖 clause 对齐；58 个真正漏抽中仅 4 个在未配对 clause |
+
+修复批次产物：ACTION=`…r1b_actionfix_hist56d_v1/`、SCOPE-DISAMBIG（负面证据）=`…r1b_scope_disambig_hist56d_v1/`、ALIGN=`…r1b_align_hist56d_v1/`、ACTOR=`…r1b_actor_hist56d_v2/`；每批事件与 manifest 见 `EXPERIMENT_EVENTS.jsonl`。
 
 ## 2. 数据与方法
 
@@ -36,9 +48,10 @@ B0 在正确的 Sun literal-overlap v2 主口径下 **F1≈0.71**（P=0.684，R=
 
 | 方法 | P | R | F1 | 备注 |
 |---|---|---|---|---|
-| B0（v10a=C3） | 0.681 | 0.741 | 0.710 | v10a 与 C3 在 v2 口径下几乎相同（ΔF1=+0.0003） |
+| B0（C3 基线） | 0.681 | 0.741 | 0.710 | 56d2b03 历史快照；v10a 与 C3 几乎相同（ΔF1=+0.0003） |
+| B0（ACTOR-v2 当前） | 0.683 | 0.744 | **0.712** | B0-R1 五批修复后；同 Gold 同口径 |
 | D1（deepseek v4pro，直接 LLM） | 0.907 | 0.664 | 0.767 | P 高 R 低；constraint R=0.288 最低 |
-| H1（B0+LLM 回退） | 0.681 | 0.741 | 0.710 | **与 B0 完全相同**：H1 的 LLM patch 全部被验证器/merge 拒绝，全部回落 B0（S2.8D 历史），不构成独立结果 |
+| H1（B0+LLM 回退） | 0.681 | 0.741 | 0.710 | **与 B0 基线完全相同**：H1 的 LLM patch 全部被验证器/merge 拒绝，全部回落 B0（S2.8D 历史），不构成独立结果 |
 
 D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/metrics.json`（tracked）；B0 数据出处：B0-R1-E2 重评产物。
 

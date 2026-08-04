@@ -2227,3 +2227,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：B0_ERROR_ANALYSIS.md C4 更新为【已修（B0-R1-ACTOR），实测 F1 +0.0018】；MASTER_PIPELINE 3.4.25：§8.6.1 ACTOR 行更新，变更日志追加（3.4.24 保留）。全量 audit 1432 passed / 24 skipped。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T06:19:00.812285+00:00 - Consolidated B0-R1 fix-result documentation (causes, fixes, measured impact) + status page sync
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1432 passed, 24 skipped in 187.07s (0:03:07)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`0be6dadbe8276b8b3f152653b9686e52f5b56755`；相关未提交路径：2 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：B0_ERROR_ANALYSIS.md 升级为导师可读的完整记录：新增 §1.1 修复结果总表（原因→根因 file:line→修复方法→实测影响→为什么），摘要表与 §3 总体表现更新为 ACTOR-v2 当前状态（F1≈0.712）；PROJECT_AUDIT 6.2 行同步五批实测结果。无代码变更。全量 audit 1432 passed / 24 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
