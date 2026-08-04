@@ -26,6 +26,21 @@ _NON_ACTOR = frozenset({
     "profit", "income", "difference", "amount", "period", "year", "tax", "section",
 })
 
+# B0-R1-ACTION (2026-08-04): dependency relations that must NOT contribute
+# to the ACTION span even though they are dominated by the verb head.
+# BasicDependencies makes the subject and agent dependents of the verb, so a
+# naive full subtree swallows the subject NP ("The taxpayer shall ...") and
+# clausal tails ("... if 1.", "... whether he treats ...") into the action
+# span.  The error analysis (docs/B0_ERROR_ANALYSIS.md C1) measured 192 of 212
+# matched action Gold spans as over-extended by a median of 54 characters.
+# The actor span keeps the FULL subtree (its subject NP is the actor itself).
+_NON_ACTION_DEPS = frozenset({
+    "nsubj", "nsubj:pass", "csubj", "csubj:pass",
+    "obl:agent", "nmod:agent",
+    "advcl", "ccomp", "mark", "discourse", "parataxis",
+    "cc", "conj",
+})
+
 
 def _token_abs(sentence: Mapping[str, Any], idx_1: int) -> tuple[int, int]:
     tok = sentence["tokens"][idx_1 - 1]
@@ -36,7 +51,12 @@ def _deps(sentence: Mapping[str, Any]) -> list[Mapping[str, Any]]:
     return [d for d in (sentence.get("basicDependencies") or []) if isinstance(d, Mapping)]
 
 
-def _subtree_span(sentence: Mapping[str, Any], head_idx: int) -> tuple[int, int]:
+def _subtree_span(
+    sentence: Mapping[str, Any],
+    head_idx: int,
+    *,
+    exclude_deps: frozenset[str] = frozenset(),
+) -> tuple[int, int]:
     kids = {head_idx}
     changed = True
     deps = _deps(sentence)
@@ -45,7 +65,13 @@ def _subtree_span(sentence: Mapping[str, Any], head_idx: int) -> tuple[int, int]
         for d in deps:
             g = int(d.get("governor", -1))
             dep = int(d.get("dependent", -1))
-            if g in kids and dep not in kids and d.get("dep") != "ROOT":
+            rel = d.get("dep") or ""
+            if (
+                g in kids
+                and dep not in kids
+                and rel != "ROOT"
+                and rel not in exclude_deps
+            ):
                 kids.add(dep)
                 changed = True
     tokens = sentence["tokens"]
@@ -125,7 +151,9 @@ def extract_actors_actions_edges(
     action_heads = sorted(set(action_heads))
 
     for head in action_heads:
-        a0, a1 = _subtree_span(sentence, head)
+        # B0-R1-ACTION: exclude subject/agent NPs and clausal tails from the
+        # action span; keep PP modifiers and complements (VP content).
+        a0, a1 = _subtree_span(sentence, head, exclude_deps=_NON_ACTION_DEPS)
         a0, a1 = max(a0, clause_start), min(a1, clause_end)
         if a1 <= a0:
             continue

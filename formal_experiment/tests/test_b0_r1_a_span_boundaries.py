@@ -862,9 +862,32 @@ class TestActiveV10CallChain:
             (i for i, t in enumerate(sent["tokens"], start=1) if t["word"].casefold() in {"process"}),
             3,
         )
-        sent["basicDependencies"].append(
-            {"dep": "aux", "governor": verb_idx, "dependent": 2}
+        subj_idx = next(
+            (i for i, t in enumerate(sent["tokens"], start=1) if t["word"].casefold() in {"taxpayer"}),
+            2,
         )
+        data_idx = next(
+            (i for i, t in enumerate(sent["tokens"], start=1) if t["word"].casefold() in {"data"}),
+            7,
+        )
+        # B0-R1-ACTION: rebuild the stub into a well-formed tree. The verb
+        # governs the subject (nsubj), the modal (aux) and the object; the
+        # object governs its determiners/modifiers; every trailing adverb is
+        # an advmod of the verb so the full 19-token VP subtree triggers the
+        # character cap path.
+        sent["basicDependencies"] = [
+            {"dep": "ROOT", "governor": 0, "dependent": verb_idx},
+            {"dep": "nsubj", "governor": verb_idx, "dependent": subj_idx},
+            {"dep": "det", "governor": subj_idx, "dependent": 1},
+            {"dep": "aux", "governor": verb_idx, "dependent": 3},
+            {"dep": "dobj", "governor": verb_idx, "dependent": data_idx},
+            {"dep": "det", "governor": data_idx, "dependent": 5},
+            {"dep": "amod", "governor": data_idx, "dependent": 6},
+        ]
+        for adverb_idx in range(8, len(sent["tokens"]) + 1):
+            sent["basicDependencies"].append(
+                {"dep": "advmod", "governor": verb_idx, "dependent": adverb_idx}
+            )
 
         class _StubLex:
             actor_surfaces = {"taxpayer"}
@@ -877,6 +900,8 @@ class TestActiveV10CallChain:
             sentence_index=0,
             lexicon=_StubLex(),  # type: ignore[arg-type]
         )
+        # the subject must not leak into the action span
+        assert all("taxpayer" not in a["text"].casefold() for a in actions)
         # at least one action was emitted
         assert actions
         for a in actions:
