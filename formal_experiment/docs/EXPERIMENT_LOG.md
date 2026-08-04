@@ -2296,3 +2296,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：授权逐字：'1.授权破例用答案反推词典，并且接受后果。但必须严格记录下来并表明区别。也就是表明词典覆盖的和未覆盖得出来的P、R 2.授权宣布B0方法对照达标这个结论。 3.如果跑出来的结果要比原先好，授权把这次运行的结果当作论文正式依据。' 词典扩展（13 名词，source authorized_local_frozen_estg150_gap_2026_08_04）已按 #1 严格记录（sources manifest + actor _meta policy_change + manifest generation note + 事件），覆盖/未覆盖 P/R 已分别报告（见 result-summary）；#2 已执行（methods.json gate flip，前一 change 事件）；#3 条件成立（F1 0.71865 > 原 0.71019），本运行结果标记为论文依据候选。运行在隔离 worktree 恢复 56d2b03 历史输入（9 项 sha 核验一致，含扩展后 lexicon 5 类文件 raw sha 与 manifest 一致），无网络无 LLM。全量 audit 1436 passed / 24 skipped，BLOCKERS=8。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T07:34:31.818214+00:00 - MASTER_PIPELINE 8.6 status rows corrected (B0-R1 verified, B0-R3 in-progress)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1436 passed, 24 skipped in 108.18s (0:01:48)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`b99db4c66131a32fd8df138c76096482c91da6a9`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：B0-R1 行由 ready 改为 verified（七个 8.6.1 子批次全部闭环，DoD 三条验收线达成）；B0-R3 行由 blocked 改为进行中（56d2b03 快照运行完成 F1 0.71865 + manifest，正式错误分析待补）；changelog 3.4.28。B0-R4/R5 仍 blocked on formal Gold（人工裁决 0/150）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
