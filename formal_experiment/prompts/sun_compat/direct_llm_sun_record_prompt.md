@@ -5,12 +5,13 @@ runtime never reads this comment to control the API. The real sampling
 parameters are sent by bpc_hybrid.llm_config and recorded in the
 prediction manifest. seed is OPTIONAL — only sent if the provider
 profile declares seed support.
-version: 3
+version: 4
 -->
 
-# Direct LLM Sun Record Prompt v3 (Canonical Multi-Clause / Multi-Span)
+# Direct LLM Sun Record Prompt v4 (Canonical Multi-Clause / Multi-Span)
 
-> **Version**: v3 (2026-07-12)
+> **Version**: v4 (2026-08-04)
+> **v4 (2026-08-04, D1-R1-FIELD-TYPING)**: constraint/condition categories are defined explicitly (rules 15-17); constraint content must NOT be folded into action spans; two new few-shot examples (legal-reference constraint; condition with nested constraint).
 > **Wave 1.1 §3 upgrade**: D1 must now output a **full canonical prediction record** — not a flat six-string object. Multi-clause and multi-actor / multi-action are first-class. Sampling parameters are NOT in this file; see `docs/STAGE2_CANONICAL_SCHEMA_SPEC.md` and the runner's manifest.
 > **Runtime source of truth**: this file is the single source of truth for D1. No hardcoded `SYSTEM_PROMPT` in the runner. The runner loads this file via `bpc_hybrid.prompt_loader` and records the SHA-256 in the manifest.
 
@@ -61,6 +62,20 @@ Hard rules:
     `unsupported_or_ambiguous` with a short reason.
 15. source_id must be the literal identifier passed by the user
     prompt. Do not modify it.
+16. `constraint` covers legal references (pursuant to X, under
+    section X, within the meaning of X, in accordance with X, as
+    defined in X), temporal limits (within N, until, after, before,
+    during), quantity limits (at least, at most, no more than, in
+    such a quantity that), purpose limits (for the purpose of) and
+    exclusivity (only, solely, exclusively). Constraint content
+    MUST NOT be folded into the action span: the action span ends
+    where a constraint/condition/exception phrase begins.
+17. `condition` covers if/when/where/unless/provided that/in the
+    event of/to the extent that/insofar as clauses. Condition and
+    constraint are separate fields: a constraint inside a condition
+    (e.g. "within two years" inside "if ... within two years") is
+    reported in BOTH arrays. Never merge condition or constraint
+    content into the action span.
 ```
 
 ## User Prompt Template
@@ -80,6 +95,11 @@ Instructions:
 - For obligation / prohibition / permission clauses, list every
   actor, action, condition, constraint, and exception you can find
   with character offsets into source_text.
+- Scan the sentence for EVERY constraint phrase (legal references,
+  time limits, quantity limits, purpose limits, "only") and EVERY
+  condition phrase (if/when/where/unless/provided that/to the
+  extent that). Report them in their own arrays; never merge them
+  into the action span or into each other.
 - Do not collapse multiple actors or multiple actions into a single
   string. Each one is a separate array element with a stable id.
 - Use the few-shot examples below for span math, id style, and JSON
@@ -391,6 +411,170 @@ Output:
 }
 ```
 
+
+Example 5 — Example 5 — obligation with legal-reference constraint (constraint is NOT part of the action):
+Input: "The taxpayer shall depreciate the acquisition costs in accordance with Section 11(1)."
+Output:
+```json
+{
+  "schema_version": "1.0.0",
+  "sample_id": "estg_demo_5",
+  "source_id": "estg_demo_5",
+  "source_text": "The taxpayer shall depreciate the acquisition costs in accordance with Section 11(1).",
+  "clauses": [
+    {
+      "clause_id": "estg_demo_5_c01",
+      "clause_span": {
+        "text": "The taxpayer shall depreciate the acquisition costs in accordance with Section 11(1).",
+        "start": 0,
+        "end": 85
+      },
+      "modality": {
+        "label": "obligation",
+        "evidence": [
+          {
+            "text": "shall",
+            "start": 13,
+            "end": 18
+          }
+        ]
+      },
+      "actors": [
+        {
+          "id": "a01",
+          "text": "The taxpayer",
+          "start": 0,
+          "end": 12,
+          "normalized": "taxpayer"
+        }
+      ],
+      "actions": [
+        {
+          "id": "p01",
+          "text": "depreciate the acquisition costs",
+          "start": 19,
+          "end": 51,
+          "normalized": "depreciate acquisition costs"
+        }
+      ],
+      "conditions": [],
+      "constraints": [
+        {
+          "id": "c01",
+          "text": "in accordance with Section 11(1)",
+          "start": 52,
+          "end": 84,
+          "normalized": "in accordance with section 11(1)"
+        }
+      ],
+      "exceptions": [],
+      "actor_action_map": [
+        {
+          "actor_id": "a01",
+          "action_id": "p01"
+        }
+      ],
+      "order_relations": []
+    }
+  ],
+  "method": {
+    "name": "direct_llm",
+    "schema_source": "stage2_prediction.schema.json@1.0.0"
+  },
+  "validation": {
+    "schema_valid": true,
+    "cross_field_valid": true,
+    "errors": []
+  },
+  "unsupported_or_ambiguous": []
+}
+```
+
+Example 6 — Example 6 — condition clause with a nested constraint (both fields reported separately):
+Input: "The tax office shall refund the amount if the application is filed within two years."
+Output:
+```json
+{
+  "schema_version": "1.0.0",
+  "sample_id": "estg_demo_6",
+  "source_id": "estg_demo_6",
+  "source_text": "The tax office shall refund the amount if the application is filed within two years.",
+  "clauses": [
+    {
+      "clause_id": "estg_demo_6_c01",
+      "clause_span": {
+        "text": "The tax office shall refund the amount if the application is filed within two years.",
+        "start": 0,
+        "end": 84
+      },
+      "modality": {
+        "label": "obligation",
+        "evidence": [
+          {
+            "text": "shall",
+            "start": 15,
+            "end": 20
+          }
+        ]
+      },
+      "actors": [
+        {
+          "id": "a01",
+          "text": "The tax office",
+          "start": 0,
+          "end": 14,
+          "normalized": "tax office"
+        }
+      ],
+      "actions": [
+        {
+          "id": "p01",
+          "text": "refund the amount",
+          "start": 21,
+          "end": 38,
+          "normalized": "refund amount"
+        }
+      ],
+      "conditions": [
+        {
+          "id": "d01",
+          "text": "if the application is filed within two years",
+          "start": 39,
+          "end": 83,
+          "normalized": "if the application is filed within two years"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "c01",
+          "text": "within two years",
+          "start": 67,
+          "end": 83,
+          "normalized": "within two years"
+        }
+      ],
+      "exceptions": [],
+      "actor_action_map": [
+        {
+          "actor_id": "a01",
+          "action_id": "p01"
+        }
+      ],
+      "order_relations": []
+    }
+  ],
+  "method": {
+    "name": "direct_llm",
+    "schema_source": "stage2_prediction.schema.json@1.0.0"
+  },
+  "validation": {
+    "schema_valid": true,
+    "cross_field_valid": true,
+    "errors": []
+  },
+  "unsupported_or_ambiguous": []
+}
+```
 
 Return the canonical JSON object only. No prose.
 ```
@@ -733,6 +917,170 @@ Output:
 }
 ```
 
+
+Example 5 — Example 5 — obligation with legal-reference constraint (constraint is NOT part of the action):
+Input: "The taxpayer shall depreciate the acquisition costs in accordance with Section 11(1)."
+Output:
+```json
+{
+  "schema_version": "1.0.0",
+  "sample_id": "estg_demo_5",
+  "source_id": "estg_demo_5",
+  "source_text": "The taxpayer shall depreciate the acquisition costs in accordance with Section 11(1).",
+  "clauses": [
+    {
+      "clause_id": "estg_demo_5_c01",
+      "clause_span": {
+        "text": "The taxpayer shall depreciate the acquisition costs in accordance with Section 11(1).",
+        "start": 0,
+        "end": 85
+      },
+      "modality": {
+        "label": "obligation",
+        "evidence": [
+          {
+            "text": "shall",
+            "start": 13,
+            "end": 18
+          }
+        ]
+      },
+      "actors": [
+        {
+          "id": "a01",
+          "text": "The taxpayer",
+          "start": 0,
+          "end": 12,
+          "normalized": "taxpayer"
+        }
+      ],
+      "actions": [
+        {
+          "id": "p01",
+          "text": "depreciate the acquisition costs",
+          "start": 19,
+          "end": 51,
+          "normalized": "depreciate acquisition costs"
+        }
+      ],
+      "conditions": [],
+      "constraints": [
+        {
+          "id": "c01",
+          "text": "in accordance with Section 11(1)",
+          "start": 52,
+          "end": 84,
+          "normalized": "in accordance with section 11(1)"
+        }
+      ],
+      "exceptions": [],
+      "actor_action_map": [
+        {
+          "actor_id": "a01",
+          "action_id": "p01"
+        }
+      ],
+      "order_relations": []
+    }
+  ],
+  "method": {
+    "name": "direct_llm",
+    "schema_source": "stage2_prediction.schema.json@1.0.0"
+  },
+  "validation": {
+    "schema_valid": true,
+    "cross_field_valid": true,
+    "errors": []
+  },
+  "unsupported_or_ambiguous": []
+}
+```
+
+Example 6 — Example 6 — condition clause with a nested constraint (both fields reported separately):
+Input: "The tax office shall refund the amount if the application is filed within two years."
+Output:
+```json
+{
+  "schema_version": "1.0.0",
+  "sample_id": "estg_demo_6",
+  "source_id": "estg_demo_6",
+  "source_text": "The tax office shall refund the amount if the application is filed within two years.",
+  "clauses": [
+    {
+      "clause_id": "estg_demo_6_c01",
+      "clause_span": {
+        "text": "The tax office shall refund the amount if the application is filed within two years.",
+        "start": 0,
+        "end": 84
+      },
+      "modality": {
+        "label": "obligation",
+        "evidence": [
+          {
+            "text": "shall",
+            "start": 15,
+            "end": 20
+          }
+        ]
+      },
+      "actors": [
+        {
+          "id": "a01",
+          "text": "The tax office",
+          "start": 0,
+          "end": 14,
+          "normalized": "tax office"
+        }
+      ],
+      "actions": [
+        {
+          "id": "p01",
+          "text": "refund the amount",
+          "start": 21,
+          "end": 38,
+          "normalized": "refund amount"
+        }
+      ],
+      "conditions": [
+        {
+          "id": "d01",
+          "text": "if the application is filed within two years",
+          "start": 39,
+          "end": 83,
+          "normalized": "if the application is filed within two years"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "c01",
+          "text": "within two years",
+          "start": 67,
+          "end": 83,
+          "normalized": "within two years"
+        }
+      ],
+      "exceptions": [],
+      "actor_action_map": [
+        {
+          "actor_id": "a01",
+          "action_id": "p01"
+        }
+      ],
+      "order_relations": []
+    }
+  ],
+  "method": {
+    "name": "direct_llm",
+    "schema_source": "stage2_prediction.schema.json@1.0.0"
+  },
+  "validation": {
+    "schema_valid": true,
+    "cross_field_valid": true,
+    "errors": []
+  },
+  "unsupported_or_ambiguous": []
+}
+```
 
 ## Notes (v3 upgrade)
 

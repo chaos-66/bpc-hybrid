@@ -2361,3 +2361,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：按用户指示（'与 B0 同理，列出 D1 pipeline 严格逐点修复'）建立 §8.7 D1-R0–R5 修复 Pipeline（与 §8.6 同构：R0 整合/R1 低召回修复/R2 锁定/R3 快照+错误分析/R4 三方法共享 Gold/R5 结论；硬约束含逐批 LLM 授权+硬预算上限、不看 Gold 调 prompt、prompt hash 固定、共享 evaluator）。D1-R0 核验通过：run_direct_llm.py（prompt loader 加载 v3 prompt）+ canonical schema + s28_s29 产物 tracked 且与 56d2b03 Gold 可重评。新增 docs/D1_ERROR_ANALYSIS.md：低召回根因量化（354 漏抽中 constraint 215=99 进 action span+91 未抽+16 进 condition；prompt 规则 14 省略指令 + few-shot 缺 constraint/condition；运行事故 lost104/recovery26/retry0）；字段归位理论 R 上限 0.288→0.699。D1-R1 各子批次（FIELD-TYPING/PROMPT-CONTRACT/VERIFY-PASS/CLEAN-RERUN）需真实 LLM pilot（逐批用户授权+预算），本轮未实施任何 prompt 修改。全量 audit 1436 passed / 24 skipped。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T09:22:58.043900+00:00 - D1-R1-FIELD-TYPING candidate: prompt v4 (constraint categories, no-fold rules, 2 new few-shot examples)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1438 passed, 24 skipped in 177.49s (0:02:57)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`f821f45e688a1e491534e572062a18eb5268428c`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：按 §8.7.1 第一子批次（D1-R1-FIELD-TYPING）实施候选：direct_llm_sun_record_prompt.md v3→v4——新增硬规则 15-17（constraint 类别定义：法律引用/时间/数量/目的/排他；constraint 内容禁止并入 action span；condition 与 constraint 分字段，嵌套约束两处都报）；用户指令增加穷尽扫描；新增 Example 5（法律引用 constraint 'in accordance with Section 11(1)'，偏移 52-84 已程序验证）与 Example 6（condition 'if ... within two years' 39-83 + 嵌套 constraint 'within two years' 67-83）。fixtures JSON（4→6）与 build 脚本同步；test_prompt_contract 新增 2 项（规则存在性 + 新例子覆盖 constraint/condition）。27 项 prompt 测试通过（含 6 例子 canonical validator 校验）；verify_d1_few_shot_fixtures 6/6 OK；全量 audit 1438 passed / 24 skipped。本批次未做任何真实 LLM 调用；pilot 待用户授权+预算。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

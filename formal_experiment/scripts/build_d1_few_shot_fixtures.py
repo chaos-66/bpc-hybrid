@@ -48,5 +48,23 @@ OUT.write_text(json.dumps([
             "source_text": "The controller shall first assess the risk, then notify the supervisory authority.",
         },
     },
+    {
+        "description": "Example 5 \u2014 obligation with legal-reference constraint",
+        "input": "The taxpayer shall depreciate the acquisition costs in accordance with Section 11(1).",
+        "build": {
+            "sample_id": "estg_demo_5",
+            "source_id": "estg_demo_5",
+            "source_text": "The taxpayer shall depreciate the acquisition costs in accordance with Section 11(1).",
+        },
+    },
+    {
+        "description": "Example 6 \u2014 condition clause with a nested constraint",
+        "input": "The tax office shall refund the amount if the application is filed within two years.",
+        "build": {
+            "sample_id": "estg_demo_6",
+            "source_id": "estg_demo_6",
+            "source_text": "The tax office shall refund the amount if the application is filed within two years.",
+        },
+    },
 ], indent=2, ensure_ascii=False), encoding="utf-8")
 print(f"Wrote {OUT}")

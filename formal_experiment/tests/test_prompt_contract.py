@@ -147,6 +147,35 @@ def test_d1_few_shot_method_name_is_direct_llm():
         assert ex["output"]["method"]["schema_source"] == SCHEMA_SOURCE
 
 
+def test_d1_prompt_v4_defines_constraint_categories_and_no_folding():
+    # D1-R1-FIELD-TYPING (2026-08-04): the system prompt must define the
+    # constraint categories (legal references, temporal/quantity limits) and
+    # forbid folding constraint content into the action span.
+    p = load_prompt("direct_llm_sun_record_prompt")
+    sys_txt = p.system_prompt
+    assert "within the meaning of" in sys_txt
+    assert "pursuant to" in sys_txt
+    assert "MUST NOT be folded into the action span" in sys_txt
+    assert "condition" in sys_txt and "constraint" in sys_txt
+    # the user template must instruct an exhaustive constraint/condition scan
+    assert "Scan the sentence for EVERY constraint phrase" in p.user_prompt_template
+
+
+def test_d1_few_shot_covers_constraint_and_condition_fields():
+    # the v4 examples must demonstrate a legal-reference constraint and a
+    # condition clause with a nested constraint (the two low-recall fields).
+    p = load_prompt("direct_llm_sun_record_prompt")
+    constraints = [ex for ex in p.few_shot_examples
+                   if ex["output"]["clauses"][0].get("constraints")]
+    conditions = [ex for ex in p.few_shot_examples
+                  if ex["output"]["clauses"][0].get("conditions")]
+    assert any("Section 11(1)" in ex["output"]["clauses"][0]["constraints"][0]["text"]
+               for ex in constraints), "legal-reference constraint example missing"
+    assert any("within two years" in ex["output"]["clauses"][0]["constraints"][0]["text"]
+               for ex in constraints), "nested-constraint example missing"
+    assert conditions, "condition example missing"
+
+
 # ---------------------------------------------------------------------------
 # render_user_prompt
 # ---------------------------------------------------------------------------
