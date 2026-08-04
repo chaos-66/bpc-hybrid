@@ -24,3 +24,7 @@ outputs/development/s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/*.json text e
 # discipline as the C3 rule above: exact registered development output
 # directory only, never a broad `*.json text eol=lf` or `text=auto`.
 outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/*.json text eol=lf
+
+# B0-R1-ACTION (2026-08-04): narrow line-ending pin for the registered
+# action-fix development run output directory. Same scope discipline.
+outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actionfix_hist56d_v1/*.json text eol=lf
