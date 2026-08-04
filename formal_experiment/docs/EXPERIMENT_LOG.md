@@ -2111,3 +2111,33 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：按 MASTER_PIPELINE 8.6.1 B0-R1-ACTION 批次验收纪律执行：focused tests（6 新增 + 既有 span 套件，106 passed）-> 全量 audit 1413 passed/24 skipped -> 真实重评。用户已确认按 pipeline 推进；本次为 development B0 运行（非 B0-R3 正式快照运行）：在隔离 worktree（D:\Paper\experiment\wt_b0_r1b，detached HEAD 00f4ad8）内恢复 56d2b03 历史输入（Layer E/membership 按配置绑定 CRLF 字节，freeze/adapter/independence 原样，independence audit 与 checkpoint 为本地已有 ignored 资产），运行前逐文件 sha256 与配置绑定核对一致；CoreNLP 4.5.10 本地 CPU 运行，无网络、无 LLM/API、未修改任何既有输入/产物/Gold。产物已复制回主树 outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actionfix_hist56d_v1（4 件套 hash 与 manifest 一致，eol=lf 钉住），worktree 将于本批次提交后移除。方法变更为 actor_action.py _subtree_span 增加 exclude_deps（nsubj/nsubj:pass/csubj/obl:agent/nmod:agent/advcl/ccomp/mark/discourse/parataxis/cc/conj）；commit 00f4ad8 已含代码与测试。delta 仅发生在 action 字段（+1 matched_p / -1 matched_gt），其余五字段 delta 全部为 0，证明修复隔离性。methods.json method_conformance_status 仍为 blocked_until_b0_r2，未解除；未声明 method correctness 或 formal performance。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T01:24:53.597462+00:00 - B0-R1-SCOPE-DISAMBIG (C2) candidate real run: measured negative, candidate rejected per 8.6 iteration rule
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v10a_r1b_scope_disambig_hist56d_v1；阶段=B0-R1-SCOPE-DISAMBIG；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python -m scripts.run_estg150_b0_enhanced_v10_development --runtime-home D:\environment\stanford-corenlp-4.5.10 --output-dir outputs/development/s27_estg150_b0_enhanced_v10a_r1b_scope_disambig_hist56d_v1 (cwd=isolated worktree D:\Paper\experiment\wt_b0_r1b, detached HEAD a3ad64f)`
+- manifest：outputs/development/s27_estg150_b0_enhanced_v10a_r1b_scope_disambig_hist56d_v1/manifest.json
+- 结果摘要：C2 candidate (cross-field identical-span dedupe, lexicon-backed side wins) measured on the real pipeline vs C3 baseline: overall F1 0.7101913 -> 0.7096445 (-0.0005), P 0.68407->0.68468 (+0.0006), R 0.73839->0.73649 (-0.0019); extracted -1, matched_p 0, matched_gt -2, missed +2. Per-field: action delta (+1 matched_p / -1 matched_gt) is the previously-measured ACTION fix, not C2; C2's own effect = condition -1 extracted / -1 matched_p / -1 matched_gt (removed one MATCHED sole-cover condition pred), constraint 0. The rule fired exactly once in the real pipeline: of the 44 identical condition+constraint pairs in the C3 registered attempts, 43 are both-tregex (registry pattern overlap: constraint 'PP=constraint << to << an|the' vs condition 'PP=condition << to << extent|purpose|case') and are intentionally skipped; offline attribution of lexicon backing did not match real span sources (per-field dedupe prefers tregex, so surviving spans are tregex-backed). Verdict per MASTER_PIPELINE 8.6 iteration rule (fixed main metric decides keep/reject): measured delta is negative -> candidate REJECTED; scope.py reverted to the pre-C2 state and the C2 test file removed; artifacts kept as evidence. Root cause of the confusion: registry-level pattern overlap (to<an|the vs to<extent) plus gold-internal semantic variance (33 matched condition spans depend on that/which/who condition markers; gold double-annotates some positions). development only; not formal.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1412 passed, 24 skipped in 129.16s (0:02:09)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`a3ad64f5b7515c31464467dc14226a1ff28dfac6`；相关未提交路径：10 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：按 MASTER_PIPELINE 8.6.1 B0-R1-SCOPE-DISAMBIG 批次纪律执行（用户已确认按 pipeline 推进）：隔离 worktree 恢复 56d2b03 历史输入（全部 9 项输入 sha 核验一致）+ 真实 CoreNLP 运行（无网络/无 LLM），exit 0。候选规则为 scope.py 交叉字段同界 span 去重（恰好一侧 lexicon 时 lexicon 字段胜出），提交 a3ad64f 含 6 个合成测试；实测 delta 为负（F1 -0.0005，仅移除 1 个已匹配 condition 唯一覆盖），按迭代规则拒绝：scope.py 已回退（工作树与提交一致），测试文件已删除，运行产物保留为负面证据。结论：44 个同界双发中 43 个为双 tregex（registry 模式重叠），规则层无法在不读 Gold 前提下安全消歧（33 个 condition 匹配依赖关系代词标记；gold 对 'to the extent'/关系从句语义内部不一致）；后续方向=registry 模式层复核或作为方法局限披露，需用户决策。methods.json method_conformance_status 仍 blocked_until_b0_r2。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T01:28:04.971734+00:00 - B0-R1-SCOPE-DISAMBIG batch finalization: catalog regenerated, tests green, C2 artifacts versioned
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1413 passed, 24 skipped in 136.52s (0:02:16)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`a3ad64f5b7515c31464467dc14226a1ff28dfac6`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：批次收尾：generate_file_catalog 重新生成（650 文件，纳入 C2 候选运行目录 4 件套 + scope.py 回退 + 测试删除）；全量 audit --with-tests 1413 passed / 24 skipped / 0 failed, integrity_pass=True。前一 experiment_run 事件（B0-R1-SCOPE-DISAMBIG，integrity_pass=False）记录的是 catalog 再生成前的中间状态测试结果（1 failed = catalog 未含新目录），以本事件为准收尾；两事件均不可变。C2 候选按实测负 delta 拒绝（见前一事件 notes），scope.py 与工作树一致（回退完成）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

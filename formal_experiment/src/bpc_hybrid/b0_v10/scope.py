@@ -420,34 +420,4 @@ def resolve_scope_fields_v10(
         result[field] = kept[:6]
         stats["final_affected_spans"] += len(result[field])
 
-    # B0-R1-SCOPE-DISAMBIG (C2): cross-field dedupe for IDENTICAL
-    # condition/constraint spans.  The same constituent can be claimed by
-    # both fields when a Tregex condition pattern and a Tregex constraint
-    # pattern (or a lexicon marker and a Tregex pattern) both match it.
-    # When exactly one side is lexicon-backed, the curated cue inventory's
-    # field wins over the broad Tregex net; both-tregex and both-lexicon
-    # identical pairs are intentionally kept (documented semantic-ambiguity
-    # territory, see docs/B0_ERROR_ANALYSIS.md C2).
-    cond_by_key = {
-        (s["start"], s["end"]): s for s in result.get("condition", [])
-    }
-    cons_by_key = {
-        (s["start"], s["end"]): s for s in result.get("constraint", [])
-    }
-    for key in set(cond_by_key) & set(cons_by_key):
-        cond_span = cond_by_key[key]
-        cons_span = cons_by_key[key]
-        cond_lex = cond_span.get("source") == "lexicon_v2_typed_scope"
-        cons_lex = cons_span.get("source") == "lexicon_v2_typed_scope"
-        if cond_lex == cons_lex:
-            continue
-        if cons_lex:
-            result["condition"] = [
-                sp for sp in result["condition"] if sp is not cond_span
-            ]
-        else:
-            result["constraint"] = [
-                sp for sp in result["constraint"] if sp is not cons_span
-            ]
-
     return result, decisions, stats

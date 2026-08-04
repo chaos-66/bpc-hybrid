@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-04
-**收录文件**：646 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：650 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -424,6 +424,11 @@
 | `outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actionfix_hist56d_v1/evaluation_independent82.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actionfix_hist56d_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actionfix_hist56d_v1/sun_table8_literal_overlap_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_enhanced_v10a_r1b_scope_disambig_hist56d_v1/b0_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_enhanced_v10a_r1b_scope_disambig_hist56d_v1/evaluation_all150.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_enhanced_v10a_r1b_scope_disambig_hist56d_v1/evaluation_independent82.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_enhanced_v10a_r1b_scope_disambig_hist56d_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_estg150_b0_enhanced_v10a_r1b_scope_disambig_hist56d_v1/sun_table8_literal_overlap_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/c3_metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/delta.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -691,7 +696,6 @@
 | `tests/test_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_a_span_boundaries.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_action_span_scope.py` | 活动 | Python 实现、脚本或测试 |
-| `tests/test_b0_r1_scope_disambig.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_v10_integration_contract.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_v10_scope_and_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_canonical_text_hash_policy.py` | 活动 | Python 实现、脚本或测试 |
