@@ -107,14 +107,14 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
 - **判定**：保留（修复的是 B0-R1 明确列出的确定性缺陷"德英 cue 验证/无伪 validated"，属正确性 DoD 项；主口径不变；label 面板 −0.48pp 为记录的已知代价，1-2 个 clause 噪声级；validated_split=0 为记录的副作用，留待后续细化——split 路径逐片验证后无 cue 片段（如主语前缀）无法验证导致全部降级 unsupported）。
 - 产物：`outputs/development/s27_estg150_b0_enhanced_v10a_r1b_align_hist56d_v1/`。
 
-### C4. Actor 抽取不足 —— 【部分可修】
+### C4. Actor 抽取不足 —— 【已修（B0-R1-ACTOR），实测主口径 F1 +0.0018】
 
-- 现象：GT=48，missed=22（R=0.54）。22 个 missed 中：
-  - **8 个含词典词**（`the employee`×2、`the Federal Minister…`、`an employee`、`the person performing the activity`、`the person required to make the deduction`、`the taxpayer`(estg_000206)、`the recipient`）→ 词典能接受、但 nsubj→动词 依赖边未找到或 clause 边界把它切走 → **依赖/句法失败，可修**；
-  - **14 个不含词典词**（`the legal successor`、`the spouse`、`A child`、`The bank`×2、`The building society`×2、`The audit body`、`The beneficiary`、`the owners or shareholders`、`It`(estg_000003) 等）→ 词典覆盖不足 → **需用户决策**（扩展词典为公开 marker，S2.3 边界禁止训练数据）；
-  - 部分 actor 同时被 C1 的 action 吞并（如 estg_000206 的 `the spouse shall not be entitled…` 被 action 覆盖）。
-- 代码位置：`b0_v10/actor_action.py:66-76`（`filter_actor_span` 要求至少一个词在 `lexicon.actor_surfaces`，且 14 词上限）、`resources/lexicon/actor_markers_en_v2.json`（37 个 surface）。
-- 预期影响：修复依赖边查找后可回收 8 个 missed；词典扩展由用户决定。
+- 现象：GT=48，missed=22（R=0.54）。22 个 missed 中 8 个含词典词（可修）、14 个不含（需决策）。
+- 代码位置：`b0_v10/actor_action.py`（actor 提取被 action-head 门控；只认 nsubj*/obl:agent/nmod:agent）。
+- **取证（2026-08-04，真实 CoreNLP 解析）**：8 个词典内漏抽的机制——(a) 5/8 的 nsubj 弧挂在无情态、非 ROOT 的动词上（分词/从句内普通动词/无情态被动谓词），被 action-head 门控挡住；(b) 3/8 是被动 by-agent/与格 to-recipient，CoreNLP 4.5.10 basicDependencies 标为 `obl`+case by/to，且"首个弧优先"让非词典主语遮蔽了 by-agent。
+- **实测修复**：候选扩展为 clause 内全部 nsubj/nsubj:pass 弧（无 action head 时也发 actor，不发边）+ action head 的 obl/nmod with by/to case；首个通过过滤器的候选胜出；actor 子树排除自身 case 介词与尾部标点；**中心词（nsubj 依赖 token）必须为词典 surface**（拒绝"the business year of a bookkeeping farmer"这类修饰词命中）。
+- **实测结果**：主口径 F1 0.71024→**0.71205（+0.0018，本系列首个正向主口径 delta）**，R +0.0066、P −0.0023；actor 字段 F1 0.616→0.670（R 0.542→0.688）；8 个漏抽全部找回；中心词校验把候选 FP 从 29 砍到 17。v1（无中心词校验）实测 −0.0021 被拒，v2 保留。
+- 产物：`outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actor_hist56d_v2/`。残余：14 个无词典覆盖的 actor（spouse/successor/bank 等）仍需 LEXICON-DECISION。
 
 ### C5. Clause 规划失配 —— 【低优先级】
 

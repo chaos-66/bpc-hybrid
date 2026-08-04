@@ -2197,3 +2197,33 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：新增 tests/test_b0_r1_bridge_semantics.py（6 项）：(1) registry 层面断言 v3-enhanced 同时刻意使用 <（child）与 <<（descendant）；(2) 真实编译运行 SunPhraseRuleBatchBridgeMulti（本地 CoreNLP 4.5.10 runtime + javac，无网络无 LLM）：'VP=modality < shall' 对 VP 下 MD 预终端不匹配而 '<<' 匹配、'MD=modality < shall'（POS 节点对词叶的直接子关系，即 registry 真实用法）匹配；无 operation 的多命中逐条记录；(3) 守卫：operated 规则多命中时 fail closed（Tsurgeon 会消费全部命中而 bridge 只记录一个）。SunPhraseRuleBatchBridgeMulti.java 增加守卫（operated 规则仅允许恰好一个非重叠命中，否则抛 IllegalStateException）。当前 registry tsurgeon_operations 全空、tsurgeon_enabled=false，守卫不改变任何现有运行行为（潜伏风险转 fail-closed 保证）。全量 audit 1428 passed / 24 skipped。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T03:49:20.329587+00:00 - B0-R1-ACTOR real run: actor recovery (plain-verb nsubj + by/to obliques + head-surface check), first positive metric delta
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v10a_r1b_actor_hist56d_v2；阶段=B0-R1-ACTOR；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python -m scripts.run_estg150_b0_enhanced_v10_development --runtime-home D:\environment\stanford-corenlp-4.5.10 --output-dir outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actor_hist56d_v2 (cwd=isolated worktree D:\Paper\experiment\wt_b0_r1b, detached HEAD b0548c1)`
+- manifest：outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actor_hist56d_v2/manifest.json
+- 结果摘要：Actor recovery measured on the real pipeline vs the ALIGN baseline: overall F1 0.7102368 -> 0.7120497 (+0.0018, the first positive primary-metric delta in the B0-R1 series), P 0.68497->0.68267 (-0.0023), R 0.73744->0.74408 (+0.0066); extracted 1111->1125, matched_p 761->768 (+7), matched_gt 778->785 (+7), misclassified 350->357, missed 277->270 (-7). Actor field: extracted 35->49, P 0.714->0.653, R 0.542->0.688, F1 0.616->0.670. All 8 forensic-identified lexicon-covered misses recovered (estg_000020/000051/000206/000283/000417/000504/000635/000776); the head-surface check cut candidate FPs from 29 to 17 (modifier-only matches like 'the business year of a bookkeeping farmer' rejected). Fix = two commits: f82b2b7 (candidates from every in-clause nsubj/nsubj:pass arc without action heads + obl/nmod with by/to case on action heads + first-filtered-candidate-wins) and b0548c1 (head token must be a lexicon surface). Other fields: modality label panel and strict diagnostics unchanged vs ALIGN (isolation). Decision: KEEP (positive fixed-metric delta). development only; not formal.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1432 passed, 24 skipped in 126.64s (0:02:06)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b0548c1e704dd9177fb231401021cee5820c5259`；相关未提交路径：8 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：按 MASTER_PIPELINE 8.6.1 B0-R1-ACTOR 批次纪律执行（用户已确认按 pipeline 推进）：先对 8 个词典内漏抽样本做真实 CoreNLP 解析取证（5/8 nsubj 挂在无情态非 ROOT 动词、3/8 为 CoreNLP 4.5.10 的 obl+case by/to），再实施两轮修复并经两次真实运行验证（v1 无中心词校验 F1 -0.0021 被拒，v2 加中心词校验 F1 +0.0018 保留）。隔离 worktree 恢复 56d2b03 历史输入（9 项 sha 核验一致）、无网络无 LLM。全量 audit 1432 passed / 24 skipped。methods.json method_conformance_status 仍 blocked_until_b0_r2。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T03:53:13.727744+00:00 - Record measured ACTOR outcome (first positive metric delta) in docs
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1432 passed, 24 skipped in 139.45s (0:02:19)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`b0548c1e704dd9177fb231401021cee5820c5259`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：B0_ERROR_ANALYSIS.md C4 更新为【已修（B0-R1-ACTOR），实测 F1 +0.0018】；MASTER_PIPELINE 3.4.25：§8.6.1 ACTOR 行更新，变更日志追加（3.4.24 保留）。全量 audit 1432 passed / 24 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
