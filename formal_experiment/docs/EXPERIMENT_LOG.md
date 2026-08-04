@@ -2387,3 +2387,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：run_direct_llm.py 加固（pilot 前置）：①新增 --model fail-closed 钉死（解析模型必须等于请求值，否则调用前中止；response 返回模型逐条校验，不一致即 abort）且检查顺序提前到输入 I/O 之前；②新增 --prompt-name（allowlist：active v4 + v3 快照）支持配对比较；③manifest 记录 requested/resolved/returned 三态模型；④修复真实缺陷：import 了不存在的 OUTPUTS_DEVELOPMENT_DIR（当前分支 runner 此前无法导入运行，改用 paths.DEVELOPMENT_DIR）；⑤v3 prompt 字节精确快照（git ff320ee^ 提取，sha 37d1edd7）落盘 prompts/sun_compat/direct_llm_sun_record_prompt_v3_2026_07_12.md；⑥新增 5 项测试（allowlist/快照身份/新规则存在性/未知 prompt 拒绝/模型钉死 fail-closed）。全量 audit 1443 passed / 24 skipped。未做任何真实 LLM 调用。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T11:36:14.272291+00:00 - D1-R1-FIELD-TYPING pilot pre-registration (20 samples, v3 vs v4, deepseek-v4-flash, strict gates)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1443 passed, 24 skipped in 201.01s (0:03:21)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`b512f55cebcd365f57225896e77b057614c534d2`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Pilot 预注册（严格门禁，用户授权模型=deepseek-v4-flash，'不能跑完150条结果P、R没动'）：输入=top-20 constraint 漏抽样本（56d2b03 Layer E approved English，覆盖 88/215 个漏抽），input.jsonl 落盘 outputs/development/s27_d1_pilot_20_hist56d_v1/。两臂各 20 次调用（--max-calls 20、--allow-llm、--model deepseek-v4-flash 钉死、--development）：A 臂 v3 快照 prompt，B 臂 v4 prompt。门禁（任一不过即拒绝，不进入 150 全量）：①行为门禁：v4 输出与 v3 必须有实质差异（constraint pred 出现/action span 收缩），无差异=prompt 无效→拒绝；②指标门禁：pilot 子集上 v4 constraint matched_gt > v3 constraint matched_gt，且 v4 overall P 相对 v3 不显著下降（净 F1 或 constraint F1 改善）；③模型门禁：resolved/returned 必须=deepseek-v4-flash（fail-closed）。总预算=40 calls。150 全量仅在门禁全过后执行（届时单独记录）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
