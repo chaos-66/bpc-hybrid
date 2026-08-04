@@ -1,0 +1,93 @@
+{
+  "assignment": "none_independent_overlap_coverage",
+  "clause_alignment_required": false,
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "evaluation_unit": "statement",
+  "invalid_attempt_count": 0,
+  "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+  "method_id": "sun_rule_only",
+  "modality_policy": "evidence_span_extraction_only_label_ignored",
+  "overall": {
+    "extracted": 1111,
+    "f1": 0.7102367843820796,
+    "ground_truth": 1055,
+    "matched_ground_truth": 778,
+    "matched_predictions": 761,
+    "misclassified": 350,
+    "missed": 277,
+    "precision": 0.684968496849685,
+    "recall": 0.7374407582938388
+  },
+  "overlap_threshold": "strictly_greater_than_zero_characters",
+  "per_field": {
+    "action": {
+      "extracted": 244,
+      "f1": 0.8554026399759472,
+      "ground_truth": 247,
+      "matched_ground_truth": 211,
+      "matched_predictions": 209,
+      "misclassified": 35,
+      "missed": 36,
+      "precision": 0.8565573770491803,
+      "recall": 0.854251012145749
+    },
+    "actor": {
+      "extracted": 35,
+      "f1": 0.6161137440758293,
+      "ground_truth": 48,
+      "matched_ground_truth": 26,
+      "matched_predictions": 25,
+      "misclassified": 10,
+      "missed": 22,
+      "precision": 0.7142857142857143,
+      "recall": 0.5416666666666666
+    },
+    "condition": {
+      "extracted": 239,
+      "f1": 0.705423471848942,
+      "ground_truth": 214,
+      "matched_ground_truth": 163,
+      "matched_predictions": 157,
+      "misclassified": 82,
+      "missed": 51,
+      "precision": 0.6569037656903766,
+      "recall": 0.7616822429906542
+    },
+    "constraint": {
+      "extracted": 330,
+      "f1": 0.4913493402728364,
+      "ground_truth": 302,
+      "matched_ground_truth": 159,
+      "matched_predictions": 152,
+      "misclassified": 178,
+      "missed": 143,
+      "precision": 0.46060606060606063,
+      "recall": 0.5264900662251656
+    },
+    "exception": {
+      "extracted": 14,
+      "f1": 0.8148148148148148,
+      "ground_truth": 13,
+      "matched_ground_truth": 11,
+      "matched_predictions": 11,
+      "misclassified": 3,
+      "missed": 2,
+      "precision": 0.7857142857142857,
+      "recall": 0.8461538461538461
+    },
+    "modality": {
+      "extracted": 249,
+      "f1": 0.864500195765443,
+      "ground_truth": 231,
+      "matched_ground_truth": 208,
+      "matched_predictions": 207,
+      "misclassified": 42,
+      "missed": 23,
+      "precision": 0.8313253012048193,
+      "recall": 0.9004329004329005
+    }
+  },
+  "reporting_role": "primary_sun_phrase_extraction_metric",
+  "sample_count": 150,
+  "schema_version": "sun_literal_overlap_evaluation@2.0.0"
+}

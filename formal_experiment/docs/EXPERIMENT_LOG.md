@@ -2154,3 +2154,33 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
 - 备注：B0_ERROR_ANALYSIS.md：C1 改为【已修，实测质量收益】，C2 改为【实测候选被拒，记为方法局限】，含真实运行数字与机制证据。MASTER_PIPELINE 3.4.23：§8.6.1 ACTION/SCOPE-DISAMBIG 两行更新为实测结论；变更日志追加 3.4.23 行。无代码变更。全量 audit 1413 passed / 24 skipped。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T02:52:51.040671+00:00 - B0-R1-ALIGN real run: DE<->EN cue validation, pseudo-validated eliminated, kept with recorded cost
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_estg150_b0_enhanced_v10a_r1b_align_hist56d_v1；阶段=B0-R1-ALIGN；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python -m scripts.run_estg150_b0_enhanced_v10_development --runtime-home D:\environment\stanford-corenlp-4.5.10 --output-dir outputs/development/s27_estg150_b0_enhanced_v10a_r1b_align_hist56d_v1 (cwd=isolated worktree D:\Paper\experiment\wt_b0_r1b, detached HEAD fcf7b34)`
+- manifest：outputs/development/s27_estg150_b0_enhanced_v10a_r1b_align_hist56d_v1/manifest.json
+- 结果摘要：DE<->EN cue-correspondence validation (documented linguistic modal table + negation polarity + numeric anchors) measured on the real pipeline. Alignment statuses: validated 107->49 (validated_split 42->0, validated_anchor 65->49), unsupported 30->72, equal_count 26->46, heuristic_supported 219->177 -> the B0-R1 DoD 'no pseudo-validated' is now satisfied at the alignment level. Modality routing: validated_aligned_classifier 20->12, record_level_classifier_fallback 20->28. Primary span metric sun_literal_overlap_evaluation@2.0.0: UNCHANGED vs the ACTION-fix run (F1 0.7102368, P 0.68497, R 0.73744; evidence spans not affected by label routing). Modality label panel: evidence-matched clause label accuracy 79.33% -> 78.85% (-0.48pp, ~2 clauses); strict clause accuracy all150 0.6407->0.6364, macro F1 0.5735->0.5699; independent82 macro F1 0.5903->0.5915 (+0.0012). Decision per MASTER_PIPELINE 8.6 DoD + iteration rule: KEEP (the fix repairs the named deterministic defect 'DE/EN cue validation / no pseudo-validated'; the fixed primary metric is unchanged; the label-panel cost of ~0.5pp (1-2 clauses) is recorded as a documented trade-off; validated_split=0 is a recorded side effect for future refinement). development only; not formal.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1422 passed, 24 skipped in 113.84s (0:01:53)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`fcf7b34f74c5c93c5ba764b65256f605f1bc04f2`；相关未提交路径：8 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：按 MASTER_PIPELINE 8.6.1 B0-R1-ALIGN 批次纪律执行（用户已确认按 pipeline 推进）：隔离 worktree 恢复 56d2b03 历史输入（9 项 sha 核验一致）+ 真实 CoreNLP 运行（无网络/无 LLM），exit 0。变更：alignment.py 新增 _cross_validates（DE->EN 情态表 darf/duerfen/durfen->may、muss/muessen/mussen->must、soll/sollen->shall、kann/koennen->may、hat zu->shall、ist verpflichtet->must、定义类 cue，否定极性一致或共享数字锚）；equal-count/monotone/split 三路径统一使用；split 路径改为连接词优先切点并逐片验证。映射为语言学文档表，非 Gold/P-R 调参。9 个新合成测试 + 弱测试锁定精确状态。全量 audit 1422 passed / 24 skipped。methods.json method_conformance_status 仍 blocked_until_b0_r2。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-04T02:56:50.488059+00:00 - Record measured ALIGN outcome in error analysis and pipeline docs
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1422 passed, 24 skipped in 112.06s (0:01:52)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`fcf7b34f74c5c93c5ba764b65256f605f1bc04f2`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked、sun_stage2_baseline_not_paper_faithful
+- 备注：B0_ERROR_ANALYSIS.md C3 更新为【已修（B0-R1-ALIGN），实测面板 -0.48pp，主口径不变】；MASTER_PIPELINE 3.4.24：§8.6.1 ALIGN 行更新为实测结论，变更日志追加。全量 audit 1422 passed / 24 skipped。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

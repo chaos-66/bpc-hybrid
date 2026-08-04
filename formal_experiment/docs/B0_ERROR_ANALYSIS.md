@@ -99,12 +99,13 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
 - **拒绝的机制证据**：(1) 33 个已匹配 condition span 完全依赖 that/which/who 关系代词条件标记（删即失 R）；(2) gold 对 "to the extent"/关系从句语义内部不一致（同短语在不同样本分别标 condition/constraint，个别位置双标注）；(3) 双 tregex 同界对无论偏向哪边都对称损失匹配（估 −0.003 F1）。在不"看 Gold 反向调规则"的硬约束下，规则层无法安全消除。
 - 残余方向：registry 模式层复核（去掉 constraint 对 "to the extent" 的捕获，收益约 4-6 FP）需用户决策；其余为方法-vs-Gold 语义分歧，按 Pipeline 披露为方法局限（论文可写，与 D1 constraint R=0.288 同性质）。
 
-### C3. 模态四分类 label 混淆 —— 【可修，独立面板】
+### C3. 模态四分类 label 混淆 —— 【已修（B0-R1-ALIGN），实测面板 −0.48pp，主口径不变】
 
 - 现象：evidence 匹配的 208 个 clause 中，label 准确率 79.3%；混淆集中在 definition↔obligation（16+7）与 permission/prohibition（5+3）。
 - 代码位置：`b0_v10/definition_resolver.py`（definition_structure 路由）、`b0_v10/alignment.py:92-114,162-209`（equal-count/monotone 路径的"伪 validated"：两侧各出现任意锚即标 validated，不校验 DE↔EN 语义对应 → 路由输入不可靠）。
-- 注意：此面板不影响六字段 span 主表，但影响论文中模态四分类报告。
-- 预期影响：DE/EN cue 验证修复后 label 混淆下降；这是 B0-R1 明确列出的"德英 cue 验证"待办。
+- **实测（2026-08-04，B0-R1-ALIGN）**：修复 = `_cross_validates`（语言学 DE→EN 情态映射表 + 否定极性一致 + 共享数字锚；equal-count/monotone/split 三路径统一；split 改连接词优先切点并逐片验证）。真实运行：validated 107→49（validated_split 42→0）、unsupported 30→72、"无伪 validated" DoD 达成；**主口径 span 指标完全不变**（F1 0.7102368，evidence span 不受 label 路由影响）；label 面板 79.33%→78.85%（**−0.48pp，约 2 个 clause**），strict clause accuracy 0.6407→0.6364，independent82 macro F1 +0.0012。
+- **判定**：保留（修复的是 B0-R1 明确列出的确定性缺陷"德英 cue 验证/无伪 validated"，属正确性 DoD 项；主口径不变；label 面板 −0.48pp 为记录的已知代价，1-2 个 clause 噪声级；validated_split=0 为记录的副作用，留待后续细化——split 路径逐片验证后无 cue 片段（如主语前缀）无法验证导致全部降级 unsupported）。
+- 产物：`outputs/development/s27_estg150_b0_enhanced_v10a_r1b_align_hist56d_v1/`。
 
 ### C4. Actor 抽取不足 —— 【部分可修】
 
