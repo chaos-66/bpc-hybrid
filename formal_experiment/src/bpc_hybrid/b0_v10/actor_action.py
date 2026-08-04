@@ -56,6 +56,7 @@ def _subtree_span(
     head_idx: int,
     *,
     exclude_deps: frozenset[str] = frozenset(),
+    exclude_own_case: bool = False,
 ) -> tuple[int, int]:
     kids = {head_idx}
     changed = True
@@ -71,6 +72,7 @@ def _subtree_span(
                 and dep not in kids
                 and rel != "ROOT"
                 and rel not in exclude_deps
+                and not (exclude_own_case and rel == "case" and g == head_idx)
             ):
                 kids.add(dep)
                 changed = True
@@ -78,6 +80,17 @@ def _subtree_span(
     begins = [tokens[i - 1]["characterOffsetBegin"] for i in kids]
     ends = [tokens[i - 1]["characterOffsetEnd"] for i in kids]
     return min(begins), max(ends)
+
+
+def _trim_trailing_punct(text: str, s1: int) -> int:
+    """Trim trailing whitespace and one trailing punctuation token."""
+    while s1 > 0 and text[s1 - 1] in " \t\n":
+        s1 -= 1
+    if s1 > 0 and text[s1 - 1] in ".,;:!?":
+        s1 -= 1
+        while s1 > 0 and text[s1 - 1] in " \t\n":
+            s1 -= 1
+    return s1
 
 
 def filter_actor_span(
@@ -132,6 +145,15 @@ def extract_actors_actions_edges(
     def in_clause(idx: int) -> bool:
         a, b = _token_abs(sentence, idx)
         return not (b <= clause_start or a >= clause_end)
+
+    def case_word(dep_idx: int) -> str | None:
+        # the preposition of an obl/nmod NP ("by", "to", ...)
+        for d in _deps(sentence):
+            if int(d.get("governor", -1)) == dep_idx and d.get("dep") == "case":
+                ci = int(d["dependent"])
+                if 1 <= ci <= len(tokens):
+                    return (tokens[ci - 1].get("word") or "").casefold()
+        return None
 
     action_heads: list[int] = []
     for d in _deps(sentence):
@@ -207,23 +229,52 @@ def extract_actors_actions_edges(
         actions.append(action)
         action_idx = len(actions) - 1
 
-        actor_idx_tok = None
-        rel = None
+        # B0-R1-ACTOR: collect every subject/agent candidate of the action
+        # head (nsubj, obl:agent/nmod:agent, and plain obl/nmod with a
+        # "by"/"to" case -- CoreNLP 4.5.10 labels passive by-agents and
+        # dative recipients this way) and take the first candidate that
+        # passes the actor filter.  Previously the first arc won outright,
+        # so a non-lexicon subject (e.g. "the free drink allowance") could
+        # shadow the by-agent ("by the employee").
+        actor_candidates: list[tuple[int, str]] = []
         for d in _deps(sentence):
             if int(d.get("governor", -1)) == head and d.get("dep") in {"nsubj", "nsubj:pass"}:
-                actor_idx_tok = int(d["dependent"])
-                rel = d.get("dep")
-                break
+                actor_candidates.append((int(d["dependent"]), d.get("dep")))
+        for d in _deps(sentence):
+            if int(d.get("governor", -1)) == head and d.get("dep") in {"obl:agent", "nmod:agent"}:
+                actor_candidates.append((int(d["dependent"]), d.get("dep")))
+        for d in _deps(sentence):
+            if (
+                int(d.get("governor", -1)) == head
+                and d.get("dep") in {"obl", "nmod"}
+                and case_word(int(d["dependent"])) in {"by", "to"}
+            ):
+                actor_candidates.append((int(d["dependent"]), d.get("dep")))
+        actor_idx_tok = None
+        rel = None
+        for cand_idx, cand_rel in actor_candidates:
+            if not in_clause(cand_idx):
+                continue
+            cand_s0, cand_s1 = _subtree_span(
+                sentence, cand_idx, exclude_own_case=True
+            )
+            cand_s0, cand_s1 = max(cand_s0, clause_start), min(cand_s1, clause_end)
+            cand_s1 = _trim_trailing_punct(source_text, cand_s1)
+            if cand_s1 <= cand_s0:
+                continue
+            if filter_actor_span(source_text, cand_s0, cand_s1, lexicon) is None:
+                stats["actors_rejected_non_subject"] += 1
+                continue
+            actor_idx_tok = cand_idx
+            rel = cand_rel
+            break
         if actor_idx_tok is None:
-            for d in _deps(sentence):
-                if int(d.get("governor", -1)) == head and d.get("dep") in {"obl:agent", "nmod:agent"}:
-                    actor_idx_tok = int(d["dependent"])
-                    rel = d.get("dep")
-                    break
-        if actor_idx_tok is None or not in_clause(actor_idx_tok):
             continue
-        s0, s1 = _subtree_span(sentence, actor_idx_tok)
+        s0, s1 = _subtree_span(sentence, actor_idx_tok, exclude_own_case=True)
         s0, s1 = max(s0, clause_start), min(s1, clause_end)
+        s1 = _trim_trailing_punct(source_text, s1)
+        if s1 <= s0:
+            continue
         filtered = filter_actor_span(source_text, s0, s1, lexicon)
         if filtered is None:
             stats["actors_rejected_non_subject"] += 1
@@ -250,4 +301,35 @@ def extract_actors_actions_edges(
             }
         )
         stats["edges_emitted"] += 1
+
+    # B0-R1-ACTOR: gold actors often attach to verbs that are NOT action
+    # heads -- participles ("the person performing the activity"), plain
+    # verbs in subordinate clauses ("If the taxpayer has claimed ...",
+    # "when an employee leaves ..."), and passive predicates without a modal
+    # ("the recipient is obliged to accept").  Every nsubj/nsubj:pass arc
+    # whose governor lies in the clause yields an actor candidate (no edge:
+    # the ownership edge requires an action head).
+    for d in _deps(sentence):
+        if d.get("dep") not in {"nsubj", "nsubj:pass"}:
+            continue
+        gov = int(d.get("governor", -1))
+        dep_i = int(d["dependent"])
+        if gov in action_heads or not in_clause(gov) or not in_clause(dep_i):
+            continue
+        s0, s1 = _subtree_span(sentence, dep_i, exclude_own_case=True)
+        s0, s1 = max(s0, clause_start), min(s1, clause_end)
+        s1 = _trim_trailing_punct(source_text, s1)
+        if s1 <= s0:
+            continue
+        filtered = filter_actor_span(source_text, s0, s1, lexicon)
+        if filtered is None:
+            stats["actors_rejected_non_subject"] += 1
+            continue
+        ai = None
+        for j, existing in enumerate(actors):
+            if not (filtered["end"] <= existing["start"] or filtered["start"] >= existing["end"]):
+                ai = j
+                break
+        if ai is None:
+            actors.append(filtered)
     return actors, actions, edges, stats

@@ -199,3 +199,85 @@ def test_action_emitted_without_any_actor() -> None:
     assert len(actions) == 1
     assert "filed" in actions[0]["text"]
     assert len(edges) == 0
+
+
+def test_passive_by_agent_obl_is_actor_with_edge() -> None:
+    # CoreNLP 4.5.10 basicDependencies labels "sold by the employee" as
+    # obl + case "by", not obl:agent.
+    text = "It may be sold by the employee."
+    # 1 It, 2 may, 3 be, 4 sold, 5 by, 6 the, 7 employee.
+    actors, actions, edges, _ = run(
+        text,
+        [
+            (0, 4, "ROOT"),
+            (4, 2, "aux"),
+            (4, 3, "aux:pass"),
+            (4, 1, "nsubj:pass"),
+            (4, 7, "obl"),
+            (7, 5, "case"),
+            (7, 6, "det"),
+        ],
+    )
+    assert len(actors) == 1
+    assert actors[0]["text"] == "the employee"
+    assert len(edges) == 1
+
+
+def test_dative_to_obl_is_actor() -> None:
+    text = "It is left to the employee."
+    # 1 It, 2 is, 3 left, 4 to, 5 the, 6 employee.
+    actors, actions, edges, _ = run(
+        text,
+        [
+            (0, 3, "ROOT"),
+            (3, 2, "aux:pass"),
+            (3, 1, "nsubj:pass"),
+            (3, 6, "obl"),
+            (6, 4, "case"),
+            (6, 5, "det"),
+        ],
+    )
+    assert len(actors) == 1
+    assert actors[0]["text"] == "the employee"
+
+
+def test_plain_verb_nsubj_actor_without_action_head() -> None:
+    # "the taxpayer has claimed": "claimed" has no modal and is not the ROOT
+    # verb, so no action head exists; the nsubj arc alone must yield the actor.
+    text = "If the taxpayer has claimed the amount."
+    # 1 If, 2 the, 3 taxpayer, 4 has, 5 claimed, 6 the, 7 amount.
+    actors, actions, edges, _ = run(
+        text,
+        [
+            (0, 1, "ROOT"),
+            (5, 3, "nsubj"),
+            (3, 2, "det"),
+            (5, 4, "aux"),
+            (5, 7, "dobj"),
+            (7, 6, "det"),
+        ],
+    )
+    assert len(actions) == 0
+    assert len(actors) == 1
+    assert actors[0]["text"] == "the taxpayer"
+    assert len(edges) == 0
+
+
+def test_plain_verb_scan_skips_action_head_governors() -> None:
+    # the action-head nsubj path already emitted "the taxpayer"; the
+    # clause-wide scan must not duplicate it.
+    text = "The taxpayer shall file the return."
+    # 1 The, 2 taxpayer, 3 shall, 4 file, 5 the, 6 return.
+    actors, actions, edges, _ = run(
+        text,
+        [
+            (0, 4, "ROOT"),
+            (4, 2, "nsubj"),
+            (2, 1, "det"),
+            (4, 3, "aux"),
+            (4, 6, "dobj"),
+            (6, 5, "det"),
+        ],
+    )
+    assert len(actors) == 1
+    assert actors[0]["text"] == "The taxpayer"
