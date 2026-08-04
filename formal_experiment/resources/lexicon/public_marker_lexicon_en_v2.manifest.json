@@ -1,70 +1,71 @@
 {
-  "artifact_scope": "development_only",
-  "boundaries": {
-    "actor_wiktionary_dump_expansion_included": false,
-    "evaluation_run": false,
-    "formal_use_allowed": false,
-    "gold_modified": false,
-    "llm_api_called": false,
-    "network_called": false,
-    "redistribution_allowed": false,
-    "s2_4_or_later_activated": false,
-    "training_run": false
+ "artifact_scope": "development_only",
+ "boundaries": {
+  "actor_wiktionary_dump_expansion_included": false,
+  "evaluation_run": false,
+  "formal_use_allowed": false,
+  "gold_modified": false,
+  "llm_api_called": false,
+  "network_called": false,
+  "redistribution_allowed": false,
+  "s2_4_or_later_activated": false,
+  "training_run": false
+ },
+ "category_files": {
+  "actor": {
+   "entry_count": 50,
+   "entry_payload_sha256": "7539e7eb3f4715afd74eabd8da96461db0b79d039ede188e1b9a40cf3f06bda0",
+   "path": "resources/lexicon/actor_markers_en_v2.json",
+   "sha256": "43e404d2a69c091e6b07ee2a474ab4f8bb3021403fc481ca2500952a6a6d8378"
   },
-  "category_files": {
-    "actor": {
-      "entry_count": 37,
-      "entry_payload_sha256": "a35ef32387254d3664f0b00a699a9ab1be5b26a5cd4c0f6d9b488c091b35fa83",
-      "path": "resources/lexicon/actor_markers_en_v2.json",
-      "sha256": "fdf026e92d9ddc4ca3b3dbe068e5440bf4c0bffd72aad9b204c5c8bc63edc44d"
-    },
-    "condition": {
-      "entry_count": 34,
-      "entry_payload_sha256": "f554af42166d5388e5fd097e842344e067e3139f6ae6419d724e8d2ff4fe0176",
-      "path": "resources/lexicon/condition_markers_en_v2.json",
-      "sha256": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a"
-    },
-    "constraint": {
-      "entry_count": 45,
-      "entry_payload_sha256": "5c39b888c94b55d0dd94ebec1682d1159743d62bdc743bf5b197d053542d72dc",
-      "path": "resources/lexicon/constraint_markers_en_v2.json",
-      "sha256": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1"
-    },
-    "exception": {
-      "entry_count": 16,
-      "entry_payload_sha256": "557c6046058c2b918deb40fa2cfbb02822162df0916c374307fb38471dce97b0",
-      "path": "resources/lexicon/exception_markers_en_v2.json",
-      "sha256": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e"
-    },
-    "modality": {
-      "entry_count": 29,
-      "entry_payload_sha256": "84d3c8295864550f19ae6b5011663e4c8669e9b52e3860b522c0236ad7ff877a",
-      "path": "resources/lexicon/modality_markers_en_v2.json",
-      "sha256": "cb6fae1292e3601b0bf10ca21459e37f63957a1e34f58d8155bc7bee74b69095"
-    }
+  "condition": {
+   "entry_count": 34,
+   "entry_payload_sha256": "9ed7f40d9a275eee2e977893cffef7d4fd99a560c8b6cbf87edece4eddf9f1d9",
+   "path": "resources/lexicon/condition_markers_en_v2.json",
+   "sha256": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a"
   },
-  "combined_payload_sha256": "f2e54ddfa1820bfb7eb583b6b6ea1fe80a6e54efdac26afeed492478353ebc8c",
-  "development_extensions": {
-    "entry_count": 0,
-    "path": "resources/lexicon/development_extensions_en_v1.json",
-    "sha256": "803d4694bdbd7d2f2a97e0bf324cbc4d68540f09526ad84c7fcb03e975d3e12c",
-    "status": "empty_locked_template_not_included_in_v2"
+  "constraint": {
+   "entry_count": 45,
+   "entry_payload_sha256": "2362805e52443c8096e29f000a683782ff896b3c767b062ab3d3531baf2ceb83",
+   "path": "resources/lexicon/constraint_markers_en_v2.json",
+   "sha256": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1"
   },
-  "generation": {
-    "duplicate_policy": "merge exact normalized field/class duplicates and union source_ids",
-    "generation_policy_sha256": "cebb4c64fdbd63339869169697438e3df6ac3612b819cf83b5a4c69a80ea9a59",
-    "normalization": "NFKC, strip, collapse internal whitespace, Unicode casefold",
-    "ordering": "descending token count, descending character count, then normalized surface and modality class"
+  "exception": {
+   "entry_count": 16,
+   "entry_payload_sha256": "87f0918f0a8ffba328fa1420dce32be1568a57696701ebf498726cb0b57dd361",
+   "path": "resources/lexicon/exception_markers_en_v2.json",
+   "sha256": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e"
   },
-  "language": "en",
-  "lexicon_id": "public_marker_lexicon_en_v2",
-  "parent_lexicon_id": "public_marker_lexicon_en_v1",
-  "schema_version": "public_marker_manifest@1.1.0",
-  "source_snapshot": {
-    "construction_mode": "offline_from_preexisting_local_research_audit_and_pinned_public_seed",
-    "evidence_cutoff": "2026-07-21",
-    "file_sha256": "b0d36fedee7d0a4d8c7fd82a34a9ec6ed3f53cd8891713ee3ebbbb841db75051",
-    "path": "resources/lexicon/public_marker_sources_en_v2.json",
-    "snapshot_id": "public_marker_sources_en_v2"
+  "modality": {
+   "entry_count": 29,
+   "entry_payload_sha256": "a356854d7c9f2487c677b2a6e02f14ab192760a02ef845fe60e2422fb16ab4b4",
+   "path": "resources/lexicon/modality_markers_en_v2.json",
+   "sha256": "cb6fae1292e3601b0bf10ca21459e37f63957a1e34f58d8155bc7bee74b69095"
   }
+ },
+ "combined_payload_sha256": "c3cdb98fe47774c4b5b043009d83e93a9a36cf4a82f4968c09bac3d84c59c467",
+ "development_extensions": {
+  "entry_count": 0,
+  "path": "resources/lexicon/development_extensions_en_v1.json",
+  "sha256": "803d4694bdbd7d2f2a97e0bf324cbc4d68540f09526ad84c7fcb03e975d3e12c",
+  "status": "empty_locked_template_not_included_in_v2"
+ },
+ "generation": {
+  "duplicate_policy": "merge exact normalized field/class duplicates and union source_ids",
+  "generation_policy_sha256": "cebb4c64fdbd63339869169697438e3df6ac3612b819cf83b5a4c69a80ea9a59",
+  "normalization": "NFKC, strip, collapse internal whitespace, Unicode casefold",
+  "ordering": "descending token count, descending character count, then normalized surface and modality class",
+  "note": "entry_payload_sha256 / combined_payload_sha256 recomputed with the canonical compact-JSON payload convention on 2026-08-04 after the user-authorized actor extension (B0-R1-LEXICON-DECISION); category file sha256 / entry_count are the loader-verified fields."
+ },
+ "language": "en",
+ "lexicon_id": "public_marker_lexicon_en_v2",
+ "parent_lexicon_id": "public_marker_lexicon_en_v1",
+ "schema_version": "public_marker_manifest@1.1.0",
+ "source_snapshot": {
+  "construction_mode": "offline_from_preexisting_local_research_audit_and_pinned_public_seed",
+  "evidence_cutoff": "2026-07-21",
+  "file_sha256": "4d60fb4c111f8226c739587bc3f18f92f7b66b6530b0c1d99570cf72b96aa47c",
+  "path": "resources/lexicon/public_marker_sources_en_v2.json",
+  "snapshot_id": "public_marker_sources_en_v2"
+ }
 }

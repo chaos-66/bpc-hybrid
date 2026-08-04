@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-04
-**收录文件**：663 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：664 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -709,6 +709,7 @@
 | `tests/test_b0_r1_action_span_scope.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_align_cue_validation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_bridge_semantics.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_b0_r1_lexicon_decision.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_v10_integration_contract.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_v10_scope_and_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_canonical_text_hash_policy.py` | 活动 | Python 实现、脚本或测试 |
