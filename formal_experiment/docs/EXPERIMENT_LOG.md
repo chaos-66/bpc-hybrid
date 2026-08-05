@@ -2465,3 +2465,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：决定性事实：s28_s29 的 150 条 d1_attempts 中 518 个 span 为 canonical 格式（{end,id,normalized,start,text}，9 个仅缺 normalized）——七月 v4pro+json_object 确实输出 canonical；当前同样配置（v3 快照 prompt、json_object、temp0、4096）+适配器在代表性子集（19 样本）仅 1 条有效、最难子集 2-5/20。根因候选（均有记录、无法对证）：旧 manifest 未记录 prompt hash/请求参数，s28_s29 实际发送的 prompt 或请求链与当前 v3 快照可能不同；或模型端行为漂移。按 Pipeline 输出不可复现/不合约=fail closed，D1-R1-FIELD-TYPING 的测量门禁当前无法满足；~110 次调用全部用于诊断（flash 92 + v4pro 诊断/pilot），无 150 全量浪费。建议：先恢复并复现七月 proven pipeline（历史分支 runner+config+输入链，b5f05b8/4afa5d1）以重建可复现基线，再测 v3-vs-v4；或用户正式锁定 D1 输出合约（适配器为准）后继续。待用户裁决。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T11:50:31.267019+00:00 - D1-R1 measurement verdict: model/API behavior drift - July pipeline not reproducible today
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1457 passed, 24 skipped in 167.36s (0:02:47)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`13335d5d8638325fa5be2f1214b426cde13a38e4`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：完整诊断链（v4pro 官方 API，temp0/4096）：①七月 prompt（4afa5d1，sha 7bc64c99）与我的 v3 快照（37d1edd7）内容逐行一致（仅 CRLF/LF 字节差异）→ prompt 不是变量；②七月 runner=裸 transport（无 json_object/thinking）→ 现在裸请求返回 empty_final_content_with_reasoning（3/4 样本）→ 模型/API 侧已开启思考模式（行为漂移实证）；③thinking-disabled 无 json_object → 有内容但容器变体 'actor_id/actor_type/spans'（列表型）+ clause_span 仍有不匹配 → 0/4 有效；④thinking-disabled+json_object → 另一嵌套变体（早前 5/20）。结论：v4pro 当前输出格式在多个不稳定变体间漂移，任何组合都无法复现七月 canonical 输出（518 规范 span），原因在模型/API 侧而非本项目代码；适配器只能逐形状打地鼠。选项：A) 换 gpt-4.1（s28_s29 配置本钉的是 gpt-4.1-2025-04-14，被 .env 覆盖成 v4pro；配置理由=强指令遵循非推理快照，若用户官方 key 支持 OpenAI 模型可试）；B) 正式锁定 D1 输出合约（全面适配器，接受漂移形状+文档化映射，属合约决策）；C) 暂停 D1-R1 测量。待用户裁决。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
