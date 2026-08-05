@@ -1,0 +1,45 @@
+{
+  "schema_version": "d1_r1_pilot_evaluation@1.0.0",
+  "run_date_utc": "2026-08-05",
+  "gold": {
+    "source_commit": "56d2b03",
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "build": "build_canonical_gold_records(layer_e@56d2b03, membership@56d2b03)"
+  },
+  "evaluator": "sun_literal_overlap_evaluation@2.0.0",
+  "pilot_input": "outputs/development/s27_d1_pilot_20_hist56d_v1/input_rep.jsonl (19 representative samples)",
+  "recipe": "v5/v6 prompt + thinking-disabled + no json_object + max_tokens=4096 + temp=0 + top_p=1",
+  "arms": {
+    "july_v5_2026_07_29": {
+      "source": "outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_attempts.json",
+      "prompt_sha256": "79f6f76fc9779abb87fc919e4384386ac812d40fcedaf73df0ea8ea1377af62e",
+      "n_in_pilot": 18,
+      "overall": {"precision": 0.87, "recall": 0.6949, "f1": 0.7727, "missed": 36},
+      "constraint": {"recall": 0.25, "f1": 0.3571},
+      "note": "July run; proves the reproduced recipe matches the historical pipeline"
+    },
+    "arm_a_v5_20260805": {
+      "source": "outputs/development/s27_d1_pilot_20_hist56d_v1/arm_a_v5_20260805/output.jsonl",
+      "prompt_sha256": "79f6f76fc9779abb87fc919e4384386ac812d40fcedaf73df0ea8ea1377af62e",
+      "n_valid": 16,
+      "validation_failures": ["estg_000043: clauses[1].modality.evidence empty", "estg_000207: clauses[1].actions[0] ambiguous occurrence", "estg_000277: clauses[1].modality.evidence[0] zero occurrence"],
+      "overall": {"precision": 0.8605, "recall": 0.7115, "f1": 0.7789, "missed": 30},
+      "constraint": {"recall": 0.3056, "f1": 0.4190}
+    },
+    "arm_b_v6_20260805": {
+      "source": "outputs/development/s27_d1_pilot_20_hist56d_v1/arm_b_v6_20260805/output.jsonl",
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "n_valid": 13,
+      "validation_failures": ["estg_000043: clauses[1].modality.evidence empty", "estg_000131: clauses[0].constraints[0] ambiguous occurrence", "estg_000207: clauses[1].actions[0] ambiguous occurrence", "estg_000277: clauses[1].modality.evidence[0] zero occurrence", "estg_000664: actions[0] text not in source", "estg_000786: clauses[0].modality.evidence empty"],
+      "overall": {"precision": 0.8594, "recall": 0.7403, "f1": 0.7954, "missed": 20},
+      "constraint": {"recall": 0.3571, "f1": 0.4762}
+    }
+  },
+  "paired_13_common_samples": {
+    "arm_a_v5": {"precision": 0.8413, "recall": 0.7013, "f1": 0.7649, "constraint_recall": 0.2857, "constraint_f1": 0.3956},
+    "arm_b_v6": {"precision": 0.8594, "recall": 0.7403, "f1": 0.7954, "constraint_recall": 0.3571, "constraint_f1": 0.4762},
+    "delta_v6_minus_v5": {"precision": 0.0181, "recall": 0.039, "f1": 0.0304, "constraint_recall": 0.0714, "constraint_f1": 0.0806},
+    "verdict": "v6 positive on all paired metrics (F1 +0.0304, constraint F1 +0.0806); KEEP candidate; caveats: n=13, v6 valid rate 13/19 vs v5 16/19 (model-side validation failures)"
+  },
+  "llm_call_budget_used": {"arm_a": 19, "arm_b": 19, "total": 38, "authorization": "user-authorized 2026-08-05 (per-batch pilot)"}
+}

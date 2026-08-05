@@ -2504,3 +2504,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：①v6=direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md：v5(79f6f76f)+规则25-27(FIELD-TYPING：constraint 类别全覆盖、action 不折叠约束/条件/例外、condition 内嵌 constraint 双报)+示例5-6(法律引用约束 52-84、条件内嵌约束 67-83，偏移程序化验证全部 OK)；6/6 fixture 通过 canonical 校验，sha=3aa64877。②runner 修正为七月配方：response_format 默认 None（json_object 仅 --json-object-response 显式开启）、few_shot_block 从 prompt 文件 ## Examples 段真实渲染（此前是占位字符串——v5 模板必须有真实示例）、--transport-timeout 默认 180s（七月最长调用 162s）。③测试：allowlist 4 项、v6 规则与 fixture 校验、catalog 重建。audit integrity pass。下一步=两臂 pilot（A=v5 冻结 vs B=v6，19 样本/臂）+ 与七月 s28_s29 同 19 样本三方对比。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T12:51:59.389144+00:00 - D1-R1 two-arm pilot (A=v5 frozen vs B=v6) + July reproducibility check on 19 representative samples
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_d1_pilot_20_hist56d_v1_arm_ab_20260805；阶段=D1-R1；方法=direct_llm；状态=成功（`succeeded`）
+- 实际运行命令：`run_direct_llm.py --prompt-name {v5_frozen|v6} --model deepseek-v4-pro --allow-llm --development (19 calls per arm)`
+- manifest：无
+- 结果摘要：v6 KEEP: paired13 F1 0.7954 vs 0.7649 (+0.0304); constraint F1 +0.0806; July reproducibility confirmed (0.7727 vs 0.7789)
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1460 passed, 24 skipped in 153.12s (0:02:33)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`4702f771c734877f0154b68205417d9ab7f316d5`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：预算：38 calls (19+19) deepseek-v4-pro 官方API thinking-disabled 无json_object 4096/temp0/top_p1。①复现验证（同18样本、同v5 prompt）：七月 F1=0.7727 vs 今天 0.7789 → 七月管线成功复现。②配对13共同样本：v6 F1=0.7954 vs v5 0.7649（+0.0304），P +0.0181，R +0.0390；constraint R 0.3571 vs 0.2857（+0.0714）、F1 +0.0806 → v6 全指标正向，KEEP。③覆盖代价：v6 有效 13/19 vs v5 16/19；失败 9 条全部记录（43/207/277 两臂共有；131/664/786 B 特有），0 LLM 传输错误。④评估=56d2b03 正式 Gold + sun_literal_overlap_evaluation@2.0.0。产物：pilot_evaluation_20260805.json + 两臂 output/manifest。下一步待批：150 全量 VERIFY-PASS 运行（150 calls）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

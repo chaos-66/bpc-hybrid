@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0.0",
+  "stage": "formal_stage2",
+  "method": "direct_llm",
+  "mode": "development",
+  "timestamp_utc": "2026-08-05T12:43:52.829681+00:00",
+  "input_path": "outputs\\development\\s27_d1_pilot_20_hist56d_v1\\input_rep.jsonl",
+  "output_path": "outputs\\development\\s27_d1_pilot_20_hist56d_v1\\arm_b_v6_20260805\\output.jsonl",
+  "sample_count_input": 19,
+  "sample_count_written": 13,
+  "sample_count_validation_failed": 6,
+  "sample_count_llm_error": 0,
+  "llm_calls": 19,
+  "max_calls": 19,
+  "llm_provider": "openai_compatible",
+  "llm_model": "deepseek-v4-pro",
+  "llm_models": {
+    "requested": "deepseek-v4-pro",
+    "resolved": "deepseek-v4-pro",
+    "returned": [
+      "deepseek-v4-pro"
+    ]
+  },
+  "transport_policy": {
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    },
+    "response_format": null,
+    "tools_sent": false
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "seed": "unsupported_or_omitted",
+    "max_tokens": 4096
+  },
+  "prompts": [
+    {
+      "role": "primary",
+      "name": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\prompts\\sun_compat\\direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
+      "sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "sampling_policy": "temperature=0, top_p=1, max_tokens=4096"
+    }
+  ],
+  "real_api": true,
+  "gold_read_by_runner": false,
+  "rule_front_end_used": false,
+  "validation_failures": [
+    {
+      "sample_id": "estg_000043",
+      "errors": [
+        "clauses[1].modality.evidence must be a non-empty array"
+      ]
+    },
+    {
+      "sample_id": "estg_000131",
+      "errors": [
+        "span_canonicalization_failed: clauses[0].constraints[0]_ambiguous_occurrence"
+      ],
+      "span_canonicalization": {
+        "attempted": true,
+        "status": "failed",
+        "clause_span_count": 1,
+        "field_span_count": 5,
+        "reanchored_count": 4,
+        "failed_reasons": [
+          "clauses[0].constraints[0]_ambiguous_occurrence"
+        ]
+      }
+    },
+    {
+      "sample_id": "estg_000207",
+      "errors": [
+        "span_canonicalization_failed: clauses[1].actions[0]_ambiguous_occurrence"
+      ],
+      "span_canonicalization": {
+        "attempted": true,
+        "status": "failed",
+        "clause_span_count": 2,
+        "field_span_count": 7,
+        "reanchored_count": 8,
+        "failed_reasons": [
+          "clauses[1].actions[0]_ambiguous_occurrence"
+        ]
+      }
+    },
+    {
+      "sample_id": "estg_000277",
+      "errors": [
+        "span_canonicalization_failed: clauses[1].modality.evidence[0]_zero_occurrence"
+      ],
+      "span_canonicalization": {
+        "attempted": true,
+        "status": "failed",
+        "clause_span_count": 2,
+        "field_span_count": 4,
+        "reanchored_count": 5,
+        "failed_reasons": [
+          "clauses[1].modality.evidence[0]_zero_occurrence"
+        ]
+      }
+    },
+    {
+      "sample_id": "estg_000664",
+      "errors": [
+        "relay_schema_adaptation_failed: actions[0]_text_not_in_source"
+      ],
+      "relay_schema_adaptation": {
+        "attempted": true,
+        "status": "failed",
+        "spans_adapted": 3,
+        "failed_reasons": [
+          "actions[0]_text_not_in_source"
+        ]
+      }
+    },
+    {
+      "sample_id": "estg_000786",
+      "errors": [
+        "clauses[0].modality.evidence must be a non-empty array"
+      ]
+    }
+  ],
+  "llm_errors": [],
+  "span_canonicalization": {
+    "records": 13,
+    "reanchored": 73,
+    "clause_spans": 17,
+    "field_spans": 64,
+    "adapted_spans": 46
+  }
+}
