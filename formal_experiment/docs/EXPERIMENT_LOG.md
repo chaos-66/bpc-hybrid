@@ -2620,3 +2620,29 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：FILE_CATALOG 重建（新增 verify_pass 产物），审计恢复 integrity pass。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T14:49:54.232762+00:00 - D1-R1 verified: all four sub-batches complete (FIELD-TYPING/PROMPT-CONTRACT/VERIFY-PASS/CLEAN-RERUN); D1-R2 unlocked
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1470 passed, 24 skipped in 124.72s (0:02:04)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`b6ca8fe03dbe3b855dc074553b293f6547bfccbf`；相关未提交路径：1 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：MASTER_PIPELINE §8.7 状态更新：D1-R1→verified（150 全量 F1 0.7735、constraint R 0.4172、0 事故），D1-R2 blocked→ready；§8.7.1 四子批次状态落定。下一步=D1-R2（prompt/model/budget 锁定）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T14:52:11.108801+00:00 - D1-R1 milestone catalog refresh
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1471 passed, 24 skipped in 121.49s (0:02:01)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`b6ca8fe03dbe3b855dc074553b293f6547bfccbf`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：FILE_CATALOG 重建。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
