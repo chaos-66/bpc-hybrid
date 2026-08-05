@@ -74,3 +74,60 @@ D1 整体 **P=0.907 / R=0.665 / F1=0.767**。低召回的结构性原因：**系
 - D1 attempts：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_attempts.json`（tracked）
 - 指标：同目录 `metrics.json`（schema `sun_table8_literal_overlap_evaluation@2.0.0`，历史注册）；本文数字为本轮用 56d2b03 canonical Gold 重算（与注册值一致：overall P 0.9068/R 0.6645/F1 0.7669）
 - 全部数字为 development only；任何 prompt 修改需授权 pilot 验证后才可进入正式口径。
+
+## 8. D1-R3 固定快照干净重跑：失败类型分析（2026-08-06）
+
+数据出处：`outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/`
+（output.jsonl / d1_responses.jsonl / manifest.json / evaluation_d1_r3_20260806.json）。
+评估 = `scripts/evaluate_d1_r3_clean_rerun.py`：git show 56d2b03 只读提取 Layer E/membership
+（临时目录，不落盘）→ `build_canonical_gold_records`（membership sha `e8e62686…` 与注册绑定一致，
+gold semantic sha `5d7ec7f6…` 与 B0-R1-E2 记录一致）→ **同一进程双评 R1 与 R3**
+（`sun_literal_overlap@2.0.0`，config sha `352113b5…`）。R1 重评 F1 0.773495 与已登记数字逐位一致
+（评估路径交叉验证通过）。
+
+**双评结果（150 条，同 Gold、同口径）**
+
+| | R1 VERIFY-PASS | R3 干净重跑 | delta（R3−R1） |
+|---|---|---|---|
+| Overall F1 | 0.773495 | **0.775625** | **+0.00213** |
+| P / R | 0.8799 / 0.6900 | 0.8793 / 0.6938 | −0.0006 / +0.0038 |
+| missed | 327 | 323 | −4 |
+| modality F1 | 0.93274 | 0.92151 | −0.01123 |
+| actor F1 | 0.75000 | 0.72222 | −0.02778 |
+| action F1 | 0.87948 | 0.87998 | +0.00051 |
+| condition F1 | 0.77972 | 0.78632 | +0.00660 |
+| constraint F1 | 0.52721 | 0.54815 | **+0.02094** |
+| exception F1 | 0.63636 | 0.69565 | **+0.05929** |
+
+结论：固定快照干净重跑**复现 R1 并微优**（F1 +0.0021），可重放性验证成功；两次均为同一锁定
+配方的独立真实运行，差异属于模型输出的固有微小波动（temp0 下仍非严格确定性）。
+
+**失败类型分析（1055 个 Gold span，statement 级同字段字符交叠口径）**
+
+| | R1 | R3 |
+|---|---|---|
+| matched | 728 | 732 |
+| wrong_field（内容被抽、落错字段）| 185 | **169** |
+| not_extracted（完全未抽）| 142 | 154 |
+
+R3 逐字段 unmatched 分布（wrong_field / not_extracted）：
+
+| 字段 | gold spans | matched | wrong_field | not_extracted |
+|---|---|---|---|---|
+| modality | 231 | 202 | 10 | 19 |
+| actor | 48 | 39 | 5 | 4 |
+| action | 247 | 202 | 23 | 22 |
+| condition | 214 | 148 | 30 | 36 |
+| **constraint** | **302** | 133 | **100** | 69 |
+| exception | 13 | 8 | 1 | 4 |
+
+要点：
+- **constraint 仍是最大短板**：302 个 Gold span 中 169 个未在本字段命中——100 个内容其实被抽到
+  了但落错字段（主要进 action/condition），69 个完全未抽；R3 相比 R1 的 wrong_field 减少 16
+  （185→169），constraint 一项减少 11（111→100），v6 字段归位改进在干净重跑中保持。
+- **not_extracted 微升**（142→154，+12）：R3 抽得更少但落位更准（R +0.0038 的同时
+  wrong_field 下降），属于同一 trade-off 面，披露记录。
+- modality/actor 的 F1 回落（−0.011/−0.028）为运行间噪声与少量抽取边界差异，非系统性回归。
+
+本小节全部数字为 development only，非正式结论；正式比较（D1-R4）仍待 formal Gold 门禁。
+

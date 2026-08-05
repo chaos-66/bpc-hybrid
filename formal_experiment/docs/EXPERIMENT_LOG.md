@@ -2689,3 +2689,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：预算：150 calls v4pro 官方API thinking-disabled 无json_object 4096/temp0/top_p1（锁定配方 estg150_d1_active_registry_v1.json 逐项一致：prompt sha 3aa64877、model 三态 deepseek-v4-pro、sampling/transport 匹配）。输入=56d2b03 Gold 源文本 150 行（共享输入 input_150_hist56d_v1.jsonl，sha c7dffcc4）。评估=scripts/evaluate_d1_r3_clean_rerun.py：git show 56d2b03 提取 Layer E/membership（只读临时目录）→ build_canonical_gold_records（membership sha e8e62686 与注册绑定一致，gold semantic sha 5d7ec7f6 与 B0-R1-E2 记录一致）→ 同一进程双评 R1/R3（sun_literal_overlap@2.0.0，config sha 352113b5）。结果：R1 重评 F1 0.7735 与已登记数字逐位一致（评估路径交叉验证通过）；R3 F1 0.775625（P 0.879268/R 0.693839，missed 323 vs R1 327）；逐字段 F1 delta：modality -0.01123/actor -0.02778/action +0.00051/condition +0.00660/constraint +0.02094/exception +0.05929。失败类型分析（R3，1055 gold spans）：matched 732、wrong_field 169（constraint 100 最大头）、not_extracted 154（constraint 69）；R1 为 matched 728/wrong_field 185/not_extracted 142。结论：固定快照干净重跑复现 R1 结果并微优（F1 +0.002，噪声范围），可重放性验证成功；两次运行均满足 0 事故（无 lost/recovery/retry）。产物：output.jsonl/d1_responses.jsonl/manifest.json/evaluation_d1_r3_20260806.json + 新评估脚本 scripts/evaluate_d1_r3_clean_rerun.py。下一步：D1-R4（三方法正式比较，blocked on formal Gold）。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T18:05:25.546368+00:00 - D1-R3 verified: fixed-snapshot clean rerun + failure-type analysis; D1-R4 remains blocked on formal Gold
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1483 passed, 24 skipped in 198.02s (0:03:18)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`5fec6501635b54bce2cfb8c52ad620294b342a19`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：MASTER_PIPELINE §8.7 D1-R3 行 blocked→verified（固定快照干净重跑 150/150 有效、0 事故、F1 0.7756 vs R1 0.7735 +0.0021、失败类型分析完成）；changelog 3.4.32；D1_ERROR_ANALYSIS.md 追加 §8（R3 双评与失败类型表）；PROJECT_AUDIT 6.3 行更新。D1-R4（三方法正式比较）仍 blocked on formal Gold/shared capsule。无 LLM 调用（运行事件已单独记录），未读 .env，Gold audit_read_only。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
