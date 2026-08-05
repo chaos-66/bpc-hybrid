@@ -1,0 +1,53 @@
+{
+  "schema_version": "d1_r1_verify_pass_evaluation@1.0.0",
+  "run_date_utc": "2026-08-05",
+  "pipeline_task": "D1-R1-VERIFY-PASS (150 full run, v6 candidate)",
+  "gold": {
+    "source_commit": "56d2b03",
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "records": 150,
+    "build": "build_canonical_gold_records(layer_e@56d2b03, membership@56d2b03)"
+  },
+  "evaluator": "sun_literal_overlap_evaluation@2.0.0",
+  "input": "outputs/development/s27_d1_pilot_20_hist56d_v1/input_150_hist56d_v1.jsonl (150 x {sample_id, approved_text_en})",
+  "recipe": "v6 prompt (3aa64877) + thinking-disabled + no json_object + max_tokens=4096 + temp=0 + top_p=1 + deepseek-v4-pro official API",
+  "semantics": "empty-not-error (user decision 2026-08-05)",
+  "run": {
+    "n_calls": 150,
+    "n_valid": 150,
+    "validation_failures": 0,
+    "llm_errors": 0,
+    "runtime_incidents": "none (no lost/recovery/retry; CLEAN-RERUN condition satisfied by this run)"
+  },
+  "metrics_v6_150": {
+    "overall": {"precision": 0.8799, "recall": 0.69, "f1": 0.7735, "missed": 327},
+    "per_field": {
+      "action": {"precision": 0.9567, "recall": 0.8138, "f1": 0.8795},
+      "actor": {"precision": 0.6562, "recall": 0.875, "f1": 0.75},
+      "condition": {"precision": 0.9015, "recall": 0.6869, "f1": 0.7797},
+      "constraint": {"precision": 0.716, "recall": 0.4172, "f1": 0.5272},
+      "exception": {"precision": 0.7778, "recall": 0.5385, "f1": 0.6364},
+      "modality": {"precision": 0.9829, "recall": 0.8874, "f1": 0.9327}
+    }
+  },
+  "baseline_registered_s28_s29": {
+    "source": "outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/metrics.json",
+    "overall": {"precision": 0.9068, "recall": 0.6645, "f1": 0.7669, "missed": 354},
+    "constraint": {"recall": 0.2881, "f1": 0.4297},
+    "note": "July-era evaluation (150 samples, 1 invalid kept in denominator)"
+  },
+  "delta_v6_minus_registered": {
+    "overall": {"precision": -0.0269, "recall": 0.0255, "f1": 0.0066},
+    "constraint": {"recall": 0.1291, "f1": 0.0975},
+    "per_field_f1_delta": {
+      "action": -0.0199,
+      "actor": 0.0362,
+      "condition": -0.0087,
+      "constraint": 0.0975,
+      "exception": 0.0808,
+      "modality": -0.0069
+    },
+    "verdict": "D1-R1 targets met: constraint R 0.288->0.417 (+0.129), overall R +0.026, overall F1 +0.007; precision trade-off -0.027 disclosed per pipeline field-level P/R rule; KEEP v6"
+  },
+  "llm_call_budget_used": {"verify_pass_150": 150, "authorization": "user-authorized 2026-08-05 (continue per pipeline)"}
+}

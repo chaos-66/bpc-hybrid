@@ -2590,3 +2590,33 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：重新生成 FILE_CATALOG（新增 pilot_evaluation_20260805_v2.json 等），审计恢复 integrity pass。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T14:44:19.158061+00:00 - D1-R1-VERIFY-PASS: 150 full run with v6 candidate (user authorized continue per pipeline)
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_d1_v6_verify_pass_150_hist56d_v1；阶段=D1-R1；方法=direct_llm；状态=成功（`succeeded`）
+- 实际运行命令：`run_direct_llm.py --prompt-name direct_llm_sun_record_prompt_v6_d1r1_2026_08_05 --model deepseek-v4-pro --allow-llm --development --max-calls 150`
+- manifest：无
+- 结果摘要：150/150 valid, 0 failures, 0 LLM errors; F1 0.7735 vs registered 0.7669 (+0.0066), constraint R 0.4172 vs 0.2881 (+0.1291); KEEP v6
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1470 passed, 24 skipped in 138.23s (0:02:18)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`284e8ed52049332dcbae0f665ea415f1b98bbf1f`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：预算：150 calls v4pro 官方API thinking-disabled 无json_object 4096。输入=56d2b03 Gold 源文本 150 行（共享输入）。评估=56d2b03 正式 Gold + sun_literal_overlap_evaluation@2.0.0。结果：整体 P 0.8799/R 0.6900/F1 0.7735（missed 327）；constraint R 0.4172/F1 0.5272；actor F1 0.75、exception F1 0.6364 提升；action/condition/modality F1 微降（-0.020/-0.009/-0.007）——字段间 trade-off 按管线规则披露。CLEAN-RERUN 条件由本次运行同时满足（0 运行事故：无 lost/recovery/retry）。产物：output/manifest/d1_responses.jsonl(150)/verify_pass_evaluation_20260805.json + input_150_hist56d_v1.jsonl。下一步：D1-R2（prompt/model/budget 锁定）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T14:46:44.874230+00:00 - D1-R1 VERIFY-PASS artifacts + catalog regeneration
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1471 passed, 24 skipped in 129.52s (0:02:09)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`284e8ed52049332dcbae0f665ea415f1b98bbf1f`；相关未提交路径：3 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：FILE_CATALOG 重建（新增 verify_pass 产物），审计恢复 integrity pass。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
