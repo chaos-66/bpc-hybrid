@@ -2400,3 +2400,29 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Pilot 预注册（严格门禁，用户授权模型=deepseek-v4-flash，'不能跑完150条结果P、R没动'）：输入=top-20 constraint 漏抽样本（56d2b03 Layer E approved English，覆盖 88/215 个漏抽），input.jsonl 落盘 outputs/development/s27_d1_pilot_20_hist56d_v1/。两臂各 20 次调用（--max-calls 20、--allow-llm、--model deepseek-v4-flash 钉死、--development）：A 臂 v3 快照 prompt，B 臂 v4 prompt。门禁（任一不过即拒绝，不进入 150 全量）：①行为门禁：v4 输出与 v3 必须有实质差异（constraint pred 出现/action span 收缩），无差异=prompt 无效→拒绝；②指标门禁：pilot 子集上 v4 constraint matched_gt > v3 constraint matched_gt，且 v4 overall P 相对 v3 不显著下降（净 F1 或 constraint F1 改善）；③模型门禁：resolved/returned 必须=deepseek-v4-flash（fail-closed）。总预算=40 calls。150 全量仅在门禁全过后执行（届时单独记录）。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T09:19:51.336624+00:00 - D1-R1 pilot blocked: deepseek-v4-flash via relay returns non-canonical schema (strict gate caught pre-150-run)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1448 passed, 24 skipped in 153.80s (0:02:33)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`83ac396a1429d4d36fc9e46507880c0c7ecda86c`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Pilot 诊断结果（flash+relay，~86 次调用全为 pilot 20 样本，未产生任何有效记录）：①首次 20 调用 HTTP 403 Cloudflare 1010——修复：transport 加浏览器 UA（llm_client.py）；②修复后返回空内容（empty_final_content_with_reasoning）——修复：H1RequestPolicy thinking={'type':'disabled'}+json_object（run_direct_llm.py）；③max_tokens 1024 截断 JSON——修复：.env 设 4096；④20/20 仍验证失败——新 canonicalizer（d1_span_canonicalizer.py，仿 S2.8D-R3 唯一 exact-text 重锚、fail-closed）生效后失败原因分类：16 个 empty_span_text + 5 个 evidence ambiguous。⑤原始响应检查定性结论：**模型返回非 canonical 嵌套 schema**（actors=[{actor_id,name,span:{start,end,text}}]、actions=[{action_id,verb,span,object}] 等），无视 v3/v4 prompt 的硬规则 1-17 与示例；v3/v4、带/不带 response_format json_object 三组合全部不通过 canonical 校验。严格门禁（'不能跑完150条结果P、R没动'）在 150 全量前拦截。选项：A) 写 D1 schema 适配器（确定性映射+fail-closed，沿 canonicalizer 先例）继续 flash；B) 换官方 API+v4pro（s28_s29 已验证 schema 合规）；C) prompt v5 内嵌完整 JSON Schema 再试；D) 放弃 flash+relay 用于 D1。待用户裁决。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T09:25:06.845293+00:00 - D1-R1 pilot blocked event finalization (catalog regenerated)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1449 passed, 24 skipped in 131.62s (0:02:11)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`83ac396a1429d4d36fc9e46507880c0c7ecda86c`；相关未提交路径：7 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：上一事件记录时 FILE_CATALOG 未含新增文件（d1_span_canonicalizer.py 等），中间态测试 1 failed；已重新生成 catalog，全量 audit 通过，以本事件收尾。其余内容见前一事件（flash+relay schema 不兼容结论与四个选项）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

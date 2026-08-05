@@ -373,6 +373,14 @@ class RealAPITransport(LLMTransport):
         # Inject real API key into headers (redacted by builder)
         headers = dict(payload["headers"])
         headers["Authorization"] = f"Bearer {self._config.api_key}"
+        # D1-R1 (2026-08-04): some OpenAI-compatible relays sit behind
+        # Cloudflare bot protection that rejects plain python-urllib
+        # signatures (HTTP 403, error 1010).  A browser-like User-Agent is
+        # required for those endpoints; it changes no semantics for others.
+        headers.setdefault("User-Agent",
+                           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                           "AppleWebKit/537.36 (KHTML, like Gecko) "
+                           "Chrome/126.0.0.0 Safari/537.36")
 
         body_bytes = json.dumps(payload["body"]).encode("utf-8")
         self.last_request_body_sha256 = sha256_bytes(body_bytes)

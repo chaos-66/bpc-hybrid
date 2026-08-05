@@ -186,7 +186,21 @@ def main() -> int:
     if not config.enabled or config.provider == "mock":
         print("Refusing to run: a real LLM provider is not enabled.")
         return 2
-    transport = RealAPITransport(config, timeout_seconds=60.0)
+    # D1-R1 (2026-08-04): deepseek-v4-flash on OpenAI-compatible relays
+    # (incl. opencode.ai/zen/go/v1) defaults to a reasoning pass that returns
+    # empty final content; the explicit policy disables thinking and pins
+    # JSON output. Same policy vocabulary as the H1 transport.
+    from bpc_hybrid.h1_transport import H1RequestPolicy
+
+    transport = RealAPITransport(
+        config,
+        timeout_seconds=60.0,
+        policy=H1RequestPolicy(
+            stream=False,
+            thinking={"type": "disabled"},
+            response_format={"type": "json_object"},
+        ),
+    )
 
     # 6. Load and validate input
     try:
@@ -203,6 +217,7 @@ def main() -> int:
     validation_failures: list[dict] = []
     llm_errors: list[dict] = []
     returned_models: set[str] = set()
+    span_audit_summary: dict[str, int] = {"records": 0, "reanchored": 0, "clause_spans": 0, "field_spans": 0}
     # Build the prompt body ONCE and reuse for all rows
     from bpc_hybrid.llm_client import OpenAICompatibleRequestBuilder
     builder = OpenAICompatibleRequestBuilder(config)
@@ -258,6 +273,23 @@ def main() -> int:
         payload.setdefault("method", {"name": "direct_llm", "schema_source": "stage2_prediction.schema.json@1.0.0"})
         payload.setdefault("unsupported_or_ambiguous", [])
 
+        # D1-R1 (2026-08-04): re-anchor span coordinates to the unique exact
+        # occurrence of their text (S2.8D-R3-style canonicalization) before the
+        # strict canonical validator; zero/ambiguous/contract violations fail
+        # closed for the whole record.
+        from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates
+
+        payload, span_audit = canonicalize_record_coordinates(payload, source_text)
+        if span_audit["status"] == "failed":
+            validation_failures.append(
+                {
+                    "sample_id": sample_id,
+                    "errors": [f"span_canonicalization_failed: {', '.join(span_audit['failed_reasons'])}"],
+                    "span_canonicalization": span_audit,
+                }
+            )
+            continue
+
         # Validate against canonical schema + cross-field rules
         report = validate_canonical(payload)
         if not (report.schema_valid and report.cross_field_valid):
@@ -266,6 +298,10 @@ def main() -> int:
             )
             continue
         results.append(payload)
+        span_audit_summary["records"] += 1
+        span_audit_summary["reanchored"] += span_audit["reanchored_count"]
+        span_audit_summary["clause_spans"] += span_audit["clause_span_count"]
+        span_audit_summary["field_spans"] += span_audit["field_span_count"]
 
     # 8. Write outputs
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -294,6 +330,7 @@ def main() -> int:
             "resolved": config.model,
             "returned": sorted(returned_models),
         },
+        "transport_policy": transport.last_request_policy,
         "sampling": sent_sampling,
         "prompts": [build_manifest_entry(prompt)],
         "real_api": True,
@@ -301,6 +338,7 @@ def main() -> int:
         "rule_front_end_used": False,
         "validation_failures": validation_failures,
         "llm_errors": llm_errors,
+        "span_canonicalization": span_audit_summary,
     }
     args.manifest.write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8"
