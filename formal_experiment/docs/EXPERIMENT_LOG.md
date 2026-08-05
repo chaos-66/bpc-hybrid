@@ -2659,3 +2659,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：configs/models/estg150_d1_active_registry_v1.json pins v6 prompt sha 3aa64877 (disk/loader/run-manifest three-way), deepseek-v4-pro fail-closed pin, temp 0/top_p 1/max_tokens 4096, seed policy unsupported_or_omitted, transport recipe (thinking-disabled, no json_object), shared input sha c7dffcc4, evaluator sha 352113b5, budget contract (per-batch authorization + --max-calls hard cap 150), D1-R1 VERIFY-PASS run registered (manifest sha 87cb1bea). 12 lock-config tests incl. S2.9 Gold-invisibility check (6 synthetic few-shot fixtures zero overlap with 150 input texts). MASTER_PIPELINE 3.4.31: D1-R2 row verified, S2.9 row partial with D1-side annotation; PROJECT_AUDIT + AGENT_RUNBOOK synced. Full audit 1483 passed / 24 skipped, integrity_pass=True, ERRORS=0. No LLM call, no .env read, Gold audit_read_only.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T17:24:11.083043+00:00 - D1-R2 correction record: evaluator-hash transcription typo caught by new lock-config test and fixed before commit
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1483 passed, 24 skipped in 147.90s (0:02:27)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`51b57c447fb561371d64b0e3c1dcfdb738ecfeff`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Correction/补充记录（append-only，不改 2026-08-06 D1-R2 主事件）：D1-R2 开发过程中（commit 51b57c4 之前）发现并修正两处过程性问题，均为最终提交前即已修正、无遗留影响。(1) evaluator config hash 抄写笔误：configs/models/estg150_d1_active_registry_v1.json 中 sun_table8_literal_overlap_v2.json 的 sha256 被抄为 352113b568c6075c8b01dafaf5fdf2e5a...（多一个 f），与磁盘实际 352113b568c6075c8b01dafa5fdf2e5a... 不一致；被新增测试 test_d1_r2_lock_config.py::test_lock_evaluator_hash_matches_disk 当场抓住，config 与测试常量两处同时修正，修正后 12 项 lock-config 测试全绿。(2) MASTER_PIPELINE.md changelog 编辑事故：3.4.31 行编辑时曾误替换 3.4.30 行，已立即恢复，最终文件 3.4.30/3.4.31 两行内容完整，git diff 可查。最终提交状态已由 audit --with-tests（1483 passed / 24 skipped，integrity_pass=True）背书。无 LLM 调用，未读 .env，Gold audit_read_only。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
