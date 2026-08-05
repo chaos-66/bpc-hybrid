@@ -1,9 +1,11 @@
 {
   "contract_version": "2.0.2",
   "reopened_at": "2026-07-11",
+  "relocked_at": "2026-08-06",
   "route": {
     "id": "sun_2024_final_version_stage2_reconstruction",
-    "status": "reopened_for_final_version_alignment",
+    "status": "locked",
+    "relock_note_2026_08_06": "Route re-locked by user-authorized governance decision: final-version method alignment completed at the method-level independent reconstruction bar — B0-R2 verified (docs/B0_R2_METHOD_CROSSWALK.md, 11 elements; Tsurgeon recorded as honest non-implementation with fail-closed guard), method_conformance_status=verified_method_level_independent_reconstruction (user-authorized 2026-08-04), official Sun supplement identified and hash-matched (57 effective Stage 3 input files), mentor-package provenance recorded. The missing_for_lock items below are DISCLOSED adaptation items under the method-level independent reconstruction bar, not blocking conditions (MASTER_PIPELINE §8.6 用户 2026-08-01 口径).",
     "exact_reproduction": false,
     "methodological_source_of_truth": "Sun et al. (2024) version of record, DOI 10.1007/s11227-023-05626-0",
     "local_pdf_status": "pre-publication manuscript; useful evidence but not controlling where it differs from the version of record",
@@ -49,7 +51,8 @@
   },
   "stage2_dataset": {
     "id": "sun_stage2_data_route_v2",
-    "status": "reopened_modality_verified_pending_phrase_gold_freeze_and_route_relock",
+    "status": "locked_for_human_review",
+    "relock_note_2026_08_06": "Re-locked by user-authorized governance decision: modality dataset verified (2,831 analysis rows) AND phrase Gold freeze reached (150/150 adjudicated, freeze_ready=True, restored 2026-08-06 from the user's 56d2b03 adjudication).",
     "authoritative_language": "de",
     "working_language": "en_translated_from_de_pending_translation_protocol_and_freeze",
     "user_decisions_2026_07_12": {

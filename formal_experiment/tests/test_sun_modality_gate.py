@@ -384,7 +384,9 @@ class TestGateIsolation:
         assert status["human_review_freeze_ready"] is True
         assert status["formal_gold_publication_ready"] is False
         assert status["final_experiment_ready"] is False
-        assert status["route"]["status"] != "locked"
+        # Route re-locked 2026-08-06 (user-authorized governance decision);
+        # stage3 + publication gate remain the isolation boundary.
+        assert status["route"]["status"] == "locked"
         contract = json.loads(
             (PROJECT_ROOT / gate.EXPERIMENT_CONTRACT_REL).read_text(encoding="utf-8")
         )
@@ -415,7 +417,10 @@ class TestGateIsolation:
         passes = {item["code"] for item in audit["findings"]["passes"]}
         blockers = {item["code"] for item in audit["findings"]["blockers"]}
         assert "sun_modality_dataset_verified" in passes
-        assert "stage2_dataset_route_relock_pending" in blockers
+        # Route + dataset re-locked 2026-08-06 (user-authorized): the
+        # relock-pending blocker is gone and the locked pass is present.
+        assert "stage2_dataset_route_relock_pending" not in blockers
+        assert "stage2_dataset_route_locked" in passes
         assert "stage2_dataset_alignment_pending" not in blockers
         # freeze_ready is True since the 2026-08-06 adjudication restore;
         # publication/final readiness remain closed (route/data/stage3).

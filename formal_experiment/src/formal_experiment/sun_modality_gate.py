@@ -506,7 +506,7 @@ def verify_sun_modality_development_data(
     checks.require(manifest.get("contract_version") == expectations.contract_version and quarantine.get("contract_version") == expectations.contract_version, "contract_ok", "derived_contract_version_mismatch", "Derived aggregates disagree with the dataset contract version.")
     checks.require(manifest.get("contract_sha256") == contract_sha and quarantine.get("contract_sha256") == contract_sha and _nested(modality, "dataset_contract", "sha256") == contract_sha, ("contract_ok", "artifact_hashes_ok"), "dataset_contract_hash_mismatch", "Dataset contract SHA-256 does not match all recorded references.")
     checks.require(modality.get("status") == "verified_development_split_locked" and modality.get("machine_gate_status") == "verified" and modality.get("formal_use") == "development_only_not_formal_gold", "contract_ok", "modality_contract_status_invalid", "Experiment contract modality status is not the exact S2.1-D intermediate state.")
-    checks.require(_nested(experiment, "stage2_dataset", "status") == "reopened_modality_verified_pending_phrase_gold_freeze_and_route_relock", "contract_ok", "stage2_dataset_intermediate_status_invalid", "Top-level Stage 2 dataset status is not the required reopened intermediate state.")
+    checks.require(_nested(experiment, "stage2_dataset", "status") == "locked_for_human_review", "contract_ok", "stage2_dataset_intermediate_status_invalid", "Top-level Stage 2 dataset status is not the required locked intermediate state.")
 
     expected_hash_entries = {
         SOURCE_MANIFEST_REL: _nested(modality, "source_manifest", "sha256"),

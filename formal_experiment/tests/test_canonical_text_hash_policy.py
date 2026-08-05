@@ -314,7 +314,9 @@ class TestBoundariesIntact:
         assert status["human_review_freeze_ready"] is True
         assert status["formal_gold_publication_ready"] is False
         assert status["final_experiment_ready"] is False
-        assert status["route"]["status"] != "locked"
+        # Route re-locked 2026-08-06 (user-authorized governance decision);
+        # publication/final readiness must remain closed without stage3.
+        assert status["route"]["status"] == "locked"
 
     def test_gate_license_and_claim_checks_still_pass(self, fast_zip):
         result = gate.verify_sun_modality_development_data(PROJECT_ROOT)

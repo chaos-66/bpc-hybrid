@@ -621,9 +621,12 @@ def test_validate_human_correction_cli_now_shows_review_freeze_true() -> None:
 # ---------------------------------------------------------------------------
 # Pre-existing governance tests kept
 # ---------------------------------------------------------------------------
-def test_audit_accepts_safe_reopened_route_without_exact_sun_claim() -> None:
+def test_audit_accepts_safe_locked_route_without_exact_sun_claim() -> None:
     audit = collect_project_audit()
-    assert "final_version_route_alignment_pending" in _codes(audit, "blockers")
+    # Route re-locked 2026-08-06 (user-authorized): the alignment pending
+    # blocker is gone and the locked pass is present.
+    assert "final_version_route_alignment_pending" not in _codes(audit, "blockers")
+    assert "reconstruction_route_locked" in _codes(audit, "passes")
     assert "official_sun_supplement_identified" in _codes(audit, "passes")
     assert "winter_reference_correctly_named" in _codes(audit, "passes")
     assert "sun_original_code_unavailable" in _codes(audit, "warnings")
@@ -636,7 +639,9 @@ def test_audit_checks_full_blank_estg_review_pack() -> None:
     assert report["invalid_json"] == 0
     assert "human_review_pack_structurally_valid" in _codes(audit, "passes")
     assert "span_multiclause_contract_locked" in _codes(audit, "passes")
-    assert "legacy_review_pack_not_formal" in _codes(audit, "warnings")
+    # Dataset route locked 2026-08-06: the retired-pack warning is no
+    # longer emitted (its condition was dataset.status != locked).
+    assert "legacy_review_pack_not_formal" not in _codes(audit, "warnings")
 
 
 def test_audit_keeps_later_experiment_phases_blocked() -> None:
@@ -645,8 +650,12 @@ def test_audit_keeps_later_experiment_phases_blocked() -> None:
     assert "formal_capsule_not_frozen" in blockers
     assert "stage3_benchmark_not_locked" in blockers
     assert "formal_methods_not_ready" in blockers
-    assert "stage2_dataset_route_relock_pending" in blockers
-    assert "stage2_dataset_alignment_pending" not in blockers
+    # Route + dataset re-locked 2026-08-06 (user-authorized): the two
+    # relock-pending blockers are gone and the locked passes are present.
+    assert "stage2_dataset_route_relock_pending" not in blockers
+    assert "stage2_dataset_route_locked" in _codes(audit, "passes")
+    assert "final_version_route_alignment_pending" not in blockers
+    assert "reconstruction_route_locked" in _codes(audit, "passes")
     # B0-R2 (2026-08-04, user-authorized): method_conformance_status flipped to
     # verified_method_level_independent_reconstruction, so the
     # sun_stage2_baseline_not_paper_faithful blocker is cleared by design

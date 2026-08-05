@@ -14,6 +14,15 @@
 > 2026-07-12 21:30 v1 工作流退役为 workflow draft；v2 工作流上线
 > 作为 active editing surface。完整路线锁在 v2 下生效，但 route v2 仍
 > 开放等待最终发表版 Sun Stage 2 实现。
+>
+> **2026-08-06 route v2 重新锁定（用户授权治理决策）**：最终版方法对齐已按
+> 方法级独立复现口径完成（B0-R2 verified + `docs/B0_R2_METHOD_CROSSWALK.md`
+> 11 元素 + `method_conformance_status=verified_method_level_independent_reconstruction`
+> （2026-08-04 用户授权）+ official Sun supplement 57 文件 hash 匹配 + mentor
+> provenance）；`experiment_contract.json` `route.status=locked`、
+> `stage2_dataset.status=locked_for_human_review`（phrase Gold freeze 150/150
+> 达成，2026-08-06 恢复用户裁决）。formal Gold 发布仍差 stage3 锁定 +
+> publication gate 白名单匹配。
 
 ## 1. 数据集单源（不可变）
 
