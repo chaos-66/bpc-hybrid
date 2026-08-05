@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-05
-**收录文件**：674 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：676 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -601,6 +601,7 @@
 | `src/bpc_hybrid/b0_v10/scope.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/b0_v10/segmentation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/b0_v10/span_safety.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/d1_schema_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/d1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/datasets/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/datasets/sun_modality_importer.py` | 活动 | Python 实现、脚本或测试 |
@@ -718,6 +719,7 @@
 | `tests/test_b0_r1_align_cue_validation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_bridge_semantics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_d1_runner_hardening.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_b0_r1_d1_schema_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_d1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_lexicon_decision.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_v10_integration_contract.py` | 活动 | Python 实现、脚本或测试 |

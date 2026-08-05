@@ -217,7 +217,7 @@ def main() -> int:
     validation_failures: list[dict] = []
     llm_errors: list[dict] = []
     returned_models: set[str] = set()
-    span_audit_summary: dict[str, int] = {"records": 0, "reanchored": 0, "clause_spans": 0, "field_spans": 0}
+    span_audit_summary: dict[str, int] = {"records": 0, "reanchored": 0, "clause_spans": 0, "field_spans": 0, "adapted_spans": 0}
     # Build the prompt body ONCE and reuse for all rows
     from bpc_hybrid.llm_client import OpenAICompatibleRequestBuilder
     builder = OpenAICompatibleRequestBuilder(config)
@@ -273,12 +273,26 @@ def main() -> int:
         payload.setdefault("method", {"name": "direct_llm", "schema_source": "stage2_prediction.schema.json@1.0.0"})
         payload.setdefault("unsupported_or_ambiguous", [])
 
-        # D1-R1 (2026-08-04): re-anchor span coordinates to the unique exact
-        # occurrence of their text (S2.8D-R3-style canonicalization) before the
-        # strict canonical validator; zero/ambiguous/contract violations fail
-        # closed for the whole record.
+        # D1-R1 (2026-08-04, option A): the opencode.ai/zen relay's
+        # deepseek-v4-flash returns spans in a nested per-field convention;
+        # the adapter maps them deterministically back to canonical spans.
+        # Then span coordinates are re-anchored to the unique exact
+        # occurrence of their text (S2.8D-R3-style canonicalization) before
+        # the strict canonical validator; zero/ambiguous/contract violations
+        # fail closed for the whole record.
+        from bpc_hybrid.d1_schema_adapter import adapt_relay_record
         from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates
 
+        payload, adapt_audit = adapt_relay_record(payload, source_text)
+        if adapt_audit["status"] == "failed":
+            validation_failures.append(
+                {
+                    "sample_id": sample_id,
+                    "errors": [f"relay_schema_adaptation_failed: {', '.join(adapt_audit['failed_reasons'])}"],
+                    "relay_schema_adaptation": adapt_audit,
+                }
+            )
+            continue
         payload, span_audit = canonicalize_record_coordinates(payload, source_text)
         if span_audit["status"] == "failed":
             validation_failures.append(
@@ -302,6 +316,7 @@ def main() -> int:
         span_audit_summary["reanchored"] += span_audit["reanchored_count"]
         span_audit_summary["clause_spans"] += span_audit["clause_span_count"]
         span_audit_summary["field_spans"] += span_audit["field_span_count"]
+        span_audit_summary["adapted_spans"] += adapt_audit["spans_adapted"]
 
     # 8. Write outputs
     args.output.parent.mkdir(parents=True, exist_ok=True)

@@ -2426,3 +2426,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：上一事件记录时 FILE_CATALOG 未含新增文件（d1_span_canonicalizer.py 等），中间态测试 1 failed；已重新生成 catalog，全量 audit 通过，以本事件收尾。其余内容见前一事件（flash+relay schema 不兼容结论与四个选项）。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T09:42:48.868354+00:00 - D1-R1 option A implemented; relay+flash stack fails reproducibility hard constraint (fail-closed verdict)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1456 passed, 24 skipped in 132.41s (0:02:12)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3297340dace3db83bcc5a7e8798a8123c530219b`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：选项 A 已实现：d1_schema_adapter.py（嵌套格式确定性映射回 canonical：actor_id/action_id/condition_id→id、span 展开、verb/object 丢弃、normalized 项目惯例、缺 id 确定性生成、text 不在 source/缺 span/非整型偏移→整记录 fail-closed）+ 7 项测试；runner 接入 adapt→canonicalize→validate 三阶段。实测：v3-flash-relay 在 20 样本上 0→5 条有效记录（25%），剩余失败=7 action 形状变体 + 6 evidence 歧义 + 2 幻觉。**可重放性决定性测试（硬约束）**：同一样本同配置连续 2 次调用，输出结构不同（actors id 'c1_a1' vs 'a1'；actions 键集不同），且单样本不同调用返回内容可变（一次空数组一次有内容）→ 违反 MASTER_PIPELINE §8.7 硬约束'同输入同配置可重放'，按'输出不可复现才 fail closed'判定该 stack 不适用于 D1。累计 ~92 次 flash 调用全部用于诊断与 pilot 20 样本，无 150 全量浪费。待用户决策：B) 官方 API+v4pro（s28_s29 已验证可复现可验证）；C) 换其它可复现 relay；D) 停止 D1-R1 在 flash 上推进。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
