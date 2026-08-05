@@ -130,4 +130,3 @@ R3 逐字段 unmatched 分布（wrong_field / not_extracted）：
 - modality/actor 的 F1 回落（−0.011/−0.028）为运行间噪声与少量抽取边界差异，非系统性回归。
 
 本小节全部数字为 development only，非正式结论；正式比较（D1-R4）仍待 formal Gold 门禁。
-
