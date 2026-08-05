@@ -42,7 +42,8 @@ from formal_experiment.paths import (
 
 PROMPTName = "direct_llm_sun_record_prompt"
 PROMPT_V3_SNAPSHOT = "direct_llm_sun_record_prompt_v3_2026_07_12"
-ALLOWED_PROMPT_NAMES = (PROMPTName, PROMPT_V3_SNAPSHOT)
+PROMPT_V5_FROZEN = "direct_llm_sun_record_prompt_v5_2026_07_29_frozen"
+ALLOWED_PROMPT_NAMES = (PROMPTName, PROMPT_V3_SNAPSHOT, PROMPT_V5_FROZEN)
 
 DEFAULT_INPUT = ROOT / "data/input/estg150_input_v1.jsonl"
 DEFAULT_OUTPUT = ROOT / "data/predictions/direct_llm_predictions.jsonl"

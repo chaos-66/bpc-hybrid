@@ -2478,3 +2478,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：完整诊断链（v4pro 官方 API，temp0/4096）：①七月 prompt（4afa5d1，sha 7bc64c99）与我的 v3 快照（37d1edd7）内容逐行一致（仅 CRLF/LF 字节差异）→ prompt 不是变量；②七月 runner=裸 transport（无 json_object/thinking）→ 现在裸请求返回 empty_final_content_with_reasoning（3/4 样本）→ 模型/API 侧已开启思考模式（行为漂移实证）；③thinking-disabled 无 json_object → 有内容但容器变体 'actor_id/actor_type/spans'（列表型）+ clause_span 仍有不匹配 → 0/4 有效；④thinking-disabled+json_object → 另一嵌套变体（早前 5/20）。结论：v4pro 当前输出格式在多个不稳定变体间漂移，任何组合都无法复现七月 canonical 输出（518 规范 span），原因在模型/API 侧而非本项目代码；适配器只能逐形状打地鼠。选项：A) 换 gpt-4.1（s28_s29 配置本钉的是 gpt-4.1-2025-04-14，被 .env 覆盖成 v4pro；配置理由=强指令遵循非推理快照，若用户官方 key 支持 OpenAI 模型可试）；B) 正式锁定 D1 输出合约（全面适配器，接受漂移形状+文档化映射，属合约决策）；C) 暂停 D1-R1 测量。待用户裁决。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T12:11:12.745821+00:00 - D1-R1: root cause found - July runtime prompt was v5 (79f6f76f) not v3; frozen v5 baseline restored and reproduced 4/4 canonical
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1458 passed, 24 skipped in 177.60s (0:02:57)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`62e87064bcb072dff425b4ec5fd8578f98d441c7`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：根因链（全部实证）：①s28_s29 manifest.prompt_bindings 记录运行时刻 prompt sha=79f6f76f（56d2b03，即 formal Gold 提交）；此前假设的 4afa5d1 prompt（7bc64c99=v3）并非七月运行时 prompt——v3 快照基线建错，全部'漂移'测试均用错 prompt；②transport_variance：preflight(estg_000002)=provider_default_enabled 思考模式（12000 tokens 非 JSON 失败，保留在分母），其余 149 请求 thinking=disabled；③正确配方=v5 prompt+thinking-disabled+裸请求(无 json_object)+max_tokens4096/temp0/top_p1，4/4 样本 canonical 有效（estg_000002/31/43/59，顶层键全合约、actors id/text/start/end/normalized、1-3 clauses）。④请求体构造（build_body）与七月逐字节一致（唯一差异=UA 头）。新增 frozen 基线 prompts/sun_compat/direct_llm_sun_record_prompt_v5_2026_07_29_frozen.md（sha 校验=79f6f76f），runner allowlist+测试更新，文件目录清单重建。v5 含 v3 没有的关键规则：contract 绑定、输入边界、代词即 actor（对应 D1 漏抽 99 条根因）。下一步：D1-R1 候选需以 v5 为基底重建（现有 v4 是 v3 系，不可直接比较），然后两臂 pilot（A=v5 冻结基线 vs B=v5+FIELDTYPING）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -21,14 +21,26 @@ if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
 from bpc_hybrid.prompt_loader import load_prompt  # noqa: E402
-from scripts.run_direct_llm import ALLOWED_PROMPT_NAMES, PROMPT_V3_SNAPSHOT  # noqa: E402
+from scripts.run_direct_llm import ALLOWED_PROMPT_NAMES, PROMPT_V3_SNAPSHOT, PROMPT_V5_FROZEN  # noqa: E402
 
 V4_MARKER = "MUST NOT be folded into the action span"
+
+V5_FROZEN_SHA = "79f6f76fc9779abb87fc919e4384386ac812d40fcedaf73df0ea8ea1377af62e"
 
 
 def test_prompt_name_allowlist_contains_active_and_snapshot() -> None:
     assert "direct_llm_sun_record_prompt" in ALLOWED_PROMPT_NAMES
     assert PROMPT_V3_SNAPSHOT in ALLOWED_PROMPT_NAMES
+    assert PROMPT_V5_FROZEN in ALLOWED_PROMPT_NAMES
+
+
+def test_v5_frozen_is_the_july_runtime_prompt() -> None:
+    p = load_prompt(PROMPT_V5_FROZEN)
+    assert p.sha256 == V5_FROZEN_SHA
+    assert "stage2_extraction_contract@1.0.0" in p.system_prompt
+    assert "pronoun" in p.system_prompt.lower()
+    assert len(p.few_shot_examples) == 4
+    assert "few_shot_block" in p.user_prompt_template
 
 
 def test_v3_snapshot_is_the_old_prompt() -> None:
