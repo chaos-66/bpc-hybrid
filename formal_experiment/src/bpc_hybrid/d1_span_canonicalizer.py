@@ -1,33 +1,43 @@
-"""D1 span-coordinate canonicalization (D1-R1, 2026-08-04).
+"""D1 span-coordinate canonicalization (D1-R1, 2026-08-05).
 
-The deepseek-v4-flash model on OpenAI-compatible relays returns spans whose
-``text`` is exact but whose ``start``/``end`` offsets are frequently off by a
-few characters on long multi-clause sentences, so the canonical validator
-rejects otherwise correct records.  Following the S2.8D-R3 H1 precedent
-(``h1_span_canonicalizer``), this module re-anchors a span to the UNIQUE
-exact occurrence of its text:
+The deepseek-v4-pro model returns spans whose ``text`` is usually exact but
+whose ``start``/``end`` offsets are frequently off by a few characters on long
+multi-clause sentences, so the canonical validator rejects otherwise correct
+records.  Following the S2.8D-R3 H1 precedent (``h1_span_canonicalizer``),
+this module re-anchors a span to the UNIQUE exact occurrence of its text:
 
 * if ``text == source_text[start:end]`` the span is already valid and is
   left untouched (status ``unchanged``);
 * otherwise the span's exact text must occur exactly once in the window
   (the clause for field spans, the whole source for clause spans) and the
-  span is re-anchored there (status ``reanchored``);
-* zero or multiple occurrences, or contract violations (non-integer
-  offsets), fail closed for the whole record (status ``failed`` with a
-  stable reason code).
+  span is re-anchored there (status ``reanchored``).
 
-Only ``start``/``end`` are ever modified; everything else is deep-copied.
-Deterministic and Gold-blind; no normalization, fuzzy matching, or label
-changes.
+Empty-vs-error policy (user decision 2026-08-05: empty is legal; the six
+semantic elements may be partially empty; Gold does not imply every element
+is present):
+
+* an unrecoverable FIELD span (zero/ambiguous occurrence, empty span text,
+  non-integer offsets) is DROPPED from its array (treated as absent) and the
+  record survives; the drop is recorded in the audit;
+* an unrecoverable CLAUSE (missing/structurally invalid/unreanchorable
+  clause_span, non-object clause) is DROPPED as a whole; the record survives;
+* a record without ``clauses`` is treated as an empty (legal) record;
+* only record-level structural violations (record not an object, empty
+  source text, ``clauses`` present but not a list) still fail closed.
+
+Only ``start``/``end`` are ever modified (or elements dropped); everything
+else is deep-copied.  Deterministic and Gold-blind; no normalization, fuzzy
+matching, or label changes.
 """
 
 from __future__ import annotations
 
 import copy
-from typing import Any, Mapping, Sequence
+from typing import Any, Mapping
 
 STATUS_UNCHANGED = "unchanged"
 STATUS_REANCHORED = "reanchored"
+STATUS_DEGRADED = "degraded"
 STATUS_FAILED = "failed"
 
 SPAN_FIELDS = ("actors", "actions", "conditions", "constraints", "exceptions")
@@ -79,19 +89,9 @@ def canonicalize_record_coordinates(
 ) -> tuple[Any, dict[str, Any]]:
     """Canonicalize every span coordinate in a direct-LLM canonical record.
 
-    Parameters
-    ----------
-    record : any
-        The parsed direct-LLM record (expected mapping with ``clauses``).
-    source_text : any
-        The record's full source text (expected non-empty str).
-
-    Returns
-    -------
-    ``(canonicalized_record, audit)``.  On success the record is a deep copy
-    with only ``start``/``end`` corrections applied; on failure the record is
-    returned unchanged and ``audit["status"] == "failed"`` with stable
-    reason codes.
+    Returns ``(canonicalized_record, audit)``.  Field-span and clause-level
+    problems degrade the record (elements dropped, audit records every drop);
+    only record-level structural violations fail closed.
     """
     audit: dict[str, Any] = {
         "attempted": True,
@@ -99,6 +99,8 @@ def canonicalize_record_coordinates(
         "clause_span_count": 0,
         "field_span_count": 0,
         "reanchored_count": 0,
+        "dropped_spans": [],
+        "dropped_clauses": [],
         "failed_reasons": [],
     }
     if not isinstance(record, Mapping):
@@ -112,77 +114,100 @@ def canonicalize_record_coordinates(
 
     out = copy.deepcopy(record)
     clauses = out.get("clauses")
+    if clauses is None:
+        out["clauses"] = []
+        return out, audit
     if not isinstance(clauses, list):
         audit["status"] = STATUS_FAILED
         audit["failed_reasons"].append("clauses_not_list")
         return record, audit
 
-    def fail(reason: str) -> None:
-        audit["status"] = STATUS_FAILED
-        audit["failed_reasons"].append(reason)
+    def degraded() -> None:
+        if audit["status"] != STATUS_FAILED and (
+            audit["dropped_spans"] or audit["dropped_clauses"]
+        ):
+            audit["status"] = STATUS_DEGRADED
 
+    kept: list[Any] = []
     for ci, clause in enumerate(clauses):
         if not isinstance(clause, Mapping):
-            fail(f"clauses[{ci}]_not_object")
-            return record, audit
+            audit["dropped_clauses"].append(ci)
+            degraded()
+            continue
         cs = clause.get("clause_span")
-        if cs is not None:
-            audit["clause_span_count"] += 1
-            if not isinstance(cs, Mapping):
-                fail(f"clauses[{ci}].clause_span_not_object")
-                return record, audit
-            fixed_cs, outcome = _reanchor_span(cs, source_text, 0, len(source_text))
-            if outcome == STATUS_REANCHORED:
-                audit["reanchored_count"] += 1
-            elif outcome != STATUS_UNCHANGED:
-                fail(f"clauses[{ci}].clause_span_{outcome}")
-                return record, audit
-            clause["clause_span"] = fixed_cs
-            if not _is_plain_int(fixed_cs.get("start")) or not _is_plain_int(fixed_cs.get("end")):
-                fail(f"clauses[{ci}].clause_span_bad_offsets")
-                return record, audit
-            window_start, window_end = int(fixed_cs["start"]), int(fixed_cs["end"])
-        else:
-            fail(f"clauses[{ci}]_missing_clause_span")
-            return record, audit
+        if cs is None:
+            audit["dropped_clauses"].append(ci)
+            degraded()
+            continue
+        if not isinstance(cs, Mapping):
+            audit["dropped_clauses"].append(ci)
+            degraded()
+            continue
+        fixed_cs, outcome = _reanchor_span(cs, source_text, 0, len(source_text))
+        if outcome != STATUS_UNCHANGED and outcome != STATUS_REANCHORED:
+            audit["dropped_clauses"].append(ci)
+            degraded()
+            continue
+        audit["clause_span_count"] += 1
+        if outcome == STATUS_REANCHORED:
+            audit["reanchored_count"] += 1
+        if not _is_plain_int(fixed_cs.get("start")) or not _is_plain_int(fixed_cs.get("end")):
+            audit["dropped_clauses"].append(ci)
+            degraded()
+            continue
+        clause["clause_span"] = fixed_cs
+        window_start, window_end = int(fixed_cs["start"]), int(fixed_cs["end"])
 
         modality = clause.get("modality")
         if isinstance(modality, Mapping):
             evidence = modality.get("evidence")
             if isinstance(evidence, list):
+                kept_evidence: list[Any] = []
                 for ei, span in enumerate(evidence):
                     audit["field_span_count"] += 1
                     if not isinstance(span, Mapping):
-                        fail(f"clauses[{ci}].modality.evidence[{ei}]_not_object")
-                        return record, audit
+                        audit["dropped_spans"].append(f"clauses[{ci}].modality.evidence[{ei}]")
+                        degraded()
+                        continue
                     fixed, outcome = _reanchor_span(span, source_text, window_start, window_end)
-                    if outcome == STATUS_REANCHORED:
+                    if outcome == STATUS_UNCHANGED:
+                        kept_evidence.append(fixed)
+                    elif outcome == STATUS_REANCHORED:
+                        kept_evidence.append(fixed)
                         audit["reanchored_count"] += 1
-                    elif outcome != STATUS_UNCHANGED:
-                        fail(f"clauses[{ci}].modality.evidence[{ei}]_{outcome}")
-                        return record, audit
-                    evidence[ei] = fixed
+                    else:
+                        audit["dropped_spans"].append(f"clauses[{ci}].modality.evidence[{ei}]")
+                        degraded()
+                modality["evidence"] = kept_evidence
 
         for field in SPAN_FIELDS:
             spans = clause.get(field)
             if spans is None:
                 continue
             if not isinstance(spans, list):
-                fail(f"clauses[{ci}].{field}_not_list")
-                return record, audit
+                audit["dropped_clauses"].append(ci)
+                degraded()
+                continue
+            kept_spans: list[Any] = []
             for si, span in enumerate(spans):
                 audit["field_span_count"] += 1
                 if not isinstance(span, Mapping):
-                    fail(f"clauses[{ci}].{field}[{si}]_not_object")
-                    return record, audit
+                    audit["dropped_spans"].append(f"clauses[{ci}].{field}[{si}]")
+                    degraded()
+                    continue
                 fixed, outcome = _reanchor_span(span, source_text, window_start, window_end)
-                if outcome == STATUS_REANCHORED:
+                if outcome == STATUS_UNCHANGED:
+                    kept_spans.append(fixed)
+                elif outcome == STATUS_REANCHORED:
+                    kept_spans.append(fixed)
                     audit["reanchored_count"] += 1
-                elif outcome != STATUS_UNCHANGED:
-                    fail(f"clauses[{ci}].{field}[{si}]_{outcome}")
-                    return record, audit
-                spans[si] = fixed
+                else:
+                    audit["dropped_spans"].append(f"clauses[{ci}].{field}[{si}]")
+                    degraded()
+            clause[field] = kept_spans
+        kept.append(clause)
 
-    if audit["status"] != STATUS_FAILED:
-        audit["status"] = STATUS_REANCHORED if audit["reanchored_count"] else STATUS_UNCHANGED
+    out["clauses"] = kept
+    if audit["status"] == STATUS_UNCHANGED and audit["reanchored_count"]:
+        audit["status"] = STATUS_REANCHORED
     return out, audit

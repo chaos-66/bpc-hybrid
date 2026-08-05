@@ -350,8 +350,8 @@ def test_modality_evidence_empty():
     record = _minimal_record()
     record["clauses"][0]["modality"]["evidence"] = []
     report = validate_canonical(record)
-    assert not report.cross_field_valid
-    assert any("modality.evidence" in e for e in report.errors), report.errors
+    assert report.cross_field_valid, report.errors
+    assert report.errors == []
 
 
 def test_normalized_can_differ_from_text():

@@ -2521,3 +2521,29 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：预算：38 calls (19+19) deepseek-v4-pro 官方API thinking-disabled 无json_object 4096/temp0/top_p1。①复现验证（同18样本、同v5 prompt）：七月 F1=0.7727 vs 今天 0.7789 → 七月管线成功复现。②配对13共同样本：v6 F1=0.7954 vs v5 0.7649（+0.0304），P +0.0181，R +0.0390；constraint R 0.3571 vs 0.2857（+0.0714）、F1 +0.0806 → v6 全指标正向，KEEP。③覆盖代价：v6 有效 13/19 vs v5 16/19；失败 9 条全部记录（43/207/277 两臂共有；131/664/786 B 特有），0 LLM 传输错误。④评估=56d2b03 正式 Gold + sun_literal_overlap_evaluation@2.0.0。产物：pilot_evaluation_20260805.json + 两臂 output/manifest。下一步待批：150 全量 VERIFY-PASS 运行（150 calls）。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T13:30:57.892646+00:00 - D1-R1 empty-not-error semantics: schema/validator relax empty evidence; canonicalizer degrades (drops bad element/clause) instead of fail-closed
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1466 passed, 24 skipped in 212.09s (0:03:32)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`09ae4fa8477fce41edd7dce2c0b0d12da7077e30`；相关未提交路径：8 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户决定（2026-08-05）：空不为错——语义六要素允许部分为空，gold 也不代表所有要素均有。落实：①stage2_prediction.schema.json modality.evidence/orderRelation.evidence minItems 1→0（新 sha d94941c1）；②validate_canonical 允许空 evidence（仅拒非数组）；③d1_span_canonicalizer 改为降级策略：不可恢复的字段 span 丢弃（dropped_spans 审计）、坏 clause_span 的 clause 整体丢弃（dropped_clauses）、缺 clauses 视为空记录；仅记录级结构违规（record_not_object/empty_source_text/clauses_not_list）保持 fail-closed；④runner 新增 d1_responses.jsonl 持久化全部解析载荷（含 error_category/errors/audit/record，镜像七月格式），span_audit_summary 增 dropped 计数；⑤测试：canonicalizer 旧 fail-closed 断言改为降级断言+4 新用例，新增 empty_not_error 测试文件（4 用例），spec 文档补 Empty-vs-error 节。audit integrity pass。下一步：按新语义重跑两臂（38 calls）并重评估。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T13:37:14.345217+00:00 - D1-R1 empty-not-error semantics (cont.): update stale test_modality_evidence_empty to new semantics
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1467 passed, 24 skipped in 164.35s (0:02:44)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`09ae4fa8477fce41edd7dce2c0b0d12da7077e30`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：test_stage2_prediction_schema.py::test_modality_evidence_empty 此前断言旧语义（空 evidence 无效），按 2026-08-05 用户决定改为断言空 evidence 有效（cross_field_valid True, errors 空）。全量 1466 passed。audit integrity pass。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

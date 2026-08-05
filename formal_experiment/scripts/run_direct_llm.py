@@ -245,10 +245,14 @@ def main() -> int:
 
     # 7. Process samples
     results: list[dict] = []
+    responses: list[dict] = []
     validation_failures: list[dict] = []
     llm_errors: list[dict] = []
     returned_models: set[str] = set()
-    span_audit_summary: dict[str, int] = {"records": 0, "reanchored": 0, "clause_spans": 0, "field_spans": 0, "adapted_spans": 0}
+    span_audit_summary: dict[str, int] = {
+        "records": 0, "reanchored": 0, "clause_spans": 0, "field_spans": 0,
+        "dropped_spans": 0, "dropped_clauses": 0, "adapted_spans": 0,
+    }
     # Build the prompt body ONCE and reuse for all rows
     from bpc_hybrid.llm_client import OpenAICompatibleRequestBuilder
     builder = OpenAICompatibleRequestBuilder(config)
@@ -306,49 +310,56 @@ def main() -> int:
         payload.setdefault("method", {"name": "direct_llm", "schema_source": "stage2_prediction.schema.json@1.0.0"})
         payload.setdefault("unsupported_or_ambiguous", [])
 
-        # D1-R1 (2026-08-04, option A): the opencode.ai/zen relay's
-        # deepseek-v4-flash returns spans in a nested per-field convention;
-        # the adapter maps them deterministically back to canonical spans.
-        # Then span coordinates are re-anchored to the unique exact
-        # occurrence of their text (S2.8D-R3-style canonicalization) before
-        # the strict canonical validator; zero/ambiguous/contract violations
-        # fail closed for the whole record.
+        # D1-R1 (2026-08-05): the adapter maps relay-specific nested
+        # conventions back to canonical spans; span coordinates are then
+        # re-anchored to the unique exact occurrence of their text.
+        # Empty-vs-error policy (user decision 2026-08-05): empty elements
+        # are legal; unrecoverable field spans and clauses are DROPPED with
+        # an audit trail instead of failing the whole record; only
+        # record-level structural violations fail closed.
         from bpc_hybrid.d1_schema_adapter import adapt_relay_record
         from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates
 
         payload, adapt_audit = adapt_relay_record(payload, source_text)
         if adapt_audit["status"] == "failed":
+            errs = [f"relay_schema_adaptation_failed: {', '.join(adapt_audit['failed_reasons'])}"]
             validation_failures.append(
-                {
-                    "sample_id": sample_id,
-                    "errors": [f"relay_schema_adaptation_failed: {', '.join(adapt_audit['failed_reasons'])}"],
-                    "relay_schema_adaptation": adapt_audit,
-                }
+                {"sample_id": sample_id, "errors": errs, "relay_schema_adaptation": adapt_audit}
+            )
+            responses.append(
+                {"sample_id": sample_id, "request_status": "ok", "error_category": "relay_schema_adaptation_failed", "errors": errs, "record": payload}
             )
             continue
         payload, span_audit = canonicalize_record_coordinates(payload, source_text)
         if span_audit["status"] == "failed":
+            errs = [f"span_canonicalization_failed: {', '.join(span_audit['failed_reasons'])}"]
             validation_failures.append(
-                {
-                    "sample_id": sample_id,
-                    "errors": [f"span_canonicalization_failed: {', '.join(span_audit['failed_reasons'])}"],
-                    "span_canonicalization": span_audit,
-                }
+                {"sample_id": sample_id, "errors": errs, "span_canonicalization": span_audit}
+            )
+            responses.append(
+                {"sample_id": sample_id, "request_status": "ok", "error_category": "span_canonicalization_failed", "errors": errs, "span_canonicalization": span_audit, "record": payload}
             )
             continue
 
         # Validate against canonical schema + cross-field rules
         report = validate_canonical(payload)
         if not (report.schema_valid and report.cross_field_valid):
-            validation_failures.append(
-                {"sample_id": sample_id, "errors": list(report.errors)}
+            errs = list(report.errors)
+            validation_failures.append({"sample_id": sample_id, "errors": errs})
+            responses.append(
+                {"sample_id": sample_id, "request_status": "ok", "error_category": "canonical_validation_failed", "errors": errs, "span_canonicalization": span_audit, "record": payload}
             )
             continue
         results.append(payload)
+        responses.append(
+            {"sample_id": sample_id, "request_status": "ok", "error_category": None, "errors": [], "span_canonicalization": span_audit, "record": payload}
+        )
         span_audit_summary["records"] += 1
         span_audit_summary["reanchored"] += span_audit["reanchored_count"]
         span_audit_summary["clause_spans"] += span_audit["clause_span_count"]
         span_audit_summary["field_spans"] += span_audit["field_span_count"]
+        span_audit_summary["dropped_spans"] += len(span_audit.get("dropped_spans", []))
+        span_audit_summary["dropped_clauses"] += len(span_audit.get("dropped_clauses", []))
         span_audit_summary["adapted_spans"] += adapt_audit["spans_adapted"]
 
     # 8. Write outputs
@@ -356,6 +367,9 @@ def main() -> int:
     with args.output.open("w", encoding="utf-8", newline="\n") as handle:
         for record in results:
             handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+    with (args.output.parent / "d1_responses.jsonl").open("w", encoding="utf-8", newline="\n") as handle:
+        for entry in responses:
+            handle.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     manifest = {
         "schema_version": "1.0.0",
@@ -386,6 +400,7 @@ def main() -> int:
         "rule_front_end_used": False,
         "validation_failures": validation_failures,
         "llm_errors": llm_errors,
+        "responses_file": str(args.output.parent / "d1_responses.jsonl"),
         "span_canonicalization": span_audit_summary,
     }
     args.manifest.write_text(

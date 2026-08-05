@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-05
-**收录文件**：678 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：684 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -416,6 +416,11 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `outputs/development/s27_d1_pilot_20_hist56d_v1/arm_a_v5_20260805/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_d1_pilot_20_hist56d_v1/arm_a_v5_20260805/output.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_d1_pilot_20_hist56d_v1/arm_b_v6_20260805/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_d1_pilot_20_hist56d_v1/arm_b_v6_20260805/output.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_d1_pilot_20_hist56d_v1/pilot_evaluation_20260805.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/b0_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/evaluation_all150.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_enhanced_v10a_r1a_c3_hist56d_v1/evaluation_independent82.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -720,6 +725,7 @@
 | `tests/test_b0_r1_action_span_scope.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_align_cue_validation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_bridge_semantics.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_b0_r1_d1_empty_not_error.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_d1_runner_hardening.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_d1_schema_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_d1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |

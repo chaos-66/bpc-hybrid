@@ -269,3 +269,15 @@ JSON Schema 表达不了的，Python validator 强制：
 - Stage 3 adapter 如何处理空 actions 的 clause
 
 这些**不是** canonical schema 本体的 blocker，是项目级未决议题。
+
+
+## Empty-vs-error semantics (user decision, 2026-08-05)
+
+Empty is not an error. The six semantic elements (modality evidence, actor,
+action, condition, constraint, exception) may be partially empty; Gold does
+not imply every element is present. modality.evidence and
+orderRelation.evidence are arrays with minItems: 0 (empty means the
+producer could not identify a surface trigger). D1-R1 pipeline behavior:
+unrecoverable field spans and clauses are dropped with an audit trail
+(dropped_spans / dropped_clauses) instead of failing the whole record;
+only record-level structural violations fail closed.

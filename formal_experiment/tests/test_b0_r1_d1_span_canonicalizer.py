@@ -1,8 +1,10 @@
 """D1 span-coordinate canonicalizer tests (D1-R1).
 
-Mirrors the S2.8D-R3 H1 canonicalizer contract: valid spans are untouched,
-off-by-N spans re-anchor to the unique exact occurrence of their text, and
-zero/ambiguous occurrences or contract violations fail closed.
+Valid spans are untouched, off-by-N spans re-anchor to the unique exact
+occurrence of their text, and (per user decision 2026-08-05: empty is legal,
+elements may be absent) unrecoverable field spans and clauses are DROPPED
+with an audit trail instead of failing the whole record; only record-level
+structural violations fail closed.
 """
 
 from __future__ import annotations
@@ -19,6 +21,7 @@ if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
 from bpc_hybrid.d1_span_canonicalizer import (  # noqa: E402
+    STATUS_DEGRADED,
     STATUS_FAILED,
     STATUS_REANCHORED,
     STATUS_UNCHANGED,
@@ -84,7 +87,7 @@ def test_field_span_reanchors_inside_clause() -> None:
     assert out["clauses"][0]["constraints"][0]["end"] == 84
 
 
-def test_ambiguous_occurrence_fails_closed() -> None:
+def test_ambiguous_occurrence_drops_span_and_degrades() -> None:
     src = "the taxpayer and the taxpayer file."
     r = record(
         {"text": src, "start": 0, "end": len(src)},
@@ -94,25 +97,52 @@ def test_ambiguous_occurrence_fails_closed() -> None:
     r["clauses"][0]["clause_span"] = {"text": src, "start": 0, "end": len(src)}
     r["clauses"][0]["modality"]["evidence"] = [{"text": src, "start": 0, "end": len(src)}]
     out, audit = canonicalize_record_coordinates(r, src)
-    assert audit["status"] == STATUS_FAILED
-    assert any("ambiguous_occurrence" in reason for reason in audit["failed_reasons"])
-    assert out == r
+    assert audit["status"] == STATUS_DEGRADED
+    assert audit["dropped_spans"] == ["clauses[0].actors[0]"]
+    assert out["clauses"][0]["actors"] == []
+    assert out["clauses"][0]["clause_span"] == {"text": src, "start": 0, "end": len(src)}
 
 
-def test_zero_occurrence_fails_closed() -> None:
+def test_zero_occurrence_drops_span_and_degrades() -> None:
     r = record(
         {"text": SRC, "start": 0, "end": len(SRC)},
         constraints=[{"id": "c01", "text": "nonexistent phrase here", "start": 10, "end": 30, "normalized": "x"}],
     )
     out, audit = canonicalize_record_coordinates(r, SRC)
-    assert audit["status"] == STATUS_FAILED
-    assert any("zero_occurrence" in reason for reason in audit["failed_reasons"])
-    assert out == r
+    assert audit["status"] == STATUS_DEGRADED
+    assert audit["dropped_spans"] == ["clauses[0].constraints[0]"]
+    assert out["clauses"][0]["constraints"] == []
 
 
-def test_non_integer_offsets_fail_closed() -> None:
+def test_non_integer_offsets_drop_span_and_degrades() -> None:
     r = record({"text": SRC, "start": 0, "end": len(SRC)})
     r["clauses"][0]["constraints"] = [{"id": "c01", "text": "in accordance with Section 11(1)", "start": "52", "end": 84}]
     out, audit = canonicalize_record_coordinates(r, SRC)
+    assert audit["status"] == STATUS_DEGRADED
+    assert audit["dropped_spans"] == ["clauses[0].constraints[0]"]
+    assert out["clauses"][0]["constraints"] == []
+
+
+def test_bad_clause_span_drops_clause_and_degrades() -> None:
+    r = record({"text": "completely invented clause text", "start": 0, "end": 30})
+    out, audit = canonicalize_record_coordinates(r, SRC)
+    assert audit["status"] == STATUS_DEGRADED
+    assert audit["dropped_clauses"] == [0]
+    assert out["clauses"] == []
+
+
+def test_missing_clauses_treated_as_empty() -> None:
+    r = record({"text": SRC, "start": 0, "end": len(SRC)})
+    del r["clauses"]
+    out, audit = canonicalize_record_coordinates(r, SRC)
+    assert audit["status"] == STATUS_UNCHANGED
+    assert out["clauses"] == []
+
+
+def test_record_level_violations_still_fail_closed() -> None:
+    r = record({"text": SRC, "start": 0, "end": len(SRC)})
+    r["clauses"] = {"not": "a list"}
+    out, audit = canonicalize_record_coordinates(r, SRC)
     assert audit["status"] == STATUS_FAILED
+    assert audit["failed_reasons"] == ["clauses_not_list"]
     assert out == r

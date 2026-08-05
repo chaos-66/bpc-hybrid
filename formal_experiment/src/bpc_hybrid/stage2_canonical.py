@@ -255,8 +255,8 @@ def validate_cross_field(payload: dict) -> list[str]:
                 f"got {modality.get('label')!r}"
             )
         evidence = modality.get("evidence", [])
-        if not isinstance(evidence, list) or not evidence:
-            errors.append(f"{path}.modality.evidence must be a non-empty array")
+        if not isinstance(evidence, list):
+            errors.append(f"{path}.modality.evidence must be an array")
         else:
             for ei, ev in enumerate(evidence):
                 if not _is_span(ev):
@@ -337,8 +337,8 @@ def validate_cross_field(payload: dict) -> list[str]:
                         f"{per_field_ids['actions']}"
                     )
             evidence = rel.get("evidence", [])
-            if not isinstance(evidence, list) or not evidence:
-                errors.append(f"{rpath}.evidence must be a non-empty array")
+            if not isinstance(evidence, list):
+                errors.append(f"{rpath}.evidence must be an array")
             else:
                 for ei, ev in enumerate(evidence):
                     if not _is_span(ev):
