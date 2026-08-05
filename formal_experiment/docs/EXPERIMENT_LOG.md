@@ -2560,3 +2560,33 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：①d1_schema_adapter：span 级失败（no_flat_or_nested_span/text_not_in_source/非整数偏移）改为丢弃该 span（dropped_spans 审计）记录存活，新增 STATUS_DEGRADED；适配结果始终回写（修复全丢弃时空列表不回写 bug）；记录级违规保持 fail-closed。②d1_span_canonicalizer：新增 dropped_edges——actor_action_map/order_relations 引用已不存在 id（因降级丢弃或模型空数组+悬空边）时清边不杀记录（estg_000207/000277 两臂的失败根因）。③测试：adapter 3 个 fail-closed 测试改降级断言+1 新用例；canonicalizer 3 新用例（悬空 actor_action_map/order_relations/null actor_id 保留）。25 用例通过，audit integrity pass。下一步：重跑两臂（38 calls）做最终测量。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T13:59:06.197864+00:00 - D1-R1 final pilot under empty-not-error semantics: both arms 19/19 valid, v6 KEEP
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_d1_pilot_20_hist56d_v1_arm_ab_c_20260805；阶段=D1-R1；方法=direct_llm；状态=成功（`succeeded`）
+- 实际运行命令：`run_direct_llm.py --prompt-name {v5_frozen|v6} --model deepseek-v4-pro --allow-llm --development (19 calls per arm)`
+- manifest：无
+- 结果摘要：v6 KEEP: paired19 F1 0.8182 vs 0.8027 (+0.0155); constraint F1 0.5397 vs 0.4850 (+0.0547); 19/19 valid both arms, 0 validation failures, 0 LLM errors
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1470 passed, 24 skipped in 140.97s (0:02:20)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`6353904c1a68cadf65afc7750fb455d573cc187a`；相关未提交路径：2 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：预算：38 calls (19+19) v4pro 官方API thinking-disabled 无json_object。空不为错语义下（坏 span/clause/边丢弃+审计，记录级才 fail-closed）：①两臂均 19/19 有效、0 验证失败、0 LLM 错误（对比旧语义 A 16/19、B 13/19）；②配对19：v6 F1 0.8182 vs v5 0.8027（+0.0155）、P +0.0021、R +0.0246；constraint R 0.425 vs 0.35（+0.075）、F1 +0.0547；③v5 今天 0.8027 > 七月 0.7727（18样本）——语义修复本身提升覆盖；④评估=56d2b03 正式 Gold + sun_literal_overlap_evaluation@2.0.0。产物：pilot_evaluation_20260805_v2.json + 两臂 output/manifest/d1_responses.jsonl。下一步待批：150 全量 VERIFY-PASS（150 calls）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T14:04:59.960044+00:00 - D1-R1 pilot v2 artifacts + catalog regeneration
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1471 passed, 24 skipped in 172.73s (0:02:52)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`6353904c1a68cadf65afc7750fb455d573cc187a`；相关未提交路径：5 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：重新生成 FILE_CATALOG（新增 pilot_evaluation_20260805_v2.json 等），审计恢复 integrity pass。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

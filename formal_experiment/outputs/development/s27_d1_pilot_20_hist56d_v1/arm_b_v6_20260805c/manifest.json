@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "stage": "formal_stage2",
+  "method": "direct_llm",
+  "mode": "development",
+  "timestamp_utc": "2026-08-05T13:55:43.253265+00:00",
+  "input_path": "outputs\\development\\s27_d1_pilot_20_hist56d_v1\\input_rep.jsonl",
+  "output_path": "outputs\\development\\s27_d1_pilot_20_hist56d_v1\\arm_b_v6_20260805c\\output.jsonl",
+  "sample_count_input": 19,
+  "sample_count_written": 19,
+  "sample_count_validation_failed": 0,
+  "sample_count_llm_error": 0,
+  "llm_calls": 19,
+  "max_calls": 19,
+  "llm_provider": "openai_compatible",
+  "llm_model": "deepseek-v4-pro",
+  "llm_models": {
+    "requested": "deepseek-v4-pro",
+    "resolved": "deepseek-v4-pro",
+    "returned": [
+      "deepseek-v4-pro"
+    ]
+  },
+  "transport_policy": {
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    },
+    "response_format": null,
+    "tools_sent": false
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "seed": "unsupported_or_omitted",
+    "max_tokens": 4096
+  },
+  "prompts": [
+    {
+      "role": "primary",
+      "name": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\prompts\\sun_compat\\direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
+      "sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "sampling_policy": "temperature=0, top_p=1, max_tokens=4096"
+    }
+  ],
+  "real_api": true,
+  "gold_read_by_runner": false,
+  "rule_front_end_used": false,
+  "validation_failures": [],
+  "llm_errors": [],
+  "responses_file": "outputs\\development\\s27_d1_pilot_20_hist56d_v1\\arm_b_v6_20260805c\\d1_responses.jsonl",
+  "span_canonicalization": {
+    "records": 19,
+    "reanchored": 125,
+    "clause_spans": 34,
+    "field_spans": 121,
+    "dropped_spans": 17,
+    "dropped_clauses": 0,
+    "adapted_spans": 84
+  }
+}

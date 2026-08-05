@@ -1,0 +1,50 @@
+{
+  "schema_version": "d1_r1_pilot_evaluation@1.1.0",
+  "run_date_utc": "2026-08-05",
+  "gold": {
+    "source_commit": "56d2b03",
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "build": "build_canonical_gold_records(layer_e@56d2b03, membership@56d2b03)"
+  },
+  "evaluator": "sun_literal_overlap_evaluation@2.0.0",
+  "pilot_input": "outputs/development/s27_d1_pilot_20_hist56d_v1/input_rep.jsonl (19 representative samples)",
+  "recipe": "v5/v6 prompt + thinking-disabled + no json_object + max_tokens=4096 + temp=0 + top_p=1",
+  "semantics": "empty-not-error (user decision 2026-08-05): empty elements legal; bad spans/clauses/edges dropped with audit; record-level structural violations only fail closed",
+  "arms": {
+    "july_v5_2026_07_29": {
+      "source": "outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_attempts.json",
+      "prompt_sha256": "79f6f76fc9779abb87fc919e4384386ac812d40fcedaf73df0ea8ea1377af62e",
+      "n_in_pilot": 18,
+      "overall": {"precision": 0.87, "recall": 0.6949, "f1": 0.7727, "missed": 36},
+      "constraint": {"recall": 0.25, "f1": 0.3571},
+      "note": "historical July run (pre empty-not-error semantics)"
+    },
+    "arm_a_v5_20260805c": {
+      "source": "outputs/development/s27_d1_pilot_20_hist56d_v1/arm_a_v5_20260805c/output.jsonl",
+      "prompt_sha256": "79f6f76fc9779abb87fc919e4384386ac812d40fcedaf73df0ea8ea1377af62e",
+      "n_valid": 19,
+      "validation_failures": [],
+      "llm_errors": 0,
+      "span_audit": {"dropped_spans": 0, "dropped_clauses": 0},
+      "overall": {"precision": 0.8922, "recall": 0.7295, "f1": 0.8027, "missed": 33},
+      "constraint": {"recall": 0.35, "f1": 0.485}
+    },
+    "arm_b_v6_20260805c": {
+      "source": "outputs/development/s27_d1_pilot_20_hist56d_v1/arm_b_v6_20260805c/output.jsonl",
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "n_valid": 19,
+      "validation_failures": [],
+      "llm_errors": 0,
+      "span_audit": {"dropped_spans": 0, "dropped_clauses": 0},
+      "overall": {"precision": 0.8942, "recall": 0.7541, "f1": 0.8182, "missed": 30},
+      "constraint": {"recall": 0.425, "f1": 0.5397}
+    }
+  },
+  "paired_19_common_samples": {
+    "arm_a_v5": {"precision": 0.8922, "recall": 0.7295, "f1": 0.8027, "constraint_recall": 0.35, "constraint_f1": 0.485},
+    "arm_b_v6": {"precision": 0.8942, "recall": 0.7541, "f1": 0.8182, "constraint_recall": 0.425, "constraint_f1": 0.5397},
+    "delta_v6_minus_v5": {"precision": 0.0021, "recall": 0.0246, "f1": 0.0155, "constraint_recall": 0.075, "constraint_f1": 0.0547},
+    "verdict": "v6 positive on all paired metrics (F1 +0.0155, constraint F1 +0.0547); 19/19 valid both arms under empty-not-error semantics; KEEP candidate"
+  },
+  "llm_call_budget_used": {"arm_a": 19, "arm_b": 19, "total": 38, "authorization": "user-authorized 2026-08-05 (per-batch pilot)"}
+}
