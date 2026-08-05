@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-06
-**收录文件**：698 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：699 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -575,6 +575,7 @@
 | `scripts/compute_estg_membership_hashes.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/dry_run_llm_estimate.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/estg150_review_tool.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/evaluate_d1_r3_clean_rerun.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/generate_file_catalog.py` | 活动 | 重建本逐文件目录 |
 | `scripts/ingest_sun_modality.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/promote_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |

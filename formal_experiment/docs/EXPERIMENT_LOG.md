@@ -2672,3 +2672,20 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Correction/补充记录（append-only，不改 2026-08-06 D1-R2 主事件）：D1-R2 开发过程中（commit 51b57c4 之前）发现并修正两处过程性问题，均为最终提交前即已修正、无遗留影响。(1) evaluator config hash 抄写笔误：configs/models/estg150_d1_active_registry_v1.json 中 sun_table8_literal_overlap_v2.json 的 sha256 被抄为 352113b568c6075c8b01dafaf5fdf2e5a...（多一个 f），与磁盘实际 352113b568c6075c8b01dafa5fdf2e5a... 不一致；被新增测试 test_d1_r2_lock_config.py::test_lock_evaluator_hash_matches_disk 当场抓住，config 与测试常量两处同时修正，修正后 12 项 lock-config 测试全绿。(2) MASTER_PIPELINE.md changelog 编辑事故：3.4.31 行编辑时曾误替换 3.4.30 行，已立即恢复，最终文件 3.4.30/3.4.31 两行内容完整，git diff 可查。最终提交状态已由 audit --with-tests（1483 passed / 24 skipped，integrity_pass=True）背书。无 LLM 调用，未读 .env，Gold audit_read_only。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T17:52:33.699052+00:00 - D1-R3: fixed-snapshot clean rerun (150 calls, locked recipe) + same-process double evaluation vs D1-R1
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_d1_v6_r3_clean_rerun_150_hist56d_v1；阶段=D1-R3；方法=direct_llm；状态=成功（`succeeded`）
+- 实际运行命令：`run_direct_llm.py --prompt-name direct_llm_sun_record_prompt_v6_d1r1_2026_08_05 --model deepseek-v4-pro --allow-llm --development --max-calls 150`
+- manifest：outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/manifest.json
+- 结果摘要：150/150 valid, 0 validation failures, 0 LLM errors, 0 incidents; F1 0.7756 vs R1 0.7735 (+0.0021), R 0.6938 (+0.0038), P 0.8793 (-0.0006); constraint F1 +0.0209, exception F1 +0.0593; modality/actor -0.011/-0.028
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：1 failed, 1482 passed, 24 skipped in 205.83s (0:03:25)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`4f156e1327a695b1be5ad0424040f55ff8c80491`；相关未提交路径：1 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：预算：150 calls v4pro 官方API thinking-disabled 无json_object 4096/temp0/top_p1（锁定配方 estg150_d1_active_registry_v1.json 逐项一致：prompt sha 3aa64877、model 三态 deepseek-v4-pro、sampling/transport 匹配）。输入=56d2b03 Gold 源文本 150 行（共享输入 input_150_hist56d_v1.jsonl，sha c7dffcc4）。评估=scripts/evaluate_d1_r3_clean_rerun.py：git show 56d2b03 提取 Layer E/membership（只读临时目录）→ build_canonical_gold_records（membership sha e8e62686 与注册绑定一致，gold semantic sha 5d7ec7f6 与 B0-R1-E2 记录一致）→ 同一进程双评 R1/R3（sun_literal_overlap@2.0.0，config sha 352113b5）。结果：R1 重评 F1 0.7735 与已登记数字逐位一致（评估路径交叉验证通过）；R3 F1 0.775625（P 0.879268/R 0.693839，missed 323 vs R1 327）；逐字段 F1 delta：modality -0.01123/actor -0.02778/action +0.00051/condition +0.00660/constraint +0.02094/exception +0.05929。失败类型分析（R3，1055 gold spans）：matched 732、wrong_field 169（constraint 100 最大头）、not_extracted 154（constraint 69）；R1 为 matched 728/wrong_field 185/not_extracted 142。结论：固定快照干净重跑复现 R1 结果并微优（F1 +0.002，噪声范围），可重放性验证成功；两次运行均满足 0 事故（无 lost/recovery/retry）。产物：output.jsonl/d1_responses.jsonl/manifest.json/evaluation_d1_r3_20260806.json + 新评估脚本 scripts/evaluate_d1_r3_clean_rerun.py。下一步：D1-R4（三方法正式比较，blocked on formal Gold）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

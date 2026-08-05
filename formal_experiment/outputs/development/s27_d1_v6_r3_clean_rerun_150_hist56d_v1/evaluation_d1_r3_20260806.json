@@ -1,0 +1,449 @@
+{
+  "schema_version": "d1_r3_clean_rerun_evaluation@1.0.0",
+  "run_date_utc": "2026-08-06",
+  "pipeline_task": "D1-R3 (fixed-snapshot clean rerun, 150 calls, locked recipe)",
+  "gold": {
+    "source_commit": "56d2b03",
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "records": 150,
+    "build": "build_canonical_gold_records(layer_e@56d2b03, membership@56d2b03)",
+    "canonical_gold_semantic_sha256": "5d7ec7f6d6611d9029840cbd92254f0b342c5b8ef8f5cd7f1d93493995d315a4",
+    "canonical_membership_sha256": "e8e6268644cbc9b7ed42bef19f2e2e2432633a306eab9bf009725ef9571785d7"
+  },
+  "evaluator": {
+    "id": "sun_literal_overlap_evaluation@2.0.0",
+    "config_sha256": "352113b568c6075c8b01dafa5fdf2e5ab4a1454bb10933cd2f9c27f5c008cc3f",
+    "source_sha256": "a6df234611ef63ab9d47a3d5e886c3a711ccce8c6e5d8e164e42826bef978de7",
+    "gold_builder_source_sha256": "2199d8cca4da25d05cf2e9635d571ca035683bc9217f692809878db3c116a580",
+    "match_rule": "independent_same_field_any_nonempty_character_span_intersection"
+  },
+  "runs": {
+    "r1_verify_pass": {
+      "run_id": "s27_d1_v6_verify_pass_150_hist56d_v1",
+      "output_sha256": "8b6398b35c080e9b06fc7ff8f760464b9150ccf4eb8873dedf701f79246620c8",
+      "responses_sha256": "f5c90f71facd3e6221f6b2957f449e67d1713d49e949fe5abe8c6c08b1ddd7a2",
+      "manifest_sha256": "87cb1bea0086edded9b1e054ce35815a72b0d0c7a61aed5138ca49734561a615",
+      "metrics": {
+        "ground_truth": 1055,
+        "extracted": 816,
+        "matched_predictions": 718,
+        "matched_ground_truth": 728,
+        "misclassified": 98,
+        "missed": 327,
+        "precision": 0.8799019607843137,
+        "recall": 0.6900473933649289,
+        "f1": 0.7734950848588793
+      },
+      "per_field": {
+        "modality": {
+          "precision": 0.9829059829059829,
+          "recall": 0.8874458874458875,
+          "f1": 0.9327398615232442
+        },
+        "actor": {
+          "precision": 0.65625,
+          "recall": 0.875,
+          "f1": 0.75
+        },
+        "action": {
+          "precision": 0.9567307692307693,
+          "recall": 0.8137651821862348,
+          "f1": 0.8794758193071757
+        },
+        "condition": {
+          "precision": 0.9015151515151515,
+          "recall": 0.6869158878504673,
+          "f1": 0.7797191887675508
+        },
+        "constraint": {
+          "precision": 0.7159763313609467,
+          "recall": 0.41721854304635764,
+          "f1": 0.5272148834635867
+        },
+        "exception": {
+          "precision": 0.7777777777777778,
+          "recall": 0.5384615384615384,
+          "f1": 0.6363636363636364
+        }
+      }
+    },
+    "r3_clean_rerun": {
+      "run_id": "s27_d1_v6_r3_clean_rerun_150_hist56d_v1",
+      "output_sha256": "e7ed4d60a134451378236e16ed91de04f4dc2589ab4e7786cabd47f9e2b1b548",
+      "responses_sha256": "9188093c5b30d288c749e1dc6da9d88eb5df4fd4c08a73518f6b4ff243dca36e",
+      "manifest_sha256": "0189ff8a213dd104f38980788246bff11c529d7a5aa7eb90887a94642e04da5c",
+      "metrics": {
+        "ground_truth": 1055,
+        "extracted": 820,
+        "matched_predictions": 721,
+        "matched_ground_truth": 732,
+        "misclassified": 99,
+        "missed": 323,
+        "precision": 0.8792682926829268,
+        "recall": 0.6938388625592417,
+        "f1": 0.7756248645193052
+      },
+      "per_field": {
+        "modality": {
+          "precision": 0.9739130434782609,
+          "recall": 0.8744588744588745,
+          "f1": 0.9215103254449921
+        },
+        "actor": {
+          "precision": 0.65,
+          "recall": 0.8125,
+          "f1": 0.7222222222222223
+        },
+        "action": {
+          "precision": 0.9523809523809523,
+          "recall": 0.8178137651821862,
+          "f1": 0.8799825746024831
+        },
+        "condition": {
+          "precision": 0.9111111111111111,
+          "recall": 0.6915887850467289,
+          "f1": 0.7863159258779318
+        },
+        "constraint": {
+          "precision": 0.7257142857142858,
+          "recall": 0.44039735099337746,
+          "f1": 0.5481510327930033
+        },
+        "exception": {
+          "precision": 0.8,
+          "recall": 0.6153846153846154,
+          "f1": 0.6956521739130435
+        }
+      }
+    }
+  },
+  "delta_r3_minus_r1": {
+    "overall": {
+      "ground_truth": 0,
+      "extracted": 4,
+      "matched_predictions": 3,
+      "matched_ground_truth": 4,
+      "misclassified": 1,
+      "missed": -4,
+      "precision": -0.000634,
+      "recall": 0.003791,
+      "f1": 0.00213
+    },
+    "per_field_f1": {
+      "modality": -0.01123,
+      "actor": -0.027778,
+      "action": 0.000507,
+      "condition": 0.006597,
+      "constraint": 0.020936,
+      "exception": 0.059289
+    },
+    "basis": "r3_minus_r1"
+  },
+  "failure_analysis": {
+    "r1": {
+      "total_gold_spans": 1055,
+      "matched": 728,
+      "unmatched": 327,
+      "wrong_field": 185,
+      "not_extracted": 142,
+      "by_field": {
+        "modality": {
+          "gold_spans": 231,
+          "matched": 205,
+          "wrong_field": 11,
+          "not_extracted": 15
+        },
+        "actor": {
+          "gold_spans": 48,
+          "matched": 42,
+          "wrong_field": 5,
+          "not_extracted": 1
+        },
+        "action": {
+          "gold_spans": 247,
+          "matched": 201,
+          "wrong_field": 24,
+          "not_extracted": 22
+        },
+        "condition": {
+          "gold_spans": 214,
+          "matched": 147,
+          "wrong_field": 32,
+          "not_extracted": 35
+        },
+        "constraint": {
+          "gold_spans": 302,
+          "matched": 126,
+          "wrong_field": 111,
+          "not_extracted": 65
+        },
+        "exception": {
+          "gold_spans": 13,
+          "matched": 7,
+          "wrong_field": 2,
+          "not_extracted": 4
+        }
+      },
+      "sample_examples": [
+        {
+          "sample_id": "estg_000002",
+          "field": "condition",
+          "start": 83,
+          "end": 136,
+          "landed_in": [
+            "action"
+          ]
+        },
+        {
+          "sample_id": "estg_000003",
+          "field": "constraint",
+          "start": 13,
+          "end": 29,
+          "landed_in": [
+            "action"
+          ]
+        },
+        {
+          "sample_id": "estg_000020",
+          "field": "modality",
+          "start": 0,
+          "end": 36,
+          "landed_in": null
+        },
+        {
+          "sample_id": "estg_000020",
+          "field": "modality",
+          "start": 114,
+          "end": 129,
+          "landed_in": [
+            "action",
+            "constraint"
+          ]
+        },
+        {
+          "sample_id": "estg_000020",
+          "field": "condition",
+          "start": 45,
+          "end": 101,
+          "landed_in": [
+            "modality",
+            "actor",
+            "action"
+          ]
+        },
+        {
+          "sample_id": "estg_000020",
+          "field": "condition",
+          "start": 111,
+          "end": 177,
+          "landed_in": [
+            "action",
+            "constraint"
+          ]
+        },
+        {
+          "sample_id": "estg_000021",
+          "field": "modality",
+          "start": 141,
+          "end": 157,
+          "landed_in": [
+            "condition",
+            "constraint"
+          ]
+        },
+        {
+          "sample_id": "estg_000021",
+          "field": "action",
+          "start": 141,
+          "end": 157,
+          "landed_in": [
+            "condition",
+            "constraint"
+          ]
+        },
+        {
+          "sample_id": "estg_000027",
+          "field": "constraint",
+          "start": 102,
+          "end": 197,
+          "landed_in": null
+        },
+        {
+          "sample_id": "estg_000027",
+          "field": "constraint",
+          "start": 202,
+          "end": 260,
+          "landed_in": null
+        }
+      ]
+    },
+    "r3": {
+      "total_gold_spans": 1055,
+      "matched": 732,
+      "unmatched": 323,
+      "wrong_field": 169,
+      "not_extracted": 154,
+      "by_field": {
+        "modality": {
+          "gold_spans": 231,
+          "matched": 202,
+          "wrong_field": 10,
+          "not_extracted": 19
+        },
+        "actor": {
+          "gold_spans": 48,
+          "matched": 39,
+          "wrong_field": 5,
+          "not_extracted": 4
+        },
+        "action": {
+          "gold_spans": 247,
+          "matched": 202,
+          "wrong_field": 23,
+          "not_extracted": 22
+        },
+        "condition": {
+          "gold_spans": 214,
+          "matched": 148,
+          "wrong_field": 30,
+          "not_extracted": 36
+        },
+        "constraint": {
+          "gold_spans": 302,
+          "matched": 133,
+          "wrong_field": 100,
+          "not_extracted": 69
+        },
+        "exception": {
+          "gold_spans": 13,
+          "matched": 8,
+          "wrong_field": 1,
+          "not_extracted": 4
+        }
+      },
+      "sample_examples": [
+        {
+          "sample_id": "estg_000002",
+          "field": "condition",
+          "start": 83,
+          "end": 136,
+          "landed_in": [
+            "action"
+          ]
+        },
+        {
+          "sample_id": "estg_000003",
+          "field": "constraint",
+          "start": 13,
+          "end": 29,
+          "landed_in": [
+            "action"
+          ]
+        },
+        {
+          "sample_id": "estg_000020",
+          "field": "modality",
+          "start": 0,
+          "end": 36,
+          "landed_in": null
+        },
+        {
+          "sample_id": "estg_000020",
+          "field": "modality",
+          "start": 114,
+          "end": 129,
+          "landed_in": [
+            "action",
+            "constraint"
+          ]
+        },
+        {
+          "sample_id": "estg_000020",
+          "field": "condition",
+          "start": 45,
+          "end": 101,
+          "landed_in": [
+            "modality",
+            "actor",
+            "action"
+          ]
+        },
+        {
+          "sample_id": "estg_000020",
+          "field": "condition",
+          "start": 111,
+          "end": 177,
+          "landed_in": [
+            "action",
+            "constraint"
+          ]
+        },
+        {
+          "sample_id": "estg_000021",
+          "field": "modality",
+          "start": 121,
+          "end": 128,
+          "landed_in": [
+            "condition"
+          ]
+        },
+        {
+          "sample_id": "estg_000021",
+          "field": "modality",
+          "start": 141,
+          "end": 157,
+          "landed_in": [
+            "condition",
+            "constraint"
+          ]
+        },
+        {
+          "sample_id": "estg_000021",
+          "field": "action",
+          "start": 129,
+          "end": 136,
+          "landed_in": [
+            "condition"
+          ]
+        },
+        {
+          "sample_id": "estg_000021",
+          "field": "action",
+          "start": 141,
+          "end": 157,
+          "landed_in": [
+            "condition",
+            "constraint"
+          ]
+        }
+      ]
+    },
+    "note": "wrong_field = Gold span unmatched in its own field but overlapped by a prediction span in another field; not_extracted = no overlapping prediction anywhere in the sample"
+  },
+  "provenance": {
+    "source_commit": "56d2b03a1fb4e206db5bb92a8eb5ed51b942b650",
+    "source_commit_ref": "56d2b03",
+    "git_blobs": {
+      "layer_e": {
+        "path": "formal_experiment/data/development/human_review/estg_150_human_correction_v1.json",
+        "blob_oid": "f7c3952a02d74c3673a8d9518d9166a79b1e41fb",
+        "raw_sha256": "0984ac9f60a8d2923292bae1a7434c4b1db1b1393fc0fcdeb9c278c3713b7266",
+        "size_bytes": 1272289
+      },
+      "membership": {
+        "path": "formal_experiment/data/development/estg/estg_150_membership_hashes.json",
+        "blob_oid": "f380f04c8d52b3080b1ff9abc558577ed8ec348d",
+        "raw_sha256": "8bd0516350b170b88ee12c772dde2adef5eda99cda47fc3cf03c88b19feb8238",
+        "size_bytes": 29210
+      }
+    }
+  },
+  "safety": {
+    "gold": "audit_read_only",
+    "llm_api": "not_called",
+    "network": "not_called",
+    "artifacts": "created_no_overwrite",
+    "gold_bytes_in_outputs": false
+  },
+  "claim_scope": "development_only_not_formal"
+}
