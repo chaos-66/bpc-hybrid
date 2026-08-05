@@ -146,3 +146,46 @@ def test_record_level_violations_still_fail_closed() -> None:
     assert audit["status"] == STATUS_FAILED
     assert audit["failed_reasons"] == ["clauses_not_list"]
     assert out == r
+
+
+def test_dangling_actor_action_edge_is_dropped_not_fatal() -> None:
+    r = record(
+        {"text": SRC, "start": 0, "end": len(SRC)},
+        actors=[{"id": "a01", "text": "The taxpayer", "start": 0, "end": 12, "normalized": "taxpayer"}],
+    )
+    r["clauses"][0]["actions"] = [
+        {"id": "p01", "text": "depreciate the acquisition costs", "start": 19, "end": 51, "normalized": "depreciate acquisition costs"}
+    ]
+    r["clauses"][0]["actor_action_map"] = [
+        {"actor_id": "a01", "action_id": "p01"},
+        {"actor_id": "a01", "action_id": "p99"},
+    ]
+    out, audit = canonicalize_record_coordinates(r, SRC)
+    assert audit["status"] == STATUS_DEGRADED
+    assert audit["dropped_edges"] == ["clauses[0].actor_action_map[1]"]
+    assert out["clauses"][0]["actor_action_map"] == [{"actor_id": "a01", "action_id": "p01"}]
+
+
+def test_dangling_order_relation_is_dropped_not_fatal() -> None:
+    r = record({"text": SRC, "start": 0, "end": len(SRC)})
+    r["clauses"][0]["actions"] = [
+        {"id": "p01", "text": "depreciate the acquisition costs", "start": 19, "end": 51, "normalized": "depreciate acquisition costs"}
+    ]
+    r["clauses"][0]["order_relations"] = [
+        {"before_action_id": "p01", "after_action_id": "p02", "evidence": [{"text": "then", "start": 0, "end": 4}]}
+    ]
+    out, audit = canonicalize_record_coordinates(r, SRC)
+    assert audit["status"] == STATUS_DEGRADED
+    assert audit["dropped_edges"] == ["clauses[0].order_relations[0]"]
+    assert out["clauses"][0]["order_relations"] == []
+
+
+def test_dangling_edge_with_null_actor_id_is_kept() -> None:
+    r = record({"text": SRC, "start": 0, "end": len(SRC)})
+    r["clauses"][0]["actions"] = [
+        {"id": "p01", "text": "depreciate the acquisition costs", "start": 19, "end": 51, "normalized": "depreciate acquisition costs"}
+    ]
+    r["clauses"][0]["actor_action_map"] = [{"actor_id": None, "action_id": "p01"}]
+    out, audit = canonicalize_record_coordinates(r, SRC)
+    assert audit["status"] == STATUS_UNCHANGED
+    assert out["clauses"][0]["actor_action_map"] == [{"actor_id": None, "action_id": "p01"}]

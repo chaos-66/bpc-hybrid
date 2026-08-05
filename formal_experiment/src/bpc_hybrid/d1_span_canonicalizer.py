@@ -101,6 +101,7 @@ def canonicalize_record_coordinates(
         "reanchored_count": 0,
         "dropped_spans": [],
         "dropped_clauses": [],
+        "dropped_edges": [],
         "failed_reasons": [],
     }
     if not isinstance(record, Mapping):
@@ -124,7 +125,7 @@ def canonicalize_record_coordinates(
 
     def degraded() -> None:
         if audit["status"] != STATUS_FAILED and (
-            audit["dropped_spans"] or audit["dropped_clauses"]
+            audit["dropped_spans"] or audit["dropped_clauses"] or audit["dropped_edges"]
         ):
             audit["status"] = STATUS_DEGRADED
 
@@ -205,6 +206,29 @@ def canonicalize_record_coordinates(
                     audit["dropped_spans"].append(f"clauses[{ci}].{field}[{si}]")
                     degraded()
             clause[field] = kept_spans
+
+        # Drop edges that reference ids removed by degradation (empty-vs-error
+        # policy: a dangling reference must not kill the whole record).
+        actor_ids = {s.get("id") for s in (clause.get("actors") or [])}
+        action_ids = {s.get("id") for s in (clause.get("actions") or [])}
+        kept_edges: list[Any] = []
+        for ei, edge in enumerate(clause.get("actor_action_map") or []):
+            if isinstance(edge, Mapping) and (
+                edge.get("actor_id") is None or edge.get("actor_id") in actor_ids
+            ) and edge.get("action_id") in action_ids:
+                kept_edges.append(edge)
+            else:
+                audit["dropped_edges"].append(f"clauses[{ci}].actor_action_map[{ei}]")
+                degraded()
+        clause["actor_action_map"] = kept_edges
+        kept_relations: list[Any] = []
+        for oi, rel in enumerate(clause.get("order_relations") or []):
+            if isinstance(rel, Mapping) and rel.get("before_action_id") in action_ids and rel.get("after_action_id") in action_ids:
+                kept_relations.append(rel)
+            else:
+                audit["dropped_edges"].append(f"clauses[{ci}].order_relations[{oi}]")
+                degraded()
+        clause["order_relations"] = kept_relations
         kept.append(clause)
 
     out["clauses"] = kept

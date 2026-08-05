@@ -1,8 +1,10 @@
-"""D1 relay-schema adapter tests (D1-R1, option A).
+"""D1 relay-schema adapter tests (D1-R1).
 
-The relay's deepseek-v4-flash returns nested per-field span containers; the
-adapter maps them deterministically to canonical spans and fails closed on
-anything non-deterministic.
+The model occasionally returns nested per-field span containers; the adapter
+maps them deterministically to canonical spans. Per user decision 2026-08-05
+(empty is legal; bad elements must not kill a record), unmappable spans are
+dropped with an audit trail and the record survives; only record-level
+structural violations fail closed.
 """
 
 from __future__ import annotations
@@ -20,6 +22,7 @@ if str(ROOT / "src") not in sys.path:
 
 from bpc_hybrid.d1_schema_adapter import (  # noqa: E402
     STATUS_ADAPTED,
+    STATUS_DEGRADED,
     STATUS_FAILED,
     STATUS_UNCHANGED,
     adapt_relay_record,
@@ -92,29 +95,42 @@ def test_missing_id_gets_deterministic_id() -> None:
     assert out["clauses"][0]["actors"][0]["id"] == "estg_demo_c01.actor.1"
 
 
-def test_missing_span_fails_closed() -> None:
+def test_missing_span_drops_and_degrades() -> None:
     r = relay_record(actors=[{"actor_id": "a1", "name": "The controller"}])
     out, audit = adapt_relay_record(r, SRC)
-    assert audit["status"] == STATUS_FAILED
-    assert any("no_flat_or_nested_span" in reason for reason in audit["failed_reasons"])
-    assert out == r
+    assert audit["status"] == STATUS_DEGRADED
+    assert any("no_flat_or_nested_span" in reason for reason in audit["dropped_spans"])
+    assert out["clauses"][0]["actors"] == []
 
 
-def test_text_not_in_source_fails_closed() -> None:
+def test_text_not_in_source_drops_and_degrades() -> None:
     r = relay_record(actors=[
         {"actor_id": "a1", "span": {"start": 0, "end": 14, "text": "The nonexistent party"}}
     ])
     out, audit = adapt_relay_record(r, SRC)
-    assert audit["status"] == STATUS_FAILED
-    assert any("text_not_in_source" in reason for reason in audit["failed_reasons"])
+    assert audit["status"] == STATUS_DEGRADED
+    assert any("text_not_in_source" in reason for reason in audit["dropped_spans"])
+    assert out["clauses"][0]["actors"] == []
 
 
-def test_non_integer_offsets_fail_closed() -> None:
+def test_non_integer_offsets_drop_and_degrades() -> None:
     r = relay_record(actors=[
         {"actor_id": "a1", "span": {"start": "abc", "end": 14, "text": "The controller"}}
     ])
     out, audit = adapt_relay_record(r, SRC)
-    assert audit["status"] == STATUS_FAILED
+    assert audit["status"] == STATUS_DEGRADED
+    assert out["clauses"][0]["actors"] == []
+
+
+def test_one_bad_span_drops_only_that_span() -> None:
+    r = relay_record(actors=[
+        {"actor_id": "a1", "span": {"start": 0, "end": 14, "text": "The controller"}},
+        {"actor_id": "a2", "span": {"start": 0, "end": 14, "text": "Nonexistent party"}},
+    ])
+    out, audit = adapt_relay_record(r, SRC)
+    assert audit["status"] == STATUS_DEGRADED
+    assert [a["id"] for a in out["clauses"][0]["actors"]] == ["a1"]
+    assert len(audit["dropped_spans"]) == 1
 
 
 def test_numeric_string_offsets_coerce_deterministically() -> None:

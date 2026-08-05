@@ -1,26 +1,22 @@
-"""D1 relay-schema adapter (D1-R1, 2026-08-04, user decision A).
+"""D1 relay-schema adapter (D1-R1, 2026-08-05).
 
-The opencode.ai/zen relay's ``deepseek-v4-flash`` ignores the canonical
-schema and returns spans in a nested per-field convention
-(``actors=[{actor_id, name, span:{start,end,text}}]``,
-``actions=[{action_id, verb, span, object}]``,
-``conditions=[{condition_id, type, text, span}]``).  Following the
-S2.8D-R3 H1 canonicalizer precedent, this module maps that format back to
-the canonical ``{id, text, start, end, normalized}`` spans DETERMINISTICALLY:
+The deepseek-v4-pro model occasionally returns spans in nested per-field
+containers (``actors=[{actor_id, name, span:{start,end,text}}]``,
+``actions=[{action_id, verb, span, object}]``).  This module maps that
+format back to the canonical ``{id, text, start, end, normalized}`` spans
+DETERMINISTICALLY:
 
 * a span container with flat ``text``/``start``/``end`` passes through;
 * a span container with a nested ``span`` mapping is unfolded;
-* anything else (missing span, non-object containers, non-integer offsets)
-  fails closed for the whole record with a stable reason;
-* ``normalized`` is the project convention ``" ".join(text.casefold().split())``;
+* empty ``normalized`` is filled with ``" ".join(text.casefold().split())``;
 * a missing deterministic ``id`` is assigned ``<clause_id>.<field>.<rank>``;
-* modality ``label``/``evidence`` and clause ``clause_span`` pass through
-  (they are already canonical in the relay output);
-* only structural mapping happens -- text, offsets, labels and content are
-  never invented or modified.
-
-The mapped record is then passed to the unique-exact-text span canonicalizer
-and the strict canonical validator.
+* per user decision 2026-08-05 (empty is legal; bad elements must not kill a
+  record), a span that cannot be mapped (missing/non-object container,
+  non-integer offsets, text not in source) is DROPPED from its array and the
+  record survives; every drop is recorded in the audit;
+* only record-level structural violations (record not an object, empty
+  source text, ``clauses`` not a list, non-object clause or modality) still
+  fail closed.
 """
 
 from __future__ import annotations
@@ -30,6 +26,7 @@ from typing import Any, Mapping
 
 STATUS_UNCHANGED = "unchanged"
 STATUS_ADAPTED = "adapted"
+STATUS_DEGRADED = "degraded"
 STATUS_FAILED = "failed"
 
 FIELD_TO_PLURAL = {
@@ -91,24 +88,24 @@ def _adapt_field_spans(
     clause: Mapping[str, Any],
     field: str,
     source_text: str,
-    failures: list[str],
+    dropped: list[str],
 ) -> list[dict[str, Any]]:
     plural = FIELD_TO_PLURAL[field]
     spans = clause.get(plural)
     if spans is None:
         return []
     if not isinstance(spans, list):
-        failures.append(f"clauses[].{plural}_not_list")
+        dropped.append(f"clauses[].{plural}_not_list")
         return []
     out: list[dict[str, Any]] = []
     for index, item in enumerate(spans):
         span, reason = _unfold_span(item, f"{plural}[{index}]")
         if reason is not None:
-            failures.append(reason)
-            return []
+            dropped.append(reason)
+            continue
         if span["text"] not in source_text:
-            failures.append(f"{plural}[{index}]_text_not_in_source")
-            return []
+            dropped.append(f"{plural}[{index}]_text_not_in_source")
+            continue
         span = dict(span)
         id_keys = MODEL_ID_KEYS[plural]
         span_id = next((item[k] for k in id_keys if isinstance(item.get(k), str) and item[k]), None)
@@ -131,6 +128,7 @@ def adapt_relay_record(record: Any, source_text: Any) -> tuple[Any, dict[str, An
         "attempted": True,
         "status": STATUS_UNCHANGED,
         "spans_adapted": 0,
+        "dropped_spans": [],
         "failed_reasons": [],
     }
     if not isinstance(record, Mapping):
@@ -155,18 +153,17 @@ def adapt_relay_record(record: Any, source_text: Any) -> tuple[Any, dict[str, An
             audit["failed_reasons"].append(f"clauses[{ci}]_not_object")
             return record, audit
         for field in FIELD_TO_PLURAL:
-            adapted = _adapt_field_spans(clause, field, source_text, audit["failed_reasons"])
-            if audit["failed_reasons"]:
-                audit["status"] = STATUS_FAILED
-                return record, audit
-            if adapted:
-                audit["spans_adapted"] += len(adapted)
-                clause[FIELD_TO_PLURAL[field]] = adapted
+            adapted = _adapt_field_spans(clause, field, source_text, audit["dropped_spans"])
+            clause[FIELD_TO_PLURAL[field]] = adapted
+            audit["spans_adapted"] += len(adapted)
         modality = clause.get("modality")
         if modality is not None and not isinstance(modality, Mapping):
             audit["status"] = STATUS_FAILED
             audit["failed_reasons"].append(f"clauses[{ci}]_modality_not_object")
             return record, audit
 
-    audit["status"] = STATUS_ADAPTED if audit["spans_adapted"] else STATUS_UNCHANGED
+    if audit["dropped_spans"]:
+        audit["status"] = STATUS_DEGRADED
+    else:
+        audit["status"] = STATUS_ADAPTED if audit["spans_adapted"] else STATUS_UNCHANGED
     return out, audit

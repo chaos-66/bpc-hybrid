@@ -2547,3 +2547,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：test_stage2_prediction_schema.py::test_modality_evidence_empty 此前断言旧语义（空 evidence 无效），按 2026-08-05 用户决定改为断言空 evidence 有效（cross_field_valid True, errors 空）。全量 1466 passed。audit integrity pass。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T13:50:02.669641+00:00 - D1-R1 empty-not-error (cont.): adapter degrades instead of fail-closed; canonicalizer drops dangling edges
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1471 passed, 24 skipped in 138.86s (0:02:18)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3d915288539ea30205f5daa9f006309a26b35152`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：①d1_schema_adapter：span 级失败（no_flat_or_nested_span/text_not_in_source/非整数偏移）改为丢弃该 span（dropped_spans 审计）记录存活，新增 STATUS_DEGRADED；适配结果始终回写（修复全丢弃时空列表不回写 bug）；记录级违规保持 fail-closed。②d1_span_canonicalizer：新增 dropped_edges——actor_action_map/order_relations 引用已不存在 id（因降级丢弃或模型空数组+悬空边）时清边不杀记录（estg_000207/000277 两臂的失败根因）。③测试：adapter 3 个 fail-closed 测试改降级断言+1 新用例；canonicalizer 3 新用例（悬空 actor_action_map/order_relations/null actor_id 保留）。25 用例通过，audit integrity pass。下一步：重跑两臂（38 calls）做最终测量。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
