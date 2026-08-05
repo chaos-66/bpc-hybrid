@@ -2491,3 +2491,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：根因链（全部实证）：①s28_s29 manifest.prompt_bindings 记录运行时刻 prompt sha=79f6f76f（56d2b03，即 formal Gold 提交）；此前假设的 4afa5d1 prompt（7bc64c99=v3）并非七月运行时 prompt——v3 快照基线建错，全部'漂移'测试均用错 prompt；②transport_variance：preflight(estg_000002)=provider_default_enabled 思考模式（12000 tokens 非 JSON 失败，保留在分母），其余 149 请求 thinking=disabled；③正确配方=v5 prompt+thinking-disabled+裸请求(无 json_object)+max_tokens4096/temp0/top_p1，4/4 样本 canonical 有效（estg_000002/31/43/59，顶层键全合约、actors id/text/start/end/normalized、1-3 clauses）。④请求体构造（build_body）与七月逐字节一致（唯一差异=UA 头）。新增 frozen 基线 prompts/sun_compat/direct_llm_sun_record_prompt_v5_2026_07_29_frozen.md（sha 校验=79f6f76f），runner allowlist+测试更新，文件目录清单重建。v5 含 v3 没有的关键规则：contract 绑定、输入边界、代词即 actor（对应 D1 漏抽 99 条根因）。下一步：D1-R1 候选需以 v5 为基底重建（现有 v4 是 v3 系，不可直接比较），然后两臂 pilot（A=v5 冻结基线 vs B=v5+FIELDTYPING）。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T12:38:04.881158+00:00 - D1-R1: v6 candidate prompt built on true July v5 baseline + runner July-recipe fixes (no json_object, real few-shot block)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1460 passed, 24 skipped in 156.23s (0:02:36)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3b6f719622e59d03512daae264b077c824eaa9c5`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：①v6=direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md：v5(79f6f76f)+规则25-27(FIELD-TYPING：constraint 类别全覆盖、action 不折叠约束/条件/例外、condition 内嵌 constraint 双报)+示例5-6(法律引用约束 52-84、条件内嵌约束 67-83，偏移程序化验证全部 OK)；6/6 fixture 通过 canonical 校验，sha=3aa64877。②runner 修正为七月配方：response_format 默认 None（json_object 仅 --json-object-response 显式开启）、few_shot_block 从 prompt 文件 ## Examples 段真实渲染（此前是占位字符串——v5 模板必须有真实示例）、--transport-timeout 默认 180s（七月最长调用 162s）。③测试：allowlist 4 项、v6 规则与 fixture 校验、catalog 重建。audit integrity pass。下一步=两臂 pilot（A=v5 冻结 vs B=v6，19 样本/臂）+ 与七月 s28_s29 同 19 样本三方对比。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

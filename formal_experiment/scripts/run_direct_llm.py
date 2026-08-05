@@ -43,7 +43,8 @@ from formal_experiment.paths import (
 PROMPTName = "direct_llm_sun_record_prompt"
 PROMPT_V3_SNAPSHOT = "direct_llm_sun_record_prompt_v3_2026_07_12"
 PROMPT_V5_FROZEN = "direct_llm_sun_record_prompt_v5_2026_07_29_frozen"
-ALLOWED_PROMPT_NAMES = (PROMPTName, PROMPT_V3_SNAPSHOT, PROMPT_V5_FROZEN)
+PROMPT_V6_D1R1 = "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05"
+ALLOWED_PROMPT_NAMES = (PROMPTName, PROMPT_V3_SNAPSHOT, PROMPT_V5_FROZEN, PROMPT_V6_D1R1)
 
 DEFAULT_INPUT = ROOT / "data/input/estg150_input_v1.jsonl"
 DEFAULT_OUTPUT = ROOT / "data/predictions/direct_llm_predictions.jsonl"
@@ -105,6 +106,21 @@ def _load_input(path: Path) -> list[dict]:
     return rows
 
 
+def _few_shot_block(prompt: object) -> str:
+    """Render the few-shot block sent to the LLM.
+
+    Uses the raw ``## Examples`` section of the prompt file (the exact
+    rendering that reproduced the July s28_s29 canonical output), so the
+    examples reach the model verbatim with their verified offsets.
+    """
+    raw = getattr(prompt, "raw_text", "")
+    start = raw.find("## Examples")
+    end = raw.find("## Notes", start)
+    if start == -1 or end == -1:
+        return ""
+    return raw[start:end].strip()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
@@ -147,6 +163,19 @@ def main() -> int:
         choices=ALLOWED_PROMPT_NAMES,
         help="Prompt file stem to load (allowlisted).",
     )
+    parser.add_argument(
+        "--json-object-response",
+        action="store_true",
+        help="Send response_format={type: json_object} (default: omitted; the "
+        "reproduced July recipe uses thinking-disabled without json_object).",
+    )
+    parser.add_argument(
+        "--transport-timeout",
+        type=float,
+        default=180.0,
+        help="Per-request timeout in seconds (default 180; July's longest call "
+        "took ~162 s).",
+    )
     args = parser.parse_args()
 
     # 1. Load prompt from disk
@@ -187,19 +216,20 @@ def main() -> int:
     if not config.enabled or config.provider == "mock":
         print("Refusing to run: a real LLM provider is not enabled.")
         return 2
-    # D1-R1 (2026-08-04): deepseek-v4-flash on OpenAI-compatible relays
-    # (incl. opencode.ai/zen/go/v1) defaults to a reasoning pass that returns
-    # empty final content; the explicit policy disables thinking and pins
-    # JSON output. Same policy vocabulary as the H1 transport.
+    # D1-R1 (2026-08-05): the reproduced July recipe is thinking-disabled
+    # WITHOUT a json_object response_format (the official deepseek-v4-pro
+    # endpoint returns empty content under provider-default thinking and a
+    # different nested shape under json_object). response_format is only
+    # requested when --json-object-response is passed explicitly.
     from bpc_hybrid.h1_transport import H1RequestPolicy
 
     transport = RealAPITransport(
         config,
-        timeout_seconds=60.0,
+        timeout_seconds=args.transport_timeout,
         policy=H1RequestPolicy(
             stream=False,
             thinking={"type": "disabled"},
-            response_format={"type": "json_object"},
+            response_format={"type": "json_object"} if args.json_object_response else None,
         ),
     )
 
@@ -223,13 +253,15 @@ def main() -> int:
     from bpc_hybrid.llm_client import OpenAICompatibleRequestBuilder
     builder = OpenAICompatibleRequestBuilder(config)
     sent_sampling = builder.sent_sampling_params()
+    few_shot_block = _few_shot_block(prompt)
     for row in rows:
         sample_id = row["sample_id"]
         source_text = row["text"]
         user_prompt = prompt.user_prompt_template.format(
             sample_id=sample_id,
+            source_id=sample_id,
             source_text=source_text,
-            few_shot_block="(omitted at runtime; prompt file is the source of truth)",
+            few_shot_block=few_shot_block,
         )
         request = LLMRequest(
             source_id=sample_id,

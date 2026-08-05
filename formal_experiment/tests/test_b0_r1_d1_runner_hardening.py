@@ -21,7 +21,13 @@ if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
 from bpc_hybrid.prompt_loader import load_prompt  # noqa: E402
-from scripts.run_direct_llm import ALLOWED_PROMPT_NAMES, PROMPT_V3_SNAPSHOT, PROMPT_V5_FROZEN  # noqa: E402
+from bpc_hybrid.stage2_canonical import validate_canonical  # noqa: E402
+from scripts.run_direct_llm import (  # noqa: E402
+    ALLOWED_PROMPT_NAMES,
+    PROMPT_V3_SNAPSHOT,
+    PROMPT_V5_FROZEN,
+    PROMPT_V6_D1R1,
+)
 
 V4_MARKER = "MUST NOT be folded into the action span"
 
@@ -32,6 +38,24 @@ def test_prompt_name_allowlist_contains_active_and_snapshot() -> None:
     assert "direct_llm_sun_record_prompt" in ALLOWED_PROMPT_NAMES
     assert PROMPT_V3_SNAPSHOT in ALLOWED_PROMPT_NAMES
     assert PROMPT_V5_FROZEN in ALLOWED_PROMPT_NAMES
+    assert PROMPT_V6_D1R1 in ALLOWED_PROMPT_NAMES
+
+
+def test_v6_d1r1_is_v5_plus_field_typing_rules() -> None:
+    p = load_prompt(PROMPT_V6_D1R1)
+    assert "constraint covers legal references" in p.system_prompt
+    assert "MUST NOT be folded into the" in p.system_prompt
+    assert "reported in BOTH arrays" in p.system_prompt
+    assert len(p.few_shot_examples) == 6
+    assert "The taxpayer shall depreciate the acquisition costs" in p.few_shot_examples[4]["input"]
+    assert "The tax office shall refund the amount" in p.few_shot_examples[5]["input"]
+
+
+def test_v6_few_shot_fixtures_validate() -> None:
+    p = load_prompt(PROMPT_V6_D1R1)
+    for ex in p.few_shot_examples:
+        rep = validate_canonical(ex["output"])
+        assert rep.schema_valid and rep.cross_field_valid, ex["description"][:60]
 
 
 def test_v5_frozen_is_the_july_runtime_prompt() -> None:
