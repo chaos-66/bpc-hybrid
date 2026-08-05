@@ -53,6 +53,16 @@ def _is_plain_int(value: Any) -> bool:
     return isinstance(value, int) and not isinstance(value, bool)
 
 
+def _coerce_offset(value: Any) -> int | None:
+    """Deterministic int coercion: ints pass; int-coercible numeric strings
+    (e.g. ``"52"``) convert; anything else fails."""
+    if _is_plain_int(value):
+        return value
+    if isinstance(value, str) and value.strip().lstrip("-").isdigit():
+        return int(value)
+    return None
+
+
 def _normalized(text: str) -> str:
     return " ".join(text.casefold().split())
 
@@ -62,9 +72,9 @@ def _unfold_span(container: Any, label: str) -> tuple[dict[str, Any] | None, str
     if not isinstance(container, Mapping):
         return None, f"{label}_not_object"
     text = container.get("text")
-    start = container.get("start")
-    end = container.get("end")
-    if isinstance(text, str) and text and _is_plain_int(start) and _is_plain_int(end):
+    start = _coerce_offset(container.get("start"))
+    end = _coerce_offset(container.get("end"))
+    if isinstance(text, str) and text and start is not None and end is not None:
         return {
             "text": text,
             "start": start,

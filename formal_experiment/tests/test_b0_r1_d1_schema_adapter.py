@@ -111,7 +111,17 @@ def test_text_not_in_source_fails_closed() -> None:
 
 def test_non_integer_offsets_fail_closed() -> None:
     r = relay_record(actors=[
-        {"actor_id": "a1", "span": {"start": "0", "end": 14, "text": "The controller"}}
+        {"actor_id": "a1", "span": {"start": "abc", "end": 14, "text": "The controller"}}
     ])
     out, audit = adapt_relay_record(r, SRC)
     assert audit["status"] == STATUS_FAILED
+
+
+def test_numeric_string_offsets_coerce_deterministically() -> None:
+    r = relay_record(actors=[
+        {"actor_id": "a1", "span": {"start": "0", "end": "14", "text": "The controller"}}
+    ])
+    out, audit = adapt_relay_record(r, SRC)
+    assert audit["status"] == STATUS_ADAPTED
+    a = out["clauses"][0]["actors"][0]
+    assert a["start"] == 0 and a["end"] == 14

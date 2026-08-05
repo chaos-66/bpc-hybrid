@@ -2439,3 +2439,29 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：选项 A 已实现：d1_schema_adapter.py（嵌套格式确定性映射回 canonical：actor_id/action_id/condition_id→id、span 展开、verb/object 丢弃、normalized 项目惯例、缺 id 确定性生成、text 不在 source/缺 span/非整型偏移→整记录 fail-closed）+ 7 项测试；runner 接入 adapt→canonicalize→validate 三阶段。实测：v3-flash-relay 在 20 样本上 0→5 条有效记录（25%），剩余失败=7 action 形状变体 + 6 evidence 歧义 + 2 幻觉。**可重放性决定性测试（硬约束）**：同一样本同配置连续 2 次调用，输出结构不同（actors id 'c1_a1' vs 'a1'；actions 键集不同），且单样本不同调用返回内容可变（一次空数组一次有内容）→ 违反 MASTER_PIPELINE §8.7 硬约束'同输入同配置可重放'，按'输出不可复现才 fail closed'判定该 stack 不适用于 D1。累计 ~92 次 flash 调用全部用于诊断与 pilot 20 样本，无 150 全量浪费。待用户决策：B) 官方 API+v4pro（s28_s29 已验证可复现可验证）；C) 换其它可复现 relay；D) 停止 D1-R1 在 flash 上推进。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T11:08:47.972761+00:00 - User decision: switch back to official API + deepseek-v4-pro for the D1 pilot
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1456 passed, 24 skipped in 143.17s (0:02:23)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`dd55de17530616b9a25390defec6e37238d12fab`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户逐字决定：'那还是换成原先的pro吧，不折腾'。.env 已从改动前备份（.env.bak2，官方 API + v4pro + 原 key）字节恢复，配置解析验证：provider=openai_compatible、model=deepseek-v4-pro、base_url/api_key 就位。runner 已具备模型钉死/UA/thinking-disabled/json_object/max_tokens=4096/适配器/canonicalizer 全套（对官方 API 无害且复用）。pilot 按预注册门禁重新执行：A 臂 v3 prompt（--model deepseek-v4-pro）→ B 臂 v4 prompt → 同口径评估 → 行为/指标门禁裁决。flash+relay 的失败记录保留为证据（~92 calls，均未进入 150 全量）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T11:34:53.676951+00:00 - D1-R1 measurement blocked: current prompt+model stack not contract-conformant; baseline requires restoring the proven July pipeline
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1457 passed, 24 skipped in 188.07s (0:03:08)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`dd55de17530616b9a25390defec6e37238d12fab`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：决定性事实：s28_s29 的 150 条 d1_attempts 中 518 个 span 为 canonical 格式（{end,id,normalized,start,text}，9 个仅缺 normalized）——七月 v4pro+json_object 确实输出 canonical；当前同样配置（v3 快照 prompt、json_object、temp0、4096）+适配器在代表性子集（19 样本）仅 1 条有效、最难子集 2-5/20。根因候选（均有记录、无法对证）：旧 manifest 未记录 prompt hash/请求参数，s28_s29 实际发送的 prompt 或请求链与当前 v3 快照可能不同；或模型端行为漂移。按 Pipeline 输出不可复现/不合约=fail closed，D1-R1-FIELD-TYPING 的测量门禁当前无法满足；~110 次调用全部用于诊断（flash 92 + v4pro 诊断/pilot），无 150 全量浪费。建议：先恢复并复现七月 proven pipeline（历史分支 runner+config+输入链，b5f05b8/4afa5d1）以重建可复现基线，再测 v3-vs-v4；或用户正式锁定 D1 输出合约（适配器为准）后继续。待用户裁决。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
