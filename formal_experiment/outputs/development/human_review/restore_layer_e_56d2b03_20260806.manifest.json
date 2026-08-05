@@ -1,0 +1,59 @@
+{
+  "schema_version": "estg150_layer_e_restore_manifest@1.0.0",
+  "purpose": "restore the user's completed 2026-07-18 Layer E adjudication from 56d2b03 into the active v2 file (user-authorized 2026-08-06)",
+  "source_commit": "56d2b03a1fb4e206db5bb92a8eb5ed51b942b650",
+  "source_blob_path": "formal_experiment/data/development/human_review/estg_150_human_correction_v1.json",
+  "source_blob_sha256": "0984ac9f60a8d2923292bae1a7434c4b1db1b1393fc0fcdeb9c278c3713b7266",
+  "user_fields_restored": [
+    "approved_text_en",
+    "approved_text_en_history",
+    "approved_text_en_sha256",
+    "decisions",
+    "human_correction",
+    "review_state"
+  ],
+  "fields_preserved_from_active": [
+    "llm_candidate",
+    "candidate_text_en",
+    "candidate_text_en_sha256",
+    "raw_text_de",
+    "raw_text_de_sha256",
+    "legacy_record_id",
+    "source_refs"
+  ],
+  "records": {
+    "active_before": 150,
+    "historical": 150,
+    "merged": 150,
+    "sample_id_sets_match": true
+  },
+  "backup": {
+    "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\human_review\\review_backups\\estg_150_human_correction_v1.pre_restore_56d2b03_20260805T181815Z.json",
+    "sha256": "d70857e0381ef1d4f068d9736d597ffa71340ce91e9d486200ece0188f439948"
+  },
+  "validation": {
+    "format_valid": true,
+    "review_ready": true,
+    "freeze_ready": true,
+    "n_approved_en": 150,
+    "n_field_decisions_resolved": 900,
+    "n_field_decisions_total": 900,
+    "review_state_counts": {
+      "needs_review": 0,
+      "in_progress": 0,
+      "reviewed": 0,
+      "adjudicated": 150
+    }
+  },
+  "target": {
+    "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\data\\development\\human_review\\estg_150_human_correction_v1.json",
+    "sha256": "0984ac9f60a8d2923292bae1a7434c4b1db1b1393fc0fcdeb9c278c3713b7266"
+  },
+  "safety": {
+    "gold": "restored_user_entered_adjudication",
+    "llm_api": "not_called",
+    "network": "not_called",
+    "backup_created": true,
+    "atomic_replace": true
+  }
+}

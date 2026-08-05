@@ -2702,3 +2702,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：MASTER_PIPELINE §8.7 D1-R3 行 blocked→verified（固定快照干净重跑 150/150 有效、0 事故、F1 0.7756 vs R1 0.7735 +0.0021、失败类型分析完成）；changelog 3.4.32；D1_ERROR_ANALYSIS.md 追加 §8（R3 双评与失败类型表）；PROJECT_AUDIT 6.3 行更新。D1-R4（三方法正式比较）仍 blocked on formal Gold/shared capsule。无 LLM 调用（运行事件已单独记录），未读 .env，Gold audit_read_only。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T20:15:24.972144+00:00 - Layer E adjudication restored from 56d2b03 into active v2 file; gate 2 freeze_ready flipped True (user-authorized)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1486 passed, 24 skipped in 134.69s (0:02:14)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`f98fb153d05bc3491a6a8f4d7b3f914d81ba34cc`；相关未提交路径：9 个
+- Gold：按授权导入人工审核（`authorized_human_review_import`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：重大数据恢复（用户授权 2026-08-06）：用户 2026-07-18 完成的 150/150 Layer E 裁决（reviewer=user, adjudicated）在 2026-07-16 v2 工作流重建时未迁移，仅存于 56d2b03 历史 blob；新脚本 scripts/restore_layer_e_adjudication_from_56d2b03.py 按 sample_id 将用户输入字段（approved_text_en/decisions/human_correction/review_state 等 6 项）迁回活动文件 estg_150_human_correction_v1.json，保留 llm_candidate/candidate_text_en/raw_text_de 等字段；备份 outputs/development/human_review/review_backups/estg_150_human_correction_v1.pre_restore_56d2b03_20260805T181815Z.json；staging+validate_global(format_valid/freeze_ready 双真)+原子替换；报告 outputs/development/human_review/restore_layer_e_56d2b03_20260806.manifest.json。结果：gate 2 human_review_freeze_ready False→True（150/150 adjudicated、900/900 decisions resolved、approved 150/150），BLOCKERS 8→7（annotation_freeze_pending → pass annotation_freeze_ready）；formal_gold_publication_ready 仍 False（route/data/stage3 未重锁）。配套：validate_layer_d_v2.py layer_e_pristine FALLBACK 语义更新（0/150 计数器已不适用——promote 从不写 Layer E，字节保护由 run_config sha256 主路径承担，FALLBACK 改为宽容+说明）；15 个状态依赖测试更新（freeze 断言 0→150，改名 test_layer_e_adjudication_complete_150 等）；新增 3 项 restore 合并函数测试。全量 1486 passed / 24 skipped，integrity_pass=True。无 LLM 调用，未读 .env。下一步：route/data/stage3 重锁 + formal Gold 发布门禁（需用户/治理决策），然后 D1-R4/B0-R4 三方法正式比较。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -960,9 +960,10 @@ def test_audit_event_log_preserved():
 
 
 # ---------------------------------------------------------------------------
-# 16. Layer E is still pristine.
+# 16. Layer E holds the completed user adjudication (restored 2026-08-06
+#     from the 56d2b03 snapshot).
 # ---------------------------------------------------------------------------
-def test_layer_e_pristine():
+def test_layer_e_adjudication_complete_150():
     doc = json.loads(LAYER_E_PATH.read_text(encoding="utf-8"))
     n_reviewed = sum(
         1 for r in doc.get("records", [])
@@ -973,18 +974,18 @@ def test_layer_e_pristine():
         if isinstance(r, dict) and r.get("review_state", {}).get("status") == "adjudicated"
     )
     assert n_reviewed == 0
-    assert n_adjudicated == 0
+    assert n_adjudicated == 150
     assert len(doc.get("records", [])) == 150
 
 
 # ---------------------------------------------------------------------------
-# 17. The four orthogonal gates are at the baseline values.
+# 17. The four orthogonal gates after the adjudication restore.
 # ---------------------------------------------------------------------------
-def test_four_orthogonal_gates_baseline():
+def test_four_orthogonal_gates_after_restore():
     from formal_experiment.audit import collect_project_audit
     a = collect_project_audit()
     assert a["human_review_input_ready"] is True
-    assert a["human_review_freeze_ready"] is False
+    assert a["human_review_freeze_ready"] is True
     assert a["formal_gold_publication_ready"] is False
     assert a["final_experiment_ready"] is False
 
@@ -1499,11 +1500,12 @@ def test_layer_e_sha256_lock_refuses_decision_change():
     Layer E bytes, so the SHA-256 lock catches it too."""
     real_layer_e_bytes = LAYER_E_PATH.read_bytes()
     fake = bytearray(real_layer_e_bytes)
-    # Find a 'unreviewed' string and replace it with 'accepted'
+    # Find a resolved decision value ('accepted' is present in the
+    # restored adjudicated file) and replace it with 'edited'.
     s = bytes(fake)
-    idx = s.find(b'"unreviewed"')
+    idx = s.find(b'"accepted"')
     assert idx >= 0
-    fake[idx:idx+len(b'"unreviewed"')] = b'"accepted"'
+    fake[idx:idx+len(b'"accepted"')] = b'"edited"'
     fake = bytes(fake)
     assert fake != real_layer_e_bytes
     with _TempLayerE(real_layer_e_bytes) as tmpdir:
@@ -1524,9 +1526,9 @@ def test_layer_e_sha256_lock_refuses_review_state_change():
     real_layer_e_bytes = LAYER_E_PATH.read_bytes()
     fake = bytearray(real_layer_e_bytes)
     s = bytes(fake)
-    idx = s.find(b'"needs_review"')
+    idx = s.find(b'"status": "adjudicated"')
     assert idx >= 0
-    fake[idx:idx+len(b'"needs_review"')] = b'"in_progress"'
+    fake[idx:idx+len(b'"status": "adjudicated"')] = b'"status": "in_progress"'
     fake = bytes(fake)
     with _TempLayerE(real_layer_e_bytes) as tmpdir:
         run_dir = _build_synthetic_run_dir_with_layer_e(

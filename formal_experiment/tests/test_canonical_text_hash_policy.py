@@ -308,7 +308,10 @@ class TestBoundariesIntact:
         assert status["sun_modality_license_status"] == "unknown_pending_confirmation"
         assert status["sun_modality_formal_use_ready"] is False
         assert status["human_review_input_ready"] is True
-        assert status["human_review_freeze_ready"] is False
+        # freeze_ready flipped to True on 2026-08-06 (150/150 adjudication
+        # restored from the 56d2b03 snapshot); publication/final readiness
+        # must remain closed.
+        assert status["human_review_freeze_ready"] is True
         assert status["formal_gold_publication_ready"] is False
         assert status["final_experiment_ready"] is False
         assert status["route"]["status"] != "locked"

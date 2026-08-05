@@ -378,7 +378,10 @@ class TestGateIsolation:
         status = collect_status()
         assert status["sun_modality_development_data_verified"] is True
         assert status["human_review_input_ready"] is True
-        assert status["human_review_freeze_ready"] is False
+        # freeze_ready flipped to True on 2026-08-06 (150/150 adjudication
+        # restored from the 56d2b03 snapshot); the isolation claim is about
+        # the OTHER gates, which must remain closed.
+        assert status["human_review_freeze_ready"] is True
         assert status["formal_gold_publication_ready"] is False
         assert status["final_experiment_ready"] is False
         assert status["route"]["status"] != "locked"
@@ -414,7 +417,9 @@ class TestGateIsolation:
         assert "sun_modality_dataset_verified" in passes
         assert "stage2_dataset_route_relock_pending" in blockers
         assert "stage2_dataset_alignment_pending" not in blockers
-        assert audit["human_review_freeze_ready"] is False
+        # freeze_ready is True since the 2026-08-06 adjudication restore;
+        # publication/final readiness remain closed (route/data/stage3).
+        assert audit["human_review_freeze_ready"] is True
         assert audit["formal_gold_publication_ready"] is False
         assert audit["final_experiment_ready"] is False
 

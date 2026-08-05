@@ -175,7 +175,7 @@ def _write_freeze_ready_v2(tmp_path: Path) -> tuple[Path, Path]:
 # ---------------------------------------------------------------------------
 # 1. Current 0/150 state: all four booleans
 # ---------------------------------------------------------------------------
-def test_current_state_four_gates_reported_at_zero_progress() -> None:
+def test_current_state_four_gates_reported_after_restore() -> None:
     audit = collect_project_audit()
     assert audit["integrity_pass"] is True
     # All four booleans must be present
@@ -186,9 +186,10 @@ def test_current_state_four_gates_reported_at_zero_progress() -> None:
         "final_experiment_ready",
     ):
         assert k in audit, f"missing gate: {k}"
-    # Current 0/150 expected values:
+    # Expected values after the 2026-08-06 adjudication restore
+    # (freeze_ready flipped to True: 150/150 adjudicated):
     assert audit["human_review_input_ready"] is True
-    assert audit["human_review_freeze_ready"] is False
+    assert audit["human_review_freeze_ready"] is True
     assert audit["formal_gold_publication_ready"] is False
     assert audit["final_experiment_ready"] is False
     # The deprecated alias equals gate 1
@@ -601,7 +602,7 @@ def test_no_formal_runner_uses_human_review_ready_alone() -> None:
 # ---------------------------------------------------------------------------
 # Validator CLI consistency
 # ---------------------------------------------------------------------------
-def test_validate_human_correction_cli_still_shows_review_freeze_false() -> None:
+def test_validate_human_correction_cli_now_shows_review_freeze_true() -> None:
     import subprocess
     cli = PROJECT_ROOT / "scripts" / "validate_human_correction.py"
     res = subprocess.run(
@@ -612,9 +613,9 @@ def test_validate_human_correction_cli_still_shows_review_freeze_false() -> None
     report = json.loads(res.stdout)
     assert report["n_records"] == 150
     assert report["n_reviewed"] == 0
-    assert report["n_adjudicated"] == 0
-    assert report["review_ready"] is False
-    assert report["freeze_ready"] is False
+    assert report["n_adjudicated"] == 150
+    assert report["review_ready"] is True
+    assert report["freeze_ready"] is True
 
 
 # ---------------------------------------------------------------------------
@@ -657,7 +658,11 @@ def test_audit_keeps_later_experiment_phases_blocked() -> None:
     assert "formal_human_review_paused" not in blockers
     # New explicit blockers exist
     assert "formal_gold_publication_paused" in blockers
-    assert "annotation_freeze_pending" in blockers
+    # Annotation freeze reached on 2026-08-06 (150/150 adjudicated
+    # restored from the 56d2b03 snapshot): the pending blocker is gone
+    # and the positive pass is present.
+    assert "annotation_freeze_pending" not in blockers
+    assert "annotation_freeze_ready" in _codes(audit, "passes")
     assert "final_experiment_not_ready" in blockers
 
 
