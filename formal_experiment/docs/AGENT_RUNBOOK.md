@@ -234,7 +234,7 @@ Sun、是否把 LLM-assisted Gold 写成纯人工、是否把 C2/C3/C4 写成 C1
 | S2.6 | 完整 B0 | 分类+抽取组合、canonical Rule Record、no-LLM 证明 | S2.4/S2.5 verified |
 | S2.7 | 代表性非 LLM baseline | 简单规则 + 强监督代表，统一 evaluator | S2.1/S2.2 满足依赖 |
 | S2.8 | H1 预注册 | trigger、merge、失败策略、硬预算；不看 test | S2.6 verified |
-| S2.9 | D1 锁定 | prompt/few-shot/model/temperature/budget hash | S2.2 frozen；API另授权 |
+| S2.9 | D1 锁定 | prompt/few-shot/model/temperature/budget hash | **D1 侧已锁定（2026-08-06，D1-R2）**：v6 prompt hash 3aa64877、deepseek-v4-pro/temp0/top_p1/4096、seed 策略与预算合同在 `configs/models/estg150_d1_active_registry_v1.json`；S2.2 frozen 仍缺；API另授权 |
 | S2.10 | 主数据评价 | modality、六字段、完整记录分开报告 | B0/H1/D1 同 IDs/Gold/eval |
 | G0.5 | 复杂度合同 | 结果前冻结文本/BPMN复杂度字段和 bins | 不得看复杂集 test 结果 |
 | S2.11 | 复杂语料冻结 | 来源/许可/hash/标签映射/人工协议 | G0.5 verified |

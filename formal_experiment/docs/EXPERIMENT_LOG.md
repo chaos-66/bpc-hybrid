@@ -2646,3 +2646,16 @@
 - 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：FILE_CATALOG 重建。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-05T16:24:52.961917+00:00 - D1-R2 verified: prompt/model/budget lock (v6 prompt hash pinned, budget contract, S2.9 DoD D1-side)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1483 passed, 24 skipped in 151.20s (0:02:31)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`0a2dabbaf0658ec62ad76e6d144352d17af7a109`；相关未提交路径：6 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_version_route_alignment_pending、stage2_dataset_route_relock_pending、annotation_freeze_pending、formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：configs/models/estg150_d1_active_registry_v1.json pins v6 prompt sha 3aa64877 (disk/loader/run-manifest three-way), deepseek-v4-pro fail-closed pin, temp 0/top_p 1/max_tokens 4096, seed policy unsupported_or_omitted, transport recipe (thinking-disabled, no json_object), shared input sha c7dffcc4, evaluator sha 352113b5, budget contract (per-batch authorization + --max-calls hard cap 150), D1-R1 VERIFY-PASS run registered (manifest sha 87cb1bea). 12 lock-config tests incl. S2.9 Gold-invisibility check (6 synthetic few-shot fixtures zero overlap with 150 input texts). MASTER_PIPELINE 3.4.31: D1-R2 row verified, S2.9 row partial with D1-side annotation; PROJECT_AUDIT + AGENT_RUNBOOK synced. Full audit 1483 passed / 24 skipped, integrity_pass=True, ERRORS=0. No LLM call, no .env read, Gold audit_read_only.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

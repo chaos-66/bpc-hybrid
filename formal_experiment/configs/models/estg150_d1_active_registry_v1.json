@@ -1,0 +1,93 @@
+{
+  "schema_version": "estg150_d1_active_registry@1.0.0",
+  "registry_id": "estg150_d1_active_registry_v1",
+  "created_at_utc": "2026-08-05T16:19:09Z",
+  "claim_scope": "development_only",
+  "pipeline_task": "D1-R2 (2026-08-06): prompt/model/budget lock; S2.9 DoD achieved for D1 side (Gold-invisible, prompt hash fixed)",
+  "recipe_lock": {
+    "prompt": {
+      "name": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "file": "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
+      "sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "status": "frozen_active_candidate",
+      "superseded_by": null,
+      "v5_july_baseline": {
+        "name": "direct_llm_sun_record_prompt_v5_2026_07_29_frozen",
+        "file": "prompts/sun_compat/direct_llm_sun_record_prompt_v5_2026_07_29_frozen.md",
+        "sha256": "79f6f76fc9779abb87fc919e4384386ac812d40fcedaf73df0ea8ea1377af62e",
+        "role": "immutable July runtime baseline (do not edit)"
+      }
+    },
+    "model": {
+      "id": "deepseek-v4-pro",
+      "provider": "openai_compatible",
+      "endpoint": "official API",
+      "fail_closed_pin": true
+    },
+    "sampling": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 4096,
+      "seed": {
+        "policy": "unsupported_or_omitted",
+        "rationale": "official API does not expose a supported seed; reproducibility rests on temperature=0 + top_p=1; manifest records the actual sent value (unsupported_or_omitted), not a claimed fixed seed"
+      }
+    },
+    "transport": {
+      "stream": false,
+      "thinking": {
+        "type": "disabled"
+      },
+      "response_format": null,
+      "rationale": "reproduced July recipe: thinking-disabled WITHOUT json_object; the official deepseek-v4-pro endpoint returns empty content under provider-default thinking and a different nested shape under json_object"
+    },
+    "input": {
+      "path": "outputs/development/s27_d1_pilot_20_hist56d_v1/input_150_hist56d_v1.jsonl",
+      "sha256": "c7dffcc4ce5bb4b963d99f75e496ad8f6c4e4bb62cb22cb9944704f5c5026184",
+      "records": 150,
+      "semantics": "shared input = 56d2b03 Gold source text (approved_text_en), same for B0/H1/D1"
+    },
+    "gold": {
+      "reference": "56d2b03 historical Layer E (formal Gold), dataset_id=independently_reconstructed_estg_150_v1",
+      "visible_to_llm": false,
+      "runner_flag": "gold_read_by_runner=false",
+      "few_shot_policy": "synthetic fixtures only; never test-set samples"
+    },
+    "evaluator": {
+      "id": "sun_literal_overlap_evaluation@2.0.0",
+      "config": "configs/evaluation/sun_table8_literal_overlap_v2.json",
+      "sha256": "352113b568c6075c8b01dafa5fdf2e5ab4a1454bb10933cd2f9c27f5c008cc3f"
+    }
+  },
+  "budget_contract": {
+    "policy": "every real LLM batch requires explicit per-batch user authorization (--allow-llm) AND a declared hard upper bound (--max-calls); no batch without authorization",
+    "hard_upper_bound_calls": 150,
+    "per_batch": "each batch declares run-id and --max-calls before execution; manifest records llm_calls vs max_calls; every call must either produce a result or find an error, and errors are recorded and reported",
+    "cost_recording": "manifest records actual calls; cost is tracked per batch in experiment events",
+    "transport_policy": "no retries without authorization; runtime incidents (lost/recovery/retry) recorded in manifest"
+  },
+  "runs": [
+    {
+      "run_id": "s27_d1_v6_verify_pass_150_hist56d_v1",
+      "pipeline_task": "D1-R1-VERIFY-PASS",
+      "status": "registered_verified",
+      "valid_for_performance_comparison": true,
+      "superseded_by": null,
+      "manifest": {
+        "path": "outputs/development/s27_d1_v6_verify_pass_150_hist56d_v1/manifest.json",
+        "sha256": "87cb1bea0086edded9b1e054ce35815a72b0d0c7a61aed5138ca49734561a615",
+        "bytes": 1930
+      },
+      "result_summary": "150/150 valid, 0 incidents; F1 0.7735 (baseline 0.7669, +0.0066), constraint R 0.4172 (baseline 0.2881, +0.1291), P 0.8799 (-0.0269 disclosed trade-off); v6 KEEP"
+    }
+  ],
+  "forbidden_active_references": [],
+  "future_active_slot": "s27_d1_fixed_snapshot_clean_rerun (D1-R3, needs per-batch user authorization + budget)",
+  "safety": {
+    "historical_artifacts_retained": true,
+    "prompt_frozen": true,
+    "gold_invisible": true,
+    "active_pipeline_must_not_import_forbidden": true
+  },
+  "parent_registry": null
+}
