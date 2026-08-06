@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-06
-**收录文件**：707 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：710 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -405,6 +405,7 @@
 | `docs/STAGE2_CANONICAL_SCHEMA_SPEC.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STAGE2_LLM_INNOVATION_DESIGN.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STYLE_EQUIVALENT_SPEC.md` | 活动 | 说明、规范或研究文档 |
+| `docs/SUPERVISOR_Q_A_PREP_2026-08-06.md` | 活动 | 说明、规范或研究文档 |
 | `docs/USER_DECISION_LOCK_2026-07-12.md` | 活动 | 说明、规范或研究文档 |
 
 ## `MANIFEST.md`
@@ -576,6 +577,7 @@
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/clean_estg150_german.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/coarse_gold_b0_condition_constraint_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/combine_h1_pilot_runs.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compare_h1_fallback_paths.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compute_estg_membership_hashes.py` | 活动 | Python 实现、脚本或测试 |
@@ -755,6 +757,7 @@
 | `tests/test_b0_v10_scope_and_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_canonical_text_hash_policy.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_coarse_gold_b0_condition_constraint.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d1_r2_lock_config.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |

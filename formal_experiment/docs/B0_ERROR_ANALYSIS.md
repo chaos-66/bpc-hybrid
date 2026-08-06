@@ -240,3 +240,38 @@ D1 数据出处：`outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/met
 - 评价结果：`formal_experiment/outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/`（v10a_metrics.json / c3_metrics.json / delta.json / manifest.json，全部 tracked）。
 - 关键 hash：canonical Gold semantic `5d7ec7f6…`；canonical membership `e8e62686…`（与注册绑定一致）；C3 attempts `c694f7cd…`；56d2b03 = `56d2b03a1fb4e206db5bb92a8eb5ed51b942b650`。
 - 全部数字为 development only；B0-R3 快照（F1 0.71865）已按用户条件授权标记为论文依据候选；formal 门禁（route/stage2/stage3 重锁）仍待用户/协调流程。
+
+## 10. 粗粒度对照实验：Sun Table-4 marker 口径（2026-08-06）
+
+> 实验：`scripts/coarse_gold_b0_condition_constraint_v1.py`（focused tests 6 项）；
+> 产物：`outputs/development/s27_b0_coarse_gold_cc_v1/`（report.json + coarse_gold_cc.json）。
+> 目的：验证"B0 低分是标注粒度/定义差异还是方法缺陷"。
+
+**收敛规则**：把 Gold 的 condition/constraint 两字段收敛为"文本含 Sun 论文 Table 4 公开 marker
+之一"的子集（condition：if/in case of/provided that/in the context of/who/whose/which；
+constraint：before/after/at least/at most/equal to/greatest/smallest/last of/least of；
+词边界、大小写不敏感；标准逐字取自论文，非主观挑选）。其余四字段不动。
+B0-R3 attempts（最终方法+授权词典）在同一进程对细/粗两个 Gold 变体双评。
+
+**结果（condition/constraint 两字段）**
+
+| | 细粒度 Gold | Sun marker 收敛 Gold |
+|---|---|---|
+| condition Gold 数 | 214 | 92 |
+| constraint Gold 数 | 302 | **13** |
+| condition R | 0.762 | **0.989** |
+| constraint R | 0.526 | **1.000** |
+| condition P | 0.657 | 0.372* |
+| constraint P | 0.461 | 0.042* |
+
+（*P 侧不可解读：本实验为**单边收敛**——仅 Gold 收敛、预测未收敛，B0 的宽口径预测在收敛
+Gold 下全部计为 FP；预测侧对齐需重新实现 Sun marker 版规则，超出本实验范围。）
+
+**核心发现（归因升级）**：
+1. **B0 在 Sun 公开定义的约束/条件口径内召回接近满分**（constraint 13/13 = 100%、condition 91/92 = 98.9%）——方法本身对 Sun 定义的语义抽取没有明显缺陷。
+2. **低分根源是"constraint 定义口径差异"而非粒度**：我们的 Gold 有 302 个 constraint，其中仅 **13 个（4%）** 符合 Sun Table 4 的 marker 定义；Sun 自己的 Gold 只有 35 个 constraint。我们把法律引用（under/pursuant to/within the meaning）、排他（only）等宽泛限定都计入 constraint，Sun 只算数量/时间/比较类限制（before/after/at least/at most/equal to…）。定义范围宽约 8-23 倍。
+3. 这比"标注粒度 2.4 倍"更根本：**不是同样定义标得更细，而是定义本身不同**。B0 的 0.72 低分主体 = 我们多定义部分（289 个）未抽全 + 宽口径预测的 FP。
+
+**披露限制**：Sun Table 4 是论文明示的 "initial sets"（论文称在其上继续扩展），故 13 个为
+Sun 定义的下界；真实 Sun 定义口径介于 13 与 35 之间。本实验的单边收敛设计只支持 R 侧结论，
+P 侧需双边收敛（Sun-marker 版规则）另行验证。

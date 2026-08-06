@@ -2728,3 +2728,20 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：experiment_contract.json 治理重锁（用户授权 2026-08-06 按 pipeline 推进）：(1) route.status reopened_for_final_version_alignment→locked——最终版方法对齐已按方法级独立复现口径完成（B0-R2 verified/B0_R2_METHOD_CROSSWALK.md 11 元素、method_conformance_status=verified_method_level_independent_reconstruction（2026-08-04 用户授权）、official Sun supplement 57 文件 hash 匹配、mentor provenance；missing_for_lock 项按 2026-08-01 用户口径为披露项），contract 增加 relock_note_2026_08_06；(2) stage2_dataset.status reopened_modality_verified_pending_phrase_gold_freeze_and_route_relock→locked_for_human_review（modality verified + phrase Gold freeze 150/150 达成 2026-08-06）。配套：sun_modality_gate.py:509 中间状态期望同步为 locked_for_human_review（audit 分支本已支持）；5 个状态依赖测试更新（reopened/relock-pending 断言 → locked pass 断言）。结果：BLOCKERS 7→5（final_version_route_alignment_pending、stage2_dataset_route_relock_pending 消除；新增 pass reconstruction_route_locked、stage2_dataset_route_locked），integrity_pass=True、freeze_ready=True、formal_gold_publication_ready 仍 False（剩余前置：stage3.status=locked、publication gate 白名单精确匹配——stage3 需先完成最终子集配置+violation Gold 锁定，属 S2.11/S3 后续任务，产物当前分支不存在，未伪造状态）。全量 1486 passed / 24 skipped。无 LLM 调用，未读 .env。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-06T00:43:41.665867+00:00 - Coarse-gold attribution experiment: condition/constraint converged to Sun Table-4 marker definition; B0 R=1.0/0.989 within Sun definition
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_b0_coarse_gold_cc_v1；阶段=B0-attribution；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/coarse_gold_b0_condition_constraint_v1.py`
+- manifest：outputs/development/s27_b0_coarse_gold_cc_v1/report.json
+- 结果摘要：Gold condition 214->92, constraint 302->13 (Sun Table-4 markers, word-boundary); B0 recall on converged gold: constraint 1.000 (13/13), condition 0.989 (91/92); fine-vs-coarse F1 0.719->0.646 (P-side not interpretable: one-sided convergence) -- attribution upgraded from granularity to definition-scope difference
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1492 passed, 24 skipped in 187.36s (0:03:07)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`71c815f7e17f3da5fa73ce9b50ee52d2ef6dc856`；相关未提交路径：5 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户要求字段级粗粒度对照。收敛标准=Sun et al. 2024 Table 4 'Examples of Markers'（initial sets，逐字取自论文，非主观）；仅收敛 condition/constraint，其余四字段不动；B0-R3 attempts（最终方法+授权词典）同一进程双评细/粗 Gold。发现：B0 在 Sun 公开定义口径内召回接近满分（constraint 13/13、condition 91/92），低分根源是定义口径差异——我们的 constraint 302 个中仅 13 个（4%）符合 Sun marker 定义（Sun 自身 Gold 仅 35 个 constraint，且只算数量/时间/比较类限制），我们把法律引用（under/pursuant to/within the meaning）与排他（only）等宽泛限定都计入 constraint，定义范围宽约 8-23 倍。这比标注粒度（1055 vs 443）更根本：不是同样定义标得更细，而是定义本身不同。披露限制：Sun Table 4 为论文明示 initial sets（Sun 在其上扩展），13 为下界；单边收敛仅支持 R 侧结论，P 侧需双边收敛（Sun-marker 版规则）另行验证。新增脚本+6 项测试；B0_ERROR_ANALYSIS §10 记录；防御手册 Q1 更新。全量 1492 passed / 24 skipped，integrity_pass=True。无 LLM 调用，未读 .env。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

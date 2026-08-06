@@ -1,0 +1,210 @@
+{
+  "schema_version": "b0_coarse_gold_cc@1.0.0",
+  "purpose": "granularity attribution: condition/constraint gold converged to Sun Table-4 marker-containing spans; B0-R3 evaluated on both gold variants in one process",
+  "convergence_rule": {
+    "source": "Sun et al. (2024) Table 4 'Examples of Markers' (initial sets, verbatim)",
+    "fields": [
+      "condition",
+      "constraint"
+    ],
+    "markers": {
+      "condition": [
+        "if",
+        "in case of",
+        "provided that",
+        "in the context of",
+        "who",
+        "whose",
+        "which"
+      ],
+      "constraint": [
+        "before",
+        "after",
+        "at least",
+        "at most",
+        "equal to",
+        "greatest",
+        "smallest",
+        "last of",
+        "least of"
+      ]
+    },
+    "match": "word-boundary, case-insensitive, any-marker",
+    "untouched_fields": [
+      "modality",
+      "actor",
+      "action",
+      "exception"
+    ]
+  },
+  "gold": {
+    "source_commit": "56d2b03a1fb4e206db5bb92a8eb5ed51b942b650",
+    "records": 150,
+    "fine_spans": {
+      "modality": 231,
+      "actor": 48,
+      "action": 247,
+      "condition": 214,
+      "constraint": 302,
+      "exception": 13
+    },
+    "coarse_spans": {
+      "modality": 231,
+      "actor": 48,
+      "action": 247,
+      "condition": 92,
+      "constraint": 13,
+      "exception": 13
+    },
+    "fine_semantic_sha256": "5d7ec7f6d6611d9029840cbd92254f0b342c5b8ef8f5cd7f1d93493995d315a4",
+    "coarse_semantic_sha256": "f5df2f6c5b763e26ba94da9a254274183e09faac2ee683dd489e854056cc4b46"
+  },
+  "attempts": {
+    "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1\\b0_attempts.json",
+    "sha256": "656545cec2fd6ca042d5253a1cc0d062d24e05d38d52288cb4f8ea67f7a55457",
+    "method": "b0_final_r3 (r2_r3_lex)"
+  },
+  "evaluator": {
+    "id": "sun_literal_overlap_evaluation@2.0.0",
+    "match_rule": "independent_same_field_any_nonempty_character_span_intersection"
+  },
+  "fine_metrics": {
+    "ground_truth": 1055,
+    "extracted": 1141,
+    "matched_predictions": 781,
+    "matched_ground_truth": 798,
+    "misclassified": 360,
+    "missed": 257,
+    "precision": 0.684487291849255,
+    "recall": 0.7563981042654029,
+    "f1": 0.7186482580011335
+  },
+  "coarse_metrics": {
+    "ground_truth": 644,
+    "extracted": 1141,
+    "matched_predictions": 575,
+    "matched_ground_truth": 580,
+    "misclassified": 566,
+    "missed": 64,
+    "precision": 0.5039439088518843,
+    "recall": 0.9006211180124224,
+    "f1": 0.6462677311836292
+  },
+  "per_field_fine": {
+    "modality": {
+      "precision": 0.8313253012048193,
+      "recall": 0.9004329004329005,
+      "f1": 0.864500195765443
+    },
+    "actor": {
+      "precision": 0.6923076923076923,
+      "recall": 0.9583333333333334,
+      "f1": 0.8038834951456311
+    },
+    "action": {
+      "precision": 0.8565573770491803,
+      "recall": 0.854251012145749,
+      "f1": 0.8554026399759472
+    },
+    "condition": {
+      "precision": 0.6569037656903766,
+      "recall": 0.7616822429906542,
+      "f1": 0.705423471848942
+    },
+    "constraint": {
+      "precision": 0.46060606060606063,
+      "recall": 0.5264900662251656,
+      "f1": 0.4913493402728364
+    },
+    "exception": {
+      "precision": 0.7857142857142857,
+      "recall": 0.8461538461538461,
+      "f1": 0.8148148148148148
+    }
+  },
+  "per_field_coarse": {
+    "modality": {
+      "precision": 0.8313253012048193,
+      "recall": 0.9004329004329005,
+      "f1": 0.864500195765443
+    },
+    "actor": {
+      "precision": 0.6923076923076923,
+      "recall": 0.9583333333333334,
+      "f1": 0.8038834951456311
+    },
+    "action": {
+      "precision": 0.8565573770491803,
+      "recall": 0.854251012145749,
+      "f1": 0.8554026399759472
+    },
+    "condition": {
+      "precision": 0.3723849372384937,
+      "recall": 0.9891304347826086,
+      "f1": 0.5410695794501786
+    },
+    "constraint": {
+      "precision": 0.04242424242424243,
+      "recall": 1.0,
+      "f1": 0.08139534883720931
+    },
+    "exception": {
+      "precision": 0.7857142857142857,
+      "recall": 0.8461538461538461,
+      "f1": 0.8148148148148148
+    }
+  },
+  "delta_coarse_minus_fine": {
+    "overall": {
+      "ground_truth": -411,
+      "extracted": 0,
+      "matched_predictions": -206,
+      "matched_ground_truth": -218,
+      "misclassified": 206,
+      "missed": -193,
+      "precision": -0.180543,
+      "recall": 0.144223,
+      "f1": -0.072381
+    },
+    "per_field": {
+      "modality": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "actor": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "action": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "condition": {
+        "precision": -0.284519,
+        "recall": 0.227448,
+        "f1": -0.164354
+      },
+      "constraint": {
+        "precision": -0.418182,
+        "recall": 0.47351,
+        "f1": -0.409954
+      },
+      "exception": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    }
+  },
+  "interpretation_hint": "A large positive condition/constraint delta supports the granularity attribution; overall delta is diluted by the four untouched fields.",
+  "safety": {
+    "gold": "audit_read_only",
+    "llm_api": "not_called",
+    "network": "not_called",
+    "original_gold_modified": false,
+    "artifacts": "created_no_overwrite"
+  }
+}
