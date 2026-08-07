@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-07
-**收录文件**：717 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：718 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -492,6 +492,7 @@
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
+| `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `paper`
