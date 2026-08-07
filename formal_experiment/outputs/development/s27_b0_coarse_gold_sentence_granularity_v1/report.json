@@ -1,0 +1,187 @@
+{
+  "schema_version": "b0_coarse_gold_sentence@1.0.0",
+  "purpose": "granularity attribution: clause-level Gold collapsed to sentence-level (one merged span per field per sentence, full extent of the field's annotation); B0-R3 evaluated on both gold variants in one process",
+  "granularity_rule": {
+    "source": "Sun et al. (2024) Stage 2 annotates at sentence level (~443 spans/150 sentences); our Gold is clause-level (1055 spans/150 sentences)",
+    "rule": "one synthetic clause per sentence [0,len(approved_text_en)); per field: one span [min(start), max(end)) over all annotated spans in the sentence; absent fields stay absent; text = approved_text_en slice",
+    "untouched_hardness_factors": [
+      "no sentence filtering (we keep sentences Sun would exclude)",
+      "OCR + LLM-translation noise",
+      "B0-R3 predictions unchanged"
+    ],
+    "sun_150_sentence_spans_reference": 443
+  },
+  "gold": {
+    "source_commit": "56d2b03a1fb4e206db5bb92a8eb5ed51b942b650",
+    "records": 150,
+    "fine_spans": {
+      "modality": 231,
+      "actor": 48,
+      "action": 247,
+      "condition": 214,
+      "constraint": 302,
+      "exception": 13
+    },
+    "coarse_spans": {
+      "modality": 150,
+      "actor": 41,
+      "action": 150,
+      "condition": 122,
+      "constraint": 135,
+      "exception": 11
+    },
+    "fine_total": 1055,
+    "coarse_total": 609,
+    "ratio_vs_sun_443": 1.375,
+    "fine_semantic_sha256": "5d7ec7f6d6611d9029840cbd92254f0b342c5b8ef8f5cd7f1d93493995d315a4",
+    "coarse_semantic_sha256": "6e19cf3c684a26aa9e9fdc9f76c3529b5a4232aecb085fad4c206ceb177bcb26"
+  },
+  "attempts": {
+    "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1\\b0_attempts.json",
+    "sha256": "656545cec2fd6ca042d5253a1cc0d062d24e05d38d52288cb4f8ea67f7a55457",
+    "method": "b0_final_r3 (r2_r3_lex)"
+  },
+  "evaluator": {
+    "id": "sun_literal_overlap_evaluation@2.0.0",
+    "match_rule": "independent_same_field_any_nonempty_character_span_intersection"
+  },
+  "fine_metrics": {
+    "ground_truth": 1055,
+    "extracted": 1141,
+    "matched_predictions": 781,
+    "matched_ground_truth": 798,
+    "misclassified": 360,
+    "missed": 257,
+    "precision": 0.684487291849255,
+    "recall": 0.7563981042654029,
+    "f1": 0.7186482580011335
+  },
+  "coarse_metrics": {
+    "ground_truth": 609,
+    "extracted": 1141,
+    "matched_predictions": 834,
+    "matched_ground_truth": 536,
+    "misclassified": 307,
+    "missed": 73,
+    "precision": 0.7309377738825592,
+    "recall": 0.8801313628899836,
+    "f1": 0.7986265076169158
+  },
+  "per_field_fine": {
+    "modality": {
+      "precision": 0.8313253012048193,
+      "recall": 0.9004329004329005,
+      "f1": 0.864500195765443
+    },
+    "actor": {
+      "precision": 0.6923076923076923,
+      "recall": 0.9583333333333334,
+      "f1": 0.8038834951456311
+    },
+    "action": {
+      "precision": 0.8565573770491803,
+      "recall": 0.854251012145749,
+      "f1": 0.8554026399759472
+    },
+    "condition": {
+      "precision": 0.6569037656903766,
+      "recall": 0.7616822429906542,
+      "f1": 0.705423471848942
+    },
+    "constraint": {
+      "precision": 0.46060606060606063,
+      "recall": 0.5264900662251656,
+      "f1": 0.4913493402728364
+    },
+    "exception": {
+      "precision": 0.7857142857142857,
+      "recall": 0.8461538461538461,
+      "f1": 0.8148148148148148
+    }
+  },
+  "per_field_coarse": {
+    "modality": {
+      "precision": 0.8473895582329317,
+      "recall": 1.0,
+      "f1": 0.9173913043478261
+    },
+    "actor": {
+      "precision": 0.7076923076923077,
+      "recall": 0.975609756097561,
+      "f1": 0.8203299152920196
+    },
+    "action": {
+      "precision": 0.8729508196721312,
+      "recall": 0.9133333333333333,
+      "f1": 0.8926856128973049
+    },
+    "condition": {
+      "precision": 0.702928870292887,
+      "recall": 0.860655737704918,
+      "f1": 0.7738369415016121
+    },
+    "constraint": {
+      "precision": 0.5606060606060606,
+      "recall": 0.6888888888888889,
+      "f1": 0.6181622204257612
+    },
+    "exception": {
+      "precision": 0.7857142857142857,
+      "recall": 1.0,
+      "f1": 0.88
+    }
+  },
+  "delta_coarse_minus_fine": {
+    "overall": {
+      "ground_truth": -446,
+      "extracted": 0,
+      "matched_predictions": 53,
+      "matched_ground_truth": -262,
+      "misclassified": -53,
+      "missed": -184,
+      "precision": 0.04645,
+      "recall": 0.123733,
+      "f1": 0.079978
+    },
+    "per_field": {
+      "modality": {
+        "precision": 0.016064,
+        "recall": 0.099567,
+        "f1": 0.052891
+      },
+      "actor": {
+        "precision": 0.015385,
+        "recall": 0.017276,
+        "f1": 0.016446
+      },
+      "action": {
+        "precision": 0.016393,
+        "recall": 0.059082,
+        "f1": 0.037283
+      },
+      "condition": {
+        "precision": 0.046025,
+        "recall": 0.098973,
+        "f1": 0.068413
+      },
+      "constraint": {
+        "precision": 0.1,
+        "recall": 0.162399,
+        "f1": 0.126813
+      },
+      "exception": {
+        "precision": 0.0,
+        "recall": 0.153846,
+        "f1": 0.065185
+      }
+    }
+  },
+  "interpretation_hint": "If B0 P/R both rise substantially at sentence-level granularity, the clause-level fine annotation is the dominant cost driver of B0's low P/R in our stricter setting; residual gap vs Sun's own reported numbers still contains the two untouched hardness factors (no sentence filtering, OCR+translation noise).",
+  "safety": {
+    "gold": "audit_read_only",
+    "llm_api": "not_called",
+    "network": "not_called",
+    "original_gold_modified": false,
+    "artifacts": "created_no_overwrite"
+  }
+}

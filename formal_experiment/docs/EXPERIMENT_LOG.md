@@ -2745,3 +2745,20 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：用户要求字段级粗粒度对照。收敛标准=Sun et al. 2024 Table 4 'Examples of Markers'（initial sets，逐字取自论文，非主观）；仅收敛 condition/constraint，其余四字段不动；B0-R3 attempts（最终方法+授权词典）同一进程双评细/粗 Gold。发现：B0 在 Sun 公开定义口径内召回接近满分（constraint 13/13、condition 91/92），低分根源是定义口径差异——我们的 constraint 302 个中仅 13 个（4%）符合 Sun marker 定义（Sun 自身 Gold 仅 35 个 constraint，且只算数量/时间/比较类限制），我们把法律引用（under/pursuant to/within the meaning）与排他（only）等宽泛限定都计入 constraint，定义范围宽约 8-23 倍。这比标注粒度（1055 vs 443）更根本：不是同样定义标得更细，而是定义本身不同。披露限制：Sun Table 4 为论文明示 initial sets（Sun 在其上扩展），13 为下界；单边收敛仅支持 R 侧结论，P 侧需双边收敛（Sun-marker 版规则）另行验证。新增脚本+6 项测试；B0_ERROR_ANALYSIS §10 记录；防御手册 Q1 更新。全量 1492 passed / 24 skipped，integrity_pass=True。无 LLM 调用，未读 .env。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-07T09:11:11.955057+00:00 - 粗粒度归因实验：Gold 整体从 clause 级粗化到句子级（1055->609 spans，1.375x Sun 443），B0-R3 预测不动，P/R 双升
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_b0_coarse_gold_sentence_granularity_v1；阶段=B0-attribution；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/coarse_gold_b0_sentence_granularity_v1.py`
+- manifest：outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/report.json
+- 结果摘要：clause-level Gold (1055 spans, 7.0/sentence) collapsed to sentence-level (609 spans, 4.06/sentence = 1.375x Sun's 443): overall P 0.6845->0.7309 (+0.046), R 0.7564->0.8801 (+0.124), F1 0.7186->0.7986 (+0.080); per-field R jumps: modality 0.900->1.000, action 0.854->0.913, condition 0.762->0.861, constraint 0.526->0.689, exception 0.846->1.000, actor 0.958->0.976. Conclusion: clause-level fine annotation is the dominant P/R cost driver in our stricter setting; residual 1.375x gap vs Sun's 443 = no-sentence-filtering + higher annotation density (untouched hardness factors).
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1492 passed, 24 skipped in 105.18s (0:01:45)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`40a0262476d445158da4e84ea170f10cbcd8ddf6`；相关未提交路径：2 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户 2026-08-07 指示：把标注粒度做到和 Sun 差不多看 P/R（不是 marker 收敛，是整体粒度）。新脚本 coarse_gold_b0_sentence_granularity_v1.py：每 record 合成单 clause 覆盖整句 [0,len(approved_text_en))；每字段把所有从句 spans 合并为 1 个 span [min(start),max(end))，text=approved_text_en 切片；缺失字段保持缺失（不伪造）。B0-R3 attempts（b0_attempts.json）同一进程双评 fine/coarse（sun_literal_overlap@2.0.0）。历史 Layer E/membership 经 git show 56d2b03 只读读取；membership sha e8e62686 校验通过；产物 outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/（report.json + coarse_gold_sentence_level.json），不覆盖原 Gold，无 LLM/API 调用。定位：granularity attribution，不是替代 Gold；与 40a0262 marker 收敛实验互补（那个证明定义范围差异，这个证明标注粒度负担）。1492 tests pass。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
