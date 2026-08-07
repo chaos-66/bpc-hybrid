@@ -2805,3 +2805,20 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：用户 2026-08-07 决策：Sun 粒度是句子级（443 spans/150 句），我们的 Gold 按 clause 拆（1055 spans）偏细；从现在起不要自己搞细，评价口径按 Sun 的粗粒度来。主口径=句子级粗 Gold（609 spans，语义 sha 6e19cf3c，B0/D1 同一粗 Gold）；细 Gold（1055 spans）降为对照口径，历史登记数字不变。粗口径 B0：P 0.7309/R 0.8801/F1 0.7986（per-field：modality 0.9174/actor 0.8203/action 0.8927/condition 0.7738/constraint 0.6182/exception 0.8800）；D1：P 0.9012/R 0.8456/F1 0.8726（per-field：modality 0.9712/actor 0.7579/action 0.9437/condition 0.8380/constraint 0.7427/exception 0.7619）。更新：brief 新增 §〇 口径决策+粗口径全字段表、B0/D1 摘要与对照矩阵主口径标注切换；PROJECT_AUDIT B0/D1 行同步；CLAIM_EVIDENCE_MATRIX C19 标注主口径决策。粗 Gold 是 development/attribution 变体，不是正式 Gold；formal 门禁不受影响。1492 tests pass。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-07T23:38:23.516249+00:00 - D1 Sol-candidate 语义小测验（第一轮）：19 calls 全消耗，estg_000313 API error，18/18 记录 clauses 被 canonicalizer 丢弃（模型输出非 verbatim clause_span），0 有效预测——失败诊断完成
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_d1_solcand_pilot_19_hist56d_v1；阶段=D1-attribution；方法=direct_llm；状态=失败（`failed`）
+- 实际运行命令：`python -m scripts.run_direct_llm --prompt-name direct_llm_sun_record_prompt_solcand_pilot_2026_08_07 --model deepseek-v4-pro --allow-llm --development --max-calls 19`
+- manifest：outputs/development/s27_d1_solcand_pilot_19_hist56d_v1/manifest.json
+- 结果摘要：FAILED-DIAGNOSED: 19 calls authorized pilot; 1 API error (estg_000313), 18 responses ok but ALL 18 records have clauses=[] (43 clauses dropped by d1_span_canonicalizer because model-emitted clause_span text is not a verbatim source substring and cannot be re-anchored); 0 valid predictions, evaluation not runnable. Root cause: Sol-candidate prompt (no few-shot examples, free clause segmentation) vs fail-closed re-anchor; secondary: jsonschema package unavailable so unsupported_or_ambiguous structure violations pass the loose _structural_check fallback (pre-existing behavior, not introduced here).
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1492 passed, 24 skipped in 161.84s (0:02:41)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`6032b907e820e24f8d7ba4948921fe7ef1714258`；相关未提交路径：4 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户 2026-08-07 授权小测验：用改编的历史 Gold 候选 prompt（Sol 语义）跑 D1 19 样本（与 arm_b_v6 基线同批）。改编：保留 full-extract 语义（每从句全量提取、不合并从句），输出结构改为 canonical 顶层（去掉 ai_review envelope），无 few-shot。新 prompt 文件 prompts/sun_compat/direct_llm_sun_record_prompt_solcand_pilot_2026_08_07.md（sha 0537c54b）；runner 白名单新增 PROMPT_SOLCAND_PILOT；评估脚本 scripts/evaluate_d1_solcand_pilot_v1.py 待有效预测后运行。失败诊断：模型输出 clause_span 非 verbatim → fail-closed 丢弃；修复方向=加合成 few-shot 示例教 verbatim span 算术，需再授权重跑。1492 tests pass。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

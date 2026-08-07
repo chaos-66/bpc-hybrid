@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-08
-**收录文件**：718 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：720 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -512,6 +512,7 @@
 | `prompts/estg150_ai_review/pass_b_adjudicator_v1.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/direct_llm_few_shot_fixtures.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `prompts/sun_compat/direct_llm_sun_record_prompt.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/direct_llm_sun_record_prompt_solcand_pilot_2026_08_07.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/direct_llm_sun_record_prompt_v3_2026_07_12.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/direct_llm_sun_record_prompt_v5_2026_07_29_frozen.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md` | 活动 | 说明、规范或研究文档 |
@@ -592,6 +593,7 @@
 | `scripts/dry_run_llm_estimate.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/estg150_review_tool.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_d1_r3_clean_rerun.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/evaluate_d1_solcand_pilot_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/generate_file_catalog.py` | 活动 | 重建本逐文件目录 |
 | `scripts/ingest_sun_modality.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/promote_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |

@@ -44,7 +44,14 @@ PROMPTName = "direct_llm_sun_record_prompt"
 PROMPT_V3_SNAPSHOT = "direct_llm_sun_record_prompt_v3_2026_07_12"
 PROMPT_V5_FROZEN = "direct_llm_sun_record_prompt_v5_2026_07_29_frozen"
 PROMPT_V6_D1R1 = "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05"
-ALLOWED_PROMPT_NAMES = (PROMPTName, PROMPT_V3_SNAPSHOT, PROMPT_V5_FROZEN, PROMPT_V6_D1R1)
+PROMPT_SOLCAND_PILOT = "direct_llm_sun_record_prompt_solcand_pilot_2026_08_07"
+ALLOWED_PROMPT_NAMES = (
+    PROMPTName,
+    PROMPT_V3_SNAPSHOT,
+    PROMPT_V5_FROZEN,
+    PROMPT_V6_D1R1,
+    PROMPT_SOLCAND_PILOT,
+)
 
 DEFAULT_INPUT = ROOT / "data/input/estg150_input_v1.jsonl"
 DEFAULT_OUTPUT = ROOT / "data/predictions/direct_llm_predictions.jsonl"
