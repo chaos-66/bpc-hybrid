@@ -2762,3 +2762,20 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：用户 2026-08-07 指示：把标注粒度做到和 Sun 差不多看 P/R（不是 marker 收敛，是整体粒度）。新脚本 coarse_gold_b0_sentence_granularity_v1.py：每 record 合成单 clause 覆盖整句 [0,len(approved_text_en))；每字段把所有从句 spans 合并为 1 个 span [min(start),max(end))，text=approved_text_en 切片；缺失字段保持缺失（不伪造）。B0-R3 attempts（b0_attempts.json）同一进程双评 fine/coarse（sun_literal_overlap@2.0.0）。历史 Layer E/membership 经 git show 56d2b03 只读读取；membership sha e8e62686 校验通过；产物 outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/（report.json + coarse_gold_sentence_level.json），不覆盖原 Gold，无 LLM/API 调用。定位：granularity attribution，不是替代 Gold；与 40a0262 marker 收敛实验互补（那个证明定义范围差异，这个证明标注粒度负担）。1492 tests pass。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-07T09:18:38.343945+00:00 - D1 粗粒度归因实验：同一句子级粗化 Gold（哈希与 B0 版一致）下重评 D1-R3，P/R/F1 变化
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_d1_coarse_gold_sentence_granularity_v1；阶段=D1-attribution；方法=direct_llm；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/coarse_gold_d1_sentence_granularity_v1.py`
+- manifest：outputs/development/s27_d1_coarse_gold_sentence_granularity_v1/report.json
+- 结果摘要：D1-R3 responses (fixed, 150/150 ok) vs clause-level Gold (1055 spans): P 0.8793 R 0.6938 F1 0.7756; vs sentence-level coarse Gold (609 spans = 1.375x Sun 443, semantic sha256 identical to B0 experiment 6e19cf3c): P 0.9012 (+0.022) R 0.8456 (+0.152) F1 0.8726 (+0.097). Per-field F1: modality 0.922->0.971, action 0.880->0.944, actor 0.722->0.758, condition 0.786->0.838, constraint 0.548->0.743 (R 0.440->0.711 +0.271), exception 0.696->0.762. Granularity effect on D1 is R-dominated, P already high; contrast with B0 (+0.046P/+0.124R).
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1492 passed, 24 skipped in 110.02s (0:01:50)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`46113376c96b11a01bbb634a9e48c8a576701f31`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户 2026-08-07 指示：D1 结果同样按句子级粗化看 P/R。新脚本 coarse_gold_d1_sentence_granularity_v1.py：粗化规则与 B0 版逐字相同，并强制 coarse semantic sha256==6e19cf3c（与 s27_b0_coarse_gold_sentence_granularity_v1 完全同一 Gold，可比）；预测用 D1-R3 固定快照 d1_responses.jsonl（150/150 ok，不重跑 LLM）。历史 Layer E/membership git show 56d2b03 只读；fine sha 5d7ec7f6 校验通过；产物 outputs/development/s27_d1_coarse_gold_sentence_granularity_v1/report.json。1492 tests pass。下一步：两方法统一粒度对照表可进 B0_ERROR_ANALYSIS/D1_ERROR_ANALYSIS 或 PPT。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
