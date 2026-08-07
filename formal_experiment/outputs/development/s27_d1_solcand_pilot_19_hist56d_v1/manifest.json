@@ -3,13 +3,13 @@
   "stage": "formal_stage2",
   "method": "direct_llm",
   "mode": "development",
-  "timestamp_utc": "2026-08-07T23:30:59.659220+00:00",
+  "timestamp_utc": "2026-08-07T23:46:51.775643+00:00",
   "input_path": "outputs\\development\\s27_d1_solcand_pilot_19_hist56d_v1\\input.jsonl",
   "output_path": "outputs\\development\\s27_d1_solcand_pilot_19_hist56d_v1\\output.jsonl",
   "sample_count_input": 19,
-  "sample_count_written": 18,
+  "sample_count_written": 19,
   "sample_count_validation_failed": 0,
-  "sample_count_llm_error": 1,
+  "sample_count_llm_error": 0,
   "llm_calls": 19,
   "max_calls": 19,
   "llm_provider": "openai_compatible",
@@ -40,7 +40,7 @@
       "role": "primary",
       "name": "direct_llm_sun_record_prompt_solcand_pilot_2026_08_07",
       "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\prompts\\sun_compat\\direct_llm_sun_record_prompt_solcand_pilot_2026_08_07.md",
-      "sha256": "0537c54b848a11ad85e9965e8fd589b32d9e80922d018508cab55191234837ce",
+      "sha256": "6405d951152dbb697c111aa681721a76c1a874feaf2b24f552e575f457790aff",
       "sampling_policy": "temperature=0, top_p=1, max_tokens=4096"
     }
   ],
@@ -48,20 +48,15 @@
   "gold_read_by_runner": false,
   "rule_front_end_used": false,
   "validation_failures": [],
-  "llm_errors": [
-    {
-      "sample_id": "estg_000313",
-      "error": "Real API unexpected error (details redacted)"
-    }
-  ],
+  "llm_errors": [],
   "responses_file": "outputs\\development\\s27_d1_solcand_pilot_19_hist56d_v1\\d1_responses.jsonl",
   "span_canonicalization": {
-    "records": 18,
-    "reanchored": 0,
-    "clause_spans": 0,
-    "field_spans": 0,
-    "dropped_spans": 0,
-    "dropped_clauses": 43,
-    "adapted_spans": 0
+    "records": 19,
+    "reanchored": 139,
+    "clause_spans": 39,
+    "field_spans": 113,
+    "dropped_spans": 2,
+    "dropped_clauses": 0,
+    "adapted_spans": 79
   }
 }

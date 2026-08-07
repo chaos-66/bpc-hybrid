@@ -2822,3 +2822,20 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：用户 2026-08-07 授权小测验：用改编的历史 Gold 候选 prompt（Sol 语义）跑 D1 19 样本（与 arm_b_v6 基线同批）。改编：保留 full-extract 语义（每从句全量提取、不合并从句），输出结构改为 canonical 顶层（去掉 ai_review envelope），无 few-shot。新 prompt 文件 prompts/sun_compat/direct_llm_sun_record_prompt_solcand_pilot_2026_08_07.md（sha 0537c54b）；runner 白名单新增 PROMPT_SOLCAND_PILOT；评估脚本 scripts/evaluate_d1_solcand_pilot_v1.py 待有效预测后运行。失败诊断：模型输出 clause_span 非 verbatim → fail-closed 丢弃；修复方向=加合成 few-shot 示例教 verbatim span 算术，需再授权重跑。1492 tests pass。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-07T23:51:54.165337+00:00 - D1 Sol-candidate 语义小测验（第二轮，修复后）：19/19 有效 0 事故，评估完成——19 样本上 Sol 语义 F1 0.7858 vs v6 基线 0.8182（细 Gold）；R +0.008、P -0.083
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s27_d1_solcand_pilot_19_hist56d_v1；阶段=D1-attribution；方法=direct_llm；状态=成功（`succeeded`）
+- 实际运行命令：`python -m scripts.run_direct_llm --prompt-name direct_llm_sun_record_prompt_solcand_pilot_2026_08_07 --model deepseek-v4-pro --allow-llm --development --max-calls 19`
+- manifest：outputs/development/s27_d1_solcand_pilot_19_hist56d_v1/manifest.json
+- 结果摘要：Round2 SUCCESS (19 calls, 0 errors, 0 dropped clauses, 139 reanchored, prompt sha 6405d951). Same 19 samples vs v6 baseline (arm_b_v6_20260805c): fine Gold P 0.8108/R 0.7623/F1 0.7858 vs v6 P 0.8942/R 0.7541/F1 0.8182 (R +0.008, P -0.083, F1 -0.032); coarse Gold P 0.8468/R 0.9014/F1 0.8733 vs v6 P 0.9231/R 0.9296/F1 0.9263. Per-field fine F1 deltas: action +0.006, condition -0.027, constraint -0.040, modality -0.046, actor -0.133, exception 0.0. Verdict: Sol-candidate semantics does NOT beat v6 - P drops (more spans 111 vs 104, prefer-inclusion over-extraction), R gains are tiny; hypothesis '同源 prompt 会更高' NOT supported on this pilot.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1492 passed, 24 skipped in 213.36s (0:03:33)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`dc579f4753f823a960854ca8ea25ebba7abe09fd`；相关未提交路径：6 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户 2026-08-07 授权第二轮（'尝试修复，框架和关键词与候选 LLM 类似'）。修复：v2 prompt 保留 Sol full-extract 语义（identify every clause / do not collapse / extract for every clause / prefer inclusion），强化 verbatim span 规则 + 3 个合成示例（span 算术教程）；新增 scripts/verify_solcand_prompt_examples_v1.py 离线校验（示例 synthetic 前缀、span 逐字一致、canonical 合法，通过）。runner 白名单已含 PROMPT_SOLCAND_PILOT。评估脚本 scripts/evaluate_d1_solcand_pilot_v1.py（细+粗双口径、与 arm_b_v6_20260805c 同批 19 样本同进程对比）。结论：假设不成立（R 微升 0.008 但 P 降 0.083，净 F1 降 0.032；粗 Gold 也降 0.053）；Sol 语义的 prefer-inclusion 主要产生 FP 而非找回漏抽。另：jsonschema 包不可用导致 validator 走宽松回退（既有行为，未改）。1492 tests pass。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

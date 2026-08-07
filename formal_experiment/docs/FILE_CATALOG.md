@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-08
-**收录文件**：720 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：725 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -438,6 +438,10 @@
 | `outputs/development/s27_d1_pilot_20_hist56d_v1/input_150_hist56d_v1.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_pilot_20_hist56d_v1/pilot_evaluation_20260805.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_pilot_20_hist56d_v1/pilot_evaluation_20260805_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_d1_solcand_pilot_19_hist56d_v1/d1_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_d1_solcand_pilot_19_hist56d_v1/input.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_d1_solcand_pilot_19_hist56d_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_d1_solcand_pilot_19_hist56d_v1/output.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/d1_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/evaluation_d1_r3_20260806.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -619,6 +623,7 @@
 | `scripts/validate_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_legacy_gold_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_solcand_prompt_examples_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_sun_modality_zip.py` | 活动 | Python 实现、脚本或测试 |
 
 ## `src`

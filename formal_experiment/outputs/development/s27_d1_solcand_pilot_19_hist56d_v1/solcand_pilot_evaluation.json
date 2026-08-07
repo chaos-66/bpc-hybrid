@@ -1,0 +1,249 @@
+{
+  "schema_version": "d1_solcand_pilot_evaluation@1.0.0",
+  "purpose": "same-19-sample comparison: D1-R3 locked recipe (v6 prompt) vs Sol-candidate-semantics pilot (adapted historical Gold-candidate prompt), on fine and sentence-level coarse golds; fixed responses, no new LLM calls",
+  "run_date_utc": "2026-08-07",
+  "samples": [
+    "estg_000002",
+    "estg_000031",
+    "estg_000043",
+    "estg_000059",
+    "estg_000075",
+    "estg_000092",
+    "estg_000108",
+    "estg_000119",
+    "estg_000131",
+    "estg_000146",
+    "estg_000207",
+    "estg_000223",
+    "estg_000277",
+    "estg_000313",
+    "estg_000414",
+    "estg_000505",
+    "estg_000560",
+    "estg_000664",
+    "estg_000786"
+  ],
+  "arms": {
+    "v6_baseline": {
+      "source": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s27_d1_pilot_20_hist56d_v1\\arm_b_v6_20260805c\\d1_responses.jsonl",
+      "sha256": "68e88a7b50bd6523b9fb7296f43bc074a9d875d699499a545c0115c24cc49100",
+      "prompt": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "note": "historical arm_b_v6_20260805c responses"
+    },
+    "solcand_pilot": {
+      "source": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s27_d1_solcand_pilot_19_hist56d_v1\\d1_responses.jsonl",
+      "sha256": "debf45e20fa74525b7cce883e103b66031f15371216811297850758257fbbb14",
+      "prompt": "direct_llm_sun_record_prompt_solcand_pilot_2026_08_07",
+      "manifest": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s27_d1_solcand_pilot_19_hist56d_v1\\manifest.json",
+      "note": "adapted Gold-candidate semantics; development/attribution only"
+    }
+  },
+  "golds": {
+    "fine": {
+      "semantic_sha256": "5d7ec7f6d6611d9029840cbd92254f0b342c5b8ef8f5cd7f1d93493995d315a4",
+      "spans": {
+        "modality": 28,
+        "actor": 4,
+        "action": 29,
+        "condition": 21,
+        "constraint": 40,
+        "exception": 0
+      }
+    },
+    "coarse_sentence": {
+      "semantic_sha256": "6e19cf3c684a26aa9e9fdc9f76c3529b5a4232aecb085fad4c206ceb177bcb26",
+      "spans": {
+        "modality": 19,
+        "actor": 4,
+        "action": 19,
+        "condition": 12,
+        "constraint": 17,
+        "exception": 0
+      }
+    }
+  },
+  "metrics": {
+    "fine": {
+      "v6": {
+        "ground_truth": 122,
+        "extracted": 104,
+        "matched_predictions": 93,
+        "matched_ground_truth": 92,
+        "misclassified": 11,
+        "missed": 30,
+        "precision": 0.8942307692307693,
+        "recall": 0.7540983606557377,
+        "f1": 0.8182078990150139
+      },
+      "solcand": {
+        "ground_truth": 122,
+        "extracted": 111,
+        "matched_predictions": 90,
+        "matched_ground_truth": 93,
+        "misclassified": 21,
+        "missed": 29,
+        "precision": 0.8108108108108109,
+        "recall": 0.7622950819672131,
+        "f1": 0.7858048162230671
+      },
+      "per_field_v6": {
+        "modality": {
+          "precision": 1.0,
+          "recall": 0.9642857142857143,
+          "f1": 0.9818181818181818
+        },
+        "actor": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8
+        },
+        "action": {
+          "precision": 0.9615384615384616,
+          "recall": 0.8620689655172413,
+          "f1": 0.9090909090909091
+        },
+        "condition": {
+          "precision": 0.8823529411764706,
+          "recall": 0.9047619047619048,
+          "f1": 0.8934169278996865
+        },
+        "constraint": {
+          "precision": 0.7391304347826086,
+          "recall": 0.425,
+          "f1": 0.5396825396825397
+        },
+        "exception": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "per_field_solcand": {
+        "modality": {
+          "precision": 0.8787878787878788,
+          "recall": 1.0,
+          "f1": 0.9354838709677419
+        },
+        "actor": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666
+        },
+        "action": {
+          "precision": 0.9,
+          "recall": 0.9310344827586207,
+          "f1": 0.9152542372881356
+        },
+        "condition": {
+          "precision": 0.875,
+          "recall": 0.8571428571428571,
+          "f1": 0.8659793814432989
+        },
+        "constraint": {
+          "precision": 0.6666666666666666,
+          "recall": 0.4,
+          "f1": 0.5
+        },
+        "exception": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      }
+    },
+    "coarse_sentence": {
+      "v6": {
+        "ground_truth": 71,
+        "extracted": 104,
+        "matched_predictions": 96,
+        "matched_ground_truth": 66,
+        "misclassified": 8,
+        "missed": 5,
+        "precision": 0.9230769230769231,
+        "recall": 0.9295774647887324,
+        "f1": 0.9263157894736843
+      },
+      "solcand": {
+        "ground_truth": 71,
+        "extracted": 111,
+        "matched_predictions": 94,
+        "matched_ground_truth": 64,
+        "misclassified": 17,
+        "missed": 7,
+        "precision": 0.8468468468468469,
+        "recall": 0.9014084507042254,
+        "f1": 0.8732762374800407
+      },
+      "per_field_v6": {
+        "modality": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "actor": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8
+        },
+        "action": {
+          "precision": 0.9615384615384616,
+          "recall": 0.9473684210526315,
+          "f1": 0.9544008483563096
+        },
+        "condition": {
+          "precision": 0.8823529411764706,
+          "recall": 0.9166666666666666,
+          "f1": 0.8991825613079019
+        },
+        "constraint": {
+          "precision": 0.8695652173913043,
+          "recall": 0.8235294117647058,
+          "f1": 0.8459214501510574
+        },
+        "exception": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "per_field_solcand": {
+        "modality": {
+          "precision": 0.8787878787878788,
+          "recall": 1.0,
+          "f1": 0.9354838709677419
+        },
+        "actor": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666
+        },
+        "action": {
+          "precision": 0.9,
+          "recall": 0.9473684210526315,
+          "f1": 0.9230769230769231
+        },
+        "condition": {
+          "precision": 0.875,
+          "recall": 0.8333333333333334,
+          "f1": 0.8536585365853658
+        },
+        "constraint": {
+          "precision": 0.8333333333333334,
+          "recall": 0.7647058823529411,
+          "f1": 0.7975460122699386
+        },
+        "exception": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      }
+    }
+  },
+  "safety": {
+    "gold": "audit_read_only",
+    "llm_api": "not_called",
+    "network": "not_called",
+    "artifacts": "created_no_overwrite"
+  }
+}
