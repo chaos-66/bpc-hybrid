@@ -2792,3 +2792,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：新增收口 brief（六章）：B0/D1 状态摘要、B0/D1 证据表（细 Gold/句子级粗 Gold/Sun-marker 归因/已修问题/剩余局限，全部标注 development/attribution/fixed-snapshot）、对照矩阵（细 Gold/粗 Gold/marker 归因，D1 marker 行明确 N/A 不编造）、论文安全表述表（6 条风险-安全对照）、缺口清单（5 项优先级）。PROJECT_AUDIT.md 最小更新：B0 资产行（B0-R1 ready→B0-R0-R3 verified，method_conformance 已解除）、D1 资产行（补 R3 与粗 Gold 归因）、§4 队列 6.2/6.3 行过时状态文字（B0-R3 F1 0.71865、LEXICON-DECISION 已实施、粗 Gold 归因）。CLAIM_EVIDENCE_MATRIX.md：C06 0/150→150/150 adjudicated、C10 补 development 证据引用、新增 C19（归因证据行，VERIFIED_PROJECT_FACT，限定只写 development/attribution 表述）。未改 Gold、未调 LLM、未动 H1 决策状态；所有数字标注 development 口径。1492 tests pass。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-07T23:10:50.354468+00:00 - 口径决策登记：用户拍板评价口径对齐 Sun 句子级粒度，句子级粗 Gold（609 spans）为主口径；粗口径 B0/D1 全字段 P/R 数据入册
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1492 passed, 24 skipped in 139.74s (0:02:19)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`26baaa810f8e0ae490ade3b20987d6d269187f9f`；相关未提交路径：4 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户 2026-08-07 决策：Sun 粒度是句子级（443 spans/150 句），我们的 Gold 按 clause 拆（1055 spans）偏细；从现在起不要自己搞细，评价口径按 Sun 的粗粒度来。主口径=句子级粗 Gold（609 spans，语义 sha 6e19cf3c，B0/D1 同一粗 Gold）；细 Gold（1055 spans）降为对照口径，历史登记数字不变。粗口径 B0：P 0.7309/R 0.8801/F1 0.7986（per-field：modality 0.9174/actor 0.8203/action 0.8927/condition 0.7738/constraint 0.6182/exception 0.8800）；D1：P 0.9012/R 0.8456/F1 0.8726（per-field：modality 0.9712/actor 0.7579/action 0.9437/condition 0.8380/constraint 0.7427/exception 0.7619）。更新：brief 新增 §〇 口径决策+粗口径全字段表、B0/D1 摘要与对照矩阵主口径标注切换；PROJECT_AUDIT B0/D1 行同步；CLAIM_EVIDENCE_MATRIX C19 标注主口径决策。粗 Gold 是 development/attribution 变体，不是正式 Gold；formal 门禁不受影响。1492 tests pass。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

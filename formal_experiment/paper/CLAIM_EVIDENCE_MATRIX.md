@@ -26,7 +26,7 @@
 | C16 | Gold 是纯人工或从零人工标注 | PROHIBITED_CLAIM | Layer C 为 LLM 候选 | 必须披露 LLM assistance | 永不允许 |
 | C17 | Barrientos 已实现 Sun 六要素或标签完全兼容 | PROHIBITED_CLAIM | schema/modality 不同 | 只能写工程借鉴与显式 adapter | 永不允许 |
 | C18 | Stage 2 与 Stage 3 或不同数据的数字可直接证明优劣 | PROHIBITED_CLAIM | C1–C4 比较合同 | 必须分表并标证据等级 | 永不允许 |
-| C19 | B0/D1 的低分主要由标注粒度与 constraint 定义口径差异解释（归因证据） | VERIFIED_PROJECT_FACT | 句子级粗 Gold：B0 F1 0.7186→0.7986、D1 0.7756→0.8726（同一粗 Gold，sha 6e19cf3c）；Sun-marker 收敛：B0 constraint R 1.0 (13/13)、condition R 0.989 (91/92)。产物 `outputs/development/s27_b0_coarse_gold_cc_v1/`、`s27_b0_coarse_gold_sentence_granularity_v1/`、`s27_d1_coarse_gold_sentence_granularity_v1/`；汇总 `outputs/reports/b0_d1_experiment_closure_brief.md` | 只写"development/attribution 证据表明粒度与定义口径影响显著"；不得改写为正式结论或"方法已达 Sun 水平"；marker 收敛仅支持 R 侧结论 | 正式 Gold 冻结后复核 |
+| C19 | B0/D1 的低分主要由标注粒度与 constraint 定义口径差异解释（归因证据） | VERIFIED_PROJECT_FACT | 句子级粗 Gold（主口径，2026-08-07 用户决策对齐 Sun 粒度）：B0 F1 0.7186→0.7986、D1 0.7756→0.8726（同一粗 Gold，sha 6e19cf3c）；Sun-marker 收敛：B0 constraint R 1.0 (13/13)、condition R 0.989 (91/92)。产物 `outputs/development/s27_b0_coarse_gold_cc_v1/`、`s27_b0_coarse_gold_sentence_granularity_v1/`、`s27_d1_coarse_gold_sentence_granularity_v1/`；汇总 `outputs/reports/b0_d1_experiment_closure_brief.md` | 只写"development/attribution 证据表明粒度与定义口径影响显著"；不得改写为正式结论或"方法已达 Sun 水平"；marker 收敛仅支持 R 侧结论 | 正式 Gold 冻结后复核 |
 
 新增任何结果性句子前，先在本表新增一行。正式回填必须记录 manifest 路径、事件
 时间、样本数、失败数、模型和 evaluator 版本；否则维持 `BLOCKED_RESULT`。

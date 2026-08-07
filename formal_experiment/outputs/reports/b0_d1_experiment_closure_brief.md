@@ -13,6 +13,39 @@ Stage 3 gate。B0 只能表述为 `method-level independent reconstruction`；Go
 
 ---
 
+## 〇、评价口径决策（2026-08-07 用户拍板）
+
+**决策**：Sun et al. (2024) 的标注粒度是句子级（150 句 443 spans，~2.95 spans/句）；
+我们的 Gold 原本按 clause 级拆（1055 spans，~7.0 spans/句）。用户决定：
+**从现在起，评价口径对齐 Sun 的句子级粗粒度——主口径采用句子级粗 Gold
+（609 spans，语义 sha `6e19cf3c…`），不再以细 Gold 为主口径。**
+
+- 粗 Gold 构造规则（非主观）：每 record 合成单 clause 覆盖整句 [0, len(approved_text_en))；
+  每字段把所有从句 spans 合并为 1 个 span [min(start), max(end))；缺失字段保持缺失。
+  B0 与 D1 使用**同一个**粗 Gold（语义 sha 强制一致），预测均未重跑。
+- 细 Gold（1055 spans）降级为 development 对照口径，仍保留证据链
+  （B0-R3 0.7186、D1-R3 0.7756 等历史登记不变）。
+- 注意：粗 Gold 是 development / attribution 变体，**不是正式 Gold**；
+  formal Gold 门禁（route/data/stage3 重锁 + publication gate）与本文决策无关、不受影响。
+
+**粗口径（主口径）B0 / D1 全字段 P/R/F1（fixed predictions，2026-08-07）**
+
+| 字段 | B0 P | B0 R | B0 F1 | D1 P | D1 R | D1 F1 |
+|---|---|---|---|---|---|---|
+| overall | 0.7309 | 0.8801 | **0.7986** | 0.9012 | 0.8456 | **0.8726** |
+| modality | 0.8474 | 1.0000 | 0.9174 | 0.9826 | 0.9600 | 0.9712 |
+| actor | 0.7077 | 0.9756 | 0.8203 | 0.6667 | 0.8780 | 0.7579 |
+| action | 0.8730 | 0.9133 | 0.8927 | 0.9762 | 0.9133 | 0.9437 |
+| condition | 0.7029 | 0.8607 | 0.7738 | 0.9185 | 0.7705 | 0.8380 |
+| constraint | 0.5606 | 0.6889 | 0.6182 | 0.7771 | 0.7111 | 0.7427 |
+| exception | 0.7857 | 1.0000 | 0.8800 | 0.8000 | 0.7273 | 0.7619 |
+
+证据：`outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/report.json`、
+`outputs/development/s27_d1_coarse_gold_sentence_granularity_v1/report.json`。
+本表所有数字为 development / attribution / fixed-snapshot 结果，非 final formal result。
+
+---
+
 ## 一、B0/D1 当前状态摘要
 
 ### B0（sun_rule_only，规则方法）
@@ -21,11 +54,12 @@ Stage 3 gate。B0 只能表述为 `method-level independent reconstruction`；Go
   LEXICON-DECISION 正向或持平、SCOPE-DISAMBIG 实测负结果已记局限、CLAUSE-REVIEW 不改动）；
   方法级一致性 `verified_method_level_independent_reconstruction`（2026-08-04 用户授权，
   非 exact reproduction）。
-- **主口径**（细 Gold，1055 spans）：**F1 0.71865（P 0.6845 / R 0.7564）**，
-  用户条件授权为论文依据候选。
+- **主口径（句子级粗 Gold，609 spans，2026-08-07 用户决策）**：**F1 0.7986（P 0.7309 / R 0.8801）**；
+  细 Gold 为对照口径：F1 0.71865（P 0.6845 / R 0.7564），用户条件授权为论文依据候选。
 - **低分解释（归因实验，两路互补）**：
   1. 句子级粗 Gold（609 spans）：F1 0.7986（P 0.7309 / R 0.8801）——我们的 Gold 比 Sun
      更细（clause 级 7.0 spans/句 vs Sun 句子级 ~2.95），细粒度标注是 P/R 的主要负担；
+     口径现已切换为粗粒度（见 §〇）；
   2. Sun Table-4 marker 收敛（constraint 302→13、condition 214→92）：constraint R 1.000
      (13/13)、condition R 0.989 (91/92)——我们的 constraint 定义范围比 Sun 宽约 8-23 倍，
      低分根源是定义口径差异。
@@ -37,8 +71,8 @@ Stage 3 gate。B0 只能表述为 `method-level independent reconstruction`；Go
 - **已收口**：v6 prompt 配方锁定（D1-R2，`configs/models/estg150_d1_active_registry_v1.json`，
   deepseek-v4-pro / temp0 / top_p1 / max_tokens4096 / thinking-disabled / 无 json_object）；
   R3 固定快照干净重跑复现成功（D1-R3 verified，150/150 有效、0 事故）。
-- **主口径**（细 Gold）：**F1 0.7756（P 0.8793 / R 0.6938）**；句子级粗 Gold：
-  **F1 0.8726（P 0.9012 / R 0.8456）**。
+- **主口径（句子级粗 Gold）**：**F1 0.8726（P 0.9012 / R 0.8456）**；细 Gold 为对照口径：
+  F1 0.7756（P 0.8793 / R 0.6938）。
 - **当前领先但仍有短板**：constraint 仍是最大错误源（R3 中 302 个 Gold span 有 100 个
   wrong_field、69 个 not_extracted）；actor 存在泛指主语误抽（P 侧历史 0.594）；整体偏
   保守漏抽（not_extracted 154）。
@@ -49,8 +83,8 @@ Stage 3 gate。B0 只能表述为 `method-level independent reconstruction`；Go
 
 | 项 | 数值 | 证据路径（formal_experiment/ 内，均 tracked） |
 |---|---|---|
-| 细 Gold P/R/F1（主口径） | 0.6845 / 0.7564 / **0.7186** | `outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/report.json`（fine_metrics）；预测源 `outputs/development/s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1/b0_attempts.json`；分析 `docs/B0_ERROR_ANALYSIS.md` §1.1/§8 |
-| 句子级粗 Gold P/R/F1 | 0.7309 / 0.8801 / **0.7986** | `outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/report.json`（coarse_metrics，粗 Gold 语义 sha `6e19cf3c…`）；脚本 `scripts/coarse_gold_b0_sentence_granularity_v1.py`；commit `4611337` |
+| 细 Gold P/R/F1（对照口径） | 0.6845 / 0.7564 / **0.7186** | `outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/report.json`（fine_metrics）；预测源 `outputs/development/s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1/b0_attempts.json`；分析 `docs/B0_ERROR_ANALYSIS.md` §1.1/§8 |
+| 句子级粗 Gold P/R/F1（**主口径**，2026-08-07） | 0.7309 / 0.8801 / **0.7986** | `outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/report.json`（coarse_metrics，粗 Gold 语义 sha `6e19cf3c…`）；脚本 `scripts/coarse_gold_b0_sentence_granularity_v1.py`；commit `4611337` |
 | Sun-marker condition R | **0.989（91/92）** | `outputs/development/s27_b0_coarse_gold_cc_v1/report.json`；脚本 `scripts/coarse_gold_b0_condition_constraint_v1.py`；`docs/B0_ERROR_ANALYSIS.md` §10；commit `40a0262` |
 | Sun-marker constraint R | **1.000（13/13）** | 同上（P 侧不可解读：单边收敛设计，收敛后 Gold 13 个 vs 预测数百个） |
 | 已修：action span 吞并 | 主口径持平；主语开头 action 8→0；strict-exact 3.0× | `docs/B0_ERROR_ANALYSIS.md` §5-C1；产物 `outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actionfix_hist56d_v1/` |
@@ -70,7 +104,7 @@ Stage 3 gate。B0 只能表述为 `method-level independent reconstruction`；Go
 | 注册旧 run P/R/F1（s28_s29） | 0.9068 / 0.6645 / **0.7669** | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/metrics.json`；`docs/PROJECT_AUDIT.md` §3.1 |
 | v6 verify-pass P/R/F1（R1） | 0.8799 / 0.6900 / **0.7735** | `outputs/development/s27_d1_v6_verify_pass_150_hist56d_v1/verify_pass_evaluation_20260805.json`；`docs/D1_ERROR_ANALYSIS.md` §8 双评表 |
 | R3 干净重跑 P/R/F1 | 0.8793 / 0.6938 / **0.7756**（+0.0021 vs R1） | `outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/evaluation_d1_r3_20260806.json`（r3_clean_rerun）；manifest 同目录；`docs/D1_ERROR_ANALYSIS.md` §8 |
-| 句子级粗 Gold P/R/F1 | 0.9012 / 0.8456 / **0.8726** | `outputs/development/s27_d1_coarse_gold_sentence_granularity_v1/report.json`（粗 Gold 与 B0 实验语义 sha 相同 `6e19cf3c…`，可比）；脚本 `scripts/coarse_gold_d1_sentence_granularity_v1.py`；commit `7899fd9` |
+| 句子级粗 Gold P/R/F1（**主口径**，2026-08-07） | 0.9012 / 0.8456 / **0.8726** | `outputs/development/s27_d1_coarse_gold_sentence_granularity_v1/report.json`（粗 Gold 与 B0 实验语义 sha 相同 `6e19cf3c…`，可比）；脚本 `scripts/coarse_gold_d1_sentence_granularity_v1.py`；commit `7899fd9` |
 | 主要错误：constraint wrong_field | **100**（内容被抽、落错字段，主要进 action/condition） | §8 失败类型表；R3 逐字段 unmatched 分布 |
 | 主要错误：constraint not_extracted | **69**（完全未抽） | 同上 |
 | 主要错误：actor 泛指主语误抽 | 旧 run P 0.594（69 pred vs 48 gold，23 无 Gold 交叠） | `docs/D1_ERROR_ANALYSIS.md` §3/§4-D1-C4 |
@@ -82,8 +116,8 @@ Stage 3 gate。B0 只能表述为 `method-level independent reconstruction`；Go
 
 | 评价口径 | B0 P/R/F1 | D1 P/R/F1 | 谁领先 | 可解释原因 |
 |---|---|---|---|---|
-| 细粒度 Gold（1055 spans，主口径） | 0.6845 / 0.7564 / **0.7186** | 0.8793 / 0.6938 / **0.7756** | **D1**（F1 +0.057） | D1 高精度但保守（P 0.879 vs 0.685）；B0 规则方法字段归属错误主导（C1 action 吞并 + C2 constraint↔condition 混淆）拖低 P，R 反而高于 D1（0.756 vs 0.694） |
-| 句子级粗 Gold（609 spans） | 0.7309 / 0.8801 / **0.7986** | 0.9012 / 0.8456 / **0.8726** | **D1**（F1 +0.074） | 粒度放松两方法 R 均大升（B0 +0.124、D1 +0.152）→ 标注粒度负担证据；D1 P 高保持，领先扩大 |
+| **句子级粗 Gold（609 spans，主口径，2026-08-07）** | 0.7309 / 0.8801 / **0.7986** | 0.9012 / 0.8456 / **0.8726** | **D1**（F1 +0.074） | 对齐 Sun 句子级粒度；B0 与 D1 在 Sun 同口径下均有明显提升（vs 细 Gold：B0 +0.080、D1 +0.097）；D1 P 高保持，领先扩大 |
+| 细粒度 Gold（1055 spans，对照口径） | 0.6845 / 0.7564 / **0.7186** | 0.8793 / 0.6938 / **0.7756** | **D1**（F1 +0.057） | D1 高精度但保守（P 0.879 vs 0.685）；B0 规则方法字段归属错误主导（C1 action 吞并 + C2 constraint↔condition 混淆）拖低 P，R 反而高于 D1（0.756 vs 0.694） |
 | condition/constraint Sun-marker 归因（R 侧） | condition R 0.989 (91/92)；constraint R 1.000 (13/13) | **N/A**（D1 未做同口径 marker 收敛实验，不编造；如需可补跑，R 侧可解读、P 侧单边收敛不可解读） | **B0（仅 R 侧）** | B0 在 Sun 公开定义内召回≈满分；我们 constraint 302 个中仅 4%（13 个）符合 Sun marker 定义（Sun 自身 35 个）→ 定义范围差异是低分主因之一 |
 
 ---
@@ -96,7 +130,7 @@ Stage 3 gate。B0 只能表述为 `method-level independent reconstruction`；Go
 | "Sun original 150" / "Sun 的 443 spans" | "项目独立构建的 LLM-assisted, human-adjudicated EStG-150 benchmark"（150 sample_ids 永久锁定；不是 Sun 原始 150，不是 exact reproduction） |
 | "final formal result" / "正式结论" | "development / attribution / fixed-snapshot 结果（56d2b03 历史快照）"；formal Gold 未发布（BLOCKERS 5），正式比较（B0-R4/D1-R4）未跑 |
 | "H1 已证明有效" | H1 开发机制已修复（S2.8D 系列 canary 成功），但**无新性能结果**；H1 路线选择待导师决定（A 放弃以 D1 为主 / B 选择性风控触发），不写任何"H1 已证明"表述 |
-| "D1 完全解决法规抽取" | "D1 是当前领先方法（细 Gold F1 0.7756，development）"，但 constraint 仍弱（wrong_field 100 + not_extracted 69）、actor 泛化误抽仍在 |
+| "D1 完全解决法规抽取" | "D1 是当前领先方法（粗 Gold 主口径 F1 0.8726，development）"，但 constraint 仍弱（wrong_field 100 + not_extracted 69）、actor 泛化误抽仍在 |
 | "B0 代码错误导致低分" | "B0 确定性代码错误已修（B0-R1 verified 闭环）"；低分由 Gold 粒度更细 + constraint 定义范围更宽 + 规则方法字段边界天花板解释（归因实验证据，见 §二/§四） |
 
 ---
