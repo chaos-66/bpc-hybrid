@@ -1,10 +1,10 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.4.21
+**文档版本**：3.5.0
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
-**最后更新**：2026-08-02
-**方法学主干**：Sun et al. (2024)  
-**当前实施优先级**：实验先完成 Stage 2，再补 Stage 1 和 Stage 3；论文非结果章节从现在并行写作
+**最后更新**：2026-08-08
+**方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
+**当前实施优先级**：实验先完成 Stage 2，再补 Stage 1 和 Stage 3；论文非结果章节从现在并行写作；2026-08-08 导师汇报后方向锁定见 §8.8
 
 > 所有 Agent 在修改实验代码、配置、数据协议或研究设计前必须完整阅读本文。
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
@@ -172,11 +172,17 @@ Tregex/Tsurgeon + reconstructed markers、token classifier/CRF（仅在训练 Go
 
 ### 8.3 Stage 2 完整方法
 
-| ID | 正式含义 | 当前状态 |
-|---|---|---|
-| B0 / `sun_rule_only` | BERT-TextCNN + CoreNLP/Tregex/Tsurgeon | blocked；现有 runner 只是 heuristic |
-| H1 / `sun_llm_fallback` | 同一 B0，仅按预注册 trigger 修复失败/不确定字段 | formal blocked；development runner 已强制绑定落盘 B0，并具备原子 merge 与逐 patch telemetry |
-| D1 / `direct_llm` | LLM 直接生成同一 Rule Record | development-only；真实调用未授权 |
+> 2026-08-08 起正式命名直观化（§8.8.3）：`B0 / sun_rule_only → Rules-Only`（纯规则法）、
+> `H1 / sun_llm_fallback → Rules+LLM-Repair`（规则+LLM 修复）、`D1 / direct_llm →
+> Direct-LLM`（直接 LLM）。新文档一律用正式命名；机器 ID 与 legacy 代号仅用于代码/
+> 注册表兼容。Legacy 代号映射：B0 / `sun_rule_only`、H1 / `sun_llm_fallback`、
+> D1 / `direct_llm`。
+
+| Legacy 代号 | 正式命名 | 机器 ID | 含义 | 当前状态 |
+|---|---|---|---|---|
+| B0 | **Rules-Only**（纯规则法） | `sun_rule_only` | 非 LLM 传统流水线：BERT-TextCNN 模态分类 + CoreNLP/Tregex/Tsurgeon 六要素抽取（Sun Stage 2 方法级重建） | B0-R0–R3 verified；B0-R4/R5 blocked on formal Gold |
+| H1 | **Rules+LLM-Repair**（规则+LLM 修复） | `sun_llm_fallback` | 同一 Rules-Only，仅按预注册 trigger 修复失败/不确定字段 | **对照方法（不再深究，2026-08-08 用户确认，§8.8.1）**；development 机制已验证，全量 150 运行主口径 F1 0.7621 vs B0 0.7986（净负） |
+| D1 | **Direct-LLM**（直接 LLM） | `direct_llm` | LLM 直接生成同一 Rule Record（端到端，不读取 B0 预测） | D1-R0–R3 verified（主方法，粗 Gold F1 0.8726）；D1-R4/R5 blocked on formal Gold |
 
 正式主表的最低方法覆盖为：简单规则下限、一个强监督学习 baseline、完整 B0、H1、
 D1。模态分类与六要素抽取分别选方法，不能用一个只做分类的 baseline 冒充完整
@@ -206,7 +212,7 @@ condition/constraint/exception 的数量与嵌套、被动语态、隐含 actor�
 | S2.5 | 完成 CoreNLP/Tregex/Tsurgeon extractor | S2.3 | blocked | 六要素规则和 fixtures 通过 |
 | S2.6 | 组合并验证完整 B0 | S2.4-S2.5 | blocked | 不调用 LLM，输出 canonical Rule Record |
 | S2.7 | 实现代表性非 LLM baseline | S2.1/S2.2 | blocked | 相同输入和 evaluator 可运行 |
-| S2.8 | 预注册 H1 trigger/merge/call budget | S2.6 | blocked；development wiring repaired 2026-07-30 | H1 强制复用同一落盘 B0；Gold-blind trigger、原子 merge、拒绝原因与硬预算可审计；正式 trigger 仍须在不看 test 结果时锁定 |
+| S2.8 | 预注册 H1 trigger/merge/call budget | S2.6 | **不再推进（2026-08-08）**：H1 降级为对照方法（§8.8.1），对照所需机制（development wiring、canary、全量 150 运行 commit 74614e3）已具备；正式 trigger 预注册取消 | 对照臂结果可复现：主口径 F1 0.7621 vs B0 0.7986（净负，证据支持 D1-primary 决策 A）；机制工作正常但 trigger+repair 配方增加 FP 而非召回 |
 | S2.9 | 锁定 D1 prompt/few-shot/model/budget | S2.2 | **verified (2026-08-06)** | **D1 侧达成（2026-08-06，D1-R2）**：v6 prompt hash 3aa64877 固定、model/sampling/seed 策略与预算合同锁定于 `configs/models/estg150_d1_active_registry_v1.json`；Gold 不可见（few-shot 为合成 fixture、runner 不读 Gold）；S2.2 frozen（150/150 adjudicated，2026-08-06 恢复后 freeze validator 通过），依赖满足 |
 | S2.10 | 主数据组件评价 | S2.2/S2.6-S2.9 | blocked | 模态与六字段指标分别报告 |
 | S2.11 | 复杂法律语料集冻结 | G0.5 | blocked | 数据资格门禁 + Gold/映射协议 |
@@ -306,6 +312,170 @@ label 另表。**迭代规则**：候选允许字段间 P/R trade-off；Agent �
 每批纪律：prompt/代码变更 + focused tests → 预算内真实 pilot（**逐批用户授权**）
 → 同口径重评 → delta 与原因记录 → keep/reject → `record_change.py` → 独立 commit
 + push。禁止读 Gold 反向调 prompt。
+
+## 8.8 导师汇报确认与方向锁定（2026-08-08）
+
+本节记录 2026-08-08 向导师汇报后确认的四项事实与执行决定。本节是后续论文写作、
+消融实验与各 Agent 派工的唯一依据；任何与此冲突的动作必须先更新本节并给出新证据。
+
+### 8.8.1 事实 1：H1（Rules+LLM-Repair）不再深究，仅作为对照
+
+**决定**：H1 降级为**对照方法**，不再作为主方法投入。论文保留其对照臂结果，
+用于证明"无证据约束的选择性 LLM 修复会净负，反衬证据约束的必要性"。
+
+**为什么效果不好**（依据 commit `74614e3`，2026-08-08 全量 150 运行，
+deepseek-v4-pro，用户授权 150 calls）：
+- 主口径（句子级粗 Gold）F1 **0.7621 vs B0 0.7986（−0.0365，净负）**；细 Gold
+  F1 0.6875 vs 0.7186（同样净负）；
+- LLM 修复在 actor 字段**过度抽取**：P 0.7077→0.2754，actor spans 65→167；
+- 其余 5 个字段持平或微升；机制本身工作正常（103 accepted / 89 changed /
+  gate=True / 0 incidents），问题出在 **trigger+repair 配方增加 FP 而非召回**。
+
+**困难点**：
+1. **trigger 与失败错位**：trigger 只看到推理时信号（低置信、结构冲突、候选多义），
+   而 B0 压倒性失败模式是"字段归属错误"（79% 的 missed Gold span 内容被抽到其它
+   字段）——这类失败在推理时不可见，Gold-blind trigger 无法对准真正需要修复的样本；
+2. **修复难以约束在字段边界内**：请求补 actor 时 LLM 倾向扩大 span、补多个候选，
+   把 precision 打穿（actor spans 65→167 的直接原因）；
+3. **收益上限受限**：修复收益被触发子集覆盖限制，成本-收益曲线不利。
+
+**优化方向（仅当未来恢复时参考，当前不执行）**：
+- 保守修复配方：actor span 长度上限 + 候选数上限 + 修复后 verbatim 回指强制校验；
+- 用 risk-coverage 曲线在 development 上选择触发子集，而非全触发；
+- 字段级白名单 + patch 前后 diff 约束。
+
+**论文表述**：H1 作为对照臂报告"选择性混合"的负结果；不声称 H1 是贡献。
+
+### 8.8.2 事实 2：B0（Rules-Only）/ D1（Direct-LLM）局限性（列表 + 例子）
+
+**B0（纯规则法，非 LLM）局限性**：
+1. **字段归属错误主导**（C1 action 吞并）：matched action 中 192/212 过长、中位超
+   Gold 54 字符。例：`"the data shall be processed only to the extent necessary"`
+   中整段被并入 action，而 Gold 将 `"to the extent necessary"` 归 constraint。
+2. **constraint↔condition 双向混淆**（C2：114 个 extra constraint 压 condition Gold、
+   31 个反向），例：`"to the extent"` 双触发。SCOPE-DISAMBIG 候选实测 −0.0005 已回退：
+   "不读 Gold"前提下规则层不可安全消歧 → 记为**方法局限**而非代码缺陷。
+3. **词典覆盖受限**：13 个无词典覆盖名词漏抽（successor/spouse/child/developers/
+   bank/body/society/owners/shareholders/beneficiary 等）；代词 `"It"` 作 actor 需
+   Gold 语义裁决（未覆盖 1/48）。
+4. **定义范围差异**：我们的 constraint Gold 302 个中仅 13 个（4%）符合 Sun 公开
+   marker 定义（Sun 自身仅 35 个）→ 定义口径差异是低分主因之一；Sun-marker 收敛后
+   B0 constraint R=1.0 (13/13)、condition R=0.989 (91/92)。
+5. **缺 Sun 原资产**：Tsurgeon 为诚实非实现（fail-closed 守卫）；词典规模与分词
+   机制为已披露适配。
+
+**D1（直接 LLM）局限性**：
+1. **constraint 召回弱**：R1 基线 R=0.288（99 个 constraint 内容进 action span、
+   91 个完全未抽）；v6 修至 0.417 仍为最弱字段；R3 失败类型：wrong_field 169
+   （constraint 100）+ not_extracted 154（constraint 69）。
+2. **actor 泛化误抽**：历史 run P=0.594（69 pred vs 48 gold）。例：表述
+   `"the body shall ensure…"` 中抽取无 Gold 交叠的泛指主语作为 actor。
+3. **高精度保守型**：细 Gold 口径 P 0.879 vs B0 0.685，但 R 0.694 vs 0.756——
+   "宁可漏抽不误抽"在低资源字段（exception/constraint）牺牲召回。
+4. **依赖真实 API 与预算合同**：每批需用户授权 + `--max-calls` 硬上限；可复现性
+   依赖 transport 配方（thinking-disabled、无 json_object、temp 0）与 prompt hash
+   三方锁定。
+
+**对照矩阵（主口径粗 Gold，2026-08-07，同一 Gold 同一 evaluator）**：
+
+| 口径 | B0 P/R/F1 | D1 P/R/F1 | 谁领先 | 可解释原因 |
+|---|---|---|---|---|
+| 句子级粗 Gold（609 spans，主口径） | 0.7309 / 0.8801 / **0.7986** | 0.9012 / 0.8456 / **0.8726** | **D1（F1 +0.074）** | D1 高精度保持；B0 召回更高（R 0.8801 vs 0.8456） |
+| 细 Gold（1055 spans，对照口径） | 0.6845 / 0.7564 / **0.7186** | 0.8793 / 0.6938 / **0.7756** | **D1（F1 +0.057）** | B0 字段归属错误拖低 P；D1 保守漏抽拖低 R |
+
+**结论**：B0 靠规则覆盖全面（R 高）、D1 靠 LLM 精度高（P 高），错误模式互补
+（B0 字段归属错、D1 低召回）；但 H1 实测净负（§8.8.1）说明"简单混合"不成立，
+主叙事以 D1 为方法主体、B0 为强对照。
+
+### 8.8.3 事实 3：方法命名直观化（B0/H1/D1 → 正式命名）
+
+导师指出 B0/H1/D1 代号不直观，审阅人无法快速理解。自 2026-08-08 起统一使用：
+
+| Legacy 代号 | 机器 ID（不变） | 正式命名（英文） | 中文名 | 一句话本质 |
+|---|---|---|---|---|
+| B0 | `sun_rule_only` | **Rules-Only** | 纯规则法 | 非 LLM 传统流水线（BERT-TextCNN 分类 + CoreNLP/Tregex 规则抽取），Sun Stage 2 方法级重建 |
+| H1 | `sun_llm_fallback` | **Rules+LLM-Repair** | 规则+LLM 修复 | 规则为主，预注册触发器按字段让 LLM 修复；**对照方法** |
+| D1 | `direct_llm` | **Direct-LLM** | 直接 LLM | 纯 LLM 端到端生成六要素 Rule Record，不读取规则预测 |
+
+**写作规则**：新文档一律用正式命名；旧文档/代码引用时首次出现给出映射
+（如"Direct-LLM（旧代号 D1）"）；机器注册表 `configs/methods.json` 保留 legacy
+`id`（代码兼容）并新增 `paper_label` 字段承载正式命名。
+
+### 8.8.4 事实 4：与 Barrientos et al. (2026) 严格对比 + 贡献细模块化（重要）
+
+**背景**：Barrientos et al. (2026) 是**本项目直接借鉴来源**（LLM 结构化输出、
+验证、受控词汇、归一化与评估纪律）；Sun et al. (2024) 是三阶段方法学主干。
+导师要求：(a) 严格对比 Barrientos 的方法；(b) 消融实验做丰富——"哪个模块缺了
+我的不行；把他的模块换成我的模块更好"；(c) 列表跑数据，逐项说明我的好在哪、
+他的好在哪、综合谁好；(d) 把贡献拆成细模块讲清楚，**不能只说"调用了 LLM"**
+（prompt 只是其中一小部分），方法章节要支撑 4–5 页。
+
+**已锁定的对比事实**（见 `docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`
+与 `docs/research/BARRIENTOS_LLM_ROLE.md`）：
+1. **任务与 schema 不同**：Barrientos=change-impact 表示（precondition/norms/
+   temporal_validity）；我们=Sun 六要素 span 抽取（modality/actor/action/condition/
+   constraint/exception + evidence span）→ **schema 不能照搬**（已锁定）。
+2. **modality 3 类 vs 4 类**：Barrientos 缺 `definition`；我们的 prompt 显式扩展
+   4 类并定义触发语义（"主要目的是定义"而非"包含定义"）。
+3. **受控词汇**：Barrientos 44 模式 4 维度（control_flow/resource/data/time）约束
+   normalized view；我们=public marker lexicon（64 marker）+ 受控 six-field schema
+   （normalized view 受控，原文 span 不覆盖）。
+4. **评估纪律**：Barrientos 3 维度（semantic coverage / structural encoding /
+   deontic correctness）+ **style-equivalent alignment**（表达不同但语义相同算正确）
+   + 专家核验（κ=0.52）；我们=span overlap 主口径 + 细/粗 Gold 双口径 + 失败类型
+   归因 + label 面板 → style-equivalent 概念列为论文方法学贡献候选。
+5. **工程纪律**：strict JSON schema、temperature 0、稳定性测试、deterministic
+   normalization → 我们已实现（D1-R2 锁定配方、预算合同、prompt hash 三方一致）。
+6. **稳定性实验差距**：Barrientos 20 句×20 次；我们当前 temp0 + prompt hash 锁定，
+   正式 5 次重跑稳定性实验**尚未执行** → 列入消融计划 AB-9。
+
+**贡献细模块化（论文方法章节 4–5 页的叙述骨架；禁止只写"调用了 LLM"）**：
+
+Direct-LLM 拆为 8 个可单独叙述/消融的模块：
+1. **六要素 schema 与证据契约**：verbatim span 回指（`text == source[start:end]`）、
+   clause 内 span、actor-action map、order relations、unsupported_or_ambiguous 兜底
+   ——契约决定输出可验证性；
+2. **prompt 工程（v1→v6 版本线）**：constraint 六子类显式定义（法律引用/时间/数量/
+   "within the meaning of"/"pursuant to"/"subject to"）、empty=absent 语义、禁止并入
+   action/condition 指令；v6 实测 constraint R 0.288→0.417（+0.129）。**prompt 只是
+   贡献的一部分，不是全部**；
+3. **few-shot 合成 fixture 工程**：6 个合成样例覆盖 condition/constraint/exception
+   缺口，与 150 测试句零交叠（Gold 不可见保障，S2.9 DoD）；
+4. **结构化输出 transport 配方**：thinking-disabled、无 json_object、max_tokens
+   4096、temp0/top_p1——150/150 有效、0 事故的可复现调用层；
+5. **确定性校验与后处理链**：canonical validator（格式/回指/字段权限）+ span
+   canonicalizer（fail-closed unique exact-text re-anchor）——把 LLM 输出转成严格
+   契约数据，坏 span/clause/边丢弃并审计；
+6. **预算与授权合同**：逐批授权、`--max-calls` 硬上限、manifest 记录 llm_calls/
+   max_calls/模型/采样/失败率；
+7. **双口径评价协议**：`sun_literal_overlap@2.0.0` 主口径 + 细 Gold（1055 spans）/
+   粗 Gold（609 spans，Sun 句子级粒度）双口径 + 失败类型归因（matched/wrong_field/
+   not_extracted）；
+8. **可复现性资产**：prompt hash 三方锁定（磁盘/loader/manifest）、注册表
+   `configs/models/estg150_d1_active_registry_v1.json`。
+
+Rules-Only 的可叙述模块：public marker lexicon 重建（来源/哈希/版本）、模态分类器
+（BERT-TextCNN 重建 + marker 路由 + 德英 cue 验证）、CoreNLP 句法/依赖抽取、Tregex
+模式注册表、Tsurgeon fail-closed 守卫、actor/action 归属解析（§8.6.1 各批次成果）。
+
+**消融实验矩阵（导师要求"列表跑数据"，全部需逐批用户授权或离线可跑）**：
+
+| 消融 ID | 变量 | 我的设计 vs 替换方案 | 回答的问题 | 状态 |
+|---|---|---|---|---|
+| AB-1 | prompt 字段定义 | v6 全字段定义 vs 去掉 constraint 子类定义 | 字段定义对 constraint R 的贡献（已有证据：v5→v6 0.288→0.417） | 部分有证据，正式表待补 |
+| AB-2 | few-shot | 6 合成 fixture vs 0-shot vs Barrientos 风格样例 | few-shot 对低资源字段的价值 | 待跑 |
+| AB-3 | modality 类别 | 4 类（Sun）vs 3 类（Barrientos 投影） | `definition` 类的独立价值 | 待跑（离线可评） |
+| AB-4 | 受控词汇 | 六字段受控 schema vs 移植 Barrientos 44 模式 dual-view | 我的归一化约束 vs 他的 pattern 约束 | 待跑 |
+| AB-5 | 校验链 | 有 validator/canonicalizer vs 无（裸 JSON 采纳） | 确定性后处理对有效率的贡献 | 可离线推理 |
+| AB-6 | transport | thinking-disabled/无 json_object vs 默认配方 | 事故率与可复现性 | 已有 0 事故证据，可整理 |
+| AB-7 | 评价口径 | 细 Gold vs 粗 Gold vs Sun-marker 收敛 | 口径敏感性（已有 0.7186/0.7986、0.7756/0.8726） | 有证据，整理成表 |
+| AB-8 | B0 模块 | lexicon 逐来源（Sleimi/LexNLP/Wiktionary）、marker 路由、跨语言验证开关 | 每个规则模块的边际贡献 | 部分有证据（R1 各批次） |
+| AB-9 | 稳定性 | 5 次重跑 agreement（对照 Barrientos 20 次） | 成本-收益的稳定性保证 | 待授权 |
+| AB-10 | style-equivalent 评估 | 开启 vs 关闭该评估维度 | 评估鲁棒性（借鉴 Barrientos 的贡献） | 待实现 |
+
+**输出要求**：每项消融至少一行结论表——「我的模块 vs 换 Barrientos 模块 vs 去掉
+模块」三列指标，明确写"我的好在哪里 / 他的好在哪里 / 综合谁好及原因"。全部以
+development/授权预算内真实或离线方式运行；涉及真实 LLM 的消融逐批授权。
 
 ## 9. Stage 3：匹配、违规检测与分类
 
@@ -410,7 +580,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 | P1 | Stage 2 数据、Gold、复杂度合同 | in progress；EStG-150 0/150 |
 | P2 | 完整 B0 | blocked |
 | P3 | Stage 2 多 baseline | blocked on P1/P2 |
-| P4 | H1/D1 与 Stage 2 复杂集 | blocked on P2/P3 |
+| P4 | Rules+LLM-Repair（对照）/ Direct-LLM 与 Stage 2 复杂集 | Direct-LLM：blocked on formal Gold（D1-R4）；Rules+LLM-Repair：**不再深究，仅作对照（2026-08-08，§8.8.1）** |
 | P5 | Stage 1 完整实现与评价 | planned after Stage 2 core |
 | P6 | Sun/Winter Stage 3 复现 | blocked on P5 and Stage 3 Gold |
 | P7 | Stage 3 多 baseline 与复杂扩展 | blocked on P6 |
@@ -431,7 +601,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 | PW0 | 论文目录、骨架、主张矩阵、TODO 和空表 | verified | 本轮建立且无虚构结果 |
 | PW1 | 引言、背景、RQ0–RQ4 | ready | 全部结果性表述为待检验或 TODO |
 | PW2 | Sun/Winter/Sleimi/Michel/Barrientos 相关工作 | ready | 内部证据回到可核验原论文 |
-| PW3 | 三阶段架构和 B0/H1/D1 方法设计稿 | ready | 未完成组件使用 TODO-STATUS |
+| PW3 | 三阶段架构和 Rules-Only / Rules+LLM-Repair / Direct-LLM（旧代号 B0/H1/D1）方法设计稿，贡献按 §8.8.4 细模块化（8 模块 Direct-LLM + 7 模块 Rules-Only） | ready | 未完成组件使用 TODO-STATUS |
 | PW4 | 数据、五层 Gold 与标注协议 | partial-ready | S2.1/S2.2 后回填实际统计 |
 | PW5 | baseline、指标、统计与复现设计 | ready | 参数在对应任务冻结后回填 |
 | PW6 | 结果表和图模板 | ready-template-only | 禁止填非正式数字 |
@@ -476,6 +646,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 
 | 版本 | 日期 | 变更 | 依据 |
 |---|---|---|---|
+| 3.5.0 | 2026-08-08 | **导师汇报后方向锁定（§8.8 新增四项事实）**：(1) Rules+LLM-Repair（旧代号 H1）**降级为对照方法、不再深究**——全量 150 运行（commit 74614e3）主口径 F1 0.7621 vs Rules-Only 0.7986（净负）、LLM 修复过度抽取 actor（P 0.7077→0.2754），机制正常但 trigger+repair 配方加 FP 不加召回；S2.8 正式 trigger 预注册取消；§8.3 方法表/P4 里程碑/PW3 同步；(2) Rules-Only 与 Direct-LLM **局限性列表+实例**写入 §8.8.2（B0：字段归属错误 C1/C2、词典缺口 13 名词+"It"、Sun-marker 定义口径差异、Tsurgeon 诚实非实现；D1：constraint R 弱 0.417、actor 泛化误抽 P 0.594、高精度保守型、API/预算依赖）；(3) **命名直观化**：B0→Rules-Only（纯规则法）、H1→Rules+LLM-Repair（规则+LLM 修复）、D1→Direct-LLM（直接 LLM），映射表 §8.8.3，机器 ID 不变、methods.json 增 paper_label；(4) **与 Barrientos et al. (2026) 严格对比 + 贡献细模块化**（§8.8.4）：Direct-LLM 拆 8 模块（schema 契约/prompt 工程/few-shot/transport/校验链/预算/双口径评价/可复现资产）、Rules-Only 拆 7 模块；消融矩阵 AB-1..AB-10（列表跑数据：我的模块 vs 换 Barrientos 模块 vs 去掉模块，明确谁好及原因）；论文方法章节目标 4–5 页、禁止只写"调用了 LLM" | 2026-08-08 导师汇报确认；H1 全量运行 commit 74614e3；B0/D1 收口 brief outputs/reports/b0_d1_experiment_closure_brief.md；Barrientos 审计 docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md；record_change 事件 + audit --with-tests |
 | 3.4.34 | 2026-08-06 | formal Gold 发布路径推进 2/4 前置（用户授权按 pipeline）：`experiment_contract.json` route.status→**locked**（最终版方法对齐按方法级独立复现口径完成：B0-R2 verified/crosswalk 11 元素、method_conformance_status 已翻转、official supplement 57 文件 hash 匹配；missing_for_lock 为披露项）与 stage2_dataset.status→**locked_for_human_review**（modality verified + phrase Gold freeze 150/150）；sun_modality_gate.py 中间状态期望同步；5 个状态依赖测试更新；BLOCKERS 7→5（`final_version_route_alignment_pending`/`stage2_dataset_route_relock_pending` 消除，新增 pass `reconstruction_route_locked`/`stage2_dataset_route_locked`）；1486 passed / 24 skipped。剩余前置：stage3.status=locked（需先完成最终子集配置+violation Gold 锁定，S2.11/S3 任务）+ publication gate 白名单精确匹配 | record_change 事件 + audit --with-tests |
 | 3.4.33 | 2026-08-06 | **S2.2 裁决冻结达成**：用户 2026-07-18 完成的 150/150 Layer E 裁决（adjudicated、reviewer=user）经用户授权从 56d2b03 历史 blob 恢复至活动 v2 文件（v2 工作流 2026-07-16 重建时未迁移；新脚本 `scripts/restore_layer_e_adjudication_from_56d2b03.py`，按 sample_id 合并 6 个用户输入字段、保留 llm_candidate 等、备份+validate_global 双真+原子替换）；gate 2 `human_review_freeze_ready` **False→True**（150/150 adjudicated、900/900 decisions、approved 150/150），BLOCKERS 8→7（`annotation_freeze_pending`→pass `annotation_freeze_ready`）；S2.2 行 → verified；S2.9 行 → verified（D1 侧锁定 + S2.2 frozen 依赖满足）；`validate_layer_d_v2.py` layer_e_pristine FALLBACK 语义更新（0/150 计数器不再适用，promote 从不写 Layer E，字节保护由 run_config sha256 主路径承担）；15 个状态依赖测试更新 + 3 项 restore 测试；1486 passed / 24 skipped。formal Gold 发布仍 blocked：route/data/stage3 各自重锁 + publication gate 状态白名单精确匹配；随后 D1-R4/B0-R4 三方法正式比较解锁 | Layer E 恢复 manifest + validate_global 报告 + record_change 事件 + audit --with-tests |
 | 3.4.32 | 2026-08-06 | D1-R3 完成：锁定配方固定快照干净重跑（150 calls v4pro 官方API thinking-disabled 无json_object 4096/temp0/top_p1；prompt sha 3aa64877、model 三态、sampling/transport 与 estg150_d1_active_registry_v1.json 逐项一致）；150/150 有效、0 验证失败、0 LLM 错误、0 事故；新评估脚本 scripts/evaluate_d1_r3_clean_rerun.py（git show 56d2b03 只读提取 Layer E/membership → build_canonical_gold_records，membership sha e8e62686 与注册绑定一致 → 同一进程双评 R1/R3）；R1 重评 F1 0.773495 与已登记数字逐位一致（评估路径交叉验证）；R3 F1 0.775625（P 0.879268/R 0.693839，missed 323 vs R1 327）；逐字段 F1 delta：modality −0.01123/actor −0.02778/action +0.00051/condition +0.00660/constraint +0.02094/exception +0.05929；失败类型分析（1055 gold span）：R3 matched 732/wrong_field 169（constraint 100 最大头）/not_extracted 154（constraint 69），R1 matched 728/wrong_field 185/not_extracted 142；结论=固定快照复现 R1 并微优（+0.0021，噪声范围），可重放性验证成功；D1-R3 行 → verified；D1_ERROR_ANALYSIS.md §8 追加 R3 失败类型小节；PROJECT_AUDIT 同步。D1-R4 仍 blocked on formal Gold | D1-R3 experiment_run 事件 + evaluation_d1_r3_20260806.json + audit --with-tests（1483 passed） |

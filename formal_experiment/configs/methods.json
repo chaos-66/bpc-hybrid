@@ -3,6 +3,8 @@
   "methods": [
     {
       "id": "sun_rule_only",
+      "paper_label": "Rules-Only",
+      "paper_label_zh": "纯规则法",
       "canonical_label": "sun_stage2_baseline",
       "role": "baseline",
       "llm_used": false,
@@ -14,16 +16,20 @@
     },
     {
       "id": "sun_llm_fallback",
+      "paper_label": "Rules+LLM-Repair",
+      "paper_label_zh": "规则+LLM 修复",
       "canonical_label": "sun_stage2_plus_llm_fallback",
       "role": "main_method",
       "llm_used": true,
       "formal_status": "blocked_until_faithful_baseline_data_and_triggers_are_locked",
       "current_command": "python scripts/run_sun_llm_fallback.py --b0-predictions <persisted-b0> --plan-only --development",
       "command_status": "development_only_not_formal",
-      "notes": "The development runner now requires and SHA-binds a persisted B0 artifact, applies only Gold-blind field-level repair plans, records accepted/rejected patches, and retains B0 atomically on rejection. Formal use remains blocked until the complete B0 and trigger budget are locked. A real run additionally requires explicit --allow-llm authorization."
+      "notes": "The development runner now requires and SHA-binds a persisted B0 artifact, applies only Gold-blind field-level repair plans, records accepted/rejected patches, and retains B0 atomically on rejection. Formal use remains blocked until the complete B0 and trigger budget are locked. A real run additionally requires explicit --allow-llm authorization. As of 2026-08-08 (supervisor decision, MASTER_PIPELINE.md §8.8.1) this method is DOWNGRADED to a comparison-only arm and will not be pursued further: the full 150-call run (commit 74614e3) was net-negative on the primary metric (coarse F1 0.7621 vs Rules-Only 0.7986) because the trigger+repair recipe added false positives (actor P 0.7077->0.2754) instead of recall."
     },
     {
       "id": "direct_llm",
+      "paper_label": "Direct-LLM",
+      "paper_label_zh": "直接 LLM",
       "canonical_label": "direct_llm_stage2_replacement",
       "role": "replacement_method",
       "llm_used": true,

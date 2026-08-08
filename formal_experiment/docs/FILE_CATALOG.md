@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-08
-**收录文件**：734 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：742 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -499,6 +499,14 @@
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/h1_responses_v1_rejected.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28d_h1_150_plan_only_v1/h1_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28d_h1_150_plan_only_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28d_h1_150_plan_only_v1/telemetry.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28d_h1_150_v4pro_v1/evaluation_h1_150_v4pro.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28d_h1_150_v4pro_v1/h1_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28d_h1_150_v4pro_v1/h1_telemetry.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28d_h1_150_v4pro_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s28d_h1_150_v4pro_v1/transport_capture.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |

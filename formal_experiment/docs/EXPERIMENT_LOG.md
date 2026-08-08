@@ -2882,3 +2882,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-08T12:24:30.091122+00:00 - 导师汇报确认四项事实入库（MASTER_PIPELINE §8.8）：(1) Rules+LLM-Repair（旧H1）降级为对照方法不再深究——全量150运行commit 74614e3主口径F1 0.7621 vs 0.7986净负、actor过度抽取P 0.7077->0.2754，S2.8正式trigger预注册取消；(2) Rules-Only/Direct-LLM局限性列表+实例（§8.8.2，含B0字段归属错误/词典缺口/Sun-marker口径差异；D1 constraint召回弱/actor泛化误抽/保守漏抽）；(3) 命名直观化：B0->Rules-Only、H1->Rules+LLM-Repair、D1->Direct-LLM，methods.json新增paper_label字段（机器ID不变）；(4) 与Barrientos 2026严格对比+贡献细模块化（§8.8.4：Direct-LLM 8模块/Rules-Only 7模块，消融矩阵AB-1..AB-10，论文方法章节4-5页目标）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1500 passed, 24 skipped in 113.40s (0:01:53)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`74614e3d08de3e68041409e1ee46409b8aafab92`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：文档批次：MASTER_PIPELINE 3.5.0（§8.3/§8.5/§8.8/§12/§12.1/§15）、PROJECT_AUDIT 同步、configs/methods.json 增 paper_label/paper_label_zh（sun_rule_only=Rules-Only纯规则法、sun_llm_fallback=Rules+LLM-Repair规则+LLM修复、direct_llm=Direct-LLM直接LLM，notes 追加 H1 降级说明）、FILE_CATALOG 重新生成；audit --with-tests 1500 passed/24 skipped；未读Gold/Layer E/.env，未调LLM
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
