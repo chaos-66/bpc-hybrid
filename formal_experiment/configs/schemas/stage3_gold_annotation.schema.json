@@ -1,0 +1,72 @@
+{
+  "schema_version": "stage3_gold_annotation@1.0.0",
+  "description": "Schema for the Stage 3 Gold annotation pack covering (a) S3.2 rule-process relevance (matching) Gold and (b) S3.3 violation Gold with type/evidence/negative. Every item is a candidate that only a human may mark reviewed/adjudicated; agents never infer decisions.",
+  "annotation_pack": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["schema_version", "dataset_id", "claim_boundary", "processes", "matching_items", "violation_items"],
+    "properties": {
+      "schema_version": {"const": "stage3_gold_annotation@1.0.0"},
+      "dataset_id": {"const": "stage3_gold_annotation_v1"},
+      "claim_boundary": {"type": "string"},
+      "processes": {
+        "type": "array",
+        "description": "Frozen S3.1 process identities this annotation pack covers.",
+        "items": {"$ref": "#/definitions/process_ref"}
+      },
+      "matching_items": {
+        "type": "array",
+        "description": "S3.2 rule-process relevance candidates. Human adjudicates relevant=true/false per pair.",
+        "items": {"$ref": "#/definitions/matching_item"}
+      },
+      "violation_items": {
+        "type": "array",
+        "description": "S3.3 violation candidates. Human adjudicates violation_type (one of the three types or null for compliant/negative) plus evidence and, for violations, the expected/actual location.",
+        "items": {"$ref": "#/definitions/violation_item"}
+      }
+    }
+  },
+  "definitions": {
+    "process_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["process_id", "source_path"],
+      "properties": {
+        "process_id": {"type": "string", "pattern": "^gdpr_[1-7]_[a-z_]+$"},
+        "source_path": {"type": "string"},
+        "activity_names": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "matching_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["item_id", "process_id", "rule_id", "rule_ref", "candidate_relevant", "evidence_activity", "review_state"],
+      "properties": {
+        "item_id": {"type": "string", "pattern": "^m[0-9]{3}$"},
+        "process_id": {"type": "string"},
+        "rule_id": {"type": "string", "pattern": "^article(5|6|7|8|9|1[0-9]|2[0-9]|3[0-9]|4[0-9]|50)$"},
+        "rule_ref": {"type": "string"},
+        "candidate_relevant": {"type": "boolean"},
+        "evidence_activity": {"type": ["string", "null"]},
+        "review_state": {"enum": ["unreviewed", "reviewed", "adjudicated"]},
+        "decision_relevant": {"type": ["boolean", "null"]}
+      }
+    },
+    "violation_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["item_id", "process_id", "rule_id", "candidate_violation_type", "candidate_evidence", "review_state"],
+      "properties": {
+        "item_id": {"type": "string", "pattern": "^v[0-9]{3}$"},
+        "process_id": {"type": "string"},
+        "rule_id": {"type": "string", "pattern": "^article(5|6|7|8|9|1[0-9]|2[0-9]|3[0-9]|4[0-9]|50)$"},
+        "candidate_violation_type": {"enum": ["missing_action", "incorrect_actor", "out_of_order", null]},
+        "candidate_evidence": {"type": "string"},
+        "candidate_location": {"type": ["string", "null"]},
+        "review_state": {"enum": ["unreviewed", "reviewed", "adjudicated"]},
+        "decision_violation_type": {"enum": ["missing_action", "incorrect_actor", "out_of_order", null]},
+        "decision_evidence": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

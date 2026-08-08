@@ -2921,3 +2921,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：S1/S3.1 资产恢复与 binding 修复：47+5 文件从 56d2b03 恢复（configs/schemas/data/docs/outputs/scripts/src/tests/fixtures + 5 个 s1 gate + process_record.schema.json）；7 个 GDPR BPMN 以批准 LF 字节落地（工作区原 CRLF 变体内容一致仅行尾，备份 .tmp/untracked_gdpr7_backup_2026_08_08/）；.gitattributes 追加 data/input/stage1_stage3/gdpr7/*.bpmn text eol=lf；修复 56d2b03 快照先存跨任务 binding 过期（s13/s15/s16 合同 upstream hash、5 个 gate 期望、experiment_contract stage1 块），s13/s15/s16/s15_s31 manifest 按当前合同重新生成并全链更新；verify_stage1_stage3_gdpr7.py 通过（7 byte-exact、45 activities、135 blank label fields）；status.py/audit.py 集成 S1 gates（stage1_*_verified + stage1_formal_bpmn_membership_locked pass）；MASTER_PIPELINE S3.1 行 verified + 3.6.1 变更日志；PROJECT_AUDIT 资产表/队列同步；FILE_CATALOG 重建；1537 passed/24 skipped；未读 Gold/Layer E/.env，未调 LLM
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-08T15:55:04.428259+00:00 - S3.2/S3.3 Stage 3 Gold annotation pack foundation: schema + blank candidate template (25 matching + 33 violation candidates) + build/verify scripts + manifest, ready for human review
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1545 passed, 24 skipped in 198.95s (0:03:18)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`f628b6b2e187d3c598b81dc400c8aa601aa04910`；相关未提交路径：9 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：新增 Stage 3 Gold 标注体系：schema stage3_gold_annotation@1.0.0（matching relevance + violation type/evidence + review_state 纪律，禁止推断决策）；build_stage3_gold_annotation.py 从 S3.1 Process Records + Winter regulations（只读）生成候选（7 流程、25 matching=相关对+负例、33 violation=每相关规则对 missing_action/incorrect_actor/out_of_order 注入点+evidence，GDPR 领域知识候选、全部 unreviewed）；verify_stage3_gold_annotation.py（身份/冻结流程对齐/候选完整性/确定性重建/无推断决策 fail closed）+ manifest s32_s33_gold_annotation_blank_v1.manifest.json；8 项测试；MASTER_PIPELINE 3.6.2 + S3.2/S3.3 行 ready for human review；PROJECT_AUDIT 同步；FILE_CATALOG 重建；1545 passed/24 skipped；未读 Gold/Layer E/.env，未调 LLM，未改 BPMN
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

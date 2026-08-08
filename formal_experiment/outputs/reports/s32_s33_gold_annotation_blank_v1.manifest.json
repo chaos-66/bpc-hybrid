@@ -1,0 +1,35 @@
+{
+  "schema_version": "stage3_gold_annotation_verification@1.0.0",
+  "run_id": "s32_s33_gold_annotation_blank_v1",
+  "task_ids": [
+    "S3.2",
+    "S3.3"
+  ],
+  "status": "succeeded_blank_pack_ready_for_human_review",
+  "dataset": {
+    "dataset_id": "stage3_gold_annotation_v1",
+    "processes": 7,
+    "matching_candidates": 25,
+    "violation_candidates": 33,
+    "all_unreviewed": true,
+    "no_decisions_inferred": true,
+    "membership_contract": "configs\\datasets\\stage1_stage3_gdpr7_v1.json"
+  },
+  "artifacts": {
+    "blank_pack": {
+      "path": "data/development/human_review/stage3_gold_annotation_blank_v1.json",
+      "sha256": "73579fe1cd95fed0b360119ecb6ccf68c48a6dd92810703448b2879705858cca",
+      "byte_size": 30145
+    }
+  },
+  "safety": {
+    "human_gold_read_or_modified": false,
+    "gold_auto_filled": false,
+    "bpmn_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "performance_evaluation": false,
+    "no_overwrite": true
+  },
+  "claim_boundary": "This blank pack contains S3.2 rule-process relevance (matching) and S3.3 violation candidates for the frozen S3.1 all-seven GDPR BPMN extension and the Winter/agostinelli GDPR regulation texts. Every item is a candidate (review_state=unreviewed); only the user may adjudicate relevance, violation type/evidence, or negatives. The pack creates no Gold, modifies no BPMN, runs no matching or violation detection, and reports no Stage 3 performance. Formal matching/violation Gold requires the user's adjudication and a freeze event."
+}
