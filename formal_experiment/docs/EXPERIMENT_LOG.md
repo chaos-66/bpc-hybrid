@@ -2839,3 +2839,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：用户 2026-08-07 授权第二轮（'尝试修复，框架和关键词与候选 LLM 类似'）。修复：v2 prompt 保留 Sol full-extract 语义（identify every clause / do not collapse / extract for every clause / prefer inclusion），强化 verbatim span 规则 + 3 个合成示例（span 算术教程）；新增 scripts/verify_solcand_prompt_examples_v1.py 离线校验（示例 synthetic 前缀、span 逐字一致、canonical 合法，通过）。runner 白名单已含 PROMPT_SOLCAND_PILOT。评估脚本 scripts/evaluate_d1_solcand_pilot_v1.py（细+粗双口径、与 arm_b_v6_20260805c 同批 19 样本同进程对比）。结论：假设不成立（R 微升 0.008 但 P 降 0.083，净 F1 降 0.032；粗 Gold 也降 0.053）；Sol 语义的 prefer-inclusion 主要产生 FP 而非找回漏抽。另：jsonschema 包不可用导致 validator 走宽松回退（既有行为，未改）。1492 tests pass。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-08T04:32:09.086555+00:00 - 三路放宽松归因实验:Sun 句子筛选子集重评(A)+ 粗 Gold marker 收敛(B)+ modality 分类器对齐验证(C);全部在粗口径主指标基础上,预测不动,纯离线
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1500 passed, 24 skipped in 129.58s (0:02:09)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3f8b36e76c94a9cecb658d08170bf34a5b30260f`；相关未提交路径：6 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：A: Sun 筛选标准(>20词/完整句/含法律行为,sequential 不适用)子集重评——legal_act 子集(133条)B0 F1 0.8110(+0.012)/D1 0.8924(+0.020),三者交集(129条)B0 0.8154(+0.017)/D1 0.8947(+0.022);证实 150 句中有 Sun 会剔除的句子。B: 粗 Gold+Sun Table-4 marker 收敛(Gold 609->441 spans,单边收敛 P 侧不可解读):B0 R 0.880->0.966、D1 R 0.846->0.909,Sun 定义内两方法召回接近满分。C: 本地 BERT-TextCNN 官方 test 集(426条)macro P 87.5/R 87.9/F1 87.7(acc 93.2)vs Sun Table7 P92.1/R94.1/F193.1,差距 -4.6/-6.2/-5.4pp,弱在 permission/prohibition。附:从 56d2b03 恢复 s24_candidate_B adapter manifest(当前分支缺失的 config 引用资产,字节级恢复 sha 校验通过)。新增 3 脚本 + 1 测试文件(8 测试);FILE_CATALOG 重建。全部 development/attribution,主口径数字不变。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

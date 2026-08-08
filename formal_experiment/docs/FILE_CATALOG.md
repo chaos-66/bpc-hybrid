@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-08
-**收录文件**：725 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：731 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -442,6 +442,7 @@
 | `outputs/development/s27_d1_solcand_pilot_19_hist56d_v1/input.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_solcand_pilot_19_hist56d_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_solcand_pilot_19_hist56d_v1/output.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_d1_solcand_pilot_19_hist56d_v1/solcand_pilot_evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/d1_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/evaluation_d1_r3_20260806.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -497,6 +498,7 @@
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `paper`
@@ -591,6 +593,7 @@
 | `scripts/coarse_gold_b0_condition_constraint_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/coarse_gold_b0_sentence_granularity_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/coarse_gold_d1_sentence_granularity_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/coarse_gold_marker_converged_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/combine_h1_pilot_runs.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compare_h1_fallback_paths.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compute_estg_membership_hashes.py` | 活动 | Python 实现、脚本或测试 |
@@ -600,6 +603,7 @@
 | `scripts/evaluate_d1_solcand_pilot_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/generate_file_catalog.py` | 活动 | 重建本逐文件目录 |
 | `scripts/ingest_sun_modality.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/modality_classifier_alignment_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/promote_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/rebuild_d1_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
@@ -616,6 +620,7 @@
 | `scripts/run_sun_rule_only.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/status.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/sun_selection_criteria_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_estg_human_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_gold.py` | 活动 | Python 实现、脚本或测试 |
@@ -806,6 +811,7 @@
 | `tests/test_r15_sun_style_g3_bpmn_violation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g4_outputs_overclaim.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_relaxation_experiments_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_restore_layer_e_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |

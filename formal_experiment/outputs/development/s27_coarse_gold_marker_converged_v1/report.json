@@ -1,0 +1,253 @@
+{
+  "schema_version": "coarse_gold_marker_converged@1.0.0",
+  "purpose": "Attribution (double relaxation): sentence-level coarse Gold (primary metric) + Sun Table-4 marker convergence on condition/constraint only; predictions untouched; one-sided convergence - P-side NOT interpretable, only R-side conclusions are supported (same discipline as s27_b0_coarse_gold_cc_v1)",
+  "marker_standard": {
+    "source": "Sun et al. (2024) Table 4 'Examples of Markers' (verbatim initial sets)",
+    "condition": [
+      "if",
+      "in case of",
+      "provided that",
+      "in the context of",
+      "who",
+      "whose",
+      "which"
+    ],
+    "constraint": [
+      "before",
+      "after",
+      "at least",
+      "at most",
+      "equal to",
+      "greatest",
+      "smallest",
+      "last of",
+      "least of"
+    ],
+    "matching": "word-boundary, case-insensitive, on span text",
+    "disclosure": "Table 4 is the paper's 'initial sets'; 13 constraint spans is a LOWER BOUND of Sun's definition scope"
+  },
+  "gold": {
+    "source_commit": "56d2b03a1fb4e206db5bb92a8eb5ed51b942b650",
+    "records": 150,
+    "coarse_semantic_sha256": "6e19cf3c684a26aa9e9fdc9f76c3529b5a4232aecb085fad4c206ceb177bcb26",
+    "coarse_spans": {
+      "modality": 150,
+      "actor": 41,
+      "action": 150,
+      "condition": 122,
+      "constraint": 135,
+      "exception": 11
+    },
+    "coarse_total": 609,
+    "converged_spans": {
+      "modality": 150,
+      "actor": 41,
+      "action": 150,
+      "condition": 74,
+      "constraint": 15,
+      "exception": 11
+    },
+    "converged_total": 441
+  },
+  "predictions": {
+    "b0": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1\\b0_attempts.json",
+      "sha256": "656545cec2fd6ca042d5253a1cc0d062d24e05d38d52288cb4f8ea67f7a55457"
+    },
+    "d1": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s27_d1_v6_r3_clean_rerun_150_hist56d_v1\\d1_responses.jsonl",
+      "sha256": "9188093c5b30d288c749e1dc6da9d88eb5df4fd4c08a73518f6b4ff243dca36e"
+    }
+  },
+  "evaluator": {
+    "id": "sun_literal_overlap_evaluation@2.0.0",
+    "match_rule": "independent_same_field_any_nonempty_character_span_intersection"
+  },
+  "coarse_metrics": {
+    "b0": {
+      "ground_truth": 609,
+      "extracted": 1141,
+      "matched_predictions": 834,
+      "matched_ground_truth": 536,
+      "misclassified": 307,
+      "missed": 73,
+      "precision": 0.7309377738825592,
+      "recall": 0.8801313628899836,
+      "f1": 0.7986265076169158
+    },
+    "d1": {
+      "ground_truth": 609,
+      "extracted": 820,
+      "matched_predictions": 739,
+      "matched_ground_truth": 515,
+      "misclassified": 81,
+      "missed": 94,
+      "precision": 0.901219512195122,
+      "recall": 0.8456486042692939,
+      "f1": 0.8725501546969051
+    }
+  },
+  "converged_metrics": {
+    "b0": {
+      "ground_truth": 441,
+      "extracted": 1141,
+      "matched_predictions": 664,
+      "matched_ground_truth": 426,
+      "misclassified": 477,
+      "missed": 15,
+      "precision": 0.581945661700263,
+      "recall": 0.9659863945578231,
+      "f1": 0.7263259253553134
+    },
+    "d1": {
+      "ground_truth": 441,
+      "extracted": 820,
+      "matched_predictions": 594,
+      "matched_ground_truth": 401,
+      "misclassified": 226,
+      "missed": 40,
+      "precision": 0.724390243902439,
+      "recall": 0.909297052154195,
+      "f1": 0.8063794276660787
+    }
+  },
+  "per_field_coarse": {
+    "b0": {
+      "modality": {
+        "precision": 0.8473895582329317,
+        "recall": 1.0,
+        "f1": 0.9173913043478261
+      },
+      "actor": {
+        "precision": 0.7076923076923077,
+        "recall": 0.975609756097561,
+        "f1": 0.8203299152920196
+      },
+      "action": {
+        "precision": 0.8729508196721312,
+        "recall": 0.9133333333333333,
+        "f1": 0.8926856128973049
+      },
+      "condition": {
+        "precision": 0.702928870292887,
+        "recall": 0.860655737704918,
+        "f1": 0.7738369415016121
+      },
+      "constraint": {
+        "precision": 0.5606060606060606,
+        "recall": 0.6888888888888889,
+        "f1": 0.6181622204257612
+      },
+      "exception": {
+        "precision": 0.7857142857142857,
+        "recall": 1.0,
+        "f1": 0.88
+      }
+    },
+    "d1": {
+      "modality": {
+        "precision": 0.9826086956521739,
+        "recall": 0.96,
+        "f1": 0.9711727842435094
+      },
+      "actor": {
+        "precision": 0.6666666666666666,
+        "recall": 0.8780487804878049,
+        "f1": 0.7578947368421053
+      },
+      "action": {
+        "precision": 0.9761904761904762,
+        "recall": 0.9133333333333333,
+        "f1": 0.9437163978494625
+      },
+      "condition": {
+        "precision": 0.9185185185185185,
+        "recall": 0.7704918032786885,
+        "f1": 0.8380185491408441
+      },
+      "constraint": {
+        "precision": 0.7771428571428571,
+        "recall": 0.7111111111111111,
+        "f1": 0.7426621160409557
+      },
+      "exception": {
+        "precision": 0.8,
+        "recall": 0.7272727272727273,
+        "f1": 0.761904761904762
+      }
+    }
+  },
+  "per_field_converged": {
+    "b0": {
+      "modality": {
+        "precision": 0.8473895582329317,
+        "recall": 1.0,
+        "f1": 0.9173913043478261
+      },
+      "actor": {
+        "precision": 0.7076923076923077,
+        "recall": 0.975609756097561,
+        "f1": 0.8203299152920196
+      },
+      "action": {
+        "precision": 0.8729508196721312,
+        "recall": 0.9133333333333333,
+        "f1": 0.8926856128973049
+      },
+      "condition": {
+        "precision": 0.5355648535564853,
+        "recall": 0.9864864864864865,
+        "f1": 0.6942308406701585
+      },
+      "constraint": {
+        "precision": 0.16666666666666666,
+        "recall": 1.0,
+        "f1": 0.2857142857142857
+      },
+      "exception": {
+        "precision": 0.7857142857142857,
+        "recall": 1.0,
+        "f1": 0.88
+      }
+    },
+    "d1": {
+      "modality": {
+        "precision": 0.9826086956521739,
+        "recall": 0.96,
+        "f1": 0.9711727842435094
+      },
+      "actor": {
+        "precision": 0.6666666666666666,
+        "recall": 0.8780487804878049,
+        "f1": 0.7578947368421053
+      },
+      "action": {
+        "precision": 0.9761904761904762,
+        "recall": 0.9133333333333333,
+        "f1": 0.9437163978494625
+      },
+      "condition": {
+        "precision": 0.6814814814814815,
+        "recall": 0.8513513513513513,
+        "f1": 0.7570038529354143
+      },
+      "constraint": {
+        "precision": 0.13142857142857142,
+        "recall": 0.8666666666666667,
+        "f1": 0.2282442748091603
+      },
+      "exception": {
+        "precision": 0.8,
+        "recall": 0.7272727272727273,
+        "f1": 0.761904761904762
+      }
+    }
+  },
+  "safety": {
+    "gold": "audit_read_only",
+    "llm_api": "not_called",
+    "network": "not_called",
+    "original_gold_modified": false,
+    "artifacts": "created_no_overwrite"
+  }
+}
