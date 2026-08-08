@@ -16,7 +16,7 @@
 | C06 | 项目 Gold 采用五层 LLM-assisted、human-adjudicated 流程 | VERIFIED_PROJECT_FACT | AGENTS、HUMAN_GOLD_GUIDE、contract | 可写流程；150/150 adjudicated（2026-08-06 用户裁决经授权恢复并验证，freeze_ready=True） | 已完成（150/150 adjudicated，freeze_ready=True；formal Gold 发布仍待 route/data/stage3 重锁） |
 | C07 | B0、H1、D1 将共享 IDs/Gold/schema/normalization/evaluator | PLANNED_METHOD | contract、methods registry | 将/计划；不能写已完成比较 | S2.10/S2.13 |
 | C08 | 复杂法律语料可能放大传统方法与 LLM 的差异 | PLANNED_METHOD | RQ2、导师要求 | “待检验假设”，不能写既定事实 | G0.5、S2.11、S2.12 |
-| C09 | H1 只在预注册失败/不确定字段调用 LLM | PLANNED_METHOD | STAGE2_LLM_INNOVATION_DESIGN | 将/计划 | S2.8 + 真实调用授权 |
+| C09 | Rules+LLM-Repair 是已完成的 development 负结果对照，不再作为待优化方法 | VERIFIED_PROJECT_FACT | MASTER_PIPELINE §8.8.1；commit `74614e3` | 仅写对照臂/负结果；不得写成正式比较或未来主方法 | formal Gold 后核验 prediction capsule；满足 shared capsule 时 zero-API 重评，否则需重新授权运行 |
 | C10 | LLM/Hybrid 优于完整 B0 | BLOCKED_RESULT | 当前无正式结果（development 证据：D1-R3 细 Gold F1 0.7756 vs B0-R3 0.7186，同 Gold 同口径非正式；粗 Gold 0.8726 vs 0.7986，见 outputs/reports/b0_d1_experiment_closure_brief.md） | 禁止比较词（formal 层面）；development 证据可单独标注引用 | S2.10/S2.12 formal manifest |
 | C11 | LLM 在复杂法律语料上优势更明显 | BLOCKED_RESULT | 当前无冻结复杂集或结果 | 禁止结论 | S2.11/S2.12 formal manifest |
 | C12 | Stage 3 改进带来 Oracle 提升 | BLOCKED_RESULT | 当前只有 scaffold | 禁止结论 | S3.7 formal manifest |

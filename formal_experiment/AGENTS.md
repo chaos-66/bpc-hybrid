@@ -152,10 +152,10 @@ The canonical integrity checker reports four distinct booleans
 that are intentionally not collapsed into one. They are stored in
 `audit["..."]` and surfaced by `audit_project.py` in this order:
 
-| # | Gate | Current 0/150 | Source of truth | Command |
+| # | Gate | Current state | Source of truth | Command |
 |---|------|---------------|-----------------|---------|
 | 1 | `human_review_input_ready` | **true** | `experiment_contract.human_review_gate.status` + membership + structural preconditions | `--require-human-review-ready` |
-| 2 | `human_review_freeze_ready` | false | v2 human_correction per-record adjudicated count | `validate_human_correction.py` `freeze_ready` |
+| 2 | `human_review_freeze_ready` | **true** (150/150 adjudicated) | v2 human_correction per-record adjudicated count | `validate_human_correction.py` `freeze_ready` |
 | 3 | `formal_gold_publication_ready` | false | gate 2 + `route.status==locked` + `stage2_dataset.status==locked_for_human_review` + `stage3.status==locked` + `formal_gold_publication_gate.status` exact match against `allowed_publication_statuses` whitelist | conservative — any missing or non-locked field, OR non-whitelisted status, keeps it false |
 | 4 | `final_experiment_ready` | false | gate 3 + method readiness + frozen input/gold | `--require-final-ready` |
 

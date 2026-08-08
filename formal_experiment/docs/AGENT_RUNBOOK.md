@@ -26,9 +26,9 @@ S2.1-A 来源/许可/原始文件证据
   → S2.1-C 真实 CSV 核查、canonicalization 与 split
   → S2.1-D 自动门禁与状态收口
   → S2.3 → S2.4 → S2.5 → S2.6（完整 B0）
-  → S2.7/S2.8/S2.9 → S2.10
+  → S2.7/S2.9 → S2.10
   → G0.5/S2.11 → S2.12 → S2.13
-  → Stage 1 → Stage 3 → 端到端消融
+  → Stage 1 + S3.1-S3.3 数据治理 → Stage 3 formal Oracle → 端到端消融
 
 论文轨道（与实验并行）
 PW0 骨架/主张账本
@@ -233,16 +233,16 @@ Sun、是否把 LLM-assisted Gold 写成纯人工、是否把 C2/C3/C4 写成 C1
 | S2.5 | CoreNLP/Tregex/Tsurgeon | 版本固定、规则、顺序约束、六字段 fixtures | S2.3 verified |
 | S2.6 | 完整 B0 | 分类+抽取组合、canonical Rule Record、no-LLM 证明 | S2.4/S2.5 verified |
 | S2.7 | 代表性非 LLM baseline | 简单规则 + 强监督代表，统一 evaluator | S2.1/S2.2 满足依赖 |
-| S2.8 | H1 预注册 | trigger、merge、失败策略、硬预算；不看 test | S2.6 verified |
-| S2.9 | D1 锁定 | prompt/few-shot/model/temperature/budget hash | **D1 侧已锁定（2026-08-06，D1-R2）**：v6 prompt hash 3aa64877、deepseek-v4-pro/temp0/top_p1/4096、seed 策略与预算合同在 `configs/models/estg150_d1_active_registry_v1.json`；S2.2 frozen 仍缺；API另授权 |
+| S2.8 | Rules+LLM-Repair 对照 | **不再推进**（§8.8.1）；保留现有可复现负结果，禁止新增 trigger/repair 优化 | formal 对照仅在 shared capsule 核验后 zero-API 重评，或另行授权重跑 |
+| S2.9 | D1 锁定 | prompt/few-shot/model/temperature/budget hash | **D1 侧已锁定（2026-08-06，D1-R2）**：v6 prompt hash 3aa64877、deepseek-v4-pro/temp0/top_p1/4096、seed 策略与预算合同在 `configs/models/estg150_d1_active_registry_v1.json`；S2.2 已冻结；新的 API 运行仍另行授权 |
 | S2.10 | 主数据评价 | modality、六字段、完整记录分开报告 | B0/H1/D1 同 IDs/Gold/eval |
 | G0.5 | 复杂度合同 | 结果前冻结文本/BPMN复杂度字段和 bins | 不得看复杂集 test 结果 |
 | S2.11 | 复杂语料冻结 | 来源/许可/hash/标签映射/人工协议 | G0.5 verified |
 | S2.12 | 复杂度与错误分析 | 退化曲线、预注册错误类型、覆盖/失败数 | S2.10/S2.11 verified |
 | S2.13 | Stage 2 冻结 | 数据/Gold/方法/指标/成本/manifests | S2.1–S2.12 全部通过 |
 
-补充边界：S2.8/S2.9 只是预注册不等于授权真实 LLM；真实运行必须另有用户明确
-授权、模型和硬调用预算。S2.10/S2.12 的论文数字只能来自 `experiment_run` 事件和
+补充边界：S2.9 的锁定不等于授权真实 LLM；所有新的真实运行必须另有用户明确授权、
+模型和硬调用预算。S2.8 已停止优化，不能据此派发新 H1 调用。S2.10/S2.12 的论文数字只能来自 `experiment_run` 事件和
 formal manifest。不同数据、split、Gold 或 evaluator 的论文值只属于 C2/C3/C4，
 不能写成 C1 严格优劣。
 
@@ -266,9 +266,10 @@ fixtures、normalization 和 evaluator。
 ### Stage 3：S3.1—S3.11
 
 ```text
-只执行协调 Agent 指定的一个 S3.x；必须先有 S1.7、S2.13，并显式更新机器合同后
-才能启动扩展。先锁原4/扩展7 BPMN身份与 hash，再锁 matching/violation Gold，
-随后分别实现 Winter、Sun 和代表性非 LLM baseline。Oracle Stage 3 先于 LLM/Hybrid，
+只执行协调 Agent 指定的一个 S3.x。S3.1-S3.3 的 BPMN 身份、matching/violation Gold
+治理可在 Stage 2 收口前受控推进；明确标注 development 的 wrapper/baseline 准备也可
+并行。S3.4 正式完成仍需 S1.7/S2.13，S3.7 正式 Oracle 主表还需 formal Gold publication；
+S3.8+ 必须等正式 Oracle、机器合同更新和相应授权。Oracle Stage 3 先于 LLM/Hybrid，
 Oracle 与 end-to-end 必须分表；matching 与 violation classification 也必须分开。
 不得把 fixture scaffold 称完整复现，不得把 all-seven extension 写成 Sun 原4。
 ```

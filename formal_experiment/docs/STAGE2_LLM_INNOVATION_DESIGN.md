@@ -3,6 +3,11 @@
 **日期**：2026-07-12  
 **研究目标**：只改变 Sun Stage 2；Stage 3 在三组实验中冻结一致。
 
+> **历史设计标注（2026-08-08）**：Rules+LLM-Repair（H1）已按
+> `MASTER_PIPELINE.md` §8.8.1 降级为对照方法，不再实施本文件中的 H1 trigger、
+> H1-field、H1-sentence 或 H1-all 优化路线。本文保留为 development 设计与来源
+> 边界记录；当前可执行路线以 `MASTER_PIPELINE.md` §8.9 为准。
+
 ## 1. 必须比较的三组方法
 
 | 组 | 输入 | Stage 2 | 输出 | 研究问题 |

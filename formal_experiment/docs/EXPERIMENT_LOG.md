@@ -2895,3 +2895,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：文档批次：MASTER_PIPELINE 3.5.0（§8.3/§8.5/§8.8/§12/§12.1/§15）、PROJECT_AUDIT 同步、configs/methods.json 增 paper_label/paper_label_zh（sun_rule_only=Rules-Only纯规则法、sun_llm_fallback=Rules+LLM-Repair规则+LLM修复、direct_llm=Direct-LLM直接LLM，notes 追加 H1 降级说明）、FILE_CATALOG 重新生成；audit --with-tests 1500 passed/24 skipped；未读Gold/Layer E/.env，未调LLM
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-08T13:35:41.876779+00:00 - 固定最终正式实验总 Pipeline 并同步所有派工与论文门禁入口
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1500 passed, 24 skipped in 128.25s (0:02:08)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`468e985d8fa2d659422d6b129d7a42a35b561406`；相关未提交路径：6 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：最终收敛审计：既有 G0/S1/S2/B0-Rx/D1-Rx/S3.x/PWx/E00-E11 为唯一执行 ID；G0 改为核账；H1 停止优化；Barrientos 使用 S2-BARR-1..5 与 L1/L2/L3；Stage 3 development/formal 双态和 formal Gold 交叉门禁已固定；human_review_freeze_ready=true，formal_gold_publication_ready=false，未运行真实 LLM/API。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -53,8 +53,8 @@ manifest 解锁。论文工作稿位于 `paper/`，不能反向定义实验状�
 | `formal_capsule_versioned` | true | `formal_experiment/` 已进入 Git checkpoint `bfb0b8a`；不代表 input/Gold/结果已冻结 |
 | `sun_modality_development_data_verified` | true | S2.1-D 门禁恢复通过；2,831 行 analysis population、quarantine、split 与许可边界均未变 |
 | `public_marker_lexicon_verified` | true | S2.3 英文 public-source v1 的 64 个 marker、来源/生成/hash/空扩展表通过离线机器门禁；development-only，未激活 S2.4+ |
-| `human_review_input_ready` | true | Layer E 输入门禁恢复 true（0/150 即可开始人工审核）；freeze/pub/final 门禁不受影响 |
-| `human_review_freeze_ready` | false | EStG-150 仍是 0/150 adjudicated |
+| `human_review_input_ready` | true | Layer E 输入门禁已满足；历史 "0/150 可开始"语义不等于当前审核进度 |
+| `human_review_freeze_ready` | true | 150/150 adjudicated（2026-08-06 经授权恢复）；freeze validator 通过，仍不足以发布 formal Gold |
 | `formal_gold_publication_ready` | false | route/data/stage3/Gold 尚未共同重锁 |
 | `final_experiment_ready` | false | 正式方法、冻结数据与最终实验均未就绪 |
 
@@ -65,7 +65,7 @@ manifest 解锁。论文工作稿位于 `paper/`，不能反向定义实验状�
 
 | 资产 | 当前状态 | 允许的表述 |
 |---|---|---|
-| EStG-150 五层审核工作流 | input-ready，0/150 | LLM-assisted、human-adjudicated 候选 Gold 工作流 |
+| EStG-150 五层审核工作流 | annotation frozen，150/150 adjudicated；formal publication 仍 blocked | LLM-assisted、human-adjudicated Gold；不得在 publication gate 前称 formal Gold |
 | 现有 `sun_rule_only` | B0-R0 集成（component presence verified）；B0-R1 ready；方法级一致性仍 blocked_until_b0_r2 | 旧 heuristic 不再冒充 B0 入口；`run_b0_batch_v10` + 完整 v10 runner script + S2.6 candidate B + CoreNLP bridge + 离线 contract 与 pattern registry 已纳入 main；未跑 ESTG-150 正式实验；`sun_stage2_baseline_not_paper_faithful` 仍为 blocker，仅 B0-R2 完成方法对照表后才能解除 |
 | Rules-Only（旧代号 B0；BERT-TextCNN + CoreNLP/Tregex/Tsurgeon） | B0-R0–R3 verified（R1 七子批次闭环 2026-08-04；R2 method-level conformance 用户授权 2026-08-04；R3 56d2b03 快照细 Gold F1 0.71865、句子级粗 Gold 主口径 F1 0.7986（2026-08-07 用户决策口径对齐 Sun）） | 允许方法级独立复现（非 exact）；B0 v10 code/config/CoreNLP bridge/runner 已纳入 main，旧 heuristic 不再冒充 B0 入口；audit 区分 component presence（pass: `b0_paper_faithful_components_present`）与 method conformance（pass: `verified_method_level_independent_reconstruction`，2026-08-04 用户授权，见 `configs/methods.json` 与 docs/B0_R2_METHOD_CROSSWALK.md）；441MB checkpoint / CoreNLP jar / Legal-BERT cache 仍为 external runtime prerequisites（未提交、未下载） |
 | Rules+LLM-Repair（旧代号 H1；Sun + LLM fallback） | **对照方法（2026-08-08 用户确认，不再深究，§8.8.1）**；development 机制与全量 150 运行（commit 74614e3）：主口径 F1 0.7621 vs Rules-Only 0.7986（净负）、LLM 修复过度抽取 actor（P 0.7077→0.2754、spans 65→167） | runner 强制读取并 SHA 绑定落盘 B0，不再内部重跑；field-level patch 原子应用并记录 accepted/rejected/no-op（103 accepted / 89 changed / gate=True / 0 incidents）；机制正常但 trigger+repair 配方加 FP 不加召回 → 论文中仅作对照臂，不作贡献 |
@@ -120,7 +120,8 @@ evidence span。Overall F1=76.69%，`invalid_attempt_count=1`。manifest 状态�
 | 8 | S2.13 | 冻结 Stage 2 | 数据、方法、指标、成本、manifest 完整 |
 | 9 | PW1 | **下一论文任务**：引言与 RQ0–RQ4 | 无结果性过度主张；主张矩阵同步 |
 
-Stage 1 和 Stage 3 的后续任务已经在主 Pipeline 中排好依赖，不在当前阶段抢跑。
+Stage 1 和 Stage 3 的后续任务见主 Pipeline §8.9：S3.1-S3.3 数据治理及明确标注的
+development 准备可受控并行；Stage 3 LLM/Hybrid、正式 Oracle、端到端均不得抢跑。
 
 ## 5. 当前派工
 
@@ -131,7 +132,7 @@ Stage 1 和 Stage 3 的后续任务已经在主 Pipeline 中排好依赖，不�
 | 当前执行 Agent | S2.3 public marker lexicon 重建 | **verified；严格停止在 S2.3** | `resources/lexicon/`、生成/加载/门禁代码、fixtures/tests、合同与状态文档；未改 Gold，未联网/调用 API，未训练/评价，未进入 S2.4/S2.5 | source=`e40c85…e369`；manifest=`5b9baf…2bf7`；combined payload=`8c3a27…7b91` |
 | Agent-P1 | PW1 引言与研究问题 | ready | `paper/THESIS_DRAFT.md`、主张矩阵 | §4.2 |
 | Agent-R1 | 论文科学主张只读复核 | blocked on PW1 draft | 无写入 | §4.3 |
-| 用户 | S2.2 Layer E 人工裁决 | in_progress 0/150 | 仅 Layer E | 审核工具/人工决定 |
+| 用户 | S2.2 Layer E 人工裁决 | verified，150/150 adjudicated | 仅 Layer E | freeze validator 通过；后续 formal Gold 仍由 stage3/publication gate 控制 |
 
 实验 Agent 默认串行；论文 Agent 可以与一个实验 Agent 并行，但不得编辑 shared
 状态页。协调 Agent 在工作 Agent 交接后统一更新本页、Pipeline、catalog 和日志。
