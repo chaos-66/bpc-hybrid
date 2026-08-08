@@ -1,0 +1,108 @@
+{
+  "schema_version": "stage1_stage3_bpmn_membership@1.0.0",
+  "dataset_id": "stage1_stage3_gdpr7_extension_v1",
+  "task_ids": ["S1.5", "S3.1"],
+  "status": "frozen_all_seven_extension_membership",
+  "claim_label": "all-seven GDPR BPMN extension",
+  "claim_boundary": "These seven Agostinelli/Winter GDPR BPMN files are the project's explicit all-seven extension. Sun et al. report four GDPR models without identifying their filenames, so this membership is not called Sun's original four-model set.",
+  "user_authorization": {
+    "status": "approved",
+    "decision_date": "2026-07-18",
+    "scope": "promote all seven listed BPMN files from the read-only Winter provenance store into the shared active Stage 1/Stage 3 input set"
+  },
+  "provenance": {
+    "canonical_source_root": "references/winter_2020_model_check/model_check/input/models/gdpr",
+    "active_root": "formal_experiment/data/input/stage1_stage3/gdpr7",
+    "promotion_mode": "byte_exact_copy_keep_source_read_only",
+    "source_files_modified": false,
+    "source_files_deleted": false
+  },
+  "membership": {
+    "selection_rule": "all seven gdpr_1 through gdpr_7 BPMN files in ascending filename order",
+    "count": 7,
+    "membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d",
+    "files": [
+      {
+        "input_id": "gdpr_1_data_breach",
+        "filename": "gdpr_1_data_breach.bpmn",
+        "raw_process_id": "sid-745786F1-0669-465D-86F5-90DB7C084831",
+        "byte_size": 72747,
+        "sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+      },
+      {
+        "input_id": "gdpr_2_consent_to_use_the_data",
+        "filename": "gdpr_2_consent_to_use_the_data.bpmn",
+        "raw_process_id": "sid-AD25B18F-DBF9-4157-9AE5-3C5E816D37AB",
+        "byte_size": 114382,
+        "sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+      },
+      {
+        "input_id": "gdpr_3_right_to_access",
+        "filename": "gdpr_3_right_to_access.bpmn",
+        "raw_process_id": "sid-C2A304F9-1DE1-4882-B3BE-60ACE45FABE7",
+        "byte_size": 28437,
+        "sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1"
+      },
+      {
+        "input_id": "gdpr_4_right_of_portability",
+        "filename": "gdpr_4_right_of_portability.bpmn",
+        "raw_process_id": "sid-C2A304F9-1DE1-4882-B3BE-60ACE45FABE7",
+        "byte_size": 31497,
+        "sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11"
+      },
+      {
+        "input_id": "gdpr_5_right_to_withdraw",
+        "filename": "gdpr_5_right_to_withdraw.bpmn",
+        "raw_process_id": "sid-5E08A921-8348-4BD9-9345-850C2161A9CD",
+        "byte_size": 31175,
+        "sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0"
+      },
+      {
+        "input_id": "gdpr_6_right_to_rectify",
+        "filename": "gdpr_6_right_to_rectify.bpmn",
+        "raw_process_id": "sid-895E8862-4E0F-4AAD-951B-46791101927E",
+        "byte_size": 17635,
+        "sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa"
+      },
+      {
+        "input_id": "gdpr_7_right_to_be_forgotten",
+        "filename": "gdpr_7_right_to_be_forgotten.bpmn",
+        "raw_process_id": "sid-611C9BD0-CB7D-4B36-ADB4-95E2D662B997",
+        "byte_size": 36906,
+        "sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+      }
+    ]
+  },
+  "process_record_activation": {
+    "structural_contract_path": "configs/stage1_structural_s11_s14.json",
+    "structural_contract_sha256": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48",
+    "parser_implementation_path": "src/bpc_hybrid/stage1_process.py",
+    "parser_implementation_sha256": "d81bde594190c96bd3f3e1d7a0d943847809b20500044f12a401d6aee822c396",
+    "process_record_schema_path": "configs/schemas/process_record.schema.json",
+    "process_record_schema_sha256": "9f2dc77a5386c472f9ea27fcf256a2e47195ed66e70ea5f9550caeccdf26bfef",
+    "process_identity_adapter": "stage1_formal_input_id_adapter@1.0.0",
+    "process_identity_rule": "use membership input_id as dataset-global process_id and update matching pool process_ref; retain raw_process_id in this membership contract",
+    "reason": "the source files for right-to-access and right-of-portability reuse the same internal BPMN process id"
+  },
+  "annotation_activation": {
+    "protocol_path": "configs/stage1_annotation_protocol_s15.json",
+    "protocol_sha256": "fd13d47108ca9e0962e5791050ce614c1ca67b418ad02e6cfb4d17647bb62305",
+    "implementation_path": "src/bpc_hybrid/stage1_human_annotation.py",
+    "implementation_sha256": "33cc64895c3bcb085262138f345640f8a26cd8ae43ae82d25248e1164551f52b",
+    "schema_path": "configs/schemas/stage1_human_annotation.schema.json",
+    "schema_sha256": "4d97de0430cce10c5f28c038447472db599b8efccec191801db7aabde1b59744",
+    "blank_template_path": "data/development/human_review/stage1_gdpr7_annotation_blank_v1.json",
+    "editable_path": "data/development/human_review/stage1_gdpr7_human_correction_v1.json",
+    "process_records_path": "data/development/human_review/stage1_gdpr7_process_records_v1.json",
+    "automatic_gold_fill": false,
+    "human_only_review_state_changes": true
+  },
+  "safety": {
+    "human_gold_read_or_modified": false,
+    "gold_auto_filled": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "performance_evaluation": false,
+    "no_overwrite": true
+  }
+}

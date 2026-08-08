@@ -1,0 +1,55 @@
+{
+  "schema_version": "stage1_label_semantics_contract@1.0.0",
+  "task_ids": ["S1.3"],
+  "status": "verified_offline_p0_p1_contract_pending_formal_bpmn_and_gold",
+  "output_schema": {
+    "path": "configs/schemas/stage1_label_semantics.schema.json",
+    "sha256": "32b7f6685c3931dce677924456618231563f253c39b2a6a7441acc63e55feda6",
+    "schema_version": "stage1_label_semantics@1.0.0"
+  },
+  "upstream_process_record": {
+    "schema_path": "configs/schemas/process_record.schema.json",
+    "schema_sha256": "9f2dc77a5386c472f9ea27fcf256a2e47195ed66e70ea5f9550caeccdf26bfef",
+    "schema_version": "process_record@1.0.0",
+    "structural_manifest_path": "outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json",
+    "structural_manifest_sha256": "09732e4085386c69f01cde30ef0fce74b8f9e906c7df0e7d8bbffc1f2f881541"
+  },
+  "baselines": {
+    "P0": {
+      "method_name": "stage1_label_p0_raw",
+      "method_version": "stage1_label_p0@1.0.0",
+      "semantics": "copy_raw_activity_label_and_lane_labels_without_actor_action_or_object_inference"
+    },
+    "P1": {
+      "method_name": "stage1_label_p1_surface_split",
+      "method_version": "stage1_label_p1@1.0.0",
+      "semantics": "single_nonempty_lane_label_as_actor_then_first_whitespace_token_as_surface_action_and_remaining_text_as_surface_business_object",
+      "whitespace_normalization": "collapse_unicode_whitespace",
+      "action_boundary_characters": ".,;:!?()[]{}<>\"'`~@#$%^&*+=|\\/-_",
+      "case_normalization": "none",
+      "lemmatization": false,
+      "part_of_speech_tagging": false,
+      "controlled_vocabulary": false
+    }
+  },
+  "determinism": {
+    "activity_records": "ascending_activity_id",
+    "lane_labels": "unique_nonempty_labels_ascending_codepoint",
+    "process_record_hash": "canonical_json_utf8_sort_keys_compact",
+    "unknown_baseline": "reject",
+    "invalid_process_record": "reject",
+    "output_tampering": "reject"
+  },
+  "safety": {
+    "fixture_scope": "synthetic_only",
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "learned_model_used": false,
+    "performance_evaluation": false,
+    "formal_label_records_written": false,
+    "no_overwrite": true
+  },
+  "claim_boundary": "S1.3 freezes and verifies two deterministic synthetic-only label baselines: P0 preserves raw labels and lane-label context without semantic inference; P1 uses one fixed surface split and a single unambiguous lane label. It performs no lemmatization, POS tagging, learned inference, human-Gold evaluation, formal BPMN evaluation, or performance measurement."
+}

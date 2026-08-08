@@ -1,0 +1,56 @@
+{
+  "schema_version": "stage1_annotation_protocol@1.0.0",
+  "task_ids": ["S1.5"],
+  "status": "verified_offline_blank_protocol_pending_formal_bpmn_membership_and_human_annotation",
+  "annotation_schema": {
+    "path": "configs/schemas/stage1_human_annotation.schema.json",
+    "sha256": "4d97de0430cce10c5f28c038447472db599b8efccec191801db7aabde1b59744",
+    "schema_version": "stage1_human_annotation_pack@1.0.0"
+  },
+  "upstream": {
+    "process_record_schema": "process_record@1.0.0",
+    "structural_manifest_path": "outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json",
+    "structural_manifest_sha256": "09732e4085386c69f01cde30ef0fce74b8f9e906c7df0e7d8bbffc1f2f881541",
+    "label_manifest_path": "outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json",
+    "label_manifest_sha256": "c1487f6bb4b149612df4da7375b17747965f43c52a8547b5aefe94318037c5ef"
+  },
+  "blank_pack": {
+    "allowed_scope": "synthetic_protocol_only",
+    "initial_review_state": "unreviewed",
+    "initial_structure_decision": "unreviewed",
+    "initial_gold_process_record": null,
+    "initial_label_field_status": "unreviewed",
+    "initial_label_field_value": null,
+    "p0_or_p1_candidate_values_copied_into_gold": false
+  },
+  "formal_membership": {
+    "status": "blocked_pending_user_approved_promotion_and_stage3_subset_lock",
+    "active_bpmn_count": 0,
+    "provenance_candidate_count": 57,
+    "promotion_from_references_or_archive_requires_user_approval": true,
+    "selection_rule": "must_be_frozen_before_annotation_and_shared_with_stage3"
+  },
+  "freeze_policy": {
+    "scope_must_equal": "formal",
+    "membership_status_must_equal": "frozen",
+    "all_records_review_state": "adjudicated",
+    "allowed_final_structure_decisions": ["accepted_candidate", "corrected"],
+    "gold_process_record_required": true,
+    "allowed_final_label_statuses": ["present", "absent"],
+    "present_requires_nonempty_value": true,
+    "absent_requires_null_value": true,
+    "human_only_state_changes": true
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "gold_auto_filled": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "performance_evaluation": false,
+    "formal_artifacts_written": false,
+    "no_overwrite": true
+  },
+  "claim_boundary": "S1.5 verifies only the blank human-annotation schema, source/activity context binding, review-state semantics, and fail-closed freeze rules on synthetic BPMN. It does not select or promote the formal BPMN set, enter human decisions, create Gold, or evaluate Stage 1 performance."
+}

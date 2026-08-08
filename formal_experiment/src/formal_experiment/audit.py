@@ -487,6 +487,119 @@ def collect_project_audit() -> dict[str, Any]:
             f"{public_marker_gate.get('blockers', [])[:8]}",
         )
 
+    # Stage 1 gates (S1.1-S1.6 + S3.1 GDPR7 membership). Restored from
+    # the 56d2b03 checkpoint and re-bound 2026-08-08; findings are
+    # converted from the status layer exactly as in the checkpoint.
+    stage1_gate = status.get("stage1_structural_gate", {})
+    if stage1_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "stage1_structural_process_record_verified",
+            "S1.1/S1.2/S1.4 verified the canonical Process Record v1 schema, "
+            "deterministic BPMN activity/event/gateway/flow/lane/pool parsing, direct "
+            "and transitive control flow, activity order, branch/parallel classification, "
+            "cycle detection, and unreachable-node accounting on two synthetic BPMN "
+            "fixtures. No label semantics, human Gold, formal BPMN, network, LLM, or "
+            "performance evaluation was used.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "stage1_structural_process_record_not_verified",
+            "S1.1/S1.2/S1.4 structural Process Record gate failed closed: "
+            f"{stage1_gate.get('errors', [])[:6]}",
+        )
+
+    stage1_label_gate = status.get("stage1_label_semantics_gate", {})
+    if stage1_label_gate.get("ready") is True:
+        _add(
+            findings,
+            "passes",
+            "stage1_label_semantics_p0_p1_verified",
+            "S1.3 verified two deterministic label baselines on synthetic BPMN: "
+            "P0 preserves raw activity/lane labels without actor/action/object inference; "
+            "P1 uses one unambiguous lane label as the actor surface and a fixed first-token/"
+            "remainder split for action/business-object surfaces. Empty, punctuation-only, "
+            "single-token, no-lane, and ambiguous-lane cases fail or report explicitly. No "
+            "lemmatizer, tagger, learned model, human Gold, formal BPMN, network, LLM, or "
+            "performance evaluation was used.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "stage1_label_semantics_p0_p1_not_verified",
+            "S1.3 P0/P1 label-semantics gate failed closed: "
+            f"{stage1_label_gate.get('errors', [])[:6]}",
+        )
+
+    stage1_annotation_gate = status.get("stage1_annotation_gate", {})
+    if stage1_annotation_gate.get("protocol_ready") is True:
+        _add(
+            findings,
+            "passes",
+            "stage1_annotation_protocol_verified",
+            "S1.5 verified a blank human-annotation schema, exact BPMN/Process-Record "
+            "source binding, activity label/lane context, three-field review states, "
+            "and fail-closed freeze summaries on one synthetic process with 6 activities "
+            "and 18 unresolved label fields. No candidate value was copied into Gold; "
+            "formal membership is reported by the separate GDPR7 gate.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "stage1_annotation_protocol_not_verified",
+            "S1.5 annotation protocol failed closed: "
+            f"{stage1_annotation_gate.get('errors', [])[:6]}",
+        )
+
+    stage1_membership_gate = status.get("stage1_membership_gate", {})
+    if stage1_membership_gate.get("membership_ready") is True:
+        summary = stage1_membership_gate.get("annotation_summary", {})
+        _add(
+            findings,
+            "passes",
+            "stage1_formal_bpmn_membership_locked",
+            "S1.5/S3.1 locked seven byte-exact Winter-provenance GDPR BPMN files as "
+            "the shared all-seven extension membership. All seven parsed into unique "
+            "dataset-level Process Records; the formal annotation input has "
+            f"{summary.get('records', 0)} records and {summary.get('label_fields', 0)} "
+            "blank label fields. This is not Sun's unidentified original four-model set, "
+            "and no human Gold or performance result was created.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "stage1_formal_bpmn_membership_not_promoted",
+            "S1.5/S3.1 formal GDPR7 membership gate failed closed: "
+            f"{stage1_membership_gate.get('errors', [])[:6]}",
+        )
+
+    stage1_evaluator_gate = status.get("stage1_evaluator_gate", {})
+    if stage1_evaluator_gate.get("evaluator_ready") is True:
+        _add(
+            findings,
+            "passes",
+            "stage1_evaluator_contract_verified",
+            "S1.6 verified exact method/process membership, eight structural set "
+            "components, actor/action/business-object exact-value P/R/F1, triple "
+            "accuracy, coverage, and terminal/invalid denominators on one synthetic "
+            "reference. The constants are not human Gold or formal performance; formal "
+            "scope remains refused until S1.5 membership and Gold are ready.",
+        )
+    else:
+        _add(
+            findings,
+            "blockers",
+            "stage1_evaluator_contract_not_verified",
+            "S1.6 evaluator contract failed closed: "
+            f"{stage1_evaluator_gate.get('errors', [])[:6]}",
+        )
+
     supplement = contract.get("official_supplement", {})
     stage3_archive = supplement.get("stage3_input_archive", {})
     if (

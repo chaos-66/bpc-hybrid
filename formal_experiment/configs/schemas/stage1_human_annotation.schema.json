@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/bpc-hybrid/stage1_human_annotation.schema.json",
+  "title": "Stage 1 Human Annotation Pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dataset", "records", "review_summary"],
+  "properties": {
+    "schema_version": {"const": "stage1_human_annotation_pack@1.0.0"},
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_id", "scope", "membership_status"],
+      "properties": {
+        "dataset_id": {"$ref": "#/$defs/nonempty"},
+        "scope": {"enum": ["synthetic_protocol_only", "formal"]},
+        "membership_status": {"enum": ["synthetic_fixture_only", "frozen"]}
+      }
+    },
+    "records": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "review_summary": {"$ref": "#/$defs/summary"}
+  },
+  "$defs": {
+    "nonempty": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stringArray": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "process_record_sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/nonempty"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "process_record_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "fieldDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"enum": ["unreviewed", "present", "absent", "needs_adjudication"]},
+        "value": {"type": ["string", "null"]}
+      }
+    },
+    "labelAnnotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["activity_id", "raw_label", "lane_labels", "actor", "action", "business_object"],
+      "properties": {
+        "activity_id": {"$ref": "#/$defs/nonempty"},
+        "raw_label": {"type": "string"},
+        "lane_labels": {"$ref": "#/$defs/stringArray"},
+        "actor": {"$ref": "#/$defs/fieldDecision"},
+        "action": {"$ref": "#/$defs/fieldDecision"},
+        "business_object": {"$ref": "#/$defs/fieldDecision"}
+      }
+    },
+    "structureAnnotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "gold_process_record"],
+      "properties": {
+        "decision": {"enum": ["unreviewed", "accepted_candidate", "corrected", "needs_adjudication"]},
+        "gold_process_record": {"type": ["object", "null"]}
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["process_id", "source", "review_state", "structure_annotation", "label_annotations"],
+      "properties": {
+        "process_id": {"$ref": "#/$defs/nonempty"},
+        "source": {"$ref": "#/$defs/source"},
+        "review_state": {"enum": ["unreviewed", "reviewed", "adjudicated"]},
+        "structure_annotation": {"$ref": "#/$defs/structureAnnotation"},
+        "label_annotations": {"type": "array", "items": {"$ref": "#/$defs/labelAnnotation"}}
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["records", "adjudicated_records", "label_fields", "resolved_label_fields", "freeze_ready"],
+      "properties": {
+        "records": {"type": "integer", "minimum": 0},
+        "adjudicated_records": {"type": "integer", "minimum": 0},
+        "label_fields": {"type": "integer", "minimum": 0},
+        "resolved_label_fields": {"type": "integer", "minimum": 0},
+        "freeze_ready": {"type": "boolean"}
+      }
+    }
+  }
+}

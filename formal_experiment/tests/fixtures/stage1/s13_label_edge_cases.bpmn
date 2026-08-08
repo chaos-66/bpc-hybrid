@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             id="Definitions_Label_Edges"
+             targetNamespace="https://example.org/bpc-hybrid/stage1">
+  <process id="Process_Label_Edges" isExecutable="false">
+    <laneSet id="LaneSet_1">
+      <lane id="Lane_Claims" name="Claims Clerk">
+        <flowNodeRef>Task_Ambiguous</flowNodeRef>
+        <flowNodeRef>Task_Empty</flowNodeRef>
+        <flowNodeRef>Task_Punct</flowNodeRef>
+        <flowNodeRef>Task_Unparseable</flowNodeRef>
+      </lane>
+      <lane id="Lane_Risk" name="Risk Manager">
+        <flowNodeRef>Task_Ambiguous</flowNodeRef>
+        <flowNodeRef>Task_Single</flowNodeRef>
+      </lane>
+    </laneSet>
+    <task id="Task_Ambiguous" name="Review disputed claim" />
+    <task id="Task_Empty" />
+    <task id="Task_NoLane" name="Archive decision" />
+    <task id="Task_Punct" name="Approve: claim request" />
+    <task id="Task_Single" name="Escalate" />
+    <task id="Task_Unparseable" name="---" />
+  </process>
+</definitions>

@@ -2908,3 +2908,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：最终收敛审计：既有 G0/S1/S2/B0-Rx/D1-Rx/S3.x/PWx/E00-E11 为唯一执行 ID；G0 改为核账；H1 停止优化；Barrientos 使用 S2-BARR-1..5 与 L1/L2/L3；Stage 3 development/formal 双态和 formal Gold 交叉门禁已固定；human_review_freeze_ready=true，formal_gold_publication_ready=false，未运行真实 LLM/API。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-08T14:41:26.069087+00:00 - S3.1 verified: restore S1/S3.1 assets from 56d2b03 checkpoint, fix stale cross-task bindings, regenerate manifests, integrate S1 gates into status/audit, land 7 GDPR BPMN byte-exact (LF) with .gitattributes eol=lf pin
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1537 passed, 24 skipped in 215.37s (0:03:35)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`d3cdefa67bfd55dd9e5a29f0403594831c63a72a`；相关未提交路径：61 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：S1/S3.1 资产恢复与 binding 修复：47+5 文件从 56d2b03 恢复（configs/schemas/data/docs/outputs/scripts/src/tests/fixtures + 5 个 s1 gate + process_record.schema.json）；7 个 GDPR BPMN 以批准 LF 字节落地（工作区原 CRLF 变体内容一致仅行尾，备份 .tmp/untracked_gdpr7_backup_2026_08_08/）；.gitattributes 追加 data/input/stage1_stage3/gdpr7/*.bpmn text eol=lf；修复 56d2b03 快照先存跨任务 binding 过期（s13/s15/s16 合同 upstream hash、5 个 gate 期望、experiment_contract stage1 块），s13/s15/s16/s15_s31 manifest 按当前合同重新生成并全链更新；verify_stage1_stage3_gdpr7.py 通过（7 byte-exact、45 activities、135 blank label fields）；status.py/audit.py 集成 S1 gates（stage1_*_verified + stage1_formal_bpmn_membership_locked pass）；MASTER_PIPELINE S3.1 行 verified + 3.6.1 变更日志；PROJECT_AUDIT 资产表/队列同步；FILE_CATALOG 重建；1537 passed/24 skipped；未读 Gold/Layer E/.env，未调 LLM
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

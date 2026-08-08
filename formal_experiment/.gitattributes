@@ -44,3 +44,14 @@ outputs/development/s27_estg150_b0_enhanced_v10a_r1b_actor_hist56d_v2/*.json tex
 # B0-R3 snapshot (2026-08-04): narrow line-ending pin for the
 # formal-snapshot run output directory.
 outputs/development/s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1/*.json text eol=lf
+
+# S3.1 GDPR7 membership (2026-08-08): narrow line-ending pin for the
+# seven approved all-seven-extension GDPR BPMN inputs restored from the
+# 56d2b03 checkpoint. The frozen membership contract
+# (configs/datasets/stage1_stage3_gdpr7_v1.json) pins raw-byte SHA-256 of
+# the LF bytes promoted byte-exactly from references/winter_2020_model_check;
+# without this rule core.autocrlf=true converts the working-tree copy to
+# CRLF and the raw SHA no longer matches the contract. Scope stays limited
+# to the exact registered membership directory; no `*.bpmn` or `text=auto`
+# widening, no renormalization of tracked content.
+data/input/stage1_stage3/gdpr7/*.bpmn text eol=lf

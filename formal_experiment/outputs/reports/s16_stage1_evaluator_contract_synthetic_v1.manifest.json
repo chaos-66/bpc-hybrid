@@ -1,0 +1,349 @@
+{
+  "schema_version": "stage1_evaluator_verification_manifest@1.0.0",
+  "run_id": "s16_stage1_evaluator_contract_synthetic_v1",
+  "task_ids": [
+    "S1.6"
+  ],
+  "status": "succeeded_contract_only",
+  "created_at": "2026-08-08T14:29:44.001863+00:00",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "claim_boundary": "S1.6 verifies evaluator mechanics only: exact membership, structural set P/R/F1, exact actor/action/business-object P/R/F1 and value accuracy, triple accuracy, coverage, and invalid/error denominators on synthetic constants. Synthetic scores are not human-Gold or formal Stage 1 performance.",
+  "artifacts": {
+    "config": {
+      "path": "configs/stage1_evaluator_s16.json",
+      "sha256": "0beea4d398683970b3caa08e51a90c9390316fb6755fb0ca1a49da941c28122d"
+    },
+    "schema": {
+      "path": "configs/schemas/stage1_evaluation_report.schema.json",
+      "sha256": "7f8c5c997689ef0e9e8e3eeedb5b4838e88faa8b1e72606cac35131c9d4b8e19"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage1_evaluation.py",
+      "sha256": "d3c91fab221c3c31bc243c08c3eb995424407ba7287df24b08373a645734c82a"
+    },
+    "runner": {
+      "path": "scripts/evaluate_stage1_s16.py",
+      "sha256": "cf708987a29a8cb5043ba2af7ce6cce9de157486f95ddba58bd50020fbde7381"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage1_evaluator_s16.py",
+      "sha256": "8ceff6cb62b90d7738a3f379551f170b45270650e511a3cfa4df80e0ed635b5c"
+    },
+    "fixture": {
+      "path": "tests/fixtures/stage1/s16_synthetic_semantic_reference.json",
+      "sha256": "8a86eacc9737efd1b391edb7c754bdfc522e9dfc4b53b5eca14a50ca62b16604"
+    },
+    "bpmn_fixture": {
+      "path": "tests/fixtures/stage1/s13_label_edge_cases.bpmn",
+      "sha256": "95076fbcd21bd3d9619dcace6f3ddec8fceaa97d9dee887e7dfd9b86924dcc43"
+    },
+    "label_manifest": {
+      "path": "outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json",
+      "sha256": "c1487f6bb4b149612df4da7375b17747965f43c52a8547b5aefe94318037c5ef"
+    },
+    "annotation_manifest": {
+      "path": "outputs/reports/s15_stage1_annotation_protocol_synthetic_v1.manifest.json",
+      "sha256": "461bce6d8b78d775bb1f45c8ab9fc15edf4ddb26b9935624fa4f02bc60c3e836"
+    }
+  },
+  "synthetic_report": {
+    "schema_version": "stage1_evaluation_report@1.0.0",
+    "scope": "synthetic_contract_verification",
+    "membership": [
+      "Process_Label_Edges"
+    ],
+    "methods": {
+      "P0": {
+        "attempts": 1,
+        "terminal_errors": 0,
+        "invalid_predictions": 0,
+        "structure_record_coverage": 1.0,
+        "label_record_coverage": 1.0,
+        "structure": {
+          "by_component": {
+            "pools": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "lanes": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "activities": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "events": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "gateways": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "sequence_flows": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "direct_edges": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "activity_order_relations": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "micro": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "semantics": {
+          "by_field": {
+            "actor": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tn": 2,
+              "exact_value_accuracy": 0.3333333333333333
+            },
+            "action": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tn": 1,
+              "exact_value_accuracy": 0.16666666666666666
+            },
+            "business_object": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tn": 3,
+              "exact_value_accuracy": 0.5
+            }
+          },
+          "micro": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 12,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tn": 6,
+            "exact_value_accuracy": 0.3333333333333333
+          }
+        },
+        "semantic_triple_exact_accuracy": 0.16666666666666666
+      },
+      "P1": {
+        "attempts": 1,
+        "terminal_errors": 0,
+        "invalid_predictions": 0,
+        "structure_record_coverage": 1.0,
+        "label_record_coverage": 1.0,
+        "structure": {
+          "by_component": {
+            "pools": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "lanes": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "activities": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "events": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "gateways": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "sequence_flows": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "direct_edges": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "activity_order_relations": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "micro": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "semantics": {
+          "by_field": {
+            "actor": {
+              "tp": 3,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "tn": 1,
+              "exact_value_accuracy": 0.6666666666666666
+            },
+            "action": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.888888888888889,
+              "tn": 1,
+              "exact_value_accuracy": 0.8333333333333334
+            },
+            "business_object": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "tn": 3,
+              "exact_value_accuracy": 1.0
+            }
+          },
+          "micro": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 2,
+            "precision": 0.9090909090909091,
+            "recall": 0.8333333333333334,
+            "f1": 0.8695652173913043,
+            "tn": 5,
+            "exact_value_accuracy": 0.8333333333333334
+          }
+        },
+        "semantic_triple_exact_accuracy": 0.5
+      }
+    }
+  },
+  "verification": {
+    "exact_membership_verified": true,
+    "structure_components": 8,
+    "semantic_fields": 3,
+    "structure_micro_tp_each_method": 8,
+    "p0_semantic_micro_counts": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 12,
+      "tn": 6
+    },
+    "p1_semantic_micro_counts": {
+      "tp": 10,
+      "fp": 1,
+      "fn": 2,
+      "tn": 5
+    },
+    "duplicate_attempt_rejected": true,
+    "terminal_error_retained": true,
+    "invalid_label_retained": true,
+    "report_extra_property_rejected": true,
+    "formal_scope_refused": true
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "synthetic_reference_is_human_gold": false,
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "formal_performance_evaluation": false,
+    "formal_results_written": false
+  }
+}

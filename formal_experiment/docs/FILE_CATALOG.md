@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-08
-**收录文件**：742 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：796 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -56,6 +56,7 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `configs/datasets/stage1_stage3_gdpr7_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/datasets/sun_modality_dataset.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_ai_review_gpt56sol_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_candidate_preregistration_template_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -88,7 +89,15 @@
 | `configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg_150_canonical_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/human_gold_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/process_record.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/stage1_evaluation_report.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/stage1_human_annotation.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/stage1_label_semantics.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage2_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage1_annotation_protocol_s15.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage1_evaluator_s16.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage1_label_semantics_s13.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage1_structural_s11_s14.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage2_evaluator_s210_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_corenlp_runtime.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
@@ -335,6 +344,9 @@
 | `data/development/human_review/estg_150_llm_six_element_candidates_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/estg_150_review_aids_zh_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/estg_150_translation_en_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/stage1_gdpr7_annotation_blank_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/stage1_gdpr7_human_correction_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/stage1_gdpr7_process_records_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/metadata/exploratory_spacy_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/metadata/sun_llm_fallback_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/metadata/sun_rule_only_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
@@ -351,6 +363,13 @@
 | `data/development/sun_modality/source_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/gold/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
 | `data/input/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+| `data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
+| `data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
+| `data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
+| `data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
+| `data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
+| `data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
+| `data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
 | `data/predictions/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
 | `data/README.md` | 正式区（受门禁） | 所在目录的入口说明 |
 | `data/results/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
@@ -402,6 +421,7 @@
 | `docs/research/SUN_REFERENCE_SNOWBALL_AND_MARKER_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_WINTER_CODE_SEPARATION_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/ROUTE_LOCK.md` | 活动 | 说明、规范或研究文档 |
+| `docs/STAGE1_HUMAN_GOLD_GUIDE.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STAGE2_CANONICAL_SCHEMA_SPEC.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STAGE2_LLM_INNOVATION_DESIGN.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STYLE_EQUIVALENT_SPEC.md` | 活动 | 说明、规范或研究文档 |
@@ -509,6 +529,11 @@
 | `outputs/development/s28d_h1_150_v4pro_v1/transport_capture.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s15_s31_gdpr7_membership_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s15_stage1_annotation_protocol_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s16_stage1_evaluator_contract_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
@@ -599,6 +624,8 @@
 | `scripts/build_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage1_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/clean_estg150_german.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/coarse_gold_b0_condition_constraint_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -612,6 +639,7 @@
 | `scripts/estg150_review_tool.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_d1_r3_clean_rerun.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_d1_solcand_pilot_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/evaluate_stage1_s16.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/generate_file_catalog.py` | 活动 | 重建本逐文件目录 |
 | `scripts/ingest_sun_modality.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/modality_classifier_alignment_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -626,6 +654,8 @@
 | `scripts/run_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_llm_zh_aid.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_stage1_structural.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_fixture_harness.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_llm_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_rule_only.py` | 活动 | Python 实现、脚本或测试 |
@@ -640,6 +670,11 @@
 | `scripts/validate_legacy_gold_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_solcand_prompt_examples_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_stage1_annotation_protocol_s15.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_stage1_evaluator_s16.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_stage1_label_semantics_s13.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_stage1_stage3_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_stage1_structural_s11_s14.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_sun_modality_zip.py` | 活动 | Python 实现、脚本或测试 |
 
 ## `src`
@@ -690,6 +725,11 @@
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/smoke.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/splitter.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage1_evaluation.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage1_formal_dataset.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage1_human_annotation.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage1_process.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_canonical.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_evaluation_v3.py` | 活动 | Python 实现、脚本或测试 |
@@ -725,6 +765,11 @@
 | `src/formal_experiment/layer_d_security.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/layer_d_validator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/paths.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/s1_annotation_gate.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/s1_evaluator_gate.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/s1_label_semantics_gate.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/s1_membership_gate.py` | 活动 | Python 实现、脚本或测试 |
+| `src/formal_experiment/s1_structural_gate.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/status.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/sun_modality_gate.py` | 活动 | Python 实现、脚本或测试 |
@@ -752,6 +797,10 @@
 | `tests/fixtures/h1_transport/sensitive_envelope.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/h1_transport/sse_delta_body.txt` | 活动 | 文本清单或依赖说明 |
 | `tests/fixtures/public_marker_lexicon/marker_cases_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/stage1/s11_branch_parallel.bpmn` | 活动 | 流程模型或测试 fixture |
+| `tests/fixtures/stage1/s13_label_edge_cases.bpmn` | 活动 | 流程模型或测试 fixture |
+| `tests/fixtures/stage1/s14_cycle_unreachable.bpmn` | 活动 | 流程模型或测试 fixture |
+| `tests/fixtures/stage1/s16_synthetic_semantic_reference.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/sun_compat_incorrect_actor.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/sun_compat_missing_action.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/sun_compat_out_of_order.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -824,6 +873,11 @@
 | `tests/test_reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_relaxation_experiments_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_restore_layer_e_adjudication.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s1_1_s1_4_stage1_structural.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s1_3_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s1_5_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s1_6_stage1_evaluator.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s1_s3_gdpr7_membership.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |

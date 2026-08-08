@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             id="Definitions_S14"
+             targetNamespace="https://example.org/synthetic/stage1">
+  <process id="Process_Cycle" isExecutable="false">
+    <startEvent id="Start_Cycle" />
+    <task id="Task_A" name="Check request" />
+    <task id="Task_B" name="Revise request" />
+    <endEvent id="End_Cycle" />
+    <task id="Task_Orphan" name="Disconnected task" />
+    <sequenceFlow id="Flow_Start_A" sourceRef="Start_Cycle" targetRef="Task_A" />
+    <sequenceFlow id="Flow_A_B" sourceRef="Task_A" targetRef="Task_B" />
+    <sequenceFlow id="Flow_B_A" sourceRef="Task_B" targetRef="Task_A" />
+    <sequenceFlow id="Flow_B_End" sourceRef="Task_B" targetRef="End_Cycle" />
+  </process>
+</definitions>

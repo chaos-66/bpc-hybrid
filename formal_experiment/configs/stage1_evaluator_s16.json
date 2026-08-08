@@ -1,0 +1,57 @@
+{
+  "schema_version": "stage1_evaluator_contract@1.0.0",
+  "task_ids": ["S1.6"],
+  "status": "verified_offline_evaluator_contract_pending_formal_membership_and_gold",
+  "report_schema": {
+    "path": "configs/schemas/stage1_evaluation_report.schema.json",
+    "sha256": "7f8c5c997689ef0e9e8e3eeedb5b4838e88faa8b1e72606cac35131c9d4b8e19",
+    "schema_version": "stage1_evaluation_report@1.0.0"
+  },
+  "methods": ["P0", "P1"],
+  "structure_components": [
+    "pools",
+    "lanes",
+    "activities",
+    "events",
+    "gateways",
+    "sequence_flows",
+    "direct_edges",
+    "activity_order_relations"
+  ],
+  "semantic_fields": ["actor", "action", "business_object"],
+  "metric_rules": {
+    "structure": "micro_set_precision_recall_f1_per_component_and_overall",
+    "semantic_match": "case_sensitive_exact_surface_value",
+    "wrong_nonnull_value": "one_false_positive_and_one_false_negative",
+    "gold_absent_prediction_absent": "true_negative",
+    "semantic": "field_micro_precision_recall_f1_and_exact_value_accuracy",
+    "triple": "all_three_fields_exact_per_activity",
+    "zero_denominator": 0.0,
+    "terminal_error": "null_records_retained_in_denominator",
+    "invalid_prediction": "retained_in_denominator_and_scored_as_empty"
+  },
+  "membership": {
+    "attempt_key": ["method", "process_id"],
+    "exact_method_process_cartesian_product": true,
+    "duplicates": "reject",
+    "missing_or_extra": "reject"
+  },
+  "upstream": {
+    "stage1_label_manifest_path": "outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json",
+    "stage1_label_manifest_sha256": "c1487f6bb4b149612df4da7375b17747965f43c52a8547b5aefe94318037c5ef",
+    "stage1_annotation_manifest_path": "outputs/reports/s15_stage1_annotation_protocol_synthetic_v1.manifest.json",
+    "stage1_annotation_manifest_sha256": "461bce6d8b78d775bb1f45c8ab9fc15edf4ddb26b9935624fa4f02bc60c3e836"
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "synthetic_reference_is_human_gold": false,
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "formal_performance_evaluation": false,
+    "formal_results_written": false,
+    "no_overwrite": true
+  },
+  "claim_boundary": "S1.6 verifies evaluator mechanics only: exact membership, structural set P/R/F1, exact actor/action/business-object P/R/F1 and value accuracy, triple accuracy, coverage, and invalid/error denominators on synthetic constants. Synthetic scores are not human-Gold or formal Stage 1 performance."
+}

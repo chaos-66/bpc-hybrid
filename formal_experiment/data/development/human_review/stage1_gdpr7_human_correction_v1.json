@@ -1,0 +1,887 @@
+{
+  "schema_version": "stage1_human_annotation_pack@1.0.0",
+  "dataset": {
+    "dataset_id": "stage1_stage3_gdpr7_extension_v1",
+    "scope": "formal",
+    "membership_status": "frozen"
+  },
+  "records": [
+    {
+      "process_id": "gdpr_1_data_breach",
+      "source": {
+        "path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+        "sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+        "process_record_sha256": "0f842984297f36b17c7144cb513de5bc73ca378b6880891b933821d9d2060da1"
+      },
+      "review_state": "unreviewed",
+      "structure_annotation": {
+        "decision": "unreviewed",
+        "gold_process_record": null
+      },
+      "label_annotations": [
+        {
+          "activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "raw_label": "Notify national authority",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+          "raw_label": "Retrieve breached subjects",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-231C2935-E80E-48E9-8E30-CBF3FC58DFB3",
+          "raw_label": "Data loss limitation",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+          "raw_label": "Handle delay",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "raw_label": "Communication with data subject",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "raw_label": "Retrieve breached data",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "source": {
+        "path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+        "sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+        "process_record_sha256": "fb6ec966fcbd1715add37af70c76067eb7aa950e25c227d43557cc2e707e125d"
+      },
+      "review_state": "unreviewed",
+      "structure_annotation": {
+        "decision": "unreviewed",
+        "gold_process_record": null
+      },
+      "label_annotations": [
+        {
+          "activity_id": "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "raw_label": "Collect consent information",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+          "raw_label": "Retrieve identity and contact details",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-1C0F89DD-F7D8-403C-B629-EBBCC78D6CE0",
+          "raw_label": "Check if legitimate interests are presents",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+          "raw_label": "Add \"existence of the right to withdraw\"",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-2AD781BC-EDA4-4092-AB65-CC7990C7647B",
+          "raw_label": "Add \"existence of the right to erase personal data\"",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-2CFD3957-D6FB-4CA6-95B4-86EEC4B4B4B8",
+          "raw_label": "Add \"existence of the right to rectify of personal data\"",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-3DED209C-9599-4735-AD13-15EAFC610C28",
+          "raw_label": "Retrieve processing legal basis",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-43ED704C-CF34-4386-9316-B4FAA1FE53B9",
+          "raw_label": "Add \"profiling about logic involved, significance and envisaged consequences of processing\"",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-5318927B-58B5-4DDF-A39C-CBC1A7B971B3",
+          "raw_label": "Retrieve the period",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-5550E7E0-4FB0-4BDF-9BFB-08BCEBC02E2D",
+          "raw_label": "Check if data has been obtained from Data Subject",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-6F9DF069-5305-47E0-9D69-85CF38A52F0A",
+          "raw_label": "Retrieve the criteria used to determine the period",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-7D31B869-9AC4-480E-82E8-09D588E1715C",
+          "raw_label": "Add \"existence of the right to access personal data\"",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-7D5FEDCD-083B-42B3-90D5-42D9E1BC518F",
+          "raw_label": "Check if personal data can be transferred internationally",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-84724963-837C-4BDB-80FC-61877E2077AA",
+          "raw_label": "Retrieve the source from which personal data are originated",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-8C6443CA-D075-4BD1-BD49-A821B09172AA",
+          "raw_label": "Add \"existence of the right to lodge a complaint to a supervisory authority\"",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-9D709ECC-ECFC-4117-9C8D-093398A8B69C",
+          "raw_label": "Add \"personal data will be transferred internationally\"",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-A3704BED-290D-4876-A8B9-84C28A16EF9B",
+          "raw_label": "Ask DPO details",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-A4A3E247-9FD8-4E29-80E6-C3F837303614",
+          "raw_label": "Add \"existence of the right to data portability\"",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-BBC6CD92-D2B3-492A-9A3E-D7F2124AE9F9",
+          "raw_label": "Retrieve legitimate interests",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-C643FE0C-2557-46F6-A0A3-8BF3A3AFF47C",
+          "raw_label": "Ask consent",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-DE86B81E-D959-47C5-A6F6-C6C4308FBDC1",
+          "raw_label": "Retrieve processing purposses",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-F1836E1F-395C-4E96-9438-2468F33B4D59",
+          "raw_label": "Check if it is possible to determine the period for which personal data will be stored",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-F4438EC3-80AE-4972-AA25-7F4A82092B32",
+          "raw_label": "Check if recipients are present",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-F49D54FD-A6B9-4719-87E4-CC1E972729B7",
+          "raw_label": "Retrieve recipients",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "process_id": "gdpr_3_right_to_access",
+      "source": {
+        "path": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+        "sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+        "process_record_sha256": "4f2daa7bed486d0457b4967fa6752ee45ca011919efd6cfa4b7e1e6ac09cbbb9"
+      },
+      "review_state": "unreviewed",
+      "structure_annotation": {
+        "decision": "unreviewed",
+        "gold_process_record": null
+      },
+      "label_annotations": [
+        {
+          "activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "raw_label": "Retrieve available data of the data subject",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+          "raw_label": "Retrieve elaborations",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "raw_label": "Communicate data and elaborations",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "process_id": "gdpr_4_right_of_portability",
+      "source": {
+        "path": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+        "sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+        "process_record_sha256": "a1d77e897e80491c9f47725c812917ae98d9aca143b6478cbd62b9bff5727446"
+      },
+      "review_state": "unreviewed",
+      "structure_annotation": {
+        "decision": "unreviewed",
+        "gold_process_record": null
+      },
+      "label_annotations": [
+        {
+          "activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "raw_label": "Retrieve available data of the data subject",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+          "raw_label": "Retrieve elaborations",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "raw_label": "Communicate data and elaborations",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "process_id": "gdpr_5_right_to_withdraw",
+      "source": {
+        "path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+        "sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+        "process_record_sha256": "6053ce182627eca57f0ab9895ca284e0c8d4292e027908d9052a38220e39a011"
+      },
+      "review_state": "unreviewed",
+      "structure_annotation": {
+        "decision": "unreviewed",
+        "gold_process_record": null
+      },
+      "label_annotations": [
+        {
+          "activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "raw_label": "Stop running BPs using withdrawn data",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "raw_label": "Stop using withdrawn data",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-A9B97678-298C-4EE7-82A3-836179299938",
+          "raw_label": "Check if withdrawn data are relevant",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "raw_label": "Communicate the withdraw",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-DFB327FD-78D3-4012-8BAC-82AF87341389",
+          "raw_label": "Inform the user that the withdraw will stop all running BPs",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "process_id": "gdpr_6_right_to_rectify",
+      "source": {
+        "path": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+        "sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+        "process_record_sha256": "5f2ee37aabf7d9ff192cd32d05191df4d42e90dbd8054b399246cae1f225e335"
+      },
+      "review_state": "unreviewed",
+      "structure_annotation": {
+        "decision": "unreviewed",
+        "gold_process_record": null
+      },
+      "label_annotations": [
+        {
+          "activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "raw_label": "Rectify data",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+          "raw_label": "Communicate the rectification\n",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "process_id": "gdpr_7_right_to_be_forgotten",
+      "source": {
+        "path": "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn",
+        "sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+        "process_record_sha256": "250bdecd830806e43549e6c60d84848d57a85539cce25af88330d4a4d8c98375"
+      },
+      "review_state": "unreviewed",
+      "structure_annotation": {
+        "decision": "unreviewed",
+        "gold_process_record": null
+      },
+      "label_annotations": [
+        {
+          "activity_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+          "raw_label": "Communication with data subject",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        },
+        {
+          "activity_id": "sid-96C77979-3657-4A97-91E3-AF3186FAD889",
+          "raw_label": "Retrieve data",
+          "lane_labels": [],
+          "actor": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "action": {
+            "status": "unreviewed",
+            "value": null
+          },
+          "business_object": {
+            "status": "unreviewed",
+            "value": null
+          }
+        }
+      ]
+    }
+  ],
+  "review_summary": {
+    "records": 7,
+    "adjudicated_records": 0,
+    "label_fields": 135,
+    "resolved_label_fields": 0,
+    "freeze_ready": false
+  }
+}

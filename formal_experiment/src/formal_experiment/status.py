@@ -46,6 +46,13 @@ from formal_experiment.paths import (
     WINTER_2020_REFERENCE_DIR,
 )
 from formal_experiment.sun_modality_gate import get_cached_sun_modality_gate
+from formal_experiment.s1_structural_gate import get_cached_stage1_structural_gate
+from formal_experiment.s1_label_semantics_gate import (
+    get_cached_stage1_label_semantics_gate,
+)
+from formal_experiment.s1_annotation_gate import get_cached_stage1_annotation_gate
+from formal_experiment.s1_evaluator_gate import get_cached_stage1_evaluator_gate
+from formal_experiment.s1_membership_gate import get_cached_stage1_membership_gate
 from bpc_hybrid.sun_style.public_marker_lexicon import (
     get_cached_public_marker_gate,
 )
@@ -399,6 +406,11 @@ def collect_status() -> dict[str, Any]:
     contract = _load_json(EXPERIMENT_CONTRACT)
     sun_modality_gate = get_cached_sun_modality_gate(REPO_ROOT)
     public_marker_gate = get_cached_public_marker_gate(REPO_ROOT)
+    stage1_structural_gate = get_cached_stage1_structural_gate(REPO_ROOT)
+    stage1_label_semantics_gate = get_cached_stage1_label_semantics_gate(REPO_ROOT)
+    stage1_annotation_gate = get_cached_stage1_annotation_gate(REPO_ROOT)
+    stage1_membership_gate = get_cached_stage1_membership_gate(REPO_ROOT)
+    stage1_evaluator_gate = get_cached_stage1_evaluator_gate(REPO_ROOT)
     methods = _load_json(METHODS_CONFIG).get("methods", [])
     legacy = _review_summary_legacy(HUMAN_REVIEW_PACK)
     canonical = _canonical_review_summary(CANONICAL_REVIEW_FILE)
@@ -567,6 +579,30 @@ def collect_status() -> dict[str, Any]:
         "sun_modality_test_size": 426,
         "sun_modality_license_status": "unknown_pending_confirmation",
         "sun_modality_formal_use_ready": False,
+        # Stage 1 gates (S1.1-S1.6 + S3.1 membership, restored from the
+        # 56d2b03 checkpoint and re-bound in 2026-08-08):
+        "stage1_structural_gate": stage1_structural_gate,
+        "stage1_structural_verified": bool(stage1_structural_gate.get("ready")),
+        "stage1_label_semantics_gate": stage1_label_semantics_gate,
+        "stage1_label_semantics_verified": bool(
+            stage1_label_semantics_gate.get("ready")
+        ),
+        "stage1_annotation_gate": stage1_annotation_gate,
+        "stage1_annotation_protocol_verified": bool(
+            stage1_annotation_gate.get("protocol_ready")
+        ),
+        "stage1_membership_gate": stage1_membership_gate,
+        "stage1_formal_membership_ready": bool(
+            stage1_membership_gate.get("membership_ready")
+        ),
+        "stage1_human_gold_freeze_ready": bool(
+            stage1_membership_gate.get("human_gold_freeze_ready")
+        ),
+        "stage1_evaluator_gate": stage1_evaluator_gate,
+        "stage1_evaluator_verified": bool(stage1_evaluator_gate.get("evaluator_ready")),
+        "stage1_formal_results_ready": bool(
+            stage1_evaluator_gate.get("formal_results_ready")
+        ),
         "assets": {
             "winter_2020_reference": WINTER_2020_REFERENCE_DIR.exists(),
             "sun_original_reference": SUN_ORIGINAL_REFERENCE_DIR.exists(),

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/bpc-hybrid/stage1_label_semantics.schema.json",
+  "title": "Stage 1 Label Semantics Sidecar",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "process_record", "method", "activities"],
+  "properties": {
+    "schema_version": {"const": "stage1_label_semantics@1.0.0"},
+    "process_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "process_id", "sha256"],
+      "properties": {
+        "schema_version": {"const": "process_record@1.0.0"},
+        "process_id": {"$ref": "#/$defs/nonempty"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "baseline", "language", "learned_model"],
+      "properties": {
+        "name": {"enum": ["stage1_label_p0_raw", "stage1_label_p1_surface_split"]},
+        "version": {"enum": ["stage1_label_p0@1.0.0", "stage1_label_p1@1.0.0"]},
+        "baseline": {"enum": ["P0", "P1"]},
+        "language": {"const": "en"},
+        "learned_model": {"const": false}
+      }
+    },
+    "activities": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/activity"}
+    }
+  },
+  "$defs": {
+    "nonempty": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nullableString": {"type": ["string", "null"]},
+    "stringArray": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "activity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activity_id",
+        "raw_label",
+        "lane_labels",
+        "actor_surface",
+        "actor_status",
+        "action_surface",
+        "business_object_surface",
+        "label_status"
+      ],
+      "properties": {
+        "activity_id": {"$ref": "#/$defs/nonempty"},
+        "raw_label": {"type": "string"},
+        "lane_labels": {"$ref": "#/$defs/stringArray"},
+        "actor_surface": {"$ref": "#/$defs/nullableString"},
+        "actor_status": {
+          "enum": ["p0_not_inferred", "single_lane_label", "no_lane_label", "ambiguous_lane_labels"]
+        },
+        "action_surface": {"$ref": "#/$defs/nullableString"},
+        "business_object_surface": {"$ref": "#/$defs/nullableString"},
+        "label_status": {
+          "enum": ["raw_only", "empty_label", "unparsed_label", "parsed_action_only", "parsed_action_object"]
+        }
+      }
+    }
+  }
+}

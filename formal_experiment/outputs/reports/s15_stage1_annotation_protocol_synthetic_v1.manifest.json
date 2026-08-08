@@ -1,0 +1,231 @@
+{
+  "schema_version": "stage1_annotation_protocol_verification_manifest@1.0.0",
+  "run_id": "s15_stage1_annotation_protocol_synthetic_v1",
+  "task_ids": [
+    "S1.5"
+  ],
+  "status": "succeeded_protocol_only",
+  "created_at": "2026-08-08T14:29:14.002750+00:00",
+  "runtime": {
+    "python": "3.14.6"
+  },
+  "claim_boundary": "S1.5 verifies only the blank human-annotation schema, source/activity context binding, review-state semantics, and fail-closed freeze rules on synthetic BPMN. It does not select or promote the formal BPMN set, enter human decisions, create Gold, or evaluate Stage 1 performance.",
+  "artifacts": {
+    "config": {
+      "path": "configs/stage1_annotation_protocol_s15.json",
+      "sha256": "fd13d47108ca9e0962e5791050ce614c1ca67b418ad02e6cfb4d17647bb62305"
+    },
+    "schema": {
+      "path": "configs/schemas/stage1_human_annotation.schema.json",
+      "sha256": "4d97de0430cce10c5f28c038447472db599b8efccec191801db7aabde1b59744"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/stage1_human_annotation.py",
+      "sha256": "33cc64895c3bcb085262138f345640f8a26cd8ae43ae82d25248e1164551f52b"
+    },
+    "runner": {
+      "path": "scripts/build_stage1_annotation_protocol.py",
+      "sha256": "0b98177b62cb032d8f140b603d081a7637fd27c6e0935b8666f478b0cf714bbd"
+    },
+    "verifier": {
+      "path": "scripts/verify_stage1_annotation_protocol_s15.py",
+      "sha256": "bd2cb320312263d229438afc896398bf43b5e0b67fb0f50052bdce85265a8359"
+    },
+    "guide": {
+      "path": "docs/STAGE1_HUMAN_GOLD_GUIDE.md",
+      "sha256": "37b9eb045872084489c82ad186874df3712ba2e58568a7924b92ffd6ac0d9924"
+    },
+    "fixture": {
+      "path": "tests/fixtures/stage1/s13_label_edge_cases.bpmn",
+      "sha256": "95076fbcd21bd3d9619dcace6f3ddec8fceaa97d9dee887e7dfd9b86924dcc43"
+    },
+    "structural_manifest": {
+      "path": "outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json",
+      "sha256": "09732e4085386c69f01cde30ef0fce74b8f9e906c7df0e7d8bbffc1f2f881541"
+    },
+    "label_manifest": {
+      "path": "outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json",
+      "sha256": "c1487f6bb4b149612df4da7375b17747965f43c52a8547b5aefe94318037c5ef"
+    }
+  },
+  "blank_pack": {
+    "schema_version": "stage1_human_annotation_pack@1.0.0",
+    "dataset": {
+      "dataset_id": "s15_synthetic_protocol_fixture_v1",
+      "scope": "synthetic_protocol_only",
+      "membership_status": "synthetic_fixture_only"
+    },
+    "records": [
+      {
+        "process_id": "Process_Label_Edges",
+        "source": {
+          "path": "tests/fixtures/stage1/s13_label_edge_cases.bpmn",
+          "sha256": "95076fbcd21bd3d9619dcace6f3ddec8fceaa97d9dee887e7dfd9b86924dcc43",
+          "process_record_sha256": "5ef7c6c8f680407e8f75b6cd584a747b814a7813ee10449625a9b4adc744bd84"
+        },
+        "review_state": "unreviewed",
+        "structure_annotation": {
+          "decision": "unreviewed",
+          "gold_process_record": null
+        },
+        "label_annotations": [
+          {
+            "activity_id": "Task_Ambiguous",
+            "raw_label": "Review disputed claim",
+            "lane_labels": [
+              "Claims Clerk",
+              "Risk Manager"
+            ],
+            "actor": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "action": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "business_object": {
+              "status": "unreviewed",
+              "value": null
+            }
+          },
+          {
+            "activity_id": "Task_Empty",
+            "raw_label": "",
+            "lane_labels": [
+              "Claims Clerk"
+            ],
+            "actor": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "action": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "business_object": {
+              "status": "unreviewed",
+              "value": null
+            }
+          },
+          {
+            "activity_id": "Task_NoLane",
+            "raw_label": "Archive decision",
+            "lane_labels": [],
+            "actor": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "action": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "business_object": {
+              "status": "unreviewed",
+              "value": null
+            }
+          },
+          {
+            "activity_id": "Task_Punct",
+            "raw_label": "Approve: claim request",
+            "lane_labels": [
+              "Claims Clerk"
+            ],
+            "actor": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "action": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "business_object": {
+              "status": "unreviewed",
+              "value": null
+            }
+          },
+          {
+            "activity_id": "Task_Single",
+            "raw_label": "Escalate",
+            "lane_labels": [
+              "Risk Manager"
+            ],
+            "actor": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "action": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "business_object": {
+              "status": "unreviewed",
+              "value": null
+            }
+          },
+          {
+            "activity_id": "Task_Unparseable",
+            "raw_label": "---",
+            "lane_labels": [
+              "Claims Clerk"
+            ],
+            "actor": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "action": {
+              "status": "unreviewed",
+              "value": null
+            },
+            "business_object": {
+              "status": "unreviewed",
+              "value": null
+            }
+          }
+        ]
+      }
+    ],
+    "review_summary": {
+      "records": 1,
+      "adjudicated_records": 0,
+      "label_fields": 18,
+      "resolved_label_fields": 0,
+      "freeze_ready": false
+    }
+  },
+  "verification": {
+    "schema_valid": true,
+    "cross_field_valid": true,
+    "record_count": 1,
+    "activity_count": 6,
+    "label_field_count": 18,
+    "resolved_label_field_count": 0,
+    "adjudicated_record_count": 0,
+    "gold_process_record_count": 0,
+    "freeze_ready": false,
+    "p0_or_p1_values_auto_filled": false
+  },
+  "failure_semantics": {
+    "schema_additional_property_rejected": true,
+    "source_binding_tamper_rejected": true,
+    "false_freeze_claim_rejected": true,
+    "present_null_inconsistency_rejected": true
+  },
+  "formal_blocker": {
+    "code": "stage1_formal_bpmn_membership_not_promoted",
+    "active_bpmn_count": 0,
+    "provenance_candidate_count": 57,
+    "requires_user_approval": true,
+    "human_gold_records": 0
+  },
+  "safety": {
+    "synthetic_fixture_only": true,
+    "formal_bpmn_read": false,
+    "human_gold_read_or_modified": false,
+    "gold_auto_filled": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "performance_evaluation": false,
+    "formal_artifacts_written": false
+  }
+}
