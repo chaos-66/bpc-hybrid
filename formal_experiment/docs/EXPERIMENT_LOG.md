@@ -2865,3 +2865,20 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：REAL_CALL_REQUIRED_MODEL=deepseek-v4-pro(run_sun_llm_fallback.py);h1_pilot_plan.REQUIRED_MODEL 同步;DEEPSEEK_V4_FLASH_H1_POLICY 更名 DEEPSEEK_V4_PRO_H1_POLICY(内容不变:thinking-disabled+json_object);combine_h1_pilot_runs 模型白名单同步;负测试语义反转(flash 现为未授权模型);历史取证快照(s28d_r2_canary_forensics/llm_client 泛化测试)保留 flash 不动;plan-only 摸底:150 句 256 从句→211 个触发计划,150 预算选中 150(缺主体 135/低置信 105/分类器打架 54);FILE_CATALOG 重建;1500 tests pass
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-08T09:58:15.929654+00:00 - H1 真实 150 全量运行(deepseek-v4-pro,用户授权 150 calls):评估 selective H1 在主口径下的实际效果,为 H1 决策 A/B 提供实测数据
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s28d_h1_150_v4pro_v1；阶段=stage2；方法=sun_llm_fallback；状态=成功（`succeeded`）
+- 实际运行命令：`python -m scripts.run_sun_llm_fallback --b0-predictions s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1/b0_attempts.json --allow-llm --model deepseek-v4-pro --max-calls 150 --development`
+- manifest：outputs/development/s28d_h1_150_v4pro_v1/manifest.json
+- 结果摘要：150 calls, changed=89, accepted=103, rejected=47, gate=True, 0 incidents; primary metric (coarse Gold): H1 F1 0.7621 (P 0.6720/R 0.8801) vs B0 0.7986 (-0.0365); actor field wrecked by LLM over-extraction: P 0.7077->0.2754, actor spans 65->167 (+102); other 5 fields flat/slightly up; fine Gold H1 0.6875 vs B0 0.7186; verdict: selective H1 net-negative under current trigger+repair recipe, supports decision A (D1-primary)
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1500 passed, 24 skipped in 150.42s (0:02:30)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`258c9fcfe603904643d09e3a1c383f54b5e8816c`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

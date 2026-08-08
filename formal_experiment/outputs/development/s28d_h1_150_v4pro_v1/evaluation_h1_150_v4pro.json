@@ -1,0 +1,69 @@
+{
+  "schema_version": "h1_150_v4pro_evaluation@1.0.0",
+  "purpose": "H1 real run (150 calls, deepseek-v4-pro, full_b0_v4 prompt) evaluated on coarse Gold (primary) and fine Gold (comparison); same-process comparable with B0-R3/D1-R3",
+  "summary": {
+    "h1_coarse": {
+      "precision": 0.672,
+      "recall": 0.8801,
+      "f1": 0.7621
+    },
+    "b0_coarse": {
+      "precision": 0.7309,
+      "recall": 0.8801,
+      "f1": 0.7986
+    },
+    "d1_coarse": {
+      "precision": 0.9012,
+      "recall": 0.8456,
+      "f1": 0.8726
+    },
+    "h1_fine": {
+      "precision": 0.6294,
+      "recall": 0.7573,
+      "f1": 0.6875
+    },
+    "b0_fine": {
+      "precision": 0.6845,
+      "recall": 0.7564,
+      "f1": 0.7186
+    },
+    "verdict": "H1 < B0 on primary metric (-0.0365 F1); actor field wrecked by LLM over-extraction (P 0.7077 -> 0.2754, +102 actor spans); other 5 fields flat or slightly up; supports decision A (drop H1, D1-primary)"
+  },
+  "actor_diagnosis": {
+    "b0_actor_spans": 65,
+    "h1_actor_spans": 167,
+    "delta": 102,
+    "h1_actor_coarse": {
+      "precision": 0.2754,
+      "recall": 0.9756,
+      "f1": 0.4296
+    },
+    "b0_actor_coarse": {
+      "precision": 0.7077,
+      "recall": 0.9756,
+      "f1": 0.8203
+    },
+    "changed_fields": {
+      "modality": 89,
+      "actors": 94,
+      "conditions": 6,
+      "constraints": 6,
+      "exceptions": 6,
+      "actor_action_map": 95,
+      "actions": 4
+    },
+    "changed_reasons": {
+      "classifier_marker_disagreement": 36,
+      "alignment_confidence_below_0_65": 67,
+      "non_definition_missing_actor": 94,
+      "scope_candidate_rejected": 6,
+      "non_definition_missing_action": 4
+    }
+  },
+  "safety": {
+    "gold": "audit_read_only",
+    "llm_api": "authorized_called",
+    "network": "called",
+    "artifacts": "created_no_overwrite"
+  }
+}
