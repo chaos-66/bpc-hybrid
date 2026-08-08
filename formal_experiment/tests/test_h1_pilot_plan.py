@@ -241,7 +241,7 @@ def _run(tmp_path, config_path, b0_path, b0_manifest, *, extra=None, max_calls=1
     if mode == "allow_llm":
         args += [
             "--allow-llm",
-            "--model", "deepseek-v4-flash",
+            "--model", "deepseek-v4-pro",
             "--transport-capture", str(out_dir / "transport_capture.jsonl"),
             "--frozen-plan", str(config_path),
             "--inter-call-delay", "0",
@@ -299,7 +299,7 @@ class TestFrozenPlanStructure:
 
     def test_11_model_mismatch_rejected(self, tmp_path):
         config, _, _ = _build_frozen_config(tmp_path, _pilot_attempts())
-        config["model"] = "deepseek-v4-pro"
+        config["model"] = "deepseek-v4-flash"
         assert any("model" in e for e in hpp.validate_structure(config))
 
 
@@ -446,7 +446,7 @@ class TestPlanOnlyVerification:
 
 
 class TestEarlyStop:
-    def _transport(self, monkeypatch, model="deepseek-v4-flash", capture_sha="1" * 64, content="", patch_model=None):
+    def _transport(self, monkeypatch, model="deepseek-v4-pro", capture_sha="1" * 64, content="", patch_model=None):
         from bpc_hybrid.llm_client import LLMResponse
 
         class FakeTransport:
@@ -501,7 +501,7 @@ class TestEarlyStop:
         return rc, out_dir, manifest, telemetry, fake_cls
 
     def test_21_provider_model_mismatch_triggers_early_stop(self, tmp_path, monkeypatch):
-        fake = self._transport(monkeypatch, patch_model="deepseek-v4-pro", content=json.dumps({"sample_id": "x", "clause_id": "x.c1", "repair_fields": [], "patches": {}}))
+        fake = self._transport(monkeypatch, patch_model="deepseek-v4-flash", content=json.dumps({"sample_id": "x", "clause_id": "x.c1", "repair_fields": [], "patches": {}}))
         rc, _, manifest, telemetry, f = self._early_stop_run(tmp_path, fake)
         assert rc == 0
         assert manifest["llm_calls"] == 1
@@ -549,7 +549,7 @@ class TestEarlyStop:
         assert manifest["patch_rejected_count"] == 10
 
     def test_25_26_no_replacement_and_not_called_marked(self, tmp_path, monkeypatch):
-        fake = self._transport(monkeypatch, patch_model="deepseek-v4-pro", content=json.dumps({"sample_id": "x", "clause_id": "x.c1", "repair_fields": [], "patches": {}}))
+        fake = self._transport(monkeypatch, patch_model="deepseek-v4-flash", content=json.dumps({"sample_id": "x", "clause_id": "x.c1", "repair_fields": [], "patches": {}}))
         rc, out_dir, manifest, telemetry, f = self._early_stop_run(tmp_path, fake)
         assert rc == 0
         # not_called keys must be a subset of the frozen plan keys and no
@@ -621,7 +621,7 @@ class TestEarlyStopRegression:
                 plan = plan_by_sample[request.source_id]
                 content = _patch_for_plan(plan, valid=valid_for(plan))
                 self.last_decode = {
-                    "status": "ok_message_content", "content": content, "model": "deepseek-v4-flash",
+                    "status": "ok_message_content", "content": content, "model": "deepseek-v4-pro",
                     "response_id": "chatcmpl-seq", "response_object": "chat.completion", "finish_reason": "stop",
                     "usage": {"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2},
                     "response_body_sha256": None, "response_content_sha256": None, "body_utf8_length": len(content),
@@ -629,7 +629,7 @@ class TestEarlyStopRegression:
                     "reasoning_present": False, "reasoning_utf8_length": None, "reasoning_sha256": None,
                     "tool_call_count": 0, "tool_call_summaries": [], "transport_audit": {}, "error_detail": None,
                 }
-                return LLMResponse(content=content, provider="openai_compatible", model="deepseek-v4-flash", finish_reason="stop")
+                return LLMResponse(content=content, provider="openai_compatible", model="deepseek-v4-pro", finish_reason="stop")
 
         monkeypatch.setattr(RUNNER, "RealAPITransport", SeqTransport)
         return SeqTransport
@@ -665,7 +665,7 @@ class TestEarlyStopRegression:
 
     def _replay_row(self, plan, record, variant, content_dict):
         body = json.dumps({
-            "id": "chatcmpl-replay", "object": "chat.completion", "model": "deepseek-v4-flash",
+            "id": "chatcmpl-replay", "object": "chat.completion", "model": "deepseek-v4-pro",
             "choices": [{"index": 0, "message": {"role": "assistant", "content": json.dumps(content_dict)}, "finish_reason": "stop"}],
             "usage": {"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2},
         })

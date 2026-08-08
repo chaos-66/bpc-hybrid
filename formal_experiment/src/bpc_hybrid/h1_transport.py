@@ -8,7 +8,7 @@ identical on both paths.
 
 Key rules:
 
-* The H1 pinned deepseek-v4-flash request policy is explicit:
+* The H1 pinned deepseek-v4-pro request policy is explicit:
   ``stream=false``, ``thinking={"type": "disabled"}``,
   ``response_format={"type": "json_object"}``; ``tools`` are never sent.
 * Only a non-empty ``message.content`` string may feed the H1 JSON patch
@@ -133,7 +133,7 @@ class H1RequestPolicy:
         return out
 
 
-DEEPSEEK_V4_FLASH_H1_POLICY = H1RequestPolicy()
+DEEPSEEK_V4_PRO_H1_POLICY = H1RequestPolicy()
 
 
 # ---------------------------------------------------------------------------

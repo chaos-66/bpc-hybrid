@@ -586,7 +586,7 @@ def _transport_row(plan, b0_record, request_id: str, content: dict) -> dict:
     body = {
         "id": "syn-chatcmpl-1",
         "object": "chat.completion",
-        "model": "deepseek-v4-flash",
+        "model": "deepseek-v4-pro",
         "choices": [
             {
                 "index": 0,

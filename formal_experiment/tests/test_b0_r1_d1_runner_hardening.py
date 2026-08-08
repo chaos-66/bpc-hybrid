@@ -1,6 +1,6 @@
 """D1-R1 runner hardening tests: model pin, prompt-name allowlist, v3 snapshot.
 
-The D1 pilot must run on the pinned model (deepseek-v4-flash) with a
+The D1 pilot must run on the pinned model (deepseek-v4-pro) with a
 fail-closed model check and a prompt-version switch for the paired
 v3-vs-v4 comparison.  These tests verify the allowlist, the snapshot
 identity, and the fail-closed decision logic without making any LLM call.

@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-08
-**收录文件**：731 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：734 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -424,6 +424,7 @@
 | `outputs/development/s27_b0_coarse_gold_cc_v1/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/coarse_gold_sentence_level.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_coarse_gold_marker_converged_v1/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_coarse_gold_sentence_granularity_v1/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_pilot_20_hist56d_v1/arm_a_v5_20260805/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_d1_pilot_20_hist56d_v1/arm_a_v5_20260805/output.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -485,6 +486,8 @@
 | `outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/delta.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_estg150_b0_v10a_vs_r1a_c3_sun_literal_v2_hist56d_v1/v10a_metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_modality_classifier_alignment_v1/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s27_sun_selection_criteria_v1/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_attempts.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_primary_call_incident.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28_s29_deepseek_v4pro_sun_literal_v1/d1_recovery_batches.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |

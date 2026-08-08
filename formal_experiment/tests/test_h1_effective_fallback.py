@@ -917,7 +917,9 @@ class TestRealCallModelGate:
         assert not (tmp_path / "out" / "h1_manifest.json").exists()
 
     def test_allow_llm_rejects_unauthorized_model_before_any_call(self, tmp_path):
-        result = RUNNER.main(self._allow_llm_args(tmp_path, "deepseek-v4-pro"))
+        # deepseek-v4-flash is NOT the authorized model anymore (pinned to
+        # deepseek-v4-pro since 2026-08-08), so it must be rejected pre-call.
+        result = RUNNER.main(self._allow_llm_args(tmp_path, "deepseek-v4-flash"))
         assert result == 3
         assert not (tmp_path / "out" / "h1_manifest.json").exists()
 
@@ -928,11 +930,11 @@ class TestRealCallModelGate:
             return LLMConfig(enabled=False, provider="mock", model="mock")
 
         monkeypatch.setattr(RUNNER, "LLMConfig", type("FakeLLMConfig", (), {"from_env": staticmethod(fake_from_env)}))
-        result = RUNNER.main(self._allow_llm_args(tmp_path, "deepseek-v4-flash"))
+        result = RUNNER.main(self._allow_llm_args(tmp_path, "deepseek-v4-pro"))
         assert result == 3
         assert not (tmp_path / "out" / "h1_manifest.json").exists()
 
-    def test_allow_llm_flash_passes_gate_and_manifests_pinning(self, tmp_path, monkeypatch):
+    def test_allow_llm_pro_passes_gate_and_manifests_pinning(self, tmp_path, monkeypatch):
         """With the exact authorized model the gate passes; a stubbed
         transport consumes the run without any network call and the
         manifest records the CLI-pinned model + gate."""
@@ -946,7 +948,7 @@ class TestRealCallModelGate:
                 self.last_decode = {
                     "status": "ok_message_content",
                     "content": "",
-                    "model": "deepseek-v4-flash",
+                    "model": "deepseek-v4-pro",
                     "response_id": "chatcmpl-test",
                     "response_object": "chat.completion",
                     "finish_reason": "stop",
@@ -1015,7 +1017,7 @@ class TestRealCallModelGate:
                 return LLMResponse(
                     content=content,
                     provider="openai_compatible",
-                    model="deepseek-v4-flash",
+                    model="deepseek-v4-pro",
                     finish_reason="stop",
                 )
 
@@ -1038,7 +1040,7 @@ class TestRealCallModelGate:
                 "--max-calls",
                 "1",
                 "--model",
-                "deepseek-v4-flash",
+                "deepseek-v4-pro",
                 "--prompt-variant",
                 "masked_selected_v5",
                 "--transport-capture",
@@ -1048,11 +1050,11 @@ class TestRealCallModelGate:
         )
         assert result == 0
         manifest = json.loads((out_dir / "h1_manifest.json").read_text(encoding="utf-8"))
-        assert manifest["llm_model"] == "deepseek-v4-flash"
+        assert manifest["llm_model"] == "deepseek-v4-pro"
         assert manifest["llm_model_source"] == "cli_override"
         assert manifest["real_call_model_gate"] == {
-            "required_model": "deepseek-v4-flash",
-            "resolved_model": "deepseek-v4-flash",
+            "required_model": "deepseek-v4-pro",
+            "resolved_model": "deepseek-v4-pro",
             "passed": True,
         }
         assert manifest["llm_calls"] == 1
@@ -1065,7 +1067,7 @@ class TestRealCallModelGate:
             for event in row["patch_events"]
             if event.get("selected_for_call")
         }
-        assert response_models == {"deepseek-v4-flash"}
+        assert response_models == {"deepseek-v4-pro"}
         # Transport section: policy actually sent + capture binding.
         assert manifest["transport"]["raw_response_saved"] is False
         assert manifest["transport"]["sanitized_transport_capture_saved"] is True
@@ -1081,9 +1083,9 @@ class TestRealCallModelGate:
         capture = _read_jsonl(out_dir / "transport_capture.jsonl")
         assert len(capture) == 1
         assert capture[0]["extraction_status"] == "ok_message_content"
-        assert capture[0]["models"]["requested"] == "deepseek-v4-flash"
-        assert capture[0]["models"]["resolved"] == "deepseek-v4-flash"
-        assert capture[0]["models"]["returned"] == "deepseek-v4-flash"
+        assert capture[0]["models"]["requested"] == "deepseek-v4-pro"
+        assert capture[0]["models"]["resolved"] == "deepseek-v4-pro"
+        assert capture[0]["models"]["returned"] == "deepseek-v4-pro"
         assert capture[0]["safety"]["authorization_saved"] is False
         assert capture[0]["safety"]["reasoning_content_saved"] is False
         assert capture[0]["safety"]["tool_call_arguments_saved"] is False
@@ -1300,7 +1302,7 @@ class TestOfflineTransportReplay:
             {
                 "id": "chatcmpl-test",
                 "object": "chat.completion",
-                "model": "deepseek-v4-flash",
+                "model": "deepseek-v4-pro",
                 "choices": [
                     {
                         "index": 0,
@@ -1706,7 +1708,7 @@ class TestOfflineTransportReplay:
                     "--max-calls",
                     "1",
                     "--model",
-                    "deepseek-v4-flash",
+                    "deepseek-v4-pro",
                     "--development",
                 ]
             )

@@ -75,7 +75,7 @@ from bpc_hybrid.h1_context import (  # noqa: E402
     build_masked_clause_context,
 )
 from bpc_hybrid.h1_transport import (  # noqa: E402
-    DEEPSEEK_V4_FLASH_H1_POLICY,
+    DEEPSEEK_V4_PRO_H1_POLICY,
     STATUS_OK,
     build_transport_capture_row,
     decode_chat_completion_envelope,
@@ -143,7 +143,7 @@ _PROMPT_NAME_BY_VARIANT = {
 # S2.8D fail-closed real-call model gate: real runs require an explicit
 # --model whose resolved value (after the CLI override) must equal exactly
 # this model ID; anything else aborts BEFORE any API call is made.
-REAL_CALL_REQUIRED_MODEL = "deepseek-v4-flash"
+REAL_CALL_REQUIRED_MODEL = "deepseek-v4-pro"
 
 _DEFAULT_OUTPUT = _PROJECT_ROOT / "data" / "predictions" / "sun_llm_fallback_predictions.jsonl"
 _DEFAULT_MANIFEST = _PROJECT_ROOT / "data" / "predictions" / "sun_llm_fallback_manifest.json"
@@ -1790,7 +1790,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
             return 3
         llm_transport = RealAPITransport(
-            config, timeout_seconds=60.0, policy=DEEPSEEK_V4_FLASH_H1_POLICY
+            config, timeout_seconds=60.0, policy=DEEPSEEK_V4_PRO_H1_POLICY
         )
         sampling = OpenAICompatibleRequestBuilder(config).sent_sampling_params()
         print(
@@ -1885,7 +1885,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             _attach_transport_fields(
                 event,
                 decode,
-                request_policy=DEEPSEEK_V4_FLASH_H1_POLICY.to_dict(),
+                request_policy=DEEPSEEK_V4_PRO_H1_POLICY.to_dict(),
                 endpoint_descriptor={"offline": True, "network": False},
                 http_status=row.get("http_status"),
             )
@@ -2266,7 +2266,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             audit.get("contract_violation_count") or 0
         )
     if args.offline_transport_replay:
-        transport_request_policy = DEEPSEEK_V4_FLASH_H1_POLICY.to_dict()
+        transport_request_policy = DEEPSEEK_V4_PRO_H1_POLICY.to_dict()
         transport_endpoint = {"offline": True, "network": False}
     elif llm_transport is not None:
         transport_request_policy = llm_transport.last_request_policy

@@ -705,7 +705,7 @@ from pathlib import Path
 from typing import Any
 
 from bpc_hybrid.h1_transport import (
-    DEEPSEEK_V4_FLASH_H1_POLICY,
+    DEEPSEEK_V4_PRO_H1_POLICY,
     H1RequestPolicy,
     REDACTED,
     STATUS_EMPTY,
@@ -917,7 +917,7 @@ class TestH1TransportContract:
             prompt_variant="masked_selected_v5",
             b0_prediction_sha256="b" * 64,
             request_body_sha256="rb" * 32,
-            request_policy=DEEPSEEK_V4_FLASH_H1_POLICY.to_dict(),
+            request_policy=DEEPSEEK_V4_PRO_H1_POLICY.to_dict(),
             http_status=200,
             endpoint_descriptor={"offline": True},
             requested_model="deepseek-v4-flash",
@@ -952,7 +952,7 @@ class TestH1TransportContract:
             prompt_variant="masked_selected_v5",
             b0_prediction_sha256="b" * 64,
             request_body_sha256="rb" * 32,
-            request_policy=DEEPSEEK_V4_FLASH_H1_POLICY.to_dict(),
+            request_policy=DEEPSEEK_V4_PRO_H1_POLICY.to_dict(),
             http_status=200,
             endpoint_descriptor={"offline": True},
             requested_model="deepseek-v4-flash",

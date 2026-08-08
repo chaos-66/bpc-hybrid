@@ -2852,3 +2852,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：A: Sun 筛选标准(>20词/完整句/含法律行为,sequential 不适用)子集重评——legal_act 子集(133条)B0 F1 0.8110(+0.012)/D1 0.8924(+0.020),三者交集(129条)B0 0.8154(+0.017)/D1 0.8947(+0.022);证实 150 句中有 Sun 会剔除的句子。B: 粗 Gold+Sun Table-4 marker 收敛(Gold 609->441 spans,单边收敛 P 侧不可解读):B0 R 0.880->0.966、D1 R 0.846->0.909,Sun 定义内两方法召回接近满分。C: 本地 BERT-TextCNN 官方 test 集(426条)macro P 87.5/R 87.9/F1 87.7(acc 93.2)vs Sun Table7 P92.1/R94.1/F193.1,差距 -4.6/-6.2/-5.4pp,弱在 permission/prohibition。附:从 56d2b03 恢复 s24_candidate_B adapter manifest(当前分支缺失的 config 引用资产,字节级恢复 sha 校验通过)。新增 3 脚本 + 1 测试文件(8 测试);FILE_CATALOG 重建。全部 development/attribution,主口径数字不变。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-08T09:24:19.908388+00:00 - H1 真实运行配方切换:H1 钉死模型从 deepseek-v4-flash 改为 deepseek-v4-pro(用户拍板,与 D1 配方一致);policy 常量与 plan/combine 校验同步
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1500 passed, 24 skipped in 126.47s (0:02:06)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`e8c0b82f1fdbeec9e9b88768697fc31d57841281`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：REAL_CALL_REQUIRED_MODEL=deepseek-v4-pro(run_sun_llm_fallback.py);h1_pilot_plan.REQUIRED_MODEL 同步;DEEPSEEK_V4_FLASH_H1_POLICY 更名 DEEPSEEK_V4_PRO_H1_POLICY(内容不变:thinking-disabled+json_object);combine_h1_pilot_runs 模型白名单同步;负测试语义反转(flash 现为未授权模型);历史取证快照(s28d_r2_canary_forensics/llm_client 泛化测试)保留 flash 不动;plan-only 摸底:150 句 256 从句→211 个触发计划,150 预算选中 150(缺主体 135/低置信 105/分类器打架 54);FILE_CATALOG 重建;1500 tests pass
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

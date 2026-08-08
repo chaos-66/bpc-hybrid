@@ -279,7 +279,7 @@ def _run(tmp_path, config_path, b0_path, b0_manifest, *, max_calls=5, extra=None
         "--development",
     ]
     if mode == "allow_llm":
-        args += ["--allow-llm", "--model", "deepseek-v4-flash",
+        args += ["--allow-llm", "--model", "deepseek-v4-pro",
                  "--transport-capture", str(out_dir / "transport_capture.jsonl"),
                  "--continuation-plan", str(config_path), "--inter-call-delay", "0"]
     else:
@@ -412,7 +412,7 @@ class TestContinuationBinding:
 
     def test_13_model_mismatch_rejected(self, tmp_path):
         config, parent_path, b0_path, b0_manifest = self._valid(tmp_path)
-        config["model"] = "deepseek-v4-pro"
+        config["model"] = "deepseek-v4-flash"
         cp = _write_config(tmp_path, config)
         rc, _ = _run(tmp_path, cp, b0_path, b0_manifest)
         assert rc == 2
@@ -520,7 +520,7 @@ class TestContinuationEarlyStop:
                 plan = plan_by_sample[request.source_id]
                 content = content_for(plan)
                 self.last_decode = {
-                    "status": "ok_message_content", "content": content, "model": "deepseek-v4-flash",
+                    "status": "ok_message_content", "content": content, "model": "deepseek-v4-pro",
                     "response_id": "chatcmpl-cont", "response_object": "chat.completion", "finish_reason": "stop",
                     "usage": {"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2},
                     "response_body_sha256": None, "response_content_sha256": None, "body_utf8_length": len(content),
@@ -528,7 +528,7 @@ class TestContinuationEarlyStop:
                     "reasoning_present": False, "reasoning_utf8_length": None, "reasoning_sha256": None,
                     "tool_call_count": 0, "tool_call_summaries": [], "transport_audit": {}, "error_detail": None,
                 }
-                return LLMResponse(content=content, provider="openai_compatible", model="deepseek-v4-flash", finish_reason="stop")
+                return LLMResponse(content=content, provider="openai_compatible", model="deepseek-v4-pro", finish_reason="stop")
 
         monkeypatch.setattr(RUNNER, "RealAPITransport", FakeTransport)
         return FakeTransport
@@ -576,8 +576,8 @@ class TestContinuationEarlyStop:
 
     def test_24_true_plan_key_mismatch_still_early_stops(self, tmp_path, monkeypatch):
         reason = hpp.evaluate_early_stop(
-            calls_made=1, consecutive_failures=0, provider_returned_model="deepseek-v4-flash",
-            required_model="deepseek-v4-flash", capture_bound=True, plan_key_ok=False, hard_call_cap=5,
+            calls_made=1, consecutive_failures=0, provider_returned_model="deepseek-v4-pro",
+            required_model="deepseek-v4-pro", capture_bound=True, plan_key_ok=False, hard_call_cap=5,
         )
         assert reason == "plan_key_mismatch"
 
@@ -612,7 +612,7 @@ class TestCombineRuns:
         d.mkdir(parents=True, exist_ok=True)
         manifest = {
             "run_id": name, "llm_calls": len(called_orders), "real_api": True,
-            "llm_model": "deepseek-v4-flash", "execution_mode": "real_llm",
+            "llm_model": "deepseek-v4-pro", "execution_mode": "real_llm",
             "patch_accepted_count": 0, "patch_rejected_count": 0,
             "prediction_changed_sample_count": 0,
             "effective_patch": {"accepted_effective_patch_count": 0},

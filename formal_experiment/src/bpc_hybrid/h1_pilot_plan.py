@@ -35,7 +35,7 @@ from typing import Any, Iterable, Mapping, Sequence
 
 SCHEMA_VERSION = "h1_small_pilot_plan@1.0.0"
 TASK_ID = "S2.8D-R5"
-REQUIRED_MODEL = "deepseek-v4-flash"
+REQUIRED_MODEL = "deepseek-v4-pro"
 EXPECTED_PLAN_COUNT = 10
 EXPECTED_HARD_CALL_CAP = 10
 EXPECTED_RETRY_PER_PLAN = 0

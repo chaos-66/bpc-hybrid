@@ -110,7 +110,7 @@ def combine_pilot_runs(
     for manifest in (p_manifest, c_manifest):
         if manifest.get("b0_binding", {}).get("sha256") != _sha256_file(b0_predictions):
             errors.append(f"{manifest.get('execution_mode')} B0 attempts sha mismatch")
-        if manifest.get("llm_model") not in (None, "deepseek-v4-flash"):
+        if manifest.get("llm_model") not in (None, "deepseek-v4-pro"):
             errors.append("model mismatch")
     parent_keys = {
         (str(e["sample_id"]), str(e["clause_id"]))
