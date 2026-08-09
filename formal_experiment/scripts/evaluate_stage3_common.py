@@ -255,12 +255,75 @@ def threshold_sensitivity(predictions: list[dict[str, Any]],
     return result
 
 
+def write_error_analysis(run_dir: Path, predictions: list[dict[str, Any]],
+                         evaluation: dict[str, Any],
+                         correction: dict[str, Any]) -> None:
+    """Method-agnostic error analysis derived from predictions + evaluation
+    (no Gold inference; deviations are reported against the frozen Gold only
+    in the evaluator, which is allowed to read it)."""
+    gold_m = {i["item_id"]: i for i in correction["matching_items"]}
+    gold_v = {i["item_id"]: i for i in correction["violation_items"]}
+    method = predictions[0].get("method_id", "?") if predictions else "?"
+    lines = [
+        f"# Stage 3 development error analysis - {method} (DEV_ONLY)",
+        "",
+        "## matching FP/FN (binary rule) or ranking notes",
+        "",
+    ]
+    for p in [q for q in predictions if q["task"] == "matching"]:
+        gold = gold_m[p["item_id"]]["decision_relevant"]
+        pred = p.get("predicted_relevance")
+        if pred is not None and pred != gold:
+            lines.append(
+                f"- {p['item_id']} {p['process_id']} x {p['rule_id']}: "
+                f"gold={gold} pred={pred} matching_score={p.get('matching_score')}"
+            )
+    if not any(q.get("predicted_relevance") is not None for q in predictions if q["task"] == "matching"):
+        lines.append("- ranking-only (no binary rule); see per-process AP/MAP in evaluation.json")
+    lines += ["", "## violation missed / wrong-type / unobservable", ""]
+    for p in [q for q in predictions if q["task"] == "violation"]:
+        gold = gold_v[p["item_id"]]["decision_violation_type"]
+        pred = p.get("predicted_violation_type")
+        scores = p.get("scores") or {
+            "missing_action": p.get("missing_action_score"),
+            "incorrect_actor": p.get("incorrect_actor_score"),
+            "out_of_order": p.get("out_of_order_score"),
+        }
+        note = ""
+        if p.get("incorrect_actor_score") is None and scores.get("incorrect_actor") is None:
+            note = " [actor unobservable]"
+        if pred != gold:
+            lines.append(
+                f"- {p['item_id']} {p['process_id']} x {p['rule_id']}: "
+                f"gold={gold} pred={pred} scores={scores}{note}"
+            )
+    lines += [
+        "",
+        "## threshold sensitivity",
+        "",
+        "- primary thresholds are pre-registered (Winter gamma 0.4/delta 0.8;",
+        "  Sun tau/gamma/theta 0.8); sweep values are sensitivity reports only",
+        "  and are NOT used to pick primary thresholds (see threshold_sensitivity.json).",
+        "",
+        "## error attribution",
+        "",
+        "- method differences (Winter clause-bag vs Sun Rule Record action/actor",
+        "  separation and order relations), actor observability (empty lane names;",
+        "  pool names present), rule extraction quality of the development adapter,",
+        "  and similarity backend limits (en_core_web_sm, no word vectors) are the",
+        "  expected error sources; no Gold/sample/threshold adjustment was performed.",
+    ]
+    (run_dir / "error_analysis.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--predictions", type=Path, required=True)
     parser.add_argument("--run-dir", type=Path, default=None)
     parser.add_argument("--sweep", action="store_true",
                         help="also compute threshold sensitivity and write threshold_sensitivity.json")
+    parser.add_argument("--error-analysis", action="store_true",
+                        help="also write error_analysis.md into the run dir")
     parser.add_argument("--correction", type=Path, default=CORRECTION_PACK)
     args = parser.parse_args()
 
@@ -285,6 +348,8 @@ def main() -> int:
                 (run_dir / "threshold_sensitivity.json").write_text(
                     json.dumps(sweep, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
                 )
+            if args.error_analysis:
+                write_error_analysis(run_dir, predictions, evaluation, correction)
         return 0
     except Exception as exc:
         print(f"common stage3 evaluation failed closed: {exc}", file=sys.stderr)

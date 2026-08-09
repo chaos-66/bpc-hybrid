@@ -386,10 +386,14 @@ def main() -> int:
         print(f"winter stage3 run failed closed: {exc}", file=sys.stderr)
         return 2
     print(f"run dir: {run_dir.relative_to(ROOT).as_posix()}")
-    # evaluation happens in the evaluator script (gold read allowed there)
-    eval_script = ROOT / "scripts" / "evaluate_winter_stage3_development.py"
+    # common evaluator (gold read allowed there), with threshold sweep and
+    # error analysis; the legacy evaluate_winter_stage3_development.py remains
+    # for the v1 run's provenance and its focused tests
+    eval_script = ROOT / "scripts" / "evaluate_stage3_common.py"
     result = subprocess.run(
-        [sys.executable, str(eval_script), "--run-dir", str(run_dir)],
+        [sys.executable, str(eval_script),
+         "--predictions", str(run_dir / "predictions.jsonl"),
+         "--run-dir", str(run_dir), "--sweep", "--error-analysis"],
         cwd=ROOT, text=True, encoding="utf-8", errors="replace",
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
     )
