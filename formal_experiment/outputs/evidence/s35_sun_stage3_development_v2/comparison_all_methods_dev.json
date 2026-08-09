@@ -1,0 +1,437 @@
+{
+  "schema_version": "stage3_methods_dev_comparison@1.0.0",
+  "note": "DEV_ONLY descriptive comparison; same 58 item IDs, same common evaluator, same Gold; no superiority claim from development numbers",
+  "runs": {
+    "winter_2020_corrected": {
+      "matching": {
+        "MAP": 0.6429,
+        "binary": {
+          "rule": "fitness > 0 (Winter) or pre-registered binary rule",
+          "confusion": {
+            "tp": 11,
+            "fp": 14,
+            "fn": 0,
+            "tn": 0
+          },
+          "precision": 0.44,
+          "recall": 1.0,
+          "f1": 0.6111
+        },
+        "per_process_ap": {
+          "gdpr_1_data_breach": 1.0,
+          "gdpr_2_consent_to_use_the_data": 0.9167,
+          "gdpr_3_right_to_access": 1.0,
+          "gdpr_4_right_of_portability": 0.3333,
+          "gdpr_5_right_to_withdraw": 0.4167,
+          "gdpr_6_right_to_rectify": 0.5,
+          "gdpr_7_right_to_be_forgotten": 0.3333
+        }
+      },
+      "violation": {
+        "macro_f1": 0.373,
+        "micro_f1": 0.5,
+        "observable_only_macro_f1": 0.373,
+        "exact_type_accuracy": 0.3333,
+        "per_type_f1": {
+          "missing_action": 0.9524,
+          "incorrect_actor": 0.0,
+          "out_of_order": 0.1667
+        },
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.9091,
+            "f1": 0.9524
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.0909,
+            "f1": 0.1667
+          }
+        },
+        "detected": 11,
+        "missed": 22,
+        "wrong_type": 0,
+        "unobservable": 0,
+        "denominator": {
+          "total_items": 33,
+          "per_type_support": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_observable": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_unobservable": {
+            "missing_action": 0,
+            "incorrect_actor": 0,
+            "out_of_order": 0
+          },
+          "unobservable_total": 0,
+          "unobservable_by_reason": {},
+          "none_gold_items": 0,
+          "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+          "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+        }
+      }
+    },
+    "winter_2020_prototype_literal": {
+      "matching": {
+        "MAP": 0.6429,
+        "binary": {
+          "rule": "fitness > 0 (Winter) or pre-registered binary rule",
+          "confusion": {
+            "tp": 11,
+            "fp": 14,
+            "fn": 0,
+            "tn": 0
+          },
+          "precision": 0.44,
+          "recall": 1.0,
+          "f1": 0.6111
+        },
+        "per_process_ap": {
+          "gdpr_1_data_breach": 1.0,
+          "gdpr_2_consent_to_use_the_data": 0.9167,
+          "gdpr_3_right_to_access": 1.0,
+          "gdpr_4_right_of_portability": 0.3333,
+          "gdpr_5_right_to_withdraw": 0.4167,
+          "gdpr_6_right_to_rectify": 0.5,
+          "gdpr_7_right_to_be_forgotten": 0.3333
+        }
+      },
+      "violation": {
+        "macro_f1": 0.373,
+        "micro_f1": 0.5,
+        "observable_only_macro_f1": 0.373,
+        "exact_type_accuracy": 0.3333,
+        "per_type_f1": {
+          "missing_action": 0.9524,
+          "incorrect_actor": 0.0,
+          "out_of_order": 0.1667
+        },
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.9091,
+            "f1": 0.9524
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.0909,
+            "f1": 0.1667
+          }
+        },
+        "detected": 11,
+        "missed": 22,
+        "wrong_type": 0,
+        "unobservable": 0,
+        "denominator": {
+          "total_items": 33,
+          "per_type_support": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_observable": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_unobservable": {
+            "missing_action": 0,
+            "incorrect_actor": 0,
+            "out_of_order": 0
+          },
+          "unobservable_total": 0,
+          "unobservable_by_reason": {},
+          "none_gold_items": 0,
+          "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+          "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+        }
+      }
+    },
+    "sun_2024": {
+      "matching": {
+        "MAP": 0.8175,
+        "binary": {
+          "rule": "fitness > 0 (Winter) or pre-registered binary rule",
+          "confusion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11,
+            "tn": 14
+          },
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "per_process_ap": {
+          "gdpr_1_data_breach": 0.5833,
+          "gdpr_2_consent_to_use_the_data": 0.6389,
+          "gdpr_3_right_to_access": 1.0,
+          "gdpr_4_right_of_portability": 1.0,
+          "gdpr_5_right_to_withdraw": 0.5,
+          "gdpr_6_right_to_rectify": 1.0,
+          "gdpr_7_right_to_be_forgotten": 1.0
+        }
+      },
+      "violation": {
+        "macro_f1": 0.3889,
+        "micro_f1": 0.5333,
+        "observable_only_macro_f1": 0.6667,
+        "exact_type_accuracy": 0.3636,
+        "per_type_f1": {
+          "missing_action": 1.0,
+          "incorrect_actor": 0.1667,
+          "out_of_order": 0.0
+        },
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.0909,
+            "f1": 0.1667
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "detected": 12,
+        "missed": 21,
+        "wrong_type": 0,
+        "unobservable": 10,
+        "denominator": {
+          "total_items": 33,
+          "per_type_support": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_observable": {
+            "missing_action": 11,
+            "incorrect_actor": 1,
+            "out_of_order": 11
+          },
+          "per_type_unobservable": {
+            "missing_action": 0,
+            "incorrect_actor": 10,
+            "out_of_order": 0
+          },
+          "unobservable_total": 10,
+          "unobservable_by_reason": {
+            "action_mapping_below_gamma": 10
+          },
+          "none_gold_items": 0,
+          "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+          "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+        }
+      }
+    },
+    "s36_bm25": {
+      "matching": {
+        "MAP": 0.6833,
+        "binary": {
+          "rule": "fitness > 0 (Winter) or pre-registered binary rule",
+          "confusion": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 8,
+            "tn": 13
+          },
+          "precision": 0.75,
+          "recall": 0.2727,
+          "f1": 0.4
+        },
+        "per_process_ap": {
+          "gdpr_1_data_breach": 0.5,
+          "gdpr_2_consent_to_use_the_data": 0.8667,
+          "gdpr_3_right_to_access": 1.0,
+          "gdpr_4_right_of_portability": 0.5,
+          "gdpr_5_right_to_withdraw": 0.4167,
+          "gdpr_6_right_to_rectify": 1.0,
+          "gdpr_7_right_to_be_forgotten": 0.5
+        }
+      },
+      "violation": {
+        "macro_f1": 0.3333,
+        "micro_f1": 0.5,
+        "observable_only_macro_f1": 0.3333,
+        "exact_type_accuracy": 0.3333,
+        "per_type_f1": {
+          "missing_action": 1.0,
+          "incorrect_actor": 0.0,
+          "out_of_order": 0.0
+        },
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "detected": 11,
+        "missed": 22,
+        "wrong_type": 0,
+        "unobservable": 11,
+        "denominator": {
+          "total_items": 33,
+          "per_type_support": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_observable": {
+            "missing_action": 11,
+            "incorrect_actor": 0,
+            "out_of_order": 11
+          },
+          "per_type_unobservable": {
+            "missing_action": 0,
+            "incorrect_actor": 11,
+            "out_of_order": 0
+          },
+          "unobservable_total": 11,
+          "unobservable_by_reason": {
+            "action_mapping_below_gamma": 11
+          },
+          "none_gold_items": 0,
+          "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+          "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+        }
+      }
+    },
+    "s36_tfidf_svd": {
+      "matching": {
+        "MAP": 0.5881,
+        "binary": {
+          "rule": "fitness > 0 (Winter) or pre-registered binary rule",
+          "confusion": {
+            "tp": 4,
+            "fp": 5,
+            "fn": 7,
+            "tn": 9
+          },
+          "precision": 0.4444,
+          "recall": 0.3636,
+          "f1": 0.4
+        },
+        "per_process_ap": {
+          "gdpr_1_data_breach": 0.5833,
+          "gdpr_2_consent_to_use_the_data": 0.5333,
+          "gdpr_3_right_to_access": 1.0,
+          "gdpr_4_right_of_portability": 0.5,
+          "gdpr_5_right_to_withdraw": 0.5,
+          "gdpr_6_right_to_rectify": 0.5,
+          "gdpr_7_right_to_be_forgotten": 0.5
+        }
+      },
+      "violation": {
+        "macro_f1": 0.5417,
+        "micro_f1": 0.6531,
+        "observable_only_macro_f1": 0.6667,
+        "exact_type_accuracy": 0.4848,
+        "per_type_f1": {
+          "missing_action": 1.0,
+          "incorrect_actor": 0.625,
+          "out_of_order": 0.0
+        },
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.4545,
+            "f1": 0.625
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "detected": 16,
+        "missed": 17,
+        "wrong_type": 0,
+        "unobservable": 6,
+        "denominator": {
+          "total_items": 33,
+          "per_type_support": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_observable": {
+            "missing_action": 11,
+            "incorrect_actor": 5,
+            "out_of_order": 11
+          },
+          "per_type_unobservable": {
+            "missing_action": 0,
+            "incorrect_actor": 6,
+            "out_of_order": 0
+          },
+          "unobservable_total": 6,
+          "unobservable_by_reason": {
+            "action_mapping_below_gamma": 6
+          },
+          "none_gold_items": 0,
+          "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+          "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+        }
+      }
+    }
+  },
+  "caveats": [
+    "the frozen violation pack has no compliant (none) gold items, so specificity is N/A and missing-action F1 can be an all-positive artifact",
+    "Sun gamma=0.8 is strict under the spaCy en_core_web_sm backend (no word vectors): most incorrect-actor check points are unobservable (action mapping below gamma) - reported, not hidden",
+    "Winter participant attribute is empty in the GDPR7 files, so its resource (actor) cost is vacuous"
+  ]
+}

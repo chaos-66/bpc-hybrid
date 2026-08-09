@@ -1,0 +1,34 @@
+{
+  "schema_version": "stage3_export_index@1.0.0",
+  "artifacts": {
+    "config_snapshot": {
+      "path": "config_snapshot.json",
+      "sha256": "5a285b6e4771ed872a6bc1fbea75e0a1f94ed66cb66797353a23363f4462a7bf",
+      "byte_size": 6107
+    },
+    "predictions": {
+      "path": "predictions.jsonl",
+      "sha256": "3df4a82659bd3be5bf24a6d9021e9c60da79d0e17224bbac0c188c48b1b7271a",
+      "byte_size": 46807
+    },
+    "evaluation": {
+      "path": "evaluation.json",
+      "sha256": "a351eb0417e8458e4f343e195a8a62f71868d100510e25876c16a72a42071630",
+      "byte_size": 2993
+    },
+    "threshold_sensitivity": {
+      "path": "threshold_sensitivity.json",
+      "sha256": "d805eb082ed07f9dd54e5d3c86e0ade02541f31fb0a077d4f507f60025bbd7e1",
+      "byte_size": 4236
+    },
+    "error_analysis": {
+      "path": "error_analysis.md",
+      "sha256": "02982f615e38bc77557a33a5b1adc869ff62a963955602f1fd0bb9066b9b878d",
+      "byte_size": 5502
+    }
+  },
+  "manifest": {
+    "path": "manifest.json",
+    "sha256": "c63b02c19bc3b6b56968e4b52a4f39d1a08d4563c4d521c6635622a1c10c5743"
+  }
+}

@@ -3012,3 +3012,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：修复与新增：(1) Gold-blind inference pack（stage3_inference@1.0.0 + 生成器 build_stage3_gold_inference.py，仅 item_id/process_id/rule_id/rule_text/check_type，无 decision/candidate/evidence 字段，按 item_id 排序打乱不变）；Winter/Sun runner 移除 idx%3 与 candidate_violation_type 路由，改读显式 check_type；(2) 公共 evaluator 修复：unobservable 只按 check_type=incorrect_actor 统计并区分 4 类原因（empty_rule_actor_denominator/no_actor_labels/action_mapping_below_gamma/no_matching_process_actor），主口径=unobservable 计入分母（FN）+ observable-only 诊断子集；threshold_sensitivity 移除 score 重算冒充 gamma sweep；(3) Sun Def 6 按论文存在性语义实现（min<theta 等价 exists），C 集合按论文含 bs_obj 近似为 process 级 actor+bs_obj（披露），字段改名 min_process_actor_similarity，theta 证据修正为 Figure 9（两模型 0.8/两模型 0.7，0.8 为预注册 development 设置）；(4) sensitivity 真实重算：sun_stage3_sensitivity.py/winter_stage3_sensitivity.py 重跑 scorer（gamma/theta 改变映射与分母，fixture 证明）；(5) 运行收口：stage3_run_common.finalise_run（export_index.json + manifest finalise + 缺 artifact fail closed）；(6) S3.6 双 arm：BM25（Okapi 归一化 [0,1]）+ TF-IDF/SVD（word+char n-gram、固定 seed/dim、numpy 自实现）共享 BaselineScorer（Def 4-7 结构 + check_type 路由），config 双文件，唯一入口 run_stage3_baselines.py --arm；15 项契约修复测试 + 2 项旧测试适配；全量 1601 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-09T12:06:58.487361+00:00 - S3.4/S3.5/S3.6 clean replay from checkpoint 67758f5 + versioned evidence capsules + docs closure (checkpoint 2 of 2)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1601 passed, 24 skipped, 19 warnings in 175.02s (0:02:55)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`67758f5ec16a9b6a0ff289006236e4dfcfffccb4`；相关未提交路径：47 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：从干净 checkpoint（67758f5）重放 5 个 run：Winter v3_clean（corrected）/v3_prototype_literal、Sun v2（修复后，不覆盖 v1，before/after：unobs 33→10、macro 0.333→0.389、exact 0.333→0.364）、BM25 v1、TF-IDF/SVD v1；全部 58 条、0 排除、manifest 绑定干净 commit/dirty=0/finalised、export_index 完整；DEV_ONLY 同口径比较（compare_stage3_methods_dev.json）：Winter MAP 0.6429/macro 0.373；Sun MAP 0.8175/binary 0.0/macro 0.389/unobs 10（action_mapping_below_gamma）；BM25 MAP 0.6833/macro 0.333/unobs 11；TF-IDF MAP 0.5881/macro 0.542/actor F1 0.625/unobs 6；evidence capsule 5 份（outputs/evidence/，版本化可提交，含 capsule_manifest 与 hash）；.gitignore 加 evidence 白名单；MASTER_PIPELINE 3.6.6 + S3.4/S3.5/S3.6 行、PROJECT_AUDIT 同步；全量 1601 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction；所有指标 DEV_ONLY 未提升为 formal
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,0 +1,145 @@
+{
+  "schema_version": "winter_stage3_run_manifest@1.1.0",
+  "run_id": "s34_winter_stage3_development_v3_prototype_literal",
+  "task_id": "S3.4",
+  "status": "development_only",
+  "reachability_mode": "prototype_literal",
+  "command": "python scripts/run_winter_stage3_development.py --variant v3_prototype_literal --reachability-mode prototype_literal",
+  "git": {
+    "commit": "67758f5ec16a9b6a0ff289006236e4dfcfffccb4",
+    "dirty_paths": []
+  },
+  "inputs": {
+    "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+    "bpmn_files": [
+      "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn"
+    ],
+    "bpmn_dir_membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d",
+    "bpmn_dir_aggregate_sha256": "627a2d5192d64431f8ddeadd83b398d1e198a95c6a6fa9e63bc4537c983052cd",
+    "membership_contract": {
+      "path": "configs/datasets/stage1_stage3_gdpr7_v1.json",
+      "sha256": "6bb2c0da4c51d06368bb858057374d9199e8d2ef494b6cb5c122be8744e11a42"
+    },
+    "blank_pack": {
+      "path": "data/development/human_review/stage3_gold_annotation_blank_v1.json",
+      "sha256": "e3f8596bcec9961c30bb90d60377f2889090e88171ca58987f127b1df72fb965",
+      "note": "no decisions in the blank pack; runner is gold-blind"
+    },
+    "inference_pack": {
+      "path": "data/development/human_review/stage3_gold_inference_v1.json",
+      "sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+      "note": "gold-blind inference contract: item ids + rule_text + check_type only"
+    },
+    "winter_lexicon": {
+      "dir": "references/winter_2020_model_check/model_check/input/files",
+      "signalwords_sha256": "447dcdb262065bdd99431dd447321da909800ad4fbd956f9bfce073f2d63e41a",
+      "sequencemarkers_sha256": "0f1f62afb6fb33bdca30cd82e17e2b8d4994c6757db9816eb0ef2018084b3c51",
+      "stopwords_sha256": "2772e28c477c4c4a3d7e2946a9d59d47ce1d44f3638df9dd6ceb429200f869cf"
+    },
+    "bpmn_files_sha256": {
+      "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+    }
+  },
+  "method": {
+    "source": "references/winter_2020_model_check/model_check/lib (main.py, classes/Pair.py, classes/Process.py, classes/Paragraph.py, classes/Sentence.py, classes/Clause.py, classes/SimilarityComputer.py, classes/Flow.py, classes/Document_Collection.py, functions.py)",
+    "semantics": "For every (BPMN model, regulation paragraph) pair: map every paragraph obligation clause to the maximally similar model obligation (spaCy en_core_web_sm .similarity on lemmatized text); fitness = mean similarity of mappings above gamma; obligation cost = fraction of clauses without a matching model obligation above gamma (missing action); resource cost = fraction of clauses whose matched task is similar (>gamma) but whose mentioned resource/actor is not the model participant (spaCy similarity < delta and no exact textual match) (incorrect actor); so (sequence/order) cost = fraction of paragraph flows whose condition matches and whose obligation task is reachable from the compared task but not vice versa (out of order).",
+    "gamma": 0.4,
+    "delta": 0.8,
+    "cost_weights": {
+      "obligation": 0.3333333333333333,
+      "resource": 0.3333333333333333,
+      "so": 0.3333333333333333
+    },
+    "only_constraints": true,
+    "prediction_rules": {
+      "matching_relevant": "fitness > 0 (a paragraph obligation maps to a model obligation with similarity > gamma); no extra threshold invented",
+      "violation_type": "cost_X > 0 for X in {obligation, resource, so}; no extra threshold invented"
+    },
+    "known_prototype_deviation": [
+      "is_reachable_from(sourceid, targetid) in Process.py returns 'targetid in reachability[targetid]' (always True). This is a deterministic code bug: it makes the 'not reachable back' conjunct always False and hence out-of-order cost always 0. Re-implemented as 'targetid in reachability[sourceid]' and disclosed; without the fix the out_of_order baseline would be vacuous.",
+      "resource (incorrect-actor) detection depends on the BPMN participant/process name attribute; the frozen GDPR7 BPMN files carry an empty process name (and empty lane names), so resource cost is expected to be vacuous on this data; disclosed as an input-contract limitation.",
+      "The prototype evaluates every regulation article against every model; this wrapper runs only the 25 matching pairs and 33 violation points frozen in the S3.2/S3.3 correction pack (input binding), so support matches the frozen Gold."
+    ]
+  },
+  "samples": {
+    "matching_candidates": 25,
+    "violation_candidates": 33,
+    "excluded": []
+  },
+  "implementation_hashes": {
+    "config": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+    "runner": "8e79476e80a6c8c045ce594010b012af3da1c428cfed934cd9f3af902bc14e26",
+    "evaluator": "501a1f0532bde4a02bf2aa8f586c82c9382a91ecd86d9c61d11ff17669804e7a",
+    "winter_model": "b249367afd707961e7961f2ccdf4685ad8e2fc5f42ef9d9c158d60879fd8035b",
+    "winter_clause": "186806e00729aca70eb52338139cba4e10b09c40ef0db097d8ad238db1fdac56",
+    "winter_pair": "30848eb83e5bac85af4ffdf870149db3a6845b75fba1e497e8bd7d8548322a73",
+    "winter_similarity": "97632047435166b809f64b0abda6564de00a324702ad0cade32aaa51443c0ddc"
+  },
+  "dependency_index": {
+    "python": "3.14.6",
+    "spacy": "3.8.13",
+    "spacy_model": "en_core_web_sm",
+    "external_lexicon": {
+      "dir": "references/winter_2020_model_check/model_check/input/files",
+      "self_contained": false,
+      "note": "development run is NOT fully self-contained in formal_experiment/; the Winter lexicon lives in references/ (read-only, not copied, not imported as code)"
+    }
+  },
+  "external_runtime_prerequisites": [
+    "spacy package + en_core_web_sm model (same model family as the Winter prototype)",
+    "references/winter_2020_model_check/model_check/input/files/{signalwords,sequencemarkers,stopwords}.txt (read-only lexicon)"
+  ],
+  "export_index": {
+    "path": "export_index.json",
+    "sha256": "38891f1199d83d97f13ca7ebcabf09d5b1af7daf230607f2adf384a5e74b3d60"
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_called": false,
+    "env_read": false,
+    "gold_decisions_read": false,
+    "correction_pack_read": false,
+    "bpmn_modified": false,
+    "no_overwrite": true
+  },
+  "artifacts": {
+    "config_snapshot": {
+      "path": "config_snapshot.json",
+      "sha256": "5a285b6e4771ed872a6bc1fbea75e0a1f94ed66cb66797353a23363f4462a7bf",
+      "byte_size": 6107
+    },
+    "predictions": {
+      "path": "predictions.jsonl",
+      "sha256": "3bdbbb411c15b86faf86b81c8db9ab9f4f0d4adfcfa080b309a7a46866e7f7ae",
+      "byte_size": 46517
+    },
+    "evaluation": {
+      "path": "evaluation.json",
+      "sha256": "a351eb0417e8458e4f343e195a8a62f71868d100510e25876c16a72a42071630",
+      "byte_size": 2993
+    },
+    "threshold_sensitivity": {
+      "path": "threshold_sensitivity.json",
+      "sha256": "d805eb082ed07f9dd54e5d3c86e0ade02541f31fb0a077d4f507f60025bbd7e1",
+      "byte_size": 4236
+    },
+    "error_analysis": {
+      "path": "error_analysis.md",
+      "sha256": "02982f615e38bc77557a33a5b1adc869ff62a963955602f1fd0bb9066b9b878d",
+      "byte_size": 5502
+    }
+  },
+  "finalised": true
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "stage3_export_index@1.0.0",
+  "artifacts": {
+    "config_snapshot": {
+      "path": "config_snapshot.json",
+      "sha256": "16d8ddff68a5b6f09b0848892d6682c1f88b376f3105a39d41bb074f62f2fd15",
+      "byte_size": 2849
+    },
+    "predictions": {
+      "path": "predictions.jsonl",
+      "sha256": "1043f96c1807376c622cd1cd78ffe11d2a7a7a47549dcaee72fc4ea1096faae7",
+      "byte_size": 40960
+    },
+    "rule_records": {
+      "path": "rule_records.jsonl",
+      "sha256": "295aa9171b6a7dd36ae1b18116fbef51e7671eba999bcbec2856a0827fca8439",
+      "byte_size": 43967
+    },
+    "process_records_index": {
+      "path": "process_records.jsonl",
+      "sha256": "ede897ad62a75afb492d8ddc3bd19c03ef34cd6b19e4d58f972790588a1e42e8",
+      "byte_size": 548
+    },
+    "evaluation": {
+      "path": "evaluation.json",
+      "sha256": "38b2d4cd29c056ace7973907ca5958fba714eb19ada70875920a27b1a0d4348f",
+      "byte_size": 3028
+    },
+    "threshold_sensitivity": {
+      "path": "threshold_sensitivity.json",
+      "sha256": "b1a0a896eb65a12bc68cb376eb35b7c88cd5a24993017d18685d3d8a6046f215",
+      "byte_size": 2822
+    },
+    "error_analysis": {
+      "path": "error_analysis.md",
+      "sha256": "82a0ce492258d0f7124654dfc9c8e1c2404173d51766b6f23d33e308bedb3cf8",
+      "byte_size": 4775
+    }
+  },
+  "manifest": {
+    "path": "manifest.json",
+    "sha256": "831a80d7c52cab2a807e1aa42d2c96c736d4f0cceb25c118ce1c4a4737733218"
+  }
+}

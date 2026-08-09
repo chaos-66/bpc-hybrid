@@ -48,6 +48,12 @@ formal_experiment/outputs/*
 !formal_experiment/outputs/reports/
 !formal_experiment/outputs/reports/**
 
+# Stage 3 evidence capsules (S3.4/S3.5/S3.6, 2026-08-08): committable
+# versioned evidence (manifest/config/predictions/evaluation/sensitivity/
+# error analysis/export index/comparison) for a fresh-clone verification.
+!formal_experiment/outputs/evidence/
+!formal_experiment/outputs/evidence/**
+
 # B0-R1-E2 (2026-08-04): narrow allowlist for the only versioned
 # development re-evaluation output directory. Everything else under
 # outputs/development stays ignored.

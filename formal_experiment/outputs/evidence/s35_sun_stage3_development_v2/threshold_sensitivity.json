@@ -1,0 +1,626 @@
+{
+  "note": "gamma/theta sweeps re-execute the SunScorer (mappings/denominators change); matching tau is a score cutoff over fixed matching scores. Diagnostic only; primary thresholds stay pre-registered (tau=gamma=theta=0.8).",
+  "matching_tau_sweep": [
+    {
+      "tau": 0.2,
+      "confusion": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 11,
+        "tn": 12
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "tau": 0.4,
+      "confusion": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 11,
+        "tn": 12
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "tau": 0.6,
+      "confusion": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 11,
+        "tn": 13
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "tau": 0.8,
+      "confusion": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 11,
+        "tn": 14
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "tau": 0.9,
+      "confusion": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 11,
+        "tn": 14
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  ],
+  "violation_gamma_sweep": [
+    {
+      "gamma": 0.2,
+      "macro_f1": 0.6667,
+      "exact_type_accuracy": 0.6667,
+      "unobservable": 0,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 0,
+          "out_of_order": 0
+        },
+        "unobservable_total": 0,
+        "unobservable_by_reason": {},
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "gamma": 0.4,
+      "macro_f1": 0.7222,
+      "exact_type_accuracy": 0.697,
+      "unobservable": 0,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 0,
+          "out_of_order": 0
+        },
+        "unobservable_total": 0,
+        "unobservable_by_reason": {},
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "gamma": 0.6,
+      "macro_f1": 0.8733,
+      "exact_type_accuracy": 0.7879,
+      "unobservable": 4,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.6364,
+          "f1": 0.7778
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.7273,
+          "f1": 0.8421
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 7,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 4,
+          "out_of_order": 0
+        },
+        "unobservable_total": 4,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 4
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "gamma": 0.8,
+      "macro_f1": 0.3889,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "gamma": 0.9,
+      "macro_f1": 0.3333,
+      "exact_type_accuracy": 0.3333,
+      "unobservable": 11,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 0,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 11,
+          "out_of_order": 0
+        },
+        "unobservable_total": 11,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 11
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    }
+  ],
+  "incorrect_actor_theta_sweep": [
+    {
+      "theta": 0.2,
+      "macro_f1": 0.3889,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "theta": 0.4,
+      "macro_f1": 0.3889,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "theta": 0.6,
+      "macro_f1": 0.3889,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "theta": 0.7,
+      "macro_f1": 0.3889,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "theta": 0.8,
+      "macro_f1": 0.3889,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "theta": 0.9,
+      "macro_f1": 0.3889,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    }
+  ]
+}

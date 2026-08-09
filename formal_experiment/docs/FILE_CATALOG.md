@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-09
-**收录文件**：840 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：883 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -537,6 +537,47 @@
 | `outputs/development/s28d_h1_150_v4pro_v1/h1_telemetry.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28d_h1_150_v4pro_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28d_h1_150_v4pro_v1/transport_capture.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_clean/capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_clean/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_clean/error_analysis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/s34_winter_stage3_development_v3_clean/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_clean/export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_clean/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_clean/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_clean/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_prototype_literal/capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_prototype_literal/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_prototype_literal/error_analysis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/s34_winter_stage3_development_v3_prototype_literal/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_prototype_literal/export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_prototype_literal/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_prototype_literal/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s34_winter_stage3_development_v3_prototype_literal/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s35_sun_stage3_development_v2/capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s35_sun_stage3_development_v2/comparison_all_methods_dev.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s35_sun_stage3_development_v2/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s35_sun_stage3_development_v2/error_analysis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/s35_sun_stage3_development_v2/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s35_sun_stage3_development_v2/export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s35_sun_stage3_development_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s35_sun_stage3_development_v2/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s35_sun_stage3_development_v2/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v1/capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v1/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v1/error_analysis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/s36_bm25_stage3_development_v1/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v1/export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v1/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v1/capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v1/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v1/error_analysis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v1/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v1/export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v1/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -640,6 +681,7 @@
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage3_evidence_capsule.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_gold_inference.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
@@ -650,6 +692,7 @@
 | `scripts/coarse_gold_marker_converged_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/combine_h1_pilot_runs.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compare_h1_fallback_paths.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/compare_stage3_methods_dev.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compare_winter_sun_stage3_dev.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compute_estg_membership_hashes.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/dry_run_llm_estimate.py` | 活动 | Python 实现、脚本或测试 |

@@ -1,0 +1,134 @@
+{
+  "schema_version": "stage3_baseline_run_manifest@1.0.0",
+  "run_id": "s36_tfidf_svd_stage3_development_v1",
+  "task_id": "S3.6",
+  "arm": "tfidf_svd",
+  "status": "development_only",
+  "command": "python scripts/run_stage3_baselines.py --arm tfidf_svd",
+  "git": {
+    "commit": "67758f5ec16a9b6a0ff289006236e4dfcfffccb4",
+    "dirty_paths": []
+  },
+  "inputs": {
+    "inference_pack": {
+      "path": "data/development/human_review/stage3_gold_inference_v1.json",
+      "sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+      "note": "gold-blind inference contract; runner never reads decisions/candidates"
+    },
+    "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+    "bpmn_dir_membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d",
+    "bpmn_dir_aggregate_sha256": "627a2d5192d64431f8ddeadd83b398d1e198a95c6a6fa9e63bc4537c983052cd",
+    "stage1_structural_contract": {
+      "path": "configs/stage1_structural_s11_s14.json",
+      "sha256": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48"
+    },
+    "bpmn_files_sha256": {
+      "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+    }
+  },
+  "method": {
+    "features": {
+      "word_ngram": 1,
+      "char_ngram": 3,
+      "sublinear_tf": true
+    },
+    "svd": {
+      "seed": 20260808,
+      "dim": 64,
+      "note": "fixed seed + fixed dim; deterministic numpy full-SVD then truncation"
+    },
+    "similarity": "cosine in the dense space, clipped to [0,1]",
+    "fit_corpus": "unlabeled rule_text (all 9 distinct rules) + all process action/actor labels of the 7 GDPR7 models; no Gold, no decisions, no parameters chosen on the 58 items",
+    "matching_formula": "matching_score = max(avg best rule-action cosine, avg best rule-actor cosine)",
+    "violation_semantics": "mapping mirrors Sun Definitions 5-7 structure with the arm's similarity; mappings do NOT depend on gamma/theta, so gamma/theta sensitivity is a legitimate score-cutoff re-derivation",
+    "empty_semantics": "empty text -> zero vector -> cosine 0.0, no match, never silently compliant"
+  },
+  "thresholds": {
+    "tau": 0.5,
+    "gamma": 0.5,
+    "theta": 0.5,
+    "note": "pre-registered cosine cutoffs; fixed sweeps reported separately, primary values never selected from Gold"
+  },
+  "samples": {
+    "matching_candidates": 25,
+    "violation_candidates": 33,
+    "excluded": []
+  },
+  "implementation_hashes": {
+    "config": "6c674d01323311cbc7c6925c214be3d8003302e38cee68dc427abfe12329937d",
+    "runner": "aea773ad631137ead1f5118d62bb68a48dc740d65138d5b58c2e2a433c2bb8b1",
+    "baseline_stage3": "84764ae36c983227f9215d6b1a8e670f3ad25bb91047c43f8deb85b2dd9daa05",
+    "bm25": "ef4b4b39c7bf6c5788d699a9d1458194a9dc75bbced270429559cb6a077e43de",
+    "tfidf_svd": "423d7e6a7f6b6ab5a7ece5742851c79bb22d1d439984e1246a89c44a0c21a3cf",
+    "rule_adapter": "194c821db35cd45659d4caa29af51769af4bd9ee4d0db0478b82fe832dc9e870"
+  },
+  "dependency_index": {
+    "python": "3.14.6",
+    "spacy": "3.8.13",
+    "spacy_model": "en_core_web_sm",
+    "numpy": "2.5.0",
+    "sklearn": "unavailable (deterministic local implementations used)"
+  },
+  "external_runtime_prerequisites": [
+    "spacy package + en_core_web_sm model (rule adapter only)",
+    "references/winter_2020_model_check/model_check/input/files/signalwords.txt (read-only)"
+  ],
+  "safety": {
+    "llm_api_called": false,
+    "network_called": false,
+    "env_read": false,
+    "gold_decisions_read": false,
+    "correction_pack_read": false,
+    "candidate_fields_read": false,
+    "bpmn_modified": false,
+    "no_overwrite": true
+  },
+  "artifacts": {
+    "config_snapshot": {
+      "path": "config_snapshot.json",
+      "sha256": "16d8ddff68a5b6f09b0848892d6682c1f88b376f3105a39d41bb074f62f2fd15",
+      "byte_size": 2849
+    },
+    "rule_records": {
+      "path": "rule_records.jsonl",
+      "sha256": "295aa9171b6a7dd36ae1b18116fbef51e7671eba999bcbec2856a0827fca8439",
+      "byte_size": 43967
+    },
+    "process_records_index": {
+      "path": "process_records.jsonl",
+      "sha256": "ede897ad62a75afb492d8ddc3bd19c03ef34cd6b19e4d58f972790588a1e42e8",
+      "byte_size": 548
+    },
+    "predictions": {
+      "path": "predictions.jsonl",
+      "sha256": "1043f96c1807376c622cd1cd78ffe11d2a7a7a47549dcaee72fc4ea1096faae7",
+      "byte_size": 40960
+    },
+    "evaluation": {
+      "path": "evaluation.json",
+      "sha256": "38b2d4cd29c056ace7973907ca5958fba714eb19ada70875920a27b1a0d4348f",
+      "byte_size": 3028
+    },
+    "threshold_sensitivity": {
+      "path": "threshold_sensitivity.json",
+      "sha256": "b1a0a896eb65a12bc68cb376eb35b7c88cd5a24993017d18685d3d8a6046f215",
+      "byte_size": 2822
+    },
+    "error_analysis": {
+      "path": "error_analysis.md",
+      "sha256": "82a0ce492258d0f7124654dfc9c8e1c2404173d51766b6f23d33e308bedb3cf8",
+      "byte_size": 4775
+    }
+  },
+  "export_index": {
+    "path": "export_index.json",
+    "sha256": "7358513d9e593e1234f58f55a733150efc58c8c2174edf82b24b9a1429a749b5"
+  },
+  "finalised": true
+}

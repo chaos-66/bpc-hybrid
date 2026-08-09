@@ -1,0 +1,197 @@
+{
+  "note": "Winter gamma sweep re-runs WinterPair (fitness and all costs depend on gamma; delta fixed at primary 0.8). Diagnostic only; primary gamma stays 0.4.",
+  "violation_gamma_sweep": [
+    {
+      "gamma": 0.2,
+      "macro_f1": 0.1984,
+      "exact_type_accuracy": 0.1212,
+      "unobservable": 0,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.2727,
+          "f1": 0.4286
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        }
+      }
+    },
+    {
+      "gamma": 0.4,
+      "macro_f1": 0.373,
+      "exact_type_accuracy": 0.3333,
+      "unobservable": 0,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.9091,
+          "f1": 0.9524
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        }
+      }
+    },
+    {
+      "gamma": 0.6,
+      "macro_f1": 0.3889,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 0,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        }
+      }
+    },
+    {
+      "gamma": 0.8,
+      "macro_f1": 0.3889,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 0,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        }
+      }
+    },
+    {
+      "gamma": 0.9,
+      "macro_f1": 0.3889,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 0,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        }
+      }
+    }
+  ],
+  "matching_gamma_sweep": [
+    {
+      "gamma": 0.2,
+      "confusion": {
+        "tp": 11,
+        "fp": 14,
+        "fn": 0,
+        "tn": 0
+      },
+      "precision": 0.44,
+      "recall": 1.0,
+      "f1": 0.6111
+    },
+    {
+      "gamma": 0.4,
+      "confusion": {
+        "tp": 11,
+        "fp": 14,
+        "fn": 0,
+        "tn": 0
+      },
+      "precision": 0.44,
+      "recall": 1.0,
+      "f1": 0.6111
+    },
+    {
+      "gamma": 0.6,
+      "confusion": {
+        "tp": 9,
+        "fp": 10,
+        "fn": 2,
+        "tn": 4
+      },
+      "precision": 0.4737,
+      "recall": 0.8182,
+      "f1": 0.6
+    },
+    {
+      "gamma": 0.8,
+      "confusion": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 11,
+        "tn": 14
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "gamma": 0.9,
+      "confusion": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 11,
+        "tn": 14
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  ]
+}

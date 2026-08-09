@@ -1,0 +1,135 @@
+{
+  "note": "baseline mappings are parameter-free (fixed BM25/TF-IDF similarity); gamma/theta sweeps re-threshold the fixed scores, which is legitimate here (documented difference vs Sun, where gamma changes the mapping sets). Diagnostic only; primary thresholds stay pre-registered.",
+  "matching_tau_sweep": [
+    {
+      "tau": 0.2,
+      "confusion": {
+        "tp": 10,
+        "fp": 13,
+        "fn": 1,
+        "tn": 1
+      },
+      "precision": 0.4348,
+      "recall": 0.9091,
+      "f1": 0.5882
+    },
+    {
+      "tau": 0.4,
+      "confusion": {
+        "tp": 7,
+        "fp": 9,
+        "fn": 4,
+        "tn": 5
+      },
+      "precision": 0.4375,
+      "recall": 0.6364,
+      "f1": 0.5185
+    },
+    {
+      "tau": 0.6,
+      "confusion": {
+        "tp": 3,
+        "fp": 4,
+        "fn": 8,
+        "tn": 10
+      },
+      "precision": 0.4286,
+      "recall": 0.2727,
+      "f1": 0.3333
+    },
+    {
+      "tau": 0.8,
+      "confusion": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 11,
+        "tn": 12
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "tau": 0.9,
+      "confusion": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 11,
+        "tn": 14
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  ],
+  "violation_gamma_sweep": [
+    {
+      "gamma": 0.2,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6
+    },
+    {
+      "gamma": 0.4,
+      "macro_f1": 0.5258,
+      "exact_type_accuracy": 0.4545,
+      "unobservable": 6
+    },
+    {
+      "gamma": 0.6,
+      "macro_f1": 0.489,
+      "exact_type_accuracy": 0.3939,
+      "unobservable": 6
+    },
+    {
+      "gamma": 0.8,
+      "macro_f1": 0.4676,
+      "exact_type_accuracy": 0.3636,
+      "unobservable": 6
+    },
+    {
+      "gamma": 0.9,
+      "macro_f1": 0.4436,
+      "exact_type_accuracy": 0.3333,
+      "unobservable": 6
+    }
+  ],
+  "incorrect_actor_theta_sweep": [
+    {
+      "theta": 0.2,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6
+    },
+    {
+      "theta": 0.4,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6
+    },
+    {
+      "theta": 0.6,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6
+    },
+    {
+      "theta": 0.7,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6
+    },
+    {
+      "theta": 0.8,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6
+    },
+    {
+      "theta": 0.9,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "schema_version": "sun_stage3_run_manifest@1.0.0",
+  "run_id": "s35_sun_stage3_development_v2",
+  "task_id": "S3.5",
+  "status": "development_only",
+  "command": "python scripts/run_sun_stage3_development.py --variant v2",
+  "git": {
+    "commit": "67758f5ec16a9b6a0ff289006236e4dfcfffccb4",
+    "dirty_paths": []
+  },
+  "inputs": {
+    "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+    "bpmn_dir_membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d",
+    "bpmn_dir_aggregate_sha256": "627a2d5192d64431f8ddeadd83b398d1e198a95c6a6fa9e63bc4537c983052cd",
+    "membership_contract": {
+      "path": "configs/datasets/stage1_stage3_gdpr7_v1.json",
+      "sha256": "6bb2c0da4c51d06368bb858057374d9199e8d2ef494b6cb5c122be8744e11a42"
+    },
+    "stage1_structural_contract": {
+      "path": "configs/stage1_structural_s11_s14.json",
+      "sha256": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48"
+    },
+    "blank_pack": {
+      "path": "data/development/human_review/stage3_gold_annotation_blank_v1.json",
+      "sha256": "e3f8596bcec9961c30bb90d60377f2889090e88171ca58987f127b1df72fb965",
+      "note": "no decisions in the blank pack; runner is gold-blind"
+    },
+    "inference_pack": {
+      "path": "data/development/human_review/stage3_gold_inference_v1.json",
+      "sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+      "note": "gold-blind inference contract: item ids + rule_text + check_type only"
+    },
+    "signalwords": {
+      "path": "references/winter_2020_model_check/model_check/input/files/signalwords.txt",
+      "sha256": "447dcdb262065bdd99431dd447321da909800ad4fbd956f9bfce073f2d63e41a",
+      "self_contained": false
+    },
+    "bpmn_files_sha256": {
+      "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+    }
+  },
+  "method": {
+    "paper_sections": {
+      "matching": "Definition 4 (Matching Score): Dr,m = rule actions -> highest-similarity process action; Or,m = rule actors -> highest-similarity process business-object/actor; matching(r,m,tau) = max( fraction of Dr,m with sim>tau, fraction of Or,m with sim>tau )",
+      "missing_action": "Definition 5: action violation(r,m,gamma) = |{(ar,am) in Dr,m | sim(ar,am)<gamma}| / |Ar|",
+      "incorrect_actor": "Definition 6: R = rule actors assigned to a matched activity (sim>gamma); C = process actors executing the same action; actor violation = |{r in R | exists r' in C, sim(r,r')<theta}| / |R|",
+      "out_of_order": "Definition 7: Ur,m,gamma = order constraints whose both endpoints map with sim>gamma; order violation = (|Ur,m,gamma| - |satisfied order constraints (forward reachable, not backward)|) / |Ur,m,gamma|"
+    },
+    "thresholds": {
+      "tau": 0.8,
+      "tau_source": "Sun 2024 Table 9 / Table 11: most models reach highest AP/MAP at tau=0.8 (9 of 12 and 4 of 4)",
+      "gamma": 0.8,
+      "gamma_source": "Sun 2024 Figure 8: violation-detection precision is highest at gamma=0.8 for most models",
+      "theta": 0.8,
+      "theta_source": "pre-registered development setting: Sun 2024 Figure 9 reports that two of the four GDPR models reach their highest incorrect-actor precision at theta=0.8 and the other two at theta=0.7 (gamma fixed at 0.8); 0.8 is the project's fixed pre-registration, reported together with a theta sweep",
+      "sweeps": {
+        "tau": [
+          0.2,
+          0.4,
+          0.6,
+          0.8,
+          0.9
+        ],
+        "gamma": [
+          0.2,
+          0.4,
+          0.6,
+          0.8,
+          0.9
+        ],
+        "theta": [
+          0.2,
+          0.4,
+          0.6,
+          0.8,
+          0.9
+        ]
+      },
+      "note": "sweeps are sensitivity reports only; primary thresholds are NOT selected from this project's data"
+    },
+    "matching_evaluation": {
+      "primary": "ranking AP per process and MAP (recommender metrics per Sun section 5.3.1); binary relevance uses the pre-registered rule matching_score > tau and is reported separately",
+      "binary_rule": "matching_score > tau (tau=0.8 primary)"
+    },
+    "similarity_backend": {
+      "package": "spacy",
+      "model": "en_core_web_sm",
+      "note": "same backend as the Winter baseline for a controlled comparison; differences come from Rule Record structure (action/actor separation, order relations), not from a stronger model; no download, no network"
+    }
+  },
+  "violation_item_type_contract": {
+    "rule": "check_type read from the explicit gold-blind inference pack (stage3_inference@1.0.0); routing metadata of the frozen test point, not a Gold label",
+    "note": "runner never reads candidate_violation_type, array order, idx%3, or any decision field"
+  },
+  "samples": {
+    "matching_candidates": 25,
+    "violation_candidates": 33,
+    "excluded": []
+  },
+  "implementation_hashes": {
+    "config": "fe79c33e4b7efd5fabfaa82eeb54e4c25904ea5c7d427314ceaa5e7b22107779",
+    "runner": "86a2737bc85442755482a1aeb493fd79968b97d8ae05f6defdbd4c729525e56a",
+    "sun_model": "5a63af5cfcc2ebd28c098960bbd0e3bab883491cb468cd3471e7b5eedbbc92f5",
+    "sun_rule_extraction": "194c821db35cd45659d4caa29af51769af4bd9ee4d0db0478b82fe832dc9e870",
+    "sun_scorer": "2161828aac6b069397b0e804adfd0ae15fe9e888d2c7bb00c55edcbbf633f878",
+    "shared_similarity": "97632047435166b809f64b0abda6564de00a324702ad0cade32aaa51443c0ddc"
+  },
+  "dependency_index": {
+    "python": "3.14.6",
+    "spacy": "3.8.13",
+    "spacy_model": "en_core_web_sm",
+    "external_signalwords": {
+      "dir": "references/winter_2020_model_check/model_check/input/files",
+      "self_contained": false
+    }
+  },
+  "external_runtime_prerequisites": [
+    "spacy package + en_core_web_sm model",
+    "references/winter_2020_model_check/model_check/input/files/signalwords.txt (read-only lexicon)"
+  ],
+  "export_index": {
+    "path": "export_index.json",
+    "sha256": "5394dae46d16f7a2306f6a6e469fe0f69ad1e6aa06129ad6ecf5d9065f5abc4e"
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_called": false,
+    "env_read": false,
+    "gold_decisions_read": false,
+    "correction_pack_read": false,
+    "candidate_fields_read": false,
+    "bpmn_modified": false,
+    "no_overwrite": true
+  },
+  "artifacts": {
+    "config_snapshot": {
+      "path": "config_snapshot.json",
+      "sha256": "066660b64d29aa5512fbf9e90217a58f493ae005a31671d0ff7ee878464c8a03",
+      "byte_size": 7298
+    },
+    "rule_records": {
+      "path": "rule_records.jsonl",
+      "sha256": "295aa9171b6a7dd36ae1b18116fbef51e7671eba999bcbec2856a0827fca8439",
+      "byte_size": 43967
+    },
+    "process_records_index": {
+      "path": "process_records.jsonl",
+      "sha256": "bcc8552626f7b4fb0fcd8db1de857078fff526e713cb24347e4ee4dc23c4a6a9",
+      "byte_size": 597
+    },
+    "predictions": {
+      "path": "predictions.jsonl",
+      "sha256": "89613817d8c67739e412c1d300738fcac49eb3db37d6e7565200907322657db3",
+      "byte_size": 49426
+    },
+    "evaluation": {
+      "path": "evaluation.json",
+      "sha256": "352e5956ba1820528bfc476ee7780414a62d0cbc44db4d9ddd0dc9f76e0bc62a",
+      "byte_size": 3018
+    },
+    "threshold_sensitivity": {
+      "path": "threshold_sensitivity.json",
+      "sha256": "8bd0c687a2c4c30861c45109e604366c61a0feb33ec6da37845e2da77f41fcd2",
+      "byte_size": 19581
+    },
+    "error_analysis": {
+      "path": "error_analysis.md",
+      "sha256": "6338790e1b01135f1dcde360f57bcddcb89134c7678a3efd3d8a24681b14e6a6",
+      "byte_size": 9395
+    }
+  },
+  "finalised": true
+}
