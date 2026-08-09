@@ -44,6 +44,10 @@ def _extract_actor(sent) -> str | None:
 
 
 def _extract_action(sent) -> str | None:
+    """Action = root verb plus its core object/complement subtrees
+    (dobj/pobj/attr/oprd/acomp/xcomp). This mirrors the Sun rule-record
+    action concept (the verb phrase that must be executed) without taking
+    the whole sentence subtree, which would dilute similarity."""
     root = None
     for token in sent:
         if token.dep_ == "ROOT":
@@ -51,9 +55,10 @@ def _extract_action(sent) -> str | None:
             break
     if root is None:
         return None
-    parts = []
-    for token in root.subtree:
-        parts.append(token.text)
+    parts = [root.text]
+    for child in root.children:
+        if child.dep_ in ("dobj", "pobj", "attr", "oprd", "acomp", "xcomp", "advmod"):
+            parts.extend(t.text for t in child.subtree)
     text = " ".join(parts).strip()
     return text or None
 
