@@ -3051,3 +3051,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：从干净 checkpoint（03e903a）重放 v2 runs：s36_bm25/tfidf_svd v2（修复后 sensitivity 重算），主指标与 v1 byte-identical（predictions+evaluation 逐字节一致）；重新 finalise/evidence capsule v2/comparison（5 方法指向 v2）；方法冻结注册表 configs/stage3_development_method_registry_v1.json（5 方法 hashes/thresholds/capsule/exposure/limitations，formal_oracle_claim_allowed=false/confirmatory_claim_allowed=false，变更须新版本）；S3.7 Oracle 输入真实性核账 outputs/reports/s37_oracle_readiness_v1.json（真正 Gold Rule/Process Records 均不存在，adapter 输出≠Gold，blocked_on_s1_7_s2_13，禁止伪 Oracle）；formal Gold 用户授权包 outputs/reports/formal_gold_authorization_packet_v1.{json,md}（dry-run：合同未修改，拟议 before/after 3 字段、预期 blocker 消除 2/保留 3、回滚、授权句）；新增 6 项测试（registry hash/forbid pseudo gold/dry-run 不修改合同等，共 23 项 contract repair 测试）；MASTER_PIPELINE 3.6.7 + S3.6 行、PROJECT_AUDIT 同步；全量 1609 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction/未翻转任何正式门禁
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-09T14:24:21.565620+00:00 - BM25 candidate-specific similarity fix + shared scorer ID fix + fixtures (checkpoint 1 of 2): the v1/v2 sim ignored the candidate text
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1618 passed, 24 skipped, 19 warnings in 179.56s (0:02:59)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`9f16534c0d0aa1b8c2f639feffa8bb6773bcbe3b`；相关未提交路径：9 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：根因：v1/v2 的 BM25 sim(a,b) 忽略 b（返回 action corpus 最佳文档分数），导致 _best_action 固定选第一个 action、actor/BO 比较误用 action corpus、out-of-order 可能映射错误 ID。修复：(1) BM25Index 重写为 candidate-specific score(query,candidate)（candidate 自身 tf/dl + 域语料 IDF/avgdl；真实 [0,1] 归一化=每 term 贡献上界 sum(IDF*(k1+1))，重复 query token 折叠、空 query/candidate/pool=0）；(2) BaselineScorer 改双域 sims_factory（action/actor 独立候选池），_best_action 返回真实 action ID，tie-breaking=score desc+first-seen，duplicate labels 确定性取首个解析 ID，out-of-order 用映射 ID；(3) config：bm25 v3（retrieval_domains 声明、supersedes v1/v2=superseded_invalid_candidate_agnostic_similarity）、tfidf seed 措辞（full SVD deterministic、seed retained but operationally unused）、两 config 删除 mappings-do-NOT-depend 错误主张；(4) 10 项 BM25 fixture（第二 action 胜出、顺序交换不变、actor 域独立、BO 独立、order 真实 ID、duplicate 稳定、归一化边界、旧实现必须失败）；全量 1618 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

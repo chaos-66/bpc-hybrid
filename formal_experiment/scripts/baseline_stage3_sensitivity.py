@@ -65,21 +65,30 @@ def _load_json(path: Path, label: str) -> dict[str, Any]:
 
 
 def _build_factory(arm: str, config: dict[str, Any], models, nlp):
-    """Same fixed text representations as the v1 runner (identical code path)."""
+    """Same fixed text representations as the v3 runner (identical code path):
+    per-model, per-domain factory returning {"action": fn, "actor": fn}."""
     if arm == "bm25":
         k1 = float(config["method"]["bm25"]["k1"])
         b = float(config["method"]["bm25"]["b"])
-        indices = {
-            pid: BM25Index([a["name"] for a in model.actions if a["name"]], k1=k1, b=b)
-            for pid, model in models.items()
-        }
+        action_indices: dict[str, Any] = {}
+        actor_indices: dict[str, Any] = {}
+        for pid, model in models.items():
+            action_indices[pid] = BM25Index(
+                [a["name"] for a in model.actions if a["name"]], k1=k1, b=b)
+            actor_docs = list(model.actors)
+            actor_docs.extend(bo["object"] for bo in model.business_objects)
+            actor_indices[pid] = BM25Index(actor_docs, k1=k1, b=b)
 
         def factory(model: Any) -> Any:
-            index = indices[model.process_id]
+            a_index = action_indices[model.process_id]
+            ac_index = actor_indices[model.process_id]
 
-            def sim(a: str, b: str) -> float:
-                return index.query(a)[0]
-            return sim
+            def action_sim(a: str, b: str) -> float:
+                return a_index.score(a, b)
+
+            def actor_sim(a: str, b: str) -> float:
+                return ac_index.score(a, b)
+            return {"action": action_sim, "actor": actor_sim}
         return factory
     seed = int(config["method"]["svd"]["seed"])
     dim = int(config["method"]["svd"]["dim"])
@@ -95,7 +104,7 @@ def _build_factory(arm: str, config: dict[str, Any], models, nlp):
     svd.fit(corpus)
 
     def factory(model: Any) -> Any:
-        return svd.similarity
+        return {"action": svd.similarity, "actor": svd.similarity}
     return factory
 
 

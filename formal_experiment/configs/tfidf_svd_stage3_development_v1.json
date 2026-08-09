@@ -6,11 +6,11 @@
   "arm": "tfidf_svd",
   "method": {
     "features": {"word_ngram": 1, "char_ngram": 3, "sublinear_tf": true},
-    "svd": {"seed": 20260808, "dim": 64, "note": "fixed seed + fixed dim; deterministic numpy full-SVD then truncation"},
+    "svd": {"seed": 20260808, "dim": 64, "note": "full SVD is deterministic under a pinned runtime; the seed is retained/reserved but operationally unused (no random process is seeded); fixed dim, numpy full-SVD then truncation"},
     "similarity": "cosine in the dense space, clipped to [0,1]",
     "fit_corpus": "unlabeled rule_text (all 9 distinct rules) + all process action/actor labels of the 7 GDPR7 models; no Gold, no decisions, no parameters chosen on the 58 items",
     "matching_formula": "matching_score = max(avg best rule-action cosine, avg best rule-actor cosine)",
-    "violation_semantics": "mapping mirrors Sun Definitions 5-7 structure with the arm's similarity; mappings do NOT depend on gamma/theta, so gamma/theta sensitivity is a legitimate score-cutoff re-derivation",
+    "violation_semantics": "mapping mirrors Sun Definitions 5-7 structure with the arm's similarity; gamma and theta DO change mappings, R/C sets, denominators and observability, so sensitivity must re-instantiate the scorer (see baseline_stage3_sensitivity.py)",
     "empty_semantics": "empty text -> zero vector -> cosine 0.0, no match, never silently compliant"
   },
   "thresholds": {

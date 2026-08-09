@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-09
-**收录文件**：906 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：907 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -57,6 +57,7 @@
 | 文件 | 状态 | 用途 |
 |---|---|---|
 | `configs/bm25_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/bm25_stage3_development_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/datasets/stage1_stage3_gdpr7_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/datasets/sun_modality_dataset.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_ai_review_gpt56sol_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |

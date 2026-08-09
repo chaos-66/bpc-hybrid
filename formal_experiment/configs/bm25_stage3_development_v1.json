@@ -9,7 +9,7 @@
     "bm25": {"k1": 1.5, "b": 0.75, "note": "Okapi BM25 defaults; fixed in config, not tuned"},
     "normalization": "score / max_possible(query) so results lie in [0,1]",
     "matching_formula": "matching_score = max(avg best rule-action BM25, avg best rule-actor BM25)",
-    "violation_semantics": "mapping mirrors Sun Definitions 5-7 structure but with BM25 similarity; mappings do NOT depend on gamma/theta, so gamma/theta sensitivity is a legitimate score-cutoff re-derivation",
+    "violation_semantics": "mapping mirrors Sun Definitions 5-7 structure with BM25 similarity; gamma and theta DO change mappings, R/C sets, denominators and observability, so sensitivity must re-instantiate the scorer (see baseline_stage3_sensitivity.py)",
     "empty_semantics": "empty query/corpus -> score 0.0, no match, never silently compliant"
   },
   "thresholds": {

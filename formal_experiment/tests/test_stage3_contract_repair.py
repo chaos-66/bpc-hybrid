@@ -237,8 +237,8 @@ def test_def6_multi_actor_exists_low_similarity() -> None:
 # ------------------------------------------------------------ BM25 fixtures
 def test_bm25_matching_positive_and_negative() -> None:
     index = BM25Index(["Notify national authority", "Send an invoice"])
-    pos, _ = index.query("notify the national authority")
-    neg, _ = index.query("erase personal data")
+    pos = index.score("notify the national authority", "Notify national authority")
+    neg = index.score("notify the national authority", "Send an invoice")
     assert pos > neg
     assert pos > 0.0
     assert neg >= 0.0
@@ -246,11 +246,10 @@ def test_bm25_matching_positive_and_negative() -> None:
 
 def test_bm25_empty_query_and_corpus() -> None:
     empty = BM25Index([])
-    score, best = empty.query("anything")
-    assert score == 0.0 and best is None
+    assert empty.score("anything", "anything") == 0.0
     index = BM25Index(["Notify national authority"])
-    score, _ = index.query("")
-    assert score == 0.0
+    assert index.score("", "Notify national authority") == 0.0
+    assert index.score("notify", "") == 0.0
 
 
 def test_baseline_scorer_missing_actor_order() -> None:
@@ -262,7 +261,7 @@ def test_baseline_scorer_missing_actor_order() -> None:
     def factory(m):
         def sim(a, b):
             return 1.0 if a.lower() == b.lower() else 0.0
-        return sim
+        return {"action": sim, "actor": sim}
 
     scorer = BaselineScorer(factory, 0.5, 0.5, 0.5)
     ma = scorer.missing_action(["Review", "Send an invoice"], model)
@@ -328,7 +327,7 @@ def _sim_table(table):
     def factory(m):
         def sim(a, b):
             return table.get((a.lower(), b.lower()), 0.0)
-        return sim
+        return {"action": sim, "actor": sim}
     return factory
 
 
@@ -441,3 +440,201 @@ def test_authorization_packet_is_dry_run_and_contract_untouched() -> None:
     contract = _load_json(ROOT / "configs" / "experiment_contract.json")
     assert contract["stage3"]["status"] == "pending_final_subset_configuration_and_violation_gold_lock"
     assert contract["formal_gold_publication_gate"]["status"] == "blocked_pending_route_data_stage3_re_lock"
+
+# ----------------------------------------- BM25 candidate-specific (S3.6-A v3)
+def test_bm25_candidate_specific_second_action_wins() -> None:
+    from bpc_hybrid.stage3_baselines.bm25 import BM25Index
+    index = BM25Index(["Send an invoice", "Notify national authority"])
+    # the query only matches the second action
+    s1 = index.score("notify the national authority", "Send an invoice")
+    s2 = index.score("notify the national authority", "Notify national authority")
+    assert s2 > s1
+    assert s1 != s2  # sim(query, A) != sim(query, B)
+
+
+def test_bm25_best_action_id_resolution() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    # two actions; the query matches only the second -> _best_action must
+    # return the SECOND action's id (the old corpus-blind sim always picked
+    # the first action)
+    model = _simple_model(["Send an invoice", "Notify national authority"])
+    index = BM25Index([a["name"] for a in model.actions])
+
+    def factory(m):
+        def action_sim(a, b):
+            return index.score(a, b)
+
+        def actor_sim(a, b):
+            return 0.0
+        return {"action": action_sim, "actor": actor_sim}
+
+    scorer = BaselineScorer(factory, 0.5, 0.5, 0.5)
+    best_id, best_label, score = scorer._best_action("notify the national authority", model)
+    assert best_id == "a1"          # second action
+    assert best_label == "Notify national authority"
+    assert score > 0.0
+
+
+def test_bm25_action_order_swap_keeps_mapping() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    model = _simple_model(["Notify national authority", "Send an invoice"])
+    index = BM25Index([a["name"] for a in model.actions])
+
+    def factory(m):
+        def action_sim(a, b):
+            return index.score(a, b)
+
+        def actor_sim(a, b):
+            return 0.0
+        return {"action": action_sim, "actor": actor_sim}
+
+    scorer = BaselineScorer(factory, 0.5, 0.5, 0.5)
+    best_id, best_label, _ = scorer._best_action("notify the national authority", model)
+    assert best_label == "Notify national authority"
+    assert best_id == "a0"          # still the matching action, now first
+
+
+def test_bm25_actor_domain_does_not_use_action_corpus() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    # verb-only label -> no business object in the actor domain
+    model = _simple_model(["Review"], actors=["Data Controller"])
+    actor_index = BM25Index(list(model.actors))
+    action_index = BM25Index([a["name"] for a in model.actions])
+
+    def factory(m):
+        def action_sim(a, b):
+            return action_index.score(a, b)
+
+        def actor_sim(a, b):
+            return actor_index.score(a, b)
+        return {"action": action_sim, "actor": actor_sim}
+
+    scorer = BaselineScorer(factory, 0.5, 0.5, 0.5)
+    # the action query shares no token with the actor corpus -> 0 on the
+    # actor domain, while it matches the action corpus
+    best_actor, score, kind = scorer._best_actor("review the request", model)
+    assert score == 0.0
+    best_id, best_label, action_score = scorer._best_action("review", model)
+    assert (best_id, best_label) == ("a0", "Review") and action_score > 0.0
+
+
+def test_bm25_business_object_candidate_scored_independently() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    model = _simple_model(["Review", "Escalate"], actors=["Data Controller"])
+    # inject an explicit business object
+    model.business_objects.append({"activity_id": "a0", "object": "data breach report"})
+    actor_index = BM25Index(list(model.actors) + [bo["object"] for bo in model.business_objects])
+
+    def factory(m):
+        def actor_sim(a, b):
+            return actor_index.score(a, b)
+
+        def action_sim(a, b):
+            return 0.0
+        return {"action": action_sim, "actor": actor_sim}
+
+    scorer = BaselineScorer(factory, 0.5, 0.5, 0.5)
+    best, score, kind = scorer._best_actor("data breach report", model)
+    assert best == "data breach report" and kind == "business_object" and score > 0.0
+
+
+def test_bm25_order_relations_use_true_action_ids() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    model = _simple_model(["Review", "Escalate", "Archive"], reachable={"a0": ["a1"], "a1": ["a2"]})
+    index = BM25Index([a["name"] for a in model.actions])
+
+    def factory(m):
+        def action_sim(a, b):
+            return index.score(a, b)
+
+        def actor_sim(a, b):
+            return 0.0
+        return {"action": action_sim, "actor": actor_sim}
+
+    scorer = BaselineScorer(factory, 0.5, 0.3, 0.5)  # gamma 0.3: exact-token matches pass
+    # endpoints map to their true action ids (a0 for review, a1 for escalate)
+    bid1, blab1, _ = scorer._best_action("review", model)
+    bid2, blab2, _ = scorer._best_action("escalate", model)
+    assert (bid1, blab1) == ("a0", "Review")
+    assert (bid2, blab2) == ("a1", "Escalate")
+    oo = scorer.out_of_order([("review", "escalate")], ["review", "escalate", "archive"], model)
+    assert oo["denominator"] == 1 and oo["score"] == 0.0
+    oo_rev = scorer.out_of_order([("escalate", "review")], ["review", "escalate", "archive"], model)
+    assert oo_rev["denominator"] == 1 and oo_rev["score"] == 1.0
+
+
+def test_bm25_duplicate_labels_deterministic_first_id() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    record = {
+        "activities": [
+            {"id": "a0", "name": "Notify authority", "type": "task", "lane_ids": []},
+            {"id": "a1", "name": "Notify authority", "type": "task", "lane_ids": []},
+            {"id": "a2", "name": "Send an invoice", "type": "task", "lane_ids": []},
+        ],
+        "events": [],
+        "pools": [], "lanes": [],
+        "control_flow": {"reachable_pairs": [], "activity_order_relations": []},
+    }
+    model = SunProcessModel("dup_model", record, NLP)
+    index = BM25Index([a["name"] for a in model.actions])
+
+    def factory(m):
+        def action_sim(a, b):
+            return index.score(a, b)
+
+        def actor_sim(a, b):
+            return 0.0
+        return {"action": action_sim, "actor": actor_sim}
+
+    scorer = BaselineScorer(factory, 0.5, 0.5, 0.5)
+    best_id, best_label, _ = scorer._best_action("notify authority", model)
+    assert best_id == "a0"  # deterministic: first parsed duplicate wins
+    assert best_label == "Notify authority"
+
+
+def test_bm25_normalization_bounds() -> None:
+    from bpc_hybrid.stage3_baselines.bm25 import BM25Index
+    index = BM25Index(["Notify national authority", "Short"])
+    # repeated query tokens
+    s_rep = index.score("notify notify notify authority", "Notify national authority")
+    # short document (below avg length)
+    s_short = index.score("notify authority", "Notify national authority")
+    assert 0.0 <= s_rep <= 1.0
+    assert 0.0 <= s_short <= 1.0
+    # high tf candidate
+    s_tf = index.score("notify authority", "Notify notify notify national authority")
+    assert 0.0 <= s_tf <= 1.0
+    # empty query / candidate / pool
+    assert index.score("", "Notify national authority") == 0.0
+    assert index.score("notify", "") == 0.0
+    assert BM25Index([]).score("notify", "anything") == 0.0
+
+
+def test_bm25_old_corpus_blind_implementation_fails() -> None:
+    # the v1/v2 defect: sim(a, b) = index.query(a)[0] ignores b. Under that
+    # implementation, _best_action on a two-action model always returns the
+    # first action even when the query matches only the second one.
+    from bpc_hybrid.stage3_baselines.bm25 import BM25Index
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    model = _simple_model(["Send an invoice", "Notify national authority"])
+    index = BM25Index([a["name"] for a in model.actions])
+
+    def broken_factory(m):
+        def sim(a, b):   # v1/v2 defect: ignores b
+            return index.score(a, a)  # not even the query form used before
+        return {"action": sim, "actor": sim}
+
+    broken = BaselineScorer(broken_factory, 0.5, 0.5, 0.5)
+    best_id, _, _ = broken._best_action("notify the national authority", model)
+    # with a fixed score for every candidate the first action always wins
+    assert best_id == "a0"
+
+    # the corrected scorer must NOT return the first action
+    def fixed_factory(m):
+        def sim(a, b):
+            return index.score(a, b)
+        return {"action": sim, "actor": sim}
+
+    fixed = BaselineScorer(fixed_factory, 0.5, 0.5, 0.5)
+    best_id_fixed, _, _ = fixed._best_action("notify the national authority", model)
+    assert best_id_fixed == "a1"

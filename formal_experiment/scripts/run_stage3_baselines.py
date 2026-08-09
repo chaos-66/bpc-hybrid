@@ -40,10 +40,17 @@ from bpc_hybrid.stage3_baselines.tfidf_svd import TfidfSvd  # noqa: E402
 from bpc_hybrid.sun_stage3.sun_model import build_sun_models  # noqa: E402
 from bpc_hybrid.sun_stage3.sun_rule_extraction import extract_rule_record  # noqa: E402
 
-CONFIGS = {
-    "bm25": ROOT / "configs" / "bm25_stage3_development_v1.json",
-    "tfidf_svd": ROOT / "configs" / "tfidf_svd_stage3_development_v1.json",
-}
+CONFIG_DIR = ROOT / "configs"
+
+
+def _config_for(arm: str, variant: str) -> Path:
+    """Per-arm, per-variant config: prefer `<arm>_stage3_development_<variant>.json`,
+    fall back to the arm default (v1) config file."""
+    candidate = CONFIG_DIR / f"{arm}_stage3_development_{variant}.json"
+    if candidate.exists():
+        return candidate
+    return CONFIG_DIR / f"{arm}_stage3_development_v1.json"
+
 MEMBERSHIP_CONTRACT = ROOT / "configs" / "datasets" / "stage1_stage3_gdpr7_v1.json"
 STAGE1_CONTRACT = ROOT / "configs" / "stage1_structural_s11_s14.json"
 BPMN_DIR = ROOT / "data" / "input" / "stage1_stage3" / "gdpr7"
@@ -88,23 +95,33 @@ def _run_id(arm: str, config: dict[str, Any]) -> str:
 
 
 def build_similarity(arm: str, config: dict[str, Any], models, nlp):
-    """Build a per-model similarity factory. TF-IDF/SVD fits once on
-    unlabeled rule texts + process labels only; BM25 builds one index per
-    process model (query vs that model's action labels)."""
+    """Build a per-model, per-domain similarity factory:
+    ``factory(model) -> {"action": fn, "actor": fn}``. BM25 uses two separate
+    candidate pools (action labels vs actor/business-object labels) as
+    declared in the config ``retrieval_domains``; TF-IDF/SVD reuses the same
+    dense similarity for both domains (fitted once on unlabeled texts)."""
     if arm == "bm25":
         k1 = float(config["method"]["bm25"]["k1"])
         b = float(config["method"]["bm25"]["b"])
-        indices: dict[str, BM25Index] = {}
+        action_indices: dict[str, BM25Index] = {}
+        actor_indices: dict[str, BM25Index] = {}
         for pid, model in models.items():
-            docs = [a["name"] for a in model.actions if a["name"]]
-            indices[pid] = BM25Index(docs, k1=k1, b=b)
+            action_indices[pid] = BM25Index(
+                [a["name"] for a in model.actions if a["name"]], k1=k1, b=b)
+            actor_docs = list(model.actors)
+            actor_docs.extend(bo["object"] for bo in model.business_objects)
+            actor_indices[pid] = BM25Index(actor_docs, k1=k1, b=b)
 
         def factory(model: Any) -> Any:
-            index = indices[model.process_id]
+            a_index = action_indices[model.process_id]
+            ac_index = actor_indices[model.process_id]
 
-            def sim(a: str, b: str) -> float:
-                return index.query(a)[0]
-            return sim
+            def action_sim(a: str, b: str) -> float:
+                return a_index.score(a, b)
+
+            def actor_sim(a: str, b: str) -> float:
+                return ac_index.score(a, b)
+            return {"action": action_sim, "actor": actor_sim}
         return factory
     if arm == "tfidf_svd":
         seed = int(config["method"]["svd"]["seed"])
@@ -122,7 +139,7 @@ def build_similarity(arm: str, config: dict[str, Any], models, nlp):
         svd.fit(corpus)
 
         def factory(model: Any) -> Any:
-            return svd.similarity
+            return {"action": svd.similarity, "actor": svd.similarity}
         return factory
     raise RuntimeError(f"unknown arm: {arm}")
 
@@ -230,8 +247,8 @@ def write_run(arm: str, config: dict[str, Any], variant: str) -> Path:
         arm, config, sim_factory, nlp, signalwords, inference, models, scorer, tau, gamma, theta)
 
     config_snapshot = {
-        "config_path": str(CONFIGS[arm].relative_to(ROOT).as_posix()),
-        "config_sha256": _sha256(CONFIGS[arm]),
+        "config_path": str(_config_for(arm, variant).relative_to(ROOT).as_posix()),
+        "config_sha256": _sha256(_config_for(arm, variant)),
         "config": config,
     }
     (run_dir / "config_snapshot.json").write_text(
@@ -279,7 +296,7 @@ def write_run(arm: str, config: dict[str, Any], variant: str) -> Path:
             "excluded": [],
         },
         "implementation_hashes": {
-            "config": _sha256(CONFIGS[arm]),
+            "config": _sha256(_config_for(arm, variant)),
             "runner": _sha256(Path(__file__)),
             "baseline_stage3": _sha256(ROOT / "src" / "bpc_hybrid" / "stage3_baselines" / "baseline_stage3.py"),
             "bm25": _sha256(ROOT / "src" / "bpc_hybrid" / "stage3_baselines" / "bm25.py"),
@@ -332,10 +349,10 @@ def _dir_aggregate_sha256(directory: Path) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--arm", required=True, choices=sorted(CONFIGS))
+    parser.add_argument("--arm", required=True, choices=["bm25", "tfidf_svd"])
     parser.add_argument("--variant", default="v1")
     args = parser.parse_args()
-    config = _load_json(CONFIGS[args.arm], f"{args.arm} config")
+    config = _load_json(_config_for(args.arm, args.variant), f"{args.arm} config")
     try:
         run_dir = write_run(args.arm, config, args.variant)
         # common evaluator (matching tau sweep over fixed scores + error analysis)
