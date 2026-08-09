@@ -2947,3 +2947,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：blank pack 每条候选嵌入条款原文 rule_text（Winter regulations 只读 UTF-8 源，规范化后与源逐字一致）；schema 增 rule_text 必填校验；新交互式裁决工具 review_stage3_gold_annotation.py（逐条显示流程活动列表+条款全文+预填判定与证据；matching 输入 y/n、violation 输入 missing_action/incorrect_actor/out_of_order/none；支持 s 跳过/u 撤销/q 保存退出/断点续审；原子写入+独立备份目录 --backup-dir，测试用临时目录不污染仓库）；verify 增 rule_text 校验；新增 6 项工具测试（全量裁决达 freeze_ready、跳过/退出、撤销/续审、备份、rule_text 一致性）；FILE_CATALOG 重建；1551 passed/24 skipped；未读 Gold/Layer E/.env，未调 LLM，未改 BPMN
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-09T08:49:08.666661+00:00 - S3.2/S3.3 annotation frozen: user adjudicated all 58 Stage 3 Gold candidates (25 matching + 33 violation); freeze manifest recorded
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1554 passed, 24 skipped in 165.71s (0:02:45)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`5fedec478e28a38b4f5d05d9ecf327fcb2db10b3`；相关未提交路径：9 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：用户逐批裁决全部 58 条候选：matching 25（11 相关/14 不相关，含负例）、violation 33（missing_action 11/incorrect_actor 11/out_of_order 11），全部通过 --import-decisions 导入（decision 字段=用户裁决，与 candidate 草稿分离记录）；verify 新增 --validate-correction 冻结校验（身份/58 条全 adjudicated/decision 合法 fail closed）+ 冻结 manifest s32_s33_gold_annotation_freeze_v1.manifest.json；review 工具新增 --import-decisions/--print-batch 批量模式；.gitignore 忽略 review 备份目录；MASTER_PIPELINE 3.6.3 + S3.2/S3.3 行 annotation frozen；PROJECT_AUDIT 同步；FILE_CATALOG 重建；1554 passed/24 skipped；未读 Gold/Layer E/.env，未调 LLM，未改 BPMN
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

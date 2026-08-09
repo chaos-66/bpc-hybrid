@@ -137,6 +137,58 @@ def _render(kind: str, item_id: str, item: dict[str, Any], pack: dict[str, Any],
     return "\n".join(lines)
 
 
+def _import_decisions(pack: dict[str, Any], editable: Path, backup_dir: Path,
+                      spec: str) -> int:
+    """Import explicitly supplied human decisions in the form
+    ``m001:y,m002:n,v001:missing_action,v002:none,...``. The tool validates
+    ids and values, writes the correction pack atomically with a backup, and
+    prints the resulting freeze summary. Decisions are never inferred: the
+    spec must come verbatim from the user."""
+    items = dict(_item_list(pack))
+    applied = 0
+    errors: list[str] = []
+    for token in spec.split(","):
+        token = token.strip()
+        if not token:
+            continue
+        if ":" not in token:
+            errors.append(f"malformed token: {token}")
+            continue
+        item_id, raw = token.split(":", 1)
+        item_id = item_id.strip()
+        value = raw.strip().lower()
+        item = items.get(item_id)
+        if item is None:
+            errors.append(f"unknown item id: {item_id}")
+            continue
+        if item_id.startswith("m"):
+            if value not in MATCHING_COMMANDS:
+                errors.append(f"{item_id}: invalid matching value {value!r} (use y/n)")
+                continue
+            item["decision_relevant"] = MATCHING_COMMANDS[value]
+            item["review_state"] = "adjudicated"
+            item.pop("decision_violation_type", None)
+            item.pop("decision_evidence", None)
+        else:
+            if value not in VIOLATION_COMMANDS:
+                errors.append(f"{item_id}: invalid violation value {value!r}")
+                continue
+            item["decision_violation_type"] = VIOLATION_COMMANDS[value]
+            item["decision_evidence"] = item.get("candidate_evidence")
+            item["review_state"] = "adjudicated"
+            item.pop("decision_relevant", None)
+        applied += 1
+    if errors:
+        print("import errors (nothing was written):")
+        for e in errors:
+            print(f"  - {e}")
+        return 2
+    _backup(editable, backup_dir)
+    _write_atomic(editable, pack)
+    print(f"imported {applied} user decisions")
+    return _freeze_summary(pack, editable)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--blank", type=Path, default=BLANK)
@@ -144,6 +196,10 @@ def main() -> int:
     parser.add_argument("--backup-dir", type=Path, default=BACKUP_DIR)
     parser.add_argument("--reviewed-all", action="store_true",
                         help="print the freeze summary without entering the interactive loop")
+    parser.add_argument("--print-batch", nargs=2, type=int, metavar=("START", "COUNT"),
+                        help="print items START..START+COUNT-1 (1-based) with full context, no interaction")
+    parser.add_argument("--import-decisions", metavar="SPEC",
+                        help="import user decisions 'm001:y,m002:n,v001:none,...' (batch mode, no interaction)")
     args = parser.parse_args()
 
     blank = _load_json(args.blank, "Stage 3 gold blank pack")
@@ -153,6 +209,22 @@ def main() -> int:
         pack = copy.deepcopy(blank)
         _backup(args.editable, args.backup_dir)
         _write_atomic(args.editable, pack)
+
+    if args.import_decisions:
+        return _import_decisions(pack, args.editable, args.backup_dir, args.import_decisions)
+
+    if args.print_batch:
+        start, count = args.print_batch
+        items = _item_list(pack)
+        total = len(items)
+        for idx in range(start - 1, min(start - 1 + count, total)):
+            item_id, item = items[idx]
+            print(_render(
+                "matching" if item_id.startswith("m") else "violation",
+                item_id, item, pack, idx + 1, total,
+            ))
+            print()
+        return 0
 
     if args.reviewed_all:
         return _freeze_summary(pack, args.editable)

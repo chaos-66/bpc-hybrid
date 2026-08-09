@@ -1,0 +1,43 @@
+{
+  "schema_version": "stage3_gold_annotation_freeze@1.0.0",
+  "run_id": "s32_s33_gold_annotation_freeze_v1",
+  "task_ids": [
+    "S3.2",
+    "S3.3"
+  ],
+  "status": "frozen_all_items_adjudicated",
+  "dataset": {
+    "dataset_id": "stage3_gold_annotation_v1",
+    "matching_adjudicated": 25,
+    "matching_relevant": 11,
+    "matching_not_relevant": 14,
+    "violation_adjudicated": 33,
+    "violation_decision_counts": {
+      "missing_action": 11,
+      "incorrect_actor": 11,
+      "out_of_order": 11
+    },
+    "freeze_ready": true
+  },
+  "artifacts": {
+    "blank_pack": {
+      "path": "data/development/human_review/stage3_gold_annotation_blank_v1.json",
+      "sha256": "e3f8596bcec9961c30bb90d60377f2889090e88171ca58987f127b1df72fb965"
+    },
+    "correction_pack": {
+      "path": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+      "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f"
+    }
+  },
+  "safety": {
+    "human_decisions_only": true,
+    "decisions_recorded_from_user": true,
+    "gold_auto_filled": false,
+    "bpmn_modified": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "performance_evaluation": false,
+    "no_overwrite": true
+  },
+  "claim_boundary": "The correction pack records the user's adjudication of the S3.2 matching (rule-process relevance) and S3.3 violation candidates. Formal Gold publication still requires the Stage 3 contract gates (stage3.status lock, freeze policy, publication whitelist) per MASTER_PIPELINE §8.9; this manifest only freezes the annotation."
+}

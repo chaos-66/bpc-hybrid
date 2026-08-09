@@ -147,10 +147,127 @@ def verify_pack(pack: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def validate_correction_pack(correction: dict[str, Any], blank: dict[str, Any]) -> dict[str, Any]:
+    """Validate the user-adjudicated correction pack: identity against the
+    blank pack, 58/58 adjudicated, legal decision values. Returns a decision
+    summary; raises fail-closed otherwise."""
+    errors: list[str] = []
+    if correction.get("schema_version") != "stage3_gold_annotation@1.0.0":
+        errors.append("correction schema_version mismatch")
+    if correction.get("dataset_id") != "stage3_gold_annotation_v1":
+        errors.append("correction dataset_id mismatch")
+
+    blank_m = {i["item_id"] for i in blank.get("matching_items", [])}
+    blank_v = {i["item_id"] for i in blank.get("violation_items", [])}
+    corr_m = {i["item_id"] for i in correction.get("matching_items", [])}
+    corr_v = {i["item_id"] for i in correction.get("violation_items", [])}
+    if corr_m != blank_m or corr_v != blank_v:
+        errors.append("correction item id set differs from the frozen blank pack")
+
+    m_items = correction.get("matching_items", [])
+    v_items = correction.get("violation_items", [])
+    for item in m_items:
+        if item.get("review_state") != "adjudicated":
+            errors.append(f"matching item {item.get('item_id')} not adjudicated")
+        if item.get("decision_relevant") not in (True, False):
+            errors.append(f"matching item {item.get('item_id')}: missing/illegal decision_relevant")
+    for item in v_items:
+        if item.get("review_state") != "adjudicated":
+            errors.append(f"violation item {item.get('item_id')} not adjudicated")
+        if item.get("decision_violation_type") not in VIOLATION_TYPES:
+            errors.append(f"violation item {item.get('item_id')}: missing/illegal decision_violation_type")
+    if errors:
+        raise Stage1FormalDatasetError("Stage 3 gold correction pack invalid: " + "; ".join(errors[:8]))
+
+    relevant = sum(1 for i in m_items if i.get("decision_relevant") is True)
+    not_relevant = sum(1 for i in m_items if i.get("decision_relevant") is False)
+    violation_types: dict[str, int] = {}
+    for i in v_items:
+        key = i.get("decision_violation_type") or "none"
+        violation_types[key] = violation_types.get(key, 0) + 1
+    return {
+        "matching_adjudicated": len(m_items),
+        "matching_relevant": relevant,
+        "matching_not_relevant": not_relevant,
+        "violation_adjudicated": len(v_items),
+        "violation_decision_counts": violation_types,
+        "freeze_ready": len(m_items) + len(v_items) == 58,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest-out", type=Path, default=DEFAULT_MANIFEST)
+    parser.add_argument("--validate-correction", type=Path, default=None,
+                        help="validate the user-adjudicated correction pack and write a freeze manifest")
+    parser.add_argument("--freeze-manifest-out", type=Path,
+                        default=ROOT / "outputs" / "reports" / "s32_s33_gold_annotation_freeze_v1.manifest.json")
     args = parser.parse_args()
+
+    if args.validate_correction is not None:
+        try:
+            blank = _load_json(PACK_PATH, "Stage 3 gold blank pack")
+            correction = _load_json(args.validate_correction, "Stage 3 gold correction pack")
+            summary = validate_correction_pack(correction, blank)
+            manifest = {
+                "schema_version": "stage3_gold_annotation_freeze@1.0.0",
+                "run_id": "s32_s33_gold_annotation_freeze_v1",
+                "task_ids": ["S3.2", "S3.3"],
+                "status": "frozen_all_items_adjudicated",
+                "dataset": {
+                    "dataset_id": correction["dataset_id"],
+                    "matching_adjudicated": summary["matching_adjudicated"],
+                    "matching_relevant": summary["matching_relevant"],
+                    "matching_not_relevant": summary["matching_not_relevant"],
+                    "violation_adjudicated": summary["violation_adjudicated"],
+                    "violation_decision_counts": summary["violation_decision_counts"],
+                    "freeze_ready": summary["freeze_ready"],
+                },
+                "artifacts": {
+                    "blank_pack": {
+                        "path": str(PACK_PATH.relative_to(ROOT).as_posix()),
+                        "sha256": _sha256(PACK_PATH),
+                    },
+                    "correction_pack": {
+                        "path": str(args.validate_correction.resolve().relative_to(ROOT).as_posix()),
+                        "sha256": _sha256(args.validate_correction),
+                    },
+                },
+                "safety": {
+                    "human_decisions_only": True,
+                    "decisions_recorded_from_user": True,
+                    "gold_auto_filled": False,
+                    "bpmn_modified": False,
+                    "llm_api_called": False,
+                    "network_called": False,
+                    "performance_evaluation": False,
+                    "no_overwrite": True,
+                },
+                "claim_boundary": (
+                    "The correction pack records the user's adjudication of the S3.2 "
+                    "matching (rule-process relevance) and S3.3 violation candidates. "
+                    "Formal Gold publication still requires the Stage 3 contract gates "
+                    "(stage3.status lock, freeze policy, publication whitelist) per "
+                    "MASTER_PIPELINE §8.9; this manifest only freezes the annotation."
+                ),
+            }
+            output = args.freeze_manifest_out.resolve()
+            if output.exists():
+                raise Stage1FormalDatasetError(f"refusing to overwrite: {output}")
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            print(
+                "Stage 3 gold annotation frozen: "
+                f"{summary['matching_adjudicated']} matching (relevant {summary['matching_relevant']}, "
+                f"not-relevant {summary['matching_not_relevant']}), "
+                f"{summary['violation_adjudicated']} violation "
+                f"({summary['violation_decision_counts']})"
+            )
+            return 0
+        except Stage1FormalDatasetError as exc:
+            print(f"Stage 3 gold correction validation failed closed: {exc}", file=sys.stderr)
+            return 2
+
     try:
         stored = _load_json(PACK_PATH, "Stage 3 gold blank pack")
         summary = verify_pack(stored)

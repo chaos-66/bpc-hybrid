@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-09
-**收录文件**：804 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：806 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -349,6 +349,7 @@
 | `data/development/human_review/stage1_gdpr7_human_correction_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/stage1_gdpr7_process_records_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/stage3_gold_annotation_blank_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/stage3_gold_annotation_human_correction_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/metadata/exploratory_spacy_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/metadata/sun_llm_fallback_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/metadata/sun_rule_only_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
@@ -539,6 +540,7 @@
 | `outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s32_s33_gold_annotation_blank_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `paper`
 

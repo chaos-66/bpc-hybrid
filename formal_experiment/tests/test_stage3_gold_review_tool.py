@@ -25,7 +25,10 @@ if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
 from bpc_hybrid.stage1_formal_dataset import Stage1FormalDatasetError  # noqa: E402
-from verify_stage3_gold_annotation import verify_pack  # noqa: E402
+from verify_stage3_gold_annotation import (  # noqa: E402
+    validate_correction_pack,
+    verify_pack,
+)
 
 BLANK = ROOT / "data" / "development" / "human_review" / "stage3_gold_annotation_blank_v1.json"
 WINTER_ARTICLE33 = (
@@ -126,3 +129,37 @@ def test_review_tool_creates_backup_before_overwrite(tmp_path) -> None:
     backup_dir = tmp_path / "backups"
     _run_tool(editable, "y\nq\n", backup_dir)
     assert any(backup_dir.glob("stage3_gold_correction_backup_*.json"))
+
+
+def test_validate_correction_pack_accepts_frozen_pack(tmp_path) -> None:
+    editable = tmp_path / "correction.json"
+    backup_dir = tmp_path / "backups"
+    answers = "\n".join(["y"] * 25 + ["none"] * 33) + "\n"
+    _run_tool(editable, answers, backup_dir)
+    blank = json.loads(BLANK.read_text(encoding="utf-8"))
+    correction = json.loads(editable.read_text(encoding="utf-8"))
+    summary = validate_correction_pack(correction, blank)
+    assert summary["freeze_ready"] is True
+    assert summary["matching_relevant"] == 25
+    assert summary["violation_decision_counts"] == {"none": 33}
+
+
+def test_validate_correction_pack_rejects_unadjudicated_item(tmp_path) -> None:
+    editable = tmp_path / "correction.json"
+    backup_dir = tmp_path / "backups"
+    _run_tool(editable, "s\nq\n", backup_dir)
+    blank = json.loads(BLANK.read_text(encoding="utf-8"))
+    correction = json.loads(editable.read_text(encoding="utf-8"))
+    with pytest.raises(Stage1FormalDatasetError):
+        validate_correction_pack(correction, blank)
+
+
+def test_validate_correction_pack_rejects_bad_decision_value(tmp_path) -> None:
+    editable = tmp_path / "correction.json"
+    backup_dir = tmp_path / "backups"
+    _run_tool(editable, "y\nq\n", backup_dir)
+    blank = json.loads(BLANK.read_text(encoding="utf-8"))
+    correction = json.loads(editable.read_text(encoding="utf-8"))
+    correction["matching_items"][0]["decision_relevant"] = "maybe"
+    with pytest.raises(Stage1FormalDatasetError):
+        validate_correction_pack(correction, blank)
