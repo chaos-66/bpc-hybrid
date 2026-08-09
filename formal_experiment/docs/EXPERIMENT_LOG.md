@@ -3064,3 +3064,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：根因：v1/v2 的 BM25 sim(a,b) 忽略 b（返回 action corpus 最佳文档分数），导致 _best_action 固定选第一个 action、actor/BO 比较误用 action corpus、out-of-order 可能映射错误 ID。修复：(1) BM25Index 重写为 candidate-specific score(query,candidate)（candidate 自身 tf/dl + 域语料 IDF/avgdl；真实 [0,1] 归一化=每 term 贡献上界 sum(IDF*(k1+1))，重复 query token 折叠、空 query/candidate/pool=0）；(2) BaselineScorer 改双域 sims_factory（action/actor 独立候选池），_best_action 返回真实 action ID，tie-breaking=score desc+first-seen，duplicate labels 确定性取首个解析 ID，out-of-order 用映射 ID；(3) config：bm25 v3（retrieval_domains 声明、supersedes v1/v2=superseded_invalid_candidate_agnostic_similarity）、tfidf seed 措辞（full SVD deterministic、seed retained but operationally unused）、两 config 删除 mappings-do-NOT-depend 错误主张；(4) 10 项 BM25 fixture（第二 action 胜出、顺序交换不变、actor 域独立、BO 独立、order 真实 ID、duplicate 稳定、归一化边界、旧实现必须失败）；全量 1618 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-09T14:38:52.283081+00:00 - S3.6-A BM25 v3 clean replay + method registry v2 + formal Gold authorization packet v2 (checkpoint 2 of 2, dry-run only)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1622 passed, 24 skipped, 19 warnings in 176.06s (0:02:56)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b0dc017e31c90f18df0f7b642a78ac5a2407bce1`；相关未提交路径：18 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：从干净 checkpoint（b0dc017）重放 BM25 v3（candidate-specific）：58 条、0 排除、finalised、manifest 披露 supersedes（v1/v2=superseded_invalid_candidate_agnostic_similarity）；v2 invalid → v3 corrected：MAP 0.6833→0.6595、binary F1 0.4→0.0、macro/exact 不变（violation 部分对候选差异不敏感）；TF-IDF 共享 scorer ID 修复后内容级 byte-identical 验证通过（无 duplicate labels）保留 v2；evidence capsule v3 + v1/v2 capsule 标 superseded；comparison active BM25=v3；method registry v2（active 5 方法含 BM25 v3、superseded_invalid_runs=BM25 v1/v2、registry_generated_at_commit 非 null、config 三 hash 区分：run snapshot/run manifest/当前工作树，sun/tfidf 工作树 hash 因后续措辞修改与 run 时不同——如实区分）；authorization packet v2（JSON Pointer 完整 before/after、freeze_policy 治理内容保留仅更新已满足状态、临时副本门禁校验 False→True（5 precondition 全满足）、活动合同字节断言未变、formal Gold publication 与方法正确性不同门禁说明、新授权句）；新增 4 项测试（registry v2 hash 闭合/BM25 v3 superseded/packet v2 dry-run）；全量 1622 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction/未翻转任何正式门禁
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

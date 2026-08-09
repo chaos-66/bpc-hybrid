@@ -1,0 +1,66 @@
+{
+  "config_path": "configs/bm25_stage3_development_v3.json",
+  "config_sha256": "2ac20fc1d7b039f4494271cdf0761312a969d570cb7f41c6ca3da32576a15cd3",
+  "config": {
+    "schema_version": "bm25_stage3_development@1.1.0",
+    "config_version": "v3",
+    "task_id": "S3.6-A",
+    "claim": "Development-only BM25 lexical lower-bound Stage 3 baseline (v3, candidate-specific). v1/v2 were invalid: their similarity function ignored the candidate text (best-document score of the action corpus for every candidate), so action mapping always picked the first action, actor/business-object comparison queried the action corpus, and out-of-order endpoints could map to the wrong action. v3 provides candidate-specific scoring over per-domain candidate pools (action corpus vs actor/business-object corpus) with a real [0,1] normalization. Matching evaluated primarily by ranking AP/MAP; binary rule (score > tau) is a fixed development setting, NOT a blind/confirmatory preregistration (the developer had seen the same 58 development Gold items and other method results; benchmark exposure cannot be fully excluded).",
+    "arm": "bm25",
+    "supersedes": {
+      "v1": "superseded_invalid_candidate_agnostic_similarity (sim ignored candidate text; results not usable for comparison, registry active methods, or the paper)",
+      "v2": "superseded_invalid_candidate_agnostic_similarity (same defect; sensitivity repair in v2 did not change the similarity function)"
+    },
+    "method": {
+      "tokenizer": "lowercase alphanumeric tokens (no stopword removal: lexical lower bound)",
+      "bm25": {
+        "k1": 1.5,
+        "b": 0.75,
+        "note": "Okapi BM25 defaults; b genuinely affects length normalisation"
+      },
+      "retrieval_domains": {
+        "action": {
+          "documents": "the process model's action labels",
+          "index": "per-model action_index"
+        },
+        "actor": {
+          "documents": "the process model's actor/pool/lane names plus business-object texts",
+          "index": "per-model actor_index"
+        },
+        "note": "separate candidate pools per domain; actor/BO scores never reuse the action corpus"
+      },
+      "scoring": "candidate-specific BM25: score(query, candidate) uses the candidate's own term frequencies and length, IDF/length statistics from the domain pool",
+      "normalization": "score / sum(IDF(t)*(k1+1)) over unique query terms; each term contribution IDF*tf*(k1+1)/(tf + k1*(1-b+b*dl/avgdl)) is < 1 for all tf/dl, so the result is truly in [0,1]; repeated query tokens are collapsed for the bound; empty query/candidate/pool yields 0.0",
+      "tie_breaking": "best match = max score with first-seen action order (stable parsed order); duplicate labels map to the first parsed action id deterministically",
+      "matching_formula": "matching_score = max(avg best rule-action BM25, avg best rule-actor BM25)",
+      "violation_semantics": "mapping mirrors Sun Definitions 5-7 structure with BM25 similarity; gamma and theta DO change mappings, R/C sets, denominators and observability, so sensitivity must re-instantiate the scorer (see baseline_stage3_sensitivity.py)",
+      "empty_semantics": "empty query/candidate/pool -> score 0.0, no match, never silently compliant"
+    },
+    "thresholds": {
+      "tau": 0.5,
+      "gamma": 0.5,
+      "theta": 0.5,
+      "note": "fixed development setting chosen from the method's lexical semantics BEFORE this run; the developer had already seen the same 58 development Gold items and other method results, so this is NOT a statistically blind/confirmatory preregistration and benchmark exposure cannot be fully excluded. Sweeps are diagnostic only; primary values never selected from the sweep."
+    },
+    "inputs": {
+      "inference_pack": "data/development/human_review/stage3_gold_inference_v1.json",
+      "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+      "stage1_structural_contract": "configs/stage1_structural_s11_s14.json",
+      "rule_record_adapter": "src/bpc_hybrid/sun_stage3/sun_rule_extraction.py (Gold-blind development adapter, shared with Sun)",
+      "note": "runner reads ONLY the inference pack; no decision/candidate/evidence fields"
+    },
+    "runner": {
+      "entry": "scripts/run_stage3_baselines.py --arm bm25 --variant v3",
+      "no_llm": true,
+      "no_network": true,
+      "no_env": true,
+      "gold_decisions_read": false,
+      "deterministic": true
+    },
+    "evaluator": {
+      "entry": "scripts/evaluate_stage3_common.py",
+      "gold_input": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+      "note": "same common evaluator and same 58 item IDs as Winter/Sun"
+    }
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "schema_version": "stage3_baseline_run_manifest@1.0.0",
+  "run_id": "s36_bm25_stage3_development_v3",
+  "task_id": "S3.6",
+  "arm": "bm25",
+  "status": "development_only",
+  "command": "python scripts/run_stage3_baselines.py --arm bm25 --variant v3",
+  "git": {
+    "commit": "b0dc017e31c90f18df0f7b642a78ac5a2407bce1",
+    "dirty_paths": [
+      "M formal_experiment/outputs/evidence/s36_bm25_stage3_development_v1/capsule_manifest.json",
+      " M formal_experiment/outputs/evidence/s36_bm25_stage3_development_v2/capsule_manifest.json",
+      " M formal_experiment/scripts/compare_stage3_methods_dev.py",
+      "?? formal_experiment/configs/stage3_development_method_registry_v2.json",
+      "?? formal_experiment/outputs/reports/formal_gold_authorization_packet_v2.json",
+      "?? formal_experiment/outputs/reports/formal_gold_authorization_packet_v2.md",
+      "?? formal_experiment/scripts/build_formal_gold_authorization_packet_v2.py",
+      "?? formal_experiment/scripts/build_stage3_method_registry_v2.py"
+    ]
+  },
+  "inputs": {
+    "inference_pack": {
+      "path": "data/development/human_review/stage3_gold_inference_v1.json",
+      "sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+      "note": "gold-blind inference contract; runner never reads decisions/candidates"
+    },
+    "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+    "bpmn_dir_membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d",
+    "bpmn_dir_aggregate_sha256": "627a2d5192d64431f8ddeadd83b398d1e198a95c6a6fa9e63bc4537c983052cd",
+    "stage1_structural_contract": {
+      "path": "configs/stage1_structural_s11_s14.json",
+      "sha256": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48"
+    },
+    "bpmn_files_sha256": {
+      "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+    }
+  },
+  "method": {
+    "tokenizer": "lowercase alphanumeric tokens (no stopword removal: lexical lower bound)",
+    "bm25": {
+      "k1": 1.5,
+      "b": 0.75,
+      "note": "Okapi BM25 defaults; b genuinely affects length normalisation"
+    },
+    "retrieval_domains": {
+      "action": {
+        "documents": "the process model's action labels",
+        "index": "per-model action_index"
+      },
+      "actor": {
+        "documents": "the process model's actor/pool/lane names plus business-object texts",
+        "index": "per-model actor_index"
+      },
+      "note": "separate candidate pools per domain; actor/BO scores never reuse the action corpus"
+    },
+    "scoring": "candidate-specific BM25: score(query, candidate) uses the candidate's own term frequencies and length, IDF/length statistics from the domain pool",
+    "normalization": "score / sum(IDF(t)*(k1+1)) over unique query terms; each term contribution IDF*tf*(k1+1)/(tf + k1*(1-b+b*dl/avgdl)) is < 1 for all tf/dl, so the result is truly in [0,1]; repeated query tokens are collapsed for the bound; empty query/candidate/pool yields 0.0",
+    "tie_breaking": "best match = max score with first-seen action order (stable parsed order); duplicate labels map to the first parsed action id deterministically",
+    "matching_formula": "matching_score = max(avg best rule-action BM25, avg best rule-actor BM25)",
+    "violation_semantics": "mapping mirrors Sun Definitions 5-7 structure with BM25 similarity; gamma and theta DO change mappings, R/C sets, denominators and observability, so sensitivity must re-instantiate the scorer (see baseline_stage3_sensitivity.py)",
+    "empty_semantics": "empty query/candidate/pool -> score 0.0, no match, never silently compliant"
+  },
+  "supersedes": {
+    "v1": "superseded_invalid_candidate_agnostic_similarity (sim ignored candidate text; results not usable for comparison, registry active methods, or the paper)",
+    "v2": "superseded_invalid_candidate_agnostic_similarity (same defect; sensitivity repair in v2 did not change the similarity function)"
+  },
+  "thresholds": {
+    "tau": 0.5,
+    "gamma": 0.5,
+    "theta": 0.5,
+    "note": "fixed development setting chosen from the method's lexical semantics BEFORE this run; the developer had already seen the same 58 development Gold items and other method results, so this is NOT a statistically blind/confirmatory preregistration and benchmark exposure cannot be fully excluded. Sweeps are diagnostic only; primary values never selected from the sweep."
+  },
+  "samples": {
+    "matching_candidates": 25,
+    "violation_candidates": 33,
+    "excluded": []
+  },
+  "implementation_hashes": {
+    "config": "2ac20fc1d7b039f4494271cdf0761312a969d570cb7f41c6ca3da32576a15cd3",
+    "runner": "6933a31e4a339505aa266dbfc71d626db09eac7cf8083831fbe87fe37a08cf29",
+    "baseline_stage3": "ba4d28fcf18ba9f83aae76f80e04d326f867177b68ce0953c4860bdc75d16dce",
+    "bm25": "14c24fbe02a9b50c60f2fc7d6439dcc438c68873281588fff78b9d82575772b7",
+    "tfidf_svd": "423d7e6a7f6b6ab5a7ece5742851c79bb22d1d439984e1246a89c44a0c21a3cf",
+    "rule_adapter": "194c821db35cd45659d4caa29af51769af4bd9ee4d0db0478b82fe832dc9e870"
+  },
+  "dependency_index": {
+    "python": "3.14.6",
+    "spacy": "3.8.13",
+    "spacy_model": "en_core_web_sm",
+    "numpy": "2.5.0",
+    "sklearn": "unavailable (deterministic local implementations used)"
+  },
+  "external_runtime_prerequisites": [
+    "spacy package + en_core_web_sm model (rule adapter only)",
+    "references/winter_2020_model_check/model_check/input/files/signalwords.txt (read-only)"
+  ],
+  "safety": {
+    "llm_api_called": false,
+    "network_called": false,
+    "env_read": false,
+    "gold_decisions_read": false,
+    "correction_pack_read": false,
+    "candidate_fields_read": false,
+    "bpmn_modified": false,
+    "no_overwrite": true
+  },
+  "artifacts": {
+    "config_snapshot": {
+      "path": "config_snapshot.json",
+      "sha256": "d700338b647f8adc261b208b48efc8736419009a83332abf02922b2f147a3ccd",
+      "byte_size": 4738
+    },
+    "rule_records": {
+      "path": "rule_records.jsonl",
+      "sha256": "295aa9171b6a7dd36ae1b18116fbef51e7671eba999bcbec2856a0827fca8439",
+      "byte_size": 43967
+    },
+    "process_records_index": {
+      "path": "process_records.jsonl",
+      "sha256": "ede897ad62a75afb492d8ddc3bd19c03ef34cd6b19e4d58f972790588a1e42e8",
+      "byte_size": 548
+    },
+    "predictions": {
+      "path": "predictions.jsonl",
+      "sha256": "61de06930042f04a511acc613811585c77a82895246c12dfd4cc6c1168b7ca7a",
+      "byte_size": 40380
+    },
+    "evaluation": {
+      "path": "evaluation.json",
+      "sha256": "189d728791f074bf6873c935e139ff7b77623ddf780b22219e549042237a0f5d",
+      "byte_size": 3007
+    },
+    "threshold_sensitivity": {
+      "path": "threshold_sensitivity.json",
+      "sha256": "a3328b6232286daddb1301d93d09c77bf77f899bcc4938c281bb7db226be3d22",
+      "byte_size": 9788
+    },
+    "error_analysis": {
+      "path": "error_analysis.md",
+      "sha256": "411c6700b8933ed64bf05a0e4713c005a9b2cc7d745b5b6169222f2c70421a3b",
+      "byte_size": 5638
+    }
+  },
+  "export_index": {
+    "path": "export_index.json",
+    "sha256": "9c8d0f8d0ffe7b2c8fe565cf23cc82458394b7dbdd194c05156e35fc0874cf0f"
+  },
+  "finalised": true
+}

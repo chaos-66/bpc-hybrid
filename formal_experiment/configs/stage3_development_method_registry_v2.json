@@ -1,0 +1,323 @@
+{
+  "schema_version": "stage3_development_method_registry@2.0.0",
+  "registry_version": "v2",
+  "registry_generated_at_commit": "b0dc017e31c90f18df0f7b642a78ac5a2407bce1",
+  "purpose": "freeze the active development method set so that no silent method change can happen after formal Gold publication; any method/config/threshold change MUST produce a new registry version",
+  "change_rule": "a new registry version (vN+1) is required for ANY change to method code, config, thresholds, evaluator, inference pack or run inputs; silent in-place edits are forbidden",
+  "active_methods": {
+    "winter_2020_corrected": {
+      "run_id": "s34_winter_stage3_development_v3_clean",
+      "methods_built_from_clean_commit": "67758f5ec16a9b6a0ff289006236e4dfcfffccb4",
+      "run_dirty_paths": 0,
+      "finalised": true,
+      "primary_thresholds": {
+        "gamma": 0.4,
+        "delta": 0.8
+      },
+      "config_hashes": {
+        "run_config_snapshot": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+        "run_manifest_implementation": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+        "current_worktree": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+        "note": "the run's config snapshot hash is authoritative for that run; a later worktree hash change (e.g. wording edits) must not be attributed to the run"
+      },
+      "implementation_hashes": {
+        "config": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+        "runner": "8e79476e80a6c8c045ce594010b012af3da1c428cfed934cd9f3af902bc14e26",
+        "evaluator": "501a1f0532bde4a02bf2aa8f586c82c9382a91ecd86d9c61d11ff17669804e7a",
+        "winter_model": "b249367afd707961e7961f2ccdf4685ad8e2fc5f42ef9d9c158d60879fd8035b",
+        "winter_clause": "186806e00729aca70eb52338139cba4e10b09c40ef0db097d8ad238db1fdac56",
+        "winter_pair": "30848eb83e5bac85af4ffdf870149db3a6845b75fba1e497e8bd7d8548322a73",
+        "winter_similarity": "97632047435166b809f64b0abda6564de00a324702ad0cade32aaa51443c0ddc"
+      },
+      "inputs": {
+        "inference_pack_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+        "bpmn_dir_aggregate_sha256": "627a2d5192d64431f8ddeadd83b398d1e198a95c6a6fa9e63bc4537c983052cd"
+      },
+      "evidence_capsule": {
+        "path": "outputs/evidence/s34_winter_stage3_development_v3_clean",
+        "sha256": "07cc3defa4fae7c6abcc3585e77811e89a50141b7209bdcddb26b9435fe0ab95",
+        "files": [
+          "config_snapshot.json",
+          "error_analysis.md",
+          "evaluation.json",
+          "export_index.json",
+          "manifest.json",
+          "predictions.jsonl",
+          "threshold_sensitivity.json"
+        ]
+      },
+      "evaluator": {
+        "path": "scripts/evaluate_stage3_common.py",
+        "sha256": "501a1f0532bde4a02bf2aa8f586c82c9382a91ecd86d9c61d11ff17669804e7a"
+      },
+      "gold_exposure": {
+        "development_gold_seen_by_developer": true,
+        "note": "the same 58 development Gold items were used to build and repair the methods before these runs; thresholds are fixed development settings, NOT blind/confirmatory preregistrations"
+      },
+      "known_limitations": [
+        "spaCy en_core_web_sm has no word vectors (similarity from tagger/parser tensors)",
+        "GDPR7 lane names are empty (pool names present); actor observability is limited",
+        "frozen violation pack has no compliant (none) gold items: specificity N/A, missing-action F1 can be an all-positive artifact"
+      ],
+      "claim_gates": {
+        "formal_oracle_claim_allowed": false,
+        "confirmatory_claim_allowed": false,
+        "dev_only": true
+      }
+    },
+    "winter_2020_prototype_literal": {
+      "run_id": "s34_winter_stage3_development_v3_prototype_literal",
+      "methods_built_from_clean_commit": "67758f5ec16a9b6a0ff289006236e4dfcfffccb4",
+      "run_dirty_paths": 0,
+      "finalised": true,
+      "primary_thresholds": {
+        "gamma": 0.4,
+        "delta": 0.8
+      },
+      "config_hashes": {
+        "run_config_snapshot": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+        "run_manifest_implementation": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+        "current_worktree": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+        "note": "the run's config snapshot hash is authoritative for that run; a later worktree hash change (e.g. wording edits) must not be attributed to the run"
+      },
+      "implementation_hashes": {
+        "config": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+        "runner": "8e79476e80a6c8c045ce594010b012af3da1c428cfed934cd9f3af902bc14e26",
+        "evaluator": "501a1f0532bde4a02bf2aa8f586c82c9382a91ecd86d9c61d11ff17669804e7a",
+        "winter_model": "b249367afd707961e7961f2ccdf4685ad8e2fc5f42ef9d9c158d60879fd8035b",
+        "winter_clause": "186806e00729aca70eb52338139cba4e10b09c40ef0db097d8ad238db1fdac56",
+        "winter_pair": "30848eb83e5bac85af4ffdf870149db3a6845b75fba1e497e8bd7d8548322a73",
+        "winter_similarity": "97632047435166b809f64b0abda6564de00a324702ad0cade32aaa51443c0ddc"
+      },
+      "inputs": {
+        "inference_pack_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+        "bpmn_dir_aggregate_sha256": "627a2d5192d64431f8ddeadd83b398d1e198a95c6a6fa9e63bc4537c983052cd"
+      },
+      "evidence_capsule": {
+        "path": "outputs/evidence/s34_winter_stage3_development_v3_prototype_literal",
+        "sha256": "48677ce3efe8681bd8c6fce7efa8a3b7813a1bf7e4fce34044029df32affea46",
+        "files": [
+          "config_snapshot.json",
+          "error_analysis.md",
+          "evaluation.json",
+          "export_index.json",
+          "manifest.json",
+          "predictions.jsonl",
+          "threshold_sensitivity.json"
+        ]
+      },
+      "evaluator": {
+        "path": "scripts/evaluate_stage3_common.py",
+        "sha256": "501a1f0532bde4a02bf2aa8f586c82c9382a91ecd86d9c61d11ff17669804e7a"
+      },
+      "gold_exposure": {
+        "development_gold_seen_by_developer": true,
+        "note": "the same 58 development Gold items were used to build and repair the methods before these runs; thresholds are fixed development settings, NOT blind/confirmatory preregistrations"
+      },
+      "known_limitations": [
+        "spaCy en_core_web_sm has no word vectors (similarity from tagger/parser tensors)",
+        "GDPR7 lane names are empty (pool names present); actor observability is limited",
+        "frozen violation pack has no compliant (none) gold items: specificity N/A, missing-action F1 can be an all-positive artifact"
+      ],
+      "claim_gates": {
+        "formal_oracle_claim_allowed": false,
+        "confirmatory_claim_allowed": false,
+        "dev_only": true
+      }
+    },
+    "sun_2024": {
+      "run_id": "s35_sun_stage3_development_v2",
+      "methods_built_from_clean_commit": "67758f5ec16a9b6a0ff289006236e4dfcfffccb4",
+      "run_dirty_paths": 0,
+      "finalised": true,
+      "primary_thresholds": {
+        "tau": 0.8,
+        "gamma": 0.8,
+        "theta": 0.8
+      },
+      "config_hashes": {
+        "run_config_snapshot": "fe79c33e4b7efd5fabfaa82eeb54e4c25904ea5c7d427314ceaa5e7b22107779",
+        "run_manifest_implementation": "fe79c33e4b7efd5fabfaa82eeb54e4c25904ea5c7d427314ceaa5e7b22107779",
+        "current_worktree": "c78ab2d14ac90dc95c86d686a61c0809e3fc7547e96b42a0b69254a7504797da",
+        "note": "the run's config snapshot hash is authoritative for that run; a later worktree hash change (e.g. wording edits) must not be attributed to the run"
+      },
+      "implementation_hashes": {
+        "config": "fe79c33e4b7efd5fabfaa82eeb54e4c25904ea5c7d427314ceaa5e7b22107779",
+        "runner": "86a2737bc85442755482a1aeb493fd79968b97d8ae05f6defdbd4c729525e56a",
+        "sun_model": "5a63af5cfcc2ebd28c098960bbd0e3bab883491cb468cd3471e7b5eedbbc92f5",
+        "sun_rule_extraction": "194c821db35cd45659d4caa29af51769af4bd9ee4d0db0478b82fe832dc9e870",
+        "sun_scorer": "2161828aac6b069397b0e804adfd0ae15fe9e888d2c7bb00c55edcbbf633f878",
+        "shared_similarity": "97632047435166b809f64b0abda6564de00a324702ad0cade32aaa51443c0ddc"
+      },
+      "inputs": {
+        "inference_pack_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+        "bpmn_dir_aggregate_sha256": "627a2d5192d64431f8ddeadd83b398d1e198a95c6a6fa9e63bc4537c983052cd"
+      },
+      "evidence_capsule": {
+        "path": "outputs/evidence/s35_sun_stage3_development_v2",
+        "sha256": "c3d4237a341426825efac22ab71ed985878bce9d33f71dfcfb9fe4ad7e46a585",
+        "files": [
+          "comparison_all_methods_dev.json",
+          "config_snapshot.json",
+          "error_analysis.md",
+          "evaluation.json",
+          "export_index.json",
+          "manifest.json",
+          "predictions.jsonl",
+          "threshold_sensitivity.json"
+        ]
+      },
+      "evaluator": {
+        "path": "scripts/evaluate_stage3_common.py",
+        "sha256": "501a1f0532bde4a02bf2aa8f586c82c9382a91ecd86d9c61d11ff17669804e7a"
+      },
+      "gold_exposure": {
+        "development_gold_seen_by_developer": true,
+        "note": "the same 58 development Gold items were used to build and repair the methods before these runs; thresholds are fixed development settings, NOT blind/confirmatory preregistrations"
+      },
+      "known_limitations": [
+        "spaCy en_core_web_sm has no word vectors (similarity from tagger/parser tensors)",
+        "GDPR7 lane names are empty (pool names present); actor observability is limited",
+        "frozen violation pack has no compliant (none) gold items: specificity N/A, missing-action F1 can be an all-positive artifact"
+      ],
+      "claim_gates": {
+        "formal_oracle_claim_allowed": false,
+        "confirmatory_claim_allowed": false,
+        "dev_only": true
+      }
+    },
+    "s36_bm25": {
+      "run_id": "s36_bm25_stage3_development_v3",
+      "methods_built_from_clean_commit": "b0dc017e31c90f18df0f7b642a78ac5a2407bce1",
+      "run_dirty_paths": 8,
+      "finalised": true,
+      "primary_thresholds": {
+        "tau": 0.5,
+        "gamma": 0.5,
+        "theta": 0.5
+      },
+      "config_hashes": {
+        "run_config_snapshot": "2ac20fc1d7b039f4494271cdf0761312a969d570cb7f41c6ca3da32576a15cd3",
+        "run_manifest_implementation": "2ac20fc1d7b039f4494271cdf0761312a969d570cb7f41c6ca3da32576a15cd3",
+        "current_worktree": "2ac20fc1d7b039f4494271cdf0761312a969d570cb7f41c6ca3da32576a15cd3",
+        "note": "the run's config snapshot hash is authoritative for that run; a later worktree hash change (e.g. wording edits) must not be attributed to the run"
+      },
+      "implementation_hashes": {
+        "config": "2ac20fc1d7b039f4494271cdf0761312a969d570cb7f41c6ca3da32576a15cd3",
+        "runner": "6933a31e4a339505aa266dbfc71d626db09eac7cf8083831fbe87fe37a08cf29",
+        "baseline_stage3": "ba4d28fcf18ba9f83aae76f80e04d326f867177b68ce0953c4860bdc75d16dce",
+        "bm25": "14c24fbe02a9b50c60f2fc7d6439dcc438c68873281588fff78b9d82575772b7",
+        "tfidf_svd": "423d7e6a7f6b6ab5a7ece5742851c79bb22d1d439984e1246a89c44a0c21a3cf",
+        "rule_adapter": "194c821db35cd45659d4caa29af51769af4bd9ee4d0db0478b82fe832dc9e870"
+      },
+      "inputs": {
+        "inference_pack_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+        "bpmn_dir_aggregate_sha256": "627a2d5192d64431f8ddeadd83b398d1e198a95c6a6fa9e63bc4537c983052cd"
+      },
+      "evidence_capsule": {
+        "path": "outputs/evidence/s36_bm25_stage3_development_v3",
+        "sha256": "f5fd555357f03f447dc44b8ca0089c3dbdbc34b4834e0452969124f6c3b25e0f",
+        "files": [
+          "config_snapshot.json",
+          "error_analysis.md",
+          "evaluation.json",
+          "export_index.json",
+          "manifest.json",
+          "predictions.jsonl",
+          "threshold_sensitivity.json"
+        ]
+      },
+      "evaluator": {
+        "path": "scripts/evaluate_stage3_common.py",
+        "sha256": "501a1f0532bde4a02bf2aa8f586c82c9382a91ecd86d9c61d11ff17669804e7a"
+      },
+      "gold_exposure": {
+        "development_gold_seen_by_developer": true,
+        "note": "the same 58 development Gold items were used to build and repair the methods before these runs; thresholds are fixed development settings, NOT blind/confirmatory preregistrations"
+      },
+      "known_limitations": [
+        "spaCy en_core_web_sm has no word vectors (similarity from tagger/parser tensors)",
+        "GDPR7 lane names are empty (pool names present); actor observability is limited",
+        "frozen violation pack has no compliant (none) gold items: specificity N/A, missing-action F1 can be an all-positive artifact"
+      ],
+      "claim_gates": {
+        "formal_oracle_claim_allowed": false,
+        "confirmatory_claim_allowed": false,
+        "dev_only": true
+      }
+    },
+    "s36_tfidf_svd": {
+      "run_id": "s36_tfidf_svd_stage3_development_v2",
+      "methods_built_from_clean_commit": "03e903aa7dcdabcece9bac2743033e9e650afcd4",
+      "run_dirty_paths": 0,
+      "finalised": true,
+      "primary_thresholds": {
+        "tau": 0.5,
+        "gamma": 0.5,
+        "theta": 0.5
+      },
+      "config_hashes": {
+        "run_config_snapshot": "d7275e76558d0e74c7d0b6281a8afe377fe1e61863e00741d1b43490dd7fad54",
+        "run_manifest_implementation": "d7275e76558d0e74c7d0b6281a8afe377fe1e61863e00741d1b43490dd7fad54",
+        "current_worktree": "60a81d44764f755837df36fe4b53e2ad89c1e09985e6cc563802bb8170440b85",
+        "note": "the run's config snapshot hash is authoritative for that run; a later worktree hash change (e.g. wording edits) must not be attributed to the run"
+      },
+      "implementation_hashes": {
+        "config": "d7275e76558d0e74c7d0b6281a8afe377fe1e61863e00741d1b43490dd7fad54",
+        "runner": "8e177736169951dbb8eefd1d3224b4d9504a5fba93e7dd8e92e55f979b7f3661",
+        "baseline_stage3": "84764ae36c983227f9215d6b1a8e670f3ad25bb91047c43f8deb85b2dd9daa05",
+        "bm25": "ef4b4b39c7bf6c5788d699a9d1458194a9dc75bbced270429559cb6a077e43de",
+        "tfidf_svd": "423d7e6a7f6b6ab5a7ece5742851c79bb22d1d439984e1246a89c44a0c21a3cf",
+        "rule_adapter": "194c821db35cd45659d4caa29af51769af4bd9ee4d0db0478b82fe832dc9e870"
+      },
+      "inputs": {
+        "inference_pack_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+        "bpmn_dir_aggregate_sha256": "627a2d5192d64431f8ddeadd83b398d1e198a95c6a6fa9e63bc4537c983052cd"
+      },
+      "evidence_capsule": {
+        "path": "outputs/evidence/s36_tfidf_svd_stage3_development_v2",
+        "sha256": "0092e4d1d1a81cda9c13767a2d934e070d3f85268680fd4487d0c649305c79b5",
+        "files": [
+          "config_snapshot.json",
+          "error_analysis.md",
+          "evaluation.json",
+          "export_index.json",
+          "manifest.json",
+          "predictions.jsonl",
+          "threshold_sensitivity.json"
+        ]
+      },
+      "evaluator": {
+        "path": "scripts/evaluate_stage3_common.py",
+        "sha256": "501a1f0532bde4a02bf2aa8f586c82c9382a91ecd86d9c61d11ff17669804e7a"
+      },
+      "gold_exposure": {
+        "development_gold_seen_by_developer": true,
+        "note": "the same 58 development Gold items were used to build and repair the methods before these runs; thresholds are fixed development settings, NOT blind/confirmatory preregistrations"
+      },
+      "known_limitations": [
+        "spaCy en_core_web_sm has no word vectors (similarity from tagger/parser tensors)",
+        "GDPR7 lane names are empty (pool names present); actor observability is limited",
+        "frozen violation pack has no compliant (none) gold items: specificity N/A, missing-action F1 can be an all-positive artifact"
+      ],
+      "claim_gates": {
+        "formal_oracle_claim_allowed": false,
+        "confirmatory_claim_allowed": false,
+        "dev_only": true
+      }
+    }
+  },
+  "superseded_invalid_runs": {
+    "s36_bm25_stage3_development_v1": {
+      "reason": "superseded_invalid_candidate_agnostic_similarity",
+      "detail": "sim(query, candidate) ignored the candidate text (best-document score of the action corpus for every candidate); not usable for comparison, registry active methods, or paper results",
+      "superseded_by": "s36_bm25_stage3_development_v3"
+    },
+    "s36_bm25_stage3_development_v2": {
+      "reason": "superseded_invalid_candidate_agnostic_similarity",
+      "detail": "same candidate-agnostic defect as v1 (v2 only repaired the sensitivity sweep, not the similarity function)",
+      "superseded_by": "s36_bm25_stage3_development_v3"
+    }
+  },
+  "note": "registry v1 (stage3_development_method_registry_v1.json) is retained as provenance; v2 is the authoritative freeze after the BM25 candidate-specific correction"
+}

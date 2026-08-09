@@ -1,0 +1,108 @@
+{
+  "schema_version": "formal_gold_authorization_packet@2.0.0",
+  "packet_id": "formal_gold_authorization_packet_v2",
+  "supersedes": "formal_gold_authorization_packet_v1 (retained)",
+  "dry_run": true,
+  "contract_not_modified": true,
+  "contract_sha256_before": "7d1ad775da5831f81e8b5f553d227fee81ac50b3b95b401b73f89e929e0db107",
+  "current_audit": {
+    "errors": 0,
+    "blockers": [
+      "formal_gold_publication_paused",
+      "final_experiment_not_ready",
+      "formal_methods_not_ready",
+      "formal_capsule_not_frozen",
+      "stage3_benchmark_not_locked"
+    ]
+  },
+  "current_contract_state": {
+    "route.status": "locked",
+    "stage2_dataset.status": "locked_for_human_review",
+    "stage3.status": "pending_final_subset_configuration_and_violation_gold_lock",
+    "publication_gate.status": "blocked_pending_route_data_stage3_re_lock",
+    "allowed_publication_statuses": [
+      "ready_for_formal_gold_publication"
+    ]
+  },
+  "frozen_credentials": {
+    "stage2_150_150": "Layer E v2 150/150 adjudicated (2026-08-06 restore); audit human_review_freeze_ready=true",
+    "stage3_58_58": {
+      "manifest": "outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json",
+      "sha256": "f37ae1164b19e1e86d007f83202a125c31c295e415b899b83cec9eb0f51a04e7"
+    }
+  },
+  "proposed_contract_changes": [
+    {
+      "pointer": "/stage3/status",
+      "pointer_path": [
+        "stage3",
+        "status"
+      ],
+      "before_full": "pending_final_subset_configuration_and_violation_gold_lock",
+      "after_full": "locked",
+      "why_eligible": "S3.1-S3.3 data governance complete (7 BPMN byte-exact, matching/violation Gold 58/58 frozen, s32_s33_gold_annotation_freeze_v1.manifest.json); the contract notes the lock requires 'final subset configuration and violation Gold lock', which the frozen annotation provides"
+    },
+    {
+      "pointer": "/formal_gold_publication_gate/status",
+      "pointer_path": [
+        "formal_gold_publication_gate",
+        "status"
+      ],
+      "before_full": "blocked_pending_route_data_stage3_re_lock",
+      "after_full": "ready_for_formal_gold_publication",
+      "why_eligible": "Event 23 requires an exact match against allowed_publication_statuses; the flip is a user-authorized contract change recorded in the audit log"
+    },
+    {
+      "pointer": "/stage2_dataset/freeze_policy",
+      "pointer_path": [
+        "stage2_dataset",
+        "freeze_policy"
+      ],
+      "before_full": "The Sun modality development schema, 2,831-row analysis population, quarantine policy, and project-reconstructed split are locked by the S2.1-D machine gate. Do not write formal input or Gold: the independently reconstructed phrase Gold still requires human freeze, and the route, Stage 3, freeze/publication policy, and exact publication-status whitelist must each be re-locked separately.",
+      "after_full": "The Sun modality development schema, 2,831-row analysis population, quarantine policy, and project-reconstructed split are locked by the S2.1-D machine gate. The independently reconstructed phrase Gold is frozen (150/150 adjudicated, freeze_ready=True, restored 2026-08-06). The route (locked 2026-08-06), Stage 3 (locked 2026-08-08 by user authorization), the freeze/publication policy (re-locked 2026-08-08) and the exact publication-status whitelist are all satisfied. Formal Gold publication is authorized by the user; formal Oracle and final experiments remain gated by S1.7/S2.13 and the missing true Gold Rule/Process Records (see s37_oracle_readiness_v1.json). Prohibitions are unchanged: do not write formal input or Gold outside the authorized publication action; predictions, manifests and results remain no-overwrite; the modality dataset stays development-only with redistribution/publication forbidden.",
+      "why_eligible": "required_preconditions demand the freeze policy be re-evaluated and explicitly re-locked with no 'reopened_pending_*' status anywhere on the formal Gold publication path; governance content and prohibitions are preserved"
+    }
+  ],
+  "dry_run_gate_check": {
+    "before": {
+      "formal_gold_publication_ready": false,
+      "preconditions": {
+        "route.status==locked": true,
+        "stage2_dataset.status==locked_for_human_review": true,
+        "stage3.status==locked": false,
+        "freeze_policy re-locked (no reopened_pending_*)": true,
+        "publication gate exact whitelist match": false
+      }
+    },
+    "after": {
+      "formal_gold_publication_ready": true,
+      "preconditions": {
+        "route.status==locked": true,
+        "stage2_dataset.status==locked_for_human_review": true,
+        "stage3.status==locked": true,
+        "freeze_policy re-locked (no reopened_pending_*)": true,
+        "publication gate exact whitelist match": true
+      }
+    }
+  },
+  "expected_blocker_outcome": {
+    "removed": [
+      "formal_gold_publication_paused (publication gate enters whitelist)",
+      "stage3_benchmark_not_locked (stage3.status becomes locked)"
+    ],
+    "remaining": [
+      "final_experiment_not_ready",
+      "formal_methods_not_ready",
+      "formal_capsule_not_frozen"
+    ]
+  },
+  "formal_gold_publication_vs_method_correctness": {
+    "note": "formal Gold publication and method correctness are DIFFERENT gates: the Stage 3 data/Gold lock can be satisfied now, while the formal Oracle remains blocked by S1.7/S2.13 and the missing true Gold Rule/Process Records (s37_oracle_readiness_v1.json); publication does NOT imply method readiness"
+  },
+  "rollback": [
+    "git revert the contract change commit or restore the previous contract blob",
+    "re-run audit_project.py: the gate returns to the blocked state",
+    "no experiment artifacts are touched by the contract flip itself"
+  ],
+  "authorization_sentence": "I authorize the machine-contract change that sets /stage3/status to 'locked', replaces /stage2_dataset/freeze_policy with the re-locked policy (governance content preserved), and sets /formal_gold_publication_gate/status to 'ready_for_formal_gold_publication', thereby enabling formal Gold publication (dry-run packet formal_gold_authorization_packet_v2)."
+}
