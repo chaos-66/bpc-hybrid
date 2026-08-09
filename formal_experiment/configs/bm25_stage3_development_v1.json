@@ -1,0 +1,41 @@
+{
+  "schema_version": "bm25_stage3_development@1.0.0",
+  "config_version": "v1",
+  "task_id": "S3.6-A",
+  "claim": "Development-only BM25 lexical lower-bound Stage 3 baseline. Deterministic Okapi BM25 over process action labels; normalized scores in [0,1]; matching evaluated primarily by ranking AP/MAP; binary rule (score > tau) pre-registered, never tuned on the 58-item Gold. Not a semantic method; no pretrained embeddings.",
+  "arm": "bm25",
+  "method": {
+    "tokenizer": "lowercase alphanumeric tokens (no stopword removal: lexical lower bound)",
+    "bm25": {"k1": 1.5, "b": 0.75, "note": "Okapi BM25 defaults; fixed in config, not tuned"},
+    "normalization": "score / max_possible(query) so results lie in [0,1]",
+    "matching_formula": "matching_score = max(avg best rule-action BM25, avg best rule-actor BM25)",
+    "violation_semantics": "mapping mirrors Sun Definitions 5-7 structure but with BM25 similarity; mappings do NOT depend on gamma/theta, so gamma/theta sensitivity is a legitimate score-cutoff re-derivation",
+    "empty_semantics": "empty query/corpus -> score 0.0, no match, never silently compliant"
+  },
+  "thresholds": {
+    "tau": 0.5,
+    "gamma": 0.5,
+    "theta": 0.5,
+    "note": "pre-registered on the method's lexical semantics (overlap must exceed half the maximum possible score); fixed sweeps reported separately, primary values never selected from Gold"
+  },
+  "inputs": {
+    "inference_pack": "data/development/human_review/stage3_gold_inference_v1.json",
+    "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+    "stage1_structural_contract": "configs/stage1_structural_s11_s14.json",
+    "rule_record_adapter": "src/bpc_hybrid/sun_stage3/sun_rule_extraction.py (Gold-blind development adapter, shared with Sun)",
+    "note": "runner reads ONLY the inference pack; no decision/candidate/evidence fields"
+  },
+  "runner": {
+    "entry": "scripts/run_stage3_baselines.py --arm bm25",
+    "no_llm": true,
+    "no_network": true,
+    "no_env": true,
+    "gold_decisions_read": false,
+    "deterministic": true
+  },
+  "evaluator": {
+    "entry": "scripts/evaluate_stage3_common.py",
+    "gold_input": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+    "note": "same common evaluator and same 58 item IDs as Winter/Sun"
+  }
+}

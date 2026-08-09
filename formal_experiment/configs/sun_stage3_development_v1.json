@@ -16,7 +16,7 @@
       "gamma": 0.8,
       "gamma_source": "Sun 2024 Figure 8: violation-detection precision is highest at gamma=0.8 for most models",
       "theta": 0.8,
-      "theta_source": "pre-registered project default (paper does not report a numeric theta); fixed diagnostic sweep reported separately",
+      "theta_source": "pre-registered development setting: Sun 2024 Figure 9 reports that two of the four GDPR models reach their highest incorrect-actor precision at theta=0.8 and the other two at theta=0.7 (gamma fixed at 0.8); 0.8 is the project's fixed pre-registration, reported together with a theta sweep",
       "sweeps": {"tau": [0.2, 0.4, 0.6, 0.8, 0.9], "gamma": [0.2, 0.4, 0.6, 0.8, 0.9], "theta": [0.2, 0.4, 0.6, 0.8, 0.9]},
       "note": "sweeps are sensitivity reports only; primary thresholds are NOT selected from this project's data"
     },

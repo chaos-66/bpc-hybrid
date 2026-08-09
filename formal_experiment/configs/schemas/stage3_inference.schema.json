@@ -1,0 +1,43 @@
+{
+  "schema_version": "stage3_inference@1.0.0",
+  "description": "Gold-blind Stage 3 development inference pack shared by Winter (S3.4), Sun (S3.5) and the non-LLM baselines (S3.6). Contains ONLY the fields a runner needs: item_id/process_id/rule_id/rule_text and, for violation check points, an explicit check_type (missing_action | incorrect_actor | out_of_order). check_type is routing metadata of the frozen test point, NOT a Gold label. The pack never carries decision_*, candidate_*, evidence, or any human adjudication. It is generated deterministically from the frozen blank pack (sorted by item_id); shuffling the source order must not change the generated pack.",
+  "fields": {
+    "schema_version": {"type": "string", "const": "stage3_inference@1.0.0"},
+    "dataset_id": {"type": "string", "const": "stage3_gold_inference_v1"},
+    "matching_items": {
+      "type": "array",
+      "description": "25 rule-process relevance items; only inference fields",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["item_id", "process_id", "rule_id", "rule_text"],
+        "properties": {
+          "item_id": {"type": "string", "pattern": "^m[0-9]{3}$"},
+          "process_id": {"type": "string"},
+          "rule_id": {"type": "string"},
+          "rule_text": {"type": "string", "minLength": 20}
+        }
+      }
+    },
+    "violation_items": {
+      "type": "array",
+      "description": "33 violation check points; check_type is the routing metadata",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["item_id", "process_id", "rule_id", "rule_text", "check_type"],
+        "properties": {
+          "item_id": {"type": "string", "pattern": "^v[0-9]{3}$"},
+          "process_id": {"type": "string"},
+          "rule_id": {"type": "string"},
+          "rule_text": {"type": "string", "minLength": 20},
+          "check_type": {"enum": ["missing_action", "incorrect_actor", "out_of_order"]}
+        }
+      }
+    }
+  },
+  "required": ["schema_version", "dataset_id", "matching_items", "violation_items"],
+  "forbidden_fields": ["decision_relevant", "decision_violation_type", "decision_evidence",
+                       "candidate_relevant", "candidate_violation_type", "candidate_evidence",
+                       "candidate_location", "review_state"]
+}

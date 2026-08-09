@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-09
-**收录文件**：826 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：840 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -56,6 +56,7 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `configs/bm25_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/datasets/stage1_stage3_gdpr7_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/datasets/sun_modality_dataset.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_ai_review_gpt56sol_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -95,6 +96,7 @@
 | `configs/schemas/stage1_label_semantics.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage2_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_gold_annotation.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/stage3_inference.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_annotation_protocol_s15.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_evaluator_s16.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -103,6 +105,7 @@
 | `configs/stage2_evaluator_s210_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_corenlp_runtime.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/tfidf_svd_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/winter_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `data`
@@ -353,6 +356,7 @@
 | `data/development/human_review/stage1_gdpr7_process_records_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/stage3_gold_annotation_blank_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/stage3_gold_annotation_human_correction_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/stage3_gold_inference_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/metadata/exploratory_spacy_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/metadata/sun_llm_fallback_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/metadata/sun_rule_only_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
@@ -626,6 +630,7 @@
 | `scripts/audit_ingest_sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/audit_project.py` | 活动 | 离线项目完整性检查（兼容文件名） |
 | `scripts/audit_stage2_to_stage3.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/baseline_stage3_sensitivity.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg150_review_layers.py` | 活动 | Python 实现、脚本或测试 |
@@ -636,6 +641,7 @@
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage3_gold_inference.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/clean_estg150_german.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/coarse_gold_b0_condition_constraint_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -670,14 +676,17 @@
 | `scripts/run_llm_zh_aid.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_structural.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_stage3_baselines.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_fixture_harness.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_llm_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_rule_only.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/stage3_run_common.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/status.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/sun_selection_criteria_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/sun_stage3_sensitivity.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_estg_human_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_gold.py` | 活动 | Python 实现、脚本或测试 |
@@ -693,6 +702,7 @@
 | `scripts/verify_stage1_structural_s11_s14.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_sun_modality_zip.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/winter_stage3_sensitivity.py` | 活动 | Python 实现、脚本或测试 |
 
 ## `src`
 
@@ -751,6 +761,9 @@
 | `src/bpc_hybrid/stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_evaluation_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_sun_literal_overlap.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage3_baselines/baseline_stage3.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage3_baselines/bm25.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage3_baselines/tfidf_svd.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/clause_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/schema.py` | 活动 | Python 实现、脚本或测试 |
@@ -913,6 +926,7 @@
 | `tests/test_splitter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_sun_literal_overlap.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage3_contract_repair.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_gold_review_tool.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_compat.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_gate.py` | 活动 | Python 实现、脚本或测试 |

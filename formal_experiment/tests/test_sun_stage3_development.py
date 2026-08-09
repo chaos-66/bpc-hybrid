@@ -143,17 +143,18 @@ def test_def5_missing_action_empty_denominator() -> None:
 
 # ------------------------------------------------------------- Definition 6
 def test_def6_incorrect_actor_observable_match() -> None:
-    model = _simple_model(["Notify national authority"], actors=["Data Controller"])
+    # verb-only label so no business object enters the actor C set
+    model = _simple_model(["Review"], actors=["Data Controller"])
     scorer = _scorer(gamma=0.8, theta=0.8)
-    ia = scorer.incorrect_actor(["Notify national authority"], ["Data Controller"], model)
+    ia = scorer.incorrect_actor(["Review"], ["Data Controller"], model)
     assert ia["observable"] is True
     assert ia["score"] == 0.0  # rule actor matches the process actor
 
 
 def test_def6_incorrect_actor_unobservable_no_pool() -> None:
-    model = _simple_model(["Notify national authority"])  # no actors at all
+    model = _simple_model(["Review"])  # no actors at all
     scorer = _scorer(gamma=0.8, theta=0.8)
-    ia = scorer.incorrect_actor(["Notify national authority"], ["Data Controller"], model)
+    ia = scorer.incorrect_actor(["Review"], ["Data Controller"], model)
     assert ia["observable"] is False
     assert ia["score"] is None
 

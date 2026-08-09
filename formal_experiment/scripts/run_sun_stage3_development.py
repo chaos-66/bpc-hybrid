@@ -43,9 +43,10 @@ MEMBERSHIP_CONTRACT = ROOT / "configs" / "datasets" / "stage1_stage3_gdpr7_v1.js
 STAGE1_CONTRACT = ROOT / "configs" / "stage1_structural_s11_s14.json"
 BPMN_DIR = ROOT / "data" / "input" / "stage1_stage3" / "gdpr7"
 BLANK_PACK = ROOT / "data" / "development" / "human_review" / "stage3_gold_annotation_blank_v1.json"
+INFERENCE_PACK = ROOT / "data" / "development" / "human_review" / "stage3_gold_inference_v1.json"
 WINTER_FILES_DIR = ROOT.parent / "references" / "winter_2020_model_check" / "model_check" / "input" / "files"
 
-VIOLATION_TYPE_ORDER = ["missing_action", "incorrect_actor", "out_of_order"]
+# check_type comes from the explicit inference pack; no idx%3 / candidate routing
 
 
 def _sha256(path: Path) -> str:
@@ -84,37 +85,21 @@ def run_id_of(config: dict[str, Any]) -> str:
     return f"s35_sun_stage3_development_{config['config_version']}"
 
 
-def write_run(config: dict[str, Any], variant: str) -> Path:
-    run_dir = ROOT / "outputs" / "development" / f"s35_sun_stage3_development_{variant}"
-    if run_dir.exists():
-        raise RuntimeError(f"refusing to overwrite existing run dir: {run_dir}")
-    run_dir.mkdir(parents=True)
-
-    nlp = spacy.load("en_core_web_sm")
-    sim = WinterSimilarity(nlp)
-    signalwords = set((WINTER_FILES_DIR / "signalwords.txt").read_text(encoding="utf-8").splitlines())
-    blank = _load_json(BLANK_PACK, "blank pack")
-
-    # input binding check
-    membership = _load_json(MEMBERSHIP_CONTRACT, "membership contract")
-    frozen_ids = [item["input_id"] for item in membership["membership"]["files"]]
-    bpmn_ids = sorted(p.stem for p in BPMN_DIR.glob("*.bpmn"))
-    blank_ids = sorted({p["process_id"] for p in blank["processes"]})
-    if frozen_ids != bpmn_ids or frozen_ids != blank_ids:
-        raise RuntimeError("input binding mismatch: membership vs bpmn files vs blank pack")
-
-    tau = float(config["method"]["thresholds"]["tau"])
-    gamma = float(config["method"]["thresholds"]["gamma"])
-    theta = float(config["method"]["thresholds"]["theta"])
-    scorer = SunScorer(sim, tau, gamma, theta, nlp=nlp)
-    models = build_sun_models(BPMN_DIR, STAGE1_CONTRACT, nlp)
-
+def build_predictions(config: dict[str, Any], nlp, sim, signalwords: set[str],
+                      inference: dict[str, Any], models: dict[str, Any],
+                      scorer: SunScorer, tau: float, gamma: float,
+                      theta: float) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Gold-blind Sun predictions over the inference pack. Reusable by the
+    sensitivity script with different gamma/theta (mappings/denominators are
+    re-derived; matching scores are recomputed too since Def 4 depends on tau
+    only through the binary cutoff, but the score itself is tau-independent;
+    we keep matching fixed by caller convention)."""
     rule_cache: dict[str, dict[str, Any]] = {}
     predictions: list[dict[str, Any]] = []
     rule_records: list[dict[str, Any]] = []
 
     # ------------------------------------------------------------- matching
-    for item in sorted(blank["matching_items"], key=lambda i: i["item_id"]):
+    for item in sorted(inference["matching_items"], key=lambda i: i["item_id"]):
         process_id = item["process_id"]
         rule_id = item["rule_id"]
         record = rule_cache.get(rule_id)
@@ -147,10 +132,13 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
         })
 
     # ------------------------------------------------------------ violation
-    v_items = sorted(blank["violation_items"], key=lambda i: i["item_id"])
-    for idx, item in enumerate(v_items):
+    # check_type comes from the explicit inference pack (routing metadata of
+    # the frozen test point); no array-order / idx%3 / candidate-field logic
+    v_items = sorted(inference["violation_items"], key=lambda i: i["item_id"])
+    for item in v_items:
         process_id = item["process_id"]
         rule_id = item["rule_id"]
+        check_type = item["check_type"]
         record = rule_cache.get(rule_id)
         if record is None:
             record = extract_rule_record(rule_id, item["rule_text"], nlp, signalwords)
@@ -160,16 +148,13 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
         ma = scorer.missing_action(record["actions"], model)
         ia = scorer.incorrect_actor(record["actions"], record["actors"], model)
         oo = scorer.out_of_order(record["order_relations"], record["actions"], model)
-        # frozen blank-pack build order: within each (process, rule) group the
-        # three items are missing_action / incorrect_actor / out_of_order
-        item_type = VIOLATION_TYPE_ORDER[idx % 3]
         scores = {
             "missing_action": ma["score"],
             "incorrect_actor": ia["score"],
             "out_of_order": oo["score"],
         }
-        item_score = scores[item_type]
-        predicted = item_type if (item_score is not None and item_score > 0.0) else None
+        item_score = scores[check_type]
+        predicted = check_type if (item_score is not None and item_score > 0.0) else None
         predictions.append({
             "schema_version": "stage3_prediction@1.0.0",
             "method_id": "sun_2024",
@@ -190,7 +175,9 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
             "source_hashes": {"rule_record": rule_id, "process_record": process_id},
             "method_provenance": f"sun_2024 Def5-7 gamma={gamma} theta={theta}",
             "gold_visible": False,
+            "check_type": check_type,
             "incorrect_actor_observable": ia["observable"],
+            "incorrect_actor_reason": ia.get("reason"),
             # diagnostic detail (score components per type, not Gold-driven)
             "scores": {
                 "missing_action": round(ma["score"], 6),
@@ -199,9 +186,42 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
                 "missing_action_denominator": ma["denominator"],
                 "incorrect_actor_denominator": ia["denominator"],
                 "incorrect_actor_observable": ia["observable"],
+                "incorrect_actor_reason": ia.get("reason"),
                 "out_of_order_denominator": oo["denominator"],
             },
         })
+    return predictions, rule_records
+
+
+def write_run(config: dict[str, Any], variant: str) -> Path:
+    run_dir = ROOT / "outputs" / "development" / f"s35_sun_stage3_development_{variant}"
+    if run_dir.exists():
+        raise RuntimeError(f"refusing to overwrite existing run dir: {run_dir}")
+    run_dir.mkdir(parents=True)
+
+    nlp = spacy.load("en_core_web_sm")
+    sim = WinterSimilarity(nlp)
+    signalwords = set((WINTER_FILES_DIR / "signalwords.txt").read_text(encoding="utf-8").splitlines())
+    blank = _load_json(BLANK_PACK, "blank pack")
+    inference = _load_json(INFERENCE_PACK, "inference pack")
+
+    # input binding check
+    membership = _load_json(MEMBERSHIP_CONTRACT, "membership contract")
+    frozen_ids = [item["input_id"] for item in membership["membership"]["files"]]
+    bpmn_ids = sorted(p.stem for p in BPMN_DIR.glob("*.bpmn"))
+    blank_ids = sorted({p["process_id"] for p in blank["processes"]})
+    if frozen_ids != bpmn_ids or frozen_ids != blank_ids:
+        raise RuntimeError("input binding mismatch: membership vs bpmn files vs blank pack")
+
+    tau = float(config["method"]["thresholds"]["tau"])
+    gamma = float(config["method"]["thresholds"]["gamma"])
+    theta = float(config["method"]["thresholds"]["theta"])
+    scorer = SunScorer(sim, tau, gamma, theta, nlp=nlp)
+    models = build_sun_models(BPMN_DIR, STAGE1_CONTRACT, nlp)
+
+    predictions, rule_records = build_predictions(
+        config, nlp, sim, signalwords, inference, models, scorer, tau, gamma, theta
+    )
 
     # ------------------------------------------------------------- artifacts
     config_snapshot = {
@@ -251,14 +271,17 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
             "blank_pack": {"path": str(BLANK_PACK.relative_to(ROOT).as_posix()),
                            "sha256": _sha256(BLANK_PACK),
                            "note": "no decisions in the blank pack; runner is gold-blind"},
+            "inference_pack": {"path": str(INFERENCE_PACK.relative_to(ROOT).as_posix()),
+                               "sha256": _sha256(INFERENCE_PACK),
+                               "note": "gold-blind inference contract: item ids + rule_text + check_type only"},
             "signalwords": {"path": str((WINTER_FILES_DIR / "signalwords.txt").relative_to(ROOT.parent).as_posix()),
                             "sha256": _sha256(WINTER_FILES_DIR / "signalwords.txt"),
                             "self_contained": False},
         },
         "method": config["method"],
         "violation_item_type_contract": {
-            "rule": "frozen blank-pack build order: within each (process, rule) group the three items are missing_action / incorrect_actor / out_of_order",
-            "note": "runner never reads candidate_violation_type or any decision field",
+            "rule": "check_type read from the explicit gold-blind inference pack (stage3_inference@1.0.0); routing metadata of the frozen test point, not a Gold label",
+            "note": "runner never reads candidate_violation_type, array order, idx%3, or any decision field",
         },
         "samples": {
             "matching_candidates": sum(1 for p in predictions if p["task"] == "matching"),
@@ -343,19 +366,43 @@ def main() -> int:
     config = _load_json(CONFIG, "sun stage3 config")
     try:
         run_dir = write_run(config, args.variant)
+        # 1) common evaluator: evaluation.json + matching tau sweep +
+        #    error_analysis.md (the only component allowed to read Gold)
+        eval_script = ROOT / "scripts" / "evaluate_stage3_common.py"
+        result = subprocess.run(
+            [sys.executable, str(eval_script),
+             "--predictions", str(run_dir / "predictions.jsonl"),
+             "--run-dir", str(run_dir), "--sweep", "--error-analysis"],
+            cwd=ROOT, text=True, encoding="utf-8", errors="replace",
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+        )
+        if result.returncode != 0:
+            raise RuntimeError("common evaluator failed:\n" + result.stdout[-800:])
+        # 2) real gamma/theta sensitivity (scorer re-execution)
+        sens_script = ROOT / "scripts" / "sun_stage3_sensitivity.py"
+        result = subprocess.run(
+            [sys.executable, str(sens_script), "--run-dir", str(run_dir)],
+            cwd=ROOT, text=True, encoding="utf-8", errors="replace",
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+        )
+        if result.returncode != 0:
+            raise RuntimeError("sun sensitivity failed:\n" + result.stdout[-800:])
+        # 3) finalise: export_index.json + manifest artifacts/finalised
+        from stage3_run_common import finalise_run
+        finalise_run(run_dir, {
+            "config_snapshot": "config_snapshot.json",
+            "predictions": "predictions.jsonl",
+            "rule_records": "rule_records.jsonl",
+            "process_records_index": "process_records.jsonl",
+            "evaluation": "evaluation.json",
+            "threshold_sensitivity": "threshold_sensitivity.json",
+            "error_analysis": "error_analysis.md",
+        })
+        print(f"finalised run: {run_dir.relative_to(ROOT).as_posix()}")
+        return 0
     except RuntimeError as exc:
         print(f"sun stage3 run failed closed: {exc}", file=sys.stderr)
         return 2
-    print(f"run dir: {run_dir.relative_to(ROOT).as_posix()}")
-    eval_script = ROOT / "scripts" / "evaluate_stage3_common.py"
-    result = subprocess.run(
-        [sys.executable, str(eval_script), "--predictions", str(run_dir / "predictions.jsonl"),
-         "--run-dir", str(run_dir), "--sweep"],
-        cwd=ROOT, text=True, encoding="utf-8", errors="replace",
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-    )
-    print(result.stdout)
-    return result.returncode
 
 
 if __name__ == "__main__":

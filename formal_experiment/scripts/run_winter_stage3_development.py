@@ -51,6 +51,7 @@ CONFIG = ROOT / "configs" / "winter_stage3_development_v1.json"
 MEMBERSHIP_CONTRACT = ROOT / "configs" / "datasets" / "stage1_stage3_gdpr7_v1.json"
 BPMN_DIR = ROOT / "data" / "input" / "stage1_stage3" / "gdpr7"
 BLANK_PACK = ROOT / "data" / "development" / "human_review" / "stage3_gold_annotation_blank_v1.json"
+INFERENCE_PACK = ROOT / "data" / "development" / "human_review" / "stage3_gold_inference_v1.json"
 CORRECTION_PACK = ROOT / "data" / "development" / "human_review" / "stage3_gold_annotation_human_correction_v1.json"
 WINTER_FILES_DIR = ROOT.parent / "references" / "winter_2020_model_check" / "model_check" / "input" / "files"
 
@@ -99,10 +100,13 @@ def load_winter_lexicon() -> tuple[set[str], set[str], set[str]]:
 
 def build_predictions(config: dict[str, Any], nlp, sim: WinterSimilarity,
                       signalwords, sequencemarkers, stopwords,
-                      blank: dict[str, Any],
-                      reachability_mode: str = REACHABILITY_CORRECTED) -> list[dict[str, Any]]:
-    gamma = float(config["method"]["gamma"])
-    delta = float(config["method"]["delta"])
+                      blank: dict[str, Any], inference: dict[str, Any],
+                      reachability_mode: str = REACHABILITY_CORRECTED,
+                      gamma: float | None = None, delta: float | None = None) -> list[dict[str, Any]]:
+    if gamma is None:
+        gamma = float(config["method"]["gamma"])
+    if delta is None:
+        delta = float(config["method"]["delta"])
 
     # load the 7 frozen BPMN models the Winter way
     models: dict[str, Any] = {}
@@ -111,10 +115,10 @@ def build_predictions(config: dict[str, Any], nlp, sim: WinterSimilarity,
             bpmn, nlp, stopwords, reachability_mode=reachability_mode
         )
 
-    # candidate process-rule pairs from the frozen blank pack
+    # candidate process-rule pairs from the frozen inference pack
     rule_texts: dict[str, str] = {}
     pair_ids: dict[tuple[str, str], str] = {}   # (process, rule) -> first matching item_id
-    for item in blank["matching_items"]:
+    for item in inference["matching_items"]:
         rule_texts.setdefault(item["rule_id"], item["rule_text"])
         pair_ids.setdefault((item["process_id"], item["rule_id"]), item["item_id"])
 
@@ -127,7 +131,7 @@ def build_predictions(config: dict[str, Any], nlp, sim: WinterSimilarity,
     predictions: list[dict[str, Any]] = []
 
     # -------- matching predictions (25) ---------------------------------
-    for item in sorted(blank["matching_items"], key=lambda i: i["item_id"]):
+    for item in sorted(inference["matching_items"], key=lambda i: i["item_id"]):
         process_id = item["process_id"]
         rule_id = item["rule_id"]
         model = models[process_id]
@@ -167,9 +171,12 @@ def build_predictions(config: dict[str, Any], nlp, sim: WinterSimilarity,
         })
 
     # -------- violation predictions (33) --------------------------------
-    for item in sorted(blank["violation_items"], key=lambda i: i["item_id"]):
+    # check_type comes from the explicit inference pack (routing metadata of
+    # the frozen test point); no array-order / idx%3 / candidate-field logic
+    for item in sorted(inference["violation_items"], key=lambda i: i["item_id"]):
         process_id = item["process_id"]
         rule_id = item["rule_id"]
+        check_type = item["check_type"]
         model = models[process_id]
         paragraph = parse_regulation_paragraph(
             rule_id, rule_texts[rule_id], nlp, stopwords,
@@ -181,10 +188,9 @@ def build_predictions(config: dict[str, Any], nlp, sim: WinterSimilarity,
             "incorrect_actor": pair.cost_resource,
             "out_of_order": pair.cost_so,
         }
-        candidate_type = item["candidate_violation_type"]
-        # each violation item targets exactly one type; predict that type when
-        # the corresponding Winter cost is > 0, otherwise none (compliant)
-        predicted = candidate_type if costs[candidate_type] > 0.0 else None
+        # each violation item targets exactly one type (check_type); predict
+        # that type when the corresponding Winter cost is > 0, else none
+        predicted = check_type if costs[check_type] > 0.0 else None
         predictions.append({
             "schema_version": "stage3_prediction@1.0.0",
             "method_id": "winter_2020",
@@ -205,8 +211,9 @@ def build_predictions(config: dict[str, Any], nlp, sim: WinterSimilarity,
             "source_hashes": {"rule_record": None, "process_record": None},
             "method_provenance": f"winter_2020 gamma={gamma} delta={delta} reachability={reachability_mode}",
             "gold_visible": False,
+            "check_type": check_type,
             # legacy fields kept for backward compatibility with the v1 run
-            "candidate_violation_type": candidate_type,
+            "candidate_violation_type": check_type,
             "cost_obligation": round(pair.cost_obligation, 6),
             "cost_resource": round(pair.cost_resource, 6),
             "cost_so": round(pair.cost_so, 6),
@@ -226,6 +233,7 @@ def write_run(config: dict[str, Any], variant: str,
     sim = WinterSimilarity(nlp)
     signalwords, sequencemarkers, stopwords = load_winter_lexicon()
     blank = _load_json(BLANK_PACK, "blank pack")
+    inference = _load_json(INFERENCE_PACK, "inference pack")
 
     # input binding check: membership contract process ids == bpmn files == blank pack
     membership = _load_json(MEMBERSHIP_CONTRACT, "membership contract")
@@ -239,7 +247,7 @@ def write_run(config: dict[str, Any], variant: str,
 
     predictions = build_predictions(
         config, nlp, sim, signalwords, sequencemarkers, stopwords, blank,
-        reachability_mode=reachability_mode,
+        inference, reachability_mode=reachability_mode,
     )
 
     # -------- write artifacts -------------------------------------------
@@ -280,6 +288,11 @@ def write_run(config: dict[str, Any], variant: str,
                 "path": str(BLANK_PACK.relative_to(ROOT).as_posix()),
                 "sha256": _sha256(BLANK_PACK),
                 "note": "no decisions in the blank pack; runner is gold-blind",
+            },
+            "inference_pack": {
+                "path": str(INFERENCE_PACK.relative_to(ROOT).as_posix()),
+                "sha256": _sha256(INFERENCE_PACK),
+                "note": "gold-blind inference contract: item ids + rule_text + check_type only",
             },
             "winter_lexicon": {
                 "dir": str(WINTER_FILES_DIR.relative_to(ROOT.parent).as_posix()),
@@ -386,9 +399,7 @@ def main() -> int:
         print(f"winter stage3 run failed closed: {exc}", file=sys.stderr)
         return 2
     print(f"run dir: {run_dir.relative_to(ROOT).as_posix()}")
-    # common evaluator (gold read allowed there), with threshold sweep and
-    # error analysis; the legacy evaluate_winter_stage3_development.py remains
-    # for the v1 run's provenance and its focused tests
+    # 1) common evaluator (evaluation.json + matching tau sweep + error analysis)
     eval_script = ROOT / "scripts" / "evaluate_stage3_common.py"
     result = subprocess.run(
         [sys.executable, str(eval_script),
@@ -397,8 +408,34 @@ def main() -> int:
         cwd=ROOT, text=True, encoding="utf-8", errors="replace",
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
     )
-    print(result.stdout)
-    return result.returncode
+    if result.returncode != 0:
+        print(f"winter stage3 evaluation failed closed: {result.stdout[-600:]}", file=sys.stderr)
+        return 2
+    # 2) real gamma sensitivity (WinterPair re-execution)
+    sens_script = ROOT / "scripts" / "winter_stage3_sensitivity.py"
+    result = subprocess.run(
+        [sys.executable, str(sens_script), "--run-dir", str(run_dir)],
+        cwd=ROOT, text=True, encoding="utf-8", errors="replace",
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+    )
+    if result.returncode != 0:
+        print(f"winter sensitivity failed closed: {result.stdout[-600:]}", file=sys.stderr)
+        return 2
+    # 3) finalise: export_index.json + manifest artifacts/finalised
+    from stage3_run_common import finalise_run
+    try:
+        finalise_run(run_dir, {
+            "config_snapshot": "config_snapshot.json",
+            "predictions": "predictions.jsonl",
+            "evaluation": "evaluation.json",
+            "threshold_sensitivity": "threshold_sensitivity.json",
+            "error_analysis": "error_analysis.md",
+        })
+    except RuntimeError as exc:
+        print(f"winter finalise failed closed: {exc}", file=sys.stderr)
+        return 2
+    print(f"finalised run: {run_dir.relative_to(ROOT).as_posix()}")
+    return 0
 
 
 if __name__ == "__main__":

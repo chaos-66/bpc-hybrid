@@ -129,7 +129,33 @@ class SunScorer:
                         model: Any) -> dict[str, Any]:
         """actor violation = |{r in R | exists r' in C, sim(r,r')<theta}| / |R|
         with R = rule actors whose action matched a process action (sim>gamma),
-        C = process actors/business objects performing that action."""
+        C = process actors/business objects performing that action.
+
+        Paper semantics (Definition 6): a rule actor r is violated if there
+        EXISTS a process actor r' in C with sim(r,r') < theta. We implement
+        min(sim over C) < theta, which is mathematically equivalent to the
+        existential quantifier. Observability reasons are distinguished:
+        - empty_rule_actor_denominator: rule text yields no actors;
+        - no_actor_labels: BPMN has no pool/lane names at all;
+        - action_mapping_below_gamma: actors exist but no action mapping
+          exceeds gamma (R empty);
+        - no_matching_process_actor: R non-empty but C empty (no process
+          actor/business object similar above gamma to any rule actor);
+        - observable: the check ran with a non-empty denominator."""
+        if not rule_actors:
+            return {
+                "score": None, "denominator": 0, "observable": False,
+                "reason": "empty_rule_actor_denominator",
+                "note": "rule text yields no actor; denominator 0 (N/A)",
+                "details": [],
+            }
+        if not model.actors and not model.business_objects:
+            return {
+                "score": None, "denominator": 0, "observable": False,
+                "reason": "no_actor_labels",
+                "note": "BPMN has no observable pool/lane names or business objects; reported as unobservable",
+                "details": [],
+            }
         # R: rule actors assigned to a matched activity
         r_set = []
         matched_actions: dict[str, str] = {}  # rule actor -> matched process action
@@ -164,50 +190,46 @@ class SunScorer:
                 matched_actions[ra] = best_action or ""
         if not r_set:
             return {
-                "score": 0.0,
-                "denominator": 0,
-                "observable": False,
-                "note": "no rule actor matched a process action above gamma; denominator 0 (N/A)",
-                "details": [],
+                "score": 0.0, "denominator": 0, "observable": False,
+                "reason": "action_mapping_below_gamma",
+                "note": "rule actors exist and the BPMN has labels, but no action mapping exceeds gamma; denominator 0 (N/A)",
+                "details": [{"rule_actor": ra, "observable": False} for ra in rule_actors],
             }
-        # C: process actors/business objects
-        c_set = []
-        for actor in model.actors:
-            for ra in r_set:
-                if self.sim.text_pair(self._lemma(ra), self._lemma(actor)) > self.gamma:
-                    c_set.append(actor)
-                    break
-        for bo in model.business_objects:
-            for ra in r_set:
-                if self.sim.text_pair(self._lemma(ra), self._lemma(bo["object"])) > self.gamma:
-                    c_set.append(bo["object"])
-                    break
-        violations = 0
-        details = []
+        # C: Definition 6's C = process actors/business objects performing the
+        # matched action. The development adapter cannot resolve activity ->
+        # lane/pool ownership (lane names are empty in the frozen GDPR7 files),
+        # so C is approximated by the process-level actor set (pool + non-empty
+        # lane names) plus business objects; disclosed as a development
+        # approximation in the config.
+        c_set = list(model.actors)
+        c_set.extend(bo["object"] for bo in model.business_objects)
         if not c_set:
-            # Definition 6 needs a process actor/object set to compare
-            # against; without any observable process actor the check is
-            # unobservable, never silently counted as compliant or violated
+            # no observable process actor at all (handled earlier, defensive)
             return {
                 "score": None,
                 "denominator": len(r_set),
                 "observable": False,
-                "note": "rule actors matched a process action but no process actor/business-object is observable (empty pool/lane names); reported as unobservable",
+                "reason": "no_matching_process_actor",
+                "note": "rule actors matched a process action but no process actor/business-object is observable; reported as unobservable",
                 "details": [{"rule_actor": ra, "observable": False} for ra in r_set],
             }
+        violations = 0
+        details = []
         for ra in r_set:
-            worst = 1.0
+            min_sim = 1.0
             for c in c_set:
                 score = self.sim.text_pair(self._lemma(ra), self._lemma(c))
-                if score < worst:
-                    worst = score
-            violated = worst < self.theta
+                if score < min_sim:
+                    min_sim = score
+            # Definition 6: violated iff there EXISTS r' in C with sim < theta
+            # (min over C < theta is the equivalent formulation)
+            violated = min_sim < self.theta
             if violated:
                 violations += 1
             details.append({
                 "rule_actor": ra,
-                "closest_process_actor_similarity": round(worst, 4),
-                "violated": violated,
+                "min_process_actor_similarity": round(min_sim, 4),
+                "exists_low_similarity": violated,
                 "process_actor_set": c_set,
             })
         score = (violations / len(r_set)) if r_set else 0.0

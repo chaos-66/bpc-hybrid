@@ -114,45 +114,111 @@ def evaluate_matching(preds: list[dict[str, Any]],
     return result
 
 
+def _check_type_of(p: dict[str, Any]) -> str | None:
+    """Routing metadata: explicit check_type, with fallback for legacy
+    predictions (candidate_violation_type mirrors the same frozen test-point
+    definition in the v1 runs)."""
+    ct = p.get("check_type")
+    if ct in TYPES:
+        return ct
+    legacy = p.get("candidate_violation_type")
+    if legacy in TYPES:
+        return legacy
+    return None
+
+
 def evaluate_violation(preds: list[dict[str, Any]],
                        gold: dict[str, Any]) -> dict[str, Any]:
+    """Per-check-type evaluation. Observability policy (documented, fixed):
+
+    - unobservable applies ONLY to incorrect_actor check points (actor
+      observability); missing_action and out_of_order are never marked
+      unobservable by the actor branch;
+    - unobservable items keep predicted=None and therefore count as FN in
+      the primary (conservative) macro/micro/exact-accuracy denominators;
+    - an observable-only diagnostic subset (P/R/F1 over items with a
+      non-empty denominator) is reported separately and is NOT the primary
+      metric.
+    """
     per_type: dict[str, dict[str, int]] = {t: {"tp": 0, "fp": 0, "fn": 0} for t in TYPES}
-    unobservable = 0
+    per_type_obs: dict[str, dict[str, int]] = {t: {"tp": 0, "fp": 0, "fn": 0} for t in TYPES}
+    unobservable_by_reason: dict[str, int] = {}
     detected = missed = wrong_type = 0
-    denominator_detail: dict[str, Any] = {}
+    none_gold = 0
     for p in preds:
+        ct = _check_type_of(p)
         g = gold[p["item_id"]]["decision_violation_type"]
         pred = p.get("predicted_violation_type")
-        if p.get("incorrect_actor_observable") is False:
-            unobservable += 1
+        if g is None:
+            none_gold += 1
+        is_unobservable = (
+            ct == "incorrect_actor"
+            and p.get("incorrect_actor_observable") is False
+        )
+        if is_unobservable:
+            reason = p.get("incorrect_actor_reason") or "unspecified"
+            unobservable_by_reason[reason] = unobservable_by_reason.get(reason, 0) + 1
         if pred == g:
             detected += 1
             per_type[g]["tp"] += 1
+            if not is_unobservable:
+                per_type_obs[g]["tp"] += 1
         elif g is None:
             per_type["none"] = per_type.get("none", {"tp": 0, "fp": 0, "fn": 0})
             per_type["none"]["fp"] += 1
+            if not is_unobservable:
+                per_type_obs["none"] = per_type_obs.get("none", {"tp": 0, "fp": 0, "fn": 0})
+                per_type_obs["none"]["fp"] += 1
         else:
             missed += 1
             per_type[g]["fn"] += 1
+            if not is_unobservable:
+                per_type_obs[g]["fn"] += 1
             if pred is not None:
                 wrong_type += 1
                 per_type[pred] = per_type.get(pred, {"tp": 0, "fp": 0, "fn": 0})
                 per_type[pred]["fp"] += 1
-    per_type_results = {}
+                if not is_unobservable:
+                    per_type_obs[pred] = per_type_obs.get(pred, {"tp": 0, "fp": 0, "fn": 0})
+                    per_type_obs[pred]["fp"] += 1
+    per_type_results: dict[str, Any] = {}
+    per_type_obs_results: dict[str, Any] = {}
     for t in TYPES:
         per_type_results[t] = {
             "support": per_type[t]["tp"] + per_type[t]["fn"],
             **_p_r_f1(per_type[t]["tp"], per_type[t]["fp"], per_type[t]["fn"]),
         }
+        per_type_obs_results[t] = {
+            "support": per_type_obs[t]["tp"] + per_type_obs[t]["fn"],
+            **_p_r_f1(per_type_obs[t]["tp"], per_type_obs[t]["fp"], per_type_obs[t]["fn"]),
+        }
     total_tp = sum(per_type[t]["tp"] for t in TYPES)
     total_fp = sum(per_type[t]["fp"] for t in TYPES)
     total_fn = sum(per_type[t]["fn"] for t in TYPES)
     micro = _p_r_f1(total_tp, total_fp, total_fn)
+    obs_tp = sum(per_type_obs[t]["tp"] for t in TYPES)
+    obs_fp = sum(per_type_obs[t]["fp"] for t in TYPES)
+    obs_fn = sum(per_type_obs[t]["fn"] for t in TYPES)
+    micro_obs = _p_r_f1(obs_tp, obs_fp, obs_fn)
+    per_type_support = {t: per_type[t]["tp"] + per_type[t]["fn"] for t in TYPES}
+    per_type_observable = {t: per_type_obs[t]["tp"] + per_type_obs[t]["fn"] for t in TYPES}
+    total_unobservable = sum(unobservable_by_reason.values())
     denominator_detail = {
         "total_items": len(preds),
-        "per_type_support": {t: per_type[t]["tp"] + per_type[t]["fn"] for t in TYPES},
-        "unobservable": unobservable,
-        "none_gold_items": sum(1 for p in preds if gold[p["item_id"]]["decision_violation_type"] is None),
+        "per_type_support": per_type_support,
+        "per_type_observable": per_type_observable,
+        "per_type_unobservable": {
+            t: per_type_support[t] - per_type_observable[t] for t in TYPES
+        },
+        "unobservable_total": total_unobservable,
+        "unobservable_by_reason": unobservable_by_reason,
+        "none_gold_items": none_gold,
+        "observability_policy": (
+            "unobservable applies only to incorrect_actor check points; unobservable "
+            "items count as FN in the primary macro/micro/exact denominators; an "
+            "observable-only diagnostic subset is reported separately and is not the "
+            "primary metric"
+        ),
         "compliant_specificity_note": (
             "N/A: the frozen violation pack contains no compliant (none) gold "
             "items, so specificity / compliant accuracy has no denominator"
@@ -161,13 +227,17 @@ def evaluate_violation(preds: list[dict[str, Any]],
     return {
         "support": len(preds),
         "per_type": per_type_results,
+        "observable_only_per_type": per_type_obs_results,
         "macro_f1": round(statistics.mean([v["f1"] for v in per_type_results.values()]), 4),
         "micro_f1": micro["f1"],
+        "observable_only_macro_f1": round(
+            statistics.mean([v["f1"] for v in per_type_obs_results.values()]), 4),
+        "observable_only_micro_f1": micro_obs["f1"],
         "exact_type_accuracy": round(detected / len(preds), 4) if preds else 0.0,
         "detected": detected,
         "missed": missed,
         "wrong_type": wrong_type,
-        "unobservable": unobservable,
+        "unobservable": total_unobservable,
         "denominator": denominator_detail,
     }
 
@@ -188,11 +258,22 @@ def evaluate(predictions: list[dict[str, Any]],
 
 def threshold_sensitivity(predictions: list[dict[str, Any]],
                           correction: dict[str, Any]) -> dict[str, Any]:
-    """Pure re-scoring: same scores, different tau/gamma/theta. Uses only the
-    score fields, never Gold, to re-derive binary decisions."""
+    """Matching tau sensitivity: tau is a score cutoff over the FIXED matching
+    scores, so it can be re-derived without re-running the scorer.
+
+    Violation gamma/theta sensitivity is NOT computed here: those parameters
+    change the action mapping, the sets and the denominators, so they must be
+    re-executed through the method-specific scorer (scripts/sun_stage3_sensitivity.py,
+    scripts/winter_stage3_sensitivity.py) with cached Rule/Process Records.
+    Re-comparing the fixed missing_action_score/out_of_order_score against a
+    fake gamma would NOT be a real gamma sweep and is therefore not produced.
+    """
     gold_m = {i["item_id"]: i for i in correction["matching_items"]}
-    gold_v = {i["item_id"]: i for i in correction["violation_items"]}
-    result: dict[str, Any] = {"note": "fixed diagnostic sweep; primary thresholds are NOT chosen from this data"}
+    result: dict[str, Any] = {
+        "note": "matching tau is a score cutoff re-derived from fixed scores; "
+                "violation gamma/theta sweeps are re-executed by the method-specific "
+                "sensitivity scripts (they change mappings/denominators)",
+    }
     # matching tau sweep: binary rule = matching_score > tau
     m_rows = []
     for tau in MATCHING_SWEEP_TAUS:
@@ -211,46 +292,6 @@ def threshold_sensitivity(predictions: list[dict[str, Any]],
         m_rows.append({"tau": tau, "confusion": {"tp": tp, "fp": fp, "fn": fn, "tn": tn},
                        **_p_r_f1(tp, fp, fn)})
     result["matching_tau_sweep"] = m_rows
-    # violation gamma sweep: missing_action = missing_action_score > gamma;
-    # out_of_order = out_of_order_score > gamma
-    v_rows = []
-    for gamma in VIOLATION_SWEEP_GAMMAS:
-        row: dict[str, Any] = {"gamma": gamma}
-        for vtype, score_key in (("missing_action", "missing_action_score"),
-                                 ("out_of_order", "out_of_order_score")):
-            tp = fp = fn = 0
-            for p in [q for q in predictions if q["task"] == "violation"
-                      and q.get("candidate_violation_type") == vtype]:
-                g = gold_v[p["item_id"]]["decision_violation_type"]
-                pred = (p.get(score_key) or 0.0) > gamma
-                if pred and g == vtype:
-                    tp += 1
-                elif pred and g != vtype:
-                    fp += 1
-                elif not pred and g == vtype:
-                    fn += 1
-            row[vtype] = _p_r_f1(tp, fp, fn)
-        v_rows.append(row)
-    result["violation_gamma_sweep"] = v_rows
-    # incorrect-actor theta sweep: actor_score > theta (only where observable)
-    a_rows = []
-    for theta in ACTOR_SWEEP_THETAS:
-        tp = fp = fn = 0
-        for p in [q for q in predictions if q["task"] == "violation"
-                  and q.get("candidate_violation_type") == "incorrect_actor"]:
-            score = p.get("incorrect_actor_score")
-            if score is None:
-                continue  # unobservable stays out of the sweep denominator
-            g = gold_v[p["item_id"]]["decision_violation_type"]
-            pred = score > theta
-            if pred and g == "incorrect_actor":
-                tp += 1
-            elif pred and g != "incorrect_actor":
-                fp += 1
-            elif not pred and g == "incorrect_actor":
-                fn += 1
-        a_rows.append({"theta": theta, **_p_r_f1(tp, fp, fn)})
-    result["incorrect_actor_theta_sweep"] = a_rows
     return result
 
 

@@ -2999,3 +2999,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：从干净 checkpoint 运行：Winter corrected clean replay（v2_clean）、Winter prototype_literal 敏感性、Sun v1（58 条全运行，0 排除）；公共 stage3_prediction schema + 公共 evaluator（AP/MAP、binary、逐类 violation、unobservable、denominator、threshold sweep 纯重算、error analysis）；Winter manifest 1.1.0（implementation hashes/export index/external prerequisites/bpmn 聚合 hash）；prototype_literal 与 corrected 的 out_of_order 分数无差异（bug 分支未被数据触发，已记录）；DEV_ONLY：Winter MAP 0.6429/binary F1 0.6111/violation macro 0.373；Sun MAP 0.8175/binary F1 0.0（tau=0.8 无正预测如实报告）/violation macro 0.333（missing_action F1 1.0 为全 positive 预测假象、incorrect_actor 全 unobservable（action 匹配不过 gamma）、out_of_order denominator 0——误差分析披露）；comparison_with_winter_dev.json 同口径描述比较（不宣称优劣）；MASTER_PIPELINE 3.6.5 + S3.4/S3.5 行、PROJECT_AUDIT、CLAIM_EVIDENCE（C20/C22）同步；FILE_CATALOG 重建；全量 1586 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-09T11:55:26.068120+00:00 - S3.4/S3.5 contract & evaluator repair + S3.6 baseline implementation and tests (checkpoint 1 of 2): gold-blind inference pack, check_type routing, unobservable accounting, Def 6 semantics, real sensitivity re-execution, BM25 + TF-IDF/SVD arms
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1601 passed, 24 skipped, 19 warnings in 197.63s (0:03:17)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`1c6c12778c2eb8f53a83942ea1b5d54f210796ad`；相关未提交路径：21 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：修复与新增：(1) Gold-blind inference pack（stage3_inference@1.0.0 + 生成器 build_stage3_gold_inference.py，仅 item_id/process_id/rule_id/rule_text/check_type，无 decision/candidate/evidence 字段，按 item_id 排序打乱不变）；Winter/Sun runner 移除 idx%3 与 candidate_violation_type 路由，改读显式 check_type；(2) 公共 evaluator 修复：unobservable 只按 check_type=incorrect_actor 统计并区分 4 类原因（empty_rule_actor_denominator/no_actor_labels/action_mapping_below_gamma/no_matching_process_actor），主口径=unobservable 计入分母（FN）+ observable-only 诊断子集；threshold_sensitivity 移除 score 重算冒充 gamma sweep；(3) Sun Def 6 按论文存在性语义实现（min<theta 等价 exists），C 集合按论文含 bs_obj 近似为 process 级 actor+bs_obj（披露），字段改名 min_process_actor_similarity，theta 证据修正为 Figure 9（两模型 0.8/两模型 0.7，0.8 为预注册 development 设置）；(4) sensitivity 真实重算：sun_stage3_sensitivity.py/winter_stage3_sensitivity.py 重跑 scorer（gamma/theta 改变映射与分母，fixture 证明）；(5) 运行收口：stage3_run_common.finalise_run（export_index.json + manifest finalise + 缺 artifact fail closed）；(6) S3.6 双 arm：BM25（Okapi 归一化 [0,1]）+ TF-IDF/SVD（word+char n-gram、固定 seed/dim、numpy 自实现）共享 BaselineScorer（Def 4-7 结构 + check_type 路由），config 双文件，唯一入口 run_stage3_baselines.py --arm；15 项契约修复测试 + 2 项旧测试适配；全量 1601 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
