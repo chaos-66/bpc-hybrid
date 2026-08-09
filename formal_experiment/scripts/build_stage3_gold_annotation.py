@@ -66,6 +66,21 @@ RULE_REF = {
     "article34": "Article 34 - Communication of a personal data breach to the data subject",
 }
 
+
+def _load_rule_text(rule_id: str) -> str:
+    """Load the full regulation text for a rule from the read-only Winter
+    regulation directory. Strips BOM and surrounding whitespace; collapses
+    blank runs so the embedded text is compact but faithful."""
+    path = REGULATION_DIR / f"{rule_id}.txt"
+    try:
+        text = path.read_text(encoding="utf-8-sig")
+    except (OSError, UnicodeDecodeError) as exc:
+        raise Stage1FormalDatasetError(f"cannot read regulation text {rule_id}: {path}") from exc
+    text = "\n".join(line.strip() for line in text.splitlines() if line.strip())
+    if len(text) < 20:
+        raise Stage1FormalDatasetError(f"regulation text too short for {rule_id}: {path}")
+    return text
+
 # Candidate rule-process relevance map (GDPR domain knowledge; candidates
 # only, human-adjudicated). ``relevant`` rules are the primary obligations
 # each BPMN process is expected to implement; ``negative`` rules are used to
@@ -240,11 +255,14 @@ def build_blank_pack() -> dict[str, Any]:
     violation_items = []
     m_seq = 0
     v_seq = 0
+    rule_text_cache: dict[str, str] = {}
     for process_id in process_ids:
         activities = {pid: _activity_names(pid, records) for pid in process_ids}[process_id]
         candidates = CANDIDATE_MATCHING[process_id]
         # matching: relevant pairs first, then negative pairs (fixed order)
         for rule_id in candidates["relevant"] + candidates["negative"]:
+            if rule_id not in rule_text_cache:
+                rule_text_cache[rule_id] = _load_rule_text(rule_id)
             is_relevant = rule_id in candidates["relevant"]
             m_seq += 1
             evidence_activity = None
@@ -260,6 +278,7 @@ def build_blank_pack() -> dict[str, Any]:
                     "process_id": process_id,
                     "rule_id": rule_id,
                     "rule_ref": RULE_REF[rule_id],
+                    "rule_text": rule_text_cache[rule_id],
                     "candidate_relevant": is_relevant,
                     "evidence_activity": evidence_activity,
                     "review_state": "unreviewed",
@@ -268,6 +287,8 @@ def build_blank_pack() -> dict[str, Any]:
             )
         # violation: one candidate of each type per relevant rule
         for rule_id in candidates["relevant"]:
+            if rule_id not in rule_text_cache:
+                rule_text_cache[rule_id] = _load_rule_text(rule_id)
             for viol in CANDIDATE_VIOLATIONS[process_id].get(rule_id, []):
                 v_seq += 1
                 violation_items.append(
@@ -275,6 +296,7 @@ def build_blank_pack() -> dict[str, Any]:
                         "item_id": f"v{v_seq:03d}",
                         "process_id": process_id,
                         "rule_id": rule_id,
+                        "rule_text": rule_text_cache[rule_id],
                         "candidate_violation_type": viol["type"],
                         "candidate_evidence": viol["evidence"],
                         "candidate_location": viol["location"],

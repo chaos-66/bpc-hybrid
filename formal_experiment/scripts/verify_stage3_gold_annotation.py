@@ -99,6 +99,8 @@ def verify_pack(pack: dict[str, Any]) -> dict[str, Any]:
         rule_id = item.get("rule_id")
         if not rule_id or not RULE_ID_PATTERN.match(rule_id):
             errors.append(f"matching item {item_id}: illegal rule_id {rule_id}")
+        if not item.get("rule_text") or len(str(item.get("rule_text"))) < 20:
+            errors.append(f"matching item {item_id}: rule_text missing or too short")
         if item.get("candidate_relevant") not in (True, False):
             errors.append(f"matching item {item_id}: candidate_relevant must be bool")
         if item.get("review_state") not in REVIEW_STATES:
@@ -119,6 +121,8 @@ def verify_pack(pack: dict[str, Any]) -> dict[str, Any]:
         rule_id = item.get("rule_id")
         if not rule_id or not RULE_ID_PATTERN.match(rule_id):
             errors.append(f"violation item {item_id}: illegal rule_id {rule_id}")
+        if not item.get("rule_text") or len(str(item.get("rule_text"))) < 20:
+            errors.append(f"violation item {item_id}: rule_text missing or too short")
         if item.get("candidate_violation_type") not in VIOLATION_TYPES:
             errors.append(f"violation item {item_id}: illegal candidate_violation_type")
         if not item.get("candidate_evidence"):
