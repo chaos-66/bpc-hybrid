@@ -2986,3 +2986,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：第一 checkpoint（代码与合同）：(1) 公共 Stage 3 prediction contract configs/schemas/stage3_prediction.schema.json（method_id/run_id/task/item_id/matching_score/predicted_relevance/三类 violation score/predicted_violation_type/evidence/threshold/source_hashes/provenance/gold_visible=false）；(2) 公共 evaluator scripts/evaluate_stage3_common.py（per-process AP/MAP、binary P/R/F1、三类 violation 逐类+macro/micro、exact type acc、unobservable、denominator、threshold sweep 纯重算）；(3) Winter reachability 双模式（corrected_reachability 主版本 / prototype_literal 敏感性）入 winter_model + runner 参数化 + manifest 1.1.0（implementation hashes/export index/external prerequisites/bpmn 聚合 hash）；(4) Sun Stage 3 方法级独立重建代码 src/bpc_hybrid/sun_stage3/（sun_model 复用 canonical Process Record、sun_rule_extraction Gold-blind development adapter（spaCy+signalwords，标注与完整 Rules-Only 差异）、sun_scorer 实现 Def 4-7（matching=max(action 比例,actor/object 比例)；missing=Def5；actor=Def6 含 unobservable 语义；order=Def7 可达性））+ config sun_stage3_development_v1.json（tau/gamma/theta=0.8 预注册 + 固定 sweep）+ runner un_sun_stage3_development.py；新增 20 项 Sun 测试 + Winter 测试适配；全量 1586 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-09T10:58:36.050113+00:00 - S3.4 portable replay closure + S3.5 Sun Stage 3 development closed loop (checkpoint 2): three runs from clean commits, common evaluator, threshold sensitivity, Winter-Sun comparison
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1586 passed, 24 skipped, 18 warnings in 198.38s (0:03:18)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`4d3c25bb036d883dcc2a7ad755539f114aa117d0`；相关未提交路径：4 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：从干净 checkpoint 运行：Winter corrected clean replay（v2_clean）、Winter prototype_literal 敏感性、Sun v1（58 条全运行，0 排除）；公共 stage3_prediction schema + 公共 evaluator（AP/MAP、binary、逐类 violation、unobservable、denominator、threshold sweep 纯重算、error analysis）；Winter manifest 1.1.0（implementation hashes/export index/external prerequisites/bpmn 聚合 hash）；prototype_literal 与 corrected 的 out_of_order 分数无差异（bug 分支未被数据触发，已记录）；DEV_ONLY：Winter MAP 0.6429/binary F1 0.6111/violation macro 0.373；Sun MAP 0.8175/binary F1 0.0（tau=0.8 无正预测如实报告）/violation macro 0.333（missing_action F1 1.0 为全 positive 预测假象、incorrect_actor 全 unobservable（action 匹配不过 gamma）、out_of_order denominator 0——误差分析披露）；comparison_with_winter_dev.json 同口径描述比较（不宣称优劣）；MASTER_PIPELINE 3.6.5 + S3.4/S3.5 行、PROJECT_AUDIT、CLAIM_EVIDENCE（C20/C22）同步；FILE_CATALOG 重建；全量 1586 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-09
-**收录文件**：825 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：826 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -644,6 +644,7 @@
 | `scripts/coarse_gold_marker_converged_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/combine_h1_pilot_runs.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compare_h1_fallback_paths.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/compare_winter_sun_stage3_dev.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compute_estg_membership_hashes.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/dry_run_llm_estimate.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/estg150_review_tool.py` | 活动 | Python 实现、脚本或测试 |
