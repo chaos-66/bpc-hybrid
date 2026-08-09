@@ -2973,3 +2973,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：Winter 2020 原型语义转写（只读 references/winter_2020_model_check/model_check/lib，独立重写不 import）：BPMN 义务任务解析+可达性（含 is_reachable_from 恒真 bug 修正并披露）、条款 constraint/obligation/flow 解析、Pair fitness/cost_obligation/cost_resource/cost_so（gamma 0.4/delta 0.8/权重 1/3，入 versioned config）；唯一入口 scripts/run_winter_stage3_development.py + 评价器 scripts/evaluate_winter_stage3_development.py；58 条冻结候选全量运行（25 matching + 33 violation），产物 outputs/development/s34_winter_stage3_development_v1/（config_snapshot/predictions/evaluation/error_analysis/manifest）；DEV_ONLY 指标：matching P 0.44/R 1.0/F1 0.61/mean AP 0.64；violation macro F1 0.37/exact type acc 0.33（missing_action F1 0.95、incorrect_actor 0.0 vacuous（participant 空）、out_of_order 0.17）；gold-blind（runner 只读 blank pack）、确定性（双跑 byte-identical）、无 LLM/网络；12 项聚焦测试；MASTER_PIPELINE S3.4 行 development wrapper verified + 3.6.4 + P1 里程碑 0/150 修正为 150/150；PROJECT_AUDIT/CLAIM_EVIDENCE_MATRIX（C20/C21）同步；FILE_CATALOG 重建；全量 1566 passed/24 skipped；未读 .env、未调 LLM、未改 Gold/BPMN/correction
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-09T10:33:48.682428+00:00 - S3.4/S3.5 code checkpoint (checkpoint 1 of 2): common Stage 3 prediction/evaluation contract + Winter reachability dual modes + Sun Stage 3 reconstruction code + tests (no final run results yet)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1586 passed, 24 skipped, 18 warnings in 192.12s (0:03:12)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`639fe621e21ca9d69106e09a43f55a9ab4560e1c`；相关未提交路径：14 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：第一 checkpoint（代码与合同）：(1) 公共 Stage 3 prediction contract configs/schemas/stage3_prediction.schema.json（method_id/run_id/task/item_id/matching_score/predicted_relevance/三类 violation score/predicted_violation_type/evidence/threshold/source_hashes/provenance/gold_visible=false）；(2) 公共 evaluator scripts/evaluate_stage3_common.py（per-process AP/MAP、binary P/R/F1、三类 violation 逐类+macro/micro、exact type acc、unobservable、denominator、threshold sweep 纯重算）；(3) Winter reachability 双模式（corrected_reachability 主版本 / prototype_literal 敏感性）入 winter_model + runner 参数化 + manifest 1.1.0（implementation hashes/export index/external prerequisites/bpmn 聚合 hash）；(4) Sun Stage 3 方法级独立重建代码 src/bpc_hybrid/sun_stage3/（sun_model 复用 canonical Process Record、sun_rule_extraction Gold-blind development adapter（spaCy+signalwords，标注与完整 Rules-Only 差异）、sun_scorer 实现 Def 4-7（matching=max(action 比例,actor/object 比例)；missing=Def5；actor=Def6 含 unobservable 语义；order=Def7 可达性））+ config sun_stage3_development_v1.json（tau/gamma/theta=0.8 预注册 + 固定 sweep）+ runner un_sun_stage3_development.py；新增 20 项 Sun 测试 + Winter 测试适配；全量 1586 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

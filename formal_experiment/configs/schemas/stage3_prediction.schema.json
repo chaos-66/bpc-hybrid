@@ -1,0 +1,33 @@
+{
+  "schema_version": "stage3_prediction@1.0.0",
+  "description": "Common Stage 3 prediction contract shared by the Winter et al. (2020) baseline and the Sun et al. (2024) method-level independent reconstruction (S3.4 / S3.5). Every runner emits one JSON object per line with these fields; the common evaluator (scripts/evaluate_stage3_common.py) consumes them against the frozen S3.2/S3.3 correction pack. Runners are gold-blind: they read only the blank pack (candidates + rule_text, no decisions).",
+  "fields": {
+    "schema_version": {"type": "string", "const": "stage3_prediction@1.0.0"},
+    "method_id": {"type": "string", "enum": ["winter_2020", "sun_2024"]},
+    "run_id": {"type": "string"},
+    "task": {"type": "string", "enum": ["matching", "violation"]},
+    "item_id": {"type": "string"},
+    "process_id": {"type": "string"},
+    "rule_id": {"type": "string"},
+    "matching_score": {"type": ["number", "null"], "description": "continuous relevance score; Winter=fitness, Sun=Definition 4 matching score"},
+    "predicted_relevance": {"type": ["boolean", "null"], "description": "null means ranking-only (Sun primary); binary only with a pre-registered rule"},
+    "missing_action_score": {"type": ["number", "null"], "description": "Winter=cost_obligation; Sun=Definition 5 action violation"},
+    "incorrect_actor_score": {"type": ["number", "null"], "description": "Winter=cost_resource; Sun=Definition 6 actor violation; null/NaN when unobservable"},
+    "out_of_order_score": {"type": ["number", "null"], "description": "Winter=cost_so; Sun=Definition 7 order violation"},
+    "predicted_violation_type": {"type": ["string", "null"], "enum": ["missing_action", "incorrect_actor", "out_of_order", null]},
+    "evidence": {"type": ["string", "null"], "description": "localization: activity/lane/order pair or null"},
+    "threshold": {"type": ["number", "null"], "description": "primary threshold used for the binary decision (tau/gamma/theta)"},
+    "config_version": {"type": "string"},
+    "source_hashes": {
+      "type": "object",
+      "description": "rule-record source and process-record source hashes used for this prediction",
+      "properties": {
+        "rule_record": {"type": ["string", "null"]},
+        "process_record": {"type": ["string", "null"]}
+      }
+    },
+    "method_provenance": {"type": "string", "description": "short method + threshold provenance string"},
+    "gold_visible": {"type": "boolean", "const": false}
+  },
+  "required": ["schema_version", "method_id", "run_id", "task", "item_id", "process_id", "rule_id", "gold_visible"]
+}

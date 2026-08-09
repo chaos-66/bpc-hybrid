@@ -39,7 +39,11 @@ if str(SRC) not in sys.path:
 import spacy  # noqa: E402
 
 from bpc_hybrid.winter_stage3.winter_clause import parse_regulation_paragraph  # noqa: E402
-from bpc_hybrid.winter_stage3.winter_model import parse_bpmn_file_winter  # noqa: E402
+from bpc_hybrid.winter_stage3.winter_model import (  # noqa: E402
+    REACHABILITY_CORRECTED,
+    REACHABILITY_MODES,
+    parse_bpmn_file_winter,
+)
 from bpc_hybrid.winter_stage3.winter_pair import WinterPair  # noqa: E402
 from bpc_hybrid.winter_stage3.winter_similarity import WinterSimilarity  # noqa: E402
 
@@ -82,6 +86,10 @@ def _git_state() -> dict[str, str]:
         return {"commit": "unknown", "dirty_paths": [str(exc)]}
 
 
+def run_id_of(config: dict[str, Any]) -> str:
+    return f"s34_winter_stage3_development_{config['config_version']}"
+
+
 def load_winter_lexicon() -> tuple[set[str], set[str], set[str]]:
     signalwords = set((WINTER_FILES_DIR / "signalwords.txt").read_text(encoding="utf-8").splitlines())
     sequencemarkers = set((WINTER_FILES_DIR / "sequencemarkers.txt").read_text(encoding="utf-8").splitlines())
@@ -91,14 +99,17 @@ def load_winter_lexicon() -> tuple[set[str], set[str], set[str]]:
 
 def build_predictions(config: dict[str, Any], nlp, sim: WinterSimilarity,
                       signalwords, sequencemarkers, stopwords,
-                      blank: dict[str, Any]) -> list[dict[str, Any]]:
+                      blank: dict[str, Any],
+                      reachability_mode: str = REACHABILITY_CORRECTED) -> list[dict[str, Any]]:
     gamma = float(config["method"]["gamma"])
     delta = float(config["method"]["delta"])
 
     # load the 7 frozen BPMN models the Winter way
     models: dict[str, Any] = {}
     for bpmn in sorted(BPMN_DIR.glob("*.bpmn")):
-        models[bpmn.stem] = parse_bpmn_file_winter(bpmn, nlp, stopwords)
+        models[bpmn.stem] = parse_bpmn_file_winter(
+            bpmn, nlp, stopwords, reachability_mode=reachability_mode
+        )
 
     # candidate process-rule pairs from the frozen blank pack
     rule_texts: dict[str, str] = {}
@@ -126,10 +137,26 @@ def build_predictions(config: dict[str, Any], nlp, sim: WinterSimilarity,
         )
         pair = WinterPair(nlp, sim, model, paragraph, resource_set, gamma, delta)
         predictions.append({
+            "schema_version": "stage3_prediction@1.0.0",
+            "method_id": "winter_2020",
+            "run_id": run_id_of(config),
             "task": "matching",
             "item_id": item["item_id"],
             "process_id": process_id,
             "rule_id": rule_id,
+            "matching_score": round(pair.fitness, 6),
+            "predicted_relevance": pair.fitness > 0.0,
+            "missing_action_score": round(pair.cost_obligation, 6),
+            "incorrect_actor_score": round(pair.cost_resource, 6),
+            "out_of_order_score": round(pair.cost_so, 6),
+            "predicted_violation_type": None,
+            "evidence": None,
+            "threshold": gamma,
+            "config_version": config["config_version"],
+            "source_hashes": {"rule_record": None, "process_record": None},
+            "method_provenance": f"winter_2020 gamma={gamma} delta={delta} reachability={reachability_mode}",
+            "gold_visible": False,
+            # legacy fields kept for backward compatibility with the v1 run
             "fitness": round(pair.fitness, 6),
             "cost_obligation": round(pair.cost_obligation, 6),
             "cost_resource": round(pair.cost_resource, 6),
@@ -137,7 +164,6 @@ def build_predictions(config: dict[str, Any], nlp, sim: WinterSimilarity,
             "cost": round(pair.cost, 6),
             "threshold_gamma": gamma,
             "predicted_relevant": pair.fitness > 0.0,
-            "gold_visible": False,
         })
 
     # -------- violation predictions (33) --------------------------------
@@ -160,22 +186,37 @@ def build_predictions(config: dict[str, Any], nlp, sim: WinterSimilarity,
         # the corresponding Winter cost is > 0, otherwise none (compliant)
         predicted = candidate_type if costs[candidate_type] > 0.0 else None
         predictions.append({
+            "schema_version": "stage3_prediction@1.0.0",
+            "method_id": "winter_2020",
+            "run_id": run_id_of(config),
             "task": "violation",
             "item_id": item["item_id"],
             "process_id": process_id,
             "rule_id": rule_id,
-            "candidate_violation_type": candidate_type,
+            "matching_score": None,
+            "predicted_relevance": None,
+            "missing_action_score": round(pair.cost_obligation, 6),
+            "incorrect_actor_score": round(pair.cost_resource, 6),
+            "out_of_order_score": round(pair.cost_so, 6),
             "predicted_violation_type": predicted,
+            "evidence": None,
+            "threshold": gamma,
+            "config_version": config["config_version"],
+            "source_hashes": {"rule_record": None, "process_record": None},
+            "method_provenance": f"winter_2020 gamma={gamma} delta={delta} reachability={reachability_mode}",
+            "gold_visible": False,
+            # legacy fields kept for backward compatibility with the v1 run
+            "candidate_violation_type": candidate_type,
             "cost_obligation": round(pair.cost_obligation, 6),
             "cost_resource": round(pair.cost_resource, 6),
             "cost_so": round(pair.cost_so, 6),
             "threshold_gamma": gamma,
-            "gold_visible": False,
         })
     return predictions
 
 
-def write_run(config: dict[str, Any], variant: str) -> Path:
+def write_run(config: dict[str, Any], variant: str,
+              reachability_mode: str = REACHABILITY_CORRECTED) -> Path:
     run_dir = ROOT / "outputs" / "development" / f"s34_winter_stage3_development_{variant}"
     if run_dir.exists():
         raise RuntimeError(f"refusing to overwrite existing run dir: {run_dir}")
@@ -197,7 +238,8 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
         )
 
     predictions = build_predictions(
-        config, nlp, sim, signalwords, sequencemarkers, stopwords, blank
+        config, nlp, sim, signalwords, sequencemarkers, stopwords, blank,
+        reachability_mode=reachability_mode,
     )
 
     # -------- write artifacts -------------------------------------------
@@ -216,16 +258,20 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
             f.write(json.dumps(p, ensure_ascii=False, sort_keys=True) + "\n")
 
     manifest = {
-        "schema_version": "winter_stage3_run_manifest@1.0.0",
+        "schema_version": "winter_stage3_run_manifest@1.1.0",
         "run_id": f"s34_winter_stage3_development_{variant}",
         "task_id": "S3.4",
         "status": "development_only",
-        "command": "python scripts/run_winter_stage3_development.py" + (f" --variant {variant}" if variant != "v1" else ""),
+        "reachability_mode": reachability_mode,
+        "command": "python scripts/run_winter_stage3_development.py"
+                  + (f" --variant {variant}" if variant != "v1" else "")
+                  + (f" --reachability-mode {reachability_mode}" if reachability_mode != REACHABILITY_CORRECTED else ""),
         "git": _git_state(),
         "inputs": {
             "bpmn_dir": str(BPMN_DIR.relative_to(ROOT).as_posix()),
             "bpmn_files": [str(p.relative_to(ROOT).as_posix()) for p in sorted(BPMN_DIR.glob("*.bpmn"))],
-            "bpmn_dir_sha256": None,
+            "bpmn_dir_membership_payload_sha256": membership["membership"]["membership_payload_sha256"],
+            "bpmn_dir_aggregate_sha256": _dir_aggregate_sha256(BPMN_DIR),
             "membership_contract": {
                 "path": str(MEMBERSHIP_CONTRACT.relative_to(ROOT).as_posix()),
                 "sha256": _sha256(MEMBERSHIP_CONTRACT),
@@ -247,6 +293,41 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
             "matching_candidates": sum(1 for p in predictions if p["task"] == "matching"),
             "violation_candidates": sum(1 for p in predictions if p["task"] == "violation"),
             "excluded": [],
+        },
+        "implementation_hashes": {
+            "config": _sha256(CONFIG),
+            "runner": _sha256(Path(__file__)),
+            "evaluator": _sha256(ROOT / "scripts" / "evaluate_stage3_common.py")
+            if (ROOT / "scripts" / "evaluate_stage3_common.py").exists() else None,
+            "winter_model": _sha256(ROOT / "src" / "bpc_hybrid" / "winter_stage3" / "winter_model.py"),
+            "winter_clause": _sha256(ROOT / "src" / "bpc_hybrid" / "winter_stage3" / "winter_clause.py"),
+            "winter_pair": _sha256(ROOT / "src" / "bpc_hybrid" / "winter_stage3" / "winter_pair.py"),
+            "winter_similarity": _sha256(ROOT / "src" / "bpc_hybrid" / "winter_stage3" / "winter_similarity.py"),
+        },
+        "dependency_index": {
+            "python": sys.version.split()[0],
+            "spacy": spacy.__version__,
+            "spacy_model": "en_core_web_sm",
+            "external_lexicon": {
+                "dir": str(WINTER_FILES_DIR.relative_to(ROOT.parent).as_posix()),
+                "self_contained": False,
+                "note": "development run is NOT fully self-contained in formal_experiment/; the Winter lexicon lives in references/ (read-only, not copied, not imported as code)",
+            },
+        },
+        "external_runtime_prerequisites": [
+            "spacy package + en_core_web_sm model (same model family as the Winter prototype)",
+            "references/winter_2020_model_check/model_check/input/files/{signalwords,sequencemarkers,stopwords}.txt (read-only lexicon)",
+        ],
+        "export_index": {
+            "schema": "configs/schemas/stage3_prediction.schema.json",
+            "predictions": "predictions.jsonl",
+            "evaluation": "evaluation.json",
+            "error_analysis": "error_analysis.md",
+            "external_lexicon_hashes": {
+                "signalwords.txt": _sha256(WINTER_FILES_DIR / "signalwords.txt"),
+                "sequencemarkers.txt": _sha256(WINTER_FILES_DIR / "sequencemarkers.txt"),
+                "stopwords.txt": _sha256(WINTER_FILES_DIR / "stopwords.txt"),
+            },
         },
         "safety": {
             "llm_api_called": False,
@@ -279,13 +360,28 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
     return run_dir
 
 
+def _dir_aggregate_sha256(directory: Path) -> str:
+    """Stable aggregate hash of a directory: sorted relative path + sha256
+    pairs, hashed as canonical JSON (deterministic across runs and OS)."""
+    import hashlib
+    entries = {
+        str(p.relative_to(directory).as_posix()): _sha256(p)
+        for p in sorted(directory.glob("*.bpmn"))
+    }
+    payload = json.dumps(entries, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant", default="v1", help="run dir variant suffix")
+    parser.add_argument("--reachability-mode", default=REACHABILITY_CORRECTED,
+                        choices=REACHABILITY_MODES,
+                        help="Winter reachability semantics (corrected vs prototype-literal)")
     args = parser.parse_args()
     config = _load_json(CONFIG, "winter stage3 config")
     try:
-        run_dir = write_run(config, args.variant)
+        run_dir = write_run(config, args.variant, reachability_mode=args.reachability_mode)
     except RuntimeError as exc:
         print(f"winter stage3 run failed closed: {exc}", file=sys.stderr)
         return 2

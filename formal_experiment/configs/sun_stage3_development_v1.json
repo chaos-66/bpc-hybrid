@@ -1,0 +1,86 @@
+{
+  "schema_version": "sun_stage3_development@1.0.0",
+  "config_version": "v1",
+  "task_id": "S3.5",
+  "claim": "Development-only method-level independent reconstruction of Sun et al. (2024) Stage 3 (matching score + three violation scores). Method evidence: Sun 2024 paper section 4.3 Definitions 4-7 and section 5.3 (Tables 9/11 for tau, Figure 8 for gamma). Not exact reproduction, not Sun original implementation, not paper-faithful unless all public rules are verified item by item. Development implementation verified; formal completion blocked on S1.7 and S2.13.",
+  "method": {
+    "paper_sections": {
+      "matching": "Definition 4 (Matching Score): Dr,m = rule actions -> highest-similarity process action; Or,m = rule actors -> highest-similarity process business-object/actor; matching(r,m,tau) = max( fraction of Dr,m with sim>tau, fraction of Or,m with sim>tau )",
+      "missing_action": "Definition 5: action violation(r,m,gamma) = |{(ar,am) in Dr,m | sim(ar,am)<gamma}| / |Ar|",
+      "incorrect_actor": "Definition 6: R = rule actors assigned to a matched activity (sim>gamma); C = process actors executing the same action; actor violation = |{r in R | exists r' in C, sim(r,r')<theta}| / |R|",
+      "out_of_order": "Definition 7: Ur,m,gamma = order constraints whose both endpoints map with sim>gamma; order violation = (|Ur,m,gamma| - |satisfied order constraints (forward reachable, not backward)|) / |Ur,m,gamma|"
+    },
+    "thresholds": {
+      "tau": 0.8,
+      "tau_source": "Sun 2024 Table 9 / Table 11: most models reach highest AP/MAP at tau=0.8 (9 of 12 and 4 of 4)",
+      "gamma": 0.8,
+      "gamma_source": "Sun 2024 Figure 8: violation-detection precision is highest at gamma=0.8 for most models",
+      "theta": 0.8,
+      "theta_source": "pre-registered project default (paper does not report a numeric theta); fixed diagnostic sweep reported separately",
+      "sweeps": {"tau": [0.2, 0.4, 0.6, 0.8, 0.9], "gamma": [0.2, 0.4, 0.6, 0.8, 0.9], "theta": [0.2, 0.4, 0.6, 0.8, 0.9]},
+      "note": "sweeps are sensitivity reports only; primary thresholds are NOT selected from this project's data"
+    },
+    "matching_evaluation": {
+      "primary": "ranking AP per process and MAP (recommender metrics per Sun section 5.3.1); binary relevance uses the pre-registered rule matching_score > tau and is reported separately",
+      "binary_rule": "matching_score > tau (tau=0.8 primary)"
+    },
+    "similarity_backend": {
+      "package": "spacy",
+      "model": "en_core_web_sm",
+      "note": "same backend as the Winter baseline for a controlled comparison; differences come from Rule Record structure (action/actor separation, order relations), not from a stronger model; no download, no network"
+    }
+  },
+  "inputs": {
+    "bpmn_membership_contract": {
+      "path": "configs/datasets/stage1_stage3_gdpr7_v1.json",
+      "purpose": "frozen S3.1 all-seven GDPR BPMN membership"
+    },
+    "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+    "stage1_structural_contract": {
+      "path": "configs/stage1_structural_s11_s14.json",
+      "purpose": "canonical Process Record parser contract (activities/events/control-flow reachability)"
+    },
+    "gold_annotation_blank_pack": {
+      "path": "data/development/human_review/stage3_gold_annotation_blank_v1.json",
+      "purpose": "58 frozen candidates with embedded rule_text; NO decisions read by the runner"
+    },
+    "winter_lexicon_dir": {
+      "path": "references/winter_2020_model_check/model_check/input/files",
+      "role": "EXTERNAL read-only provenance: signalwords.txt for obligation detection in the development Rule Record adapter",
+      "files": ["signalwords.txt"],
+      "self_contained": false
+    }
+  },
+  "rule_record_adapter": {
+    "role": "development Sun Rule Record adapter (Gold-blind)",
+    "inputs": ["rule_text from the blank pack", "signalwords.txt (external)"],
+    "method": "deterministic spaCy dependency extraction: sentence split -> obligation sentences (signalword) -> actor (nsubj/nsubjpass), action (ROOT verb phrase + objects), order relations (sequence markers 'after'/'then' + sentence order)",
+    "differences_from_full_stage2_rules_only": [
+      "full Stage 2 Rules-Only = BERT-TextCNN modality classifier + CoreNLP/Tregex/Tsurgeon phrase extraction + public marker lexicon (not run here: external CoreNLP runtime not available)",
+      "this adapter uses only spaCy dependency parsing and the shared signalword lexicon",
+      "no B0 predictions are used; adapter output is marked development-only and must not be presented as formal B0"
+    ],
+    "forbidden_inputs": ["decision_relevant", "decision_violation_type", "candidate_relevant", "candidate_violation_type", "candidate_evidence", "candidate_location"]
+  },
+  "process_record_input": {
+    "source": "canonical Process Record via configs/stage1_structural_s11_s14.json parser (src/bpc_hybrid/stage1_process.py)",
+    "used_fields": ["activities (id/name/type)", "events", "pools (name)", "lanes (name)", "control_flow.reachable_pairs", "control_flow.activity_order_relations"],
+    "observability_note": "lanes carry empty names in the frozen GDPR7 files; pools carry names (e.g. 'Data Controller'); actor checks use pool + non-empty lane names; empty actor semantics are reported as unobservable, never inferred from Gold"
+  },
+  "runner": {
+    "entry": "scripts/run_sun_stage3_development.py",
+    "no_llm": true,
+    "no_network": true,
+    "no_env": true,
+    "gold_decisions_read": false,
+    "deterministic": true,
+    "run_dir_template": "outputs/development/s35_sun_stage3_development_<variant>/"
+  },
+  "evaluator": {
+    "entry": "scripts/evaluate_stage3_common.py",
+    "gold_input": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+    "metrics_matching": ["per_process_AP", "MAP", "binary P/R/F1 + confusion (pre-registered rule)"],
+    "metrics_violation": ["per_type P/R/F1", "macro/micro F1", "exact type accuracy", "detected/missed/wrong-type", "unobservable", "denominator"],
+    "note": "no compliant (none) gold items exist in the frozen violation pack, so specificity/compliant accuracy is N/A"
+  }
+}

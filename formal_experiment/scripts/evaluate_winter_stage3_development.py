@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import json
 import statistics
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -61,7 +62,7 @@ def evaluate(run_dir: Path) -> dict[str, Any]:
     per_process: dict[str, list[tuple[float, bool]]] = {}
     for p in m_preds:
         gold = gold_m[p["item_id"]]["decision_relevant"]
-        pred = p["predicted_relevant"]
+        pred = p.get("predicted_relevant", p.get("predicted_relevance"))
         if pred and gold:
             tp += 1
         elif pred and not gold:

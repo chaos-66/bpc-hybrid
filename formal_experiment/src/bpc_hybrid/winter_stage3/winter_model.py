@@ -29,6 +29,11 @@ GATEWAYS = [
 EVENTS = ["intermediateCatchEvent", "intermediateThrowEvent", "boundaryEvent"]
 
 
+REACHABILITY_CORRECTED = "corrected_reachability"
+REACHABILITY_PROTOTYPE_LITERAL = "prototype_literal"
+REACHABILITY_MODES = (REACHABILITY_CORRECTED, REACHABILITY_PROTOTYPE_LITERAL)
+
+
 class WinterModel:
     """One BPMN file as the Winter prototype sees it (all ``process``
     elements flattened per file, mirroring ``BPMN(f, processes)``)."""
@@ -62,7 +67,10 @@ class WinterProcess:
         flows: list[Any],
         nlp,
         stopwords: set[str],
+        reachability_mode: str = REACHABILITY_CORRECTED,
     ):
+        if reachability_mode not in REACHABILITY_MODES:
+            raise ValueError(f"unknown reachability mode: {reachability_mode}")
         self._id = process_id
         self.participant = participant
         self.start_events = start_events
@@ -73,6 +81,7 @@ class WinterProcess:
         self.flows = flows
         self.nlp = nlp
         self.stopwords = stopwords
+        self.reachability_mode = reachability_mode
 
         self.start_event_labels = _labels(start_events)
         self.end_event_labels = _labels(end_events)
@@ -102,8 +111,18 @@ class WinterProcess:
         ]
 
     def is_reachable_from(self, sourceid: str, targetid: str) -> bool:
-        """Winter semantics (bug-fixed): is ``targetid`` reachable from
-        ``sourceid`` in the sequence-flow transitive closure."""
+        """Two explicit modes:
+
+        - ``corrected_reachability``: is ``targetid`` reachable from
+          ``sourceid`` in the sequence-flow transitive closure (fixes the
+          prototype's deterministic always-True bug);
+        - ``prototype_literal``: replicates the Winter prototype's exact
+          expression ``targetid in reachability[targetid]`` (always True),
+          kept as a zero-cost sensitivity mode so the bug's effect on the
+          out-of-order baseline is measurable.
+        """
+        if self.reachability_mode == REACHABILITY_PROTOTYPE_LITERAL:
+            return targetid in self.reachability.get(targetid, set())
         return targetid in self.reachability.get(sourceid, set())
 
 
@@ -157,7 +176,8 @@ def _compute_reachability(directly_follows: dict[str, list[str]]) -> dict[str, s
     return reachability
 
 
-def parse_bpmn_file_winter(path, nlp, stopwords: set[str]) -> WinterModel:
+def parse_bpmn_file_winter(path, nlp, stopwords: set[str],
+                           reachability_mode: str = REACHABILITY_CORRECTED) -> WinterModel:
     """Parse one BPMN file the Winter way (``minidom``; every ``process``
     element becomes a WinterProcess; gateway/event tags as in the prototype)."""
     doc = minidom.parse(str(path))
@@ -176,6 +196,7 @@ def parse_bpmn_file_winter(path, nlp, stopwords: set[str]) -> WinterModel:
             WinterProcess(
                 _id, participant, start_events, end_events, tasks,
                 gateways, events, flows, nlp, stopwords,
+                reachability_mode=reachability_mode,
             )
         )
     return WinterModel(path.stem, processes)

@@ -32,9 +32,28 @@
     },
     "winter_lexicon_dir": {
       "path": "references/winter_2020_model_check/model_check/input/files",
-      "role": "read-only provenance: signalwords.txt (constraint detection), sequencemarkers.txt (flow detection), stopwords.txt (lemmatization filtering)",
-      "files": ["signalwords.txt", "sequencemarkers.txt", "stopwords.txt"]
+      "role": "EXTERNAL read-only provenance dependency, NOT copied into formal_experiment/: signalwords.txt (constraint detection), sequencemarkers.txt (flow detection), stopwords.txt (lemmatization filtering)",
+      "files": ["signalwords.txt", "sequencemarkers.txt", "stopwords.txt"],
+      "self_contained": false
     }
+  },
+  "external_dependencies": {
+    "note": "development run is NOT fully self-contained inside formal_experiment/; the Winter lexicon and the spaCy model are external runtime prerequisites",
+    "lexicon": {
+      "type": "read_only_text_files",
+      "location": "references/winter_2020_model_check/model_check/input/files",
+      "copy_or_activate_forbidden_without_user_authorization": true
+    },
+    "spacy_model": {
+      "type": "python_package_model",
+      "package": "spacy",
+      "model": "en_core_web_sm",
+      "note": "same model family as the Winter prototype; no download, no network"
+    }
+  },
+  "reachability_modes": {
+    "corrected_reachability": "default development main version; fixes the prototype always-True is_reachable_from bug",
+    "prototype_literal": "zero-cost sensitivity mode replicating the prototype's literal buggy expression"
   },
   "runner": {
     "entry": "scripts/run_winter_stage3_development.py",
