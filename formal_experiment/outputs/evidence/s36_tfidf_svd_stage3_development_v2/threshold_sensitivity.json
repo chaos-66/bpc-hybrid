@@ -1,0 +1,315 @@
+{
+  "note": "gamma/theta sweeps RE-INSTANTIATE the BaselineScorer and recompute mappings, R/C sets, order denominators, observability, scores and predictions (gamma is not a pure score cutoff for baseline either). Text representations, Rule/Process Records and the inference pack stay fixed; matching tau is a score cutoff over the fixed matching scores. Diagnostic only; primary thresholds stay at the v1 fixed values (0.5) and are never selected from this data.",
+  "matching_tau_sweep": [
+    {
+      "tau": 0.2,
+      "confusion": {
+        "tp": 10,
+        "fp": 13,
+        "fn": 1,
+        "tn": 1
+      },
+      "precision": 0.4348,
+      "recall": 0.9091,
+      "f1": 0.5882
+    },
+    {
+      "tau": 0.4,
+      "confusion": {
+        "tp": 7,
+        "fp": 9,
+        "fn": 4,
+        "tn": 5
+      },
+      "precision": 0.4375,
+      "recall": 0.6364,
+      "f1": 0.5185
+    },
+    {
+      "tau": 0.6,
+      "confusion": {
+        "tp": 3,
+        "fp": 4,
+        "fn": 8,
+        "tn": 10
+      },
+      "precision": 0.4286,
+      "recall": 0.2727,
+      "f1": 0.3333
+    },
+    {
+      "tau": 0.8,
+      "confusion": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 11,
+        "tn": 12
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "tau": 0.9,
+      "confusion": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 11,
+        "tn": 14
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  ],
+  "violation_gamma_sweep": [
+    {
+      "gamma": 0.2,
+      "macro_f1": 0.8767,
+      "exact_type_accuracy": 0.7879,
+      "unobservable": 2,
+      "per_type_f1": {
+        "missing_action": 0.9524,
+        "incorrect_actor": 0.9,
+        "out_of_order": 0.7778
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 9,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 2,
+          "out_of_order": 0
+        },
+        "unobservable_total": 2,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 2
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "gamma": 0.4,
+      "macro_f1": 0.6482,
+      "exact_type_accuracy": 0.5758,
+      "unobservable": 4,
+      "per_type_f1": {
+        "missing_action": 1.0,
+        "incorrect_actor": 0.7778,
+        "out_of_order": 0.1667
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 7,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 4,
+          "out_of_order": 0
+        },
+        "unobservable_total": 4,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 4
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "gamma": 0.6,
+      "macro_f1": 0.4762,
+      "exact_type_accuracy": 0.4242,
+      "unobservable": 8,
+      "per_type_f1": {
+        "missing_action": 1.0,
+        "incorrect_actor": 0.4286,
+        "out_of_order": 0.0
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 3,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 8,
+          "out_of_order": 0
+        },
+        "unobservable_total": 8,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 8
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "gamma": 0.8,
+      "macro_f1": 0.3333,
+      "exact_type_accuracy": 0.3333,
+      "unobservable": 11,
+      "per_type_f1": {
+        "missing_action": 1.0,
+        "incorrect_actor": 0.0,
+        "out_of_order": 0.0
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 0,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 11,
+          "out_of_order": 0
+        },
+        "unobservable_total": 11,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 11
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    {
+      "gamma": 0.9,
+      "macro_f1": 0.3333,
+      "exact_type_accuracy": 0.3333,
+      "unobservable": 11,
+      "per_type_f1": {
+        "missing_action": 1.0,
+        "incorrect_actor": 0.0,
+        "out_of_order": 0.0
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 0,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 11,
+          "out_of_order": 0
+        },
+        "unobservable_total": 11,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 11
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    }
+  ],
+  "incorrect_actor_theta_sweep": [
+    {
+      "theta": 0.2,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6,
+      "per_type_f1": {
+        "missing_action": 1.0,
+        "incorrect_actor": 0.625,
+        "out_of_order": 0.0
+      }
+    },
+    {
+      "theta": 0.4,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6,
+      "per_type_f1": {
+        "missing_action": 1.0,
+        "incorrect_actor": 0.625,
+        "out_of_order": 0.0
+      }
+    },
+    {
+      "theta": 0.6,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6,
+      "per_type_f1": {
+        "missing_action": 1.0,
+        "incorrect_actor": 0.625,
+        "out_of_order": 0.0
+      }
+    },
+    {
+      "theta": 0.7,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6,
+      "per_type_f1": {
+        "missing_action": 1.0,
+        "incorrect_actor": 0.625,
+        "out_of_order": 0.0
+      }
+    },
+    {
+      "theta": 0.8,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6,
+      "per_type_f1": {
+        "missing_action": 1.0,
+        "incorrect_actor": 0.625,
+        "out_of_order": 0.0
+      }
+    },
+    {
+      "theta": 0.9,
+      "macro_f1": 0.5417,
+      "exact_type_accuracy": 0.4848,
+      "unobservable": 6,
+      "per_type_f1": {
+        "missing_action": 1.0,
+        "incorrect_actor": 0.625,
+        "out_of_order": 0.0
+      }
+    }
+  ]
+}

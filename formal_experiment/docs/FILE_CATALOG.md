@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-09
-**收录文件**：883 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：906 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -103,6 +103,7 @@
 | `configs/stage1_label_semantics_s13.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_structural_s11_s14.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage2_evaluator_s210_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage3_development_method_registry_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_corenlp_runtime.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/tfidf_svd_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -570,6 +571,14 @@
 | `outputs/evidence/s36_bm25_stage3_development_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_bm25_stage3_development_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_bm25_stage3_development_v1/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v2/capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v2/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v2/error_analysis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/s36_bm25_stage3_development_v2/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v2/export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v2/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_bm25_stage3_development_v2/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v1/capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v1/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v1/error_analysis.md` | 活动 | 说明、规范或研究文档 |
@@ -578,8 +587,18 @@
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v1/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v2/capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v2/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v2/error_analysis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v2/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v2/export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v2/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s36_tfidf_svd_stage3_development_v2/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/formal_gold_authorization_packet_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/formal_gold_authorization_packet_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s15_s31_gdpr7_membership_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -590,6 +609,7 @@
 | `outputs/reports/s32_s33_gold_annotation_blank_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s34_winter_stage3_development_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `paper`
 
@@ -676,14 +696,17 @@
 | `scripts/build_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg150_review_layers.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg_human_review_pack.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_formal_gold_authorization_packet.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s3_7_oracle_readiness.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_evidence_capsule.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_gold_inference.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage3_method_registry.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/clean_estg150_german.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/coarse_gold_b0_condition_constraint_v1.py` | 活动 | Python 实现、脚本或测试 |

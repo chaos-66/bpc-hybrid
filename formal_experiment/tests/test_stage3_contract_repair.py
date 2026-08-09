@@ -397,3 +397,47 @@ def test_baseline_sensitivity_is_not_fixed_score_cutoff() -> None:
     # 0.0 > 0.9 -> not missing; the real re-execution says missing
     assert (ma_primary["score"] > 0.9) is False  # fixed-score cutoff view
     assert ma_strict["missing"] == 1             # real re-execution view
+
+# ----------------------------------------- method registry / oracle / packet
+def test_method_registry_hashes_complete() -> None:
+    registry = _load_json(ROOT / "configs" / "stage3_development_method_registry_v1.json")
+    assert registry["schema_version"] == "stage3_development_method_registry@1.0.0"
+    assert set(registry["methods"]) == {
+        "winter_2020_corrected", "winter_2020_prototype_literal", "sun_2024",
+        "s36_bm25", "s36_tfidf_svd"}
+    for name, m in registry["methods"].items():
+        assert m["finalised"] is True
+        assert m["claim_gates"]["formal_oracle_claim_allowed"] is False
+        assert m["claim_gates"]["confirmatory_claim_allowed"] is False
+        assert m["config"]["sha256"]
+        assert m["implementation_hashes"]
+        assert m["evidence_capsule"]["sha256"]
+        # every declared capsule file must exist
+        capsule_dir = ROOT / m["evidence_capsule"]["path"]
+        for fname in m["evidence_capsule"]["files"]:
+            assert (capsule_dir / fname).exists()
+
+
+def test_oracle_readiness_forbids_pseudo_gold() -> None:
+    report = _load_json(ROOT / "outputs" / "reports" / "s37_oracle_readiness_v1.json")
+    assert report["status"] == "blocked_on_s1_7_s2_13"
+    assert report["checks"]["1_gold_rule_records_exist"]["ok"] is False
+    assert report["checks"]["4_gold_process_records_exist"]["ok"] is False
+    assert report["checks"]["10_development_oracle_runnable_now"]["ok"] is False
+    assert "NOT an Oracle" in report["checks"]["10_development_oracle_runnable_now"]["reason"]
+    assert "development_rule_record_adapter_output" in report["strict_distinction"]
+    assert report["strict_distinction"]["true_gold_rule_records"].endswith("NOT present")
+
+
+def test_authorization_packet_is_dry_run_and_contract_untouched() -> None:
+    packet = _load_json(ROOT / "outputs" / "reports" / "formal_gold_authorization_packet_v1.json")
+    assert packet["dry_run"] is True
+    assert packet["contract_not_modified"] is True
+    assert len(packet["proposed_contract_changes"]) == 3
+    fields = {p["field"] for p in packet["proposed_contract_changes"]}
+    assert fields == {"stage3.status", "formal_gold_publication_gate.status", "stage2_dataset.freeze_policy"}
+    assert packet["authorization_sentence"]
+    # the contract itself must still hold the pre-flip values
+    contract = _load_json(ROOT / "configs" / "experiment_contract.json")
+    assert contract["stage3"]["status"] == "pending_final_subset_configuration_and_violation_gold_lock"
+    assert contract["formal_gold_publication_gate"]["status"] == "blocked_pending_route_data_stage3_re_lock"

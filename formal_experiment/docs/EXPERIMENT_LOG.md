@@ -3038,3 +3038,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：修正 baseline sensitivity 方法错误：BaselineScorer 的 gamma 影响 missing action 判定、incorrect actor R 集合、out-of-order 端点映射与分母，theta 影响 actor 判定——sweep 必须重实例化 scorer 重算（映射/R/C/分母/可观测性/分数/预测），删除 mappings parameter-free 错误声明；matching tau 仍为固定 score cutoff；新增 5 项手算 fixture（gamma 改变 missing/actor observability/order denominator、theta 改变 actor 判定、新 sensitivity 非固定 score cutoff）；runner sensitivity 调用补 --arm；Sun config 输入措辞修正（inference pack=运行输入、blank pack=验证/溯源）；S3.6 阈值 0.5 措辞修正（fixed development setting before this run、非 blind preregistration、不宣称排除 benchmark exposure）；全量 1606 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-09T13:45:44.642310+00:00 - S3.6 sensitivity fix replay v2 + method freeze registry + S3.7 Oracle readiness audit + formal Gold authorization packet (checkpoint 2 of 2, dry-run only)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1609 passed, 24 skipped, 19 warnings in 176.91s (0:02:56)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`03e903aa7dcdabcece9bac2743033e9e650afcd4`；相关未提交路径：28 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：从干净 checkpoint（03e903a）重放 v2 runs：s36_bm25/tfidf_svd v2（修复后 sensitivity 重算），主指标与 v1 byte-identical（predictions+evaluation 逐字节一致）；重新 finalise/evidence capsule v2/comparison（5 方法指向 v2）；方法冻结注册表 configs/stage3_development_method_registry_v1.json（5 方法 hashes/thresholds/capsule/exposure/limitations，formal_oracle_claim_allowed=false/confirmatory_claim_allowed=false，变更须新版本）；S3.7 Oracle 输入真实性核账 outputs/reports/s37_oracle_readiness_v1.json（真正 Gold Rule/Process Records 均不存在，adapter 输出≠Gold，blocked_on_s1_7_s2_13，禁止伪 Oracle）；formal Gold 用户授权包 outputs/reports/formal_gold_authorization_packet_v1.{json,md}（dry-run：合同未修改，拟议 before/after 3 字段、预期 blocker 消除 2/保留 3、回滚、授权句）；新增 6 项测试（registry hash/forbid pseudo gold/dry-run 不修改合同等，共 23 项 contract repair 测试）；MASTER_PIPELINE 3.6.7 + S3.6 行、PROJECT_AUDIT 同步；全量 1609 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction/未翻转任何正式门禁
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

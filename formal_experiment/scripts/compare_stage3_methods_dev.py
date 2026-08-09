@@ -23,8 +23,8 @@ RUNS = {
     "winter_2020_corrected": "s34_winter_stage3_development_v3_clean",
     "winter_2020_prototype_literal": "s34_winter_stage3_development_v3_prototype_literal",
     "sun_2024": "s35_sun_stage3_development_v2",
-    "s36_bm25": "s36_bm25_stage3_development_v1",
-    "s36_tfidf_svd": "s36_tfidf_svd_stage3_development_v1",
+    "s36_bm25": "s36_bm25_stage3_development_v2",
+    "s36_tfidf_svd": "s36_tfidf_svd_stage3_development_v2",
 }
 
 

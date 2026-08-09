@@ -1,0 +1,54 @@
+{
+  "config_path": "configs/tfidf_svd_stage3_development_v1.json",
+  "config_sha256": "d7275e76558d0e74c7d0b6281a8afe377fe1e61863e00741d1b43490dd7fad54",
+  "config": {
+    "schema_version": "tfidf_svd_stage3_development@1.0.0",
+    "config_version": "v1",
+    "task_id": "S3.6-B",
+    "claim": "Development-only TF-IDF/SVD dense + BPMN graph Stage 3 baseline. word + char n-gram TF-IDF, fixed-seed truncated SVD to a fixed dimension, cosine similarity, plus canonical BPMN sequence-flow reachability. Honest naming: TF-IDF/SVD dense baseline, NOT a pretrained transformer embedding. Fitted ONLY on unlabeled rule texts and process labels (no Gold/decisions).",
+    "arm": "tfidf_svd",
+    "method": {
+      "features": {
+        "word_ngram": 1,
+        "char_ngram": 3,
+        "sublinear_tf": true
+      },
+      "svd": {
+        "seed": 20260808,
+        "dim": 64,
+        "note": "fixed seed + fixed dim; deterministic numpy full-SVD then truncation"
+      },
+      "similarity": "cosine in the dense space, clipped to [0,1]",
+      "fit_corpus": "unlabeled rule_text (all 9 distinct rules) + all process action/actor labels of the 7 GDPR7 models; no Gold, no decisions, no parameters chosen on the 58 items",
+      "matching_formula": "matching_score = max(avg best rule-action cosine, avg best rule-actor cosine)",
+      "violation_semantics": "mapping mirrors Sun Definitions 5-7 structure with the arm's similarity; mappings do NOT depend on gamma/theta, so gamma/theta sensitivity is a legitimate score-cutoff re-derivation",
+      "empty_semantics": "empty text -> zero vector -> cosine 0.0, no match, never silently compliant"
+    },
+    "thresholds": {
+      "tau": 0.5,
+      "gamma": 0.5,
+      "theta": 0.5,
+      "note": "fixed development setting (0.5) chosen BEFORE this run; the developer had already seen the same 58 development Gold items and other method results, so this is NOT a statistically blind/confirmatory preregistration and benchmark exposure cannot be fully excluded. Sweeps are diagnostic only; primary values never selected from the sweep."
+    },
+    "inputs": {
+      "inference_pack": "data/development/human_review/stage3_gold_inference_v1.json",
+      "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+      "stage1_structural_contract": "configs/stage1_structural_s11_s14.json",
+      "rule_record_adapter": "src/bpc_hybrid/sun_stage3/sun_rule_extraction.py (Gold-blind development adapter, shared with Sun)",
+      "note": "runner reads ONLY the inference pack; no decision/candidate/evidence fields"
+    },
+    "runner": {
+      "entry": "scripts/run_stage3_baselines.py --arm tfidf_svd",
+      "no_llm": true,
+      "no_network": true,
+      "no_env": true,
+      "gold_decisions_read": false,
+      "deterministic": true
+    },
+    "evaluator": {
+      "entry": "scripts/evaluate_stage3_common.py",
+      "gold_input": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+      "note": "same common evaluator and same 58 item IDs as Winter/Sun"
+    }
+  }
+}

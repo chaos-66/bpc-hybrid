@@ -1,0 +1,80 @@
+{
+  "schema_version": "s37_oracle_readiness@1.0.0",
+  "report_id": "s37_oracle_readiness_v1",
+  "status": "blocked_on_s1_7_s2_13",
+  "strict_distinction": {
+    "development_rule_record_adapter_output": "outputs/development/*/rule_records.jsonl (Gold-blind spaCy adapter; NOT Gold)",
+    "canonical_bpmn_process_records": "parsed via configs/stage1_structural_s11_s14.json from data/input/stage1_stage3/gdpr7/*.bpmn; structural parsing output, NOT Gold",
+    "true_gold_rule_records": "human-adjudicated, frozen six-element Rule Records per GDPR rule; NOT present",
+    "true_gold_process_records": "human-adjudicated, frozen Process Records (action/actor/object/order) per BPMN; NOT present",
+    "rule": "Oracle Stage 3 requires true Gold Rule/Process Records; development adapter outputs must never be renamed to Gold; the frozen matching/violation Gold does NOT imply Rule/Process Record Gold exists"
+  },
+  "checks": {
+    "1_gold_rule_records_exist": {
+      "ok": false,
+      "found": []
+    },
+    "2_gold_rule_records_cover_all_rule_ids": {
+      "ok": false,
+      "unique_rule_ids_in_stage3_pack": [
+        "article15",
+        "article16",
+        "article17",
+        "article20",
+        "article22",
+        "article33",
+        "article34",
+        "article6",
+        "article7"
+      ],
+      "count": 9
+    },
+    "3_rule_record_fields_human_adjudicated_and_frozen": {
+      "ok": false,
+      "note": "no human-adjudicated, frozen Rule Records exist for actor/action/business object/order relations"
+    },
+    "4_gold_process_records_exist": {
+      "ok": false,
+      "found": []
+    },
+    "5_all_seven_bpmn_action_actor_object_order_frozen": {
+      "ok": false,
+      "note": "canonical Process Records exist (structural parse) but action/business-object extraction is development-level and lane names are empty; no human freeze of actor/object/order semantics"
+    },
+    "6_s1_7_gap": {
+      "ok": false,
+      "note": "S1.7 (freeze formal Stage 1) requires S1.6 baseline evaluation and S1.5 human Gold on Process Records; not completed (blocked per MASTER_PIPELINE §7)"
+    },
+    "7_s2_13_gap": {
+      "ok": false,
+      "note": "S2.13 (freeze Stage 2) requires S2.10/S2.12 and formal Gold publication; not completed"
+    },
+    "8_zero_api_after_formal_gold_publication": [
+      "B0-R4/D1-R4 formal comparison (three methods on frozen input/Gold)",
+      "S2.10/S2.12 main-data component evaluation and complexity analysis",
+      "S3.7 Oracle runs of Winter/Sun/B25/TF-IDF against true Gold Rule/Process Records (offline)",
+      "threshold sensitivity and error analysis on the frozen methods (offline)"
+    ],
+    "9_still_requires_human_or_api": [
+      "true Gold Rule Records: human adjudication + freeze (human)",
+      "true Gold Process Records: human adjudication + freeze (human)",
+      "S1.5 Stage 1 human Gold adjudication (human)",
+      "S3.8 LLM/Hybrid Stage 3 (real API + per-batch authorization)"
+    ],
+    "10_development_oracle_runnable_now": {
+      "ok": false,
+      "reason": "no true Gold Rule/Process Records; running an 'Oracle' on development adapter outputs would be a pseudo-Oracle and is forbidden; the five-method development comparison is NOT an Oracle"
+    }
+  },
+  "matching_violation_gold_frozen": {
+    "correction_pack": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+    "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f",
+    "note": "matching/violation Gold frozen (user adjudicated) does NOT constitute Rule/Process Record Gold"
+  },
+  "bpmn_membership": {
+    "contract": "configs/datasets/stage1_stage3_gdpr7_v1.json",
+    "payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d",
+    "bpmn_count": 7
+  },
+  "conclusion": "Oracle Stage 3 (S3.7) is BLOCKED: true Gold Rule Records and true Gold Process Records do not exist. blocked_on_s1_7_s2_13. No pseudo-Gold, no fake Oracle. Development comparison stays development-only."
+}
