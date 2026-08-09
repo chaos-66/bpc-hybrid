@@ -638,3 +638,64 @@ def test_bm25_old_corpus_blind_implementation_fails() -> None:
     fixed = BaselineScorer(fixed_factory, 0.5, 0.5, 0.5)
     best_id_fixed, _, _ = fixed._best_action("notify the national authority", model)
     assert best_id_fixed == "a1"
+
+# --------------------------------- registry v2 / packet v2 / bm25 v3
+def test_registry_v2_active_points_to_bm25_v3() -> None:
+    registry = _load_json(ROOT / "configs" / "stage3_development_method_registry_v2.json")
+    assert registry["registry_version"] == "v2"
+    assert registry["registry_generated_at_commit"]  # never null
+    assert registry["active_methods"]["s36_bm25"]["run_id"] == "s36_bm25_stage3_development_v3"
+    superseded = registry["superseded_invalid_runs"]
+    assert set(superseded) == {"s36_bm25_stage3_development_v1", "s36_bm25_stage3_development_v2"}
+    for s in superseded.values():
+        assert s["reason"] == "superseded_invalid_candidate_agnostic_similarity"
+        assert s["superseded_by"] == "s36_bm25_stage3_development_v3"
+
+
+def test_registry_v2_run_config_hash_matches_evidence() -> None:
+    import hashlib
+    registry = _load_json(ROOT / "configs" / "stage3_development_method_registry_v2.json")
+    for name, m in registry["active_methods"].items():
+        run_dir = ROOT / "outputs" / "development" / m["run_id"]
+        snapshot = _load_json(run_dir / "config_snapshot.json")
+        manifest = _load_json(run_dir / "manifest.json")
+        # run config snapshot hash == manifest implementation config hash
+        assert snapshot["config_sha256"] == manifest["implementation_hashes"]["config"], name
+        # and equals the registry's recorded run hashes
+        assert m["config_hashes"]["run_config_snapshot"] == snapshot["config_sha256"], name
+        assert m["config_hashes"]["run_manifest_implementation"] == manifest["implementation_hashes"]["config"], name
+        # every declared evidence file exists
+        capsule_dir = ROOT / m["evidence_capsule"]["path"]
+        for fname in m["evidence_capsule"]["files"]:
+            assert (capsule_dir / fname).exists()
+        assert m["claim_gates"]["formal_oracle_claim_allowed"] is False
+        assert m["claim_gates"]["confirmatory_claim_allowed"] is False
+
+
+def test_authorization_packet_v2_dry_run_and_gate_flip() -> None:
+    packet = _load_json(ROOT / "outputs" / "reports" / "formal_gold_authorization_packet_v2.json")
+    assert packet["dry_run"] is True and packet["contract_not_modified"] is True
+    assert packet["dry_run_gate_check"]["before"]["formal_gold_publication_ready"] is False
+    assert packet["dry_run_gate_check"]["after"]["formal_gold_publication_ready"] is True
+    # every proposed before value equals the live contract value (full, no truncation)
+    contract = _load_json(ROOT / "configs" / "experiment_contract.json")
+    for ch in packet["proposed_contract_changes"]:
+        node = contract
+        for seg in ch["pointer_path"][:-1]:
+            node = node[seg]
+        assert node[ch["pointer_path"][-1]] == ch["before_full"]
+    # freeze policy after value preserves governance content
+    after = packet["proposed_contract_changes"][2]["after_full"]
+    assert "redistribution/publication forbidden" in after
+    assert "do not write formal input or Gold" in after
+    # active contract still pre-flip
+    assert contract["stage3"]["status"] == "pending_final_subset_configuration_and_violation_gold_lock"
+    assert contract["formal_gold_publication_gate"]["status"] == "blocked_pending_route_data_stage3_re_lock"
+
+
+def test_bm25_v3_manifest_discloses_supersession() -> None:
+    manifest = _load_json(ROOT / "outputs" / "development" / "s36_bm25_stage3_development_v3" / "manifest.json")
+    assert manifest["finalised"] is True
+    supersedes = manifest.get("supersedes") or {}
+    assert supersedes.get("v1", "").startswith("superseded_invalid_candidate_agnostic_similarity")
+    assert supersedes.get("v2", "").startswith("superseded_invalid_candidate_agnostic_similarity")

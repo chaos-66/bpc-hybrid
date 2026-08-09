@@ -289,6 +289,7 @@ def write_run(arm: str, config: dict[str, Any], variant: str) -> Path:
                                            "sha256": _sha256(STAGE1_CONTRACT)},
         },
         "method": config["method"],
+        "supersedes": config.get("supersedes"),
         "thresholds": config["thresholds"],
         "samples": {
             "matching_candidates": sum(1 for p in predictions if p["task"] == "matching"),
