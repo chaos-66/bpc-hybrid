@@ -2960,3 +2960,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：用户逐批裁决全部 58 条候选：matching 25（11 相关/14 不相关，含负例）、violation 33（missing_action 11/incorrect_actor 11/out_of_order 11），全部通过 --import-decisions 导入（decision 字段=用户裁决，与 candidate 草稿分离记录）；verify 新增 --validate-correction 冻结校验（身份/58 条全 adjudicated/decision 合法 fail closed）+ 冻结 manifest s32_s33_gold_annotation_freeze_v1.manifest.json；review 工具新增 --import-decisions/--print-batch 批量模式；.gitignore 忽略 review 备份目录；MASTER_PIPELINE 3.6.3 + S3.2/S3.3 行 annotation frozen；PROJECT_AUDIT 同步；FILE_CATALOG 重建；1554 passed/24 skipped；未读 Gold/Layer E/.env，未调 LLM，未改 BPMN
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-09T09:46:09.460980+00:00 - S3.4 Winter Stage 3 wrapper development closed loop: Winter 2020 baseline transcription + full 58-candidate DEV_ONLY run + evaluation/error analysis + 12 focused tests
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1566 passed, 24 skipped, 8 warnings in 195.63s (0:03:15)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`ef9be99d5a3fd2ee2e00e1f49d617fafceb29510`；相关未提交路径：13 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：Winter 2020 原型语义转写（只读 references/winter_2020_model_check/model_check/lib，独立重写不 import）：BPMN 义务任务解析+可达性（含 is_reachable_from 恒真 bug 修正并披露）、条款 constraint/obligation/flow 解析、Pair fitness/cost_obligation/cost_resource/cost_so（gamma 0.4/delta 0.8/权重 1/3，入 versioned config）；唯一入口 scripts/run_winter_stage3_development.py + 评价器 scripts/evaluate_winter_stage3_development.py；58 条冻结候选全量运行（25 matching + 33 violation），产物 outputs/development/s34_winter_stage3_development_v1/（config_snapshot/predictions/evaluation/error_analysis/manifest）；DEV_ONLY 指标：matching P 0.44/R 1.0/F1 0.61/mean AP 0.64；violation macro F1 0.37/exact type acc 0.33（missing_action F1 0.95、incorrect_actor 0.0 vacuous（participant 空）、out_of_order 0.17）；gold-blind（runner 只读 blank pack）、确定性（双跑 byte-identical）、无 LLM/网络；12 项聚焦测试；MASTER_PIPELINE S3.4 行 development wrapper verified + 3.6.4 + P1 里程碑 0/150 修正为 150/150；PROJECT_AUDIT/CLAIM_EVIDENCE_MATRIX（C20/C21）同步；FILE_CATALOG 重建；全量 1566 passed/24 skipped；未读 .env、未调 LLM、未改 Gold/BPMN/correction
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,0 +1,55 @@
+{
+  "schema_version": "winter_stage3_development@1.0.0",
+  "config_version": "v1",
+  "task_id": "S3.4",
+  "claim": "Development-only Winter et al. (2020) Stage 3 baseline wrapper. Method semantics transcribed from the Winter prototype under references/winter_2020_model_check/model_check/lib (read-only provenance; code is re-implemented, not imported). Not a formal result; formal completion blocked on S1.7 and S2.13.",
+  "method": {
+    "source": "references/winter_2020_model_check/model_check/lib (main.py, classes/Pair.py, classes/Process.py, classes/Paragraph.py, classes/Sentence.py, classes/Clause.py, classes/SimilarityComputer.py, classes/Flow.py, classes/Document_Collection.py, functions.py)",
+    "semantics": "For every (BPMN model, regulation paragraph) pair: map every paragraph obligation clause to the maximally similar model obligation (spaCy en_core_web_sm .similarity on lemmatized text); fitness = mean similarity of mappings above gamma; obligation cost = fraction of clauses without a matching model obligation above gamma (missing action); resource cost = fraction of clauses whose matched task is similar (>gamma) but whose mentioned resource/actor is not the model participant (spaCy similarity < delta and no exact textual match) (incorrect actor); so (sequence/order) cost = fraction of paragraph flows whose condition matches and whose obligation task is reachable from the compared task but not vice versa (out of order).",
+    "gamma": 0.4,
+    "delta": 0.8,
+    "cost_weights": {"obligation": 0.3333333333333333, "resource": 0.3333333333333333, "so": 0.3333333333333333},
+    "only_constraints": true,
+    "prediction_rules": {
+      "matching_relevant": "fitness > 0 (a paragraph obligation maps to a model obligation with similarity > gamma); no extra threshold invented",
+      "violation_type": "cost_X > 0 for X in {obligation, resource, so}; no extra threshold invented"
+    },
+    "known_prototype_deviation": [
+      "is_reachable_from(sourceid, targetid) in Process.py returns 'targetid in reachability[targetid]' (always True). This is a deterministic code bug: it makes the 'not reachable back' conjunct always False and hence out-of-order cost always 0. Re-implemented as 'targetid in reachability[sourceid]' and disclosed; without the fix the out_of_order baseline would be vacuous.",
+      "resource (incorrect-actor) detection depends on the BPMN participant/process name attribute; the frozen GDPR7 BPMN files carry an empty process name (and empty lane names), so resource cost is expected to be vacuous on this data; disclosed as an input-contract limitation.",
+      "The prototype evaluates every regulation article against every model; this wrapper runs only the 25 matching pairs and 33 violation points frozen in the S3.2/S3.3 correction pack (input binding), so support matches the frozen Gold."
+    ]
+  },
+  "inputs": {
+    "bpmn_membership_contract": {
+      "path": "configs/datasets/stage1_stage3_gdpr7_v1.json",
+      "purpose": "frozen S3.1 all-seven GDPR BPMN membership"
+    },
+    "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+    "gold_annotation_blank_pack": {
+      "path": "data/development/human_review/stage3_gold_annotation_blank_v1.json",
+      "purpose": "58 frozen candidates (25 matching + 33 violation) with embedded rule_text; contains NO decisions, so the runner cannot read Gold"
+    },
+    "winter_lexicon_dir": {
+      "path": "references/winter_2020_model_check/model_check/input/files",
+      "role": "read-only provenance: signalwords.txt (constraint detection), sequencemarkers.txt (flow detection), stopwords.txt (lemmatization filtering)",
+      "files": ["signalwords.txt", "sequencemarkers.txt", "stopwords.txt"]
+    }
+  },
+  "runner": {
+    "entry": "scripts/run_winter_stage3_development.py",
+    "no_llm": true,
+    "no_network": true,
+    "no_env": true,
+    "gold_decisions_read": false,
+    "deterministic": true,
+    "run_dir_template": "outputs/development/s34_winter_stage3_development_<variant>/"
+  },
+  "evaluator": {
+    "entry": "scripts/evaluate_winter_stage3_development.py",
+    "gold_input": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+    "metrics_matching": ["support", "precision", "recall", "f1", "confusion", "mean_ap_per_process"],
+    "metrics_violation": ["per_type_support", "per_type_p/r/f1", "macro_f1", "micro_f1", "exact_type_accuracy", "detected/missed/wrong_type"],
+    "note": "no compliant (none) gold items exist in the frozen violation pack, so specificity/compliant accuracy is N/A"
+  }
+}

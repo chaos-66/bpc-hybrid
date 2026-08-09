@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-09
-**收录文件**：806 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：815 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -101,6 +101,7 @@
 | `configs/stage1_structural_s11_s14.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage2_evaluator_s210_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_corenlp_runtime.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/winter_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `data`
 
@@ -646,6 +647,7 @@
 | `scripts/evaluate_d1_r3_clean_rerun.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_d1_solcand_pilot_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_stage1_s16.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/evaluate_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/generate_file_catalog.py` | 活动 | 重建本逐文件目录 |
 | `scripts/ingest_sun_modality.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/modality_classifier_alignment_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -666,6 +668,7 @@
 | `scripts/run_stage3_fixture_harness.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_llm_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_rule_only.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/status.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/sun_selection_criteria_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -763,6 +766,11 @@
 | `src/bpc_hybrid/sun_style/sun_b0.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/syntactic_rules.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/violation_detection.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/winter_stage3/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/winter_stage3/winter_clause.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/winter_stage3/winter_model.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/winter_stage3/winter_pair.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/winter_stage3/winter_similarity.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/audit.py` | 活动 | Python 实现、脚本或测试 |
 | `src/formal_experiment/estg150_c1_transport.py` | 活动 | Python 实现、脚本或测试 |
@@ -902,6 +910,7 @@
 | `tests/test_sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_source_manifest.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_verification_receipt.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 
 ## `tools`
 

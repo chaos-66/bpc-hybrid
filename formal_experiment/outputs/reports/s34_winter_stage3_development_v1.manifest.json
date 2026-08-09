@@ -1,0 +1,119 @@
+{
+    "schema_version":  "winter_stage3_run_manifest@1.0.0",
+    "run_id":  "s34_winter_stage3_development_v1",
+    "task_id":  "S3.4",
+    "status":  "development_only",
+    "command":  "python scripts/run_winter_stage3_development.py",
+    "git":  {
+                "commit":  "ef9be99d5a3fd2ee2e00e1f49d617fafceb29510",
+                "dirty_paths":  [
+                                    "?? formal_experiment/configs/winter_stage3_development_v1.json",
+                                    "?? formal_experiment/scripts/evaluate_winter_stage3_development.py",
+                                    "?? formal_experiment/scripts/run_winter_stage3_development.py",
+                                    "?? formal_experiment/src/bpc_hybrid/winter_stage3/",
+                                    "?? formal_experiment/tests/test_winter_stage3_development.py"
+                                ]
+            },
+    "inputs":  {
+                   "bpmn_dir":  "data/input/stage1_stage3/gdpr7",
+                   "bpmn_files":  [
+                                      "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+                                      "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+                                      "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+                                      "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+                                      "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+                                      "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+                                      "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn"
+                                  ],
+                   "bpmn_dir_sha256":  null,
+                   "membership_contract":  {
+                                               "path":  "configs/datasets/stage1_stage3_gdpr7_v1.json",
+                                               "sha256":  "6bb2c0da4c51d06368bb858057374d9199e8d2ef494b6cb5c122be8744e11a42"
+                                           },
+                   "blank_pack":  {
+                                      "path":  "data/development/human_review/stage3_gold_annotation_blank_v1.json",
+                                      "sha256":  "e3f8596bcec9961c30bb90d60377f2889090e88171ca58987f127b1df72fb965",
+                                      "note":  "no decisions in the blank pack; runner is gold-blind"
+                                  },
+                   "winter_lexicon":  {
+                                          "dir":  "references/winter_2020_model_check/model_check/input/files",
+                                          "signalwords_sha256":  "447dcdb262065bdd99431dd447321da909800ad4fbd956f9bfce073f2d63e41a",
+                                          "sequencemarkers_sha256":  "0f1f62afb6fb33bdca30cd82e17e2b8d4994c6757db9816eb0ef2018084b3c51",
+                                          "stopwords_sha256":  "2772e28c477c4c4a3d7e2946a9d59d47ce1d44f3638df9dd6ceb429200f869cf"
+                                      },
+                   "bpmn_files_sha256":  {
+                                             "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn":  "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+                                             "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn":  "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+                                             "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn":  "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+                                             "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn":  "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+                                             "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn":  "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+                                             "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn":  "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+                                             "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn":  "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+                                         }
+               },
+    "method":  {
+                   "source":  "references/winter_2020_model_check/model_check/lib (main.py, classes/Pair.py, classes/Process.py, classes/Paragraph.py, classes/Sentence.py, classes/Clause.py, classes/SimilarityComputer.py, classes/Flow.py, classes/Document_Collection.py, functions.py)",
+                   "semantics":  "For every (BPMN model, regulation paragraph) pair: map every paragraph obligation clause to the maximally similar model obligation (spaCy en_core_web_sm .similarity on lemmatized text); fitness = mean similarity of mappings above gamma; obligation cost = fraction of clauses without a matching model obligation above gamma (missing action); resource cost = fraction of clauses whose matched task is similar (\u003egamma) but whose mentioned resource/actor is not the model participant (spaCy similarity \u003c delta and no exact textual match) (incorrect actor); so (sequence/order) cost = fraction of paragraph flows whose condition matches and whose obligation task is reachable from the compared task but not vice versa (out of order).",
+                   "gamma":  0.4,
+                   "delta":  0.8,
+                   "cost_weights":  {
+                                        "obligation":  0.3333333333333333,
+                                        "resource":  0.3333333333333333,
+                                        "so":  0.3333333333333333
+                                    },
+                   "only_constraints":  true,
+                   "prediction_rules":  {
+                                            "matching_relevant":  "fitness \u003e 0 (a paragraph obligation maps to a model obligation with similarity \u003e gamma); no extra threshold invented",
+                                            "violation_type":  "cost_X \u003e 0 for X in {obligation, resource, so}; no extra threshold invented"
+                                        },
+                   "known_prototype_deviation":  [
+                                                     "is_reachable_from(sourceid, targetid) in Process.py returns \u0027targetid in reachability[targetid]\u0027 (always True). This is a deterministic code bug: it makes the \u0027not reachable back\u0027 conjunct always False and hence out-of-order cost always 0. Re-implemented as \u0027targetid in reachability[sourceid]\u0027 and disclosed; without the fix the out_of_order baseline would be vacuous.",
+                                                     "resource (incorrect-actor) detection depends on the BPMN participant/process name attribute; the frozen GDPR7 BPMN files carry an empty process name (and empty lane names), so resource cost is expected to be vacuous on this data; disclosed as an input-contract limitation.",
+                                                     "The prototype evaluates every regulation article against every model; this wrapper runs only the 25 matching pairs and 33 violation points frozen in the S3.2/S3.3 correction pack (input binding), so support matches the frozen Gold."
+                                                 ]
+               },
+    "samples":  {
+                    "matching_candidates":  25,
+                    "violation_candidates":  33,
+                    "excluded":  [
+
+                                 ]
+                },
+    "safety":  {
+                   "llm_api_called":  false,
+                   "network_called":  false,
+                   "env_read":  false,
+                   "gold_decisions_read":  false,
+                   "correction_pack_read":  false,
+                   "bpmn_modified":  false,
+                   "no_overwrite":  true
+               },
+    "artifacts":  {
+                      "config_snapshot":  {
+                                              "path":  "config_snapshot.json",
+                                              "sha256":  "c57d9cad8061db6485536aabc266e81cdd7c5c9665ba2b042863c75a9d4b0a02"
+                                          },
+                      "predictions":  {
+                                          "path":  "predictions.jsonl",
+                                          "sha256":  "7dcf83878eb48127ef2b7f347e36806e48b12e2530e59350a36570fd08958b50"
+                                      },
+                      "evaluation":  {
+                                         "path":  "evaluation.json",
+                                         "sha256":  "83da026d278d998a2746729d0001a26ec182589395710e52473a372b4cf6cbc6"
+                                     },
+                      "error_analysis":  {
+                                             "path":  "error_analysis.md",
+                                             "sha256":  "07135dfe429f6ab73672cf00402ab9a24e47cff1692081cc0effb07438a5b501"
+                                         }
+                  },
+    "evaluation":  {
+                       "path":  "evaluation.json",
+                       "sha256":  "83da026d278d998a2746729d0001a26ec182589395710e52473a372b4cf6cbc6"
+                   },
+    "error_analysis":  {
+                           "path":  "error_analysis.md",
+                           "sha256":  "07135dfe429f6ab73672cf00402ab9a24e47cff1692081cc0effb07438a5b501"
+                       },
+    "manifest_copy_of":  "outputs/development/s34_winter_stage3_development_v1/manifest.json",
+    "run_dir":  "outputs/development/s34_winter_stage3_development_v1"
+}

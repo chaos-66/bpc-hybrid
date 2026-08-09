@@ -27,6 +27,8 @@
 | C17 | Barrientos 已实现 Sun 六要素或标签完全兼容 | PROHIBITED_CLAIM | schema/modality 不同 | 只能写工程借鉴与显式 adapter | 永不允许 |
 | C18 | Stage 2 与 Stage 3 或不同数据的数字可直接证明优劣 | PROHIBITED_CLAIM | C1–C4 比较合同 | 必须分表并标证据等级 | 永不允许 |
 | C19 | B0/D1 的低分主要由标注粒度与 constraint 定义口径差异解释（归因证据） | VERIFIED_PROJECT_FACT | 句子级粗 Gold（主口径，2026-08-07 用户决策对齐 Sun 粒度）：B0 F1 0.7186→0.7986、D1 0.7756→0.8726（同一粗 Gold，sha 6e19cf3c）；Sun-marker 收敛：B0 constraint R 1.0 (13/13)、condition R 0.989 (91/92)。产物 `outputs/development/s27_b0_coarse_gold_cc_v1/`、`s27_b0_coarse_gold_sentence_granularity_v1/`、`s27_d1_coarse_gold_sentence_granularity_v1/`；汇总 `outputs/reports/b0_d1_experiment_closure_brief.md` | 只写"development/attribution 证据表明粒度与定义口径影响显著"；不得改写为正式结论或"方法已达 Sun 水平"；marker 收敛仅支持 R 侧结论 | 正式 Gold 冻结后复核 |
+| C20 | Winter et al. (2020) Stage 3 baseline 已有 development 实现（S3.4 wrapper） | VERIFIED_PROJECT_FACT | `src/bpc_hybrid/winter_stage3/`（Winter 原型语义转写：spaCy 匹配、gamma 0.4/delta 0.8、fitness/cost 三分量）；全量 58 条冻结候选运行 `outputs/development/s34_winter_stage3_development_v1/`（DEV_ONLY：matching F1 0.61、violation macro F1 0.37）；manifest `s34_winter_stage3_development_v1/manifest.json` | 只能写"Winter baseline 已有 development 实现与 DEV_ONLY 指标"；不得把 DEV_ONLY 数字写成正式比较或 Stage 3 结论 | formal Oracle（S3.7）与正式 Gold 门禁 |
+| C21 | Stage 3 matching/violation Gold 标注已冻结（用户裁决） | VERIFIED_PROJECT_FACT | `data/development/human_review/stage3_gold_annotation_human_correction_v1.json`（25 matching=11 相关/14 不相关；33 violation=三类各 11）；冻结 manifest `s32_s33_gold_annotation_freeze_v1.manifest.json` | 可写"Stage 3 Gold 标注已冻结（LLM 无关、用户裁决）"；正式 Gold 发布仍待 stage3.status 合同门禁 | stage3.status 重锁 + publication gate 白名单 |
 
 新增任何结果性句子前，先在本表新增一行。正式回填必须记录 manifest 路径、事件
 时间、样本数、失败数、模型和 evaluator 版本；否则维持 `BLOCKED_RESULT`。
