@@ -106,7 +106,7 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
     tau = float(config["method"]["thresholds"]["tau"])
     gamma = float(config["method"]["thresholds"]["gamma"])
     theta = float(config["method"]["thresholds"]["theta"])
-    scorer = SunScorer(sim, tau, gamma, theta)
+    scorer = SunScorer(sim, tau, gamma, theta, nlp=nlp)
     models = build_sun_models(BPMN_DIR, STAGE1_CONTRACT, nlp)
 
     rule_cache: dict[str, dict[str, Any]] = {}
@@ -190,6 +190,7 @@ def write_run(config: dict[str, Any], variant: str) -> Path:
             "source_hashes": {"rule_record": rule_id, "process_record": process_id},
             "method_provenance": f"sun_2024 Def5-7 gamma={gamma} theta={theta}",
             "gold_visible": False,
+            "incorrect_actor_observable": ia["observable"],
             # diagnostic detail (score components per type, not Gold-driven)
             "scores": {
                 "missing_action": round(ma["score"], 6),

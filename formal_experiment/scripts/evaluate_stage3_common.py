@@ -123,8 +123,7 @@ def evaluate_violation(preds: list[dict[str, Any]],
     for p in preds:
         g = gold[p["item_id"]]["decision_violation_type"]
         pred = p.get("predicted_violation_type")
-        if p.get("incorrect_actor_score") is None and p.get("task") == "violation" \
-                and p.get("candidate_violation_type") == "incorrect_actor":
+        if p.get("incorrect_actor_observable") is False:
             unobservable += 1
         if pred == g:
             detected += 1
@@ -290,7 +289,7 @@ def write_error_analysis(run_dir: Path, predictions: list[dict[str, Any]],
             "out_of_order": p.get("out_of_order_score"),
         }
         note = ""
-        if p.get("incorrect_actor_score") is None and scores.get("incorrect_actor") is None:
+        if p.get("incorrect_actor_observable") is False:
             note = " [actor unobservable]"
         if pred != gold:
             lines.append(

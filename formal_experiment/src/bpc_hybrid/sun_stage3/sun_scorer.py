@@ -11,11 +11,28 @@ from typing import Any
 
 
 class SunScorer:
-    def __init__(self, sim, tau: float, gamma: float, theta: float):
+    def __init__(self, sim, tau: float, gamma: float, theta: float, nlp=None):
         self.sim = sim
         self.tau = tau
         self.gamma = gamma
         self.theta = theta
+        self.nlp = nlp
+        self._lemma_cache: dict[str, str] = {}
+
+    def _lemma(self, text: str) -> str:
+        """Lemmatized text for similarity comparisons, aligned with the
+        Winter baseline (same spaCy backend, controlled comparison)."""
+        if self.nlp is None:
+            return text
+        cached = self._lemma_cache.get(text)
+        if cached is None:
+            cached = " ".join(
+                w.lemma_ if w.lemma_ != "-PRON-" else w.text
+                for w in self.nlp(text)
+                if not w.is_punct and not w.is_space
+            )
+            self._lemma_cache[text] = cached
+        return cached
 
     # ------------------------------------------------------------- Definition 4
     def matching_score(self, rule_actions: list[str], rule_actors: list[str],
@@ -52,10 +69,11 @@ class SunScorer:
     def _best_action_match(self, rule_action: str, model: Any):
         best_score = 0.0
         best_name = None
+        rule_lemma = self._lemma(rule_action)
         for act in model.actions:
             if not act["name"]:
                 continue
-            score = self.sim.text_pair(rule_action, act["name"])
+            score = self.sim.text_pair(rule_lemma, self._lemma(act["name"]))
             if score > best_score:
                 best_score = score
                 best_name = act["name"]
@@ -65,15 +83,16 @@ class SunScorer:
         best_score = 0.0
         best_name = None
         best_kind = None
+        rule_lemma = self._lemma(rule_actor)
         # actors first (pool/lane names), then business objects
         for actor in model.actors:
-            score = self.sim.text_pair(rule_actor, actor)
+            score = self.sim.text_pair(rule_lemma, self._lemma(actor))
             if score > best_score:
                 best_score = score
                 best_name = actor
                 best_kind = model.actor_sources.get(actor, "actor")
         for bo in model.business_objects:
-            score = self.sim.text_pair(rule_actor, bo["object"])
+            score = self.sim.text_pair(rule_lemma, self._lemma(bo["object"]))
             if score > best_score:
                 best_score = score
                 best_name = bo["object"]
@@ -120,7 +139,10 @@ class SunScorer:
             for act in model.actions:
                 if not act["name"]:
                     continue
-                score = self.sim.text_pair(rule_actions[0] if rule_actions else "", act["name"])
+                score = self.sim.text_pair(
+                    self._lemma(rule_actions[0] if rule_actions else ""),
+                    self._lemma(act["name"]),
+                )
                 if score > best_action_score:
                     best_action_score = score
                     best_action = act["name"]
@@ -132,7 +154,9 @@ class SunScorer:
                 for act in model.actions:
                     if not act["name"]:
                         continue
-                    score = self.sim.text_pair(rule_action, act["name"])
+                    score = self.sim.text_pair(
+                        self._lemma(rule_action), self._lemma(act["name"])
+                    )
                     if score > actor_action_score:
                         actor_action_score = score
             if actor_action_score > self.gamma:
@@ -150,12 +174,12 @@ class SunScorer:
         c_set = []
         for actor in model.actors:
             for ra in r_set:
-                if self.sim.text_pair(ra, actor) > self.gamma:
+                if self.sim.text_pair(self._lemma(ra), self._lemma(actor)) > self.gamma:
                     c_set.append(actor)
                     break
         for bo in model.business_objects:
             for ra in r_set:
-                if self.sim.text_pair(ra, bo["object"]) > self.gamma:
+                if self.sim.text_pair(self._lemma(ra), self._lemma(bo["object"])) > self.gamma:
                     c_set.append(bo["object"])
                     break
         violations = 0
@@ -174,7 +198,7 @@ class SunScorer:
         for ra in r_set:
             worst = 1.0
             for c in c_set:
-                score = self.sim.text_pair(ra, c)
+                score = self.sim.text_pair(self._lemma(ra), self._lemma(c))
                 if score < worst:
                     worst = score
             violated = worst < self.theta
