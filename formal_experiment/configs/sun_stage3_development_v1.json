@@ -42,7 +42,13 @@
     },
     "gold_annotation_blank_pack": {
       "path": "data/development/human_review/stage3_gold_annotation_blank_v1.json",
-      "purpose": "58 frozen candidates with embedded rule_text; NO decisions read by the runner"
+      "purpose": "VERIFICATION/TRACEABILITY ONLY: the frozen blank pack is the source the inference pack is derived from; the RUNNER does not read it for inference. The runner consumes the inference pack below.",
+      "runner_usage": "not read by the runner"
+    },
+    "inference_pack": {
+      "path": "data/development/human_review/stage3_gold_inference_v1.json",
+      "purpose": "RUN INPUT: gold-blind inference contract (item ids + rule_text + check_type only; no decision/candidate/evidence fields)",
+      "runner_usage": "read by the runner"
     },
     "winter_lexicon_dir": {
       "path": "references/winter_2020_model_check/model_check/input/files",

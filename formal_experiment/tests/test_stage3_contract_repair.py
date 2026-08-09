@@ -322,3 +322,78 @@ def test_finalise_export_index_hashes_match(tmp_path) -> None:
     manifest = _load_json(run_dir / "manifest.json")
     assert manifest["finalised"] is True
     assert manifest["artifacts"]["predictions"]["sha256"] == expected
+
+# ------------------------------------------- baseline sensitivity (real re-exec)
+def _sim_table(table):
+    def factory(m):
+        def sim(a, b):
+            return table.get((a.lower(), b.lower()), 0.0)
+        return sim
+    return factory
+
+
+def test_baseline_gamma_changes_missing_action() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    # rule action "notify" vs model action "Notify": similarity 0.6
+    model = _simple_model(["Notify"])
+    factory = _sim_table({("notify", "notify"): 0.6})
+    loose = BaselineScorer(factory, 0.5, 0.4, 0.5)   # gamma 0.4: 0.6 > 0.4 -> matched
+    strict = BaselineScorer(factory, 0.5, 0.8, 0.5)  # gamma 0.8: 0.6 < 0.8 -> missing
+    assert loose.missing_action(["notify"], model)["missing"] == 0
+    assert strict.missing_action(["notify"], model)["missing"] == 1
+    assert strict.missing_action(["notify"], model)["denominator"] == 1
+
+
+def test_baseline_gamma_changes_actor_observability() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    model = _simple_model(["Notify"], actors=["Data Controller"])
+    factory = _sim_table({("notify", "notify"): 0.6, ("data controller", "data controller"): 1.0})
+    loose = BaselineScorer(factory, 0.5, 0.5, 0.5)
+    strict = BaselineScorer(factory, 0.5, 0.9, 0.5)
+    ia_loose = loose.incorrect_actor(["notify"], ["Data Controller"], model)
+    ia_strict = strict.incorrect_actor(["notify"], ["Data Controller"], model)
+    assert ia_loose["observable"] is True      # action mapping 0.6 > 0.5
+    assert ia_loose["denominator"] == 1
+    assert ia_strict["observable"] is False    # action mapping 0.6 < 0.9
+    assert ia_strict["reason"] == "action_mapping_below_gamma"
+
+
+def test_baseline_gamma_changes_order_denominator() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    model = _simple_model(["Review", "Escalate"], reachable={"a0": ["a1"]})
+    factory = _sim_table({("review", "review"): 0.6, ("escalate", "escalate"): 0.6})
+    loose = BaselineScorer(factory, 0.5, 0.5, 0.5)
+    strict = BaselineScorer(factory, 0.5, 0.9, 0.5)
+    oo_loose = loose.out_of_order([("review", "escalate")], ["review", "escalate"], model)
+    oo_strict = strict.out_of_order([("review", "escalate")], ["review", "escalate"], model)
+    assert oo_loose["denominator"] == 1        # both endpoints 0.6 > 0.5
+    assert oo_strict["denominator"] == 0       # both endpoints 0.6 < 0.9
+
+
+def test_baseline_theta_changes_actor_judgement() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    model = _simple_model(["Notify"], actors=["Data Controller"])
+    factory = _sim_table({("notify", "notify"): 1.0, ("data controller", "data controller"): 0.6})
+    lenient = BaselineScorer(factory, 0.5, 0.5, 0.5)   # theta 0.5: 0.6 >= 0.5 -> ok
+    strict = BaselineScorer(factory, 0.5, 0.5, 0.8)    # theta 0.8: 0.6 < 0.8 -> violation
+    assert lenient.incorrect_actor(["notify"], ["Data Controller"], model)["score"] == 0.0
+    assert strict.incorrect_actor(["notify"], ["Data Controller"], model)["score"] > 0.0
+
+
+def test_baseline_sensitivity_is_not_fixed_score_cutoff() -> None:
+    from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
+    # score 0.6 is fixed; a pure cutoff at gamma=0.9 would still use score 0.6
+    # and predict "not missing", but the real re-execution changes the
+    # mapping (0.6 < 0.9) and therefore the score to 1.0 (missing fraction)
+    model = _simple_model(["Notify"])
+    factory = _sim_table({("notify", "notify"): 0.6})
+    scorer_primary = BaselineScorer(factory, 0.5, 0.5, 0.5)
+    scorer_strict = BaselineScorer(factory, 0.5, 0.9, 0.5)
+    ma_primary = scorer_primary.missing_action(["notify"], model)
+    ma_strict = scorer_strict.missing_action(["notify"], model)
+    assert ma_primary["score"] == 0.0
+    assert ma_strict["score"] == 1.0          # re-mapping changed the score itself
+    # the old (wrong) cutoff approach would have kept score 0.0 and compared
+    # 0.0 > 0.9 -> not missing; the real re-execution says missing
+    assert (ma_primary["score"] > 0.9) is False  # fixed-score cutoff view
+    assert ma_strict["missing"] == 1             # real re-execution view

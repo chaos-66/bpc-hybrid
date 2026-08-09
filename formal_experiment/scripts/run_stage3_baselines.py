@@ -351,7 +351,7 @@ def main() -> int:
         # baseline gamma/theta cutoff sweep (evaluation-side script reads Gold; runner does not)
         sens_script = ROOT / "scripts" / "baseline_stage3_sensitivity.py"
         result = subprocess.run(
-            [sys.executable, str(sens_script), "--run-dir", str(run_dir)],
+            [sys.executable, str(sens_script), "--run-dir", str(run_dir), "--arm", args.arm],
             cwd=ROOT, text=True, encoding="utf-8", errors="replace",
             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         if result.returncode != 0:

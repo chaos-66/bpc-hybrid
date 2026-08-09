@@ -3025,3 +3025,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：从干净 checkpoint（67758f5）重放 5 个 run：Winter v3_clean（corrected）/v3_prototype_literal、Sun v2（修复后，不覆盖 v1，before/after：unobs 33→10、macro 0.333→0.389、exact 0.333→0.364）、BM25 v1、TF-IDF/SVD v1；全部 58 条、0 排除、manifest 绑定干净 commit/dirty=0/finalised、export_index 完整；DEV_ONLY 同口径比较（compare_stage3_methods_dev.json）：Winter MAP 0.6429/macro 0.373；Sun MAP 0.8175/binary 0.0/macro 0.389/unobs 10（action_mapping_below_gamma）；BM25 MAP 0.6833/macro 0.333/unobs 11；TF-IDF MAP 0.5881/macro 0.542/actor F1 0.625/unobs 6；evidence capsule 5 份（outputs/evidence/，版本化可提交，含 capsule_manifest 与 hash）；.gitignore 加 evidence 白名单；MASTER_PIPELINE 3.6.6 + S3.4/S3.5/S3.6 行、PROJECT_AUDIT 同步；全量 1601 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction；所有指标 DEV_ONLY 未提升为 formal
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-09T13:34:21.850897+00:00 - S3.6 sensitivity method fix (checkpoint 1 of 2): baseline gamma/theta sweeps re-instantiate the scorer and recompute mappings/denominators/observability; hand-computed fixtures; config wording corrections
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1606 passed, 24 skipped, 19 warnings in 210.72s (0:03:30)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`34f11c7ebd64d1fc29c41c307c80aca92e8e9eb0`；相关未提交路径：5 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
+- 备注：修正 baseline sensitivity 方法错误：BaselineScorer 的 gamma 影响 missing action 判定、incorrect actor R 集合、out-of-order 端点映射与分母，theta 影响 actor 判定——sweep 必须重实例化 scorer 重算（映射/R/C/分母/可观测性/分数/预测），删除 mappings parameter-free 错误声明；matching tau 仍为固定 score cutoff；新增 5 项手算 fixture（gamma 改变 missing/actor observability/order denominator、theta 改变 actor 判定、新 sensitivity 非固定 score cutoff）；runner sensitivity 调用补 --arm；Sun config 输入措辞修正（inference pack=运行输入、blank pack=验证/溯源）；S3.6 阈值 0.5 措辞修正（fixed development setting before this run、非 blind preregistration、不宣称排除 benchmark exposure）；全量 1606 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
