@@ -1,0 +1,275 @@
+{
+  "count": 33,
+  "dataset_id": "stage3_violation_gold_v1",
+  "items": [
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 33(1) obliges the controller to notify the supervisory authority without undue delay after becoming aware of a breach; candidate: is the notification activity present after breach detection?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v001",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 33(1) assigns notification to the controller; candidate: is the notification performed by the controller lane and not by an external party?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v002",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 33(1)/(3) requires notification not later than 72 hours; candidate: does notification precede delay-handling that could postpone it past the deadline?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v003",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 34(1) obliges the controller to communicate a high-risk breach to the data subject without undue delay; candidate: is that communication activity present?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v004",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article34"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 34(1) assigns the communication duty to the controller; candidate: is the communication executed by the correct actor?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v005",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article34"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 34(1) requires communication without undue delay; candidate: does communication happen before the delay branch?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v006",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article34"
+    },
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 7(3) requires that the data subject can withdraw consent at any time and is informed of that right before giving consent; candidate: is the withdrawal-right information present?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v007",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article7"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 7(1) requires consent to be obtained from the data subject by the controller; candidate: is consent collected from the correct party?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v008",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article7"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 7(3) requires informing about the withdrawal right before consent is given; candidate: does the information precede the consent collection?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v009",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article7"
+    },
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 6(1) requires a lawful basis for every processing; candidate: is the legal-basis determination activity present?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v010",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article6"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 6(1) places the lawfulness determination on the controller; candidate: is the determination performed by the controller?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v011",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article6"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 6(1)(a) ties processing to consent; candidate: does the legal-basis check follow rather than precede consent collection?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v012",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article6"
+    },
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 22(1)/(3) requires safeguards and information for automated decision-making including profiling; candidate: is the profiling information present?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v013",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 22(3) requires suitable measures by the controller; candidate: is the information supplied by the controller?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v014",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 22(2)(a) allows automated decisions based on explicit consent; candidate: does profiling information follow rather than precede consent?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v015",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 15(1) obliges the controller to provide access to the data subject; candidate: is the communication activity present?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v016",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 15(1) gives the right to the data subject and imposes the duty on the controller; candidate: is the retrieval/communication performed by the controller?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v017",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 12(3) requires acting on a request without undue delay and at the latest within one month; candidate: does communication precede any uncontrolled delay?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v018",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    },
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 20(1) requires the controller to provide the data in a structured, commonly used and machine-readable format; candidate: is the provision activity present?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v019",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 20(1) gives portability to the data subject; candidate: is the data handed to the data subject (not a third party by default)?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v020",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 12(3) applies the without-undue-delay duty; candidate: does the transfer follow the request without delay?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v021",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 7(3) requires that withdrawal is as easy as giving consent; candidate: is a withdrawal-communication activity present?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v022",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article7"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 7(3) requires the controller to stop processing on withdrawal; candidate: is the stop action executed by the controller?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v023",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article7"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 7(3) requires cessation without undue delay after withdrawal; candidate: does the stop precede any further processing?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v024",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article7"
+    },
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 17(1)(b) requires erasure when consent is withdrawn and no other legal basis applies; candidate: is an erasure/stop activity present?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v025",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 17(1) duties rest with the controller; candidate: is the erasure executed by the controller?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v026",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 17(1) requires erasure without undue delay; candidate: does the stop precede rather than follow continued processing?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v027",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 16 requires the controller to rectify inaccurate personal data without undue delay; candidate: is the rectification activity present?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v028",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 16 assigns the rectification duty to the controller; candidate: is the rectification performed by the controller?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v029",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 16 with Art 12(3) requires acting without undue delay and communicating the rectification; candidate: does communication follow the rectification promptly?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v030",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "check_type": "missing_action",
+      "decision_evidence": "Art 17(1) requires the controller to erase personal data without undue delay; candidate: is an erasure activity present?",
+      "decision_violation_type": "missing_action",
+      "item_id": "v031",
+      "process_id": "gdpr_7_right_to_be_forgotten",
+      "rule_id": "article17"
+    },
+    {
+      "check_type": "incorrect_actor",
+      "decision_evidence": "Art 17(1) imposes the erasure duty on the controller; candidate: is the erasure executed by the controller?",
+      "decision_violation_type": "incorrect_actor",
+      "item_id": "v032",
+      "process_id": "gdpr_7_right_to_be_forgotten",
+      "rule_id": "article17"
+    },
+    {
+      "check_type": "out_of_order",
+      "decision_evidence": "Art 17(1) requires erasure without undue delay and Art 19 requires informing about erasure; candidate: does erasure precede communication?",
+      "decision_violation_type": "out_of_order",
+      "item_id": "v033",
+      "process_id": "gdpr_7_right_to_be_forgotten",
+      "rule_id": "article17"
+    }
+  ],
+  "schema_version": "stage3_formal_gold@1.0.0",
+  "sources": {
+    "correction_pack_sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f",
+    "inference_pack_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4"
+  }
+}

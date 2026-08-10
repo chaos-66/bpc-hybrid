@@ -89,13 +89,41 @@ def _git_head() -> str:
 
 
 def _git_dirty() -> list[str]:
+    """Porcelain dirty entries, excluding this publisher's own output paths.
+
+    The publisher's own outputs (input/gold/manifest/report) are created by
+    this very run, so they must not count as unexpected dirty state; without
+    this exclusion the manifest's git snapshot would differ between the first
+    run and a byte-identical replay, breaking deterministic replay.
+    """
+    publisher_outputs = {str(p.relative_to(ROOT)).replace("\\", "/") for p in (
+        OUT_ESTG150_INPUT, OUT_STAGE2_GOLD, OUT_MATCHING_GOLD,
+        OUT_VIOLATION_GOLD, OUT_MANIFEST, OUT_REPORT)}
+    # porcelain reports untracked files grouped by directory, so a freshly
+    # created output directory may appear as "?? data/gold/stage2/" instead
+    # of per-file entries; exclude those directory-level entries too.
+    publisher_dirs = {str(p.parent.relative_to(ROOT)).replace("\\", "/") for p in (
+        OUT_ESTG150_INPUT, OUT_STAGE2_GOLD, OUT_MATCHING_GOLD,
+        OUT_VIOLATION_GOLD, OUT_MANIFEST, OUT_REPORT)}
     try:
         out = subprocess.run(
             ["git", "status", "--porcelain"], cwd=ROOT, capture_output=True,
             text=True, check=True).stdout.strip()
-        return out.splitlines()[:20]
+        entries = out.splitlines()
     except Exception:  # pragma: no cover
         return []
+    filtered = []
+    for entry in entries:
+        path = entry[3:].strip().strip('"')
+        norm = path.replace("\\", "/").rstrip("/")
+        # porcelain may report paths relative to the repo root (e.g. with
+        # status.relativePaths=false) instead of relative to ROOT
+        if norm.startswith("formal_experiment/"):
+            norm = norm[len("formal_experiment/"):]
+        if norm in publisher_outputs or norm in publisher_dirs:
+            continue
+        filtered.append(entry)
+    return filtered[:20]
 
 
 def _canonical_json(payload: dict[str, Any]) -> bytes:
@@ -437,7 +465,18 @@ def main() -> int:
         "",
         "## Artifacts",
     ]
-    for path, digest in artifact_hashes.items():
+    # stable explicit artifact order (dict iteration order must not leak
+    # into the human report; the manifest dict gains an entry after it is
+    # written, so its insertion order differs between run 1 and replays)
+    artifact_order = [
+        "data/input/estg150_formal_input_v1.json",
+        "data/gold/stage2/estg150_formal_gold_v1.json",
+        "data/gold/stage3/stage3_matching_gold_v1.json",
+        "data/gold/stage3/stage3_violation_gold_v1.json",
+        "outputs/reports/formal_gold_publication_v1.manifest.json",
+    ]
+    for path in artifact_order:
+        digest = artifact_hashes[path]
         report_lines.append(f"- `{path}` sha256={digest[:16]}...")
     report_lines += [
         "",
