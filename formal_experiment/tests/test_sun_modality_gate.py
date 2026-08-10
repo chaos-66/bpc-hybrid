@@ -398,12 +398,15 @@ class TestGateIsolation:
         assert publication_gate["status"] in publication_gate[
             "allowed_publication_statuses"
         ]
-        assert all(
-            method["formal_status"] != "ready" for method in status["methods"]
-        )
-        assert next(
-            method for method in status["methods"] if method["id"] == "sun_rule_only"
-        )["formal_status"] == "blocked_final_sun_stage2_reimplementation_required"
+        # sun_rule_only was promoted to ready by explicit user authorization
+        # on 2026-08-10 (B0-R4 formal candidate closure); the two LLM methods
+        # remain blocked, which keeps the final-experiment gate closed.
+        by_id = {m["id"]: m for m in status["methods"]}
+        assert by_id["sun_rule_only"]["formal_status"] == "ready"
+        assert by_id["sun_rule_only"]["command_status"] == \
+            "formal_ready_candidate_authorized"
+        assert by_id["sun_llm_fallback"]["formal_status"] != "ready"
+        assert by_id["direct_llm"]["formal_status"] != "ready"
         manifest = json.loads(
             (PROJECT_ROOT / gate.MANIFEST_REL).read_text(encoding="utf-8")
         )

@@ -66,17 +66,10 @@
   "formal_predictions_capsule_produced": false,
   "formal_results_capsule_produced": false,
   "git": {
-    "commit": "956c771358acea9fdfe1cc35899bd47ae2149a4f",
+    "commit": "16c76266834c23c332680500cbbf29df8d0a35db",
     "dirty_paths": [
-      "A  formal_experiment/configs/schemas/estg150_formal_inference_input_v2.schema.json",
-      "M  formal_experiment/docs/EXPERIMENT_EVENTS.jsonl",
-      "M  formal_experiment/docs/EXPERIMENT_LOG.md",
-      "M  formal_experiment/docs/FILE_CATALOG.md",
-      "AM formal_experiment/scripts/publish_formal_benchmark_v2.py",
-      "A  formal_experiment/scripts/verify_formal_benchmark_release_v2.py",
-      "M  formal_experiment/src/formal_experiment/audit.py",
-      "M  formal_experiment/src/formal_experiment/status.py",
-      "A  formal_experiment/tests/test_formal_benchmark_release_v2.py"
+      "M formal_experiment/configs/methods.json",
+      " M formal_experiment/tests/test_sun_modality_gate.py"
     ],
     "note": "release manifest records publisher git state; artifact bytes are commit-independent"
   },
@@ -88,7 +81,7 @@
   "implementation_hashes": {
     "experiment_contract": "2b0c3e8ba94353b080f46ad167d55e2cfa645ea7436277f07ec0a328bb536d7a",
     "input_v2_schema": "d68dcff28b442e9a03398790901db4148244a1f7e9dd156a425af74e64d2cab9",
-    "methods_config": "af3b0aa42623cddf18af3e8c8cbef59fb1cb3cff0dbb45db9d920e1cfe599ae9",
+    "methods_config": "ebb953ec8754af6d7057e0860b7e3dbd0722d0f66a12d89b3aa05617a9048158",
     "prediction_schema": "d94941c1f7ea90f768d7244bdb72ac3c588b727e0f1fcb4e4732ef8b239259ea",
     "publisher": "5a5d84e63b92ea9e686986e22b94ede13981a94a72ca200be08552f0fd0cec06",
     "stage2_gold_schema": "78b44dc6cbc8bd108f29720803c77f7202ebd40774c3c473a5e8e96a5e93707a",

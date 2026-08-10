@@ -3142,3 +3142,16 @@
 - 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T10:56:13.684033+00:00 - sun_rule_only method gate authorization APPLIED per explicit user authorization (2026-08-10): configs/methods.json sun_rule_only formal_status blocked_final_sun_stage2_reimplementation_required -> ready AND command_status development_only_not_formal -> formal_ready_candidate_authorized; ONLY this method changed - sun_llm_fallback/direct_llm/experiment_contract/stage3 gate/Gold/publication status all untouched; no real LLM/API called. release manifest v2 methods_config implementation hash re-published (v2 input/Gold bytes unchanged, replay byte-identical, verifier 53 checks pass); audit formal_methods_not_ready reduced 3->2 methods, final_experiment_ready stays False, methods_unexpectedly_ready not triggered; test_sun_modality_gate isolation boundary assertions updated (sun_rule_only ready + others blocked); authorization dry-run package marked applied; MASTER_PIPELINE changelog 3.4.37 + B0-R4 promotion row + PROJECT_AUDIT 6.2 updated; 1664 tests passed
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1664 passed, 24 skipped, 19 warnings in 309.15s (0:05:09)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`16c76266834c23c332680500cbbf29df8d0a35db`；相关未提交路径：7 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
