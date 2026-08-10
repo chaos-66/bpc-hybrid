@@ -1,0 +1,122 @@
+{
+  "schema_version": "sun_rule_only_method_gate_authorization_dry_run@1.0.0",
+  "status": "dry_run_not_applied",
+  "purpose": "The ONLY formal method gate change the user is asked to decide. Nothing in this package is applied; methods.json / experiment_contract.json / Stage 3 gate / Gold / publication status are untouched.",
+  "methods_json_change": {
+    "file": "configs/methods.json",
+    "scope": "sun_rule_only only; direct_llm and sun_llm_fallback untouched",
+    "before": {
+      "id": "sun_rule_only",
+      "paper_label": "Rules-Only",
+      "paper_label_zh": "纯规则法",
+      "canonical_label": "sun_stage2_baseline",
+      "role": "baseline",
+      "llm_used": false,
+      "formal_status": "blocked_final_sun_stage2_reimplementation_required",
+      "method_conformance_status": "verified_method_level_independent_reconstruction",
+      "current_command": "python scripts/run_sun_rule_only.py",
+      "command_status": "development_only_not_formal",
+      "notes": "Legacy ID retained. The intended baseline is the complete final Sun Stage 2 (BERT-TextCNN plus CoreNLP/Tregex/Tsurgeon phrase extraction). method_conformance_status was flipped to 'verified_method_level_independent_reconstruction' by explicit user authorization on 2026-08-04 (B0-R2 gate, recorded in EXPERIMENT_EVENTS.jsonl): the component-vs-method cross-walk is documented in docs/B0_R2_METHOD_CROSSWALK.md (Tsurgeon is an honest non-implementation with a fail-closed guard; lexicon scale and segmentation mechanisms are disclosed adaptations). The runner remains a development reconstruction and must not be reported as Sun's original implementation or an exact reproduction; formal performance results still require the formal Gold/route/stage3 locks."
+    },
+    "after": {
+      "id": "sun_rule_only",
+      "paper_label": "Rules-Only",
+      "paper_label_zh": "纯规则法",
+      "canonical_label": "sun_stage2_baseline",
+      "role": "baseline",
+      "llm_used": false,
+      "formal_status": "ready",
+      "method_conformance_status": "verified_method_level_independent_reconstruction",
+      "current_command": "python scripts/run_sun_rule_only.py",
+      "command_status": "formal_ready_candidate_authorized",
+      "notes": "Legacy ID retained. The intended baseline is the complete final Sun Stage 2 (BERT-TextCNN plus CoreNLP/Tregex/Tsurgeon phrase extraction). method_conformance_status was flipped to 'verified_method_level_independent_reconstruction' by explicit user authorization on 2026-08-04 (B0-R2 gate, recorded in EXPERIMENT_EVENTS.jsonl): the component-vs-method cross-walk is documented in docs/B0_R2_METHOD_CROSSWALK.md (Tsurgeon is an honest non-implementation with a fail-closed guard; lexicon scale and segmentation mechanisms are disclosed adaptations). The runner remains a development reconstruction and must not be reported as Sun's original implementation or an exact reproduction; formal performance results still require the formal Gold/route/stage3 locks. B0-R4 formal candidate completed 2026-08-10 (F1 0.71865, P 0.6845 / R 0.7564, identical to the development snapshot), bound to formal input v2; formal status promoted by user authorization (dry-run package), NOT applied yet."
+    },
+    "diff_fields": [
+      "formal_status",
+      "command_status",
+      "notes"
+    ]
+  },
+  "proposed_formal_status": "ready",
+  "binding_hashes": {
+    "b0_config": {
+      "path": "configs/models/estg150_b0_enhanced_s27_v10a.json",
+      "sha256": "151c0cd2261075c1cd2dfe45757213736bd8c66b184bd70c6a4cd511551597d8"
+    },
+    "b0_runner": {
+      "path": "scripts/run_estg150_b0_formal.py",
+      "sha256": "6993956eadefd0803b7cf361b9f050539bb03a9b4a5e2c0e92c1935c1cff10d0"
+    },
+    "formal_input_v2": {
+      "path": "data/input/estg150_formal_inference_input_v2.json",
+      "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2"
+    },
+    "gold_stage2": {
+      "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+      "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+    },
+    "primary_evaluator_config": {
+      "path": "configs/evaluation/sun_table8_literal_overlap_v2.json",
+      "sha256": "352113b568c6075c8b01dafa5fdf2e5ab4a1454bb10933cd2f9c27f5c008cc3f"
+    },
+    "strict_evaluator_config": {
+      "path": "configs/stage2_evaluator_s210_v3.json",
+      "sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f"
+    },
+    "release_manifest_v2": {
+      "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+      "sha256": "4a89ec2fb3e8317a933744c19bb47aa740c82dc61059829b3b61ce76135fb98f"
+    },
+    "candidate_manifest": {
+      "path": "outputs/development/b0_r4_formal_candidate_v1/manifest.json",
+      "sha256": "56ef81d7179ef6d1156c4837532107ac2358d8c7d73cbca50f4d27c57fdcea70"
+    }
+  },
+  "candidate_metrics": {
+    "records": 150,
+    "sun_literal_overlap_primary": {
+      "ground_truth": 1055,
+      "extracted": 1141,
+      "matched_predictions": 781,
+      "matched_ground_truth": 798,
+      "misclassified": 360,
+      "missed": 257,
+      "precision": 0.684487291849255,
+      "recall": 0.7563981042654029,
+      "f1": 0.7186482580011335
+    },
+    "replay_evidence": {
+      "main_dir": "outputs/development/b0_r4_formal_candidate_v1",
+      "replay_dir": "outputs/development/b0_r4_formal_candidate_v1_replay",
+      "primary_metrics_byte_identical": true,
+      "error_analysis_byte_identical": true,
+      "config_snapshot_byte_identical": true,
+      "attempts_record_content_identical": true,
+      "nondeterministic_only": "runtime latency / seconds (performance timing)",
+      "claim_scope": "formal_candidate_not_yet_authorized_as_formal_result"
+    },
+    "comparison_with_development_snapshot": "identical metrics to the B0-R3 development snapshot (F1 0.71865): method semantics unchanged; only the input channel changed to formal input v2 (Gold-blind)"
+  },
+  "formal_run_command_after_authorization": "python scripts/run_estg150_b0_formal.py --runtime-home D:\\environment\\stanford-corenlp-4.5.10 --output-dir outputs/development/b0_r4_formal_candidate_v2_authorized && python scripts/audit_project.py",
+  "expected_audit_changes_after_authorization": {
+    "formal_methods_not_ready": "sun_rule_only moves out of the non-ready set",
+    "final_experiment_not_ready": "remains present while sun_llm_fallback and direct_llm are not ready (their authorization is a separate decision)",
+    "methods_unexpectedly_ready": "MUST NOT trigger: audit currently errors when ALL three methods are ready; with only sun_rule_only ready the non-ready set still has 2 members"
+  },
+  "rollback": {
+    "git": "git revert of the authorization commit (methods.json only)",
+    "manual": "restore configs/methods.json sun_rule_only formal_status to 'blocked_final_sun_stage2_reimplementation_required' and command_status to 'development_only_not_formal'; the candidate outputs under outputs/development are non-formal and need no rollback"
+  },
+  "readiness_ref": {
+    "path": "outputs/reports/b0_d1_formal_readiness_v2.json",
+    "all_methods_bound_to_formal_input_v2": true
+  },
+  "untouched": [
+    "configs/methods.json direct_llm",
+    "configs/methods.json sun_llm_fallback",
+    "configs/experiment_contract.json",
+    "stage3 gate",
+    "Gold files",
+    "publication status"
+  ]
+}

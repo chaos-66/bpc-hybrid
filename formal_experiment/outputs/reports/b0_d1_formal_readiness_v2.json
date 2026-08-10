@@ -1,0 +1,187 @@
+{
+  "schema_version": "b0_d1_formal_readiness@2.0.0",
+  "generated_zero_api": true,
+  "formal_input_v2": {
+    "path": "data/input/estg150_formal_inference_input_v2.json",
+    "records": 150,
+    "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2"
+  },
+  "gold_stage2": {
+    "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+  },
+  "membership_sha256": "e8e6268644cbc9b7ed42bef19f2e2e2432633a306eab9bf009725ef9571785d7",
+  "methods": {
+    "sun_rule_only": {
+      "method": "sun_rule_only",
+      "snapshot": "formal_candidate_v1 (run by run_estg150_b0_formal.py)",
+      "llm_calls_recorded": 0,
+      "binding_ok": true,
+      "zero_api_reevaluation_allowed": true,
+      "checks": [
+        {
+          "item": "B0 method is zero-API (llm_used=false)",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "item": "B0 formal candidate runner exists",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "item": "B0 historical attempts 150 rows",
+          "ok": true,
+          "detail": "150 rows (development provenance only)"
+        },
+        {
+          "item": "B0 historical ids == formal v2 ids",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "item": "B0 history is development-only (not formal)",
+          "ok": true,
+          "detail": ""
+        }
+      ],
+      "verdict": "zero-API by construction; formal candidate run required"
+    },
+    "direct_llm": {
+      "method": "direct_llm",
+      "snapshot": "s27_d1_v6_r3_clean_rerun_150_hist56d_v1",
+      "llm_calls_recorded": 150,
+      "binding_ok": true,
+      "zero_api_reevaluation_allowed": true,
+      "checks": [
+        {
+          "item": "D1 snapshot exists (input/predictions/manifest)",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "item": "D1 predictions 150 rows",
+          "ok": true,
+          "detail": "150 rows"
+        },
+        {
+          "item": "D1 prediction ids == formal input v2 ids",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "item": "D1 predictions schema-valid",
+          "ok": true,
+          "detail": "150/150"
+        },
+        {
+          "item": "D1 input text == formal v2 text (150/150)",
+          "ok": true,
+          "detail": "0 mismatches"
+        },
+        {
+          "item": "D1 prompt hash == registry lock",
+          "ok": true,
+          "detail": "registry=3aa64877cd4c4dae"
+        },
+        {
+          "item": "D1 prompt file == registry lock",
+          "ok": true,
+          "detail": "disk=3aa64877cd4c4dae"
+        },
+        {
+          "item": "D1 run manifest prompt == lock",
+          "ok": true,
+          "detail": "manifest=3aa64877cd4c4dae"
+        },
+        {
+          "item": "D1 model == deepseek-v4-pro",
+          "ok": true,
+          "detail": "deepseek-v4-pro"
+        },
+        {
+          "item": "D1 sampling t0/top1/4096",
+          "ok": true,
+          "detail": "{'temperature': 0.0, 'top_p': 1.0, 'seed': 'unsupported_or_omitted', 'max_tokens': 4096}"
+        },
+        {
+          "item": "D1 no gold read by runner",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "item": "D1 evaluator config == registry lock",
+          "ok": true,
+          "detail": "disk=352113b568c6075c"
+        }
+      ],
+      "verdict": "bound_to_formal_input_v2; zero-API candidate re-evaluation allowed"
+    },
+    "sun_llm_fallback": {
+      "method": "sun_llm_fallback",
+      "snapshot": "s28d_h1_150_v4pro_v1",
+      "llm_calls_recorded": 150,
+      "binding_ok": true,
+      "zero_api_reevaluation_allowed": true,
+      "checks": [
+        {
+          "item": "H1 snapshot exists (predictions/manifest)",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "item": "H1 predictions 150 rows",
+          "ok": true,
+          "detail": "150 rows"
+        },
+        {
+          "item": "H1 prediction ids == formal input v2 ids",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "item": "H1 predictions schema-valid",
+          "ok": true,
+          "detail": "150/150"
+        },
+        {
+          "item": "H1 source_text == formal v2 text (150/150)",
+          "ok": true,
+          "detail": "0 mismatches"
+        },
+        {
+          "item": "H1 prompt hash == locked prompt",
+          "ok": true,
+          "detail": "manifest=00fe02996914e17f"
+        },
+        {
+          "item": "H1 prompt file == locked prompt",
+          "ok": true,
+          "detail": "disk=00fe02996914e17f"
+        },
+        {
+          "item": "H1 model == deepseek-v4-pro",
+          "ok": true,
+          "detail": "deepseek-v4-pro"
+        },
+        {
+          "item": "H1 sampling t0/top1",
+          "ok": true,
+          "detail": "{'temperature': 0.0, 'top_p': 1.0, 'seed': 'unsupported_or_omitted', 'max_tokens': 4096}"
+        },
+        {
+          "item": "H1 b0 binding verified",
+          "ok": true,
+          "detail": ""
+        }
+      ],
+      "verdict": "bound_to_formal_input_v2; zero-API candidate re-evaluation allowed"
+    }
+  },
+  "summary": {
+    "d1_historical_predictions_reusable_zero_api": true,
+    "h1_historical_predictions_reusable_zero_api": true,
+    "b0_requires_formal_candidate_run": true,
+    "any_new_llm_api_call_required": false
+  }
+}

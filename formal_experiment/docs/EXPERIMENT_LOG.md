@@ -3129,3 +3129,16 @@
 - 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T09:41:59.049140+00:00 - Checkpoint 2/2: B0-R4 formal candidate closure + readiness v2 + method authorization dry-run package + status corrections. b0_d1_formal_readiness_v2.json/.md: D1-R3 (s27_d1_v6_r3_clean_rerun_150_hist56d_v1) and H1 (s28d_h1_150_v4pro_v1) historical 150-row predictions verified record-by-record against formal input v2 (ids equal, input text hashes equal, prompt/model/sampling equal locked recipe, snapshot complete + schema-valid) -> zero-API candidate re-evaluation allowed, no new LLM calls; B0 zero-API by construction + formal candidate runner present. run_estg150_b0_formal.py (Gold-blind: reads only formal input v2 + locked method assets; never reads data/gold or Layer E adjudication fields; evaluator separate step) full 150-row run -> outputs/development/b0_r4_formal_candidate_v1 (claim_scope=formal_candidate_not_yet_authorized_as_formal_result): primary F1 0.71865 (P 0.6845/R 0.7564) identical to B0-R3 development snapshot (method semantics locked); double-run to b0_r4_formal_candidate_v1_replay: predictions content/primary metrics/error analysis/config snapshot byte-identical, only performance timing fields differ; candidate never writes formal predictions/results. Authorization dry-run package outputs/reports/sun_rule_only_method_gate_authorization_dry_run.json/.md (methods.json sun_rule_only exact before/after, proposed formal_status=ready, binding hashes, candidate metrics + replay evidence, formal run command, expected audit changes, rollback) NOT applied; direct_llm/sun_llm_fallback/contract/stage3 gate/Gold untouched. MASTER_PIPELINE 3.4.36 + B0-R4/D1-R4 rows + 3.4.35 title corrected (S2.13 NOT complete: Gold publication subtask verified, executable input v2 verified, B0-R4 candidate verified/promotion pending, S2.10/S2.12 blocked, S1.7/S3.7 blocked); PROJECT_AUDIT rows updated. New tests: readiness binding (match/mismatch/missing/id), candidate runner isolation/no-overwrite/double-run determinism. 1664 tests passed
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1664 passed, 24 skipped, 19 warnings in 321.07s (0:05:21)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`f76723a54accb30ba36397493c82082a6db3865d`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

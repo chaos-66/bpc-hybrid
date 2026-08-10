@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-10
-**收录文件**：939 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：948 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -616,6 +616,8 @@
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/b0_d1_formal_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/b0_d1_formal_readiness_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/formal_benchmark_release_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/formal_benchmark_release_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/formal_benchmark_release_v2_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -636,6 +638,8 @@
 | `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s34_winter_stage3_development_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sun_rule_only_method_gate_authorization_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sun_rule_only_method_gate_authorization_dry_run.md` | 活动 | 说明、规范或研究文档 |
 
 ## `paper`
 
@@ -718,6 +722,7 @@
 | `scripts/audit_project.py` | 活动 | 离线项目完整性检查（兼容文件名） |
 | `scripts/audit_stage2_to_stage3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/baseline_stage3_sensitivity.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_b0_d1_formal_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg150_review_layers.py` | 活动 | Python 实现、脚本或测试 |
@@ -735,6 +740,7 @@
 | `scripts/build_stage3_gold_inference.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_method_registry.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_method_registry_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sun_rule_only_authorization_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/clean_estg150_german.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/coarse_gold_b0_condition_constraint_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -767,6 +773,7 @@
 | `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_ai_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v10_development.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_estg150_b0_formal.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_llm_zh_aid.py` | 活动 | Python 实现、脚本或测试 |
@@ -960,6 +967,7 @@
 | `tests/fixtures/sun_modality/synthetic_unknown_label.csv` | 活动 | 项目文件 |
 | `tests/test_analyze_b0_error_types.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_audit.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_b0_formal_candidate.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_a_span_boundaries.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_action_span_scope.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_r1_align_cue_validation.py` | 活动 | Python 实现、脚本或测试 |
@@ -987,6 +995,7 @@
 | `tests/test_fallback_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_benchmark_release_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_formal_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_effective_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_fallback_runner.py` | 活动 | Python 实现、脚本或测试 |
