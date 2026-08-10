@@ -1,0 +1,131 @@
+{
+  "artifacts": {
+    "estg150_formal_inference_input_v2.json": {
+      "byte_size": 204491,
+      "path": "data/input/estg150_formal_inference_input_v2.json",
+      "record_count": 150,
+      "schema": "estg150_formal_inference_input@2.0.0",
+      "schema_file_sha256": "d68dcff28b442e9a03398790901db4148244a1f7e9dd156a425af74e64d2cab9",
+      "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2"
+    },
+    "estg150_formal_input_v1.STATUS.md": {
+      "byte_size": 326,
+      "path": "data/input/estg150_formal_input_v1.STATUS.md",
+      "record_count": 0,
+      "schema": "markdown marker",
+      "sha256": "7d0b087e3b70b1762e585bd8d02703f4dde60a0491801dfbcf8c6526f7c9d464"
+    },
+    "estg150_formal_input_v1.json": {
+      "byte_size": 3174,
+      "marker_byte_size": 326,
+      "marker_sha256": "7d0b087e3b70b1762e585bd8d02703f4dde60a0491801dfbcf8c6526f7c9d464",
+      "path": "data/input/estg150_formal_input_v1.json",
+      "record_count": 150,
+      "role": "membership-only; not sufficient as executable model input",
+      "schema": "stage2_formal_input@1.0.0",
+      "sha256": "95f66c3497cbdc6a3617ce27b0204dee173521df88bf0abb76825e9733674b39"
+    },
+    "stage2_gold": {
+      "byte_size": 461240,
+      "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+      "record_count": 150,
+      "schema": "stage2_formal_gold@1.0.0",
+      "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+    },
+    "stage3_matching_gold": {
+      "byte_size": 4068,
+      "path": "data/gold/stage3/stage3_matching_gold_v1.json",
+      "record_count": 25,
+      "schema": "stage3_formal_gold@1.0.0",
+      "sha256": "55dffbcaf7d6510c11a06f10b134dfb449af0bd687d0cf40f7839be19bc2e618"
+    },
+    "stage3_violation_gold": {
+      "byte_size": 12540,
+      "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+      "record_count": 33,
+      "schema": "stage3_formal_gold@1.0.0",
+      "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550"
+    }
+  },
+  "authorization": {
+    "gold_publication_commits": [
+      "8571dd5",
+      "9f716f6",
+      "956c771"
+    ],
+    "governance_commit": "5d56f03",
+    "packet": "formal_gold_authorization_packet_v2"
+  },
+  "exclusions": {
+    "gold_process_records": "DO NOT EXIST (blocked on S1.7)",
+    "gold_rule_records": "DO NOT EXIST (blocked on human adjudication + freeze)",
+    "modality_dataset": "not published (license unknown, redistribution/publication forbidden)"
+  },
+  "executable_input_ready": true,
+  "final_experiment_ready": false,
+  "formal_predictions_capsule_produced": false,
+  "formal_results_capsule_produced": false,
+  "git": {
+    "commit": "956c771358acea9fdfe1cc35899bd47ae2149a4f",
+    "dirty_paths": [
+      "A  formal_experiment/configs/schemas/estg150_formal_inference_input_v2.schema.json",
+      "M  formal_experiment/docs/EXPERIMENT_EVENTS.jsonl",
+      "M  formal_experiment/docs/EXPERIMENT_LOG.md",
+      "M  formal_experiment/docs/FILE_CATALOG.md",
+      "AM formal_experiment/scripts/publish_formal_benchmark_v2.py",
+      "A  formal_experiment/scripts/verify_formal_benchmark_release_v2.py",
+      "M  formal_experiment/src/formal_experiment/audit.py",
+      "M  formal_experiment/src/formal_experiment/status.py",
+      "A  formal_experiment/tests/test_formal_benchmark_release_v2.py"
+    ],
+    "note": "release manifest records publisher git state; artifact bytes are commit-independent"
+  },
+  "gold_exposure": {
+    "label": "LLM-assisted, human-adjudicated Gold (unchanged from v1 publication)",
+    "runner_must_not_read_gold": true
+  },
+  "gold_unchanged": true,
+  "implementation_hashes": {
+    "experiment_contract": "2b0c3e8ba94353b080f46ad167d55e2cfa645ea7436277f07ec0a328bb536d7a",
+    "input_v2_schema": "d68dcff28b442e9a03398790901db4148244a1f7e9dd156a425af74e64d2cab9",
+    "methods_config": "af3b0aa42623cddf18af3e8c8cbef59fb1cb3cff0dbb45db9d920e1cfe599ae9",
+    "prediction_schema": "d94941c1f7ea90f768d7244bdb72ac3c588b727e0f1fcb4e4732ef8b239259ea",
+    "publisher": "5a5d84e63b92ea9e686986e22b94ede13981a94a72ca200be08552f0fd0cec06",
+    "stage2_gold_schema": "78b44dc6cbc8bd108f29720803c77f7202ebd40774c3c473a5e8e96a5e93707a",
+    "stage3_gold_schema": "aa9fd20448abb26a0c6f570627ba75eab9473ca3c70d91765ddd73a4f4064273",
+    "validator": "b9e1b9e29468fcc332ff139a4bda82c4420119ca409b4d2b89df4c6b8f3dbd58"
+  },
+  "membership": {
+    "count": 150,
+    "payload_sha256": "8573e105d2bc167c6aa0a92c16f79a3aaf725baadfea86f0b5d2b1ea68b1e0d7",
+    "source_membership_path": "data/development/estg/estg_selected_150_de.jsonl"
+  },
+  "release": "formal_benchmark_release_v2",
+  "release_status": "input_v2_and_gold_published_and_verified",
+  "replay": {
+    "deterministic_replay": true,
+    "no_overwrite": true,
+    "v1_preserved_byte_identical": true
+  },
+  "schema_version": "formal_benchmark_release_manifest@2.0.0",
+  "source_hashes": {
+    "layer_e": "0984ac9f60a8d2923292bae1a7434c4b1db1b1393fc0fcdeb9c278c3713b7266",
+    "membership_hashes": "0f9065523a57900b22a8a04ae9109d37c72abbe514f3cde60bcd7652cfa1417b",
+    "stage3_correction": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f",
+    "stage3_inference": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+    "v1_input": "95f66c3497cbdc6a3617ce27b0204dee173521df88bf0abb76825e9733674b39"
+  },
+  "states": {
+    "executable_input_ready": true,
+    "final_experiment_ready": false,
+    "formal_predictions_capsule_produced": false,
+    "formal_results_capsule_produced": false,
+    "gold_capsule_published_verified": true,
+    "methods_ready": false
+  },
+  "v1_limitation": {
+    "explanation": "v1 carries only the 150 sample IDs and the membership payload (membership index). It does not carry the text fields a Gold-blind runner needs; the executable input is v2.",
+    "label": "membership-only; not sufficient as executable model input",
+    "path": "data/input/estg150_formal_input_v1.json"
+  }
+}

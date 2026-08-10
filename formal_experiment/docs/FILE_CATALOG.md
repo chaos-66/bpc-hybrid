@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-10
-**收录文件**：930 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：939 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -89,6 +89,7 @@
 | `configs/schemas/dataset_manifest.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_ai_review_model_output.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/estg150_formal_inference_input_v2.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg_150_canonical_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/human_gold_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/process_record.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -381,7 +382,9 @@
 | `data/gold/stage3/stage3_matching_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/gold/stage3/stage3_violation_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/input/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+| `data/input/estg150_formal_inference_input_v2.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/input/estg150_formal_input_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/input/estg150_formal_input_v1.STATUS.md` | 正式区（受门禁） | 说明、规范或研究文档 |
 | `data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
 | `data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
 | `data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
@@ -613,6 +616,9 @@
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/formal_benchmark_release_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/formal_benchmark_release_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/formal_benchmark_release_v2_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/formal_gold_authorization_packet_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/formal_gold_authorization_packet_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/formal_gold_authorization_packet_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -751,6 +757,7 @@
 | `scripts/ingest_sun_modality.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/modality_classifier_alignment_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/promote_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/publish_formal_benchmark_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/publish_formal_gold_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/rebuild_d1_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
@@ -783,6 +790,7 @@
 | `scripts/validate_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_legacy_gold_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_formal_benchmark_release_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_solcand_prompt_examples_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_annotation_protocol_s15.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_evaluator_s16.py` | 活动 | Python 实现、脚本或测试 |
@@ -977,6 +985,7 @@
 | `tests/test_extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_fallback_pipeline.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_formal_benchmark_release_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_effective_fallback.py` | 活动 | Python 实现、脚本或测试 |

@@ -162,6 +162,24 @@ def _load_json(path: Path) -> dict[str, Any]:
         return {}
 
 
+def _load_release_verifier() -> Any | None:
+    """Load the independent release verifier script as a module (no package
+    import cycle: the verifier lives under scripts/ and imports nothing from
+    formal_experiment)."""
+    try:
+        import importlib.util
+        path = REPO_ROOT / "scripts" / "verify_formal_benchmark_release_v2.py"
+        spec = importlib.util.spec_from_file_location(
+            "formal_benchmark_release_verifier", path)
+        if spec is None or spec.loader is None:
+            return None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    except Exception:  # pragma: no cover - defensive
+        return None
+
+
 def _valid_event_log(path: Path) -> tuple[int, list[int]]:
     report = inspect_jsonl(path)
     return report.valid_json, report.invalid_lines
@@ -1075,8 +1093,48 @@ def collect_project_audit() -> dict[str, Any]:
         "predictions": _meaningful_count(FORMAL_PREDICTIONS_DIR), "results": _meaningful_count(FORMAL_RESULTS_DIR),
         "reports": _meaningful_count(FORMAL_REPORTS_DIR),
     }
-    if not frozen_counts["input"] or not frozen_counts["gold"]:
-        _add(findings, "blockers", "formal_capsule_not_frozen", f"Artifact counts: {frozen_counts}")
+    # The frozen capsule check distinguishes the GOLD capsule (frozen input +
+    # Gold artifacts, which IS frozen since the 2026-08-10 formal Gold
+    # publication) from the FINAL EXPERIMENT capsule (predictions/results,
+    # which are expected to not exist yet). predictions/results == 0 must
+    # never be misread as "the final capsule is frozen".
+    gold_capsule_frozen = bool(frozen_counts["input"]) and bool(frozen_counts["gold"])
+    if gold_capsule_frozen:
+        _add(findings, "passes", "formal_gold_capsule_frozen",
+             "Gold capsule frozen: frozen input and Gold artifacts exist under data/input and data/gold.")
+    else:
+        _add(findings, "blockers", "formal_capsule_not_frozen",
+             f"Gold capsule NOT frozen (frozen input and/or Gold artifacts missing): {frozen_counts}")
+    if not frozen_counts["predictions"] or not frozen_counts["results"]:
+        _add(findings, "warnings", "formal_predictions_results_capsule_not_produced",
+             "Formal predictions/results capsule is not produced yet (expected at this stage). "
+             "This is NOT the final experiment capsule being frozen.")
+
+    # ------------------------------------------------------------------
+    # Formal benchmark release v2: independent verifier gate.
+    # The verifier re-reads every published artifact from disk (hashes,
+    # sizes, counts, schema, membership, text provenance, decisions vs
+    # frozen sources, forbidden fields, modality exclusion, implementation
+    # hashes). A directory-with-files check is NOT a publication check.
+    verifier = _load_release_verifier()
+    if verifier is None:
+        _add(findings, "errors", "formal_benchmark_release_invalid",
+             "Formal benchmark release verifier module could not be loaded.")
+    else:
+        try:
+            release_result = verifier.verify_release()
+            if release_result.get("verified"):
+                _add(findings, "passes", "formal_benchmark_release_verified",
+                     "Formal benchmark release v2 verified by independent verifier "
+                     "(artifacts, schema, membership, text provenance, decisions, "
+                     "forbidden fields, modality exclusion, implementation hashes).")
+            else:
+                failed_checks = [c["name"] for c in release_result.get("checks", []) if not c["ok"]]
+                _add(findings, "errors", "formal_benchmark_release_invalid",
+                     f"Formal benchmark release v2 verification FAILED: {failed_checks}")
+        except Exception as exc:  # pragma: no cover - defensive
+            _add(findings, "errors", "formal_benchmark_release_invalid",
+                 f"Formal benchmark release verifier raised: {exc}")
     if contract.get("stage3", {}).get("status") != "locked":
         _add(findings, "blockers", "stage3_benchmark_not_locked", "Formal BPMN set, matching configuration, and violation Gold still require a later lock.")
 
@@ -1345,8 +1403,11 @@ def collect_project_audit() -> dict[str, Any]:
         "FORBIDDEN. "
         "(6) The four orthogonal gates (human_review_input_ready / "
         "human_review_freeze_ready / formal_gold_publication_ready / "
-        "final_experiment_ready) are unchanged by this reminder ; only the "
-        "input gate is currently true at 0/150.",
+        "final_experiment_ready) are unchanged by this reminder. Current "
+        "state: input/freeze/Gold-publication gates true (150/150 "
+        "adjudicated, formal Gold published, executable input v2 verified); "
+        "final_experiment_ready remains false (methods + predictions/results "
+        "capsule not ready).",
     )
 
     integrity_pass = not findings["errors"]
@@ -1384,11 +1445,11 @@ def collect_project_audit() -> dict[str, Any]:
         # status are all in place.
         "human_review_ready": human_review_ready,
         "human_review_ready_semantics": (
-            "DEPRECATED alias. Equals human_review_input_ready (true "
-            "once the user can start the human review at 0/150). New "
-            "code that needs 'ready to publish Gold' must use "
-            "human_review_freeze_ready, formal_gold_publication_ready, "
-            "or final_experiment_ready."
+            "DEPRECATED alias. Equals human_review_input_ready. Current "
+            "state: 150/150 adjudicated (annotation frozen), formal Gold "
+            "published, executable input v2 verified. New code that needs "
+            "'ready to publish Gold' must use human_review_freeze_ready, "
+            "formal_gold_publication_ready, or final_experiment_ready."
         ),
         # Four orthogonal gates:
         "human_review_input_ready": human_review_input_ready,
@@ -1426,12 +1487,13 @@ def collect_project_audit() -> dict[str, Any]:
             "public_marker_gate", {}
         ).get("combined_payload_sha256"),
         "claim_boundary": (
-            "Route v2 is reopened for final-version and official-data alignment. "
-            "The EStG-150 dataset is the project-self-sampled 150 (NOT Sun's original 150, "
-            "NOT an exact reproduction). The user is authorized to begin editing the v2 "
-            "human_correction file NOW; formal Gold publication remains paused until "
-            "all 150 records are adjudicated AND route / data / stage3 / freeze_policy "
-            "are each individually re-locked."
+            "Route is locked (sun_2024_final_version_stage2_reconstruction, "
+            "method-level independent reconstruction, not an exact reproduction). "
+            "The EStG-150 dataset is the project-self-sampled 150 (NOT Sun's original 150). "
+            "150/150 Layer E records are adjudicated (annotation frozen); formal Gold "
+            "artifacts are published and the executable Gold-blind input v2 is verified. "
+            "Formal predictions/results capsule is NOT produced yet; final experiment "
+            "and formal method gates remain not-ready."
         ),
         "findings": findings,
         "formal_status": status,
@@ -1458,6 +1520,10 @@ def print_human(audit: dict[str, Any]) -> None:
     print(f"Human review freeze ready      : {audit.get('human_review_freeze_ready')}")
     print(f"Formal Gold publication ready : {audit.get('formal_gold_publication_ready')}")
     print(f"Final experiment ready         : {audit.get('final_experiment_ready')}")
+    release_verified = any(
+        item["code"] == "formal_benchmark_release_verified"
+        for item in audit["findings"]["passes"])
+    print(f"Executable input v2 verified   : {release_verified}")
     print(f"(human_review_ready alias = {audit.get('human_review_ready')}; "
           f"{audit.get('human_review_ready_semantics', '')})")
     print()

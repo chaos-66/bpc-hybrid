@@ -1,0 +1,39 @@
+{
+  "artifacts": {
+    "input_v1": {
+      "byte_size": 3174,
+      "path": "data/input/estg150_formal_input_v1.json",
+      "sha256": "95f66c3497cbdc6a3617ce27b0204dee173521df88bf0abb76825e9733674b39"
+    },
+    "input_v1_status_marker": {
+      "path": "data/input/estg150_formal_input_v1.STATUS.md",
+      "sha256": "7d0b087e3b70b1762e585bd8d02703f4dde60a0491801dfbcf8c6526f7c9d464"
+    },
+    "input_v2": {
+      "path": "data/input/estg150_formal_inference_input_v2.json",
+      "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2"
+    },
+    "release_manifest": {
+      "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+      "sha256": "4a89ec2fb3e8317a933744c19bb47aa740c82dc61059829b3b61ce76135fb98f"
+    },
+    "stage2_gold": {
+      "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+      "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+    },
+    "stage3_matching_gold": {
+      "path": "data/gold/stage3/stage3_matching_gold_v1.json",
+      "sha256": "55dffbcaf7d6510c11a06f10b134dfb449af0bd687d0cf40f7839be19bc2e618"
+    },
+    "stage3_violation_gold": {
+      "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+      "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550"
+    }
+  },
+  "manifest": {
+    "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+    "sha256": "4a89ec2fb3e8317a933744c19bb47aa740c82dc61059829b3b61ce76135fb98f"
+  },
+  "release": "formal_benchmark_release_v2",
+  "schema_version": "formal_benchmark_release_export_index@1.0.0"
+}

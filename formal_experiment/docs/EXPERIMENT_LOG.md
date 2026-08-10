@@ -3116,3 +3116,16 @@
 - 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T09:01:52.904412+00:00 - Checkpoint 1/2: formal benchmark input v2 correction + release manifest v2 + independent verifier + audit integration. Published data/input/estg150_formal_inference_input_v2.json (150 Gold-blind executable records: sample_id/approved_text_en/raw_text_de/language/source_ref/input_text_sha256/provenance; NO decisions/spans/candidates/relations/evidence; text byte-identical to frozen Layer E, membership payload matches frozen estg_150_membership_hashes), v1 input preserved byte-identical and marked membership-only via STATUS.md sidecar; formal_benchmark_release_v2.manifest.json + .md + export_index bind v1 limitation, v2 input, Stage 2/Stage 3 Gold (unchanged, hash-verified vs v1 publication manifest), implementation hashes (publisher/validator/schemas/configs/contract), source hashes, authorization commit 5d56f03 + publication commits; deterministic replay byte-identical, no-overwrite; independent verifier verify_formal_benchmark_release_v2.py re-reads disk artifacts (53 checks: hashes/sizes/counts/schema/membership/text provenance/decisions vs frozen sources/forbidden fields/modality exclusion/implementation hashes/git capsule) -> audit pass formal_benchmark_release_verified + error formal_benchmark_release_invalid on tamper; frozen capsule check split: formal_gold_capsule_frozen pass + formal_predictions_results_capsule_not_produced warning (predictions/results=0 not misread as frozen final capsule); stale status text fixed (no 0/150 input-gate-only, no route reopened, no publication paused; 150/150 frozen + Gold published + executable input v2 verified shown); 13 new focused tests; Gold files unchanged
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1652 passed, 24 skipped, 19 warnings in 243.42s (0:04:03)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`956c771358acea9fdfe1cc35899bd47ae2149a4f`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

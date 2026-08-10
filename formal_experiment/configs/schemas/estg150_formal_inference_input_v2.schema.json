@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "estg150_formal_inference_input_v2",
+  "description": "Gold-blind executable formal inference input for the independently reconstructed EStG-150 benchmark. Carries ONLY text fields and fixed provenance; NO adjudication content (no six-element Gold spans/labels, no decisions, no LLM candidate drafts, no relation/order Gold, no review evidence).",
+  "type": "object",
+  "required": ["schema_version", "dataset_id", "count", "claim", "membership_payload_sha256", "records"],
+  "properties": {
+    "schema_version": { "const": "estg150_formal_inference_input@2.0.0" },
+    "dataset_id": { "const": "independently_reconstructed_estg_150_v1" },
+    "count": { "const": 150 },
+    "claim": { "type": "string" },
+    "membership_payload_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "records": {
+      "type": "array",
+      "minItems": 150,
+      "maxItems": 150,
+      "items": {
+        "type": "object",
+        "required": ["sample_id", "approved_text_en", "raw_text_de", "language", "source_ref", "input_text_sha256", "provenance"],
+        "additionalProperties": false,
+        "properties": {
+          "sample_id": { "type": "string", "pattern": "^estg_\\d{6}$" },
+          "approved_text_en": { "type": "string", "minLength": 1 },
+          "raw_text_de": { "type": "string", "minLength": 1 },
+          "language": { "type": "string" },
+          "source_ref": {
+            "type": "object",
+            "required": ["german_source", "legacy_record_id", "layer_e_record"],
+            "additionalProperties": false,
+            "properties": {
+              "german_source": { "type": "string" },
+              "legacy_record_id": { "type": "integer" },
+              "layer_e_record": { "type": "string" }
+            }
+          },
+          "input_text_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "provenance": {
+            "type": "object",
+            "required": ["source_layer", "gold_visible", "adjudication_fields_excluded"],
+            "additionalProperties": false,
+            "properties": {
+              "source_layer": { "type": "string" },
+              "gold_visible": { "const": false },
+              "adjudication_fields_excluded": { "const": true }
+            }
+          }
+        }
+      }
+    }
+  }
+}

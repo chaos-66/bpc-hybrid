@@ -35,6 +35,7 @@ from formal_experiment.paths import (
     CANONICAL_REVIEW_FILE,
     ESTG_150_MEMBERSHIP_HASHES,
     EXPERIMENT_CONTRACT,
+    FORMAL_REPORTS_DIR,
     FROZEN_GOLD_DIR,
     FROZEN_INPUT_DIR,
     HUMAN_CORRECTION_FILE,
@@ -627,6 +628,13 @@ def collect_status() -> dict[str, Any]:
         "formal_gold_publication_ready": formal_gold_publication_ready,
         "final_experiment_ready": final_experiment_ready,
         "ready_for_final_metrics": final_experiment_ready,
+        # Executable Gold-blind inference input v2 (published 2026-08-10):
+        # lightweight presence check; the full independent verification is
+        # performed by the audit's formal_benchmark_release_verified gate.
+        "executable_input_v2_verified": bool(
+            (FROZEN_INPUT_DIR / "estg150_formal_inference_input_v2.json").exists()
+            and (FORMAL_REPORTS_DIR / "formal_benchmark_release_v2.manifest.json").exists()
+        ),
         # Authoritative contract gate info (read, not just stored):
         "human_review_gate_status": gate_status,
         "human_review_gate_allowed": allowed_input_statuses,
@@ -641,9 +649,11 @@ def collect_status() -> dict[str, Any]:
         # Backward-compatible deprecated alias (DO NOT use for new code):
         "human_review_ready": human_review_ready,
         "human_review_ready_semantics": (
-            "DEPRECATED alias. Current value equals human_review_input_ready "
-            "(true once input is ready at 0/150). New code must use "
-            "human_review_freeze_ready or formal_gold_publication_ready."
+            "DEPRECATED alias. Current value equals human_review_input_ready. "
+            "Current state: 150/150 adjudicated (annotation frozen), formal Gold "
+            "artifacts published, executable Gold-blind input v2 verified. New "
+            "code must use human_review_freeze_ready or "
+            "formal_gold_publication_ready."
         ),
         "frozen_artifacts": frozen,
         "methods": methods,
@@ -670,6 +680,7 @@ def print_human(status: dict[str, Any]) -> None:
     print(f"Human review freeze ready      : {status['human_review_freeze_ready']}")
     print(f"Formal Gold publication ready : {status['formal_gold_publication_ready']}")
     print(f"Final experiment ready        : {status['final_experiment_ready']}")
+    print(f"Executable input v2 verified  : {status.get('executable_input_v2_verified')}")
     print(f"(human_review_ready alias = {status['human_review_input_ready']}; {status.get('human_review_ready_semantics', '')})")
     review = status["human_review"]
     v2 = status.get("human_correction_v2", {})
