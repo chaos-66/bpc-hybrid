@@ -45,13 +45,14 @@ CURRENT_FREEZE_POLICY = (
 )
 
 # Proposed full replacement, preserving governance content and prohibitions and
-# only updating the now-satisfied status parts.
+# only updating the now-satisfied status parts. The re-lock dates use the
+# ACTUAL authorization date 2026-08-10, matching the executed contract change.
 PROPOSED_FREEZE_POLICY = (
     "The Sun modality development schema, 2,831-row analysis population, quarantine policy, "
     "and project-reconstructed split are locked by the S2.1-D machine gate. The independently "
     "reconstructed phrase Gold is frozen (150/150 adjudicated, freeze_ready=True, restored "
-    "2026-08-06). The route (locked 2026-08-06), Stage 3 (locked 2026-08-08 by user "
-    "authorization), the freeze/publication policy (re-locked 2026-08-08) and the exact "
+    "2026-08-06). The route (locked 2026-08-06), Stage 3 (locked 2026-08-10 by user "
+    "authorization), the freeze/publication policy (re-locked 2026-08-10) and the exact "
     "publication-status whitelist are all satisfied. Formal Gold publication is authorized by the "
     "user; formal Oracle and final experiments remain gated by S1.7/S2.13 and the missing true "
     "Gold Rule/Process Records (see s37_oracle_readiness_v1.json). Prohibitions are unchanged: "

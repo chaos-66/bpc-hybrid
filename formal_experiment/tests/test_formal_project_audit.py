@@ -187,10 +187,12 @@ def test_current_state_four_gates_reported_after_restore() -> None:
     ):
         assert k in audit, f"missing gate: {k}"
     # Expected values after the 2026-08-06 adjudication restore
-    # (freeze_ready flipped to True: 150/150 adjudicated):
+    # (freeze_ready flipped to True: 150/150 adjudicated) and the
+    # 2026-08-10 user-authorized formal Gold publication flip
+    # (stage3 locked, publication gate in whitelist, freeze policy re-locked):
     assert audit["human_review_input_ready"] is True
     assert audit["human_review_freeze_ready"] is True
-    assert audit["formal_gold_publication_ready"] is False
+    assert audit["formal_gold_publication_ready"] is True
     assert audit["final_experiment_ready"] is False
     # The deprecated alias equals gate 1
     assert audit["human_review_ready"] is True
@@ -389,20 +391,32 @@ def test_freeze_true_but_gold_paused_keeps_publication_blocked(
     tmp_path: Path, monkeypatch,
 ) -> None:
     """Simulate 150/150 adjudicated by replacing the v2 file with a
-    minimal doc whose review_state.status=adjudicated and freeze_ready=True.
-    The route / dataset / stage3 / freeze_policy remain reopened. The
-    audit must report:
+    minimal doc whose review_state.status=adjudicated and freeze_ready=True,
+    AND simulate a reopened contract (route/dataset/stage3/gate not all
+    locked). The audit must report:
       - human_review_freeze_ready = True
       - formal_gold_publication_ready = False
       - formal_gold_publication_paused blocker present
       - the message must NOT contain 'Formal Gold can be declared'"""
     test_v2, test_membership = _write_freeze_ready_v2(tmp_path)
 
+    # Simulate a blocked (reopened) contract variant: keep everything
+    # frozen except force the publication gate back to blocked and the
+    # stage3 status back to pending.
+    contract_path = PROJECT_ROOT / "configs/experiment_contract.json"
+    test_contract = tmp_path / "experiment_contract.json"
+    cdoc = json.loads(contract_path.read_text(encoding="utf-8"))
+    cdoc["stage3"]["status"] = "pending_final_subset_configuration_and_violation_gold_lock"
+    cdoc["formal_gold_publication_gate"]["status"] = "blocked_pending_route_data_stage3_re_lock"
+    test_contract.write_text(json.dumps(cdoc, ensure_ascii=False, indent=2), encoding="utf-8")
+
     from formal_experiment import status as status_mod
     orig_v2 = status_mod.HUMAN_CORRECTION_FILE
     orig_mem = status_mod.ESTG_150_MEMBERSHIP_HASHES
+    orig_contract = status_mod.EXPERIMENT_CONTRACT
     monkeypatch.setattr(status_mod, "HUMAN_CORRECTION_FILE", test_v2)
     monkeypatch.setattr(status_mod, "ESTG_150_MEMBERSHIP_HASHES", test_membership)
+    monkeypatch.setattr(status_mod, "EXPERIMENT_CONTRACT", test_contract)
     s = status_mod.collect_status()
     assert s["human_review_freeze_ready"] is True, s
     # The route/dataset/stage3 remain reopened, so formal_gold_publication_ready
@@ -413,6 +427,7 @@ def test_freeze_true_but_gold_paused_keeps_publication_blocked(
     from formal_experiment import audit as audit_mod
     orig_v2_audit = audit_mod.HUMAN_CORRECTION_FILE
     monkeypatch.setattr(audit_mod, "HUMAN_CORRECTION_FILE", test_v2)
+    monkeypatch.setattr(audit_mod, "EXPERIMENT_CONTRACT", test_contract)
     audit = audit_mod.collect_project_audit()
     blockers = _codes(audit, "blockers")
     assert "formal_gold_publication_paused" in blockers
@@ -424,7 +439,9 @@ def test_freeze_true_but_gold_paused_keeps_publication_blocked(
     assert "Formal Gold can be declared" not in all_msgs, all_msgs
     monkeypatch.setattr(status_mod, "HUMAN_CORRECTION_FILE", orig_v2)
     monkeypatch.setattr(status_mod, "ESTG_150_MEMBERSHIP_HASHES", orig_mem)
+    monkeypatch.setattr(status_mod, "EXPERIMENT_CONTRACT", orig_contract)
     monkeypatch.setattr(audit_mod, "HUMAN_CORRECTION_FILE", orig_v2_audit)
+    monkeypatch.setattr(audit_mod, "EXPERIMENT_CONTRACT", orig_contract)
 
 
 # ---------------------------------------------------------------------------
@@ -538,7 +555,9 @@ def test_formal_gold_publication_ready_conservative_when_route_only_unlocks(
     )
     assert fgg_blocker is not None
     msg = fgg_blocker["message"]
-    assert "route.status=" in msg or "stage2_dataset.status=" in msg or "stage3.status=" in msg, msg
+    assert ("route.status=" in msg or "stage2_dataset.status=" in msg
+            or "stage3.status=" in msg
+            or "formal_gold_publication_gate.status=" in msg), msg
     # The forbidden phrase must not appear
     assert "Formal Gold can be declared" not in msg
     monkeypatch.setattr(status_mod, "HUMAN_CORRECTION_FILE", orig_v2)
@@ -648,7 +667,6 @@ def test_audit_keeps_later_experiment_phases_blocked() -> None:
     audit = collect_project_audit()
     blockers = _codes(audit, "blockers")
     assert "formal_capsule_not_frozen" in blockers
-    assert "stage3_benchmark_not_locked" in blockers
     assert "formal_methods_not_ready" in blockers
     # Route + dataset re-locked 2026-08-06 (user-authorized): the two
     # relock-pending blockers are gone and the locked passes are present.
@@ -665,8 +683,12 @@ def test_audit_keeps_later_experiment_phases_blocked() -> None:
     assert "direct_llm_runner_missing" not in blockers
     # Old contradictory blocker is removed
     assert "formal_human_review_paused" not in blockers
-    # New explicit blockers exist
-    assert "formal_gold_publication_paused" in blockers
+    # Stage 3 was locked on 2026-08-10 (user authorization, packet v2), so
+    # the stage3 benchmark blocker is gone and the publication-paused
+    # blocker is gone (publication gate entered the whitelist).
+    assert "stage3_benchmark_not_locked" not in blockers
+    assert "formal_gold_publication_paused" not in blockers
+    assert "formal_gold_publication_ready" in _codes(audit, "passes")
     # Annotation freeze reached on 2026-08-06 (150/150 adjudicated
     # restored from the 56d2b03 snapshot): the pending blocker is gone
     # and the positive pass is present.

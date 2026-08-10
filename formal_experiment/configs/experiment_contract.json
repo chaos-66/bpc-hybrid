@@ -302,7 +302,7 @@
       "current_development_pack_role": "retired as editing surface, retained as development provenance; see data/development/human_review/estg150_review_pack_v1.jsonl for the file and docs/ESTG150_DATA_MAP.md for the data map.",
       "accepted_strategy_2026_07_12_1715": "The project has ONE 150. The membership is the 150 legacy record_ids of estg_selected_150_de.jsonl. The benchmark is labelled independently_reconstructed_estg_150_v1 and is NOT Sun's original 150. The active editing surface is estg_150_canonical_review_v1.json. The original Sun 150 IDs and 443 phrase spans are not prerequisites."
     },
-    "freeze_policy": "The Sun modality development schema, 2,831-row analysis population, quarantine policy, and project-reconstructed split are locked by the S2.1-D machine gate. Do not write formal input or Gold: the independently reconstructed phrase Gold still requires human freeze, and the route, Stage 3, freeze/publication policy, and exact publication-status whitelist must each be re-locked separately."
+    "freeze_policy": "The Sun modality development schema, 2,831-row analysis population, quarantine policy, and project-reconstructed split are locked by the S2.1-D machine gate. The independently reconstructed phrase Gold is frozen (150/150 adjudicated, freeze_ready=True, restored 2026-08-06). The route (locked 2026-08-06), Stage 3 (locked 2026-08-10 by user authorization), the freeze/publication policy (re-locked 2026-08-10) and the exact publication-status whitelist are all satisfied. Formal Gold publication is authorized by the user; formal Oracle and final experiments remain gated by S1.7/S2.13 and the missing true Gold Rule/Process Records (see s37_oracle_readiness_v1.json). Prohibitions are unchanged: do not write formal input or Gold outside the authorized publication action; predictions, manifests and results remain no-overwrite; the modality dataset stays development-only with redistribution/publication forbidden."
   },
   "methods": [
     "sun_rule_only",
@@ -351,8 +351,9 @@
     "notes": "human_review_input_ready is true once the input gate is satisfied. The four orthogonal gates are: human_review_input_ready (user can start review at 0/150), human_review_freeze_ready (150/150 adjudicated, annotation frozen), formal_gold_publication_ready (route + data + stage3 + freeze policy all re-locked, ready to declare formal Gold), final_experiment_ready (everything including Stage 3 is locked). The route v2 being reopened does NOT block the input gate; it DOES block formal_gold_publication_ready. Agents must not infer or import any human review decision; the user remains the sole owner of approved/reviewed/adjudicated state changes."
   },
   "formal_gold_publication_gate": {
-    "status": "blocked_pending_route_data_stage3_re_lock",
+    "status": "ready_for_formal_gold_publication",
     "status_changed_at_utc_event_23": "2026-07-13 Event 23 governance: this status field is now matched against the exact allowed_publication_statuses whitelist; the previous fail-open 'not blocked and not unknown' heuristic has been removed",
+    "status_changed_2026_08_10_user_authorization": "User authorized the machine-contract change per formal_gold_authorization_packet_v2 (actual authorization date 2026-08-10): status moved into the exact allowed_publication_statuses whitelist, enabling formal Gold publication. This does NOT imply final experiments, formal Oracle, or method readiness.",
     "allowed_publication_statuses": [
       "ready_for_formal_gold_publication"
     ],
@@ -369,7 +370,8 @@
     "notes": "human_review_freeze_ready (150/150 adjudicated) is a NECESSARY but NOT SUFFICIENT condition for formal_gold_publication_ready. The route v2 being reopened, official modality data not yet ingested, Stage 3 subset/violation Gold not yet locked, the freeze_policy still being in 'do not write formal input or Gold until ...' mode, or the publication status not exactly matching the whitelist each individually keep formal_gold_publication_ready false."
   },
   "stage3": {
-    "status": "pending_final_subset_configuration_and_violation_gold_lock",
+    "status": "locked",
+    "relock_note_2026_08_10": "Stage 3 re-locked by user authorization (formal_gold_authorization_packet_v2, actual authorization date 2026-08-10): S3.1-S3.3 data governance complete (7 GDPR BPMN byte-exact; matching/violation Gold 58/58 frozen, s32_s33_gold_annotation_freeze_v1.manifest.json) and the contract's 'final subset configuration and violation Gold lock' condition is satisfied by the frozen annotation. This lock does NOT imply S1.7/S2.13 completion, Gold Rule/Process Records, formal Oracle, or final experiments (s37_oracle_readiness_v1.json).",
     "official_inputs_available": true,
     "official_input_summary": "Seven Agostinelli GDPR BPMN models, GDPR Articles 5-50, and four Winter configuration files.",
     "sun_paper_gap": "The paper reports four GDPR models but does not identify the four filenames in the available manuscript; all-seven evaluation may be reported only as an explicit extension.",

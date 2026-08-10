@@ -380,19 +380,22 @@ class TestGateIsolation:
         assert status["human_review_input_ready"] is True
         # freeze_ready flipped to True on 2026-08-06 (150/150 adjudication
         # restored from the 56d2b03 snapshot); the isolation claim is about
-        # the OTHER gates, which must remain closed.
+        # the FINAL-experiment gate, which must remain closed even though
+        # formal Gold publication was unlocked on 2026-08-10 (user
+        # authorization, packet v2).
         assert status["human_review_freeze_ready"] is True
-        assert status["formal_gold_publication_ready"] is False
+        assert status["formal_gold_publication_ready"] is True
         assert status["final_experiment_ready"] is False
         # Route re-locked 2026-08-06 (user-authorized governance decision);
-        # stage3 + publication gate remain the isolation boundary.
+        # stage3 locked + publication gate in whitelist since 2026-08-10,
+        # but the final-experiment gate stays the isolation boundary.
         assert status["route"]["status"] == "locked"
         contract = json.loads(
             (PROJECT_ROOT / gate.EXPERIMENT_CONTRACT_REL).read_text(encoding="utf-8")
         )
-        assert contract["stage3"]["status"] != "locked"
+        assert contract["stage3"]["status"] == "locked"
         publication_gate = contract["formal_gold_publication_gate"]
-        assert publication_gate["status"] not in publication_gate[
+        assert publication_gate["status"] in publication_gate[
             "allowed_publication_statuses"
         ]
         assert all(
@@ -423,8 +426,10 @@ class TestGateIsolation:
         assert "stage2_dataset_route_locked" in passes
         assert "stage2_dataset_alignment_pending" not in blockers
         # freeze_ready is True since the 2026-08-06 adjudication restore;
-        # publication/final readiness remain closed (route/data/stage3).
+        # formal Gold publication was unlocked on 2026-08-10 (user
+        # authorization, packet v2) while the final-experiment gate stays
+        # closed.
         assert audit["human_review_freeze_ready"] is True
-        assert audit["formal_gold_publication_ready"] is False
+        assert audit["formal_gold_publication_ready"] is True
         assert audit["final_experiment_ready"] is False
 

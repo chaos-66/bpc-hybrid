@@ -986,7 +986,9 @@ def test_four_orthogonal_gates_after_restore():
     a = collect_project_audit()
     assert a["human_review_input_ready"] is True
     assert a["human_review_freeze_ready"] is True
-    assert a["formal_gold_publication_ready"] is False
+    # formal Gold publication unlocked 2026-08-10 (user authorization,
+    # packet v2); final experiment stays blocked.
+    assert a["formal_gold_publication_ready"] is True
     assert a["final_experiment_ready"] is False
 
 

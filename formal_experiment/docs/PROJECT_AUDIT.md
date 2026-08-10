@@ -55,7 +55,7 @@ manifest 解锁。论文工作稿位于 `paper/`，不能反向定义实验状�
 | `public_marker_lexicon_verified` | true | S2.3 英文 public-source v1 的 64 个 marker、来源/生成/hash/空扩展表通过离线机器门禁；development-only，未激活 S2.4+ |
 | `human_review_input_ready` | true | Layer E 输入门禁已满足；历史 "0/150 可开始"语义不等于当前审核进度 |
 | `human_review_freeze_ready` | true | 150/150 adjudicated（2026-08-06 经授权恢复）；freeze validator 通过，仍不足以发布 formal Gold |
-| `formal_gold_publication_ready` | false | route/data/stage3/Gold 尚未共同重锁 |
+| `formal_gold_publication_ready` | **true** | 用户 2026-08-10 按 formal_gold_authorization_packet_v2 授权：stage3.status=locked、publication gate=ready_for_formal_gold_publication（白名单精确匹配）、freeze_policy 重锁（治理/许可/禁止约束保留）；formal Gold 已可发布（尚不代表 S1.7/S2.13/Gold Rule-Process Records/Oracle/最终实验完成） |
 | `final_experiment_ready` | false | 正式方法、冻结数据与最终实验均未就绪 |
 
 每次修改后的最新值以机器检查输出为准；若本表与机器检查冲突，以机器检查为准并

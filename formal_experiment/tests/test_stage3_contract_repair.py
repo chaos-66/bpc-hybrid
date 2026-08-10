@@ -436,10 +436,12 @@ def test_authorization_packet_is_dry_run_and_contract_untouched() -> None:
     fields = {p["field"] for p in packet["proposed_contract_changes"]}
     assert fields == {"stage3.status", "formal_gold_publication_gate.status", "stage2_dataset.freeze_policy"}
     assert packet["authorization_sentence"]
-    # the contract itself must still hold the pre-flip values
+    # v1 was a dry-run record of the PRE-authorization state; the contract
+    # has since been flipped on 2026-08-10 per the v2 authorization, so the
+    # contract must now hold the POST-flip values (v2 packet's after values).
     contract = _load_json(ROOT / "configs" / "experiment_contract.json")
-    assert contract["stage3"]["status"] == "pending_final_subset_configuration_and_violation_gold_lock"
-    assert contract["formal_gold_publication_gate"]["status"] == "blocked_pending_route_data_stage3_re_lock"
+    assert contract["stage3"]["status"] == "locked"
+    assert contract["formal_gold_publication_gate"]["status"] == "ready_for_formal_gold_publication"
 
 # ----------------------------------------- BM25 candidate-specific (S3.6-A v3)
 def test_bm25_candidate_specific_second_action_wins() -> None:
@@ -677,20 +679,30 @@ def test_authorization_packet_v2_dry_run_and_gate_flip() -> None:
     assert packet["dry_run"] is True and packet["contract_not_modified"] is True
     assert packet["dry_run_gate_check"]["before"]["formal_gold_publication_ready"] is False
     assert packet["dry_run_gate_check"]["after"]["formal_gold_publication_ready"] is True
-    # every proposed before value equals the live contract value (full, no truncation)
+    # the v2 packet recorded the FULL pre-authorization values (stage3/gate
+    # have no date, so the executed contract must equal the packet's after
+    # exactly there; the freeze policy's re-lock dates were set to the ACTUAL
+    # authorization date 2026-08-10 per the user, so the executed value is
+    # the packet's after with 2026-08-08 -> 2026-08-10).
     contract = _load_json(ROOT / "configs" / "experiment_contract.json")
     for ch in packet["proposed_contract_changes"]:
         node = contract
         for seg in ch["pointer_path"][:-1]:
             node = node[seg]
-        assert node[ch["pointer_path"][-1]] == ch["before_full"]
+        if ch["pointer"] == "/stage2_dataset/freeze_policy":
+            expected = ch["after_full"].replace("2026-08-08", "2026-08-10")
+        else:
+            expected = ch["after_full"]
+        assert node[ch["pointer_path"][-1]] == expected, ch["pointer"]
     # freeze policy after value preserves governance content
     after = packet["proposed_contract_changes"][2]["after_full"]
     assert "redistribution/publication forbidden" in after
     assert "do not write formal input or Gold" in after
-    # active contract still pre-flip
-    assert contract["stage3"]["status"] == "pending_final_subset_configuration_and_violation_gold_lock"
-    assert contract["formal_gold_publication_gate"]["status"] == "blocked_pending_route_data_stage3_re_lock"
+    # active contract is now post-flip with the actual authorization date
+    assert contract["stage3"]["status"] == "locked"
+    assert contract["formal_gold_publication_gate"]["status"] == "ready_for_formal_gold_publication"
+    assert contract["stage3"]["relock_note_2026_08_10"]
+    assert contract["formal_gold_publication_gate"].get("status_changed_2026_08_10_user_authorization")
 
 
 def test_bm25_v3_manifest_discloses_supersession() -> None:

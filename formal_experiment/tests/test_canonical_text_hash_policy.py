@@ -309,13 +309,14 @@ class TestBoundariesIntact:
         assert status["sun_modality_formal_use_ready"] is False
         assert status["human_review_input_ready"] is True
         # freeze_ready flipped to True on 2026-08-06 (150/150 adjudication
-        # restored from the 56d2b03 snapshot); publication/final readiness
-        # must remain closed.
+        # restored from the 56d2b03 snapshot); formal Gold publication was
+        # unlocked on 2026-08-10 (user authorization, packet v2) while the
+        # final-experiment gate stays closed.
         assert status["human_review_freeze_ready"] is True
-        assert status["formal_gold_publication_ready"] is False
+        assert status["formal_gold_publication_ready"] is True
         assert status["final_experiment_ready"] is False
         # Route re-locked 2026-08-06 (user-authorized governance decision);
-        # publication/final readiness must remain closed without stage3.
+        # final-experiment readiness must remain closed without methods.
         assert status["route"]["status"] == "locked"
 
     def test_gate_license_and_claim_checks_still_pass(self, fast_zip):

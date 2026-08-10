@@ -3077,3 +3077,16 @@
 - 仍存在 blocker：formal_gold_publication_paused、final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen、stage3_benchmark_not_locked
 - 备注：从干净 checkpoint（b0dc017）重放 BM25 v3（candidate-specific）：58 条、0 排除、finalised、manifest 披露 supersedes（v1/v2=superseded_invalid_candidate_agnostic_similarity）；v2 invalid → v3 corrected：MAP 0.6833→0.6595、binary F1 0.4→0.0、macro/exact 不变（violation 部分对候选差异不敏感）；TF-IDF 共享 scorer ID 修复后内容级 byte-identical 验证通过（无 duplicate labels）保留 v2；evidence capsule v3 + v1/v2 capsule 标 superseded；comparison active BM25=v3；method registry v2（active 5 方法含 BM25 v3、superseded_invalid_runs=BM25 v1/v2、registry_generated_at_commit 非 null、config 三 hash 区分：run snapshot/run manifest/当前工作树，sun/tfidf 工作树 hash 因后续措辞修改与 run 时不同——如实区分）；authorization packet v2（JSON Pointer 完整 before/after、freeze_policy 治理内容保留仅更新已满足状态、临时副本门禁校验 False→True（5 precondition 全满足）、活动合同字节断言未变、formal Gold publication 与方法正确性不同门禁说明、新授权句）；新增 4 项测试（registry v2 hash 闭合/BM25 v3 superseded/packet v2 dry-run）；全量 1622 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction/未翻转任何正式门禁
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T05:40:16.293099+00:00 - formal Gold 发布授权执行：机器合同变更（用户 2026-08-10 明确授权，按 formal_gold_authorization_packet_v2）——stage3.status→locked、publication gate→ready_for_formal_gold_publication、freeze_policy→完整重锁文本（2026-08-10）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1622 passed, 24 skipped, 19 warnings in 210.91s (0:03:30)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`582dca095e2ebb4078d89ed7da1365320a5b22d8`；相关未提交路径：10 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen
+- 备注：按 packet v2 执行三处合同变更（实际授权日 2026-08-10）：/stage3/status→locked（含 relock_note_2026_08_10）、/formal_gold_publication_gate/status→ready_for_formal_gold_publication（含 status_changed_2026_08_10_user_authorization）、/stage2_dataset/freeze_policy→完整重锁文本（保留数据/许可/冻结范围/禁止事项治理，仅更新已满足的 pending/relock 状态，日期 2026-08-10）；audit 验证：formal_gold_publication_ready False→True、BLOCKERS 5→3（消除 formal_gold_publication_paused、stage3_benchmark_not_locked；保留 final_experiment_not_ready/formal_methods_not_ready/formal_capsule_not_frozen）、final_experiment_ready 仍 False；更新 8 个 gate 期望测试（test_formal_project_audit 4、test_sun_modality_gate 2、test_canonical_text_hash_policy 1、test_layer_d 1）+ 2 个 packet 测试（v1 历史记录、v2 与执行值日期感知对比）；全量 1622 passed/24 skipped；不隐含 S1.7/S2.13/Gold Rule-Process Records/formal Oracle/最终实验完成；未调用任何 LLM/API
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
