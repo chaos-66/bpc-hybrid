@@ -287,7 +287,14 @@ def _human_correction_v2_summary(
 
 
 def _meaningful_count(path: Path) -> int:
-    return sum(1 for item in path.glob("*") if item.is_file() and item.name != ".gitkeep") if path.exists() else 0
+    """Count real files recursively (subdirectories like data/gold/stage2/ must
+    count their contents)."""
+    if not path.exists():
+        return 0
+    return sum(
+        1 for item in path.rglob("*")
+        if item.is_file() and item.name != ".gitkeep"
+    )
 
 
 def _check_membership_fail_closed(

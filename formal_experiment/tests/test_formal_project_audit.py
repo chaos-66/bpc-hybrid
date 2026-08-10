@@ -666,8 +666,12 @@ def test_audit_checks_full_blank_estg_review_pack() -> None:
 def test_audit_keeps_later_experiment_phases_blocked() -> None:
     audit = collect_project_audit()
     blockers = _codes(audit, "blockers")
-    assert "formal_capsule_not_frozen" in blockers
+    # Formal Gold published 2026-08-10 (checkpoint 2): frozen capsule now has
+    # input=1 + gold=3 files, so formal_capsule_not_frozen is cleared; final
+    # phases stay blocked only on method readiness.
+    assert "formal_capsule_not_frozen" not in blockers
     assert "formal_methods_not_ready" in blockers
+    assert "final_experiment_not_ready" in blockers
     # Route + dataset re-locked 2026-08-06 (user-authorized): the two
     # relock-pending blockers are gone and the locked passes are present.
     assert "stage2_dataset_route_relock_pending" not in blockers

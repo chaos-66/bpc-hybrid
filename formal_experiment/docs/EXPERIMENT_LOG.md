@@ -3103,3 +3103,16 @@
 - 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T07:43:42.780893+00:00 - S2.13 checkpoint 2: formal Gold actual publication + zero-API readiness audit of B0-R4/D1-R4/S2.10/S2.12. Published: data/input/estg150_formal_input_v1.json (150 ids, membership payload a9a746d1 pinned), data/gold/stage2/estg150_formal_gold_v1.json (150 decision-only records, spans verified vs approved_text_en, decisions all in {accepted,edited,rejected}, zero LLM-draft leakage), data/gold/stage3 matching(25)+violation(33) (ids aligned with frozen correction, decision-only), manifest + human report; deterministic replay verified (no-overwrite byte-identical, manifest git snapshot excludes own outputs), 34-point post-publication verification all pass; audit formal_capsule_not_frozen cleared (input=1/gold=3, _meaningful_count made recursive; BLOCKERS 3->2); status/audit display fixes; B0-R4 ready-audit: shared input/Gold/evaluator ready but formal claim_scope runner missing -> no re-eval run; D1-R4: LLM authorization/budget missing -> no API called; S2.10/S2.12 remain blocked on formal three-method run; no Gold rule/process records fabricated, no development metrics promoted
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1639 passed, 24 skipped, 19 warnings in 174.75s (0:02:54)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`9f716f68ff4496471c89bc2266de19c1537f743a`；相关未提交路径：6 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

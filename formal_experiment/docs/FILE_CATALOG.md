@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-10
-**收录文件**：924 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：930 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -377,7 +377,11 @@
 | `data/development/sun_modality/raw/.gitignore` | 开发/溯源 | 项目文件 |
 | `data/development/sun_modality/source_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/gold/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+| `data/gold/stage2/estg150_formal_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/gold/stage3/stage3_matching_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/gold/stage3/stage3_violation_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/input/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+| `data/input/estg150_formal_input_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
 | `data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
 | `data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
@@ -613,6 +617,8 @@
 | `outputs/reports/formal_gold_authorization_packet_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/formal_gold_authorization_packet_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/formal_gold_authorization_packet_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/formal_gold_publication_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/formal_gold_publication_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s15_s31_gdpr7_membership_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
