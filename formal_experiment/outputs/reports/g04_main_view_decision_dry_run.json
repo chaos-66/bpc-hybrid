@@ -1,0 +1,14 @@
+{
+  "schema_version": "g04_main_view_decision_dry_run@1.0.0",
+  "status": "dry_run_not_applied",
+  "proposal": {
+    "formal_main_report": "sentence-level coarse five span-bearing fields (actor/action/condition/constraint/exception) via the fixed Sun literal-overlap contract, PLUS the separate four-class modality-label metrics (accuracy + macro-F1)",
+    "modality_evidence_span_metrics": "explicitly unavailable (published Gold modality is a plain string); never zeroed, never aggregated into any span aggregate",
+    "fine_grained_five_fields": "diagnostic / 对照 view only",
+    "historical_six_field_coarse_aggregate": "development provenance only; NOT formal (includes modality evidence-span numbers not reproducible from the published Gold)",
+    "no_gold_modification": true,
+    "no_fabricated_modality_evidence_spans": true
+  },
+  "authorization_required": "this is a formal evaluation-contract decision; it is applied only after explicit user authorization. main_view_publishable is NOT flipped by this package.",
+  "not_applied": true
+}

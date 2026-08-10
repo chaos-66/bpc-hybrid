@@ -41,7 +41,10 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from bpc_hybrid.g04_coarse_view import build_coarse_view  # noqa: E402
+from bpc_hybrid.g04_coarse_view import (  # noqa: E402
+    build_coarse_view,
+    semantic_hash_json,
+)
 from bpc_hybrid.formal_stage2_evaluation import (  # noqa: E402
     evaluate_modality_labels,
     evaluate_span_metrics,
@@ -56,6 +59,10 @@ B0_FINE = ROOT / "data" / "results" / "b0_formal_arm_v1" / "evaluation_fine.json
 B0_COARSE = ROOT / "data" / "results" / "b0_formal_arm_v1" / "evaluation_coarse.json"
 B0_LABELS = ROOT / "data" / "results" / "b0_formal_arm_v1" / "modality_labels.json"
 READINESS = ROOT / "outputs" / "reports" / "b0_d1_formal_readiness_v2.json"
+G04_MANIFEST = (ROOT / "outputs" / "evidence" / "g04_formal_coarse_view_v1"
+                / "manifest.json")
+G04_DERIVED = (ROOT / "outputs" / "evidence" / "g04_formal_coarse_view_v1"
+               / "coarse_view_derived.json")
 
 D1_RUN = ROOT / "outputs" / "development" / "s27_d1_v6_r3_clean_rerun_150_hist56d_v1"
 D1_PRED = D1_RUN / "d1_responses.jsonl"
@@ -88,6 +95,38 @@ def _load_jsonl(path: Path) -> list[dict[str, Any]]:
                 path.read_text(encoding="utf-8").splitlines() if line.strip()]
     except (OSError, json.JSONDecodeError):
         return []
+
+
+def _authoritative_coarse_view_hash() -> dict[str, str]:
+    """Cross-verified authoritative G0.4 coarse-view semantic hash.
+
+    NO hash is hardcoded here. The value is read from the G0.4 manifest AND
+    recomputed from the committed derived artifact, AND cross-checked against
+    the B0 formal arm manifest's G0.4 declaration. Any disagreement fails
+    closed (RuntimeError) so a stale or tampered binding can never silently
+    propagate.
+    """
+    g04_manifest = _load_json(G04_MANIFEST)
+    manifest_sha = g04_manifest.get("derived_view", {}).get("semantic_sha256")
+    if not isinstance(manifest_sha, str) or not manifest_sha:
+        raise RuntimeError("G0.4 manifest missing derived_view.semantic_sha256")
+    if not G04_DERIVED.exists():
+        raise RuntimeError("G0.4 derived artifact missing; cannot cross-verify")
+    derived = json.loads(G04_DERIVED.read_text(encoding="utf-8"))
+    recomputed = semantic_hash_json(derived)
+    if manifest_sha != recomputed:
+        raise RuntimeError(
+            f"G0.4 hash disagreement: manifest={manifest_sha} "
+            f"recomputed={recomputed}")
+    b0_manifest = _load_json(B0_MANIFEST)
+    b0_sha = b0_manifest.get("g04", {}).get("coarse_view_semantic_sha256")
+    if b0_sha != manifest_sha:
+        raise RuntimeError(
+            f"B0 formal manifest G0.4 hash disagreement: {b0_sha} vs {manifest_sha}")
+    return {"semantic_sha256": manifest_sha,
+            "source": "outputs/evidence/g04_formal_coarse_view_v1/manifest.json "
+                      "(cross-verified against derived artifact recomputation "
+                      "and the B0 formal arm manifest)"}
 
 
 def _verify_binding(method: str, predictions: list[dict[str, Any]],
@@ -203,6 +242,9 @@ def build_reevaluation() -> dict[str, Any]:
             },
         }
 
+    # authoritative G0.4 coarse-view hash (cross-verified, never hardcoded)
+    coarse_hash = _authoritative_coarse_view_hash()
+
     # comparison capsule
     b0_manifest = _load_json(B0_MANIFEST)
     comparison = {
@@ -213,7 +255,8 @@ def build_reevaluation() -> dict[str, Any]:
                         "sha256": _sha256_file(FORMAL_GOLD)},
         "coarse_view": {
             "transform": "src/bpc_hybrid/g04_coarse_view.py",
-            "semantic_sha256": "d15061d74b41c58d66cfdafc86f1b0f2dc91e1a51447afcafc4c67ebcb59c5c3",
+            "semantic_sha256": coarse_hash["semantic_sha256"],
+            "semantic_hash_source": coarse_hash["source"],
             "main_view_publishable": False,
             "note": "G0.4 consistency gate: modality evidence not reproducible from published Gold; five-field spans published"},
         "prediction_schema": {"path": "configs/schemas/stage2_prediction.schema.json"},

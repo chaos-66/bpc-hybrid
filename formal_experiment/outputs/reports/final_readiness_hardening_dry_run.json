@@ -1,0 +1,91 @@
+{
+  "schema_version": "final_readiness_gate_hardening_dry_run@1.0.0",
+  "status": "dry_run_not_applied",
+  "defects_recorded": [
+    "status.py: final_experiment_ready computed from formal Gold + all-three-methods ready + input/Gold file counts; no requirement for the three-method formal predictions/results capsule to exist and pass independent verification",
+    "status.py: no requirement that the G0.4 formal main-view reporting contract be user-authorized and publishable",
+    "audit.py: methods_unexpectedly_ready error fires unconditionally whenever all three methods are ready; no recognized authorized terminal state exists"
+  ],
+  "minimal_reproduction": {
+    "method": "in-memory simulation of the CURRENT status.py/audit.py computation paths (contract + methods + frozen counts); no file modified",
+    "scenarios": {
+      "D1_alone_ready": {
+        "formal_gold_publication_ready": true,
+        "frozen_counts": {
+          "input": 10,
+          "gold": 3
+        },
+        "method_blockers": [
+          "sun_llm_fallback"
+        ],
+        "final_experiment_ready (current status.py)": false,
+        "methods_unexpectedly_ready error (current audit.py)": false
+      },
+      "H1_comparison_only_ready_not_recognized": {
+        "formal_gold_publication_ready": true,
+        "frozen_counts": {
+          "input": 10,
+          "gold": 3
+        },
+        "method_blockers": [
+          "direct_llm",
+          "sun_llm_fallback"
+        ],
+        "final_experiment_ready (current status.py)": false,
+        "methods_unexpectedly_ready error (current audit.py)": false
+      },
+      "all_three_ready": {
+        "formal_gold_publication_ready": true,
+        "frozen_counts": {
+          "input": 10,
+          "gold": 3
+        },
+        "method_blockers": [],
+        "final_experiment_ready (current status.py)": true,
+        "methods_unexpectedly_ready error (current audit.py)": true
+      }
+    },
+    "key_finding": "all_three_ready -> final_experiment_ready=true under the current status.py logic while the three-method capsule is absent, and audit.py simultaneously raises methods_unexpectedly_ready -- the config flip alone opens the final gate; H1 comparison_only_ready is NOT recognized as ready (blockers unchanged)"
+  },
+  "proposed_fail_closed_target_semantics": [
+    "method states must be in a user-approved formal terminal set",
+    "the three formal arm capsules (sun_rule_only / direct_llm / sun_llm_fallback) must each exist AND pass their independent verifier",
+    "shared comparison capsule hashes (input/Gold/schema/normalization/evaluators) must all agree",
+    "the G0.4 formal main-view reporting contract must be user-authorized",
+    "until all of the above hold, final_experiment_ready MUST stay false",
+    "after user authorization AND real satisfaction of all conditions, methods_unexpectedly_ready must no longer fire",
+    "a config status flip alone must not open the final gate early"
+  ],
+  "recommended_state_semantics": {
+    "terminal_set": [
+      "ready"
+    ],
+    "comparison_only_arm": "formal_status=ready + role='comparison_arm_only' + notes (uses the existing terminal set; no audit/status semantic drift)",
+    "final_gate": "final_experiment_ready = publication_ready AND all three method statuses in the approved terminal set AND three capsules verified AND G0.4 contract authorized AND shared comparison capsule consistent"
+  },
+  "required_changes": {
+    "code": [
+      "status.py: add capsule-completeness + G0.4-authorization terms to final_experiment_ready",
+      "audit.py: replace the unconditional methods_unexpectedly_ready error with a guarded check that only fires when methods are ready WITHOUT the required capsule/contract authorization",
+      "audit.py: add passes for 'three formal capsules verified' and 'G0.4 main-view contract authorized'"
+    ],
+    "tests": [
+      "final gate stays false when only the B0 arm capsule exists",
+      "final gate stays false when G0.4 contract not authorized",
+      "methods_unexpectedly_ready does not fire in the authorized terminal state"
+    ],
+    "docs": [
+      "PROJECT_AUDIT / MASTER_PIPELINE gate tables updated to the new semantics after implementation (not in this dry-run)"
+    ]
+  },
+  "unified_authorization_sentence": "I authorize the formal evaluation-contract and final-readiness decisions: (1) the G0.4 formal main report consists of the sentence-level coarse five span-bearing fields plus the separate four-class modality-label metrics, with modality evidence-span metrics explicitly unavailable (never zeroed, never aggregated), fine-grained five fields as diagnostic/对照, and the historical six-field coarse aggregate retained as development provenance only; (2) the direct_llm method gate may move to ready with the existing bound D1-R3 snapshot published formally zero-API as the default path (new LLM budget only if the binding breaks or I explicitly request a rerun); (3) the sun_llm_fallback method gate may move to ready with role/notes marking it comparison-only (existing bound snapshot published formally zero-API as the comparison arm); (4) the final-readiness gate is hardened fail-closed so final_experiment_ready requires the three verified formal capsules, a consistent shared comparison capsule and the authorized G0.4 contract, and methods_unexpectedly_ready no longer fires in that authorized state.",
+  "not_applied": true,
+  "untouched": [
+    "methods.json",
+    "experiment_contract.json",
+    "stage3 gate",
+    "Gold",
+    "publication status",
+    "G0.4 main_view_publishable"
+  ]
+}

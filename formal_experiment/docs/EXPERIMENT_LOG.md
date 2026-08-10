@@ -3215,3 +3215,16 @@
 - 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T16:47:06.566794+00:00 - Shared comparison capsule hash correction + gate-readiness dry-run acceptance fixes (no gates applied). (1) Removed the hardcoded wrong coarse-view semantic hash (d15061d7...5c3) from build_d1_h1_zero_api_reevaluation_v1.py and the generated comparison capsule; authoritative hash d15061d74b41c58dd4278f0a675327099453564090005f9b58b1d352de5cfe39 now cross-verified from the G0.4 manifest + recomputation of the committed derived artifact + B0 formal manifest G0.4 declaration, failing closed on any disagreement; D1/H1 reevaluation manifest/comparison capsule JSON+MD rebuilt (capsule 89992562..., manifest 8ce1dac0...); D1/H1 prediction bytes unchanged (D1 9188093c..., H1 4fd7c116... locked hashes), 0 new API calls; tamper/wrong-hardcode tests fail closed. (2) D1/H1 method-gate dry-run v2 factual corrections (not applied): Direct-LLM keeps candidate-not-authorized, states the 150-row snapshot IS bound to formal input v2, default path after authorization = zero-API formal publication of that snapshot (no new API call; new budget only if binding breaks or explicit rerun request), removed the incorrect v1 'necessarily needs a new LLM budget' claim; Rules+LLM-Repair keeps comparison-only, states the snapshot can be published formally zero-API as the comparison arm, corrects the v1 claim that comparison_only_ready reduces blockers (it is NOT recognized as ready by current status/audit), lists two reviewable options (A recommended: formal_status=ready + role/notes comparison-only; B: keep comparison_only_ready with synchronized terminal-set/audit/status changes) with simulated blocker states. (3) final-readiness hardening dry-run package (final_readiness_hardening_dry_run.json/.md): records the defects (status.py can set final_experiment_ready=true from formal Gold + three methods ready + input/Gold file presence without the three-method capsule; no G0.4 main-view authorization requirement; audit.py unconditional methods_unexpectedly_ready when all ready), in-memory minimal reproduction (all-three-ready -> premature final gate + unexpected error; D1 alone -> false; H1 comparison_only_ready not recognized), proposed fail-closed target semantics, required code/test/doc changes and a unified authorization sentence. (4) G0.4 decision proposal dry-run (g04_main_view_decision_dry_run.json/.md): formal main report = coarse five span fields + separate modality-label metrics; modality evidence-span unavailable never zeroed/aggregated; fine five fields diagnostic; historical six-field coarse aggregate stays development provenance; main_view_publishable NOT flipped. Nothing applied; methods.json/Gold/experiment_contract/stage3 gate/publication status untouched; zero LLM/API. 12 new focused tests; 1694 passed
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1694 passed, 24 skipped, 19 warnings in 303.27s (0:05:03)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b1d1315e25da1e7b55fec78b54ca8f682ddeea25`；相关未提交路径：16 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
