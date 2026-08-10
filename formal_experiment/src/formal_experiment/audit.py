@@ -162,6 +162,29 @@ def _load_json(path: Path) -> dict[str, Any]:
         return {}
 
 
+def _formal_capsule_methods() -> set[str]:
+    """Method arms with published formal capsules (predictions+results).
+
+    Coverage is derived from per-arm manifests under outputs/reports
+    (pattern <arm>_v*.manifest.json carrying method_id); a single file in
+    data/predictions is NOT treated as the complete three-method capsule.
+    """
+    methods: set[str] = set()
+    pred_dir = FORMAL_PREDICTIONS_DIR
+    if not pred_dir.exists():
+        return methods
+    for arm_dir in pred_dir.iterdir():
+        if not arm_dir.is_dir():
+            continue
+        for manifest_candidate in (FORMAL_REPORTS_DIR / f"{arm_dir.name}.manifest.json",):
+            if manifest_candidate.exists():
+                manifest = _load_json(manifest_candidate)
+                mid = manifest.get("method_id")
+                if isinstance(mid, str) and mid:
+                    methods.add(mid)
+    return methods
+
+
 def _load_release_verifier() -> Any | None:
     """Load the independent release verifier script as a module (no package
     import cycle: the verifier lives under scripts/ and imports nothing from
@@ -1105,10 +1128,24 @@ def collect_project_audit() -> dict[str, Any]:
     else:
         _add(findings, "blockers", "formal_capsule_not_frozen",
              f"Gold capsule NOT frozen (frozen input and/or Gold artifacts missing): {frozen_counts}")
+    # Method-coverage check for the predictions/results capsule: one file in
+    # data/predictions must never be misread as the complete three-method
+    # final capsule. Coverage is derived from the per-arm manifests under
+    # outputs/reports (each arm manifest carries method_id).
+    capsule_methods = _formal_capsule_methods()
+    all_methods = {"sun_rule_only", "sun_llm_fallback", "direct_llm"}
     if not frozen_counts["predictions"] or not frozen_counts["results"]:
         _add(findings, "warnings", "formal_predictions_results_capsule_not_produced",
              "Formal predictions/results capsule is not produced yet (expected at this stage). "
              "This is NOT the final experiment capsule being frozen.")
+    elif capsule_methods != all_methods:
+        _add(findings, "warnings", "formal_predictions_results_capsule_partial",
+             f"Formal predictions/results capsule is PARTIAL: published method arms "
+             f"{sorted(capsule_methods)} of the three-method set "
+             f"{sorted(all_methods)}; this is NOT the complete three-method final capsule.")
+    else:
+        _add(findings, "passes", "formal_predictions_results_capsule_complete",
+             "Formal predictions/results capsule covers all three methods.")
 
     # ------------------------------------------------------------------
     # Formal benchmark release v2: independent verifier gate.

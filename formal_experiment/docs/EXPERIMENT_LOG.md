@@ -3155,3 +3155,16 @@
 - 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T12:19:21.990299+00:00 - Checkpoint 1/3: governance/evidence consistency fixes + G0.4 dual-view evaluation contract + B0 formal arm toolchain. (1) authorization dry-run package fixed: proposal(dry_run_not_applied)/application(applied, commit 6a29766) states separated, exact before/after + boundaries kept, stale post-authorization command replaced with the formal entry run_b0_formal_arm.py (no candidate dir masquerading as formal); (2) live status text synced: MASTER_PIPELINE B0 method table (B0-R4 candidate verified + gate authorized, B0-R5 blocked on formal result), AGENTS.md static states (publication_ready true/route locked/Gold published/freeze true, gate definitions unchanged), PROJECT_AUDIT residue fixed; (3) evidence gap recorded: candidate manifest under outputs/development is gitignored/absent remotely -> formal capsule must be self-contained (design implemented); (4) G0.4 contract + shared coarse transform (src/bpc_hybrid/g04_coarse_view.py) derived from PUBLISHED Gold; consistency proof: semantic hash d15061d7 != historical 6e19cf3c because published Gold modality is a plain string (modality evidence not reproducible, 147/150 records differ in modality evidence ONLY; all other fields byte-identical) -> per contract the formal coarse MAIN-view metrics are NOT published; historical coarse numbers stay development provenance; coarse five-field span metrics match history per-field (0.8203/0.8927/0.7738/0.6182/0.8800); (5) formal evaluation module (formal_stage2_evaluation.py): five span-bearing fields + modality-label four-class separate + modality evidence-span unavailable with reason (never silent zero) + timing isolated; (6) B0 formal arm runner (run_b0_formal_arm.py, claim_scope=formal, is_formal_performance_result=true, fail-closed preconditions incl. release verifier + method gates, writes data/predictions/b0_formal_arm_v1 + data/results + reports manifest/export/capsule/verifier, no-overwrite/staging/atomic rename); (7) audit method-coverage distinction: not_produced -> partial (lists covered methods) -> complete pass; single file never misread as three-method capsule; 11 focused tests; 1675 passed. No Gold/contract/Stage3 gate/publication status modified; zero LLM/API
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1675 passed, 24 skipped, 19 warnings in 230.07s (0:03:50)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`6a29766347491908d749a8b149788d893dba01b0`；相关未提交路径：14 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -93,11 +93,12 @@ python scripts/audit_project.py --require-final-ready
   file NOW as long as `--require-human-review-ready` is green. This is the
   **input** gate (data + schema + tool locked, 150 sample_ids stable, format-valid
   editing surface). The **freeze** gate (150/150 adjudicated) is reported
-  separately as `human_review_freeze_ready` and remains false until the user
-  finishes adjudicating every record. These two gates are intentionally
-  distinct: input-ready does NOT require any record to be reviewed, and
-  freeze-ready is a **necessary but NOT sufficient** condition for declaring
-  formal Gold. Declaring formal Gold also requires `route.status==locked`
+  separately as `human_review_freeze_ready`; as of 2026-08-06 it is
+  **true** (150/150 adjudicated, annotation frozen; the two gates are
+  intentionally distinct: input-ready does NOT require any record to be
+  reviewed, and freeze-ready is a **necessary but NOT sufficient** condition
+  for declaring formal Gold). Declaring formal Gold also requires
+  `route.status==locked`
   AND `stage2_dataset.status==locked_for_human_review` AND
   `stage3.status==locked` AND
   `formal_gold_publication_gate.status` exactly matching the contract's
@@ -156,7 +157,7 @@ that are intentionally not collapsed into one. They are stored in
 |---|------|---------------|-----------------|---------|
 | 1 | `human_review_input_ready` | **true** | `experiment_contract.human_review_gate.status` + membership + structural preconditions | `--require-human-review-ready` |
 | 2 | `human_review_freeze_ready` | **true** (150/150 adjudicated) | v2 human_correction per-record adjudicated count | `validate_human_correction.py` `freeze_ready` |
-| 3 | `formal_gold_publication_ready` | false | gate 2 + `route.status==locked` + `stage2_dataset.status==locked_for_human_review` + `stage3.status==locked` + `formal_gold_publication_gate.status` exact match against `allowed_publication_statuses` whitelist | conservative — any missing or non-locked field, OR non-whitelisted status, keeps it false |
+| 3 | `formal_gold_publication_ready` | **true** (2026-08-10 user-authorized formal Gold publication; gate definition unchanged) | gate 2 + `route.status==locked` + `stage2_dataset.status==locked_for_human_review` + `stage3.status==locked` + `formal_gold_publication_gate.status` exact match against `allowed_publication_statuses` whitelist | conservative — any missing or non-locked field, OR non-whitelisted status, keeps it false |
 | 4 | `final_experiment_ready` | false | gate 3 + method readiness + frozen input/gold | `--require-final-ready` |
 
 Gate 1 is true at 0/150 once the data sources, schemas, tool, v2
@@ -180,12 +181,13 @@ truth** for `format_valid` / `review_ready` / `freeze_ready` in
 both `status.py` and `audit.py`. Any status / check divergence on
 the same v2 file is now a single-source-of-truth violation.
 
-Route v2 is reopened after discovery of final-version method differences and
-the official Sun dataset supplement. The existing 150-row review pack is
-development-only. The 150-record EStG-150 v2 human_correction file is the
-active editing surface and is NOT a development pack: gate 1 above is
-true, and the user may begin editing it. Re-locking route v2 affects
-gate 3 / gate 4, NOT gate 1.
+Route was reopened on 2026-07-13 after discovery of final-version method
+differences and the official Sun dataset supplement, and re-locked on
+2026-08-06 (user-authorized governance; `route.status=locked`). The
+150-record EStG-150 v2 human_correction file is the active editing surface
+and is NOT a development pack. Gates 3/4 additionally require the stage2
+dataset, stage3 and freeze/publication policy locks, which are all re-locked
+as of 2026-08-10.
 
 ### EStG-150 membership is permanently locked (2026-07-13)
 
@@ -200,8 +202,10 @@ This 150 is:
 - **NOT** Sun's original 150 sentence phrase Gold (443 spans).
 - **NOT** an exact reproduction of any external dataset.
 - The project's `independently_reconstructed_estg_150_v1`
-  benchmark, to be published as `LLM-assisted, human-adjudicated
-  Gold` after the user finishes 150/150.
+  benchmark, published as `LLM-assisted, human-adjudicated Gold`
+  on 2026-08-10 (Stage 2 / Stage 3 Gold artifacts under
+  `data/gold/`, executable Gold-blind input v2 under
+  `data/input/`, publication manifests under `outputs/reports/`).
 
 Once the user begins editing Layer E, this 150 cannot be
 re-sampled, re-seeded, swapped with the legacy development pack,

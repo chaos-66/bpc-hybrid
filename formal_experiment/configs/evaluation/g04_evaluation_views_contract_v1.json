@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "schema_version": "g04_evaluation_views_contract@1.0.0",
+  "contract_id": "g04_evaluation_views_contract_v1",
+  "created": "2026-08-10",
+  "purpose": "Versioned, machine-verifiable evaluation-views contract for the formal benchmark. Fixes which Gold view feeds which metric family, forbids cross-view mixing, and separates modality-label metrics from six-field span metrics.",
+  "views": {
+    "coarse_sentence_level": {
+      "role": "primary (Sun-aligned main view) -- PUBLICATION GATED on consistency proof",
+      "transform": {
+        "name": "formal_sentence_level_coarse_view",
+        "input": "data/gold/stage2/estg150_formal_gold_v1.json (published formal Gold)",
+        "rule": "one synthetic clause per sentence over [0, len(approved_text_en)); per field one span [min(start), max(end)) over all annotated spans in the sentence; absent fields stay absent; text = approved_text_en slice; modality label = first non-empty clause modality string; modality evidence = merged clause spans (published Gold does not carry local modality evidence spans)",
+        "normalized": "spans carry normalized = ' '.join(text.casefold().split()) for non-modality fields (deterministic derivation, not copied from any development file)",
+        "historical_semantic_sha256": "6e19cf3c684a26aa9e9fdc9f76c3529b5a4232aecb085fad4c206ceb177bcb26",
+        "consistency_proof_required": "derived view must hash- and record-level match the historical sentence-level coarse gold (2026-08-07 user-confirmed main view); otherwise primary formal metrics MUST NOT be published and the exact diff must be reported"
+      },
+      "evaluator": "sun_table8_literal_overlap_v2 (sun_literal_overlap_evaluation@2.0.0)",
+      "consistency_status_2026_08_10": {
+        "semantic_hash_matches_historical": false,
+        "record_level_identical": false,
+        "diff_fields": {"modality": 147},
+        "reason": "published formal Gold stores modality as a plain string; the local modality evidence spans of the historical coarse gold (Layer E modality.span) are not reproducible from it. All other fields are identical.",
+        "consequence": "historical coarse numbers remain development-side provenance; the formal coarse MAIN-view metrics are NOT published. Fine-grained six-field span metrics and modality-label metrics remain computable from the published Gold."
+      }
+    },
+    "fine_gold": {
+      "role": "secondary / diagnostic (clause-level)",
+      "input": "data/gold/stage2/estg150_formal_gold_v1.json as published",
+      "evaluator": "sun_table8_literal_overlap_v2 (same evaluator, same normalization)",
+      "note": "fine-grained formal Gold remains the second/对照 view; never mixed with the coarse view in the same table"
+    }
+  },
+  "rules": {
+    "no_cross_view_mixing": true,
+    "modality_label_metrics_reported_separately": true,
+    "modality_evidence_span_metrics": "unavailable from the published formal Gold (modality published as plain string; Layer E local evidence spans are adjudication content not carried by the decision-only Gold); reported as unavailable with reason, never silently zero",
+    "six_field_span_metrics": "fixed Sun literal-overlap primary contract (independent_same_field_any_nonempty_character_span_intersection)",
+    "diagnostic_only": ["strict_exact", "token_overlap", "clause_aligned_hungarian_iou", "actor_action_edges"],
+    "claim_scopes": {
+      "formal": "only the B0 formal arm (sun_rule_only) may carry claim_scope=formal; D1/H1 remain candidate / formal-gate-blocked",
+      "candidate": "D1/H1 zero-API re-evaluations are candidates, never formal"
+    }
+  },
+  "outputs": {
+    "coarse_view_file": "outputs/evidence/g04_formal_coarse_view_v1/coarse_view_derived.json",
+    "coarse_view_report": "outputs/evidence/g04_formal_coarse_view_v1/manifest.json"
+  }
+}

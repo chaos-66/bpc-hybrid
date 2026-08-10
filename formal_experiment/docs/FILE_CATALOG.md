@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-10
-**收录文件**：948 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：956 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -74,6 +74,7 @@
 | `configs/estg150_openai_strict_transport_schema_adapter_v1_6.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_openai_strict_transport_schema_adapter_v1_7.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/estg150_openai_strict_transport_schema_adapter_v1_8.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/evaluation/g04_evaluation_views_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/evaluation/sun_table8_literal_overlap_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/experiment_contract.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -549,6 +550,8 @@
 | `outputs/development/s28d_h1_150_v4pro_v1/h1_telemetry.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28d_h1_150_v4pro_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28d_h1_150_v4pro_v1/transport_capture.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/g04_formal_coarse_view_v1/coarse_view_derived.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/g04_formal_coarse_view_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s34_winter_stage3_development_v3_clean/capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s34_winter_stage3_development_v3_clean/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s34_winter_stage3_development_v3_clean/error_analysis.md` | 活动 | 说明、规范或研究文档 |
@@ -727,6 +730,7 @@
 | `scripts/build_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg150_review_layers.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg_human_review_pack.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_formal_coarse_view_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_formal_gold_authorization_packet.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_formal_gold_authorization_packet_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
@@ -770,6 +774,7 @@
 | `scripts/reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/restore_layer_e_adjudication_from_56d2b03.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/review_stage3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_b0_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_ai_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v10_development.py` | 活动 | Python 实现、脚本或测试 |
@@ -842,6 +847,8 @@
 | `src/bpc_hybrid/evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/fallback.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/formal_stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/g04_coarse_view.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_context.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_pilot_plan.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |
@@ -996,6 +1003,7 @@
 | `tests/test_formal_benchmark_release_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_g04_and_b0_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_effective_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_fallback_runner.py` | 活动 | Python 实现、脚本或测试 |

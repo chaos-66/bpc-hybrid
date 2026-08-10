@@ -1,0 +1,44 @@
+{
+  "schema_version": "g04_formal_coarse_view_manifest@1.0.0",
+  "contract": {
+    "path": "configs/evaluation/g04_evaluation_views_contract_v1.json",
+    "sha256": "336415f28a4097b40ff90425358728bac4ac7a36e2566aa73cad9468b88434e8"
+  },
+  "input": {
+    "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+  },
+  "derived_view": {
+    "path": "outputs/evidence/g04_formal_coarse_view_v1/coarse_view_derived.json",
+    "records": 150,
+    "semantic_sha256": "d15061d74b41c58dd4278f0a675327099453564090005f9b58b1d352de5cfe39",
+    "historical_semantic_sha256": "6e19cf3c684a26aa9e9fdc9f76c3529b5a4232aecb085fad4c206ceb177bcb26",
+    "semantic_hash_matches_historical": false
+  },
+  "consistency_with_historical": {
+    "comparable": true,
+    "historical_path": "outputs\\development\\s27_b0_coarse_gold_sentence_granularity_v1\\coarse_gold_sentence_level.json",
+    "record_level_identical": false,
+    "diff_count": 147,
+    "diff_fields": {
+      "modality": 147
+    },
+    "first_diffs": [
+      "estg_000020: ['modality']",
+      "estg_000021: ['modality']",
+      "estg_000027: ['modality']",
+      "estg_000028: ['modality']",
+      "estg_000030: ['modality']",
+      "estg_000031: ['modality']",
+      "estg_000033: ['modality']",
+      "estg_000035: ['modality']",
+      "estg_000036: ['modality']",
+      "estg_000037: ['modality']"
+    ]
+  },
+  "main_view_publishable": false,
+  "not_publishable_reason": "modality evidence spans of the historical coarse view are not reproducible from the published formal Gold (modality published as plain string; Layer E modality.span local evidence dropped). 147/150 records differ in modality evidence only; all other fields (actors/actions/conditions/constraints/exceptions, source_text, clause_span, source_id) are identical. Historical coarse numbers remain development-side provenance, NOT formal.",
+  "granularity_rule": "one synthetic clause per sentence over [0, len(approved_text_en)); per field one span [min(start), max(end)) over all annotated spans in the sentence; absent fields stay absent; text = approved_text_en slice; modality label = first non-empty clause modality string; modality evidence = merged clause spans (published Gold does not carry local modality evidence spans)",
+  "generated_zero_api": true,
+  "no_development_file_copied": true
+}

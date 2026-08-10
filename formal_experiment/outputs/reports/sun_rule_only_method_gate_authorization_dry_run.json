@@ -1,7 +1,7 @@
 {
   "schema_version": "sun_rule_only_method_gate_authorization_dry_run@1.0.0",
-  "status": "dry_run_not_applied",
-  "purpose": "The ONLY formal method gate change the user is asked to decide. Nothing in this package is applied; methods.json / experiment_contract.json / Stage 3 gate / Gold / publication status are untouched.",
+  "status": "applied",
+  "purpose": "Originally a dry-run proposal for the ONLY formal method gate change. The proposal was authorized and APPLIED by the user on 2026-08-10 (commit 6a29766): configs/methods.json sun_rule_only formal_status -> ready, command_status -> formal_ready_candidate_authorized. Nothing else was modified (methods.json other entries, experiment_contract.json, Stage 3 gate, Gold, publication status all untouched); no LLM/API was called. This record keeps the exact before/after, the authorization boundary and the untouched items; proposal state and application state are explicit and separate.",
   "methods_json_change": {
     "file": "configs/methods.json",
     "scope": "sun_rule_only only; direct_llm and sun_llm_fallback untouched",
@@ -97,7 +97,7 @@
     },
     "comparison_with_development_snapshot": "identical metrics to the B0-R3 development snapshot (F1 0.71865): method semantics unchanged; only the input channel changed to formal input v2 (Gold-blind)"
   },
-  "formal_run_command_after_authorization": "python scripts/run_estg150_b0_formal.py --runtime-home D:\\environment\\stanford-corenlp-4.5.10 --output-dir outputs/development/b0_r4_formal_candidate_v2_authorized && python scripts/audit_project.py",
+  "formal_run_command_after_authorization": "python scripts/run_b0_formal_arm.py --runtime-home D:\\\\environment\\\\stanford-corenlp-4.5.10 && python scripts/verify_formal_benchmark_release_v2.py && python scripts/audit_project.py",
   "expected_audit_changes_after_authorization": {
     "formal_methods_not_ready": "sun_rule_only moves out of the non-ready set",
     "final_experiment_not_ready": "remains present while sun_llm_fallback and direct_llm are not ready (their authorization is a separate decision)",
@@ -130,5 +130,7 @@
     "gold_untouched": true,
     "publication_status_untouched": true,
     "llm_api_called": false
-  }
+  },
+  "proposal_status": "dry_run_not_applied",
+  "post_authorization_command_note": "The formal B0 arm publishes the versioned capsule under data/predictions/b0_formal_arm_v1 and data/results/b0_formal_arm_v1 (claim_scope=formal). Development candidate directories under outputs/development are NOT formal publications and are not referenced by this command."
 }
