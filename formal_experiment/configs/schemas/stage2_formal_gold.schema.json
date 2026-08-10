@@ -1,0 +1,94 @@
+{
+  "schema_version": "stage2_formal_gold@1.0.0",
+  "description": "Canonical decision-only Stage 2 formal Gold for the project's independently reconstructed EStG-150 benchmark. LLM-assisted, human-adjudicated: the human decisions recorded in the active v2 Layer E file (estg_150_human_correction_v1.json) are the sole source of every value; LLM candidate text, draft fields, internal suggestions and review tooling state are excluded. Not Sun's original 150, not an exact reproduction.",
+  "document": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["schema_version", "dataset_id", "claim", "membership", "records"],
+    "properties": {
+      "schema_version": {"const": "stage2_formal_gold@1.0.0"},
+      "dataset_id": {"const": "independently_reconstructed_estg_150_v1"},
+      "claim": {"const": "LLM-assisted, human-adjudicated Gold"},
+      "membership": {
+        "type": "object",
+        "required": ["count", "payload_sha256", "source_membership_path"],
+        "properties": {
+          "count": {"const": 150},
+          "payload_sha256": {"type": "string"},
+          "source_membership_path": {"type": "string"}
+        }
+      },
+      "records": {
+        "type": "array",
+        "minItems": 150,
+        "maxItems": 150,
+        "items": {"$ref": "#/definitions/record"}
+      }
+    }
+  },
+  "definitions": {
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sample_id", "approved_text_en", "clauses", "decisions", "source_hashes"],
+      "properties": {
+        "sample_id": {"type": "string"},
+        "approved_text_en": {"type": "string"},
+        "clauses": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/clause"}
+        },
+        "decisions": {
+          "type": "object",
+          "description": "human adjudication actions per field (accepted/edited/rejected)",
+          "required": ["translation", "modality", "actor", "action", "condition", "constraint", "exception"]
+        },
+        "source_hashes": {
+          "type": "object",
+          "required": ["layer_e_record_sha256"],
+          "properties": {
+            "layer_e_record_sha256": {"type": "string"}
+          }
+        }
+      }
+    },
+    "clause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clause_id", "clause_span", "modality", "actors", "actions", "conditions", "constraints", "exceptions", "actor_action_map", "order_relations"],
+      "properties": {
+        "clause_id": {"type": "string"},
+        "clause_span": {"$ref": "#/definitions/span"},
+        "modality": {"type": ["string", "null"]},
+        "actors": {"type": "array", "items": {"$ref": "#/definitions/span_item"}},
+        "actions": {"type": "array", "items": {"$ref": "#/definitions/span_item"}},
+        "conditions": {"type": "array", "items": {"$ref": "#/definitions/span_item"}},
+        "constraints": {"type": "array", "items": {"$ref": "#/definitions/span_item"}},
+        "exceptions": {"type": "array", "items": {"$ref": "#/definitions/span_item"}},
+        "actor_action_map": {"type": "array"},
+        "order_relations": {"type": "array"}
+      }
+    },
+    "span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "start", "end"],
+      "properties": {
+        "text": {"type": "string"},
+        "start": {"type": "integer"},
+        "end": {"type": "integer"}
+      }
+    },
+    "span_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text", "start", "end"],
+      "properties": {
+        "id": {"type": "string"},
+        "text": {"type": "string"},
+        "start": {"type": "integer"},
+        "end": {"type": "integer"}
+      }
+    }
+  }
+}

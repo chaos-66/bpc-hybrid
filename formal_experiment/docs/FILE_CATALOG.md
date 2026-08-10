@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-10
-**收录文件**：920 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：924 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -95,7 +95,9 @@
 | `configs/schemas/stage1_evaluation_report.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_human_annotation.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_label_semantics.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/stage2_formal_gold.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage2_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/stage3_formal_gold.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_gold_annotation.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_inference.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -743,6 +745,7 @@
 | `scripts/ingest_sun_modality.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/modality_classifier_alignment_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/promote_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/publish_formal_gold_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/rebuild_d1_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
 | `scripts/reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
@@ -985,6 +988,7 @@
 | `tests/test_project_structure.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_prompt_contract.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_publish_formal_gold.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g1_lexicon_classifier.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g2_extraction_rules.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_r15_sun_style_g3_bpmn_violation.py` | 活动 | Python 实现、脚本或测试 |

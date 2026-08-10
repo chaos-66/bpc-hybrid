@@ -1,0 +1,76 @@
+{
+  "schema_version": "stage3_formal_gold@1.0.0",
+  "description": "Canonical decision-only Stage 3 formal Gold: 25 matching (rule-process relevance) + 33 violation (missing_action / incorrect_actor / out_of_order) decisions, derived solely from the user-adjudicated S3.2/S3.3 correction pack. candidate_* fields and rule_text drafts are excluded (rule_text lives in the inference pack, referenced by hash). check_type is routing metadata from the inference pack, not a Gold label. Gold Rule Records and Gold Process Records do NOT exist yet (see s37_oracle_readiness_v1.json).",
+  "documents": {
+    "matching": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "dataset_id", "count", "items", "sources"],
+      "properties": {
+        "schema_version": {"const": "stage3_formal_gold@1.0.0"},
+        "dataset_id": {"const": "stage3_matching_gold_v1"},
+        "count": {"const": 25},
+        "items": {
+          "type": "array",
+          "minItems": 25,
+          "maxItems": 25,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["item_id", "process_id", "rule_id", "decision_relevant"],
+            "properties": {
+              "item_id": {"type": "string", "pattern": "^m[0-9]{3}$"},
+              "process_id": {"type": "string"},
+              "rule_id": {"type": "string"},
+              "decision_relevant": {"type": "boolean"}
+            }
+          }
+        },
+        "sources": {
+          "type": "object",
+          "required": ["correction_pack_sha256", "inference_pack_sha256"],
+          "properties": {
+            "correction_pack_sha256": {"type": "string"},
+            "inference_pack_sha256": {"type": "string"}
+          }
+        }
+      }
+    },
+    "violation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "dataset_id", "count", "items", "sources"],
+      "properties": {
+        "schema_version": {"const": "stage3_formal_gold@1.0.0"},
+        "dataset_id": {"const": "stage3_violation_gold_v1"},
+        "count": {"const": 33},
+        "items": {
+          "type": "array",
+          "minItems": 33,
+          "maxItems": 33,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["item_id", "process_id", "rule_id", "check_type", "decision_violation_type"],
+            "properties": {
+              "item_id": {"type": "string", "pattern": "^v[0-9]{3}$"},
+              "process_id": {"type": "string"},
+              "rule_id": {"type": "string"},
+              "check_type": {"enum": ["missing_action", "incorrect_actor", "out_of_order"]},
+              "decision_violation_type": {"enum": ["missing_action", "incorrect_actor", "out_of_order", null]},
+              "decision_evidence": {"type": ["string", "null"]}
+            }
+          }
+        },
+        "sources": {
+          "type": "object",
+          "required": ["correction_pack_sha256", "inference_pack_sha256"],
+          "properties": {
+            "correction_pack_sha256": {"type": "string"},
+            "inference_pack_sha256": {"type": "string"}
+          }
+        }
+      }
+    }
+  }
+}

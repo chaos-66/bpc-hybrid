@@ -3090,3 +3090,16 @@
 - 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen
 - 备注：按 packet v2 执行三处合同变更（实际授权日 2026-08-10）：/stage3/status→locked（含 relock_note_2026_08_10）、/formal_gold_publication_gate/status→ready_for_formal_gold_publication（含 status_changed_2026_08_10_user_authorization）、/stage2_dataset/freeze_policy→完整重锁文本（保留数据/许可/冻结范围/禁止事项治理，仅更新已满足的 pending/relock 状态，日期 2026-08-10）；audit 验证：formal_gold_publication_ready False→True、BLOCKERS 5→3（消除 formal_gold_publication_paused、stage3_benchmark_not_locked；保留 final_experiment_not_ready/formal_methods_not_ready/formal_capsule_not_frozen）、final_experiment_ready 仍 False；更新 8 个 gate 期望测试（test_formal_project_audit 4、test_sun_modality_gate 2、test_canonical_text_hash_policy 1、test_layer_d 1）+ 2 个 packet 测试（v1 历史记录、v2 与执行值日期感知对比）；全量 1622 passed/24 skipped；不隐含 S1.7/S2.13/Gold Rule-Process Records/formal Oracle/最终实验完成；未调用任何 LLM/API
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T06:53:36.651872+00:00 - task A checkpoint 1: deterministic formal Gold publisher (zero-API) ready — Stage2/Stage3 Gold extraction from frozen Layer E + Stage 3 25/33 correction, fail-closed preconditions (route locked, publication whitelist, 150/150 adjudicated, membership payload hash, 25+33), decision-only outputs with per-record Layer E source hashes, no-overwrite deterministic writes, dry-run verified; status display fixed to show active v2 correction (150/150 adjudicated, freeze_ready) with v1 provenance-only labeling; paths.json route status synced to locked; FILE_CATALOG regenerated; 17 new publisher tests (1638 passed total)
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1639 passed, 24 skipped, 19 warnings in 231.46s (0:03:51)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`5d56f035eaaf8ef606f51f6afc4eadbf21a28db1`；相关未提交路径：7 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready、formal_capsule_not_frozen
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
