@@ -1,0 +1,40 @@
+{
+  "schema_version": "formal_stage2_modality_labels@1.0.0",
+  "classes": [
+    "obligation",
+    "permission",
+    "prohibition",
+    "definition"
+  ],
+  "records": 150,
+  "accuracy": 0.74,
+  "macro_f1": 0.712845542257307,
+  "per_class": [
+    {
+      "class": "obligation",
+      "precision": 0.7105263157894737,
+      "recall": 0.9152542372881356,
+      "f1": 0.8
+    },
+    {
+      "class": "permission",
+      "precision": 0.8857142857142857,
+      "recall": 0.7380952380952381,
+      "f1": 0.8051948051948051
+    },
+    {
+      "class": "prohibition",
+      "precision": 0.9285714285714286,
+      "recall": 0.65,
+      "f1": 0.7647058823529412
+    },
+    {
+      "class": "definition",
+      "precision": 0.52,
+      "recall": 0.4482758620689655,
+      "f1": 0.48148148148148145
+    }
+  ],
+  "separate_from_span_metrics": true,
+  "unlabeled_predictions": 0
+}

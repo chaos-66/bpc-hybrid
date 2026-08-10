@@ -1,0 +1,47 @@
+{
+  "schema_version": "b0_formal_arm_export_index@1.0.0",
+  "run_id": "b0_formal_arm_v1_replay",
+  "claim_scope": "formal",
+  "artifacts": {
+    "predictions/predictions.json": {
+      "path": "data/predictions/b0_formal_arm_v1_replay/predictions.json",
+      "sha256": "fa94991d246db9876b55d6a473644a4a1b93404bc35d3e314d3dba4768d9278d"
+    },
+    "predictions/telemetry.json": {
+      "path": "data/predictions/b0_formal_arm_v1_replay/telemetry.json",
+      "sha256": "c260d4cc4b6f6dc88c7a4997f015af491ff559d642975c88076cb81d4dedffb2"
+    },
+    "results/evaluation_fine.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/evaluation_fine.json",
+      "sha256": "383f9a0f7a2c7f35e108dc4eecd4a556dac47be9ab3208d2d3d15d26ef190176"
+    },
+    "results/evaluation_coarse.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/evaluation_coarse.json",
+      "sha256": "abd2b7972fe539b50cdaa597799aeb190b06e134c1e2f57fe87fc6b8ce346130"
+    },
+    "results/modality_labels.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/modality_labels.json",
+      "sha256": "e17d7c43dfa802a1f7afa296ad99fd14ca684da1c2d2ec5e16004853fae4907c"
+    },
+    "results/g04_view_declaration.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/g04_view_declaration.json",
+      "sha256": "d5ae1691bbb427af0595fe5541e8a2e7756fbb840f9ce9c809f5595808f24693"
+    },
+    "results/cost.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/cost.json",
+      "sha256": "91671dd49747821ecd8e9c02bd2d61277fdff9cef62a2d1c6d7f363c54cb0782"
+    },
+    "results/config_snapshot.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/config_snapshot.json",
+      "sha256": "f0d8ba91773a7264e9e5f5df4f3026c5d409d859a00e1454a63d73a3611fb419"
+    },
+    "manifest.json": {
+      "path": "outputs/reports/b0_formal_arm_v1_replay.manifest.json",
+      "sha256": "fb787740f8255550031de927572834a213a91e402ca48cf7ecabbff6e8333715"
+    }
+  },
+  "manifest": {
+    "path": "outputs/reports/b0_formal_arm_v1_replay.manifest.json",
+    "sha256": "fb787740f8255550031de927572834a213a91e402ca48cf7ecabbff6e8333715"
+  }
+}

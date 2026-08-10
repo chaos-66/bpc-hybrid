@@ -1,0 +1,184 @@
+{
+  "schema_version": "b0_formal_arm_manifest@1.0.0",
+  "run_id": "b0_formal_arm_v1_replay",
+  "claim_scope": "formal",
+  "is_formal_performance_result": true,
+  "method_id": "sun_rule_only",
+  "method_variant": "b0_enhanced_v10a",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "arm_scope": {
+    "single_method_b0_formal_arm": true,
+    "final_experiment_ready": false,
+    "note": "B0 formal arm only; the three-method final capsule is not complete (D1/H1 remain formal-gate-blocked)"
+  },
+  "preconditions_verified": {
+    "formal_benchmark_release_v2_verified": true,
+    "sun_rule_only_formal_status_ready": true,
+    "sun_rule_only_command_status": true,
+    "sun_rule_only_llm_used_false": true,
+    "d1_still_blocked": true,
+    "h1_still_blocked": true,
+    "formal_input_v2_present": true,
+    "formal_gold_present": true
+  },
+  "input_binding": {
+    "formal_input_v2_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "records": 150,
+    "gold_read_by_runner": false
+  },
+  "evaluation_binding": {
+    "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+    "views": [
+      "fine_clause_level",
+      "coarse_sentence_level"
+    ],
+    "modality_label_metrics_separate": true,
+    "modality_evidence_span_metrics": "unavailable (published Gold modality is a plain string)"
+  },
+  "g04": {
+    "contract": "g04_evaluation_views_contract@1.0.0",
+    "coarse_main_view_publishable": false,
+    "coarse_main_view_not_published_reason": "modality evidence spans of the historical coarse view are not reproducible from the published formal Gold (modality published as plain string; Layer E modality.span local evidence dropped). 147/150 records differ in modality evidence only; all other fields (actors/actions/conditions/constraints/exceptions, source_text, clause_span, source_id) are identical. Historical coarse numbers remain development-side provenance, NOT formal.",
+    "coarse_view_semantic_sha256": "d15061d74b41c58dd4278f0a675327099453564090005f9b58b1d352de5cfe39",
+    "no_cross_view_mixing": true,
+    "modality_evidence_span_metrics": "unavailable (published Gold modality is a plain string)"
+  },
+  "runtime_summary": {
+    "record_count": 150,
+    "predicted_clause_count": 249,
+    "corenlp_seconds": 206.25781960017048,
+    "total_seconds": 234.81174769997597,
+    "device": "cpu",
+    "modality_route_counts": {
+      "definition_structure": 4,
+      "heuristic_aligned_classifier": 31,
+      "marker_obligation": 106,
+      "marker_permission": 49,
+      "prohibition_negation": 19,
+      "record_level_classifier_fallback": 28,
+      "validated_aligned_classifier": 12
+    }
+  },
+  "metrics_summary": {
+    "fine_span_fields": {
+      "actor": {
+        "ground_truth": 48,
+        "extracted": 65,
+        "precision": 0.6923076923076923,
+        "recall": 0.9583333333333334,
+        "f1": 0.8038834951456311
+      },
+      "action": {
+        "ground_truth": 247,
+        "extracted": 244,
+        "precision": 0.8565573770491803,
+        "recall": 0.854251012145749,
+        "f1": 0.8554026399759472
+      },
+      "condition": {
+        "ground_truth": 214,
+        "extracted": 239,
+        "precision": 0.6569037656903766,
+        "recall": 0.7616822429906542,
+        "f1": 0.705423471848942
+      },
+      "constraint": {
+        "ground_truth": 302,
+        "extracted": 330,
+        "precision": 0.46060606060606063,
+        "recall": 0.5264900662251656,
+        "f1": 0.4913493402728364
+      },
+      "exception": {
+        "ground_truth": 13,
+        "extracted": 14,
+        "precision": 0.7857142857142857,
+        "recall": 0.8461538461538461,
+        "f1": 0.8148148148148148
+      }
+    },
+    "coarse_span_fields": {
+      "actor": {
+        "ground_truth": 41,
+        "extracted": 65,
+        "precision": 0.7076923076923077,
+        "recall": 0.975609756097561,
+        "f1": 0.8203299152920196
+      },
+      "action": {
+        "ground_truth": 150,
+        "extracted": 244,
+        "precision": 0.8729508196721312,
+        "recall": 0.9133333333333333,
+        "f1": 0.8926856128973049
+      },
+      "condition": {
+        "ground_truth": 122,
+        "extracted": 239,
+        "precision": 0.702928870292887,
+        "recall": 0.860655737704918,
+        "f1": 0.7738369415016121
+      },
+      "constraint": {
+        "ground_truth": 135,
+        "extracted": 330,
+        "precision": 0.5606060606060606,
+        "recall": 0.6888888888888889,
+        "f1": 0.6181622204257612
+      },
+      "exception": {
+        "ground_truth": 11,
+        "extracted": 14,
+        "precision": 0.7857142857142857,
+        "recall": 1.0,
+        "f1": 0.88
+      }
+    },
+    "modality_labels": {
+      "accuracy": 0.74,
+      "macro_f1": 0.712845542257307
+    }
+  },
+  "safety": {
+    "llm_api_called": false,
+    "network_called": false,
+    "gold_read_by_runner": false,
+    "timing_isolated_in_telemetry": true
+  },
+  "reproduce_command": "python scripts/run_b0_formal_arm.py --runtime-home D:\\environment\\stanford-corenlp-4.5.10",
+  "artifacts": {
+    "predictions/predictions.json": {
+      "path": "data/predictions/b0_formal_arm_v1_replay/predictions.json",
+      "sha256": "fa94991d246db9876b55d6a473644a4a1b93404bc35d3e314d3dba4768d9278d"
+    },
+    "predictions/telemetry.json": {
+      "path": "data/predictions/b0_formal_arm_v1_replay/telemetry.json",
+      "sha256": "c260d4cc4b6f6dc88c7a4997f015af491ff559d642975c88076cb81d4dedffb2"
+    },
+    "results/evaluation_fine.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/evaluation_fine.json",
+      "sha256": "383f9a0f7a2c7f35e108dc4eecd4a556dac47be9ab3208d2d3d15d26ef190176"
+    },
+    "results/evaluation_coarse.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/evaluation_coarse.json",
+      "sha256": "abd2b7972fe539b50cdaa597799aeb190b06e134c1e2f57fe87fc6b8ce346130"
+    },
+    "results/modality_labels.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/modality_labels.json",
+      "sha256": "e17d7c43dfa802a1f7afa296ad99fd14ca684da1c2d2ec5e16004853fae4907c"
+    },
+    "results/g04_view_declaration.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/g04_view_declaration.json",
+      "sha256": "d5ae1691bbb427af0595fe5541e8a2e7756fbb840f9ce9c809f5595808f24693"
+    },
+    "results/cost.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/cost.json",
+      "sha256": "91671dd49747821ecd8e9c02bd2d61277fdff9cef62a2d1c6d7f363c54cb0782"
+    },
+    "results/config_snapshot.json": {
+      "path": "data/results/b0_formal_arm_v1_replay/config_snapshot.json",
+      "sha256": "f0d8ba91773a7264e9e5f5df4f3026c5d409d859a00e1454a63d73a3611fb419"
+    }
+  }
+}

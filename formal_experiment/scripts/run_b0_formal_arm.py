@@ -87,12 +87,9 @@ G04_COARSE_REPORT = (ROOT / "outputs" / "evidence" / "g04_formal_coarse_view_v1"
 PREDICTION_SCHEMA = ROOT / "configs" / "schemas" / "stage2_prediction.schema.json"
 VERIFIER_MODULE = ROOT / "scripts" / "verify_formal_benchmark_release_v2.py"
 
-OUT_PRED_DIR = ROOT / "data" / "predictions" / "b0_formal_arm_v1"
-OUT_RES_DIR = ROOT / "data" / "results" / "b0_formal_arm_v1"
-OUT_MANIFEST = ROOT / "outputs" / "reports" / "b0_formal_arm_v1.manifest.json"
-OUT_EXPORT = ROOT / "outputs" / "reports" / "b0_formal_arm_v1_export_index.json"
-OUT_CAPSULE = ROOT / "outputs" / "reports" / "b0_formal_arm_v1_capsule_manifest.json"
-OUT_VERIFIER = ROOT / "outputs" / "reports" / "verify_b0_formal_arm_v1.py"
+OUT_PRED_BASE = ROOT / "data" / "predictions"
+OUT_RES_BASE = ROOT / "data" / "results"
+OUT_REPORTS = ROOT / "outputs" / "reports"
 
 RUN_ID = "b0_formal_arm_v1"
 CLAIM_SCOPE = "formal"
@@ -216,7 +213,11 @@ def main() -> int:
     parser.add_argument("--runtime-home", type=Path, required=True,
                         help="CoreNLP 4.5.10 runtime directory")
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
+    parser.add_argument("--output-tag", default="b0_formal_arm_v1",
+                        help="capsule tag (use a NEW tag for the replay run; "
+                             "the primary run must use b0_formal_arm_v1)")
     args = parser.parse_args()
+    run_id = args.output_tag
 
     # ---- fail-closed preconditions --------------------------------
     preconditions = check_preconditions()
@@ -278,31 +279,31 @@ def main() -> int:
     }
 
     # ---- staging + atomic rename (no overwrite) --------------------
-    staging = ROOT / "data" / "predictions" / f".{RUN_ID}.staging-{Path(__file__).stem}"
+    staging = ROOT / "data" / "predictions" / f".{run_id}.staging-{Path(__file__).stem}"
     if staging.exists():
         shutil.rmtree(staging)
     staging.mkdir(parents=True)
 
     artifacts: dict[str, dict[str, Any]] = {}
     def _stage(rel_dir: Path, name: str, payload: dict[str, Any]) -> None:
-        target = staging / rel_dir / name
+        target = staging / rel_dir / run_id / name
         target.parent.mkdir(parents=True, exist_ok=True)
         data = (json.dumps(payload, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
         target.write_bytes(data)
         artifacts[f"{rel_dir.as_posix()}/{name}"] = {
-            "path": f"data/{rel_dir.as_posix()}/{name}",
+            "path": f"data/{rel_dir.as_posix()}/{run_id}/{name}",
             "sha256": _sha256_bytes(data),
         }
 
-    _stage(Path("predictions") / RUN_ID, "predictions.json",
+    _stage(Path("predictions"), "predictions.json",
            {"schema_version": "b0_formal_arm_predictions@1.0.0",
             "claim_scope": CLAIM_SCOPE, "records": predictions})
-    _stage(Path("predictions") / RUN_ID, "telemetry.json", telemetry)
-    _stage(Path("results") / RUN_ID, "evaluation_fine.json", fine_metrics)
-    _stage(Path("results") / RUN_ID, "evaluation_coarse.json", coarse_metrics)
-    _stage(Path("results") / RUN_ID, "modality_labels.json", modality_labels)
-    _stage(Path("results") / RUN_ID, "g04_view_declaration.json", g04)
-    _stage(Path("results") / RUN_ID, "cost.json",
+    _stage(Path("predictions"), "telemetry.json", telemetry)
+    _stage(Path("results"), "evaluation_fine.json", fine_metrics)
+    _stage(Path("results"), "evaluation_coarse.json", coarse_metrics)
+    _stage(Path("results"), "modality_labels.json", modality_labels)
+    _stage(Path("results"), "g04_view_declaration.json", g04)
+    _stage(Path("results"), "cost.json",
            {"schema_version": "b0_formal_arm_cost@1.0.0",
             "llm_api_called": False, "network_called": False,
             "estimated_cost_usd": 0.0, "note": "zero-API run"})
@@ -325,11 +326,11 @@ def main() -> int:
         "release_manifest_v2": {"path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
                                 "sha256": sha256_file(RELEASE_MANIFEST)},
     }
-    _stage(Path("results") / RUN_ID, "config_snapshot.json", config_snapshot)
+    _stage(Path("results"), "config_snapshot.json", config_snapshot)
 
     manifest = {
         "schema_version": "b0_formal_arm_manifest@1.0.0",
-        "run_id": RUN_ID,
+        "run_id": run_id,
         "claim_scope": CLAIM_SCOPE,
         "is_formal_performance_result": True,
         "method_id": METHOD_ID,
@@ -383,62 +384,64 @@ def main() -> int:
         "artifacts": artifacts,
     }
     manifest_sha = _write_staged(staging, "manifest.json", manifest)
-    artifacts["manifest.json"] = {"path": "outputs/reports/b0_formal_arm_v1.manifest.json",
+    artifacts["manifest.json"] = {"path": f"outputs/reports/{run_id}.manifest.json",
                                   "sha256": manifest_sha}
 
     export_index = {
         "schema_version": "b0_formal_arm_export_index@1.0.0",
-        "run_id": RUN_ID,
+        "run_id": run_id,
         "claim_scope": CLAIM_SCOPE,
         "artifacts": artifacts,
-        "manifest": {"path": "outputs/reports/b0_formal_arm_v1.manifest.json",
+        "manifest": {"path": f"outputs/reports/{run_id}.manifest.json",
                      "sha256": manifest_sha},
     }
     capsule_manifest = {
         "schema_version": "b0_formal_arm_capsule@1.0.0",
-        "capsule": "b0_formal_arm_v1",
+        "capsule": run_id,
         "claim_scope": CLAIM_SCOPE,
         "files": {name: info for name, info in artifacts.items()},
-        "independent_verifier": {"path": "outputs/reports/verify_b0_formal_arm_v1.py",
+        "independent_verifier": {"path": f"outputs/reports/verify_{run_id}.py",
                                  "sha256": "computed-after"},
     }
 
     # verifier script (self-contained, tamper/fail-closed)
     verifier_src = _VERIFIER_TEMPLATE.format(
+        RUN_ID=run_id,
         MANIFEST_SHA=manifest_sha,
-        PRED_SHA=artifacts["predictions/b0_formal_arm_v1/predictions.json"]["sha256"],
+        PRED_SHA=artifacts["predictions/predictions.json"]["sha256"],
         INPUT_V2_SHA=input_v2_sha, GOLD_SHA=gold_sha)
     (staging / "verify_b0_formal_arm_v1.py").write_text(verifier_src, encoding="utf-8")
     verifier_sha = _sha256_bytes(verifier_src.encode("utf-8"))
     capsule_manifest["files"]["outputs/reports/verify_b0_formal_arm_v1.py"] = {
-        "path": "outputs/reports/verify_b0_formal_arm_v1.py", "sha256": verifier_sha}
+        "path": f"outputs/reports/verify_{run_id}.py", "sha256": verifier_sha}
     capsule_manifest["independent_verifier"]["sha256"] = verifier_sha
-    (staging / "capsule_manifest.json").write_text(
+    (staging / "capsule_manifest.json").write_bytes(
         (json.dumps(capsule_manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
 
     # finalize: atomic rename of staging into the formal dirs
-    final_dirs = [OUT_PRED_DIR, OUT_RES_DIR]
-    for d in final_dirs:
+    out_pred_dir = OUT_PRED_BASE / run_id
+    out_res_dir = OUT_RES_BASE / run_id
+    out_manifest = OUT_REPORTS / f"{run_id}.manifest.json"
+    out_export = OUT_REPORTS / f"{run_id}_export_index.json"
+    out_capsule = OUT_REPORTS / f"{run_id}_capsule_manifest.json"
+    out_verifier = OUT_REPORTS / f"verify_{run_id}.py"
+    for d in (out_pred_dir, out_res_dir, out_manifest, out_export,
+              out_capsule, out_verifier):
         if d.exists():
             raise Estg150B0DevelopmentError(f"refusing to overwrite existing: {d}")
     for rel in ("predictions", "results"):
-        src = staging / rel
-        dst = ROOT / "data" / rel / RUN_ID
+        src = staging / rel / run_id
+        dst = ROOT / "data" / rel / run_id
         dst.parent.mkdir(parents=True, exist_ok=True)
         src.rename(dst)
-    for name in ("manifest.json", "verify_b0_formal_arm_v1.py",
-                 "capsule_manifest.json"):
-        (ROOT / "outputs" / "reports" / f"b0_formal_arm_v1"
-         if name == "manifest.json" else ROOT / "outputs" / "reports").mkdir(
-            parents=True, exist_ok=True)
-    (staging / "manifest.json").rename(OUT_MANIFEST)
-    (staging / "verify_b0_formal_arm_v1.py").rename(OUT_VERIFIER)
-    (staging / "capsule_manifest.json").rename(OUT_CAPSULE)
+    (staging / "manifest.json").rename(out_manifest)
+    (staging / "verify_b0_formal_arm_v1.py").rename(out_verifier)
+    (staging / "capsule_manifest.json").rename(out_capsule)
     export_data = (json.dumps(export_index, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
-    OUT_EXPORT.write_bytes(export_data)
+    out_export.write_bytes(export_data)
     shutil.rmtree(staging, ignore_errors=True)
 
-    print(f"B0 formal arm capsule published: {RUN_ID}")
+    print(f"B0 formal arm capsule published: {run_id}")
     print(f"  claim_scope: {CLAIM_SCOPE} | is_formal_performance_result: True")
     print(f"  records: {len(predictions)} | invalid: 0")
     print(f"  fine span F1 (5 fields): "
@@ -462,8 +465,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-MANIFEST = ROOT / "outputs" / "reports" / "b0_formal_arm_v1.manifest.json"
-PRED = ROOT / "data" / "predictions" / "b0_formal_arm_v1" / "predictions.json"
+RUN_ID = "{RUN_ID}"
+MANIFEST = ROOT / "outputs" / "reports" / f"{RUN_ID}.manifest.json"
+PRED = ROOT / "data" / "predictions" / RUN_ID / "predictions.json"
 INPUT_V2 = ROOT / "data" / "input" / "estg150_formal_inference_input_v2.json"
 GOLD = ROOT / "data" / "gold" / "stage2" / "estg150_formal_gold_v1.json"
 
@@ -494,9 +498,9 @@ def verify() -> dict:
             check(f"artifact hash manifest", info.get("sha256") == EXPECTED_MANIFEST_SHA)
             continue
         p = ROOT / info["path"]
-        check(f"artifact exists {name}", p.exists())
+        check(f"artifact exists {{name}}", p.exists())
         if p.exists():
-            check(f"artifact hash {name}", _sha(p) == info.get("sha256"))
+            check(f"artifact hash {{name}}", _sha(p) == info.get("sha256"))
     check("predictions 150", len(json.loads(PRED.read_text(encoding="utf-8")).get("records", [])) == 150)
     check("predictions timing-free",
           all("runtime" not in r and "latency" not in json.dumps(r)
@@ -504,11 +508,11 @@ def verify() -> dict:
     check("input v2 hash", _sha(INPUT_V2) == EXPECTED_INPUT_V2_SHA)
     check("gold hash", _sha(GOLD) == EXPECTED_GOLD_SHA)
     check("g04 declaration present",
-          (ROOT / "data" / "results" / "b0_formal_arm_v1" / "g04_view_declaration.json").exists())
-    res = ROOT / "data" / "results" / "b0_formal_arm_v1"
+          (ROOT / "data" / "results" / RUN_ID / "g04_view_declaration.json").exists())
+    res = ROOT / "data" / "results" / RUN_ID
     for f in ("evaluation_fine.json", "evaluation_coarse.json", "modality_labels.json",
               "cost.json", "config_snapshot.json"):
-        check(f"result {f} exists", (res / f).exists())
+        check(f"result {{f}} exists", (res / f).exists())
     cost = json.loads((res / "cost.json").read_text(encoding="utf-8"))
     check("zero api", cost.get("llm_api_called") is False and cost.get("estimated_cost_usd") == 0.0)
     return {{"verified": all(c["ok"] for c in checks), "checks": checks}}

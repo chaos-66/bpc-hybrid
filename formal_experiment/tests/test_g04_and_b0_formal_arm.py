@@ -257,3 +257,46 @@ def test_audit_current_state_partial_or_not_produced() -> None:
     assert "formal_predictions_results_capsule_complete" not in passes
     assert ("formal_predictions_results_capsule_not_produced" in warnings
             or "formal_predictions_results_capsule_partial" in warnings)
+
+
+def test_b0_formal_arm_verifier_tamper_fail_closed() -> None:
+    """The generated B0 formal arm verifier must fail on tampering and pass
+    on the intact capsule (test restores the file afterwards)."""
+    import subprocess
+    pred = (ROOT / "data" / "predictions" / "b0_formal_arm_v1"
+            / "predictions.json")
+    verifier = (ROOT / "outputs" / "reports"
+                / "verify_b0_formal_arm_v1.py")
+    if not pred.exists() or not verifier.exists():
+        pytest.skip("B0 formal arm capsule not published yet")
+    orig = pred.read_bytes()
+    try:
+        pred.write_bytes(orig.replace(b'"records"', b'"records" '))
+        r = subprocess.run([sys.executable, str(verifier)],
+                           capture_output=True, text=True)
+        assert r.returncode != 0, "verifier must fail on tampered capsule"
+    finally:
+        pred.write_bytes(orig)
+    r2 = subprocess.run([sys.executable, str(verifier)],
+                        capture_output=True, text=True)
+    assert r2.returncode == 0, "verifier must pass on the intact capsule"
+
+
+def test_b0_formal_arm_capsule_published_and_semantics() -> None:
+    """Published B0 formal arm capsule: claim_scope=formal, timing-free
+    canonical predictions, five-field metrics, modality-label table."""
+    manifest_path = (ROOT / "outputs" / "reports"
+                     / "b0_formal_arm_v1.manifest.json")
+    if not manifest_path.exists():
+        pytest.skip("B0 formal arm capsule not published yet")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert manifest["claim_scope"] == "formal"
+    assert manifest["is_formal_performance_result"] is True
+    assert manifest["arm_scope"]["final_experiment_ready"] is False
+    assert manifest["safety"]["gold_read_by_runner"] is False
+    assert manifest["safety"]["llm_api_called"] is False
+    pred = json.loads((ROOT / "data" / "predictions" / "b0_formal_arm_v1"
+                       / "predictions.json").read_text(encoding="utf-8"))
+    assert len(pred["records"]) == 150
+    assert all("runtime" not in r and "latency" not in json.dumps(r)
+               for r in pred["records"])

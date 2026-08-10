@@ -3168,3 +3168,37 @@
 - 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T13:19:27.451643+00:00 - Checkpoint 2/3: B0 formal arm double run (CoreNLP runtime verified f813ce4e/a5da9f6f). First run -> data/predictions/b0_formal_arm_v1 + data/results/b0_formal_arm_v1 + outputs/reports (manifest 095a839f...); replay run --output-tag b0_formal_arm_v1_replay -> identical canonical artifacts (predictions fa94991d + all six result files byte-identical; only telemetry latency differs). claim_scope=formal, is_formal_performance_result=true, single-method B0 arm, final_experiment_ready=false declared. Independent verifiers both VERIFIED; tamper test fail-closed. audit method-coverage now reports formal_predictions_results_capsule_partial (sun_rule_only), NOT complete. Coarse MAIN-view metrics NOT published (G0.4 consistency gate); five-field spans + modality labels reported. No Gold/contract/stage3/D1H1 methods modified; zero LLM/API
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=b0_formal_arm_v1；阶段=B0-R4 formal arm；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_b0_formal_arm.py --runtime-home D:\environment\stanford-corenlp-4.5.10`
+- manifest：outputs/reports/b0_formal_arm_v1.manifest.json
+- 结果摘要：B0 formal arm double-run: predictions/5-field span metrics/modality labels/config snapshot byte-identical across runs (predictions fa94991d246d; fine 5-field F1 actor 0.8039/action 0.8554/condition 0.7054/constraint 0.4913/exception 0.8148; coarse 5-field F1 0.8203/0.8927/0.7738/0.6182/0.8800 matching history per-field; modality label accuracy 0.74 macro-F1 0.7128; modality evidence-span unavailable per G0.4 contract; only telemetry timing differs)
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：2 failed, 1675 passed, 24 skipped, 19 warnings in 178.03s (0:02:58)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`c2905d6f684f10842e54cce3cf4ef3b089c01d0f`；相关未提交路径：26 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T13:28:53.666748+00:00 - Checkpoint 2/3: B0 formal arm double run (CoreNLP runtime verified f813ce4e/a5da9f6f). First run -> data/predictions/b0_formal_arm_v1 + data/results/b0_formal_arm_v1 + outputs/reports (manifest 095a839f...); replay run --output-tag b0_formal_arm_v1_replay -> identical canonical artifacts (predictions fa94991d + all six result files byte-identical; only telemetry latency differs). claim_scope=formal, is_formal_performance_result=true, single-method B0 arm, final_experiment_ready=false declared. Independent verifiers both VERIFIED; tamper test fail-closed. audit method-coverage now reports formal_predictions_results_capsule_partial (sun_rule_only), NOT complete. Coarse MAIN-view metrics NOT published (G0.4 consistency gate); five-field spans + modality labels reported. No Gold/contract/stage3/D1H1 methods modified; zero LLM/API
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=b0_formal_arm_v1；阶段=B0-R4 formal arm；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_b0_formal_arm.py --runtime-home D:\environment\stanford-corenlp-4.5.10`
+- manifest：outputs/reports/b0_formal_arm_v1.manifest.json
+- 结果摘要：B0 formal arm double-run: predictions/5-field span metrics/modality labels/config snapshot byte-identical across runs (predictions fa94991d246d; fine 5-field F1 actor 0.8039/action 0.8554/condition 0.7054/constraint 0.4913/exception 0.8148; coarse 5-field F1 0.8203/0.8927/0.7738/0.6182/0.8800 matching history per-field; modality label accuracy 0.74 macro-F1 0.7128; modality evidence-span unavailable per G0.4 contract; only telemetry timing differs)
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1677 passed, 24 skipped, 19 warnings in 166.71s (0:02:46)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`c2905d6f684f10842e54cce3cf4ef3b089c01d0f`；相关未提交路径：30 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

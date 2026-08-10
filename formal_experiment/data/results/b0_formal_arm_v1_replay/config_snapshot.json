@@ -1,0 +1,34 @@
+{
+  "schema_version": "b0_formal_arm_config_snapshot@1.0.0",
+  "method": {
+    "method_id": "sun_rule_only",
+    "method_variant": "b0_enhanced_v10a",
+    "config_path": "configs/models/estg150_b0_enhanced_s27_v10a.json",
+    "config_sha256": "151c0cd2261075c1cd2dfe45757213736bd8c66b184bd70c6a4cd511551597d8"
+  },
+  "input": {
+    "path": "data/input/estg150_formal_inference_input_v2.json",
+    "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "records": 150
+  },
+  "gold": {
+    "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+  },
+  "primary_evaluator_config": {
+    "path": "configs/evaluation/sun_table8_literal_overlap_v2.json",
+    "sha256": "352113b568c6075c8b01dafa5fdf2e5ab4a1454bb10933cd2f9c27f5c008cc3f"
+  },
+  "g04_contract": {
+    "path": "configs/evaluation/g04_evaluation_views_contract_v1.json",
+    "sha256": "336415f28a4097b40ff90425358728bac4ac7a36e2566aa73cad9468b88434e8"
+  },
+  "prediction_schema": {
+    "path": "configs/schemas/stage2_prediction.schema.json",
+    "sha256": "d94941c1f7ea90f768d7244bdb72ac3c588b727e0f1fcb4e4732ef8b239259ea"
+  },
+  "release_manifest_v2": {
+    "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+    "sha256": "ca789b0074ef53fc03f2178adc07568cd5d3fc9ac72a62f8423a1daf9c27ac6e"
+  }
+}

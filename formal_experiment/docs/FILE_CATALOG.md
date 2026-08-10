@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-10
-**收录文件**：956 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：980 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -394,8 +394,24 @@
 | `data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
 | `data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
 | `data/predictions/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+| `data/predictions/b0_formal_arm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/b0_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/b0_formal_arm_v1_replay/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/b0_formal_arm_v1_replay/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/README.md` | 正式区（受门禁） | 所在目录的入口说明 |
 | `data/results/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+| `data/results/b0_formal_arm_v1/config_snapshot.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1/cost.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1/evaluation_coarse.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1/evaluation_fine.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1/g04_view_declaration.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1/modality_labels.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1_replay/config_snapshot.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1_replay/cost.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1_replay/evaluation_coarse.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1_replay/evaluation_fine.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1_replay/g04_view_declaration.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/b0_formal_arm_v1_replay/modality_labels.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 
 ## `docs`
 
@@ -621,6 +637,12 @@
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/b0_d1_formal_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/b0_d1_formal_readiness_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/b0_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/b0_formal_arm_v1_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/b0_formal_arm_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/b0_formal_arm_v1_replay.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/b0_formal_arm_v1_replay_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/b0_formal_arm_v1_replay_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/formal_benchmark_release_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/formal_benchmark_release_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/formal_benchmark_release_v2_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -643,6 +665,8 @@
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sun_rule_only_method_gate_authorization_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sun_rule_only_method_gate_authorization_dry_run.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/verify_b0_formal_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `outputs/reports/verify_b0_formal_arm_v1_replay.py` | 活动 | Python 实现、脚本或测试 |
 
 ## `paper`
 
