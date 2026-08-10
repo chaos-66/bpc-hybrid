@@ -3202,3 +3202,16 @@
 - 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T13:37:46.110361+00:00 - Checkpoint 3/3: D1/H1 zero-API candidate re-evaluation + shared comparison capsule + decision dry-run packages + S2.10/S2.12 partial status. Re-verified D1-R3 and H1 historical 150-row snapshots (ids/text hashes vs formal input v2/prompt lock/schema-valid all pass) and re-evaluated with the SAME Gold views/contract/evaluators as the B0 formal arm -> outputs/evidence/d1_h1_zero_api_reeval_v1 (d1+h1 reevaluation + comparison_capsule.json/.md + manifest). D1 coarse five-field F1 matches history per-field (0.7579/0.9437/0.8380/0.7427/0.7619); claim scopes: B0 formal, D1 candidate/formal-gate-blocked, H1 candidate/comparison-only/formal-gate-blocked; comparison capsule binds input v2/Gold/coarse transform/prediction schema/normalization/evaluators/snapshot hashes/claim scopes/gate states/historical calls 300/new calls 0/comparability boundaries (modality evidence-span unavailable for all; historical coarse numbers development provenance). D1/H1 results NOT written to data/predictions or data/results, no claim_scope=formal. D1 and H1 method-gate decision dry-run packages (separate exact before/after, zero-API binding evidence, risks, expected audit changes, copy-ready authorization sentence) NOT applied; methods.json unchanged for both. S2.10 -> partial (B0 formal arm component evaluation verified; three-method comparison pending authorization); S2.12 -> partial (descriptive/exploratory infrastructure, retrospective not preregistered, full DoD blocked on S2.11); S2.13 full DoD/S1.7/S3.7 not marked complete; no Stage 3 Oracle or end-to-end run started. 1682 tests passed
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：否
+- 测试：1682 passed, 24 skipped, 19 warnings in 175.96s (0:02:55)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`0562c606e111cccac6dec9c2c67ec4e694efe455`；相关未提交路径：15 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

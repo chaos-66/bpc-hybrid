@@ -1,0 +1,170 @@
+{
+  "schema_version": "method_gate_decision_dry_run@1.0.0",
+  "method_id": "direct_llm",
+  "status": "dry_run_not_applied",
+  "purpose": "D1-R3 historical 150-row snapshot proven bound to formal input v2 (IDs/text hashes/prompt/model/sampling/schema), zero-API re-evaluation complete. Proposal only; a formal D1 run would still need the user's LLM budget authorization.",
+  "methods_json_change": {
+    "file": "configs/methods.json",
+    "scope": "direct_llm only",
+    "before": {
+      "id": "direct_llm",
+      "paper_label": "Direct-LLM",
+      "paper_label_zh": "直接 LLM",
+      "canonical_label": "direct_llm_stage2_replacement",
+      "role": "replacement_method",
+      "llm_used": true,
+      "formal_status": "blocked_until_official_data_output_contract_and_evaluator_are_locked",
+      "current_command": "python scripts/run_direct_llm.py",
+      "command_status": "development_only_not_formal",
+      "notes": "Replaces the whole Stage 2 without running the Sun pipeline or reading Gold. It must use the same frozen inputs, output contract, evaluator, and Stage 3 as the other two methods. Real calls require explicit authorization."
+    },
+    "after": {
+      "id": "direct_llm",
+      "paper_label": "Direct-LLM",
+      "paper_label_zh": "直接 LLM",
+      "canonical_label": "direct_llm_stage2_replacement",
+      "role": "replacement_method",
+      "llm_used": true,
+      "formal_status": "ready",
+      "current_command": "python scripts/run_direct_llm.py",
+      "command_status": "formal_ready_candidate_authorized",
+      "notes": "Replaces the whole Stage 2 without running the Sun pipeline or reading Gold. It must use the same frozen inputs, output contract, evaluator, and Stage 3 as the other two methods. Real calls require explicit authorization."
+    },
+    "diff_fields": [
+      "formal_status",
+      "command_status"
+    ]
+  },
+  "evidence": {
+    "zero_api_binding": true,
+    "comparison_capsule": "outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json",
+    "fine_span_fields": {
+      "actor": {
+        "ground_truth": 48,
+        "extracted": 60,
+        "precision": 0.65,
+        "recall": 0.8125,
+        "f1": 0.7222222222222223
+      },
+      "action": {
+        "ground_truth": 247,
+        "extracted": 210,
+        "precision": 0.9523809523809523,
+        "recall": 0.8178137651821862,
+        "f1": 0.8799825746024831
+      },
+      "condition": {
+        "ground_truth": 214,
+        "extracted": 135,
+        "precision": 0.9111111111111111,
+        "recall": 0.6915887850467289,
+        "f1": 0.7863159258779318
+      },
+      "constraint": {
+        "ground_truth": 302,
+        "extracted": 175,
+        "precision": 0.7257142857142858,
+        "recall": 0.44039735099337746,
+        "f1": 0.5481510327930033
+      },
+      "exception": {
+        "ground_truth": 13,
+        "extracted": 10,
+        "precision": 0.8,
+        "recall": 0.6153846153846154,
+        "f1": 0.6956521739130435
+      }
+    },
+    "coarse_span_fields": {
+      "actor": {
+        "ground_truth": 41,
+        "extracted": 60,
+        "precision": 0.6666666666666666,
+        "recall": 0.8780487804878049,
+        "f1": 0.7578947368421053
+      },
+      "action": {
+        "ground_truth": 150,
+        "extracted": 210,
+        "precision": 0.9761904761904762,
+        "recall": 0.9133333333333333,
+        "f1": 0.9437163978494625
+      },
+      "condition": {
+        "ground_truth": 122,
+        "extracted": 135,
+        "precision": 0.9185185185185185,
+        "recall": 0.7704918032786885,
+        "f1": 0.8380185491408441
+      },
+      "constraint": {
+        "ground_truth": 135,
+        "extracted": 175,
+        "precision": 0.7771428571428571,
+        "recall": 0.7111111111111111,
+        "f1": 0.7426621160409557
+      },
+      "exception": {
+        "ground_truth": 11,
+        "extracted": 10,
+        "precision": 0.8,
+        "recall": 0.7272727272727273,
+        "f1": 0.761904761904762
+      }
+    },
+    "modality_labels": {
+      "schema_version": "formal_stage2_modality_labels@1.0.0",
+      "classes": [
+        "obligation",
+        "permission",
+        "prohibition",
+        "definition"
+      ],
+      "records": 150,
+      "accuracy": 0.8333333333333334,
+      "macro_f1": 0.7694506979014613,
+      "per_class": [
+        {
+          "class": "obligation",
+          "precision": 0.8656716417910447,
+          "recall": 0.9830508474576272,
+          "f1": 0.9206349206349207
+        },
+        {
+          "class": "permission",
+          "precision": 0.9090909090909091,
+          "recall": 0.9523809523809523,
+          "f1": 0.9302325581395349
+        },
+        {
+          "class": "prohibition",
+          "precision": 0.6538461538461539,
+          "recall": 0.85,
+          "f1": 0.7391304347826088
+        },
+        {
+          "class": "definition",
+          "precision": 0.8333333333333334,
+          "recall": 0.3448275862068966,
+          "f1": 0.4878048780487806
+        }
+      ],
+      "separate_from_span_metrics": true,
+      "unlabeled_predictions": 1
+    },
+    "historical_llm_calls": 150,
+    "new_llm_calls": 0,
+    "note": "zero-API re-evaluation is binding evidence, NOT formal authorization; a formal run still requires the user's LLM budget authorization"
+  },
+  "risks": "D1-R3 used the locked v6 prompt (3aa64877) and model deepseek-v4-pro; official API transport without json_object; a formal rerun should reuse the same recipe. Candidate metrics are NOT formal results.",
+  "expected_audit_changes": "formal_methods_not_ready would drop direct_llm (2 -> 1 non-ready method); final_experiment_ready stays False while sun_llm_fallback is blocked; methods_unexpectedly_ready must NOT trigger.",
+  "authorization_sentence": "I authorize promoting configs/methods.json direct_llm formal_status from blocked_until_official_data_output_contract_and_evaluator_are_locked to ready (command_status formal_ready_candidate_authorized), based on the zero-API binding evidence in b0_d1_formal_readiness_v2 and the D1/H1 comparison capsule, acknowledging that a formal D1 run then requires an explicit separate LLM budget authorization.",
+  "rollback": "git revert of the applied commit (methods.json only)",
+  "untouched": [
+    "sun_rule_only",
+    "experiment_contract.json",
+    "stage3 gate",
+    "Gold",
+    "publication status"
+  ]
+}

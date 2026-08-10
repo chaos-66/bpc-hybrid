@@ -1,0 +1,25 @@
+{
+  "schema_version": "d1_h1_zero_api_reeval_manifest@1.0.0",
+  "artifacts": {
+    "d1/reevaluation.json": {
+      "path": "outputs/evidence/d1_h1_zero_api_reeval_v1/d1/reevaluation.json",
+      "sha256": "0c66ecd355a9ed031bbd053573ce0bb51b9410f95e42dd4644d91cee0053266e"
+    },
+    "h1/reevaluation.json": {
+      "path": "outputs/evidence/d1_h1_zero_api_reeval_v1/h1/reevaluation.json",
+      "sha256": "560c609d86bb7346928f3c69e52833d5b3784f6d6483149b05db7d33d63a1401"
+    },
+    "comparison_capsule.json": {
+      "path": "outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json",
+      "sha256": "e3dcb8113673db7ee24539c03fdaa7279a9962fdf2f450c8bab9c7ca4e4fe26e"
+    },
+    "comparison_capsule.md": {
+      "path": "outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.md",
+      "sha256": "ccaf3b59cf4d80d35e9bd8369bada54cede71ed4832f3a6dddb0bcbf1e62c029"
+    }
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  },
+  "note": "D1/H1 results are candidates; nothing written to data/predictions or data/results"
+}

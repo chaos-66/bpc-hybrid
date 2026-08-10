@@ -1,0 +1,170 @@
+{
+  "schema_version": "method_gate_decision_dry_run@1.0.0",
+  "method_id": "sun_llm_fallback",
+  "status": "dry_run_not_applied",
+  "purpose": "H1 150-row snapshot (s28d_h1_150_v4pro_v1) proven bound to formal input v2; zero-API re-evaluation complete. H1 is DOWNGRADED to comparison-only (2026-08-08 decision); the package documents the comparison-arm status change as a proposal; no further optimization is intended.",
+  "methods_json_change": {
+    "file": "configs/methods.json",
+    "scope": "sun_llm_fallback only",
+    "before": {
+      "id": "sun_llm_fallback",
+      "paper_label": "Rules+LLM-Repair",
+      "paper_label_zh": "规则+LLM 修复",
+      "canonical_label": "sun_stage2_plus_llm_fallback",
+      "role": "main_method",
+      "llm_used": true,
+      "formal_status": "blocked_until_faithful_baseline_data_and_triggers_are_locked",
+      "current_command": "python scripts/run_sun_llm_fallback.py --b0-predictions <persisted-b0> --plan-only --development",
+      "command_status": "development_only_not_formal",
+      "notes": "The development runner now requires and SHA-binds a persisted B0 artifact, applies only Gold-blind field-level repair plans, records accepted/rejected patches, and retains B0 atomically on rejection. Formal use remains blocked until the complete B0 and trigger budget are locked. A real run additionally requires explicit --allow-llm authorization. As of 2026-08-08 (supervisor decision, MASTER_PIPELINE.md §8.8.1) this method is DOWNGRADED to a comparison-only arm and will not be pursued further: the full 150-call run (commit 74614e3) was net-negative on the primary metric (coarse F1 0.7621 vs Rules-Only 0.7986) because the trigger+repair recipe added false positives (actor P 0.7077->0.2754) instead of recall."
+    },
+    "after": {
+      "id": "sun_llm_fallback",
+      "paper_label": "Rules+LLM-Repair",
+      "paper_label_zh": "规则+LLM 修复",
+      "canonical_label": "sun_stage2_plus_llm_fallback",
+      "role": "main_method",
+      "llm_used": true,
+      "formal_status": "comparison_only_ready",
+      "current_command": "python scripts/run_sun_llm_fallback.py --b0-predictions <persisted-b0> --plan-only --development",
+      "command_status": "formal_ready_candidate_authorized",
+      "notes": "The development runner now requires and SHA-binds a persisted B0 artifact, applies only Gold-blind field-level repair plans, records accepted/rejected patches, and retains B0 atomically on rejection. Formal use remains blocked until the complete B0 and trigger budget are locked. A real run additionally requires explicit --allow-llm authorization. As of 2026-08-08 (supervisor decision, MASTER_PIPELINE.md §8.8.1) this method is DOWNGRADED to a comparison-only arm and will not be pursued further: the full 150-call run (commit 74614e3) was net-negative on the primary metric (coarse F1 0.7621 vs Rules-Only 0.7986) because the trigger+repair recipe added false positives (actor P 0.7077->0.2754) instead of recall."
+    },
+    "diff_fields": [
+      "formal_status",
+      "command_status"
+    ]
+  },
+  "evidence": {
+    "zero_api_binding": true,
+    "comparison_capsule": "outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json",
+    "fine_span_fields": {
+      "actor": {
+        "ground_truth": 48,
+        "extracted": 167,
+        "precision": 0.2694610778443114,
+        "recall": 0.9583333333333334,
+        "f1": 0.4206462101198944
+      },
+      "action": {
+        "ground_truth": 247,
+        "extracted": 247,
+        "precision": 0.854251012145749,
+        "recall": 0.8623481781376519,
+        "f1": 0.8582804980520968
+      },
+      "condition": {
+        "ground_truth": 214,
+        "extracted": 237,
+        "precision": 0.6624472573839663,
+        "recall": 0.7616822429906542,
+        "f1": 0.7086073460798293
+      },
+      "constraint": {
+        "ground_truth": 302,
+        "extracted": 330,
+        "precision": 0.4636363636363636,
+        "recall": 0.5264900662251656,
+        "f1": 0.49306822327617655
+      },
+      "exception": {
+        "ground_truth": 13,
+        "extracted": 14,
+        "precision": 0.7857142857142857,
+        "recall": 0.8461538461538461,
+        "f1": 0.8148148148148148
+      }
+    },
+    "coarse_span_fields": {
+      "actor": {
+        "ground_truth": 41,
+        "extracted": 167,
+        "precision": 0.2754491017964072,
+        "recall": 0.975609756097561,
+        "f1": 0.42960541676395053
+      },
+      "action": {
+        "ground_truth": 150,
+        "extracted": 247,
+        "precision": 0.8704453441295547,
+        "recall": 0.92,
+        "f1": 0.8945369030390738
+      },
+      "condition": {
+        "ground_truth": 122,
+        "extracted": 237,
+        "precision": 0.7088607594936709,
+        "recall": 0.860655737704918,
+        "f1": 0.7774178621008793
+      },
+      "constraint": {
+        "ground_truth": 135,
+        "extracted": 330,
+        "precision": 0.5636363636363636,
+        "recall": 0.6888888888888889,
+        "f1": 0.6199999999999999
+      },
+      "exception": {
+        "ground_truth": 11,
+        "extracted": 14,
+        "precision": 0.7857142857142857,
+        "recall": 1.0,
+        "f1": 0.88
+      }
+    },
+    "modality_labels": {
+      "schema_version": "formal_stage2_modality_labels@1.0.0",
+      "classes": [
+        "obligation",
+        "permission",
+        "prohibition",
+        "definition"
+      ],
+      "records": 150,
+      "accuracy": 0.82,
+      "macro_f1": 0.8123013565761656,
+      "per_class": [
+        {
+          "class": "obligation",
+          "precision": 0.7777777777777778,
+          "recall": 0.9491525423728814,
+          "f1": 0.8549618320610687
+        },
+        {
+          "class": "permission",
+          "precision": 0.9428571428571428,
+          "recall": 0.7857142857142857,
+          "f1": 0.8571428571428571
+        },
+        {
+          "class": "prohibition",
+          "precision": 1.0,
+          "recall": 0.85,
+          "f1": 0.9189189189189189
+        },
+        {
+          "class": "definition",
+          "precision": 0.6538461538461539,
+          "recall": 0.5862068965517241,
+          "f1": 0.6181818181818182
+        }
+      ],
+      "separate_from_span_metrics": true,
+      "unlabeled_predictions": 0
+    },
+    "historical_llm_calls": 150,
+    "new_llm_calls": 0,
+    "note": "zero-API re-evaluation is binding evidence, NOT formal authorization; a formal run still requires the user's LLM budget authorization"
+  },
+  "risks": "H1 was net-negative on the primary metric (coarse F1 0.7621 vs B0 0.7986); trigger+repair recipe added false positives. Comparison-only status prevents misuse.",
+  "expected_audit_changes": "formal_methods_not_ready would drop sun_llm_fallback (2 -> 1 non-ready method); final_experiment_ready stays False while direct_llm is blocked.",
+  "authorization_sentence": "I authorize recording configs/methods.json sun_llm_fallback as comparison-only: formal_status blocked_until_faithful_baseline_data_and_triggers_are_locked -> comparison_only_ready (command_status formal_ready_candidate_authorized), based on the zero-API binding evidence; this does NOT authorize any further LLM optimization or a formal fallback run.",
+  "rollback": "git revert of the applied commit (methods.json only)",
+  "untouched": [
+    "sun_rule_only",
+    "experiment_contract.json",
+    "stage3 gate",
+    "Gold",
+    "publication status"
+  ]
+}

@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-10
-**收录文件**：980 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：992 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -566,6 +566,11 @@
 | `outputs/development/s28d_h1_150_v4pro_v1/h1_telemetry.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28d_h1_150_v4pro_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28d_h1_150_v4pro_v1/transport_capture.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/d1_h1_zero_api_reeval_v1/d1/reevaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/d1_h1_zero_api_reeval_v1/h1/reevaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/d1_h1_zero_api_reeval_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/g04_formal_coarse_view_v1/coarse_view_derived.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/g04_formal_coarse_view_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s34_winter_stage3_development_v3_clean/capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -643,6 +648,8 @@
 | `outputs/reports/b0_formal_arm_v1_replay.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/b0_formal_arm_v1_replay_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/b0_formal_arm_v1_replay_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/direct_llm_method_gate_decision_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/direct_llm_method_gate_decision_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/formal_benchmark_release_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/formal_benchmark_release_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/formal_benchmark_release_v2_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -663,6 +670,8 @@
 | `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s34_winter_stage3_development_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sun_llm_fallback_method_gate_decision_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sun_llm_fallback_method_gate_decision_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sun_rule_only_method_gate_authorization_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sun_rule_only_method_gate_authorization_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/verify_b0_formal_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -752,6 +761,8 @@
 | `scripts/build_b0_d1_formal_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_d1_h1_gate_decision_packages.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_d1_h1_zero_api_reevaluation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg150_review_layers.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg_human_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_formal_coarse_view_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1013,6 +1024,7 @@
 | `tests/test_canonical_text_hash_policy.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_coarse_gold_b0_condition_constraint.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_d1_h1_zero_api_reeval.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d1_r2_lock_config.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
