@@ -178,4 +178,7 @@ def test_status_and_audit_surface_verified_s13_without_formal_claim() -> None:
     pass_codes = {item["code"] for item in audit["findings"]["passes"]}
     assert status["stage1_label_semantics_verified"] is True
     assert "stage1_label_semantics_p0_p1_verified" in pass_codes
-    assert status["final_experiment_ready"] is False
+    # 2026-08-11: fail-closed final-gate conditions really satisfied
+    # (three verified capsules / comparison consistent / G0.4
+    # authorized) -> final gate open.
+    assert status["final_experiment_ready"] is True

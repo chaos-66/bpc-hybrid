@@ -41,7 +41,7 @@ from formal_experiment.paths import (
     SUN_ORIGINAL_REFERENCE_DIR,
     WINTER_2020_REFERENCE_DIR,
 )
-from formal_experiment.status import collect_status
+from formal_experiment.status import collect_status, formal_final_gate_conditions
 
 
 REQUIRED_DOCS = (
@@ -1053,8 +1053,24 @@ def collect_project_audit() -> dict[str, Any]:
     if nonready:
         _add(findings, "blockers", "formal_methods_not_ready", f"Method gates: {nonready}")
     else:
-        _add(findings, "errors", "methods_unexpectedly_ready",
-             "methods.json should keep all 3 methods blocked at this stage.")
+        # Final-readiness hardening (user-authorized 2026-08-11): with all
+        # three methods ready, methods_unexpectedly_ready must only fire when
+        # the fail-closed final-gate conditions are NOT yet really satisfied
+        # (three verified capsules / hash-consistent comparison capsule /
+        # user-authorized G0.4 contract). In the authorized, fully satisfied
+        # state the error must NOT fire.
+        gate = formal_final_gate_conditions()
+        if gate["capsule_complete"] and gate["g04_contract_authorized"] \
+                and gate["comparison_consistent"]:
+            _add(findings, "passes", "final_gate_conditions_met",
+                 "All three method gates are ready AND the fail-closed "
+                 "final-gate conditions are really satisfied (three verified "
+                 "formal capsules, hash-consistent shared comparison capsule, "
+                 "user-authorized G0.4 contract).")
+        else:
+            _add(findings, "errors", "methods_unexpectedly_ready",
+                 "methods.json has all 3 methods ready but the fail-closed "
+                 "final-gate conditions are NOT met: " + "; ".join(gate["reasons"]))
 
     rule = (REPO_ROOT / "scripts/run_sun_rule_only.py").read_text(encoding="utf-8")
     hybrid = (REPO_ROOT / "scripts/run_sun_llm_fallback.py").read_text(encoding="utf-8")

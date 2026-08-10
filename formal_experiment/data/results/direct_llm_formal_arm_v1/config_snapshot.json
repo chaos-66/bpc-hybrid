@@ -1,0 +1,31 @@
+{
+  "schema_version": "snapshot_formal_arm_config_snapshot@1.0.0",
+  "method": {
+    "method_id": "direct_llm",
+    "snapshot": "s27_d1_v6_r3_clean_rerun_150_hist56d_v1",
+    "snapshot_predictions_sha256": "9188093c5b30d288c749e1dc6da9d88eb5df4fd4c08a73518f6b4ff243dca36e"
+  },
+  "input": {
+    "path": "data/input/estg150_formal_inference_input_v2.json",
+    "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2"
+  },
+  "gold": {
+    "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+  },
+  "primary_evaluator_config": {
+    "path": "configs/evaluation/sun_table8_literal_overlap_v2.json"
+  },
+  "g04_contract": {
+    "path": "configs/evaluation/g04_evaluation_views_contract_v1.json",
+    "sha256": "af91cd3e099bbb0b4e633f312c79d00f3b485f954038d6268ce8c7470a11d76c"
+  },
+  "prediction_schema": {
+    "path": "configs/schemas/stage2_prediction.schema.json",
+    "sha256": "d94941c1f7ea90f768d7244bdb72ac3c588b727e0f1fcb4e4732ef8b239259ea"
+  },
+  "release_manifest_v2": {
+    "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+    "sha256": "53a862ea2a089aa13c04af067857e81a2a546c6bc452565accceac239c096820"
+  }
+}

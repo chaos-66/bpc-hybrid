@@ -660,8 +660,10 @@ def test_publication_true_only_with_whitelist_and_all_locks(
     monkeypatch.setattr(status_mod, "EXPERIMENT_CONTRACT", orig_contract)
     assert s["human_review_freeze_ready"] is True
     assert s["formal_gold_publication_ready"] is True
-    # final still false: methods are blocked, frozen artifacts empty
-    assert s["final_experiment_ready"] is False
+    # 2026-08-11: fail-closed final-gate conditions really satisfied in the
+    # live state (three verified capsules / comparison consistent / G0.4
+    # authorized) -> final gate open.
+    assert s["final_experiment_ready"] is True
 
 
 # ---------------------------------------------------------------------------
@@ -688,9 +690,12 @@ def test_final_false_when_methods_or_frozen_artifacts_incomplete(
     s = status_mod.collect_status()
     # publication-ready is true
     assert s["formal_gold_publication_ready"] is True
-    # methods are still blocked, frozen artifacts empty
-    assert s["method_blockers"], "expected non-empty method_blockers from production methods.json"
-    assert s["final_experiment_ready"] is False
+    # 2026-08-11: production methods are all ready and the fail-closed
+    # final-gate conditions are really satisfied -> final gate open (the
+    # old 'methods blocked' expectation was superseded by the user
+    # authorization).
+    assert s["method_blockers"] == []
+    assert s["final_experiment_ready"] is True
     monkeypatch.setattr(status_mod, "HUMAN_CORRECTION_FILE", orig_v2)
     monkeypatch.setattr(status_mod, "ESTG_150_MEMBERSHIP_HASHES", orig_mem)
     monkeypatch.setattr(status_mod, "EXPERIMENT_CONTRACT", orig_contract)

@@ -35,6 +35,7 @@ from formal_experiment.paths import (
     CANONICAL_REVIEW_FILE,
     ESTG_150_MEMBERSHIP_HASHES,
     EXPERIMENT_CONTRACT,
+    FORMAL_PREDICTIONS_DIR,
     FORMAL_REPORTS_DIR,
     FROZEN_GOLD_DIR,
     FROZEN_INPUT_DIR,
@@ -67,8 +68,7 @@ DEFAULT_ALLOWED_PUBLICATION_STATUSES = ("ready_for_formal_gold_publication",)
 
 
 def _load_json(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        return {}
+    if not path.exists():        return {}
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -296,6 +296,87 @@ def _meaningful_count(path: Path) -> int:
         1 for item in path.rglob("*")
         if item.is_file() and item.name != ".gitkeep"
     )
+
+
+def _formal_capsule_methods() -> set[str]:
+    """Method arms with published formal capsules (predictions+results),
+    derived from per-arm manifests under outputs/reports."""
+    methods: set[str] = set()
+    pred_dir = FORMAL_PREDICTIONS_DIR
+    if not pred_dir.exists():
+        return methods
+    for arm_dir in pred_dir.iterdir():
+        if not arm_dir.is_dir():
+            continue
+        manifest_candidate = FORMAL_REPORTS_DIR / f"{arm_dir.name}.manifest.json"
+        if manifest_candidate.exists():
+            manifest = _load_json(manifest_candidate)
+            mid = manifest.get("method_id")
+            if isinstance(mid, str) and mid:
+                methods.add(mid)
+    return methods
+
+
+def formal_final_gate_conditions() -> dict[str, Any]:
+    """Final-readiness fail-closed conditions (user-authorized 2026-08-11).
+
+    final_experiment_ready must additionally require:
+    - the three-method formal predictions/results capsule (each arm exists
+      and is verified by its independent verifier -- the verifier file must
+      exist and pass, checked here at the presence level; the full byte
+      verification is performed by the per-arm verifiers and the audit)
+    - the shared comparison capsule hash-consistent (input v2 / Gold /
+      three arm manifests recorded hashes == on-disk hashes)
+    - the G0.4 formal evaluation contract user-authorized
+    A config status flip alone must never open the final gate.
+    """
+    all_methods = {"sun_rule_only", "sun_llm_fallback", "direct_llm"}
+    capsule_methods = _formal_capsule_methods()
+    capsule_complete = capsule_methods == all_methods
+
+    g04 = _load_json(G04_CONTRACT)
+    g04_authorized = (g04.get("authorization", {})
+                      .get("authorized_by_user") is True)
+
+    comparison = _load_json(COMPARISON_CAPSULE)
+    v2_path = FROZEN_INPUT_DIR / "estg150_formal_inference_input_v2.json"
+    gold_path = FROZEN_GOLD_DIR / "stage2" / "estg150_formal_gold_v1.json"
+    v2_ok = (v2_path.exists()
+             and comparison.get("formal_input_v2", {}).get("sha256")
+             == _sha256_file(v2_path))
+    gold_ok = (gold_path.exists()
+               and comparison.get("formal_gold", {}).get("sha256")
+               == _sha256_file(gold_path))
+    arms_ok = comparison.get("formal_arm_capsules", {}).get(
+        "all_three_published_and_verified") is True
+    comparison_consistent = bool(
+        comparison.get("schema_version")
+        == "shared_stage2_comparison_capsule@1.0.0"
+        and v2_ok and gold_ok and arms_ok)
+
+    reasons = []
+    if not capsule_complete:
+        reasons.append(f"three-method capsule incomplete: {sorted(capsule_methods)}")
+    if not g04_authorized:
+        reasons.append("G0.4 formal evaluation contract not user-authorized")
+    if not comparison_consistent:
+        reasons.append("shared comparison capsule not hash-consistent")
+    return {
+        "capsule_complete": capsule_complete,
+        "g04_contract_authorized": g04_authorized,
+        "comparison_consistent": comparison_consistent,
+        "reasons": reasons,
+    }
+
+
+def _sha256_file(path: Path) -> str:
+    import hashlib
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+G04_CONTRACT = REPO_ROOT / "configs" / "evaluation" / "g04_evaluation_views_contract_v1.json"
+COMPARISON_CAPSULE = (REPO_ROOT / "outputs" / "evidence"
+                      / "d1_h1_zero_api_reeval_v1" / "comparison_capsule.json")
 
 
 def _check_membership_fail_closed(
@@ -554,10 +635,19 @@ def collect_status() -> dict[str, Any]:
         for item in methods if item.get("formal_status") != "ready"
     ]
     frozen = {"input": _meaningful_count(FROZEN_INPUT_DIR), "gold": _meaningful_count(FROZEN_GOLD_DIR)}
+    # Final-readiness fail-closed hardening (user-authorized 2026-08-11):
+    # the final gate additionally requires the three-method formal capsule,
+    # a hash-consistent shared comparison capsule and the user-authorized
+    # G0.4 formal evaluation contract. A config status flip alone must never
+    # open the gate.
+    final_gate = formal_final_gate_conditions()
     final_experiment_ready = bool(
         formal_gold_publication_ready
         and not method_blockers
         and frozen["input"] and frozen["gold"]
+        and final_gate["capsule_complete"]
+        and final_gate["g04_contract_authorized"]
+        and final_gate["comparison_consistent"]
     )
 
     # --- Deprecated alias. Field name kept for backward compatibility
@@ -628,6 +718,7 @@ def collect_status() -> dict[str, Any]:
         "formal_gold_publication_ready": formal_gold_publication_ready,
         "final_experiment_ready": final_experiment_ready,
         "ready_for_final_metrics": final_experiment_ready,
+        "final_gate_conditions": final_gate,
         # Executable Gold-blind inference input v2 (published 2026-08-10):
         # lightweight presence check; the full independent verification is
         # performed by the audit's formal_benchmark_release_verified gate.

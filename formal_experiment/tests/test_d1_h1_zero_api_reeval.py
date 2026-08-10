@@ -68,44 +68,65 @@ def test_comparison_capsule_bindings_and_boundaries() -> None:
     assert cmp["formal_gold"]["sha256"]
     methods = cmp["methods"]
     assert methods["sun_rule_only"]["claim_scope"] == "formal"
-    assert methods["direct_llm"]["claim_scope"] == "candidate"
-    assert methods["sun_llm_fallback"]["claim_scope"] == "candidate"
+    assert methods["direct_llm"]["claim_scope"] == "formal"
+    assert methods["sun_llm_fallback"]["claim_scope"] == "formal"
+    assert methods["direct_llm"]["is_formal_arm"] is True
+    assert methods["sun_llm_fallback"]["is_formal_arm"] is True
+    assert methods["sun_llm_fallback"]["gate_status"].startswith("ready")
+    assert "comparison_arm_only" in methods["sun_llm_fallback"]["gate_status"]
     assert cmp["decisions"]["h1_downgraded_to_comparison_only"] is True
     assert cmp["zero_api"]["new_llm_api_calls"] == 0
     assert cmp["zero_api"]["real_api_calls_total_historical"] == 300
     assert "not_comparable" in cmp["comparability_boundaries"]
     assert "modality_evidence_span_metrics" in cmp["comparability_boundaries"]
-    assert cmp["coarse_view"]["main_view_publishable"] is False
+    assert cmp["coarse_view"]["main_view_publishable"] is True
+    assert cmp["coarse_view"]["g04_contract_authorized"] is True
+    assert cmp["formal_arm_capsules"]["all_three_published_and_verified"] is True
 
 
-def test_nothing_written_to_formal_prediction_results_dirs() -> None:
-    """D1/H1 candidate results must not appear in the formal directories."""
-    for rel in ("data/predictions", "data/results"):
-        d = ROOT / rel
-        if not d.exists():
-            continue
-        for sub in d.iterdir():
-            assert "d1" not in sub.name.lower()
-            assert "h1" not in sub.name.lower()
-            assert "direct_llm" not in sub.name.lower()
-            assert "sun_llm_fallback" not in sub.name.lower()
+def test_formal_arm_capsules_published() -> None:
+    """2026-08-11: the D1/H1 formal arm capsules exist in the formal
+    directories (user-authorized zero-API snapshot publications)."""
+    for tag in ("direct_llm_formal_arm_v1", "sun_llm_fallback_formal_arm_v1"):
+        pred = ROOT / "data" / "predictions" / tag / "predictions.json"
+        res = ROOT / "data" / "results" / tag / "evaluation_fine.json"
+        man = ROOT / "outputs" / "reports" / f"{tag}.manifest.json"
+        assert pred.exists(), tag
+        assert res.exists(), tag
+        assert man.exists(), tag
+        manifest = json.loads(man.read_text(encoding="utf-8"))
+        assert manifest["claim_scope"] == "formal"
+        assert manifest["is_formal_performance_result"] is True
+        assert manifest["zero_api"]["new_llm_calls"] == 0
 
 
-def test_decision_packages_dry_run_not_applied() -> None:
-    for mid in ("direct_llm", "sun_llm_fallback"):
+def test_decision_packages_record_proposal_and_application() -> None:
+    """The v2 decision packages document the authorized proposal; methods.json
+    now carries the APPLIED state (2026-08-11 user authorization)."""
+    methods = json.loads((ROOT / "configs" / "methods.json")
+                         .read_text(encoding="utf-8"))
+    current = {m["id"]: m for m in methods["methods"]}
+    for mid, applied_status in (
+            ("direct_llm", "ready"),
+            ("sun_llm_fallback", "ready")):
         p = (ROOT / "outputs" / "reports"
-             / f"{mid}_method_gate_decision_dry_run.json")
-        if not p.exists():
-            pytest.skip(f"{mid} decision package not built yet")
+             / f"{mid}_method_gate_decision_dry_run_v2.json")
+        assert p.exists(), f"{mid} v2 package missing"
         pkg = json.loads(p.read_text(encoding="utf-8"))
-        assert pkg["status"] == "dry_run_not_applied"
-        before = pkg["methods_json_change"]["before"]
-        after = pkg["methods_json_change"]["after"]
+        assert pkg["schema_version"] == "method_gate_decision_dry_run@2.0.0"
+        change = pkg["methods_json_change"]
+        before = change["before"]
+        if "after" in change:  # D1 package: single proposed after
+            after = change["after"]
+        else:  # H1 package: recommended Option A after
+            after = change["options"]["A_recommended_ready_plus_role"]["after"]
         assert before["formal_status"] != after["formal_status"]
-        assert pkg["authorization_sentence"]
+        assert after["formal_status"] == "ready"
+        assert pkg["purpose"]
         assert pkg["rollback"]
-        # methods.json on disk must still carry the BEFORE status
-        methods = json.loads((ROOT / "configs" / "methods.json")
-                             .read_text(encoding="utf-8"))
-        current = next(m for m in methods["methods"] if m["id"] == mid)
-        assert current["formal_status"] == before["formal_status"]
+        assert pkg["zero_api_path"]["new_llm_calls_required_for_default_path"] == 0
+        # applied state on disk matches the authorized proposal
+        assert current[mid]["formal_status"] == applied_status
+        assert current[mid]["command_status"] == "formal_ready_candidate_authorized"
+    assert current["sun_llm_fallback"]["role"] == "comparison_arm_only"
+    assert "comparison-only" in current["sun_llm_fallback"]["notes"].lower()

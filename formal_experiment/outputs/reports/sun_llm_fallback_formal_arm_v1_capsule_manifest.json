@@ -1,0 +1,47 @@
+{
+  "schema_version": "snapshot_formal_arm_capsule@1.0.0",
+  "capsule": "sun_llm_fallback_formal_arm_v1",
+  "claim_scope": "formal",
+  "files": {
+    "predictions/predictions.json": {
+      "path": "data/predictions/sun_llm_fallback_formal_arm_v1/predictions.json",
+      "sha256": "65286d86ddb93c361a846c4c4fcc7cd9c4c4fe8a19392dbaa88d3617c1978be2"
+    },
+    "predictions/telemetry.json": {
+      "path": "data/predictions/sun_llm_fallback_formal_arm_v1/telemetry.json",
+      "sha256": "10749252d79c363add3ad728d91d3c0f71fe42ed094a62896e111e11fdd083fb"
+    },
+    "results/evaluation_fine.json": {
+      "path": "data/results/sun_llm_fallback_formal_arm_v1/evaluation_fine.json",
+      "sha256": "99af08afcbbc931f57d7471108771179f97b3fbc1dbee20eb669196fd47dcff4"
+    },
+    "results/evaluation_coarse.json": {
+      "path": "data/results/sun_llm_fallback_formal_arm_v1/evaluation_coarse.json",
+      "sha256": "31e7afbb0139d281eb3e64be216dd3b8b7cc1a0d081b13fd7febbbb93aff455c"
+    },
+    "results/modality_labels.json": {
+      "path": "data/results/sun_llm_fallback_formal_arm_v1/modality_labels.json",
+      "sha256": "7ada6b6faf8075bcb7fe85ab20ba46b759673d0094ce9e97c57af7d2a681cf27"
+    },
+    "results/g04_view_declaration.json": {
+      "path": "data/results/sun_llm_fallback_formal_arm_v1/g04_view_declaration.json",
+      "sha256": "8cb784335f0df97a48f1dae2781018ad8a4863ebc71e3c6ede9210710005b479"
+    },
+    "results/cost.json": {
+      "path": "data/results/sun_llm_fallback_formal_arm_v1/cost.json",
+      "sha256": "da56bb8dd3e096ecece239a2b465816a67c88eabebcbae866103620d28330997"
+    },
+    "results/config_snapshot.json": {
+      "path": "data/results/sun_llm_fallback_formal_arm_v1/config_snapshot.json",
+      "sha256": "d09af43ea69a79ce6f83c659e8402c7f16cbc7a533bd882543c507968270d378"
+    },
+    "manifest.json": {
+      "path": "outputs/reports/sun_llm_fallback_formal_arm_v1.manifest.json",
+      "sha256": "0b5e32852028d83b920da7fd9695f0985def37724f792d6e81630a057ea41f18"
+    }
+  },
+  "independent_verifier": {
+    "path": "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py",
+    "sha256": "4ac48c6b9b49b21814c6c25af2a285f76039f900db0722e70a13352969c51c3d"
+  }
+}

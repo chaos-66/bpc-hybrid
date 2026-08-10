@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-11
-**收录文件**：1003 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1028 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -398,6 +398,10 @@
 | `data/predictions/b0_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/b0_formal_arm_v1_replay/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/b0_formal_arm_v1_replay/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/direct_llm_formal_arm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/direct_llm_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/sun_llm_fallback_formal_arm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/sun_llm_fallback_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/README.md` | 正式区（受门禁） | 所在目录的入口说明 |
 | `data/results/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
 | `data/results/b0_formal_arm_v1/config_snapshot.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
@@ -412,6 +416,18 @@
 | `data/results/b0_formal_arm_v1_replay/evaluation_fine.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/results/b0_formal_arm_v1_replay/g04_view_declaration.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/results/b0_formal_arm_v1_replay/modality_labels.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/direct_llm_formal_arm_v1/config_snapshot.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/direct_llm_formal_arm_v1/cost.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/direct_llm_formal_arm_v1/evaluation_coarse.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/direct_llm_formal_arm_v1/evaluation_fine.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/direct_llm_formal_arm_v1/g04_view_declaration.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/direct_llm_formal_arm_v1/modality_labels.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/sun_llm_fallback_formal_arm_v1/config_snapshot.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/sun_llm_fallback_formal_arm_v1/cost.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/sun_llm_fallback_formal_arm_v1/evaluation_coarse.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/sun_llm_fallback_formal_arm_v1/evaluation_fine.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/sun_llm_fallback_formal_arm_v1/g04_view_declaration.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/sun_llm_fallback_formal_arm_v1/modality_labels.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 
 ## `docs`
 
@@ -648,6 +664,9 @@
 | `outputs/reports/b0_formal_arm_v1_replay.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/b0_formal_arm_v1_replay_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/b0_formal_arm_v1_replay_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/direct_llm_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/direct_llm_formal_arm_v1_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/direct_llm_formal_arm_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_method_gate_decision_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_method_gate_decision_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/direct_llm_method_gate_decision_dry_run_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -676,6 +695,9 @@
 | `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s34_winter_stage3_development_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sun_llm_fallback_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sun_llm_fallback_formal_arm_v1_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sun_llm_fallback_formal_arm_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sun_llm_fallback_method_gate_decision_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sun_llm_fallback_method_gate_decision_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sun_llm_fallback_method_gate_decision_dry_run_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -684,6 +706,8 @@
 | `outputs/reports/sun_rule_only_method_gate_authorization_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/verify_b0_formal_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `outputs/reports/verify_b0_formal_arm_v1_replay.py` | 活动 | Python 实现、脚本或测试 |
+| `outputs/reports/verify_direct_llm_formal_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
 
 ## `paper`
 
@@ -814,6 +838,7 @@
 | `scripts/promote_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/publish_formal_benchmark_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/publish_formal_gold_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/publish_snapshot_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/rebuild_d1_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
 | `scripts/reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |

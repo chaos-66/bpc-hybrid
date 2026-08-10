@@ -241,22 +241,24 @@ def test_audit_capsule_method_coverage(tmp_path: Path, monkeypatch) -> None:
     assert methods != {"sun_rule_only", "sun_llm_fallback", "direct_llm"}
 
 
-def test_audit_capsule_coverage_empty() -> None:
+def test_audit_capsule_coverage_complete_after_three_arms() -> None:
+    """2026-08-11: all three formal arm capsules published -> coverage is
+    the complete three-method set (derived from per-arm manifests)."""
     from formal_experiment import audit as audit_mod
-    assert audit_mod._formal_capsule_methods() != {
+    assert audit_mod._formal_capsule_methods() == {
         "sun_rule_only", "sun_llm_fallback", "direct_llm"}
 
 
-def test_audit_current_state_partial_or_not_produced() -> None:
-    """Current real state: either no capsule (warning not_produced) or only
-    the B0 arm (warning partial); never the complete pass."""
+def test_audit_current_state_complete_pass() -> None:
+    """Current real state: three formal arm capsules published -> the
+    complete pass fires and no partial/not-produced warning remains."""
     from formal_experiment.audit import collect_project_audit
     audit = collect_project_audit()
-    warnings = {item["code"] for item in audit["findings"]["warnings"]}
     passes = {item["code"] for item in audit["findings"]["passes"]}
-    assert "formal_predictions_results_capsule_complete" not in passes
-    assert ("formal_predictions_results_capsule_not_produced" in warnings
-            or "formal_predictions_results_capsule_partial" in warnings)
+    warnings = {item["code"] for item in audit["findings"]["warnings"]}
+    assert "formal_predictions_results_capsule_complete" in passes
+    assert "formal_predictions_results_capsule_partial" not in warnings
+    assert "formal_predictions_results_capsule_not_produced" not in warnings
 
 
 def test_b0_formal_arm_verifier_tamper_fail_closed() -> None:

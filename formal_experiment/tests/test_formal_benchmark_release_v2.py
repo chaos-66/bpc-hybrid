@@ -420,12 +420,8 @@ def test_audit_gains_release_verified_pass() -> None:
     passes = {item["code"] for item in audit["findings"]["passes"]}
     assert "formal_benchmark_release_verified" in passes
     assert "formal_gold_capsule_frozen" in passes
-    warnings = {item["code"] for item in audit["findings"]["warnings"]}
-    # the predictions/results capsule is either not produced yet or partial
-    # (only the B0 formal arm published) -- never the complete pass
-    assert ("formal_predictions_results_capsule_not_produced" in warnings
-            or "formal_predictions_results_capsule_partial" in warnings)
-    assert "formal_predictions_results_capsule_complete" not in {
-        item["code"] for item in audit["findings"]["passes"]}
+    passes = {item["code"] for item in audit["findings"]["passes"]}
+    # 2026-08-11: all three formal arm capsules published -> complete pass
+    assert "formal_predictions_results_capsule_complete" in passes
     errors = {item["code"] for item in audit["findings"]["errors"]}
     assert "formal_benchmark_release_invalid" not in errors

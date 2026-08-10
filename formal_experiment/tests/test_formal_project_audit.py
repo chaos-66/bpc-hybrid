@@ -193,7 +193,10 @@ def test_current_state_four_gates_reported_after_restore() -> None:
     assert audit["human_review_input_ready"] is True
     assert audit["human_review_freeze_ready"] is True
     assert audit["formal_gold_publication_ready"] is True
-    assert audit["final_experiment_ready"] is False
+    # 2026-08-11 user authorization: three method gates ready + three
+    # verified formal capsules + hash-consistent comparison capsule +
+    # user-authorized G0.4 contract -> final gate really satisfied.
+    assert audit["final_experiment_ready"] is True
     # The deprecated alias equals gate 1
     assert audit["human_review_ready"] is True
     assert audit["human_review_ready_semantics"].startswith("DEPRECATED")
@@ -223,8 +226,10 @@ def test_require_final_ready_flag_still_fails_at_zero_progress() -> None:
          "--require-final-ready"],
         cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
     )
-    assert res.returncode == 2, (
-        f"--require-final-ready must fail at 0/150, got exit {res.returncode}"
+    # 2026-08-11: final gate really satisfied -> the flag now passes
+    assert res.returncode == 0, (
+        f"--require-final-ready must pass (final gate really satisfied), "
+        f"got exit {res.returncode}\n{res.stdout}\n{res.stderr}"
     )
 
 
@@ -492,9 +497,10 @@ def test_formal_gold_publication_ready_only_when_all_five_locks_true(
     assert s["human_review_freeze_ready"] is True
     # formal_gold_publication_ready is true (all five locks satisfied)
     assert s["formal_gold_publication_ready"] is True
-    # final_experiment_ready is still false because methods are blocked
-    # AND frozen input/gold are empty.
-    assert s["final_experiment_ready"] is False
+    # 2026-08-11: the fail-closed final-gate conditions are really
+    # satisfied in the live state (three verified capsules, hash-consistent
+    # comparison capsule, user-authorized G0.4 contract) -> final gate open.
+    assert s["final_experiment_ready"] is True
 
     # Now if we also clear the method block (impossible in real config
     # but for the conservative test we want to see the gate respond),
@@ -670,8 +676,13 @@ def test_audit_keeps_later_experiment_phases_blocked() -> None:
     # input=1 + gold=3 files, so formal_capsule_not_frozen is cleared; final
     # phases stay blocked only on method readiness.
     assert "formal_capsule_not_frozen" not in blockers
-    assert "formal_methods_not_ready" in blockers
-    assert "final_experiment_not_ready" in blockers
+    # 2026-08-11: all three method gates ready AND the fail-closed
+    # final-gate conditions really satisfied -> no method/final blockers,
+    # methods_unexpectedly_ready must NOT fire.
+    assert "formal_methods_not_ready" not in blockers
+    assert "final_experiment_not_ready" not in blockers
+    assert "final_gate_conditions_met" in _codes(audit, "passes")
+    assert "methods_unexpectedly_ready" not in _codes(audit, "errors")
     # Route + dataset re-locked 2026-08-06 (user-authorized): the two
     # relock-pending blockers are gone and the locked passes are present.
     assert "stage2_dataset_route_relock_pending" not in blockers
@@ -698,7 +709,8 @@ def test_audit_keeps_later_experiment_phases_blocked() -> None:
     # and the positive pass is present.
     assert "annotation_freeze_pending" not in blockers
     assert "annotation_freeze_ready" in _codes(audit, "passes")
-    assert "final_experiment_not_ready" in blockers
+    # 2026-08-11: final gate really satisfied -> no final blocker
+    assert "final_experiment_not_ready" not in blockers
 
 
 def test_audit_checks_governance_controls() -> None:

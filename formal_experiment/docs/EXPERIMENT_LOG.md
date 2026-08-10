@@ -3228,3 +3228,16 @@
 - 仍存在 blocker：final_experiment_not_ready、formal_methods_not_ready
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-10T17:55:35.835627+00:00 - 2026-08-11 user authorization applied (four formal decisions, zero-API). (1) G0.4 formal main report authorized: coarse five span-bearing fields + separate four-class modality-label metrics; modality evidence-span explicitly unavailable (never zeroed/aggregated); fine five fields diagnostic; historical six-field coarse aggregate stays development provenance; Gold untouched, no fabricated evidence spans; contract authorization recorded, coarse-view manifest main_view_publishable flipped true. (2) direct_llm gate ready (formal_status=ready, command_status=formal_ready_candidate_authorized); bound D1-R3 snapshot published formally ZERO-API -> data/predictions/direct_llm_formal_arm_v1 + results + reports (claim_scope=formal, is_formal_performance_result=true, new calls 0, snapshot bytes locked 9188093c, independent verifier VERIFIED). (3) sun_llm_fallback Option A applied (ready, formal_ready_candidate_authorized, role=comparison_arm_only, notes stop-optimizing + comparison-only boundary); bound H1 snapshot published formally ZERO-API -> sun_llm_fallback_formal_arm_v1 (snapshot 4fd7c116, verifier VERIFIED). (4) final-readiness fail-closed hardening implemented: status.py formal_final_gate_conditions() (three-method capsule complete + G0.4 contract authorized + comparison capsule hash-consistent incl. on-disk recomputation of input v2/Gold/three arm manifests); final_experiment_ready requires all; audit.py methods_unexpectedly_ready conditional (real satisfaction -> pass final_gate_conditions_met, no unconditional error); comparison capsule v2 rebuilt (three methods formal, main_view_publishable=true, all_three_published=true, hash 4aaaef13). All fail-closed conditions REALLY satisfied -> final_experiment_ready=true, BLOCKERS 0, ERRORS 0 (config flip alone never opens the gate). 11 test files updated for the new gate state (final true / capsule complete / unexpected-ready conditional); 1694 tests passed. No LLM/API calls; Gold/experiment_contract/stage3 gate/publication status untouched.
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1694 passed, 24 skipped, 19 warnings in 182.67s (0:03:02)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`af0fe7725b68f84a3ef2004d1e7861b185b83143`；相关未提交路径：50 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

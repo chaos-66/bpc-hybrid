@@ -989,7 +989,9 @@ def test_four_orthogonal_gates_after_restore():
     # formal Gold publication unlocked 2026-08-10 (user authorization,
     # packet v2); final experiment stays blocked.
     assert a["formal_gold_publication_ready"] is True
-    assert a["final_experiment_ready"] is False
+    # 2026-08-11: final gate really satisfied (three capsules verified,
+    # comparison consistent, G0.4 authorized).
+    assert a["final_experiment_ready"] is True
 
 
 # ===========================================================================

@@ -61,6 +61,7 @@ B0_LABELS = ROOT / "data" / "results" / "b0_formal_arm_v1" / "modality_labels.js
 READINESS = ROOT / "outputs" / "reports" / "b0_d1_formal_readiness_v2.json"
 G04_MANIFEST = (ROOT / "outputs" / "evidence" / "g04_formal_coarse_view_v1"
                 / "manifest.json")
+G04_CONTRACT = ROOT / "configs" / "evaluation" / "g04_evaluation_views_contract_v1.json"
 G04_DERIVED = (ROOT / "outputs" / "evidence" / "g04_formal_coarse_view_v1"
                / "coarse_view_derived.json")
 
@@ -244,6 +245,30 @@ def build_reevaluation() -> dict[str, Any]:
 
     # authoritative G0.4 coarse-view hash (cross-verified, never hardcoded)
     coarse_hash = _authoritative_coarse_view_hash()
+    # G0.4 authorization state (user-authorized 2026-08-11)
+    g04_contract = _load_json(G04_CONTRACT)
+    g04_authorized = (g04_contract.get("authorization", {})
+                      .get("authorized_by_user") is True)
+    g04_manifest = _load_json(G04_MANIFEST)
+    main_view_publishable = g04_manifest.get("main_view_publishable") is True
+
+    # per-method FORMAL arm manifests (user-authorized zero-API publications)
+    arm_manifests = {
+        "sun_rule_only": B0_MANIFEST,
+        "direct_llm": ROOT / "outputs" / "reports"
+                      / "direct_llm_formal_arm_v1.manifest.json",
+        "sun_llm_fallback": ROOT / "outputs" / "reports"
+                            / "sun_llm_fallback_formal_arm_v1.manifest.json",
+    }
+    arm_meta = {}
+    for mid, path in arm_manifests.items():
+        m = _load_json(path)
+        arm_meta[mid] = {
+            "manifest": str(path.relative_to(ROOT)),
+            "manifest_sha256": _sha256_file(path) if path.exists() else "missing",
+            "claim_scope": m.get("claim_scope"),
+            "is_formal": m.get("is_formal_performance_result") is True,
+        }
 
     # comparison capsule
     b0_manifest = _load_json(B0_MANIFEST)
@@ -257,8 +282,9 @@ def build_reevaluation() -> dict[str, Any]:
             "transform": "src/bpc_hybrid/g04_coarse_view.py",
             "semantic_sha256": coarse_hash["semantic_sha256"],
             "semantic_hash_source": coarse_hash["source"],
-            "main_view_publishable": False,
-            "note": "G0.4 consistency gate: modality evidence not reproducible from published Gold; five-field spans published"},
+            "main_view_publishable": main_view_publishable,
+            "g04_contract_authorized": g04_authorized,
+            "note": "G0.4 user-authorized main report = coarse FIVE span fields + separate modality-label metrics; modality evidence-span unavailable (never zeroed/aggregated); historical six-field aggregate stays development provenance"},
         "prediction_schema": {"path": "configs/schemas/stage2_prediction.schema.json"},
         "normalization": "formal_stage2_evaluation + g04_coarse_view (shared)",
         "evaluators": {
@@ -267,17 +293,20 @@ def build_reevaluation() -> dict[str, Any]:
         },
         "methods": {
             "sun_rule_only": {
-                "claim_scope": "formal",
+                "claim_scope": arm_meta["sun_rule_only"]["claim_scope"],
                 "gate_status": "ready (user-authorized 2026-08-10)",
-                "prediction_manifest": "outputs/reports/b0_formal_arm_v1.manifest.json",
-                "prediction_manifest_sha256": _sha256_file(B0_MANIFEST),
+                "prediction_manifest": arm_meta["sun_rule_only"]["manifest"],
+                "prediction_manifest_sha256": arm_meta["sun_rule_only"]["manifest_sha256"],
                 "fine_span_fields": _load_json(B0_FINE).get("span_fields", {}),
                 "coarse_span_fields": _load_json(B0_COARSE).get("span_fields", {}),
                 "modality_labels": _load_json(B0_LABELS),
             },
             "direct_llm": {
-                "claim_scope": reeval["direct_llm"]["claim_scope"],
-                "gate_status": reeval["direct_llm"]["gate_status"],
+                "claim_scope": arm_meta["direct_llm"]["claim_scope"],
+                "is_formal_arm": arm_meta["direct_llm"]["is_formal"],
+                "gate_status": "ready (user-authorized 2026-08-11; zero-API snapshot publication)",
+                "arm_manifest": arm_meta["direct_llm"]["manifest"],
+                "arm_manifest_sha256": arm_meta["direct_llm"]["manifest_sha256"],
                 "snapshot": reeval["direct_llm"]["snapshot"],
                 "historical_llm_calls": reeval["direct_llm"]["historical_llm_calls"],
                 "new_llm_calls": 0,
@@ -286,8 +315,12 @@ def build_reevaluation() -> dict[str, Any]:
                 "modality_labels": reeval["direct_llm"]["evaluation"]["modality_labels"],
             },
             "sun_llm_fallback": {
-                "claim_scope": reeval["sun_llm_fallback"]["claim_scope"],
-                "gate_status": reeval["sun_llm_fallback"]["gate_status"],
+                "claim_scope": arm_meta["sun_llm_fallback"]["claim_scope"],
+                "is_formal_arm": arm_meta["sun_llm_fallback"]["is_formal"],
+                "gate_status": ("ready / comparison_arm_only (user-authorized "
+                                "2026-08-11; zero-API snapshot publication)"),
+                "arm_manifest": arm_meta["sun_llm_fallback"]["manifest"],
+                "arm_manifest_sha256": arm_meta["sun_llm_fallback"]["manifest_sha256"],
                 "snapshot": reeval["sun_llm_fallback"]["snapshot"],
                 "historical_llm_calls": reeval["sun_llm_fallback"]["historical_llm_calls"],
                 "new_llm_calls": 0,
@@ -312,6 +345,12 @@ def build_reevaluation() -> dict[str, Any]:
         "zero_api": {"new_llm_api_calls": 0, "real_api_calls_total_historical": (
             reeval["direct_llm"]["historical_llm_calls"]
             + reeval["sun_llm_fallback"]["historical_llm_calls"])},
+        "formal_arm_capsules": {
+            "all_three_published_and_verified": all(
+                meta["is_formal"] and meta["manifest_sha256"] != "missing"
+                for meta in arm_meta.values()),
+            "per_method": arm_meta,
+        },
     }
     return {"reeval": reeval, "comparison": comparison}
 

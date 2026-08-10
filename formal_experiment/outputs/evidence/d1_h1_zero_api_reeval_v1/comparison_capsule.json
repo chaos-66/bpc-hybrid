@@ -12,8 +12,9 @@
     "transform": "src/bpc_hybrid/g04_coarse_view.py",
     "semantic_sha256": "d15061d74b41c58dd4278f0a675327099453564090005f9b58b1d352de5cfe39",
     "semantic_hash_source": "outputs/evidence/g04_formal_coarse_view_v1/manifest.json (cross-verified against derived artifact recomputation and the B0 formal arm manifest)",
-    "main_view_publishable": false,
-    "note": "G0.4 consistency gate: modality evidence not reproducible from published Gold; five-field spans published"
+    "main_view_publishable": true,
+    "g04_contract_authorized": true,
+    "note": "G0.4 user-authorized main report = coarse FIVE span fields + separate modality-label metrics; modality evidence-span unavailable (never zeroed/aggregated); historical six-field aggregate stays development provenance"
   },
   "prediction_schema": {
     "path": "configs/schemas/stage2_prediction.schema.json"
@@ -27,7 +28,7 @@
     "sun_rule_only": {
       "claim_scope": "formal",
       "gate_status": "ready (user-authorized 2026-08-10)",
-      "prediction_manifest": "outputs/reports/b0_formal_arm_v1.manifest.json",
+      "prediction_manifest": "outputs\\reports\\b0_formal_arm_v1.manifest.json",
       "prediction_manifest_sha256": "095a839fe7a98ed24de3afb3d840d1af5596f28988dae0429154f5b024f47c09",
       "fine_span_fields": {
         "actor": {
@@ -145,8 +146,11 @@
       }
     },
     "direct_llm": {
-      "claim_scope": "candidate",
-      "gate_status": "formal-gate-blocked",
+      "claim_scope": "formal",
+      "is_formal_arm": true,
+      "gate_status": "ready (user-authorized 2026-08-11; zero-API snapshot publication)",
+      "arm_manifest": "outputs\\reports\\direct_llm_formal_arm_v1.manifest.json",
+      "arm_manifest_sha256": "f0f86318259de87c9557781b69d2573a13bb25469db194905cfc216fef94d133",
       "snapshot": "s27_d1_v6_r3_clean_rerun_150_hist56d_v1",
       "historical_llm_calls": 150,
       "new_llm_calls": 0,
@@ -266,8 +270,11 @@
       }
     },
     "sun_llm_fallback": {
-      "claim_scope": "candidate",
-      "gate_status": "comparison-only / formal-gate-blocked",
+      "claim_scope": "formal",
+      "is_formal_arm": true,
+      "gate_status": "ready / comparison_arm_only (user-authorized 2026-08-11; zero-API snapshot publication)",
+      "arm_manifest": "outputs\\reports\\sun_llm_fallback_formal_arm_v1.manifest.json",
+      "arm_manifest_sha256": "0b5e32852028d83b920da7fd9695f0985def37724f792d6e81630a057ea41f18",
       "snapshot": "s28d_h1_150_v4pro_v1",
       "historical_llm_calls": 150,
       "new_llm_calls": 0,
@@ -400,5 +407,28 @@
   "zero_api": {
     "new_llm_api_calls": 0,
     "real_api_calls_total_historical": 300
+  },
+  "formal_arm_capsules": {
+    "all_three_published_and_verified": true,
+    "per_method": {
+      "sun_rule_only": {
+        "manifest": "outputs\\reports\\b0_formal_arm_v1.manifest.json",
+        "manifest_sha256": "095a839fe7a98ed24de3afb3d840d1af5596f28988dae0429154f5b024f47c09",
+        "claim_scope": "formal",
+        "is_formal": true
+      },
+      "direct_llm": {
+        "manifest": "outputs\\reports\\direct_llm_formal_arm_v1.manifest.json",
+        "manifest_sha256": "f0f86318259de87c9557781b69d2573a13bb25469db194905cfc216fef94d133",
+        "claim_scope": "formal",
+        "is_formal": true
+      },
+      "sun_llm_fallback": {
+        "manifest": "outputs\\reports\\sun_llm_fallback_formal_arm_v1.manifest.json",
+        "manifest_sha256": "0b5e32852028d83b920da7fd9695f0985def37724f792d6e81630a057ea41f18",
+        "claim_scope": "formal",
+        "is_formal": true
+      }
+    }
   }
 }

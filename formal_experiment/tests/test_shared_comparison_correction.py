@@ -110,6 +110,10 @@ def test_comparison_capsule_carries_authoritative_hash() -> None:
     assert cmp["coarse_view"]["semantic_sha256"] == AUTHORITATIVE_COARSE_SHA
     assert "semantic_hash_source" in cmp["coarse_view"]
     assert "cross-verified" in cmp["coarse_view"]["semantic_hash_source"]
+    # 2026-08-11 user authorization applied
+    assert cmp["coarse_view"]["main_view_publishable"] is True
+    assert cmp["coarse_view"]["g04_contract_authorized"] is True
+    assert cmp["formal_arm_capsules"]["all_three_published_and_verified"] is True
 
 
 def test_d1_h1_prediction_bytes_unchanged() -> None:
@@ -210,14 +214,17 @@ def test_g04_decision_dry_run_not_applied() -> None:
 # --------------------------------------------------------------------------- nothing applied
 
 
-def test_methods_gold_contract_unchanged() -> None:
+def test_methods_gold_contract_state_after_authorization() -> None:
+    """2026-08-11 authorization applied to methods.json (D1/H1 ready);
+    Gold and the experiment contract remain untouched."""
     methods = json.loads((ROOT / "configs" / "methods.json")
                          .read_text(encoding="utf-8"))
     by_id = {m["id"]: m for m in methods["methods"]}
-    assert by_id["direct_llm"]["formal_status"] == \
-        "blocked_until_official_data_output_contract_and_evaluator_are_locked"
-    assert by_id["sun_llm_fallback"]["formal_status"] == \
-        "blocked_until_faithful_baseline_data_and_triggers_are_locked"
+    assert by_id["direct_llm"]["formal_status"] == "ready"
+    assert by_id["direct_llm"]["command_status"] == \
+        "formal_ready_candidate_authorized"
+    assert by_id["sun_llm_fallback"]["formal_status"] == "ready"
+    assert by_id["sun_llm_fallback"]["role"] == "comparison_arm_only"
     assert by_id["sun_rule_only"]["formal_status"] == "ready"
     gold = json.loads((ROOT / "data" / "gold" / "stage2"
                        / "estg150_formal_gold_v1.json")

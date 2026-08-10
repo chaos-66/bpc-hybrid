@@ -314,7 +314,10 @@ class TestBoundariesIntact:
         # final-experiment gate stays closed.
         assert status["human_review_freeze_ready"] is True
         assert status["formal_gold_publication_ready"] is True
-        assert status["final_experiment_ready"] is False
+        # 2026-08-11 user authorization: three method gates ready + three
+        # verified formal capsules + hash-consistent comparison capsule +
+        # user-authorized G0.4 contract -> final gate really satisfied.
+        assert status["final_experiment_ready"] is True
         # Route re-locked 2026-08-06 (user-authorized governance decision);
         # final-experiment readiness must remain closed without methods.
         assert status["route"]["status"] == "locked"

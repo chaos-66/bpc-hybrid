@@ -189,4 +189,7 @@ def test_status_and_audit_surface_verified_stage1_without_formal_claim() -> None
     pass_codes = {item["code"] for item in audit["findings"]["passes"]}
     assert status["stage1_structural_verified"] is True
     assert "stage1_structural_process_record_verified" in pass_codes
-    assert status["final_experiment_ready"] is False
+    # 2026-08-11: fail-closed final-gate conditions really satisfied
+    # (three verified capsules / comparison consistent / G0.4
+    # authorized) -> final gate open.
+    assert status["final_experiment_ready"] is True

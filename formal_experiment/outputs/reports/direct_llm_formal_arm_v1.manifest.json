@@ -1,0 +1,147 @@
+{
+  "schema_version": "snapshot_formal_arm_manifest@1.0.0",
+  "run_id": "direct_llm_formal_arm_v1",
+  "claim_scope": "formal",
+  "is_formal_performance_result": true,
+  "method_id": "direct_llm",
+  "snapshot": "s27_d1_v6_r3_clean_rerun_150_hist56d_v1",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "zero_api": {
+    "historical_llm_calls": 150,
+    "new_llm_calls": 0,
+    "default_path": "zero-API publication of the bound snapshot"
+  },
+  "preconditions_verified": {
+    "release_v2_verified": true,
+    "formal_status_ready": true,
+    "command_status": true,
+    "llm_used_true_declared": true,
+    "g04_authorized": true,
+    "input_v2_present": true,
+    "gold_present": true
+  },
+  "binding": {
+    "problems": [],
+    "ok": true
+  },
+  "metrics_summary": {
+    "fine_span_fields": {
+      "actor": {
+        "ground_truth": 48,
+        "extracted": 60,
+        "precision": 0.65,
+        "recall": 0.8125,
+        "f1": 0.7222222222222223
+      },
+      "action": {
+        "ground_truth": 247,
+        "extracted": 210,
+        "precision": 0.9523809523809523,
+        "recall": 0.8178137651821862,
+        "f1": 0.8799825746024831
+      },
+      "condition": {
+        "ground_truth": 214,
+        "extracted": 135,
+        "precision": 0.9111111111111111,
+        "recall": 0.6915887850467289,
+        "f1": 0.7863159258779318
+      },
+      "constraint": {
+        "ground_truth": 302,
+        "extracted": 175,
+        "precision": 0.7257142857142858,
+        "recall": 0.44039735099337746,
+        "f1": 0.5481510327930033
+      },
+      "exception": {
+        "ground_truth": 13,
+        "extracted": 10,
+        "precision": 0.8,
+        "recall": 0.6153846153846154,
+        "f1": 0.6956521739130435
+      }
+    },
+    "coarse_span_fields": {
+      "actor": {
+        "ground_truth": 41,
+        "extracted": 60,
+        "precision": 0.6666666666666666,
+        "recall": 0.8780487804878049,
+        "f1": 0.7578947368421053
+      },
+      "action": {
+        "ground_truth": 150,
+        "extracted": 210,
+        "precision": 0.9761904761904762,
+        "recall": 0.9133333333333333,
+        "f1": 0.9437163978494625
+      },
+      "condition": {
+        "ground_truth": 122,
+        "extracted": 135,
+        "precision": 0.9185185185185185,
+        "recall": 0.7704918032786885,
+        "f1": 0.8380185491408441
+      },
+      "constraint": {
+        "ground_truth": 135,
+        "extracted": 175,
+        "precision": 0.7771428571428571,
+        "recall": 0.7111111111111111,
+        "f1": 0.7426621160409557
+      },
+      "exception": {
+        "ground_truth": 11,
+        "extracted": 10,
+        "precision": 0.8,
+        "recall": 0.7272727272727273,
+        "f1": 0.761904761904762
+      }
+    },
+    "modality_labels": {
+      "accuracy": 0.8333333333333334,
+      "macro_f1": 0.7694506979014613
+    }
+  },
+  "safety": {
+    "llm_api_called": false,
+    "new_llm_api_calls": 0,
+    "gold_read_by_runner": false,
+    "timing_not_carried_into_canonical_artifacts": true
+  },
+  "artifacts": {
+    "predictions/predictions.json": {
+      "path": "data/predictions/direct_llm_formal_arm_v1/predictions.json",
+      "sha256": "bbadb6834572e58fb8321204b3bc975c887d23d9ae60bd804bf91137bb46072b"
+    },
+    "predictions/telemetry.json": {
+      "path": "data/predictions/direct_llm_formal_arm_v1/telemetry.json",
+      "sha256": "12c44fa7ab7fa8f33b9533c50523fd376a7174a8660a2db6a8a428cf094b2c9f"
+    },
+    "results/evaluation_fine.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/evaluation_fine.json",
+      "sha256": "1586480e33a3b362e58764956b73bbe5503760d26a31dda4f71ccb1e107bb9a9"
+    },
+    "results/evaluation_coarse.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/evaluation_coarse.json",
+      "sha256": "471447b0494d735f9b5ea20ce4ba7687f2fc3304bec00c29e0b4905f3c830212"
+    },
+    "results/modality_labels.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/modality_labels.json",
+      "sha256": "0bbbdae086ae8a4c15709719888fc502422fd788437f209634798cc70dc4762f"
+    },
+    "results/g04_view_declaration.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/g04_view_declaration.json",
+      "sha256": "8cb784335f0df97a48f1dae2781018ad8a4863ebc71e3c6ede9210710005b479"
+    },
+    "results/cost.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/cost.json",
+      "sha256": "da56bb8dd3e096ecece239a2b465816a67c88eabebcbae866103620d28330997"
+    },
+    "results/config_snapshot.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/config_snapshot.json",
+      "sha256": "1d868d4f32d2233c95664d040eedee068a06228dd6f9bfa993c710d0f76db0d6"
+    }
+  }
+}

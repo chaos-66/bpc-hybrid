@@ -1,0 +1,62 @@
+{
+  "schema_version": "formal_stage2_span_metrics@1.0.0",
+  "view": "fine_clause_level",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "method_id": "sun_llm_fallback",
+  "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+  "overall": {
+    "ground_truth": 824,
+    "extracted": 1244,
+    "matched_predictions": 577,
+    "matched_ground_truth": 592,
+    "misclassified": 667,
+    "missed": 232,
+    "precision": 0.4638263665594855,
+    "recall": 0.7184466019417476,
+    "f1": 0.5637183388673614
+  },
+  "span_fields": {
+    "actor": {
+      "ground_truth": 48,
+      "extracted": 167,
+      "precision": 0.2694610778443114,
+      "recall": 0.9583333333333334,
+      "f1": 0.4206462101198944
+    },
+    "action": {
+      "ground_truth": 247,
+      "extracted": 247,
+      "precision": 0.854251012145749,
+      "recall": 0.8623481781376519,
+      "f1": 0.8582804980520968
+    },
+    "condition": {
+      "ground_truth": 214,
+      "extracted": 237,
+      "precision": 0.6624472573839663,
+      "recall": 0.7616822429906542,
+      "f1": 0.7086073460798293
+    },
+    "constraint": {
+      "ground_truth": 302,
+      "extracted": 330,
+      "precision": 0.4636363636363636,
+      "recall": 0.5264900662251656,
+      "f1": 0.49306822327617655
+    },
+    "exception": {
+      "ground_truth": 13,
+      "extracted": 14,
+      "precision": 0.7857142857142857,
+      "recall": 0.8461538461538461,
+      "f1": 0.8148148148148148
+    }
+  },
+  "modality_span": {
+    "available": false,
+    "reason": "published formal Gold stores modality as a plain string; local modality evidence spans are not carried by the decision-only Gold",
+    "ground_truth": 0,
+    "extracted": 249
+  },
+  "no_cross_view_mixing": true
+}

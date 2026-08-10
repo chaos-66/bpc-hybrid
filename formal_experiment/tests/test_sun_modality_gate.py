@@ -385,10 +385,12 @@ class TestGateIsolation:
         # authorization, packet v2).
         assert status["human_review_freeze_ready"] is True
         assert status["formal_gold_publication_ready"] is True
-        assert status["final_experiment_ready"] is False
+        # 2026-08-11: the fail-closed final-gate conditions are really
+        # satisfied (three verified capsules / comparison consistent /
+        # G0.4 authorized) -> the final-experiment gate is open.
+        assert status["final_experiment_ready"] is True
         # Route re-locked 2026-08-06 (user-authorized governance decision);
-        # stage3 locked + publication gate in whitelist since 2026-08-10,
-        # but the final-experiment gate stays the isolation boundary.
+        # stage3 locked + publication gate in whitelist since 2026-08-10.
         assert status["route"]["status"] == "locked"
         contract = json.loads(
             (PROJECT_ROOT / gate.EXPERIMENT_CONTRACT_REL).read_text(encoding="utf-8")
@@ -398,15 +400,21 @@ class TestGateIsolation:
         assert publication_gate["status"] in publication_gate[
             "allowed_publication_statuses"
         ]
-        # sun_rule_only was promoted to ready by explicit user authorization
-        # on 2026-08-10 (B0-R4 formal candidate closure); the two LLM methods
-        # remain blocked, which keeps the final-experiment gate closed.
+        # 2026-08-10: sun_rule_only promoted to ready; 2026-08-11 user
+        # authorization: direct_llm and sun_llm_fallback also promoted
+        # (H1 as comparison_arm_only) with zero-API snapshot publications;
+        # the fail-closed final-gate conditions are really satisfied.
         by_id = {m["id"]: m for m in status["methods"]}
         assert by_id["sun_rule_only"]["formal_status"] == "ready"
         assert by_id["sun_rule_only"]["command_status"] == \
             "formal_ready_candidate_authorized"
-        assert by_id["sun_llm_fallback"]["formal_status"] != "ready"
-        assert by_id["direct_llm"]["formal_status"] != "ready"
+        assert by_id["sun_llm_fallback"]["formal_status"] == "ready"
+        assert by_id["sun_llm_fallback"]["role"] == "comparison_arm_only"
+        assert by_id["sun_llm_fallback"]["command_status"] == \
+            "formal_ready_candidate_authorized"
+        assert by_id["direct_llm"]["formal_status"] == "ready"
+        assert by_id["direct_llm"]["command_status"] == \
+            "formal_ready_candidate_authorized"
         manifest = json.loads(
             (PROJECT_ROOT / gate.MANIFEST_REL).read_text(encoding="utf-8")
         )
@@ -434,5 +442,6 @@ class TestGateIsolation:
         # closed.
         assert audit["human_review_freeze_ready"] is True
         assert audit["formal_gold_publication_ready"] is True
-        assert audit["final_experiment_ready"] is False
+        # 2026-08-11: fail-closed final-gate conditions really satisfied
+        assert audit["final_experiment_ready"] is True
 

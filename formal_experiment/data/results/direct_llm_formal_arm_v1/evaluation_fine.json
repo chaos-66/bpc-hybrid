@@ -1,0 +1,62 @@
+{
+  "schema_version": "formal_stage2_span_metrics@1.0.0",
+  "view": "fine_clause_level",
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "method_id": "direct_llm",
+  "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+  "overall": {
+    "ground_truth": 824,
+    "extracted": 820,
+    "matched_predictions": 497,
+    "matched_ground_truth": 530,
+    "misclassified": 323,
+    "missed": 294,
+    "precision": 0.6060975609756097,
+    "recall": 0.6432038834951457,
+    "f1": 0.6240996626104099
+  },
+  "span_fields": {
+    "actor": {
+      "ground_truth": 48,
+      "extracted": 60,
+      "precision": 0.65,
+      "recall": 0.8125,
+      "f1": 0.7222222222222223
+    },
+    "action": {
+      "ground_truth": 247,
+      "extracted": 210,
+      "precision": 0.9523809523809523,
+      "recall": 0.8178137651821862,
+      "f1": 0.8799825746024831
+    },
+    "condition": {
+      "ground_truth": 214,
+      "extracted": 135,
+      "precision": 0.9111111111111111,
+      "recall": 0.6915887850467289,
+      "f1": 0.7863159258779318
+    },
+    "constraint": {
+      "ground_truth": 302,
+      "extracted": 175,
+      "precision": 0.7257142857142858,
+      "recall": 0.44039735099337746,
+      "f1": 0.5481510327930033
+    },
+    "exception": {
+      "ground_truth": 13,
+      "extracted": 10,
+      "precision": 0.8,
+      "recall": 0.6153846153846154,
+      "f1": 0.6956521739130435
+    }
+  },
+  "modality_span": {
+    "available": false,
+    "reason": "published formal Gold stores modality as a plain string; local modality evidence spans are not carried by the decision-only Gold",
+    "ground_truth": 0,
+    "extracted": 230
+  },
+  "no_cross_view_mixing": true
+}

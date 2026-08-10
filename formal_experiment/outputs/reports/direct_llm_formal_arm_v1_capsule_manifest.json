@@ -1,0 +1,47 @@
+{
+  "schema_version": "snapshot_formal_arm_capsule@1.0.0",
+  "capsule": "direct_llm_formal_arm_v1",
+  "claim_scope": "formal",
+  "files": {
+    "predictions/predictions.json": {
+      "path": "data/predictions/direct_llm_formal_arm_v1/predictions.json",
+      "sha256": "bbadb6834572e58fb8321204b3bc975c887d23d9ae60bd804bf91137bb46072b"
+    },
+    "predictions/telemetry.json": {
+      "path": "data/predictions/direct_llm_formal_arm_v1/telemetry.json",
+      "sha256": "12c44fa7ab7fa8f33b9533c50523fd376a7174a8660a2db6a8a428cf094b2c9f"
+    },
+    "results/evaluation_fine.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/evaluation_fine.json",
+      "sha256": "1586480e33a3b362e58764956b73bbe5503760d26a31dda4f71ccb1e107bb9a9"
+    },
+    "results/evaluation_coarse.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/evaluation_coarse.json",
+      "sha256": "471447b0494d735f9b5ea20ce4ba7687f2fc3304bec00c29e0b4905f3c830212"
+    },
+    "results/modality_labels.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/modality_labels.json",
+      "sha256": "0bbbdae086ae8a4c15709719888fc502422fd788437f209634798cc70dc4762f"
+    },
+    "results/g04_view_declaration.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/g04_view_declaration.json",
+      "sha256": "8cb784335f0df97a48f1dae2781018ad8a4863ebc71e3c6ede9210710005b479"
+    },
+    "results/cost.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/cost.json",
+      "sha256": "da56bb8dd3e096ecece239a2b465816a67c88eabebcbae866103620d28330997"
+    },
+    "results/config_snapshot.json": {
+      "path": "data/results/direct_llm_formal_arm_v1/config_snapshot.json",
+      "sha256": "1d868d4f32d2233c95664d040eedee068a06228dd6f9bfa993c710d0f76db0d6"
+    },
+    "manifest.json": {
+      "path": "outputs/reports/direct_llm_formal_arm_v1.manifest.json",
+      "sha256": "f0f86318259de87c9557781b69d2573a13bb25469db194905cfc216fef94d133"
+    }
+  },
+  "independent_verifier": {
+    "path": "outputs/reports/verify_direct_llm_formal_arm_v1.py",
+    "sha256": "8038f0dc3e87e4c4427cdf4ba98ddf0e61c1ffa07c0caf38edd920fdb536a724"
+  }
+}
