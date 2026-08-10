@@ -1,0 +1,89 @@
+{
+  "artifacts": {
+    "data/gold/stage2/estg150_formal_gold_v1.json": {
+      "byte_size": 461240,
+      "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+      "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+    },
+    "data/gold/stage3/stage3_matching_gold_v1.json": {
+      "byte_size": 4068,
+      "path": "data/gold/stage3/stage3_matching_gold_v1.json",
+      "sha256": "55dffbcaf7d6510c11a06f10b134dfb449af0bd687d0cf40f7839be19bc2e618"
+    },
+    "data/gold/stage3/stage3_violation_gold_v1.json": {
+      "byte_size": 12540,
+      "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+      "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550"
+    },
+    "data/input/estg150_formal_input_v1.json": {
+      "byte_size": 3174,
+      "path": "data/input/estg150_formal_input_v1.json",
+      "sha256": "95f66c3497cbdc6a3617ce27b0204dee173521df88bf0abb76825e9733674b39"
+    }
+  },
+  "authorization": {
+    "contract_commit": "5d56f03",
+    "date": "2026-08-10",
+    "packet": "formal_gold_authorization_packet_v2"
+  },
+  "exclusions": {
+    "development_rule_record_adapter_outputs": "not Gold; not published",
+    "gold_process_records": "DO NOT EXIST (blocked on S1.7)",
+    "gold_rule_records": "DO NOT EXIST (blocked on human adjudication + freeze)",
+    "modality_dataset": "not published (license unknown, redistribution/publication forbidden)"
+  },
+  "git": {
+    "commit": "8571dd5f9a63c105db15b1b8cf16012742f74d10",
+    "dirty_paths": [],
+    "note": "manifest records the publisher's git state at publication time; artifact bytes are commit-independent"
+  },
+  "gold_exposure": {
+    "label": "LLM-assisted, human-adjudicated Gold",
+    "note": "values derive exclusively from the user's adjudications; LLM candidate/draft fields are excluded (their layer-E source hash is recorded)"
+  },
+  "oracle_status": {
+    "note": "formal Oracle requires true Gold Rule/Process Records (see s37_oracle_readiness_v1.json)",
+    "s3_7": "blocked_on_s1_7_s2_13"
+  },
+  "preconditions_verified": {
+    "inference membership aligned": true,
+    "layer_e 150/150 adjudicated": true,
+    "membership payload hash match": true,
+    "publication gate exact whitelist match": true,
+    "stage2_dataset.status == locked_for_human_review": true,
+    "stage3 25+33 adjudicated": true,
+    "stage3.status == locked": true
+  },
+  "publication_status": "artifacts_published_and_verified",
+  "record_counts": {
+    "stage2_records": 150,
+    "stage3_matching": 25,
+    "stage3_violation": 33
+  },
+  "schema_version": "formal_gold_publication_manifest@1.0.0",
+  "sources": {
+    "bpmn_dir_aggregate_sha256": "0cf5774c9fead21308f455d77be5d99c1afb076df65ff8bbf071121b4797466d",
+    "layer_e_v2_correction": {
+      "path": "data/development/human_review/estg_150_human_correction_v1.json",
+      "sha256": "0984ac9f60a8d2923292bae1a7434c4b1db1b1393fc0fcdeb9c278c3713b7266"
+    },
+    "membership_contract": {
+      "path": "configs/datasets/stage1_stage3_gdpr7_v1.json",
+      "sha256": "6bb2c0da4c51d06368bb858057374d9199e8d2ef494b6cb5c122be8744e11a42"
+    },
+    "stage3_correction": {
+      "path": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+      "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f"
+    },
+    "stage3_inference": {
+      "path": "data/development/human_review/stage3_gold_inference_v1.json",
+      "sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4"
+    }
+  },
+  "states": {
+    "artifacts_published": true,
+    "formal_experiment_ready": false,
+    "gate_ready": true,
+    "methods_ready": false
+  }
+}
