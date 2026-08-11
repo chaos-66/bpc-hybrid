@@ -96,7 +96,8 @@ def test_paper_draft_has_claim_gates_and_no_fabricated_result_rows() -> None:
     assert "| B0 | TEMPLATE | —" in draft
     assert "BLOCKED_RESULT" in claims
     assert "PROHIBITED_CLAIM" in claims
-    assert "当前正式实验结果**：0" in claims
+    # 2026-08-11: formal three-method comparison + conclusion exist
+    assert "三方法正式比较已发布" in claims
 
 
 def test_external_chatgpt_entry_reuses_canonical_project_sources() -> None:

@@ -1,0 +1,38 @@
+{
+  "schema_version": "s2_11_license_adapter_readiness@2.0.0",
+  "project_date": "2026-08-11",
+  "status": "dry_run_not_applied",
+  "license_audit": {
+    "local": {
+      "local_license_files": [],
+      "keyword_hits": [],
+      "keyword_hit_count": 0,
+      "conclusion": "NO local license declaration found; status unknown_pending_confirmation"
+    },
+    "external_evidence": {
+      "status": "pending",
+      "reason": "no authoritative URL/DOI for the Barrientos 2026 paper/repo/artifact is recorded locally; online license verification was NOT performed (search snippets are not acceptable per contract)"
+    },
+    "four_way_distinction": {
+      "paper_readable": "unknown_pending_confirmation",
+      "code_usable": "unknown_pending_confirmation",
+      "data_redistributable": "unknown_pending_confirmation",
+      "project_activatable": "unknown_pending_confirmation",
+      "policy": "no inference without explicit declaration"
+    }
+  },
+  "s2_11_exact_blockers": [
+    "license: unknown_pending_confirmation (no local declaration; external evidence pending)",
+    "data activation authorization: NOT granted (references/ stays read-only)",
+    "mapping decision: modality 3->4 mapping table / adjudication not decided",
+    "human Gold: required for external-label qualification; not started",
+    "G0.5 complexity rules: not frozen before results (retrospective only today)",
+    "Barrientos adapter (S2-BARR-2): not implemented (only the contract dry-run exists)"
+  ],
+  "authorization_sentence": null,
+  "authorization_sentence_reason": "data-qualification conditions NOT all met (license unknown, activation not authorized, mapping/adjudication pending); no authorization sentence is emitted",
+  "g0_5_s2_11_status_unchanged": true,
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

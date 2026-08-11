@@ -1,0 +1,28 @@
+{
+  "schema_version": "stage2_formal_conclusion_manifest@1.0.0",
+  "conclusion": {
+    "path": "outputs/reports/stage2_formal_conclusion_v1.json",
+    "sha256": "d882a5e24913db3a679c77d253f4e54db2abd38c2aac0151706df141ef4a27d5"
+  },
+  "conclusion_md": {
+    "path": "outputs/reports/stage2_formal_conclusion_v1.md",
+    "sha256": "908591204d2396b48f72a9c259d851e8b806053f94ddfe5aa882523183f215d8"
+  },
+  "references": {
+    "comparison_report": {
+      "path": "outputs/reports/stage2_formal_three_method_comparison_v1.json",
+      "sha256": "c9d76544a36ca4c27939d8090a8bfafc6da690a2e5d2b5d09624b27b4f9cf740"
+    },
+    "comparison_manifest": {
+      "path": "outputs/reports/stage2_formal_three_method_comparison_v1.manifest.json",
+      "sha256": "dc41eb4bee6b1cd06afc184f27ae63dcd9e93b6e5b4869a2d3e6b876d47236c6"
+    },
+    "comparison_capsule": {
+      "path": "outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json",
+      "sha256": "c473c04cb16a7a38e2e2e03b0b3be3dc5d1dfd11de642a394d73181fd456877e"
+    }
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

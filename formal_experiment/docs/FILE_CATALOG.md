@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-11
-**收录文件**：1046 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1058 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -684,6 +684,8 @@
 | `outputs/reports/formal_gold_publication_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/g04_main_view_decision_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/g04_main_view_decision_dry_run.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s15_s31_gdpr7_membership_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -693,6 +695,8 @@
 | `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_data_qualification_mapping_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_data_qualification_mapping_dry_run.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s2_11_license_adapter_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_11_license_adapter_readiness_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -702,6 +706,10 @@
 | `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s34_winter_stage3_development_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage2_formal_conclusion_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage2_formal_conclusion_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage2_formal_conclusion_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage2_formal_conclusion_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_formal_three_method_comparison_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_formal_three_method_comparison_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_formal_three_method_comparison_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -719,6 +727,7 @@
 | `outputs/reports/verify_b0_formal_arm_v1_replay.py` | 活动 | Python 实现、脚本或测试 |
 | `outputs/reports/verify_direct_llm_formal_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `outputs/reports/verify_stage2_formal_comparison_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `outputs/reports/verify_stage2_formal_conclusion_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
 
 ## `paper`
@@ -817,12 +826,14 @@
 | `scripts/build_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s211_license_g07_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s211_s213_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_formal_error_analysis_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_7_oracle_readiness.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage2_formal_comparison_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage2_formal_conclusion_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_evidence_capsule.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_gold_inference.py` | 活动 | Python 实现、脚本或测试 |
@@ -1093,6 +1104,7 @@
 | `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_g04_and_b0_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_g07_barrientos_adapter_contract.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_effective_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_fallback_runner.py` | 活动 | Python 实现、脚本或测试 |

@@ -1054,7 +1054,7 @@ def collect_project_audit() -> dict[str, Any]:
         _add(findings, "blockers", "formal_methods_not_ready", f"Method gates: {nonready}")
     else:
         # Final-readiness hardening (user-authorized 2026-08-11, hardened
-        # 2026-08-12): with all three methods ready, the audit EXECUTES the
+        # 2026-08-11): with all three methods ready, the audit EXECUTES the
         # full fail-closed verification -- three arm capsules verified
         # structurally and by hash from disk, the three independent
         # verifiers actually run, the comparison capsule re-derived, and the

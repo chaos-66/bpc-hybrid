@@ -319,7 +319,7 @@ def _formal_capsule_methods() -> set[str]:
 
 def formal_final_gate_conditions() -> dict[str, Any]:
     """Final-readiness fail-closed conditions (user-authorized 2026-08-11,
-    hardened 2026-08-12).
+    hardened 2026-08-11).
 
     final_experiment_ready must additionally require:
     - the three-method formal predictions/results capsule: EVERY arm is

@@ -3267,3 +3267,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-11T03:16:03.027605+00:00 - Checkpoint 1/3: Stage 2 formal conclusion close-out + S2.11 license/G0.7 readiness evidence. (1) stage2_formal_conclusion_v1 (d882a5e2, verifier 16fd36f5 VERIFIED): paper-safe conclusions with formal names (Rules-Only/Direct-LLM/Rules+LLM-Repair comparison-only; legacy codes pipeline-only), authorized G0.4 view only (coarse five fields main + modality labels separate + fine diagnostic + evidence-span unavailable; historical six-field aggregate not cited), disclosures (150 sentences, paper-faithful independent reconstruction NOT exact reproduction, historical 300 calls + 0 new, no statistical-significance inference), every conclusion references report/manifest/hash; B0-R5/D1-R5 -> verified, H1 comparison-only, three-method comparison NOT downgraded by S2.11/S2.13 incompleteness. (2) CLAIM_EVIDENCE_MATRIX updated (header formal results, C07 PLANNED->VERIFIED, C09 updated, new C23/C24). (3) Date corrections: 10 unwarranted 2026-08-12 refs -> 2026-08-11 (project date); machine UTC timestamps keep actual generation time. (4) s2_11_license_adapter_readiness_v2: local license audit (no LICENSE/README/metadata in references/barrientos_2026 -> all four categories unknown_pending_confirmation, no inference), external evidence pending (no authoritative URL/DOI locally, no search snippets), exact S2.11 blockers listed, no authorization sentence (conditions not met). (5) g0_7_barrientos_adapter_registry_dry_run: schema/labels/data/metrics/license registry, modality 3->4 non-mappable boundary, precondition/norm/temporal->span adapter boundaries, definition/span-alignment/cross-reference/evidence-provenance handling, synthetic fixtures only, external labels never auto-promoted to Gold; 9 adapter-contract fail-closed tests. G0.5/S2.11 status unchanged. 1718 tests passed. Zero new LLM/API; Gold/contract/Stage 3 gate/publication untouched.
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1718 passed, 24 skipped, 19 warnings in 350.20s (0:05:50)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b2a407158458625738f1f1e481bb0c59be136fbb`；相关未提交路径：21 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

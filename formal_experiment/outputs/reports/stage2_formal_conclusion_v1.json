@@ -1,0 +1,149 @@
+{
+  "schema_version": "stage2_formal_conclusion@1.0.0",
+  "conclusion_id": "stage2_formal_conclusion_v1",
+  "project_date": "2026-08-11",
+  "formal_names": {
+    "sun_rule_only": "Rules-Only",
+    "direct_llm": "Direct-LLM",
+    "sun_llm_fallback": "Rules+LLM-Repair (comparison-only)"
+  },
+  "legacy_codes_are_pipeline_ids_only": true,
+  "evaluation_contract": {
+    "g04": "g04_evaluation_views_contract@1.0.0",
+    "authorized": true,
+    "authorized_at": "2026-08-11",
+    "main_report": "sentence-level coarse FIVE span-bearing fields + separate four-class modality-label metrics",
+    "modality_evidence_span_metrics": "unavailable (never zeroed, never aggregated)",
+    "fine_five_fields_role": "diagnostic / 对照",
+    "historical_six_field_aggregate": "development provenance only (NOT mixed in)"
+  },
+  "data_scale": {
+    "sentences": 150,
+    "dataset": "independently_reconstructed_estg_150_v1",
+    "input_v2_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+  },
+  "reconstruction_disclosure": "paper-faithful independent reconstruction of the published Sun et al. (2024) Stage 2; NOT the authors' original implementation and NOT an exact reproduction",
+  "disclosures": {
+    "historical_llm_calls": 300,
+    "new_llm_api_calls": 0,
+    "no_statistical_significance_inference": "field differences are descriptive; no significance tests were run and none are claimed",
+    "modality_evidence_span_metrics": "unavailable (never zeroed/aggregated)",
+    "historical_six_field_aggregate": "development provenance only; NOT cited as formal conclusion"
+  },
+  "conclusions": [
+    {
+      "claim": "Direct-LLM leads on action (coarse five-field F1)",
+      "value": {
+        "sun_rule_only": 0.8927,
+        "direct_llm": 0.9437,
+        "sun_llm_fallback": 0.8945
+      },
+      "supported": true,
+      "reference": "stage2_formal_three_method_comparison_v1.json#methods.*.main_view_coarse_five_fields"
+    },
+    {
+      "claim": "Direct-LLM leads on condition (coarse five-field F1)",
+      "value": {
+        "sun_rule_only": 0.7738,
+        "direct_llm": 0.838,
+        "sun_llm_fallback": 0.7774
+      },
+      "supported": true,
+      "reference": "stage2_formal_three_method_comparison_v1.json#methods.*.main_view_coarse_five_fields"
+    },
+    {
+      "claim": "Direct-LLM leads on constraint (coarse five-field F1)",
+      "value": {
+        "sun_rule_only": 0.6182,
+        "direct_llm": 0.7427,
+        "sun_llm_fallback": 0.62
+      },
+      "supported": true,
+      "reference": "stage2_formal_three_method_comparison_v1.json#methods.*.main_view_coarse_five_fields"
+    },
+    {
+      "claim": "Direct-LLM leads on modality four-class label accuracy",
+      "value": {
+        "sun_rule_only": 0.74,
+        "direct_llm": 0.8333,
+        "sun_llm_fallback": 0.82
+      },
+      "supported": true,
+      "reference": "stage2_formal_three_method_comparison_v1.json#methods.*.modality_labels.accuracy"
+    },
+    {
+      "claim": "Rules-Only leads on actor (coarse five-field F1)",
+      "value": {
+        "sun_rule_only": 0.8203,
+        "direct_llm": 0.7579,
+        "sun_llm_fallback": 0.4296
+      },
+      "supported": true,
+      "reference": "stage2_formal_three_method_comparison_v1.json#methods.*.main_view_coarse_five_fields"
+    },
+    {
+      "claim": "Rules-Only leads on exception (coarse five-field F1)",
+      "value": {
+        "sun_rule_only": 0.88,
+        "direct_llm": 0.7619,
+        "sun_llm_fallback": 0.88
+      },
+      "supported": true,
+      "reference": "stage2_formal_three_method_comparison_v1.json#methods.*.main_view_coarse_five_fields"
+    },
+    {
+      "claim": "Rules+LLM-Repair is net-negative as an overall scheme; kept as comparison-only and no longer optimized (2026-08-08 decision)",
+      "value": {
+        "sun_rule_only": 0.8203,
+        "direct_llm": 0.7579,
+        "sun_llm_fallback": 0.4296
+      },
+      "supported": true,
+      "reference": "stage2_formal_three_method_comparison_v1.json#conclusions.h1_net_negative_stop_optimizing"
+    }
+  ],
+  "per_method_summary": {
+    "sun_rule_only": {
+      "label": "Rules-Only",
+      "role": "baseline",
+      "coarse_five_field_mean_f1": 0.797,
+      "modality_label_accuracy": 0.74
+    },
+    "direct_llm": {
+      "label": "Direct-LLM",
+      "role": "replacement_method",
+      "coarse_five_field_mean_f1": 0.8088,
+      "modality_label_accuracy": 0.8333333333333334
+    },
+    "sun_llm_fallback": {
+      "label": "Rules+LLM-Repair",
+      "role": "comparison_arm_only",
+      "coarse_five_field_mean_f1": 0.7203,
+      "modality_label_accuracy": 0.82
+    }
+  },
+  "references": {
+    "comparison_report": {
+      "path": "outputs/reports/stage2_formal_three_method_comparison_v1.json",
+      "sha256": "c9d76544a36ca4c27939d8090a8bfafc6da690a2e5d2b5d09624b27b4f9cf740"
+    },
+    "comparison_manifest": {
+      "path": "outputs/reports/stage2_formal_three_method_comparison_v1.manifest.json",
+      "sha256": "dc41eb4bee6b1cd06afc184f27ae63dcd9e93b6e5b4869a2d3e6b876d47236c6"
+    },
+    "comparison_capsule": {
+      "path": "outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json",
+      "sha256": "c473c04cb16a7a38e2e2e03b0b3be3dc5d1dfd11de642a394d73181fd456877e"
+    }
+  },
+  "task_status": {
+    "B0-R5": "verified (paper conclusion formed; method-level independent reconstruction; result may be positive or negative and is reported descriptively)",
+    "D1-R5": "verified (paper conclusion formed; method-level independent reconstruction; disclosures recorded)",
+    "H1": "comparison-only conclusion (2026-08-08 decision; stop optimizing)"
+  },
+  "not_downgraded": "the three-method formal comparison remains formal; S2.11/S2.13 incompleteness does not demote it to candidate",
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

@@ -1,7 +1,7 @@
 # 科学主张—证据矩阵
 
 **状态**：活动写作控制表  
-**当前正式实验结果**：0；任何性能结论均保持 `BLOCKED_RESULT`
+**当前正式实验结果**：三方法正式比较已发布（2026-08-11，`stage2_formal_three_method_comparison_v1` 与 `stage2_formal_conclusion_v1`）；性能结论仅限正式报告中字段级描述性结论，禁止显著性推断
 
 状态只使用：`VERIFIED_PRIMARY_SOURCE`、`VERIFIED_PROJECT_FACT`、
 `PLANNED_METHOD`、`BLOCKED_RESULT`、`PROHIBITED_CLAIM`。
@@ -14,9 +14,9 @@
 | C04 | 工作区没有 Sun 完整 Stage 2 源码、权重、完整 marker 和原始 150 phrase Gold | VERIFIED_PROJECT_FACT | 项目研究证据和机器 blocker | 作为复现边界与局限 | 投稿前再核查资产 |
 | C05 | 项目只有一个固定 EStG-150 membership | VERIFIED_PROJECT_FACT | membership hash、ROUTE_LOCK | 已固定；不是 Sun 原始 150 | hash 不得变 |
 | C06 | 项目 Gold 采用五层 LLM-assisted、human-adjudicated 流程 | VERIFIED_PROJECT_FACT | AGENTS、HUMAN_GOLD_GUIDE、contract | 可写流程；150/150 adjudicated（2026-08-06 用户裁决经授权恢复并验证，freeze_ready=True） | 已完成（150/150 adjudicated，freeze_ready=True；formal Gold 发布仍待 route/data/stage3 重锁） |
-| C07 | B0、H1、D1 将共享 IDs/Gold/schema/normalization/evaluator | PLANNED_METHOD | contract、methods registry | 将/计划；不能写已完成比较 | S2.10/S2.13 |
+| C07 | Rules-Only、Direct-LLM、Rules+LLM-Repair 已共享 IDs/Gold/schema/normalization/evaluator 并完成正式比较 | VERIFIED_PROJECT_FACT | 三方法 formal capsules（b0_formal_arm_v1 / direct_llm_formal_arm_v1 / sun_llm_fallback_formal_arm_v1，独立 verifier 全过）；shared comparison capsule `outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json`；正式报告 `outputs/reports/stage2_formal_three_method_comparison_v1.json` | 可写"三方法在冻结输入/Gold/合同/evaluators 上完成正式比较"；不得超出报告字段级结论 | S2.10 verified（2026-08-11） |
 | C08 | 复杂法律语料可能放大传统方法与 LLM 的差异 | PLANNED_METHOD | RQ2、导师要求 | “待检验假设”，不能写既定事实 | G0.5、S2.11、S2.12 |
-| C09 | Rules+LLM-Repair 是已完成的 development 负结果对照，不再作为待优化方法 | VERIFIED_PROJECT_FACT | MASTER_PIPELINE §8.8.1；commit `74614e3` | 仅写对照臂/负结果；不得写成正式比较或未来主方法 | formal Gold 后核验 prediction capsule；满足 shared capsule 时 zero-API 重评，否则需重新授权运行 |
+| C09 | Rules+LLM-Repair 是负结果对照，保留为 comparison-only 且停止优化（正式比较确认净负） | VERIFIED_PROJECT_FACT | development 负结果（commit `74614e3`，§8.8.1）+ 正式比较确认 （`stage2_formal_three_method_comparison_v1.json`：actor 粗 F1 0.4296 vs Rules-Only 0.8203；`stage2_formal_conclusion_v1.json` H1 comparison-only 结论） | 仅写对照臂/负结果；不得写成可优化主方法 | 已完成（comparison-only 正式结论，2026-08-11） |
 | C10 | LLM/Hybrid 优于完整 B0 | BLOCKED_RESULT | 当前无正式结果（development 证据：D1-R3 细 Gold F1 0.7756 vs B0-R3 0.7186，同 Gold 同口径非正式；粗 Gold 0.8726 vs 0.7986，见 outputs/reports/b0_d1_experiment_closure_brief.md） | 禁止比较词（formal 层面）；development 证据可单独标注引用 | S2.10/S2.12 formal manifest |
 | C11 | LLM 在复杂法律语料上优势更明显 | BLOCKED_RESULT | 当前无冻结复杂集或结果 | 禁止结论 | S2.11/S2.12 formal manifest |
 | C12 | Stage 3 改进带来 Oracle 提升 | BLOCKED_RESULT | 当前只有 scaffold | 禁止结论 | S3.7 formal manifest |
@@ -30,6 +30,9 @@
 | C20 | Winter et al. (2020) Stage 3 baseline 已有 development 实现与可移植重放（S3.4） | VERIFIED_PROJECT_FACT | `src/bpc_hybrid/winter_stage3/`（Winter 原型语义转写：spaCy 匹配、gamma 0.4/delta 0.8、fitness/cost 三分量）；clean replay `outputs/development/s34_winter_stage3_development_v2_clean/` + prototype_literal 敏感性（reachability 双模式，本数据无差异）；DEV_ONLY：MAP 0.6429、violation macro F1 0.373；manifest 1.1.0（implementation hashes/export index/external prerequisites） | 只能写"Winter baseline 已有 development 实现与 DEV_ONLY 指标"；不得把 DEV_ONLY 数字写成正式比较或 Stage 3 结论 | formal Oracle（S3.7）与正式 Gold 门禁 |
 | C21 | Stage 3 matching/violation Gold 标注已冻结（用户裁决） | VERIFIED_PROJECT_FACT | `data/development/human_review/stage3_gold_annotation_human_correction_v1.json`（25 matching=11 相关/14 不相关；33 violation=三类各 11）；冻结 manifest `s32_s33_gold_annotation_freeze_v1.manifest.json` | 可写"Stage 3 Gold 标注已冻结（LLM 无关、用户裁决）"；正式 Gold 发布仍待 stage3.status 合同门禁 | stage3.status 重锁 + publication gate 白名单 |
 | C22 | Sun et al. (2024) Stage 3 已有方法级独立 development 重建（S3.5，Def 4-7） | VERIFIED_PROJECT_FACT | `src/bpc_hybrid/sun_stage3/`（matching=Def4、missing action=Def5、incorrect actor=Def6、out-of-order=Def7；tau/gamma/theta=0.8 预注册）；58 条 run `outputs/development/s35_sun_stage3_development_v1/`（DEV_ONLY：MAP 0.8175、violation macro F1 0.333）；与 Winter 同口径比较 `comparison_with_winter_dev.json` | 只能写"Sun Stage 3 方法级独立重建已有 development 实现与 DEV_ONLY 指标"；禁止 exact reproduction/Sun original/paper-faithful（除非逐项验证全部公开规则）；不得把 DEV_ONLY 写成正式结论 | formal Oracle（S3.7）与正式 Gold 门禁 |
+
+| C23 | 三方法正式比较结论：Direct-LLM 在 action/condition/constraint 与 modality label accuracy 领先；Rules-Only 在 actor/exception 领先；字段级互补、无整体胜者声明 | VERIFIED_PROJECT_FACT | 正式报告 `outputs/reports/stage2_formal_three_method_comparison_v1.json`（c9d76544…）+ manifest（dc41eb4b…）；G0.4 授权口径（粗五字段 + modality label 单独；modality evidence-span unavailable；历史六字段 aggregate 不引用）；数据规模 150 句；历史调用 300、新增 0 | 只写"正式比较（描述性）表明字段级差异"；禁止显著性推断；禁止把 Rules-Only 称为 Sun 原始实现或 exact reproduction | 已完成（S2.10 verified；B0-R5/D1-R5 结论包 `stage2_formal_conclusion_v1.json` d882a5e2…） |
+| C24 | B0-R5/D1-R5 正式结论已形成（方法级独立复现；结果可正可负、描述性披露） | VERIFIED_PROJECT_FACT | `outputs/reports/stage2_formal_conclusion_v1.json`（d882a5e2…）+ verifier（16fd36f5… VERIFIED）；重建披露（paper-faithful independent reconstruction、非 exact reproduction）、数据规模、调用成本、无显著性推断均已记录 | 按结论包表述写作；每条结论回指报告/manifest/hash；不得把 H1 写成主方法 | 已完成（2026-08-11）；论文正式回填时对照 manifest 复核 |
 
 新增任何结果性句子前，先在本表新增一行。正式回填必须记录 manifest 路径、事件
 时间、样本数、失败数、模型和 evaluator 版本；否则维持 `BLOCKED_RESULT`。
