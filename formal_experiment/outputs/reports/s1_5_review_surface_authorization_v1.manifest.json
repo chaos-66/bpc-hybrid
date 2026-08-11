@@ -1,0 +1,59 @@
+{
+  "schema_version": "s1_5_review_surface_authorization@1.0.0",
+  "project_date": "2026-08-11",
+  "authorized_by_user": true,
+  "authorization_scope": {
+    "review_surface_open": true,
+    "gold_freeze_authorized": false,
+    "tool_must_not_infer_or_prefill": true,
+    "freeze_requires": {
+      "structure_decisions": "7/7 by the user",
+      "label_field_decisions": "135/135 by the user"
+    }
+  },
+  "membership": {
+    "bpmn_count": 7,
+    "activities": 45,
+    "label_fields": 135,
+    "payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d",
+    "expected_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d"
+  },
+  "review_surface": {
+    "records": 7,
+    "summary": {
+      "records": 7,
+      "adjudicated_records": 0,
+      "label_fields": 135,
+      "resolved_label_fields": 0,
+      "freeze_ready": false
+    },
+    "correction_sha256": "b5fdf7ce323527d5992bcef3d7a7e3a3fd1ee1ecaf149de4b941e89882c7f43b",
+    "blank_sha256": "b5fdf7ce323527d5992bcef3d7a7e3a3fd1ee1ecaf149de4b941e89882c7f43b",
+    "tool": {
+      "path": "scripts/stage1_review_tool.py",
+      "sha256": "434dfe7e8ac31fd2e45842cd1a71c873715ac33cf66bd55943b456c1dca1adf3"
+    },
+    "guide": {
+      "path": "docs/HUMAN_PROCESS_GOLD_GUIDE.md",
+      "sha256": "f8f76a7bb116cbb97748e0cf1172863d969b38d93b032fdfbf6c1a764255fe08"
+    },
+    "schema": {
+      "path": "configs/schemas/stage1_human_annotation.schema.json",
+      "sha256": "4d97de0430cce10c5f28c038447472db599b8efccec191801db7aabde1b59744"
+    }
+  },
+  "checks": {
+    "membership_payload_matches_authorization": true,
+    "correction_equals_blank_template": true,
+    "all_records_unreviewed": true,
+    "no_gold_prefilled": true,
+    "freeze_ready_false": true,
+    "tool_exists": true,
+    "guide_exists": true,
+    "schema_exists": true
+  },
+  "status": "input_ready_freeze_blocked",
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

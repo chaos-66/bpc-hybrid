@@ -1194,6 +1194,31 @@ def collect_project_audit() -> dict[str, Any]:
     if contract.get("stage3", {}).get("status") != "locked":
         _add(findings, "blockers", "stage3_benchmark_not_locked", "Formal BPMN set, matching configuration, and violation Gold still require a later lock.")
 
+    # ------------------------------------------------------------------
+    # S1.5 review-surface input-readiness (user-authorized 2026-08-11).
+    # The authorization record must exist with all checks green, the
+    # correction file must stay all-unreviewed with freeze_ready=False
+    # (the tool must never infer/prefill). This is input-ready only; Gold
+    # freeze remains blocked until the user adjudicates 7/7 + 135/135.
+    s15_auth = _load_json(REPO_ROOT / "outputs" / "reports"
+                          / "s1_5_review_surface_authorization_v1.manifest.json")
+    s15_checks = s15_auth.get("checks", {})
+    s15_ok = (s15_auth.get("authorized_by_user") is True
+              and all(s15_checks.values())
+              and s15_auth.get("authorization_scope", {}).get(
+                  "gold_freeze_authorized") is False)
+    if s15_ok:
+        _add(findings, "passes", "stage1_review_surface_input_ready",
+             "S1.5 review surface is input-ready (user-authorized 2026-08-11; "
+             "all-seven GDPR-7 membership, all-unreviewed correction file, "
+             "review tool + bilingual guide; tool never infers/prefills; "
+             "Gold freeze remains blocked).")
+    else:
+        _add(findings, "errors", "stage1_review_surface_not_ready",
+             "S1.5 review-surface authorization missing or its preconditions "
+             "failed (correction file must stay all-unreviewed, freeze_ready "
+             "must be False).")
+
     tracked = _git_check(["ls-files", "--error-unmatch", "formal_experiment/AGENTS.md"])
     if tracked is False:
         _add(findings, "blockers", "formal_capsule_not_versioned", "Create an intentional Git checkpoint before freezing input and Gold.")

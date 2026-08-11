@@ -3306,3 +3306,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-11T04:13:36.943022+00:00 - S1.5 review-surface authorization APPLIED per explicit user authorization (2026-08-11): open the S1.5 human Process Gold review surface with the frozen all-seven GDPR-7 membership (7 BPMN/45 activities/135 label fields, membership payload SHA-256 e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d verified), stage1_review_tool.py, the all-blank/unreviewed stage1_gdpr7_human_correction_v1.json and the bilingual HUMAN_PROCESS_GOLD_GUIDE.md for the user's own adjudication; the tool must never infer/prefill/auto-accept; this authorization ONLY sets S1.5 to input-ready, does NOT authorize Gold freeze (freeze still requires the user's 7/7 structure decisions + 135/135 actor/action/business_object adjudications). Recorded s1_5_review_surface_authorization_v1.manifest.json (8 preconditions all green: membership payload match, correction==blank, 7/7 unreviewed, no Gold prefilled, freeze_ready=False, tool/guide/schema exist); audit pass stage1_review_surface_input_ready added (fail-closed error stage1_review_surface_not_ready if the correction file changes or the authorization is missing); MASTER_PIPELINE S1.5 row blocked -> input_ready (freeze still blocked); 1 new test; 1724 passed. Zero new LLM/API; Gold/contract/Stage 3 gate/publication untouched; no human Process Gold created or inferred.
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1724 passed, 24 skipped, 19 warnings in 335.82s (0:05:35)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`c9f6491627a3d2b5bfd91beabbb8a1ac84e3e9ec`；相关未提交路径：6 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

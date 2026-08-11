@@ -121,6 +121,26 @@ def test_s1_5_readiness_counts_and_unreviewed_proof() -> None:
     assert s15["zero_api"]["new_llm_api_calls"] == 0
 
 
+def test_s1_5_review_surface_authorization_applied() -> None:
+    """2026-08-11 user authorization: S1.5 input-ready recorded; audit pass
+    present; freeze NOT authorized."""
+    man = json.loads((ROOT / "outputs" / "reports"
+                      / "s1_5_review_surface_authorization_v1.manifest.json")
+                     .read_text(encoding="utf-8"))
+    assert man["authorized_by_user"] is True
+    assert man["authorization_scope"]["gold_freeze_authorized"] is False
+    assert man["authorization_scope"]["tool_must_not_infer_or_prefill"] is True
+    assert man["membership"]["payload_sha256"] == (
+        "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d")
+    assert all(man["checks"].values())
+    assert man["status"] == "input_ready_freeze_blocked"
+    from formal_experiment.audit import collect_project_audit
+    audit = collect_project_audit()
+    passes = {item["code"] for item in audit["findings"]["passes"]}
+    assert "stage1_review_surface_input_ready" in passes
+    assert audit["final_experiment_ready"] is True  # Stage 2 gate unaffected
+
+
 def test_s1_6_s1_7_s3_7_readiness() -> None:
     s16 = _load_report("s1_6_evaluator_synthetic_verification_v1.json")
     assert s16["status"] == "synthetic_verification_only"
