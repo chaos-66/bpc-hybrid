@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-11
-**收录文件**：1063 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1072 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -449,6 +449,7 @@
 | `docs/FILE_CATALOG.md` | 活动 | 自动生成的逐文件目录 |
 | `docs/HUMAN_GOLD_GUIDE.md` | 活动 | 说明、规范或研究文档 |
 | `docs/HUMAN_GOLD_REVIEW_PACK_SCHEMA_v2.md` | 活动 | 说明、规范或研究文档 |
+| `docs/HUMAN_PROCESS_GOLD_GUIDE.md` | 活动 | 说明、规范或研究文档 |
 | `docs/INDEX.md` | 活动 | 说明、规范或研究文档 |
 | `docs/LLM_BUDGET_PROPOSAL_2026-07-12.md` | 活动 | 说明、规范或研究文档 |
 | `docs/MASTER_PIPELINE.md` | 活动 | 唯一完整三阶段路线与任务树 |
@@ -694,6 +695,10 @@
 | `outputs/reports/s1_1_s1_4_determinism_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_1_s1_4_matrix_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_1_s1_4_matrix_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s1_5_input_readiness_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_5_input_readiness_dry_run.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s1_6_evaluator_synthetic_verification_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_7_freeze_checklist_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_data_qualification_mapping_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -709,6 +714,7 @@
 | `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s34_winter_stage3_development_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_7_oracle_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_formal_conclusion_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_formal_conclusion_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_formal_conclusion_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -830,6 +836,7 @@
 | `scripts/build_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s1_1_s1_4_matrix_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s1_5_s3_7_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s211_license_g07_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s211_s213_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_formal_error_analysis_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -891,6 +898,7 @@
 | `scripts/run_sun_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/stage1_review_tool.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/stage3_run_common.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/status.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/sun_selection_criteria_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1136,6 +1144,7 @@
 | `tests/test_restore_layer_e_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_1_s1_4_stage1_structural.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_3_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s1_5_review_tool_and_readiness.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_5_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_6_stage1_evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_s3_gdpr7_membership.py` | 活动 | Python 实现、脚本或测试 |

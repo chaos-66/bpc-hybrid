@@ -1,0 +1,31 @@
+{
+  "schema_version": "s3_7_oracle_readiness@2.0.0",
+  "status": "readiness_report_oracle_not_started",
+  "gold_rule_records": {
+    "exist": false,
+    "note": "true Gold Rule Records DO NOT EXIST (blocked on human adjudication + freeze; see formal benchmark release v2 exclusions)"
+  },
+  "gold_process_records": {
+    "exist": false,
+    "note": "true Gold Process Records DO NOT EXIST (S1.5 human Process Gold not started)"
+  },
+  "machine_candidates_only": {
+    "stage2_method_predictions": "NOT Gold Rule Records (three method predictions are candidates, never Rule Records)",
+    "stage1_parser_records": "NOT Gold Process Records (deterministic parser candidates, never Process Gold)",
+    "sun_rule_extraction_adapter": "development adapter outputs, not Gold"
+  },
+  "dependencies": {
+    "s1_7": "blocked (requires S1.5 human Process Gold + S1.6 formal evaluation)",
+    "s2_13": "blocked (full DoD not met)",
+    "s3_4_s3_6": "development-only; formal completion blocked on S1.7/S2.13"
+  },
+  "forbidden": [
+    "Stage 2 method predictions as Gold Rule Records",
+    "parser candidates as Gold Process Records",
+    "starting the formal Oracle without true Gold records"
+  ],
+  "oracle_started": false,
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

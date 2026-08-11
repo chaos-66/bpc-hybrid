@@ -1,0 +1,67 @@
+{
+  "schema_version": "s1_5_input_readiness_dry_run@1.0.0",
+  "status": "dry_run_not_applied",
+  "project_date": "2026-08-11",
+  "membership": {
+    "bpmn_count": 7,
+    "membership_payload_sha256": null,
+    "process_records_sha256": "d4d61f46091a4063e8db2d405f893df6c3951ed4ee77b62deebe27fa35d48487",
+    "claim": "all-seven GDPR BPMN extension (frozen 2026-07-18 user approval)"
+  },
+  "review_surface": {
+    "records": 7,
+    "activities": 45,
+    "label_fields": 135,
+    "unreviewed_records": 7,
+    "unresolved_fields": 142
+  },
+  "schema": {
+    "path": "configs/schemas/stage1_human_annotation.schema.json",
+    "sha256": "4d97de0430cce10c5f28c038447472db599b8efccec191801db7aabde1b59744"
+  },
+  "tool": {
+    "path": "scripts/stage1_review_tool.py",
+    "sha256": "434dfe7e8ac31fd2e45842cd1a71c873715ac33cf66bd55943b456c1dca1adf3",
+    "features": [
+      "paged list/show",
+      "export",
+      "import with atomic save + backup",
+      "validate",
+      "backup/undo",
+      "never infers decisions"
+    ]
+  },
+  "guide": {
+    "path": "docs/HUMAN_PROCESS_GOLD_GUIDE.md",
+    "sha256": "f8f76a7bb116cbb97748e0cf1172863d969b38d93b032fdfbf6c1a764255fe08"
+  },
+  "validator": "validate_editable_annotation_pack (stage1_formal_dataset.py)",
+  "blank_template_unreviewed_proof": {
+    "blank_sha256": "b5fdf7ce323527d5992bcef3d7a7e3a3fd1ee1ecaf149de4b941e89882c7f43b",
+    "correction_equals_blank": true,
+    "all_records_unreviewed": true,
+    "all_label_fields_unresolved": true,
+    "no_gold_prefilled": true
+  },
+  "expected_review_workload": {
+    "records": 7,
+    "structure_decisions": 7,
+    "label_field_decisions": 135,
+    "note": "135 label fields across 45 activities; structure decisions 7"
+  },
+  "before_after": {
+    "before": {
+      "S1.5": "blocked",
+      "human_gold_freeze_ready": false
+    },
+    "after_if_user_authorizes_review_surface": {
+      "S1.5": "input_ready",
+      "human_gold_freeze_ready": false,
+      "note": "authorization only opens the review surface; freeze still requires 7/7 adjudicated + 135/135 resolved"
+    }
+  },
+  "authorization_sentence": "I authorize the S1.5 review surface for the frozen all-seven GDPR-7 membership (7 BPMN, 45 activities, 135 label fields, membership payload <hash>): the stage1 review tool, the blank/unreviewed correction file and the bilingual HUMAN_PROCESS_GOLD_GUIDE may be used for my review; no decision is inferred by the tool and freeze requires my 7/7 adjudication plus 135/135 field resolutions.",
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

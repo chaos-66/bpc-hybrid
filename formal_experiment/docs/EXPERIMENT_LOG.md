@@ -3293,3 +3293,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-11T03:46:48.689486+00:00 - Checkpoint 3/3: S1.5 human Process Gold review preparation + S1.6/S1.7/S3.7 follow-on readiness. (1) Non-destructive stage1_review_tool.py (list/show/export/import/backup/validate/undo; import applies ONLY explicit user decisions with atomic save + backup; invalid states fail closed; never infers decisions; operates only on the user-editable correction file, immutable blank template untouched). (2) Bilingual HUMAN_PROCESS_GOLD_GUIDE.md (decision meanings, empty-lane/implicit-actor/gateway/loop/parallel/unreachable handling, candidate editing, freeze conditions; only the user may set reviewed/adjudicated). (3) s1_5_input_readiness_dry_run: membership 7 BPMN/45 activities/135 label fields (payload e88caf81...), review surface all 7 records unreviewed, 142 unresolved (135 fields + 7 structure), correction byte-identical to blank, no Gold prefilled proof, expected workload, before/after (authorization only opens the review surface; freeze still requires 7/7 + 135/135), copy-ready authorization sentence; S1.5 formal gate NOT applied. (4) s1_6_evaluator_synthetic_verification_v1 (synthetic only; formal run blocked until human Process Gold). (5) s1_7_freeze_checklist_v1 (input/output/method/metrics/hash/manifest; output=human Process Gold NOT YET EXISTING; blocked on S1.5). (6) s3_7_oracle_readiness_v2 (true Gold Rule Records DO NOT EXIST; true Gold Process Records DO NOT EXIST; Stage 2 method predictions NOT Rule Records; parser candidates NOT Process Records; dependencies S1.7/S2.13/S3.4-S3.6; Oracle NOT started). 5 new focused tests; 1723 passed. Zero new LLM/API; Gold/contract/Stage 3 gate/publication untouched; no human Process Gold created or inferred.
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1723 passed, 24 skipped, 19 warnings in 355.06s (0:05:55)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`2eccccc47f419af03b05346d5298b2894d4047f7`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

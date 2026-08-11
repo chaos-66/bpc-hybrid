@@ -1,0 +1,20 @@
+{
+  "schema_version": "s1_6_evaluator_synthetic_verification@1.0.0",
+  "status": "synthetic_verification_only",
+  "contract": "configs/stage1_evaluator_s16.json (stage1_evaluator_contract@1.0.0)",
+  "implementation": "src/bpc_hybrid/stage1_evaluation.py",
+  "synthetic_manifest": {
+    "path": "outputs/reports/s16_stage1_evaluator_contract_synthetic_v1.manifest.json",
+    "sha256": "8689dea4f8cf8e88043ff73ccac27c85b842602263a3b2ab6390fd9905f6b8a1"
+  },
+  "metrics": [
+    "structure 8-component micro P/R/F1",
+    "actor/action/business_object P/R/F1 (incl. tn + exact_value_accuracy)",
+    "semantic_triple_exact_accuracy",
+    "unobservable/undefined handling"
+  ],
+  "formal_run": "blocked until human Process Gold (S1.5) exists",
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

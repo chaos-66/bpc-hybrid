@@ -1,0 +1,18 @@
+{
+  "schema_version": "s1_7_freeze_checklist@1.0.0",
+  "status": "checklist_ready_freeze_not_applied",
+  "checklist": {
+    "input": "7 GDPR BPMN byte-locked (membership e88caf81...) + process records hash-locked",
+    "output": "human Process Gold (adjudicated annotation pack) - NOT YET EXISTING",
+    "method": "stage1 parser (stage1_bpmn_parser@1.0.0) + label semantics P0/P1 + evaluator contract",
+    "metrics": "S1.6 evaluator contract (structure + semantic P/R/F1)",
+    "hash": "per-file sha256 + manifest + export index (project pattern)",
+    "manifest": "freeze manifest binding input/output/method/metrics/hash"
+  },
+  "blocked_on": [
+    "S1.5 human Process Gold (7/7 adjudicated + 135/135 resolved)"
+  ],
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}
