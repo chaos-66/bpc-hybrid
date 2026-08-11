@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-11
-**收录文件**：1074 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1077 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -843,6 +843,7 @@
 | `scripts/build_s211_s213_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_formal_error_analysis_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_7_oracle_readiness.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage1_adjudication_asset.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage2_formal_comparison_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -917,6 +918,7 @@
 | `scripts/verify_stage1_annotation_protocol_s15.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_evaluator_s16.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_gdpr7_determinism_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_stage1_human_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_label_semantics_s13.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_stage3_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_structural_s11_s14.py` | 活动 | Python 实现、脚本或测试 |
@@ -1158,6 +1160,7 @@
 | `tests/test_shared_comparison_correction.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_smoke.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_splitter.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage1_human_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_sun_literal_overlap.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_contract_repair.py` | 活动 | Python 实现、脚本或测试 |

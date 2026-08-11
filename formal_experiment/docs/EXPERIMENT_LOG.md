@@ -3319,3 +3319,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-11T10:53:46.320654+00:00 - S1.5 human adjudication checkpoint gdpr_1_data_breach (batch 1/7): user-confirmed adjudication mechanically imported. 19 decisions (1 structure decision = accepted_candidate; 18 label fields all present with exact values: actor=Data Controller x6, action Notify/Retrieve/limitation/Handle/Communication/Retrieve, business_object national authority/breached subjects/Data loss/delay/data subject/breached data; original surface forms preserved, no lemmatization). gold_process_record copied byte-semantically from the locked stage1_gdpr7_process_records_v1.json (canonical sha256 0f842984297f36b17c7144cb513de5bc73ca378b6880891b933821d9d2060da1 verified via canonical_sha256); Handle delay stays in unreachable_node_ids. Evidence assets: outputs/development/human_review/stage1_adjudications/gdpr_1_data_breach/{decision_v1.json, manifest.json, import_record_v1.json} (manifest: before correction sha = blank sha b5fdf7ce..., after correction sha 2c10c78f1e77d935f8bd6691dd327b32afaaba89a7c6189a2666e2a15ddc8416, candidate/bpmn/membership hashes, llm_api_calls=0, gold_freeze_authorized=false, DeepSeek mechanical transcription only). Imported via stage1_review_tool.py import (atomic save + backup 20260811T103818Z, summary recomputed); validate: schema_valid + cross_field_valid + freeze_ready=false. Correction summary: records 7, adjudicated_records 1, label_fields 135, resolved_label_fields 18, freeze_ready false; other six records unchanged (still unreviewed). Generic incremental verifier scripts/verify_stage1_human_adjudication.py (10 fail-closed checks, reusable for batches 2-7) VERIFIED; 10 tamper tests (field value/extra field/candidate content/candidate hash/other record/summary/manifest missing/freeze early/decision inconsistency) all fail closed. Audit semantics evolved: stage1_review_surface_input_ready (blank state) -> stage1_human_adjudication_in_progress (verified adjudications exist; every correction-vs-blank difference must be backed by a versioned decision asset; unevidenced change -> error stage1_human_adjudication_invalid). MASTER_PIPELINE S1.5 input_ready -> in_progress (1/7, 18/135; freeze still blocked). 1734 tests passed. Zero LLM/API; Gold/contract/Stage 3 gate/publication untouched; no inference by agent; S1.6/S1.7/S3.7 not started.
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1734 passed, 24 skipped, 19 warnings in 349.19s (0:05:49)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`11f756fd82dd17ee95dd17125eb7dfb2ecf7b021`；相关未提交路径：9 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

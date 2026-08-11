@@ -34,6 +34,9 @@ if str(SRC) not in sys.path:
 
 CORRECTION = (ROOT / "data" / "development" / "human_review"
               / "stage1_gdpr7_human_correction_v1.json")
+MEMBERSHIP_CONTRACT = ROOT / "configs" / "datasets" / "stage1_stage3_gdpr7_v1.json"
+PROCESS_RECORDS = (ROOT / "data" / "development" / "human_review"
+                   / "stage1_gdpr7_process_records_v1.json")
 BACKUP_DIR = (ROOT / "outputs" / "development" / "human_review"
               / "stage1_review_backups")
 
@@ -67,9 +70,40 @@ def _backup() -> Path:
 
 
 def _validate(doc: dict[str, Any]) -> dict[str, Any]:
-    from bpc_hybrid.stage1_formal_dataset import validate_editable_annotation_pack
-    result = validate_editable_annotation_pack(CORRECTION, doc)
+    from bpc_hybrid.stage1_formal_dataset import (
+        load_formal_membership_contract,
+        validate_editable_annotation_pack,
+    )
+    membership = load_formal_membership_contract(MEMBERSHIP_CONTRACT)
+    records_doc = json.loads(PROCESS_RECORDS.read_text(encoding="utf-8"))
+    result = validate_editable_annotation_pack(doc, records_doc["records"],
+                                               membership)
     return result
+
+
+def _recompute_summary(doc: dict[str, Any]) -> None:
+    """Recompute the top-level review_summary from the record content
+    (tool-owned computation; never fabricated)."""
+    records = doc.get("records", [])
+    label_fields = 0
+    resolved = 0
+    adjudicated = 0
+    for r in records:
+        if r.get("review_state") == "adjudicated":
+            adjudicated += 1
+        for la in r.get("label_annotations", []):
+            label_fields += 3
+            for f in ("actor", "action", "business_object"):
+                if la.get(f, {}).get("status") in ("present", "absent"):
+                    resolved += 1
+    doc["review_summary"] = {
+        "records": len(records),
+        "adjudicated_records": adjudicated,
+        "label_fields": label_fields,
+        "resolved_label_fields": resolved,
+        "freeze_ready": bool(adjudicated == len(records)
+                             and resolved == label_fields and len(records) > 0),
+    }
 
 
 def _cmd_list(doc: dict[str, Any]) -> None:
@@ -130,6 +164,7 @@ def _cmd_import(doc: dict[str, Any], decisions_path: Path) -> None:
                     target[field]["status"] = st
                     target[field]["value"] = la[field].get("value")
         applied += 1
+    _recompute_summary(doc)
     backup = _backup()
     _atomic_save(doc)
     print(f"imported decisions for {applied} records (backup: {backup})")

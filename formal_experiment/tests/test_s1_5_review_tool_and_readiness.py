@@ -137,7 +137,8 @@ def test_s1_5_review_surface_authorization_applied() -> None:
     from formal_experiment.audit import collect_project_audit
     audit = collect_project_audit()
     passes = {item["code"] for item in audit["findings"]["passes"]}
-    assert "stage1_review_surface_input_ready" in passes
+    # after batch-1 import the audit reports adjudication-in-progress
+    assert "stage1_human_adjudication_in_progress" in passes
     assert audit["final_experiment_ready"] is True  # Stage 2 gate unaffected
 
 

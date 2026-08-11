@@ -203,6 +203,22 @@ def _load_release_verifier() -> Any | None:
         return None
 
 
+def _load_adjudication_verifier() -> Any | None:
+    """Load the incremental S1.5 human-adjudication verifier (script module)."""
+    try:
+        import importlib.util
+        path = REPO_ROOT / "scripts" / "verify_stage1_human_adjudication.py"
+        spec = importlib.util.spec_from_file_location(
+            "stage1_human_adjudication_verifier", path)
+        if spec is None or spec.loader is None:
+            return None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    except Exception:  # pragma: no cover - defensive
+        return None
+
+
 def _valid_event_log(path: Path) -> tuple[int, list[int]]:
     report = inspect_jsonl(path)
     return report.valid_json, report.invalid_lines
@@ -1196,18 +1212,46 @@ def collect_project_audit() -> dict[str, Any]:
 
     # ------------------------------------------------------------------
     # S1.5 review-surface input-readiness (user-authorized 2026-08-11).
-    # The authorization record must exist with all checks green, the
+    # The authorization record must exist with all checks green; the
     # correction file must stay all-unreviewed with freeze_ready=False
     # (the tool must never infer/prefill). This is input-ready only; Gold
     # freeze remains blocked until the user adjudicates 7/7 + 135/135.
+    # State evolution (2026-08-11): once verified human adjudications
+    # exist, the audit switches to stage1_human_adjudication_in_progress,
+    # which additionally requires every correction-vs-blank difference to be
+    # backed by a versioned decision asset and the incremental adjudication
+    # verifier to pass.
     s15_auth = _load_json(REPO_ROOT / "outputs" / "reports"
                           / "s1_5_review_surface_authorization_v1.manifest.json")
     s15_checks = s15_auth.get("checks", {})
-    s15_ok = (s15_auth.get("authorized_by_user") is True
-              and all(s15_checks.values())
-              and s15_auth.get("authorization_scope", {}).get(
-                  "gold_freeze_authorized") is False)
-    if s15_ok:
+    auth_ok = (s15_auth.get("authorized_by_user") is True
+               and all(s15_checks.values())
+               and s15_auth.get("authorization_scope", {}).get(
+                   "gold_freeze_authorized") is False)
+    adjudication_dir = (REPO_ROOT / "outputs" / "development" / "human_review"
+                        / "stage1_adjudications")
+    has_adjudications = adjudication_dir.exists() and any(
+        d.is_dir() for d in adjudication_dir.iterdir())
+    adjudication_ok = False
+    if has_adjudications:
+        try:
+            verifier = _load_adjudication_verifier()
+            if verifier is not None:
+                adjudication_ok = verifier.verify()["verified"] is True
+        except Exception:  # pragma: no cover - defensive
+            adjudication_ok = False
+    if has_adjudications and adjudication_ok and auth_ok:
+        _add(findings, "passes", "stage1_human_adjudication_in_progress",
+             "S1.5 human adjudication is in progress (user-authorized "
+             "review surface; every correction-vs-blank difference backed by "
+             "a versioned user-decision asset; incremental adjudication "
+             "verifier passes; freeze remains blocked).")
+    elif has_adjudications and not adjudication_ok:
+        _add(findings, "errors", "stage1_human_adjudication_invalid",
+             "S1.5 adjudication assets exist but the incremental "
+             "adjudication verifier FAILED (tampered field/hash/summary or "
+             "unevidenced correction change).")
+    elif auth_ok:
         _add(findings, "passes", "stage1_review_surface_input_ready",
              "S1.5 review surface is input-ready (user-authorized 2026-08-11; "
              "all-seven GDPR-7 membership, all-unreviewed correction file, "
