@@ -400,7 +400,7 @@
   },
   "comparability_boundaries": {
     "cross_method_comparable": "same input v2, same Gold views, same schema, same normalization, same evaluators",
-    "not_comparable": "B0 formal arm (claim_scope=formal) vs D1/H1 candidates (formal-gate-blocked): metrics are method-side re-evaluations on the same contract, but D1/H1 are NOT formal results",
+    "not_comparable": "all three method arms are formal (claim_scope=formal) on the same contract/views/evaluators; NOT comparable to the historical six-field coarse aggregate (development provenance, modality evidence-span not reproducible from the published Gold); modality evidence-span metrics unavailable for ALL methods",
     "modality_evidence_span_metrics": "unavailable for ALL methods (published Gold modality is a plain string)",
     "historical_coarse_numbers": "development provenance only (not formal)"
   },

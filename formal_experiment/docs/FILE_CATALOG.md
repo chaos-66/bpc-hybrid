@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-11
-**收录文件**：1028 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1030 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -917,6 +917,7 @@
 | `src/bpc_hybrid/evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/fallback.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/formal_arm_verification.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/formal_stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/g04_coarse_view.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_context.py` | 活动 | Python 实现、脚本或测试 |
@@ -1071,6 +1072,7 @@
 | `tests/test_extractor.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_fallback_pipeline.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_final_gate_verification.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_benchmark_release_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |

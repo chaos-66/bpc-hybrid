@@ -37,9 +37,9 @@
     ]
   },
   "main_view_publishable": true,
-  "not_publishable_reason": "modality evidence spans of the historical coarse view are not reproducible from the published formal Gold (modality published as plain string; Layer E modality.span local evidence dropped). 147/150 records differ in modality evidence only; all other fields (actors/actions/conditions/constraints/exceptions, source_text, clause_span, source_id) are identical. Historical coarse numbers remain development-side provenance, NOT formal.",
   "granularity_rule": "one synthetic clause per sentence over [0, len(approved_text_en)); per field one span [min(start), max(end)) over all annotated spans in the sentence; absent fields stay absent; text = approved_text_en slice; modality label = first non-empty clause modality string; modality evidence = merged clause spans (published Gold does not carry local modality evidence spans)",
   "generated_zero_api": true,
   "no_development_file_copied": true,
-  "main_view_publishable_note": "User-authorized 2026-08-11 (G0.4 decision): the formal main report is the sentence-level coarse FIVE span-bearing fields + separate four-class modality-label metrics. The historical six-field coarse aggregate (incl. modality evidence-span numbers not reproducible from the published Gold) remains development provenance and is NOT part of the formal main report. main_view_publishable refers to the authorized five-field+label main report only."
+  "main_view_publishable_note": "user-authorized 2026-08-11 formal main report = coarse FIVE span fields + separate modality-label metrics (publishable); the historical six-field coarse aggregate (incl. modality evidence-span) is development provenance only and NOT part of the formal main report",
+  "historical_aggregate_not_publishable_reason": "modality evidence spans of the historical coarse view are not reproducible from the published formal Gold (modality published as plain string; Layer E modality.span local evidence dropped). 147/150 records differ in modality evidence only; all other fields (actors/actions/conditions/constraints/exceptions, source_text, clause_span, source_id) are identical. Historical coarse numbers remain development-side provenance, NOT formal."
 }

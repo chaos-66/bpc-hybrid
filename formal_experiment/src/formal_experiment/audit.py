@@ -1053,20 +1053,23 @@ def collect_project_audit() -> dict[str, Any]:
     if nonready:
         _add(findings, "blockers", "formal_methods_not_ready", f"Method gates: {nonready}")
     else:
-        # Final-readiness hardening (user-authorized 2026-08-11): with all
-        # three methods ready, methods_unexpectedly_ready must only fire when
-        # the fail-closed final-gate conditions are NOT yet really satisfied
-        # (three verified capsules / hash-consistent comparison capsule /
-        # user-authorized G0.4 contract). In the authorized, fully satisfied
-        # state the error must NOT fire.
-        gate = formal_final_gate_conditions()
-        if gate["capsule_complete"] and gate["g04_contract_authorized"] \
-                and gate["comparison_consistent"]:
+        # Final-readiness hardening (user-authorized 2026-08-11, hardened
+        # 2026-08-12): with all three methods ready, the audit EXECUTES the
+        # full fail-closed verification -- three arm capsules verified
+        # structurally and by hash from disk, the three independent
+        # verifiers actually run, the comparison capsule re-derived, and the
+        # G0.4 contract authorization checked. methods_unexpectedly_ready
+        # fires ONLY when those conditions are not REALLY satisfied; in the
+        # authorized, fully satisfied state it must NOT fire.
+        from bpc_hybrid.formal_arm_verification import verify_all_with_verifiers
+        gate = verify_all_with_verifiers()
+        if gate["verified"]:
             _add(findings, "passes", "final_gate_conditions_met",
                  "All three method gates are ready AND the fail-closed "
-                 "final-gate conditions are really satisfied (three verified "
-                 "formal capsules, hash-consistent shared comparison capsule, "
-                 "user-authorized G0.4 contract).")
+                 "final-gate conditions are really satisfied (three formal "
+                 "capsules verified from disk incl. executed independent "
+                 "verifiers, hash-consistent shared comparison capsule "
+                 "re-derived, user-authorized G0.4 contract).")
         else:
             _add(findings, "errors", "methods_unexpectedly_ready",
                  "methods.json has all 3 methods ready but the fail-closed "

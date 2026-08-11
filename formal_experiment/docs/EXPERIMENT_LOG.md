@@ -3241,3 +3241,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-11T02:11:13.225578+00:00 - Checkpoint A: real fail-closed final-gate verification + stale semantics cleanup. (1) src/bpc_hybrid/formal_arm_verification.py: exact method->manifest->predictions->results->capsule->verifier mapping; every arm manifest hash RECOMPUTED from disk and compared item-by-item vs comparison capsule per_method records; method_id/claim_scope=formal/is_formal_performance_result/artifacts exist+hash-match/input-Gold bindings recomputed/new-calls=0 verified; comparison capsule re-derived (input v2/Gold hashes, G0.4 semantic hash triple-consistent manifest-vs-comparison-vs-derived recomputation, per-method manifest hashes, claim scopes, main_view_publishable/authorization, all_three_published_and_verified DERIVED not trusted). (2) status.py formal_final_gate_conditions uses verify_all_static (no self-reported state trusted); audit.py executes verify_all_with_verifiers -- the three independent verifiers actually RUN via subprocess (not just existence), all VERIFIED -> pass final_gate_conditions_met, else methods_unexpectedly_ready error. (3) Tamper tests (9): one artifact per arm (B0 predictions / D1 evaluation_fine / H1 modality_labels), direct_llm manifest method_id, comparison capsule per_method hash, G0.4 manifest semantic hash -> verify_all_static False, audit error + final_experiment_ready=false (config ready alone cannot keep the gate open). (4) Stale semantics cleanup: G0.4 contract claim_scopes.formal now three methods formal; coarse role/consequence -> historical six-field aggregate not publishable, authorized five-field+label main report publishable; coarse manifest not_publishable_reason renamed historical_aggregate_not_publishable_reason; comparison capsule not_comparable updated (three methods formal; incomparability is vs historical aggregate); methods.json sun_rule_only notes drop 'candidate result not yet published' (published 2026-08-11) and state three-method ready != S2.13/S1.7/S3.7 completion; release manifest v2 re-published for methods_config hash change (8b3cbd2e, verifier VERIFIED). 1703 tests passed. Zero new LLM/API; Gold/contract/Stage 3 gate/publication status untouched.
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1703 passed, 24 skipped, 19 warnings in 206.55s (0:03:26)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`24ca5da7f65929dc1030ae2770513f1b42b71deb`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

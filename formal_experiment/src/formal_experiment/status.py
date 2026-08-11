@@ -318,54 +318,32 @@ def _formal_capsule_methods() -> set[str]:
 
 
 def formal_final_gate_conditions() -> dict[str, Any]:
-    """Final-readiness fail-closed conditions (user-authorized 2026-08-11).
+    """Final-readiness fail-closed conditions (user-authorized 2026-08-11,
+    hardened 2026-08-12).
 
     final_experiment_ready must additionally require:
-    - the three-method formal predictions/results capsule (each arm exists
-      and is verified by its independent verifier -- the verifier file must
-      exist and pass, checked here at the presence level; the full byte
-      verification is performed by the per-arm verifiers and the audit)
-    - the shared comparison capsule hash-consistent (input v2 / Gold /
-      three arm manifests recorded hashes == on-disk hashes)
-    - the G0.4 formal evaluation contract user-authorized
+    - the three-method formal predictions/results capsule: EVERY arm is
+      verified structurally and by hash from disk (method_id exact,
+      claim_scope=formal, is_formal_performance_result=true, predictions and
+      results files exist and hash-match the manifest, input/Gold bindings
+      recomputed, new-LLM-calls=0 declaration) -- no self-reported state is
+      trusted;
+    - the shared comparison capsule hash-consistent: input v2 / Gold / G0.4
+      semantic hash triple-consistent / per-method arm manifest hashes
+      recomputed and compared item by item;
+    - the G0.4 formal evaluation contract user-authorized.
+    The audit layer additionally EXECUTES the three independent verifiers
+    (see bpc_hybrid.formal_arm_verification.verify_all_with_verifiers).
     A config status flip alone must never open the final gate.
     """
-    all_methods = {"sun_rule_only", "sun_llm_fallback", "direct_llm"}
-    capsule_methods = _formal_capsule_methods()
-    capsule_complete = capsule_methods == all_methods
-
-    g04 = _load_json(G04_CONTRACT)
-    g04_authorized = (g04.get("authorization", {})
-                      .get("authorized_by_user") is True)
-
-    comparison = _load_json(COMPARISON_CAPSULE)
-    v2_path = FROZEN_INPUT_DIR / "estg150_formal_inference_input_v2.json"
-    gold_path = FROZEN_GOLD_DIR / "stage2" / "estg150_formal_gold_v1.json"
-    v2_ok = (v2_path.exists()
-             and comparison.get("formal_input_v2", {}).get("sha256")
-             == _sha256_file(v2_path))
-    gold_ok = (gold_path.exists()
-               and comparison.get("formal_gold", {}).get("sha256")
-               == _sha256_file(gold_path))
-    arms_ok = comparison.get("formal_arm_capsules", {}).get(
-        "all_three_published_and_verified") is True
-    comparison_consistent = bool(
-        comparison.get("schema_version")
-        == "shared_stage2_comparison_capsule@1.0.0"
-        and v2_ok and gold_ok and arms_ok)
-
-    reasons = []
-    if not capsule_complete:
-        reasons.append(f"three-method capsule incomplete: {sorted(capsule_methods)}")
-    if not g04_authorized:
-        reasons.append("G0.4 formal evaluation contract not user-authorized")
-    if not comparison_consistent:
-        reasons.append("shared comparison capsule not hash-consistent")
+    from bpc_hybrid.formal_arm_verification import verify_all_static
+    result = verify_all_static()
     return {
-        "capsule_complete": capsule_complete,
-        "g04_contract_authorized": g04_authorized,
-        "comparison_consistent": comparison_consistent,
-        "reasons": reasons,
+        "capsule_complete": result["capsule_complete"],
+        "g04_contract_authorized": result["g04_contract_authorized"],
+        "comparison_consistent": result["comparison_consistent"],
+        "reasons": result["reasons"],
+        "arms": {m: v["verified"] for m, v in result["arms"].items()},
     }
 
 

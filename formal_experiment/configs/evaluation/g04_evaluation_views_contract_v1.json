@@ -6,7 +6,7 @@
   "purpose": "Versioned, machine-verifiable evaluation-views contract for the formal benchmark. Fixes which Gold view feeds which metric family, forbids cross-view mixing, and separates modality-label metrics from six-field span metrics.",
   "views": {
     "coarse_sentence_level": {
-      "role": "primary (Sun-aligned main view) -- PUBLICATION GATED on consistency proof",
+      "role": "formal main report (user-authorized 2026-08-11): sentence-level coarse FIVE span-bearing fields + separate four-class modality-label metrics; modality evidence-span explicitly unavailable; fine five fields diagnostic/对照; the historical SIX-field coarse aggregate (incl. modality evidence-span) is development provenance only and is NOT part of the formal main report",
       "transform": {
         "name": "formal_sentence_level_coarse_view",
         "input": "data/gold/stage2/estg150_formal_gold_v1.json (published formal Gold)",
@@ -23,7 +23,7 @@
           "modality": 147
         },
         "reason": "published formal Gold stores modality as a plain string; the local modality evidence spans of the historical coarse gold (Layer E modality.span) are not reproducible from it. All other fields are identical.",
-        "consequence": "historical coarse numbers remain development-side provenance; the formal coarse MAIN-view metrics are NOT published. Fine-grained six-field span metrics and modality-label metrics remain computable from the published Gold."
+        "consequence": "historical six-field coarse aggregate (incl. modality evidence-span numbers not reproducible from the published Gold) is development provenance only and is NOT part of the formal main report; the user-authorized formal main report (five span fields + modality labels) IS publishable (main_view_publishable=true)"
       },
       "main_report_authorized": true
     },
@@ -46,8 +46,8 @@
       "actor_action_edges"
     ],
     "claim_scopes": {
-      "formal": "only the B0 formal arm (sun_rule_only) may carry claim_scope=formal; D1/H1 remain candidate / formal-gate-blocked",
-      "candidate": "D1/H1 zero-API re-evaluations are candidates, never formal"
+      "formal": "all three method arms (sun_rule_only / direct_llm / sun_llm_fallback) carry claim_scope=formal since the 2026-08-11 user authorization (zero-API snapshot publications)",
+      "candidate": "no longer active for the formal arms; historical candidate re-evaluations remain provenance"
     }
   },
   "outputs": {
