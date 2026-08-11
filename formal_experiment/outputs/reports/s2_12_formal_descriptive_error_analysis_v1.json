@@ -1,0 +1,286 @@
+{
+  "schema_version": "s2_12_formal_descriptive_error_analysis@1.0.0",
+  "retrospective": true,
+  "preregistered": false,
+  "note": "stratification/analysis formed AFTER seeing the results; explicitly retrospective/exploratory, NOT preregistered; S2.12 full DoD remains blocked on S2.11 (complex legal corpus + G0.5)",
+  "methodology": {
+    "error_taxonomy": "per-field ground_truth/extracted/matched/misclassified/missed (Sun literal-overlap contract)",
+    "denominator": "same formal input v2 (150 records) and same published Gold views for all methods",
+    "input_set": "estg150_formal_inference_input_v2.json (150)",
+    "view": "coarse five span fields (main) + separate modality labels",
+    "modality_evidence_span": "unavailable (never zeroed/aggregated)"
+  },
+  "per_method": {
+    "sun_rule_only": {
+      "label": "Rules-Only",
+      "arm": "b0_formal_arm_v1",
+      "fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 65,
+          "precision": 0.7076923076923077,
+          "recall": 0.975609756097561,
+          "f1": 0.8203299152920196,
+          "matched_approx": 40,
+          "missed_approx": 1,
+          "misclassified_approx": 19
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 244,
+          "precision": 0.8729508196721312,
+          "recall": 0.9133333333333333,
+          "f1": 0.8926856128973049,
+          "matched_approx": 137,
+          "missed_approx": 13,
+          "misclassified_approx": 31
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 239,
+          "precision": 0.702928870292887,
+          "recall": 0.860655737704918,
+          "f1": 0.7738369415016121,
+          "matched_approx": 105,
+          "missed_approx": 17,
+          "misclassified_approx": 71
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 330,
+          "precision": 0.5606060606060606,
+          "recall": 0.6888888888888889,
+          "f1": 0.6181622204257612,
+          "matched_approx": 93,
+          "missed_approx": 42,
+          "misclassified_approx": 145
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 14,
+          "precision": 0.7857142857142857,
+          "recall": 1.0,
+          "f1": 0.88,
+          "matched_approx": 11,
+          "missed_approx": 0,
+          "misclassified_approx": 3
+        }
+      },
+      "modality_labels": {
+        "accuracy": 0.74,
+        "macro_f1": 0.712845542257307
+      }
+    },
+    "direct_llm": {
+      "label": "Direct-LLM",
+      "arm": "direct_llm_formal_arm_v1",
+      "fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 60,
+          "precision": 0.6666666666666666,
+          "recall": 0.8780487804878049,
+          "f1": 0.7578947368421053,
+          "matched_approx": 36,
+          "missed_approx": 5,
+          "misclassified_approx": 20
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 210,
+          "precision": 0.9761904761904762,
+          "recall": 0.9133333333333333,
+          "f1": 0.9437163978494625,
+          "matched_approx": 137,
+          "missed_approx": 13,
+          "misclassified_approx": 5
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 135,
+          "precision": 0.9185185185185185,
+          "recall": 0.7704918032786885,
+          "f1": 0.8380185491408441,
+          "matched_approx": 94,
+          "missed_approx": 28,
+          "misclassified_approx": 11
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 175,
+          "precision": 0.7771428571428571,
+          "recall": 0.7111111111111111,
+          "f1": 0.7426621160409557,
+          "matched_approx": 96,
+          "missed_approx": 39,
+          "misclassified_approx": 39
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 10,
+          "precision": 0.8,
+          "recall": 0.7272727272727273,
+          "f1": 0.761904761904762,
+          "matched_approx": 8,
+          "missed_approx": 3,
+          "misclassified_approx": 2
+        }
+      },
+      "modality_labels": {
+        "accuracy": 0.8333333333333334,
+        "macro_f1": 0.7694506979014613
+      }
+    },
+    "sun_llm_fallback": {
+      "label": "Rules+LLM-Repair",
+      "arm": "sun_llm_fallback_formal_arm_v1",
+      "fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 167,
+          "precision": 0.2754491017964072,
+          "recall": 0.975609756097561,
+          "f1": 0.42960541676395053,
+          "matched_approx": 40,
+          "missed_approx": 1,
+          "misclassified_approx": 121
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 247,
+          "precision": 0.8704453441295547,
+          "recall": 0.92,
+          "f1": 0.8945369030390738,
+          "matched_approx": 138,
+          "missed_approx": 12,
+          "misclassified_approx": 32
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 237,
+          "precision": 0.7088607594936709,
+          "recall": 0.860655737704918,
+          "f1": 0.7774178621008793,
+          "matched_approx": 105,
+          "missed_approx": 17,
+          "misclassified_approx": 69
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 330,
+          "precision": 0.5636363636363636,
+          "recall": 0.6888888888888889,
+          "f1": 0.6199999999999999,
+          "matched_approx": 93,
+          "missed_approx": 42,
+          "misclassified_approx": 144
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 14,
+          "precision": 0.7857142857142857,
+          "recall": 1.0,
+          "f1": 0.88,
+          "matched_approx": 11,
+          "missed_approx": 0,
+          "misclassified_approx": 3
+        }
+      },
+      "modality_labels": {
+        "accuracy": 0.82,
+        "macro_f1": 0.8123013565761656
+      }
+    }
+  },
+  "complementarity": {
+    "actor": {
+      "missed_approx": {
+        "sun_rule_only": 1,
+        "direct_llm": 5,
+        "sun_llm_fallback": 1
+      },
+      "misclassified_approx": {
+        "sun_rule_only": 19,
+        "direct_llm": 20,
+        "sun_llm_fallback": 121
+      },
+      "lowest_missed": "sun_rule_only",
+      "highest_missed": "direct_llm"
+    },
+    "action": {
+      "missed_approx": {
+        "sun_rule_only": 13,
+        "direct_llm": 13,
+        "sun_llm_fallback": 12
+      },
+      "misclassified_approx": {
+        "sun_rule_only": 31,
+        "direct_llm": 5,
+        "sun_llm_fallback": 32
+      },
+      "lowest_missed": "sun_llm_fallback",
+      "highest_missed": "sun_rule_only"
+    },
+    "condition": {
+      "missed_approx": {
+        "sun_rule_only": 17,
+        "direct_llm": 28,
+        "sun_llm_fallback": 17
+      },
+      "misclassified_approx": {
+        "sun_rule_only": 71,
+        "direct_llm": 11,
+        "sun_llm_fallback": 69
+      },
+      "lowest_missed": "sun_rule_only",
+      "highest_missed": "direct_llm"
+    },
+    "constraint": {
+      "missed_approx": {
+        "sun_rule_only": 42,
+        "direct_llm": 39,
+        "sun_llm_fallback": 42
+      },
+      "misclassified_approx": {
+        "sun_rule_only": 145,
+        "direct_llm": 39,
+        "sun_llm_fallback": 144
+      },
+      "lowest_missed": "direct_llm",
+      "highest_missed": "sun_rule_only"
+    },
+    "exception": {
+      "missed_approx": {
+        "sun_rule_only": 0,
+        "direct_llm": 3,
+        "sun_llm_fallback": 0
+      },
+      "misclassified_approx": {
+        "sun_rule_only": 3,
+        "direct_llm": 2,
+        "sun_llm_fallback": 3
+      },
+      "lowest_missed": "sun_rule_only",
+      "highest_missed": "direct_llm"
+    }
+  },
+  "weakest_field_per_method": {
+    "sun_rule_only": "constraint",
+    "direct_llm": "constraint",
+    "sun_llm_fallback": "constraint"
+  },
+  "observations": [
+    "constraint is the weakest field for Rules-Only (lowest recall) and among the weakest for the other methods",
+    "Direct-LLM has the highest recall on action/condition/constraint; Rules-Only has the highest recall on actor (approx missed counts derived from recall)",
+    "Rules+LLM-Repair consistently underperforms its own Rules-Only base on actor (net-negative), matching the 2026-08-08 stop-optimizing decision",
+    "all three methods share the modality evidence-span limitation (structural, from the published Gold)",
+    "misclassified vs missed trade-off differs per method per field (see complementarity)"
+  ],
+  "dependency": {
+    "full_doD_blocked_on": "S2.11 (complex legal corpus freeze + G0.5 complexity rules frozen before results) + Barrientos adapter",
+    "this_document": "EStG-150-internal formal descriptive part only"
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

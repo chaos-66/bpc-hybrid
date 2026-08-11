@@ -1,0 +1,24 @@
+# S2.13 Stage 2 Freeze Gap Capsule
+
+- semantics: final_experiment_ready=true means the THREE-METHOD FORMAL EVALUATION ASSETS are ready (three verified capsules, consistent comparison capsule, user-authorized G0.4 contract). It does NOT mean S2.13 or the full pipeline is complete.
+
+## Completed
+- formal_gold: {'path': 'data/gold/stage2/estg150_formal_gold_v1.json', 'sha256': 'c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100'}
+- executable_input_v2: {'path': 'data/input/estg150_formal_inference_input_v2.json', 'sha256': '52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2'}
+- three_method_formal_capsules: {'sun_rule_only': 'b0_formal_arm_v1 (verified)', 'direct_llm': 'direct_llm_formal_arm_v1 (verified)', 'sun_llm_fallback': 'sun_llm_fallback_formal_arm_v1 (verified, comparison-only)'}
+- shared_comparison_capsule: {'path': 'outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json', 'sha256': 'c473c04cb16a7a38e2e2e03b0b3be3dc5d1dfd11de642a394d73181fd456877e'}
+- formal_comparison_report: outputs/reports/stage2_formal_three_method_comparison_v1.json
+- evaluation_contract: G0.4 user-authorized (2026-08-11)
+- method_gates: {'sun_rule_only': 'ready', 'sun_llm_fallback': 'ready', 'direct_llm': 'ready'}
+- cost_manifests: per-arm cost.json + telemetry (new calls 0)
+- schemas_normalization_evaluators: frozen and shared across methods
+
+## Remaining
+- s2_11: blocked (complex legal corpus freeze + G0.5 + Barrientos adapter qualification)
+- s2_12_full_DoD: blocked on S2.11 (descriptive part delivered, retrospective)
+- s2_13_full_DoD: NOT complete (S2.1-S2.12 full DoD not met)
+- s1_7: blocked (true Gold Process Records)
+- s3_7: blocked (true Gold Rule/Process Records; formal Oracle NOT started)
+- paper_conclusions: B0-R5/D1-R5 formal conclusion writing pending
+
+- no pseudo Oracle: True

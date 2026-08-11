@@ -1,0 +1,96 @@
+{
+  "schema_version": "s2_11_data_qualification_mapping_dry_run@1.0.0",
+  "status": "dry_run_not_applied",
+  "round": "2026-08-12 read-only qualification; G0.5/S2.11 formal status NOT changed",
+  "candidate_data": {
+    "barrientos_2026": {
+      "identity": "Barrientos et al. (2026) RC4PC artifact (references/barrientos_2026)",
+      "source": "local references/ (read-only provenance store)",
+      "license": "not re-verified offline; redistribution not assumed",
+      "local_availability": true,
+      "files_qualified": 91,
+      "notable_members": [
+        "artifact_input/prompts/formalize_requirements_prompt.txt",
+        "artifact_input/formats/compliance_requirements_format.json",
+        "evaluation/annotations_from_compliance_experts/protocol_and_results.md"
+      ]
+    },
+    "stage1_gdpr7": {
+      "identity": "project Stage 1 GDPR-7 BPMN models + annotation",
+      "source": "data/input/stage1_stage3/gdpr7 + data/development/human_review",
+      "license": "project-frozen Stage 1 assets",
+      "local_availability": true,
+      "bpmn_count": 7,
+      "bpmn_files": [
+        "gdpr_1_data_breach.bpmn",
+        "gdpr_2_consent_to_use_the_data.bpmn",
+        "gdpr_3_right_to_access.bpmn",
+        "gdpr_4_right_of_portability.bpmn",
+        "gdpr_5_right_to_withdraw.bpmn",
+        "gdpr_6_right_to_rectify.bpmn",
+        "gdpr_7_right_to_be_forgotten.bpmn"
+      ]
+    },
+    "activation": "NONE this round (references/ and archive/ stay read-only)"
+  },
+  "schema_mapping": {
+    "sun_rule_record_fields": [
+      "modality",
+      "actor",
+      "action",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "barrientos_rc4pc_fields": [
+      "id",
+      "precondition",
+      "norms",
+      "temporal_validity"
+    ],
+    "mapping_status": "direct field mapping NOT possible (different task/schema philosophy); adapter required",
+    "modality_incompatibility": "Barrientos 3 classes (obligation/permission/prohibition) vs Sun 4 classes (+ definition); labels must be mapped or human-adjudicated, never treated as Sun-compatible directly"
+  },
+  "adapter_boundaries": [
+    "modality enum expansion 3 -> 4 requires a mapping table or adjudication",
+    "condition/action structure differs (precondition triples vs spans); span alignment adapter needed",
+    "external labels are NOT Sun-compatible Gold; guard: never auto-promote"
+  ],
+  "complexity_definitions_candidates": {
+    "l1": "single-clause sentence, one modality, no nested condition",
+    "l2": "multi-clause sentence, nested condition/constraint, cross-references",
+    "l3": "multi-sentence legal provision with exceptions and cross-article references",
+    "status": "CANDIDATES ONLY - G0.5 complexity rules not frozen before results; any later use must be explicitly retrospective or re-frozen"
+  },
+  "metrics": {
+    "comparable": "six-element extraction metrics on the same frozen input/Gold/evaluators",
+    "not_comparable": "cross-corpus metric transfer without re-normalization; label reuse without mapping"
+  },
+  "human_gold_required": true,
+  "hash_manifest_export_scheme": {
+    "per_file_sha256": true,
+    "manifest": "versioned json manifest binding data/adapter/mapping hashes",
+    "export_index": "path+sha256+bytes per artifact (project pattern)"
+  },
+  "before_after": {
+    "before": {
+      "G0.5": "blocked",
+      "S2.11": "blocked",
+      "data_activated": false
+    },
+    "after_if_authorized_and_qualified": {
+      "G0.5": "frozen_rules",
+      "S2.11": "ready_for_adapter"
+    },
+    "note": "NOT applied this round; qualification incomplete (license re-verification + mapping adjudication pending)"
+  },
+  "authorization_sentence": null,
+  "authorization_sentence_reason": "qualification decision conditions NOT reached this round (license/mapping/adaptation details pending); no authorization sentence is emitted",
+  "guards": [
+    "external labels must never be treated as Sun-compatible Gold without mapping + adjudication",
+    "references/archive/_retired remain read-only; nothing activated"
+  ],
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

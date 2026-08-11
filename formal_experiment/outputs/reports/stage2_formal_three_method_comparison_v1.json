@@ -1,0 +1,431 @@
+{
+  "schema_version": "stage2_formal_three_method_comparison@1.0.0",
+  "report_id": "stage2_formal_three_method_comparison_v1",
+  "generated_zero_api": true,
+  "evaluation_contract": {
+    "g04": "g04_evaluation_views_contract@1.0.0",
+    "authorized": true,
+    "authorized_at": "2026-08-11",
+    "main_report": "sentence-level coarse FIVE span-bearing fields + separate four-class modality-label metrics",
+    "modality_evidence_span_metrics": "unavailable (never zeroed, never aggregated)",
+    "fine_five_fields_role": "diagnostic / 对照",
+    "historical_six_field_aggregate": "development provenance only (NOT mixed in)"
+  },
+  "input": {
+    "path": "data/input/estg150_formal_inference_input_v2.json",
+    "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2"
+  },
+  "gold": {
+    "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+  },
+  "comparison_capsule": {
+    "path": "outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json",
+    "sha256": "c473c04cb16a7a38e2e2e03b0b3be3dc5d1dfd11de642a394d73181fd456877e"
+  },
+  "methods": {
+    "sun_rule_only": {
+      "method": "sun_rule_only",
+      "label": "Rules-Only",
+      "role": "baseline",
+      "claim_scope": "formal",
+      "arm_manifest": "outputs/reports/b0_formal_arm_v1.manifest.json",
+      "arm_manifest_sha256": "095a839fe7a98ed24de3afb3d840d1af5596f28988dae0429154f5b024f47c09",
+      "historical_llm_calls": 0,
+      "new_llm_calls": 0,
+      "main_view_coarse_five_fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 65,
+          "precision": 0.7076923076923077,
+          "recall": 0.975609756097561,
+          "f1": 0.8203299152920196
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 244,
+          "precision": 0.8729508196721312,
+          "recall": 0.9133333333333333,
+          "f1": 0.8926856128973049
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 239,
+          "precision": 0.702928870292887,
+          "recall": 0.860655737704918,
+          "f1": 0.7738369415016121
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 330,
+          "precision": 0.5606060606060606,
+          "recall": 0.6888888888888889,
+          "f1": 0.6181622204257612
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 14,
+          "precision": 0.7857142857142857,
+          "recall": 1.0,
+          "f1": 0.88
+        }
+      },
+      "diagnostic_fine_five_fields": {
+        "actor": {
+          "ground_truth": 48,
+          "extracted": 65,
+          "precision": 0.6923076923076923,
+          "recall": 0.9583333333333334,
+          "f1": 0.8038834951456311
+        },
+        "action": {
+          "ground_truth": 247,
+          "extracted": 244,
+          "precision": 0.8565573770491803,
+          "recall": 0.854251012145749,
+          "f1": 0.8554026399759472
+        },
+        "condition": {
+          "ground_truth": 214,
+          "extracted": 239,
+          "precision": 0.6569037656903766,
+          "recall": 0.7616822429906542,
+          "f1": 0.705423471848942
+        },
+        "constraint": {
+          "ground_truth": 302,
+          "extracted": 330,
+          "precision": 0.46060606060606063,
+          "recall": 0.5264900662251656,
+          "f1": 0.4913493402728364
+        },
+        "exception": {
+          "ground_truth": 13,
+          "extracted": 14,
+          "precision": 0.7857142857142857,
+          "recall": 0.8461538461538461,
+          "f1": 0.8148148148148148
+        }
+      },
+      "modality_labels": {
+        "accuracy": 0.74,
+        "macro_f1": 0.712845542257307,
+        "per_class": [
+          {
+            "class": "obligation",
+            "precision": 0.7105263157894737,
+            "recall": 0.9152542372881356,
+            "f1": 0.8
+          },
+          {
+            "class": "permission",
+            "precision": 0.8857142857142857,
+            "recall": 0.7380952380952381,
+            "f1": 0.8051948051948051
+          },
+          {
+            "class": "prohibition",
+            "precision": 0.9285714285714286,
+            "recall": 0.65,
+            "f1": 0.7647058823529412
+          },
+          {
+            "class": "definition",
+            "precision": 0.52,
+            "recall": 0.4482758620689655,
+            "f1": 0.48148148148148145
+          }
+        ]
+      }
+    },
+    "direct_llm": {
+      "method": "direct_llm",
+      "label": "Direct-LLM",
+      "role": "replacement_method",
+      "claim_scope": "formal",
+      "arm_manifest": "outputs/reports/direct_llm_formal_arm_v1.manifest.json",
+      "arm_manifest_sha256": "f0f86318259de87c9557781b69d2573a13bb25469db194905cfc216fef94d133",
+      "historical_llm_calls": 150,
+      "new_llm_calls": 0,
+      "main_view_coarse_five_fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 60,
+          "precision": 0.6666666666666666,
+          "recall": 0.8780487804878049,
+          "f1": 0.7578947368421053
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 210,
+          "precision": 0.9761904761904762,
+          "recall": 0.9133333333333333,
+          "f1": 0.9437163978494625
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 135,
+          "precision": 0.9185185185185185,
+          "recall": 0.7704918032786885,
+          "f1": 0.8380185491408441
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 175,
+          "precision": 0.7771428571428571,
+          "recall": 0.7111111111111111,
+          "f1": 0.7426621160409557
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 10,
+          "precision": 0.8,
+          "recall": 0.7272727272727273,
+          "f1": 0.761904761904762
+        }
+      },
+      "diagnostic_fine_five_fields": {
+        "actor": {
+          "ground_truth": 48,
+          "extracted": 60,
+          "precision": 0.65,
+          "recall": 0.8125,
+          "f1": 0.7222222222222223
+        },
+        "action": {
+          "ground_truth": 247,
+          "extracted": 210,
+          "precision": 0.9523809523809523,
+          "recall": 0.8178137651821862,
+          "f1": 0.8799825746024831
+        },
+        "condition": {
+          "ground_truth": 214,
+          "extracted": 135,
+          "precision": 0.9111111111111111,
+          "recall": 0.6915887850467289,
+          "f1": 0.7863159258779318
+        },
+        "constraint": {
+          "ground_truth": 302,
+          "extracted": 175,
+          "precision": 0.7257142857142858,
+          "recall": 0.44039735099337746,
+          "f1": 0.5481510327930033
+        },
+        "exception": {
+          "ground_truth": 13,
+          "extracted": 10,
+          "precision": 0.8,
+          "recall": 0.6153846153846154,
+          "f1": 0.6956521739130435
+        }
+      },
+      "modality_labels": {
+        "accuracy": 0.8333333333333334,
+        "macro_f1": 0.7694506979014613,
+        "per_class": [
+          {
+            "class": "obligation",
+            "precision": 0.8656716417910447,
+            "recall": 0.9830508474576272,
+            "f1": 0.9206349206349207
+          },
+          {
+            "class": "permission",
+            "precision": 0.9090909090909091,
+            "recall": 0.9523809523809523,
+            "f1": 0.9302325581395349
+          },
+          {
+            "class": "prohibition",
+            "precision": 0.6538461538461539,
+            "recall": 0.85,
+            "f1": 0.7391304347826088
+          },
+          {
+            "class": "definition",
+            "precision": 0.8333333333333334,
+            "recall": 0.3448275862068966,
+            "f1": 0.4878048780487806
+          }
+        ]
+      }
+    },
+    "sun_llm_fallback": {
+      "method": "sun_llm_fallback",
+      "label": "Rules+LLM-Repair",
+      "role": "comparison_arm_only",
+      "claim_scope": "formal",
+      "arm_manifest": "outputs/reports/sun_llm_fallback_formal_arm_v1.manifest.json",
+      "arm_manifest_sha256": "0b5e32852028d83b920da7fd9695f0985def37724f792d6e81630a057ea41f18",
+      "historical_llm_calls": 150,
+      "new_llm_calls": 0,
+      "main_view_coarse_five_fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 167,
+          "precision": 0.2754491017964072,
+          "recall": 0.975609756097561,
+          "f1": 0.42960541676395053
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 247,
+          "precision": 0.8704453441295547,
+          "recall": 0.92,
+          "f1": 0.8945369030390738
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 237,
+          "precision": 0.7088607594936709,
+          "recall": 0.860655737704918,
+          "f1": 0.7774178621008793
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 330,
+          "precision": 0.5636363636363636,
+          "recall": 0.6888888888888889,
+          "f1": 0.6199999999999999
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 14,
+          "precision": 0.7857142857142857,
+          "recall": 1.0,
+          "f1": 0.88
+        }
+      },
+      "diagnostic_fine_five_fields": {
+        "actor": {
+          "ground_truth": 48,
+          "extracted": 167,
+          "precision": 0.2694610778443114,
+          "recall": 0.9583333333333334,
+          "f1": 0.4206462101198944
+        },
+        "action": {
+          "ground_truth": 247,
+          "extracted": 247,
+          "precision": 0.854251012145749,
+          "recall": 0.8623481781376519,
+          "f1": 0.8582804980520968
+        },
+        "condition": {
+          "ground_truth": 214,
+          "extracted": 237,
+          "precision": 0.6624472573839663,
+          "recall": 0.7616822429906542,
+          "f1": 0.7086073460798293
+        },
+        "constraint": {
+          "ground_truth": 302,
+          "extracted": 330,
+          "precision": 0.4636363636363636,
+          "recall": 0.5264900662251656,
+          "f1": 0.49306822327617655
+        },
+        "exception": {
+          "ground_truth": 13,
+          "extracted": 14,
+          "precision": 0.7857142857142857,
+          "recall": 0.8461538461538461,
+          "f1": 0.8148148148148148
+        }
+      },
+      "modality_labels": {
+        "accuracy": 0.82,
+        "macro_f1": 0.8123013565761656,
+        "per_class": [
+          {
+            "class": "obligation",
+            "precision": 0.7777777777777778,
+            "recall": 0.9491525423728814,
+            "f1": 0.8549618320610687
+          },
+          {
+            "class": "permission",
+            "precision": 0.9428571428571428,
+            "recall": 0.7857142857142857,
+            "f1": 0.8571428571428571
+          },
+          {
+            "class": "prohibition",
+            "precision": 1.0,
+            "recall": 0.85,
+            "f1": 0.9189189189189189
+          },
+          {
+            "class": "definition",
+            "precision": 0.6538461538461539,
+            "recall": 0.5862068965517241,
+            "f1": 0.6181818181818182
+          }
+        ]
+      }
+    }
+  },
+  "delta_matrix": {
+    "sun_rule_only vs direct_llm": {
+      "actor": 0.0624,
+      "action": -0.051,
+      "condition": -0.0642,
+      "constraint": -0.1245,
+      "exception": 0.1181
+    },
+    "sun_rule_only vs sun_llm_fallback": {
+      "actor": 0.3907,
+      "action": -0.0019,
+      "condition": -0.0036,
+      "constraint": -0.0018,
+      "exception": 0.0
+    },
+    "direct_llm vs sun_rule_only": {
+      "actor": -0.0624,
+      "action": 0.051,
+      "condition": 0.0642,
+      "constraint": 0.1245,
+      "exception": -0.1181
+    },
+    "direct_llm vs sun_llm_fallback": {
+      "actor": 0.3283,
+      "action": 0.0492,
+      "condition": 0.0606,
+      "constraint": 0.1227,
+      "exception": -0.1181
+    },
+    "sun_llm_fallback vs sun_rule_only": {
+      "actor": -0.3907,
+      "action": 0.0019,
+      "condition": 0.0036,
+      "constraint": 0.0018,
+      "exception": 0.0
+    },
+    "sun_llm_fallback vs direct_llm": {
+      "actor": -0.3283,
+      "action": -0.0492,
+      "condition": -0.0606,
+      "constraint": -0.1227,
+      "exception": 0.1181
+    }
+  },
+  "coarse_five_field_mean_f1": {
+    "sun_rule_only": 0.797,
+    "direct_llm": 0.8088,
+    "sun_llm_fallback": 0.7203
+  },
+  "conclusions": {
+    "h1_net_negative_stop_optimizing": "Rules+LLM-Repair (comparison-only) remains net-negative on the main coarse five-field view (esp. actor F1), consistent with the 2026-08-08 decision; no further optimization is intended",
+    "d1_strength": "Direct-LLM leads on action/condition/constraint coarse F1 with the highest modality-label accuracy; its actor extraction trails Rules-Only",
+    "b0_strength": "Rules-Only leads on actor and exception coarse F1 with higher recall; its constraint field is the weakest",
+    "modality_label_separate": "modality four-class label metrics are reported separately and must not be mixed into span metrics",
+    "common_limitation": "modality evidence-span metrics are unavailable for all three methods (published Gold stores modality as a plain string)",
+    "three_method_ready_not_pipeline_complete": "three-method formal comparison ready does NOT imply S2.13 / S1.7 / S3.7 completion"
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0,
+    "historical_calls_total": 300
+  }
+}

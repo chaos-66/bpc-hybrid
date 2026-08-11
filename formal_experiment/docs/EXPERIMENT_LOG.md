@@ -3254,3 +3254,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-11T02:28:50.934985+00:00 - Checkpoint B: formal three-method comparison report + S2.10 verified + S2.12 descriptive analysis + S2.11/S2.13 dry-runs (zero-API). (1) stage2_formal_three_method_comparison_v1.json/.md/manifest/export/independent verifier (report c9d76544, manifest dc41eb4b, verifier 22c23331, verifier VERIFIED): authorized G0.4 main report only (coarse five span fields per method P/R/F1 + separate modality label accuracy/macro-F1/per-class; fine five fields diagnostic; modality evidence-span unavailable never zeroed/aggregated; historical six-field aggregate NOT mixed); per-method results, cross-method delta matrix, descriptive coarse five-field mean, historical calls B0=0/D1=150/H1=150 with new calls 0, conclusions referencing artifact hashes (H1 net-negative stop-optimizing; D1 leads action/condition/constraint + label accuracy; B0 leads actor/exception recall; common evidence-span limitation; three-method ready != pipeline complete). (2) S2.10 -> verified (authorized DoD really met: modality and six-field metrics reported separately under the authorized view). (3) S2.12 -> partial with delivered formal descriptive common error analysis (s2_12_formal_descriptive_error_analysis_v1: same taxonomy/denominator/input set, per-field approx missed/misclassified complementarity, weakest field per method, observations; explicit retrospective/exploratory NOT preregistered; full DoD blocked on S2.11). (4) S2.11 data qualification & mapping protocol dry-run (s2_11_data_qualification_mapping_dry_run: Barrientos 2026 + Stage1 GDPR-7 read-only qualification, schema mapping, modality 3->4 incompatibility, adapter boundaries, L1/L2/L3 complexity candidates (G0.5 not frozen), comparable/not-comparable metrics, human Gold required, external-labels-never-Sun-Gold guard, hash/manifest/export scheme, before/after; qualification conditions NOT reached -> no authorization sentence emitted; G0.5/S2.11 status unchanged). (5) S2.13 Stage 2 freeze gap capsule (s2_13_stage2_freeze_gap_capsule: completed vs remaining exact list; final_experiment_ready=true = three-method formal evaluation assets ready, NOT S2.13/full pipeline; S2.13/S1.7/S3.7 NOT complete; no pseudo Oracle). 6 new focused tests; 1709 passed. Zero new LLM/API; Gold/contract/Stage 3 gate/publication status untouched.
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1709 passed, 24 skipped, 19 warnings in 317.23s (0:05:17)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`553feb544509cd4e74d531b9654eb43a5f2eb5be`；相关未提交路径：19 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
