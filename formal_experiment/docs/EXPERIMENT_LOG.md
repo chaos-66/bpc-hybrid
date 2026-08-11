@@ -3280,3 +3280,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-11T03:34:45.472555+00:00 - Checkpoint 2/3: Stage 1 S1.1-S1.4 status audit + determinism verification. (1) s1_1_s1_4_matrix_v1.json/.md: per-task matrix (code/schema/config/fixtures/tests/manifest/met-DoD/gaps/status) — S1.1 verified (Process Record schema + fixtures + validator), S1.2 verified (deterministic parsing, 7/7 GDPR double-run byte-identical), S1.3 partial (P0/P1 mechanical label semantics done; P2 not implemented; actor/action/object remain machine candidates never Gold), S1.4 verified (control_flow 12-key + branch/parallel/cycle/unreachable fail-closed tests). (2) verify_stage1_gdpr7_determinism_v1.py: parsing all 7 GDPR BPMN twice byte-identical AND byte-identical to the membership-locked stage1_gdpr7_process_records_v1.json; manifest s1_1_s1_4_determinism_v1 with input/schema/config/implementation hashes and safety (zero API, Stage 3 Gold not used to tune Stage 1, no human decision inferred). (3) MASTER_PIPELINE total table S1.1/S1.2/S1.4 -> verified, S1.3 -> partial (exact gap: P2); S1.5-S1.7 remain blocked (human Process Gold not started). 1718 tests passed. Zero new LLM/API; Gold/contract/Stage 3 gate/publication untouched.
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1718 passed, 24 skipped, 19 warnings in 393.01s (0:06:33)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`c144920862867f7a7b88554bb9350b7c8b08bbf5`；相关未提交路径：7 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

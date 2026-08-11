@@ -1,0 +1,49 @@
+{
+  "schema_version": "s1_1_s1_4_determinism_manifest@1.0.0",
+  "project_date": "2026-08-11",
+  "checks": {
+    "seven_bpmn_files": true,
+    "double_run_byte_identical": true,
+    "matches_locked_process_records": true,
+    "record_count": true
+  },
+  "bpmn_files": [
+    "gdpr_1_data_breach.bpmn",
+    "gdpr_2_consent_to_use_the_data.bpmn",
+    "gdpr_3_right_to_access.bpmn",
+    "gdpr_4_right_of_portability.bpmn",
+    "gdpr_5_right_to_withdraw.bpmn",
+    "gdpr_6_right_to_rectify.bpmn",
+    "gdpr_7_right_to_be_forgotten.bpmn"
+  ],
+  "hashes": {
+    "membership_contract": {
+      "path": "configs/datasets/stage1_stage3_gdpr7_v1.json",
+      "sha256": "6bb2c0da4c51d06368bb858057374d9199e8d2ef494b6cb5c122be8744e11a42"
+    },
+    "process_record_schema": {
+      "path": "configs/schemas/process_record.schema.json",
+      "sha256": "9f2dc77a5386c472f9ea27fcf256a2e47195ed66e70ea5f9550caeccdf26bfef"
+    },
+    "parser_implementation": {
+      "path": "src/bpc_hybrid/stage1_process.py",
+      "sha256": "d81bde594190c96bd3f3e1d7a0d943847809b20500044f12a401d6aee822c396"
+    },
+    "dataset_implementation": {
+      "path": "src/bpc_hybrid/stage1_formal_dataset.py",
+      "sha256": "86a33bc6f4da6cd40feda9ea7ec65a74cbae1b5c09366c5bdcdf65e59d7e8486"
+    },
+    "locked_process_records": {
+      "path": "data/development/human_review/stage1_gdpr7_process_records_v1.json",
+      "sha256": "d4d61f46091a4063e8db2d405f893df6c3951ed4ee77b62deebe27fa35d48487"
+    }
+  },
+  "safety": {
+    "llm_api_called": false,
+    "stage3_gold_not_used_to_tune_stage1": true,
+    "no_human_decision_inferred": true
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

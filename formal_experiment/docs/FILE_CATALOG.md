@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-11
-**收录文件**：1058 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1063 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -691,6 +691,9 @@
 | `outputs/reports/s15_s31_gdpr7_membership_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s15_stage1_annotation_protocol_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s16_stage1_evaluator_contract_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_1_s1_4_determinism_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_1_s1_4_matrix_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_1_s1_4_matrix_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_data_qualification_mapping_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -826,6 +829,7 @@
 | `scripts/build_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s1_1_s1_4_matrix_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s211_license_g07_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s211_s213_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_formal_error_analysis_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -902,6 +906,7 @@
 | `scripts/verify_solcand_prompt_examples_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_annotation_protocol_s15.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_evaluator_s16.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_stage1_gdpr7_determinism_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_label_semantics_s13.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_stage3_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_structural_s11_s14.py` | 活动 | Python 实现、脚本或测试 |
