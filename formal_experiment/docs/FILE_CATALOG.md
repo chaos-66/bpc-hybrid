@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-12
-**收录文件**：1093 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1097 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -508,6 +508,9 @@
 | `outputs/development/human_review/stage1_adjudications/gdpr_4_right_of_portability/decision_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/human_review/stage1_adjudications/gdpr_4_right_of_portability/import_record_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/human_review/stage1_adjudications/gdpr_4_right_of_portability/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/human_review/stage1_adjudications/gdpr_5_right_to_withdraw/decision_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/human_review/stage1_adjudications/gdpr_5_right_to_withdraw/import_record_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/human_review/stage1_adjudications/gdpr_5_right_to_withdraw/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_cc_v1/coarse_gold_cc.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_cc_v1/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/coarse_gold_sentence_level.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1175,6 +1178,7 @@
 | `tests/test_stage1_adjudication_batch2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_adjudication_batch3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_adjudication_batch4.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage1_adjudication_batch5.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_adjudication_chain.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_human_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |

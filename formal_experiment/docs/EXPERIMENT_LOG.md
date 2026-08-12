@@ -3384,3 +3384,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-12T14:25:44.923173+00:00 - S1.5 human adjudication checkpoint gdpr_5_right_to_withdraw (batch 5/7): user-confirmed 2026-08-12 adjudication mechanically imported. 16 decisions (1 structure = accepted_candidate; 15 label fields all present: actor 5/5 Data Controller; compound actions locked: D1 action 'Stop running', D2 action 'Stop using' (single-word 'Stop' strictly forbidden); clause boundaries: D3 business_object 'withdrawn data' (if-clause not absorbed), D5 business_object 'the user' (that-clause is notification content, not absorbed); D4 'the withdraw' kept verbatim (no 'withdrawal', article kept); surface forms preserved, no lemmatization). gold_process_record copied byte-semantically from the gdpr_5 locked candidate ONLY (canonical sha256 6053ce182627eca57f0ab9895ca284e0c8d4292e027908d9052a38220e39a011 verified). Chain assets: stage1_adjudications/gdpr_5_right_to_withdraw/{decision_v1.json, import_record_v1.json, manifest.json} (before_correction_sha256=6befc63c... (batch-4 after), after_correction_sha256=1afabb877d29f493..., import_record_sha256=310de1ed..., prev_process=gdpr_4_right_of_portability, llm_api_calls=0, gold_freeze_authorized=false). Imported via review tool (backup 20260812T135821Z); validate valid, freeze false. Correction summary: 5/7 adjudicated, 123/135 resolved, freeze_ready false (remaining 12 label fields + 2 structure decisions = 14 human decisions). Five-batch chain verifier (blank -> b1..b5 -> on-disk byte replay) VERIFIED. 12 batch-5 focused tests (compound-action split / P1-remainder object fail closed, if/that-clause absorption fail closed, withdrawal/article tamper fail closed, generic tamper, gdpr_6/7 not prefilled, summary/freeze). S1.5 stays in_progress (5/7, 123/135); S1.6/S1.7/S3.7 not started. Zero new LLM/API; Gold/contract/Stage 3 gate/publication untouched; DeepSeek mechanical transcription only.
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1787 passed, 24 skipped, 19 warnings in 314.36s (0:05:14)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`079a7dde67ef74ed7b01564c273115ce02c8bc60`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
