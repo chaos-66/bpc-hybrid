@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-11
-**收录文件**：1077 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-08-12
+**收录文件**：1081 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -496,6 +496,9 @@
 |---|---|---|
 | `outputs/development/human_review/restore_layer_e_56d2b03_20260806.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/human_review/review_backups/estg_150_human_correction_v1.pre_restore_56d2b03_20260805T181815Z.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/human_review/stage1_adjudications/gdpr_1_data_breach/decision_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/human_review/stage1_adjudications/gdpr_1_data_breach/import_record_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/human_review/stage1_adjudications/gdpr_1_data_breach/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_cc_v1/coarse_gold_cc.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_cc_v1/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/coarse_gold_sentence_level.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1160,6 +1163,7 @@
 | `tests/test_shared_comparison_correction.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_smoke.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_splitter.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage1_adjudication_chain.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_human_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_sun_literal_overlap.py` | 活动 | Python 实现、脚本或测试 |

@@ -3332,3 +3332,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-12T09:26:36.497632+00:00 - Checkpoint A: harden the S1.5 multi-batch adjudication evidence chain. Real gaps found and fixed: (1) the previous verifier hardcoded '18 fields / 6 activities' (would break for batch-2's 24 activities) -> field count now DERIVED as 3 x candidate activities (batch-1 derives 18, batch-2 derives 72); (2) per-process manifest before/after correction hashes were recorded but never verified -> the verifier now replays the chain from the immutable blank baseline: batch N before_correction_sha256 must equal the previous state hash, replay(before + import record) must equal after_correction_sha256, and the final replay hash+content must equal the on-disk correction; no fork/broken/out-of-order chain allowed (shared predecessor detected); (3) import_record_v1.json was not bound -> manifest now records import_record_sha256 and the verifier recomputes it from disk; (4) batch-1's recorded before hash was a polluted intermediate state (evidence repair: corrected to the true blank-state hash b5fdf7ce... with after 2c10c78f... and import binding 27d0be69...; historical semantics preserved, no other field changed); (5) chain uniqueness/replayability: stable order gdpr_1..gdpr_7, unique ordered adjudicated processes, replay is a pure function of blank + import records, and unadjudicated processes must remain byte-equal to blank. build_stage1_adjudication_asset.py extended (import_record_sha256 + prev_process in the manifest) for batches 2-7. 10 new chain-integrity focused tests (batch-1 verified, before/after hash tamper, import tamper, activity id missing/extra, derived field count (no hardcoded 18), synthetic two-batch replay, broken/forked chain fail). 1744 tests passed. Zero LLM/API; Gold/contract/stage3/publication untouched.
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1744 passed, 24 skipped, 19 warnings in 264.12s (0:04:24)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`d7d381c13a67578541aeea3b98fdea3566b0564b`；相关未提交路径：5 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

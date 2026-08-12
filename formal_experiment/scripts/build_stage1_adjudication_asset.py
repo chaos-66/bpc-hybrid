@@ -100,7 +100,8 @@ def build_asset(process_id: str, user_decision: dict[str, Any],
 
 
 def write_asset(process_id: str, asset: dict[str, Any],
-                record: dict[str, Any]) -> dict[str, Any]:
+                record: dict[str, Any],
+                prev_process: str | None = None) -> dict[str, Any]:
     before_sha = _sha256_file(CORRECTION)
     out = OUT_DIR / process_id
     out.mkdir(parents=True, exist_ok=True)
@@ -111,6 +112,13 @@ def write_asset(process_id: str, asset: dict[str, Any],
         raise RuntimeError(f"refusing to overwrite different content: {decision_path}")
     decision_path.write_bytes(decision_data)
     decision_sha = hashlib.sha256(decision_data).hexdigest()
+    import_path = out / "import_record_v1.json"
+    import_data = (json.dumps({"records": [record]}, ensure_ascii=False,
+                              indent=2) + "\n").encode("utf-8")
+    if import_path.exists() and import_path.read_bytes() != import_data:
+        raise RuntimeError(f"refusing to overwrite different content: {import_path}")
+    import_path.write_bytes(import_data)
+    import_sha = hashlib.sha256(import_data).hexdigest()
 
     manifest = {
         "schema_version": "s1_5_human_adjudication_manifest@1.0.0",
@@ -118,8 +126,10 @@ def write_asset(process_id: str, asset: dict[str, Any],
         "adjudication_date": asset["adjudication_date"],
         "decision_asset": {"path": f"outputs/development/human_review/stage1_adjudications/{process_id}/decision_v1.json",
                            "sha256": decision_sha},
+        "import_record_sha256": import_sha,
         "before_correction_sha256": before_sha,
         "after_correction_sha256": None,
+        "prev_process": prev_process,
         "candidate_process_record_sha256":
             asset["evidence_hashes"]["candidate_process_record_sha256"],
         "bpmn_source_sha256": asset["evidence_hashes"]["bpmn_source_sha256"],
@@ -140,21 +150,18 @@ def main() -> int:
     parser = __import__("argparse").ArgumentParser(description=__doc__)
     parser.add_argument("--decision-json", required=True)
     parser.add_argument("--date", default="2026-08-11")
+    parser.add_argument("--prev", default=None,
+                        help="previous adjudicated process_id (chain link)")
     args = parser.parse_args()
 
     user_decision = json.loads(Path(args.decision_json).read_text(encoding="utf-8"))
     process_id = user_decision["process_id"]
     built = build_asset(process_id, user_decision, args.date)
-    manifest = write_asset(process_id, built["asset"], built["record"])
-    # emit the import JSON (record) for the review tool
-    import_path = OUT_DIR / process_id / "import_record_v1.json"
-    import_data = (json.dumps({"records": [built["record"]]}, ensure_ascii=False,
-                              indent=2) + "\n").encode("utf-8")
-    if import_path.exists() and import_path.read_bytes() != import_data:
-        raise RuntimeError(f"refusing to overwrite different content: {import_path}")
-    import_path.write_bytes(import_data)
+    manifest = write_asset(process_id, built["asset"], built["record"],
+                           prev_process=args.prev)
     print(f"adjudication asset written: {OUT_DIR.relative_to(ROOT)}/{process_id}")
     print(f"  candidate sha256: {manifest['candidate_process_record_sha256']}")
+    print(f"  import_record_sha256: {manifest['import_record_sha256'][:16]}...")
     return 0
 
 
