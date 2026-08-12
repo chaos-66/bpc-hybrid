@@ -63,8 +63,9 @@ def test_normal_batch1_import_verifies() -> None:
     assert "stage1_human_adjudication_in_progress" in passes
     assert "stage1_review_surface_input_ready" not in passes
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    assert doc["review_summary"]["adjudicated_records"] == 1
-    assert doc["review_summary"]["resolved_label_fields"] == 18
+    # batches 1+2 imported: 2/7 adjudicated, 90/135 resolved
+    assert doc["review_summary"]["adjudicated_records"] == 2
+    assert doc["review_summary"]["resolved_label_fields"] == 90
     assert doc["review_summary"]["freeze_ready"] is False
 
 

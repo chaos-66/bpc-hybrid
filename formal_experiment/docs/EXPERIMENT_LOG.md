@@ -3345,3 +3345,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-12T09:48:26.405885+00:00 - S1.5 human adjudication checkpoint gdpr_2_consent_to_use_the_data (batch 2/7): user-confirmed 2026-08-12 adjudication mechanically imported. 73 decisions (1 structure decision = accepted_candidate; 72 label fields all present: actor 24/24 Data Controller; action/business_object per the confirmed table; surface forms preserved incl. 'purposses' and 'rectify of', no lemmatization, business_object without outer quotes and without if-predicates). gold_process_record copied byte-semantically from the locked process records (canonical sha256 fb6ec966fcbd1715add37af70c76067eb7aa950e25c227d43557cc2e707e125d verified). Chain evidence assets: stage1_adjudications/gdpr_2_consent_to_use_the_data/{decision_v1.json, import_record_v1.json, manifest.json} (manifest: before_correction_sha256=2c10c78f1e... (batch-1 after), after_correction_sha256=da8f1b05fc0dbcd5..., import_record_sha256=55a83587..., prev_process=gdpr_1_data_breach, llm_api_calls=0, gold_freeze_authorized=false). Imported via stage1_review_tool.py import (atomic save + backup 20260812T092843Z, summary recomputed); validate: schema_valid + cross_field_valid + freeze_ready=false. Correction summary: records 7, adjudicated_records 2, label_fields 135, resolved_label_fields 90, freeze_ready false (remaining 45 label fields + 5 structure decisions = 50 human decisions). Chain verifier (blank -> gdpr_1 -> gdpr_2 -> on-disk correction, byte-replay) VERIFIED. 14 batch-2 focused tests (derived 72-field count, if-sentence smuggling / outer-quote addition / purposses->purposes correction all fail closed, chain break, import hash, candidate tamper etc.). S1.5 stays in_progress (2/7, 90/135); S1.6/S1.7/S3.7 not started. Zero new LLM/API; Gold/contract/Stage 3 gate/publication untouched; DeepSeek mechanical transcription only.
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1755 passed, 24 skipped, 19 warnings in 307.11s (0:05:07)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3e5b5eb68108767f9f8444e10e7d78536705670a`；相关未提交路径：8 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
