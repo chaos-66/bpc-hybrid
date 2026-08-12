@@ -56,13 +56,14 @@ def test_batch2_chain_verified_and_counts() -> None:
     r = m.verify()
     assert r["verified"] is True, [c for c in r["checks"] if not c["ok"]]
     assert r["adjudicated_processes"] == [
-        "gdpr_1_data_breach", "gdpr_2_consent_to_use_the_data"]
+        "gdpr_1_data_breach", "gdpr_2_consent_to_use_the_data",
+        "gdpr_3_right_to_access"]
     # batch-2 derives 72 fields from 24 activities
     assert any("field count derived (72)" in c["name"]
                for c in r["checks"])
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    assert doc["review_summary"]["adjudicated_records"] == 2
-    assert doc["review_summary"]["resolved_label_fields"] == 90
+    assert doc["review_summary"]["adjudicated_records"] == 3
+    assert doc["review_summary"]["resolved_label_fields"] == 99
     assert doc["review_summary"]["freeze_ready"] is False
 
 

@@ -171,7 +171,9 @@ def _make_synthetic_world(tmp_path: Path, monkeypatch) -> tuple[object, Path]:
     world = tmp_path / "world"
     world.mkdir()
     shutil.copy2(BLANK, world / "blank.json")
-    shutil.copy2(CORRECTION, world / "correction.json")
+    # the synthetic correction starts from the BLANK state (a copy of the
+    # current real correction would carry real batches and break replay)
+    shutil.copy2(BLANK, world / "correction.json")
     shutil.copy2(PROCESS_RECORDS, world / "process_records.json")
     shutil.copy2(MEMBERSHIP, world / "membership.json")
     shutil.copy2(AUTH_MANIFEST, world / "auth_manifest.json")

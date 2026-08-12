@@ -3358,3 +3358,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-12T10:34:46.381245+00:00 - S1.5 human adjudication checkpoint gdpr_3_right_to_access (batch 3/7): user-confirmed 2026-08-12 adjudication mechanically imported. 10 decisions (1 structure = accepted_candidate; 9 label fields all present: actor 3/3 Data Controller, action Retrieve/Retrieve/Communicate, business_object 'available data of the data subject' (not narrowed, post-modifier kept) / 'elaborations' / 'data and elaborations' (coordinated object kept); surface forms preserved, no lemmatization). gold_process_record copied byte-semantically from locked candidate (canonical sha256 4f2daa7bed486d0457b4967fa6752ee45ca011919efd6cfa4b7e1e6ac09cbbb9 verified). Presentation-only factual correction recorded: the read-only package table had shown C1/C2 as tasks; their real XML types are subProcess (C3 is task) -- the locked candidate always recorded the correct types; the presentation error was never written back to BPMN/candidate. Chain assets: stage1_adjudications/gdpr_3_right_to_access/{decision_v1.json, import_record_v1.json, manifest.json} (before_correction_sha256=da8f1b05... (batch-2 after), after_correction_sha256=a4f65b1a8d833264..., import_record_sha256=455805a5..., prev_process=gdpr_2_consent_to_use_the_data, llm_api_calls=0, gold_freeze_authorized=false). Imported via stage1_review_tool.py import (backup 20260812T100637Z); validate: valid, freeze_ready=false. Correction summary: records 7, adjudicated_records 3, label_fields 135, resolved_label_fields 99, freeze_ready false (remaining 36 label fields + 4 structure decisions = 40 human decisions). Three-batch chain verifier (blank -> gdpr_1 -> gdpr_2 -> gdpr_3 -> on-disk correction byte replay) VERIFIED. 9 batch-3 focused tests (3 activities/9 fields derived, type verification, C1 narrowing / C3 split fail closed, actor/action tamper, activity id missing/extra, candidate/hash/import/chain break, summary/unadjudicated/freeze). S1.5 stays in_progress (3/7, 99/135); S1.6/S1.7/S3.7 not started. Zero new LLM/API; Gold/contract/Stage 3 gate/publication untouched; DeepSeek mechanical transcription only.
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1764 passed, 24 skipped, 19 warnings in 313.18s (0:05:13)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`eae4f11c3f2096130856babc4a63f1c274e8c82d`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
