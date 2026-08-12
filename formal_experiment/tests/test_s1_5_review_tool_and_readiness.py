@@ -76,9 +76,9 @@ def test_tool_import_applies_only_explicit_decisions(tmp_path: Path) -> None:
         assert la["actor"]["status"] == "present"
         assert la["actor"]["value"] == "Data Controller"
         assert la["business_object"]["status"] == "absent"
-        # untouched records stay unreviewed (gdpr_4 is the first never
-        # adjudicated process; gdpr_1/2/3 adjudicated in batches 1-3)
-        assert doc["records"][3]["review_state"] == "unreviewed"
+        # untouched records stay unreviewed (gdpr_5 is the first never
+        # adjudicated process; gdpr_1/2/3/4 adjudicated in batches 1-4)
+        assert doc["records"][4]["review_state"] == "unreviewed"
         # a backup was created
         after = sorted(backup_dir.glob("*.json"))
         assert len(after) == len(before) + 1

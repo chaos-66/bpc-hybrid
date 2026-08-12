@@ -270,6 +270,10 @@ def verify() -> dict[str, Any]:
             "label_annotations": merged_las,
         }
         check(f"[{pid}] correction record == decision", corr_rec == expected_rec)
+        if corr_rec is None:
+            check(f"[{pid}] correction record present", False,
+                  "record missing from correction (cross-process tamper?)")
+            continue
 
         # 6. gold == locked candidate (accepted_candidate)
         gold = decision.get("structure_annotation", {}).get(

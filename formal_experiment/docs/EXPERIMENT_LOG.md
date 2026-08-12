@@ -3371,3 +3371,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-12T12:13:04.096559+00:00 - S1.5 human adjudication checkpoint gdpr_4_right_of_portability (batch 4/7): user-confirmed 2026-08-12 adjudication mechanically imported. 10 decisions (1 structure = accepted_candidate; 9 label fields all present: actor 3/3 Data Controller, action Retrieve/Retrieve/Communicate, business_object 'available data of the data subject' (not narrowed) / 'elaborations' / 'data and elaborations' (coordinated object kept); surface forms preserved, no lemmatization). gold_process_record copied byte-semantically from the gdpr_4 locked candidate ONLY (canonical sha256 a1d77e897e80491c9f47725c812917ae98d9aca143b6478cbd62b9bff5727446 verified); copying the gdpr_3 candidate is forbidden and tested. gdpr_3/gdpr_4 INDEPENDENCE PROOF: both share raw XML process id sid-C2A304F9-1DE1-4882-B3BE-60ACE45FABE7, disambiguated by the membership identity adapter via input_id; dataset-level process_id / source input_id / pool process_ref all bound to each process's own identity (gdpr_4 source 68601777.../31497 bytes; gdpr_3 source d6e48d09...); candidates, decision/import/manifest assets independent (gdpr_3 assets byte-unchanged vs HEAD, verified autocrlf-aware); lookups are process-scoped (no cross-process activity-ID matching; verifier now defensively guards a missing correction record). Chain assets: stage1_adjudications/gdpr_4_right_of_portability/{decision_v1.json, import_record_v1.json, manifest.json} (before_correction_sha256=a4f65b1a... (batch-3 after), after_correction_sha256=6befc63cb9989d5d..., import_record_sha256=3f293930..., prev_process=gdpr_3_right_to_access, llm_api_calls=0, gold_freeze_authorized=false). Imported via review tool (backup 20260812T115047Z); validate valid, freeze false. Correction summary: 4/7 adjudicated, 108/135 resolved, freeze_ready false (remaining 27 label fields + 3 structure decisions = 30 human decisions). Four-batch chain verifier (blank -> b1 -> b2 -> b3 -> b4 -> on-disk byte replay) VERIFIED. 11 batch-4 focused tests (identity binding, shared-raw-id non-conflict, gdpr_3-candidate-copy fail, source misbind fail, cross-process match fail, assets unchanged, narrowing/split fail, label/activity/candidate/hash/chain/summary/unadjudicated/freeze). S1.5 stays in_progress (4/7, 108/135); S1.6/S1.7/S3.7 not started. Zero new LLM/API; Gold/contract/Stage 3 gate/publication untouched; DeepSeek mechanical transcription only.
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1775 passed, 24 skipped, 19 warnings in 306.14s (0:05:06)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`37e9912cbf041b60083825418d7a9abcd407a29e`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
