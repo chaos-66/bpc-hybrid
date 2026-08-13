@@ -1,0 +1,123 @@
+{
+  "schema_version": "stage1_label_p2_config@1.0.0",
+  "task_ids": ["S1.3"],
+  "status": "locked_pending_formal_inference",
+  "method": {
+    "claim_name": "Sun/Leopold-style Stage 1 method-level independent reconstruction",
+    "baseline": "P2",
+    "method_name": "stage1_label_p2_linguistic",
+    "method_version": "stage1_label_p2@1.0.0",
+    "honest_label": "post-Gold paper-derived method reconstruction with a locked implementation and prospective one-shot evaluation",
+    "forbidden_claims": [
+      "exact reproduction", "Sun original implementation", "P1 enhanced",
+      "novel Stage 1 method", "blind preregistration", "developer-blind"
+    ]
+  },
+  "input_contract": {
+    "process_record_schema": "process_record@1.0.0",
+    "bpmn_source": "data/input/stage1_stage3/gdpr7/*.bpmn (formal inference only)",
+    "whitelist": [
+      "data/input/stage1_stage3/gdpr7/",
+      "configs/datasets/stage1_stage3_gdpr7_v1.json",
+      "data/development/human_review/stage1_gdpr7_process_records_v1.json",
+      "configs/stage1_label_p2_v1.json",
+      "configs/schemas/stage1_label_semantics_p2.schema.json"
+    ],
+    "forbidden_inputs": [
+      "data/gold/stage1/", "data/gold/stage2/", "data/gold/stage3/",
+      "stage1_gdpr7_human_correction_v1.json",
+      "stage1_adjudications/"
+    ]
+  },
+  "runtime": {
+    "type": "offline_python_package",
+    "package": "spacy",
+    "version": "3.8.13",
+    "model": "en_core_web_sm",
+    "model_version": "3.8.0",
+    "model_dir_sha256": "f5c9433ca389d21da684983f431a8294ef78e3f48ea91d901318c716cc4e52ae",
+    "model_dir_files": 26,
+    "pipeline": ["tok2vec", "tagger", "parser", "attribute_ruler", "lemmatizer", "ner"],
+    "note": "offline, no download, no network; same model family as the Winter Stage 3 development baseline",
+    "missing_runtime": "fail_closed_raise_no_p1_fallback"
+  },
+  "language_analysis": {
+    "normalization": "collapse_unicode_whitespace",
+    "case_normalization": "none",
+    "lemmatization_in_output": false,
+    "output_token_form": "original_surface_token_text",
+    "pos_tagset": "spacy_english_universal_pos",
+    "dependency_labels": {
+      "root": "ROOT",
+      "object": ["obj", "dobj", "dative", "attr"],
+      "passive_subject": ["nsubjpass", "csubjpass"],
+      "verb_complement_chain": ["xcomp"],
+      "auxiliary": ["aux", "auxpass"],
+      "preposition": ["prep"],
+      "prep_object": ["pobj"],
+      "conjunction": ["conj"]
+    }
+  },
+  "rules": {
+    "label_style_recognition": {
+      "verb_style": "root token POS is VERB",
+      "noun_style": "root token POS is NOUN/PROPN",
+      "degenerate_style": "no VERB/NOUN/PROPN tokens",
+      "empty_label": "normalized label is empty"
+    },
+    "actor_derivation": {
+      "single_nonempty_lane_label": "actor = the unique non-empty lane label",
+      "empty_lane_or_no_lane": "actor = pool name via BPMN XML lane-set mapping (status pool_fallback_empty_lane)",
+      "ambiguous_nonempty_lanes": "actor = pool name (status pool_fallback_ambiguous_lanes)",
+      "no_pool_name": "actor = null (status no_actor)",
+      "statuses": [
+        "single_lane_label", "pool_fallback_empty_lane",
+        "pool_fallback_ambiguous_lanes", "pool_fallback_single_lane", "no_actor"
+      ]
+    },
+    "semantic_content_derivation": {
+      "verb_style_action": "action = root VERB token surface; append xcomp VERB chain tokens separated by single space (verb-complement composition)",
+      "verb_style_object": "object = dependency subtree of the object label under root/xcomp verb (obj/dobj/dative/attr): includes determiners, adjectives, noun modifiers and conj branches; excludes aux/auxpass/punct tokens and the preposition token itself; prep objects (pobj) inside the object subtree are merged with the preposition token excluded; prep phrases attached directly to the verb are treated as adjuncts and excluded",
+      "passive_object": "object = passive subject (nsubjpass/csubjpass) subtree when present",
+      "noun_style_action": "action = first NOUN/PROPN token surface",
+      "noun_style_object": "object = concatenation (single space) of prep pobj subtrees attached to the action noun, preposition tokens excluded; empty when no prep",
+      "conjunction_inclusion": "conj branches of the head object token are included in the subtree",
+      "action_only": "object = null with verb_style_action_only / noun_style_action_only status when the object derivation is empty",
+      "degenerate": "all surfaces null with degenerate_label status",
+      "empty": "all surfaces null with empty_label status",
+      "label_statuses": [
+        "empty_label", "degenerate_label", "unparsed_label",
+        "verb_style_action_object", "verb_style_action_only",
+        "noun_style_action_object", "noun_style_action_only",
+        "passive_style_action_object", "passive_style_action_only"
+      ]
+    }
+  },
+  "determinism": {
+    "activity_records": "ascending_activity_id",
+    "lane_labels": "unique_nonempty_labels_ascending_codepoint",
+    "process_record_hash": "canonical_json_utf8_sort_keys_compact",
+    "unknown_baseline": "reject",
+    "invalid_process_record": "reject",
+    "output_tampering": "reject",
+    "double_run": "byte_identical_required"
+  },
+  "safety": {
+    "gold_read": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "learned_model_used": true,
+    "learned_model_scope": "offline_statistical_pos_dependency_parser_only",
+    "no_gold_tuning": true,
+    "no_p0_p1_fallback": true,
+    "no_hardcoded_process_or_activity_ids": true,
+    "no_per_sample_or_per_label_rules": true
+  },
+  "implementation": {
+    "module": "src/bpc_hybrid/stage1_label_semantics_p2.py",
+    "schema": "configs/schemas/stage1_label_semantics_p2.schema.json",
+    "runner": "scripts/run_stage1_p2_inference.py",
+    "verifier": "scripts/verify_stage1_p2.py"
+  },
+  "claim_boundary": "P2 is a Sun/Leopold-style method-level independent reconstruction locked AFTER the Stage 1 Process Gold was formed: locked implementation, locked config, locked offline runtime; one-shot prospective formal evaluation without any post-evaluation tuning. It is not exact reproduction, not the Sun original implementation, and not a P1 enhancement."
+}

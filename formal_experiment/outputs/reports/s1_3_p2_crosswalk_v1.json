@@ -1,0 +1,153 @@
+{
+  "schema_version": "s1_3_p2_method_crosswalk@1.0.0",
+  "project_date": "2026-08-13",
+  "claim_name": "Sun/Leopold-style Stage 1 method-level independent reconstruction",
+  "forbidden_claims": ["exact reproduction", "Sun original implementation", "P1 enhanced", "novel Stage 1 method", "blind preregistration", "developer-blind", "test-blind"],
+  "honest_label": "post-Gold paper-derived method reconstruction with a locked implementation and prospective one-shot evaluation",
+  "evidence_sources": [
+    {
+      "id": "sun2024_fulltext",
+      "title": "Design-time business process compliance assessment based on multi-granularity semantic information",
+      "authors": ["Xiaoxiao Sun", "Siqing Yang", "Chenying Zhao", "Dongjin Yu"],
+      "local_path": "references/papers/extracted/sun_2024_full_text.txt",
+      "sha256": "947140c3b7e350b4d35b9b6848c275dd265dc060f517da7a1dcfce43a55eec47",
+      "evidence_level": "primary_local_copy"
+    },
+    {
+      "id": "sun2024_evidence",
+      "title": "Sun 2024 structured paper evidence extract",
+      "local_path": "references/papers/extracted/sun_2024_paper_evidence.json",
+      "sha256": "65f03a466a25d640afaa48a0ea60a43c7538a942811cb0739b63e8fa34086ac0",
+      "evidence_level": "local_structured_extract"
+    },
+    {
+      "id": "sun2024_missing",
+      "title": "Sun 2024 missing assets register",
+      "local_path": "references/papers/extracted/sun_2024_missing_assets.md",
+      "sha256": "ea624152b39dd613ea75579f132425791976cb24991654df850ac61911eb3a92",
+      "evidence_level": "local_register"
+    }
+  ],
+  "method_claims": [
+    {
+      "claim_id": "C1",
+      "claim": "Process model label parsing extracts business components: actions and business objects from activity and event labels; actors/actions/business objects are the semantic components of labels",
+      "source": "sun2024_fulltext",
+      "location": "Section 4.1 (Process Model Disassembly); Fig. 1 overview",
+      "evidence_level": "explicit_paper_statement",
+      "implementation": "P2 extracts actor/action/business_object per activity from model context + label language analysis",
+      "difference": "none (core claim preserved)",
+      "affects_prediction_semantics": true
+    },
+    {
+      "claim_id": "C2",
+      "claim": "A Leopold et al. (2013) technique decomposes activity/event labels using model context analysis and structural knowledge of labels; Sun employs 'a similar technique' for actions and business objects",
+      "source": "sun2024_fulltext",
+      "location": "Section 4.1, paragraph on label parsing; reference [25] (Leopold 2013, PhD thesis)",
+      "evidence_level": "explicit_paper_statement",
+      "implementation": "P2 implements deterministic model-context analysis (pool/lane) + structural label analysis (POS/dependency based)",
+      "difference": "Leopold 2013 PhD thesis is unavailable locally; exact style taxonomy and rules are unavailable_or_underspecified (see D-items)",
+      "affects_prediction_semantics": true
+    },
+    {
+      "claim_id": "C3",
+      "claim": "Process label analysis has three steps: 1. Label Style Recognition, 2. Label Composition Analysis, 3. Semantic Content Derivation (Fig. 3)",
+      "source": "sun2024_fulltext",
+      "location": "Section 4.1, Fig. 3",
+      "evidence_level": "explicit_paper_statement",
+      "implementation": "P2 pipeline mirrors the three steps with locked deterministic rules",
+      "difference": "per-step parameters not published; project adaptation locked in config (see D1-D4)",
+      "affects_prediction_semantics": true
+    },
+    {
+      "claim_id": "C4",
+      "claim": "The majority of model information (activities, events, gateways, control flow) is explicitly contained in the process model structure (Definition 1); actors are available from model structure",
+      "source": "sun2024_fulltext",
+      "location": "Section 4.1 before Fig. 3",
+      "evidence_level": "explicit_paper_statement",
+      "implementation": "P2 actor derivation uses pool/lane model context from the frozen structural Process Record + BPMN XML lane-set mapping",
+      "difference": "none for actor context; no learned model used",
+      "affects_prediction_semantics": true
+    },
+    {
+      "claim_id": "C5",
+      "claim": "Sun's language-analysis paradigm for extraction rules combines constituency parsing and dependency parsing (verb phrase, subject/object dependencies, passive nsubjpass, root verb) for rule-based concept extraction",
+      "source": "sun2024_fulltext",
+      "location": "Section 4.2 (regulatory document parsing; same NLP paradigm family), Fig. 7 dependency tree example (nsubjpass aux Root advcl)",
+      "evidence_level": "explicit_paper_statement_analogous_domain",
+      "implementation": "P2 uses offline spaCy en_core_web_sm dependency parse (locked hash) with deterministic dependency rules: root verb, obj/dobj, nsubjpass, xcomp verb chains, prep.pobj merge, conj inclusion",
+      "difference": "applied to BPMN labels (text snippets) rather than regulatory sentences; rules are the minimal deterministic adaptation of the stated paradigm (see D2)",
+      "affects_prediction_semantics": true
+    }
+  ],
+  "unavailable_or_underspecified": [
+    {
+      "item_id": "D1",
+      "item": "Leopold (2013) exact label-style taxonomy and per-style recognition rules",
+      "reason": "PhD thesis not available locally (references/papers has no Leopold file); Sun defers details to [25]",
+      "adaptation": "P2 locks a minimal three-style deterministic classifier (verb_style / noun_style / degenerate) based on POS evidence (Section 4.2 paradigm)",
+      "rationale": "minimal, deterministic, interpretable; no learned model"
+    },
+    {
+      "item_id": "D2",
+      "item": "Exact syntactic rules for action/object derivation from labels",
+      "reason": "Sun states the steps 'will not be extensively discussed ... due to space limitation'",
+      "adaptation": "P2 locks dependency rules: action = root verb (+ xcomp verb chain); object = obj/dobj subtree incl. internal prep pobj, conj, excl. aux/punct; passive via nsubjpass; noun-style action = first noun, object = prep pobj(s)",
+      "rationale": "standard dependency-grammar formulation consistent with the stated paradigm (Fig. 7 example)"
+    },
+    {
+      "item_id": "D3",
+      "item": "Tokenizer/parser/POS configuration of the original method",
+      "reason": "not published; author assets unavailable",
+      "adaptation": "locked offline spaCy 3.8.13 + en_core_web_sm 3.8.0 (dir sha256 f5c9433c...), no download, no network",
+      "rationale": "only offline runtime already present in the workspace (Winter baseline uses the same model family)"
+    },
+    {
+      "item_id": "D4",
+      "item": "Actor fallback policy when lane labels are empty or ambiguous",
+      "reason": "not specified in the paper",
+      "adaptation": "pool-name fallback from BPMN XML lane-set mapping (empty lane -> pool; ambiguous non-empty lanes -> pool with ambiguity status; no pool -> null + no_actor)",
+      "rationale": "model context analysis per C2/C4; deterministic and disclosed"
+    }
+  ],
+  "project_adaptations": [
+    {
+      "id": "PA1",
+      "item": "Label normalization",
+      "value": "collapse unicode whitespace (same policy as locked P1); no case normalization, no lemmatization in output values",
+      "affects_prediction_semantics": true
+    },
+    {
+      "id": "PA2",
+      "item": "Determinism and serialization",
+      "value": "ascending activity_id ordering; canonical JSON UTF-8 sort-keys compact hashing; fail-closed on unknown baseline/invalid record/output tampering",
+      "affects_prediction_semantics": false
+    },
+    {
+      "id": "PA3",
+      "item": "Gold isolation",
+      "value": "P2 implementation/config/runner never read data/gold, human correction, adjudication assets, or Stage 3 Gold; input whitelist enforced; static + runtime guards",
+      "affects_prediction_semantics": false
+    },
+    {
+      "id": "PA4",
+      "item": "No per-sample or per-label special rules",
+      "value": "no process_id/activity_id/Gold-value hardcoding; forbidden by contract tests",
+      "affects_prediction_semantics": false
+    }
+  ],
+  "engineering_enhancements": [
+    "hash-locked config/registry with implementation/runtime/source bindings",
+    "fail-closed behavior on missing runtime or unparseable labels",
+    "independent verifier with recomputed hashes (no trusted booleans)",
+    "synthetic fixtures whose expectations derive from the method contract, not from GDPR-7 Gold",
+    "deterministic double-run byte-identical guarantee"
+  ],
+  "forbidden_p0_p1_mechanisms": [
+    "P1 first-token surface split is NOT used anywhere inside P2 (no fallback to P1)",
+    "P0 raw-label passthrough is NOT used inside P2",
+    "any hidden fallback to P0/P1 outputs is forbidden",
+    "P2 outputs must come from the locked linguistic/model-context analysis only"
+  ],
+  "claim_boundary": "This is a method-level independent reconstruction (Sun/Leopold-style) with a locked implementation and prospective one-shot evaluation. It is NOT an exact reproduction, NOT Sun's original implementation, NOT a P1 enhancement, NOT a novel Stage 1 method, and NOT a blind preregistration (the lock happened after the Stage 1 Gold was formed)."
+}

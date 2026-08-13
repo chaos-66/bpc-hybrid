@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-13
-**收录文件**：1113 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1123 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -85,6 +85,7 @@
 | `configs/models/sun_b0_s26_candidate_B_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/sun_bert_textcnn_s24.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/paths.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/resources/english_verb_roots_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s28d_r5_h1_small_pilot_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s28d_r6c1_h1_remaining_pilot_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/dataset_manifest.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -97,6 +98,7 @@
 | `configs/schemas/stage1_evaluation_report.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_human_annotation.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_label_semantics.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/stage1_label_semantics_p2.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage2_formal_gold.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage2_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_formal_gold.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -105,6 +107,7 @@
 | `configs/schemas/stage3_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_annotation_protocol_s15.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_evaluator_s16.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage1_label_p2_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_label_semantics_s13.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_structural_s11_s14.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage2_evaluator_s210_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -461,6 +464,7 @@
 | `docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/BARRIENTOS_LLM_ROLE.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/PUBLIC_MARKER_LEXICON_RECONSTRUCTION.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/S1_P2_CROSSWALK.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/S28D_R2_CANARY_OFFSET_FORENSICS.json` | 研究证据 | 机器可读配置、数据、事件或产物 |
 | `docs/research/S28D_R2_CANARY_OFFSET_FORENSICS.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/S28D_R3_COORDINATE_CANONICALIZATION.json` | 研究证据 | 机器可读配置、数据、事件或产物 |
@@ -718,6 +722,8 @@
 | `outputs/reports/s1_1_s1_4_determinism_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_1_s1_4_matrix_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_1_s1_4_matrix_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s1_3_p2_crosswalk_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_3_p2_locked_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_5_input_readiness_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_5_input_readiness_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s1_5_process_gold_freeze_authorization_dry_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -919,6 +925,7 @@
 | `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_llm_zh_aid.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_stage1_p2_inference.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_structural.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_baselines.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_fixture_harness.py` | 活动 | Python 实现、脚本或测试 |
@@ -947,6 +954,7 @@
 | `scripts/verify_stage1_gdpr7_determinism_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_human_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_label_semantics_s13.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_stage1_p2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_process_gold.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_stage3_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_structural_s11_s14.py` | 活动 | Python 实现、脚本或测试 |
@@ -1009,6 +1017,7 @@
 | `src/bpc_hybrid/stage1_formal_dataset.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage1_human_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/stage1_label_semantics_p2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage1_process.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_canonical.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
@@ -1175,6 +1184,7 @@
 | `tests/test_relaxation_experiments_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_restore_layer_e_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_1_s1_4_stage1_structural.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s1_3_p2_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_3_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_5_review_tool_and_readiness.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_5_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |

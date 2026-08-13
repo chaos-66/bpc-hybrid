@@ -1,0 +1,65 @@
+{
+  "schema_version": "s1_3_p2_locked_manifest@1.0.0",
+  "project_date": "2026-08-13",
+  "status": "locked_pending_formal_inference",
+  "claim_name": "Sun/Leopold-style Stage 1 method-level independent reconstruction",
+  "honest_label": "post-Gold paper-derived method reconstruction with a locked implementation and prospective one-shot evaluation",
+  "method": {
+    "baseline": "P2",
+    "method_name": "stage1_label_p2_linguistic",
+    "method_version": "stage1_label_p2@1.0.0"
+  },
+  "artifacts": {
+    "configs/stage1_label_p2_v1.json": "59ac4e8ec2b02632366cac229b5538c4f243910f6a371b5e14e1be65817cc49d",
+    "src/bpc_hybrid/stage1_label_semantics_p2.py": "c95910efe80992e0b49be7859e9c9a7b48493e9c794472ed86bcb129d2a5a3c2",
+    "configs/schemas/stage1_label_semantics_p2.schema.json": "5473a28b0682d9ced4e4ad8f1016d19db5663734d311fc2845f23862f2f0bd39",
+    "configs/resources/english_verb_roots_v1.json": "10d04b816c413b5082802364b87f66b6f1ac93a16a7df114246c041566c7af44",
+    "outputs/reports/s1_3_p2_crosswalk_v1.json": "a31f38aeb1095264a84305d01998ac1556abd73e9ef6838f555078c8a4b54774",
+    "scripts/run_stage1_p2_inference.py": "a5412c47e2e80a3e065da36ef13ff9b6f334db81a7864334cfa651f027940436",
+    "scripts/verify_stage1_p2.py": "e2c1ac0d0629946c86864d84b38510b216f52931c4766e811ff6a98327950d4f",
+    "tests/test_s1_3_p2_label_semantics.py": "fbddce03d14f154dd19c6374cf20c44f9e68c270afac0de6c0b7eaaae99e98fc"
+  },
+  "runtime": {
+    "package": "spacy",
+    "version": "3.8.13",
+    "model": "en_core_web_sm",
+    "model_version": "3.8.0",
+    "model_dir_sha256": "f5c9433ca389d21da684983f431a8294ef78e3f48ea91d901318c716cc4e52ae",
+    "model_dir_files": 26,
+    "missing_runtime": "fail_closed_raise_no_p1_fallback"
+  },
+  "evidence_sources": {
+    "references/papers/extracted/sun_2024_full_text.txt": "947140c3b7e350b4d35b9b6848c275dd265dc060f517da7a1dcfce43a55eec47",
+    "references/papers/extracted/sun_2024_paper_evidence.json": "65f03a466a25d640afaa48a0ea60a43c7538a942811cb0739b63e8fa34086ac0",
+    "references/papers/extracted/sun_2024_missing_assets.md": "ea624152b39dd613ea75579f132425791976cb24991654df850ac61911eb3a92"
+  },
+  "safety": {
+    "gold_read": false,
+    "human_gold_tuning": false,
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "p0_p1_fallback": false,
+    "hardcoded_process_or_activity_ids": false,
+    "per_sample_or_per_label_rules": false
+  },
+  "verifier": {
+    "script": "scripts/verify_stage1_p2.py",
+    "result": "VERIFIED",
+    "checks": 14
+  },
+  "synthetic_tests": {
+    "file": "tests/test_s1_3_p2_label_semantics.py",
+    "result": "21 passed",
+    "coverage": [
+      "single lane actor", "empty lane + pool fallback", "ambiguous lanes",
+      "verb-object", "compound action", "preposition phrase",
+      "that/whether clause", "conjunction", "passive voice", "empty label",
+      "punctuation + unicode whitespace", "subprocess/task type consistency",
+      "runtime missing fail-closed", "byte-identical double run",
+      "no hardcoded ids/labels", "gold path isolation",
+      "no P1 fallback (P2 != P1)"
+    ]
+  },
+  "reproducible_command": "python formal_experiment/scripts/run_stage1_p2_inference.py --output outputs/development/stage1_predictions/formal_predictions_v1.json",
+  "claim_boundary": "P2 is locked AFTER the Stage 1 Process Gold was formed: locked implementation, config and offline runtime; prospective one-shot formal evaluation without post-evaluation tuning. Not exact reproduction, not the Sun original implementation, not a P1 enhancement, not a novel method, not a blind preregistration."
+}

@@ -3436,3 +3436,16 @@
 - 仍存在 blocker：无
 - 备注：7/7 Process Records frozen and published to data/gold/stage1/process_records/stage1_process_gold_v1.json (f33aa857, 256,960 B) + manifest (1885dad2); only adjudicated data published, all hashes preserved, independent verifier verify_stage1_process_gold.py VERIFIED; P2 boundary recorded (pre-locked fully disclosed adaptations only, no Gold tuning, no P0/P1 as P2, no exact reproduction claim); gold_freeze_authorized=true, status process_gold_freeze_authorized_and_published, audit pass stage1_process_gold_published; S1.6/S1.7/S3.7 NOT auto-advanced; zero LLM/API; contract/stage3 gate untouched
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-13T12:46:55.246845+00:00 - S1.3 P2 Sun/Leopold-style method-level independent reconstruction locked (implementation + config + runtime + synthetic tests + verifier)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1852 passed, 24 skipped, 19 warnings in 365.73s (0:06:05)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`661f20b3e9e7924ecac3831709bb680a35cb6817`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Crosswalk C1-C5/D1-D4; P2 config/registry + implementation (model context + style recognition + composition/semantic derivation); offline spaCy 3.8.13/en_core_web_sm 3.8.0 locked (dir f5c9433c); Gold isolation (whitelist + AST static check + fail-closed runtime); 21 synthetic tests; verifier 14 checks VERIFIED; manifest s1_3_p2_locked_v1; formal inference/evaluation pending; zero LLM/API; Gold/contract/stage3 untouched
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

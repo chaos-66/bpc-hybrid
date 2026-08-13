@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/bpc-hybrid/stage1_label_semantics_p2.schema.json",
+  "title": "Stage 1 Label Semantics Sidecar — P2 (Sun/Leopold-style linguistic)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "process_record", "method", "activities"],
+  "properties": {
+    "schema_version": {"const": "stage1_label_semantics_p2@1.0.0"},
+    "process_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "process_id", "sha256"],
+      "properties": {
+        "schema_version": {"const": "process_record@1.0.0"},
+        "process_id": {"$ref": "#/$defs/nonempty"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "baseline", "language", "learned_model", "runtime"],
+      "properties": {
+        "name": {"const": "stage1_label_p2_linguistic"},
+        "version": {"const": "stage1_label_p2@1.0.0"},
+        "baseline": {"const": "P2"},
+        "language": {"const": "en"},
+        "learned_model": {"const": true},
+        "runtime": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["package", "version", "model", "model_version", "model_dir_sha256"],
+          "properties": {
+            "package": {"const": "spacy"},
+            "version": {"const": "3.8.13"},
+            "model": {"const": "en_core_web_sm"},
+            "model_version": {"const": "3.8.0"},
+            "model_dir_sha256": {"const": "f5c9433ca389d21da684983f431a8294ef78e3f48ea91d901318c716cc4e52ae"}
+          }
+        }
+      }
+    },
+    "activities": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/activity"}
+    }
+  },
+  "$defs": {
+    "nonempty": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nullableString": {"type": ["string", "null"]},
+    "stringArray": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "activity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activity_id",
+        "raw_label",
+        "lane_labels",
+        "actor_surface",
+        "actor_status",
+        "action_surface",
+        "business_object_surface",
+        "label_status"
+      ],
+      "properties": {
+        "activity_id": {"$ref": "#/$defs/nonempty"},
+        "raw_label": {"type": "string"},
+        "lane_labels": {"$ref": "#/$defs/stringArray"},
+        "actor_surface": {"$ref": "#/$defs/nullableString"},
+        "actor_status": {
+          "enum": [
+            "single_lane_label", "pool_fallback_empty_lane",
+            "pool_fallback_ambiguous_lanes", "pool_fallback_single_lane",
+            "no_actor"
+          ]
+        },
+        "action_surface": {"$ref": "#/$defs/nullableString"},
+        "business_object_surface": {"$ref": "#/$defs/nullableString"},
+        "label_status": {
+          "enum": [
+            "empty_label", "degenerate_label", "unparsed_label",
+            "verb_style_action_object", "verb_style_action_only",
+            "noun_style_action_object", "noun_style_action_only",
+            "passive_style_action_object", "passive_style_action_only"
+          ]
+        }
+      }
+    }
+  }
+}
