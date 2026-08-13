@@ -1,0 +1,33 @@
+{
+  "schema_version": "stage1_formal_capsule_manifest@1.0.0",
+  "project_date": "2026-08-13",
+  "status": "evaluation_completed_no_tuning",
+  "inputs": {
+    "predictions": {
+      "path": "outputs/development/stage1_predictions/formal_predictions_v1.json",
+      "sha256": "79a9b2c17185d63dc5ab5d9c47c8c592469b30f3cf7298740e593838166a94a8"
+    },
+    "gold": {
+      "path": "data/gold/stage1/process_records/stage1_process_gold_v1.json",
+      "sha256": "f33aa857a0796d0517a9d04cc96b0a4f316202603fe0adf66693aeb5cb444bca"
+    },
+    "evaluator_contract": {
+      "path": "configs/stage1_evaluator_s16_formal.json",
+      "sha256": "c6ebc24114d0ed0af9dc8af2fbd72343870fc2cae48f68c62a37939bc6a261f9"
+    },
+    "label_contract": {
+      "path": "configs/stage1_label_semantics_s13.json",
+      "sha256": "abb9d85fe0b7453be316d5ea1fe821d2a953fc9200190a92d4454f060cffd201"
+    },
+    "p2_config": {
+      "path": "configs/stage1_label_p2_v1.json",
+      "sha256": "59ac4e8ec2b02632366cac229b5538c4f243910f6a371b5e14e1be65817cc49d"
+    }
+  },
+  "evaluation_sha256": "9fc1a7da7a0144de4dfe83049ae0c9d26b1bdacc51c8d4c012ed89d4eb03eb1c",
+  "predictions_sha256": "79a9b2c17185d63dc5ab5d9c47c8c592469b30f3cf7298740e593838166a94a8",
+  "export_index_sha256": "001d600c5b649bc945e1146c6db1f4742e24258650cbfc570a22192d49d3eeb1",
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

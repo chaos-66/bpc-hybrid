@@ -5,7 +5,7 @@
     "S1.6"
   ],
   "status": "succeeded_contract_only",
-  "created_at": "2026-08-08T14:29:44.001863+00:00",
+  "created_at": "2026-08-13T13:30:45.456807+00:00",
   "runtime": {
     "python": "3.14.6"
   },
@@ -13,7 +13,7 @@
   "artifacts": {
     "config": {
       "path": "configs/stage1_evaluator_s16.json",
-      "sha256": "0beea4d398683970b3caa08e51a90c9390316fb6755fb0ca1a49da941c28122d"
+      "sha256": "d9e3295d8fc880fbd5e0330c01cfd0c6c68a4e50329b841624c184371d0a26e4"
     },
     "schema": {
       "path": "configs/schemas/stage1_evaluation_report.schema.json",
@@ -21,11 +21,11 @@
     },
     "implementation": {
       "path": "src/bpc_hybrid/stage1_evaluation.py",
-      "sha256": "d3c91fab221c3c31bc243c08c3eb995424407ba7287df24b08373a645734c82a"
+      "sha256": "c9ef105be60beaa16e58ca876c75355ccb7bbb81b28ba31f8696ca9985e8410a"
     },
     "runner": {
       "path": "scripts/evaluate_stage1_s16.py",
-      "sha256": "cf708987a29a8cb5043ba2af7ce6cce9de157486f95ddba58bd50020fbde7381"
+      "sha256": "2a2b20f104e575a45785d9b3b33368e79490af88e9356a98a67805368feb180c"
     },
     "verifier": {
       "path": "scripts/verify_stage1_evaluator_s16.py",

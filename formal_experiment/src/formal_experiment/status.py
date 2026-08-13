@@ -352,6 +352,23 @@ def _sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _stage1_formal_evaluation_verified() -> bool:
+    """Run the independent S1.6 formal-evaluation capsule verifier from
+    disk (2026-08-13); never trust stored booleans."""
+    try:
+        import importlib.util
+        path = REPO_ROOT / "scripts" / "verify_stage1_formal_evaluation.py"
+        spec = importlib.util.spec_from_file_location(
+            "s1_formal_eval_status_verifier", path)
+        if spec is None or spec.loader is None:
+            return False
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module.verify()["verified"] is True
+    except Exception:  # pragma: no cover - defensive
+        return False
+
+
 G04_CONTRACT = REPO_ROOT / "configs" / "evaluation" / "g04_evaluation_views_contract_v1.json"
 COMPARISON_CAPSULE = (REPO_ROOT / "outputs" / "evidence"
                       / "d1_h1_zero_api_reeval_v1" / "comparison_capsule.json")
@@ -678,6 +695,12 @@ def collect_status() -> dict[str, Any]:
         "stage1_evaluator_verified": bool(stage1_evaluator_gate.get("evaluator_ready")),
         "stage1_formal_results_ready": bool(
             stage1_evaluator_gate.get("formal_results_ready")
+        ),
+        # 2026-08-13: one-shot formal evaluation (P0/P1/P2 vs frozen Stage 1
+        # Process Gold); the audit actually runs the independent capsule
+        # verifier, so this mirrors the audit pass
+        "stage1_formal_evaluation_verified": bool(
+            _stage1_formal_evaluation_verified()
         ),
         "assets": {
             "winter_2020_reference": WINTER_2020_REFERENCE_DIR.exists(),

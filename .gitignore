@@ -142,3 +142,9 @@ codex_tmp/
 
 # Stage 3 gold review backups (local restore artifacts, not versioned)
 formal_experiment/data/development/human_review/backups/
+
+# S1.6 formal Stage 1 predictions + evaluation capsule (locked formal assets)
+!formal_experiment/outputs/development/stage1_predictions/
+!formal_experiment/outputs/development/stage1_predictions/*
+!formal_experiment/outputs/development/stage1_formal_capsule_v1/
+!formal_experiment/outputs/development/stage1_formal_capsule_v1/*

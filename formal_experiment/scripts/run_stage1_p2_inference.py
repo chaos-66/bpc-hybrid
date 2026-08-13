@@ -66,6 +66,7 @@ def main() -> int:
     out = ROOT / args.output
     if out.exists():
         raise SystemExit(f"refusing to overwrite existing output: {out}")
+    out.parent.mkdir(parents=True, exist_ok=True)
 
     membership = load_formal_membership_contract(INPUTS["membership"])
     structural_contract = load_stage1_contract(

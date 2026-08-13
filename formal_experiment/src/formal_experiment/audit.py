@@ -235,6 +235,54 @@ def _load_gold_verifier() -> Any | None:
         return None
 
 
+def _load_formal_evaluation_verifier() -> Any | None:
+    """Load the S1.6 formal evaluation capsule verifier (script module)."""
+    try:
+        import importlib.util
+        path = REPO_ROOT / "scripts" / "verify_stage1_formal_evaluation.py"
+        spec = importlib.util.spec_from_file_location(
+            "stage1_formal_evaluation_verifier", path)
+        if spec is None or spec.loader is None:
+            return None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    except Exception:  # pragma: no cover - defensive
+        return None
+
+
+def _load_p2_verifier() -> Any | None:
+    """Load the S1.3 P2 lock verifier (script module)."""
+    try:
+        import importlib.util
+        path = REPO_ROOT / "scripts" / "verify_stage1_p2.py"
+        spec = importlib.util.spec_from_file_location(
+            "stage1_p2_verifier", path)
+        if spec is None or spec.loader is None:
+            return None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    except Exception:  # pragma: no cover - defensive
+        return None
+
+
+def _load_prediction_verifier() -> Any | None:
+    """Load the S1.6 formal predictions verifier (script module)."""
+    try:
+        import importlib.util
+        path = REPO_ROOT / "scripts" / "verify_stage1_predictions.py"
+        spec = importlib.util.spec_from_file_location(
+            "stage1_predictions_verifier", path)
+        if spec is None or spec.loader is None:
+            return None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    except Exception:  # pragma: no cover - defensive
+        return None
+
+
 def _valid_event_log(path: Path) -> tuple[int, list[int]]:
     report = inspect_jsonl(path)
     return report.valid_json, report.invalid_lines
@@ -1298,7 +1346,49 @@ def collect_project_audit() -> dict[str, Any]:
              "rewritten decision); source/candidate/correction/seven-batch "
              "chain hashes preserved; seven-batch chain verifier passes; "
              "user-authorized 2026-08-13 (gold_freeze_authorized=true). "
-             "S1.6 formal evaluation / S1.7 / S3.7 are NOT auto-advanced.")
+             "S1.7 / S3.7 are NOT auto-advanced.")
+
+    # ------------------------------------------------------------------
+    # S1.3 P2 + S1.6 one-shot formal evaluation (2026-08-13): the audit
+    # ACTUALLY RUNS the independent P2 lock verifier, the prediction
+    # verifier and the formal evaluation capsule verifier (recomputed from
+    # disk, not file-presence checks).
+    p2_verified = False
+    predictions_verified = False
+    evaluation_verified = False
+    try:
+        p2_verifier = _load_p2_verifier()
+        if p2_verifier is not None:
+            p2_verified = p2_verifier.verify()["verified"] is True
+    except Exception:  # pragma: no cover - defensive
+        p2_verified = False
+    try:
+        pred_verifier = _load_prediction_verifier()
+        if pred_verifier is not None:
+            predictions_verified = pred_verifier.verify()["verified"] is True
+    except Exception:  # pragma: no cover - defensive
+        predictions_verified = False
+    try:
+        eval_verifier = _load_formal_evaluation_verifier()
+        if eval_verifier is not None:
+            evaluation_verified = eval_verifier.verify()["verified"] is True
+    except Exception:  # pragma: no cover - defensive
+        evaluation_verified = False
+    if p2_verified and predictions_verified and evaluation_verified:
+        _add(findings, "passes", "stage1_formal_evaluation_verified",
+             "S1.6 one-shot formal evaluation VERIFIED (2026-08-13): "
+             "P2 Sun/Leopold-style reconstruction locked and byte-unchanged; "
+             "P0/P1/P2 formal predictions re-verified from whitelisted "
+             "inputs (no Gold leakage); evaluation capsule re-run from disk "
+             "matches the stored report; zero LLM/API; P2 not tuned after "
+             "evaluation; limitations disclosed (candidate-assisted Gold, "
+             "no significance inference, post-Gold lock). S1.7 freeze and "
+             "S3.7 Oracle are NOT auto-advanced.")
+    elif (p2_verified and not predictions_verified) or (
+            predictions_verified and not evaluation_verified):
+        _add(findings, "errors", "stage1_formal_evaluation_invalid",
+             "S1.3/S1.6 formal assets exist but an independent verifier "
+             "FAILED (predictions or evaluation capsule tampered).")
     elif has_adjudications and adjudication_ok and auth_ok \
             and adjudication_complete:
         _add(findings, "passes",

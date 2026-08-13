@@ -3449,3 +3449,20 @@
 - 仍存在 blocker：无
 - 备注：Crosswalk C1-C5/D1-D4; P2 config/registry + implementation (model context + style recognition + composition/semantic derivation); offline spaCy 3.8.13/en_core_web_sm 3.8.0 locked (dir f5c9433c); Gold isolation (whitelist + AST static check + fail-closed runtime); 21 synthetic tests; verifier 14 checks VERIFIED; manifest s1_3_p2_locked_v1; formal inference/evaluation pending; zero LLM/API; Gold/contract/stage3 untouched
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-13T13:56:31.594345+00:00 - S1.6 formal one-shot P0/P1/P2 evaluation verified (predictions locked first; P2 unchanged after lock)
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s16_formal_one_shot_v1；阶段=stage1；方法=P0/P1/P2；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_stage1_formal_evaluation.py --capsule outputs/development/stage1_formal_capsule_v1`
+- manifest：outputs/development/stage1_formal_capsule_v1/manifest.json
+- 结果摘要：P0 micro F1 0.0 (raw, no semantics); P1 micro F1 0.5956 acc 0.4241 triple 0.0; P2 micro F1 0.8185 acc 0.6928 triple 0.4222; structure micro F1 1.0 (shared parser component, not external generalization evidence); one-shot, no tuning; zero LLM/API
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1859 passed, 24 skipped, 19 warnings in 479.69s (0:07:59)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`c704bbc527a91e89f0a6da7cabbd637e5ccada12`；相关未提交路径：13 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Predictions locked and re-verified from whitelisted inputs (no Gold leakage); formal evaluator is a NEW asset (stage1_evaluation_formal.py + stage1_evaluator_s16_formal.json) independent of the contract-locked synthetic evaluator (contract untouched); capsule + independent verifier VERIFIED; limitations disclosed (candidate-assisted Gold, no significance, post-Gold lock); synthetic S1.6 gate expectations re-bound to current assets (historical mismatch from f628b6b); S1.3->verified, S1.6->verified, S1.7 blocked (freeze pending authorization)
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
