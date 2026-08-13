@@ -3466,3 +3466,16 @@
 - 仍存在 blocker：无
 - 备注：Predictions locked and re-verified from whitelisted inputs (no Gold leakage); formal evaluator is a NEW asset (stage1_evaluation_formal.py + stage1_evaluator_s16_formal.json) independent of the contract-locked synthetic evaluator (contract untouched); capsule + independent verifier VERIFIED; limitations disclosed (candidate-assisted Gold, no significance, post-Gold lock); synthetic S1.6 gate expectations re-bound to current assets (historical mismatch from f628b6b); S1.3->verified, S1.6->verified, S1.7 blocked (freeze pending authorization)
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-13T14:20:46.951361+00:00 - S1.7 freeze readiness dry-run packet built and verified (ready_for_user_freeze_authorization; freeze NOT applied)
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1865 passed, 24 skipped, 19 warnings in 566.24s (0:09:26)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`9372a5426c77c08aa4b3eee31ba2055899370eeb`；相关未提交路径：6 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Self-contained packet s1_7_freezer_readiness_dry_run_v1.{json,md} (sha 7cc488b0): 24 asset hashes recomputed from disk, 5 independent verifiers actually run and pass, consistency declarations (zero API, P2 unchanged after lock, Gold not used for tuning, Stage 3 not started), rollback/fail-closed semantics, Stage 3 boundary (Oracle only via its own gates), exact authorization sentence; independent verifier verify_s1_7_freezer_dry_run.py (10 checks VERIFIED); 6 tamper tests; S1.7 target status ready_for_user_freeze_authorization - formal freeze NOT applied, awaiting user authorization; zero LLM/API; Gold/contract/stage3 untouched
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
