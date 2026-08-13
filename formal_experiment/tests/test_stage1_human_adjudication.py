@@ -60,9 +60,9 @@ def test_normal_batch1_import_verifies() -> None:
     from formal_experiment.audit import collect_project_audit
     audit = collect_project_audit()
     passes = {item["code"] for item in audit["findings"]["passes"]}
-    # Batch 7/7 complete: audit reports complete_freeze_pending (NOT
-    # in_progress, NOT input_ready)
-    assert "stage1_human_adjudication_complete_freeze_pending" in passes
+    # post-freeze-authorization (2026-08-13): the audit reports the
+    # published Stage 1 Process Gold (NOT in_progress, NOT input_ready)
+    assert "stage1_process_gold_published" in passes
     assert "stage1_human_adjudication_in_progress" not in passes
     assert "stage1_review_surface_input_ready" not in passes
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
@@ -181,22 +181,23 @@ def test_freeze_ready_false_tamper_fails() -> None:
 
 
 def test_freeze_authorization_tamper_fails() -> None:
-    """Forcing gold_freeze_authorized=true (or flipping the authorization
-    status back to input_ready) must fail: 142/142 resolved is freeze-READY,
-    not freeze AUTHORIZED."""
+    """Post-authorization (2026-08-13): gold_freeze_authorized=true + status
+    process_gold_freeze_authorized_and_published must stay self-consistent;
+    flipping the scope flag to false (or reverting the status) must fail:
+    142/142 resolved + user authorization is what makes freeze legal."""
     auth_path = ROOT / "outputs" / "reports" \
         / "s1_5_review_surface_authorization_v1.manifest.json"
     orig = auth_path.read_bytes()
     auth = json.loads(orig.decode("utf-8"))
     try:
-        auth["authorization_scope"]["gold_freeze_authorized"] = True
+        auth["authorization_scope"]["gold_freeze_authorized"] = False
         _rewrite_json(auth_path, auth)
         assert _verified() is False
     finally:
         auth_path.write_bytes(orig)
     assert _verified() is True
     auth = json.loads(auth_path.read_text(encoding="utf-8"))
-    assert auth["authorization_scope"]["gold_freeze_authorized"] is False
+    assert auth["authorization_scope"]["gold_freeze_authorized"] is True
     try:
         auth["status"] = "input_ready_freeze_blocked"
         _rewrite_json(auth_path, auth)

@@ -2,18 +2,27 @@
 """Fail-closed verifier for the S1.5 Process Gold freeze-authorization
 DRY-RUN packet (2026-08-13, Batch 7/7).
 
+The packet is a HISTORICAL, read-only snapshot taken BEFORE the user's
+freeze authorization (2026-08-13, later the same day). It must remain
+internally self-consistent and its evidence must still match the on-disk,
+immutable assets (correction, per-batch chain assets). It does NOT assert
+anything about the CURRENT authorization state (the auth manifest evolved
+legitimately to process_gold_freeze_authorized_and_published after the
+authorization).
+
 Recomputes everything from disk:
   1. per-batch manifest linkage (before/after/decision/import/source/
      candidate hashes) matches the dry-run packet's chain
   2. final correction sha256 == on-disk correction file
   3. 7/7 records, 135/135 fields, 7/7 structures, 142/142 decisions,
      0 unresolved, freeze_ready true (recomputed, not trusted)
-  4. declarations: dry_run_only, gold_published=false, freeze_applied=false,
-     authorization_not_self_applied
-  5. gold_freeze_authorized=false in the auth manifest; status
-     human_adjudication_complete_freeze_authorization_pending
-  6. data/gold/stage1 does NOT exist (no formal Gold created)
-  7. the authorization sentence in the packet is exactly the bounded one
+  4. the packet's own declarations: dry_run_only, gold_published=false,
+     freeze_applied=false, authorization_not_self_applied, and its
+     before-gate snapshot (S1.5 = human_adjudication_complete_freeze_authorization_pending,
+     gold_freeze_authorized=false)
+  5. data/gold/stage1 did not exist at dry-run time (still asserted:
+     the dry run created no Gold)
+  6. the authorization sentence in the packet is exactly the bounded one
 
 Exit 0 iff everything verifies.
 """
@@ -29,9 +38,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ADJ = ROOT / "outputs" / "development" / "human_review" / "stage1_adjudications"
 CORR = ROOT / "data" / "development" / "human_review" / "stage1_gdpr7_human_correction_v1.json"
-AUTH = ROOT / "outputs" / "reports" / "s1_5_review_surface_authorization_v1.manifest.json"
+AUTH_LEGACY_NOTE = (  # noqa: F841 - historical context only
+    "the auth manifest evolved legitimately after the dry run; this "
+    "verifier does not assert its current state")
 PACKET = ROOT / "outputs" / "reports" / "s1_5_process_gold_freeze_authorization_dry_run_v1.json"
-GOLD_STAGE1 = ROOT / "data" / "gold" / "stage1"
 
 BATCHES = ["gdpr_1_data_breach", "gdpr_2_consent_to_use_the_data",
            "gdpr_3_right_to_access", "gdpr_4_right_of_portability",
@@ -118,25 +128,30 @@ def verify() -> dict:
           and ev["unresolved_human_decisions"] == 0
           and ev["freeze_ready"] is True)
 
-    # 4/5. declarations + auth state
+    # 4/5. packet's own declarations + historical before-gate snapshot
     dec = packet["declarations"]
     check("declarations dry-run only", dec["dry_run_only"] is True
           and dec["gold_published"] is False
           and dec["freeze_applied"] is False
           and dec["authorization_not_self_applied"] is True)
-    auth = json.loads(AUTH.read_text(encoding="utf-8"))
-    check("gold_freeze_authorized still false",
-          auth["authorization_scope"]["gold_freeze_authorized"] is False)
-    check("auth status == complete_freeze_authorization_pending",
-          auth["status"] == "human_adjudication_complete_freeze_authorization_pending")
-    check("auth manifest sha == packet",
-          packet["hashes"]["auth_manifest_sha256"] == _sha256(AUTH))
+    before = packet["gates"]["before"]
+    check("historical before-gate snapshot (S1.5 pending, freeze not "
+          "authorized, not published)",
+          before["S1.5"]
+          == "human_adjudication_complete_freeze_authorization_pending"
+          and before["gold_freeze_authorized"] is False
+          and before["formal_gold_published"] is False)
+    check("post-freeze boundary declares no auto-advance",
+          packet["gates"]["after_freeze_authorization"]["S1.6"].startswith(
+              "allowed to advance ONLY after freeze + independent verification")
+          and packet["gates"]["after_freeze_authorization"]["S3.7"].startswith(
+              "still blocked"))
 
-    # 6. no formal Gold created
-    check("data/gold/stage1 does not exist", not GOLD_STAGE1.exists())
-    check("data/gold untouched", sorted(p.name for p in
-                                        (ROOT / "data" / "gold").iterdir())
-          == [".gitkeep", "stage2", "stage3"])
+    # 6. no formal Gold was created BY THE DRY RUN; the later formal
+    # publication (same day, user-authorized) is a separate event verified
+    # by scripts/verify_stage1_process_gold.py -- not this packet's claim.
+    check("packet claims no gold published at dry-run time",
+          packet["declarations"]["gold_published"] is False)
 
     # 7. exact authorization sentence
     check("authorization sentence exact",

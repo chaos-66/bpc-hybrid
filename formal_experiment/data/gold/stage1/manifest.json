@@ -1,0 +1,88 @@
+{
+  "schema_version": "stage1_process_gold_publication_manifest@1.0.0",
+  "publication_status": "artifacts_published_and_verified",
+  "publish_date": "2026-08-13",
+  "authorization": {
+    "manifest": "outputs/reports/s1_5_process_gold_freeze_authorization_v1.manifest.json",
+    "sha256": "4b97762cfe3cb336a2a163bd85cbc850f9963a513af8a33185efae7d0486e25c",
+    "authorized_by_user": true
+  },
+  "artifacts": {
+    "data/gold/stage1/process_records/stage1_process_gold_v1.json": {
+      "path": "data/gold/stage1/process_records/stage1_process_gold_v1.json",
+      "byte_size": 256960,
+      "sha256": "f33aa857a0796d0517a9d04cc96b0a4f316202603fe0adf66693aeb5cb444bca"
+    }
+  },
+  "record_counts": {
+    "process_records": 7,
+    "label_fields": 135,
+    "structure_decisions": 7
+  },
+  "preconditions_verified": {
+    "seven_batches_chain_verified": true,
+    "correction_freeze_ready": true,
+    "correction_sha256": "6a9c055a8f92c04aa5c44c92d4653bad128f048103fd16584754c121cb0ba18e",
+    "gold_equals_correction_records": true,
+    "gold_freeze_authorized": true
+  },
+  "preserved_hashes": {
+    "blank_sha256": "b5fdf7ce323527d5992bcef3d7a7e3a3fd1ee1ecaf149de4b941e89882c7f43b",
+    "correction_sha256": "6a9c055a8f92c04aa5c44c92d4653bad128f048103fd16584754c121cb0ba18e",
+    "membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d",
+    "chain": {
+      "gdpr_1_data_breach": {
+        "before_correction_sha256": "b5fdf7ce323527d5992bcef3d7a7e3a3fd1ee1ecaf149de4b941e89882c7f43b",
+        "after_correction_sha256": "2c10c78f1e77d935f8bd6691dd327b32afaaba89a7c6189a2666e2a15ddc8416",
+        "candidate_process_record_sha256": "0f842984297f36b17c7144cb513de5bc73ca378b6880891b933821d9d2060da1",
+        "bpmn_source_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+      },
+      "gdpr_2_consent_to_use_the_data": {
+        "before_correction_sha256": "2c10c78f1e77d935f8bd6691dd327b32afaaba89a7c6189a2666e2a15ddc8416",
+        "after_correction_sha256": "da8f1b05fc0dbcd5c096a79da36b9a317190937a8de65eab2aa7ca21344cecb7",
+        "candidate_process_record_sha256": "fb6ec966fcbd1715add37af70c76067eb7aa950e25c227d43557cc2e707e125d",
+        "bpmn_source_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+      },
+      "gdpr_3_right_to_access": {
+        "before_correction_sha256": "da8f1b05fc0dbcd5c096a79da36b9a317190937a8de65eab2aa7ca21344cecb7",
+        "after_correction_sha256": "a4f65b1a8d833264035f578531f06d3fc40933fa7292be75f37200904d9786ea",
+        "candidate_process_record_sha256": "4f2daa7bed486d0457b4967fa6752ee45ca011919efd6cfa4b7e1e6ac09cbbb9",
+        "bpmn_source_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1"
+      },
+      "gdpr_4_right_of_portability": {
+        "before_correction_sha256": "a4f65b1a8d833264035f578531f06d3fc40933fa7292be75f37200904d9786ea",
+        "after_correction_sha256": "6befc63cb9989d5d23b418a51d58e1a71d36ad7a3254df679ae2a90b510e42f8",
+        "candidate_process_record_sha256": "a1d77e897e80491c9f47725c812917ae98d9aca143b6478cbd62b9bff5727446",
+        "bpmn_source_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11"
+      },
+      "gdpr_5_right_to_withdraw": {
+        "before_correction_sha256": "6befc63cb9989d5d23b418a51d58e1a71d36ad7a3254df679ae2a90b510e42f8",
+        "after_correction_sha256": "1afabb877d29f4937c3988bc2c1dc85da7098be6592b1190b13e5a17e9611330",
+        "candidate_process_record_sha256": "6053ce182627eca57f0ab9895ca284e0c8d4292e027908d9052a38220e39a011",
+        "bpmn_source_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0"
+      },
+      "gdpr_6_right_to_rectify": {
+        "before_correction_sha256": "1afabb877d29f4937c3988bc2c1dc85da7098be6592b1190b13e5a17e9611330",
+        "after_correction_sha256": "947487b19e91da5db6c9d971c5cd3f10e0e8d83c728e4dcba13497ec3a465e38",
+        "candidate_process_record_sha256": "5f2ee37aabf7d9ff192cd32d05191df4d42e90dbd8054b399246cae1f225e335",
+        "bpmn_source_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa"
+      },
+      "gdpr_7_right_to_be_forgotten": {
+        "before_correction_sha256": "947487b19e91da5db6c9d971c5cd3f10e0e8d83c728e4dcba13497ec3a465e38",
+        "after_correction_sha256": "6a9c055a8f92c04aa5c44c92d4653bad128f048103fd16584754c121cb0ba18e",
+        "candidate_process_record_sha256": "250bdecd830806e43549e6c60d84848d57a85539cce25af88330d4a4d8c98375",
+        "bpmn_source_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+      }
+    }
+  },
+  "p2_boundary": "pre-locked, fully disclosed project adaptations ONLY for unavailable raw data and non-public paper parameters; NEVER tune with the formal Gold; NEVER present P0/P1 as P2; NEVER claim exact reproduction",
+  "exclusions": {
+    "s1_6": "formal evaluation NOT run yet (independent verification of the frozen Gold comes first)",
+    "s1_7": "NOT completed",
+    "s3_7": "Oracle NOT started",
+    "exact_reproduction_claim": "FORBIDDEN"
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

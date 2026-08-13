@@ -3423,3 +3423,16 @@
 - 仍存在 blocker：无
 - 备注：7 user decisions (structure accepted_candidate; F1 Communication/data subject - 'with' excluded; F2 Retrieve/data); 142/142 resolved 0 unresolved; seven-batch chain VERIFIED byte-level; freeze_ready=true as fact but gold_freeze_authorized=false; auth status human_adjudication_complete_freeze_authorization_pending; dry-run packet + verifier; no Gold published, no freeze applied, contract/stage3/publication untouched
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-13T11:15:38.124751+00:00 - S1.5 formal Stage 1 Process Gold freeze + publication (user-authorized 2026-08-13)
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1831 passed, 24 skipped, 19 warnings in 355.33s (0:05:55)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`56ae14ddf74af2778d31719839fca76a5d6e3009`；相关未提交路径：15 个
+- Gold：仅按授权调整格式（`authorized_format_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：7/7 Process Records frozen and published to data/gold/stage1/process_records/stage1_process_gold_v1.json (f33aa857, 256,960 B) + manifest (1885dad2); only adjudicated data published, all hashes preserved, independent verifier verify_stage1_process_gold.py VERIFIED; P2 boundary recorded (pre-locked fully disclosed adaptations only, no Gold tuning, no P0/P1 as P2, no exact reproduction claim); gold_freeze_authorized=true, status process_gold_freeze_authorized_and_published, audit pass stage1_process_gold_published; S1.6/S1.7/S3.7 NOT auto-advanced; zero LLM/API; contract/stage3 gate untouched
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -128,29 +128,28 @@ def test_s1_5_readiness_counts_and_unreviewed_proof() -> None:
 
 
 def test_s1_5_review_surface_authorization_applied() -> None:
-    """2026-08-11 user authorization (evolved 2026-08-13 after Batch 7/7):
-    S1.5 adjudication complete; audit pass present; freeze NOT authorized."""
+    """2026-08-11 user authorization (evolved 2026-08-13: adjudication
+    complete then freeze authorized + Process Gold published); audit pass
+    present; Gold published but S1.6/S1.7/S3.7 NOT auto-advanced."""
     man = json.loads((ROOT / "outputs" / "reports"
                       / "s1_5_review_surface_authorization_v1.manifest.json")
                      .read_text(encoding="utf-8"))
     assert man["authorized_by_user"] is True
-    assert man["authorization_scope"]["gold_freeze_authorized"] is False
+    assert man["authorization_scope"]["gold_freeze_authorized"] is True
     assert man["authorization_scope"]["tool_must_not_infer_or_prefill"] is True
     assert man["membership"]["payload_sha256"] == (
         "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d")
     assert all(man["checks"].values())
-    # Batch 7/7: human adjudication complete, formal freeze pending
-    assert man["status"] == \
-        "human_adjudication_complete_freeze_authorization_pending"
+    # post-authorization (2026-08-13): Process Gold frozen + published
+    assert man["status"] == "process_gold_freeze_authorized_and_published"
     assert man["review_surface"]["summary"]["adjudicated_records"] == 7
     assert man["review_surface"]["summary"]["resolved_label_fields"] == 135
     assert man["review_surface"]["summary"]["freeze_ready"] is True
     from formal_experiment.audit import collect_project_audit
     audit = collect_project_audit()
     passes = {item["code"] for item in audit["findings"]["passes"]}
-    # after batch-7 import the audit reports adjudication complete /
-    # freeze pending
-    assert "stage1_human_adjudication_complete_freeze_pending" in passes
+    # after the freeze authorization the audit reports the published Gold
+    assert "stage1_process_gold_published" in passes
     assert audit["final_experiment_ready"] is True  # Stage 2 gate unaffected
 
 

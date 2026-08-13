@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-13
-**收录文件**：1108 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1113 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -379,6 +379,8 @@
 | `data/development/sun_modality/raw/.gitignore` | 开发/溯源 | 项目文件 |
 | `data/development/sun_modality/source_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/gold/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
+| `data/gold/stage1/manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/gold/stage1/process_records/stage1_process_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/gold/stage2/estg150_formal_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/gold/stage3/stage3_matching_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/gold/stage3/stage3_violation_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
@@ -720,6 +722,7 @@
 | `outputs/reports/s1_5_input_readiness_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s1_5_process_gold_freeze_authorization_dry_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_5_process_gold_freeze_authorization_dry_run_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s1_5_process_gold_freeze_authorization_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_5_review_surface_authorization_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_6_evaluator_synthetic_verification_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_7_freeze_checklist_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -944,6 +947,7 @@
 | `scripts/verify_stage1_gdpr7_determinism_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_human_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_label_semantics_s13.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_stage1_process_gold.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_stage3_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_structural_s11_s14.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
@@ -1192,6 +1196,7 @@
 | `tests/test_stage1_adjudication_batch7.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_adjudication_chain.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_human_adjudication.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage1_process_gold.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_sun_literal_overlap.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_contract_repair.py` | 活动 | Python 实现、脚本或测试 |

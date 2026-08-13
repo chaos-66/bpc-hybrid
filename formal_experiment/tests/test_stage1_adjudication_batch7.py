@@ -95,7 +95,8 @@ def test_batch7_chain_verified_and_exact_values() -> None:
     names = [c["name"] for c in r["checks"]]
     assert any("adjudication completeness fact consistent (freeze_ready "
                "derived)" in n for n in names)
-    assert any("formal gold freeze NOT authorized" in n for n in names)
+    assert any("gold freeze authorization state self-consistent" in n
+               for n in names)
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
     assert doc["review_summary"] == {
         "records": 7, "adjudicated_records": 7, "label_fields": 135,
@@ -382,12 +383,24 @@ def test_sequence_flow_structure_tamper_fails() -> None:
     assert _verified() is True
 
 
-def test_gold_freeze_authorization_force_fails() -> None:
+def test_gold_freeze_authorization_inconsistent_fails() -> None:
+    """Post-authorization: gold_freeze_authorized=true + status
+    process_gold_freeze_authorized_and_published must stay self-consistent;
+    flipping the scope flag to false (or reverting the status to pending)
+    must fail the chain verifier."""
     auth_path = AUTH_MANIFEST
     orig = auth_path.read_bytes()
     auth = json.loads(orig.decode("utf-8"))
     try:
-        auth["authorization_scope"]["gold_freeze_authorized"] = True
+        auth["authorization_scope"]["gold_freeze_authorized"] = False
+        _rewrite(auth_path, auth)
+        assert _verified() is False
+    finally:
+        auth_path.write_bytes(orig)
+    assert _verified() is True
+    auth = json.loads(orig.decode("utf-8"))
+    try:
+        auth["status"] = "human_adjudication_complete_freeze_authorization_pending"
         _rewrite(auth_path, auth)
         assert _verified() is False
     finally:

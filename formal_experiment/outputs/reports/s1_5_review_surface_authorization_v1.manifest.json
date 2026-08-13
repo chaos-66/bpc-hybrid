@@ -5,7 +5,7 @@
   "authorized_by_user": true,
   "authorization_scope": {
     "review_surface_open": true,
-    "gold_freeze_authorized": false,
+    "gold_freeze_authorized": true,
     "tool_must_not_infer_or_prefill": true,
     "freeze_requires": {
       "structure_decisions": "7/7 by the user",
@@ -51,12 +51,19 @@
     "all_structure_decisions_resolved_7_of_7": true,
     "no_gold_prefilled": true,
     "adjudication_chain_verified_7_batches": true,
-    "gold_freeze_authorized_false": true,
+    "gold_freeze_authorized_true": true,
+    "process_gold_published_and_verified": true,
     "tool_exists": true,
     "guide_exists": true,
     "schema_exists": true
   },
-  "status": "human_adjudication_complete_freeze_authorization_pending",
+  "status": "process_gold_freeze_authorized_and_published",
+  "freeze_authorization": {
+    "date": "2026-08-13",
+    "manifest": "outputs/reports/s1_5_process_gold_freeze_authorization_v1.manifest.json",
+    "gold_manifest": "data/gold/stage1/manifest.json",
+    "note": "formal Stage 1 Process Gold frozen + published after the user's explicit authorization; S1.6/S1.7/S3.7 are NOT auto-advanced"
+  },
   "zero_api": {
     "new_llm_api_calls": 0
   }

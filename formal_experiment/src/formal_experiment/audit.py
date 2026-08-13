@@ -219,6 +219,22 @@ def _load_adjudication_verifier() -> Any | None:
         return None
 
 
+def _load_gold_verifier() -> Any | None:
+    """Load the Stage 1 Process Gold publication verifier (script module)."""
+    try:
+        import importlib.util
+        path = REPO_ROOT / "scripts" / "verify_stage1_process_gold.py"
+        spec = importlib.util.spec_from_file_location(
+            "stage1_process_gold_verifier", path)
+        if spec is None or spec.loader is None:
+            return None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    except Exception:  # pragma: no cover - defensive
+        return None
+
+
 def _valid_event_log(path: Path) -> tuple[int, list[int]]:
     report = inspect_jsonl(path)
     return report.valid_json, report.invalid_lines
@@ -1225,14 +1241,21 @@ def collect_project_audit() -> dict[str, Any]:
     # true) and the verifier passes while gold_freeze_authorized stays
     # false, the audit reports stage1_human_adjudication_complete_freeze_pending
     # ("142/142 resolved" is a freeze-READY fact, NOT a freeze authorization
-    # and NOT published Gold).
+    # and NOT published Gold). State evolution (2026-08-13, user freeze
+    # authorization): with gold_freeze_authorized=true AND the published
+    # Stage 1 Process Gold independently verified, the audit reports
+    # stage1_process_gold_published; this is published Gold, but S1.6
+    # formal evaluation / S1.7 / S3.7 are NOT auto-advanced.
     s15_auth = _load_json(REPO_ROOT / "outputs" / "reports"
                           / "s1_5_review_surface_authorization_v1.manifest.json")
     s15_checks = s15_auth.get("checks", {})
+    freeze_authorized = s15_auth.get("authorization_scope", {}).get(
+        "gold_freeze_authorized") is True
     auth_ok = (s15_auth.get("authorized_by_user") is True
                and all(s15_checks.values())
-               and s15_auth.get("authorization_scope", {}).get(
-                   "gold_freeze_authorized") is False)
+               and (s15_auth.get("authorization_scope", {}).get(
+                   "gold_freeze_authorized") is False
+                    or freeze_authorized))
     adjudication_dir = (REPO_ROOT / "outputs" / "development" / "human_review"
                         / "stage1_adjudications")
     has_adjudications = adjudication_dir.exists() and any(
@@ -1255,7 +1278,28 @@ def collect_project_audit() -> dict[str, Any]:
         s15_summary.get("adjudicated_records") == 7
         and s15_summary.get("resolved_label_fields") == 135
         and s15_summary.get("freeze_ready") is True)
+    # published Stage 1 Process Gold: independently verified artifact
+    gold_verified = False
+    if freeze_authorized:
+        try:
+            gold_verifier = _load_gold_verifier()
+            if gold_verifier is not None:
+                gold_verified = gold_verifier.verify()["verified"] is True
+        except Exception:  # pragma: no cover - defensive
+            gold_verified = False
     if has_adjudications and adjudication_ok and auth_ok \
+            and adjudication_complete and freeze_authorized and gold_verified:
+        _add(findings, "passes", "stage1_process_gold_published",
+             "Formal Stage 1 Process Gold FROZEN and PUBLISHED "
+             "(data/gold/stage1/process_records/stage1_process_gold_v1.json): "
+             "7/7 records, 135/135 label fields, 7/7 structure decisions, "
+             "142/142 human decisions, 0 unresolved; every published record "
+             "equals the adjudicated correction record (no added/inferred/"
+             "rewritten decision); source/candidate/correction/seven-batch "
+             "chain hashes preserved; seven-batch chain verifier passes; "
+             "user-authorized 2026-08-13 (gold_freeze_authorized=true). "
+             "S1.6 formal evaluation / S1.7 / S3.7 are NOT auto-advanced.")
+    elif has_adjudications and adjudication_ok and auth_ok \
             and adjudication_complete:
         _add(findings, "passes",
              "stage1_human_adjudication_complete_freeze_pending",

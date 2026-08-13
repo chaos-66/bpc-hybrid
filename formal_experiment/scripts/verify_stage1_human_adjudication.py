@@ -21,8 +21,8 @@ order gdpr_1..gdpr_7):
    chain
 10. import_record bound (hash recorded in the manifest and recomputed)
 11. summary counts consistent; freeze_ready true only at 7/7 + 135/135;
-    formal Gold freeze stays unauthorized (gold_freeze_authorized=false,
-    authorization status human_adjudication_complete_freeze_authorization_pending)
+    gold freeze authorization state self-consistent (pending+false before
+    the 2026-08-13 user authorization; authorized+published after)
 12. any tamper -> nonzero exit
 
 Exit 0 iff everything verifies.
@@ -155,12 +155,14 @@ def verify() -> dict[str, Any]:
     corr_by_id = {r["process_id"]: r for r in correction.get("records", [])}
 
     auth = _load(AUTH_MANIFEST)
+    # Authorization state: adjudication complete (2026-08-13) then explicit
+    # user freeze authorization + publication (also 2026-08-13). The review
+    # surface authorization must stay intact (authorized_by_user true).
     check("review surface authorization intact",
           auth.get("authorized_by_user") is True
-          and auth.get("authorization_scope", {}).get(
-              "gold_freeze_authorized") is False
           and auth.get("status")
-          == "human_adjudication_complete_freeze_authorization_pending")
+          in ("human_adjudication_complete_freeze_authorization_pending",
+              "process_gold_freeze_authorized_and_published"))
     check("membership payload", membership.get("membership", {}).get(
         "membership_payload_sha256") == EXPECTED_MEMBERSHIP_PAYLOAD)
 
@@ -388,11 +390,22 @@ def verify() -> dict[str, Any]:
         detail = "partial world: freeze_ready must be false"
     check("adjudication completeness fact consistent (freeze_ready "
           "derived)", complete_ok, detail + " " + json.dumps(summary))
-    check("formal gold freeze NOT authorized",
-          auth.get("authorization_scope", {}).get(
-              "gold_freeze_authorized") is False
-          and auth.get("status")
-          == "human_adjudication_complete_freeze_authorization_pending")
+    # Gold freeze authorization state: after the user's explicit freeze
+    # authorization (2026-08-13) gold_freeze_authorized is true and the
+    # authorization status is process_gold_freeze_authorized_and_published;
+    # before that it was false + ..._pending. The manifest must be
+    # self-consistent either way (no half-authorization).
+    freeze_scope = auth.get("authorization_scope", {}).get(
+        "gold_freeze_authorized") is True
+    freeze_status_ok = auth.get("status") == \
+        "process_gold_freeze_authorized_and_published"
+    pending_scope = auth.get("authorization_scope", {}).get(
+        "gold_freeze_authorized") is False
+    pending_status_ok = auth.get("status") == \
+        "human_adjudication_complete_freeze_authorization_pending"
+    check("gold freeze authorization state self-consistent",
+          (freeze_scope and freeze_status_ok)
+          or (pending_scope and pending_status_ok))
 
     verified = all(c["ok"] for c in checks)
     return {"verified": verified, "checks": checks,
