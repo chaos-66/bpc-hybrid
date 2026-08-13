@@ -78,7 +78,7 @@ def test_tool_import_applies_only_explicit_decisions(tmp_path: Path) -> None:
         assert la["business_object"]["status"] == "absent"
         # untouched records stay unreviewed (gdpr_5 is the first never
         # adjudicated process; gdpr_1/2/3/4 adjudicated in batches 1-4)
-        assert doc["records"][5]["review_state"] == "unreviewed"
+        assert doc["records"][6]["review_state"] == "unreviewed"
         # a backup was created
         after = sorted(backup_dir.glob("*.json"))
         assert len(after) == len(before) + 1

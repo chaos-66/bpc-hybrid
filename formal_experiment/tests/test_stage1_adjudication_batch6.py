@@ -1,9 +1,10 @@
-"""Batch-5 focused tests for the S1.5 adjudication chain (gdpr_5).
+"""Batch-6 focused tests for the S1.5 adjudication chain (gdpr_6).
 
-Real semantic-boundary guardrails: compound actions (Stop running / Stop
-using), if/that clause boundaries (D3/D5), preserved surface form (D4
-'the withdraw'). Every tamper is applied to the real artifact, asserted to
-FAIL the chain verifier, then restored byte-exactly.
+Focus: the E2 raw_label trailing newline (preserved in evidence) vs the
+clean semantic values (no newline / trailing whitespace) -- an explicit
+user adjudication, not evidence cleaning. Every tamper is applied to the
+real artifact, asserted to FAIL the chain verifier, then restored
+byte-exactly.
 """
 
 from __future__ import annotations
@@ -25,21 +26,20 @@ if str(SRC) not in sys.path:
 VERIFIER_PATH = ROOT / "scripts" / "verify_stage1_human_adjudication.py"
 CORRECTION = (ROOT / "data" / "development" / "human_review"
               / "stage1_gdpr7_human_correction_v1.json")
+PROCESS_RECORDS = (ROOT / "data" / "development" / "human_review"
+                   / "stage1_gdpr7_process_records_v1.json")
 ASSET = (ROOT / "outputs" / "development" / "human_review"
-         / "stage1_adjudications" / "gdpr_5_right_to_withdraw")
+         / "stage1_adjudications" / "gdpr_6_right_to_rectify")
 
-D1 = "sid-07817A82-69C2-45A1-9ABC-277F17D93747"
-D2 = "sid-1A48D305-CB15-4C57-A988-B39ED62DE531"
-D3 = "sid-A9B97678-298C-4EE7-82A3-836179299938"
-D4 = "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB"
-D5 = "sid-DFB327FD-78D3-4012-8BAC-82AF87341389"
+E1 = "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814"
+E2 = "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
 
 
 def _load_verifier() -> object:
     spec = importlib.util.spec_from_file_location(
-        "s1ad_b5_verifier", VERIFIER_PATH)
+        "s1ad_b6_verifier", VERIFIER_PATH)
     module = importlib.util.module_from_spec(spec)
-    sys.modules["s1ad_b5_verifier"] = module
+    sys.modules["s1ad_b6_verifier"] = module
     spec.loader.exec_module(module)
     return module
 
@@ -55,17 +55,10 @@ def _rewrite(path: Path, doc) -> None:
 
 def _rec(doc):
     return next(r for r in doc["records"]
-                if r["process_id"] == "gdpr_5_right_to_withdraw")
+                if r["process_id"] == "gdpr_6_right_to_rectify")
 
 
-def _tamper_field(correction_doc, activity_id, field, new_value) -> None:
-    rec = _rec(correction_doc)
-    la = next(x for x in rec["label_annotations"]
-              if x["activity_id"] == activity_id)
-    la[field]["value"] = new_value
-
-
-def test_batch5_chain_verified_and_counts() -> None:
+def test_batch6_chain_verified_and_counts() -> None:
     m = _load_verifier()
     r = m.verify()
     assert r["verified"] is True, [c for c in r["checks"] if not c["ok"]]
@@ -73,18 +66,81 @@ def test_batch5_chain_verified_and_counts() -> None:
         "gdpr_1_data_breach", "gdpr_2_consent_to_use_the_data",
         "gdpr_3_right_to_access", "gdpr_4_right_of_portability",
         "gdpr_5_right_to_withdraw", "gdpr_6_right_to_rectify"]
-    assert any("field count derived (15)" in c["name"] for c in r["checks"])
+    assert any("field count derived (6)" in c["name"] for c in r["checks"])
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
     assert doc["review_summary"]["adjudicated_records"] == 6
     assert doc["review_summary"]["resolved_label_fields"] == 129
     assert doc["review_summary"]["freeze_ready"] is False
 
 
-def test_compound_action_stop_running() -> None:
+def test_e2_raw_label_newline_preserved() -> None:
+    """The trailing newline is part of the raw evidence (blank raw_label and
+    locked candidate name), while the semantic values are clean."""
+    doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
+    la = next(x for x in _rec(doc)["label_annotations"]
+              if x["activity_id"] == E2)
+    assert la["raw_label"].endswith("\n")
+    assert "\n" not in la["action"]["value"]
+    assert "\n" not in la["business_object"]["value"]
+    assert not la["action"]["value"].strip().endswith(" ")
+    recs = json.loads(PROCESS_RECORDS.read_text(encoding="utf-8"))["records"]
+    cand = next(r for r in recs
+                if r["process_id"] == "gdpr_6_right_to_rectify")
+    e2 = next(a for a in cand["activities"] if a["id"] == E2)
+    assert e2["name"].endswith("\n")
+
+
+def test_remove_e2_raw_label_newline_fails() -> None:
+    """Deleting the trailing newline from the correction's raw_label must
+    fail (raw evidence must stay byte-stable)."""
     orig = CORRECTION.read_bytes()
     doc = json.loads(orig.decode("utf-8"))
+    la = next(x for x in _rec(doc)["label_annotations"]
+              if x["activity_id"] == E2)
     try:
-        _tamper_field(doc, D1, "action", "Stop")  # split compound
+        la["raw_label"] = la["raw_label"].rstrip("\n")
+        _rewrite(CORRECTION, doc)
+        assert _verified() is False
+    finally:
+        CORRECTION.write_bytes(orig)
+    assert _verified() is True
+
+
+def test_action_with_newline_fails() -> None:
+    orig = CORRECTION.read_bytes()
+    doc = json.loads(orig.decode("utf-8"))
+    la = next(x for x in _rec(doc)["label_annotations"]
+              if x["activity_id"] == E2)
+    try:
+        la["action"]["value"] = "Communicate\n"
+        _rewrite(CORRECTION, doc)
+        assert _verified() is False
+    finally:
+        CORRECTION.write_bytes(orig)
+    assert _verified() is True
+
+
+def test_business_object_with_newline_fails() -> None:
+    orig = CORRECTION.read_bytes()
+    doc = json.loads(orig.decode("utf-8"))
+    la = next(x for x in _rec(doc)["label_annotations"]
+              if x["activity_id"] == E2)
+    try:
+        la["business_object"]["value"] = "the rectification "
+        _rewrite(CORRECTION, doc)
+        assert _verified() is False
+    finally:
+        CORRECTION.write_bytes(orig)
+    assert _verified() is True
+
+
+def test_business_object_without_article_fails() -> None:
+    orig = CORRECTION.read_bytes()
+    doc = json.loads(orig.decode("utf-8"))
+    la = next(x for x in _rec(doc)["label_annotations"]
+              if x["activity_id"] == E2)
+    try:
+        la["business_object"]["value"] = "rectification"
         _rewrite(CORRECTION, doc)
         assert _verified() is False
     finally:
@@ -92,146 +148,32 @@ def test_compound_action_stop_running() -> None:
     assert _verified() is True
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
     la = next(x for x in _rec(doc)["label_annotations"]
-              if x["activity_id"] == D1)
-    assert la["action"]["value"] == "Stop running"
-    assert la["business_object"]["value"] == "BPs using withdrawn data"
+              if x["activity_id"] == E2)
+    assert la["business_object"]["value"] == "the rectification"
 
 
-def test_d1_object_back_to_p1_remainder() -> None:
+def test_generic_tamper_and_chain() -> None:
     orig = CORRECTION.read_bytes()
     doc = json.loads(orig.decode("utf-8"))
     try:
-        _tamper_field(doc, D1, "business_object",
-                      "running BPs using withdrawn data")  # P1 remainder
+        la = next(x for x in _rec(doc)["label_annotations"]
+                  if x["activity_id"] == E1)
+        la["action"]["value"] = "Fix"
         _rewrite(CORRECTION, doc)
         assert _verified() is False
     finally:
         CORRECTION.write_bytes(orig)
     assert _verified() is True
-
-
-def test_compound_action_stop_using() -> None:
-    orig = CORRECTION.read_bytes()
-    doc = json.loads(orig.decode("utf-8"))
-    try:
-        _tamper_field(doc, D2, "action", "Stop")
-        _rewrite(CORRECTION, doc)
-        assert _verified() is False
-    finally:
-        CORRECTION.write_bytes(orig)
-    assert _verified() is True
-    doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    la = next(x for x in _rec(doc)["label_annotations"]
-              if x["activity_id"] == D2)
-    assert la["action"]["value"] == "Stop using"
-    assert la["business_object"]["value"] == "withdrawn data"
-
-
-def test_d2_object_back_to_using_phrase() -> None:
-    orig = CORRECTION.read_bytes()
-    doc = json.loads(orig.decode("utf-8"))
-    try:
-        _tamper_field(doc, D2, "business_object", "using withdrawn data")
-        _rewrite(CORRECTION, doc)
-        assert _verified() is False
-    finally:
-        CORRECTION.write_bytes(orig)
-    assert _verified() is True
-
-
-def test_d3_full_if_clause_as_object() -> None:
-    orig = CORRECTION.read_bytes()
-    doc = json.loads(orig.decode("utf-8"))
-    try:
-        _tamper_field(doc, D3, "business_object",
-                      "if withdrawn data are relevant")
-        _rewrite(CORRECTION, doc)
-        assert _verified() is False
-    finally:
-        CORRECTION.write_bytes(orig)
-    assert _verified() is True
-    doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    la = next(x for x in _rec(doc)["label_annotations"]
-              if x["activity_id"] == D3)
-    assert la["business_object"]["value"] == "withdrawn data"
-
-
-def test_d4_withdraw_surface_form() -> None:
-    orig = CORRECTION.read_bytes()
-    doc = json.loads(orig.decode("utf-8"))
-    try:
-        _tamper_field(doc, D4, "business_object", "withdrawal")
-        _rewrite(CORRECTION, doc)
-        assert _verified() is False
-    finally:
-        CORRECTION.write_bytes(orig)
-    assert _verified() is True
-    doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    try:
-        _tamper_field(doc, D4, "business_object", "withdraw")  # no article
-        _rewrite(CORRECTION, doc)
-        assert _verified() is False
-    finally:
-        CORRECTION.write_bytes(orig)
-    assert _verified() is True
-    doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    la = next(x for x in _rec(doc)["label_annotations"]
-              if x["activity_id"] == D4)
-    assert la["business_object"]["value"] == "the withdraw"
-
-
-def test_d5_that_clause_boundary() -> None:
-    orig = CORRECTION.read_bytes()
-    doc = json.loads(orig.decode("utf-8"))
-    try:
-        _tamper_field(doc, D5, "business_object",
-                      "the user that the withdraw will stop all running BPs")
-        _rewrite(CORRECTION, doc)
-        assert _verified() is False
-    finally:
-        CORRECTION.write_bytes(orig)
-    assert _verified() is True
-    doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    try:
-        _tamper_field(doc, D5, "business_object",
-                      "the withdraw will stop all running BPs")
-        _rewrite(CORRECTION, doc)
-        assert _verified() is False
-    finally:
-        CORRECTION.write_bytes(orig)
-    assert _verified() is True
-    doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    try:
-        _tamper_field(doc, D5, "business_object", "all running BPs")
-        _rewrite(CORRECTION, doc)
-        assert _verified() is False
-    finally:
-        CORRECTION.write_bytes(orig)
-    assert _verified() is True
-    doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    la = next(x for x in _rec(doc)["label_annotations"]
-              if x["activity_id"] == D5)
-    assert la["business_object"]["value"] == "the user"
-
-
-def test_generic_tampers_and_chain() -> None:
-    # actor tamper
-    orig = CORRECTION.read_bytes()
-    doc = json.loads(orig.decode("utf-8"))
-    try:
-        _tamper_field(doc, D1, "actor", "X")
-        _rewrite(CORRECTION, doc)
-        assert _verified() is False
-    finally:
-        CORRECTION.write_bytes(orig)
-    assert _verified() is True
-    # activity id missing
+    # activity id extra
     imp_path = ASSET / "import_record_v1.json"
     orig_i = imp_path.read_bytes()
     imp = json.loads(orig_i.decode("utf-8"))
     try:
-        imp["records"][0]["label_annotations"] = \
-            imp["records"][0]["label_annotations"][:4]
+        imp["records"][0]["label_annotations"].append({
+            "activity_id": "sid-FAKE", "actor": {"status": "present",
+                                                 "value": "X"},
+            "action": {"status": "present", "value": "X"},
+            "business_object": {"status": "present", "value": "X"}})
         _rewrite(imp_path, imp)
         assert _verified() is False
     finally:
@@ -249,7 +191,7 @@ def test_generic_tampers_and_chain() -> None:
     finally:
         dec_path.write_bytes(orig_d)
     assert _verified() is True
-    # chain break 4->5
+    # chain break 5->6
     man_path = ASSET / "manifest.json"
     orig_m = man_path.read_bytes()
     man = json.loads(orig_m.decode("utf-8"))
@@ -262,10 +204,11 @@ def test_generic_tampers_and_chain() -> None:
     assert _verified() is True
 
 
-def test_earlier_batches_assets_unchanged() -> None:
+def test_earlier_batches_and_gdpr7() -> None:
     import subprocess
     for pid in ("gdpr_1_data_breach", "gdpr_2_consent_to_use_the_data",
-                "gdpr_3_right_to_access", "gdpr_4_right_of_portability"):
+                "gdpr_3_right_to_access", "gdpr_4_right_of_portability",
+                "gdpr_5_right_to_withdraw"):
         for name in ("decision_v1.json", "import_record_v1.json",
                      "manifest.json"):
             diff = subprocess.run(
@@ -274,9 +217,6 @@ def test_earlier_batches_assets_unchanged() -> None:
                  f"stage1_adjudications/{pid}/{name}"],
                 capture_output=True)
             assert diff.returncode == 0, f"{pid}/{name} changed"
-
-
-def test_unadjudicated_not_prefilled() -> None:
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
     rec7 = next(r for r in doc["records"]
                 if r["process_id"] == "gdpr_7_right_to_be_forgotten")

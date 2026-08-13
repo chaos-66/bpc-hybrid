@@ -3397,3 +3397,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-13T08:20:35.306253+00:00 - S1.5 human adjudication checkpoint gdpr_6_right_to_rectify (batch 6/7): Batch 5 (d896516) was successfully pushed FIRST and verified on the remote (remote HEAD == d8965168acc9c85ab7fc6f842c9ad1fcd6a76f2c); push used a session-only proxy override (git -c http.proxy= -c https.proxy=) after read-only diagnosis showed the configured local proxy 127.0.0.1:7890 unreachable while direct github.com:443 was reachable -- no global git config was modified, no credentials printed. Then user-confirmed 2026-08-13 adjudication mechanically imported: 7 decisions (1 structure = accepted_candidate; 6 label fields all present: actor 2/2 Data Controller; E1 action 'Rectify' / business_object 'data'; E2 action 'Communicate' / business_object 'the rectification'). Raw-label trailing-newline boundary: E2 raw_label keeps the trailing newline (source XML &#10;; locked candidate name identical), while the semantic action/business_object values carry NO newline or trailing whitespace (explicit adjudication, not evidence cleaning); business_object keeps the article 'the'. gold_process_record copied byte-semantically from the gdpr_6 locked candidate (canonical sha256 5f2ee37aabf7d9ff192cd32d05191df4d42e90dbd8054b399246cae1f225e335 verified). Chain assets: stage1_adjudications/gdpr_6_right_to_rectify/{decision_v1.json, import_record_v1.json, manifest.json} (before_correction_sha256=1afabb877d... (batch-5 after), after_correction_sha256=947487b19e91da5d..., import_record_sha256=7f98dd61..., prev_process=gdpr_5_right_to_withdraw, llm_api_calls=0, gold_freeze_authorized=false). Imported via review tool (backup 20260813T075834Z); validate valid, freeze false. Correction summary: 6/7 adjudicated, 129/135 resolved, freeze_ready false (remaining 6 label fields + 1 structure decision = 7 human decisions). Six-batch chain verifier (blank -> b1..b6 -> on-disk byte replay) VERIFIED. 9 batch-6 focused tests (newline preservation/removal fail closed, action/object with newline or trailing whitespace fail closed, article removal fail closed, generic tamper, gdpr_7 not prefilled, summary/freeze). S1.5 stays in_progress (6/7, 129/135); S1.6/S1.7/S3.7 not started. Zero new LLM/API; Gold/contract/Stage 3 gate/publication untouched; DeepSeek mechanical transcription only.
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1796 passed, 24 skipped, 19 warnings in 337.88s (0:05:37)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`d8965168acc9c85ab7fc6f842c9ad1fcd6a76f2c`；相关未提交路径：13 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

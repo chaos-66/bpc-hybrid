@@ -1,0 +1,214 @@
+{
+  "schema_version": "s1_5_human_adjudication_decision@1.0.0",
+  "process_id": "gdpr_6_right_to_rectify",
+  "adjudication_date": "2026-08-13",
+  "adjudicated_by": "user",
+  "mechanical_transcription_by": "DeepSeek (no inference; explicit user decisions transcribed only)",
+  "review_state": "adjudicated",
+  "structure_annotation": {
+    "decision": "accepted_candidate",
+    "gold_process_record": {
+      "schema_version": "process_record@1.0.0",
+      "process_id": "gdpr_6_right_to_rectify",
+      "source": {
+        "input_id": "gdpr_6_right_to_rectify",
+        "path": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+        "sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+        "byte_size": 17635,
+        "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL"
+      },
+      "method": {
+        "name": "stage1_bpmn_xml_structural",
+        "parser_version": "stage1_bpmn_parser@1.0.0",
+        "label_semantics": "preserve_original_labels_only"
+      },
+      "pools": [
+        {
+          "id": "sid-5B015984-4680-4AF3-A5C9-DB09356D9289",
+          "name": "Data Controller",
+          "process_ref": "gdpr_6_right_to_rectify"
+        }
+      ],
+      "lanes": [
+        {
+          "id": "sid-95D07626-A357-422E-830F-B1E57917DB74",
+          "name": "",
+          "parent_lane_id": null,
+          "flow_node_refs": [
+            "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+            "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0",
+            "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28",
+            "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
+          ]
+        }
+      ],
+      "activities": [
+        {
+          "id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "name": "Rectify data",
+          "type": "subProcess",
+          "lane_ids": [
+            "sid-95D07626-A357-422E-830F-B1E57917DB74"
+          ]
+        },
+        {
+          "id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+          "name": "Communicate the rectification\n",
+          "type": "task",
+          "lane_ids": [
+            "sid-95D07626-A357-422E-830F-B1E57917DB74"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0",
+          "name": "Request received",
+          "type": "startEvent",
+          "lane_ids": [
+            "sid-95D07626-A357-422E-830F-B1E57917DB74"
+          ]
+        },
+        {
+          "id": "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28",
+          "name": "Request fulfilled",
+          "type": "endEvent",
+          "lane_ids": [
+            "sid-95D07626-A357-422E-830F-B1E57917DB74"
+          ]
+        }
+      ],
+      "gateways": [],
+      "sequence_flows": [
+        {
+          "id": "sid-5600A460-FE6A-41EB-A21B-20EAC23AF88D",
+          "name": "",
+          "source_ref": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "target_ref": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "sid-6BEC0E3B-9289-4FBC-933B-A3A7BEAB5A82",
+          "name": "",
+          "source_ref": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+          "target_ref": "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28",
+          "condition_expression": null,
+          "is_default": false
+        },
+        {
+          "id": "sid-C47C687B-ED5F-490A-82CA-78E17FCE5BDF",
+          "name": "",
+          "source_ref": "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0",
+          "target_ref": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "condition_expression": null,
+          "is_default": false
+        }
+      ],
+      "control_flow": {
+        "direct_edges": [
+          {
+            "source_ref": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+            "target_ref": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
+          },
+          {
+            "source_ref": "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0",
+            "target_ref": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814"
+          },
+          {
+            "source_ref": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+            "target_ref": "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28"
+          }
+        ],
+        "reachable_pairs": [
+          {
+            "source_ref": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+            "target_ref": "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28"
+          },
+          {
+            "source_ref": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+            "target_ref": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
+          },
+          {
+            "source_ref": "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0",
+            "target_ref": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814"
+          },
+          {
+            "source_ref": "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0",
+            "target_ref": "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28"
+          },
+          {
+            "source_ref": "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0",
+            "target_ref": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
+          },
+          {
+            "source_ref": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+            "target_ref": "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28"
+          }
+        ],
+        "activity_order_relations": [
+          {
+            "before_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+            "after_activity_id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+            "relation": "reachable_before"
+          }
+        ],
+        "start_event_ids": [
+          "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0"
+        ],
+        "end_event_ids": [
+          "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28"
+        ],
+        "branching_gateway_ids": [],
+        "parallel_gateway_ids": [],
+        "parallel_split_gateway_ids": [],
+        "parallel_join_gateway_ids": [],
+        "cyclic_node_ids": [],
+        "cycle_detected": false,
+        "unreachable_node_ids": []
+      }
+    }
+  },
+  "label_annotations": [
+    {
+      "activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "actor": {
+        "status": "present",
+        "value": "Data Controller"
+      },
+      "action": {
+        "status": "present",
+        "value": "Rectify"
+      },
+      "business_object": {
+        "status": "present",
+        "value": "data"
+      }
+    },
+    {
+      "activity_id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+      "actor": {
+        "status": "present",
+        "value": "Data Controller"
+      },
+      "action": {
+        "status": "present",
+        "value": "Communicate"
+      },
+      "business_object": {
+        "status": "present",
+        "value": "the rectification"
+      }
+    }
+  ],
+  "evidence_hashes": {
+    "candidate_process_record_sha256": "5f2ee37aabf7d9ff192cd32d05191df4d42e90dbd8054b399246cae1f225e335",
+    "bpmn_source_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+    "membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d"
+  },
+  "safety": {
+    "llm_api_calls": 0,
+    "gold_freeze_authorized": false,
+    "inferred_by_agent": false
+  }
+}
