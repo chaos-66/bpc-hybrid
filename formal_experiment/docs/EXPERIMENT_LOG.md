@@ -3479,3 +3479,16 @@
 - 仍存在 blocker：无
 - 备注：Self-contained packet s1_7_freezer_readiness_dry_run_v1.{json,md} (sha 7cc488b0): 24 asset hashes recomputed from disk, 5 independent verifiers actually run and pass, consistency declarations (zero API, P2 unchanged after lock, Gold not used for tuning, Stage 3 not started), rollback/fail-closed semantics, Stage 3 boundary (Oracle only via its own gates), exact authorization sentence; independent verifier verify_s1_7_freezer_dry_run.py (10 checks VERIFIED); 6 tamper tests; S1.7 target status ready_for_user_freeze_authorization - formal freeze NOT applied, awaiting user authorization; zero LLM/API; Gold/contract/stage3 untouched
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-13T17:48:55.115136+00:00 - S1 target-overlap claim correction + formal asset path correction + S1.7 readiness v2 (P2/predictions/metrics byte-unchanged; NOT post-evaluation tuning)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1885 passed, 24 skipped, 19 warnings in 695.21s (0:11:35)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`e3583c934022273b75bca50724c98956eb1469d2`；相关未提交路径：23 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Historical target overlap documented (3 exact overlaps incl. Retrieve data with triple matching human Gold; verb list corrected to 200/200, content unchanged); fixtures corrected to zero overlap with gates; claim correction v2 (target-aware, strict_test_blind=false, held-out generalization denied, evaluation_role=fixed-GDPR7 descriptive); formal v2 authoritative paths (data/predictions/stage1_formal_v1, data/results/stage1_formal_v1, stage1_formal_evaluation_v2.*) with development paths kept as historical provenance; S1.7 v1 marked superseded, v2 packet built (7 verifiers run, freeze NOT applied); P2 config/impl/runtime, predictions (79a9b2c1), metrics (canonical 19002346), Stage 1 Gold, contract, methods, Stage 3 gate unchanged; zero LLM/API; S1.7 freeze pending user authorization
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

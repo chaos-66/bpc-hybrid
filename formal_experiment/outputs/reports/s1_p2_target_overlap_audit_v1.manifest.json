@@ -1,0 +1,41 @@
+{
+  "schema_version": "s1_p2_target_overlap_audit_manifest@1.0.0",
+  "project_date": "2026-08-13",
+  "status": "verified",
+  "artifacts": {
+    "outputs/reports/s1_p2_target_overlap_audit_v1.json": "948d268ae15e243841309623ca0028a4fe5d1391f82db04853a3d7d887b7c129",
+    "outputs/reports/s1_p2_target_overlap_audit_v1.md": "157541aa44810e150522ac4ad9d6eb61717ca7c627f22eac81fb028e05a573ff",
+    "scripts/verify_s1_p2_target_overlap_audit.py": "355e2a995e4c5f6e44d3fe12db360f021a249ff0d335c238597c907e5c3a5c40"
+  },
+  "key_facts": {
+    "historical_exact_overlap_count": 3,
+    "historical_exact_overlap_labels": [
+      "Communication with data subject",
+      "Rectify data",
+      "Retrieve data"
+    ],
+    "historical_normalized_overlap_counts": {
+      "whitespace": 3,
+      "casefold": 3,
+      "punctuation": 3
+    },
+    "current_exact_overlap_count": 0,
+    "verb_total_entries": 200,
+    "verb_unique_entries": 200,
+    "gold_action_headwords_covered": 10,
+    "gold_action_headwords_uncovered": 3,
+    "triple_match_with_human_gold": 1,
+    "development_was_target_aware": true,
+    "strict_test_blind_supported": false,
+    "runtime_gold_read": false,
+    "post_evaluation_tuning": false,
+    "historical_test_commit": "c704bbc527a91e89f0a6da7cabbd637e5ccada12"
+  },
+  "verifier": {
+    "script": "scripts/verify_s1_p2_target_overlap_audit.py",
+    "result": "VERIFIED"
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

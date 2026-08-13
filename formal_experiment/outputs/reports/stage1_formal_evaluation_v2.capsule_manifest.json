@@ -1,0 +1,39 @@
+{
+  "schema_version": "stage1_formal_capsule_manifest_v2@1.0.0",
+  "project_date": "2026-08-13",
+  "status": "claim_corrected_numbers_locked",
+  "authoritative_paths": [
+    "data/predictions/stage1_formal_v1/",
+    "data/results/stage1_formal_v1/"
+  ],
+  "historical_provenance": [
+    "outputs/development/stage1_predictions/formal_predictions_v1.json",
+    "outputs/development/stage1_formal_capsule_v1/"
+  ],
+  "artifacts": {
+    "report": {
+      "path": "outputs\\reports\\stage1_formal_evaluation_v2.json",
+      "sha256": "954122d4ed893a5d8bafc19afe627fe9a44f42cfdacd8af3ff747e798502c988"
+    },
+    "predictions": {
+      "path": "data\\predictions\\stage1_formal_v1\\formal_predictions_v1.json",
+      "sha256": "79a9b2c17185d63dc5ab5d9c47c8c592469b30f3cf7298740e593838166a94a8"
+    },
+    "results": {
+      "path": "data\\results\\stage1_formal_v1\\stage1_formal_evaluation_v1.json",
+      "sha256": "a072db39b37167d76aa4e49b9845b5b563255d980b9ee00cd811f43c116a7392"
+    },
+    "audit": {
+      "path": "outputs\\reports\\s1_p2_target_overlap_audit_v1.json",
+      "sha256": "948d268ae15e243841309623ca0028a4fe5d1391f82db04853a3d7d887b7c129"
+    },
+    "claim": {
+      "path": "outputs\\reports\\s1_stage1_claim_correction_v2.json",
+      "sha256": "46b3e2a8db3e6498ef45c9ac52e54b570eae68ce9b399af007a5307e2bdae6c2"
+    }
+  },
+  "export_index_sha256": "c9c2e7871f5f7726860ae9681003cb5d3f8c58a8d684c91550f1cb614cefa924",
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

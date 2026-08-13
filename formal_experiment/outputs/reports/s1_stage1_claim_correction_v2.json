@@ -1,0 +1,47 @@
+{
+  "schema_version": "s1_stage1_claim_correction@2.0.0",
+  "project_date": "2026-08-13",
+  "correction_reason": "target fixture overlap and formal path semantics (see outputs/reports/s1_p2_target_overlap_audit_v1.json)",
+  "supersedes": "P2 claim language recorded in the S1.3 crosswalk / locked manifest / S1.6 evaluation v1 / S1.7 readiness v1 (historical assets kept; their claim metadata is corrected by this document; their NUMBERS remain locked and valid)",
+  "accurate_claim": "post-Gold, target-aware Sun/Leopold-style method-level reconstruction with Gold-isolated inference, pre-evaluation code/config lock, and no post-evaluation tuning",
+  "structured_status": {
+    "runtime_gold_read": false,
+    "target_labels_seen_during_development": true,
+    "strict_test_blind": false,
+    "developer_blind": false,
+    "held_out_generalization_claim_allowed": false,
+    "implementation_locked_before_scoring": true,
+    "post_evaluation_tuning": false,
+    "exact_reproduction_claim_allowed": false,
+    "sun_original_implementation_claim_allowed": false,
+    "stage1_innovation_claim_allowed": false,
+    "evaluation_role": "formal_descriptive_component_evaluation_on_fixed_GDPR7"
+  },
+  "removed_or_corrected_claims": [
+    "unqualified gold_not_used_for_tuning=true -> corrected: the inference RUNTIME never read Gold; the DEVELOPMENT (fixture selection and assertion writing) saw at least three target activity labels and one assertion triple matched the human Gold",
+    "unqualified prospective one-shot evaluation -> corrected: prospective one-shot scoring of a post-Gold, target-aware locked implementation",
+    "synthetic fixtures ... not from GDPR-7 Gold -> corrected: fixtures are now disjoint from the 45 GDPR-7 raw labels (zero overlap gate); the HISTORICAL fixtures did overlap",
+    "any test-blind / developer-blind implication -> denied",
+    "any held-out generalization implication -> denied"
+  ],
+  "preserved_claims_with_boundaries": {
+    "inference_runner_never_reads_gold_at_runtime": true,
+    "p2_method_locked_before_scoring": true,
+    "no_post_evaluation_method_tuning": true,
+    "metrics_are_formal_recomputable_fixed_dataset_descriptive_results": true,
+    "stage1_not_an_innovation_contribution": true,
+    "p2_is_method_level_reconstruction_not_exact_reproduction": true
+  },
+  "disclosures": {
+    "processes": 7,
+    "activities": 45,
+    "semantic_fields": 135,
+    "gold_nature": "candidate-assisted human adjudication",
+    "structural_gold_nature": "human-accepted parser candidates",
+    "structural_score_1_0_is_not_external_generalization_evidence": true,
+    "no_significance_inference": true,
+    "no_hard_comparison_with_sun_absolute_scores": true,
+    "generalization_requires_new_independently_adjudicated_bpmn_after_method_freeze": true
+  },
+  "zero_api": {"new_llm_api_calls": 0}
+}

@@ -283,6 +283,21 @@ def _load_prediction_verifier() -> Any | None:
         return None
 
 
+def _load_verifier_script(name: str, filename: str) -> Any | None:
+    """Load an independent verifier script module by filename."""
+    try:
+        import importlib.util
+        path = REPO_ROOT / "scripts" / filename
+        spec = importlib.util.spec_from_file_location(name, path)
+        if spec is None or spec.loader is None:
+            return None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    except Exception:  # pragma: no cover - defensive
+        return None
+
+
 def _valid_event_log(path: Path) -> tuple[int, list[int]]:
     report = inspect_jsonl(path)
     return report.valid_json, report.invalid_lines
@@ -1376,19 +1391,68 @@ def collect_project_audit() -> dict[str, Any]:
         evaluation_verified = False
     if p2_verified and predictions_verified and evaluation_verified:
         _add(findings, "passes", "stage1_formal_evaluation_verified",
-             "S1.6 one-shot formal evaluation VERIFIED (2026-08-13): "
-             "P2 Sun/Leopold-style reconstruction locked and byte-unchanged; "
-             "P0/P1/P2 formal predictions re-verified from whitelisted "
-             "inputs (no Gold leakage); evaluation capsule re-run from disk "
-             "matches the stored report; zero LLM/API; P2 not tuned after "
-             "evaluation; limitations disclosed (candidate-assisted Gold, "
-             "no significance inference, post-Gold lock). S1.7 freeze and "
-             "S3.7 Oracle are NOT auto-advanced.")
+             "S1.6 fixed-GDPR-7 formal descriptive component evaluation "
+             "VERIFIED (2026-08-13): P2 Sun/Leopold-style reconstruction "
+             "locked and byte-unchanged; P0/P1/P2 formal predictions "
+             "re-verified from whitelisted inputs (no Gold leakage at "
+             "runtime); evaluation capsule re-run from disk matches the "
+             "stored report; zero LLM/API; P2 not tuned after evaluation. "
+             "Claim boundary (2026-08-13 correction): the reconstruction is "
+             "post-Gold and target-aware (three fixture labels overlapped "
+             "the GDPR-7 target); NOT strict test-blind; NOT held-out "
+             "generalization evidence; candidate-assisted Gold; structure "
+             "1.0 is not external generalization evidence; no significance "
+             "inference; no hard comparison with Sun absolute scores.")
     elif (p2_verified and not predictions_verified) or (
             predictions_verified and not evaluation_verified):
         _add(findings, "errors", "stage1_formal_evaluation_invalid",
              "S1.3/S1.6 formal assets exist but an independent verifier "
              "FAILED (predictions or evaluation capsule tampered).")
+
+    # ------------------------------------------------------------------
+    # 2026-08-13 correction gate: target-overlap audit + claim correction +
+    # formal v2 assets + S1.7 v2 readiness. All verifiers ACTUALLY run.
+    overlap_verified = False
+    v2_verified = False
+    v2p_verified = False
+    try:
+        ov_verifier = _load_verifier_script("s1_overlap_audit_verifier",
+                                            "verify_s1_p2_target_overlap_audit.py")
+        if ov_verifier is not None:
+            overlap_verified = ov_verifier.verify()["verified"] is True
+    except Exception:  # pragma: no cover - defensive
+        overlap_verified = False
+    try:
+        v2_verifier = _load_verifier_script("s1_v2_verifier",
+                                            "verify_stage1_formal_evaluation_v2.py")
+        if v2_verifier is not None:
+            v2_verified = v2_verifier.verify()["verified"] is True
+    except Exception:  # pragma: no cover - defensive
+        v2_verified = False
+    try:
+        v2p_verifier = _load_verifier_script("s1_v2p_verifier",
+                                             "verify_s1_7_freezer_dry_run_v2.py")
+        if v2p_verifier is not None:
+            v2p_verified = v2p_verifier.verify()["verified"] is True
+    except Exception:  # pragma: no cover - defensive
+        v2p_verified = False
+    if overlap_verified and v2_verified and v2p_verified:
+        _add(findings, "passes", "stage1_claim_correction_verified",
+             "S1 claim/formal-path correction VERIFIED (2026-08-13): "
+             "target-overlap audit (historical 3 overlaps documented, "
+             "current fixtures zero-overlap) + target-aware claim "
+             "correction v2 (strict_test_blind=false, "
+             "held_out_generalization_claim_allowed=false, "
+             "runtime_gold_read=false, post_evaluation_tuning=false) + "
+             "formal v2 assets (data/predictions + data/results + v2 report, "
+             "numbers byte-locked) + S1.7 readiness v2 (v1 superseded, "
+             "freeze NOT applied).")
+    elif (overlap_verified or v2_verified or v2p_verified):
+        _add(findings, "errors", "stage1_claim_correction_invalid",
+             "S1 correction assets exist but an independent verifier "
+             "FAILED (overlap audit / v2 assets / S1.7 v2 tampered, or a "
+             "claim was reverted to test-blind / a formal path points back "
+             "to development / verb count is not 200).")
     elif has_adjudications and adjudication_ok and auth_ok \
             and adjudication_complete:
         _add(findings, "passes",

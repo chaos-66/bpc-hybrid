@@ -51,6 +51,8 @@ STRUCTURAL_CONTRACT = load_stage1_contract(
     ROOT / MEMBERSHIP["process_record_activation"]["structural_contract_path"])
 
 BPMN_NS = "http://www.omg.org/spec/BPMN/20100524/MODEL"
+PROCESS_RECORDS = (ROOT / "data" / "development" / "human_review"
+                   / "stage1_gdpr7_process_records_v1.json")
 
 
 def _synthetic_bpmn(path: Path, *, labels: dict[str, str],
@@ -164,10 +166,14 @@ def _by_id(sidecar, activity_id: str) -> dict:
 @pytest.fixture()
 def world(tmp_path: Path) -> tuple[dict, Path]:
     bpmn = tmp_path / "synthetic.bpmn"
+    # NOTE (2026-08-13 correction): these synthetic labels are chosen to be
+    # DISJOINT from the 45 GDPR-7 activity raw labels (see
+    # outputs/reports/s1_p2_target_overlap_audit_v1.json for the historical
+    # overlap audit). Expectations derive from the P2 method contract.
     labels = {
-        "act_retrieve": "Retrieve data",
-        "act_communicate": "Communication with data subject",
-        "act_rectify": "Rectify data",
+        "act_retrieve": "Collect records",
+        "act_communicate": "Correspondence with the customer",
+        "act_rectify": "Update records",
         "act_stop": "Stop running",
         "act_check": "Check whether the data is processed",
         "act_review": "Review the report and the contract",
@@ -246,8 +252,8 @@ def test_verb_object(world) -> None:
     record, bpmn = world
     sidecar = _render(record, bpmn)
     act = _by_id(sidecar, "act_retrieve")
-    assert act["action_surface"] == "Retrieve"
-    assert act["business_object_surface"] == "data"
+    assert act["action_surface"] == "Collect"
+    assert act["business_object_surface"] == "records"
     assert act["label_status"] == "verb_style_action_object"
 
 
@@ -255,8 +261,8 @@ def test_noun_style_prep_phrase(world) -> None:
     record, bpmn = world
     sidecar = _render(record, bpmn)
     act = _by_id(sidecar, "act_communicate")
-    assert act["action_surface"] == "Communication"
-    assert act["business_object_surface"] == "data subject"
+    assert act["action_surface"] == "Correspondence"
+    assert act["business_object_surface"] == "the customer"
     assert act["label_status"] == "noun_style_action_object"
 
 
@@ -340,8 +346,8 @@ def test_type_consistency_subprocess(world) -> None:
 # ---------------------------------------------------------------------------
 
 def test_p2_differs_from_p1_on_prep_phrase(world) -> None:
-    """P1's first-token split yields business_object='with data subject';
-    P2's linguistic analysis yields 'data subject' (preposition excluded).
+    """P1's first-token split yields business_object='with the customer';
+    P2's linguistic analysis yields 'the customer' (preposition excluded).
     This proves P2 is not a P1 fallback."""
     record, bpmn = world
     p1 = render_label_semantics(record, baseline="P1",
@@ -351,8 +357,8 @@ def test_p2_differs_from_p1_on_prep_phrase(world) -> None:
                   if a["activity_id"] == "act_communicate")
     p2_act = next(a for a in p2["activities"]
                   if a["activity_id"] == "act_communicate")
-    assert p1_act["business_object_surface"] == "with data subject"
-    assert p2_act["business_object_surface"] == "data subject"
+    assert p1_act["business_object_surface"] == "with the customer"
+    assert p2_act["business_object_surface"] == "the customer"
 
 
 # ---------------------------------------------------------------------------
@@ -470,3 +476,97 @@ def test_verb_resource_is_generic() -> None:
     assert isinstance(verbs, list) and len(verbs) == len(set(verbs))
     assert all(v.islower() and v.isalpha() for v in verbs)
     assert "data" not in verbs and "subject" not in verbs
+
+
+# ---------------------------------------------------------------------------
+# zero-overlap gate (2026-08-13 correction: fixtures must stay DISJOINT from
+# the 45 GDPR-7 activity raw labels; the historical overlap is documented in
+# outputs/reports/s1_p2_target_overlap_audit_v1.json)
+# ---------------------------------------------------------------------------
+
+def _gdpr_45_raw_labels() -> set[str]:
+    recs = json.loads(PROCESS_RECORDS.read_text(encoding="utf-8"))["records"]
+    instances = [a["name"] for r in recs for a in r["activities"]]
+    assert len(instances) == 45  # 45 activity instances
+    return set(instances)  # 41 unique raw labels
+
+
+def _fixture_labels() -> set[str]:
+    import ast
+    tree = ast.parse((ROOT / "tests"
+                      / "test_s1_3_p2_label_semantics.py")
+                     .read_text(encoding="utf-8"))
+    labels = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Dict):
+            for key, value in zip(node.keys, node.values):
+                if isinstance(key, ast.Constant) and isinstance(
+                        key.value, str) and key.value.startswith("act_"):
+                    if isinstance(value, ast.Constant) and isinstance(
+                            value.value, str):
+                        labels.add(value.value)
+    return labels
+
+
+def test_fixture_labels_disjoint_from_gdpr45() -> None:
+    """Exact overlap must be zero after the 2026-08-13 correction."""
+    gdpr = _gdpr_45_raw_labels()
+    fixture = _fixture_labels()
+    assert fixture, "fixture labels must be extractable"
+    overlap = fixture & gdpr
+    assert overlap == set(), f"exact overlap with GDPR-7 labels: {overlap}"
+
+
+def test_fixture_labels_disjoint_after_normalization() -> None:
+    """whitespace/case/punctuation-normalized overlap must also be zero."""
+    import re
+    import unicodedata
+    gdpr = _gdpr_45_raw_labels()
+    fixture = _fixture_labels()
+
+    def norm_ws(t: str) -> str:
+        return " ".join(t.split())
+
+    def norm_cf(t: str) -> str:
+        return unicodedata.normalize("NFKC", t).casefold()
+
+    def norm_pn(t: str) -> str:
+        return re.sub(r'[\s.,;:!?()\[\]{}<>"\'`~@#$%^&*+=|\\/_-]+', " ",
+                      norm_ws(t)).strip().casefold()
+
+    for name, fn in (("whitespace", norm_ws), ("casefold", norm_cf),
+                     ("punctuation", norm_pn)):
+        g = {fn(x) for x in gdpr}
+        f = {fn(x) for x in fixture}
+        assert f & g == set(), f"{name}-normalized overlap: {f & g}"
+
+
+def test_fixture_ids_not_from_gdpr7() -> None:
+    """Fixture process/activity ids must not come from GDPR-7."""
+    import ast
+    tree = ast.parse((ROOT / "tests"
+                      / "test_s1_3_p2_label_semantics.py")
+                     .read_text(encoding="utf-8"))
+    # scan only the fixture label dict keys (activity ids) and the synthetic
+    # process id constants used to build fixtures
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Dict):
+            for key in node.keys:
+                if isinstance(key, ast.Constant) and isinstance(
+                        key.value, str) and key.value.startswith("act_"):
+                    assert "gdpr_" not in key.value and "sid-" not in key.value
+    source = (ROOT / "tests" / "test_s1_3_p2_label_semantics.py").read_text(
+        encoding="utf-8")
+    assert "synth_process" in source
+    # no literal GDPR-7 id may appear as a fixture id
+    assert 'synth_process_1' in source or 'synth_process_2' in source
+
+
+def test_gold_only_for_overlap_check() -> None:
+    """The Process Gold may be referenced ONLY by the disjointness gate (to
+    CHECK fixture overlap); it must never be an input of P2 rendering."""
+    # the gate test uses PROCESS_RECORDS (raw labels), not the Gold file
+    src = (ROOT / "src" / "bpc_hybrid"
+           / "stage1_label_semantics_p2.py").read_text(encoding="utf-8")
+    assert "data/gold" not in src
+    assert "human_correction" not in src

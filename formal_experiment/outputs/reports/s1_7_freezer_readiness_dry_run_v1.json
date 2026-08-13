@@ -92,5 +92,8 @@
   "authorization_sentence": "I authorize the formal S1.7 freeze of the already-verified Stage 1 assets: the frozen seven-BPMN membership and source hashes, the canonical Process Record schema and records, the Sun/Leopold-style P2 method (locked config, implementation and offline runtime), the P0/P1/P2 formal predictions, the frozen Stage 1 Process Gold, the S1.6 one-shot evaluation results and the evaluation capsule. The freeze shall NOT modify P2 or recompute selective results, shall NOT add any LLM/API call, and shall NOT modify the Stage 2/Stage 3 Gold or the experiment contract. After the S1.7 freeze, the formal Stage 3 Oracle still advances only through its own independent gates.",
   "zero_api": {
     "new_llm_api_calls": 0
-  }
+  },
+  "superseded_by": "s1_7_freezer_readiness_dry_run_v2.json",
+  "superseded_reason": "superseded_due_to_target_fixture_overlap_and_formal_path_semantics",
+  "superseded_note": "historical v1 kept as provenance; numbers remain valid; claim semantics corrected by v2"
 }

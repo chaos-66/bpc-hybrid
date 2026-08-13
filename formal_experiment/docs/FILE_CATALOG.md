@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-13
-**收录文件**：1138 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-08-14
+**收录文件**：1155 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -406,6 +406,7 @@
 | `data/predictions/b0_formal_arm_v1_replay/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/direct_llm_formal_arm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/direct_llm_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/stage1_formal_v1/formal_predictions_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/sun_llm_fallback_formal_arm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/sun_llm_fallback_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/README.md` | 正式区（受门禁） | 所在目录的入口说明 |
@@ -428,6 +429,7 @@
 | `data/results/direct_llm_formal_arm_v1/evaluation_fine.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/results/direct_llm_formal_arm_v1/g04_view_declaration.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/results/direct_llm_formal_arm_v1/modality_labels.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/results/stage1_formal_v1/stage1_formal_evaluation_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/results/sun_llm_fallback_formal_arm_v1/config_snapshot.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/results/sun_llm_fallback_formal_arm_v1/cost.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/results/sun_llm_fallback_formal_arm_v1/evaluation_coarse.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
@@ -740,6 +742,12 @@
 | `outputs/reports/s1_7_freeze_checklist_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_7_freezer_readiness_dry_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_7_freezer_readiness_dry_run_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s1_7_freezer_readiness_dry_run_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_7_freezer_readiness_dry_run_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s1_p2_target_overlap_audit_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_p2_target_overlap_audit_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_p2_target_overlap_audit_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s1_stage1_claim_correction_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_data_qualification_mapping_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -756,6 +764,11 @@
 | `outputs/reports/s34_winter_stage3_development_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_7_oracle_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage1_formal_evaluation_v2.capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage1_formal_evaluation_v2.export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage1_formal_evaluation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage1_formal_evaluation_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage1_formal_evaluation_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage2_formal_conclusion_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_formal_conclusion_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_formal_conclusion_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -958,10 +971,13 @@
 | `scripts/verify_formal_benchmark_release_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s1_5_freeze_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s1_7_freezer_dry_run.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_s1_7_freezer_dry_run_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_s1_p2_target_overlap_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_solcand_prompt_examples_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_annotation_protocol_s15.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_evaluator_s16.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_formal_evaluation.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_stage1_formal_evaluation_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_gdpr7_determinism_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_human_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_label_semantics_s13.py` | 活动 | Python 实现、脚本或测试 |
@@ -1204,6 +1220,7 @@
 | `tests/test_s1_6_formal_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_6_stage1_evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_7_freezer_dry_run.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s1_correction_2026_08_13.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_s3_gdpr7_membership.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_2_s3_3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
