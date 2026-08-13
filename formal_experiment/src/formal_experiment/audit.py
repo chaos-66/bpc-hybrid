@@ -1220,7 +1220,12 @@ def collect_project_audit() -> dict[str, Any]:
     # exist, the audit switches to stage1_human_adjudication_in_progress,
     # which additionally requires every correction-vs-blank difference to be
     # backed by a versioned decision asset and the incremental adjudication
-    # verifier to pass.
+    # verifier to pass. State evolution (2026-08-13, Batch 7/7): when the
+    # correction reports 7/7 adjudicated + 135/135 resolved (freeze_ready
+    # true) and the verifier passes while gold_freeze_authorized stays
+    # false, the audit reports stage1_human_adjudication_complete_freeze_pending
+    # ("142/142 resolved" is a freeze-READY fact, NOT a freeze authorization
+    # and NOT published Gold).
     s15_auth = _load_json(REPO_ROOT / "outputs" / "reports"
                           / "s1_5_review_surface_authorization_v1.manifest.json")
     s15_checks = s15_auth.get("checks", {})
@@ -1240,7 +1245,28 @@ def collect_project_audit() -> dict[str, Any]:
                 adjudication_ok = verifier.verify()["verified"] is True
         except Exception:  # pragma: no cover - defensive
             adjudication_ok = False
-    if has_adjudications and adjudication_ok and auth_ok:
+    # 7/7 + 135/135 (derived from the on-disk correction summary, the same
+    # source the adjudication verifier validates; freeze_ready true)
+    s15_correction = _load_json(
+        REPO_ROOT / "data" / "development" / "human_review"
+        / "stage1_gdpr7_human_correction_v1.json")
+    s15_summary = s15_correction.get("review_summary", {})
+    adjudication_complete = (
+        s15_summary.get("adjudicated_records") == 7
+        and s15_summary.get("resolved_label_fields") == 135
+        and s15_summary.get("freeze_ready") is True)
+    if has_adjudications and adjudication_ok and auth_ok \
+            and adjudication_complete:
+        _add(findings, "passes",
+             "stage1_human_adjudication_complete_freeze_pending",
+             "S1.5 human adjudication COMPLETE: 7/7 records, 135/135 label "
+             "fields, 7/7 structure decisions, 142/142 human decisions "
+             "resolved, 0 unresolved (every correction-vs-blank difference "
+             "backed by a versioned user-decision asset; incremental "
+             "adjudication verifier passes). Formal Process Gold freeze is "
+             "NOT yet authorized (gold_freeze_authorized=false); this is a "
+             "freeze-READY fact, not published Gold.")
+    elif has_adjudications and adjudication_ok and auth_ok:
         _add(findings, "passes", "stage1_human_adjudication_in_progress",
              "S1.5 human adjudication is in progress (user-authorized "
              "review surface; every correction-vs-blank difference backed by "

@@ -40,7 +40,7 @@ def test_tool_list_and_show() -> None:
     r = _run_tool("list")
     assert r.returncode == 0, r.stderr
     assert "gdpr_1_data_breach" in r.stdout
-    assert "review_state=unreviewed" in r.stdout
+    assert "review_state=adjudicated" in r.stdout
     r2 = _run_tool("show", "gdpr_1_data_breach")
     assert r2.returncode == 0
     assert '"process_id": "gdpr_1_data_breach"' in r2.stdout
@@ -76,9 +76,14 @@ def test_tool_import_applies_only_explicit_decisions(tmp_path: Path) -> None:
         assert la["actor"]["status"] == "present"
         assert la["actor"]["value"] == "Data Controller"
         assert la["business_object"]["status"] == "absent"
-        # untouched records stay unreviewed (gdpr_5 is the first never
-        # adjudicated process; gdpr_1/2/3/4 adjudicated in batches 1-4)
-        assert doc["records"][6]["review_state"] == "unreviewed"
+        # untouched records stay untouched (post-Batch-7: all seven records
+        # are adjudicated; the import above only touches gdpr_1's explicit
+        # fields, so e.g. gdpr_2 must remain byte-identical to its locked
+        # batch-2 adjudication)
+        assert doc["records"][1]["review_state"] == "adjudicated"
+        rec2 = doc["records"][1]
+        assert all(la["actor"]["status"] == "present"
+                   for la in rec2["label_annotations"])
         # a backup was created
         after = sorted(backup_dir.glob("*.json"))
         assert len(after) == len(before) + 1
@@ -123,8 +128,8 @@ def test_s1_5_readiness_counts_and_unreviewed_proof() -> None:
 
 
 def test_s1_5_review_surface_authorization_applied() -> None:
-    """2026-08-11 user authorization: S1.5 input-ready recorded; audit pass
-    present; freeze NOT authorized."""
+    """2026-08-11 user authorization (evolved 2026-08-13 after Batch 7/7):
+    S1.5 adjudication complete; audit pass present; freeze NOT authorized."""
     man = json.loads((ROOT / "outputs" / "reports"
                       / "s1_5_review_surface_authorization_v1.manifest.json")
                      .read_text(encoding="utf-8"))
@@ -134,12 +139,18 @@ def test_s1_5_review_surface_authorization_applied() -> None:
     assert man["membership"]["payload_sha256"] == (
         "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d")
     assert all(man["checks"].values())
-    assert man["status"] == "input_ready_freeze_blocked"
+    # Batch 7/7: human adjudication complete, formal freeze pending
+    assert man["status"] == \
+        "human_adjudication_complete_freeze_authorization_pending"
+    assert man["review_surface"]["summary"]["adjudicated_records"] == 7
+    assert man["review_surface"]["summary"]["resolved_label_fields"] == 135
+    assert man["review_surface"]["summary"]["freeze_ready"] is True
     from formal_experiment.audit import collect_project_audit
     audit = collect_project_audit()
     passes = {item["code"] for item in audit["findings"]["passes"]}
-    # after batch-1 import the audit reports adjudication-in-progress
-    assert "stage1_human_adjudication_in_progress" in passes
+    # after batch-7 import the audit reports adjudication complete /
+    # freeze pending
+    assert "stage1_human_adjudication_complete_freeze_pending" in passes
     assert audit["final_experiment_ready"] is True  # Stage 2 gate unaffected
 
 

@@ -5898,10 +5898,170 @@
         "sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
         "process_record_sha256": "250bdecd830806e43549e6c60d84848d57a85539cce25af88330d4a4d8c98375"
       },
-      "review_state": "unreviewed",
+      "review_state": "adjudicated",
       "structure_annotation": {
-        "decision": "unreviewed",
-        "gold_process_record": null
+        "decision": "accepted_candidate",
+        "gold_process_record": {
+          "schema_version": "process_record@1.0.0",
+          "process_id": "gdpr_7_right_to_be_forgotten",
+          "source": {
+            "input_id": "gdpr_7_right_to_be_forgotten",
+            "path": "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn",
+            "sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+            "byte_size": 36906,
+            "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL"
+          },
+          "method": {
+            "name": "stage1_bpmn_xml_structural",
+            "parser_version": "stage1_bpmn_parser@1.0.0",
+            "label_semantics": "preserve_original_labels_only"
+          },
+          "pools": [
+            {
+              "id": "sid-5E7222FC-289A-4D63-AC6A-3EA1AEDDFC17",
+              "name": "Data Controller",
+              "process_ref": "gdpr_7_right_to_be_forgotten"
+            }
+          ],
+          "lanes": [
+            {
+              "id": "sid-DEBA3D3D-A341-4E84-B401-B7ED5E1D460D",
+              "name": "",
+              "parent_lane_id": null,
+              "flow_node_refs": [
+                "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597",
+                "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C",
+                "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+                "sid-96C77979-3657-4A97-91E3-AF3186FAD889"
+              ]
+            }
+          ],
+          "activities": [
+            {
+              "id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+              "name": "Communication with data subject",
+              "type": "subProcess",
+              "lane_ids": [
+                "sid-DEBA3D3D-A341-4E84-B401-B7ED5E1D460D"
+              ]
+            },
+            {
+              "id": "sid-96C77979-3657-4A97-91E3-AF3186FAD889",
+              "name": "Retrieve data",
+              "type": "subProcess",
+              "lane_ids": [
+                "sid-DEBA3D3D-A341-4E84-B401-B7ED5E1D460D"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "id": "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597",
+              "name": "Request fulfilled",
+              "type": "endEvent",
+              "lane_ids": [
+                "sid-DEBA3D3D-A341-4E84-B401-B7ED5E1D460D"
+              ]
+            },
+            {
+              "id": "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C",
+              "name": "Request received",
+              "type": "startEvent",
+              "lane_ids": [
+                "sid-DEBA3D3D-A341-4E84-B401-B7ED5E1D460D"
+              ]
+            }
+          ],
+          "gateways": [],
+          "sequence_flows": [
+            {
+              "id": "sid-45615EE8-6C4F-440C-B497-8DB259D27A59",
+              "name": "",
+              "source_ref": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+              "target_ref": "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597",
+              "condition_expression": null,
+              "is_default": false
+            },
+            {
+              "id": "sid-9DF89E19-EEDD-4823-B241-3D340BF2E6C3",
+              "name": "",
+              "source_ref": "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C",
+              "target_ref": "sid-96C77979-3657-4A97-91E3-AF3186FAD889",
+              "condition_expression": null,
+              "is_default": false
+            },
+            {
+              "id": "sid-D815ED31-9CB7-4D23-9D2B-1602A3FAF12D",
+              "name": "",
+              "source_ref": "sid-96C77979-3657-4A97-91E3-AF3186FAD889",
+              "target_ref": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+              "condition_expression": null,
+              "is_default": false
+            }
+          ],
+          "control_flow": {
+            "direct_edges": [
+              {
+                "source_ref": "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C",
+                "target_ref": "sid-96C77979-3657-4A97-91E3-AF3186FAD889"
+              },
+              {
+                "source_ref": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+                "target_ref": "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597"
+              },
+              {
+                "source_ref": "sid-96C77979-3657-4A97-91E3-AF3186FAD889",
+                "target_ref": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67"
+              }
+            ],
+            "reachable_pairs": [
+              {
+                "source_ref": "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C",
+                "target_ref": "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597"
+              },
+              {
+                "source_ref": "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C",
+                "target_ref": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67"
+              },
+              {
+                "source_ref": "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C",
+                "target_ref": "sid-96C77979-3657-4A97-91E3-AF3186FAD889"
+              },
+              {
+                "source_ref": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+                "target_ref": "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597"
+              },
+              {
+                "source_ref": "sid-96C77979-3657-4A97-91E3-AF3186FAD889",
+                "target_ref": "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597"
+              },
+              {
+                "source_ref": "sid-96C77979-3657-4A97-91E3-AF3186FAD889",
+                "target_ref": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67"
+              }
+            ],
+            "activity_order_relations": [
+              {
+                "before_activity_id": "sid-96C77979-3657-4A97-91E3-AF3186FAD889",
+                "after_activity_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+                "relation": "reachable_before"
+              }
+            ],
+            "start_event_ids": [
+              "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C"
+            ],
+            "end_event_ids": [
+              "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597"
+            ],
+            "branching_gateway_ids": [],
+            "parallel_gateway_ids": [],
+            "parallel_split_gateway_ids": [],
+            "parallel_join_gateway_ids": [],
+            "cyclic_node_ids": [],
+            "cycle_detected": false,
+            "unreachable_node_ids": []
+          }
+        }
       },
       "label_annotations": [
         {
@@ -5909,16 +6069,16 @@
           "raw_label": "Communication with data subject",
           "lane_labels": [],
           "actor": {
-            "status": "unreviewed",
-            "value": null
+            "status": "present",
+            "value": "Data Controller"
           },
           "action": {
-            "status": "unreviewed",
-            "value": null
+            "status": "present",
+            "value": "Communication"
           },
           "business_object": {
-            "status": "unreviewed",
-            "value": null
+            "status": "present",
+            "value": "data subject"
           }
         },
         {
@@ -5926,16 +6086,16 @@
           "raw_label": "Retrieve data",
           "lane_labels": [],
           "actor": {
-            "status": "unreviewed",
-            "value": null
+            "status": "present",
+            "value": "Data Controller"
           },
           "action": {
-            "status": "unreviewed",
-            "value": null
+            "status": "present",
+            "value": "Retrieve"
           },
           "business_object": {
-            "status": "unreviewed",
-            "value": null
+            "status": "present",
+            "value": "data"
           }
         }
       ]
@@ -5943,9 +6103,9 @@
   ],
   "review_summary": {
     "records": 7,
-    "adjudicated_records": 6,
+    "adjudicated_records": 7,
     "label_fields": 135,
-    "resolved_label_fields": 129,
-    "freeze_ready": false
+    "resolved_label_fields": 135,
+    "freeze_ready": true
   }
 }

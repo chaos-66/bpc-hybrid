@@ -172,7 +172,9 @@ def test_status_and_audit_combine_protocol_with_separate_formal_membership() -> 
     blockers = {item["code"] for item in audit["findings"]["blockers"]}
     assert status["stage1_annotation_protocol_verified"] is True
     assert status["stage1_formal_membership_ready"] is True
-    assert status["stage1_human_gold_freeze_ready"] is False
+    # post-Batch-7 (2026-08-13): 7/7 adjudicated + 135/135 resolved is a
+    # freeze-READY fact; the formal freeze itself is still unauthorized
+    assert status["stage1_human_gold_freeze_ready"] is True
     assert "stage1_annotation_protocol_verified" in passes
     assert "stage1_formal_bpmn_membership_locked" in passes
     assert "stage1_formal_bpmn_membership_not_promoted" not in blockers

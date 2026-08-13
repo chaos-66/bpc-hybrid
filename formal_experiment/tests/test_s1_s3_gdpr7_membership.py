@@ -81,7 +81,9 @@ def test_blank_and_editable_annotation_inputs_have_no_auto_gold() -> None:
     editable = json.loads(EDITABLE.read_text(encoding="utf-8"))
     report = validate_editable_annotation_pack(editable, records, contract)
     assert report["valid"] is True
-    assert report["freeze_ready"] is False
+    # post-Batch-7 (2026-08-13): the editable pack is freeze-READY
+    # (7/7 + 135/135); formal freeze authorization is a separate gate
+    assert report["freeze_ready"] is True
     invalid = copy.deepcopy(editable)
     invalid["records"][0]["source"]["sha256"] = "0" * 64
     assert validate_editable_annotation_pack(invalid, records, contract)["valid"] is False
@@ -123,7 +125,9 @@ def test_exact_gate_status_and_audit_report_membership_ready() -> None:
     gate = verify_stage1_membership_gate(ROOT)
     assert gate["membership_ready"] is True
     assert gate["active_formal_bpmn_count"] == 7
-    assert gate["human_gold_freeze_ready"] is False
+    # post-Batch-7 (2026-08-13): freeze-READY (7/7 + 135/135); formal freeze
+    # authorization is a separate gate (gold_freeze_authorized=false)
+    assert gate["human_gold_freeze_ready"] is True
     failed = verify_stage1_membership_gate(
         ROOT,
         expectations=replace(STAGE1_MEMBERSHIP_EXPECTATIONS, config_sha256="0" * 64),

@@ -60,13 +60,16 @@ def test_normal_batch1_import_verifies() -> None:
     from formal_experiment.audit import collect_project_audit
     audit = collect_project_audit()
     passes = {item["code"] for item in audit["findings"]["passes"]}
-    assert "stage1_human_adjudication_in_progress" in passes
+    # Batch 7/7 complete: audit reports complete_freeze_pending (NOT
+    # in_progress, NOT input_ready)
+    assert "stage1_human_adjudication_complete_freeze_pending" in passes
+    assert "stage1_human_adjudication_in_progress" not in passes
     assert "stage1_review_surface_input_ready" not in passes
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    # batches 1-6 imported: 6/7 adjudicated, 129/135 resolved
-    assert doc["review_summary"]["adjudicated_records"] == 6
-    assert doc["review_summary"]["resolved_label_fields"] == 129
-    assert doc["review_summary"]["freeze_ready"] is False
+    # all 7 batches imported: 7/7 adjudicated, 135/135 resolved
+    assert doc["review_summary"]["adjudicated_records"] == 7
+    assert doc["review_summary"]["resolved_label_fields"] == 135
+    assert doc["review_summary"]["freeze_ready"] is True
 
 
 def test_label_field_value_tamper() -> None:
@@ -142,7 +145,9 @@ def test_summary_forgery() -> None:
     orig = CORRECTION.read_bytes()
     doc = json.loads(orig.decode("utf-8"))
     try:
-        doc["review_summary"]["resolved_label_fields"] = 135
+        # forge an inconsistent count (the real resolved count is 135; the
+        # verifier recomputes from the records and must fail the forgery)
+        doc["review_summary"]["resolved_label_fields"] = 134
         _rewrite_json(CORRECTION, doc)
         assert _verified() is False
     finally:
@@ -161,15 +166,43 @@ def test_decision_manifest_missing() -> None:
     assert _verified() is True
 
 
-def test_freeze_opened_early() -> None:
+def test_freeze_ready_false_tamper_fails() -> None:
+    """At 7/7 complete, freeze_ready must stay TRUE; a tamper that flips it
+    to False must fail (and the derived summary must match the records)."""
     orig = CORRECTION.read_bytes()
     doc = json.loads(orig.decode("utf-8"))
     try:
-        doc["review_summary"]["freeze_ready"] = True
+        doc["review_summary"]["freeze_ready"] = False
         _rewrite_json(CORRECTION, doc)
         assert _verified() is False
     finally:
         CORRECTION.write_bytes(orig)
+    assert _verified() is True
+
+
+def test_freeze_authorization_tamper_fails() -> None:
+    """Forcing gold_freeze_authorized=true (or flipping the authorization
+    status back to input_ready) must fail: 142/142 resolved is freeze-READY,
+    not freeze AUTHORIZED."""
+    auth_path = ROOT / "outputs" / "reports" \
+        / "s1_5_review_surface_authorization_v1.manifest.json"
+    orig = auth_path.read_bytes()
+    auth = json.loads(orig.decode("utf-8"))
+    try:
+        auth["authorization_scope"]["gold_freeze_authorized"] = True
+        _rewrite_json(auth_path, auth)
+        assert _verified() is False
+    finally:
+        auth_path.write_bytes(orig)
+    assert _verified() is True
+    auth = json.loads(auth_path.read_text(encoding="utf-8"))
+    assert auth["authorization_scope"]["gold_freeze_authorized"] is False
+    try:
+        auth["status"] = "input_ready_freeze_blocked"
+        _rewrite_json(auth_path, auth)
+        assert _verified() is False
+    finally:
+        auth_path.write_bytes(orig)
     assert _verified() is True
 
 

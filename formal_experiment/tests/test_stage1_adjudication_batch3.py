@@ -68,12 +68,14 @@ def test_batch3_chain_verified_and_counts() -> None:
     assert r["adjudicated_processes"] == [
         "gdpr_1_data_breach", "gdpr_2_consent_to_use_the_data",
         "gdpr_3_right_to_access", "gdpr_4_right_of_portability",
-        "gdpr_5_right_to_withdraw", "gdpr_6_right_to_rectify"]
+        "gdpr_5_right_to_withdraw", "gdpr_6_right_to_rectify",
+        "gdpr_7_right_to_be_forgotten"]
     assert any("field count derived (9)" in c["name"] for c in r["checks"])
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    assert doc["review_summary"]["adjudicated_records"] == 6
-    assert doc["review_summary"]["resolved_label_fields"] == 129
-    assert doc["review_summary"]["freeze_ready"] is False
+    # post-Batch-7: 7/7 adjudicated, 135/135 resolved, freeze_ready true
+    assert doc["review_summary"]["adjudicated_records"] == 7
+    assert doc["review_summary"]["resolved_label_fields"] == 135
+    assert doc["review_summary"]["freeze_ready"] is True
 
 
 def test_candidate_real_types_subprocess_task() -> None:
@@ -209,8 +211,10 @@ def test_summary_forgery_unadjudicated_freeze() -> None:
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
     orig = json.dumps(doc["review_summary"])
     try:
-        doc["review_summary"]["resolved_label_fields"] = 135
-        doc["review_summary"]["freeze_ready"] = True
+        # forge an inconsistent count (real resolved count is 135) and flip
+        # freeze_ready off; both must fail
+        doc["review_summary"]["resolved_label_fields"] = 134
+        doc["review_summary"]["freeze_ready"] = False
         _rewrite(CORRECTION, doc)
         assert _verified() is False
     finally:

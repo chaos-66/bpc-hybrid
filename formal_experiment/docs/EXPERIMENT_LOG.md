@@ -3410,3 +3410,16 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-13T10:33:17.338900+00:00 - S1.5 Batch 7/7 gdpr_7_right_to_be_forgotten adjudication import + seven-batch chain closure + freeze readiness dry-run
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1820 passed, 24 skipped, 19 warnings in 304.54s (0:05:04)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`847ac11aaaefa6ae107fe3791d37b60f04516c01`；相关未提交路径：24 个
+- Gold：按授权导入人工审核（`authorized_human_review_import`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：7 user decisions (structure accepted_candidate; F1 Communication/data subject - 'with' excluded; F2 Retrieve/data); 142/142 resolved 0 unresolved; seven-batch chain VERIFIED byte-level; freeze_ready=true as fact but gold_freeze_authorized=false; auth status human_adjudication_complete_freeze_authorization_pending; dry-run packet + verifier; no Gold published, no freeze applied, contract/stage3/publication untouched
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

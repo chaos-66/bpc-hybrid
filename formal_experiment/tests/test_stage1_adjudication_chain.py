@@ -211,7 +211,8 @@ def _synthetic_asset(world: Path, process_id: str, activities: list[dict],
                                  "gold_process_record": gold},
         "label_annotations": labels,
         "evidence_hashes": {"candidate_process_record_sha256": lock_sha,
-                            "bpmn_source_sha256": "a" * 64,
+                            "bpmn_source_sha256":
+                                blank_record["source"]["sha256"],
                             "membership_payload_sha256": "b" * 64},
         "safety": {"llm_api_calls": 0, "gold_freeze_authorized": False,
                    "inferred_by_agent": False},
@@ -236,6 +237,12 @@ def _synthetic_asset(world: Path, process_id: str, activities: list[dict],
 
 def _link_manifest(out: Path, before_sha: str, after_sha: str,
                    prev: str | None, candidate_sha: str | None = None) -> None:
+    # bind the REAL locked source sha and membership payload (the synthetic
+    # world copies the real membership contract / process records)
+    recs = json.loads(PROCESS_RECORDS.read_text(encoding="utf-8"))["records"]
+    lock = next(r for r in recs if r["process_id"] == out.name)
+    membership = json.loads(MEMBERSHIP.read_text(encoding="utf-8"))
+    memb_sha = membership["membership"]["membership_payload_sha256"]
     man = {
         "schema_version": "s1_5_human_adjudication_manifest@1.0.0",
         "process_id": out.name,
@@ -245,8 +252,8 @@ def _link_manifest(out: Path, before_sha: str, after_sha: str,
         "after_correction_sha256": after_sha,
         "prev_process": prev,
         "candidate_process_record_sha256": candidate_sha or ("x" * 64),
-        "bpmn_source_sha256": "a" * 64,
-        "membership_payload_sha256": "b" * 64,
+        "bpmn_source_sha256": lock["source"]["sha256"],
+        "membership_payload_sha256": memb_sha,
         "llm_api_calls": 0, "gold_freeze_authorized": False,
     }
     (out / "manifest.json").write_text(

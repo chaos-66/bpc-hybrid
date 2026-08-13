@@ -65,12 +65,23 @@ def test_batch6_chain_verified_and_counts() -> None:
     assert r["adjudicated_processes"] == [
         "gdpr_1_data_breach", "gdpr_2_consent_to_use_the_data",
         "gdpr_3_right_to_access", "gdpr_4_right_of_portability",
-        "gdpr_5_right_to_withdraw", "gdpr_6_right_to_rectify"]
+        "gdpr_5_right_to_withdraw", "gdpr_6_right_to_rectify",
+        "gdpr_7_right_to_be_forgotten"]
     assert any("field count derived (6)" in c["name"] for c in r["checks"])
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
-    assert doc["review_summary"]["adjudicated_records"] == 6
-    assert doc["review_summary"]["resolved_label_fields"] == 129
-    assert doc["review_summary"]["freeze_ready"] is False
+    # post-Batch-7 state: 7/7 adjudicated, 135/135 resolved, freeze_ready true
+    # (batch-6 data itself is unchanged; see test_earlier_batches_and_gdpr7)
+    assert doc["review_summary"]["adjudicated_records"] == 7
+    assert doc["review_summary"]["resolved_label_fields"] == 135
+    assert doc["review_summary"]["freeze_ready"] is True
+    # batch-6 record content is byte-locked to the historical batch-6 import
+    rec6 = next(r for r in doc["records"]
+                if r["process_id"] == "gdpr_6_right_to_rectify")
+    assert rec6["review_state"] == "adjudicated"
+    la = next(x for x in rec6["label_annotations"]
+              if x["activity_id"] == "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746")
+    assert la["action"]["value"] == "Communicate"
+    assert la["business_object"]["value"] == "the rectification"
 
 
 def test_e2_raw_label_newline_preserved() -> None:
@@ -208,7 +219,7 @@ def test_earlier_batches_and_gdpr7() -> None:
     import subprocess
     for pid in ("gdpr_1_data_breach", "gdpr_2_consent_to_use_the_data",
                 "gdpr_3_right_to_access", "gdpr_4_right_of_portability",
-                "gdpr_5_right_to_withdraw"):
+                "gdpr_5_right_to_withdraw", "gdpr_6_right_to_rectify"):
         for name in ("decision_v1.json", "import_record_v1.json",
                      "manifest.json"):
             diff = subprocess.run(
@@ -220,9 +231,11 @@ def test_earlier_batches_and_gdpr7() -> None:
     doc = json.loads(CORRECTION.read_text(encoding="utf-8"))
     rec7 = next(r for r in doc["records"]
                 if r["process_id"] == "gdpr_7_right_to_be_forgotten")
-    assert rec7["review_state"] == "unreviewed"
-    assert all(la["actor"]["status"] == "unreviewed"
-               and la["actor"]["value"] is None
+    # post-Batch-7: gdpr_7 is adjudicated (covered in depth by the batch-7
+    # focused tests); before Batch 7 it was unreviewed.
+    assert rec7["review_state"] == "adjudicated"
+    assert all(la["actor"]["status"] == "present"
+               and la["actor"]["value"] == "Data Controller"
                for la in rec7["label_annotations"])
 
 
@@ -230,8 +243,10 @@ def test_summary_forgery_and_freeze() -> None:
     orig = CORRECTION.read_bytes()
     doc = json.loads(orig.decode("utf-8"))
     try:
-        doc["review_summary"]["resolved_label_fields"] = 135
-        doc["review_summary"]["freeze_ready"] = True
+        # forge an inconsistent resolved count (real value is 135) and flip
+        # freeze_ready off; both must fail
+        doc["review_summary"]["resolved_label_fields"] = 134
+        doc["review_summary"]["freeze_ready"] = False
         _rewrite(CORRECTION, doc)
         assert _verified() is False
     finally:

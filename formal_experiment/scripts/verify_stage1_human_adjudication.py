@@ -20,7 +20,9 @@ order gdpr_1..gdpr_7):
    after hash == the on-disk correction file hash; no fork/broken/cyclic
    chain
 10. import_record bound (hash recorded in the manifest and recomputed)
-11. summary counts consistent; freeze_ready false
+11. summary counts consistent; freeze_ready true only at 7/7 + 135/135;
+    formal Gold freeze stays unauthorized (gold_freeze_authorized=false,
+    authorization status human_adjudication_complete_freeze_authorization_pending)
 12. any tamper -> nonzero exit
 
 Exit 0 iff everything verifies.
@@ -157,7 +159,8 @@ def verify() -> dict[str, Any]:
           auth.get("authorized_by_user") is True
           and auth.get("authorization_scope", {}).get(
               "gold_freeze_authorized") is False
-          and auth.get("status") == "input_ready_freeze_blocked")
+          and auth.get("status")
+          == "human_adjudication_complete_freeze_authorization_pending")
     check("membership payload", membership.get("membership", {}).get(
         "membership_payload_sha256") == EXPECTED_MEMBERSHIP_PAYLOAD)
 
@@ -198,6 +201,9 @@ def verify() -> dict[str, Any]:
         check(f"[{pid}] import record hash bound",
               _sha256_file(import_path)
               == manifest.get("import_record_sha256"))
+        check(f"[{pid}] membership payload hash == expected",
+              manifest.get("membership_payload_sha256")
+              == EXPECTED_MEMBERSHIP_PAYLOAD)
         check(f"[{pid}] process id consistent",
               decision.get("process_id") == manifest.get("process_id") == pid)
         check(f"[{pid}] candidate hash matches",
@@ -209,6 +215,9 @@ def verify() -> dict[str, Any]:
             check(f"[{pid}] locked candidate hash exact",
                   canonical_sha256(locked)
                   == manifest.get("candidate_process_record_sha256"))
+            check(f"[{pid}] bpmn source hash == locked",
+                  manifest.get("bpmn_source_sha256")
+                  == locked.get("source", {}).get("sha256"))
 
         # 2. chain: before == prev state hash
         before_ok = manifest.get("before_correction_sha256") == prev_sha
@@ -348,12 +357,42 @@ def verify() -> dict[str, Any]:
                    for la in r.get("label_annotations", [])
                    for f in FIELD_NAMES
                    if la.get(f, {}).get("status") in ("present", "absent"))
+    resolved_struct = sum(
+        1 for r in correction.get("records", [])
+        if r.get("structure_annotation", {}).get("decision")
+        in ("accepted_candidate", "corrected"))
     summary_ok = (summary.get("records") == len(correction.get("records", []))
                   and summary.get("adjudicated_records") == adjudicated
                   and summary.get("label_fields") == 135
                   and summary.get("resolved_label_fields") == resolved)
     check("summary consistent", summary_ok, json.dumps(summary))
-    check("freeze_ready false", summary.get("freeze_ready") is False)
+    # Adjudication-completeness fact: in a world where ALL records are
+    # adjudicated and ALL fields resolved (7/7 + 135/135 in the real
+    # dataset), freeze_ready must be true and 0 decisions unresolved; in a
+    # partially adjudicated world (e.g. synthetic replay worlds with 2/7)
+    # freeze_ready must be false. Either way the fact is DERIVED from the
+    # records, never trusted from the summary. Formal Gold freeze still
+    # requires explicit user authorization (checked separately below).
+    total_fields = sum(3 * len(r.get("label_annotations", []))
+                       for r in correction.get("records", []))
+    world_complete = (adjudicated == len(correction.get("records", []))
+                      and resolved == total_fields
+                      and len(correction.get("records", [])) > 0)
+    if world_complete:
+        complete_ok = (summary.get("freeze_ready") is True
+                       and resolved_struct == len(correction.get(
+                           "records", [])))
+        detail = "complete world: freeze_ready must be true"
+    else:
+        complete_ok = summary.get("freeze_ready") is False
+        detail = "partial world: freeze_ready must be false"
+    check("adjudication completeness fact consistent (freeze_ready "
+          "derived)", complete_ok, detail + " " + json.dumps(summary))
+    check("formal gold freeze NOT authorized",
+          auth.get("authorization_scope", {}).get(
+              "gold_freeze_authorized") is False
+          and auth.get("status")
+          == "human_adjudication_complete_freeze_authorization_pending")
 
     verified = all(c["ok"] for c in checks)
     return {"verified": verified, "checks": checks,

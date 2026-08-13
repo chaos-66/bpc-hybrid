@@ -1,6 +1,7 @@
 {
   "schema_version": "s1_5_review_surface_authorization@1.0.0",
   "project_date": "2026-08-11",
+  "adjudication_complete_date": "2026-08-13",
   "authorized_by_user": true,
   "authorization_scope": {
     "review_surface_open": true,
@@ -22,12 +23,12 @@
     "records": 7,
     "summary": {
       "records": 7,
-      "adjudicated_records": 0,
+      "adjudicated_records": 7,
       "label_fields": 135,
-      "resolved_label_fields": 0,
-      "freeze_ready": false
+      "resolved_label_fields": 135,
+      "freeze_ready": true
     },
-    "correction_sha256": "b5fdf7ce323527d5992bcef3d7a7e3a3fd1ee1ecaf149de4b941e89882c7f43b",
+    "correction_sha256": "6a9c055a8f92c04aa5c44c92d4653bad128f048103fd16584754c121cb0ba18e",
     "blank_sha256": "b5fdf7ce323527d5992bcef3d7a7e3a3fd1ee1ecaf149de4b941e89882c7f43b",
     "tool": {
       "path": "scripts/stage1_review_tool.py",
@@ -44,15 +45,18 @@
   },
   "checks": {
     "membership_payload_matches_authorization": true,
-    "correction_equals_blank_template": true,
-    "all_records_unreviewed": true,
+    "correction_evolved_from_blank_via_7_evidence_assets": true,
+    "all_records_adjudicated_7_of_7": true,
+    "all_label_fields_resolved_135_of_135": true,
+    "all_structure_decisions_resolved_7_of_7": true,
     "no_gold_prefilled": true,
-    "freeze_ready_false": true,
+    "adjudication_chain_verified_7_batches": true,
+    "gold_freeze_authorized_false": true,
     "tool_exists": true,
     "guide_exists": true,
     "schema_exists": true
   },
-  "status": "input_ready_freeze_blocked",
+  "status": "human_adjudication_complete_freeze_authorization_pending",
   "zero_api": {
     "new_llm_api_calls": 0
   }

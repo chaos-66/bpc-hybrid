@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-13
-**收录文件**：1101 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1108 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -514,6 +514,9 @@
 | `outputs/development/human_review/stage1_adjudications/gdpr_6_right_to_rectify/decision_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/human_review/stage1_adjudications/gdpr_6_right_to_rectify/import_record_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/human_review/stage1_adjudications/gdpr_6_right_to_rectify/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/human_review/stage1_adjudications/gdpr_7_right_to_be_forgotten/decision_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/human_review/stage1_adjudications/gdpr_7_right_to_be_forgotten/import_record_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/human_review/stage1_adjudications/gdpr_7_right_to_be_forgotten/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_cc_v1/coarse_gold_cc.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_cc_v1/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s27_b0_coarse_gold_sentence_granularity_v1/coarse_gold_sentence_level.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -715,6 +718,8 @@
 | `outputs/reports/s1_1_s1_4_matrix_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s1_5_input_readiness_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_5_input_readiness_dry_run.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s1_5_process_gold_freeze_authorization_dry_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_5_process_gold_freeze_authorization_dry_run_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s1_5_review_surface_authorization_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_6_evaluator_synthetic_verification_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_7_freeze_checklist_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -932,6 +937,7 @@
 | `scripts/validate_legacy_gold_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_formal_benchmark_release_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_s1_5_freeze_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_solcand_prompt_examples_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_annotation_protocol_s15.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_evaluator_s16.py` | 活动 | Python 实现、脚本或测试 |
@@ -1183,6 +1189,7 @@
 | `tests/test_stage1_adjudication_batch4.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_adjudication_batch5.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_adjudication_batch6.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage1_adjudication_batch7.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_adjudication_chain.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_human_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |
