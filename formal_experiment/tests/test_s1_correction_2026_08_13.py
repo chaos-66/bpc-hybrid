@@ -293,3 +293,114 @@ def test_byte_locks_hold() -> None:
         "c95910efe80992e0b49be7859e9c9a7b48493e9c794472ed86bcb129d2a5a3c2"
     assert hashlib.sha256(SRC_PRED.read_bytes()).hexdigest() == \
         "79a9b2c17185d63dc5ab5d9c47c8c592469b30f3cf7298740e593838166a94a8"
+
+
+# ---------------------------------------------------------------------------
+# S1.7 freeze authorization invariants (2026-08-13 user-authorized)
+# ---------------------------------------------------------------------------
+
+AUTH = ROOT / "outputs" / "reports" / "s1_7_freezer_authorization_v1.manifest.json"
+AUTH_VERIFIER = ROOT / "scripts" / "verify_s1_7_freezer_authorization.py"
+
+
+def _auth_verified() -> bool:
+    return _load_verifier(AUTH_VERIFIER, "corr_auth").verify()["verified"]
+
+
+def test_auth_verified() -> None:
+    m = _load_verifier(AUTH_VERIFIER, "corr_auth2")
+    r = m.verify()
+    assert r["verified"] is True, [c for c in r["checks"] if not c["ok"]]
+    auth = json.loads(AUTH.read_text(encoding="utf-8"))
+    assert auth["authorized_by_user"] is True
+    assert auth["status"] == "freeze_applied"
+    assert auth["safety"]["post_evaluation_tuning"] is False
+    assert auth["safety"]["strict_test_blind"] is False
+    assert auth["safety"]["held_out_generalization_claim_allowed"] is False
+
+
+def test_auth_status_tamper_fails() -> None:
+    orig = AUTH.read_bytes()
+    doc = json.loads(orig.decode("utf-8"))
+    try:
+        doc["status"] = "freeze_pending"
+        _rewrite(AUTH, doc)
+        assert _auth_verified() is False
+    finally:
+        AUTH.write_bytes(orig)
+    assert _auth_verified() is True
+
+
+def test_auth_sentence_tamper_fails() -> None:
+    orig = AUTH.read_bytes()
+    doc = json.loads(orig.decode("utf-8"))
+    try:
+        doc["authorization_sentence_zh"] = doc[
+            "authorization_sentence_zh"].replace(
+            "不作为held-out泛化证据", "作为泛化证据")
+        _rewrite(AUTH, doc)
+        assert _auth_verified() is False
+    finally:
+        AUTH.write_bytes(orig)
+    assert _auth_verified() is True
+
+
+def test_auth_p2_config_tamper_fails() -> None:
+    p2_config = ROOT / "configs" / "stage1_label_p2_v1.json"
+    orig = p2_config.read_bytes()
+    doc = json.loads(orig.decode("utf-8"))
+    try:
+        doc["runtime"]["model"] = "en_core_web_md"
+        _rewrite(p2_config, doc)
+        assert _auth_verified() is False
+    finally:
+        p2_config.write_bytes(orig)
+    assert _auth_verified() is True
+
+
+def test_auth_predictions_tamper_fails() -> None:
+    orig = SRC_PRED.read_bytes()
+    doc = json.loads(orig.decode("utf-8"))
+    try:
+        doc["attempts"][0]["label_record"]["activities"][0][
+            "action_surface"] = "X"
+        _rewrite(SRC_PRED, doc)
+        assert _auth_verified() is False
+    finally:
+        SRC_PRED.write_bytes(orig)
+    assert _auth_verified() is True
+
+
+def test_auth_exclusion_removal_fails() -> None:
+    orig = AUTH.read_bytes()
+    doc = json.loads(orig.decode("utf-8"))
+    try:
+        doc["exclusions"] = [x for x in doc["exclusions"]
+                             if "Stage 3 Oracle" not in x]
+        _rewrite(AUTH, doc)
+        assert _auth_verified() is False
+    finally:
+        AUTH.write_bytes(orig)
+    assert _auth_verified() is True
+
+
+def test_auth_safety_tamper_fails() -> None:
+    orig = AUTH.read_bytes()
+    doc = json.loads(orig.decode("utf-8"))
+    try:
+        doc["safety"]["post_evaluation_tuning"] = True
+        _rewrite(AUTH, doc)
+        assert _auth_verified() is False
+    finally:
+        AUTH.write_bytes(orig)
+    assert _auth_verified() is True
+
+
+def test_auth_deletion_fails() -> None:
+    orig = AUTH.read_bytes()
+    try:
+        AUTH.unlink()
+        assert _auth_verified() is False
+    finally:
+        AUTH.write_bytes(orig)
+    assert _auth_verified() is True

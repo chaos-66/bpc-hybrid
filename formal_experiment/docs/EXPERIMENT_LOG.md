@@ -3492,3 +3492,16 @@
 - 仍存在 blocker：无
 - 备注：Historical target overlap documented (3 exact overlaps incl. Retrieve data with triple matching human Gold; verb list corrected to 200/200, content unchanged); fixtures corrected to zero overlap with gates; claim correction v2 (target-aware, strict_test_blind=false, held-out generalization denied, evaluation_role=fixed-GDPR7 descriptive); formal v2 authoritative paths (data/predictions/stage1_formal_v1, data/results/stage1_formal_v1, stage1_formal_evaluation_v2.*) with development paths kept as historical provenance; S1.7 v1 marked superseded, v2 packet built (7 verifiers run, freeze NOT applied); P2 config/impl/runtime, predictions (79a9b2c1), metrics (canonical 19002346), Stage 1 Gold, contract, methods, Stage 3 gate unchanged; zero LLM/API; S1.7 freeze pending user authorization
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-13T18:39:55.540865+00:00 - S1.7 formal freeze APPLIED (user-authorized 2026-08-13; target-aware claim semantics)
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1893 passed, 24 skipped, 19 warnings in 695.85s (0:11:35)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`9655774bb81003fc667a562e7363bd721955cf76`；相关未提交路径：7 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：User authorization recorded verbatim in s1_7_freezer_authorization_v1.manifest.json (sha 7712176c): acknowledges post-Gold P2 development + 3 target labels in dev fixtures + fixed-GDPR7 descriptive evaluation (not held-out); freeze scope = non-tuned P2 method, existing P0/P1/P2 predictions, ORIGINAL metrics, Stage 1 Process Gold, verified evaluation capsule; exclusions: no P2 change / no selective recompute / zero LLM-API / no Stage 2-3 Gold or contract change / no Stage 3 Oracle authorization; 24 asset hashes bound; independent verifier verify_s1_7_freezer_authorization.py VERIFIED; audit pass stage1_s7_freeze_authorized; S1.7 -> frozen; S3.7 not started (Oracle only via its own gates); 8 new authorization tamper tests; zero LLM/API; P2/predictions/metrics/Gold/contract unchanged
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

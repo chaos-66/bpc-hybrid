@@ -1453,6 +1453,7 @@ def collect_project_audit() -> dict[str, Any]:
              "FAILED (overlap audit / v2 assets / S1.7 v2 tampered, or a "
              "claim was reverted to test-blind / a formal path points back "
              "to development / verb count is not 200).")
+
     elif has_adjudications and adjudication_ok and auth_ok \
             and adjudication_complete:
         _add(findings, "passes",
@@ -1487,6 +1488,37 @@ def collect_project_audit() -> dict[str, Any]:
              "failed (correction file must stay all-unreviewed, freeze_ready "
              "must be False).")
 
+    # ------------------------------------------------------------------
+    # S1.7 freeze authorization (2026-08-13, user-authorized): the
+    # authorization manifest must verify (byte-locks, sentences, safety,
+    # exclusions) and the readiness packet must still be dry-run. The
+    # freeze does NOT auto-advance S1.6/S3.7. (Placed after the S1.5
+    # state machine so the if/elif chain above stays intact.)
+    freeze_verified = False
+    try:
+        fa_verifier = _load_verifier_script("s1_freeze_auth_verifier",
+                                            "verify_s1_7_freezer_authorization.py")
+        if fa_verifier is not None:
+            freeze_verified = fa_verifier.verify()["verified"] is True
+    except Exception:  # pragma: no cover - defensive
+        freeze_verified = False
+    if freeze_verified:
+        _add(findings, "passes", "stage1_s7_freeze_authorized",
+             "S1.7 formal freeze AUTHORIZED and APPLIED (2026-08-13, "
+             "user-authorized): the existing non-tuned P2 method (locked "
+             "config/implementation/offline runtime), the existing locked "
+             "P0/P1/P2 predictions, the ORIGINAL metrics, the Stage 1 "
+             "Process Gold and the verified evaluation capsule are frozen; "
+             "no P2 modification, no selective recomputation, zero LLM/API; "
+             "target-aware disclosure holds (post-Gold development, "
+             "strict_test_blind=false, fixed-GDPR7 descriptive "
+             "evaluation). The formal Stage 3 Oracle is NOT authorized and "
+             "advances only through its own gates.")
+    else:
+        _add(findings, "errors", "stage1_s7_freeze_authorization_invalid",
+             "S1.7 freeze authorization manifest missing or FAILED "
+             "(tampered sentences/bindings/safety/exclusions, or the "
+             "readiness packet was mutated).")
     tracked = _git_check(["ls-files", "--error-unmatch", "formal_experiment/AGENTS.md"])
     if tracked is False:
         _add(findings, "blockers", "formal_capsule_not_versioned", "Create an intentional Git checkpoint before freezing input and Gold.")

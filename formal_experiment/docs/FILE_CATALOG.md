@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-14
-**收录文件**：1155 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1157 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -740,6 +740,7 @@
 | `outputs/reports/s1_5_review_surface_authorization_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_6_evaluator_synthetic_verification_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_7_freeze_checklist_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s1_7_freezer_authorization_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_7_freezer_readiness_dry_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s1_7_freezer_readiness_dry_run_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s1_7_freezer_readiness_dry_run_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -970,6 +971,7 @@
 | `scripts/verify_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_formal_benchmark_release_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s1_5_freeze_dry_run.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_s1_7_freezer_authorization.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s1_7_freezer_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s1_7_freezer_dry_run_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s1_p2_target_overlap_audit.py` | 活动 | Python 实现、脚本或测试 |

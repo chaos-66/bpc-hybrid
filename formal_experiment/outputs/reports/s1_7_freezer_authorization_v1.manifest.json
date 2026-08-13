@@ -1,0 +1,67 @@
+{
+  "schema_version": "s1_7_freezer_authorization@1.0.0",
+  "project_date": "2026-08-13",
+  "authorized_by_user": true,
+  "status": "freeze_applied",
+  "authorization_sentence_zh": "我知悉P2是在Stage 1 Process Gold形成后开发，且至少三条目标活动标签曾进入开发测试，其中至少一条测试三元组与人工Gold一致；我确认S1.6指标仅作为固定GDPR-7上的正式描述性组件评价，不作为held-out泛化证据。我授权正式冻结S1.7现有资产：评价后未再调优的P2锁定方法、现有P0/P1/P2预测、原始指标、Stage 1 Process Gold及已验证的正式评价capsule。冻结不得修改P2、不得选择性重算结果、不得调用LLM/API、不得修改Stage 2/Stage 3 Gold或experiment contract，也不自动授权Stage 3 Oracle。",
+  "authorization_sentence_en": "I acknowledge that the P2 method was developed AFTER the Stage 1 Process Gold was formed and that at least three target activity labels (\"Communication with data subject\", \"Rectify data\", \"Retrieve data\") entered the development test fixtures, with at least one asserted triple matching the human Gold; I acknowledge that the S1.6 metrics are a fixed-GDPR-7 formal descriptive component evaluation and NOT held-out generalization evidence. I authorize the formal S1.7 freeze of the existing, non-tuned-after-evaluation P2 method (locked config, implementation and offline runtime), the existing locked P0/P1/P2 predictions and the ORIGINAL metrics, together with the frozen Stage 1 Process Gold and the verified evaluation capsule. The freeze shall NOT modify P2, shall NOT recompute selective results, shall NOT add any LLM/API call, and shall NOT modify the Stage 2/Stage 3 Gold or the experiment contract. The formal Stage 3 Oracle is NOT auto-authorized by this packet and advances only through its own independent gates.",
+  "freeze_scope": [
+    "P2 locked method (config/implementation/offline runtime; NOT tuned after evaluation)",
+    "existing locked P0/P1/P2 predictions (development + authoritative copies)",
+    "ORIGINAL metrics (numeric body, canonical 19002346...)",
+    "Stage 1 Process Gold (data/gold/stage1)",
+    "verified evaluation capsule (v1 development + v2 formal assets)"
+  ],
+  "exclusions": [
+    "no P2 modification",
+    "no selective result recomputation",
+    "no LLM/API calls",
+    "no Stage 2/Stage 3 Gold modification",
+    "no experiment contract modification",
+    "no Stage 3 Oracle authorization (advances only through its own gates)"
+  ],
+  "bindings": {
+    "membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d",
+    "verb_list_count": {
+      "total": 200,
+      "unique": 200
+    },
+    "hashes": {
+      "configs/stage1_label_p2_v1.json": "59ac4e8ec2b02632366cac229b5538c4f243910f6a371b5e14e1be65817cc49d",
+      "src/bpc_hybrid/stage1_label_semantics_p2.py": "c95910efe80992e0b49be7859e9c9a7b48493e9c794472ed86bcb129d2a5a3c2",
+      "configs/schemas/stage1_label_semantics_p2.schema.json": "5473a28b0682d9ced4e4ad8f1016d19db5663734d311fc2845f23862f2f0bd39",
+      "outputs/reports/s1_3_p2_locked_v1.manifest.json": "e00d42a4d0df64df12ad842cc6facb8cd8da060ec1866ad59e79d7e6f960a0ff",
+      "outputs/development/stage1_predictions/formal_predictions_v1.json": "79a9b2c17185d63dc5ab5d9c47c8c592469b30f3cf7298740e593838166a94a8",
+      "data/predictions/stage1_formal_v1/formal_predictions_v1.json": "79a9b2c17185d63dc5ab5d9c47c8c592469b30f3cf7298740e593838166a94a8",
+      "data/results/stage1_formal_v1/stage1_formal_evaluation_v1.json": "a072db39b37167d76aa4e49b9845b5b563255d980b9ee00cd811f43c116a7392",
+      "outputs/reports/stage1_formal_evaluation_v2.json": "954122d4ed893a5d8bafc19afe627fe9a44f42cfdacd8af3ff747e798502c988",
+      "outputs/development/stage1_formal_capsule_v1/evaluation.json": "9fc1a7da7a0144de4dfe83049ae0c9d26b1bdacc51c8d4c012ed89d4eb03eb1c",
+      "data/gold/stage1/process_records/stage1_process_gold_v1.json": "f33aa857a0796d0517a9d04cc96b0a4f316202603fe0adf66693aeb5cb444bca",
+      "data/gold/stage1/manifest.json": "1885dad26f43b19324f2e779a7bbed0db5b19699145d8607a59439423b23e587",
+      "outputs/reports/s1_5_process_gold_freeze_authorization_v1.manifest.json": "4b97762cfe3cb336a2a163bd85cbc850f9963a513af8a33185efae7d0486e25c",
+      "outputs/reports/s1_p2_target_overlap_audit_v1.json": "948d268ae15e243841309623ca0028a4fe5d1391f82db04853a3d7d887b7c129",
+      "outputs/reports/s1_stage1_claim_correction_v2.json": "46b3e2a8db3e6498ef45c9ac52e54b570eae68ce9b399af007a5307e2bdae6c2",
+      "outputs/reports/s1_7_freezer_readiness_dry_run_v2.json": "be5d4b80d807d66606f265e024c2a0b8d3743380dd8649643aee4fcfc9d4997f",
+      "configs/datasets/stage1_stage3_gdpr7_v1.json": "6bb2c0da4c51d06368bb858057374d9199e8d2ef494b6cb5c122be8744e11a42",
+      "data/development/human_review/stage1_gdpr7_process_records_v1.json": "d4d61f46091a4063e8db2d405f893df6c3951ed4ee77b62deebe27fa35d48487",
+      "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+    }
+  },
+  "safety": {
+    "runtime_gold_read": false,
+    "target_labels_seen_during_development": true,
+    "strict_test_blind": false,
+    "post_evaluation_tuning": false,
+    "held_out_generalization_claim_allowed": false,
+    "evaluation_role": "formal_descriptive_component_evaluation_on_fixed_GDPR7"
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}
