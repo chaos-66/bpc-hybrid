@@ -3505,3 +3505,16 @@
 - 仍存在 blocker：无
 - 备注：User authorization recorded verbatim in s1_7_freezer_authorization_v1.manifest.json (sha 7712176c): acknowledges post-Gold P2 development + 3 target labels in dev fixtures + fixed-GDPR7 descriptive evaluation (not held-out); freeze scope = non-tuned P2 method, existing P0/P1/P2 predictions, ORIGINAL metrics, Stage 1 Process Gold, verified evaluation capsule; exclusions: no P2 change / no selective recompute / zero LLM-API / no Stage 2-3 Gold or contract change / no Stage 3 Oracle authorization; 24 asset hashes bound; independent verifier verify_s1_7_freezer_authorization.py VERIFIED; audit pass stage1_s7_freeze_authorized; S1.7 -> frozen; S3.7 not started (Oracle only via its own gates); 8 new authorization tamper tests; zero LLM/API; P2/predictions/metrics/Gold/contract unchanged
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-15T05:19:43.710304+00:00 - S2.13→S3.7 transition ledger reconciliation and fail-closed readiness hardening; stale pre-S1-freeze reports superseded without overwrite; no gate or Oracle applied
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1907 passed, 24 skipped, 19 warnings in 928.82s (0:15:28)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`e67736266dcde7cfdb0ca6fb1a0e8b933b767157`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：S1.7 frozen; S2.13 still blocked on S2.11/G0.5/S2.12 full DoD; Stage 1 Process Gold and Stage 3 25+33 decision Gold verified; 9 GDPR Gold Rule Records absent; S3.7 Oracle not started or authorized
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

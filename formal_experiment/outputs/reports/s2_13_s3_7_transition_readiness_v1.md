@@ -1,0 +1,181 @@
+# S2.13 → S3.7 Transition Readiness Ledger v1
+
+**Schema**: `s2_13_s3_7_transition_readiness@1.0.0`
+**Report ID**: `s2_13_s3_7_transition_readiness_v1`
+
+## Determinism
+
+Every state judgment in this report is re-derived from current on-disk assets, manifests, hashes, or executed independent verifiers; no hardcoded existence conclusions and no wall-clock timestamps. Rebuilding on identical inputs produces byte-identical outputs; existing outputs with different bytes are refused.
+
+## Superseded current-state judgments (historical files preserved unmodified)
+
+- `outputs/reports/s2_13_stage2_freeze_gap_capsule.json` (sha256 `eb934910c2e0…`): 2026-08-11 current-state judgment predates the S1.7 freeze (2026-08-13) and still lists S1.7 as blocked ('true Gold Process Records'); the remaining-items list is superseded by this v1 ledger while the historical file stays unmodified.
+- `outputs/reports/s2_13_stage2_freeze_gap_capsule.md` (sha256 `ca369600d594…`): 2026-08-11 Markdown rendering of the same superseded gap capsule; preserved unmodified as historical provenance.
+- `outputs/reports/s3_7_oracle_readiness_v2.json` (sha256 `0e79232bb17b…`): 2026-08-11 current-state judgment is stale: it hardcodes gold_process_records.exist=false with 'S1.5 human Process Gold not started', which the 2026-08-13 Stage 1 Process Gold publication and S1.7 freeze invalidated; superseded by this v1 ledger, historical content preserved.
+- `outputs/reports/s37_oracle_readiness_v1.json` (sha256 `7bd3e8dec72b…`): 2026-08-09 current-state judgment is stale: 'true Gold Process Records not present' and the S1.7 gap no longer hold after 2026-08-13; its Gold-Rule-Records absence finding remains true and is carried forward; superseded by this v1 ledger, historical content preserved.
+- `outputs/reports/formal_benchmark_release_v2.manifest.json` (sha256 `8b3cbd2e6081…`): Its publication-time exclusions block ('gold_process_records DO NOT EXIST', 'gold_rule_records DO NOT EXIST') is a historical snapshot: the gold_process_records exclusion is now stale (Stage 1 Process Gold published 2026-08-13) while the gold_rule_records exclusion remains true; the release manifest file itself stays unmodified.
+- `scripts/build_s1_5_s3_7_readiness_v1.py` (sha256 `dc474b80485d…`): Historical builder that hardcodes the pre-freeze conclusion 'true Gold Process Records DO NOT EXIST (S1.5 human Process Gold not started)'; preserved unmodified as provenance; its current-state output logic is superseded by this deterministic builder.
+- `scripts/build_s3_7_oracle_readiness.py` (sha256 `71881cb446e1…`): Historical builder for s37_oracle_readiness_v1.json that hardcodes 'true Gold Process Records ... NOT present'; preserved unmodified as provenance; its current-state output logic is superseded by this deterministic builder.
+
+## Dependency matrix
+
+### Stage 1
+
+- **S1.5 = verified** — Stage 1 Process Gold frozen and published (user-authorized 2026-08-13; 7/7 records, 135/135 label fields, 7/7 structure decisions); independent verifier scripts/verify_stage1_process_gold.py VERIFIED.
+  - evidence [disk_asset]: `data/gold/stage1/process_records/stage1_process_gold_v1.json`, sha256 `f33aa857a079…`
+  - evidence [manifest]: `data/gold/stage1/manifest.json`, sha256 `1885dad26f43…`
+  - evidence [manifest]: `outputs/reports/s1_5_process_gold_freeze_authorization_v1.manifest.json`, sha256 `4b97762cfe3c…`
+  - evidence [independent_verifier]: `scripts/verify_stage1_process_gold.py`, sha256 `26deb38f9b4b…`
+- **S1.6 = verified** — Fixed-GDPR-7 formal descriptive component evaluation (target-aware claim: post-Gold development, strict_test_blind=false, no held-out generalization claim); P2 config/implementation/runtime, predictions and ORIGINAL metrics byte-unchanged.
+  - evidence [disk_asset]: `data/predictions/stage1_formal_v1/formal_predictions_v1.json`, sha256 `79a9b2c17185…`
+  - evidence [disk_asset]: `data/results/stage1_formal_v1/stage1_formal_evaluation_v1.json`, sha256 `a072db39b371…`
+  - evidence [disk_asset]: `outputs/reports/stage1_formal_evaluation_v2.json`, sha256 `954122d4ed89…`
+  - evidence [manifest]: `outputs/reports/stage1_formal_evaluation_v2.manifest.json`, sha256 `0d7736f81a3c…`
+- **S1.7 = frozen** — Formal Stage 1 freeze APPLIED (user-authorized 2026-08-13): non-tuned P2 method, existing P0/P1/P2 predictions, ORIGINAL metrics, Stage 1 Process Gold and the verified evaluation capsule are frozen; zero LLM/API; the freeze does NOT auto-authorize the Stage 3 Oracle.
+  - evidence [manifest]: `outputs/reports/s1_7_freezer_authorization_v1.manifest.json`, sha256 `7712176c877c…`
+  - evidence [disk_asset]: `outputs/reports/s1_7_freezer_readiness_dry_run_v2.json`, sha256 `be5d4b80d807…`
+  - evidence [independent_verifier]: `scripts/verify_s1_7_freezer_authorization.py`, sha256 `e7fb0005e4ed…`
+
+### Stage 2
+
+- **S2.10 = verified** — Three-method formal capsules, hash-consistent shared comparison capsule and the formal three-method comparison report are published and independently verified (authorized G0.4 evaluation views; new LLM calls 0).
+  - evidence [disk_asset]: `data/predictions/b0_formal_arm_v1/predictions.json`, sha256 `fa94991d246d…`
+  - evidence [disk_asset]: `data/results/b0_formal_arm_v1/evaluation_coarse.json`, sha256 `abd2b7972fe5…`
+  - evidence [manifest]: `outputs/reports/b0_formal_arm_v1.manifest.json`, sha256 `095a839fe7a9…`
+  - evidence [independent_verifier]: `outputs/reports/verify_b0_formal_arm_v1.py`, sha256 `01e20bd01173…`
+  - evidence [disk_asset]: `data/predictions/direct_llm_formal_arm_v1/predictions.json`, sha256 `bbadb6834572…`
+  - evidence [disk_asset]: `data/results/direct_llm_formal_arm_v1/evaluation_coarse.json`, sha256 `471447b0494d…`
+  - evidence [manifest]: `outputs/reports/direct_llm_formal_arm_v1.manifest.json`, sha256 `f0f86318259d…`
+  - evidence [independent_verifier]: `outputs/reports/verify_direct_llm_formal_arm_v1.py`, sha256 `e48bba8919e8…`
+  - evidence [disk_asset]: `data/predictions/sun_llm_fallback_formal_arm_v1/predictions.json`, sha256 `65286d86ddb9…`
+  - evidence [disk_asset]: `data/results/sun_llm_fallback_formal_arm_v1/evaluation_coarse.json`, sha256 `31e7afbb0139…`
+  - evidence [manifest]: `outputs/reports/sun_llm_fallback_formal_arm_v1.manifest.json`, sha256 `0b5e32852028…`
+  - evidence [independent_verifier]: `outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py`, sha256 `932d13273ee5…`
+  - evidence [disk_asset]: `outputs/reports/stage2_formal_three_method_comparison_v1.json`, sha256 `c9d76544a36c…`
+  - evidence [manifest]: `outputs/reports/stage2_formal_three_method_comparison_v1.manifest.json`, sha256 `dc41eb4bee6b…`
+  - evidence [independent_verifier]: `outputs/reports/verify_stage2_formal_comparison_v1.py`, sha256 `22c23331ad68…`
+- **S2.11 = blocked** — Complex legal corpus NOT frozen and NOT activated; precise blockers are re-read from the S2.11 license/adapter readiness v2 asset; G0.5 complexity contract still not frozen.
+  - blocker: license: unknown_pending_confirmation (no local declaration; external evidence pending)
+  - blocker: data activation authorization: NOT granted (references/ stays read-only)
+  - blocker: mapping decision: modality 3->4 mapping table / adjudication not decided
+  - blocker: human Gold: required for external-label qualification; not started
+  - blocker: G0.5 complexity rules: not frozen before results (retrospective only today)
+  - blocker: Barrientos adapter (S2-BARR-2): not implemented (only the contract dry-run exists)
+  - evidence [disk_asset]: `outputs/reports/s2_11_license_adapter_readiness_v2.json`, sha256 `8d271f59e2c6…`
+  - evidence [disk_asset]: `outputs/reports/s2_11_data_qualification_mapping_dry_run.json`, sha256 `9a8835ec27c3…`
+  - evidence [derivation]: `no frozen G0.5 complexity contract found under configs/evaluation/ (glob g05_* / complexity_*)`
+- **S2.12 = partial** — Formal descriptive common error analysis delivered as RETROSPECTIVE/EXPLORATORY (stratification formed after seeing results, NOT preregistered); full DoD remains blocked on S2.11.
+  - evidence [disk_asset]: `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json`, sha256 `9f6c734002fd…`
+  - evidence [manifest]: `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.manifest.json`, sha256 `89b3f1209c19…`
+- **S2.13 = blocked** — Stage 2 freeze NOT complete. DoD unchanged (S2.1-S2.12 full DoD); NOT decomposed into new formal tasks and NOT modified this round; final_experiment_ready=true does NOT complete S2.13.
+  - blocker: S2.11 blocked (external complex-corpus license, data activation, 3->4 label mapping, human Gold, G0.5, Barrientos adapter)
+  - blocker: S2.12 full DoD not met (partial/retrospective descriptive part only)
+  - evidence [derivation]: `derived: S2.11 blocked AND S2.12 partial -> S2.13 blocked; DoD text unchanged in MASTER_PIPELINE.md`
+  - evidence [disk_asset]: `outputs/reports/s2_13_stage2_freeze_gap_capsule.json`, sha256 `eb934910c2e0…`
+  - evidence [disk_asset]: `outputs/reports/s2_11_license_adapter_readiness_v2.json`, sha256 `8d271f59e2c6…`
+
+### Stage 3
+
+- **S3.2 = verified** — 25 matching decision Gold frozen and published (data/gold/stage3/stage3_matching_gold_v1.json); these relevance decisions are NOT Gold Rule Records.
+  - evidence [disk_asset]: `data/gold/stage3/stage3_matching_gold_v1.json`, sha256 `55dffbcaf7d6…`
+  - evidence [disk_asset]: `data/development/human_review/stage3_gold_annotation_human_correction_v1.json`, sha256 `3310d624b03d…`
+  - evidence [manifest]: `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json`, sha256 `f37ae1164b19…`
+  - evidence [manifest]: `outputs/reports/formal_benchmark_release_v2.manifest.json`, sha256 `8b3cbd2e6081…`
+  - evidence [independent_verifier]: `scripts/verify_formal_benchmark_release_v2.py`, sha256 `b9e1b9e29468…`
+- **S3.3 = verified** — 33 violation decision Gold frozen and published (data/gold/stage3/stage3_violation_gold_v1.json); these type/evidence decisions are NOT Gold Rule Records.
+  - evidence [disk_asset]: `data/gold/stage3/stage3_violation_gold_v1.json`, sha256 `54245ef0d102…`
+  - evidence [disk_asset]: `data/development/human_review/stage3_gold_annotation_human_correction_v1.json`, sha256 `3310d624b03d…`
+  - evidence [manifest]: `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json`, sha256 `f37ae1164b19…`
+  - evidence [manifest]: `outputs/reports/formal_benchmark_release_v2.manifest.json`, sha256 `8b3cbd2e6081…`
+  - evidence [independent_verifier]: `scripts/verify_formal_benchmark_release_v2.py`, sha256 `b9e1b9e29468…`
+- **S3.4 = development_only** — Winter wrapper development evidence only; formal completion still blocked: S1.7 dependency is now SATISFIED (frozen 2026-08-13), S2.13 remains blocked.
+  - evidence [manifest]: `outputs/development/s34_winter_stage3_development_v3_clean/manifest.json`, sha256 `74b918548d0e…`
+  - evidence [manifest]: `outputs/development/s34_winter_stage3_development_v3_prototype_literal/manifest.json`, sha256 `91dda78fedc3…`
+- **S3.5 = development_only** — Sun Stage 3 method-level reconstruction development evidence only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied).
+  - evidence [manifest]: `outputs/development/s35_sun_stage3_development_v2/manifest.json`, sha256 `48c61dbc85a0…`
+- **S3.6 = development_only** — BM25 v3 + TF-IDF/SVD development baselines only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied); threshold 0.5 remains a fixed development setting.
+  - evidence [manifest]: `outputs/development/s36_bm25_stage3_development_v3/manifest.json`, sha256 `f81988c5522d…`
+  - evidence [manifest]: `outputs/development/s36_tfidf_svd_stage3_development_v2/manifest.json`, sha256 `56e40e3e81a9…`
+- **S3.7 = blocked** — Formal Oracle NOT started and NOT authorized; development Stage 3 numbers must not be promoted; the oracle_control block records the fail-closed flags.
+  - blocker: Formal, user-adjudicated and frozen GDPR Gold Rule Records for the 9 rule IDs do not exist
+  - blocker: S2.13 blocked
+  - blocker: S3.4/S3.5/S3.6 formal completion pending
+  - evidence [disk_asset]: `outputs/reports/s37_oracle_readiness_v1.json`, sha256 `7bd3e8dec72b…`
+  - evidence [disk_asset]: `outputs/reports/s3_7_oracle_readiness_v2.json`, sha256 `0e79232bb17b…`
+  - evidence [derivation]: `derived: no oracle authorization manifest and no formal oracle run/result assets found on disk`
+
+## Stage 1 Process Gold
+
+- exists: **True**
+- path: `data/gold/stage1/process_records/stage1_process_gold_v1.json` (sha256 `f33aa857a079…`)
+- manifest: `data/gold/stage1/manifest.json` (sha256 `1885dad26f43…`)
+- counts: {'process_records': 7, 'label_fields': 135, 'structure_decisions': 7}
+- independent verifier `scripts/verify_stage1_process_gold.py` VERIFIED (see verifiers_executed)
+
+## Stage 3 decision Gold
+
+- matching: `data/gold/stage3/stage3_matching_gold_v1.json` (count 25, sha256 `55dffbcaf7d6…`)
+- violation: `data/gold/stage3/stage3_violation_gold_v1.json` (count 33, sha256 `54245ef0d102…`)
+- frozen correction: `data/development/human_review/stage3_gold_annotation_human_correction_v1.json`
+- consistency_with_frozen_correction: **True**
+- The published matching/violation decisions are DECISION Gold only; they are NOT complete Rule/Process Gold and must never be used as Gold Rule Records.
+
+## Gold Rule Records
+
+- exist: **False**
+- absence derived from: no file under data/gold/ matches a Gold Rule Record artifact pattern (name contains 'rule_record'); data/gold/stage2/estg150_formal_gold_v1.json is the EStG-150 Stage 2 six-element span Gold and is NOT a GDPR Rule Record
+- the 9 GDPR rule IDs covered by the matching/violation decision packs (derived from disk): article6, article7, article15, article16, article17, article20, article22, article33, article34
+- rule_ids_derived_from: data/gold/stage3/stage3_matching_gold_v1.json, data/gold/stage3/stage3_violation_gold_v1.json
+- stage2 EStG-150 Gold is NOT GDPR Rule Records: **True**
+- Formal, user-adjudicated and frozen GDPR Gold Rule Records for the 9 rule IDs do NOT exist. This round did NOT create, infer, or auto-fill any Gold Rule Record; their production remains a user-owned adjudication + freeze task.
+
+## S3.4–S3.6 development-only
+
+- **s3_4**: development_only — Winter wrapper development evidence only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied by the 2026-08-13 freeze).
+  - evidence [manifest]: `outputs/development/s34_winter_stage3_development_v3_clean/manifest.json` sha256 `74b918548d0e…`
+  - evidence [manifest]: `outputs/development/s34_winter_stage3_development_v3_prototype_literal/manifest.json` sha256 `91dda78fedc3…`
+- **s3_5**: development_only — Sun Stage 3 development evidence only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied).
+  - evidence [manifest]: `outputs/development/s35_sun_stage3_development_v2/manifest.json` sha256 `48c61dbc85a0…`
+- **s3_6**: development_only — BM25 v3 + TF-IDF/SVD development baselines only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied).
+  - evidence [manifest]: `outputs/development/s36_bm25_stage3_development_v3/manifest.json` sha256 `f81988c5522d…`
+  - evidence [manifest]: `outputs/development/s36_tfidf_svd_stage3_development_v2/manifest.json` sha256 `56e40e3e81a9…`
+
+## Oracle control (fail-closed)
+
+- formal_oracle_started: **False**
+- formal_oracle_authorized: **False**
+- ready_for_oracle_authorization: **False** (Substantive dependencies remain, so readiness is NOT reducible to a single authorization: S2.13 is blocked, formal user-adjudicated frozen GDPR Gold Rule Records for the 9 rule IDs do not exist, and S3.4/S3.5/S3.6 formal completion is pending.)
+- authorization_sentence: **None** (No 'directly start the formal Oracle' authorization sentence may be generated now: substantive dependencies remain (S2.13 freeze; formal, user-adjudicated and frozen GDPR Gold Rule Records for the 9 rule IDs; S3.4-S3.6 formal promotion). Oracle readiness is not reducible to a single authorization.)
+- no_pseudo_oracle: **True**
+- probe: probe outputs/reports/*oracle_authorization* -> no matches
+- probe: probe data/results/*oracle* + outputs/evidence/*oracle* -> no matches
+
+## Prohibitions
+
+1. Stage 2 method predictions must NOT be treated as Gold Rule Records.
+2. Parser candidates must NOT be treated as Gold Process Records.
+3. Stage 3 matching/violation decision labels must NOT be treated as complete Rule/Process Gold.
+4. Development Stage 3 numbers must NOT be promoted to formal results.
+5. audit_project.py --require-final-ready returning 0 must NOT bypass the MASTER_PIPELINE S2.13 / S3.7 dependencies.
+
+## Audit consistency
+
+- final_experiment_ready: **True**
+- semantics: final_experiment_ready=true means ONLY that the Stage 2 three-method formal evaluation / final-metric MACHINE gates are ready (three verified formal capsules, hash-consistent shared comparison capsule, user-authorized G0.4 contract); it does NOT mean S2.13, S3.7, or full MASTER_PIPELINE completion.
+- derived from: formal_experiment.audit.collect_project_audit() run in-process at build time
+- claim_boundary_contradiction_free: **True**
+
+## Independent verifiers executed
+
+- `scripts/verify_stage1_process_gold.py`: verified=True, exit_code=0, checks 21
+- `scripts/verify_s1_7_freezer_authorization.py`: verified=True, exit_code=0, checks 16
+- `scripts/verify_formal_benchmark_release_v2.py`: verified=True, exit_code=0, checks 53
+- `outputs/reports/verify_b0_formal_arm_v1.py`: verified=True, exit_code=0
+- `outputs/reports/verify_direct_llm_formal_arm_v1.py`: verified=True, exit_code=0
+- `outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py`: verified=True, exit_code=0
+- `outputs/reports/verify_stage2_formal_comparison_v1.py`: verified=True, exit_code=0
+
+## Zero API
+
+- new_llm_api_calls: **0**
+

@@ -1,0 +1,579 @@
+{
+  "schema_version": "s2_13_s3_7_transition_readiness@1.0.0",
+  "report_id": "s2_13_s3_7_transition_readiness_v1",
+  "build_note": "Every state judgment in this report is re-derived from current on-disk assets, manifests, hashes, or executed independent verifiers; no hardcoded existence conclusions and no wall-clock timestamps. Rebuilding on identical inputs produces byte-identical outputs; existing outputs with different bytes are refused.",
+  "supersedes": [
+    {
+      "path": "outputs/reports/s2_13_stage2_freeze_gap_capsule.json",
+      "sha256": "eb934910c2e046c43cfae063ff8eac69e124fda65830f5c50cb2e1fd50abc311",
+      "reason": "2026-08-11 current-state judgment predates the S1.7 freeze (2026-08-13) and still lists S1.7 as blocked ('true Gold Process Records'); the remaining-items list is superseded by this v1 ledger while the historical file stays unmodified."
+    },
+    {
+      "path": "outputs/reports/s2_13_stage2_freeze_gap_capsule.md",
+      "sha256": "ca369600d594359bbbe1977c16ee4443d9ee16c0a5e7accf0e4b5081bf3a18ac",
+      "reason": "2026-08-11 Markdown rendering of the same superseded gap capsule; preserved unmodified as historical provenance."
+    },
+    {
+      "path": "outputs/reports/s3_7_oracle_readiness_v2.json",
+      "sha256": "0e79232bb17b172ea6f5f105e6a3e75a9aa2d67a42614c66a1e65a566da9827b",
+      "reason": "2026-08-11 current-state judgment is stale: it hardcodes gold_process_records.exist=false with 'S1.5 human Process Gold not started', which the 2026-08-13 Stage 1 Process Gold publication and S1.7 freeze invalidated; superseded by this v1 ledger, historical content preserved."
+    },
+    {
+      "path": "outputs/reports/s37_oracle_readiness_v1.json",
+      "sha256": "7bd3e8dec72be75a4b3414c889839b5891e59e47707b3845a59e510328dd5a7b",
+      "reason": "2026-08-09 current-state judgment is stale: 'true Gold Process Records not present' and the S1.7 gap no longer hold after 2026-08-13; its Gold-Rule-Records absence finding remains true and is carried forward; superseded by this v1 ledger, historical content preserved."
+    },
+    {
+      "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+      "sha256": "8b3cbd2e6081a31bb3d2fec018f11ed9c5bf45d0ec51507050bb9472c3ed4447",
+      "reason": "Its publication-time exclusions block ('gold_process_records DO NOT EXIST', 'gold_rule_records DO NOT EXIST') is a historical snapshot: the gold_process_records exclusion is now stale (Stage 1 Process Gold published 2026-08-13) while the gold_rule_records exclusion remains true; the release manifest file itself stays unmodified."
+    },
+    {
+      "path": "scripts/build_s1_5_s3_7_readiness_v1.py",
+      "sha256": "dc474b80485dd1d355f8a677be0988834a78f4fd56601de8ecf1b8e1fd1ee68b",
+      "reason": "Historical builder that hardcodes the pre-freeze conclusion 'true Gold Process Records DO NOT EXIST (S1.5 human Process Gold not started)'; preserved unmodified as provenance; its current-state output logic is superseded by this deterministic builder."
+    },
+    {
+      "path": "scripts/build_s3_7_oracle_readiness.py",
+      "sha256": "71881cb446e1aa492e69ec07f1f1fdcd6331568ac36b70d0f0d99c2b849b9b09",
+      "reason": "Historical builder for s37_oracle_readiness_v1.json that hardcodes 'true Gold Process Records ... NOT present'; preserved unmodified as provenance; its current-state output logic is superseded by this deterministic builder."
+    }
+  ],
+  "dependency_matrix": {
+    "stage1": [
+      {
+        "task_id": "S1.5",
+        "status": "verified",
+        "note": "Stage 1 Process Gold frozen and published (user-authorized 2026-08-13; 7/7 records, 135/135 label fields, 7/7 structure decisions); independent verifier scripts/verify_stage1_process_gold.py VERIFIED.",
+        "evidence": [
+          {
+            "path": "data/gold/stage1/process_records/stage1_process_gold_v1.json",
+            "kind": "disk_asset",
+            "sha256": "f33aa857a0796d0517a9d04cc96b0a4f316202603fe0adf66693aeb5cb444bca"
+          },
+          {
+            "path": "data/gold/stage1/manifest.json",
+            "kind": "manifest",
+            "sha256": "1885dad26f43b19324f2e779a7bbed0db5b19699145d8607a59439423b23e587"
+          },
+          {
+            "path": "outputs/reports/s1_5_process_gold_freeze_authorization_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "4b97762cfe3cb336a2a163bd85cbc850f9963a513af8a33185efae7d0486e25c"
+          },
+          {
+            "path": "scripts/verify_stage1_process_gold.py",
+            "kind": "independent_verifier",
+            "sha256": "26deb38f9b4b3787c6a2a795b659c5cdd7675a1fc05109f0bcc37a010f0f3cc8"
+          }
+        ]
+      },
+      {
+        "task_id": "S1.6",
+        "status": "verified",
+        "note": "Fixed-GDPR-7 formal descriptive component evaluation (target-aware claim: post-Gold development, strict_test_blind=false, no held-out generalization claim); P2 config/implementation/runtime, predictions and ORIGINAL metrics byte-unchanged.",
+        "evidence": [
+          {
+            "path": "data/predictions/stage1_formal_v1/formal_predictions_v1.json",
+            "kind": "disk_asset",
+            "sha256": "79a9b2c17185d63dc5ab5d9c47c8c592469b30f3cf7298740e593838166a94a8"
+          },
+          {
+            "path": "data/results/stage1_formal_v1/stage1_formal_evaluation_v1.json",
+            "kind": "disk_asset",
+            "sha256": "a072db39b37167d76aa4e49b9845b5b563255d980b9ee00cd811f43c116a7392"
+          },
+          {
+            "path": "outputs/reports/stage1_formal_evaluation_v2.json",
+            "kind": "disk_asset",
+            "sha256": "954122d4ed893a5d8bafc19afe627fe9a44f42cfdacd8af3ff747e798502c988"
+          },
+          {
+            "path": "outputs/reports/stage1_formal_evaluation_v2.manifest.json",
+            "kind": "manifest",
+            "sha256": "0d7736f81a3c01367398d9ce787d006bd718e328fa050d254321454f32337473"
+          }
+        ]
+      },
+      {
+        "task_id": "S1.7",
+        "status": "frozen",
+        "note": "Formal Stage 1 freeze APPLIED (user-authorized 2026-08-13): non-tuned P2 method, existing P0/P1/P2 predictions, ORIGINAL metrics, Stage 1 Process Gold and the verified evaluation capsule are frozen; zero LLM/API; the freeze does NOT auto-authorize the Stage 3 Oracle.",
+        "evidence": [
+          {
+            "path": "outputs/reports/s1_7_freezer_authorization_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "7712176c877c982e11ec670625aedb266f052d3d5b7a898d1a8504285990850a"
+          },
+          {
+            "path": "outputs/reports/s1_7_freezer_readiness_dry_run_v2.json",
+            "kind": "disk_asset",
+            "sha256": "be5d4b80d807d66606f265e024c2a0b8d3743380dd8649643aee4fcfc9d4997f"
+          },
+          {
+            "path": "scripts/verify_s1_7_freezer_authorization.py",
+            "kind": "independent_verifier",
+            "sha256": "e7fb0005e4ed8fa1bf2bb26b0e3cbab6e9504dae715ef48f58225d1b89ada88d"
+          }
+        ]
+      }
+    ],
+    "stage2": [
+      {
+        "task_id": "S2.10",
+        "status": "verified",
+        "note": "Three-method formal capsules, hash-consistent shared comparison capsule and the formal three-method comparison report are published and independently verified (authorized G0.4 evaluation views; new LLM calls 0).",
+        "evidence": [
+          {
+            "path": "data/predictions/b0_formal_arm_v1/predictions.json",
+            "kind": "disk_asset",
+            "sha256": "fa94991d246db9876b55d6a473644a4a1b93404bc35d3e314d3dba4768d9278d"
+          },
+          {
+            "path": "data/results/b0_formal_arm_v1/evaluation_coarse.json",
+            "kind": "disk_asset",
+            "sha256": "abd2b7972fe539b50cdaa597799aeb190b06e134c1e2f57fe87fc6b8ce346130"
+          },
+          {
+            "path": "outputs/reports/b0_formal_arm_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "095a839fe7a98ed24de3afb3d840d1af5596f28988dae0429154f5b024f47c09"
+          },
+          {
+            "path": "outputs/reports/verify_b0_formal_arm_v1.py",
+            "kind": "independent_verifier",
+            "sha256": "01e20bd01173186620837ed86e5802f3a9ba1af187f1778e84d915e893fdd1ae"
+          },
+          {
+            "path": "data/predictions/direct_llm_formal_arm_v1/predictions.json",
+            "kind": "disk_asset",
+            "sha256": "bbadb6834572e58fb8321204b3bc975c887d23d9ae60bd804bf91137bb46072b"
+          },
+          {
+            "path": "data/results/direct_llm_formal_arm_v1/evaluation_coarse.json",
+            "kind": "disk_asset",
+            "sha256": "471447b0494d735f9b5ea20ce4ba7687f2fc3304bec00c29e0b4905f3c830212"
+          },
+          {
+            "path": "outputs/reports/direct_llm_formal_arm_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "f0f86318259de87c9557781b69d2573a13bb25469db194905cfc216fef94d133"
+          },
+          {
+            "path": "outputs/reports/verify_direct_llm_formal_arm_v1.py",
+            "kind": "independent_verifier",
+            "sha256": "e48bba8919e81c1d60939ee5c2db7101f57f7fa6fade664bd4d75f31b6aad6c8"
+          },
+          {
+            "path": "data/predictions/sun_llm_fallback_formal_arm_v1/predictions.json",
+            "kind": "disk_asset",
+            "sha256": "65286d86ddb93c361a846c4c4fcc7cd9c4c4fe8a19392dbaa88d3617c1978be2"
+          },
+          {
+            "path": "data/results/sun_llm_fallback_formal_arm_v1/evaluation_coarse.json",
+            "kind": "disk_asset",
+            "sha256": "31e7afbb0139d281eb3e64be216dd3b8b7cc1a0d081b13fd7febbbb93aff455c"
+          },
+          {
+            "path": "outputs/reports/sun_llm_fallback_formal_arm_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "0b5e32852028d83b920da7fd9695f0985def37724f792d6e81630a057ea41f18"
+          },
+          {
+            "path": "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py",
+            "kind": "independent_verifier",
+            "sha256": "932d13273ee573ca15af95c5972b6f868851cbd35536829f955fb7dce7db8b9c"
+          },
+          {
+            "path": "outputs/reports/stage2_formal_three_method_comparison_v1.json",
+            "kind": "disk_asset",
+            "sha256": "c9d76544a36ca4c27939d8090a8bfafc6da690a2e5d2b5d09624b27b4f9cf740"
+          },
+          {
+            "path": "outputs/reports/stage2_formal_three_method_comparison_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "dc41eb4bee6b1cd06afc184f27ae63dcd9e93b6e5b4869a2d3e6b876d47236c6"
+          },
+          {
+            "path": "outputs/reports/verify_stage2_formal_comparison_v1.py",
+            "kind": "independent_verifier",
+            "sha256": "22c23331ad6875c7cb72817070c4c3780bc7d45c310250717f8fa3861efa0d57"
+          }
+        ]
+      },
+      {
+        "task_id": "S2.11",
+        "status": "blocked",
+        "blockers": [
+          "license: unknown_pending_confirmation (no local declaration; external evidence pending)",
+          "data activation authorization: NOT granted (references/ stays read-only)",
+          "mapping decision: modality 3->4 mapping table / adjudication not decided",
+          "human Gold: required for external-label qualification; not started",
+          "G0.5 complexity rules: not frozen before results (retrospective only today)",
+          "Barrientos adapter (S2-BARR-2): not implemented (only the contract dry-run exists)"
+        ],
+        "note": "Complex legal corpus NOT frozen and NOT activated; precise blockers are re-read from the S2.11 license/adapter readiness v2 asset; G0.5 complexity contract still not frozen.",
+        "evidence": [
+          {
+            "path": "outputs/reports/s2_11_license_adapter_readiness_v2.json",
+            "kind": "disk_asset",
+            "sha256": "8d271f59e2c6d24006ab7139509a6cf3b96d4a276a3d88c019b1a83db4b5a2e0"
+          },
+          {
+            "path": "outputs/reports/s2_11_data_qualification_mapping_dry_run.json",
+            "kind": "disk_asset",
+            "sha256": "9a8835ec27c3e64c0d38a8b2dbf59d3ab78b5949cb7a39ccb505fd2d67f5a994"
+          },
+          {
+            "path": "no frozen G0.5 complexity contract found under configs/evaluation/ (glob g05_* / complexity_*)",
+            "kind": "derivation"
+          }
+        ]
+      },
+      {
+        "task_id": "S2.12",
+        "status": "partial",
+        "note": "Formal descriptive common error analysis delivered as RETROSPECTIVE/EXPLORATORY (stratification formed after seeing results, NOT preregistered); full DoD remains blocked on S2.11.",
+        "evidence": [
+          {
+            "path": "outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json",
+            "kind": "disk_asset",
+            "sha256": "9f6c734002fd4d6761454e8e751e172e543ce4f1808b19d3f3513f05374619fd"
+          },
+          {
+            "path": "outputs/reports/s2_12_formal_descriptive_error_analysis_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "89b3f1209c193ec872b9b01319f9003e0ba26387cbce0830f86e2054040dda06"
+          }
+        ]
+      },
+      {
+        "task_id": "S2.13",
+        "status": "blocked",
+        "blockers": [
+          "S2.11 blocked (external complex-corpus license, data activation, 3->4 label mapping, human Gold, G0.5, Barrientos adapter)",
+          "S2.12 full DoD not met (partial/retrospective descriptive part only)"
+        ],
+        "note": "Stage 2 freeze NOT complete. DoD unchanged (S2.1-S2.12 full DoD); NOT decomposed into new formal tasks and NOT modified this round; final_experiment_ready=true does NOT complete S2.13.",
+        "evidence": [
+          {
+            "path": "derived: S2.11 blocked AND S2.12 partial -> S2.13 blocked; DoD text unchanged in MASTER_PIPELINE.md",
+            "kind": "derivation"
+          },
+          {
+            "path": "outputs/reports/s2_13_stage2_freeze_gap_capsule.json",
+            "kind": "disk_asset",
+            "sha256": "eb934910c2e046c43cfae063ff8eac69e124fda65830f5c50cb2e1fd50abc311"
+          },
+          {
+            "path": "outputs/reports/s2_11_license_adapter_readiness_v2.json",
+            "kind": "disk_asset",
+            "sha256": "8d271f59e2c6d24006ab7139509a6cf3b96d4a276a3d88c019b1a83db4b5a2e0"
+          }
+        ]
+      }
+    ],
+    "stage3": [
+      {
+        "task_id": "S3.2",
+        "status": "verified",
+        "note": "25 matching decision Gold frozen and published (data/gold/stage3/stage3_matching_gold_v1.json); these relevance decisions are NOT Gold Rule Records.",
+        "evidence": [
+          {
+            "path": "data/gold/stage3/stage3_matching_gold_v1.json",
+            "kind": "disk_asset",
+            "sha256": "55dffbcaf7d6510c11a06f10b134dfb449af0bd687d0cf40f7839be19bc2e618"
+          },
+          {
+            "path": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+            "kind": "disk_asset",
+            "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f"
+          },
+          {
+            "path": "outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "f37ae1164b19e1e86d007f83202a125c31c295e415b899b83cec9eb0f51a04e7"
+          },
+          {
+            "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+            "kind": "manifest",
+            "sha256": "8b3cbd2e6081a31bb3d2fec018f11ed9c5bf45d0ec51507050bb9472c3ed4447"
+          },
+          {
+            "path": "scripts/verify_formal_benchmark_release_v2.py",
+            "kind": "independent_verifier",
+            "sha256": "b9e1b9e29468fcc332ff139a4bda82c4420119ca409b4d2b89df4c6b8f3dbd58"
+          }
+        ]
+      },
+      {
+        "task_id": "S3.3",
+        "status": "verified",
+        "note": "33 violation decision Gold frozen and published (data/gold/stage3/stage3_violation_gold_v1.json); these type/evidence decisions are NOT Gold Rule Records.",
+        "evidence": [
+          {
+            "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+            "kind": "disk_asset",
+            "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550"
+          },
+          {
+            "path": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+            "kind": "disk_asset",
+            "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f"
+          },
+          {
+            "path": "outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "f37ae1164b19e1e86d007f83202a125c31c295e415b899b83cec9eb0f51a04e7"
+          },
+          {
+            "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+            "kind": "manifest",
+            "sha256": "8b3cbd2e6081a31bb3d2fec018f11ed9c5bf45d0ec51507050bb9472c3ed4447"
+          },
+          {
+            "path": "scripts/verify_formal_benchmark_release_v2.py",
+            "kind": "independent_verifier",
+            "sha256": "b9e1b9e29468fcc332ff139a4bda82c4420119ca409b4d2b89df4c6b8f3dbd58"
+          }
+        ]
+      },
+      {
+        "task_id": "S3.4",
+        "status": "development_only",
+        "note": "Winter wrapper development evidence only; formal completion still blocked: S1.7 dependency is now SATISFIED (frozen 2026-08-13), S2.13 remains blocked.",
+        "evidence": [
+          {
+            "path": "outputs/development/s34_winter_stage3_development_v3_clean/manifest.json",
+            "kind": "manifest",
+            "sha256": "74b918548d0e5aa839f50446e359e04e3ec3ce7fb6aa86b3637a11a98e4ff649"
+          },
+          {
+            "path": "outputs/development/s34_winter_stage3_development_v3_prototype_literal/manifest.json",
+            "kind": "manifest",
+            "sha256": "91dda78fedc33e47ab70e86f2726c6673e8bdb52ccf3aec652b6819564807dd8"
+          }
+        ]
+      },
+      {
+        "task_id": "S3.5",
+        "status": "development_only",
+        "note": "Sun Stage 3 method-level reconstruction development evidence only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied).",
+        "evidence": [
+          {
+            "path": "outputs/development/s35_sun_stage3_development_v2/manifest.json",
+            "kind": "manifest",
+            "sha256": "48c61dbc85a0fd28b1fa21c1b2563c65ca029107afe503e35586698ea7388b21"
+          }
+        ]
+      },
+      {
+        "task_id": "S3.6",
+        "status": "development_only",
+        "note": "BM25 v3 + TF-IDF/SVD development baselines only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied); threshold 0.5 remains a fixed development setting.",
+        "evidence": [
+          {
+            "path": "outputs/development/s36_bm25_stage3_development_v3/manifest.json",
+            "kind": "manifest",
+            "sha256": "f81988c5522d3f897ec0155d755f0c6f580ebaff999f9a53be941638055d012a"
+          },
+          {
+            "path": "outputs/development/s36_tfidf_svd_stage3_development_v2/manifest.json",
+            "kind": "manifest",
+            "sha256": "56e40e3e81a9a76b3fb93f5a77726348d8b1d2305cb1cd69798c529a85ce1082"
+          }
+        ]
+      },
+      {
+        "task_id": "S3.7",
+        "status": "blocked",
+        "blockers": [
+          "Formal, user-adjudicated and frozen GDPR Gold Rule Records for the 9 rule IDs do not exist",
+          "S2.13 blocked",
+          "S3.4/S3.5/S3.6 formal completion pending"
+        ],
+        "note": "Formal Oracle NOT started and NOT authorized; development Stage 3 numbers must not be promoted; the oracle_control block records the fail-closed flags.",
+        "evidence": [
+          {
+            "path": "outputs/reports/s37_oracle_readiness_v1.json",
+            "kind": "disk_asset",
+            "sha256": "7bd3e8dec72be75a4b3414c889839b5891e59e47707b3845a59e510328dd5a7b"
+          },
+          {
+            "path": "outputs/reports/s3_7_oracle_readiness_v2.json",
+            "kind": "disk_asset",
+            "sha256": "0e79232bb17b172ea6f5f105e6a3e75a9aa2d67a42614c66a1e65a566da9827b"
+          },
+          {
+            "path": "derived: no oracle authorization manifest and no formal oracle run/result assets found on disk",
+            "kind": "derivation"
+          }
+        ]
+      }
+    ]
+  },
+  "stage1_process_gold": {
+    "exists": true,
+    "path": "data/gold/stage1/process_records/stage1_process_gold_v1.json",
+    "sha256": "f33aa857a0796d0517a9d04cc96b0a4f316202603fe0adf66693aeb5cb444bca",
+    "manifest_path": "data/gold/stage1/manifest.json",
+    "manifest_sha256": "1885dad26f43b19324f2e779a7bbed0db5b19699145d8607a59439423b23e587",
+    "counts": {
+      "process_records": 7,
+      "label_fields": 135,
+      "structure_decisions": 7
+    }
+  },
+  "stage3_decision_gold": {
+    "matching": {
+      "path": "data/gold/stage3/stage3_matching_gold_v1.json",
+      "sha256": "55dffbcaf7d6510c11a06f10b134dfb449af0bd687d0cf40f7839be19bc2e618",
+      "count": 25
+    },
+    "violation": {
+      "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+      "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550",
+      "count": 33
+    },
+    "frozen_correction": {
+      "path": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+      "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f"
+    },
+    "consistency_with_frozen_correction": true,
+    "note": "The published matching/violation decisions are DECISION Gold only; they are NOT complete Rule/Process Gold and must never be used as Gold Rule Records."
+  },
+  "gold_rule_records": {
+    "exist": false,
+    "absence_derived_from": "no file under data/gold/ matches a Gold Rule Record artifact pattern (name contains 'rule_record'); data/gold/stage2/estg150_formal_gold_v1.json is the EStG-150 Stage 2 six-element span Gold and is NOT a GDPR Rule Record",
+    "covered_rule_ids": [
+      "article6",
+      "article7",
+      "article15",
+      "article16",
+      "article17",
+      "article20",
+      "article22",
+      "article33",
+      "article34"
+    ],
+    "rule_ids_derived_from": [
+      "data/gold/stage3/stage3_matching_gold_v1.json",
+      "data/gold/stage3/stage3_violation_gold_v1.json"
+    ],
+    "stage2_estg150_gold_is_not_gdpr_rule_records": true,
+    "note": "Formal, user-adjudicated and frozen GDPR Gold Rule Records for the 9 rule IDs do NOT exist. This round did NOT create, infer, or auto-fill any Gold Rule Record; their production remains a user-owned adjudication + freeze task."
+  },
+  "stage3_development_only": {
+    "s3_4": {
+      "status": "development_only",
+      "formal_completion": "Winter wrapper development evidence only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied by the 2026-08-13 freeze).",
+      "evidence": [
+        {
+          "path": "outputs/development/s34_winter_stage3_development_v3_clean/manifest.json",
+          "kind": "manifest",
+          "sha256": "74b918548d0e5aa839f50446e359e04e3ec3ce7fb6aa86b3637a11a98e4ff649"
+        },
+        {
+          "path": "outputs/development/s34_winter_stage3_development_v3_prototype_literal/manifest.json",
+          "kind": "manifest",
+          "sha256": "91dda78fedc33e47ab70e86f2726c6673e8bdb52ccf3aec652b6819564807dd8"
+        }
+      ]
+    },
+    "s3_5": {
+      "status": "development_only",
+      "formal_completion": "Sun Stage 3 development evidence only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied).",
+      "evidence": [
+        {
+          "path": "outputs/development/s35_sun_stage3_development_v2/manifest.json",
+          "kind": "manifest",
+          "sha256": "48c61dbc85a0fd28b1fa21c1b2563c65ca029107afe503e35586698ea7388b21"
+        }
+      ]
+    },
+    "s3_6": {
+      "status": "development_only",
+      "formal_completion": "BM25 v3 + TF-IDF/SVD development baselines only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied).",
+      "evidence": [
+        {
+          "path": "outputs/development/s36_bm25_stage3_development_v3/manifest.json",
+          "kind": "manifest",
+          "sha256": "f81988c5522d3f897ec0155d755f0c6f580ebaff999f9a53be941638055d012a"
+        },
+        {
+          "path": "outputs/development/s36_tfidf_svd_stage3_development_v2/manifest.json",
+          "kind": "manifest",
+          "sha256": "56e40e3e81a9a76b3fb93f5a77726348d8b1d2305cb1cd69798c529a85ce1082"
+        }
+      ]
+    }
+  },
+  "oracle_control": {
+    "formal_oracle_started": false,
+    "formal_oracle_authorized": false,
+    "ready_for_oracle_authorization": false,
+    "ready_for_oracle_authorization_reason": "Substantive dependencies remain, so readiness is NOT reducible to a single authorization: S2.13 is blocked, formal user-adjudicated frozen GDPR Gold Rule Records for the 9 rule IDs do not exist, and S3.4/S3.5/S3.6 formal completion is pending.",
+    "authorization_sentence": null,
+    "authorization_sentence_reason": "No 'directly start the formal Oracle' authorization sentence may be generated now: substantive dependencies remain (S2.13 freeze; formal, user-adjudicated and frozen GDPR Gold Rule Records for the 9 rule IDs; S3.4-S3.6 formal promotion). Oracle readiness is not reducible to a single authorization.",
+    "no_pseudo_oracle": true,
+    "probe_evidence": [
+      {
+        "path": "probe outputs/reports/*oracle_authorization* -> no matches",
+        "kind": "derivation"
+      },
+      {
+        "path": "probe data/results/*oracle* + outputs/evidence/*oracle* -> no matches",
+        "kind": "derivation"
+      }
+    ]
+  },
+  "prohibitions": [
+    "Stage 2 method predictions must NOT be treated as Gold Rule Records.",
+    "Parser candidates must NOT be treated as Gold Process Records.",
+    "Stage 3 matching/violation decision labels must NOT be treated as complete Rule/Process Gold.",
+    "Development Stage 3 numbers must NOT be promoted to formal results.",
+    "audit_project.py --require-final-ready returning 0 must NOT bypass the MASTER_PIPELINE S2.13 / S3.7 dependencies."
+  ],
+  "audit_consistency": {
+    "final_experiment_ready": true,
+    "semantics": "final_experiment_ready=true means ONLY that the Stage 2 three-method formal evaluation / final-metric MACHINE gates are ready (three verified formal capsules, hash-consistent shared comparison capsule, user-authorized G0.4 contract); it does NOT mean S2.13, S3.7, or full MASTER_PIPELINE completion.",
+    "derived_from": "formal_experiment.audit.collect_project_audit() run in-process at build time",
+    "claim_boundary_contradiction_free": true
+  },
+  "verifiers_executed": {
+    "scripts/verify_stage1_process_gold.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 21
+    },
+    "scripts/verify_s1_7_freezer_authorization.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 16
+    },
+    "scripts/verify_formal_benchmark_release_v2.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 53
+    },
+    "outputs/reports/verify_b0_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_direct_llm_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_stage2_formal_comparison_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    }
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

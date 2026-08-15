@@ -1755,6 +1755,37 @@ def collect_project_audit() -> dict[str, Any]:
             "and ESTG-150 frozen-split run before this gate can be lifted.",
         )
 
+    # Dynamic final-readiness wording (2026-08-15 regression fix): the
+    # previous hardcoded tails claimed "final_experiment_ready remains
+    # false" and "Formal predictions/results capsule is NOT produced yet"
+    # even after the 2026-08-11 user-authorized final gate really opened.
+    # Derive the wording from the same state the audit itself reports so
+    # the warning and the claim boundary can never contradict the printed
+    # gate values again.
+    capsule_complete = any(
+        item.get("code") == "formal_predictions_results_capsule_complete"
+        for item in findings.get("passes", []))
+    final_gate_now = bool(
+        status.get("ready_for_final_metrics")
+        and not findings["errors"]
+        and not findings["blockers"])
+    if final_gate_now:
+        final_gate_wording = (
+            "final_experiment_ready=True, which means ONLY that the "
+            "Stage 2 three-method formal evaluation / final-metric "
+            "machine gates are ready (three verified formal capsules, "
+            "hash-consistent shared comparison capsule, user-authorized "
+            "G0.4 contract); it does NOT mean S2.13, S3.7, or the full "
+            "MASTER_PIPELINE is complete.")
+    else:
+        final_gate_wording = (
+            "final_experiment_ready remains false (formal methods, "
+            "frozen final capsule, or Stage 3 completion not ready).")
+    capsule_wording = (
+        "the formal predictions/results capsule covers all three methods"
+        if capsule_complete
+        else "the formal predictions/results capsule is NOT produced yet")
+
     _add(
         findings,
         "warnings",
@@ -1787,8 +1818,7 @@ def collect_project_audit() -> dict[str, Any]:
         "final_experiment_ready) are unchanged by this reminder. Current "
         "state: input/freeze/Gold-publication gates true (150/150 "
         "adjudicated, formal Gold published, executable input v2 verified); "
-        "final_experiment_ready remains false (methods + predictions/results "
-        "capsule not ready).",
+        + capsule_wording + "; " + final_gate_wording,
     )
 
     integrity_pass = not findings["errors"]
@@ -1873,8 +1903,7 @@ def collect_project_audit() -> dict[str, Any]:
             "The EStG-150 dataset is the project-self-sampled 150 (NOT Sun's original 150). "
             "150/150 Layer E records are adjudicated (annotation frozen); formal Gold "
             "artifacts are published and the executable Gold-blind input v2 is verified. "
-            "Formal predictions/results capsule is NOT produced yet; final experiment "
-            "and formal method gates remain not-ready."
+            + capsule_wording + "; " + final_gate_wording
         ),
         "findings": findings,
         "formal_status": status,
