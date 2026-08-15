@@ -1,0 +1,397 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "s2_13_s3_7_transition_readiness@2.0.0",
+  "description": "Deterministic S2.13 -> S3.7 transition control capsule report schema (v2). v2 supersedes the v1 verifier-completeness / fail-closed guarantees only: v1's current-state conclusions remain basically correct and every v1 file stays byte-exact. The report is rebuilt exclusively from current on-disk assets, manifests, hashes and executed independent verifiers (no wall-clock timestamps, no hardcoded existence conclusions). Fail-closed invariants are encoded as const values: Gold-Rule-Record absence is a THREE-STATE probe (no candidate -> exist=false; unverified candidate -> the builder aborts and no report is emitted; exist=true requires a future user-authorized freeze/publication path that v2 does NOT implement), any manifest/export omission or extra entry, any rule-ID set change, any Gold identity change, any Oracle control flag change, or any development-vs-formal status change makes the document schema-invalid.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "build_note",
+    "supersedes",
+    "dependency_matrix",
+    "stage1_process_gold",
+    "stage3_decision_gold",
+    "gold_rule_records",
+    "stage3_development_only",
+    "oracle_control",
+    "prohibitions",
+    "audit_consistency",
+    "verification_scope",
+    "verifiers_executed",
+    "zero_api"
+  ],
+  "properties": {
+    "schema_version": {"const": "s2_13_s3_7_transition_readiness@2.0.0"},
+    "report_id": {"const": "s2_13_s3_7_transition_readiness_v2"},
+    "build_note": {"type": "string", "minLength": 20},
+    "supersedes": {
+      "type": "array",
+      "minItems": 15,
+      "items": {"$ref": "#/definitions/superseded_report"}
+    },
+    "dependency_matrix": {"$ref": "#/definitions/dependency_matrix"},
+    "stage1_process_gold": {"$ref": "#/definitions/stage1_process_gold"},
+    "stage3_decision_gold": {"$ref": "#/definitions/stage3_decision_gold"},
+    "gold_rule_records": {"$ref": "#/definitions/gold_rule_records"},
+    "stage3_development_only": {"$ref": "#/definitions/stage3_development_only"},
+    "oracle_control": {"$ref": "#/definitions/oracle_control"},
+    "prohibitions": {
+      "type": "array",
+      "minItems": 5,
+      "items": {"type": "string", "minLength": 10}
+    },
+    "audit_consistency": {"$ref": "#/definitions/audit_consistency"},
+    "verification_scope": {"$ref": "#/definitions/verification_scope"},
+    "verifiers_executed": {"$ref": "#/definitions/verifiers_executed"},
+    "zero_api": {"$ref": "#/definitions/zero_api"}
+  },
+  "definitions": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "superseded_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "reason"],
+      "properties": {
+        "path": {"type": "string", "minLength": 5},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "reason": {"type": "string", "minLength": 10}
+      }
+    },
+    "evidence_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "kind"],
+      "properties": {
+        "path": {"type": "string", "minLength": 3},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "kind": {
+          "enum": ["disk_asset", "manifest", "independent_verifier", "derivation"]
+        }
+      }
+    },
+    "matrix_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task_id", "status", "note", "evidence"],
+      "properties": {
+        "task_id": {"type": "string", "minLength": 4},
+        "status": {
+          "enum": ["verified", "frozen", "blocked", "partial", "development_only"]
+        },
+        "blockers": {"type": "array", "items": {"type": "string"}},
+        "note": {"type": "string", "minLength": 5},
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/definitions/evidence_ref"}
+        }
+      }
+    },
+    "dependency_matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stage1", "stage2", "stage3"],
+      "properties": {
+        "stage1": {
+          "type": "array",
+          "minItems": 3,
+          "items": {"$ref": "#/definitions/matrix_item"}
+        },
+        "stage2": {
+          "type": "array",
+          "minItems": 4,
+          "items": {"$ref": "#/definitions/matrix_item"}
+        },
+        "stage3": {
+          "type": "array",
+          "minItems": 6,
+          "items": {"$ref": "#/definitions/matrix_item"}
+        }
+      }
+    },
+    "stage1_process_gold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exists",
+        "path",
+        "sha256",
+        "manifest_path",
+        "manifest_sha256",
+        "counts"
+      ],
+      "properties": {
+        "exists": {"const": true},
+        "path": {"type": "string"},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "manifest_path": {"type": "string"},
+        "manifest_sha256": {"$ref": "#/definitions/sha256"},
+        "counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["process_records", "label_fields", "structure_decisions"],
+          "properties": {
+            "process_records": {"const": 7},
+            "label_fields": {"const": 135},
+            "structure_decisions": {"const": 7}
+          }
+        }
+      }
+    },
+    "gold_file_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "count"],
+      "properties": {
+        "path": {"type": "string"},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "stage3_decision_gold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "matching",
+        "violation",
+        "frozen_correction",
+        "consistency_with_frozen_correction",
+        "note"
+      ],
+      "properties": {
+        "matching": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256", "count"],
+          "properties": {
+            "path": {"type": "string"},
+            "sha256": {"$ref": "#/definitions/sha256"},
+            "count": {"const": 25}
+          }
+        },
+        "violation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256", "count"],
+          "properties": {
+            "path": {"type": "string"},
+            "sha256": {"$ref": "#/definitions/sha256"},
+            "count": {"const": 33}
+          }
+        },
+        "frozen_correction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": {"type": "string"},
+            "sha256": {"$ref": "#/definitions/sha256"}
+          }
+        },
+        "consistency_with_frozen_correction": {"const": true},
+        "note": {"type": "string", "minLength": 10}
+      }
+    },
+    "gold_rule_records": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exist",
+        "absence_derived_from",
+        "candidate_probe",
+        "covered_rule_ids",
+        "rule_ids_derived_from",
+        "stage2_estg150_gold_is_not_gdpr_rule_records",
+        "checked_stage2_estg150_gold",
+        "note"
+      ],
+      "properties": {
+        "exist": {"const": false},
+        "absence_derived_from": {"type": "string", "minLength": 5},
+        "candidate_probe": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["patterns", "history_sources", "found"],
+          "properties": {
+            "patterns": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"type": "string"}
+            },
+            "history_sources": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"type": "string"}
+            },
+            "found": {
+              "type": "array",
+              "maxItems": 0
+            }
+          }
+        },
+        "covered_rule_ids": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "article6",
+              "article7",
+              "article15",
+              "article16",
+              "article17",
+              "article20",
+              "article22",
+              "article33",
+              "article34"
+            ]
+          }
+        },
+        "rule_ids_derived_from": {
+          "type": "array",
+          "minItems": 2,
+          "items": {"type": "string"}
+        },
+        "stage2_estg150_gold_is_not_gdpr_rule_records": {"const": true},
+        "checked_stage2_estg150_gold": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": {"type": "string"},
+            "sha256": {"$ref": "#/definitions/sha256"}
+          }
+        },
+        "note": {"type": "string", "minLength": 10}
+      }
+    },
+    "dev_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "formal_completion", "evidence"],
+      "properties": {
+        "status": {"const": "development_only"},
+        "formal_completion": {"type": "string", "minLength": 10},
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/definitions/evidence_ref"}
+        }
+      }
+    },
+    "stage3_development_only": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["s3_4", "s3_5", "s3_6"],
+      "properties": {
+        "s3_4": {"$ref": "#/definitions/dev_item"},
+        "s3_5": {"$ref": "#/definitions/dev_item"},
+        "s3_6": {"$ref": "#/definitions/dev_item"}
+      }
+    },
+    "oracle_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "formal_oracle_started",
+        "formal_oracle_authorized",
+        "ready_for_oracle_authorization",
+        "ready_for_oracle_authorization_reason",
+        "authorization_sentence",
+        "authorization_sentence_reason",
+        "no_pseudo_oracle",
+        "probe_evidence"
+      ],
+      "properties": {
+        "formal_oracle_started": {"const": false},
+        "formal_oracle_authorized": {"const": false},
+        "ready_for_oracle_authorization": {"const": false},
+        "ready_for_oracle_authorization_reason": {"type": "string", "minLength": 10},
+        "authorization_sentence": {"type": "null"},
+        "authorization_sentence_reason": {"type": "string", "minLength": 10},
+        "no_pseudo_oracle": {"const": true},
+        "probe_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/definitions/evidence_ref"}
+        }
+      }
+    },
+    "audit_consistency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "final_experiment_ready",
+        "semantics",
+        "derived_from",
+        "claim_boundary_contradiction_free"
+      ],
+      "properties": {
+        "final_experiment_ready": {"type": "boolean"},
+        "semantics": {"type": "string", "minLength": 20},
+        "derived_from": {"type": "string", "minLength": 5},
+        "claim_boundary_contradiction_free": {"const": true}
+      }
+    },
+    "verification_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exact_manifest_reconstruction",
+        "exact_export_reconstruction",
+        "strict_verifier_verdict",
+        "gold_rule_record_three_state_probe",
+        "markdown_single_eof_newline"
+      ],
+      "properties": {
+        "exact_manifest_reconstruction": {"const": true},
+        "exact_export_reconstruction": {"const": true},
+        "strict_verifier_verdict": {"const": true},
+        "gold_rule_record_three_state_probe": {"const": true},
+        "markdown_single_eof_newline": {"const": true}
+      }
+    },
+    "verifier_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verified", "exit_code"],
+      "properties": {
+        "verified": {"const": true},
+        "exit_code": {"const": 0},
+        "checks": {"type": "integer", "minimum": 1}
+      }
+    },
+    "verifiers_executed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scripts/verify_stage1_process_gold.py",
+        "scripts/verify_s1_7_freezer_authorization.py",
+        "scripts/verify_formal_benchmark_release_v2.py",
+        "outputs/reports/verify_b0_formal_arm_v1.py",
+        "outputs/reports/verify_direct_llm_formal_arm_v1.py",
+        "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py",
+        "outputs/reports/verify_stage2_formal_comparison_v1.py"
+      ],
+      "properties": {
+        "scripts/verify_stage1_process_gold.py": {"$ref": "#/definitions/verifier_result"},
+        "scripts/verify_s1_7_freezer_authorization.py": {"$ref": "#/definitions/verifier_result"},
+        "scripts/verify_formal_benchmark_release_v2.py": {"$ref": "#/definitions/verifier_result"},
+        "outputs/reports/verify_b0_formal_arm_v1.py": {"$ref": "#/definitions/verifier_result"},
+        "outputs/reports/verify_direct_llm_formal_arm_v1.py": {"$ref": "#/definitions/verifier_result"},
+        "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py": {"$ref": "#/definitions/verifier_result"},
+        "outputs/reports/verify_stage2_formal_comparison_v1.py": {"$ref": "#/definitions/verifier_result"}
+      }
+    },
+    "zero_api": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["new_llm_api_calls"],
+      "properties": {
+        "new_llm_api_calls": {"const": 0}
+      }
+    }
+  }
+}

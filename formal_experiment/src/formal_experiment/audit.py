@@ -1779,8 +1779,11 @@ def collect_project_audit() -> dict[str, Any]:
             "MASTER_PIPELINE is complete.")
     else:
         final_gate_wording = (
-            "final_experiment_ready remains false (formal methods, "
-            "frozen final capsule, or Stage 3 completion not ready).")
+            "final_experiment_ready remains false: Stage 2 three-method "
+            "formal capsules, shared comparison consistency, authorized "
+            "G0.4 contract, frozen input/Gold, or integrity conditions are "
+            "not ready. This still says nothing about S2.13/S3.7/"
+            "full-pipeline completion.")
     capsule_wording = (
         "the formal predictions/results capsule covers all three methods"
         if capsule_complete

@@ -3518,3 +3518,16 @@
 - 仍存在 blocker：无
 - 备注：S1.7 frozen; S2.13 still blocked on S2.11/G0.5/S2.12 full DoD; Stage 1 Process Gold and Stage 3 25+33 decision Gold verified; 9 GDPR Gold Rule Records absent; S3.7 Oracle not started or authorized
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-15T06:51:00.167586+00:00 - S2.13→S3.7 transition readiness v2: close Gold-absence, manifest/export completeness, audit wording and live-status gaps without changing gates
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1943 passed, 24 skipped, 19 warnings in 737.43s (0:12:17)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`5d5743036510777452990f3464f008da2b58a7a5`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：v1 preserved byte-exact; v2 fails closed on any unverified Rule Record candidate and exact-manifest/export omissions; PROJECT_AUDIT and MASTER milestones reconciled; S2.13/S3.7 unchanged
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
