@@ -55,7 +55,7 @@ manifest 解锁。论文工作稿位于 `paper/`，不能反向定义实验状�
 | `human_review_input_ready` | true | Layer E 输入门禁已满足；历史 "0/150 可开始"语义不等于当前审核进度 |
 | `human_review_freeze_ready` | true | 150/150 adjudicated（2026-08-06 经授权恢复）；freeze validator 通过，仍不足以发布 formal Gold |
 | `formal_gold_publication_ready` | **true** | 用户 2026-08-10 按 formal_gold_authorization_packet_v2 授权：stage3.status=locked、publication gate=ready_for_formal_gold_publication（白名单精确匹配）、freeze_policy 重锁（治理/许可/禁止约束保留）；formal Gold 已发布（尚不代表 S1.7/S2.13/Gold Rule-Process Records/Oracle/最终实验完成） |
-| `final_experiment_ready` | **true（仅机器门禁）** | 正式方法、冻结输入/Gold 与三方法正式 capsule 机器门禁就绪；**仅代表 Stage 2 三方法正式评价/最终指标机器门禁就绪，不代表 S2.13、S3.7 或完整 MASTER_PIPELINE 完成**（2026-08-15 过渡核账：S2.13 仍 blocked、正式 Oracle 未启动未授权，见 `outputs/reports/s2_13_s3_7_transition_readiness_v1.json`） |
+| `final_experiment_ready` | **true（仅机器门禁）** | 正式方法、冻结输入/Gold 与三方法正式 capsule 机器门禁就绪；**仅代表 Stage 2 三方法正式评价/最终指标机器门禁就绪，不代表 S2.13、S3.7 或完整 MASTER_PIPELINE 完成**（2026-08-15 过渡核账：S2.13 仍 blocked、正式 Oracle 未启动未授权，见 `outputs/reports/s2_13_s3_7_transition_readiness_v2.json`（当前；v1 为历史 provenance）） |
 
 每次修改后的最新值以机器检查输出为准；若本表与机器检查冲突，以机器检查为准并
 立即修正本页。
@@ -104,7 +104,7 @@ evidence span。Overall F1=76.69%，`invalid_attempt_count=1`。manifest 状态�
 
 当前真实下一路径（2026-08-15 核账，唯一执行顺序；S3.7 授权句仍未生成）：
 
-1. **S2.11/G0.5**：外部复杂语料资格、3→4 标签映射与人工 Gold 门禁（需用户决策/授权）；
+1. **S2.11/G0.5**：外部复杂语料资格、3→4 标签映射与人工 Gold 门禁（需用户决策/授权）；**决策入口 `outputs/reports/s2_11_g0_5_pre_authorization_v3.json`**（G1 许可证据 / G2 激活 / G3 映射选择 / G4 G0.5 冻结 / G5 空白 Gold review surface，仅 dry-run 授权句）；
 2. **S2.12 full DoD**（预注册分层与错误类型）；
 3. **S2.13 Stage 2 冻结**（DoD 不变）；
 4. **用户裁决并冻结 9 个 GDPR Gold Rule Records**（article6/7/15/16/17/20/22/33/34；Agent 不得创建/推断）；
@@ -132,8 +132,9 @@ evidence span。Overall F1=76.69%，`invalid_attempt_count=1`。manifest 状态�
 | 10 | S3.4 | **development wrapper verified + 收口（2026-08-08）**：Winter baseline 转写 + 可移植重放（reachability 双模式、manifest 1.1.0、export index）；修复后重放 v3_clean/v3_prototype_literal（inference pack check_type 路由）；DEV_ONLY：MAP 0.6429、binary F1 0.6111、violation macro 0.373；evidence capsule `outputs/evidence/s34_winter_stage3_development_v3_clean|prototype_literal/`；S1.7 依赖已满足（2026-08-13 frozen）；formal completion blocked on S2.13 | 正式 canonical I/O + reproducible command（DoD 正式完成仍 blocked on S2.13；S1.7 已满足） |
 | 11 | S3.5 | **development implementation verified（2026-08-08）**：Sun Def 4-7 重建 + 证据修复（inference pack/check_type/Def 6 存在性语义/unobservable 口径/sensitivity 真实重算）；run v2（不覆盖 v1，before/after 对照：unobs 33→10、macro 0.333→0.389、exact 0.333→0.364）；DEV_ONLY：MAP 0.8175、binary F1 0.0 如实；evidence capsule `outputs/evidence/s35_sun_stage3_development_v2/`（含 5 方法 comparison）；S1.7 依赖已满足（2026-08-13 frozen）；formal completion blocked on S2.13 | 不再是 fixture approximation；formal Oracle 主表待 formal Gold 门禁 |
 | 12 | S3.6 | **development baseline verified（2026-08-08）**：BM25 + TF-IDF/SVD 双 arm；sensitivity 修复（gamma/theta 重实例化 scorer 重算，v2 runs 主指标与 v1 byte-identical）；DEV_ONLY：BM25 MAP 0.6833/macro 0.333；TF-IDF MAP 0.5881/macro 0.542；evidence capsule v2；阈值 0.5=fixed development setting（非 blind preregistration）；S1.7 依赖已满足（2026-08-13 frozen）；formal completion blocked on S2.13 | 相同 Gold/evaluator；正式 baseline 待 formal Oracle 门禁 |
-| 12.1 | S2.13→S3.7 过渡核账 | **完成（2026-08-15，过渡控制 capsule v1）**：`outputs/reports/s2_13_s3_7_transition_readiness_v1.{json,md,manifest.json,export_index.json}` + schema + builder + 独立 verifier + 14 项聚焦测试——依赖矩阵从磁盘资产/manifest/hash/实际执行的 7 个独立 verifier 逐项重推导（S1.7=frozen、S2.10=verified、S2.11=blocked、S2.12=partial/retrospective、S2.13=blocked、S3.4-S3.6=development_only）；Stage 1 Process Gold 与 Stage 3 matching/violation decision Gold 均存在且 verifier 通过；9 个 GDPR Gold Rule Records 不存在；Oracle 控制全 false；旧报告（s2_13 gap capsule、s3_7_oracle_readiness_v2、s37_oracle_readiness_v1、release v2 历史 exclusions、两个旧 builder）声明 supersede 但文件逐字节保留；audit.py 陈旧尾部改为动态措辞并消除真假矛盾；零 gate 翻转 | 独立 verifier VERIFIED；14 项聚焦测试通过；全量 audit --with-tests 通过 |
-| 13 | S2.13 | **blocked（2026-08-15 核账）**：Stage 2 冻结 DoD（S2.1–S2.12 完整）未达成；精确 blockers：S2.11 blocked（外部复杂语料许可 unknown_pending_confirmation、数据激活授权未授予、3→4 标签映射未裁决、人工 Gold 未开始、G0.5 复杂度规则未冻结、Barrientos adapter 未实现）+ S2.12 full DoD 未达成（仅 retrospective 描述性部分）；`final_experiment_ready=true` 不代表 S2.13 完成；DoD 未改、未拆新任务 | 数据、方法、Gold、指标、成本、manifest 完整（全部达成前保持 blocked） |
+| 12.1 | S2.13→S3.7 过渡核账 | **完成（2026-08-15）**：**v2 capsule 为当前 fail-closed 入口**（`outputs/reports/s2_13_s3_7_transition_readiness_v2.*`：GRR 三态探测、manifest/export 精确重建、严格 verifier 判定）；**v1 保留为历史版本**（`…_v1.*`，字节未改，v1 verifier 继续通过）；依赖矩阵从磁盘资产/manifest/hash/实际执行的 7 个独立 verifier 逐项重推导（S1.7=frozen、S2.10=verified、S2.11=blocked、S2.12=partial/retrospective、S2.13=blocked、S3.4-S3.6=development_only）；9 个 GDPR Gold Rule Records 不存在；Oracle 控制全 false；旧报告声明 supersede 但文件逐字节保留；零 gate 翻转 | v2 独立 verifier VERIFIED；v1/v2 聚焦测试通过；全量 audit --with-tests 通过 |
+| 12.2 | S2.11/G0.5 授权前工程收口 | **完成（2026-08-15，用户决策包 v3）**：`outputs/reports/s2_11_g0_5_pre_authorization_v3.*`——Barrientos adapter 为 **synthetic/shadow implementation verified**（`src/bpc_hybrid/s2_11_barrientos_adapter.py`，25 项真实执行测试，fail-closed 错误码，formal activation 仍 blocked on license/mapping/authorization/human Gold）；G0.5 候选合同 **draft_not_frozen**（`configs/g05_complexity_candidate_draft_v1.json`，20 项 synthetic 边界测试）；许可核账只读（91 文件名称+hash 盘点，无 LICENSE 证据 → license_status=unknown_pending_confirmation）；映射选项 M1（推荐）/M2 未应用；空白人工 Gold 协议就绪（未创建 data/gold）；分离门禁 G1/G2 ready=false+null、G3/G4/G5 ready=true+dry-run 授权句；零 gate 翻转 | v3 独立 verifier VERIFIED；30 项 v3 聚焦测试通过 |
+| 13 | S2.13 | **blocked（2026-08-15 核账）**：Stage 2 冻结 DoD（S2.1–S2.12 完整）未达成；精确 blockers：S2.11 blocked（外部复杂语料许可 unknown_pending_confirmation、数据激活授权未授予、3→4 标签映射未裁决、人工 Gold 未开始、G0.5 复杂度规则 draft_not_frozen、Barrientos adapter synthetic/shadow implementation verified——formal activation 仍 blocked）+ S2.12 full DoD 未达成（仅 retrospective 描述性部分）；`final_experiment_ready=true` 不代表 S2.13 完成；DoD 未改、未拆新任务 | 数据、方法、Gold、指标、成本、manifest 完整（全部达成前保持 blocked） |
 | 14 | PW1 | **下一论文任务**：引言与 RQ0–RQ4 | 无结果性过度主张；主张矩阵同步 |
 
 Stage 1 和 Stage 3 的后续任务见主 Pipeline §8.9：S3.1-S3.3 数据治理及明确标注的
@@ -145,7 +146,7 @@ development 准备可受控并行；Stage 3 LLM/Hybrid、正式 Oracle、端到�
 |---|---|---|---|---|
 | 协调 Agent | 维护门禁、验收和日志 | in_progress | shared docs/log only | `docs/AGENT_RUNBOOK.md` §§1–3 |
 | Agent-E1 | S2.1-A 官方数据来源证据 | **verified** (2026-07-15 字节级核验通过；许可仍 unknown_pending_confirmation；B2 仍 open) | `data/development/sun_modality/`、`docs/research/SUN_MODALITY_DATASET_INGESTION.md`、manifest、`scripts/verify_sun_modality_zip.py`、tests | §4.1 |
-| 当前执行 Agent | S2.13→S3.7 过渡核账与 readiness 维护（2026-08-15） | **完成**：v1 capsule 已提交 （5d57430）；v2 capsule 收敛 verifier-completeness / fail-closed 保证（三态 GRR 探测、manifest/export 精确重建、严格 verifier 判定），v1 文件逐字节保留 | 只写 `formal_experiment/` 内 capsule/docs/scripts/tests；未改 Gold/合同/门禁，零 LLM/API | 下一真实路径：S2.11/G0.5 → S2.12 → S2.13 → Gold Rule Records （用户）→ S3.4–S3.6 → S3.7 单独授权 |
+| 当前执行 Agent | S2.11/G0.5 授权前工程收口（2026-08-15） | **完成**：用户决策包 v3（`s2_11_g0_5_pre_authorization_v3.*`）+ adapter synthetic/shadow implementation verified + G0.5 draft_not_frozen；v2 transition capsule 为当前 fail-closed 入口（v1 历史保留） | 只写 `formal_experiment/` 内 capsule/docs/scripts/tests/configs；references/ 只读未激活；未改 Gold/合同/门禁，零 LLM/API | 下一真实路径：S2.11/G0.5 门禁（G1 许可证据 → G2 激活 → G3 映射 → G4 G0.5 冻结 → G5 Gold review surface）→ S2.12 → S2.13 → Gold Rule Records（用户）→ S3.4–S3.6 → S3.7 单独授权 |
 | Agent-P1 | PW1 引言与研究问题 | ready | `paper/THESIS_DRAFT.md`、主张矩阵 | §4.2 |
 | Agent-R1 | 论文科学主张只读复核 | blocked on PW1 draft | 无写入 | §4.3 |
 | 用户 | S2.2 Layer E 人工裁决 | verified，150/150 adjudicated | 仅 Layer E | freeze validator 通过；formal Gold 已于 2026-08-10 发布（用户授权）；Gold Rule Records 另行裁决 |
@@ -177,6 +178,7 @@ development 准备可受控并行；Stage 3 LLM/Hybrid、正式 Oracle、端到�
 - 历史交接：`_retired/docs/2026-07/CURRENT_HANDOFF_2026-07-12.md`
 - 追加式实验日志：`docs/EXPERIMENT_LOG.md`、`docs/EXPERIMENT_EVENTS.jsonl`
 - Agent 派工与 Prompt：`docs/AGENT_RUNBOOK.md`
-- S2.13→S3.7 过渡核账（2026-08-15）：`outputs/reports/s2_13_s3_7_transition_readiness_v1.json`（+ `.md` / `.manifest.json` / `_export_index.json`；schema `configs/schemas/s2_13_s3_7_transition_readiness.schema.json`；builder `scripts/build_s2_13_s3_7_transition_readiness_v1.py`；verifier `scripts/verify_s2_13_s3_7_transition_readiness_v1.py`；测试 `tests/test_s2_13_s3_7_transition_readiness_v1.py`）
+- S2.13→S3.7 过渡核账（2026-08-15）：**当前** `outputs/reports/s2_13_s3_7_transition_readiness_v2.json`（+ `.md` / `.manifest.json` / `_export_index.json`；schema `configs/schemas/s2_13_s3_7_transition_readiness_v2.schema.json`；builder `scripts/build_s2_13_s3_7_transition_readiness_v2.py`；verifier `scripts/verify_s2_13_s3_7_transition_readiness_v2.py`；测试 `tests/test_s2_13_s3_7_transition_readiness_v2.py`）；v1 为历史版本（`…_v1.*`，字节未改）
+- S2.11/G0.5 授权前工程收口（2026-08-15，用户决策包 v3）：`outputs/reports/s2_11_g0_5_pre_authorization_v3.json`（+ `.md` / `.manifest.json` / `_export_index.json`；schema `configs/schemas/s2_11_g0_5_pre_authorization_v3.schema.json`；builder `scripts/build_s2_11_g0_5_pre_authorization_v3.py`；verifier `scripts/verify_s2_11_g0_5_pre_authorization_v3.py`；测试 `tests/test_s2_11_g0_5_pre_authorization_v3.py`；adapter `src/bpc_hybrid/s2_11_barrientos_adapter.py`（synthetic/shadow only）；G0.5 候选合同 `configs/g05_complexity_candidate_draft_v1.json`（draft_not_frozen）+ `src/bpc_hybrid/g05_complexity_candidate.py` + 对应测试）
 - 历史（superseded 当前状态判断，文件保留）：`outputs/reports/s2_13_stage2_freeze_gap_capsule.{json,md}`、`outputs/reports/s3_7_oracle_readiness_v2.json`、`outputs/reports/s37_oracle_readiness_v1.json`
 - 论文工作稿与主张矩阵：`paper/THESIS_DRAFT.md`、`paper/CLAIM_EVIDENCE_MATRIX.md`

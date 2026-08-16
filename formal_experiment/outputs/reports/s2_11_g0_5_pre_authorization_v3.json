@@ -1,0 +1,918 @@
+{
+  "schema_version": "s2_11_g0_5_pre_authorization@3.0.0",
+  "report_id": "s2_11_g0_5_pre_authorization_v3",
+  "build_note": "Deterministic S2.11 / G0.5 pre-authorization decision capsule; every state judgment is re-derived from current on-disk assets, manifests, hashes or executed independent verifiers; the license audit is read-only (names + hashes + sizes only); authorization sentences are DRY-RUN text and nothing is applied; no gate is flipped and no Gold is created.",
+  "supersedes": [
+    {
+      "path": "outputs/reports/s2_11_license_adapter_readiness_v2.json",
+      "sha256": "8d271f59e2c6d24006ab7139509a6cf3b96d4a276a3d88c019b1a83db4b5a2e0",
+      "reason": "2026-08-11 license/adapter readiness v2; its current-state judgment is superseded by the v3 decision capsule (v3 adds the executable synthetic/shadow adapter, the G0.5 draft contract and the separated user gates); the historical file stays unmodified."
+    },
+    {
+      "path": "outputs/reports/s2_11_data_qualification_mapping_dry_run.json",
+      "sha256": "9a8835ec27c3e64c0d38a8b2dbf59d3ab78b5949cb7a39ccb505fd2d67f5a994",
+      "reason": "2026-08-11 data-qualification & mapping dry-run; superseded as the decision entry by v3 (which carries concrete mapping options with dry-run authorization sentences); the historical file stays unmodified."
+    },
+    {
+      "path": "outputs/reports/g0_7_barrientos_adapter_registry_dry_run.json",
+      "sha256": "bb65cca291aa9338429e5f114d44df0c95f36dc46a45cc9204d62ca8faa46278",
+      "reason": "2026-08-11 G0.7 adapter registry dry-run; superseded by v3 which reports the synthetic/shadow adapter implementation verified by real execution tests; the historical file stays unmodified."
+    },
+    {
+      "path": "outputs/reports/g0_7_barrientos_adapter_registry_dry_run.md",
+      "sha256": "04029f864ae0e5a0eafe2ee14a1c510477b0ecf1091d5510dd82e7591efbf280",
+      "reason": "Markdown rendering of the same superseded registry dry-run; preserved unmodified as historical provenance."
+    }
+  ],
+  "state_matrix": [
+    {
+      "task_id": "S1.5",
+      "status": "verified",
+      "note": "Stage 1 Process Gold frozen and published (user-authorized 2026-08-13; 7/7 records, 135/135 label fields, 7/7 structure decisions).",
+      "evidence": [
+        {
+          "path": "data/gold/stage1/process_records/stage1_process_gold_v1.json",
+          "kind": "disk_asset",
+          "sha256": "f33aa857a0796d0517a9d04cc96b0a4f316202603fe0adf66693aeb5cb444bca"
+        },
+        {
+          "path": "data/gold/stage1/manifest.json",
+          "kind": "manifest",
+          "sha256": "1885dad26f43b19324f2e779a7bbed0db5b19699145d8607a59439423b23e587"
+        },
+        {
+          "path": "outputs/reports/s1_5_process_gold_freeze_authorization_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "4b97762cfe3cb336a2a163bd85cbc850f9963a513af8a33185efae7d0486e25c"
+        }
+      ]
+    },
+    {
+      "task_id": "S1.6",
+      "status": "verified",
+      "note": "Fixed-GDPR-7 formal descriptive component evaluation; post-Gold, target-aware, NOT held-out generalization evidence; P2/predictions/metrics byte-unchanged.",
+      "evidence": [
+        {
+          "path": "data/predictions/stage1_formal_v1/formal_predictions_v1.json",
+          "kind": "disk_asset",
+          "sha256": "79a9b2c17185d63dc5ab5d9c47c8c592469b30f3cf7298740e593838166a94a8"
+        },
+        {
+          "path": "data/results/stage1_formal_v1/stage1_formal_evaluation_v1.json",
+          "kind": "disk_asset",
+          "sha256": "a072db39b37167d76aa4e49b9845b5b563255d980b9ee00cd811f43c116a7392"
+        }
+      ]
+    },
+    {
+      "task_id": "S1.7",
+      "status": "frozen",
+      "note": "Formal Stage 1 freeze APPLIED (2026-08-13); does NOT auto-authorize the Stage 3 Oracle.",
+      "evidence": [
+        {
+          "path": "outputs/reports/s1_7_freezer_authorization_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "7712176c877c982e11ec670625aedb266f052d3d5b7a898d1a8504285990850a"
+        }
+      ]
+    },
+    {
+      "task_id": "S2.10",
+      "status": "verified",
+      "note": "Three-method formal capsules and the formal three-method comparison are published and independently verified; new LLM calls 0.",
+      "evidence": [
+        {
+          "path": "outputs/reports/b0_formal_arm_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "095a839fe7a98ed24de3afb3d840d1af5596f28988dae0429154f5b024f47c09"
+        },
+        {
+          "path": "outputs/reports/direct_llm_formal_arm_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "f0f86318259de87c9557781b69d2573a13bb25469db194905cfc216fef94d133"
+        },
+        {
+          "path": "outputs/reports/sun_llm_fallback_formal_arm_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "0b5e32852028d83b920da7fd9695f0985def37724f792d6e81630a057ea41f18"
+        },
+        {
+          "path": "outputs/reports/stage2_formal_three_method_comparison_v1.json",
+          "kind": "disk_asset",
+          "sha256": "c9d76544a36ca4c27939d8090a8bfafc6da690a2e5d2b5d09624b27b4f9cf740"
+        }
+      ]
+    },
+    {
+      "task_id": "S2.11",
+      "status": "blocked",
+      "blockers": [
+        "license: unknown_pending_confirmation (no local declaration; external evidence pending)",
+        "data activation authorization: NOT granted (references/ stays read-only)",
+        "mapping decision: modality 3->4 mapping table / adjudication not decided",
+        "human Gold: required for external-label qualification; not started",
+        "G0.5 complexity rules: not frozen before results (retrospective only today)",
+        "Barrientos adapter (S2-BARR-2): not implemented (only the contract dry-run exists)"
+      ],
+      "note": "Complex legal corpus NOT frozen and NOT activated; license unknown_pending_confirmation, activation NOT authorized, mapping policy NOT approved, human Gold NOT started, G0.5 draft_not_frozen, adapter synthetic_shadow_only; the v3 decision capsule is the current decision entry for this gate.",
+      "evidence": [
+        {
+          "path": "outputs/reports/s2_11_license_adapter_readiness_v2.json",
+          "kind": "disk_asset",
+          "sha256": "8d271f59e2c6d24006ab7139509a6cf3b96d4a276a3d88c019b1a83db4b5a2e0"
+        },
+        {
+          "path": "outputs/reports/s2_11_data_qualification_mapping_dry_run.json",
+          "kind": "disk_asset",
+          "sha256": "9a8835ec27c3e64c0d38a8b2dbf59d3ab78b5949cb7a39ccb505fd2d67f5a994"
+        },
+        {
+          "path": "src/bpc_hybrid/s2_11_barrientos_adapter.py",
+          "kind": "disk_asset",
+          "sha256": "5141c473ed3637d11fb98f69f9885c214c6f9d19757cc305b09da995cfacd81b"
+        }
+      ]
+    },
+    {
+      "task_id": "S2.12",
+      "status": "partial",
+      "note": "Formal descriptive common error analysis delivered as RETROSPECTIVE/EXPLORATORY; full DoD blocked on S2.11.",
+      "evidence": [
+        {
+          "path": "outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json",
+          "kind": "disk_asset",
+          "sha256": "9f6c734002fd4d6761454e8e751e172e543ce4f1808b19d3f3513f05374619fd"
+        },
+        {
+          "path": "outputs/reports/s2_12_formal_descriptive_error_analysis_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "89b3f1209c193ec872b9b01319f9003e0ba26387cbce0830f86e2054040dda06"
+        }
+      ]
+    },
+    {
+      "task_id": "S2.13",
+      "status": "blocked",
+      "blockers": [
+        "S2.11 blocked",
+        "S2.12 full DoD not met (partial/retrospective only)"
+      ],
+      "note": "Stage 2 freeze NOT complete; DoD unchanged; final_experiment_ready=true does NOT complete S2.13.",
+      "evidence": [
+        {
+          "path": "derived: S2.11 blocked AND S2.12 partial -> S2.13 blocked; DoD unchanged this round",
+          "kind": "derivation"
+        },
+        {
+          "path": "outputs/reports/s2_13_stage2_freeze_gap_capsule.json",
+          "kind": "disk_asset",
+          "sha256": "eb934910c2e046c43cfae063ff8eac69e124fda65830f5c50cb2e1fd50abc311"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.2",
+      "status": "verified",
+      "note": "25 matching decision Gold published; decisions are NOT Gold Rule Records.",
+      "evidence": [
+        {
+          "path": "data/gold/stage3/stage3_matching_gold_v1.json",
+          "kind": "disk_asset",
+          "sha256": "55dffbcaf7d6510c11a06f10b134dfb449af0bd687d0cf40f7839be19bc2e618"
+        },
+        {
+          "path": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+          "kind": "disk_asset",
+          "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f"
+        },
+        {
+          "path": "outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "f37ae1164b19e1e86d007f83202a125c31c295e415b899b83cec9eb0f51a04e7"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.3",
+      "status": "verified",
+      "note": "33 violation decision Gold published; decisions are NOT Gold Rule Records.",
+      "evidence": [
+        {
+          "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+          "kind": "disk_asset",
+          "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.4",
+      "status": "development_only",
+      "note": "Winter wrapper development evidence only; formal completion still blocked on S2.13 (S1.7 satisfied).",
+      "evidence": [
+        {
+          "path": "outputs/development/s34_winter_stage3_development_v3_clean/manifest.json",
+          "kind": "manifest",
+          "sha256": "74b918548d0e5aa839f50446e359e04e3ec3ce7fb6aa86b3637a11a98e4ff649"
+        },
+        {
+          "path": "outputs/development/s34_winter_stage3_development_v3_prototype_literal/manifest.json",
+          "kind": "manifest",
+          "sha256": "91dda78fedc33e47ab70e86f2726c6673e8bdb52ccf3aec652b6819564807dd8"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.5",
+      "status": "development_only",
+      "note": "Sun Stage 3 development evidence only; formal completion still blocked on S2.13.",
+      "evidence": [
+        {
+          "path": "outputs/development/s35_sun_stage3_development_v2/manifest.json",
+          "kind": "manifest",
+          "sha256": "48c61dbc85a0fd28b1fa21c1b2563c65ca029107afe503e35586698ea7388b21"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.6",
+      "status": "development_only",
+      "note": "BM25 v3 + TF-IDF/SVD development baselines only; formal completion still blocked on S2.13.",
+      "evidence": [
+        {
+          "path": "outputs/development/s36_bm25_stage3_development_v3/manifest.json",
+          "kind": "manifest",
+          "sha256": "f81988c5522d3f897ec0155d755f0c6f580ebaff999f9a53be941638055d012a"
+        },
+        {
+          "path": "outputs/development/s36_tfidf_svd_stage3_development_v2/manifest.json",
+          "kind": "manifest",
+          "sha256": "56e40e3e81a9a76b3fb93f5a77726348d8b1d2305cb1cd69798c529a85ce1082"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.7",
+      "status": "blocked",
+      "blockers": [
+        "9 GDPR Gold Rule Records do not exist",
+        "S2.13 blocked",
+        "S3.4/S3.5/S3.6 formal completion pending"
+      ],
+      "note": "Formal Oracle NOT started and NOT authorized; no Oracle authorization sentence is generated by this capsule.",
+      "evidence": [
+        {
+          "path": "outputs/reports/s37_oracle_readiness_v1.json",
+          "kind": "disk_asset",
+          "sha256": "7bd3e8dec72be75a4b3414c889839b5891e59e47707b3845a59e510328dd5a7b"
+        },
+        {
+          "path": "outputs/reports/s3_7_oracle_readiness_v2.json",
+          "kind": "disk_asset",
+          "sha256": "0e79232bb17b172ea6f5f105e6a3e75a9aa2d67a42614c66a1e65a566da9827b"
+        }
+      ]
+    }
+  ],
+  "license_audit": {
+    "references_path": "references/barrientos_2026",
+    "read_only_verified": true,
+    "file_count": 91,
+    "files": [
+      {
+        "path": "references/barrientos_2026/artifact_input/formats/compliance_requirements_format.json",
+        "sha256": "791b1fd6018b3ba7ccba6ba40583e5a914dd8fa8104d01060c54bd3d9b6e7db1",
+        "byte_size": 3008
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/process_models/blood_donation_scenario/blood_donation_scenario.bpmn",
+        "sha256": "7f4ab7175f01013277672821674fc9c692dbca40413683bbcdb2511b38e9ad4c",
+        "byte_size": 50568
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/process_models/blood_donation_scenario/blood_donation_scenario.pdf",
+        "sha256": "501757bdc7343ec9c496ab37dd7d9b33c75f0257fb60a95042abd5d8122cc1e2",
+        "byte_size": 34453
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/process_models/emergencies_scenario/emergencies_scenario.bpmn",
+        "sha256": "e9afbd97f08344289d8aa015efb5e0d3a7043ecd75a11dbdaf1f53891b68499f",
+        "byte_size": 91482
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/process_models/emergencies_scenario/emergencies_scenario.pdf",
+        "sha256": "30895818ad194d1cd6a2830b01a8623b4ec9a65ca51853f6b880a1cd1026a151",
+        "byte_size": 43530
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/process_models/SIM_card_scenario/SIM_card_scenario.bpmn",
+        "sha256": "338c8144cd2802f0813c0cc7d6ab230bcb4adc37bc738f4ad4c5e506da144064",
+        "byte_size": 67048
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/process_models/SIM_card_scenario/SIM_card_scenario.pdf",
+        "sha256": "6e0c433f32a0b478a4956a4f8a378ef2a350a394bc08d1cded4321e5e938b8a2",
+        "byte_size": 238890
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/prompts/calculate_stability_step_1.txt",
+        "sha256": "3a9883ae3aa6ee70862564620f4d37bdf49ffedc9c732378b033fa6876de8f5c",
+        "byte_size": 1275
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/prompts/formalize_requirements_prompt.txt",
+        "sha256": "49af69cc8ff6063db97fbdeab74cd4c7f0506d1bae7d86233971749f3ad4738a",
+        "byte_size": 3780
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/prompts/formalize_requirements_prompt_no_patterns.txt",
+        "sha256": "2e2bf321fe48ee206ab851e7f24b83a677af30b2f9730544d295e62aa763b377",
+        "byte_size": 2587
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+        "sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+        "byte_size": 2043
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+        "sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+        "byte_size": 2403
+      },
+      {
+        "path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+        "sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+        "byte_size": 1707
+      },
+      {
+        "path": "references/barrientos_2026/environment.yml",
+        "sha256": "f3286c43db17a28648c2eee4adcbd5e1d06cbf991aef69949e2cf7dd9a7be833",
+        "byte_size": 5045
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_R_P_F1/analysis_results_step_2_by_level.xlsx",
+        "sha256": "cfb30f84d6d413cabebeff6a704ae88805e2c5edbf48cce51b5c3e1579420a03",
+        "byte_size": 5608
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_R_P_F1/analysis_results_step_2_by_scenario.xlsx",
+        "sha256": "327dd4dccf7a0edfd22648ea71cf1ee4bff9f967b3517489cc54fe8acc3ffde0",
+        "byte_size": 5592
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_R_P_F1/analyzed_results_step_1.xlsx",
+        "sha256": "4058e11bd12e0381b514d4209fac90fed879087747c0e868575bd84cb8d5d6c5",
+        "byte_size": 6247
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_R_P_F1/analyzed_results_step_3.xlsx",
+        "sha256": "b48c6cc73c61a6e14f688f27be4dc843d54c5fe2930ba22fd1197675e19e784b",
+        "byte_size": 8263
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r1.txt",
+        "sha256": "9a88dbbe86021ca64517c2185aafc0aa95605cbcd0e9b64536d6a4bab89cf726",
+        "byte_size": 6115
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r10.txt",
+        "sha256": "9de514ee2e335256dee8dd58390892761c6fe0016d975d33dccd3dea3b9bc4a2",
+        "byte_size": 2046
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r11.txt",
+        "sha256": "b073b1d2744da17c2cd005cf567b1c81f2137b62a8ee8a573eb6d421d392e922",
+        "byte_size": 7504
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r12.txt",
+        "sha256": "1493c82e843cb700dde5d851c860998d7237081fc6057242c9e4147e93392f42",
+        "byte_size": 2022
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r13.txt",
+        "sha256": "c61815ef0c1afeba3d0c8e1162dfce9a638489a06e8f1c85693d3dd6b2acc213",
+        "byte_size": 7879
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r14.txt",
+        "sha256": "3ceb9b9bbe4b1fe9d093340e32ce41b859ea2c86c3153a1a8708d41d941f1ec6",
+        "byte_size": 5500
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r15.txt",
+        "sha256": "d05e8b2cc6c3783fd21142a2a425b0f0ada4c12c4794c04d221fd9aa0f65a249",
+        "byte_size": 4074
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r16.txt",
+        "sha256": "039d4f671b4c9269f7e9b122361973c8696ba90833088bf3cd8002a8a94c4156",
+        "byte_size": 11136
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r17.txt",
+        "sha256": "80f11d19056f6275229fa697efe61f28e206d59b1c48c50dd4a6b58da221cca1",
+        "byte_size": 11030
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r18.txt",
+        "sha256": "c48ee99d6d2b6300a46d643a16a3979fba4aee788a5f12be880c32a8563a747a",
+        "byte_size": 2146
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r19.txt",
+        "sha256": "f561882a62aac7232646d94483c090d06702fea32d9c92052301b3666a5f276a",
+        "byte_size": 10235
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r2.txt",
+        "sha256": "ff56e874225f14ba81f9086ae988e6cf34d35b54a9e34dd2483d23beb9120b7d",
+        "byte_size": 5858
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r20.txt",
+        "sha256": "64df77590622595ecb86de3dcdabaefdb4de134f26e8c14012ea3f33541b4813",
+        "byte_size": 6388
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r3.txt",
+        "sha256": "e3c324ede62aa9343109ffd17171b48dc1419b5bbe25690d6f81cf88846c6f03",
+        "byte_size": 9513
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r4.txt",
+        "sha256": "603192b69c90b2096eb84e8a8d98b6e31eeb4d808559046b9a0c32854c3af2e9",
+        "byte_size": 4469
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r5.txt",
+        "sha256": "cd4ca5e72674d81350544e86bffc830d5a2cfc985581cb757148400f6e56d195",
+        "byte_size": 4199
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r6.txt",
+        "sha256": "32adc4fd03bb743fa546a268779d3b2cab192fe696e6db8682e6c8c506456f41",
+        "byte_size": 3497
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r7.txt",
+        "sha256": "91dd4e63a512fcb0a64fa276442ca6be71ead5e928c73130e3605e3f132c1d83",
+        "byte_size": 3244
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r8.txt",
+        "sha256": "9541358065d8f73a2859bfc99d340e954b31756ba4c57140634917f8a3baf8dd",
+        "byte_size": 3792
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_1/stability_results_r9.txt",
+        "sha256": "320bf0f50b8bff295e792011d03aa0e4ecf2dd1a4421181c259d424fc0fb1d56",
+        "byte_size": 3059
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r1.txt",
+        "sha256": "f145e22c1fbefddfa72cb2a86230f1b106299857b88d6bfa0e741edad8d6c07e",
+        "byte_size": 7828
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r10.txt",
+        "sha256": "0131e260b72df788509eeae946ebfeb1f764cc96c066629ba30fa2c2ad18a879",
+        "byte_size": 5366
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r11.txt",
+        "sha256": "ff3ef4d1215ee041023bf501e63ebe18e280e06ca9f0797c77162566ea9a968a",
+        "byte_size": 5258
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r12.txt",
+        "sha256": "a726c5f1934aa56b11723718f19e6b047154682217960882139457950f5a3cc7",
+        "byte_size": 5101
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r13.txt",
+        "sha256": "00542cd3f2ad4abf46f620bb7c93cdc7db25dcdaf8fac989fc808c22f9d4c6f2",
+        "byte_size": 9041
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r14.txt",
+        "sha256": "098776a582649723253669eb27b7f78c08d23990ec22793bdb518049b44c8ce4",
+        "byte_size": 5601
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r15.txt",
+        "sha256": "e3f3b9cdb0d635c5ccf13e1d27c51a51aa7f8a74f9adad71ab7ba84bf04f0f1a",
+        "byte_size": 5152
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r16.txt",
+        "sha256": "28da1bdb0d1492c49ef044fe08737f0aedcd0909f4760cb6cdadfe8a556c8e9f",
+        "byte_size": 5170
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r17.txt",
+        "sha256": "7f3a4df9243c9a80cc50b8693f909922790e2f90a3ef0563bd39fc8e176918b9",
+        "byte_size": 5717
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r18.txt",
+        "sha256": "d724361d624c34323c7bd61746105e741936ed3992fdac61d3efff402f8ab096",
+        "byte_size": 5515
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r19.txt",
+        "sha256": "d5f1572fe0012a8bd6be08d2d11238bcd200bc832304cddf33df212a3633d7f7",
+        "byte_size": 7359
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r2.txt",
+        "sha256": "61fc6ee513c4cb5fc96a0e42272b9c914feefcab3d80bbc8b841b99ef2cdb40e",
+        "byte_size": 6859
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r20.txt",
+        "sha256": "5a21dbda91aace368e11d2d2a18651758a438bed2bcd48d49b4bfec42a46714b",
+        "byte_size": 6009
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r3.txt",
+        "sha256": "bb9f9b7b58f5e1bdf7a7063f26979c49e3b1f28e40193b4ce13703b694f40a60",
+        "byte_size": 7253
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r4.txt",
+        "sha256": "98c528339f5fd49d85402959a608a63d43cd1313a769428f5c6cf235fb884eaf",
+        "byte_size": 7564
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r5.txt",
+        "sha256": "c2947fa2fdcbe84f539f7fec35a4aba6a64d94ac89cece276933ed183bfd04c5",
+        "byte_size": 5716
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r6.txt",
+        "sha256": "795e3db266c005e8d9e360eac6ab49cbb0fc7e28cd87f732047bf3393431e4b5",
+        "byte_size": 5470
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r7.txt",
+        "sha256": "dd777aaa2e61cb7d08b567bea44d94783a40bcfd6ec41ebab96073be9b6921f2",
+        "byte_size": 6135
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r8.txt",
+        "sha256": "cb702a4d58ff7c114f73b88d1cbb20298c463b86b589b1b6d0ea77534f8fa6be",
+        "byte_size": 8294
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/analyzed_stability/stability_step_3/deviation_semantic_evaluation_r9.txt",
+        "sha256": "150e630d24d096d84880d7f4a57be9772e0cfffbd9afc0b4576e16ffe0fb96f2",
+        "byte_size": 7345
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/to_analyze/results_step_1.xlsx",
+        "sha256": "066aa707ef7de6edf30940452fcdd4574bdc1a4d2534bfec47d624fc0fb9d2d1",
+        "byte_size": 5519
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/to_analyze/results_step_2.xlsx",
+        "sha256": "8b8f19a4b37866047590d9947511ea605ee973034e019614a12be5d58b465c80",
+        "byte_size": 5955
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/analysis_of_results/to_analyze/results_step_3.xlsx",
+        "sha256": "68c8dfd98914fc5d5a098750c5c267d1791ace39ad8aed13af4f978fa8c7f151",
+        "byte_size": 7639
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/annotations_from_compliance_experts/annotations/annotations_expert_1.xlsx",
+        "sha256": "48edc700ef76e0f4c2deeb579b3c2096f29cbc375008ac96120c1dbb0ffc728b",
+        "byte_size": 35464
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/annotations_from_compliance_experts/annotations/annotations_expert_2.xlsx",
+        "sha256": "8dbcb5a8e8ff26d865cffb9ea4b72f285e4b1438666e87dcd7c85bcf1b8ade38",
+        "byte_size": 29141
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/annotations_from_compliance_experts/instructions/task_1_representing_requirements_RC4PC.docx",
+        "sha256": "728f0862de1669fe46122258854750f6a9ad99708ef650f8dfa6169fd8af498e",
+        "byte_size": 9189
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/annotations_from_compliance_experts/instructions/task_2_reasoning_about_process_model_compliance_change_aware.docx",
+        "sha256": "1cd300c715385575cd314583085cb7e324710d68512f707dd5dea2eb3154e1f0",
+        "byte_size": 8180
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/annotations_from_compliance_experts/protocol_and_results.md",
+        "sha256": "67ff3c8eadd5a84e35ed918c1aab6ef08056684d2388db95d878bad567513fc1",
+        "byte_size": 6061
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/ground_truth/ground_truth_ReqChange4BPC.xlsx",
+        "sha256": "89e5e5fd503fa196f6ecb2edfeecdb38186260428e0bc58ea3c8f14c290a7dac",
+        "byte_size": 84817
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/ground_truth/step_1_baseline.json",
+        "sha256": "83146ef0e3e47334a8e367805b7d691454e82c69d9abaa456a80e31adba33224",
+        "byte_size": 9384
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/ground_truth/step_2_baseline.json",
+        "sha256": "ecd3aa81cfa92c68d9a599bd38463de589bc9108de06833c52ed90a3551b367e",
+        "byte_size": 4626
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/ground_truth/step_3_baseline.json",
+        "sha256": "96b3c1e8f10e0ad45636d7620c41062f15bf03e96d537fb1ccb2e3450cac467d",
+        "byte_size": 6507
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/representing_Zasada_et_al_2023_req_RC4BC/representation_req_Zasada.xlsx",
+        "sha256": "ca783bab95c649b925bb56e2863447acbb27e72d715e33d892a8a1c64b585910",
+        "byte_size": 18803
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/results_from_Winter_et_al_2020/blood_donation_scenario/results_blood_donation_scenario.bpmn.csv",
+        "sha256": "1f05e222f210debcb3bb36f0262eef8dc5f99c3958caefb9375a05d406701eac",
+        "byte_size": 610
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/results_from_Winter_et_al_2020/emergencies_scenario/results_emergencies_scenario.bpmn.csv",
+        "sha256": "b45f260e91f64d4ae704d251d2dbeb0b6523449382b3bf5d888fb578317227e6",
+        "byte_size": 776
+      },
+      {
+        "path": "references/barrientos_2026/evaluation/results_from_Winter_et_al_2020/SIM_card_scenario/results_SIM_card_scenario.bpmn.csv",
+        "sha256": "c2d9a275c1d05966c2e172d330547b6282a71d65dd4e10bcfeac4899ee930228",
+        "byte_size": 474
+      },
+      {
+        "path": "references/barrientos_2026/notebooks/AnalyzeImpactRequirementChangesBusinessProcessCompliance.ipynb",
+        "sha256": "dde3323ebde46380d05aba278acd457f78371255fbbfde815a91e1bb8f9226eb",
+        "byte_size": 34987
+      },
+      {
+        "path": "references/barrientos_2026/notebooks/CalculateStability.ipynb",
+        "sha256": "14ea087d8843e0488925334fffff0125df86bc9e1bfb9f401d08499ee2cc0106",
+        "byte_size": 11676
+      },
+      {
+        "path": "references/barrientos_2026/tools/analyze_results/analysis_results_step_1.py",
+        "sha256": "c0a8a05fc6fa612ecdc16fe1f096ee564a4ce6679b1e2df39443aad86f54c6bf",
+        "byte_size": 4086
+      },
+      {
+        "path": "references/barrientos_2026/tools/analyze_results/analysis_results_step_2.py",
+        "sha256": "af2fa8ce4eded309e678c9ee1513a13e14eff240df98742ea7b43a46563f57ca",
+        "byte_size": 3179
+      },
+      {
+        "path": "references/barrientos_2026/tools/analyze_results/analysis_results_step_3.py",
+        "sha256": "e5638027ab4df9287ddf76b372cd7737c167096ef37e3482a4e3bf986bb5aedf",
+        "byte_size": 3873
+      },
+      {
+        "path": "references/barrientos_2026/tools/analyze_results/calculate_stability_ratio.py",
+        "sha256": "2601760a20c9633eadea0cd947dcec8bad3bd413a5bed0c8902f10512ea669f7",
+        "byte_size": 2642
+      },
+      {
+        "path": "references/barrientos_2026/tools/analyze_results/clean_stability_analysis_step_1.py",
+        "sha256": "9f0fb117bf750f0848a3d2012a9fa6f74c8be524e54ae1f838436cbc1fdc2e5d",
+        "byte_size": 2217
+      },
+      {
+        "path": "references/barrientos_2026/tools/calculate_atomic_change_operations/calculate_atomic_delta.py",
+        "sha256": "3c1f2fa04c16c81c5186b5759a436d70c62dea7f98e0dcd85eb722aa6c4bcfda",
+        "byte_size": 7191
+      },
+      {
+        "path": "references/barrientos_2026/tools/calculate_atomic_change_operations/calculate_atomic_delta_using_transformer.py",
+        "sha256": "8d85958f071abb9f0255eec8eb24997efea151e96c33a0b2b600301e7a368653",
+        "byte_size": 7123
+      },
+      {
+        "path": "references/barrientos_2026/tools/helpers/calculate_average_execution_time.py",
+        "sha256": "58f3010f2144b04ac91c4d4610b8b82ca17e5ec9aa2029e50bb2bd4a5dbefcc0",
+        "byte_size": 926
+      },
+      {
+        "path": "references/barrientos_2026/tools/helpers/calculate_total_amount_deviations.py",
+        "sha256": "bedd4331109a63b6d4b46b5d864e53b65ce984ed63449b93a34237977b78012a",
+        "byte_size": 989
+      },
+      {
+        "path": "references/barrientos_2026/tools/helpers/calculate_total_words.ipynb",
+        "sha256": "6ebd2fc1d53c7fd441e8b670a32a98133883ad3e2daf7e0b3c827c7783f341dc",
+        "byte_size": 2113
+      },
+      {
+        "path": "references/barrientos_2026/tools/helpers/distribution_step_1.py",
+        "sha256": "13a46048dc1f6a7fde211cf19e2b1ca121d2a0e7aae90010ddcf10774403fcff",
+        "byte_size": 5710
+      },
+      {
+        "path": "references/barrientos_2026/tools/helpers/distribution_step_1_baseline.py",
+        "sha256": "b41d7487d325dd5b57aa1577b618dbb4d852233d93306bff6c7f595aaf9237b3",
+        "byte_size": 11913
+      },
+      {
+        "path": "references/barrientos_2026/tools/helpers/distribution_step_2_baseline.py",
+        "sha256": "b76afda04d830aba52f1c0d75d70f9bd2fcb565455d347cb064491e26ef312b0",
+        "byte_size": 3382
+      },
+      {
+        "path": "references/barrientos_2026/tools/helpers/distribution_step_3_baseline.py",
+        "sha256": "1155482bc9cfd57cf15c9ca4a86614343ce7554d9d8821b9f9e8bb280989fc78",
+        "byte_size": 1503
+      },
+      {
+        "path": "references/barrientos_2026/tools/helpers/verify_completeness_atomic_delta_detection.py",
+        "sha256": "4ee2b350194dd54d57d6eabbd0ba7081ab33e5bb4fb25d6b670e7dfcd3203478",
+        "byte_size": 7522
+      }
+    ],
+    "license_evidence_files": [],
+    "four_state": {
+      "paper_readable": "not_established_without_authoritative_evidence",
+      "code_usable": "not_established_without_authoritative_evidence",
+      "data_reusable": "not_established_without_authoritative_evidence",
+      "activation_granted": false
+    },
+    "license_status": "unknown_pending_confirmation",
+    "ready_for_data_activation": false,
+    "activation_authorization_sentence": null,
+    "evidence_notes": [
+      "inventory records file names, SHA-256 and sizes only; no content is copied into this report and no notebook/script/tool under references/ is executed",
+      "file presence, downloadability, search snippets or citation are NOT license evidence",
+      "no authoritative LICENSE/COPYING/NOTICE/README/metadata file was found"
+    ]
+  },
+  "mapping_options": {
+    "options": [
+      {
+        "id": "M1",
+        "name": "identity_candidate_mapping",
+        "before": "External Barrientos labels are unavailable to the project: license unknown, activation not authorized, no mapping policy, adapter synthetic/shadow only.",
+        "after": "After G1+G2+G3: obligation/permission/prohibition map by identity to candidate-only values with per-field provenance for the human Gold review; definition is never produced; external ground truth stays a review aid.",
+        "risks": [
+          "identity assumes the nominal semantics of the three shared modality classes align between Barrientos and Sun; unverified semantics are caught by the mandatory human Gold adjudication before anything becomes Gold",
+          "no definition-class records can be produced from this source; definition coverage must come from other corpora or separate adjudication"
+        ],
+        "confirmation_sentence": "I select mapping option M1 (identity candidate mapping for obligation/permission/prohibition; definition is never auto-produced and requires separate human adjudication) as the S2.11 Barrientos 3->4 modality mapping policy."
+      },
+      {
+        "id": "M2",
+        "name": "conservative_no_mapping",
+        "before": "Same as M1: external labels unavailable.",
+        "after": "After G1+G2+G3: no external label is mapped at all; every source element enters the human Gold review as review aid and all decisions are made from scratch by the user.",
+        "risks": [
+          "largest human workload (no candidate values to start from)",
+          "most conservative with respect to label-semantics drift"
+        ],
+        "confirmation_sentence": "I select mapping option M2 (conservative no-mapping: external labels are review aids only and every decision is made from scratch by human adjudication)."
+      }
+    ],
+    "recommended": "M1",
+    "recommendation_reason": "The three shared modality classes are nominally identical (obligation/permission/prohibition) and the G0.7 registry dry-run documented the 3-class set; an identity candidate mapping minimizes human workload while the mandatory human Gold adjudication still guards against label-semantics drift, and the fail-closed adapter never promotes candidates to Gold. M2 is the conservative fallback if the user distrusts nominal label alignment.",
+    "applied": false,
+    "definition_handling": "never auto-produced; definition-class records require separate human adjudication",
+    "external_ground_truth_role": "provenance or review aid only; never project Gold"
+  },
+  "human_gold_protocol": {
+    "ready": true,
+    "blank_schema_provided": true,
+    "decision_fields": [
+      "sample_id",
+      "source_text",
+      "approved_text_en",
+      "modality",
+      "actor",
+      "action",
+      "condition",
+      "constraint",
+      "exception",
+      "evidence_span",
+      "review_state"
+    ],
+    "review_surface_separated": true,
+    "adjudication_separated": true,
+    "freeze_separated": true,
+    "publication_separated": true,
+    "final_adjudication_by": "user_only",
+    "estimated_workload": "to be sized once the corpus is activated and the review surface is opened (G5); sizing is part of the G5 scope, not this round",
+    "gold_files_created": false,
+    "decision_prefill": false
+  },
+  "g0_5_candidate": {
+    "config_path": "configs/g05_complexity_candidate_draft_v1.json",
+    "config_sha256": "61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586",
+    "status": "draft_not_frozen",
+    "frozen": false
+  },
+  "adapter_status": {
+    "implementation": "synthetic_shadow_only",
+    "verified": true,
+    "source_path": "src/bpc_hybrid/s2_11_barrientos_adapter.py",
+    "tests_path": "tests/test_g07_barrientos_adapter_contract.py",
+    "formal_activation_blocked_on": [
+      "license qualification (unknown_pending_confirmation)",
+      "data activation authorization",
+      "3->4 mapping policy approval",
+      "human Gold adjudication for the external complex corpus"
+    ]
+  },
+  "user_gates": [
+    {
+      "gate_id": "G1",
+      "name": "provide/confirm authoritative license evidence for references/barrientos_2026",
+      "ready_for_authorization": false,
+      "authorization_sentence": null,
+      "missing": [
+        "authoritative license file (LICENSE/COPYING/NOTICE) or publisher/author official statement for references/barrientos_2026; file presence, downloadability, search snippets or citation are NOT sufficient"
+      ]
+    },
+    {
+      "gate_id": "G2",
+      "name": "authorize external data activation (after license qualification)",
+      "ready_for_authorization": false,
+      "authorization_sentence": null,
+      "missing": [
+        "G1 license qualified (currently unknown_pending_confirmation)",
+        "user activation authorization"
+      ]
+    },
+    {
+      "gate_id": "G3",
+      "name": "select the 3->4 modality mapping policy",
+      "ready_for_authorization": true,
+      "authorization_sentence": "I select mapping option M1 (identity candidate mapping for obligation/permission/prohibition; definition is never auto-produced and requires separate human adjudication) as the S2.11 Barrientos 3->4 modality mapping policy.",
+      "missing": []
+    },
+    {
+      "gate_id": "G4",
+      "name": "authorize freezing the G0.5 candidate complexity contract",
+      "ready_for_authorization": true,
+      "authorization_sentence": "I authorize freezing configs/g05_complexity_candidate_draft_v1.json as the G0.5 complexity contract (experiment-contract / gate change, status frozen) BEFORE any new complex-corpus results are produced.",
+      "missing": []
+    },
+    {
+      "gate_id": "G5",
+      "name": "authorize opening the blank S2.11 human Gold review surface",
+      "ready_for_authorization": true,
+      "authorization_sentence": "I authorize opening the blank S2.11 human Gold review surface (blank schema + decision fields + separated review/adjudication/freeze/publication workflow); no decision may be prefilled and final adjudication is user-only.",
+      "missing": []
+    }
+  ],
+  "oracle_control": {
+    "formal_oracle_started": false,
+    "formal_oracle_authorized": false,
+    "ready_for_oracle_authorization": false,
+    "authorization_sentence": null,
+    "no_pseudo_oracle": true
+  },
+  "safety": {
+    "gates_unchanged": true,
+    "gold_predictions_results_contract_methods_unchanged": true,
+    "g0_5_frozen": false,
+    "references_read_only_not_activated": true
+  },
+  "verifiers_executed": {
+    "scripts/verify_stage1_process_gold.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 21
+    },
+    "scripts/verify_s1_7_freezer_authorization.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 16
+    },
+    "scripts/verify_formal_benchmark_release_v2.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 53
+    },
+    "outputs/reports/verify_b0_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_direct_llm_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_stage2_formal_comparison_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    }
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.11
+**文档版本**：3.6.12
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-08-15
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -582,7 +582,7 @@ B0/H1/D1 的预测 Rule Records，评价误差传播。两种结果必须分表�
 | S3.4 | 完成 Winter wrapper | S1.7/S2.13 | **development wrapper verified（2026-08-08）**：Winter 2020 原型语义转写 + 可移植重放（reachability 双模式、manifest 1.1.0、export index、evidence capsule outputs/evidence/s34_winter_stage3_development_v3_clean\|prototype_literal/）；修复后重放 v3_clean/v3_prototype_literal（inference pack check_type 路由、公共 evaluator 口径）；DEV_ONLY：MAP 0.6429/binary F1 0.6111、violation macro 0.373（两模式 out_of_order 无差异）；**S1.7 依赖已满足（2026-08-13 frozen）；formal completion 仍 blocked on S2.13** | formal canonical I/O + reproducible command |
 | S3.5 | 完成 Sun Stage 3 | S3.1-S3.3 | **development implementation verified（2026-08-08）**：Def 4-7 方法级独立重建 + 契约/评价修复（Gold-blind inference pack、check_type 路由、Def 6 论文存在性语义（C=process actor+bs_obj 近似披露）、unobservable 按 check_type 统计（v2：33→10，before/after 对照）、sensitivity 真实重算）；run s35_sun_stage3_development_v2（evidence capsule 含 5 方法 comparison）；DEV_ONLY：MAP 0.8175、binary F1 0.0（如实）、violation macro 0.389/exact 0.364/unobs 10（均较 v1 口径修正）；**S1.7 依赖已满足（2026-08-13 frozen）；formal completion 仍 blocked on S2.13** | 不再是 fixture approximation；formal Oracle 主表待 formal Gold 门禁 |
 | S3.6 | 完成代表性非 LLM baseline | S3.2/S3.3 | **development baseline verified（2026-08-08）**：BM25（v3 candidate-specific：MAP 0.6595/binary F1 0.0；v1/v2 因忽略候选文本标记 superseded_invalid_candidate_agnostic_similarity，不入有效比较/论文）+ TF-IDF/SVD（v2 保留：MAP 0.5881/macro 0.542，经验证不受共享 scorer ID 修复影响）；双域 sims（action/actor 独立候选池）、真实 ID 映射、check_type 路由、sensitivity 重实例化 scorer；阈值 0.5=fixed development setting（非 blind preregistration）；evidence capsule v3/v2；**S1.7 依赖已满足（2026-08-13 frozen）；formal completion 仍 blocked on S2.13** | 相同 Gold/evaluator；正式 baseline 待 formal Oracle 门禁 |
-| S3.7 | Oracle Stage 3 比较 | S3.4-S3.6 + formal Gold publication | blocked（development Oracle 可先行；**2026-08-15 过渡核账：formal_oracle_started=false、formal_oracle_authorized=false、ready_for_oracle_authorization=false、authorization_sentence=null、no_pseudo_oracle=true**；9 个 GDPR rule IDs（article6/7/15/16/17/20/22/33/34）的正式 Gold Rule Records 不存在（matching/violation decision Gold ≠ Gold Rule Records）；详见 outputs/reports/s2_13_s3_7_transition_readiness_v1.json） | 正式 Oracle 主表隔离 Stage 3；development 结果不得替代本表 |
+| S3.7 | Oracle Stage 3 比较 | S3.4-S3.6 + formal Gold publication | blocked（development Oracle 可先行；**2026-08-15 过渡核账：formal_oracle_started=false、formal_oracle_authorized=false、ready_for_oracle_authorization=false、authorization_sentence=null、no_pseudo_oracle=true**；9 个 GDPR rule IDs（article6/7/15/16/17/20/22/33/34）的正式 Gold Rule Records 不存在（matching/violation decision Gold ≠ Gold Rule Records）；详见 outputs/reports/s2_13_s3_7_transition_readiness_v2.json（当前 fail-closed capsule；v1 为历史 provenance）） | 正式 Oracle 主表隔离 Stage 3；development 结果不得替代本表 |
 | S3.8 | LLM/Hybrid Stage 3 预注册与实现 | S3.7 | blocked | prompt、预算、重复次数固定 |
 | S3.9 | 复杂 BPMN 与多违规扩展 | G0.5/S3.7 | blocked | 复杂度和标签在结果前冻结 |
 | S3.10 | end-to-end 误差传播 | S2.13/S3.7 | blocked | B0/H1/D1 进入同一 Stage 3 |
@@ -653,7 +653,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 `PW1`–`PW6` 中已解锁的非结果章节。未经合同变更，不要提前启动 Stage 3 LLM，
 也不要因 Stage 3 尚未就绪而修改 Stage 2 Gold 门禁。
 
-### 12.0 下一真实路径（2026-08-15 过渡核账，见 `outputs/reports/s2_13_s3_7_transition_readiness_v1.json`）
+### 12.0 下一真实路径（2026-08-15 核账，见 `outputs/reports/s2_13_s3_7_transition_readiness_v2.json`（当前；v1 为历史 provenance））
 
 `final_experiment_ready=true` 仅代表 Stage 2 三方法正式评价/最终指标机器门禁
 就绪；S1.7 已 frozen（2026-08-13）但 **S2.13 仍 blocked、S3.7 正式 Oracle 未启动
@@ -661,7 +661,12 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 
 1. **S2.11/G0.5/S2.12 完整依赖**：完成或经用户正式决策处理外部复杂语料许可、
    数据激活授权、3→4 标签映射、人工 Gold、G0.5 复杂度规则结果前冻结与
-   Barrientos adapter（S2-BARR-2）；
+   Barrientos adapter（S2-BARR-2）；**当前决策入口为
+   `outputs/reports/s2_11_g0_5_pre_authorization_v3.json`**（许可核账
+   unknown_pending_confirmation、映射选项 M1/M2（未应用）、空白人工 Gold
+   协议、分离的用户门禁 G1–G5（仅 dry-run 授权句）；adapter 为
+   synthetic/shadow implementation verified；G0.5 候选合同
+   `configs/g05_complexity_candidate_draft_v1.json` 为 draft_not_frozen）；
 2. **S2.13 冻结**（DoD 不变：S2.1–S2.12 完整）；
 3. **GDPR Gold Rule Records 人工裁决与冻结**：由用户完成 9 个 rule IDs
    （article6/7/15/16/17/20/22/33/34）的正式 Gold Rule Records；Agent 不得创建、
@@ -672,6 +677,25 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
    保持 false。
 
 本轮（2026-08-15）只做核账与 readiness 加固，未翻转上述任何正式 gate。
+
+### 12.0b S2.11/G0.5 授权前工程收口（2026-08-15，见 `outputs/reports/s2_11_g0_5_pre_authorization_v3.json`）
+
+本轮工程成果（均未翻 gate）：(1) Barrientos adapter 核心
+（`src/bpc_hybrid/s2_11_barrientos_adapter.py`）为 **synthetic/shadow
+implementation verified**——fail-closed（许可/激活/映射策略/文本与 span
+provenance/跨引用/未知字段/未知 modality 全部机器可判定错误码拒绝；
+definition 永不凭空产生；输出仅 candidate_only/review_candidate；
+synthetic_test_only 策略不得进入 formal mode）；真实执行测试 25 项。
+(2) G0.5 候选复杂度合同（`configs/g05_complexity_candidate_draft_v1.json`）
+为 **draft_not_frozen**，覆盖文本长度/clause 数/依赖深度/actor-action 数/
+condition-constraint-exception 数量与嵌套/被动语态/隐含 actor/跨句跨条款
+引用/原语言-翻译标记/BPMN 规模与结构复杂度，L1/L2/L3 确定性规则、优先级、
+边界值、缺失与冲突处理，20 项 synthetic 边界测试；禁止回溯套用既有 S2.10
+结果。(3) 用户决策包 v3 提供许可核账四分状态、映射选项 M1/M2（推荐 M1，
+未应用）、空白人工 Gold 协议（未创建任何 data/gold 文件）、分离门禁
+G1–G5（G1/G2 因证据/前置不足 ready=false 且授权句 null；G3/G4/G5 仅缺用户
+选择，给出精确 dry-run 授权句）。本轮零新增 LLM/API，references/ 只读未
+激活，S2.11/S2.12/S2.13/Stage 3 gate 均未改变，未生成 S3.7 Oracle 授权句。
 
 ### 12.1 论文并行轨道（导师要求立即启动）
 
@@ -728,6 +752,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 
 | 版本 | 日期 | 变更 | 依据 |
 |---|---|---|---|
+| 3.6.12 | 2026-08-15 | **S2.11/G0.5 授权前工程收口与用户决策包 v3（零 API/零 gate 翻转）**：(1) Barrientos adapter 核心 `src/bpc_hybrid/s2_11_barrientos_adapter.py`——synthetic/shadow implementation verified，仅接受显式输入、不扫描 references/；fail-closed typed 错误码（LICENSE_NOT_QUALIFIED/ACTIVATION_NOT_AUTHORIZED/MAPPING_POLICY_NOT_APPROVED/SYNTHETIC_POLICY_IN_FORMAL_MODE/INVALID_STRUCTURE/UNKNOWN_MODALITY/DEFINITION_NOT_PRODUCIBLE/MAPPING_POLICY_INCOMPLETE/INVALID_MAPPED_MODALITY/MISSING_TEXT_PROVENANCE/MISSING_SPAN_ALIGNMENT/INVALID_SPAN/AMBIGUOUS_SPAN/UNRESOLVED_CROSS_REFERENCE）；输出仅 candidate_only/review_candidate，external_annotation 仅 review aid；(2) 重写 `test_g07_barrientos_adapter_contract.py`（删除 `or True` 空断言，25 项真实执行测试）；(3) G0.5 候选合同 `configs/g05_complexity_candidate_draft_v1.json`（status=draft_not_frozen、retrospective_use_forbidden、L1/L2/L3 确定性规则/优先级/边界/缺失与冲突处理，覆盖 MASTER 要求的全部复杂度字段）+ `src/bpc_hybrid/g05_complexity_candidate.py` + 20 项 synthetic 边界测试；(4) 用户决策包 v3（schema/builder/独立 verifier/30 项测试/JSON/MD/manifest/export index）：许可核账只读（references/barrientos_2026 91 文件按 名称+sha256+size 盘点、无 LICENSE/COPYING/NOTICE/README/metadata → license_status=unknown_pending_confirmation、ready_for_data_activation=false、activation 授权句 null；paper/code/data/activation 四分状态）；映射选项 M1（identity candidate mapping，推荐）/M2（conservative no-mapping），未应用；空白人工 Gold 协议（review/adjudication/freeze/publication 分离、user_only、未创建 data/gold）；分离用户门禁 G1（许可证据，ready=false/null）/G2（激活，ready=false/null）/G3（映射选择，ready=true + dry-run 授权句）/G4（G0.5 冻结，ready=true + dry-run 授权句）/G5（空白 Gold review surface，ready=true + dry-run 授权句）；manifest 精确集合重建 + export 精确重建 + 单 EOF newline + 全部篡改负例 fail-closed；MASTER S3.7/下一真实路径改指 v2 transition capsule（v1 历史），新增 §12.0b；PROJECT_AUDIT 过渡核账行明确 v2 当前/v1 历史、S2.13 行 adapter 状态更新、证据入口加 v3；全量测试通过；零新增 LLM/API，Gold/contract/methods/predictions/results/references/Stage 3 gate/S2.11-S2.13 状态均未修改，未生成 Oracle 授权句 | 决策包 v3（builder/verifier/manifest）+ adapter + G0.5 draft + record_change 事件 + audit --with-tests |
 | 3.6.11 | 2026-08-15 | **S2.13→S3.7 transition readiness v2：收敛 Gold 缺失探测、manifest/export 完整性校验与实时状态矛盾（零 API/零 gate 翻转）**：v1 capsule 全部文件逐字节保留（v1 verifier 继续通过、git hash-object 与 HEAD 一致）；新建 v2 capsule（schema/build/verify/test/reports，8 文件）——**Gold Rule Records 三态探测**（无候选→exist=false + 9 rule IDs + 显式绑定被检查的 Stage 2 EStG-150 Gold path/hash；任何 rule_record/rule-record 命名候选（data/gold/**、outputs/reports/**、历史 readiness 文档提及的具体路径）→ builder fail-closed 报错并列出路径，绝不报告 exist=false、绝不自行提升；exist=true 保留给未来用户授权 freeze/publication 路径，v2 未实现）；**manifest 精确重建**（verifier 在内存用磁盘 report/MD 字节与重收集 bindings 重建完整 manifest，与磁盘逐键比较，缺项/多余项/byte_size 篡改/同步重算 export hash 均 fail）；**export index 精确重建**（磁盘 report/MD/manifest 字节确定性重建，结构完全相等，重算哈希不能绕过）；**严格 verifier 判定**（非 JSON verifier 需 exit 0 + 显式成功行，"VERIFIED" 裸子串因 "NOT VERIFIED" 也包含而被拒绝）；Markdown 单 EOF newline；audit false 分支措辞改为仅描述真实计算条件并明示与 S2.13/S3.7/full-pipeline 无关（gate 计算/合同/状态值未变）+ true/false 双向回归测试；PROJECT_AUDIT 陈旧行原位收敛（sun_rule_only/D1/正式结果目录/S2.4-6/B0-R2-R5/S3.2-S3.3/当前派工/§1 结论），队列与派工收敛为真实下一路径（S2.11/G0.5 → S2.12 → S2.13 → 用户 Gold Rule Records → S3.4-S3.6 → S3.7 单独授权）；MASTER P1-P4 里程碑修正（P1 数据/Gold 完成但 G0.5/S2.11 未完成；P2 完整 B0 完成；P3 三方法正式比较完成、复杂扩展未完成；P4 D1 正式 arm 已发布、H1 comparison-only、复杂集仍 blocked）；全量测试通过；本轮零新增 LLM/API，Gold/contract/methods/predictions/results/Stage 3 gate/S2.13 状态均未修改，未生成 Oracle 授权句 | 过渡 capsule v2（builder/verifier/manifest）+ audit.py 措辞修复 + PROJECT_AUDIT/MASTER 收敛 + record_change 事件 + audit --with-tests |
 | 3.6.10 | 2026-08-15 | **S2.13→S3.7 过渡核账与 fail-closed readiness 加固（过渡控制 capsule v1，零 API/零 gate 翻转）**：新建确定性过渡控制 capsule `s2_13_s3_7_transition_readiness_v1`（schema + builder + 独立 verifier + 14 项聚焦测试 + JSON/MD/manifest/export index）——逐项从磁盘资产/manifest/hash/实际执行的独立 verifier 重新推导依赖矩阵（S1.7=frozen；S2.10=verified；S2.11=blocked（许可/数据激活/3→4 映射/人工 Gold/G0.5/Barrientos adapter 精确 blockers 重读自 s2_11 资产）；S2.12=partial/retrospective；S2.13=blocked（DoD 未改、未拆新任务）；Stage 1 Process Gold 存在且 verifier 通过（7/135/7）；Stage 3 matching 25+violation 33 decision Gold 存在且与 frozen correction 一致（≠ Gold Rule Records）；9 个 GDPR rule IDs（article6/7/15/16/17/20/22/33/34）的正式 Gold Rule Records 不存在且本轮未创建/未推断；S3.4/S3.5/S3.6=development_only；formal_oracle_started=false、formal_oracle_authorized=false、ready_for_oracle_authorization=false、authorization_sentence=null、no_pseudo_oracle=true）；旧报告（s2_13_stage2_freeze_gap_capsule.{json,md}、s3_7_oracle_readiness_v2、s37_oracle_readiness_v1、formal_benchmark_release_v2 历史 exclusions、两个硬编码“Process Gold 不存在”的旧 builder）声明 supersede 其“当前状态判断”，文件本身逐字节保留未修改；audit.py 陈旧静态尾部改为动态生成（final_experiment_ready=true 仅代表 Stage 2 三方法正式评价/最终指标机器门禁就绪，不代表 S2.13/S3.7/全 Pipeline 完成），新增矛盾消除回归测试；独立 verifier 实际运行 7 个既有 verifier + 重跑 audit 并逐项比对；全量测试通过；本轮零新增 LLM/API，Gold/contract/methods/predictions/results/Stage 3 gate/S2.13 状态均未修改，未生成 Oracle 授权句 | 过渡 capsule v1（builder/verifier/manifest）+ audit.py 措辞修复 + record_change 事件 + audit --with-tests |
 | 3.6.9 | 2026-08-10 | **formal Gold 发布授权执行（用户授权，packet v2 落地）**：按 ormal_gold_authorization_packet_v2 执行机器合同变更（实际授权日 2026-08-10）——stage3.status→locked（含 relock_note 2026-08-10）、ormal_gold_publication_gate.status→

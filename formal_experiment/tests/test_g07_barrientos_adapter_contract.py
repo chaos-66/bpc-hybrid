@@ -1,108 +1,332 @@
-"""Focused tests for the G0.7 Barrientos adapter contract (synthetic only).
+"""Real-execution focused tests for the G0.7 / S2.11 Barrientos adapter
+core (synthetic/shadow implementation).
 
-The adapter contract is FAIL-CLOSED: without an explicit mapping decision
-the 3-class Barrientos modality must NOT be auto-extended to the project's
-4 classes, precondition/norm structures must NOT be silently converted to
-span-based Rule Record fields, and external labels must NEVER be
-auto-promoted to project Gold. All fixtures are synthetic; nothing external
-is activated.
+These tests CALL `src/bpc_hybrid/s2_11_barrientos_adapter.py` with synthetic
+fixtures only. They never access, copy or execute real
+`references/barrientos_2026` data. Every fail-closed condition asserts a
+machine-decodable error code; no assertion is ever vacuous (`or True`
+guards are forbidden here).
 """
 
 from __future__ import annotations
 
-import json
-from pathlib import Path
+import hashlib
+from typing import Any
 
 import pytest
 
-ROOT = Path(__file__).resolve().parents[1]
+from bpc_hybrid.s2_11_barrientos_adapter import (
+    ActivationNotAuthorizedError,
+    ActivationState,
+    AmbiguousSpanError,
+    BarrientosAdapterError,
+    DefinitionNotProducibleError,
+    InvalidMappedModalityError,
+    InvalidSpanError,
+    InvalidStructureError,
+    LicenseNotQualifiedError,
+    LicenseState,
+    MappingPolicy,
+    MappingPolicyIncompleteError,
+    MappingPolicyNotApprovedError,
+    MissingSpanAlignmentError,
+    MissingTextProvenanceError,
+    SyntheticPolicyInFormalModeError,
+    UnknownModalityError,
+    UnresolvedCrossReferenceError,
+    convert_to_candidate,
+)
 
-BARRIENTOS_CLASSES = {"obligation", "permission", "prohibition"}
-SUN_CLASSES = {"obligation", "permission", "prohibition", "definition"}
+BARRIENTOS_CLASSES = ("obligation", "permission", "prohibition")
 
 
-def _synthetic_barrientos_record(modality: str) -> dict:
-    return {
-        "source": "synthetic barrientos-style RC4PC record",
-        "id": "syn-001",
-        "precondition": {"and": [{"predicate": "x"}, {"not": {"predicate": "y"}}]},
-        "norms": [{"modality": modality, "action": {"resources": ["r1"]}}],
-        "temporal_validity": {"start": "t0", "end": "t1"},
+def _synthetic_policy(approved: bool = True,
+                      synthetic_test_only: bool = True,
+                      identity: dict[str, str] | None = None,
+                      fields: dict[str, str] | None = None) -> MappingPolicy:
+    return MappingPolicy(
+        policy_id="syn-policy-v1",
+        approved=approved,
+        synthetic_test_only=synthetic_test_only,
+        modality_identity=identity if identity is not None else {
+            "obligation": "obligation",
+            "permission": "permission",
+            "prohibition": "prohibition",
+        },
+        field_mapping=fields if fields is not None else {
+            "precondition": "condition",
+        },
+    )
+
+
+def _synthetic_record(modality: str = "obligation", **overrides: Any) -> dict:
+    text = ("the data subject shall be notified without undue delay")
+    record: dict[str, Any] = {
+        "source_record_id": "syn-001",
+        "source_element": "norms[0]",
+        "source_path": "synthetic:rc4pc/syn-001",
+        "modality": modality,
+        "text": text,
+        "text_provenance": {
+            "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+            "language": "en",
+        },
+        "span": {"start": 0, "end": len(text)},
+        "text_span_source": "approved_english_alignment",
+        "cross_references": [{"ref_id": "art-7", "resolved": True}],
+        "structure": {"precondition": {"predicate": "x"},
+                      "norm": {"modality": modality},
+                      "temporal_validity": {"start": "t0", "end": "t1"}},
     }
+    record.update(overrides)
+    return record
 
 
-# --- 1. modality 3 -> 4 boundary ---------------------------------------------
+def _qualified_license() -> LicenseState:
+    return LicenseState(qualified=True, license_status="qualified")
 
 
-@pytest.mark.parametrize("cls", ["obligation", "permission", "prohibition"])
-def test_three_class_modality_never_auto_extended(cls: str) -> None:
-    record = _synthetic_barrientos_record(cls)
-    labels = [n["modality"] for n in record["norms"]]
-    assert set(labels) <= BARRIENTOS_CLASSES
-    # without an explicit mapping decision, a definition-class label can
-    # never be invented for a Barrientos record
-    assert "definition" not in labels
-    assert "definition" not in SUN_CLASSES - BARRIENTOS_CLASSES - {"definition"}
+def _authorized_activation() -> ActivationState:
+    return ActivationState(authorized=True)
 
 
-def test_mapping_requires_explicit_table_or_adjudication() -> None:
-    # the adapter contract: mapping table is EMPTY until a decision exists
-    mapping_table: dict[str, str] = {}
-    for cls in BARRIENTOS_CLASSES:
-        with pytest.raises(KeyError):
-            _ = mapping_table[cls]  # no auto-mapping without decision
+def _convert(record: dict[str, Any] | None = None, **kwargs: Any) -> dict:
+    return convert_to_candidate(
+        record if record is not None else _synthetic_record(),
+        license_state=kwargs.pop("license_state", _qualified_license()),
+        activation_state=kwargs.pop("activation_state",
+                                    _authorized_activation()),
+        mapping_policy=kwargs.pop("mapping_policy", _synthetic_policy()),
+        mode=kwargs.pop("mode", "synthetic_test_only"),
+    )
 
 
-def test_definition_class_absent_in_source() -> None:
-    for cls in BARRIENTOS_CLASSES:
-        assert cls != "definition"
+def _error_code(exc: BarrientosAdapterError) -> str:
+    return exc.code
 
 
-# --- 2. precondition / norm / temporal -> span boundary -----------------------
+# --- 1. license / activation / policy fail-closed ---------------------------
 
 
-def test_precondition_triples_not_auto_converted_to_spans() -> None:
-    record = _synthetic_barrientos_record("obligation")
-    precondition = record["precondition"]
-    # and/or/not triples have no span coordinates; a span-based conversion
-    # without alignment is forbidden by the contract
-    assert "start" not in precondition and "end" not in precondition
-    with pytest.raises(KeyError):
-        _ = precondition["start"]  # span alignment adapter not implemented
+def test_license_not_qualified_refuses() -> None:
+    with pytest.raises(LicenseNotQualifiedError) as exc:
+        _convert(license_state=LicenseState(qualified=False))
+    assert _error_code(exc.value) == "LICENSE_NOT_QUALIFIED"
 
 
-def test_temporal_validity_needs_mapping_decision() -> None:
-    record = _synthetic_barrientos_record("permission")
-    tv = record["temporal_validity"]
-    assert set(tv) == {"start", "end"}
-    # contract: temporal start/end -> constraint mapping is UNDECIDED
-    assert "constraint_mapping" not in tv
+def test_activation_not_authorized_refuses() -> None:
+    with pytest.raises(ActivationNotAuthorizedError) as exc:
+        _convert(activation_state=ActivationState(authorized=False))
+    assert _error_code(exc.value) == "ACTIVATION_NOT_AUTHORIZED"
 
 
-# --- 3. external labels never auto-promoted to Gold ---------------------------
+def test_mapping_policy_not_approved_refuses() -> None:
+    with pytest.raises(MappingPolicyNotApprovedError) as exc:
+        _convert(mapping_policy=_synthetic_policy(approved=False))
+    assert _error_code(exc.value) == "MAPPING_POLICY_NOT_APPROVED"
+
+
+# --- 2. modality 3 -> 4 boundary ---------------------------------------------
+
+
+@pytest.mark.parametrize("cls", BARRIENTOS_CLASSES)
+def test_shared_modalities_never_auto_mapped_without_policy(cls: str) -> None:
+    # approved=False: even identity mapping must be refused
+    with pytest.raises(MappingPolicyNotApprovedError):
+        _convert(_synthetic_record(modality=cls),
+                 mapping_policy=_synthetic_policy(approved=False))
+    # approved=True but the policy has NO modality entry at all
+    with pytest.raises(MappingPolicyIncompleteError) as exc:
+        _convert(_synthetic_record(modality=cls),
+                 mapping_policy=_synthetic_policy(identity={}))
+    assert _error_code(exc.value) == "MAPPING_POLICY_INCOMPLETE"
+
+
+def test_definition_never_invented() -> None:
+    policy = _synthetic_policy(identity={
+        "obligation": "definition", "permission": "permission",
+        "prohibition": "prohibition"})
+    with pytest.raises(DefinitionNotProducibleError) as exc:
+        _convert(_synthetic_record(modality="obligation"),
+                 mapping_policy=policy)
+    assert _error_code(exc.value) == "DEFINITION_NOT_PRODUCIBLE"
+
+
+def test_unknown_modality_fails_closed() -> None:
+    with pytest.raises(UnknownModalityError) as exc:
+        _convert(_synthetic_record(modality="definition"))
+    assert _error_code(exc.value) == "UNKNOWN_MODALITY"
+
+
+def test_invalid_mapped_modality_fails_closed() -> None:
+    policy = _synthetic_policy(identity={
+        "obligation": "bogus", "permission": "permission",
+        "prohibition": "prohibition"})
+    with pytest.raises(InvalidMappedModalityError) as exc:
+        _convert(_synthetic_record(modality="obligation"),
+                 mapping_policy=policy)
+    assert _error_code(exc.value) == "INVALID_MAPPED_MODALITY"
+
+
+# --- 3. text / span alignment ------------------------------------------------
+
+
+def test_missing_text_refuses() -> None:
+    with pytest.raises(MissingTextProvenanceError) as exc:
+        _convert(_synthetic_record(text="   "))
+    assert _error_code(exc.value) == "MISSING_TEXT_PROVENANCE"
+
+
+def test_text_provenance_hash_mismatch_refuses() -> None:
+    record = _synthetic_record()
+    record["text_provenance"] = {"sha256": "00" * 64, "language": "en"}
+    with pytest.raises(MissingTextProvenanceError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "MISSING_TEXT_PROVENANCE"
+
+
+def test_missing_span_refuses() -> None:
+    with pytest.raises(MissingSpanAlignmentError) as exc:
+        _convert(_synthetic_record(span=None))
+    assert _error_code(exc.value) == "MISSING_SPAN_ALIGNMENT"
+
+
+def test_external_offsets_without_alignment_refuse() -> None:
+    record = _synthetic_record(text_span_source="external_offsets")
+    with pytest.raises(MissingSpanAlignmentError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "MISSING_SPAN_ALIGNMENT"
+
+
+def test_span_out_of_bounds_refuses() -> None:
+    with pytest.raises(InvalidSpanError) as exc:
+        _convert(_synthetic_record(span={"start": 0, "end": 9999}))
+    assert _error_code(exc.value) == "INVALID_SPAN"
+
+
+def test_negative_span_refuses() -> None:
+    with pytest.raises(InvalidSpanError) as exc:
+        _convert(_synthetic_record(span={"start": -1, "end": 5}))
+    assert _error_code(exc.value) == "INVALID_SPAN"
+
+
+def test_ambiguous_span_refuses() -> None:
+    text = "the data subject shall be notified, the data subject shall be"
+    record = _synthetic_record(
+        text=text,
+        text_provenance={
+            "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+            "language": "en"},
+        span={"start": 0, "end": 16})  # "the data subject" appears twice
+    with pytest.raises(AmbiguousSpanError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "AMBIGUOUS_SPAN"
+
+
+# --- 4. cross references -----------------------------------------------------
+
+
+def test_unresolved_cross_reference_refuses() -> None:
+    record = _synthetic_record(cross_references=[
+        {"ref_id": "art-7", "resolved": True},
+        {"ref_id": "art-22", "resolved": False}])
+    with pytest.raises(UnresolvedCrossReferenceError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "UNRESOLVED_CROSS_REFERENCE"
+
+
+# --- 5. synthetic policy / formal mode ---------------------------------------
+
+
+def test_synthetic_policy_never_enters_formal_mode() -> None:
+    with pytest.raises(SyntheticPolicyInFormalModeError) as exc:
+        _convert(mode="formal")
+    assert _error_code(exc.value) == "SYNTHETIC_POLICY_IN_FORMAL_MODE"
+
+
+# --- 6. external labels never Gold -------------------------------------------
 
 
 def test_external_labels_never_auto_promoted_to_gold() -> None:
-    record = _synthetic_barrientos_record("obligation")
-    # the promotion guard requires: license qualified + mapping decision +
-    # human adjudication; none exist -> every candidate value must be refused
-    license_qualified = False
-    mapping_decided = False
-    adjudicated = False
-    promoted = []
-    for n in record["norms"]:
-        if n["modality"] in SUN_CLASSES:
-            if license_qualified and mapping_decided and adjudicated:
-                promoted.append(n["modality"])
-            # else: candidate namespace only, never Gold
-    assert promoted == []
-    assert not (license_qualified or mapping_decided or adjudicated)
+    record = _synthetic_record(external_annotation={
+        "modality": "obligation", "origin": "external ground truth"})
+    out = _convert(record)
+    assert out["is_gold"] is False
+    assert out["promotion_guard"]["human_adjudicated"] is False
+    assert out["promotion_guard"]["gold_promotion"] is False
+    assert out["semantics"] == "candidate_only"
+    # the external annotation is a review aid, never a mapped field
+    assert "external_annotation" not in out["mapped_fields"]
+    assert out["review_aids"] == [{"external_annotation": record[
+        "external_annotation"]}]
+    assert "external_annotation_review_aid_only" in out["warnings"]
 
 
-def test_synthetic_fixtures_only_policy() -> None:
-    # the adapter contract tests must never touch references/ or real data
-    assert not (ROOT.parent / "references" / "barrientos_2026").joinpath(
-        "artifact_input").exists() or True  # read-only, not activated
-    # and the tests only use the synthetic builder above
-    assert _synthetic_barrientos_record("obligation")["source"].startswith(
-        "synthetic")
+# --- 7. legal synthetic conversion keeps provenance --------------------------
+
+
+def test_legal_synthetic_candidate_keeps_field_provenance() -> None:
+    out = _convert()
+    assert out["status"] == "review_candidate"
+    assert out["semantics"] == "candidate_only"
+    assert out["mapped_fields"]["modality"] == "obligation"
+    assert out["mapped_fields"]["condition"] == {"predicate": "x"}
+    for sun_field in out["mapped_fields"]:
+        prov = out["field_provenance"][sun_field]
+        assert prov["source_element"] == "norms[0]"
+        assert prov["source_path"] == "synthetic:rc4pc/syn-001"
+        assert prov["source_record_id"] == "syn-001"
+        assert prov["span"] == {"start": 0, "end": len(
+            "the data subject shall be notified without undue delay")}
+        assert prov["mapping_policy_id"] == "syn-policy-v1"
+
+
+def test_unmapped_structure_fields_never_silently_converted() -> None:
+    out = _convert()
+    # 'norm' and 'temporal_validity' are NOT in the field mapping
+    assert "norm" not in out["mapped_fields"]
+    assert "temporal_validity" not in out["mapped_fields"]
+    assert "unmapped_structure_field:norm" in out["warnings"]
+    assert "unmapped_structure_field:temporal_validity" in out["warnings"]
+
+
+def test_input_order_does_not_affect_canonical_output() -> None:
+    record_a = _synthetic_record()
+    record_b = _synthetic_record()
+    record_b["structure"] = {"temporal_validity": {"start": "t0", "end": "t1"},
+                             "norm": {"modality": "obligation"},
+                             "precondition": {"predicate": "x"}}
+    out_a = _convert(record_a)
+    out_b = _convert(record_b)
+    assert out_a == out_b
+
+
+# --- 8. structure / unknown fields -------------------------------------------
+
+
+def test_unknown_record_field_fails_closed() -> None:
+    record = _synthetic_record(bogus_field="x")
+    with pytest.raises(InvalidStructureError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "INVALID_STRUCTURE"
+    assert "bogus_field" in exc.value.detail
+
+
+def test_missing_required_key_fails_closed() -> None:
+    record = _synthetic_record()
+    del record["text_provenance"]
+    with pytest.raises(InvalidStructureError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "INVALID_STRUCTURE"
+
+
+# --- 9. real-world default states refuse -------------------------------------
+
+
+def test_current_real_world_states_refuse_everything() -> None:
+    # license unknown, activation not authorized, policy not approved:
+    # the exact current project states -> every conversion is refused
+    with pytest.raises(LicenseNotQualifiedError):
+        _convert(license_state=LicenseState(),
+                 activation_state=ActivationState(),
+                 mapping_policy=_synthetic_policy(approved=False))

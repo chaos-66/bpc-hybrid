@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-15
-**收录文件**：1173 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-08-16
+**收录文件**：1185 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -77,6 +77,7 @@
 | `configs/evaluation/g04_evaluation_views_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/evaluation/sun_table8_literal_overlap_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/experiment_contract.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/g05_complexity_candidate_draft_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_active_registry_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_enhanced_s27_v10a.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -95,6 +96,7 @@
 | `configs/schemas/estg_150_canonical_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/human_gold_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/process_record.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/s2_11_g0_5_pre_authorization_v3.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_13_s3_7_transition_readiness.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_13_s3_7_transition_readiness_v2.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_evaluation_report.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -755,6 +757,10 @@
 | `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_data_qualification_mapping_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_data_qualification_mapping_dry_run.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s2_11_g0_5_pre_authorization_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_11_g0_5_pre_authorization_v3.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_11_g0_5_pre_authorization_v3.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s2_11_g0_5_pre_authorization_v3_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_license_adapter_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_license_adapter_readiness_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -905,6 +911,7 @@
 | `scripts/build_s1_5_s3_7_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s211_license_g07_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s211_s213_dry_run.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s2_11_g0_5_pre_authorization_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_formal_error_analysis_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -987,6 +994,7 @@
 | `scripts/verify_s1_7_freezer_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s1_7_freezer_dry_run_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s1_p2_target_overlap_audit.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_s2_11_g0_5_pre_authorization_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_solcand_prompt_examples_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1043,6 +1051,7 @@
 | `src/bpc_hybrid/formal_arm_verification.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/formal_stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/g04_coarse_view.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/g05_complexity_candidate.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_context.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_pilot_plan.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |
@@ -1053,6 +1062,7 @@
 | `src/bpc_hybrid/mini_pilot_evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/normalization.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/prompt_loader.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s2_11_barrientos_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/smoke.py` | 活动 | Python 实现、脚本或测试 |
@@ -1203,6 +1213,7 @@
 | `tests/test_formal_project_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_formal_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_g04_and_b0_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_g05_complexity_candidate_draft_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_g07_barrientos_adapter_contract.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_effective_fallback.py` | 活动 | Python 实现、脚本或测试 |
@@ -1239,6 +1250,7 @@
 | `tests/test_s1_correction_2026_08_13.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_s3_gdpr7_membership.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s2_11_g0_5_pre_authorization_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_2_s3_3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |

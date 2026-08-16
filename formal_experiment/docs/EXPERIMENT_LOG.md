@@ -3531,3 +3531,16 @@
 - 仍存在 blocker：无
 - 备注：v1 preserved byte-exact; v2 fails closed on any unverified Rule Record candidate and exact-manifest/export omissions; PROJECT_AUDIT and MASTER milestones reconciled; S2.13/S3.7 unchanged
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-16T04:32:12.191572+00:00 - S2.11/G0.5 pre-authorization engineering closure and user decision capsule v3: fail-closed Barrientos adapter core (synthetic/shadow), real-execution adapter tests, G0.5 draft_not_frozen candidate contract, separated user gates with dry-run authorization sentences; no data activation, no G0.5 freeze, no Gold creation, no gate flips
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2009 passed, 24 skipped, 19 warnings in 931.99s (0:15:31)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`2f67acaaab7c2209254affb016fa746feab38ed9`；相关未提交路径：16 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：references=read_only_not_activated; gates=unchanged; adapter=synthetic_shadow_only; G0.5=draft_not_frozen; license_status=unknown_pending_confirmation; ready_for_data_activation=false; activation sentence null; G1/G2 ready=false+null; G3/G4/G5 ready=true+dry-run sentences only; no Oracle authorization sentence generated
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
