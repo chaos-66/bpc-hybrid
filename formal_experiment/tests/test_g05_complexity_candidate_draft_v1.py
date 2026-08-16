@@ -8,6 +8,7 @@ and fail-closed behaviour. Nothing here freezes the contract.
 
 from __future__ import annotations
 
+import json
 from typing import Any
 
 import pytest
@@ -19,7 +20,9 @@ from bpc_hybrid.g05_complexity_candidate import (
     MissingFeatureError,
     UnknownFeatureError,
     classify,
+    derive_promotion_readiness,
     load_config,
+    validate_frozen_application,
 )
 
 L1_FEATURES: dict[str, Any] = {
@@ -186,3 +189,123 @@ def test_error_codes_are_machine_decodable() -> None:
             trigger()
         assert isinstance(exc.value.code, str)
         assert exc.value.code.startswith("G05_")
+
+
+# ---------------------------------------------------------------------------
+# Promotion readiness (current disk state + future frozen path, synthetic)
+# ---------------------------------------------------------------------------
+def test_current_promotion_readiness_is_draft_not_frozen(tmp_path: Path) -> None:
+    import json
+    from pathlib import Path as _Path
+    root = tmp_path
+    cfg_dir = root / "configs"
+    cfg_dir.mkdir(parents=True)
+    cfg_dir.joinpath("g05_complexity_candidate_draft_v1.json").write_text(
+        json.dumps(load_config()), encoding="utf-8")
+    readiness = derive_promotion_readiness(root)
+    assert readiness["g0_5_status"] == "draft_not_frozen"
+    assert readiness["promotion_ready_for_application"] is False
+    assert any("user authorization manifest" in m
+               for m in readiness["missing"])
+    assert readiness["authorization_manifests_found"] == []
+    assert readiness["frozen_configs_found"] == []
+    assert readiness["prior_results_found"] == []
+    assert readiness["preregistration_claim_allowed"] is False
+
+
+def _synthetic_draft_config() -> dict:
+    return dict(load_config())
+
+
+def _synthetic_frozen_config() -> dict:
+    config = dict(_synthetic_draft_config())
+    config["status"] = "frozen"
+    config["frozen_before_new_results"] = True
+    config["retrospective_use_forbidden"] = True
+    return config
+
+
+def _auth_manifest(draft: dict, frozen: dict, sentence: str = "I authorize "
+                   "freezing the G0.5 complexity contract") -> dict:
+    import hashlib
+    return {
+        "manifest_id": "syn-g05-auth-1",
+        "draft_config_sha256": hashlib.sha256(json.dumps(
+            draft, sort_keys=True).encode("utf-8")).hexdigest(),
+        "approved_frozen_config_sha256": hashlib.sha256(json.dumps(
+            frozen, sort_keys=True).encode("utf-8")).hexdigest(),
+        "scope": "future external complex corpora only; never "
+                 "retrospective on S2.10",
+        "authorization_sentence": sentence,
+    }
+
+
+def test_future_frozen_application_valid_with_synthetic_fixture() -> None:
+    draft = _synthetic_draft_config()
+    frozen = _synthetic_frozen_config()
+    manifest = _auth_manifest(draft, frozen)
+    result = validate_frozen_application(draft, frozen, manifest,
+                                         corpus_has_prior_results=False)
+    assert result["frozen_application_valid"] is True
+    assert result["g0_5_status"] == "frozen"
+    assert result["frozen_before_new_results"] is True
+    assert result["preregistration_claim_allowed"] is True
+
+
+def test_frozen_application_rejects_unbound_manifest_hash() -> None:
+    draft = _synthetic_draft_config()
+    frozen = _synthetic_frozen_config()
+    manifest = _auth_manifest(draft, frozen)
+    manifest["draft_config_sha256"] = "00" * 64
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest)
+    assert "draft config hash" in exc.value.message
+
+
+def test_frozen_application_rejects_draft_status_config() -> None:
+    draft = _synthetic_draft_config()
+    frozen = _synthetic_frozen_config()
+    frozen["status"] = "draft_not_frozen"
+    manifest = _auth_manifest(draft, frozen)
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest)
+    assert "frozen" in exc.value.message
+
+
+def test_frozen_application_rejects_missing_frozen_before_flag() -> None:
+    draft = _synthetic_draft_config()
+    frozen = _synthetic_frozen_config()
+    del frozen["frozen_before_new_results"]
+    manifest = _auth_manifest(draft, frozen)
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest)
+    assert exc.value.code == "G05_CLASSIFICATION_ERROR"
+
+
+def test_frozen_application_rejects_prior_results() -> None:
+    draft = _synthetic_draft_config()
+    frozen = _synthetic_frozen_config()
+    manifest = _auth_manifest(draft, frozen)
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest,
+                                    corpus_has_prior_results=True)
+    assert "prior prediction/result" in exc.value.message
+
+
+def test_frozen_application_rejects_retrospective_flag_missing() -> None:
+    draft = _synthetic_draft_config()
+    frozen = _synthetic_frozen_config()
+    del frozen["retrospective_use_forbidden"]
+    manifest = _auth_manifest(draft, frozen)
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest)
+    assert "retrospective" in exc.value.message
+
+
+def test_frozen_application_rejects_empty_sentence() -> None:
+    draft = _synthetic_draft_config()
+    frozen = _synthetic_frozen_config()
+    manifest = _auth_manifest(draft, frozen, sentence="   ")
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest)
+    assert "authorization sentence" in exc.value.message

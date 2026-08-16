@@ -28,6 +28,20 @@ CONFIG_PATH = Path(__file__).resolve().parents[2] / "configs" / \
 
 EXPECTED_STATUS = "draft_not_frozen"
 
+# Future frozen configs / authorization manifests are probed with these
+# name patterns; none may exist today.
+FROZEN_CONFIG_PATTERNS = ("g05_complexity_candidate_frozen*",
+                          "g05_*_frozen*.json")
+AUTHORIZATION_MANIFEST_PATTERNS = (
+    "outputs/reports/*g05*authorization*",
+    "outputs/reports/*g05*freeze*manifest*",
+    "configs/*g05*authorization*",
+)
+PRIOR_RESULT_PATTERNS = (
+    "data/results/*g05*",
+    "outputs/evidence/*g05*",
+)
+
 
 class G05ClassificationError(Exception):
     """Machine-decodable classification rejection."""
@@ -162,4 +176,150 @@ def classify(features: Mapping[str, Any],
         "config_version": config.get("config_version"),
         "status": config.get("status"),
         "conflict_policy_applied": "highest_level_wins",
+    }
+
+
+def derive_promotion_readiness(root: Path) -> dict[str, Any]:
+    """Derive the CURRENT G0.5 promotion readiness from disk (fail-closed).
+
+    Today this always yields g0_5_status=draft_not_frozen and
+    promotion_ready_for_application=false because no user authorization
+    manifest and no frozen config exist and no prior new-corpus results
+    may exist. The future frozen-application path is exercised separately
+    by :func:`validate_frozen_application` with synthetic fixtures.
+    """
+    config = load_config(root / "configs" / "g05_complexity_candidate_draft_v1.json")
+    frozen_configs = sorted(
+        p.relative_to(root).as_posix()
+        for pat in FROZEN_CONFIG_PATTERNS
+        for p in (root / "configs").glob(pat))
+    auth_manifests = sorted(
+        p.relative_to(root).as_posix()
+        for pat in AUTHORIZATION_MANIFEST_PATTERNS
+        for p in root.glob(pat))
+    prior_results = sorted(
+        p.relative_to(root).as_posix()
+        for pat in PRIOR_RESULT_PATTERNS
+        for p in root.glob(pat))
+    missing: list[str] = []
+    if not auth_manifests:
+        missing.append("user authorization manifest (G4 dry-run sentence "
+                       "is NOT applied)")
+    if frozen_configs:
+        missing.append("no frozen config may exist before the G4 "
+                       "authorization is applied")
+    if prior_results:
+        missing.append("no new-corpus prediction/result may exist before "
+                       "the freeze takes effect")
+    ready = bool(auth_manifests and not frozen_configs and not prior_results)
+    return {
+        "g0_5_status": config.get("status", "unknown"),
+        "promotion_ready_for_application": ready,
+        "missing": missing,
+        "draft_config_sha256": _config_sha256(
+            root / "configs" / "g05_complexity_candidate_draft_v1.json"),
+        "frozen_configs_found": frozen_configs,
+        "authorization_manifests_found": auth_manifests,
+        "prior_results_found": prior_results,
+        "retrospective_use_forbidden": config.get(
+            "retrospective_use_forbidden") is True,
+        "preregistration_claim_allowed": False,
+    }
+
+
+def _config_sha256(path: Path) -> str:
+    import hashlib
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def validate_frozen_application(
+        draft_config: dict[str, Any],
+        frozen_config: dict[str, Any],
+        authorization_manifest: dict[str, Any],
+        corpus_has_prior_results: bool = False) -> dict[str, Any]:
+    """FAIL-CLOSED validation of the FUTURE G0.5 frozen-application path.
+
+    Synthetic-fixture only: neither the project config nor any real
+    authorization manifest may be created this round. Validates:
+      * draft config status == draft_not_frozen;
+      * frozen config status == frozen with
+        frozen_before_new_results=true and
+        retrospective_use_forbidden=true;
+      * authorization manifest binds the exact draft config sha256, the
+        approved frozen config sha256, the scope and a non-empty
+        authorization sentence;
+      * no prior prediction/result for the corpus
+        (corpus_has_prior_results=False).
+
+    Raises :class:`G05ClassificationError` (codes G05_FROZEN_APPLICATION_
+    *) on any violation.
+    """
+    if not isinstance(draft_config, dict) or \
+            draft_config.get("status") != "draft_not_frozen":
+        raise G05ClassificationError(
+            "frozen application requires the draft config to be "
+            "draft_not_frozen",
+            detail=f"draft_status={draft_config.get('status')!r}")
+    if not isinstance(frozen_config, dict) or \
+            frozen_config.get("status") != "frozen":
+        raise G05ClassificationError(
+            "frozen application requires the approved config to be frozen",
+            detail=f"frozen_status={frozen_config.get('status')!r}")
+    if frozen_config.get("frozen_before_new_results") is not True:
+        raise G05ClassificationError(
+            "frozen config must declare frozen_before_new_results=true",
+            detail=f"frozen_before_new_results="
+                   f"{frozen_config.get('frozen_before_new_results')!r}")
+    if frozen_config.get("retrospective_use_forbidden") is not True:
+        raise G05ClassificationError(
+            "frozen config must forbid retrospective use",
+            detail=f"retrospective_use_forbidden="
+                   f"{frozen_config.get('retrospective_use_forbidden')!r}")
+    if not isinstance(authorization_manifest, dict):
+        raise G05ClassificationError(
+            "frozen application requires an authorization manifest",
+            detail=f"authorization_manifest={authorization_manifest!r}")
+    import hashlib as _hl
+    draft_sha = _hl.sha256(json.dumps(
+        draft_config, sort_keys=True).encode("utf-8")).hexdigest()
+    frozen_sha = _hl.sha256(json.dumps(
+        frozen_config, sort_keys=True).encode("utf-8")).hexdigest()
+    if authorization_manifest.get("draft_config_sha256") != draft_sha:
+        raise G05ClassificationError(
+            "authorization manifest does not bind the draft config hash",
+            detail=f"manifest={authorization_manifest.get('draft_config_sha256')!r} "
+                   f"derived={draft_sha[:12]}...")
+    if authorization_manifest.get("approved_frozen_config_sha256") != \
+            frozen_sha:
+        raise G05ClassificationError(
+            "authorization manifest does not bind the frozen config hash",
+            detail=f"manifest="
+                   f"{authorization_manifest.get('approved_frozen_config_sha256')!r} "
+                   f"derived={frozen_sha[:12]}...")
+    if not isinstance(authorization_manifest.get("scope"), str) or \
+            not authorization_manifest["scope"].strip():
+        raise G05ClassificationError(
+            "authorization manifest must declare a scope",
+            detail=f"scope={authorization_manifest.get('scope')!r}")
+    if not isinstance(authorization_manifest.get("authorization_sentence"),
+                      str) or not authorization_manifest[
+                          "authorization_sentence"].strip():
+        raise G05ClassificationError(
+            "authorization manifest must carry an authorization sentence",
+            detail="authorization_sentence missing or empty")
+    if corpus_has_prior_results:
+        raise G05ClassificationError(
+            "frozen application is invalid when the corpus already has "
+            "prior prediction/result",
+            detail="corpus_has_prior_results=True")
+    return {
+        "frozen_application_valid": True,
+        "g0_5_status": "frozen",
+        "draft_config_sha256": draft_sha,
+        "approved_frozen_config_sha256": frozen_sha,
+        "scope": authorization_manifest.get("scope"),
+        "frozen_before_new_results": True,
+        "retrospective_use_forbidden": True,
+        "corpus_has_prior_results": False,
+        "preregistration_claim_allowed": True,
     }

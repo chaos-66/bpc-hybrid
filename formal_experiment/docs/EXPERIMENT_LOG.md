@@ -3544,3 +3544,16 @@
 - 仍存在 blocker：无
 - 备注：references=read_only_not_activated; gates=unchanged; adapter=synthetic_shadow_only; G0.5=draft_not_frozen; license_status=unknown_pending_confirmation; ready_for_data_activation=false; activation sentence null; G1/G2 ready=false+null; G3/G4/G5 ready=true+dry-run sentences only; no Oracle authorization sentence generated
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-16T07:21:36.558860+00:00 - S2.11/G0.5 pre-authorization decision capsule v4 corrective: article CC BY 4.0 vs artifact license separation, hardened adapter provenance, G0.5 promotion readiness, gate ordering fixes; no authorization applied
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：是
+- 测试：3 failed, 2057 passed, 24 skipped, 19 warnings in 817.74s (0:13:37)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`31ac757d821b7e451650edbd70b1899ed0104616`；相关未提交路径：15 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：article license confirmed CC BY 4.0 (article-only, publisher PDF hash-bound 6ce91fd2); artifact code/data license unresolved (unknown_pending_confirmation); references read-only/not activated; adapter synthetic/shadow only (hardened); G0.5 draft_not_frozen; G3/G4 dry-run only; G2/G5/G6 false/null; no Gold, no API, no Oracle, gates unchanged; v3 capsule superseded byte-exact; v3 verifier/tests fail-closed as designed because v3 bindings include files this round was required to modify (MASTER_PIPELINE.md, PROJECT_AUDIT.md, adapter, g07 tests) - 3 expected v3 failures, 2057 passed
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

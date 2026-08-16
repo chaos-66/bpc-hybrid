@@ -1,11 +1,10 @@
-"""Real-execution focused tests for the G0.7 / S2.11 Barrientos adapter
-core (synthetic/shadow implementation).
+"""Real-execution focused tests for the HARDENED G0.7 / S2.11 Barrientos
+adapter core (synthetic/shadow implementation, v4 provenance model).
 
 These tests CALL `src/bpc_hybrid/s2_11_barrientos_adapter.py` with synthetic
-fixtures only. They never access, copy or execute real
-`references/barrientos_2026` data. Every fail-closed condition asserts a
-machine-decodable error code; no assertion is ever vacuous (`or True`
-guards are forbidden here).
+fixtures only; they never access, copy or execute real
+`references/` data. Every fail-closed condition asserts a machine-decodable
+error code; no assertion is ever vacuous (`or True` guards are forbidden).
 """
 
 from __future__ import annotations
@@ -18,11 +17,17 @@ import pytest
 from bpc_hybrid.s2_11_barrientos_adapter import (
     ActivationNotAuthorizedError,
     ActivationState,
-    AmbiguousSpanError,
     BarrientosAdapterError,
     DefinitionNotProducibleError,
+    ElementPathMismatchError,
+    EvidenceBindingMissingError,
+    EvidenceBindingSyntheticError,
+    EvidenceBinding,
+    FieldProvenanceMissingError,
+    FieldSpanAmbiguousError,
+    FieldSpanInvalidError,
+    FieldValueMismatchError,
     InvalidMappedModalityError,
-    InvalidSpanError,
     InvalidStructureError,
     LicenseNotQualifiedError,
     LicenseState,
@@ -31,7 +36,10 @@ from bpc_hybrid.s2_11_barrientos_adapter import (
     MappingPolicyNotApprovedError,
     MissingSpanAlignmentError,
     MissingTextProvenanceError,
+    NestedDictAsSpanFieldError,
+    NonCanonicalTargetError,
     SyntheticPolicyInFormalModeError,
+    TargetCollisionError,
     UnknownModalityError,
     UnresolvedCrossReferenceError,
     convert_to_candidate,
@@ -40,10 +48,31 @@ from bpc_hybrid.s2_11_barrientos_adapter import (
 BARRIENTOS_CLASSES = ("obligation", "permission", "prohibition")
 
 
+def _sha(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _element(value: Any, text: str, span: tuple[int, int],
+             element: str = "norms[0].modality",
+             path: str = "synthetic:rc4pc/syn-001") -> dict[str, Any]:
+    start, end = span
+    return {
+        "value": value,
+        "element": element,
+        "path": path,
+        "text_hash": _sha(text),
+        "span": {"start": start, "end": end},
+        "span_alignment_source": "approved_english_alignment",
+    }
+
+
 def _synthetic_policy(approved: bool = True,
                       synthetic_test_only: bool = True,
                       identity: dict[str, str] | None = None,
-                      fields: dict[str, str] | None = None) -> MappingPolicy:
+                      fields: dict[str, str] | None = None,
+                      license_binding: EvidenceBinding | None = None,
+                      auth_binding: EvidenceBinding | None = None
+                      ) -> MappingPolicy:
     return MappingPolicy(
         policy_id="syn-policy-v1",
         approved=approved,
@@ -56,27 +85,35 @@ def _synthetic_policy(approved: bool = True,
         field_mapping=fields if fields is not None else {
             "precondition": "condition",
         },
+        license_evidence_binding=license_binding,
+        authorization_manifest_binding=auth_binding,
     )
 
 
-def _synthetic_record(modality: str = "obligation", **overrides: Any) -> dict:
-    text = ("the data subject shall be notified without undue delay")
+def _synthetic_record(modality: str = "obligation", *,
+                      text: str = "the data subject shall be notified "
+                                  "without undue delay",
+                      **overrides: Any) -> dict:
     record: dict[str, Any] = {
         "source_record_id": "syn-001",
-        "source_element": "norms[0]",
         "source_path": "synthetic:rc4pc/syn-001",
-        "modality": modality,
+        "modality": _element(modality, text, (0, len(text)),
+                             element="norms[0].modality"),
         "text": text,
-        "text_provenance": {
-            "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
-            "language": "en",
+        "text_provenance": {"sha256": _sha(text), "language": "en"},
+        "structure": {
+            "precondition": _element("the data subject", text, (0, 16),
+                                     element="precondition",
+                                     path="synthetic:rc4pc/syn-001"),
+            "norm": _element("shall be notified", text, (17, 34),
+                             element="norm",
+                             path="synthetic:rc4pc/syn-001"),
+            "temporal_validity": _element("without undue delay", text,
+                                          (35, len(text)),
+                                          element="temporal_validity",
+                                          path="synthetic:rc4pc/syn-001"),
         },
-        "span": {"start": 0, "end": len(text)},
-        "text_span_source": "approved_english_alignment",
         "cross_references": [{"ref_id": "art-7", "resolved": True}],
-        "structure": {"precondition": {"predicate": "x"},
-                      "norm": {"modality": modality},
-                      "temporal_validity": {"start": "t0", "end": "t1"}},
     }
     record.update(overrides)
     return record
@@ -88,6 +125,21 @@ def _qualified_license() -> LicenseState:
 
 def _authorized_activation() -> ActivationState:
     return ActivationState(authorized=True)
+
+
+def _synthetic_bindings() -> tuple[EvidenceBinding, EvidenceBinding]:
+    return (EvidenceBinding(kind="license", evidence_id="syn-lic-1",
+                            evidence_hash=_sha("lic"), synthetic=True),
+            EvidenceBinding(kind="authorization", evidence_id="syn-auth-1",
+                            evidence_hash=_sha("auth"), synthetic=True))
+
+
+def _real_bindings() -> tuple[EvidenceBinding, EvidenceBinding]:
+    # Test-only NON-synthetic bindings for the future formal path fixture.
+    return (EvidenceBinding(kind="license", evidence_id="lic-1",
+                            evidence_hash=_sha("lic")),
+            EvidenceBinding(kind="authorization", evidence_id="auth-1",
+                            evidence_hash=_sha("auth")))
 
 
 def _convert(record: dict[str, Any] | None = None, **kwargs: Any) -> dict:
@@ -131,11 +183,9 @@ def test_mapping_policy_not_approved_refuses() -> None:
 
 @pytest.mark.parametrize("cls", BARRIENTOS_CLASSES)
 def test_shared_modalities_never_auto_mapped_without_policy(cls: str) -> None:
-    # approved=False: even identity mapping must be refused
     with pytest.raises(MappingPolicyNotApprovedError):
         _convert(_synthetic_record(modality=cls),
                  mapping_policy=_synthetic_policy(approved=False))
-    # approved=True but the policy has NO modality entry at all
     with pytest.raises(MappingPolicyIncompleteError) as exc:
         _convert(_synthetic_record(modality=cls),
                  mapping_policy=_synthetic_policy(identity={}))
@@ -168,7 +218,17 @@ def test_invalid_mapped_modality_fails_closed() -> None:
     assert _error_code(exc.value) == "INVALID_MAPPED_MODALITY"
 
 
-# --- 3. text / span alignment ------------------------------------------------
+def test_modality_provenance_must_point_at_norm_element() -> None:
+    record = _synthetic_record()
+    record["modality"] = _element("obligation", record["text"],
+                                  (0, len(record["text"])),
+                                  element="structure.root")
+    with pytest.raises(ElementPathMismatchError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "ELEMENT_PATH_MISMATCH"
+
+
+# --- 3. text / record provenance ---------------------------------------------
 
 
 def test_missing_text_refuses() -> None:
@@ -185,45 +245,109 @@ def test_text_provenance_hash_mismatch_refuses() -> None:
     assert _error_code(exc.value) == "MISSING_TEXT_PROVENANCE"
 
 
-def test_missing_span_refuses() -> None:
-    with pytest.raises(MissingSpanAlignmentError) as exc:
-        _convert(_synthetic_record(span=None))
-    assert _error_code(exc.value) == "MISSING_SPAN_ALIGNMENT"
+# --- 4. field-level provenance and canonical targets -------------------------
 
 
-def test_external_offsets_without_alignment_refuse() -> None:
-    record = _synthetic_record(text_span_source="external_offsets")
-    with pytest.raises(MissingSpanAlignmentError) as exc:
+def test_non_canonical_target_fails_closed() -> None:
+    policy = _synthetic_policy(fields={"precondition": "modality"})
+    with pytest.raises(NonCanonicalTargetError) as exc:
+        _convert(mapping_policy=policy)
+    assert _error_code(exc.value) == "NON_CANONICAL_TARGET"
+
+
+def test_non_canonical_target_bogus_fails_closed() -> None:
+    policy = _synthetic_policy(fields={"precondition": "bogus_field"})
+    with pytest.raises(NonCanonicalTargetError) as exc:
+        _convert(mapping_policy=policy)
+    assert _error_code(exc.value) == "NON_CANONICAL_TARGET"
+
+
+def test_duplicate_target_collision_fails_closed() -> None:
+    policy = _synthetic_policy(fields={"precondition": "condition",
+                                       "norm": "condition"})
+    with pytest.raises(TargetCollisionError) as exc:
+        _convert(mapping_policy=policy)
+    assert _error_code(exc.value) == "TARGET_COLLISION"
+    assert "condition" in exc.value.detail
+
+
+def test_field_without_provenance_fails_closed() -> None:
+    record = _synthetic_record()
+    record["structure"]["precondition"] = "bare value"
+    with pytest.raises(FieldProvenanceMissingError) as exc:
         _convert(record)
-    assert _error_code(exc.value) == "MISSING_SPAN_ALIGNMENT"
+    assert _error_code(exc.value) == "FIELD_PROVENANCE_MISSING"
 
 
-def test_span_out_of_bounds_refuses() -> None:
-    with pytest.raises(InvalidSpanError) as exc:
-        _convert(_synthetic_record(span={"start": 0, "end": 9999}))
-    assert _error_code(exc.value) == "INVALID_SPAN"
+def test_field_missing_span_fails_closed() -> None:
+    record = _synthetic_record()
+    del record["structure"]["precondition"]["span"]
+    with pytest.raises(FieldProvenanceMissingError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "FIELD_PROVENANCE_MISSING"
 
 
-def test_negative_span_refuses() -> None:
-    with pytest.raises(InvalidSpanError) as exc:
-        _convert(_synthetic_record(span={"start": -1, "end": 5}))
-    assert _error_code(exc.value) == "INVALID_SPAN"
+def test_field_span_out_of_bounds_fails_closed() -> None:
+    record = _synthetic_record()
+    record["structure"]["precondition"]["span"] = {"start": 0, "end": 9999}
+    with pytest.raises(FieldSpanInvalidError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "FIELD_SPAN_INVALID"
 
 
-def test_ambiguous_span_refuses() -> None:
+def test_field_span_empty_fails_closed() -> None:
+    record = _synthetic_record()
+    record["structure"]["precondition"]["span"] = {"start": 16, "end": 16}
+    with pytest.raises(FieldSpanInvalidError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "FIELD_SPAN_INVALID"
+
+
+def test_field_span_ambiguous_fails_closed() -> None:
     text = "the data subject shall be notified, the data subject shall be"
-    record = _synthetic_record(
-        text=text,
-        text_provenance={
-            "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
-            "language": "en"},
-        span={"start": 0, "end": 16})  # "the data subject" appears twice
-    with pytest.raises(AmbiguousSpanError) as exc:
+    record = _synthetic_record(text=text)
+    record["structure"]["precondition"] = _element(
+        "the data subject", text, (0, 16), element="precondition")
+    with pytest.raises(FieldSpanAmbiguousError) as exc:
         _convert(record)
-    assert _error_code(exc.value) == "AMBIGUOUS_SPAN"
+    assert _error_code(exc.value) == "FIELD_SPAN_AMBIGUOUS"
 
 
-# --- 4. cross references -----------------------------------------------------
+def test_field_value_mismatch_fails_closed() -> None:
+    record = _synthetic_record()
+    record["structure"]["precondition"]["value"] = "the controller"
+    with pytest.raises(FieldValueMismatchError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "FIELD_VALUE_MISMATCH"
+
+
+def test_nested_dict_as_span_field_fails_closed() -> None:
+    record = _synthetic_record()
+    record["structure"]["precondition"]["value"] = {
+        "and": [{"predicate": "x"}]}
+    with pytest.raises(NestedDictAsSpanFieldError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "NESTED_DICT_AS_SPAN_FIELD"
+
+
+def test_element_path_hash_mismatch_fails_closed() -> None:
+    record = _synthetic_record()
+    record["structure"]["precondition"]["text_hash"] = "00" * 64
+    with pytest.raises(ElementPathMismatchError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "ELEMENT_PATH_MISMATCH"
+
+
+def test_field_span_external_offsets_fail_closed() -> None:
+    record = _synthetic_record()
+    record["structure"]["precondition"]["span_alignment_source"] = \
+        "external_offsets"
+    with pytest.raises(MissingSpanAlignmentError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "MISSING_SPAN_ALIGNMENT"
+
+
+# --- 5. cross references -----------------------------------------------------
 
 
 def test_unresolved_cross_reference_refuses() -> None:
@@ -235,16 +359,46 @@ def test_unresolved_cross_reference_refuses() -> None:
     assert _error_code(exc.value) == "UNRESOLVED_CROSS_REFERENCE"
 
 
-# --- 5. synthetic policy / formal mode ---------------------------------------
+# --- 6. synthetic policy / formal mode / evidence bindings -------------------
 
 
 def test_synthetic_policy_never_enters_formal_mode() -> None:
+    lic, auth = _synthetic_bindings()
+    policy = _synthetic_policy(license_binding=lic, auth_binding=auth)
     with pytest.raises(SyntheticPolicyInFormalModeError) as exc:
-        _convert(mode="formal")
+        _convert(mode="formal", mapping_policy=policy)
     assert _error_code(exc.value) == "SYNTHETIC_POLICY_IN_FORMAL_MODE"
 
 
-# --- 6. external labels never Gold -------------------------------------------
+def test_formal_mode_requires_evidence_bindings() -> None:
+    policy = _synthetic_policy(synthetic_test_only=False)
+    with pytest.raises(EvidenceBindingMissingError) as exc:
+        _convert(mode="formal", mapping_policy=policy)
+    assert _error_code(exc.value) == "EVIDENCE_BINDING_MISSING"
+
+
+def test_formal_mode_rejects_synthetic_bindings() -> None:
+    lic, auth = _synthetic_bindings()
+    policy = _synthetic_policy(synthetic_test_only=False,
+                               license_binding=lic, auth_binding=auth)
+    with pytest.raises(EvidenceBindingSyntheticError) as exc:
+        _convert(mode="formal", mapping_policy=policy)
+    assert _error_code(exc.value) == "EVIDENCE_BINDING_SYNTHETIC"
+
+
+def test_formal_mode_accepts_nonsynthetic_bindings_fixture() -> None:
+    # Future formal path fixture: non-synthetic test bindings + a real
+    # non-synthetic policy allow conversion (this does NOT change the real
+    # disk state; no such evidence exists in the project today).
+    lic, auth = _real_bindings()
+    policy = _synthetic_policy(synthetic_test_only=False,
+                               license_binding=lic, auth_binding=auth)
+    out = _convert(mode="formal", mapping_policy=policy)
+    assert out["semantics"] == "candidate_only"
+    assert out["is_gold"] is False
+
+
+# --- 7. external labels never Gold -------------------------------------------
 
 
 def test_external_labels_never_auto_promoted_to_gold() -> None:
@@ -255,35 +409,54 @@ def test_external_labels_never_auto_promoted_to_gold() -> None:
     assert out["promotion_guard"]["human_adjudicated"] is False
     assert out["promotion_guard"]["gold_promotion"] is False
     assert out["semantics"] == "candidate_only"
-    # the external annotation is a review aid, never a mapped field
     assert "external_annotation" not in out["mapped_fields"]
     assert out["review_aids"] == [{"external_annotation": record[
         "external_annotation"]}]
     assert "external_annotation_review_aid_only" in out["warnings"]
 
 
-# --- 7. legal synthetic conversion keeps provenance --------------------------
+# --- 8. legal synthetic conversion: field-level provenance -------------------
 
 
-def test_legal_synthetic_candidate_keeps_field_provenance() -> None:
+def test_legal_synthetic_candidate_keeps_field_level_provenance() -> None:
     out = _convert()
     assert out["status"] == "review_candidate"
-    assert out["semantics"] == "candidate_only"
     assert out["mapped_fields"]["modality"] == "obligation"
-    assert out["mapped_fields"]["condition"] == {"predicate": "x"}
-    for sun_field in out["mapped_fields"]:
-        prov = out["field_provenance"][sun_field]
-        assert prov["source_element"] == "norms[0]"
-        assert prov["source_path"] == "synthetic:rc4pc/syn-001"
-        assert prov["source_record_id"] == "syn-001"
-        assert prov["span"] == {"start": 0, "end": len(
-            "the data subject shall be notified without undue delay")}
-        assert prov["mapping_policy_id"] == "syn-policy-v1"
+    assert out["mapped_fields"]["condition"] == "the data subject"
+    # modality provenance points at the norm modality element
+    mod_prov = out["field_provenance"]["modality"]
+    assert mod_prov["source_element"] == "norms[0].modality"
+    assert mod_prov["span"] == {"start": 0, "end": 54}
+    # structural field provenance uses ITS OWN element/span, not the
+    # modality/record-global span
+    cond_prov = out["field_provenance"]["condition"]
+    assert cond_prov["source_element"] == "precondition"
+    assert cond_prov["source_path"] == "synthetic:rc4pc/syn-001"
+    assert cond_prov["source_record_id"] == "syn-001"
+    assert cond_prov["source_text_hash"] == _sha(
+        "the data subject shall be notified without undue delay")
+    assert cond_prov["span"] == {"start": 0, "end": 16}
+    assert cond_prov["span_alignment_source"] == \
+        "approved_english_alignment"
+    assert cond_prov["mapping_policy_id"] == "syn-policy-v1"
+    # the structural span must differ from the modality span (separate)
+    assert cond_prov["span"] != mod_prov["span"]
+
+
+def test_modality_only_mapping_when_no_field_policy() -> None:
+    # M1 scope: without an approved field mapping policy the output
+    # contains ONLY the modality candidate; structure stays blank.
+    policy = _synthetic_policy(fields={})
+    out = _convert(mapping_policy=policy)
+    assert set(out["mapped_fields"]) == {"modality"}
+    assert set(out["field_provenance"]) == {"modality"}
+    assert "unmapped_structure_field:precondition" in out["warnings"]
+    assert "unmapped_structure_field:norm" in out["warnings"]
+    assert "unmapped_structure_field:temporal_validity" in out["warnings"]
 
 
 def test_unmapped_structure_fields_never_silently_converted() -> None:
     out = _convert()
-    # 'norm' and 'temporal_validity' are NOT in the field mapping
     assert "norm" not in out["mapped_fields"]
     assert "temporal_validity" not in out["mapped_fields"]
     assert "unmapped_structure_field:norm" in out["warnings"]
@@ -293,15 +466,16 @@ def test_unmapped_structure_fields_never_silently_converted() -> None:
 def test_input_order_does_not_affect_canonical_output() -> None:
     record_a = _synthetic_record()
     record_b = _synthetic_record()
-    record_b["structure"] = {"temporal_validity": {"start": "t0", "end": "t1"},
-                             "norm": {"modality": "obligation"},
-                             "precondition": {"predicate": "x"}}
-    out_a = _convert(record_a)
-    out_b = _convert(record_b)
-    assert out_a == out_b
+    structure = record_b["structure"]
+    record_b["structure"] = {
+        "temporal_validity": structure["temporal_validity"],
+        "norm": structure["norm"],
+        "precondition": structure["precondition"],
+    }
+    assert _convert(record_a) == _convert(record_b)
 
 
-# --- 8. structure / unknown fields -------------------------------------------
+# --- 9. structure / unknown fields -------------------------------------------
 
 
 def test_unknown_record_field_fails_closed() -> None:
@@ -320,12 +494,20 @@ def test_missing_required_key_fails_closed() -> None:
     assert _error_code(exc.value) == "INVALID_STRUCTURE"
 
 
-# --- 9. real-world default states refuse -------------------------------------
+def test_modality_span_out_of_bounds_fails_closed() -> None:
+    text = "the data subject shall be notified without undue delay"
+    record = _synthetic_record(text=text)
+    record["modality"] = _element("obligation", text, (0, 9999),
+                                  element="norms[0].modality")
+    with pytest.raises(FieldSpanInvalidError) as exc:
+        _convert(record)
+    assert _error_code(exc.value) == "FIELD_SPAN_INVALID"
+
+
+# --- 10. real-world default states refuse ------------------------------------
 
 
 def test_current_real_world_states_refuse_everything() -> None:
-    # license unknown, activation not authorized, policy not approved:
-    # the exact current project states -> every conversion is refused
     with pytest.raises(LicenseNotQualifiedError):
         _convert(license_state=LicenseState(),
                  activation_state=ActivationState(),
