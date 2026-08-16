@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Fail-closed Barrientos-style -> candidate Rule Record adapter (S2.11 /
-S2-BARR-2) — v5 hardening.
+S2-BARR-2) — v6 hardening.
 
 STATUS: SYNTHETIC / SHADOW implementation only. It is importable and fully
 tested against synthetic fixtures, but it is NOT a formal adapter:
@@ -19,10 +19,33 @@ tested against synthetic fixtures, but it is NOT a formal adapter:
     hash to the declared 64-hex SHA-256, whose internal kind/ID/scope match
     the binding, and (for the authorization manifest) whose policy binding
     exactly matches the mapping policy (policy ID, modality mapping, field
-    mapping, license evidence hash, authorization scope). No such assets
-    exist on disk today, and synthetic bindings never enter formal mode;
+    mapping, license evidence ID/hash/scope) and whose append-only
+    authorization event (ID + raw-byte SHA-256) is verified from disk. No
+    such assets exist on disk today, and synthetic bindings never enter
+    formal mode;
   * output is `candidate_only` / `review_candidate` semantics only and can
     never claim project Gold.
+
+v6 additions:
+  * the evidence verifier returns a re-verified structured EvidenceContext
+    (not None), and every FORMAL output carries an explicit
+    `formal_evidence_provenance` block (license evidence ID/relative
+    path/raw-byte SHA-256/exact license scope; authorization manifest
+    ID/relative path/raw-byte SHA-256/exact authorization scope;
+    authorization event ID/relative path/raw-byte SHA-256; policy ID;
+    canonical modality/field mapping hashes; how the manifest binds the
+    license evidence; candidate_only=true; gold_authorized=false).
+    Synthetic mode never masquerades as formal evidence: the block is
+    null there.
+  * scopes are controlled enums: license scope must be one of
+    LICENSE_SCOPES and the authorization manifest must EXACTLY repeat the
+    license evidence scope in its policy binding; the authorization scope
+    must be one of AUTHORIZATION_SCOPES (e.g. s2_11_candidate_mapping_only).
+    An article-only license scope NEVER satisfies the artifact code/data
+    requirement (LICENSE_SCOPE_NOT_ARTIFACT_COVERING).
+  * evidence paths are additionally checked after Path.resolve(): the
+    resolved file must still live inside the resolved evidence root, so a
+    symlink/junction escape is rejected (EVIDENCE_PATH_ESCAPE).
 
 Provenance model (v5, verifiable): every mappable source element carries
 its own element/key, field-level locator, source record ID, source text
@@ -39,7 +62,9 @@ Fail-closed error codes (BarrientosAdapterError subclasses):
   MAPPING_POLICY_NOT_APPROVED / SYNTHETIC_POLICY_IN_FORMAL_MODE /
   EVIDENCE_BINDING_MISSING / EVIDENCE_BINDING_SYNTHETIC /
   EVIDENCE_BINDING_INVALID / EVIDENCE_DOC_MISMATCH /
-  AUTHORIZATION_BINDING_MISMATCH / INVALID_STRUCTURE / UNKNOWN_MODALITY /
+  EVIDENCE_PATH_ESCAPE / LICENSE_SCOPE_NOT_ARTIFACT_COVERING /
+  AUTHORIZATION_BINDING_MISMATCH / AUTHORIZATION_EVENT_MISMATCH /
+  INVALID_STRUCTURE / UNKNOWN_MODALITY /
   DEFINITION_NOT_PRODUCIBLE / MAPPING_POLICY_INCOMPLETE /
   INVALID_MAPPED_MODALITY / MISSING_TEXT_PROVENANCE /
   MISSING_SPAN_ALIGNMENT / INVALID_SPAN / AMBIGUOUS_SPAN /
@@ -69,6 +94,20 @@ CANONICAL_SPAN_FIELDS = frozenset(
 
 # Strict mode enum (v5): anything else is INVALID_MODE.
 VALID_MODES = frozenset({"synthetic_test_only", "formal"})
+
+# Controlled scope enums (v6): scopes are never free-form strings.
+# A license scope must be one of LICENSE_SCOPES; only the artifact-covering
+# scopes may satisfy the artifact code/data requirement. An authorization
+# manifest scope must be one of AUTHORIZATION_SCOPES.
+LICENSE_SCOPES = frozenset({
+    "article_only", "artifact_code", "artifact_code_data",
+    "synthetic_test_only"})
+AUTHORIZATION_SCOPES = frozenset({
+    "s2_11_candidate_mapping_only", "synthetic_test_only"})
+ARTIFACT_COVERING_LICENSE_SCOPES = frozenset({
+    "artifact_code", "artifact_code_data"})
+
+AUTHORIZATION_EVENT_KIND = "s2_11_authorization_event"
 
 REQUIRED_RECORD_KEYS = frozenset({
     "source_record_id", "source_path", "modality", "text",
@@ -149,6 +188,18 @@ class EvidenceDocMismatchError(BarrientosAdapterError):
 
 class AuthorizationBindingMismatchError(BarrientosAdapterError):
     code = "AUTHORIZATION_BINDING_MISMATCH"
+
+
+class EvidencePathEscapeError(BarrientosAdapterError):
+    code = "EVIDENCE_PATH_ESCAPE"
+
+
+class LicenseScopeNotArtifactCoveringError(BarrientosAdapterError):
+    code = "LICENSE_SCOPE_NOT_ARTIFACT_COVERING"
+
+
+class AuthorizationEventMismatchError(BarrientosAdapterError):
+    code = "AUTHORIZATION_EVENT_MISMATCH"
 
 
 class InvalidStructureError(BarrientosAdapterError):
@@ -249,11 +300,16 @@ class EvidenceBinding:
     """Versioned, FILE-BACKED evidence binding required by FORMAL mode.
 
     `path` is a RELATIVE path under the evidence root (no absolute paths,
-    no ".." traversal). The file must exist, its raw bytes must hash to
-    `evidence_hash` (64 lowercase hex), and its JSON content must match
-    kind/ID/scope (authorization manifests additionally bind the mapping
-    policy exactly). `synthetic=True` marks a test fixture binding;
-    synthetic bindings are never accepted in formal mode.
+    no ".." traversal; after resolve() the file must still live inside the
+    evidence root — symlink/junction escapes are rejected). The file must
+    exist, its raw bytes must hash to `evidence_hash` (64 lowercase hex),
+    and its JSON content must match kind/ID/scope (authorization manifests
+    additionally bind the mapping policy exactly and an append-only
+    authorization event). `scope` is the CONTROLLED scope the document
+    must carry exactly: a LICENSE_SCOPES value for kind="license" and an
+    AUTHORIZATION_SCOPES value for kind="authorization". `synthetic=True`
+    marks a test fixture binding; synthetic bindings are never accepted in
+    formal mode.
     """
 
     kind: str
@@ -261,6 +317,26 @@ class EvidenceBinding:
     evidence_hash: str
     path: str | None = None
     synthetic: bool = False
+    scope: str | None = None
+
+
+@dataclass(frozen=True)
+class EvidenceContext:
+    """Structured, RE-VERIFIED evidence context returned by the formal
+    evidence verifier (v6). Built only from files re-read during the
+    conversion; callers cannot supply or forge it."""
+
+    license_doc: dict[str, Any]
+    license_relative_path: str
+    license_sha256: str
+    authorization_doc: dict[str, Any]
+    authorization_relative_path: str
+    authorization_sha256: str
+    authorization_event_doc: dict[str, Any]
+    authorization_event_relative_path: str
+    authorization_event_sha256: str
+    modality_mapping_canonical_hash: str
+    field_mapping_canonical_hash: str
 
 
 @dataclass(frozen=True)
@@ -333,9 +409,49 @@ def _check_activation(activation_state: ActivationState) -> None:
             detail="activation_state.authorized=False")
 
 
+def _canonical_mapping_hash(mapping: Mapping[str, str]) -> str:
+    """Deterministic canonical SHA-256 of a mapping (sorted keys)."""
+    payload = json.dumps(dict(sorted(mapping.items())), sort_keys=True,
+                         ensure_ascii=False).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _is_within(root_resolved: Path, candidate_resolved: Path) -> bool:
+    """True iff the RESOLVED candidate path is inside the RESOLVED root
+    (symlink/junction escape detection; v6)."""
+    try:
+        return candidate_resolved.is_relative_to(root_resolved)
+    except ValueError:  # pragma: no cover - different drive edge
+        return False
+
+
+def _resolve_evidence_path(root: Path, path: str) -> Path:
+    """Lexically safe evidence path + resolved containment check.
+
+    Rejects absolute paths, '..' traversal and backslash separators, then
+    requires that the path RESOLVES (following symlinks/junctions) to a
+    file still inside the resolved evidence root.
+    """
+    posix = PurePosixPath(path)
+    if posix.is_absolute() or ".." in posix.parts or "\\" in path:
+        raise EvidenceBindingInvalidError(
+            "evidence path must be relative and must not traverse '..'",
+            detail=f"path={path!r}")
+    file_path = root / path
+    resolved = file_path.resolve()
+    root_resolved = root.resolve()
+    if not _is_within(root_resolved, resolved):
+        raise EvidencePathEscapeError(
+            "evidence path resolves OUTSIDE the evidence root "
+            "(symlink/junction escape)",
+            detail=f"path={path!r} resolved={resolved}")
+    return file_path
+
+
 def _check_evidence_binding(binding: EvidenceBinding, expected_kind: str,
                             root: Path) -> dict[str, Any]:
-    """Verify one FILE-BACKED evidence binding (formal mode)."""
+    """Verify one FILE-BACKED evidence binding (formal mode) and return the
+    re-verified evidence document."""
     if binding.kind != expected_kind:
         raise EvidenceBindingInvalidError(
             f"evidence binding kind {binding.kind!r} does not match "
@@ -356,12 +472,7 @@ def _check_evidence_binding(binding: EvidenceBinding, expected_kind: str,
         raise EvidenceBindingInvalidError(
             "evidence binding requires a relative evidence path",
             detail=f"path={path!r}")
-    posix = PurePosixPath(path)
-    if posix.is_absolute() or ".." in posix.parts or "\\" in path:
-        raise EvidenceBindingInvalidError(
-            "evidence path must be relative and must not traverse '..'",
-            detail=f"path={path!r}")
-    file_path = root / path
+    file_path = _resolve_evidence_path(root, path)
     if not file_path.is_file():
         raise EvidenceBindingInvalidError(
             "evidence file does not exist under the evidence root",
@@ -391,17 +502,112 @@ def _check_evidence_binding(binding: EvidenceBinding, expected_kind: str,
             "evidence document internal ID does not match the binding",
             detail=f"doc_id={doc.get('evidence_id')!r} "
                    f"binding_id={binding.evidence_id!r}")
-    if not isinstance(doc.get("scope"), str) or not doc["scope"].strip():
-        raise EvidenceDocMismatchError(
-            "evidence document must declare a non-empty scope",
-            detail=f"scope={doc.get('scope')!r}")
+    # Controlled scope enum + EXACT scope match (v6).
+    scope = doc.get("scope")
+    if expected_kind == "license":
+        if not isinstance(scope, str) or scope not in LICENSE_SCOPES:
+            raise EvidenceDocMismatchError(
+                "license evidence scope must be one of the controlled "
+                "LICENSE_SCOPES",
+                detail=f"scope={scope!r} allowed={sorted(LICENSE_SCOPES)}")
+        if scope != binding.scope:
+            raise EvidenceDocMismatchError(
+                "license evidence scope does not EXACTLY match the binding",
+                detail=f"doc_scope={scope!r} binding_scope={binding.scope!r}")
+    else:
+        if not isinstance(scope, str) or scope not in AUTHORIZATION_SCOPES:
+            raise EvidenceDocMismatchError(
+                "authorization scope must be one of the controlled "
+                "AUTHORIZATION_SCOPES",
+                detail=f"scope={scope!r} "
+                       f"allowed={sorted(AUTHORIZATION_SCOPES)}")
+        if scope != binding.scope:
+            raise EvidenceDocMismatchError(
+                "authorization scope does not EXACTLY match the binding",
+                detail=f"doc_scope={scope!r} binding_scope={binding.scope!r}")
     return doc
+
+
+def _check_authorization_event(doc: dict[str, Any],
+                               binding: EvidenceBinding,
+                               root: Path) -> dict[str, Any]:
+    """Verify the append-only authorization event bound by the manifest
+    (v6) and return the re-verified event document."""
+    event_id = doc.get("authorization_event_id")
+    event_sha = doc.get("authorization_event_sha256")
+    event_path_raw = doc.get("authorization_event_path")
+    if not isinstance(event_id, str) or not EVIDENCE_ID_RE.fullmatch(event_id):
+        raise AuthorizationEventMismatchError(
+            "authorization manifest must bind a stable authorization "
+            "event ID",
+            detail=f"event_id={event_id!r}")
+    if not isinstance(event_sha, str) or not SHA256_RE.fullmatch(event_sha):
+        raise AuthorizationEventMismatchError(
+            "authorization manifest must bind the authorization event "
+            "raw-byte SHA-256",
+            detail=f"event_sha256={event_sha!r}")
+    if not isinstance(event_path_raw, str) or not event_path_raw.strip():
+        raise AuthorizationEventMismatchError(
+            "authorization manifest must bind an authorization event "
+            "relative path",
+            detail=f"event_path={event_path_raw!r}")
+    event_path = _resolve_evidence_path(root, event_path_raw)
+    if not event_path.is_file():
+        raise AuthorizationEventMismatchError(
+            "authorization event file does not exist under the evidence "
+            "root",
+            detail=f"path={event_path_raw!r}")
+    actual_sha = _sha256_file(event_path)
+    if actual_sha != event_sha:
+        raise AuthorizationEventMismatchError(
+            "authorization event raw bytes do not hash to the manifest "
+            "binding",
+            detail=f"declared={event_sha[:12]}... actual={actual_sha[:12]}...")
+    try:
+        event = json.loads(event_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise AuthorizationEventMismatchError(
+            "authorization event is not readable JSON",
+            detail=f"error={exc!r}")
+    if not isinstance(event, dict):
+        raise AuthorizationEventMismatchError(
+            "authorization event must be a JSON object",
+            detail=f"type={type(event).__name__}")
+    if event.get("kind") != AUTHORIZATION_EVENT_KIND:
+        raise AuthorizationEventMismatchError(
+            "authorization event internal kind does not match the "
+            "approved event kind",
+            detail=f"kind={event.get('kind')!r}")
+    if event.get("event_id") != event_id:
+        raise AuthorizationEventMismatchError(
+            "authorization event internal ID does not match the manifest "
+            "binding",
+            detail=f"event_id={event.get('event_id')!r} bound={event_id!r}")
+    if event.get("authorization_sentence") != doc.get(
+            "authorization_sentence"):
+        raise AuthorizationEventMismatchError(
+            "authorization event must carry the EXACT authorization "
+            "sentence of the manifest",
+            detail="event sentence differs from the manifest sentence")
+    if event.get("manifest_id") != doc.get("evidence_id"):
+        raise AuthorizationEventMismatchError(
+            "authorization event must reference the authorizing manifest "
+            "ID",
+            detail=f"event_manifest={event.get('manifest_id')!r} "
+                   f"manifest={doc.get('evidence_id')!r}")
+    if event.get("append_only") is not True:
+        raise AuthorizationEventMismatchError(
+            "authorization event must be append-only",
+            detail=f"append_only={event.get('append_only')!r}")
+    return event
 
 
 def _check_authorization_manifest(doc: dict[str, Any],
                                   binding: EvidenceBinding,
                                   mapping_policy: MappingPolicy,
-                                  license_binding: EvidenceBinding) -> None:
+                                  license_binding: EvidenceBinding,
+                                  license_doc: dict[str, Any],
+                                  root: Path) -> dict[str, Any]:
     policy_binding = doc.get("policy_binding")
     if not isinstance(policy_binding, dict):
         raise AuthorizationBindingMismatchError(
@@ -435,19 +641,40 @@ def _check_authorization_manifest(doc: dict[str, Any],
             detail=f"manifest="
                    f"{policy_binding.get('license_evidence_hash')!r} "
                    f"license={license_binding.evidence_hash[:12]}...")
-    if not isinstance(doc.get("scope"), str) or not doc["scope"].strip():
+    if policy_binding.get("license_evidence_id") != \
+            license_binding.evidence_id:
         raise AuthorizationBindingMismatchError(
-            "authorization manifest must declare an authorization scope",
-            detail=f"scope={doc.get('scope')!r}")
+            "authorization manifest does not bind the license evidence ID",
+            detail=f"manifest="
+                   f"{policy_binding.get('license_evidence_id')!r} "
+                   f"license={license_binding.evidence_id!r}")
+    # The manifest must EXACTLY repeat the license evidence scope (v6).
+    if policy_binding.get("license_evidence_scope") != \
+            license_doc.get("scope"):
+        raise AuthorizationBindingMismatchError(
+            "authorization manifest must EXACTLY repeat the license "
+            "evidence scope",
+            detail=f"manifest="
+                   f"{policy_binding.get('license_evidence_scope')!r} "
+                   f"license={license_doc.get('scope')!r}")
+    if not isinstance(doc.get("scope"), str) or \
+            doc["scope"] not in AUTHORIZATION_SCOPES:
+        raise AuthorizationBindingMismatchError(
+            "authorization manifest scope must be one of the controlled "
+            "AUTHORIZATION_SCOPES",
+            detail=f"scope={doc.get('scope')!r} "
+                   f"allowed={sorted(AUTHORIZATION_SCOPES)}")
     if not isinstance(doc.get("authorization_sentence"), str) or \
             not doc["authorization_sentence"].strip():
         raise AuthorizationBindingMismatchError(
             "authorization manifest must carry an authorization sentence",
             detail="authorization_sentence missing or empty")
+    event = _check_authorization_event(doc, binding, root)
+    return event
 
 
 def _check_policy(mapping_policy: MappingPolicy, mode: str,
-                  evidence_root: Path | None) -> None:
+                  evidence_root: Path | None) -> EvidenceContext | None:
     _check_mode(mode)
     if not mapping_policy.approved:
         raise MappingPolicyNotApprovedError(
@@ -478,11 +705,41 @@ def _check_policy(mapping_policy: MappingPolicy, mode: str,
                 "synthetic evidence bindings must never enter formal mode",
                 detail=f"license_synthetic={license_binding.synthetic}, "
                        f"auth_synthetic={auth_binding.synthetic}")
-        _check_evidence_binding(license_binding, "license", evidence_root)
+        license_doc = _check_evidence_binding(license_binding, "license",
+                                              evidence_root)
+        # An article-only license scope NEVER satisfies the artifact
+        # code/data requirement (v6).
+        license_scope = license_doc.get("scope")
+        if license_scope not in ARTIFACT_COVERING_LICENSE_SCOPES:
+            raise LicenseScopeNotArtifactCoveringError(
+                "formal mode requires an artifact-covering license scope; "
+                "an article-only scope does NOT cover the artifact "
+                "code/data",
+                detail=f"license_scope={license_scope!r} "
+                       f"allowed={sorted(ARTIFACT_COVERING_LICENSE_SCOPES)}")
         auth_doc = _check_evidence_binding(
             auth_binding, "authorization", evidence_root)
-        _check_authorization_manifest(auth_doc, auth_binding,
-                                      mapping_policy, license_binding)
+        event_doc = _check_authorization_manifest(
+            auth_doc, auth_binding, mapping_policy, license_binding,
+            license_doc, evidence_root)
+        return EvidenceContext(
+            license_doc=license_doc,
+            license_relative_path=str(license_binding.path),
+            license_sha256=license_binding.evidence_hash,
+            authorization_doc=auth_doc,
+            authorization_relative_path=str(auth_binding.path),
+            authorization_sha256=auth_binding.evidence_hash,
+            authorization_event_doc=event_doc,
+            authorization_event_relative_path=str(
+                auth_doc.get("authorization_event_path")),
+            authorization_event_sha256=str(
+                auth_doc.get("authorization_event_sha256")),
+            modality_mapping_canonical_hash=_canonical_mapping_hash(
+                mapping_policy.modality_identity),
+            field_mapping_canonical_hash=_canonical_mapping_hash(
+                mapping_policy.field_mapping),
+        )
+    return None
 
 
 def _check_structure(record: Mapping[str, Any]) -> None:
@@ -772,7 +1029,7 @@ def convert_to_candidate(
     _check_mode(mode)
     _check_license(license_state)
     _check_activation(activation_state)
-    _check_policy(mapping_policy, mode, evidence_root)
+    evidence_context = _check_policy(mapping_policy, mode, evidence_root)
     _check_structure(record)
     _check_record_identity(record)
     _check_field_policy(mapping_policy)
@@ -808,6 +1065,44 @@ def convert_to_candidate(
         review_aids.append({"external_annotation": annotation})
         warnings.append("external_annotation_review_aid_only")
 
+    formal_evidence_provenance: dict[str, Any] | None = None
+    if evidence_context is not None:
+        lic = evidence_context.license_doc
+        auth = evidence_context.authorization_doc
+        ev = evidence_context.authorization_event_doc
+        formal_evidence_provenance = {
+            "license_evidence": {
+                "evidence_id": lic["evidence_id"],
+                "relative_path": evidence_context.license_relative_path,
+                "sha256": evidence_context.license_sha256,
+                "license_scope": lic["scope"],
+            },
+            "authorization_manifest": {
+                "manifest_id": auth["evidence_id"],
+                "relative_path": evidence_context.authorization_relative_path,
+                "sha256": evidence_context.authorization_sha256,
+                "authorization_scope": auth["scope"],
+            },
+            "authorization_event": {
+                "event_id": ev["event_id"],
+                "relative_path":
+                    evidence_context.authorization_event_relative_path,
+                "sha256": evidence_context.authorization_event_sha256,
+            },
+            "policy_id": mapping_policy.policy_id,
+            "modality_mapping_canonical_hash":
+                evidence_context.modality_mapping_canonical_hash,
+            "field_mapping_canonical_hash":
+                evidence_context.field_mapping_canonical_hash,
+            "license_evidence_binding": (
+                f"authorization manifest policy_binding binds "
+                f"license_evidence_id={lic['evidence_id']} and "
+                f"license_evidence_hash={evidence_context.license_sha256} "
+                f"and license_evidence_scope={lic['scope']}"),
+            "candidate_only": True,
+            "gold_authorized": False,
+        }
+
     return {
         "status": OUTPUT_STATUS,
         "semantics": OUTPUT_SEMANTICS,
@@ -816,6 +1111,7 @@ def convert_to_candidate(
         "mapped_fields": ordered_fields,
         "field_provenance": full_provenance,
         "mapping_policy_id": mapping_policy.policy_id,
+        "formal_evidence_provenance": formal_evidence_provenance,
         "resolved_cross_references": resolved_refs,
         "review_aids": review_aids,
         "warnings": sorted(set(warnings)),

@@ -1,28 +1,23 @@
-"""Focused tests for the S2.11 / G0.5 pre-authorization decision capsule v5
-(now a SUPERSEDED historical capsule under v6 lifecycle semantics; v6 is
-the active capsule).
-
-v5's core assets (schema/builder/verifier/four outputs) stay byte-exact,
-anchored to the FIXED v5 ORIGIN COMMIT 78837391167639da1bdef74faf67b817fa604813
-(hardcoded SHA-256 map, independent of HEAD). Once the assets its
-manifest binds legitimately evolve (v6 changes the adapter, the G0.5
-chain and the status documents), the historical v5 builder MUST fail
-closed with a no-overwrite rejection and the historical v5 verifier MUST
-reject with a declared binding/state-drift diagnosis.
+"""Focused tests for the S2.11 / G0.5 pre-authorization decision capsule v6
+(ACTIVE capsule; v3/v4/v5 are superseded historical capsules).
 
 Covers:
-  * historical core assets match the FIXED ORIGIN map (disk bytes AND
-    origin-commit git blobs); the historical builder fails closed
-    (no-overwrite) and never touches Gold/predictions/results/
-    contract/methods/references
-  * the historical verifier rejection belongs to the declared
-    binding/state-drift patterns and never modifies outputs
-  * v4 red-test facts recorded exactly (3 failed / test_returncode=1 /
-    integrity_pass=false) and v5 restored the active suite integrity
-    (its full audit receipt was 2118 passed / 24 skipped / 19 warnings);
-    v5 is NOT a red checkpoint and its events stay preserved
-  * supersedes declares v3 decision entries + full v3/v4 capsules; v3/v4
-    CORE assets byte-exact against the fixed origin map
+  * ACTIVE v6 builder: deterministic byte-identical rebuild from current
+    disk, no-overwrite refusal, no sensitive touches, references read-only
+  * v6 verifier passes on the canonical outputs (seven independent
+    verifiers executed, audit re-run)
+  * v5 audit facts recorded exactly (green receipt 2118 passed / 24
+    skipped / 19 warnings in 941.91s; NOT a red checkpoint; hand-built
+    validation-result protection overturned) and v6 counterexamples
+  * FIXED ORIGIN anchors: the v6 report binds the v3/v4/v5 origin commits
+    and the hardcoded SHA-256 maps; disk AND origin-commit blobs match;
+    the v5 HEAD-relative blind spot is demonstrated and closed (same
+    wrong bytes in HEAD+disk still fail the fixed check)
+  * G0.5 SEALED chain: classify_frozen has NO validation-result parameter;
+    the exact v5 hand-built 64-hex dict is rejected; forged manifests,
+    replaced sentences/scopes/events and results-then-authorization are
+    rejected; prior results are derived from disk evidence
+  * supersedes declares v3 decision entries + full v3/v4/v5 capsules
   * G0.5 raw-byte authorization hash domain (61938c99…) is the ONLY
     authorization hash; draft_not_frozen; not promotion-ready
   * gate ordering G1/G2/G5/G6 false+null, G3/G4 dry-run with raw-byte
@@ -56,16 +51,16 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-BUILDER_SCRIPT = ROOT / "scripts" / "build_s2_11_g0_5_pre_authorization_v5.py"
-VERIFIER_SCRIPT = ROOT / "scripts" / "verify_s2_11_g0_5_pre_authorization_v5.py"
+BUILDER_SCRIPT = ROOT / "scripts" / "build_s2_11_g0_5_pre_authorization_v6.py"
+VERIFIER_SCRIPT = ROOT / "scripts" / "verify_s2_11_g0_5_pre_authorization_v6.py"
 OUT_JSON = ROOT / "outputs" / "reports" / \
-    "s2_11_g0_5_pre_authorization_v5.json"
+    "s2_11_g0_5_pre_authorization_v6.json"
 OUT_MD = ROOT / "outputs" / "reports" / \
-    "s2_11_g0_5_pre_authorization_v5.md"
+    "s2_11_g0_5_pre_authorization_v6.md"
 OUT_MANIFEST = ROOT / "outputs" / "reports" / \
-    "s2_11_g0_5_pre_authorization_v5.manifest.json"
+    "s2_11_g0_5_pre_authorization_v6.manifest.json"
 OUT_EXPORT = ROOT / "outputs" / "reports" / \
-    "s2_11_g0_5_pre_authorization_v5_export_index.json"
+    "s2_11_g0_5_pre_authorization_v6_export_index.json"
 
 REF_DIR = ROOT.parent / "references" / "barrientos_2026"
 PDF_PATH = ROOT.parent / "references" / "papers" / \
@@ -96,11 +91,21 @@ V4_CAPSULE = HistoricalCapsule(
              "outputs/reports/s2_11_g0_5_pre_authorization_v4.manifest.json",
              "outputs/reports/s2_11_g0_5_pre_authorization_v4_export_index.json"),
 )
+V5_CAPSULE = HistoricalCapsule(
+    name="s2_11_g0_5_pre_authorization_v5",
+    schema_rel="configs/schemas/s2_11_g0_5_pre_authorization_v5.schema.json",
+    builder_rel="scripts/build_s2_11_g0_5_pre_authorization_v5.py",
+    verifier_rel="scripts/verify_s2_11_g0_5_pre_authorization_v5.py",
+    outputs=("outputs/reports/s2_11_g0_5_pre_authorization_v5.json",
+             "outputs/reports/s2_11_g0_5_pre_authorization_v5.md",
+             "outputs/reports/s2_11_g0_5_pre_authorization_v5.manifest.json",
+             "outputs/reports/s2_11_g0_5_pre_authorization_v5_export_index.json"),
+)
 
 
 def _load_builder() -> Any:
     spec = importlib.util.spec_from_file_location(
-        "s2_11_g0_5_pre_authorization_builder_v5", BUILDER_SCRIPT)
+        "s2_11_g0_5_pre_authorization_builder_v6", BUILDER_SCRIPT)
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
     assert spec.loader is not None
@@ -110,7 +115,7 @@ def _load_builder() -> Any:
 
 def _load_verifier() -> Any:
     spec = importlib.util.spec_from_file_location(
-        "s2_11_g0_5_pre_authorization_verifier_v5", VERIFIER_SCRIPT)
+        "s2_11_g0_5_pre_authorization_verifier_v6", VERIFIER_SCRIPT)
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
     assert spec.loader is not None
@@ -171,28 +176,9 @@ def _failed_details(result: dict[str, Any]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Historical capsule lifecycle semantics (v6): v5 is a SUPERSEDED capsule.
-# Its core assets stay byte-exact against the FIXED v5 ORIGIN COMMIT
-# (7883739…; hardcoded SHA-256 map, independent of HEAD). Once the assets
-# its manifest binds legitimately evolve (v6), the historical builder
-# MUST fail closed with a no-overwrite rejection and the historical
-# verifier MUST reject with a binding/state-drift diagnosis.
+# ACTIVE v6 builder determinism
 # ---------------------------------------------------------------------------
-V5_CAPSULE = HistoricalCapsule(
-    name="s2_11_g0_5_pre_authorization_v5",
-    schema_rel="configs/schemas/s2_11_g0_5_pre_authorization_v5.schema.json",
-    builder_rel="scripts/build_s2_11_g0_5_pre_authorization_v5.py",
-    verifier_rel="scripts/verify_s2_11_g0_5_pre_authorization_v5.py",
-    outputs=("outputs/reports/s2_11_g0_5_pre_authorization_v5.json",
-             "outputs/reports/s2_11_g0_5_pre_authorization_v5.md",
-             "outputs/reports/s2_11_g0_5_pre_authorization_v5.manifest.json",
-             "outputs/reports/s2_11_g0_5_pre_authorization_v5_export_index.json"),
-)
-
-
-def test_historical_core_assets_match_fixed_origin_and_builder_fails_closed() -> None:
-    ok, detail = historical_core_assets_match_fixed_origin(ROOT, "v5")
-    assert ok, f"v5 core assets drifted from the fixed origin anchor: {detail}"
+def test_v6_builder_byte_identical_rebuild_and_no_sensitive_touches() -> None:
     sensitive = [
         ROOT / "data" / "gold" / "stage1" / "process_records" /
         "stage1_process_gold_v1.json",
@@ -206,31 +192,37 @@ def test_historical_core_assets_match_fixed_origin_and_builder_fails_closed() ->
         ROOT / "configs" / "methods.json",
     ]
     before = {p: _sha(p.read_bytes()) for p in sensitive}
-    drift_ok, detail2 = builder_rejects_with_no_overwrite_drift(
-        ROOT, V5_CAPSULE)
-    assert drift_ok, (
-        "v5 builder must fail closed with a no-overwrite rejection when "
-        f"its bound assets evolved: {detail2}")
+    outputs = [OUT_JSON, OUT_MD, OUT_MANIFEST, OUT_EXPORT]
+    first = {p: p.read_bytes() if p.exists() else None for p in outputs}
+    proc = subprocess.run(
+        [sys.executable, str(BUILDER_SCRIPT)], cwd=ROOT,
+        capture_output=True, text=True, check=False)
+    assert proc.returncode == 0, (
+        f"v6 builder failed: {proc.returncode}\n{proc.stdout}\n{proc.stderr}")
+    second = {p: p.read_bytes() for p in outputs}
+    for p in outputs:
+        assert second[p] == first[p], (
+            f"v6 builder rebuild is not byte-identical: {p}")
     after = {p: _sha(p.read_bytes()) for p in sensitive}
     assert after == before, (
-        "historical builder touched Gold / predictions / results / "
-        "contract / methods")
+        "v6 builder touched Gold / predictions / results / contract / methods")
 
 
-def test_historical_builder_never_modifies_references() -> None:
+def test_v6_builder_never_modifies_references() -> None:
     ref_files = sorted(p for p in REF_DIR.rglob("*") if p.is_file())
     ref_files.append(PDF_PATH)
     before = {str(p.relative_to(ROOT.parent)): _sha(p.read_bytes())
               for p in ref_files}
-    drift_ok, detail = builder_rejects_with_no_overwrite_drift(ROOT,
-                                                               V5_CAPSULE)
-    assert drift_ok, detail
+    proc = subprocess.run(
+        [sys.executable, str(BUILDER_SCRIPT)], cwd=ROOT,
+        capture_output=True, text=True, check=False)
+    assert proc.returncode == 0, proc.stderr
     after = {str(p.relative_to(ROOT.parent)): _sha(p.read_bytes())
              for p in ref_files}
-    assert after == before, "historical builder modified references/"
+    assert after == before, "v6 builder modified references/"
 
 
-def test_v5_builder_no_overwrite_refusal(tmp_path: Path) -> None:
+def test_v6_builder_no_overwrite_refusal(tmp_path: Path) -> None:
     builder = _load_builder()
     target = tmp_path / "out.json"
     target.write_bytes(b"first")
@@ -241,51 +233,96 @@ def test_v5_builder_no_overwrite_refusal(tmp_path: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Historical verifier rejection semantics (v6)
+# ACTIVE v6 verifier
 # ---------------------------------------------------------------------------
-def test_historical_verifier_rejection_is_binding_drift() -> None:
-    is_drift, detail = verifier_rejection_is_binding_drift(ROOT, V5_CAPSULE)
-    assert is_drift, (
-        "v5 verifier must reject with failures that all belong to the "
-        f"declared binding/state-drift patterns: {detail}")
-
-
-def test_historical_verifier_never_touches_outputs() -> None:
-    before = {}
-    for rel in V5_CAPSULE.outputs:
-        p = ROOT / rel
-        before[rel] = p.read_bytes() if p.is_file() else None
-    is_drift, detail = verifier_rejection_is_binding_drift(ROOT, V5_CAPSULE)
-    assert is_drift, detail
-    for rel, data in before.items():
-        p = ROOT / rel
-        assert (p.read_bytes() if p.is_file() else None) == data
+def test_v6_verifier_passes_on_canonical_outputs() -> None:
+    verifier = _load_verifier()
+    result = verifier.verify(run_external=True)
+    assert result["verified"] is True, (
+        "canonical v6 capsule must verify: " + _failed_details(result))
 
 
 # ---------------------------------------------------------------------------
-# v4 red-test facts
+# v5 audit facts
 # ---------------------------------------------------------------------------
-def test_v4_red_test_facts_recorded() -> None:
+def test_v5_audit_facts_recorded() -> None:
     report = _load(OUT_JSON)
-    facts = report["v4_red_test_facts"]
-    assert facts["v4_audit_not_verified"] is True
-    assert facts["v4_change_event_failed_tests"] == 3
-    assert facts["v4_change_event_test_returncode"] == 1
-    assert facts["v4_change_event_integrity_pass"] is False
-    assert facts["v5_restores_active_suite_integrity"] is True
-    assert len(facts["minimal_counterexamples"]) >= 4
-    joined = "\n".join(facts["minimal_counterexamples"]).lower()
-    for needle in ("invalid_mode", "evidence_binding", "element_path",
-                   "51a6e4fe"):
+    facts = report["v5_audit_facts"]
+    assert facts["v5_audit_green"] is True
+    assert facts["v5_final_receipt"] == \
+        "2118 passed, 24 skipped, 19 warnings in 941.91s"
+    assert facts["v5_handbuilt_validation_claim_overturned"] is True
+    assert facts["v5_not_a_red_checkpoint"] is True
+    assert facts["v5_historical_events_preserved"] is True
+    assert len(facts["v6_counterexamples"]) >= 6
+    joined = "\n".join(facts["v6_counterexamples"]).lower()
+    for needle in ("64 lowercase hex", "no validation-result parameter",
+                   "derive_prior_results", "61938c99", "51a6e4fe"):
         assert needle in joined, f"missing counterexample needle: {needle}"
 
 
 # ---------------------------------------------------------------------------
-# Historical lifecycle semantics (helper-based, fixed origin anchors)
+# FIXED ORIGIN anchors (v3/v4/v5, HEAD-independent)
 # ---------------------------------------------------------------------------
-@pytest.mark.parametrize("version", ["v3", "v4"])
+@pytest.mark.parametrize("version", ["v3", "v4", "v5"])
+def test_fixed_origin_anchors_match_disk_and_git(version: str) -> None:
+    ok, detail = historical_core_assets_match_fixed_origin(ROOT, version)
+    assert ok, f"{version} core assets drifted from the fixed origin " \
+               f"anchor: {detail}"
+
+
+def test_report_binds_fixed_origin_anchors() -> None:
+    from bpc_hybrid.capsule_lifecycle import (
+        FIXED_ORIGIN_COMMITS, fixed_core_asset_hashes)
+    report = _load(OUT_JSON)
+    anchors = report["fixed_origin_anchors"]
+    assert set(anchors) == {"v3", "v4", "v5"}
+    for version, info in anchors.items():
+        assert info["origin_commit"] == FIXED_ORIGIN_COMMITS[version]
+        assets = info["assets"]
+        assert set(assets) == set(fixed_core_asset_hashes(version))
+        for key, want in fixed_core_asset_hashes(version).items():
+            assert assets[key]["sha256"] == want
+            p = ROOT / _rel_for(version, key)
+            assert p.is_file()
+            assert _sha(p.read_bytes()) == want
+
+
+def _rel_for(version: str, key: str) -> str:
+    from bpc_hybrid.capsule_lifecycle import CORE_ASSET_REL_TEMPLATES
+    for k, t in CORE_ASSET_REL_TEMPLATES:
+        if k == key:
+            return t.format(v=version)
+    raise AssertionError(f"unknown asset key {key}")
+
+
+def test_same_wrong_bytes_in_head_and_disk_still_fails_fixed_origin(
+        monkeypatch: Any, tmp_path: Path) -> None:
+    """v5 regression: `historical_core_assets_match_head` compares disk to
+    HEAD, so a commit that rewrites a historical asset in HEAD *and* on
+    disk with the same wrong bytes passes it. The v6 fixed-origin check
+    must still fail because the hardcoded SHA-256 map is HEAD-independent."""
+    from bpc_hybrid import capsule_lifecycle as cl
+    root = tmp_path / "formal_experiment"
+    wrong = b"WRONG-BYTES-SAME-IN-HEAD-AND-DISK"
+    for rel in cl.core_asset_rels("v3"):
+        p = root / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_bytes(wrong)
+    # Simulate HEAD pointing at the SAME wrong bytes (the v5 blind spot).
+    monkeypatch.setattr(cl, "git_head_blob", lambda repo, rel: wrong)
+    old_ok, _ = cl.historical_core_assets_match_head(root, V3_CAPSULE)
+    assert old_ok, (
+        "the old HEAD-relative check must pass here by construction "
+        "(this is the v5 blind spot we are closing)")
+    ok, detail = cl.historical_core_assets_match_fixed_origin(root, "v3")
+    assert not ok, "the fixed origin map must catch the same-wrong-bytes case"
+    assert "disk_mismatch" in detail
+
+
+@pytest.mark.parametrize("version", ["v3", "v4", "v5"])
 def test_historical_capsule_lifecycle_semantics(version: str) -> None:
-    capsule = V3_CAPSULE if version == "v3" else V4_CAPSULE
+    capsule = {"v3": V3_CAPSULE, "v4": V4_CAPSULE, "v5": V5_CAPSULE}[version]
     ok, detail = historical_core_assets_match_fixed_origin(ROOT, version)
     assert ok, f"{capsule.name} core assets drifted from the fixed origin " \
                f"anchor: {detail}"
@@ -299,7 +336,7 @@ def test_historical_capsule_lifecycle_semantics(version: str) -> None:
         f"{vdetail}")
 
 
-def test_supersedes_declares_v3_and_v4_capsules() -> None:
+def test_supersedes_declares_v3_v4_and_v5_capsules() -> None:
     report = _load(OUT_JSON)
     declared = {item["path"] for item in report["supersedes"]}
     required = [
@@ -319,6 +356,14 @@ def test_supersedes_declares_v3_and_v4_capsules() -> None:
         "outputs/reports/s2_11_g0_5_pre_authorization_v4.md",
         "outputs/reports/s2_11_g0_5_pre_authorization_v4.manifest.json",
         "outputs/reports/s2_11_g0_5_pre_authorization_v4_export_index.json",
+        "configs/schemas/s2_11_g0_5_pre_authorization_v5.schema.json",
+        "scripts/build_s2_11_g0_5_pre_authorization_v5.py",
+        "scripts/verify_s2_11_g0_5_pre_authorization_v5.py",
+        "tests/test_s2_11_g0_5_pre_authorization_v5.py",
+        "outputs/reports/s2_11_g0_5_pre_authorization_v5.json",
+        "outputs/reports/s2_11_g0_5_pre_authorization_v5.md",
+        "outputs/reports/s2_11_g0_5_pre_authorization_v5.manifest.json",
+        "outputs/reports/s2_11_g0_5_pre_authorization_v5_export_index.json",
         "outputs/reports/s2_11_license_adapter_readiness_v2.json",
         "outputs/reports/s2_11_data_qualification_mapping_dry_run.json",
         "outputs/reports/g0_7_barrientos_adapter_registry_dry_run.json",
@@ -326,11 +371,130 @@ def test_supersedes_declares_v3_and_v4_capsules() -> None:
     ]
     for path in required:
         assert path in declared, f"missing supersedes declaration: {path}"
+    assert len(declared) == 28
 
 
 # ---------------------------------------------------------------------------
-# G0.5 raw-byte hash domain
+# G0.5 SEALED frozen-application chain (regression counterexamples)
 # ---------------------------------------------------------------------------
+def _real_draft_config_path() -> Path:
+    import bpc_hybrid.g05_complexity_candidate as g05
+    root = Path(g05.__file__).resolve().parents[2]
+    return root / "configs" / "g05_complexity_candidate_draft_v1.json"
+
+
+def _write_json(path: Path, doc: dict[str, Any]) -> str:
+    data = json.dumps(doc, ensure_ascii=False, sort_keys=True,
+                      indent=2).encode("utf-8")
+    path.write_bytes(data)
+    return _sha(data)
+
+
+def _make_frozen_fixture(
+        tmp_path: Path) -> tuple[Path, Path, Path, Path]:
+    from bpc_hybrid.g05_complexity_candidate import (
+        APPROVED_AUTHORIZATION_SCOPE,
+        AUTHORIZATION_EVENT_KIND,
+        AUTHORIZATION_MANIFEST_SCHEMA_VERSION,
+        approved_authorization_sentence,
+        derive_prior_results,
+    )
+    root = tmp_path
+    draft_path = root / "draft.json"
+    draft_path.write_bytes(_real_draft_config_path().read_bytes())
+    frozen_path = root / "frozen.json"
+    doc = dict(_load(_real_draft_config_path()))
+    doc["status"] = "frozen"
+    doc["frozen_before_new_results"] = True
+    doc["retrospective_use_forbidden"] = True
+    frozen_path.write_bytes(json.dumps(doc, ensure_ascii=False, indent=2)
+                            .encode("utf-8"))
+    draft_sha = _sha(draft_path.read_bytes())
+    frozen_sha = _sha(frozen_path.read_bytes())
+    sentence = approved_authorization_sentence(draft_sha)
+    event_path = root / "authorization_event.json"
+    event_sha = _write_json(event_path, {
+        "kind": AUTHORIZATION_EVENT_KIND,
+        "event_id": "syn-g05-event-1",
+        "authorization_sentence": sentence,
+        "scope": APPROVED_AUTHORIZATION_SCOPE,
+        "manifest_id": "syn-g05-auth-1",
+        "append_only": True,
+    })
+    manifest_path = root / "manifest.json"
+    _write_json(manifest_path, {
+        "schema_version": AUTHORIZATION_MANIFEST_SCHEMA_VERSION,
+        "manifest_id": "syn-g05-auth-1",
+        "authorization_applied": True,
+        "draft_config_path": "draft.json",
+        "draft_config_sha256": draft_sha,
+        "approved_frozen_config_path": "frozen.json",
+        "approved_frozen_config_sha256": frozen_sha,
+        "scope": APPROVED_AUTHORIZATION_SCOPE,
+        "authorization_sentence": sentence,
+        "authorization_sentence_sha256": _sha(sentence.encode("utf-8")),
+        "retrospective_use_forbidden": True,
+        "frozen_before_new_results": True,
+        "s2_10_retrospective_use_forbidden": True,
+        "prior_results_scan_sha256":
+            derive_prior_results(root)["scan_sha256"],
+        "authorization_event_id": "syn-g05-event-1",
+        "authorization_event_path": "authorization_event.json",
+        "authorization_event_sha256": event_sha,
+        "application_checkpoint": {
+            "pending_commit_not_applied": True,
+            "commit_sha256": None,
+        },
+    })
+    return root, draft_path, frozen_path, manifest_path
+
+
+def test_classify_frozen_rejects_handbuilt_64_hex_validation_result(
+        tmp_path: Path) -> None:
+    """THE v5 vulnerability regression: the exact hand-built dict v5
+    accepted (64-hex token + correct frozen hash + valid=true) must be
+    rejected. classify_frozen has NO validation-result parameter at all."""
+    from bpc_hybrid.g05_complexity_candidate import (
+        classify_frozen, G05ClassificationError)
+    root, draft, frozen, manifest = _make_frozen_fixture(tmp_path)
+    fake = {
+        "frozen_application_valid": True,
+        "validation_token": "00" * 32,
+        "approved_frozen_config_sha256": _sha(frozen.read_bytes()),
+    }
+    with pytest.raises(TypeError):
+        classify_frozen({}, frozen, fake)  # type: ignore[call-arg]
+    with pytest.raises(TypeError):
+        classify_frozen(  # type: ignore[call-arg]
+            {}, frozen_config_path=frozen, validation_result=fake)
+    # A forged MANIFEST file (even with a well-formed token field) cannot
+    # unlock the classifier either: the full approved binding is required.
+    forged = tmp_path / "forged_manifest.json"
+    _write_json(forged, fake)
+    with pytest.raises(G05ClassificationError) as exc:
+        classify_frozen({}, draft_config_path=draft,
+                        frozen_config_path=frozen,
+                        authorization_manifest_path=forged,
+                        project_root=root)
+    assert "manifest" in exc.value.message.lower()
+
+
+def test_classify_frozen_rejects_results_then_authorization(
+        tmp_path: Path) -> None:
+    from bpc_hybrid.g05_complexity_candidate import (
+        classify_frozen, G05ClassificationError)
+    root, draft, frozen, manifest = _make_frozen_fixture(tmp_path)
+    res = root / "outputs" / "evidence"
+    res.mkdir(parents=True)
+    (res / "g05_new_corpus_result.json").write_bytes(b"{}")
+    with pytest.raises(G05ClassificationError) as exc:
+        classify_frozen({}, draft_config_path=draft,
+                        frozen_config_path=frozen,
+                        authorization_manifest_path=manifest,
+                        project_root=root)
+    assert "prior" in exc.value.message.lower()
+
+
 def test_g05_raw_byte_hash_domain() -> None:
     report = _load(OUT_JSON)
     g5 = report["g0_5_candidate"]
@@ -345,7 +509,6 @@ def test_g05_raw_byte_hash_domain() -> None:
     assert pr["promotion_ready_for_application"] is False
     assert any("user authorization manifest" in m for m in pr["missing"])
     assert pr["preregistration_claim_allowed"] is False
-    # G4 dry-run sentence binds the RAW BYTE hash.
     g4 = next(g for g in report["user_gates"] if g["gate_id"] == "G4")
     assert DRAFT_RAW_SHA in g4["authorization_sentence"]
     assert "RAW BYTE sha256" in g4["authorization_sentence"]
@@ -500,7 +663,7 @@ def test_export_fails_even_when_hashes_recomputed(tmp_path: Path) -> None:
     def mutate(e: dict[str, Any]) -> None:
         entry = e["artifacts"]["report_md"]
         other = OUT_JSON.read_bytes()
-        entry["path"] = "outputs/reports/s2_11_g0_5_pre_authorization_v5.json"
+        entry["path"] = "outputs/reports/s2_11_g0_5_pre_authorization_v6.json"
         entry["sha256"] = _sha(other)
         entry["byte_size"] = len(other)
     exp_p = _tamper_export(tmp_path, mutate)
@@ -530,12 +693,30 @@ def _tamper_report(tmp_path: Path,
                            run_external=False)
 
 
-def test_report_fails_when_v4_facts_hidden(tmp_path: Path) -> None:
+def test_report_fails_when_v5_facts_hidden(tmp_path: Path) -> None:
     verifier = _load_verifier()
     def mutate(r: dict[str, Any]) -> None:
-        r["v4_red_test_facts"]["v4_audit_not_verified"] = False
+        r["v5_audit_facts"]["v5_audit_green"] = False
     result = _tamper_report(tmp_path, mutate, verifier)
     assert result["verified"] is False
+
+
+def test_report_fails_when_v5_receipt_replaced(tmp_path: Path) -> None:
+    verifier = _load_verifier()
+    def mutate(r: dict[str, Any]) -> None:
+        r["v5_audit_facts"]["v5_final_receipt"] = "2059 passed"
+    result = _tamper_report(tmp_path, mutate, verifier)
+    assert result["verified"] is False
+
+
+def test_report_fails_when_origin_anchor_tampered(tmp_path: Path) -> None:
+    verifier = _load_verifier()
+    def mutate(r: dict[str, Any]) -> None:
+        r["fixed_origin_anchors"]["v3"]["assets"]["schema"]["sha256"] = \
+            "11" * 32
+    result = _tamper_report(tmp_path, mutate, verifier)
+    assert result["verified"] is False
+    assert any("FIXED ORIGIN" in n for n in _failed_check_names(result))
 
 
 def test_report_fails_when_g4_hash_not_raw_bytes(tmp_path: Path) -> None:

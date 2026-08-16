@@ -1,14 +1,18 @@
 """Focused tests for the S2.11 / G0.5 pre-authorization decision capsule v3.
 
-v3 is a SUPERSEDED HISTORICAL capsule (v5 lifecycle semantics): its core
-assets (schema/builder/verifier/four outputs) stay byte-exact; once the
-assets its manifest binds legitimately evolve, the historical builder MUST
-fail closed with a no-overwrite rejection and the historical verifier MUST
-reject with a declared binding/state-drift diagnosis.
+v3 is a SUPERSEDED HISTORICAL capsule (v6 lifecycle semantics): its core
+assets (schema/builder/verifier/four outputs) stay byte-exact, anchored
+to the FIXED v3 ORIGIN COMMIT 31ac757d821b7e451650edbd70b1899ed0104616
+(hardcoded SHA-256 map in `src/bpc_hybrid/capsule_lifecycle.py`); once
+the assets its manifest binds legitimately evolve, the historical builder
+MUST fail closed with a no-overwrite rejection and the historical
+verifier MUST reject with a declared binding/state-drift diagnosis.
 
 Covers:
-  * historical core assets match HEAD; the historical builder fails
-    closed (no-overwrite) and never touches Gold/predictions/results/
+  * historical core assets match the FIXED ORIGIN map (disk bytes AND
+    origin-commit git blobs; a simultaneous HEAD+disk rewrite to the same
+    wrong bytes still fails); the historical builder fails closed
+    (no-overwrite) and never touches Gold/predictions/results/
     contract/methods/references
   * the historical verifier rejection belongs to the declared
     binding/state-drift patterns (not arbitrary exceptions) and never
@@ -42,7 +46,7 @@ import pytest
 from bpc_hybrid.capsule_lifecycle import (
     HistoricalCapsule,
     builder_rejects_with_no_overwrite_drift,
-    historical_core_assets_match_head,
+    historical_core_assets_match_fixed_origin,
     verifier_rejection_is_binding_drift,
 )
 
@@ -145,12 +149,13 @@ def _failed_details(result: dict[str, Any]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Historical capsule lifecycle semantics (v5): v3 is a SUPERSEDED capsule.
-# Its core assets stay byte-exact; once the assets its manifest binds
-# legitimately evolve, the historical builder MUST fail closed with a
-# no-overwrite rejection and the historical verifier MUST reject with a
-# binding/state-drift diagnosis. This is the correct historical behavior,
-# NOT a failure of v3.
+# Historical capsule lifecycle semantics (v6): v3 is a SUPERSEDED capsule.
+# Its core assets stay byte-exact against the FIXED v3 ORIGIN COMMIT
+# (31ac757d…; hardcoded SHA-256 map, independent of HEAD); once the
+# assets its manifest binds legitimately evolve, the historical builder
+# MUST fail closed with a no-overwrite rejection and the historical
+# verifier MUST reject with a binding/state-drift diagnosis. This is the
+# correct historical behavior, NOT a failure of v3.
 # ---------------------------------------------------------------------------
 V3_CAPSULE = HistoricalCapsule(
     name="s2_11_g0_5_pre_authorization_v3",
@@ -164,9 +169,9 @@ V3_CAPSULE = HistoricalCapsule(
 )
 
 
-def test_historical_core_assets_match_head_and_builder_fails_closed() -> None:
-    ok, changed = historical_core_assets_match_head(ROOT, V3_CAPSULE)
-    assert ok, f"v3 core assets drifted from HEAD: {changed}"
+def test_historical_core_assets_match_fixed_origin_and_builder_fails_closed() -> None:
+    ok, detail = historical_core_assets_match_fixed_origin(ROOT, "v3")
+    assert ok, f"v3 core assets drifted from the fixed origin anchor: {detail}"
     sensitive = [
         ROOT / "data" / "gold" / "stage1" / "process_records" /
         "stage1_process_gold_v1.json",

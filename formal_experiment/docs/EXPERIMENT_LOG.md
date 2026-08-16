@@ -3570,3 +3570,16 @@
 - 仍存在 blocker：无
 - 备注：full audit exit 0 (2118 passed, 24 skipped, 19 warnings), test_returncode=0; v4 red-test facts recorded in v5 (3 failed/2057 passed/test_returncode=1/integrity_pass=false) and fixed by lifecycle semantics; v3/v4 core outputs byte-exact, pytest files corrected to lifecycle semantics; article license CC BY 4.0 article-only confirmed, artifact code/data unresolved (unknown_pending_confirmation); adapter synthetic/shadow only (hardened v5, strict mode INVALID_MODE, file-backed evidence binding, exact element/locator provenance); G0.5 draft_not_frozen, raw-byte hash 61938c99 is the only authorization hash (semantic 51a6e4fe rejected); G3/G4 dry-run only; G1/G2/G5/G6 false/null; no Gold, no API, no Oracle, gates unchanged
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-16T20:28:29.703544+00:00 - S2.11/G0.5 v6 纠正：封闭可伪造 frozen-validation（classify_frozen 移除 caller-supplied validation result、每次调用从磁盘重验 manifest/授权事件/prior-results 证据）、固定历史 capsule v3/v4/v5 origin commit 锚点（21 项硬编码 SHA-256 map，与 HEAD 无关）、adapter formal_evidence_provenance（受控 scope 枚举、resolve containment）、v5 事实如实记录（审计绿灯 2118/24/19 in 941.91s、防护声明被推翻、非红测）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2175 passed, 24 skipped, 19 warnings in 1061.25s (0:17:41)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`78837391167639da1bdef74faf67b817fa604813`；相关未提交路径：19 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：v6 capsule supersede v3/v4/v5 当前状态判断（28 项 supersedes 全部 hash 绑定）；全量审计 2175 passed/24 skipped/19 warnings（1061.25s）exit 0；G0.5 仍 draft_not_frozen（原始字节 61938c99…，51a6e4fe… 永不使用）、G3/G4 仅 dry-run、G1/G2/G5/G6 ready=false+null、S3.7 全 false/null、零 gate 翻转、零 LLM/API、Gold/contract/methods/predictions/results/references 未改、未生成 Oracle 授权句
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

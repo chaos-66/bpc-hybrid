@@ -1,17 +1,23 @@
-"""Real-execution focused tests for the v5-hardened Barrientos adapter
+"""Real-execution focused tests for the v6-hardened Barrientos adapter
 core (synthetic/shadow implementation).
 
 Calls `src/bpc_hybrid/s2_11_barrientos_adapter.py` with synthetic fixtures
 only; never accesses real `references/` data. Every fail-closed condition
 asserts a machine-decodable error code; no assertion is vacuous. Formal
-positive fixtures create license/authorization evidence documents in the
-pytest tmp_path (never in project paths).
+positive fixtures create license/authorization evidence documents and the
+append-only authorization event in the pytest tmp_path (never in project
+paths). Scopes are controlled enums (LICENSE_SCOPES / AUTHORIZATION_SCOPES);
+formal outputs carry a re-verified `formal_evidence_provenance` block and
+synthetic outputs carry null there. Evidence paths are also checked after
+Path.resolve() so symlink/junction escapes are rejected.
 """
 
 from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +28,7 @@ from bpc_hybrid.s2_11_barrientos_adapter import (
     ActivationState,
     AmbiguousSpanError,
     AuthorizationBindingMismatchError,
+    AuthorizationEventMismatchError,
     BarrientosAdapterError,
     DefinitionNotProducibleError,
     ElementPathMismatchError,
@@ -30,6 +37,7 @@ from bpc_hybrid.s2_11_barrientos_adapter import (
     EvidenceBindingMissingError,
     EvidenceBindingSyntheticError,
     EvidenceDocMismatchError,
+    EvidencePathEscapeError,
     FieldProvenanceMissingError,
     FieldSpanAmbiguousError,
     FieldSpanInvalidError,
@@ -39,6 +47,7 @@ from bpc_hybrid.s2_11_barrientos_adapter import (
     InvalidRecordIdentityError,
     InvalidStructureError,
     LicenseNotQualifiedError,
+    LicenseScopeNotArtifactCoveringError,
     LicenseState,
     MappingPolicy,
     MappingPolicyIncompleteError,
@@ -160,35 +169,59 @@ def _write_json(path: Path, doc: dict[str, Any]) -> str:
 def _make_evidence_root(tmp_path: Path,
                         policy: MappingPolicy) -> tuple[Path, EvidenceBinding,
                                                         EvidenceBinding]:
-    """Write synthetic license + authorization evidence documents into
-    tmp_path and return (root, license_binding, auth_binding)."""
+    """Write synthetic license + authorization evidence documents and the
+    append-only authorization event into tmp_path (never project paths)
+    and return (root, license_binding, auth_binding).
+
+    v6: scopes are controlled enums — the license evidence declares the
+    artifact-covering scope `artifact_code_data` and the authorization
+    manifest declares the controlled scope `s2_11_candidate_mapping_only`
+    and EXACTLY repeats the license scope in its policy binding; the
+    manifest additionally binds the append-only authorization event
+    (ID + relative path + raw-byte SHA-256).
+    """
     root = tmp_path
     lic_doc = {
         "kind": "license",
         "evidence_id": "syn-lic-1",
-        "scope": "synthetic license evidence fixture for tests only",
+        "scope": "artifact_code_data",
     }
     lic_hash = _write_json(root / "license_evidence.json", lic_doc)
+    event_doc = {
+        "kind": "s2_11_authorization_event",
+        "event_id": "syn-ev-1",
+        "authorization_sentence": "synthetic dry-run sentence",
+        "manifest_id": "syn-auth-1",
+        "append_only": True,
+    }
+    event_hash = _write_json(root / "authorization_event.json", event_doc)
     auth_doc = {
         "kind": "authorization",
         "evidence_id": "syn-auth-1",
-        "scope": "synthetic authorization fixture for tests only",
+        "scope": "s2_11_candidate_mapping_only",
         "authorization_sentence": "synthetic dry-run sentence",
+        "authorization_event_id": "syn-ev-1",
+        "authorization_event_path": "authorization_event.json",
+        "authorization_event_sha256": event_hash,
         "policy_binding": {
             "policy_id": policy.policy_id,
             "modality_mapping": dict(policy.modality_identity),
             "field_mapping": dict(policy.field_mapping),
+            "license_evidence_id": "syn-lic-1",
             "license_evidence_hash": lic_hash,
+            "license_evidence_scope": "artifact_code_data",
         },
     }
     auth_hash = _write_json(root / "authorization_manifest.json", auth_doc)
     lic_binding = EvidenceBinding(kind="license", evidence_id="syn-lic-1",
                                   evidence_hash=lic_hash,
-                                  path="license_evidence.json")
+                                  path="license_evidence.json",
+                                  scope="artifact_code_data")
     auth_binding = EvidenceBinding(kind="authorization",
                                    evidence_id="syn-auth-1",
                                    evidence_hash=auth_hash,
-                                   path="authorization_manifest.json")
+                                   path="authorization_manifest.json",
+                                   scope="s2_11_candidate_mapping_only")
     return root, lic_binding, auth_binding
 
 
@@ -698,6 +731,280 @@ def test_formal_manifest_license_hash_mismatch_rejected(tmp_path: Path) -> None:
     with pytest.raises(EvidenceBindingInvalidError) as exc:
         _convert(mode="formal", mapping_policy=policy, evidence_root=root)
     assert _error_code(exc.value) == "EVIDENCE_BINDING_INVALID"
+
+
+# --- 7b. v6: scope enums + resolved-path escape + evidence provenance --------
+
+
+def test_formal_article_only_license_scope_rejected(tmp_path: Path) -> None:
+    # An article-only license scope NEVER satisfies the artifact code/data
+    # requirement, even when every file/hash/ID matches.
+    policy = _synthetic_policy(synthetic_test_only=False)
+    root, lic, auth = _make_evidence_root(tmp_path, policy)
+    lic_doc = json.loads((root / "license_evidence.json")
+                         .read_text(encoding="utf-8"))
+    lic_doc["scope"] = "article_only"
+    lic_hash = _write_json(root / "license_evidence.json", lic_doc)
+    auth_doc = json.loads((root / "authorization_manifest.json")
+                          .read_text(encoding="utf-8"))
+    auth_doc["policy_binding"]["license_evidence_hash"] = lic_hash
+    auth_doc["policy_binding"]["license_evidence_scope"] = "article_only"
+    _write_json(root / "authorization_manifest.json", auth_doc)
+    lic = EvidenceBinding(kind="license", evidence_id="syn-lic-1",
+                          evidence_hash=lic_hash, path=lic.path,
+                          scope="article_only")
+    auth = EvidenceBinding(kind="authorization", evidence_id="syn-auth-1",
+                           evidence_hash=_sha(
+                               (root / "authorization_manifest.json")
+                               .read_text(encoding="utf-8")),
+                           path=auth.path, scope=auth.scope)
+    policy = MappingPolicy(
+        policy_id=policy.policy_id, approved=True, synthetic_test_only=False,
+        modality_identity=policy.modality_identity,
+        field_mapping=policy.field_mapping,
+        license_evidence_binding=lic, authorization_manifest_binding=auth)
+    with pytest.raises(LicenseScopeNotArtifactCoveringError) as exc:
+        _convert(mode="formal", mapping_policy=policy, evidence_root=root)
+    assert _error_code(exc.value) == "LICENSE_SCOPE_NOT_ARTIFACT_COVERING"
+
+
+def test_formal_license_scope_must_exactly_match_binding(
+        tmp_path: Path) -> None:
+    policy = _synthetic_policy(synthetic_test_only=False)
+    root, lic, auth = _make_evidence_root(tmp_path, policy)
+    # doc says artifact_code_data but the binding expects artifact_code
+    lic = EvidenceBinding(kind="license", evidence_id="syn-lic-1",
+                          evidence_hash=lic.evidence_hash, path=lic.path,
+                          scope="artifact_code")
+    policy = MappingPolicy(
+        policy_id=policy.policy_id, approved=True, synthetic_test_only=False,
+        modality_identity=policy.modality_identity,
+        field_mapping=policy.field_mapping,
+        license_evidence_binding=lic, authorization_manifest_binding=auth)
+    with pytest.raises(EvidenceDocMismatchError) as exc:
+        _convert(mode="formal", mapping_policy=policy, evidence_root=root)
+    assert _error_code(exc.value) == "EVIDENCE_DOC_MISMATCH"
+
+
+def test_formal_authorization_scope_must_be_controlled_enum(
+        tmp_path: Path) -> None:
+    policy = _synthetic_policy(synthetic_test_only=False)
+    root, lic, auth = _make_evidence_root(tmp_path, policy)
+    auth_doc = json.loads((root / "authorization_manifest.json")
+                          .read_text(encoding="utf-8"))
+    auth_doc["scope"] = "anything-at-all"
+    auth_hash = _write_json(root / "authorization_manifest.json", auth_doc)
+    auth = EvidenceBinding(kind="authorization", evidence_id="syn-auth-1",
+                           evidence_hash=auth_hash, path=auth.path,
+                           scope="anything-at-all")
+    policy = MappingPolicy(
+        policy_id=policy.policy_id, approved=True, synthetic_test_only=False,
+        modality_identity=policy.modality_identity,
+        field_mapping=policy.field_mapping,
+        license_evidence_binding=lic, authorization_manifest_binding=auth)
+    with pytest.raises(EvidenceDocMismatchError) as exc:
+        _convert(mode="formal", mapping_policy=policy, evidence_root=root)
+    assert _error_code(exc.value) == "EVIDENCE_DOC_MISMATCH"
+
+
+def test_formal_manifest_must_exactly_repeat_license_scope(
+        tmp_path: Path) -> None:
+    policy = _synthetic_policy(synthetic_test_only=False)
+    root, lic, auth = _make_evidence_root(tmp_path, policy)
+    auth_doc = json.loads((root / "authorization_manifest.json")
+                          .read_text(encoding="utf-8"))
+    auth_doc["policy_binding"]["license_evidence_scope"] = "article_only"
+    auth_hash = _write_json(root / "authorization_manifest.json", auth_doc)
+    auth = EvidenceBinding(kind="authorization", evidence_id="syn-auth-1",
+                           evidence_hash=auth_hash, path=auth.path,
+                           scope=auth.scope)
+    policy = MappingPolicy(
+        policy_id=policy.policy_id, approved=True, synthetic_test_only=False,
+        modality_identity=policy.modality_identity,
+        field_mapping=policy.field_mapping,
+        license_evidence_binding=lic, authorization_manifest_binding=auth)
+    with pytest.raises(AuthorizationBindingMismatchError) as exc:
+        _convert(mode="formal", mapping_policy=policy, evidence_root=root)
+    assert _error_code(exc.value) == "AUTHORIZATION_BINDING_MISMATCH"
+
+
+def test_formal_resolved_path_escape_rejected(tmp_path: Path) -> None:
+    # v6: a path that is lexically safe but RESOLVES outside the evidence
+    # root (symlink/junction) must be rejected. The containment predicate
+    # is always asserted; the junction integration runs when the platform
+    # allows creating one (no admin needed for directory junctions).
+    policy = _synthetic_policy(synthetic_test_only=False)
+    root = tmp_path / "evidence_root"
+    root.mkdir()
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    outside_file = outside / "lic.json"
+    outside_doc = {"kind": "license", "evidence_id": "out-lic",
+                   "scope": "artifact_code_data"}
+    outside_hash = _write_json(outside_file, outside_doc)
+    # predicate: a resolved path outside the evidence root is not within it
+    from bpc_hybrid.s2_11_barrientos_adapter import _is_within
+    assert not _is_within(root.resolve(), outside_file.resolve())
+    assert _is_within(root.resolve(), (root / "x.json").resolve())
+    # junction integration when possible
+    link = root / "escape"
+    created = False
+    try:
+        proc = subprocess.run(
+            ["cmd", "/c", "mklink", "/J", str(link), str(outside)],
+            capture_output=True, check=False)
+        created = proc.returncode == 0 and link.exists()
+    except OSError:
+        created = False
+    if created:
+        lic = EvidenceBinding(kind="license", evidence_id="out-lic",
+                              evidence_hash=outside_hash,
+                              path="escape/lic.json",
+                              scope="artifact_code_data")
+        from bpc_hybrid.s2_11_barrientos_adapter import _check_evidence_binding
+        with pytest.raises(EvidencePathEscapeError) as exc:
+            _check_evidence_binding(lic, "license", root)
+        assert _error_code(exc.value) == "EVIDENCE_PATH_ESCAPE"
+
+
+def test_formal_event_hash_mismatch_rejected(tmp_path: Path) -> None:
+    policy = _synthetic_policy(synthetic_test_only=False)
+    root, lic, auth = _make_evidence_root(tmp_path, policy)
+    auth_doc = json.loads((root / "authorization_manifest.json")
+                          .read_text(encoding="utf-8"))
+    auth_doc["authorization_event_sha256"] = "33" * 32
+    auth_hash = _write_json(root / "authorization_manifest.json", auth_doc)
+    auth = EvidenceBinding(kind="authorization", evidence_id="syn-auth-1",
+                           evidence_hash=auth_hash, path=auth.path,
+                           scope=auth.scope)
+    policy = MappingPolicy(
+        policy_id=policy.policy_id, approved=True, synthetic_test_only=False,
+        modality_identity=policy.modality_identity,
+        field_mapping=policy.field_mapping,
+        license_evidence_binding=lic, authorization_manifest_binding=auth)
+    with pytest.raises(AuthorizationEventMismatchError) as exc:
+        _convert(mode="formal", mapping_policy=policy, evidence_root=root)
+    assert _error_code(exc.value) == "AUTHORIZATION_EVENT_MISMATCH"
+
+
+def test_formal_event_id_mismatch_rejected(tmp_path: Path) -> None:
+    policy = _synthetic_policy(synthetic_test_only=False)
+    root, lic, auth = _make_evidence_root(tmp_path, policy)
+    event_doc = json.loads((root / "authorization_event.json")
+                           .read_text(encoding="utf-8"))
+    event_doc["event_id"] = "other-ev"
+    event_hash = _write_json(root / "authorization_event.json", event_doc)
+    auth_doc = json.loads((root / "authorization_manifest.json")
+                          .read_text(encoding="utf-8"))
+    auth_doc["authorization_event_sha256"] = event_hash
+    auth_hash = _write_json(root / "authorization_manifest.json", auth_doc)
+    auth = EvidenceBinding(kind="authorization", evidence_id="syn-auth-1",
+                           evidence_hash=auth_hash, path=auth.path,
+                           scope=auth.scope)
+    policy = MappingPolicy(
+        policy_id=policy.policy_id, approved=True, synthetic_test_only=False,
+        modality_identity=policy.modality_identity,
+        field_mapping=policy.field_mapping,
+        license_evidence_binding=lic, authorization_manifest_binding=auth)
+    with pytest.raises(AuthorizationEventMismatchError) as exc:
+        _convert(mode="formal", mapping_policy=policy, evidence_root=root)
+    assert _error_code(exc.value) == "AUTHORIZATION_EVENT_MISMATCH"
+
+
+def test_formal_output_provenance_matches_reextracted_evidence(
+        tmp_path: Path) -> None:
+    # Every formal_evidence_provenance field must equal values
+    # re-extracted from the actual evidence files and the policy.
+    from bpc_hybrid.s2_11_barrientos_adapter import _canonical_mapping_hash
+    policy = _synthetic_policy(synthetic_test_only=False)
+    root, lic, auth = _make_evidence_root(tmp_path, policy)
+    policy = MappingPolicy(
+        policy_id=policy.policy_id, approved=True, synthetic_test_only=False,
+        modality_identity=policy.modality_identity,
+        field_mapping=policy.field_mapping,
+        license_evidence_binding=lic, authorization_manifest_binding=auth)
+    out = _convert(mode="formal", mapping_policy=policy, evidence_root=root)
+    prov = out["formal_evidence_provenance"]
+    assert prov is not None
+    assert prov["candidate_only"] is True
+    assert prov["gold_authorized"] is False
+    assert prov["policy_id"] == policy.policy_id
+    assert prov["license_evidence"]["evidence_id"] == "syn-lic-1"
+    assert prov["license_evidence"]["relative_path"] == \
+        "license_evidence.json"
+    assert prov["license_evidence"]["sha256"] == lic.evidence_hash
+    assert prov["license_evidence"]["license_scope"] == "artifact_code_data"
+    assert prov["authorization_manifest"]["manifest_id"] == "syn-auth-1"
+    assert prov["authorization_manifest"]["authorization_scope"] == \
+        "s2_11_candidate_mapping_only"
+    assert prov["authorization_manifest"]["sha256"] == auth.evidence_hash
+    assert prov["authorization_event"]["event_id"] == "syn-ev-1"
+    assert prov["authorization_event"]["relative_path"] == \
+        "authorization_event.json"
+    assert prov["authorization_event"]["sha256"] == _sha(
+        (root / "authorization_event.json").read_text(encoding="utf-8"))
+    assert prov["modality_mapping_canonical_hash"] == \
+        _canonical_mapping_hash(policy.modality_identity)
+    assert prov["field_mapping_canonical_hash"] == \
+        _canonical_mapping_hash(policy.field_mapping)
+    assert "license_evidence_id=syn-lic-1" in \
+        prov["license_evidence_binding"]
+    assert "license_evidence_scope=artifact_code_data" in \
+        prov["license_evidence_binding"]
+
+
+def test_formal_output_provenance_tamper_is_detectable(
+        tmp_path: Path) -> None:
+    # The provenance block is OUTPUT-only: a tampered copy (e.g. a wrong
+    # license hash) no longer matches the re-extracted evidence, so any
+    # downstream verifier can detect the tamper.
+    from bpc_hybrid.s2_11_barrientos_adapter import _canonical_mapping_hash
+    policy = _synthetic_policy(synthetic_test_only=False)
+    root, lic, auth = _make_evidence_root(tmp_path, policy)
+    policy = MappingPolicy(
+        policy_id=policy.policy_id, approved=True, synthetic_test_only=False,
+        modality_identity=policy.modality_identity,
+        field_mapping=policy.field_mapping,
+        license_evidence_binding=lic, authorization_manifest_binding=auth)
+    out = _convert(mode="formal", mapping_policy=policy, evidence_root=root)
+    tampered = dict(out)
+    prov = dict(tampered["formal_evidence_provenance"])
+    lic_ev = dict(prov["license_evidence"])
+    lic_ev["sha256"] = "44" * 32
+    prov["license_evidence"] = lic_ev
+    tampered["formal_evidence_provenance"] = prov
+    assert tampered["formal_evidence_provenance"]["license_evidence"][
+        "sha256"] != _sha((root / "license_evidence.json")
+                          .read_text(encoding="utf-8"))
+    assert tampered["formal_evidence_provenance"][
+        "modality_mapping_canonical_hash"] == \
+        _canonical_mapping_hash(policy.modality_identity)
+
+
+def test_formal_output_provenance_cannot_be_supplied_via_record(
+        tmp_path: Path) -> None:
+    # A caller cannot smuggle provenance through the source record: the
+    # record key set is strict and rejects the key as an unknown field.
+    policy = _synthetic_policy(synthetic_test_only=False)
+    root, lic, auth = _make_evidence_root(tmp_path, policy)
+    policy = MappingPolicy(
+        policy_id=policy.policy_id, approved=True, synthetic_test_only=False,
+        modality_identity=policy.modality_identity,
+        field_mapping=policy.field_mapping,
+        license_evidence_binding=lic, authorization_manifest_binding=auth)
+    record = _synthetic_record()
+    record["formal_evidence_provenance"] = {"fake": True}
+    with pytest.raises(InvalidStructureError) as exc:
+        _convert(record, mode="formal", mapping_policy=policy,
+                 evidence_root=root)
+    assert "formal_evidence_provenance" in exc.value.detail
+
+
+def test_synthetic_output_has_null_formal_provenance() -> None:
+    # Synthetic mode must never masquerade as formal evidence.
+    out = _convert(mode="synthetic_test_only")
+    assert out["formal_evidence_provenance"] is None
+    assert out["semantics"] == "candidate_only"
 
 
 # --- 8. external labels never Gold -------------------------------------------

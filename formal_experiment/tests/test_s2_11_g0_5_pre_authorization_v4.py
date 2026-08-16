@@ -1,15 +1,18 @@
 """Focused tests for the S2.11 / G0.5 pre-authorization decision capsule v4
-(corrective, now a SUPERSEDED historical capsule under v5 lifecycle
+(corrective, now a SUPERSEDED historical capsule under v6 lifecycle
 semantics).
 
-v4's core assets (schema/builder/verifier/four outputs) stay byte-exact.
-Once the assets its manifest binds legitimately evolve, the historical v4
-builder MUST fail closed with a no-overwrite rejection and the historical
-v4 verifier MUST reject with a declared binding/state-drift diagnosis.
+v4's core assets (schema/builder/verifier/four outputs) stay byte-exact,
+anchored to the FIXED v4 ORIGIN COMMIT 8e8b488ea6d91ef0e6d0cf942ff9729e3e6776f6
+(hardcoded SHA-256 map, independent of HEAD). Once the assets its
+manifest binds legitimately evolve, the historical v4 builder MUST fail
+closed with a no-overwrite rejection and the historical v4 verifier MUST
+reject with a declared binding/state-drift diagnosis.
 
 Covers:
-  * historical core assets match HEAD; the historical builder fails
-    closed (no-overwrite) and never touches Gold/predictions/results/
+  * historical core assets match the FIXED ORIGIN map (disk bytes AND
+    origin-commit git blobs); the historical builder fails closed
+    (no-overwrite) and never touches Gold/predictions/results/
     contract/methods/references
   * the historical verifier rejection belongs to the declared
     binding/state-drift patterns and never modifies outputs
@@ -40,7 +43,7 @@ import pytest
 from bpc_hybrid.capsule_lifecycle import (
     HistoricalCapsule,
     builder_rejects_with_no_overwrite_drift,
-    historical_core_assets_match_head,
+    historical_core_assets_match_fixed_origin,
     verifier_rejection_is_binding_drift,
 )
 
@@ -151,11 +154,12 @@ def _failed_details(result: dict[str, Any]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Historical capsule lifecycle semantics (v5): v4 is a SUPERSEDED capsule.
-# Its core assets stay byte-exact; once the assets its manifest binds
-# legitimately evolve, the historical builder MUST fail closed with a
-# no-overwrite rejection and the historical verifier MUST reject with a
-# binding/state-drift diagnosis.
+# Historical capsule lifecycle semantics (v6): v4 is a SUPERSEDED capsule.
+# Its core assets stay byte-exact against the FIXED v4 ORIGIN COMMIT
+# (8e8b488e…; hardcoded SHA-256 map, independent of HEAD); once the
+# assets its manifest binds legitimately evolve, the historical builder
+# MUST fail closed with a no-overwrite rejection and the historical
+# verifier MUST reject with a binding/state-drift diagnosis.
 # ---------------------------------------------------------------------------
 V4_CAPSULE = HistoricalCapsule(
     name="s2_11_g0_5_pre_authorization_v4",
@@ -169,9 +173,9 @@ V4_CAPSULE = HistoricalCapsule(
 )
 
 
-def test_historical_core_assets_match_head_and_builder_fails_closed() -> None:
-    ok, changed = historical_core_assets_match_head(ROOT, V4_CAPSULE)
-    assert ok, f"v4 core assets drifted from HEAD: {changed}"
+def test_historical_core_assets_match_fixed_origin_and_builder_fails_closed() -> None:
+    ok, detail = historical_core_assets_match_fixed_origin(ROOT, "v4")
+    assert ok, f"v4 core assets drifted from the fixed origin anchor: {detail}"
     sensitive = [
         ROOT / "data" / "gold" / "stage1" / "process_records" /
         "stage1_process_gold_v1.json",

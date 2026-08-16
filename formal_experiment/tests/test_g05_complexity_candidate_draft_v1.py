@@ -1,11 +1,27 @@
 """Synthetic boundary tests for the G0.5 complexity candidate classifier
-and the FUTURE frozen-application path (v5 raw-byte hash domain).
+and the FUTURE frozen-application path (v6 sealed chain).
 
 The candidate contract is `draft_not_frozen` and applies ONLY to future
 complex corpora; these tests use synthetic feature records and synthetic
 fixture files in pytest tmp directories. The authorization hash domain is
 the RAW FILE BYTES (never a re-serialized semantic dict). Nothing here
 freezes the contract or creates real authorization manifests.
+
+v6 chain sealing (replaces the v5 caller-supplied validation-result API):
+  * classify_frozen has NO validation-result parameter at all — it
+    re-verifies the draft config, frozen config, authorization manifest,
+    authorization event and prior-results evidence from disk on EVERY
+    call; a hand-built dict (even with a well-formed 64-hex token) can
+    never unlock the frozen classifier;
+  * the authorization manifest must fully bind schema/version, manifest
+    ID, authorization_applied=true, the exact approved scope and the
+    exact approved G4 dry-run sentence (+ its UTF-8 SHA-256), draft and
+    frozen config relative paths + raw-byte SHA-256, the append-only
+    authorization event (ID + raw-byte SHA-256), the re-derived
+    prior-results scan, and a pending (not-applied) application
+    checkpoint;
+  * prior results are derived from the synthetic project root by
+    deterministic path/manifest rules — never from a caller bool.
 """
 
 from __future__ import annotations
@@ -18,13 +34,18 @@ from typing import Any
 import pytest
 
 from bpc_hybrid.g05_complexity_candidate import (
+    APPROVED_AUTHORIZATION_SCOPE,
+    AUTHORIZATION_EVENT_KIND,
+    AUTHORIZATION_MANIFEST_SCHEMA_VERSION,
     DraftNotFrozenViolationError,
     G05ClassificationError,
     InvalidFeatureValueError,
     MissingFeatureError,
     UnknownFeatureError,
+    approved_authorization_sentence,
     classify,
     classify_frozen,
+    derive_prior_results,
     derive_promotion_readiness,
     load_config,
     validate_frozen_application,
@@ -61,6 +82,10 @@ def _with(**overrides: Any) -> dict[str, Any]:
 
 def _raw_sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _sha_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
 
 
 # ---------------------------------------------------------------------------
@@ -191,7 +216,7 @@ def test_derive_promotion_readiness_ignores_bare_filenames(
 
 
 # ---------------------------------------------------------------------------
-# FUTURE frozen-application path: RAW BYTE hash domain (v5)
+# FUTURE frozen-application path: RAW BYTE hash domain + SEALED chain (v6)
 # ---------------------------------------------------------------------------
 def _write_config(path: Path, status: str, **extra: Any) -> None:
     doc = dict(load_config())
@@ -208,27 +233,75 @@ def _real_draft_config_path() -> Path:
     return root / "configs" / "g05_complexity_candidate_draft_v1.json"
 
 
-def _make_frozen_fixture(tmp_path: Path) -> tuple[Path, Path, Path, str]:
+def _write_json(path: Path, doc: dict[str, Any]) -> str:
+    data = json.dumps(doc, ensure_ascii=False, sort_keys=True,
+                      indent=2).encode("utf-8")
+    path.write_bytes(data)
+    return _sha_bytes(data)
+
+
+def _make_frozen_fixture(
+        tmp_path: Path) -> tuple[Path, Path, Path, Path, Path]:
+    """Build a complete SYNTHETIC frozen-application fixture (all files in
+    the pytest tmp directory; NOTHING on the real project disk).
+
+    Returns (root, draft_path, frozen_path, manifest_path, event_path).
+    """
+    root = tmp_path
     # The draft config is the REAL project draft config copied byte-for-byte,
     # so its raw-byte hash IS the dry-run G4 hash domain (61938c99…).
-    draft_path = tmp_path / "draft.json"
+    draft_path = root / "draft.json"
     draft_path.write_bytes(_real_draft_config_path().read_bytes())
-    frozen_path = tmp_path / "frozen.json"
-    manifest_path = tmp_path / "manifest.json"
+    frozen_path = root / "frozen.json"
     _write_config(frozen_path, "frozen",
                   frozen_before_new_results=True,
                   retrospective_use_forbidden=True)
-    manifest = {
+    draft_sha = _raw_sha(draft_path)
+    frozen_sha = _raw_sha(frozen_path)
+    sentence = approved_authorization_sentence(draft_sha)
+    event_path = root / "authorization_event.json"
+    event_sha = _write_json(event_path, {
+        "kind": AUTHORIZATION_EVENT_KIND,
+        "event_id": "syn-g05-event-1",
+        "authorization_sentence": sentence,
+        "scope": APPROVED_AUTHORIZATION_SCOPE,
         "manifest_id": "syn-g05-auth-1",
-        "draft_config_sha256": _raw_sha(draft_path),
-        "approved_frozen_config_sha256": _raw_sha(frozen_path),
-        "scope": "future external complex corpora only; never "
-                 "retrospective on S2.10",
-        "authorization_sentence": "synthetic G4 dry-run fixture",
-    }
-    manifest_path.write_bytes(json.dumps(manifest, ensure_ascii=False,
-                                         indent=2).encode("utf-8"))
-    return draft_path, frozen_path, manifest_path, _raw_sha(manifest_path)
+        "append_only": True,
+    })
+    manifest_path = root / "manifest.json"
+    _write_json(manifest_path, {
+        "schema_version": AUTHORIZATION_MANIFEST_SCHEMA_VERSION,
+        "manifest_id": "syn-g05-auth-1",
+        "authorization_applied": True,
+        "draft_config_path": "draft.json",
+        "draft_config_sha256": draft_sha,
+        "approved_frozen_config_path": "frozen.json",
+        "approved_frozen_config_sha256": frozen_sha,
+        "scope": APPROVED_AUTHORIZATION_SCOPE,
+        "authorization_sentence": sentence,
+        "authorization_sentence_sha256": _sha_bytes(
+            sentence.encode("utf-8")),
+        "retrospective_use_forbidden": True,
+        "frozen_before_new_results": True,
+        "s2_10_retrospective_use_forbidden": True,
+        "prior_results_scan_sha256":
+            derive_prior_results(root)["scan_sha256"],
+        "authorization_event_id": "syn-g05-event-1",
+        "authorization_event_path": "authorization_event.json",
+        "authorization_event_sha256": event_sha,
+        "application_checkpoint": {
+            "pending_commit_not_applied": True,
+            "commit_sha256": None,
+        },
+    })
+    return root, draft_path, frozen_path, manifest_path, event_path
+
+
+def _mutate_manifest(manifest_path: Path,
+                     mutate: Any) -> None:
+    doc = json.loads(manifest_path.read_text(encoding="utf-8"))
+    mutate(doc)
+    _write_json(manifest_path, doc)
 
 
 def test_draft_config_raw_byte_hash_is_61938c99() -> None:
@@ -242,177 +315,350 @@ def test_draft_config_raw_byte_hash_is_61938c99() -> None:
 
 def test_future_frozen_application_valid_with_raw_byte_hashes(
         tmp_path: Path) -> None:
-    draft, frozen, manifest, manifest_sha = _make_frozen_fixture(tmp_path)
-    result = validate_frozen_application(draft, frozen, manifest)
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    result = validate_frozen_application(draft, frozen, manifest,
+                                         project_root=root)
     assert result["frozen_application_valid"] is True
     assert result["draft_config_sha256"] == _raw_sha(draft)
     assert result["approved_frozen_config_sha256"] == _raw_sha(frozen)
-    assert result["validation_token"] == manifest_sha
+    assert result["validation_token"] == _raw_sha(manifest)
     # the validation chain accepts the EXACT raw-byte hash domain of the
     # dry-run G4 sentence (61938c99…) — the semantic re-serialization hash
     # 51a6e4fe… must never be used as the authorization hash.
     assert result["draft_config_sha256"].startswith("61938c99")
+    assert result["prior_results_found"] == []
+    assert result["scope"] == APPROVED_AUTHORIZATION_SCOPE
+    assert result["application_checkpoint"] == {
+        "pending_commit_not_applied": True}
 
 
-def test_future_frozen_application_rejects_semantic_hash(tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+def test_future_frozen_application_rejects_semantic_hash(
+        tmp_path: Path) -> None:
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
     # Rebind the manifest to the OLD semantic hash domain (json.dumps of
     # the dict) — the validator must reject it.
     semantic = hashlib.sha256(json.dumps(
         json.loads(draft.read_text(encoding="utf-8")),
         sort_keys=True).encode("utf-8")).hexdigest()
-    doc = json.loads(manifest.read_text(encoding="utf-8"))
-    doc["draft_config_sha256"] = semantic
-    manifest.write_bytes(json.dumps(doc, ensure_ascii=False, indent=2)
-                         .encode("utf-8"))
+    _mutate_manifest(manifest,
+                     lambda m: m.update({"draft_config_sha256": semantic}))
     with pytest.raises(G05ClassificationError) as exc:
-        validate_frozen_application(draft, frozen, manifest)
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
     assert "RAW BYTE hash" in exc.value.message
 
 
 def test_future_frozen_application_rejects_unbound_manifest_hash(
         tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
-    doc = json.loads(manifest.read_text(encoding="utf-8"))
-    doc["draft_config_sha256"] = "00" * 64
-    manifest.write_bytes(json.dumps(doc, ensure_ascii=False, indent=2)
-                         .encode("utf-8"))
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    _mutate_manifest(manifest,
+                     lambda m: m.update({"draft_config_sha256": "00" * 64}))
     with pytest.raises(G05ClassificationError) as exc:
-        validate_frozen_application(draft, frozen, manifest)
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
     assert "draft config RAW BYTE hash" in exc.value.message
 
 
 def test_future_frozen_application_rejects_draft_status_config(
         tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
     _write_config(frozen, "draft_not_frozen")
-    doc = json.loads(manifest.read_text(encoding="utf-8"))
-    doc["approved_frozen_config_sha256"] = _raw_sha(frozen)
-    manifest.write_bytes(json.dumps(doc, ensure_ascii=False, indent=2)
-                         .encode("utf-8"))
+    _mutate_manifest(
+        manifest,
+        lambda m: m.update(
+            {"approved_frozen_config_sha256": _raw_sha(frozen)}))
     with pytest.raises(G05ClassificationError) as exc:
-        validate_frozen_application(draft, frozen, manifest)
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
     assert "frozen" in exc.value.message
 
 
 def test_future_frozen_application_rejects_missing_frozen_before_flag(
         tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
-    _write_config(frozen, "frozen",
-                  retrospective_use_forbidden=True)
-    doc = json.loads(manifest.read_text(encoding="utf-8"))
-    doc["approved_frozen_config_sha256"] = _raw_sha(frozen)
-    manifest.write_bytes(json.dumps(doc, ensure_ascii=False, indent=2)
-                         .encode("utf-8"))
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    _write_config(frozen, "frozen", retrospective_use_forbidden=True)
+    _mutate_manifest(
+        manifest,
+        lambda m: m.update(
+            {"approved_frozen_config_sha256": _raw_sha(frozen)}))
     with pytest.raises(G05ClassificationError) as exc:
-        validate_frozen_application(draft, frozen, manifest)
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
     assert "frozen_before_new_results" in exc.value.message
 
 
 def test_future_frozen_application_rejects_retrospective_flag_missing(
         tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
     doc = dict(load_config())
     doc.pop("retrospective_use_forbidden")
     doc["status"] = "frozen"
     doc["frozen_before_new_results"] = True
     frozen.write_bytes(json.dumps(doc, ensure_ascii=False, indent=2)
                        .encode("utf-8"))
-    mdoc = json.loads(manifest.read_text(encoding="utf-8"))
-    mdoc["approved_frozen_config_sha256"] = _raw_sha(frozen)
-    manifest.write_bytes(json.dumps(mdoc, ensure_ascii=False, indent=2)
-                         .encode("utf-8"))
+    _mutate_manifest(
+        manifest,
+        lambda m: m.update(
+            {"approved_frozen_config_sha256": _raw_sha(frozen)}))
     with pytest.raises(G05ClassificationError) as exc:
-        validate_frozen_application(draft, frozen, manifest)
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
     assert "retrospective" in exc.value.message
 
 
-def test_future_frozen_application_rejects_prior_results(
+def test_future_frozen_application_rejects_prior_results_from_disk(
         tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    # The caller cannot pass a bool; prior results are DERIVED from the
+    # synthetic project root. A g05 result file on disk rejects the freeze
+    # application even though the manifest's declared scan is stale/empty.
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    res = root / "data" / "results"
+    res.mkdir(parents=True)
+    (res / "g05_complex_prior_result.json").write_bytes(b"{}")
     with pytest.raises(G05ClassificationError) as exc:
         validate_frozen_application(draft, frozen, manifest,
-                                    corpus_has_prior_results=True)
-    assert "prior prediction/result" in exc.value.message
+                                    project_root=root)
+    assert "prior" in exc.value.message.lower()
 
 
-def test_future_frozen_application_rejects_empty_sentence(
+def test_future_frozen_application_rejects_stale_prior_results_scan(
         tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
-    doc = json.loads(manifest.read_text(encoding="utf-8"))
-    doc["authorization_sentence"] = "   "
-    manifest.write_bytes(json.dumps(doc, ensure_ascii=False, indent=2)
-                         .encode("utf-8"))
+    # The manifest binds a prior-results scan; if the disk scan no longer
+    # matches (e.g. a result appeared after the manifest was written), the
+    # chain must reject — and the manifest's own declared scan is ignored
+    # unless it matches the re-derived scan.
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    _mutate_manifest(
+        manifest,
+        lambda m: m.update({"prior_results_scan_sha256": "00" * 64}))
     with pytest.raises(G05ClassificationError) as exc:
-        validate_frozen_application(draft, frozen, manifest)
-    assert "authorization sentence" in exc.value.message
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
+    assert "scan" in exc.value.message.lower()
 
 
-def test_future_frozen_application_rejects_missing_scope(
+def test_future_frozen_application_rejects_replaced_sentence(
         tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
-    doc = json.loads(manifest.read_text(encoding="utf-8"))
-    doc["scope"] = ""
-    manifest.write_bytes(json.dumps(doc, ensure_ascii=False, indent=2)
-                         .encode("utf-8"))
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    _mutate_manifest(
+        manifest,
+        lambda m: m.update({"authorization_sentence": "I authorize all"}))
     with pytest.raises(G05ClassificationError) as exc:
-        validate_frozen_application(draft, frozen, manifest)
-    assert "scope" in exc.value.message
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
+    assert "sentence" in exc.value.message.lower()
+
+
+def test_future_frozen_application_rejects_replaced_scope(
+        tmp_path: Path) -> None:
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    _mutate_manifest(
+        manifest, lambda m: m.update({"scope": "anything at all"}))
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
+    assert exc.value.code == "G05_FROZEN_APPLICATION_SCOPE_MISMATCH"
+
+
+def test_future_frozen_application_rejects_authorization_not_applied(
+        tmp_path: Path) -> None:
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    _mutate_manifest(
+        manifest, lambda m: m.update({"authorization_applied": False}))
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
+    assert "authorization_applied" in exc.value.message
+
+
+def test_future_frozen_application_rejects_replaced_event(
+        tmp_path: Path) -> None:
+    root, draft, frozen, manifest, event = _make_frozen_fixture(tmp_path)
+    # Replace the event file CONTENT (same path): raw-byte hash mismatch.
+    ev = json.loads(event.read_text(encoding="utf-8"))
+    ev["authorization_sentence"] = "a different sentence"
+    _write_json(event, ev)
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
+    assert "event" in exc.value.message.lower()
+
+
+def test_future_frozen_application_rejects_replaced_event_path(
+        tmp_path: Path) -> None:
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    _mutate_manifest(
+        manifest,
+        lambda m: m.update(
+            {"authorization_event_path": "other_event.json"}))
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
+    assert "event" in exc.value.message.lower()
+
+
+def test_future_frozen_application_rejects_pending_checkpoint_flipped(
+        tmp_path: Path) -> None:
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    _mutate_manifest(
+        manifest,
+        lambda m: m.update(
+            {"application_checkpoint": {
+                "pending_commit_not_applied": False,
+                "commit_sha256": "11" * 40}}))
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
+    assert exc.value.code == "G05_FROZEN_APPLICATION_CHECKPOINT"
+
+
+def test_future_frozen_application_rejects_modified_manifest_after_validation(
+        tmp_path: Path) -> None:
+    # First validation passes; then the manifest is modified. The second
+    # validation must reject — no stale token can survive a manifest edit.
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    result = validate_frozen_application(draft, frozen, manifest,
+                                         project_root=root)
+    assert result["frozen_application_valid"] is True
+    _mutate_manifest(manifest,
+                     lambda m: m.update({"manifest_id": "syn-g05-auth-2"}))
+    with pytest.raises(G05ClassificationError) as exc:
+        validate_frozen_application(draft, frozen, manifest,
+                                    project_root=root)
+    # the append-only event still references the OLD manifest ID, so the
+    # modified manifest is rejected at the event binding
+    assert exc.value.code == "G05_FROZEN_APPLICATION_EVENT_MISMATCH"
 
 
 # ---------------------------------------------------------------------------
-# classify_frozen: only a complete validation result unlocks frozen config
+# classify_frozen: NO caller-supplied validation result exists in v6
 # ---------------------------------------------------------------------------
-def test_classify_frozen_requires_complete_validation_result(
+def test_classify_frozen_never_accepts_a_caller_supplied_validation_result(
         tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    """v5 vulnerability regression: the exact hand-built dict that v5
+    accepted (64-hex token + correct frozen hash + valid=true) must now be
+    IMPOSSIBLE to pass — classify_frozen has no validation-result parameter
+    and re-verifies everything from disk on every call."""
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    fake = {
+        "frozen_application_valid": True,
+        "validation_token": "00" * 32,
+        "approved_frozen_config_sha256": _raw_sha(frozen),
+    }
+    with pytest.raises(TypeError):
+        classify_frozen(_with(), frozen, fake)  # type: ignore[call-arg]
+    with pytest.raises(TypeError):
+        classify_frozen(  # type: ignore[call-arg]
+            _with(), frozen_config_path=frozen, validation_result=fake)
+
+
+def test_classify_frozen_rejects_forged_manifest_64_hex_token_variant(
+        tmp_path: Path) -> None:
+    """Even a manifest forged with a well-formed 64-hex token and the
+    correct frozen hash cannot unlock the classifier: the manifest must
+    carry the FULL approved binding (sentence, scope, event, scan)."""
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    forged = {
+        "frozen_application_valid": True,
+        "validation_token": "ab" * 32,
+        "approved_frozen_config_sha256": _raw_sha(frozen),
+    }
+    forged_path = tmp_path / "forged_manifest.json"
+    _write_json(forged_path, forged)
     with pytest.raises(G05ClassificationError) as exc:
-        classify_frozen(_with(), frozen, {"frozen_application_valid": True})
-    assert "validation token" in exc.value.message
+        classify_frozen(_with(), draft_config_path=draft,
+                        frozen_config_path=frozen,
+                        authorization_manifest_path=forged_path,
+                        project_root=root)
+    assert "manifest" in exc.value.message.lower()
 
 
-def test_classify_frozen_accepts_validated_result(tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
-    result = validate_frozen_application(draft, frozen, manifest)
-    out = classify_frozen(_with(), frozen, result)
+def test_classify_frozen_accepts_validated_fixture(tmp_path: Path) -> None:
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    out = classify_frozen(_with(), draft_config_path=draft,
+                          frozen_config_path=frozen,
+                          authorization_manifest_path=manifest,
+                          project_root=root)
     assert out["level"] == "L1"
     assert out["status"] == "frozen"
 
 
-def test_classify_frozen_rejects_wrong_file(tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
-    other = tmp_path / "other.json"
-    doc = dict(load_config())
-    doc["status"] = "frozen"
-    doc["frozen_before_new_results"] = True
-    doc["retrospective_use_forbidden"] = True
-    doc["status_reason"] = "different bytes than the validated frozen file"
-    other.write_bytes(json.dumps(doc, ensure_ascii=False, indent=2)
-                      .encode("utf-8"))
-    result = validate_frozen_application(draft, frozen, manifest)
+def test_classify_frozen_rejects_wrong_frozen_file(tmp_path: Path) -> None:
+    # Replace the frozen file AFTER the fixture was created: the manifest
+    # binds the OLD raw-byte hash, so re-verification must reject.
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    _write_config(frozen, "frozen",
+                  frozen_before_new_results=True,
+                  retrospective_use_forbidden=True,
+                  status_reason="different bytes than the bound file")
     with pytest.raises(G05ClassificationError) as exc:
-        classify_frozen(_with(), other, result)
-    assert "does not bind THIS frozen config" in exc.value.message
+        classify_frozen(_with(), draft_config_path=draft,
+                        frozen_config_path=frozen,
+                        authorization_manifest_path=manifest,
+                        project_root=root)
+    assert "frozen config RAW BYTE hash" in exc.value.message
 
 
-def test_classify_frozen_rejects_handbuilt_result(tmp_path: Path) -> None:
-    draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
-    # A hand-built result with a malformed token must be rejected.
-    fake = {
-        "frozen_application_valid": True,
-        "validation_token": "not-a-64-hex-token",
-        "approved_frozen_config_sha256": _raw_sha(frozen),
-    }
+def test_classify_frozen_rejects_bool_only_claim(tmp_path: Path) -> None:
+    # A caller who only passes True/false values can never even reach the
+    # classifier: the manifest file itself is re-verified.
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    not_a_manifest = tmp_path / "bool_manifest.json"
+    not_a_manifest.write_bytes(b"true")
     with pytest.raises(G05ClassificationError) as exc:
-        classify_frozen(_with(), frozen, fake)
-    assert "validation token" in exc.value.message
-    # A hand-built result with a well-formed token but a WRONG config hash
-    # must be rejected as well.
-    fake2 = {
-        "frozen_application_valid": True,
-        "validation_token": "11" * 32,
-        "approved_frozen_config_sha256": "22" * 32,
-    }
+        classify_frozen(_with(), draft_config_path=draft,
+                        frozen_config_path=frozen,
+                        authorization_manifest_path=not_a_manifest,
+                        project_root=root)
+    assert "manifest" in exc.value.message.lower() or \
+        "JSON" in exc.value.message
+
+
+def test_classify_frozen_rejects_results_then_authorization(
+        tmp_path: Path) -> None:
+    # Produce a target result FIRST, then build a fully-formed manifest:
+    # the prior-results evidence scan must still reject the application.
+    root, draft, frozen, manifest, _ = _make_frozen_fixture(tmp_path)
+    res = root / "outputs" / "evidence"
+    res.mkdir(parents=True)
+    (res / "g05_new_corpus_result.json").write_bytes(b"{}")
     with pytest.raises(G05ClassificationError) as exc:
-        classify_frozen(_with(), frozen, fake2)
-    assert "does not bind THIS frozen config" in exc.value.message
+        classify_frozen(_with(), draft_config_path=draft,
+                        frozen_config_path=frozen,
+                        authorization_manifest_path=manifest,
+                        project_root=root)
+    assert "prior" in exc.value.message.lower()
+
+
+# ---------------------------------------------------------------------------
+# prior-results derivation from disk evidence
+# ---------------------------------------------------------------------------
+def test_derive_prior_results_empty_project_scan() -> None:
+    import bpc_hybrid.g05_complexity_candidate as g05
+    from pathlib import Path as _Path
+    root = _Path(g05.__file__).resolve().parents[2]
+    scan = derive_prior_results(root)
+    assert scan["result_paths"] == []
+    assert scan["result_hashes"] == {}
+    assert len(scan["scan_sha256"]) == 64
+
+
+def test_derive_prior_results_finds_and_binds_results(tmp_path: Path) -> None:
+    res = tmp_path / "data" / "results"
+    res.mkdir(parents=True)
+    a = res / "g05_a.json"
+    a.write_bytes(b"result-a")
+    b = res / "g05_b.json"
+    b.write_bytes(b"result-b")
+    ev = tmp_path / "outputs" / "evidence"
+    ev.mkdir(parents=True)
+    c = ev / "g05_c.json"
+    c.write_bytes(b"result-c")
+    scan = derive_prior_results(tmp_path)
+    assert scan["result_paths"] == [
+        "data/results/g05_a.json", "data/results/g05_b.json",
+        "outputs/evidence/g05_c.json"]
+    assert scan["result_hashes"]["data/results/g05_a.json"] == \
+        _sha_bytes(b"result-a")
+    # deterministic: same tree -> same scan hash
+    assert scan["scan_sha256"] == derive_prior_results(tmp_path)["scan_sha256"]
