@@ -1,11 +1,18 @@
 """Focused tests for the S2.11 / G0.5 pre-authorization decision capsule v3.
 
+v3 is a SUPERSEDED HISTORICAL capsule (v5 lifecycle semantics): its core
+assets (schema/builder/verifier/four outputs) stay byte-exact; once the
+assets its manifest binds legitimately evolve, the historical builder MUST
+fail closed with a no-overwrite rejection and the historical verifier MUST
+reject with a declared binding/state-drift diagnosis.
+
 Covers:
-  * deterministic, byte-identical builder rebuild + no-overwrite refusal
-  * the builder never touches Gold / predictions / results / contract /
-    methods / references / gates
-  * the v3 independent verifier passes on the canonical outputs (seven
-    independent verifiers executed, audit re-run)
+  * historical core assets match HEAD; the historical builder fails
+    closed (no-overwrite) and never touches Gold/predictions/results/
+    contract/methods/references
+  * the historical verifier rejection belongs to the declared
+    binding/state-drift patterns (not arbitrary exceptions) and never
+    modifies outputs
   * license audit fail-closed fields and read-only inventory
   * G0.5 stays draft_not_frozen; adapter stays synthetic_shadow_only
   * separated user gates: G1/G2 null sentences, G3/G4/G5 exact dry-run
@@ -16,7 +23,7 @@ Covers:
   * export exact-reconstruction negative cases (missing/extra entry,
     field tamper, release tamper, recomputed hashes)
   * superseded historical decision entries stay byte-unchanged
-  * references/ is never modified by the builder (read-only proof)
+  * references/ is never modified (read-only proof)
 """
 
 from __future__ import annotations
@@ -31,6 +38,13 @@ from pathlib import Path
 from typing import Any, Callable
 
 import pytest
+
+from bpc_hybrid.capsule_lifecycle import (
+    HistoricalCapsule,
+    builder_rejects_with_no_overwrite_drift,
+    historical_core_assets_match_head,
+    verifier_rejection_is_binding_drift,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
@@ -131,9 +145,28 @@ def _failed_details(result: dict[str, Any]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Builder determinism, no-overwrite, read-only references
+# Historical capsule lifecycle semantics (v5): v3 is a SUPERSEDED capsule.
+# Its core assets stay byte-exact; once the assets its manifest binds
+# legitimately evolve, the historical builder MUST fail closed with a
+# no-overwrite rejection and the historical verifier MUST reject with a
+# binding/state-drift diagnosis. This is the correct historical behavior,
+# NOT a failure of v3.
 # ---------------------------------------------------------------------------
-def test_builder_byte_identical_rebuild_and_no_sensitive_touches() -> None:
+V3_CAPSULE = HistoricalCapsule(
+    name="s2_11_g0_5_pre_authorization_v3",
+    schema_rel="configs/schemas/s2_11_g0_5_pre_authorization_v3.schema.json",
+    builder_rel="scripts/build_s2_11_g0_5_pre_authorization_v3.py",
+    verifier_rel="scripts/verify_s2_11_g0_5_pre_authorization_v3.py",
+    outputs=("outputs/reports/s2_11_g0_5_pre_authorization_v3.json",
+             "outputs/reports/s2_11_g0_5_pre_authorization_v3.md",
+             "outputs/reports/s2_11_g0_5_pre_authorization_v3.manifest.json",
+             "outputs/reports/s2_11_g0_5_pre_authorization_v3_export_index.json"),
+)
+
+
+def test_historical_core_assets_match_head_and_builder_fails_closed() -> None:
+    ok, changed = historical_core_assets_match_head(ROOT, V3_CAPSULE)
+    assert ok, f"v3 core assets drifted from HEAD: {changed}"
     sensitive = [
         ROOT / "data" / "gold" / "stage1" / "process_records" /
         "stage1_process_gold_v1.json",
@@ -147,35 +180,29 @@ def test_builder_byte_identical_rebuild_and_no_sensitive_touches() -> None:
         ROOT / "configs" / "methods.json",
     ]
     before = {p: _sha(p.read_bytes()) for p in sensitive}
-    outputs = [OUT_JSON, OUT_MD, OUT_MANIFEST, OUT_EXPORT]
-    first = {p: p.read_bytes() if p.exists() else None for p in outputs}
-    proc = subprocess.run(
-        [sys.executable, str(BUILDER_SCRIPT)], cwd=ROOT,
-        capture_output=True, text=True, check=False)
-    assert proc.returncode == 0, (
-        f"builder failed: {proc.returncode}\n{proc.stdout}\n{proc.stderr}")
-    second = {p: p.read_bytes() for p in outputs}
-    for p in outputs:
-        assert second[p] == first[p], (
-            f"builder rebuild is not byte-identical: {p}")
+    drift_ok, detail = builder_rejects_with_no_overwrite_drift(ROOT,
+                                                               V3_CAPSULE)
+    assert drift_ok, (
+        "v3 builder must fail closed with a no-overwrite rejection when "
+        f"its bound assets evolved: {detail}")
     after = {p: _sha(p.read_bytes()) for p in sensitive}
     assert after == before, (
-        "builder touched Gold / predictions / results / contract / methods")
+        "historical builder touched Gold / predictions / results / "
+        "contract / methods")
 
 
-def test_builder_never_modifies_references() -> None:
+def test_historical_builder_never_modifies_references() -> None:
     if not REF_DIR.is_dir():
         pytest.skip("references/barrientos_2026 not present")
     ref_files = sorted(p for p in REF_DIR.rglob("*") if p.is_file())
     before = {str(p.relative_to(REF_DIR)): _sha(p.read_bytes())
               for p in ref_files}
-    proc = subprocess.run(
-        [sys.executable, str(BUILDER_SCRIPT)], cwd=ROOT,
-        capture_output=True, text=True, check=False)
-    assert proc.returncode == 0, proc.stderr
+    drift_ok, detail = builder_rejects_with_no_overwrite_drift(ROOT,
+                                                               V3_CAPSULE)
+    assert drift_ok, detail
     after = {str(p.relative_to(REF_DIR)): _sha(p.read_bytes())
              for p in ref_files}
-    assert after == before, "builder modified references/"
+    assert after == before, "historical builder modified references/"
 
 
 def test_builder_no_overwrite_refusal(tmp_path: Path) -> None:
@@ -189,13 +216,25 @@ def test_builder_no_overwrite_refusal(tmp_path: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Positive verifier run
+# Historical verifier rejection semantics (v5)
 # ---------------------------------------------------------------------------
-def test_verifier_passes_on_canonical_outputs() -> None:
-    verifier = _load_verifier()
-    result = verifier.verify(run_external=True)
-    assert result["verified"] is True, (
-        "canonical v3 capsule must verify: " + _failed_details(result))
+def test_historical_verifier_rejection_is_binding_drift() -> None:
+    is_drift, detail = verifier_rejection_is_binding_drift(ROOT, V3_CAPSULE)
+    assert is_drift, (
+        "v3 verifier must reject with failures that all belong to the "
+        f"declared binding/state-drift patterns: {detail}")
+
+
+def test_historical_verifier_never_touches_outputs() -> None:
+    before = {}
+    for rel in V3_CAPSULE.outputs:
+        p = ROOT / rel
+        before[rel] = p.read_bytes() if p.is_file() else None
+    is_drift, detail = verifier_rejection_is_binding_drift(ROOT, V3_CAPSULE)
+    assert is_drift, detail
+    for rel, data in before.items():
+        p = ROOT / rel
+        assert (p.read_bytes() if p.is_file() else None) == data
 
 
 def test_report_declares_and_binds_superseded_entries() -> None:

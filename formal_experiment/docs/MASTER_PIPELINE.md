@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.13
+**文档版本**：3.6.14
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-08-15
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -662,14 +662,16 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 1. **S2.11/G0.5/S2.12 完整依赖**：完成或经用户正式决策处理外部复杂语料许可、
    数据激活授权、3→4 标签映射、人工 Gold、G0.5 复杂度规则结果前冻结与
    Barrientos adapter（S2-BARR-2）；**当前决策入口为
-   `outputs/reports/s2_11_g0_5_pre_authorization_v4.json`**（v3 为历史
+   `outputs/reports/s2_11_g0_5_pre_authorization_v5.json`**（v3/v4 为历史
    checkpoint）：论文许可已确认（CC BY 4.0，article-only，出版社 PDF 证据链
    hash 绑定）；artifact code/data 许可仍 unknown_pending_confirmation；
    映射选项 M1（modality identity candidate ONLY）/M2（未应用）；G0.5
-   draft_not_frozen 且 promotion readiness=false；adapter 为 hardened
-   synthetic/shadow implementation verified；分离门禁 G1–G6（G3/G4 仅
-   dry-run 授权句，G4 句子绑定精确 config hash 且只授权未来
-   gate-application checkpoint；G5 protocol-ready 但 ready=false）；
+   draft_not_frozen 且 promotion readiness=false（授权 hash 域 = 原始字节
+   61938c99…）；adapter 为 hardened v5 synthetic/shadow implementation
+   verified（严格 mode 枚举、真实文件级 evidence binding、可验证字段级
+   provenance）；分离门禁 G1–G6（G3/G4 仅 dry-run 授权句，G4 句子绑定原始
+   字节 hash 且只授权未来 gate-application checkpoint；G5 protocol-ready
+   但 ready=false）；
 2. **S2.13 冻结**（DoD 不变：S2.1–S2.12 完整）；
 3. **GDPR Gold Rule Records 人工裁决与冻结**：由用户完成 9 个 rule IDs
    （article6/7/15/16/17/20/22/33/34）的正式 Gold Rule Records；Agent 不得创建、
@@ -681,37 +683,37 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 
 本轮（2026-08-15）只做核账与 readiness 加固，未翻转上述任何正式 gate。
 
-### 12.0b S2.11/G0.5 授权前工程收口（2026-08-15，v4 纠正，见 `outputs/reports/s2_11_g0_5_pre_authorization_v4.json`）
+### 12.0b S2.11/G0.5 授权前工程收口（2026-08-15，v5 纠正，见 `outputs/reports/s2_11_g0_5_pre_authorization_v5.json`）
 
-本轮工程成果（均未翻 gate）：(1) **许可分离纠正**：论文许可已确认
-（`references/papers/Barrientos_2026_Impact_analysis.pdf`，标题/DOI
-10.1016/j.infsof.2026.108079/Elsevier CC BY 4.0 正文声明/artifact URL
-证据链，PDF hash+size 绑定）——`paper_readable=true`、
-`article_license=CC-BY-4.0`（scope=article_only）、
-`article_license_does_not_auto_cover_artifact=true`；artifact
-code/data 许可仍 `unknown_pending_confirmation`、
-`project_activatable=false`、`ready_for_data_activation=false`、激活授权句
-null。(2) **adapter provenance 加固**：字段级 provenance（每个 source
-element 自带 element/path/record ID/text hash/span/alignment
-source/policy ID）、modality provenance 指向 norm element、结构字段不复用
-全局 span、canonical target 白名单
-{actor,action,condition,constraint,exception}、duplicate target/nested
-dict/span 不一致/非 canonical target 全部 typed fail-closed；formal mode
-要求版本化 license/authorization evidence bindings（当前磁盘无 → 仍拒绝；
-synthetic binding 不得进 formal）；输出仅 candidate/review aid。仍是
-synthetic/shadow implementation verified（38 项真实执行测试）。(3)
-**M1/M2 精确范围**：M1 仅授权三类共享 modality 的 identity candidate
-mapping；precondition/norm/temporal_validity → 结构字段映射需要独立门禁
-G6；无 field mapping policy 时 M1 输出只有 modality candidate。M2 不映射
-任何外部 label。(4) **G0.5 promotion readiness**：仍 draft_not_frozen；
-未来冻结应用路径（frozen config + 用户授权 manifest 绑定 draft/frozen
-config hash、scope、授权句、frozen_before_new_results=true、无先行结果、
-禁回溯）以 synthetic fixture 实现并测试；当前推导
-promotion_ready_for_application=false、missing=user authorization
-manifest。(5) **gate 顺序修复**：G3 ready=true（dry-run）、G4 ready=true
-（句子绑定精确 config SHA-256，仅授权未来 gate-application checkpoint、
-本轮不 frozen）、G5 protocol_ready=true 但 ready=false/sentence=null
-（条件式 future sentence 保留）、G6（结构 field mapping gate）ready=false。
+本轮工程成果（均未翻 gate）：(1) **v4 红测修复与历史 capsule 生命周期**：
+v4 变更事件如实记录 3 failed / 2057 passed / 24 skipped、test_returncode=1、
+integrity_pass=false（v3 历史正例测试在 v3 绑定资产演进后按 fail-closed
+设计拒绝）；v5 引入 `src/bpc_hybrid/capsule_lifecycle.py` 集中语义——v3/v4
+核心资产（schema/builder/verifier/4 outputs）逐字节不变（git 证明），v3/v4
+pytest 文件仅按生命周期语义修正（历史 builder no-overwrite fail-closed、
+历史 verifier 拒绝且失败项属于声明性 binding drift、历史负例测试继续真实
+执行、active v5 builder/verifier 从当前磁盘成功重建/验证）；v5 全量审计
+恢复 exit 0。(2) **许可分离**：论文许可已确认（CC BY 4.0 article-only，
+PDF hash 绑定），artifact code/data 仍 unknown_pending_confirmation、
+project_activatable=false、ready_for_data_activation=false、激活授权句 null。
+(3) **adapter 加固（v5）**：严格 mode 枚举（INVALID_MODE）、真实文件级
+evidence binding（相对安全路径 + 原始字节 SHA-256 + ID/kind/scope + 授权
+manifest 精确绑定 policy/modality/field mapping/license hash）、可验证字段级
+provenance（精确 element、确定性 locator `record_path#element`、重叠 span
+ambiguity）；formal 正例仅用 tmp 临时文件；当前磁盘仍拒绝一切 formal 转换；
+synthetic/shadow implementation verified（68 项真实执行测试）。(4) **M1/M2
+精确范围**：M1 仅授权三类共享 modality identity candidate mapping；结构
+映射需独立 G6；M2 不映射任何外部 label。(5) **G0.5 promotion readiness**：
+`draft_config_sha256`（原始字节）= `61938c99…` 是唯一授权 hash 域（语义
+hash `51a6e4fe…` 被 validator 拒绝）；`validate_frozen_application` 只对
+真实文件原始字节算 hash；`classify_frozen` 仅接受完整验证结果（含不可伪造
+validation_token）；`derive_promotion_readiness` 必须验证完整资产组合而非
+glob 文件名；当前磁盘推导 draft_not_frozen /
+promotion_ready_for_application=false / missing=user authorization
+manifest；不创建真实 frozen config 或授权 manifest。(6) **gate 顺序**：
+G3 ready=true（dry-run）、G4 ready=true（句子绑定原始字节 hash，仅授权未来
+gate-application checkpoint、本轮不 frozen）、G5 protocol_ready=true 但
+ready=false/sentence=null（条件式 future sentence）、G6 ready=false。
 本轮零新增 LLM/API，references/ 只读未激活，S2.11/S2.12/S2.13/Stage 3
 gate 均未改变，未生成 S3.7 Oracle 授权句。
 
@@ -770,7 +772,8 @@ gate 均未改变，未生成 S3.7 Oracle 授权句。
 
 | 版本 | 日期 | 变更 | 依据 |
 |---|---|---|---|
-| 3.6.13 | 2026-08-15 | **S2.11/G0.5 用户决策包 v4（纠正）：许可证据分离、adapter provenance 加固、G0.5 promotion readiness、gate 顺序修复（零 API/零 gate 翻转）**：(1) 论文许可确认——`references/papers/Barrientos_2026_Impact_analysis.pdf`（sha256 6ce91fd2…，1,822,940 B）只读证据链：标题/DOI 10.1016/j.infsof.2026.108079/Elsevier 正文 "open access article under the CC BY license" 声明/artifact URL（anonymous.4open.science）；`paper_readable=true`、`article_license=CC-BY-4.0`（article_only）、`article_license_does_not_auto_cover_artifact=true`；artifact code/data 仍 `unknown_pending_confirmation`、`project_activatable=false`、`ready_for_data_activation=false`、激活授权句 null；(2) adapter 加固（`src/bpc_hybrid/s2_11_barrientos_adapter.py`，38 项真实执行测试）：record-level 与 field-level provenance 分离、每个 source element 自带 element/path/record ID/text hash/span/alignment source/policy ID、modality provenance 指向 norm element、结构字段不复用全局 span、canonical target 白名单 {actor/action/condition/constraint/exception}、NON_CANONICAL_TARGET/TARGET_COLLISION/FIELD_PROVENANCE_MISSING/FIELD_SPAN_INVALID/FIELD_SPAN_AMBIGUOUS/FIELD_VALUE_MISMATCH/NESTED_DICT_AS_SPAN_FIELD/ELEMENT_PATH_MISMATCH/EVIDENCE_BINDING_MISSING/EVIDENCE_BINDING_SYNTHETIC typed fail-closed；formal mode 要求版本化 license/authorization evidence bindings（当前磁盘无 → 拒绝）；synthetic/shadow only；(3) M1 精确范围=modality identity candidate ONLY（结构字段映射需独立 G6）；M2 不映射任何外部 label；(4) G0.5 promotion readiness（`g05_complexity_candidate.py` 扩展）：当前 `g0_5_status=draft_not_frozen`、`promotion_ready_for_application=false`、missing=user authorization manifest；未来冻结应用路径（frozen config + 授权 manifest 绑定 draft/frozen hash/scope/授权句/frozen_before_new_results=true/无先行结果/禁回溯）以 synthetic fixture 实现并测试（+8 项）；(5) gate 顺序修复：G1（artifact license）/G2（activation）/G5（Gold review surface，protocol_ready=true 但 ready=false/null，条件式 future sentence）/G6（结构映射）ready=false+null；G3 ready=true（M1 dry-run 句）；G4 ready=true（句子绑定精确 config SHA-256，仅授权未来 gate-application checkpoint，明确 "does NOT freeze G0.5 this round"）；v4 capsule supersede v3 的 license four-state/adapter-completeness/G4-G5 readiness 判断，v3 全文件逐字节保留；MASTER/PROJECT_AUDIT v4 为当前决策入口（v3 历史）；全量测试通过；零新增 LLM/API，Gold/contract/methods/predictions/results/references/Stage 3 gate/S2.11-S2.13 状态均未修改，未生成 Oracle 授权句 | 决策包 v4（builder/verifier/manifest）+ adapter 加固 + G0.5 promotion readiness + record_change 事件 + audit --with-tests |
+| 3.6.14 | 2026-08-15 | **S2.11/G0.5 用户决策包 v5：修复 v4 红测、历史 capsule 生命周期、真实 provenance/evidence binding 与 G0.5 原始字节绑定（零 API/零 gate 翻转）**：(1) **v4 红测修复**：v4 变更事件如实记录 3 failed / 2057 passed / test_returncode=1 / integrity_pass=false；v5 引入集中式历史 capsule 生命周期语义（`src/bpc_hybrid/capsule_lifecycle.py`）——v3/v4 核心资产（schema/builder/verifier/4 outputs）逐字节不变（git 证明），其 pytest 文件仅按生命周期语义修正（历史 builder 在绑定资产演进后 no-overwrite fail-closed、历史 verifier 拒绝且失败项属于声明性 binding drift、历史负例测试继续真实执行）；v5 全量审计恢复 exit 0（不含 xfail/skip/过滤）。(2) **adapter 严格 mode 枚举**：`{synthetic_test_only, formal}` 之外一律 INVALID_MODE（`mode="production_typo"` 被拒）。(3) **真实 evidence binding**：formal mode 要求文件级绑定——相对安全路径（禁绝对/`..` 逃逸）、64 位小写 hex SHA-256、原始字节重算一致、evidence 文档内部 kind/ID/scope 一致、authorization manifest 精确绑定 policy ID/modality mapping/field mapping/license evidence hash/scope；synthetic binding/缺文件/错 hash/错 ID/错 kind/路径逃逸全拒绝；formal 正例仅用 pytest 临时目录 synthetic 文件；当前磁盘仍拒绝一切 formal 转换。(4) **可验证字段级 provenance**：source_record_id/source_path 非空合法（`str(None)` 伪装拒绝）、结构字段 element 精确等于 mapping key、modality element 精确匹配 `norms[<idx>].modality`、字段 path 必须等于确定性 locator `record_source_path#element`、record path 不得含 `#`、bool 不得作为 offset、重叠 span ambiguity（`"aaa"` 中 `"aa"` 两个起点）检测、未知 descriptor 字段拒绝。(5) **G0.5 原始字节 hash 域**：`validate_frozen_application` 改为接收真实文件路径并只对原始字节算 SHA-256；dry-run G4 句绑定 draft config 原始字节 `61938c99…`（语义重序列化 hash `51a6e4fe…` 被 validator 拒绝）；`classify_frozen` 仅接受完整验证结果（含不可伪造 validation_token = manifest 原始字节 hash）；`derive_promotion_readiness` 不再仅凭 glob 文件名判 ready，必须解析并验证完整资产组合（当前磁盘仍 draft_not_frozen / promotion_ready=false）；不创建真实 frozen config 或授权 manifest。(6) v5 capsule（schema/builder/verifier/30 项测试/JSON/MD/manifest/export index）supersede v3/v4 当前状态判断（v3 4 决策项 + v3 8 文件 + v4 8 文件 = 20 项 supersedes，全部 hash 绑定）；gate 状态 G1/G2/G5/G6 false+null、G3/G4 dry-run（G4 绑定原始字节 hash、仅未来 gate-application checkpoint）、S3.7 全 false/null；MASTER/PROJECT_AUDIT v5 为当前决策入口（v3/v4 历史）；全量审计 exit 0（2059 passed / 24 skipped 等以最终 receipt 为准）；零新增 LLM/API，Gold/contract/methods/predictions/results/references/Stage 3 gate/S2.11-S2.13 状态均未修改，未生成 Oracle 授权句 | 决策包 v5（builder/verifier/manifest）+ capsule_lifecycle + adapter 加固 + G0.5 原始字节绑定 + record_change 事件 + audit --with-tests（exit 0） |
+| 3.6.13 | 2026-08-15 | **S2.11/G0.5 用户决策包 v4（纠正）：许可证据分离、adapter provenance 加固、G0.5 promotion readiness、gate 顺序修复（零 API/零 gate 翻转）**：(1) 论文许可确认——`references/papers/Barrientos_2026_Impact_analysis.pdf`（sha256 6ce91fd2…，1,822,940 B）只读证据链：标题/DOI 10.1016/j.infsof.2026.108079/Elsevier 正文 "open access article under the CC BY license" 声明/artifact URL（anonymous.4open.science）；`paper_readable=true`、`article_license=CC-BY-4.0`（article_only）、`article_license_does_not_auto_cover_artifact=true`；artifact code/data 仍 `unknown_pending_confirmation`、`project_activatable=false`、`ready_for_data_activation=false`、激活授权句 null；(2) adapter 加固（`src/bpc_hybrid/s2_11_barrientos_adapter.py`，38 项真实执行测试）：record-level 与 field-level provenance 分离、每个 source element 自带 element/path/record ID/text hash/span/alignment source/policy ID、modality provenance 指向 norm element、结构字段不复用全局 span、canonical target 白名单 {actor/action/condition/constraint/exception}、NON_CANONICAL_TARGET/TARGET_COLLISION/FIELD_PROVENANCE_MISSING/FIELD_SPAN_INVALID/FIELD_SPAN_AMBIGUOUS/FIELD_VALUE_MISMATCH/NESTED_DICT_AS_SPAN_FIELD/ELEMENT_PATH_MISMATCH/EVIDENCE_BINDING_MISSING/EVIDENCE_BINDING_SYNTHETIC typed fail-closed；formal mode 要求版本化 license/authorization evidence bindings（当前磁盘无 → 拒绝）；synthetic/shadow only；(3) M1 精确范围=modality identity candidate ONLY（结构字段映射需独立 G6）；M2 不映射任何外部 label；(4) G0.5 promotion readiness（`g05_complexity_candidate.py` 扩展）：当前 `g0_5_status=draft_not_frozen`、`promotion_ready_for_application=false`、missing=user authorization manifest；未来冻结应用路径（frozen config + 授权 manifest 绑定 draft/frozen hash/scope/授权句/frozen_before_new_results=true/无先行结果/禁回溯）以 synthetic fixture 实现并测试（+8 项）；(5) gate 顺序修复：G1（artifact license）/G2（activation）/G5（Gold review surface，protocol_ready=true 但 ready=false/null，条件式 future sentence）/G6（结构映射）ready=false+null；G3 ready=true（M1 dry-run 句）；G4 ready=true（句子绑定精确 config SHA-256，仅授权未来 gate-application checkpoint，明确 "does NOT freeze G0.5 this round"）；v4 capsule supersede v3 的 license four-state/adapter-completeness/G4-G5 readiness 判断，v3 全文件逐字节保留；MASTER/PROJECT_AUDIT v4 为当前决策入口（v3 历史）；**全量审计为红灯（v4 变更事件如实记录：3 failed / 2057 passed / 24 skipped，test_returncode=1，integrity_pass=false——v3 历史正例测试在 v3 绑定资产（adapter/文档）被本轮任务要求演进后按 fail-closed 设计拒绝；该红灯由 v5 的历史 capsule 生命周期语义修复，v5 全量 exit 0）**；零新增 LLM/API，Gold/contract/methods/predictions/results/references/Stage 3 gate/S2.11-S2.13 状态均未修改，未生成 Oracle 授权句 | 决策包 v4（builder/verifier/manifest）+ adapter 加固 + G0.5 promotion readiness + record_change 事件 + audit --with-tests（v4 全量 exit 1） |
 | 3.6.12 | 2026-08-15 | **S2.11/G0.5 授权前工程收口与用户决策包 v3（零 API/零 gate 翻转）**：(1) Barrientos adapter 核心 `src/bpc_hybrid/s2_11_barrientos_adapter.py`——synthetic/shadow implementation verified，仅接受显式输入、不扫描 references/；fail-closed typed 错误码（LICENSE_NOT_QUALIFIED/ACTIVATION_NOT_AUTHORIZED/MAPPING_POLICY_NOT_APPROVED/SYNTHETIC_POLICY_IN_FORMAL_MODE/INVALID_STRUCTURE/UNKNOWN_MODALITY/DEFINITION_NOT_PRODUCIBLE/MAPPING_POLICY_INCOMPLETE/INVALID_MAPPED_MODALITY/MISSING_TEXT_PROVENANCE/MISSING_SPAN_ALIGNMENT/INVALID_SPAN/AMBIGUOUS_SPAN/UNRESOLVED_CROSS_REFERENCE）；输出仅 candidate_only/review_candidate，external_annotation 仅 review aid；(2) 重写 `test_g07_barrientos_adapter_contract.py`（删除 `or True` 空断言，25 项真实执行测试）；(3) G0.5 候选合同 `configs/g05_complexity_candidate_draft_v1.json`（status=draft_not_frozen、retrospective_use_forbidden、L1/L2/L3 确定性规则/优先级/边界/缺失与冲突处理，覆盖 MASTER 要求的全部复杂度字段）+ `src/bpc_hybrid/g05_complexity_candidate.py` + 20 项 synthetic 边界测试；(4) 用户决策包 v3（schema/builder/独立 verifier/30 项测试/JSON/MD/manifest/export index）：许可核账只读（references/barrientos_2026 91 文件按 名称+sha256+size 盘点、无 LICENSE/COPYING/NOTICE/README/metadata → license_status=unknown_pending_confirmation、ready_for_data_activation=false、activation 授权句 null；paper/code/data/activation 四分状态）；映射选项 M1（identity candidate mapping，推荐）/M2（conservative no-mapping），未应用；空白人工 Gold 协议（review/adjudication/freeze/publication 分离、user_only、未创建 data/gold）；分离用户门禁 G1（许可证据，ready=false/null）/G2（激活，ready=false/null）/G3（映射选择，ready=true + dry-run 授权句）/G4（G0.5 冻结，ready=true + dry-run 授权句）/G5（空白 Gold review surface，ready=true + dry-run 授权句）；manifest 精确集合重建 + export 精确重建 + 单 EOF newline + 全部篡改负例 fail-closed；MASTER S3.7/下一真实路径改指 v2 transition capsule（v1 历史），新增 §12.0b；PROJECT_AUDIT 过渡核账行明确 v2 当前/v1 历史、S2.13 行 adapter 状态更新、证据入口加 v3；全量测试通过；零新增 LLM/API，Gold/contract/methods/predictions/results/references/Stage 3 gate/S2.11-S2.13 状态均未修改，未生成 Oracle 授权句 | 决策包 v3（builder/verifier/manifest）+ adapter + G0.5 draft + record_change 事件 + audit --with-tests |
 | 3.6.11 | 2026-08-15 | **S2.13→S3.7 transition readiness v2：收敛 Gold 缺失探测、manifest/export 完整性校验与实时状态矛盾（零 API/零 gate 翻转）**：v1 capsule 全部文件逐字节保留（v1 verifier 继续通过、git hash-object 与 HEAD 一致）；新建 v2 capsule（schema/build/verify/test/reports，8 文件）——**Gold Rule Records 三态探测**（无候选→exist=false + 9 rule IDs + 显式绑定被检查的 Stage 2 EStG-150 Gold path/hash；任何 rule_record/rule-record 命名候选（data/gold/**、outputs/reports/**、历史 readiness 文档提及的具体路径）→ builder fail-closed 报错并列出路径，绝不报告 exist=false、绝不自行提升；exist=true 保留给未来用户授权 freeze/publication 路径，v2 未实现）；**manifest 精确重建**（verifier 在内存用磁盘 report/MD 字节与重收集 bindings 重建完整 manifest，与磁盘逐键比较，缺项/多余项/byte_size 篡改/同步重算 export hash 均 fail）；**export index 精确重建**（磁盘 report/MD/manifest 字节确定性重建，结构完全相等，重算哈希不能绕过）；**严格 verifier 判定**（非 JSON verifier 需 exit 0 + 显式成功行，"VERIFIED" 裸子串因 "NOT VERIFIED" 也包含而被拒绝）；Markdown 单 EOF newline；audit false 分支措辞改为仅描述真实计算条件并明示与 S2.13/S3.7/full-pipeline 无关（gate 计算/合同/状态值未变）+ true/false 双向回归测试；PROJECT_AUDIT 陈旧行原位收敛（sun_rule_only/D1/正式结果目录/S2.4-6/B0-R2-R5/S3.2-S3.3/当前派工/§1 结论），队列与派工收敛为真实下一路径（S2.11/G0.5 → S2.12 → S2.13 → 用户 Gold Rule Records → S3.4-S3.6 → S3.7 单独授权）；MASTER P1-P4 里程碑修正（P1 数据/Gold 完成但 G0.5/S2.11 未完成；P2 完整 B0 完成；P3 三方法正式比较完成、复杂扩展未完成；P4 D1 正式 arm 已发布、H1 comparison-only、复杂集仍 blocked）；全量测试通过；本轮零新增 LLM/API，Gold/contract/methods/predictions/results/Stage 3 gate/S2.13 状态均未修改，未生成 Oracle 授权句 | 过渡 capsule v2（builder/verifier/manifest）+ audit.py 措辞修复 + PROJECT_AUDIT/MASTER 收敛 + record_change 事件 + audit --with-tests |
 | 3.6.10 | 2026-08-15 | **S2.13→S3.7 过渡核账与 fail-closed readiness 加固（过渡控制 capsule v1，零 API/零 gate 翻转）**：新建确定性过渡控制 capsule `s2_13_s3_7_transition_readiness_v1`（schema + builder + 独立 verifier + 14 项聚焦测试 + JSON/MD/manifest/export index）——逐项从磁盘资产/manifest/hash/实际执行的独立 verifier 重新推导依赖矩阵（S1.7=frozen；S2.10=verified；S2.11=blocked（许可/数据激活/3→4 映射/人工 Gold/G0.5/Barrientos adapter 精确 blockers 重读自 s2_11 资产）；S2.12=partial/retrospective；S2.13=blocked（DoD 未改、未拆新任务）；Stage 1 Process Gold 存在且 verifier 通过（7/135/7）；Stage 3 matching 25+violation 33 decision Gold 存在且与 frozen correction 一致（≠ Gold Rule Records）；9 个 GDPR rule IDs（article6/7/15/16/17/20/22/33/34）的正式 Gold Rule Records 不存在且本轮未创建/未推断；S3.4/S3.5/S3.6=development_only；formal_oracle_started=false、formal_oracle_authorized=false、ready_for_oracle_authorization=false、authorization_sentence=null、no_pseudo_oracle=true）；旧报告（s2_13_stage2_freeze_gap_capsule.{json,md}、s3_7_oracle_readiness_v2、s37_oracle_readiness_v1、formal_benchmark_release_v2 历史 exclusions、两个硬编码“Process Gold 不存在”的旧 builder）声明 supersede 其“当前状态判断”，文件本身逐字节保留未修改；audit.py 陈旧静态尾部改为动态生成（final_experiment_ready=true 仅代表 Stage 2 三方法正式评价/最终指标机器门禁就绪，不代表 S2.13/S3.7/全 Pipeline 完成），新增矛盾消除回归测试；独立 verifier 实际运行 7 个既有 verifier + 重跑 audit 并逐项比对；全量测试通过；本轮零新增 LLM/API，Gold/contract/methods/predictions/results/Stage 3 gate/S2.13 状态均未修改，未生成 Oracle 授权句 | 过渡 capsule v1（builder/verifier/manifest）+ audit.py 措辞修复 + record_change 事件 + audit --with-tests |

@@ -1,0 +1,596 @@
+{
+  "schema_version": "s2_11_g0_5_pre_authorization@5.0.0",
+  "report_id": "s2_11_g0_5_pre_authorization_v5",
+  "build_note": "Deterministic S2.11 / G0.5 corrective decision capsule v5; every state judgment is re-derived from current on-disk assets, manifests, hashes or executed independent verifiers. v4 was pushed but its change event recorded 3 failed / 2057 passed / test_returncode=1 / integrity_pass=false; v5 records those facts and restores the ACTIVE suite integrity (full audit exit 0). Article license CC BY 4.0 (article-only) is separated from artifact code/data license (unknown_pending_confirmation); the adapter is the hardened v5 synthetic/shadow implementation (strict mode enum, real file-backed evidence bindings, verifiable field-level provenance); G0.5 stays draft_not_frozen and its authorization hash domain is the raw file bytes; G4 authorizes only a future gate-application checkpoint; G5 is not authorization-ready; authorization sentences are DRY-RUN text, nothing is applied, no gate is flipped and no Gold is created.",
+  "v4_red_test_facts": {
+    "v4_audit_not_verified": true,
+    "v4_change_event_failed_tests": 3,
+    "v4_change_event_test_returncode": 1,
+    "v4_change_event_integrity_pass": false,
+    "v5_restores_active_suite_integrity": true,
+    "minimal_counterexamples": [
+      "invalid adapter mode (e.g. mode='production_typo') -> INVALID_MODE; a strict mode enum now rejects anything outside {synthetic_test_only, formal}",
+      "empty/invalid evidence binding (empty ID, non-SHA256 hash, wrong kind, '..' path escape, missing file, wrong raw-byte hash, doc kind/ID/scope mismatch, manifest policy mismatch) -> EVIDENCE_BINDING_*/AUTHORIZATION_BINDING_MISMATCH",
+      "arbitrary element/path (element='totally.wrong', path not equal to the deterministic record_path#element locator) -> ELEMENT_PATH_MISMATCH",
+      "G0.5 hash-domain mismatch: the raw-byte config hash 61938c99… is the only authorization hash; the semantic re-serialization hash 51a6e4fe… is rejected by validate_frozen_application"
+    ]
+  },
+  "supersedes": [
+    {
+      "path": "outputs/reports/s2_11_license_adapter_readiness_v2.json",
+      "sha256": "8d271f59e2c6d24006ab7139509a6cf3b96d4a276a3d88c019b1a83db4b5a2e0",
+      "reason": "2026-08-11 license/adapter readiness v2; superseded as a decision entry by v3/v4/v5; historical file stays unmodified."
+    },
+    {
+      "path": "outputs/reports/s2_11_data_qualification_mapping_dry_run.json",
+      "sha256": "9a8835ec27c3e64c0d38a8b2dbf59d3ab78b5949cb7a39ccb505fd2d67f5a994",
+      "reason": "2026-08-11 data-qualification & mapping dry-run; superseded as the decision entry by v3/v4/v5; historical file stays unmodified."
+    },
+    {
+      "path": "outputs/reports/g0_7_barrientos_adapter_registry_dry_run.json",
+      "sha256": "bb65cca291aa9338429e5f114d44df0c95f36dc46a45cc9204d62ca8faa46278",
+      "reason": "2026-08-11 G0.7 adapter registry dry-run; superseded by v3/v4/v5 synthetic/shadow adapter reports; historical file stays unmodified."
+    },
+    {
+      "path": "outputs/reports/g0_7_barrientos_adapter_registry_dry_run.md",
+      "sha256": "04029f864ae0e5a0eafe2ee14a1c510477b0ecf1091d5510dd82e7591efbf280",
+      "reason": "Markdown rendering of the same superseded registry dry-run; preserved unmodified."
+    },
+    {
+      "path": "configs/schemas/s2_11_g0_5_pre_authorization_v3.schema.json",
+      "sha256": "50d0efd0432f965b34c8d211ff5ef1d31b73fbf4479862d82618a2f33744e0a1",
+      "reason": "v3 schema; kept byte-exact (historical lifecycle semantics)."
+    },
+    {
+      "path": "scripts/build_s2_11_g0_5_pre_authorization_v3.py",
+      "sha256": "89ce3684fddcf582c859b85547c367cc8a84038a9b5269f1cd7b8ceb1479b537",
+      "reason": "v3 builder; kept byte-exact; its current-state judgments are superseded by v5."
+    },
+    {
+      "path": "scripts/verify_s2_11_g0_5_pre_authorization_v3.py",
+      "sha256": "830f6aad3e3e597c10dd3bef9f5cc32e5b67d12e314d9e99b23f04a9b662c553",
+      "reason": "v3 verifier; kept byte-exact; its active-verification role is superseded by v5 (historical drift is the expected behavior)."
+    },
+    {
+      "path": "tests/test_s2_11_g0_5_pre_authorization_v3.py",
+      "sha256": "4cfb28ef8c3cfd8fd5ff048b6a60141a0e040086280bd8f7c03edc2d13fdf87f",
+      "reason": "v3 pytest file: CORRECTED lifecycle test semantics only (v5); the v3 core assets are untouched."
+    },
+    {
+      "path": "outputs/reports/s2_11_g0_5_pre_authorization_v3.json",
+      "sha256": "7c380a171423e2fd859166e0307be84d5455ed323c07caf387b1d453c266a72b",
+      "reason": "v3 decision report; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_11_g0_5_pre_authorization_v3.md",
+      "sha256": "557f30b9253445a349311c1fe0a604f8171428ac2fa062df2c3d75d10e6dc27a",
+      "reason": "v3 Markdown rendering; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_11_g0_5_pre_authorization_v3.manifest.json",
+      "sha256": "cf2b7b577d8f8d1dcfd956d3031bf7c9ccd82f2433a2a5b90b7625431b538018",
+      "reason": "v3 manifest; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_11_g0_5_pre_authorization_v3_export_index.json",
+      "sha256": "72c41725bc8153c671c0a6b411cc443cc62f7dcd765ef44d5cdab18bff719de6",
+      "reason": "v3 export index; byte-exact historical provenance."
+    },
+    {
+      "path": "configs/schemas/s2_11_g0_5_pre_authorization_v4.schema.json",
+      "sha256": "4f52d45a530d23e1aef3cf6582bbbc511d67b7e7db4bfe2dec2482fba58f4794",
+      "reason": "v4 schema; kept byte-exact (historical lifecycle semantics)."
+    },
+    {
+      "path": "scripts/build_s2_11_g0_5_pre_authorization_v4.py",
+      "sha256": "3dfc2bbcd85afab0fa818a314cdce3c2823ae1b490280be1015e810440098259",
+      "reason": "v4 builder; kept byte-exact; its current-state judgments are superseded by v5."
+    },
+    {
+      "path": "scripts/verify_s2_11_g0_5_pre_authorization_v4.py",
+      "sha256": "69ed77a734686a100a990e4426e54fe214d2d506ec5c9dc73fd8281ae632ddfd",
+      "reason": "v4 verifier; kept byte-exact; its active-verification role is superseded by v5 (historical drift is the expected behavior)."
+    },
+    {
+      "path": "tests/test_s2_11_g0_5_pre_authorization_v4.py",
+      "sha256": "d12b7bed917e42a106d591dfe7201e29c79a1451b8a28b4553acd3b52a4e6bfb",
+      "reason": "v4 pytest file: CORRECTED lifecycle test semantics only (v5); the v4 core assets are untouched."
+    },
+    {
+      "path": "outputs/reports/s2_11_g0_5_pre_authorization_v4.json",
+      "sha256": "e4bc4f7d799be61ef99a75a3e1de03601f3885545e9a8e4a93ebed5654907e3b",
+      "reason": "v4 decision report; byte-exact historical provenance; its change event recorded 3 failed / 2057 passed / test_returncode=1 / integrity_pass=false (see v4_red_test_facts)."
+    },
+    {
+      "path": "outputs/reports/s2_11_g0_5_pre_authorization_v4.md",
+      "sha256": "ac76e0f6a3282bb8cba4a0d205465e386836e9631dc04c6c49bc0f3d1edb3585",
+      "reason": "v4 Markdown rendering; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_11_g0_5_pre_authorization_v4.manifest.json",
+      "sha256": "9d9098a4df77446c9c50bb9bfd932cb9a666ac40843f747ce22321be437762a2",
+      "reason": "v4 manifest; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_11_g0_5_pre_authorization_v4_export_index.json",
+      "sha256": "424ea8ddac8a5e23c3de1938f030d79c1613e167160a7e4db4843bd251626111",
+      "reason": "v4 export index; byte-exact historical provenance."
+    }
+  ],
+  "state_matrix": [
+    {
+      "task_id": "S1.5",
+      "status": "verified",
+      "note": "Stage 1 Process Gold frozen and published (user-authorized 2026-08-13; 7/7 records, 135/135 label fields, 7/7 structure decisions).",
+      "evidence": [
+        {
+          "path": "data/gold/stage1/process_records/stage1_process_gold_v1.json",
+          "kind": "disk_asset",
+          "sha256": "f33aa857a0796d0517a9d04cc96b0a4f316202603fe0adf66693aeb5cb444bca"
+        },
+        {
+          "path": "data/gold/stage1/manifest.json",
+          "kind": "manifest",
+          "sha256": "1885dad26f43b19324f2e779a7bbed0db5b19699145d8607a59439423b23e587"
+        },
+        {
+          "path": "outputs/reports/s1_5_process_gold_freeze_authorization_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "4b97762cfe3cb336a2a163bd85cbc850f9963a513af8a33185efae7d0486e25c"
+        }
+      ]
+    },
+    {
+      "task_id": "S1.6",
+      "status": "verified",
+      "note": "Fixed-GDPR-7 formal descriptive component evaluation; post-Gold, target-aware, NOT held-out generalization evidence; P2/predictions/metrics byte-unchanged.",
+      "evidence": [
+        {
+          "path": "data/predictions/stage1_formal_v1/formal_predictions_v1.json",
+          "kind": "disk_asset",
+          "sha256": "79a9b2c17185d63dc5ab5d9c47c8c592469b30f3cf7298740e593838166a94a8"
+        },
+        {
+          "path": "data/results/stage1_formal_v1/stage1_formal_evaluation_v1.json",
+          "kind": "disk_asset",
+          "sha256": "a072db39b37167d76aa4e49b9845b5b563255d980b9ee00cd811f43c116a7392"
+        }
+      ]
+    },
+    {
+      "task_id": "S1.7",
+      "status": "frozen",
+      "note": "Formal Stage 1 freeze APPLIED (2026-08-13); does NOT auto-authorize the Stage 3 Oracle.",
+      "evidence": [
+        {
+          "path": "outputs/reports/s1_7_freezer_authorization_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "7712176c877c982e11ec670625aedb266f052d3d5b7a898d1a8504285990850a"
+        }
+      ]
+    },
+    {
+      "task_id": "S2.10",
+      "status": "verified",
+      "note": "Three-method formal capsules and the formal three-method comparison are published and independently verified; new LLM calls 0.",
+      "evidence": [
+        {
+          "path": "outputs/reports/b0_formal_arm_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "095a839fe7a98ed24de3afb3d840d1af5596f28988dae0429154f5b024f47c09"
+        },
+        {
+          "path": "outputs/reports/direct_llm_formal_arm_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "f0f86318259de87c9557781b69d2573a13bb25469db194905cfc216fef94d133"
+        },
+        {
+          "path": "outputs/reports/sun_llm_fallback_formal_arm_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "0b5e32852028d83b920da7fd9695f0985def37724f792d6e81630a057ea41f18"
+        },
+        {
+          "path": "outputs/reports/stage2_formal_three_method_comparison_v1.json",
+          "kind": "disk_asset",
+          "sha256": "c9d76544a36ca4c27939d8090a8bfafc6da690a2e5d2b5d09624b27b4f9cf740"
+        }
+      ]
+    },
+    {
+      "task_id": "S2.11",
+      "status": "blocked",
+      "blockers": [
+        "license: unknown_pending_confirmation (no local declaration; external evidence pending)",
+        "data activation authorization: NOT granted (references/ stays read-only)",
+        "mapping decision: modality 3->4 mapping table / adjudication not decided",
+        "human Gold: required for external-label qualification; not started",
+        "G0.5 complexity rules: not frozen before results (retrospective only today)",
+        "Barrientos adapter (S2-BARR-2): not implemented (only the contract dry-run exists)"
+      ],
+      "note": "Complex legal corpus NOT frozen and NOT activated; article license CC BY 4.0 (article-only) is confirmed, artifact code/data license still unknown_pending_confirmation, activation NOT authorized, mapping policy NOT approved, human Gold NOT started, G0.5 draft_not_frozen, adapter hardened synthetic/shadow only; the v5 decision capsule is the current decision entry for this gate.",
+      "evidence": [
+        {
+          "path": "outputs/reports/s2_11_license_adapter_readiness_v2.json",
+          "kind": "disk_asset",
+          "sha256": "8d271f59e2c6d24006ab7139509a6cf3b96d4a276a3d88c019b1a83db4b5a2e0"
+        },
+        {
+          "path": "outputs/reports/s2_11_data_qualification_mapping_dry_run.json",
+          "kind": "disk_asset",
+          "sha256": "9a8835ec27c3e64c0d38a8b2dbf59d3ab78b5949cb7a39ccb505fd2d67f5a994"
+        },
+        {
+          "path": "src/bpc_hybrid/s2_11_barrientos_adapter.py",
+          "kind": "disk_asset",
+          "sha256": "868ce8722868d513fde495635a03f955aaab01f27d277d2a466be709a8e38119"
+        }
+      ]
+    },
+    {
+      "task_id": "S2.12",
+      "status": "partial",
+      "note": "Formal descriptive common error analysis delivered as RETROSPECTIVE/EXPLORATORY; full DoD blocked on S2.11.",
+      "evidence": [
+        {
+          "path": "outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json",
+          "kind": "disk_asset",
+          "sha256": "9f6c734002fd4d6761454e8e751e172e543ce4f1808b19d3f3513f05374619fd"
+        },
+        {
+          "path": "outputs/reports/s2_12_formal_descriptive_error_analysis_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "89b3f1209c193ec872b9b01319f9003e0ba26387cbce0830f86e2054040dda06"
+        }
+      ]
+    },
+    {
+      "task_id": "S2.13",
+      "status": "blocked",
+      "blockers": [
+        "S2.11 blocked",
+        "S2.12 full DoD not met (partial/retrospective only)"
+      ],
+      "note": "Stage 2 freeze NOT complete; DoD unchanged; final_experiment_ready=true does NOT complete S2.13.",
+      "evidence": [
+        {
+          "path": "derived: S2.11 blocked AND S2.12 partial -> S2.13 blocked; DoD unchanged this round",
+          "kind": "derivation"
+        },
+        {
+          "path": "outputs/reports/s2_13_stage2_freeze_gap_capsule.json",
+          "kind": "disk_asset",
+          "sha256": "eb934910c2e046c43cfae063ff8eac69e124fda65830f5c50cb2e1fd50abc311"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.2",
+      "status": "verified",
+      "note": "25 matching decision Gold published; decisions are NOT Gold Rule Records.",
+      "evidence": [
+        {
+          "path": "data/gold/stage3/stage3_matching_gold_v1.json",
+          "kind": "disk_asset",
+          "sha256": "55dffbcaf7d6510c11a06f10b134dfb449af0bd687d0cf40f7839be19bc2e618"
+        },
+        {
+          "path": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+          "kind": "disk_asset",
+          "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f"
+        },
+        {
+          "path": "outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json",
+          "kind": "manifest",
+          "sha256": "f37ae1164b19e1e86d007f83202a125c31c295e415b899b83cec9eb0f51a04e7"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.3",
+      "status": "verified",
+      "note": "33 violation decision Gold published; decisions are NOT Gold Rule Records.",
+      "evidence": [
+        {
+          "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+          "kind": "disk_asset",
+          "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.4",
+      "status": "development_only",
+      "note": "Winter wrapper development evidence only; formal completion still blocked on S2.13 (S1.7 satisfied).",
+      "evidence": [
+        {
+          "path": "outputs/development/s34_winter_stage3_development_v3_clean/manifest.json",
+          "kind": "manifest",
+          "sha256": "74b918548d0e5aa839f50446e359e04e3ec3ce7fb6aa86b3637a11a98e4ff649"
+        },
+        {
+          "path": "outputs/development/s34_winter_stage3_development_v3_prototype_literal/manifest.json",
+          "kind": "manifest",
+          "sha256": "91dda78fedc33e47ab70e86f2726c6673e8bdb52ccf3aec652b6819564807dd8"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.5",
+      "status": "development_only",
+      "note": "Sun Stage 3 development evidence only; formal completion still blocked on S2.13.",
+      "evidence": [
+        {
+          "path": "outputs/development/s35_sun_stage3_development_v2/manifest.json",
+          "kind": "manifest",
+          "sha256": "48c61dbc85a0fd28b1fa21c1b2563c65ca029107afe503e35586698ea7388b21"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.6",
+      "status": "development_only",
+      "note": "BM25 v3 + TF-IDF/SVD development baselines only; formal completion still blocked on S2.13.",
+      "evidence": [
+        {
+          "path": "outputs/development/s36_bm25_stage3_development_v3/manifest.json",
+          "kind": "manifest",
+          "sha256": "f81988c5522d3f897ec0155d755f0c6f580ebaff999f9a53be941638055d012a"
+        },
+        {
+          "path": "outputs/development/s36_tfidf_svd_stage3_development_v2/manifest.json",
+          "kind": "manifest",
+          "sha256": "56e40e3e81a9a76b3fb93f5a77726348d8b1d2305cb1cd69798c529a85ce1082"
+        }
+      ]
+    },
+    {
+      "task_id": "S3.7",
+      "status": "blocked",
+      "blockers": [
+        "9 GDPR Gold Rule Records do not exist",
+        "S2.13 blocked",
+        "S3.4/S3.5/S3.6 formal completion pending"
+      ],
+      "note": "Formal Oracle NOT started and NOT authorized; no Oracle authorization sentence is generated by this capsule.",
+      "evidence": [
+        {
+          "path": "outputs/reports/s37_oracle_readiness_v1.json",
+          "kind": "disk_asset",
+          "sha256": "7bd3e8dec72be75a4b3414c889839b5891e59e47707b3845a59e510328dd5a7b"
+        },
+        {
+          "path": "outputs/reports/s3_7_oracle_readiness_v2.json",
+          "kind": "disk_asset",
+          "sha256": "0e79232bb17b172ea6f5f105e6a3e75a9aa2d67a42614c66a1e65a566da9827b"
+        }
+      ]
+    }
+  ],
+  "license_audit": {
+    "references_path": "references/barrientos_2026",
+    "article_evidence": {
+      "pdf_path": "references/papers/Barrientos_2026_Impact_analysis.pdf",
+      "pdf_sha256": "6ce91fd29557b0c4b5afc3908ff0d65d446566d645119f133e95ede9ff42251b",
+      "pdf_byte_size": 1822940,
+      "title": "Impact analysis of regulatory requirement changes on business process compliance",
+      "doi": "10.1016/j.infsof.2026.108079",
+      "ccby_statement": "0950-5849/© 2026 The Authors. Published by Elsevier B.V. This is an open access article under the CC BY license (http://creativecommons.org/licenses/by/4.0/).",
+      "ccby_url": "http://creativecommons.org/licenses/by/4.0/",
+      "artifact_url": "https://anonymous.4open.science/r/Requirements_Change_for_Business_Process_Compliance",
+      "tum_reference_url": "https://portal.fis.tum.de/en/publications/impact-analysis-of-regulatory-requirement-changes-on-business-pro/",
+      "extracted_read_only": true
+    },
+    "paper_readable": true,
+    "article_license": "CC-BY-4.0",
+    "article_license_scope": "article_only",
+    "article_license_does_not_auto_cover_artifact": true,
+    "code_usable": "unknown_pending_confirmation",
+    "data_reusable": "unknown_pending_confirmation",
+    "project_activatable": false,
+    "ready_for_data_activation": false,
+    "activation_authorization_sentence": null,
+    "artifact_file_count": 91,
+    "artifact_license_evidence_files": [],
+    "evidence_notes": [
+      "article evidence chain: publisher PDF (references/papers/Barrientos_2026_Impact_analysis.pdf, sha256 6ce91fd29557..., 1822940 bytes) contains the DOI https://doi.org/10.1016/j.infsof.2026.108079, the Elsevier open-access statement 'This is an open access article under the CC BY license' (http://creativecommons.org/licenses/by/4.0/) and the artifact link https://anonymous.4open.science/r/Requirements_Change_for_Business_Process_Compliance; extracted read-only 2026-08-15",
+      "article license CC BY 4.0 applies to the ARTICLE ONLY and does NOT auto-cover the code/data artifact; artifact code/data license stays unknown_pending_confirmation",
+      "web-search snippets, file presence or downloadability are NOT license evidence; the TUM portal page is a cross-check reference only (not fetched this round)",
+      "no artifact license-evidence-named file was found"
+    ]
+  },
+  "mapping_options": {
+    "options": [
+      {
+        "id": "M1",
+        "name": "modality_identity_candidate_only",
+        "scope": "authorizes ONLY identity CANDIDATE mapping for the three shared modality classes (obligation/permission/prohibition); it does NOT authorize any precondition/norm/temporal_validity -> actor/action/condition/constraint/exception structural mapping",
+        "before": "External Barrientos labels are unavailable to the project: artifact license unknown, activation not authorized, no mapping policy, adapter hardened synthetic/shadow only.",
+        "after": "After G1+G2+G3: obligation/permission/prohibition map by identity to candidate-only modality values with field-level provenance for the human Gold review; without a separately approved field mapping policy the structural fields stay blank; definition is never produced; external ground truth stays a review aid.",
+        "risks": [
+          "identity assumes nominal modality-label alignment between Barrientos and Sun; unverified semantics are caught by the mandatory human Gold adjudication",
+          "no structural candidate values are produced until a separate field-mapping gate (G6) is decided"
+        ],
+        "confirmation_sentence": "I select mapping option M1 for the S2.11 Barrientos 3->4 modality mapping: identity candidate mapping for obligation/permission/prohibition ONLY; this does NOT authorize any precondition/norm/temporal_validity -> actor/action/condition/constraint/exception structural mapping (a separate field-mapping gate is required); definition is never auto-produced and requires separate human adjudication."
+      },
+      {
+        "id": "M2",
+        "name": "conservative_no_mapping",
+        "scope": "maps NO external label at all; all external content enters the human Gold review as review aid only",
+        "before": "Same as M1: external labels unavailable.",
+        "after": "After G1+G2+G3: no external label is mapped; every source element enters the human Gold review as review aid and all decisions are made from scratch by the user.",
+        "risks": [
+          "largest human workload (no candidate values to start from)",
+          "most conservative with respect to label-semantics drift"
+        ],
+        "confirmation_sentence": "I select mapping option M2 (conservative no-mapping: external labels are review aids only and every decision is made from scratch by human adjudication)."
+      }
+    ],
+    "recommended": "M1",
+    "recommendation_reason": "The three shared modality classes are nominally identical and the G0.7 registry dry-run documented the 3-class set; M1 minimizes human workload while the mandatory human Gold adjudication still guards against label-semantics drift and the hardened adapter never promotes candidates to Gold. M1 explicitly does NOT authorize structural field mapping (G6 remains a separate gate). M2 is the conservative fallback.",
+    "applied": false,
+    "definition_handling": "never auto-produced; definition-class records require separate human adjudication",
+    "external_ground_truth_role": "provenance or review aid only; never project Gold",
+    "structure_mapping_requires_separate_gate": true
+  },
+  "human_gold_protocol": {
+    "protocol_ready": true,
+    "blank_schema_provided": true,
+    "decision_fields": [
+      "sample_id",
+      "source_text",
+      "approved_text_en",
+      "modality",
+      "actor",
+      "action",
+      "condition",
+      "constraint",
+      "exception",
+      "evidence_span",
+      "review_state"
+    ],
+    "review_surface_separated": true,
+    "adjudication_separated": true,
+    "freeze_separated": true,
+    "publication_separated": true,
+    "final_adjudication_by": "user_only",
+    "gold_files_created": false,
+    "decision_prefill": false
+  },
+  "g0_5_candidate": {
+    "config_path": "configs/g05_complexity_candidate_draft_v1.json",
+    "config_sha256": "61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586",
+    "status": "draft_not_frozen",
+    "frozen": false
+  },
+  "g0_5_promotion_readiness": {
+    "g0_5_status": "draft_not_frozen",
+    "promotion_ready_for_application": false,
+    "missing": [
+      "user authorization manifest (G4 dry-run sentence is NOT applied)"
+    ],
+    "draft_config_sha256": "61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586",
+    "preregistration_claim_allowed": false
+  },
+  "adapter_status": {
+    "implementation": "synthetic_shadow_only",
+    "hardened": true,
+    "verified": true,
+    "source_path": "src/bpc_hybrid/s2_11_barrientos_adapter.py",
+    "tests_path": "tests/test_g07_barrientos_adapter_contract.py",
+    "formal_activation_blocked_on": [
+      "artifact code/data license qualification (unknown_pending_confirmation; article CC BY 4.0 does NOT cover the artifact)",
+      "data activation authorization",
+      "3->4 modality mapping policy approval (G3)",
+      "structural field mapping policy approval (G6)",
+      "human Gold adjudication for the external complex corpus (G5)"
+    ]
+  },
+  "user_gates": [
+    {
+      "gate_id": "G1",
+      "name": "confirm authoritative license evidence for references/barrientos_2026 artifact code/data",
+      "ready_for_authorization": false,
+      "authorization_sentence": null,
+      "missing": [
+        "ARTICLE license resolved: CC BY 4.0 (article-only, publisher statement hash-bound) — this does NOT cover the artifact",
+        "artifact code/data license evidence: authoritative LICENSE/COPYING/NOTICE/README/metadata on the artifact repository root or a publisher/author statement, versioned with URL/scope/license identifier/hash"
+      ]
+    },
+    {
+      "gate_id": "G2",
+      "name": "authorize external data activation (after artifact license qualification)",
+      "ready_for_authorization": false,
+      "authorization_sentence": null,
+      "missing": [
+        "G1 artifact code/data license qualified (currently unknown_pending_confirmation)",
+        "user activation authorization"
+      ]
+    },
+    {
+      "gate_id": "G3",
+      "name": "select the 3->4 modality mapping policy (modality identity candidate ONLY)",
+      "ready_for_authorization": true,
+      "authorization_sentence": "I select mapping option M1 for the S2.11 Barrientos 3->4 modality mapping: identity candidate mapping for obligation/permission/prohibition ONLY; this does NOT authorize any precondition/norm/temporal_validity -> actor/action/condition/constraint/exception structural mapping (a separate field-mapping gate is required); definition is never auto-produced and requires separate human adjudication.",
+      "missing": []
+    },
+    {
+      "gate_id": "G4",
+      "name": "authorize a FUTURE G0.5 freeze gate-application checkpoint (raw-byte config hash-bound)",
+      "ready_for_authorization": true,
+      "authorization_sentence": "I authorize a future gate-application checkpoint that freezes configs/g05_complexity_candidate_draft_v1.json (RAW BYTE sha256 61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586) as the G0.5 complexity contract (scope: future external complex corpora only; retrospective_use_forbidden=true; must take effect before any new complex-corpus results are produced). This sentence authorizes ONLY that future gate-application checkpoint; it does NOT freeze G0.5 this round.",
+      "missing": []
+    },
+    {
+      "gate_id": "G5",
+      "name": "authorize opening the blank S2.11 human Gold review surface",
+      "ready_for_authorization": false,
+      "authorization_sentence": null,
+      "future_authorization_sentence_after_prerequisites": "Future sentence, only after G1 artifact code/data license is qualified, G2 data activation is authorized, the actual corpus membership/hash is fixed and the review workload is sized: I authorize opening the blank S2.11 human Gold review surface; no decision may be prefilled and final adjudication is user-only.",
+      "missing": [
+        "G1 artifact code/data license qualified",
+        "G2 data activation authorized",
+        "actual corpus membership/hash fixed",
+        "review workload sized (corpus-dependent)"
+      ]
+    },
+    {
+      "gate_id": "G6",
+      "name": "authorize a structural field mapping policy (source element -> canonical Sun span field)",
+      "ready_for_authorization": false,
+      "authorization_sentence": null,
+      "missing": [
+        "a complete, evidence-based field mapping policy option set (source elements -> actor/action/condition/constraint/exception); v5 does NOT select one on its own"
+      ]
+    }
+  ],
+  "oracle_control": {
+    "formal_oracle_started": false,
+    "formal_oracle_authorized": false,
+    "ready_for_oracle_authorization": false,
+    "authorization_sentence": null,
+    "no_pseudo_oracle": true
+  },
+  "safety": {
+    "gates_unchanged": true,
+    "gold_predictions_results_contract_methods_unchanged": true,
+    "g0_5_frozen": false,
+    "references_read_only_not_activated": true,
+    "no_authorization_applied": true
+  },
+  "verifiers_executed": {
+    "scripts/verify_stage1_process_gold.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 21
+    },
+    "scripts/verify_s1_7_freezer_authorization.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 16
+    },
+    "scripts/verify_formal_benchmark_release_v2.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 53
+    },
+    "outputs/reports/verify_b0_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_direct_llm_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_stage2_formal_comparison_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    }
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

@@ -1,0 +1,421 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "s2_11_g0_5_pre_authorization@5.0.0",
+  "description": "Deterministic S2.11 / G0.5 pre-authorization user decision capsule v5. v5 supersedes the v3/v4 current-state/active-binding judgments; every v3/v4 core asset stays byte-exact (historical lifecycle semantics). v4 was pushed but its change event recorded 3 failed / 2057 passed / test_returncode=1 / integrity_pass=false — v5 explicitly records those red-test facts and is the version that restores the ACTIVE suite integrity (full audit exit 0). v5 also hardens: strict mode enum (INVALID_MODE), real file-backed evidence bindings (raw-byte SHA-256, ID/kind/scope/policy binding, path-safety), verifiable field-level provenance (exact element, deterministic locator, overlapping-span ambiguity), and the G0.5 raw-byte authorization hash domain (draft config 61938c99…; the semantic re-serialization hash 51a6e4fe… is never an authorization hash). All fail-closed invariants are consts; nothing is applied.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "build_note",
+    "v4_red_test_facts",
+    "supersedes",
+    "state_matrix",
+    "license_audit",
+    "mapping_options",
+    "human_gold_protocol",
+    "g0_5_candidate",
+    "g0_5_promotion_readiness",
+    "adapter_status",
+    "user_gates",
+    "oracle_control",
+    "safety",
+    "verifiers_executed",
+    "zero_api"
+  ],
+  "properties": {
+    "schema_version": {"const": "s2_11_g0_5_pre_authorization@5.0.0"},
+    "report_id": {"const": "s2_11_g0_5_pre_authorization_v5"},
+    "build_note": {"type": "string", "minLength": 20},
+    "v4_red_test_facts": {"$ref": "#/definitions/v4_red_test_facts"},
+    "supersedes": {
+      "type": "array",
+      "minItems": 20,
+      "items": {"$ref": "#/definitions/superseded_report"}
+    },
+    "state_matrix": {
+      "type": "array",
+      "minItems": 9,
+      "items": {"$ref": "#/definitions/matrix_item"}
+    },
+    "license_audit": {"$ref": "#/definitions/license_audit"},
+    "mapping_options": {"$ref": "#/definitions/mapping_options"},
+    "human_gold_protocol": {"$ref": "#/definitions/human_gold_protocol"},
+    "g0_5_candidate": {"$ref": "#/definitions/g0_5_candidate"},
+    "g0_5_promotion_readiness": {"$ref": "#/definitions/g0_5_promotion_readiness"},
+    "adapter_status": {"$ref": "#/definitions/adapter_status"},
+    "user_gates": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/definitions/user_gate"}
+    },
+    "oracle_control": {"$ref": "#/definitions/oracle_control"},
+    "safety": {"$ref": "#/definitions/safety"},
+    "verifiers_executed": {"$ref": "#/definitions/verifiers_executed"},
+    "zero_api": {"$ref": "#/definitions/zero_api"}
+  },
+  "definitions": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "v4_red_test_facts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "v4_audit_not_verified",
+        "v4_change_event_failed_tests",
+        "v4_change_event_test_returncode",
+        "v4_change_event_integrity_pass",
+        "v5_restores_active_suite_integrity",
+        "minimal_counterexamples"
+      ],
+      "properties": {
+        "v4_audit_not_verified": {"const": true},
+        "v4_change_event_failed_tests": {"const": 3},
+        "v4_change_event_test_returncode": {"const": 1},
+        "v4_change_event_integrity_pass": {"const": false},
+        "v5_restores_active_suite_integrity": {"const": true},
+        "minimal_counterexamples": {
+          "type": "array",
+          "minItems": 4,
+          "items": {"type": "string", "minLength": 10}
+        }
+      }
+    },
+    "superseded_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "reason"],
+      "properties": {
+        "path": {"type": "string", "minLength": 5},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "reason": {"type": "string", "minLength": 10}
+      }
+    },
+    "evidence_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "kind"],
+      "properties": {
+        "path": {"type": "string", "minLength": 3},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "kind": {
+          "enum": ["disk_asset", "manifest", "independent_verifier", "derivation"]
+        }
+      }
+    },
+    "matrix_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task_id", "status", "note", "evidence"],
+      "properties": {
+        "task_id": {"type": "string", "minLength": 4},
+        "status": {
+          "enum": ["verified", "frozen", "blocked", "partial", "development_only"]
+        },
+        "blockers": {"type": "array", "items": {"type": "string"}},
+        "note": {"type": "string", "minLength": 5},
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/definitions/evidence_ref"}
+        }
+      }
+    },
+    "article_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pdf_path",
+        "pdf_sha256",
+        "pdf_byte_size",
+        "title",
+        "doi",
+        "ccby_statement",
+        "ccby_url",
+        "artifact_url",
+        "tum_reference_url",
+        "extracted_read_only"
+      ],
+      "properties": {
+        "pdf_path": {"const": "references/papers/Barrientos_2026_Impact_analysis.pdf"},
+        "pdf_sha256": {"$ref": "#/definitions/sha256"},
+        "pdf_byte_size": {"type": "integer", "minimum": 1},
+        "title": {"const": "Impact analysis of regulatory requirement changes on business process compliance"},
+        "doi": {"const": "10.1016/j.infsof.2026.108079"},
+        "ccby_statement": {"type": "string", "minLength": 20},
+        "ccby_url": {"const": "http://creativecommons.org/licenses/by/4.0/"},
+        "artifact_url": {"const": "https://anonymous.4open.science/r/Requirements_Change_for_Business_Process_Compliance"},
+        "tum_reference_url": {"const": "https://portal.fis.tum.de/en/publications/impact-analysis-of-regulatory-requirement-changes-on-business-pro/"},
+        "extracted_read_only": {"const": true}
+      }
+    },
+    "license_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "references_path",
+        "article_evidence",
+        "paper_readable",
+        "article_license",
+        "article_license_scope",
+        "article_license_does_not_auto_cover_artifact",
+        "code_usable",
+        "data_reusable",
+        "project_activatable",
+        "ready_for_data_activation",
+        "activation_authorization_sentence",
+        "artifact_file_count",
+        "artifact_license_evidence_files",
+        "evidence_notes"
+      ],
+      "properties": {
+        "references_path": {"const": "references/barrientos_2026"},
+        "article_evidence": {"$ref": "#/definitions/article_evidence"},
+        "paper_readable": {"const": true},
+        "article_license": {"const": "CC-BY-4.0"},
+        "article_license_scope": {"const": "article_only"},
+        "article_license_does_not_auto_cover_artifact": {"const": true},
+        "code_usable": {"const": "unknown_pending_confirmation"},
+        "data_reusable": {"const": "unknown_pending_confirmation"},
+        "project_activatable": {"const": false},
+        "ready_for_data_activation": {"const": false},
+        "activation_authorization_sentence": {"type": "null"},
+        "artifact_file_count": {"type": "integer", "minimum": 1},
+        "artifact_license_evidence_files": {"type": "array", "items": {"type": "string"}},
+        "evidence_notes": {
+          "type": "array",
+          "minItems": 3,
+          "items": {"type": "string", "minLength": 10}
+        }
+      }
+    },
+    "mapping_option": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "scope", "before", "after", "risks", "confirmation_sentence"],
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string", "minLength": 3},
+        "scope": {"type": "string", "minLength": 10},
+        "before": {"type": "string", "minLength": 10},
+        "after": {"type": "string", "minLength": 10},
+        "risks": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "confirmation_sentence": {"type": "string", "minLength": 10}
+      }
+    },
+    "mapping_options": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "options",
+        "recommended",
+        "recommendation_reason",
+        "applied",
+        "definition_handling",
+        "external_ground_truth_role",
+        "structure_mapping_requires_separate_gate"
+      ],
+      "properties": {
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "items": {"$ref": "#/definitions/mapping_option"}
+        },
+        "recommended": {"type": "string"},
+        "recommendation_reason": {"type": "string", "minLength": 10},
+        "applied": {"const": false},
+        "definition_handling": {"const": "never auto-produced; definition-class records require separate human adjudication"},
+        "external_ground_truth_role": {"const": "provenance or review aid only; never project Gold"},
+        "structure_mapping_requires_separate_gate": {"const": true}
+      }
+    },
+    "human_gold_protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol_ready",
+        "blank_schema_provided",
+        "decision_fields",
+        "review_surface_separated",
+        "adjudication_separated",
+        "freeze_separated",
+        "publication_separated",
+        "final_adjudication_by",
+        "gold_files_created",
+        "decision_prefill"
+      ],
+      "properties": {
+        "protocol_ready": {"const": true},
+        "blank_schema_provided": {"const": true},
+        "decision_fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string"}
+        },
+        "review_surface_separated": {"const": true},
+        "adjudication_separated": {"const": true},
+        "freeze_separated": {"const": true},
+        "publication_separated": {"const": true},
+        "final_adjudication_by": {"const": "user_only"},
+        "gold_files_created": {"const": false},
+        "decision_prefill": {"const": false}
+      }
+    },
+    "g0_5_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["config_path", "config_sha256", "status", "frozen"],
+      "properties": {
+        "config_path": {"const": "configs/g05_complexity_candidate_draft_v1.json"},
+        "config_sha256": {"$ref": "#/definitions/sha256"},
+        "status": {"const": "draft_not_frozen"},
+        "frozen": {"const": false}
+      }
+    },
+    "g0_5_promotion_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "g0_5_status",
+        "promotion_ready_for_application",
+        "missing",
+        "draft_config_sha256",
+        "preregistration_claim_allowed"
+      ],
+      "properties": {
+        "g0_5_status": {"const": "draft_not_frozen"},
+        "promotion_ready_for_application": {"const": false},
+        "missing": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string"}
+        },
+        "draft_config_sha256": {"$ref": "#/definitions/sha256"},
+        "preregistration_claim_allowed": {"const": false}
+      }
+    },
+    "adapter_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "implementation",
+        "hardened",
+        "verified",
+        "source_path",
+        "tests_path",
+        "formal_activation_blocked_on"
+      ],
+      "properties": {
+        "implementation": {"const": "synthetic_shadow_only"},
+        "hardened": {"const": true},
+        "verified": {"const": true},
+        "source_path": {"const": "src/bpc_hybrid/s2_11_barrientos_adapter.py"},
+        "tests_path": {"const": "tests/test_g07_barrientos_adapter_contract.py"},
+        "formal_activation_blocked_on": {
+          "type": "array",
+          "minItems": 5,
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "user_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gate_id",
+        "name",
+        "ready_for_authorization",
+        "authorization_sentence",
+        "missing"
+      ],
+      "properties": {
+        "gate_id": {"type": "string"},
+        "name": {"type": "string", "minLength": 3},
+        "ready_for_authorization": {"type": "boolean"},
+        "authorization_sentence": {
+          "oneOf": [{"type": "null"}, {"type": "string", "minLength": 20}]
+        },
+        "future_authorization_sentence_after_prerequisites": {
+          "oneOf": [{"type": "null"}, {"type": "string", "minLength": 20}]
+        },
+        "missing": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "oracle_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "formal_oracle_started",
+        "formal_oracle_authorized",
+        "ready_for_oracle_authorization",
+        "authorization_sentence",
+        "no_pseudo_oracle"
+      ],
+      "properties": {
+        "formal_oracle_started": {"const": false},
+        "formal_oracle_authorized": {"const": false},
+        "ready_for_oracle_authorization": {"const": false},
+        "authorization_sentence": {"type": "null"},
+        "no_pseudo_oracle": {"const": true}
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gates_unchanged",
+        "gold_predictions_results_contract_methods_unchanged",
+        "g0_5_frozen",
+        "references_read_only_not_activated",
+        "no_authorization_applied"
+      ],
+      "properties": {
+        "gates_unchanged": {"const": true},
+        "gold_predictions_results_contract_methods_unchanged": {"const": true},
+        "g0_5_frozen": {"const": false},
+        "references_read_only_not_activated": {"const": true},
+        "no_authorization_applied": {"const": true}
+      }
+    },
+    "verifier_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verified", "exit_code"],
+      "properties": {
+        "verified": {"const": true},
+        "exit_code": {"const": 0},
+        "checks": {"type": "integer", "minimum": 1}
+      }
+    },
+    "verifiers_executed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scripts/verify_stage1_process_gold.py",
+        "scripts/verify_s1_7_freezer_authorization.py",
+        "scripts/verify_formal_benchmark_release_v2.py",
+        "outputs/reports/verify_b0_formal_arm_v1.py",
+        "outputs/reports/verify_direct_llm_formal_arm_v1.py",
+        "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py",
+        "outputs/reports/verify_stage2_formal_comparison_v1.py"
+      ],
+      "properties": {
+        "scripts/verify_stage1_process_gold.py": {"$ref": "#/definitions/verifier_result"},
+        "scripts/verify_s1_7_freezer_authorization.py": {"$ref": "#/definitions/verifier_result"},
+        "scripts/verify_formal_benchmark_release_v2.py": {"$ref": "#/definitions/verifier_result"},
+        "outputs/reports/verify_b0_formal_arm_v1.py": {"$ref": "#/definitions/verifier_result"},
+        "outputs/reports/verify_direct_llm_formal_arm_v1.py": {"$ref": "#/definitions/verifier_result"},
+        "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py": {"$ref": "#/definitions/verifier_result"},
+        "outputs/reports/verify_stage2_formal_comparison_v1.py": {"$ref": "#/definitions/verifier_result"}
+      }
+    },
+    "zero_api": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["new_llm_api_calls"],
+      "properties": {
+        "new_llm_api_calls": {"const": 0}
+      }
+    }
+  }
+}

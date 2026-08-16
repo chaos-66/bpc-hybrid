@@ -3557,3 +3557,16 @@
 - 仍存在 blocker：无
 - 备注：article license confirmed CC BY 4.0 (article-only, publisher PDF hash-bound 6ce91fd2); artifact code/data license unresolved (unknown_pending_confirmation); references read-only/not activated; adapter synthetic/shadow only (hardened); G0.5 draft_not_frozen; G3/G4 dry-run only; G2/G5/G6 false/null; no Gold, no API, no Oracle, gates unchanged; v3 capsule superseded byte-exact; v3 verifier/tests fail-closed as designed because v3 bindings include files this round was required to modify (MASTER_PIPELINE.md, PROJECT_AUDIT.md, adapter, g07 tests) - 3 expected v3 failures, 2057 passed
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-16T18:37:13.695996+00:00 - S2.11/G0.5 pre-authorization decision capsule v5: restore audit integrity (v4 red tests fixed via historical capsule lifecycle semantics), strict adapter mode enum, real file-backed evidence bindings, verifiable field-level provenance, G0.5 raw-byte authorization hash domain; no authorization applied
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2118 passed, 24 skipped, 19 warnings in 960.63s (0:16:00)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`8e8b488ea6d91ef0e6d0cf942ff9729e3e6776f6`；相关未提交路径：18 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：full audit exit 0 (2118 passed, 24 skipped, 19 warnings), test_returncode=0; v4 red-test facts recorded in v5 (3 failed/2057 passed/test_returncode=1/integrity_pass=false) and fixed by lifecycle semantics; v3/v4 core outputs byte-exact, pytest files corrected to lifecycle semantics; article license CC BY 4.0 article-only confirmed, artifact code/data unresolved (unknown_pending_confirmation); adapter synthetic/shadow only (hardened v5, strict mode INVALID_MODE, file-backed evidence binding, exact element/locator provenance); G0.5 draft_not_frozen, raw-byte hash 61938c99 is the only authorization hash (semantic 51a6e4fe rejected); G3/G4 dry-run only; G1/G2/G5/G6 false/null; no Gold, no API, no Oracle, gates unchanged
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
