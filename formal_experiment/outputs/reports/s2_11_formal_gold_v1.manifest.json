@@ -1,0 +1,96 @@
+{
+  "schema_version": "s2_11_formal_gold_manifest@1.0.0",
+  "publication_status": "verified_frozen_published",
+  "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+  "record_count": 36,
+  "source_provenance": {
+    "proposal_source": "deepseek_offline_proposal_v3",
+    "adjudication": "user_batch_confirmation",
+    "reviewer": "hyc",
+    "revisions": "none",
+    "independent_from_scratch_expert_annotation": false,
+    "derivation": "canonical decisions copied without adding, inferring, or rewriting any label, span, mapping, or relation"
+  },
+  "bindings": {
+    "confirmation_event": {
+      "path": "configs/s2_11_batch_import_confirmation_event_v3.json",
+      "sha256": "226b47982934dafce987b34df857144a046c7cbf54b5969efa4fb19e2d079405",
+      "user_instruction_utf8_sha256": "7414a38de5e5441b1881978caa0b2bd893c0463d247ce19d4651da54aa685b82"
+    },
+    "proposal_report": {
+      "path": "outputs/reports/s2_11_proposal_report_v3.json",
+      "sha256": "0cd725b4e7e14c88a97ca005ec10dac3f7fc77c2ebf3955eb746abdc9479616a"
+    },
+    "proposal_file": {
+      "path": "outputs/development/s2_11_local_working/adjudication_proposals_v3/proposals.jsonl",
+      "sha256": "9882ba45d8486235df7fc2411eb7a1c3e5977f87ade527898ff29e45396e6a3b"
+    },
+    "decisions": {
+      "path": "data/development/human_review/s2_11_review_decisions_v2.json",
+      "sha256": "8dacfbd0244e6e7afa6336e5ddd679818b2a196b09de4a585e1628254a476d54"
+    },
+    "membership": {
+      "path": "outputs/reports/s2_11_corpus_membership_v1.json",
+      "sha256": "a63c50ea3164e6629a66746531ad379c3970c8dfa86971eaa35186693bb7a2af"
+    },
+    "g0_5_frozen_config": {
+      "path": "configs/g05_complexity_frozen_v1.json",
+      "sha256": "6f632dd4965cbd21c6889471080c731e3ccaf0b9158fa71e5ba874ea561ffa4b"
+    }
+  },
+  "freeze": {
+    "verified": true,
+    "frozen": true,
+    "adjudicated": 36,
+    "unresolved": 0
+  },
+  "artifacts": {
+    "data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json": {
+      "path": "data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json",
+      "sha256": "039ae8b2429826ae2b320667fb4a0dff96de6408b0a9637c1d9911565129c804",
+      "byte_size": 83915
+    },
+    "outputs/reports/s2_11_freeze_publication_capsule_v1.json": {
+      "path": "outputs/reports/s2_11_freeze_publication_capsule_v1.json",
+      "sha256": "90ea94217c4450356a5b20678b36995c48aa220fc6b66bd962ee1705bd1cefed",
+      "byte_size": 2384
+    },
+    "outputs/reports/s2_11_freeze_publication_capsule_v1.md": {
+      "path": "outputs/reports/s2_11_freeze_publication_capsule_v1.md",
+      "sha256": "88849bbd1b1dda1dc456bd5af5b3e3526555c9037b928c66d7f44232bf5a7175",
+      "byte_size": 716
+    }
+  },
+  "implementation": {
+    "configs/schemas/s2_11_formal_gold_v1.schema.json": {
+      "path": "configs/schemas/s2_11_formal_gold_v1.schema.json",
+      "sha256": "24657ede7379799808a1558c94003745ec0cbcfb932b1b2a78036a00a7abfb3d"
+    },
+    "scripts/publish_s2_11_formal_gold_v1.py": {
+      "path": "scripts/publish_s2_11_formal_gold_v1.py",
+      "sha256": "ac113f085f8778b73f1190bd6704b77fed459b7fc90cfa96e2e69683c7a9fd3e"
+    },
+    "scripts/verify_s2_11_formal_gold_v1.py": {
+      "path": "scripts/verify_s2_11_formal_gold_v1.py",
+      "sha256": "7fae1777152449d4736b2b109069060de09201bcad164ade54e67bcb61500238"
+    },
+    "scripts/verify_s2_11_review_freeze_v3.py": {
+      "path": "scripts/verify_s2_11_review_freeze_v3.py",
+      "sha256": "3910f6d9c439895976f5ec492e442ca3b4526b13a35fec72b75cc1e1675a4623"
+    },
+    "src/bpc_hybrid/s2_11_canonical_v3.py": {
+      "path": "src/bpc_hybrid/s2_11_canonical_v3.py",
+      "sha256": "65bc7fad22e9e9df4ef77de198ba2c91514fa849eb9ab6064059778d8888f6fc"
+    }
+  },
+  "replay_command": "python formal_experiment/scripts/publish_s2_11_formal_gold_v1.py --check",
+  "verification_command": "python formal_experiment/scripts/verify_s2_11_formal_gold_v1.py",
+  "boundaries": {
+    "raw_text_committed": false,
+    "gold_rule_records_created": false,
+    "stage3_oracle_started": false
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

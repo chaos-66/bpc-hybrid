@@ -3674,3 +3674,16 @@
 - 仍存在 blocker：无
 - 备注：用户确认事件 configs/s2_11_batch_import_confirmation_event_v3.json（proposal v3 SHA 9882ba45d8486235df7fc2411eb7a1c3e5977f87ade527898ff29e45396e6a3b，reviewer hyc，gold_created=false）；decisions v2 36/36 adjudicated；freeze validator v3 frozen=true；readiness v3 schema 3.1.0；transition v7 VERIFIED；v5/v6 历史测试 Checkpoint G 例外记录在案；PROJECT_AUDIT.md 因历史双重编码乱码本轮未改动（另行报告）
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-17T16:00:34.255868+00:00 - Publish verified S2.11 complex-corpus formal Gold from frozen user-adjudicated canonical decisions
+
+- 事件类型：里程碑（`milestone`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2556 passed, 24 skipped, 19 warnings in 1048.95s (0:17:28)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`781339be60ce1e84454e6c75c65e6d38c6166df4`；相关未提交路径：18 个
+- Gold：按授权导入人工审核（`authorized_human_review_import`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Derived byte-equivalently from proposal v3 plus user batch confirmation by hyc; not independent-from-scratch expert annotation. Committed artifact excludes third-party raw text. Zero LLM/API; no Gold Rule Records; Oracle not started. PROJECT_AUDIT.md intentionally untouched because its historical encoding is not safely repairable in this checkpoint. A prior sandbox-only audit attempt failed on temporary-directory permissions; the required non-sandbox offline rerun passed.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

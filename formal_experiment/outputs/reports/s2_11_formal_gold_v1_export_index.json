@@ -1,0 +1,35 @@
+{
+  "schema_version": "s2_11_formal_gold_export_index@1.0.0",
+  "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+  "artifacts": {
+    "data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json": {
+      "path": "data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json",
+      "sha256": "039ae8b2429826ae2b320667fb4a0dff96de6408b0a9637c1d9911565129c804",
+      "byte_size": 83915
+    },
+    "outputs/reports/s2_11_freeze_publication_capsule_v1.json": {
+      "path": "outputs/reports/s2_11_freeze_publication_capsule_v1.json",
+      "sha256": "90ea94217c4450356a5b20678b36995c48aa220fc6b66bd962ee1705bd1cefed",
+      "byte_size": 2384
+    },
+    "outputs/reports/s2_11_freeze_publication_capsule_v1.md": {
+      "path": "outputs/reports/s2_11_freeze_publication_capsule_v1.md",
+      "sha256": "88849bbd1b1dda1dc456bd5af5b3e3526555c9037b928c66d7f44232bf5a7175",
+      "byte_size": 716
+    },
+    "outputs/reports/s2_11_formal_gold_v1.manifest.json": {
+      "path": "outputs/reports/s2_11_formal_gold_v1.manifest.json",
+      "sha256": "12ab299d98468401745fe300cb8bbf9c0fd91c4ca9b295fb6a57fcb4446d2101",
+      "byte_size": 4067
+    }
+  },
+  "schema": {
+    "path": "configs/schemas/s2_11_formal_gold_v1.schema.json",
+    "sha256": "24657ede7379799808a1558c94003745ec0cbcfb932b1b2a78036a00a7abfb3d"
+  },
+  "independent_verifier": {
+    "path": "scripts/verify_s2_11_formal_gold_v1.py",
+    "sha256": "7fae1777152449d4736b2b109069060de09201bcad164ade54e67bcb61500238"
+  },
+  "replay_command": "python formal_experiment/scripts/publish_s2_11_formal_gold_v1.py --check"
+}
