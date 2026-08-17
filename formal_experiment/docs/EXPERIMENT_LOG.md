@@ -3596,3 +3596,16 @@
 - 仍存在 blocker：无
 - 备注：用户转发授权原句 除了用apikey的时候要授权，其他直接正常进行即可。（UTF-8 SHA-256 a8a1dec4…）记录于 configs/s2_11_user_authorization_event_v1.json；G0.5 冻结 configs/g05_complexity_frozen_v1.json（frozen_before_new_results、retrospective/s2_10 forbidden、scope=future_external_complex_corpora_only，draft 61938c99… 不变，v6 密封链完整验证，冻结前零候选）；v6 capsule 转历史安全基线（核心资产字节不变）；全量审计 2193 passed/24 skipped/19 warnings（1139.53s）exit 0；零 LLM/API、未伪造 Gold、未发布受限原文、S2.13/S3.7 未动
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-17T01:18:21.702494+00:00 - S2.11 语料激活与人工 review surface（Checkpoint B：corpus inventory + deterministic ingestion + 29 候选 + G0.5 frozen 分类 + G5 空白 review surface 打开 + S2.11=in_progress_human_adjudication + transition v3 重推导）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2266 passed, 24 skipped, 19 warnings in 1205.86s (0:20:05)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`63fcc96d35547bd874ed2a9fccd630ec9907b590`；相关未提交路径：30 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：真实 Barrientos requirement 语料本地只读激活（3 文件 40 记录 hash-only membership，4 条空文本隔离，不复制原文）；确定性模态抽取（文档化关键词规则+精确 span）→ hardened adapter local_read_only_research 模式（许可未知不声称 verified，用户授权事件+containment 证据）→ 29 条候选（obligation 21/permission 2/prohibition 6；G0.5 frozen L1×28/L2×1；provenance 29/29）＋7 条运行期隔离（MODALITY_UNKNOWN/FIELD_SPAN_AMBIGUOUS，共 11 条）；完整候选含原文仅 gitignored 本地目录 outputs/development/s2_11_local_working/；G5=applied_review_surface_open（29 samples 空白 pack 全 null/unreviewed + 用户决策文件 + review 工具（hash 只读加载原文、原子写、备份、resume、progress）+ 冻结验证器）；S2.11=in_progress_human_adjudication（29 条待用户裁决+11 条隔离）；transition readiness v3 重推导（v1/v2 字节保留）；全量审计 2266 passed/24 skipped/19 warnings（1205.86s）exit 0；零 LLM/API、未伪造 Gold、未发布受限原文、S2.12/S2.13/S3.7 未推进
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -164,10 +165,22 @@ def verify() -> dict[str, Any]:
     check("no S2.11 candidate/result before the freeze (prior-results "
           "scan empty)", scan["result_paths"] == [],
           "; ".join(scan["result_paths"][:10]))
+    # The Checkpoint B candidate artifacts live ONLY in the gitignored
+    # local working directory, which the scan patterns deliberately do not
+    # cover; they must be git-ignored (never committed).
     local_files = sorted(p for p in LOCAL_WORKING_DIR.rglob("*")
                          if p.is_file()) if LOCAL_WORKING_DIR.is_dir() else []
-    check("local candidate working dir absent/empty",
-          local_files == [], "; ".join(str(p) for p in local_files[:5]))
+    ignored_ok = True
+    for p in local_files[:5]:
+        proc = subprocess.run(
+            ["git", "check-ignore", "--",
+             str(p.relative_to(ROOT))],
+            cwd=ROOT, capture_output=True, text=True, check=False)
+        if proc.returncode != 0:
+            ignored_ok = False
+            break
+    check("local candidate artifacts git-ignored (never committed)",
+          ignored_ok)
     try:
         result = validate_frozen_application(
             ROOT / DRAFT_REL, ROOT / FROZEN_REL, ROOT / MANIFEST_REL,

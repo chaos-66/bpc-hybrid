@@ -250,11 +250,26 @@ def test_draft_config_stays_byte_unchanged() -> None:
 
 
 def test_no_candidates_before_freeze() -> None:
+    # The sealed chain's prior-results scan (data/results/*g05* and
+    # outputs/evidence/*g05*) must stay EMPTY: the freeze was applied
+    # before any candidate/result existed. The Checkpoint B candidate
+    # artifacts live ONLY in the gitignored local working directory
+    # (outputs/development/s2_11_local_working), which the scan patterns
+    # deliberately do not cover.
     scan = derive_prior_results(ROOT)
     assert scan["result_paths"] == []
-    local_files = sorted(p for p in LOCAL_WORKING_DIR.rglob("*")
-                         if p.is_file()) if LOCAL_WORKING_DIR.is_dir() else []
-    assert local_files == []
+    local_dir = LOCAL_WORKING_DIR
+    if local_dir.is_dir():
+        local_files = sorted(p for p in local_dir.rglob("*")
+                             if p.is_file())
+        assert local_files, "local working dir must not be empty after B"
+        # the local artifacts are NOT committed (git-ignored)
+        import subprocess as _sp
+        proc = _sp.run(["git", "check-ignore", "--",
+                        str(local_files[0].relative_to(ROOT))],
+                       cwd=ROOT, capture_output=True, text=True)
+        assert proc.returncode == 0, \
+            "local candidate artifacts must be git-ignored"
 
 
 # ---------------------------------------------------------------------------

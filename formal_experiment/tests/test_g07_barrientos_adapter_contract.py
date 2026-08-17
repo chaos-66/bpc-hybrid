@@ -60,6 +60,7 @@ from bpc_hybrid.s2_11_barrientos_adapter import (
     TargetCollisionError,
     UnknownModalityError,
     UnresolvedCrossReferenceError,
+    UserAuthorizationNotValidError,
     convert_to_candidate,
     field_locator,
 )
@@ -1005,6 +1006,212 @@ def test_synthetic_output_has_null_formal_provenance() -> None:
     out = _convert(mode="synthetic_test_only")
     assert out["formal_evidence_provenance"] is None
     assert out["semantics"] == "candidate_only"
+
+
+# --- 7c. v6/B: local_read_only_research mode (unknown license) -------------
+
+
+def _make_user_authorization_root(
+        tmp_path: Path) -> tuple[Path, EvidenceBinding]:
+    """Write a synthetic user_authorization evidence document (exact
+    containment policy, unknown license) into tmp_path and return
+    (root, binding)."""
+    root = tmp_path
+    doc = {
+        "kind": "user_authorization",
+        "event_id": "syn-user-auth-1",
+        "authorization_scope": "local_read_only_nonredistributive_s2_11",
+        "user_instruction_utf8_sha256": "11" * 32,
+        "containment_policy": {
+            "artifact_license_verified": False,
+            "artifact_license_status": "unknown_pending_confirmation",
+            "local_read_only_research_use_authorized_by_user": True,
+            "raw_redistribution_allowed": False,
+            "raw_publication_allowed": False,
+            "references_mutation_allowed": False,
+            "formal_export_may_include_only_hashes_ids_aggregates_and_user_created_decisions": True,
+        },
+        "append_only": True,
+    }
+    doc_hash = _write_json(root / "user_authorization.json", doc)
+    binding = EvidenceBinding(
+        kind="user_authorization", evidence_id="syn-user-auth-1",
+        evidence_hash=doc_hash, path="user_authorization.json",
+        scope="local_read_only_nonredistributive_s2_11")
+    return root, binding
+
+
+def _local_policy(binding: EvidenceBinding,
+                  synthetic: bool = False) -> MappingPolicy:
+    return MappingPolicy(
+        policy_id="syn-policy-v1", approved=True,
+        synthetic_test_only=synthetic,
+        modality_identity={
+            "obligation": "obligation",
+            "permission": "permission",
+            "prohibition": "prohibition",
+        },
+        field_mapping={},
+        user_authorization_binding=binding,
+    )
+
+
+def _unknown_license() -> LicenseState:
+    return LicenseState(qualified=False,
+                        license_status="unknown_pending_confirmation")
+
+
+def test_local_read_only_mode_requires_user_authorization_binding(
+        tmp_path: Path) -> None:
+    policy = _synthetic_policy(synthetic_test_only=False)
+    with pytest.raises(EvidenceBindingMissingError) as exc:
+        _convert(mode="local_read_only_research", mapping_policy=policy,
+                 evidence_root=tmp_path,
+                 license_state=_unknown_license())
+    assert _error_code(exc.value) == "EVIDENCE_BINDING_MISSING"
+
+
+def test_local_read_only_mode_rejects_synthetic_binding(
+        tmp_path: Path) -> None:
+    root, binding = _make_user_authorization_root(tmp_path)
+    binding = EvidenceBinding(
+        kind="user_authorization", evidence_id=binding.evidence_id,
+        evidence_hash=binding.evidence_hash, path=binding.path,
+        scope=binding.scope, synthetic=True)
+    with pytest.raises(EvidenceBindingSyntheticError) as exc:
+        _convert(mode="local_read_only_research",
+                 mapping_policy=_local_policy(binding), evidence_root=root,
+                 license_state=_unknown_license())
+    assert _error_code(exc.value) == "EVIDENCE_BINDING_SYNTHETIC"
+
+
+def test_local_read_only_mode_accepts_real_user_authorization(
+        tmp_path: Path) -> None:
+    root, binding = _make_user_authorization_root(tmp_path)
+    out = _convert(mode="local_read_only_research",
+                   mapping_policy=_local_policy(binding), evidence_root=root,
+                   license_state=_unknown_license())
+    assert out["semantics"] == "candidate_only"
+    assert out["is_gold"] is False
+    prov = out["formal_evidence_provenance"]
+    assert prov is not None
+    assert prov["mode"] == "local_read_only_research"
+    assert prov["license_verified"] is False
+    assert prov["license_status"] == "unknown_pending_confirmation"
+    assert prov["user_authorization"]["event_id"] == "syn-user-auth-1"
+    assert prov["containment_policy"]["raw_redistribution_allowed"] is False
+    guard = out["promotion_guard"]
+    assert guard["local_read_only_research"] is True
+    assert guard["raw_redistribution_allowed"] is False
+    assert guard["license_verified"] is False
+
+
+def test_local_read_only_mode_rejects_redistribution_allowed(
+        tmp_path: Path) -> None:
+    root, binding = _make_user_authorization_root(tmp_path)
+    doc = json.loads((root / "user_authorization.json")
+                     .read_text(encoding="utf-8"))
+    doc["containment_policy"]["raw_redistribution_allowed"] = True
+    doc_hash = _write_json(root / "user_authorization.json", doc)
+    binding = EvidenceBinding(
+        kind="user_authorization", evidence_id=binding.evidence_id,
+        evidence_hash=doc_hash, path=binding.path, scope=binding.scope)
+    with pytest.raises(UserAuthorizationNotValidError) as exc:
+        _convert(mode="local_read_only_research",
+                 mapping_policy=_local_policy(binding), evidence_root=root,
+                 license_state=_unknown_license())
+    assert _error_code(exc.value) == "USER_AUTHORIZATION_NOT_VALID"
+
+
+def test_local_read_only_mode_rejects_license_claimed_verified(
+        tmp_path: Path) -> None:
+    root, binding = _make_user_authorization_root(tmp_path)
+    doc = json.loads((root / "user_authorization.json")
+                     .read_text(encoding="utf-8"))
+    doc["containment_policy"]["artifact_license_verified"] = True
+    doc_hash = _write_json(root / "user_authorization.json", doc)
+    binding = EvidenceBinding(
+        kind="user_authorization", evidence_id=binding.evidence_id,
+        evidence_hash=doc_hash, path=binding.path, scope=binding.scope)
+    with pytest.raises(UserAuthorizationNotValidError) as exc:
+        _convert(mode="local_read_only_research",
+                 mapping_policy=_local_policy(binding), evidence_root=root,
+                 license_state=_unknown_license())
+    assert _error_code(exc.value) == "USER_AUTHORIZATION_NOT_VALID"
+
+
+def test_local_read_only_mode_rejects_scope_mismatch(
+        tmp_path: Path) -> None:
+    root, binding = _make_user_authorization_root(tmp_path)
+    binding = EvidenceBinding(
+        kind="user_authorization", evidence_id=binding.evidence_id,
+        evidence_hash=binding.evidence_hash, path=binding.path,
+        scope="s2_11_candidate_mapping_only")
+    with pytest.raises(EvidenceDocMismatchError) as exc:
+        _convert(mode="local_read_only_research",
+                 mapping_policy=_local_policy(binding), evidence_root=root,
+                 license_state=_unknown_license())
+    assert _error_code(exc.value) == "EVIDENCE_DOC_MISMATCH"
+
+
+def test_local_read_only_mode_rejects_qualified_license_state(
+        tmp_path: Path) -> None:
+    root, binding = _make_user_authorization_root(tmp_path)
+    with pytest.raises(LicenseNotQualifiedError) as exc:
+        _convert(mode="local_read_only_research",
+                 mapping_policy=_local_policy(binding), evidence_root=root,
+                 license_state=LicenseState(qualified=True,
+                                             license_status="qualified"))
+    assert _error_code(exc.value) == "LICENSE_NOT_QUALIFIED"
+
+
+def test_local_read_only_mode_accepts_unknown_license_state(
+        tmp_path: Path) -> None:
+    root, binding = _make_user_authorization_root(tmp_path)
+    out = _convert(mode="local_read_only_research",
+                   mapping_policy=_local_policy(binding), evidence_root=root,
+                   license_state=LicenseState(
+                       qualified=False,
+                       license_status="unknown_pending_confirmation"))
+    assert out["formal_evidence_provenance"]["license_verified"] is False
+
+
+def test_local_read_only_mode_rejects_fabricated_gold_claims(
+        tmp_path: Path) -> None:
+    root, binding = _make_user_authorization_root(tmp_path)
+    record = _synthetic_record(external_annotation={
+        "modality": "obligation", "origin": "external ground truth"})
+    out = _convert(record, mode="local_read_only_research",
+                   mapping_policy=_local_policy(binding), evidence_root=root,
+                   license_state=_unknown_license())
+    assert out["is_gold"] is False
+    assert out["promotion_guard"]["human_adjudicated"] is False
+    assert out["promotion_guard"]["gold_promotion"] is False
+    assert "external_annotation_review_aid_only" in out["warnings"]
+
+
+def test_local_read_only_mode_works_with_checkpoint_a_event_read_only() -> None:
+    # Integration: the REAL Checkpoint A user authorization event (already
+    # committed) is the evidence document; the adapter reads it read-only.
+    root = Path(__file__).resolve().parents[1]
+    event_rel = "configs/s2_11_user_authorization_event_v1.json"
+    event_path = root / event_rel
+    assert event_path.is_file()
+    binding = EvidenceBinding(
+        kind="user_authorization",
+        evidence_id="s2-11-user-auth-2026-08-17-v1",
+        evidence_hash=hashlib.sha256(event_path.read_bytes()).hexdigest(),
+        path=event_rel,
+        scope="local_read_only_nonredistributive_s2_11")
+    out = _convert(mode="local_read_only_research",
+                   mapping_policy=_local_policy(binding), evidence_root=root,
+                   license_state=_unknown_license())
+    prov = out["formal_evidence_provenance"]
+    assert prov["user_authorization"]["event_id"] == \
+        "s2-11-user-auth-2026-08-17-v1"
+    assert prov["user_authorization"]["user_instruction_utf8_sha256"] == \
+        "a8a1dec4c826b1303fde64f2ac111ea2886ad0b08fd8a20af68b5a67130bfc64"
+    assert prov["license_verified"] is False
 
 
 # --- 8. external labels never Gold -------------------------------------------

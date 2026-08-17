@@ -1,0 +1,14 @@
+{
+  "schema_version": "s2_11_g5_review_surface@1.0.0",
+  "status": "applied_review_surface_open",
+  "blank_review_pack": "data/development/human_review/s2_11_blank_review_v1.json",
+  "decisions_file": "data/development/human_review/s2_11_review_decisions_v1.json",
+  "review_tool": "scripts/review_s2_11_candidates.py",
+  "freeze_validator": "scripts/verify_s2_11_review_freeze.py",
+  "candidate_run": "outputs/reports/s2_11_candidate_run_v1.json",
+  "workload_records_for_user": 29,
+  "gold_files_created": false,
+  "final_adjudication_by": "user_only",
+  "raw_text_committed": false,
+  "hash_mismatch_refuses": true
+}

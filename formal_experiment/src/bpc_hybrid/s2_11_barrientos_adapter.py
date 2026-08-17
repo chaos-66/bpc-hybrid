@@ -92,8 +92,17 @@ SUN_MODALITY_CLASSES = frozenset(
 CANONICAL_SPAN_FIELDS = frozenset(
     {"actor", "action", "condition", "constraint", "exception"})
 
-# Strict mode enum (v5): anything else is INVALID_MODE.
-VALID_MODES = frozenset({"synthetic_test_only", "formal"})
+# Strict mode enum (v5; extended in the user-authorized activation round):
+# anything else is INVALID_MODE.
+VALID_MODES = frozenset({
+    "synthetic_test_only", "formal",
+    # user-authorized local read-only research path (Checkpoint A/B):
+    # the artifact license is UNKNOWN (never claimed verified), the user
+    # authorized local read-only non-redistributive research use, and a
+    # file-backed user_authorization evidence document (containment
+    # policy) is required instead of license qualification.
+    "local_read_only_research",
+})
 
 # Controlled scope enums (v6): scopes are never free-form strings.
 # A license scope must be one of LICENSE_SCOPES; only the artifact-covering
@@ -103,11 +112,27 @@ LICENSE_SCOPES = frozenset({
     "article_only", "artifact_code", "artifact_code_data",
     "synthetic_test_only"})
 AUTHORIZATION_SCOPES = frozenset({
-    "s2_11_candidate_mapping_only", "synthetic_test_only"})
+    "s2_11_candidate_mapping_only", "synthetic_test_only",
+    "local_read_only_nonredistributive_s2_11"})
 ARTIFACT_COVERING_LICENSE_SCOPES = frozenset({
     "artifact_code", "artifact_code_data"})
 
 AUTHORIZATION_EVENT_KIND = "s2_11_authorization_event"
+USER_AUTHORIZATION_KIND = "user_authorization"
+LOCAL_READ_ONLY_SCOPE = "local_read_only_nonredistributive_s2_11"
+
+# The containment policy a user_authorization evidence document must carry
+# EXACTLY (unknown license, user-authorized local read-only research use,
+# redistribution/publication/references mutation forbidden).
+REQUIRED_CONTAINMENT_POLICY: dict[str, Any] = {
+    "artifact_license_verified": False,
+    "artifact_license_status": "unknown_pending_confirmation",
+    "local_read_only_research_use_authorized_by_user": True,
+    "raw_redistribution_allowed": False,
+    "raw_publication_allowed": False,
+    "references_mutation_allowed": False,
+    "formal_export_may_include_only_hashes_ids_aggregates_and_user_created_decisions": True,
+}
 
 REQUIRED_RECORD_KEYS = frozenset({
     "source_record_id", "source_path", "modality", "text",
@@ -200,6 +225,10 @@ class LicenseScopeNotArtifactCoveringError(BarrientosAdapterError):
 
 class AuthorizationEventMismatchError(BarrientosAdapterError):
     code = "AUTHORIZATION_EVENT_MISMATCH"
+
+
+class UserAuthorizationNotValidError(BarrientosAdapterError):
+    code = "USER_AUTHORIZATION_NOT_VALID"
 
 
 class InvalidStructureError(BarrientosAdapterError):
@@ -340,6 +369,20 @@ class EvidenceContext:
 
 
 @dataclass(frozen=True)
+class LocalReadOnlyEvidenceContext:
+    """Re-verified evidence context for the local_read_only_research mode:
+    the artifact license is UNKNOWN and the USER AUTHORIZATION event (with
+    the containment policy) is the authority for local non-redistributive
+    research use."""
+
+    user_authorization_doc: dict[str, Any]
+    user_authorization_relative_path: str
+    user_authorization_sha256: str
+    modality_mapping_canonical_hash: str
+    field_mapping_canonical_hash: str
+
+
+@dataclass(frozen=True)
 class MappingPolicy:
     """Caller-supplied, user-approved mapping policy.
 
@@ -359,6 +402,7 @@ class MappingPolicy:
     field_mapping: Mapping[str, str] = field(default_factory=dict)
     license_evidence_binding: EvidenceBinding | None = None
     authorization_manifest_binding: EvidenceBinding | None = None
+    user_authorization_binding: EvidenceBinding | None = None
 
 
 def field_locator(record_source_path: str, element: str) -> str:
@@ -497,14 +541,16 @@ def _check_evidence_binding(binding: EvidenceBinding, expected_kind: str,
         raise EvidenceDocMismatchError(
             "evidence document internal kind does not match the binding",
             detail=f"doc_kind={doc.get('kind')!r} expected={expected_kind!r}")
-    if doc.get("evidence_id") != binding.evidence_id:
+    doc_id = doc.get("event_id" if expected_kind == USER_AUTHORIZATION_KIND
+                     else "evidence_id")
+    if doc_id != binding.evidence_id:
         raise EvidenceDocMismatchError(
             "evidence document internal ID does not match the binding",
-            detail=f"doc_id={doc.get('evidence_id')!r} "
+            detail=f"doc_id={doc_id!r} "
                    f"binding_id={binding.evidence_id!r}")
     # Controlled scope enum + EXACT scope match (v6).
-    scope = doc.get("scope")
     if expected_kind == "license":
+        scope = doc.get("scope")
         if not isinstance(scope, str) or scope not in LICENSE_SCOPES:
             raise EvidenceDocMismatchError(
                 "license evidence scope must be one of the controlled "
@@ -514,7 +560,21 @@ def _check_evidence_binding(binding: EvidenceBinding, expected_kind: str,
             raise EvidenceDocMismatchError(
                 "license evidence scope does not EXACTLY match the binding",
                 detail=f"doc_scope={scope!r} binding_scope={binding.scope!r}")
+    elif expected_kind == USER_AUTHORIZATION_KIND:
+        scope = doc.get("authorization_scope")
+        if not isinstance(scope, str) or scope not in AUTHORIZATION_SCOPES:
+            raise EvidenceDocMismatchError(
+                "user authorization scope must be one of the controlled "
+                "AUTHORIZATION_SCOPES",
+                detail=f"authorization_scope={scope!r} "
+                       f"allowed={sorted(AUTHORIZATION_SCOPES)}")
+        if scope != binding.scope:
+            raise EvidenceDocMismatchError(
+                "user authorization scope does not EXACTLY match the "
+                "binding",
+                detail=f"doc_scope={scope!r} binding_scope={binding.scope!r}")
     else:
+        scope = doc.get("scope")
         if not isinstance(scope, str) or scope not in AUTHORIZATION_SCOPES:
             raise EvidenceDocMismatchError(
                 "authorization scope must be one of the controlled "
@@ -673,8 +733,44 @@ def _check_authorization_manifest(doc: dict[str, Any],
     return event
 
 
+def _check_user_authorization(doc: dict[str, Any],
+                              binding: EvidenceBinding) -> None:
+    """Verify the user_authorization evidence document (local_read_only_
+    research mode, Checkpoint A/B): the containment policy must match the
+    required values EXACTLY — an unknown license is never claimed
+    verified, raw redistribution/publication and references mutation stay
+    forbidden, and only local read-only research use is authorized."""
+    if doc.get("authorization_scope") != LOCAL_READ_ONLY_SCOPE:
+        raise UserAuthorizationNotValidError(
+            "user authorization scope must EXACTLY equal the controlled "
+            "local_read_only_nonredistributive_s2_11 scope",
+            detail=f"scope={doc.get('authorization_scope')!r}")
+    cp = doc.get("containment_policy")
+    if not isinstance(cp, dict):
+        raise UserAuthorizationNotValidError(
+            "user authorization must carry a containment_policy object",
+            detail=f"containment_policy={cp!r}")
+    for key, want in sorted(REQUIRED_CONTAINMENT_POLICY.items()):
+        if cp.get(key) != want:
+            raise UserAuthorizationNotValidError(
+                f"containment policy field {key!r} does not match the "
+                "required value",
+                detail=f"declared={cp.get(key)!r} required={want!r}")
+    instruction_hash = doc.get("user_instruction_utf8_sha256")
+    if not isinstance(instruction_hash, str) or \
+            not SHA256_RE.fullmatch(instruction_hash):
+        raise UserAuthorizationNotValidError(
+            "user authorization must bind a 64-hex user-instruction "
+            "SHA-256",
+            detail=f"user_instruction_utf8_sha256={instruction_hash!r}")
+    if doc.get("append_only") is not True:
+        raise UserAuthorizationNotValidError(
+            "user authorization event must be append-only",
+            detail=f"append_only={doc.get('append_only')!r}")
+
+
 def _check_policy(mapping_policy: MappingPolicy, mode: str,
-                  evidence_root: Path | None) -> EvidenceContext | None:
+                  evidence_root: Path | None) -> Any:
     _check_mode(mode)
     if not mapping_policy.approved:
         raise MappingPolicyNotApprovedError(
@@ -734,6 +830,36 @@ def _check_policy(mapping_policy: MappingPolicy, mode: str,
                 auth_doc.get("authorization_event_path")),
             authorization_event_sha256=str(
                 auth_doc.get("authorization_event_sha256")),
+            modality_mapping_canonical_hash=_canonical_mapping_hash(
+                mapping_policy.modality_identity),
+            field_mapping_canonical_hash=_canonical_mapping_hash(
+                mapping_policy.field_mapping),
+        )
+    if mode == "local_read_only_research":
+        user_binding = mapping_policy.user_authorization_binding
+        if user_binding is None:
+            raise EvidenceBindingMissingError(
+                "local_read_only_research mode requires the file-backed "
+                "user authorization binding (the artifact license is "
+                "unknown and is NOT claimed verified)",
+                detail="user_authorization_binding=None")
+        if evidence_root is None:
+            raise EvidenceBindingMissingError(
+                "local_read_only_research mode requires an evidence_root "
+                "directory",
+                detail="evidence_root=None")
+        if user_binding.synthetic:
+            raise EvidenceBindingSyntheticError(
+                "synthetic evidence bindings must never enter a real "
+                "activation mode",
+                detail="user_authorization_binding.synthetic=True")
+        user_doc = _check_evidence_binding(
+            user_binding, USER_AUTHORIZATION_KIND, evidence_root)
+        _check_user_authorization(user_doc, user_binding)
+        return LocalReadOnlyEvidenceContext(
+            user_authorization_doc=user_doc,
+            user_authorization_relative_path=str(user_binding.path),
+            user_authorization_sha256=user_binding.evidence_hash,
             modality_mapping_canonical_hash=_canonical_mapping_hash(
                 mapping_policy.modality_identity),
             field_mapping_canonical_hash=_canonical_mapping_hash(
@@ -1027,7 +1153,16 @@ def convert_to_candidate(
     with a machine-decodable code on any fail-closed condition.
     """
     _check_mode(mode)
-    _check_license(license_state)
+    if mode == "local_read_only_research":
+        # The artifact license is UNKNOWN by design in this mode; the
+        # user authorization + containment policy is the authority.
+        if license_state.license_status != "unknown_pending_confirmation":
+            raise LicenseNotQualifiedError(
+                "local_read_only_research mode requires the license to be "
+                "unknown_pending_confirmation (never claimed verified)",
+                detail=f"license_status={license_state.license_status!r}")
+    else:
+        _check_license(license_state)
     _check_activation(activation_state)
     evidence_context = _check_policy(mapping_policy, mode, evidence_root)
     _check_structure(record)
@@ -1067,10 +1202,36 @@ def convert_to_candidate(
 
     formal_evidence_provenance: dict[str, Any] | None = None
     if evidence_context is not None:
-        lic = evidence_context.license_doc
-        auth = evidence_context.authorization_doc
-        ev = evidence_context.authorization_event_doc
-        formal_evidence_provenance = {
+        if isinstance(evidence_context, LocalReadOnlyEvidenceContext):
+            ua = evidence_context.user_authorization_doc
+            cp = ua.get("containment_policy") or {}
+            formal_evidence_provenance = {
+                "mode": "local_read_only_research",
+                "user_authorization": {
+                    "event_id": ua["event_id"],
+                    "relative_path":
+                        evidence_context.user_authorization_relative_path,
+                    "sha256": evidence_context.user_authorization_sha256,
+                    "authorization_scope": ua["authorization_scope"],
+                    "user_instruction_utf8_sha256":
+                        ua["user_instruction_utf8_sha256"],
+                },
+                "containment_policy": dict(cp),
+                "license_verified": False,
+                "license_status": "unknown_pending_confirmation",
+                "policy_id": mapping_policy.policy_id,
+                "modality_mapping_canonical_hash":
+                    evidence_context.modality_mapping_canonical_hash,
+                "field_mapping_canonical_hash":
+                    evidence_context.field_mapping_canonical_hash,
+                "candidate_only": True,
+                "gold_authorized": False,
+            }
+        else:
+            lic = evidence_context.license_doc
+            auth = evidence_context.authorization_doc
+            ev = evidence_context.authorization_event_doc
+            formal_evidence_provenance = {
             "license_evidence": {
                 "evidence_id": lic["evidence_id"],
                 "relative_path": evidence_context.license_relative_path,
@@ -1122,5 +1283,8 @@ def convert_to_candidate(
             "mapping_policy_approved": bool(mapping_policy.approved),
             "human_adjudicated": False,
             "gold_promotion": False,
+            "local_read_only_research": mode == "local_read_only_research",
+            "raw_redistribution_allowed": False,
+            "license_verified": False,
         },
     }
