@@ -1,0 +1,62 @@
+{
+  "schema_version": "s2_12_execution_plan_report@2.0.0",
+  "plan_config": "configs/s2_12_execution_plan_v2.json",
+  "status": "frozen",
+  "supersedes_v1": {
+    "plan_config_v1": "configs/s2_12_execution_plan_v1.json",
+    "plan_report_v1": "outputs/reports/s2_12_execution_plan_v1.json",
+    "readiness_v1": "outputs/reports/s2_12_execution_readiness_v1.json",
+    "reason": "v1 used a whole-field string exact-equality evaluator and a flat Gold shape; v2 aligns with the Stage 2 formal evaluation contract (modality label metrics + five-field Sun literal-overlap span metrics over the canonical clause/span Gold shape)"
+  },
+  "strata_level_counts": {
+    "L1": 31,
+    "L2": 5,
+    "L3": 0
+  },
+  "freeze_state": {
+    "adjudicated": 0,
+    "total": 36
+  },
+  "importer_v2_dry_run": {
+    "samples": 36,
+    "blocked_fields": 0,
+    "blocked_samples": 0,
+    "unresolved_fields": 0,
+    "adjudicable": 36
+  },
+  "parity": {
+    "passed": true,
+    "span_metrics_equal": true,
+    "modality_metrics_equal": true,
+    "fixture_samples": 4,
+    "strata_present": [
+      "L1",
+      "L2",
+      "L3"
+    ],
+    "l3_no_samples": true,
+    "zero_api": {
+      "new_llm_api_calls": 0
+    }
+  },
+  "raw_text_committed": false,
+  "gold_created": false,
+  "zero_api": {
+    "new_llm_api_calls": 0
+  },
+  "bindings": {
+    "outputs/reports/s2_11_corpus_membership_v1.json": "a63c50ea3164e6629a66746531ad379c3970c8dfa86971eaa35186693bb7a2af",
+    "configs/g05_complexity_frozen_v1.json": "6f632dd4965cbd21c6889471080c731e3ccaf0b9158fa71e5ba874ea561ffa4b",
+    "configs/g05_complexity_candidate_draft_v1.json": "61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586",
+    "configs/g05_authorization_manifest_v1.json": "6ada674e066ec79db7ea2232c79a1ad40e2ea6cc47182d4431f025299b3fb684",
+    "data/development/human_review/s2_11_review_decisions_v2.json": "75d593120abfd729c730a7c752b21204d7ccdfcda7e71bbb4326d49d1fbeb362",
+    "outputs/reports/s2_11_proposal_report_v2.json": "5f596d54391e8e1a1a995cb994c77281949c27562e98c04a9755e4cdc31bb6c0",
+    "outputs/reports/s2_11_batch_import_dry_run_v2.json": "1abf220b9507311dbfbf905e487c296c2141950f4dea41335391a3529c4e7276",
+    "configs/stage2_evaluator_s210_v3.json": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f",
+    "configs/models/estg150_d1_active_registry_v1.json": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+    "outputs/development/s28d_h1_150_v4pro_v1/manifest.json": "aad34e65120c1481815cf78872bcc49d5d0722a3972c2373e8b114d9a6005e4c",
+    "configs/s2_12_execution_plan_v1.json": "2ee9ab7c700d65160967985ab1a2e40da867a4c89b2933a314292d0c221b97e9",
+    "outputs/reports/s2_12_execution_plan_v1.json": "2f2f3f1569c83d6de1cd214ed5e7b80a2a7360392ce58009d1e44f2e5b2cd8da",
+    "outputs/reports/s2_12_execution_readiness_v1.json": "09e00651fb478641eabc260f0a2a54929fe7b80bd3ad6a9616c6a52ddbb52795"
+  }
+}

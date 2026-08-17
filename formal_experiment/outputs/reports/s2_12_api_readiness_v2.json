@@ -1,0 +1,53 @@
+{
+  "schema_version": "s2_12_api_readiness@2.0.0",
+  "status": "dry_run_not_applied",
+  "records": 36,
+  "arms": {
+    "direct_llm": {
+      "model_id": "deepseek-v4-pro",
+      "model_source": "configs/models/estg150_d1_active_registry_v1.json",
+      "fail_closed_pin": true,
+      "provider": "openai_compatible",
+      "endpoint": "official API",
+      "transport": {
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        },
+        "response_format": null,
+        "rationale": "reproduced July recipe: thinking-disabled WITHOUT json_object; the official deepseek-v4-pro endpoint returns empty content under provider-default thinking and a different nested shape under json_object"
+      },
+      "calls_per_record": 1,
+      "max_calls": 36,
+      "output_token_cap": 4096,
+      "input_token_cap": "not_documented_in_repo"
+    },
+    "sun_llm_fallback": {
+      "model_id": "deepseek-v4-pro",
+      "model_source": "outputs/development/s28d_h1_150_v4pro_v1/manifest.json (llm_model, source=cli_override)",
+      "trigger_semantics": "fallback fires on incomplete rule extraction (B0-first); historical 150-record full run: 111 samples called / 150 calls",
+      "derived_max_calls_per_record": 2,
+      "max_calls": 72,
+      "output_token_cap": "4096 derived_from_d1_recipe (H1 manifest records max_tokens=null)",
+      "input_token_cap": "not_documented_in_repo"
+    }
+  },
+  "totals": {
+    "max_calls": 108,
+    "output_token_cap_per_call": 4096,
+    "output_side_total_token_bound": 442368,
+    "input_side_total_token_bound": "unresolved",
+    "cost_cap": "cost_cap_unresolved"
+  },
+  "missing_items_for_final_authorization": [
+    "cost_cap (no trustworthy price basis in repo)",
+    "input_token_cap (not documented in registry/manifest)"
+  ],
+  "final_copyable_authorization_sentence": null,
+  "final_sentence_reason": "a final authorization sentence is NOT issued because the input token cap and the cost cap are unresolved; an incomplete sentence is never called executable",
+  "calls_made": 0,
+  "authorized": false,
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

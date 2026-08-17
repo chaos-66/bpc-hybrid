@@ -1,0 +1,2023 @@
+{
+  "schema_version": "s2_11_review_surface@2.0.0",
+  "surface_id": "s2-11-blank-review-v2",
+  "candidate_run": "outputs/reports/s2_11_candidate_run_v1.json",
+  "membership": "outputs/reports/s2_11_corpus_membership_v1.json",
+  "population": {
+    "inventory": 40,
+    "objective_exclusions": 4,
+    "nonempty_membership": 36,
+    "review_population": 36,
+    "candidate_available": 29,
+    "candidate_unavailable": 7,
+    "closure_invariant": "review_population == nonempty_membership == inventory - objective_exclusions"
+  },
+  "model": {
+    "field_states": [
+      "unresolved",
+      "absent",
+      "present"
+    ],
+    "modality": "status + label (controlled vocabulary) + evidence span array",
+    "ordinary_fields": [
+      "actor",
+      "action",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "spans": "identified spans {id, start, end}; text == source[start:end] (verified against the hash-bound source at runtime; committed files carry coordinates only)",
+    "actor_action_map": "typed span-id references",
+    "order_relations": "typed action span-id references"
+  },
+  "raw_text_committed": false,
+  "final_adjudication_by": "user_only",
+  "gold_files_created": false,
+  "supersedes_v1": {
+    "blank_review_v1": "data/development/human_review/s2_11_blank_review_v1.json",
+    "decisions_v1": "data/development/human_review/s2_11_review_decisions_v1.json"
+  },
+  "samples": [
+    {
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "text_sha256": "17a5295cdd1ec8b7848252bb0ee98d9b9bbc599d4ffad6aa48fcf94dc83d6dfc",
+      "candidate_hash": null,
+      "candidate_status": "unavailable",
+      "candidate": null,
+      "candidate_error": {
+        "code": "QUARANTINE_MODALITY_UNKNOWN",
+        "detail": "no deterministic modality keyword matched"
+      },
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r10_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 95
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "text_sha256": "f2247ea6bc11dc4b17e811fac2bda2bdb6d160cff111da839988b352b4cec03b",
+      "candidate_hash": "7a8ea46b39337af23feecac5806b181c49e0f3b92b705ed77b2f589f296ea7f1",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r10_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 136
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "text_sha256": "73768ea4f655461058f4cd129d4fbc20402a07f24c099e31793010053e20824a",
+      "candidate_hash": "ebd7ce4ab3bd7916f332bda72db6e657a72686a777ae1c0e43fdfb9ac0f77d23",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "prohibition",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r11_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 70
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "text_sha256": "ec600eceed94e17b399a334eaedceca6a0c234c23c82ee317edb9bbf5668ed28",
+      "candidate_hash": "b7936eca99befaa820922aacbcdbea8cb1f380b6b1b6352e544002aa82117492",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r11_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 126
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "text_sha256": "390f8189f8b8fd15a92a3f48425466147d387850fc25524bdd84da67cfff56ae",
+      "candidate_hash": "d545ce96f350aa38f7f80b16bc72ef5ac188bfb30f06bde897e4764d06d433ca",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r12_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 101
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "text_sha256": "aa28843bc3a23f7ca8694cab3b6c8e856a5655e5d911699d2a25e4c3876b185d",
+      "candidate_hash": "b5529d1ff43e3dc046bf84653edcc423281e0310805eb2cd21bb8169e2c86ec7",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "prohibition",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r13_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 89
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "text_sha256": "509344c6d55b87c416675b53f14dd3ebd9f947425d09680c1271356da2324668",
+      "candidate_hash": "09ac900d0d8cbc7f8c67358547a23eeb0b8f42dd0fa585bac251f664d9ae1eda",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "prohibition",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r13_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 88
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "text_sha256": "14a133ae8b9d332b96f0e3f0ff8f92972e26492fc747066c962078cef56cf94e",
+      "candidate_hash": "32e72ed8b1c79531a4758c523ac00bbb08502efee89ea14a28c308b0cc99b264",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "permission",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r8_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 71
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "text_sha256": "e4ad22e7f9300da841b0c018ab1746db4b9dcaea6b5d79758a691c3e35238223",
+      "candidate_hash": "4c492d62a5d4693e10d12c419680c13686b0ae80a3efdd94f6b3866f19e40b5e",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r8_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 92
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "text_sha256": "d9b3db2c8352ce437669820aeaed9de14108023cee084c3b76e6c48a07509d34",
+      "candidate_hash": "fdbf00873592acb64a06183abb917f78d547c0a239898466b2bbb83f4bf7c6fa",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r9_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 124
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "aa401bff79294f187d39987c21fb736dcaa74820824ed4e657da6b67e0134787",
+      "candidate_hash": "5ce90d495c61b4cbfc3f8cf3eab31d39a4b77bf8e4b04e3ca6d43f6c2fa551f2",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r14_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 148
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "03d61f084728dcc8a5ddcbc6e2e7ea4bd83a800390af295e2ba1b51baec02329",
+      "candidate_hash": "58806b9aa2ad8fb57b5d105d0ec764775f8e2465f04c20d4d97838c442dcd292",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r14_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 103
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "4695d4ce260f7b2e97cf3c0fb9376faba6a80782cc84f9d3b9a19db71fed7431",
+      "candidate_hash": "6f932821ec3dcb298c3d7c9ed69824eb34b82fb8aaec18777f4c011b120e7ee5",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r15_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 79
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "d490bb505b4a09cc2ef829d07297a8bfd8ee70e88c0a71f9fdb83200827391e6",
+      "candidate_hash": "f718e66fea05486d9585b86aee5fad520253d7a82e3f728aa576e25d66481dcc",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r15_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 59
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "f3eab08e7c817e5a69f5805e8d85b9faa1eb849991c6d9aa424d3039885eb8ee",
+      "candidate_hash": null,
+      "candidate_status": "unavailable",
+      "candidate": null,
+      "candidate_error": {
+        "code": "QUARANTINE_MODALITY_UNKNOWN",
+        "detail": "no deterministic modality keyword matched"
+      },
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r16_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 83
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "f0518457348a35eb171546b74718d03ff5e2626b085243e8bb4756aa76e752c6",
+      "candidate_hash": null,
+      "candidate_status": "unavailable",
+      "candidate": null,
+      "candidate_error": {
+        "code": "QUARANTINE_MODALITY_UNKNOWN",
+        "detail": "no deterministic modality keyword matched"
+      },
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r17_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 128
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "1f6c995eccc075b7067e9503830d28db59e327b1cc6e8b3fa43bbd37523a6729",
+      "candidate_hash": null,
+      "candidate_status": "unavailable",
+      "candidate": null,
+      "candidate_error": {
+        "code": "QUARANTINE_MODALITY_UNKNOWN",
+        "detail": "no deterministic modality keyword matched"
+      },
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r17_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 65
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "fa8055c249d1b45f20997933f1fc0c631c0794f1001e7b328239baab44d57844",
+      "candidate_hash": "ebdae47377aef0c142034d22a4ab953a3b99365c21c41fed2cc857e433b74d46",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r18_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 88
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "af0f01e75941494e28578a209a53fbbfbb79c62cd31072387359f95f6c33a739",
+      "candidate_hash": "8f5e6292e769f50ba849aa6a72dd4bd245511575ee07c71a5f1902b12ef1f09a",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r19_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 87
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "642bf63355da20278ba79048c5f6826c37142bdc39e95fd1d177ee5a55657614",
+      "candidate_hash": "c38c2026d56d879542b319064ab39f603303196d142bb9f406dac492d0e8899a",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "prohibition",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r19_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 91
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "a96e90fbe25b028de2ead440f54dd6a911369c633f0af81c15b9f4adc9867301",
+      "candidate_hash": "59f40f4b8a5bdad1579910ab276a7e9304bef768e0731e1079d6feb8e9f45cd8",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "prohibition",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r20_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 140
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "text_sha256": "f334c0ef6687bc5c2369848930ab17b29518370f5a7d142be662da57d97facdb",
+      "candidate_hash": "2444426968a31aa379788ad79c79d3545f7d968facdea60e090418f07ed17fbb",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "prohibition",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r20_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 141
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r1/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "ed6a2753aff4de7d60ec9d4f28f50a9b7dcf3bdb36090b16ffd6212cab5c5bda",
+      "candidate_hash": "de148117efcff0a83e946c77c66263dc3a162d8c67a693fe11fd8bc6a2687323",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r1_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 165
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r1/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "ed9d956d410f3ad6f44611f24d5717818905da4deb909176aff2911e7d7a55cd",
+      "candidate_hash": "d0367f8eb0647fafd72610b0cdd5bcb3f3c3353bc86d1a2c5e67411dd883306e",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r1_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 147
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r2/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "f4db6ab93be655d072849f1be757b631039e8860535339f67d84af718e055a41",
+      "candidate_hash": null,
+      "candidate_status": "unavailable",
+      "candidate": null,
+      "candidate_error": {
+        "code": "FIELD_SPAN_AMBIGUOUS",
+        "detail": "modality aligned span text is not unique (overlapping occurrences included)"
+      },
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r2_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 149
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r2/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "3659f994c7a02977f2f816c10b4c3328c3034a7359584df694613633b20a1259",
+      "candidate_hash": null,
+      "candidate_status": "unavailable",
+      "candidate": null,
+      "candidate_error": {
+        "code": "FIELD_SPAN_AMBIGUOUS",
+        "detail": "modality aligned span text is not unique (overlapping occurrences included)"
+      },
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r2_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 151
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r3/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "6c487518c81e91ba812643b82ced01bf880cfe0f8307e7402cf6b23130cf6ecf",
+      "candidate_hash": null,
+      "candidate_status": "unavailable",
+      "candidate": null,
+      "candidate_error": {
+        "code": "FIELD_SPAN_AMBIGUOUS",
+        "detail": "modality aligned span text is not unique (overlapping occurrences included)"
+      },
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r3_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 188
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r3/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "9ba6089cf16579e36d726386ecd94e4dc6c90b2b9888a0bc7f036bc8389e426c",
+      "candidate_hash": "244a16e18b4adb78177b3a30e50311824f80e462f2c0e0e5c03f1c3338ae7c1d",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L2"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r3_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 160
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r4/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "dd0ae603f10fa714321cd1b79e91eae567e61add94efafe6a7b6dfa4ab318502",
+      "candidate_hash": "244b77da9040272bda32525a3d41acb927a0655e876ef2408065700ab8e12a49",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r4_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 43
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r4/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "2569981eacc62a9fe696367b6eb74256d6884456929d3c57f4c01bce4d145e88",
+      "candidate_hash": "c1a21a677d79bcb30e19bcce9c9f7517ca3798554443e19498670ae49c40f54a",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r4_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 109
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r5/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "f8811e4b641efdd7d1631e8f71974437227460e2cdd3e1c7548376ae19653c39",
+      "candidate_hash": "a1404cf83041e863a6b0ddba40b7e575b7af986ba2ef3e6a7174d3b0e2cf46b0",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r5_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 75
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r5/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "bb9e19778613c581acf391489386ac549b7fb4e5ffe58347023ef79be10685f5",
+      "candidate_hash": "9d86272855998116e97b026bd33348e94374f3a7865b7d24be3f967392dd873b",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "permission",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r5_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 96
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r6/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "67f3e22563f8415e4190bb5ff069d9b03b6a13f368e6b3d07780770fab77b6b5",
+      "candidate_hash": "2e7621e1f0a6f890e42a41974e4a39fb0f8881f6500bf98b0a298477e493f1ae",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r6_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 50
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r6/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "743e54784a4bf4e1d248b24812dd84872d6802674478e2267d990aee74456940",
+      "candidate_hash": "8e00c3a16129d74534e1a8a0183e76e2a9399ae1caa0be59633c1cd28f49cb80",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r6_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 60
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r7/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "5adb472d8c06f306c1c7dcd06003b32be0bc18a7b9c0613e9b0779e99e9654f6",
+      "candidate_hash": "ba34943415aa831ece623561e5d506d82bb57c2f3102668d73fa1e2a98cbc6bf",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r7_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 68
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    {
+      "sample_id": "emergencies_scenario/r7/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "text_sha256": "f95cbbc556a2a365b0ebebaf4bc3dd09602754433a72e64b9a2fb4f5377177b5",
+      "candidate_hash": "46500b3ce6ce600e7666fd9cbc25cdae47c21a9b2e13f90975595567485a6313",
+      "candidate_status": "available",
+      "candidate": {
+        "modality": "obligation",
+        "g0_5_level": "L1"
+      },
+      "candidate_error": null,
+      "review_metadata": {
+        "review_state": "unreviewed",
+        "reviewer": null,
+        "confirmation_event": null
+      },
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r7_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 123
+            },
+            "modality": {
+              "status": "unresolved",
+              "label": null,
+              "evidence": []
+            },
+            "actor": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "action": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "condition": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "constraint": {
+              "status": "unresolved",
+              "spans": []
+            },
+            "exception": {
+              "status": "unresolved",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    }
+  ],
+  "sample_count": 36
+}
