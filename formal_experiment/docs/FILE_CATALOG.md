@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-17
-**收录文件**：1242 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1248 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -766,6 +766,7 @@
 | `outputs/reports/s1_stage1_claim_correction_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s27_estg150_b0_v9_status_correction_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_11_batch_import_dry_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_candidate_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_corpus_membership_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_data_qualification_mapping_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -793,6 +794,8 @@
 | `outputs/reports/s2_11_gates_applied_checkpoint_a_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_license_adapter_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_license_adapter_readiness_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s2_11_proposal_report_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_11_review_surface_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -1016,7 +1019,9 @@
 | `scripts/run_sun_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/s2_11_batch_import_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s2_11_build_review_surface.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/s2_11_generate_proposals.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s2_11_inventory_corpus.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s2_11_run_candidates.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/stage1_review_tool.py` | 活动 | Python 实现、脚本或测试 |
@@ -1307,6 +1312,7 @@
 | `tests/test_s2_11_g0_5_pre_authorization_v5.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_11_g0_5_pre_authorization_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_11_gates_applied_checkpoint_a.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s2_11_proposals_and_batch_import.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v3.py` | 活动 | Python 实现、脚本或测试 |

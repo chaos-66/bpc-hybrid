@@ -1,0 +1,19 @@
+{
+  "schema_version": "s2_11_review_surface_manifest@1.1.0",
+  "manifest_id": "s2_11_review_surface_v1.manifest",
+  "artifact_type": "review_surface_bundle",
+  "determinism": {
+    "no_wall_clock": true,
+    "byte_identical_rebuild": true,
+    "no_overwrite": true
+  },
+  "bindings": {
+    "data/development/human_review/s2_11_blank_review_v1.json": "a1ce7cfa15851f4e0649f390b87590fbbdfe3c809c64ba53db0ba1c5f8f4bf87",
+    "data/development/human_review/s2_11_review_decisions_v1.json": "9764a6a03bb65b13195225e664c7b5ba3679f7bfb114c2406f4d4a3b3ce35fdb",
+    "outputs/reports/s2_11_candidate_run_v1.json": "5fe8225f6be56cd41974d26473142d77858cd2ed62b0626b3af56600ba5734fd",
+    "outputs/reports/s2_11_corpus_membership_v1.json": "a63c50ea3164e6629a66746531ad379c3970c8dfa86971eaa35186693bb7a2af"
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

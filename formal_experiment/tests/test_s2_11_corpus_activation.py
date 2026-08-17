@@ -8,11 +8,11 @@ Covers:
   * deterministic G0.5 feature extraction
   * candidate run: deterministic double-run, counts, modality/level
     distributions, quarantine codes, NO raw text in the committed report
-  * G5 blank review surface: 29 samples, all decisions null,
-    unreviewed, candidate/Gold separation, no raw text
+  * G5 blank review surface: 36 samples (29 available / 7 unavailable),
+    all decisions null, unreviewed, candidate/Gold separation, no raw text
   * review tool plumbing: verify, show (hash-verified text), set/undo/
     state/backup on a tmp copy, progress
-  * review freeze validator: valid structure, frozen=false, remaining 29
+  * review freeze validator: valid structure, frozen=false, remaining 36
 """
 
 from __future__ import annotations
@@ -186,20 +186,44 @@ def test_candidate_run_deterministic_double_run() -> None:
 def test_blank_review_surface_all_null_and_separated() -> None:
     pack = _load(BLANK_REVIEW_REL)
     run = _load(CANDIDATE_RUN_REL)
-    assert pack["sample_count"] == 29
+    membership = _load(MEMBERSHIP_REL)
+    assert pack["sample_count"] == 36
     assert set(pack["decision_fields"]) == {
         "modality", "actor", "action", "condition", "constraint",
         "exception"}
     sample_ids = [s["sample_id"] for s in pack["samples"]]
-    assert set(sample_ids) == set(run["candidates"])
+    # review population == nonempty membership (no candidate-success bias)
+    assert set(sample_ids) == set(membership["records"])
+    pop = pack["population"]
+    assert pop["inventory"] == 40
+    assert pop["objective_exclusions"] == 4
+    assert pop["nonempty_membership"] == 36
+    assert pop["review_population"] == 36
+    assert pop["candidate_available"] == 29
+    assert pop["candidate_unavailable"] == 7
+    # the 29 available items are exactly the candidate run's candidates
+    available = {s["sample_id"] for s in pack["samples"]
+                 if s["candidate_status"] == "available"}
+    assert available == set(run["candidates"])
+    unavailable = [s for s in pack["samples"]
+                   if s["candidate_status"] == "unavailable"]
+    assert len(unavailable) == 7
     for sample in pack["samples"]:
         assert sample["review_state"] == "unreviewed"
         assert sample["reviewer"] is None
         assert all(v is None for v in sample["decision"].values())
         assert len(sample["text_sha256"]) == 64
-        assert len(sample["candidate_hash"]) == 64
         assert sample["source_path"].startswith(
             "references/barrientos_2026/")
+        if sample["candidate_status"] == "available":
+            assert sample["candidate"] is not None
+            assert sample["candidate_error"] is None
+            assert len(sample["candidate_hash"]) == 64
+        else:
+            assert sample["candidate"] is None
+            assert sample["candidate_hash"] is None
+            assert sample["candidate_error"]["code"] in {
+                "QUARANTINE_MODALITY_UNKNOWN", "FIELD_SPAN_AMBIGUOUS"}
     assert pack["final_adjudication_by"] == "user_only"
     assert pack["gold_files_created"] is False
     assert pack["raw_text_committed"] is False
@@ -210,7 +234,7 @@ def test_blank_review_surface_all_null_and_separated() -> None:
 
 def test_review_decisions_file_all_unreviewed() -> None:
     decisions = _load(DECISIONS_REL)
-    assert len(decisions["records"]) == 29
+    assert len(decisions["records"]) == 36
     for entry in decisions["records"].values():
         assert entry["review_state"] == "unreviewed"
         assert entry["reviewer"] is None
@@ -276,11 +300,11 @@ def test_review_progress_and_freeze_validator() -> None:
     import verify_s2_11_review_freeze as freeze
     doc = tool.load_decisions()
     counts = tool.progress(doc)
-    assert counts == {"unreviewed": 29, "reviewed": 0, "adjudicated": 0}
+    assert counts == {"unreviewed": 36, "reviewed": 0, "adjudicated": 0}
     result = freeze.verify()
     assert result["verified"] is True
     assert result["frozen"] is False
-    assert result["remaining_for_user"] == 29
+    assert result["remaining_for_user"] == 36
     assert result["gold_rule_records_created"] is False
     assert result["gold_creation_requires_user_authorization"] is True
 
@@ -293,8 +317,11 @@ def test_freeze_validator_detects_adjudicated_with_null_fields(
     doc["records"][first]["review_state"] = "adjudicated"
     doc["records"][first]["reviewer"] = "user"
     target = tmp_path / DECISIONS_REL
-    target.parent.mkdir(parents=True)
+    target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+    pack_target = tmp_path / BLANK_REVIEW_REL
+    pack_target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(ROOT / BLANK_REVIEW_REL, pack_target)
     old = freeze.ROOT
     freeze.ROOT = tmp_path
     try:

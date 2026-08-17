@@ -90,11 +90,18 @@ def load_decisions() -> dict[str, Any]:
 
 
 def load_blank_candidate(sample_id: str) -> dict[str, Any]:
-    """Candidate review-aid info from the blank pack (modality + level)."""
+    """Candidate review-aid info from the blank pack (modality + level +
+    candidate_status; unavailable items carry the stable error code)."""
     pack = _load_json(ROOT / BLANK_REVIEW_REL)
     for sample in pack.get("samples", []):
         if sample.get("sample_id") == sample_id:
-            return dict(sample.get("candidate") or {})
+            info: dict[str, Any] = {}
+            if sample.get("candidate") is not None:
+                info.update(dict(sample["candidate"]))
+            info["candidate_status"] = sample.get("candidate_status")
+            if sample.get("candidate_error") is not None:
+                info["candidate_error"] = sample["candidate_error"]
+            return info
     return {}
 
 

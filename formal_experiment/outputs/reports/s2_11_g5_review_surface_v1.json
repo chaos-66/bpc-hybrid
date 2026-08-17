@@ -1,14 +1,61 @@
 {
-  "schema_version": "s2_11_g5_review_surface@1.0.0",
+  "schema_version": "s2_11_g5_review_surface@1.1.0",
   "status": "applied_review_surface_open",
   "blank_review_pack": "data/development/human_review/s2_11_blank_review_v1.json",
   "decisions_file": "data/development/human_review/s2_11_review_decisions_v1.json",
   "review_tool": "scripts/review_s2_11_candidates.py",
   "freeze_validator": "scripts/verify_s2_11_review_freeze.py",
   "candidate_run": "outputs/reports/s2_11_candidate_run_v1.json",
-  "workload_records_for_user": 29,
+  "membership": "outputs/reports/s2_11_corpus_membership_v1.json",
+  "population": {
+    "inventory": 40,
+    "objective_exclusions": 4,
+    "nonempty_membership": 36,
+    "review_population": 36,
+    "candidate_available": 29,
+    "candidate_unavailable": 7,
+    "closure_invariant": "review_population == nonempty_membership == inventory - objective_exclusions"
+  },
+  "objective_exclusions": [
+    {
+      "record_id": "blood_donation_scenario/r16/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "code": "QUARANTINE_EMPTY_TEXT",
+      "detail": "empty or placeholder text"
+    },
+    {
+      "record_id": "blood_donation_scenario/r18/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "code": "QUARANTINE_EMPTY_TEXT",
+      "detail": "empty or placeholder text"
+    },
+    {
+      "record_id": "SIM_card_scenario/r9/v1",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "code": "QUARANTINE_EMPTY_TEXT",
+      "detail": "empty or placeholder text"
+    },
+    {
+      "record_id": "SIM_card_scenario/r12/v2",
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "code": "QUARANTINE_EMPTY_TEXT",
+      "detail": "empty or placeholder text"
+    }
+  ],
+  "workload_records_for_user": 36,
   "gold_files_created": false,
   "final_adjudication_by": "user_only",
   "raw_text_committed": false,
-  "hash_mismatch_refuses": true
+  "hash_mismatch_refuses": true,
+  "candidate_failure_does_not_reduce_population": true,
+  "bindings": {
+    "data/development/human_review/s2_11_blank_review_v1.json": "a1ce7cfa15851f4e0649f390b87590fbbdfe3c809c64ba53db0ba1c5f8f4bf87",
+    "data/development/human_review/s2_11_review_decisions_v1.json": "9764a6a03bb65b13195225e664c7b5ba3679f7bfb114c2406f4d4a3b3ce35fdb",
+    "outputs/reports/s2_11_candidate_run_v1.json": "5fe8225f6be56cd41974d26473142d77858cd2ed62b0626b3af56600ba5734fd",
+    "outputs/reports/s2_11_corpus_membership_v1.json": "a63c50ea3164e6629a66746531ad379c3970c8dfa86971eaa35186693bb7a2af"
+  }
 }

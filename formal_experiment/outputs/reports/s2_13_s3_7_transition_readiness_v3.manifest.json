@@ -10,12 +10,12 @@
   "artifacts": {
     "report_json": {
       "path": "outputs/reports/s2_13_s3_7_transition_readiness_v3.json",
-      "sha256": "9d6fa94ab60cfead2f2cd0906269206572385a98aaa009b41ffbadd995ee2a29",
+      "sha256": "496b5e142f8b2dfb316f62e6533b5ab8a69cd3282eff4847cb163fdc10212fe4",
       "byte_size": 35115
     },
     "report_md": {
       "path": "outputs/reports/s2_13_s3_7_transition_readiness_v3.md",
-      "sha256": "f143ee281e828cb7254b55cbbaf234993494d25759cd8ba1012d2c14b33967c3",
+      "sha256": "f50b31bf76f9a4d96ff7440cd30f64cbff89ff186b2a629c27f6b85c34fcaa9b",
       "byte_size": 23515
     }
   },
@@ -23,8 +23,8 @@
     "configs/schemas/s2_13_s3_7_transition_readiness.schema.json": "df270ee8ee27bd2c59686d396df7c37ecf6cafb1dd35ceb0aba48a63464f6786",
     "configs/schemas/s2_13_s3_7_transition_readiness_v2.schema.json": "2b0d9418e748eb49753dea75ca46db072dc60226b7dc08ea1eafc6ecfd8bbaaf",
     "configs/schemas/s2_13_s3_7_transition_readiness_v3.schema.json": "ed823a75543975fe00242685bcb02c8495926113f8ea3a805c0c8234e4444622",
-    "data/development/human_review/s2_11_blank_review_v1.json": "87087fb4d89ff61766ae99eb5966ada65742b044d6e5a9ecb52684b425a770f8",
-    "data/development/human_review/s2_11_review_decisions_v1.json": "a46c75bd3b8f594402f5757adb10dbb8a64e6f45c6bd5f6b725f646a96c19588",
+    "data/development/human_review/s2_11_blank_review_v1.json": "a1ce7cfa15851f4e0649f390b87590fbbdfe3c809c64ba53db0ba1c5f8f4bf87",
+    "data/development/human_review/s2_11_review_decisions_v1.json": "9764a6a03bb65b13195225e664c7b5ba3679f7bfb114c2406f4d4a3b3ce35fdb",
     "data/development/human_review/stage3_gold_annotation_human_correction_v1.json": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f",
     "data/gold/stage1/manifest.json": "1885dad26f43b19324f2e779a7bbed0db5b19699145d8607a59439423b23e587",
     "data/gold/stage1/process_records/stage1_process_gold_v1.json": "f33aa857a0796d0517a9d04cc96b0a4f316202603fe0adf66693aeb5cb444bca",
@@ -52,7 +52,7 @@
     "outputs/reports/s1_7_freezer_readiness_dry_run_v2.json": "be5d4b80d807d66606f265e024c2a0b8d3743380dd8649643aee4fcfc9d4997f",
     "outputs/reports/s2_11_candidate_run_v1.json": "5fe8225f6be56cd41974d26473142d77858cd2ed62b0626b3af56600ba5734fd",
     "outputs/reports/s2_11_corpus_membership_v1.json": "a63c50ea3164e6629a66746531ad379c3970c8dfa86971eaa35186693bb7a2af",
-    "outputs/reports/s2_11_g5_review_surface_v1.json": "6ae99d76000d29e2161d92f0ff4035912765a67968beebfed14144a17a851eaa",
+    "outputs/reports/s2_11_g5_review_surface_v1.json": "571ba7ae3c39cde5deafeffa55e1e0ac67b8dcd9e1564568832513128ff14da4",
     "outputs/reports/s2_11_license_adapter_readiness_v2.json": "8d271f59e2c6d24006ab7139509a6cf3b96d4a276a3d88c019b1a83db4b5a2e0",
     "outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json": "9f6c734002fd4d6761454e8e751e172e543ce4f1808b19d3f3513f05374619fd",
     "outputs/reports/s2_12_formal_descriptive_error_analysis_v1.manifest.json": "89b3f1209c193ec872b9b01319f9003e0ba26387cbce0830f86e2054040dda06",
@@ -87,7 +87,7 @@
     "scripts/verify_s1_7_freezer_authorization.py": "e7fb0005e4ed8fa1bf2bb26b0e3cbab6e9504dae715ef48f58225d1b89ada88d",
     "scripts/verify_s2_13_s3_7_transition_readiness_v1.py": "5ee35fa837c05dc2e6c15168dcee0a4704486212c81c2710d16435e3e668ad1a",
     "scripts/verify_s2_13_s3_7_transition_readiness_v2.py": "b9639016634af014e9e779ff127de49da2f26b277eef3360a202260aab7996ab",
-    "scripts/verify_s2_13_s3_7_transition_readiness_v3.py": "b723cfbad2d1e8b9d51d4c72066420d049942238d864582994d1ddcd0f8bde1b",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v3.py": "d9f9094f44b2f6112b98f22e5de161da1a923f8d8cb0ab383a78388adf1445d0",
     "scripts/verify_stage1_process_gold.py": "26deb38f9b4b3787c6a2a795b659c5cdd7675a1fc05109f0bcc37a010f0f3cc8",
     "src/formal_experiment/audit.py": "706ce10b8f2eb1afdf4e5ba2d0fc2b2529c07c4d82072f72fc2ad90a8e1ace18",
     "src/formal_experiment/status.py": "6969d520da54bfa53a59d79de547742eabcd9e22d1e27f4dd746106af98316cd",
@@ -101,7 +101,7 @@
     },
     "verifier": {
       "path": "scripts/verify_s2_13_s3_7_transition_readiness_v3.py",
-      "sha256": "b723cfbad2d1e8b9d51d4c72066420d049942238d864582994d1ddcd0f8bde1b"
+      "sha256": "d9f9094f44b2f6112b98f22e5de161da1a923f8d8cb0ab383a78388adf1445d0"
     },
     "schema": {
       "path": "configs/schemas/s2_13_s3_7_transition_readiness_v3.schema.json",

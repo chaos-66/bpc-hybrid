@@ -486,9 +486,9 @@ def main() -> int:
         for c in result["checks"]:
             print(("PASS" if c["ok"] else "FAIL"), c["name"],
                   ("- " + c["detail"]) if c["detail"] else "")
-        print("S2.13/S3.7 TRANSITION READINESS V2 VERIFIED"
+        print("S2.13/S3.7 TRANSITION READINESS V3 VERIFIED"
               if result["verified"]
-              else "S2.13/S3.7 TRANSITION READINESS V2 NOT VERIFIED")
+              else "S2.13/S3.7 TRANSITION READINESS V3 NOT VERIFIED")
     return 0 if result["verified"] else 1
 
 

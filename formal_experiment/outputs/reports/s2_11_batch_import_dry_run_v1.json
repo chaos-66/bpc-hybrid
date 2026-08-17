@@ -1,0 +1,110 @@
+{
+  "schema_version": "s2_11_batch_import_dry_run@1.0.0",
+  "proposal_report": "outputs/reports/s2_11_proposal_report_v1.json",
+  "proposal_report_sha256": "1f889494ef5ec07addb1d9dd3f6fa8c3abb92c4a5f3c77e875966fca3be50260",
+  "proposal_file": "outputs\\development\\s2_11_local_working\\adjudication_proposals_v1\\proposals.jsonl",
+  "proposal_file_sha256": "14c1ec909b2c5aa2249d2acfac1f3e411ff00a3c967a3d6b2ed06ddba8c7364b",
+  "membership": "outputs/reports/s2_11_corpus_membership_v1.json",
+  "population": {
+    "inventory": 40,
+    "objective_exclusions": 4,
+    "nonempty_membership": 36,
+    "review_population": 36,
+    "closure_invariant": "review_population == nonempty_membership == inventory - objective_exclusions"
+  },
+  "batch_import_mode": "accept_all_with_listed_revisions",
+  "revisions_file": null,
+  "revisions_file_sha256": null,
+  "would_be_decisions_file": "outputs\\development\\s2_11_local_working\\batch_import_dry_run_v1\\would_be_decisions.json",
+  "would_be_decisions_sha256": "393cec2b28a51a34eb46cf11816383f721aafeda4b23c08b2da61f58fb0f5fe0",
+  "would_be_decisions": {
+    "records": 36,
+    "review_state": "reviewed",
+    "reviewer": "null (never the user)",
+    "adjudication_pending_user_confirmation": true
+  },
+  "import_stats": {
+    "samples": 36,
+    "import_blocked_fields": 10,
+    "import_blocked_samples": 7
+  },
+  "import_blocked": [
+    {
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "field": "constraint",
+      "reason": "proposed_value_not_found_in_text"
+    },
+    {
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "field": "constraint",
+      "reason": "multi_value_proposal_requires_user_selection"
+    },
+    {
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "field": "action",
+      "reason": "proposed_value_not_found_in_text"
+    },
+    {
+      "sample_id": "emergencies_scenario/r2/v1",
+      "field": "action",
+      "reason": "multi_value_proposal_requires_user_selection"
+    },
+    {
+      "sample_id": "emergencies_scenario/r2/v1",
+      "field": "constraint",
+      "reason": "multi_value_proposal_requires_user_selection"
+    },
+    {
+      "sample_id": "emergencies_scenario/r2/v2",
+      "field": "actor",
+      "reason": "multi_value_proposal_requires_user_selection"
+    },
+    {
+      "sample_id": "emergencies_scenario/r2/v2",
+      "field": "action",
+      "reason": "multi_value_proposal_requires_user_selection"
+    },
+    {
+      "sample_id": "emergencies_scenario/r2/v2",
+      "field": "constraint",
+      "reason": "multi_value_proposal_requires_user_selection"
+    },
+    {
+      "sample_id": "emergencies_scenario/r3/v1",
+      "field": "constraint",
+      "reason": "multi_value_proposal_requires_user_selection"
+    },
+    {
+      "sample_id": "emergencies_scenario/r3/v2",
+      "field": "constraint",
+      "reason": "multi_value_proposal_requires_user_selection"
+    }
+  ],
+  "recommended_for_user_revision": [
+    "SIM_card_scenario/r10/v1",
+    "SIM_card_scenario/r11/v1",
+    "blood_donation_scenario/r16/v1",
+    "blood_donation_scenario/r17/v1",
+    "blood_donation_scenario/r17/v2",
+    "emergencies_scenario/r2/v1",
+    "emergencies_scenario/r2/v2",
+    "emergencies_scenario/r3/v1"
+  ],
+  "fail_closed": {
+    "confirmation_event_present": false,
+    "applied": false,
+    "wrote_decisions": false,
+    "reviewer_never_user": true,
+    "gold_created": false,
+    "human_approved": false
+  },
+  "determinism": {
+    "no_wall_clock": true,
+    "byte_identical_rebuild": true,
+    "no_overwrite": true
+  },
+  "raw_text_committed": false,
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

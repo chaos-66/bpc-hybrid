@@ -74,9 +74,9 @@ Every state judgment in this report is re-derived from current on-disk assets, m
   - blocker: 29 records require user adjudication (blank review surface open; decisions are user-only)
   - blocker: 11 records quarantined (see the candidate run report for stable error codes)
   - evidence [disk_asset]: `outputs/reports/s2_11_candidate_run_v1.json`, sha256 `5fe8225f6be5…`
-  - evidence [disk_asset]: `outputs/reports/s2_11_g5_review_surface_v1.json`, sha256 `6ae99d76000d…`
-  - evidence [disk_asset]: `data/development/human_review/s2_11_blank_review_v1.json`, sha256 `87087fb4d89f…`
-  - evidence [disk_asset]: `data/development/human_review/s2_11_review_decisions_v1.json`, sha256 `a46c75bd3b8f…`
+  - evidence [disk_asset]: `outputs/reports/s2_11_g5_review_surface_v1.json`, sha256 `571ba7ae3c39…`
+  - evidence [disk_asset]: `data/development/human_review/s2_11_blank_review_v1.json`, sha256 `a1ce7cfa1585…`
+  - evidence [disk_asset]: `data/development/human_review/s2_11_review_decisions_v1.json`, sha256 `9764a6a03bb6…`
   - evidence [disk_asset]: `outputs/reports/s2_11_corpus_membership_v1.json`, sha256 `a63c50ea3164…`
   - evidence [derivation]: `derived: S2.11 = in_progress_human_adjudication from the candidate run (workload, quarantine), the G5 review surface status and the hash-only membership manifest; no Gold created`
 - **S2.12 = partial** — Formal descriptive common error analysis delivered as RETROSPECTIVE/EXPLORATORY (stratification formed after seeing results, NOT preregistered); full DoD remains blocked on S2.11.

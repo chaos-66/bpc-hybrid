@@ -22,6 +22,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 
 DECISIONS_REL = "data/development/human_review/s2_11_review_decisions_v1.json"
+BLANK_REVIEW_REL = "data/development/human_review/s2_11_blank_review_v1.json"
 DECISION_FIELDS = ("modality", "actor", "action", "condition",
                    "constraint", "exception")
 
@@ -31,11 +32,35 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def verify() -> dict[str, Any]:
+    pack = _load_json(ROOT / BLANK_REVIEW_REL)
+    expected_ids = [s["sample_id"] for s in pack.get("samples", [])]
     doc = _load_json(ROOT / DECISIONS_REL)
     records = doc.get("records") or {}
     problems: list[str] = []
     counts = {"unreviewed": 0, "reviewed": 0, "adjudicated": 0}
-    for sample_id, entry in sorted(records.items()):
+
+    # population invariants: review_population == nonempty_membership and
+    # the decisions sample set matches the blank pack EXACTLY (missing,
+    # duplicate or extra sample IDs refuse)
+    pop = pack.get("population") or {}
+    if pop.get("review_population") != pop.get("nonempty_membership"):
+        problems.append("review_population != nonempty_membership")
+    if pop.get("review_population") != len(expected_ids):
+        problems.append("review_population != sample count in the pack")
+    expected_set = set(expected_ids)
+    actual_set = set(records)
+    missing = sorted(expected_set - actual_set)
+    extra = sorted(actual_set - expected_set)
+    if missing:
+        problems.append(f"missing sample ids: {missing}")
+    if extra:
+        problems.append(f"extra sample ids: {extra}")
+
+    for sample_id in expected_ids:
+        entry = records.get(sample_id)
+        if not isinstance(entry, dict):
+            problems.append(f"{sample_id}: missing decision entry")
+            continue
         state = entry.get("review_state")
         if state not in counts:
             problems.append(f"{sample_id}: bad review_state {state!r}")
@@ -46,14 +71,15 @@ def verify() -> dict[str, Any]:
             if field not in decision:
                 problems.append(f"{sample_id}: missing field {field!r}")
         if state == "adjudicated":
-            missing = [f for f in DECISION_FIELDS
-                       if decision.get(f) is None]
-            if missing:
+            missing_fields = [f for f in DECISION_FIELDS
+                              if decision.get(f) is None]
+            if missing_fields:
                 problems.append(
-                    f"{sample_id}: adjudicated with null fields {missing}")
+                    f"{sample_id}: adjudicated with null fields "
+                    f"{missing_fields}")
             if not entry.get("reviewer"):
                 problems.append(f"{sample_id}: adjudicated without reviewer")
-    total = len(records)
+    total = len(expected_ids)
     frozen = bool(total and counts["adjudicated"] == total
                   and not problems)
     return {
