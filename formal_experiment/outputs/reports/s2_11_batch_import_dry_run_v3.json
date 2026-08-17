@@ -1,0 +1,49 @@
+{
+  "schema_version": "s2_11_batch_import_dry_run@2.0.0",
+  "proposal_report": "outputs/reports/s2_11_proposal_report_v3.json",
+  "proposal_report_sha256": "0cd725b4e7e14c88a97ca005ec10dac3f7fc77c2ebf3955eb746abdc9479616a",
+  "proposal_file": "outputs\\development\\s2_11_local_working\\adjudication_proposals_v3\\proposals.jsonl",
+  "proposal_file_sha256": "9882ba45d8486235df7fc2411eb7a1c3e5977f87ade527898ff29e45396e6a3b",
+  "membership": "outputs/reports/s2_11_corpus_membership_v1.json",
+  "population": {
+    "inventory": 40,
+    "objective_exclusions": 4,
+    "nonempty_membership": 36,
+    "review_population": 36
+  },
+  "batch_import_mode": "accept_all_with_listed_revisions",
+  "revisions_file": null,
+  "revisions_file_sha256": null,
+  "would_be_decisions_file": "outputs\\development\\s2_11_local_working\\batch_import_v3_dry_run\\would_be_decisions_v3.json",
+  "would_be_decisions_sha256": "00b14140013def7fb698385ad017f79aa524f55c2bc748360d2656f80fe0ad74",
+  "would_be_decisions": {
+    "records": 36,
+    "review_state": "reviewed",
+    "reviewer": "null (never the user)",
+    "adjudication_pending_user_confirmation": true
+  },
+  "import_stats": {
+    "samples": 36,
+    "blocked_fields": 0,
+    "blocked_samples": 0,
+    "unresolved_fields": 0,
+    "adjudicable": 36
+  },
+  "fail_closed": {
+    "confirmation_event_present": false,
+    "applied": false,
+    "wrote_decisions": false,
+    "reviewer_never_user": true,
+    "gold_created": false,
+    "human_approved": false
+  },
+  "raw_text_committed": false,
+  "zero_api": {
+    "new_llm_api_calls": 0
+  },
+  "determinism": {
+    "no_wall_clock": true,
+    "byte_identical_rebuild": true,
+    "no_overwrite": true
+  }
+}

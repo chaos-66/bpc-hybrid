@@ -1,0 +1,3123 @@
+{
+  "schema_version": "s2_11_proposal_report@3.0.0",
+  "proposal_source": "deepseek_offline_proposal_v3",
+  "membership": "outputs/reports/s2_11_corpus_membership_v1.json",
+  "proposal_count": 36,
+  "coverage": "36/36",
+  "proposal_file": "outputs\\development\\s2_11_local_working\\adjudication_proposals_v3\\proposals.jsonl",
+  "proposal_file_sha256": "9882ba45d8486235df7fc2411eb7a1c3e5977f87ade527898ff29e45396e6a3b",
+  "supersedes_v2": {
+    "proposal_file_sha256": "9386642738e73ac2296edb709bd1183b072cacca328b3359762551d0e2b2e5ac",
+    "proposal_report_v2": "outputs/reports/s2_11_proposal_report_v2.json",
+    "proposal_report_v2_sha256": "5f596d54391e8e1a1a995cb994c77281949c27562e98c04a9755e4cdc31bb6c0",
+    "status": "superseded_pending_targeted_correction_do_not_approve"
+  },
+  "confidence_counts": {
+    "high": 23,
+    "medium": 9,
+    "low": 4
+  },
+  "needs_attention_ids": [
+    "SIM_card_scenario/r10/v1",
+    "SIM_card_scenario/r10/v2",
+    "SIM_card_scenario/r11/v1",
+    "blood_donation_scenario/r16/v1",
+    "blood_donation_scenario/r17/v1",
+    "blood_donation_scenario/r17/v2",
+    "blood_donation_scenario/r18/v2",
+    "blood_donation_scenario/r19/v1",
+    "blood_donation_scenario/r19/v2",
+    "emergencies_scenario/r1/v1",
+    "emergencies_scenario/r3/v1",
+    "emergencies_scenario/r4/v2",
+    "emergencies_scenario/r5/v1",
+    "emergencies_scenario/r7/v2"
+  ],
+  "acceptance_counts": {
+    "exact_slice_failures": 0,
+    "duplicate_span_ids": 0,
+    "duplicate_clause_ids": 0,
+    "ambiguous_auto_occurrences": 0,
+    "invalid_or_missing_actor_action_mappings": 0,
+    "invalid_order_relations": 0,
+    "action_constraint_overlaps": 0,
+    "modality_evidence_missing": 0,
+    "unresolved_fields": 0
+  },
+  "entries": {
+    "SIM_card_scenario/r10/v1": {
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "text_sha256": "17a5295cdd1ec8b7848252bb0ee98d9b9bbc599d4ffad6aa48fcf94dc83d6dfc",
+      "record_confidence": 0.5,
+      "needs_attention": true,
+      "reason": "v3 correction: the actor is ONLY the main-clause 'the customer' (explicit occurrence 1; id unique); the condition-internal customer belongs to the condition content; the actor-action mapping to 'activating the SIM card' is established.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r10_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 95
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r10_v1_c01_modev_0_54",
+                  "start": 54,
+                  "end": 71,
+                  "confidence": 0.5
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v1_c01_act_0",
+                  "start": 41,
+                  "end": 53,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v1_c01_actn_0",
+                  "start": 72,
+                  "end": 95,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 39,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "constraint": {
+              "status": "absent",
+              "spans": []
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r10_v1_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r10_v1_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "SIM_card_scenario/r10/v2": {
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "text_sha256": "f2247ea6bc11dc4b17e811fac2bda2bdb6d160cff111da839988b352b4cec03b",
+      "record_confidence": 0.65,
+      "needs_attention": true,
+      "reason": "Company activation duty on delivery; the 'so that' purpose clause is a low-confidence constraint (purpose vs constraint boundary).",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r10_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 136
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r10_v2_c01_modev_0_59",
+                  "start": 59,
+                  "end": 63,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v2_c01_act_0",
+                  "start": 41,
+                  "end": 58,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v2_c01_actn_0",
+                  "start": 64,
+                  "end": 85,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 39,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v2_c01_constr_0",
+                  "start": 86,
+                  "end": 136,
+                  "confidence": 0.65
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r10_v2_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r10_v2_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "SIM_card_scenario/r11/v1": {
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "text_sha256": "73768ea4f655461058f4cd129d4fbc20402a07f24c099e31793010053e20824a",
+      "record_confidence": 0.6,
+      "needs_attention": true,
+      "reason": "Absence of obligation ('is not obligated') classified as PERMISSION (permitted not to ask), NOT prohibition; the deterministic v1 rule labeled it prohibition - corrected in v2.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r11_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 70
+            },
+            "modality": {
+              "status": "present",
+              "label": "permission",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r11_v1_c01_modev_0_18",
+                  "start": 18,
+                  "end": 34,
+                  "confidence": 0.6
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r11_v1_c01_act_0",
+                  "start": 0,
+                  "end": 17,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r11_v1_c01_actn_0",
+                  "start": 38,
+                  "end": 69,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "absent",
+              "spans": []
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r11_v1_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r11_v1_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "SIM_card_scenario/r11/v2": {
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "text_sha256": "ec600eceed94e17b399a334eaedceca6a0c234c23c82ee317edb9bbf5668ed28",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "Consent-before-retrieval duty for the Data Controller; 'Before ...' is a temporal constraint.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r11_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 126
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r11_v2_c01_modev_0_87",
+                  "start": 87,
+                  "end": 93,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r11_v2_c01_act_0",
+                  "start": 67,
+                  "end": 86,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r11_v2_c01_actn_0",
+                  "start": 94,
+                  "end": 126,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r11_v2_c01_constr_0",
+                  "start": 0,
+                  "end": 65,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r11_v2_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r11_v2_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "SIM_card_scenario/r12/v1": {
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "text_sha256": "390f8189f8b8fd15a92a3f48425466147d387850fc25524bdd84da67cfff56ae",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "Deletion duty when portability is denied; passive with no stated executor -> actor absent (the data is the patient, not the actor).",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r12_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 101
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r12_v1_c01_modev_0_68",
+                  "start": 68,
+                  "end": 72,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r12_v1_c01_actn_0",
+                  "start": 73,
+                  "end": 101,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r12_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 37,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "absent",
+              "spans": []
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "SIM_card_scenario/r13/v1": {
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "text_sha256": "aa28843bc3a23f7ca8694cab3b6c8e856a5655e5d911699d2a25e4c3876b185d",
+      "record_confidence": 0.8,
+      "needs_attention": false,
+      "reason": "Negative eligibility = prohibition of receiving; the debt qualifier is a constraint.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r13_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 89
+            },
+            "modality": {
+              "status": "present",
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r13_v1_c01_modev_0_48",
+                  "start": 48,
+                  "end": 64,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v1_c01_act_0",
+                  "start": 0,
+                  "end": 9,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v1_c01_actn_0",
+                  "start": 68,
+                  "end": 89,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v1_c01_constr_0",
+                  "start": 10,
+                  "end": 47,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r13_v1_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r13_v1_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "SIM_card_scenario/r13/v2": {
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "text_sha256": "509344c6d55b87c416675b53f14dd3ebd9f947425d09680c1271356da2324668",
+      "record_confidence": 0.8,
+      "needs_attention": false,
+      "reason": "Change version: threshold 100 -> 50 is reflected in the constraint span.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r13_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 88
+            },
+            "modality": {
+              "status": "present",
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r13_v2_c01_modev_0_47",
+                  "start": 47,
+                  "end": 63,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v2_c01_act_0",
+                  "start": 0,
+                  "end": 9,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v2_c01_actn_0",
+                  "start": 67,
+                  "end": 88,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v2_c01_constr_0",
+                  "start": 10,
+                  "end": 46,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r13_v2_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r13_v2_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "SIM_card_scenario/r8/v1": {
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "text_sha256": "14a133ae8b9d332b96f0e3f0ff8f92972e26492fc747066c962078cef56cf94e",
+      "record_confidence": 0.8,
+      "needs_attention": false,
+      "reason": "v3 correction: 'longer than 30 days' is annotated as a quantity/temporal constraint; the action is the exact span 'sending the SIM card' (normalized full verb phrase); actor-action mapping kept.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r8_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 71
+            },
+            "modality": {
+              "status": "present",
+              "label": "permission",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r8_v1_c01_modev_0_18",
+                  "start": 18,
+                  "end": 21,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v1_c01_act_0",
+                  "start": 0,
+                  "end": 17,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v1_c01_actn_0",
+                  "start": 50,
+                  "end": 70,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v1_c01_constr_0",
+                  "start": 27,
+                  "end": 46,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r8_v1_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r8_v1_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "SIM_card_scenario/r8/v2": {
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "text_sha256": "e4ad22e7f9300da841b0c018ab1746db4b9dcaea6b5d79758a691c3e35238223",
+      "record_confidence": 0.8,
+      "needs_attention": false,
+      "reason": "Passive 'be terminated'; the process is the patient, the terminating party is unstated -> actor absent; the temporal quantity inside the condition is annotated separately.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r8_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 92
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r8_v2_c01_modev_0_29",
+                  "start": 29,
+                  "end": 33,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v2_c01_actn_0",
+                  "start": 34,
+                  "end": 47,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v2_c01_cond_0",
+                  "start": 48,
+                  "end": 92,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v2_c01_constr_0",
+                  "start": 60,
+                  "end": 77,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "SIM_card_scenario/r9/v2": {
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+      "file_sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+      "text_sha256": "d9b3db2c8352ce437669820aeaed9de14108023cee084c3b76e6c48a07509d34",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "v1 exact-substring failure fixed: the temporal constraint now carries the exact text incl. the curly apostrophe.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "SIM_card_scenario_r9_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 124
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r9_v2_c01_modev_0_56",
+                  "start": 56,
+                  "end": 68,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r9_v2_c01_actn_0",
+                  "start": 72,
+                  "end": 124,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r9_v2_c01_constr_0",
+                  "start": 0,
+                  "end": 51,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r14/v1": {
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "aa401bff79294f187d39987c21fb736dcaa74820824ed4e657da6b67e0134787",
+      "record_confidence": 0.8,
+      "needs_attention": false,
+      "reason": "First-time donation triggers an information duty before consent; passive with recipient 'to the donor' (not the actor) -> actor absent.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r14_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 148
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r14_v1_c01_modev_0_94",
+                  "start": 94,
+                  "end": 102,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r14_v1_c01_actn_0",
+                  "start": 103,
+                  "end": 127,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r14_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 43,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r14_v1_c01_constr_0",
+                  "start": 128,
+                  "end": 148,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r14/v2": {
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "03d61f084728dcc8a5ddcbc6e2e7ea4bd83a800390af295e2ba1b51baec02329",
+      "record_confidence": 0.8,
+      "needs_attention": false,
+      "reason": "Change version: the first-time condition is dropped; the standalone duty + constraint remain.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r14_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 103
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r14_v2_c01_modev_0_49",
+                  "start": 49,
+                  "end": 57,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r14_v2_c01_actn_0",
+                  "start": 58,
+                  "end": 82,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r14_v2_c01_constr_0",
+                  "start": 83,
+                  "end": 103,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r15/v1": {
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "4695d4ce260f7b2e97cf3c0fb9376faba6a80782cc84f9d3b9a19db71fed7431",
+      "record_confidence": 0.9,
+      "needs_attention": false,
+      "reason": "Active intransitive: the process itself terminates -> actor 'the process'.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r15_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 79
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r15_v1_c01_modev_0_63",
+                  "start": 63,
+                  "end": 69,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v1_c01_act_0",
+                  "start": 51,
+                  "end": 62,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v1_c01_actn_0",
+                  "start": 70,
+                  "end": 79,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 49,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "absent",
+              "spans": []
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "blood_donation_scenario_r15_v1_c01_act_0",
+            "action_span_id": "blood_donation_scenario_r15_v1_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r15/v2": {
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "d490bb505b4a09cc2ef829d07297a8bfd8ee70e88c0a71f9fdb83200827391e6",
+      "record_confidence": 0.9,
+      "needs_attention": false,
+      "reason": "Change version: consent-retraction disjunct dropped; the condition span reflects it.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r15_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 59
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r15_v2_c01_modev_0_43",
+                  "start": 43,
+                  "end": 49,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v2_c01_act_0",
+                  "start": 31,
+                  "end": 42,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v2_c01_actn_0",
+                  "start": 50,
+                  "end": 59,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 29,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "absent",
+              "spans": []
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "blood_donation_scenario_r15_v2_c01_act_0",
+            "action_span_id": "blood_donation_scenario_r15_v2_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r16/v1": {
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "f3eab08e7c817e5a69f5805e8d85b9faa1eb849991c6d9aa424d3039885eb8ee",
+      "record_confidence": 0.5,
+      "needs_attention": true,
+      "reason": "Descriptive monitoring duty with NO standard modal cue; the predicate 'is monitored' is the minimal cue-containing phrase; passive - the donor is monitored by an unstated party -> actor absent; class inference debatable.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r16_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 83
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r16_v1_c01_modev_0_38",
+                  "start": 38,
+                  "end": 50,
+                  "confidence": 0.5
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r16_v1_c01_actn_0",
+                  "start": 38,
+                  "end": 50,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r16_v1_c01_constr_0",
+                  "start": 0,
+                  "end": 26,
+                  "confidence": 0.8
+                },
+                {
+                  "id": "blood_donation_scenario_r16_v1_c01_constr_1",
+                  "start": 51,
+                  "end": 83,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r17/v1": {
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "f0518457348a35eb171546b74718d03ff5e2626b085243e8bb4756aa76e752c6",
+      "record_confidence": 0.55,
+      "needs_attention": true,
+      "reason": "v1 exact-substring failure fixed: the imperative was a single un-sliced value ('assess the donor  and record...' has a double space); v2 splits the two coordinated imperatives into separate spans with an order relation (assess before record). Imperative = the modality cue.",
+      "g0_5_level": "L2",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r17_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 128
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r17_v1_c01_modev_0_75",
+                  "start": 75,
+                  "end": 91,
+                  "confidence": 0.55
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v1_c01_actn_0",
+                  "start": 75,
+                  "end": 91,
+                  "confidence": 0.85
+                },
+                {
+                  "id": "blood_donation_scenario_r17_v1_c01_actn_1",
+                  "start": 97,
+                  "end": 128,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 73,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v1_c01_constr_0",
+                  "start": 3,
+                  "end": 19,
+                  "confidence": 0.7
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": [
+          {
+            "before_span_id": "blood_donation_scenario_r17_v1_c01_actn_0",
+            "after_span_id": "blood_donation_scenario_r17_v1_c01_actn_1"
+          }
+        ]
+      }
+    },
+    "blood_donation_scenario/r17/v2": {
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "1f6c995eccc075b7067e9503830d28db59e327b1cc6e8b3fa43bbd37523a6729",
+      "record_confidence": 0.55,
+      "needs_attention": true,
+      "reason": "Change version: 15 -> 20 minutes reflected in condition and constraint; imperative modality inference.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r17_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 65
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r17_v2_c01_modev_0_49",
+                  "start": 49,
+                  "end": 65,
+                  "confidence": 0.55
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v2_c01_actn_0",
+                  "start": 49,
+                  "end": 65,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 47,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v2_c01_constr_0",
+                  "start": 3,
+                  "end": 19,
+                  "confidence": 0.7
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r18/v2": {
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "fa8055c249d1b45f20997933f1fc0c631c0794f1001e7b328239baab44d57844",
+      "record_confidence": 0.8,
+      "needs_attention": true,
+      "reason": "v3 correction: 'immediately' is annotated as a temporal constraint; the action is the exact span 'sent the reason for rejection' (normalized full passive verb phrase); passive executor stays absent (the rejected donor is the recipient, never the actor).",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r18_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 88
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r18_v2_c01_modev_0_39",
+                  "start": 39,
+                  "end": 43,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r18_v2_c01_actn_0",
+                  "start": 59,
+                  "end": 88,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r18_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 32,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r18_v2_c01_constr_0",
+                  "start": 47,
+                  "end": 58,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r19/v1": {
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "af0f01e75941494e28578a209a53fbbfbb79c62cd31072387359f95f6c33a739",
+      "record_confidence": 0.7,
+      "needs_attention": true,
+      "reason": "Gerund-subject action (the required activity); purpose clause as constraint; boundary debatable.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r19_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 87
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r19_v1_c01_modev_0_35",
+                  "start": 35,
+                  "end": 44,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r19_v1_c01_actn_0",
+                  "start": 0,
+                  "end": 34,
+                  "confidence": 0.75
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r19_v1_c01_constr_0",
+                  "start": 45,
+                  "end": 87,
+                  "confidence": 0.7
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r19/v2": {
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "642bf63355da20278ba79048c5f6826c37142bdc39e95fd1d177ee5a55657614",
+      "record_confidence": 0.6,
+      "needs_attention": true,
+      "reason": "'is not needed' = absence of requirement -> PERMISSION (NOT prohibition); the deterministic rule's class is corrected; change version vs r19/v1.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r19_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 91
+            },
+            "modality": {
+              "status": "present",
+              "label": "permission",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r19_v2_c01_modev_0_35",
+                  "start": 35,
+                  "end": 48,
+                  "confidence": 0.6
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r19_v2_c01_actn_0",
+                  "start": 0,
+                  "end": 34,
+                  "confidence": 0.75
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r19_v2_c01_constr_0",
+                  "start": 49,
+                  "end": 91,
+                  "confidence": 0.7
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r20/v1": {
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "a96e90fbe25b028de2ead440f54dd6a911369c633f0af81c15b9f4adc9867301",
+      "record_confidence": 0.9,
+      "needs_attention": false,
+      "reason": "Clear prohibition with a disjunctive condition.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r20_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 140
+            },
+            "modality": {
+              "status": "present",
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r20_v1_c01_modev_0_90",
+                  "start": 90,
+                  "end": 108,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v1_c01_act_0",
+                  "start": 77,
+                  "end": 89,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v1_c01_actn_0",
+                  "start": 109,
+                  "end": 140,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 75,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "absent",
+              "spans": []
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "blood_donation_scenario_r20_v1_c01_act_0",
+            "action_span_id": "blood_donation_scenario_r20_v1_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "blood_donation_scenario/r20/v2": {
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json",
+      "file_sha256": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+      "text_sha256": "f334c0ef6687bc5c2369848930ab17b29518370f5a7d142be662da57d97facdb",
+      "record_confidence": 0.9,
+      "needs_attention": false,
+      "reason": "Change version: or -> and reflected in the condition span.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "blood_donation_scenario_r20_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 141
+            },
+            "modality": {
+              "status": "present",
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r20_v2_c01_modev_0_91",
+                  "start": 91,
+                  "end": 109,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v2_c01_act_0",
+                  "start": 78,
+                  "end": 90,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v2_c01_actn_0",
+                  "start": 110,
+                  "end": 141,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 76,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "absent",
+              "spans": []
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "blood_donation_scenario_r20_v2_c01_act_0",
+            "action_span_id": "blood_donation_scenario_r20_v2_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r1/v1": {
+      "sample_id": "emergencies_scenario/r1/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "ed6a2753aff4de7d60ec9d4f28f50a9b7dcf3bdb36090b16ffd6212cab5c5bda",
+      "record_confidence": 0.75,
+      "needs_attention": true,
+      "reason": "Passive 'be asked' with 'every 20 minutes' as a temporal constraint; the embedded question content ('if they are experiencing any pain') is not contiguous with the verb and is not a condition of the duty, so it is not annotated as a separate field.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r1_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 165
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r1_v1_c01_modev_0_100",
+                  "start": 100,
+                  "end": 104,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v1_c01_actn_0",
+                  "start": 105,
+                  "end": 113,
+                  "confidence": 0.75
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 86,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v1_c01_constr_0",
+                  "start": 114,
+                  "end": 130,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r1/v2": {
+      "sample_id": "emergencies_scenario/r1/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "ed9d956d410f3ad6f44611f24d5717818905da4deb909176aff2911e7d7a55cd",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "Change version: the ask-duty becomes an administer-duty; passive, actor unstated.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r1_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 147
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r1_v2_c01_modev_0_110",
+                  "start": 110,
+                  "end": 114,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v2_c01_actn_0",
+                  "start": 115,
+                  "end": 130,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 86,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v2_c01_constr_0",
+                  "start": 131,
+                  "end": 147,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r2/v1": {
+      "sample_id": "emergencies_scenario/r2/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "f4db6ab93be655d072849f1be757b631039e8860535339f67d84af718e055a41",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "Two clauses (consent first, then time-out) with an order relation; v1's un-sliced multi-value action is split into per-clause spans.",
+      "g0_5_level": "L2",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r2_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 76
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c01_modev_0_42",
+                  "start": 42,
+                  "end": 46,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c01_act_0",
+                  "start": 32,
+                  "end": 41,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c01_actn_0",
+                  "start": 47,
+                  "end": 75,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c01_constr_0",
+                  "start": 0,
+                  "end": 30,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          },
+          {
+            "clause_id": "emergencies_scenario_r2_v1_c02",
+            "clause_span": {
+              "start": 77,
+              "end": 149
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c02_modev_0_112",
+                  "start": 112,
+                  "end": 116,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c02_act_0",
+                  "start": 102,
+                  "end": 111,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c02_actn_0",
+                  "start": 117,
+                  "end": 149,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c02_constr_0",
+                  "start": 77,
+                  "end": 100,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "emergencies_scenario_r2_v1_c01_act_0",
+            "action_span_id": "emergencies_scenario_r2_v1_c01_actn_0"
+          },
+          {
+            "actor_span_id": "emergencies_scenario_r2_v1_c02_act_0",
+            "action_span_id": "emergencies_scenario_r2_v1_c02_actn_0"
+          }
+        ],
+        "order_relations": [
+          {
+            "before_span_id": "emergencies_scenario_r2_v1_c01_actn_0",
+            "after_span_id": "emergencies_scenario_r2_v1_c02_actn_0"
+          }
+        ]
+      }
+    },
+    "emergencies_scenario/r2/v2": {
+      "sample_id": "emergencies_scenario/r2/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "3659f994c7a02977f2f816c10b4c3328c3034a7359584df694613633b20a1259",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "Change version: the time-out actor changes nurse -> doctor; v1 exact-substring failure fixed by clause splitting.",
+      "g0_5_level": "L2",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r2_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 76
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c01_modev_0_42",
+                  "start": 42,
+                  "end": 46,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c01_act_0",
+                  "start": 32,
+                  "end": 41,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c01_actn_0",
+                  "start": 47,
+                  "end": 75,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c01_constr_0",
+                  "start": 0,
+                  "end": 30,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          },
+          {
+            "clause_id": "emergencies_scenario_r2_v2_c02",
+            "clause_span": {
+              "start": 77,
+              "end": 151
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c02_modev_0_113",
+                  "start": 113,
+                  "end": 117,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c02_act_0",
+                  "start": 102,
+                  "end": 112,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c02_actn_0",
+                  "start": 118,
+                  "end": 150,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c02_constr_0",
+                  "start": 77,
+                  "end": 100,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "emergencies_scenario_r2_v2_c01_act_0",
+            "action_span_id": "emergencies_scenario_r2_v2_c01_actn_0"
+          },
+          {
+            "actor_span_id": "emergencies_scenario_r2_v2_c02_act_0",
+            "action_span_id": "emergencies_scenario_r2_v2_c02_actn_0"
+          }
+        ],
+        "order_relations": [
+          {
+            "before_span_id": "emergencies_scenario_r2_v2_c01_actn_0",
+            "after_span_id": "emergencies_scenario_r2_v2_c02_actn_0"
+          }
+        ]
+      }
+    },
+    "emergencies_scenario/r3/v1": {
+      "sample_id": "emergencies_scenario/r3/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "6c487518c81e91ba812643b82ced01bf880cfe0f8307e7402cf6b23130cf6ecf",
+      "record_confidence": 0.8,
+      "needs_attention": true,
+      "reason": "v3 correction: the normative clause span is extended to the full record and the temporal-validity constraint 'valid from 2024 to 2030' is annotated per the frozen constraint definition; the second 'must' cue is handled by the explicit occurrence 0; existing condition, approval action and the two temporal constraints are kept; no fake clause is created.",
+      "g0_5_level": "L2",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r3_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 188
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_modev_0_35",
+                  "start": 35,
+                  "end": 39,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_act_0",
+                  "start": 27,
+                  "end": 34,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_actn_0",
+                  "start": 40,
+                  "end": 57,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 25,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_constr_0",
+                  "start": 58,
+                  "end": 90,
+                  "confidence": 0.85
+                },
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_constr_1",
+                  "start": 116,
+                  "end": 150,
+                  "confidence": 0.8
+                },
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_constr_2",
+                  "start": 164,
+                  "end": 187,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "emergencies_scenario_r3_v1_c01_act_0",
+            "action_span_id": "emergencies_scenario_r3_v1_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r3/v2": {
+      "sample_id": "emergencies_scenario/r3/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "9ba6089cf16579e36d726386ecd94e4dc6c90b2b9888a0bc7f036bc8389e426c",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "v3 correction: the normative clause span is extended to the full record and the temporal-validity constraint 'valid from 2025 to 2031' is annotated; existing condition/action/constraint are kept.",
+      "g0_5_level": "L2",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r3_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 160
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_modev_0_67",
+                  "start": 67,
+                  "end": 71,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_act_0",
+                  "start": 58,
+                  "end": 66,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_actn_0",
+                  "start": 72,
+                  "end": 89,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 56,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_constr_0",
+                  "start": 90,
+                  "end": 122,
+                  "confidence": 0.85
+                },
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_constr_1",
+                  "start": 136,
+                  "end": 159,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [
+          {
+            "actor_span_id": "emergencies_scenario_r3_v2_c01_act_0",
+            "action_span_id": "emergencies_scenario_r3_v2_c01_actn_0"
+          }
+        ],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r4/v1": {
+      "sample_id": "emergencies_scenario/r4/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "dd0ae603f10fa714321cd1b79e91eae567e61add94efafe6a7b6dfa4ab318502",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "Passive 'be analyzed'; analyzer unstated -> actor absent.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r4_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 43
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r4_v1_c01_modev_0_24",
+                  "start": 24,
+                  "end": 30,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r4_v1_c01_actn_0",
+                  "start": 31,
+                  "end": 42,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r4_v1_c01_constr_0",
+                  "start": 0,
+                  "end": 16,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r4/v2": {
+      "sample_id": "emergencies_scenario/r4/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "2569981eacc62a9fe696367b6eb74256d6884456929d3c57f4c01bce4d145e88",
+      "record_confidence": 0.7,
+      "needs_attention": true,
+      "reason": "v3 correction: action/constraint overlap eliminated - the action is the exact raw span 'happen' (normalized 'happen before the surgery'), the temporal constraint 'before the surgery' is separate; overlap = 0.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r4_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 109
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r4_v2_c01_modev_0_76",
+                  "start": 76,
+                  "end": 82,
+                  "confidence": 0.7
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r4_v2_c01_actn_0",
+                  "start": 83,
+                  "end": 89,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r4_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 56,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r4_v2_c01_constr_0",
+                  "start": 90,
+                  "end": 108,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r5/v1": {
+      "sample_id": "emergencies_scenario/r5/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "f8811e4b641efdd7d1631e8f71974437227460e2cdd3e1c7548376ae19653c39",
+      "record_confidence": 0.7,
+      "needs_attention": true,
+      "reason": "The required activities appear as a nominal subject phrase; the action-as-nominal boundary is debatable.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r5_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 75
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r5_v1_c01_modev_0_36",
+                  "start": 36,
+                  "end": 48,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r5_v1_c01_actn_0",
+                  "start": 0,
+                  "end": 35,
+                  "confidence": 0.7
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r5_v1_c01_constr_0",
+                  "start": 49,
+                  "end": 74,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r5/v2": {
+      "sample_id": "emergencies_scenario/r5/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "bb9e19778613c581acf391489386ac549b7fb4e5ffe58347023ef79be10685f5",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "'may' = permission; the 'even if ... have not been performed' clause is an exception to the normal requirement.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r5_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 96
+            },
+            "modality": {
+              "status": "present",
+              "label": "permission",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r5_v2_c01_modev_0_12",
+                  "start": 12,
+                  "end": 15,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r5_v2_c01_actn_0",
+                  "start": 16,
+                  "end": 23,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "absent",
+              "spans": []
+            },
+            "exception": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r5_v2_c01_exc_0",
+                  "start": 24,
+                  "end": 95,
+                  "confidence": 0.85
+                }
+              ]
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r6/v1": {
+      "sample_id": "emergencies_scenario/r6/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "67f3e22563f8415e4190bb5ff069d9b03b6a13f368e6b3d07780770fab77b6b5",
+      "record_confidence": 0.75,
+      "needs_attention": false,
+      "reason": "Passive; collector unstated -> actor absent; 'from all patients' is the scope constraint.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r6_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 50
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r6_v1_c01_modev_0_14",
+                  "start": 14,
+                  "end": 18,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r6_v1_c01_actn_0",
+                  "start": 19,
+                  "end": 31,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r6_v1_c01_constr_0",
+                  "start": 32,
+                  "end": 49,
+                  "confidence": 0.75
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r6/v2": {
+      "sample_id": "emergencies_scenario/r6/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "743e54784a4bf4e1d248b24812dd84872d6802674478e2267d990aee74456940",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "Change version: adult condition added.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r6_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 60
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r6_v2_c01_modev_0_42",
+                  "start": 42,
+                  "end": 46,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r6_v2_c01_actn_0",
+                  "start": 47,
+                  "end": 59,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r6_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 26,
+                  "confidence": 0.9
+                }
+              ]
+            },
+            "constraint": {
+              "status": "absent",
+              "spans": []
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r7/v1": {
+      "sample_id": "emergencies_scenario/r7/v1",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "5adb472d8c06f306c1c7dcd06003b32be0bc18a7b9c0613e9b0779e99e9654f6",
+      "record_confidence": 0.85,
+      "needs_attention": false,
+      "reason": "Passive 'be applied'; actor unstated; the immediacy temporal constraint is annotated.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r7_v1_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 68
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r7_v1_c01_modev_0_52",
+                  "start": 52,
+                  "end": 56,
+                  "confidence": 0.95
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r7_v1_c01_actn_0",
+                  "start": 57,
+                  "end": 67,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r7_v1_c01_constr_0",
+                  "start": 0,
+                  "end": 39,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
+              "spans": []
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    },
+    "emergencies_scenario/r7/v2": {
+      "sample_id": "emergencies_scenario/r7/v2",
+      "proposal_source": "deepseek_offline_proposal_v3",
+      "human_approved": false,
+      "gold": false,
+      "reviewer": null,
+      "source_path": "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json",
+      "file_sha256": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+      "text_sha256": "f95cbbc556a2a365b0ebebaf4bc3dd09602754433a72e64b9a2fb4f5377177b5",
+      "record_confidence": 0.7,
+      "needs_attention": true,
+      "reason": "'should' = soft obligation; the waiver clause ('timing is flexible...') is an exception; boundary debatable.",
+      "g0_5_level": "L1",
+      "canonical": {
+        "clauses": [
+          {
+            "clause_id": "emergencies_scenario_r7_v2_c01",
+            "clause_span": {
+              "start": 0,
+              "end": 123
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r7_v2_c01_modev_0_11",
+                  "start": 11,
+                  "end": 17,
+                  "confidence": 0.7
+                }
+              ]
+            },
+            "actor": {
+              "status": "absent",
+              "spans": []
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r7_v2_c01_actn_0",
+                  "start": 18,
+                  "end": 28,
+                  "confidence": 0.85
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r7_v2_c01_constr_0",
+                  "start": 29,
+                  "end": 54,
+                  "confidence": 0.8
+                }
+              ]
+            },
+            "exception": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r7_v2_c01_exc_0",
+                  "start": 60,
+                  "end": 122,
+                  "confidence": 0.75
+                }
+              ]
+            }
+          }
+        ],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    }
+  },
+  "g0_5_frozen_binding": {
+    "frozen_config": "configs/g05_complexity_frozen_v1.json",
+    "draft_config": "configs/g05_complexity_candidate_draft_v1.json",
+    "authorization_manifest": "configs/g05_authorization_manifest_v1.json"
+  },
+  "raw_text_committed": false,
+  "human_approved": false,
+  "gold_created": false,
+  "zero_api": {
+    "new_llm_api_calls": 0
+  },
+  "determinism": {
+    "no_wall_clock": true,
+    "byte_identical_rebuild": true,
+    "no_overwrite": true
+  }
+}

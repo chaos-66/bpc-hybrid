@@ -3648,3 +3648,16 @@
 - 仍存在 blocker：无
 - 备注：canonical v2 模型（unresolved/absent/present+evidence spans+maps）；36 条重新语义复核 proposal v2（v1 superseded 不可批准；exact-slice=0/evidence missing=0/display None=0；SHA 93866427…）；importer v2 dry-run blocked=0/unresolved=0/adjudicable=36（未创建确认事件、未 apply、freeze=false）；S2.12 评估器 v2 对齐正式合同（parity 通过）+ plan/readiness v2 + API readiness v2（两臂 deepseek-v4-pro、36/72/108 calls、输出 4096、输入未文档化、cost_cap_unresolved、无最终授权句）；transition v5（39 项 supersedes、9 verifier）；S2.11=只剩一次性用户确认、S2.12=partial+execution-ready v2、S2.13 blocked、S3.7 未动
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-17T08:34:14.018739+00:00 - S2.11 proposal v3 最终校正与一次性确认就绪（Checkpoint F，零 LLM/API）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2499 passed, 24 skipped, 19 warnings in 1610.60s (0:26:50)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`644b0d8dd1bac047a86ccc4b85a64c9666ab6327`；相关未提交路径：24 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：六问题复现+修复：r10v1 actor 消歧+aam、canonical validator v3 强化（唯一 span/clause ID、aam 覆盖、order 约束）、r4v2/r8v1/r18v2 overlap=0、r3v1/r3v2 validity constraints；proposal v3（SHA 9882ba45…，验收计数全零；v1/v2 superseded 不可批准，文件逐字节保留）；importer v3 dry-run 0/0/36（未创建确认事件、未 apply、freeze=false）；freeze/review v3；S2.12 readiness v3（parity 重跑、re-bind）；transition v6（47 supersedes、11 verifier、V6 VERIFIED）；S2.11=只剩一次性用户内容确认、S2.12=partial+execution-ready v3、S2.13 blocked、S3.7 未动
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

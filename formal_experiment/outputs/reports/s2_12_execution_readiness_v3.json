@@ -1,0 +1,96 @@
+{
+  "schema_version": "s2_12_execution_readiness@3.0.0",
+  "status": "ready_for_execution_pending_user_gates",
+  "supersedes_v2": {
+    "readiness_v2": "outputs/reports/s2_12_execution_readiness_v2.json",
+    "reason": "re-binds the S2.11 proposal v3 / importer v3 assets (proposal v2 superseded); evaluator v2 unchanged"
+  },
+  "ready_claims": {
+    "schema_ready": true,
+    "importer_ready": {
+      "samples": 36,
+      "blocked_fields": 0,
+      "blocked_samples": 0,
+      "unresolved_fields": 0,
+      "adjudicable": 36
+    },
+    "evaluator_ready": {
+      "module": "src/bpc_hybrid/s2_12_stratified_evaluator_v2.py",
+      "parity_rerun": {
+        "passed": true,
+        "span_metrics_equal": true,
+        "modality_metrics_equal": true,
+        "fixture_samples": 4,
+        "strata_present": [
+          "L1",
+          "L2",
+          "L3"
+        ],
+        "l3_no_samples": true,
+        "zero_api": {
+          "new_llm_api_calls": 0
+        }
+      }
+    },
+    "method_adapter_dry_run_ready": true,
+    "gold_or_formal_evaluation_complete": false
+  },
+  "proposal_v3": {
+    "report": "outputs/reports/s2_11_proposal_report_v3.json",
+    "proposal_file_sha256": "9882ba45d8486235df7fc2411eb7a1c3e5977f87ade527898ff29e45396e6a3b",
+    "human_approved": false,
+    "gold_created": false,
+    "supersedes_v2_status": "superseded_pending_targeted_correction_do_not_approve"
+  },
+  "runner": {
+    "script": "scripts/s2_12_build_readiness_v3.py",
+    "fail_closed": true,
+    "real_run_refused": true,
+    "real_run_refusal_reason": "proposal v3 is NOT user-confirmed (importer v3 --apply requires the confirmation event binding the proposal v3 SHA) and S2.11 freeze is 0/36"
+  },
+  "gates": {
+    "s2_11_freeze": {
+      "adjudicated": 0,
+      "total": 36,
+      "ready": false
+    },
+    "api_budget_authorization": {
+      "event_present": false,
+      "ready": false,
+      "missing_items": [
+        "cost_cap (no trustworthy price basis in repo)",
+        "input_token_cap (not documented in registry/manifest)"
+      ]
+    }
+  },
+  "api_readiness": {
+    "report": "outputs/reports/s2_12_api_readiness_v2.json",
+    "calls_made": 0,
+    "final_copyable_authorization_sentence": null
+  },
+  "raw_text_committed": false,
+  "gold_created": false,
+  "human_approved": false,
+  "zero_api": {
+    "new_llm_api_calls": 0
+  },
+  "determinism": {
+    "no_wall_clock": true,
+    "byte_identical_rebuild": true,
+    "no_overwrite": true
+  },
+  "bindings": {
+    "configs/s2_12_execution_plan_v2.json": "0fde9dec2beddd8c14fc8f2b71b20ada9cca47c6cbf8e62d2309df532a321fbe",
+    "configs/stage2_evaluator_s210_v3.json": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f",
+    "data/development/human_review/s2_11_review_decisions_v2.json": "75d593120abfd729c730a7c752b21204d7ccdfcda7e71bbb4326d49d1fbeb362",
+    "outputs/reports/s2_11_batch_import_dry_run_v3.json": "36329ab1cd7c441ff98b54414b39b36297cb15c0642b7e09e2c5a51619b4131e",
+    "outputs/reports/s2_11_corpus_membership_v1.json": "a63c50ea3164e6629a66746531ad379c3970c8dfa86971eaa35186693bb7a2af",
+    "outputs/reports/s2_11_proposal_report_v3.json": "0cd725b4e7e14c88a97ca005ec10dac3f7fc77c2ebf3955eb746abdc9479616a",
+    "outputs/reports/s2_12_api_readiness_v2.json": "d9c3c5e24ec9bf475c63864ec9de7e744d4d0abf93f1923df2027fc2612b84b9",
+    "outputs/reports/s2_12_execution_plan_v2.json": "7130f9bd4ec2f45b5562adfeecb51995406ede11fcd9d1b7ca9f64015cea63a8",
+    "outputs/reports/s2_12_execution_readiness_v2.json": "38be851dc25a7fa9e4803d5401e65b61c8147ab7bf1175d1a32cb18680898852",
+    "scripts/s2_12_build_execution_ready_v2.py": "9a2693a1530c7a19ecbaecc6d0d22e22840c942cc0cfc124e9d73089eb2267ea",
+    "src/bpc_hybrid/s2_12_method_adapter.py": "03d37a4a49da2c19b93fc73a75135eb9904269522e8747a6acfdd59dcabd84c2",
+    "src/bpc_hybrid/s2_12_stratified_evaluator_v2.py": "2d1bdcf4ddab94220ad3108d9145c0d8d306ec70519e39ac62396fcb3d9cac6d"
+  }
+}
