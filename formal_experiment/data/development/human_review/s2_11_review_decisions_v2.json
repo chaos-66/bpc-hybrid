@@ -1,13 +1,17 @@
 {
   "schema_version": "s2_11_review_decisions@2.0.0",
   "surface_id": "s2-11-blank-review-v2",
+  "batch_import": "accept_all_with_listed_revisions",
+  "applied": true,
+  "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json",
+  "adjudication_pending_user_confirmation": false,
   "final_adjudication_by": "user_only",
   "records": {
     "SIM_card_scenario/r10/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -18,41 +22,70 @@
               "end": 95
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r10_v1_c01_modev_0_54",
+                  "start": 54,
+                  "end": 71
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v1_c01_act_0",
+                  "start": 41,
+                  "end": 53
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v1_c01_actn_0",
+                  "start": 72,
+                  "end": 95
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 39
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r10_v1_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r10_v1_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "SIM_card_scenario/r10/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -63,41 +96,76 @@
               "end": 136
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r10_v2_c01_modev_0_59",
+                  "start": 59,
+                  "end": 63
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v2_c01_act_0",
+                  "start": 41,
+                  "end": 58
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v2_c01_actn_0",
+                  "start": 64,
+                  "end": 85
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 39
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r10_v2_c01_constr_0",
+                  "start": 86,
+                  "end": 136
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r10_v2_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r10_v2_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "SIM_card_scenario/r11/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -108,41 +176,64 @@
               "end": 70
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "permission",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r11_v1_c01_modev_0_18",
+                  "start": 18,
+                  "end": 34
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r11_v1_c01_act_0",
+                  "start": 0,
+                  "end": 17
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r11_v1_c01_actn_0",
+                  "start": 38,
+                  "end": 69
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r11_v1_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r11_v1_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "SIM_card_scenario/r11/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -153,41 +244,70 @@
               "end": 126
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r11_v2_c01_modev_0_87",
+                  "start": 87,
+                  "end": 93
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r11_v2_c01_act_0",
+                  "start": 67,
+                  "end": 86
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r11_v2_c01_actn_0",
+                  "start": 94,
+                  "end": 126
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r11_v2_c01_constr_0",
+                  "start": 0,
+                  "end": 65
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r11_v2_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r11_v2_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "SIM_card_scenario/r12/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -198,28 +318,46 @@
               "end": 101
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r12_v1_c01_modev_0_68",
+                  "start": 68,
+                  "end": 72
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r12_v1_c01_actn_0",
+                  "start": 73,
+                  "end": 101
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r12_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 37
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -230,9 +368,9 @@
     },
     "SIM_card_scenario/r13/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -243,41 +381,70 @@
               "end": 89
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r13_v1_c01_modev_0_48",
+                  "start": 48,
+                  "end": 64
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v1_c01_act_0",
+                  "start": 0,
+                  "end": 9
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v1_c01_actn_0",
+                  "start": 68,
+                  "end": 89
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v1_c01_constr_0",
+                  "start": 10,
+                  "end": 47
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r13_v1_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r13_v1_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "SIM_card_scenario/r13/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -288,41 +455,70 @@
               "end": 88
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r13_v2_c01_modev_0_47",
+                  "start": 47,
+                  "end": 63
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v2_c01_act_0",
+                  "start": 0,
+                  "end": 9
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v2_c01_actn_0",
+                  "start": 67,
+                  "end": 88
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r13_v2_c01_constr_0",
+                  "start": 10,
+                  "end": 46
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r13_v2_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r13_v2_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "SIM_card_scenario/r8/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -333,41 +529,70 @@
               "end": 71
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "permission",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r8_v1_c01_modev_0_18",
+                  "start": 18,
+                  "end": 21
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v1_c01_act_0",
+                  "start": 0,
+                  "end": 17
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v1_c01_actn_0",
+                  "start": 50,
+                  "end": 70
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v1_c01_constr_0",
+                  "start": 27,
+                  "end": 46
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "SIM_card_scenario_r8_v1_c01_act_0",
+            "action_span_id": "SIM_card_scenario_r8_v1_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "SIM_card_scenario/r8/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -378,28 +603,52 @@
               "end": 92
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r8_v2_c01_modev_0_29",
+                  "start": 29,
+                  "end": 33
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v2_c01_actn_0",
+                  "start": 34,
+                  "end": 47
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v2_c01_cond_0",
+                  "start": 48,
+                  "end": 92
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r8_v2_c01_constr_0",
+                  "start": 60,
+                  "end": 77
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -410,9 +659,9 @@
     },
     "SIM_card_scenario/r9/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -423,28 +672,46 @@
               "end": 124
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "SIM_card_scenario_r9_v2_c01_modev_0_56",
+                  "start": 56,
+                  "end": 68
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r9_v2_c01_actn_0",
+                  "start": 72,
+                  "end": 124
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "SIM_card_scenario_r9_v2_c01_constr_0",
+                  "start": 0,
+                  "end": 51
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -455,9 +722,9 @@
     },
     "blood_donation_scenario/r14/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -468,28 +735,52 @@
               "end": 148
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r14_v1_c01_modev_0_94",
+                  "start": 94,
+                  "end": 102
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r14_v1_c01_actn_0",
+                  "start": 103,
+                  "end": 127
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r14_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 43
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r14_v1_c01_constr_0",
+                  "start": 128,
+                  "end": 148
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -500,9 +791,9 @@
     },
     "blood_donation_scenario/r14/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -513,28 +804,46 @@
               "end": 103
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r14_v2_c01_modev_0_49",
+                  "start": 49,
+                  "end": 57
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r14_v2_c01_actn_0",
+                  "start": 58,
+                  "end": 82
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r14_v2_c01_constr_0",
+                  "start": 83,
+                  "end": 103
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -545,9 +854,9 @@
     },
     "blood_donation_scenario/r15/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -558,41 +867,70 @@
               "end": 79
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r15_v1_c01_modev_0_63",
+                  "start": 63,
+                  "end": 69
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v1_c01_act_0",
+                  "start": 51,
+                  "end": 62
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v1_c01_actn_0",
+                  "start": 70,
+                  "end": 79
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 49
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "blood_donation_scenario_r15_v1_c01_act_0",
+            "action_span_id": "blood_donation_scenario_r15_v1_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "blood_donation_scenario/r15/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -603,41 +941,70 @@
               "end": 59
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r15_v2_c01_modev_0_43",
+                  "start": 43,
+                  "end": 49
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v2_c01_act_0",
+                  "start": 31,
+                  "end": 42
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v2_c01_actn_0",
+                  "start": 50,
+                  "end": 59
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r15_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 29
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "blood_donation_scenario_r15_v2_c01_act_0",
+            "action_span_id": "blood_donation_scenario_r15_v2_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "blood_donation_scenario/r16/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -648,28 +1015,51 @@
               "end": 83
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r16_v1_c01_modev_0_38",
+                  "start": 38,
+                  "end": 50
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r16_v1_c01_actn_0",
+                  "start": 38,
+                  "end": 50
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r16_v1_c01_constr_0",
+                  "start": 0,
+                  "end": 26
+                },
+                {
+                  "id": "blood_donation_scenario_r16_v1_c01_constr_1",
+                  "start": 51,
+                  "end": 83
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -680,9 +1070,9 @@
     },
     "blood_donation_scenario/r17/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -693,41 +1083,75 @@
               "end": 128
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r17_v1_c01_modev_0_75",
+                  "start": 75,
+                  "end": 91
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v1_c01_actn_0",
+                  "start": 75,
+                  "end": 91
+                },
+                {
+                  "id": "blood_donation_scenario_r17_v1_c01_actn_1",
+                  "start": 97,
+                  "end": 128
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 73
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v1_c01_constr_0",
+                  "start": 3,
+                  "end": 19
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
         "actor_action_map": [],
-        "order_relations": []
+        "order_relations": [
+          {
+            "before_span_id": "blood_donation_scenario_r17_v1_c01_actn_0",
+            "after_span_id": "blood_donation_scenario_r17_v1_c01_actn_1"
+          }
+        ]
       }
     },
     "blood_donation_scenario/r17/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -738,28 +1162,52 @@
               "end": 65
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r17_v2_c01_modev_0_49",
+                  "start": 49,
+                  "end": 65
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v2_c01_actn_0",
+                  "start": 49,
+                  "end": 65
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 47
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r17_v2_c01_constr_0",
+                  "start": 3,
+                  "end": 19
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -770,9 +1218,9 @@
     },
     "blood_donation_scenario/r18/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -783,28 +1231,52 @@
               "end": 88
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r18_v2_c01_modev_0_39",
+                  "start": 39,
+                  "end": 43
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r18_v2_c01_actn_0",
+                  "start": 59,
+                  "end": 88
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r18_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 32
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r18_v2_c01_constr_0",
+                  "start": 47,
+                  "end": 58
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -815,9 +1287,9 @@
     },
     "blood_donation_scenario/r19/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -828,28 +1300,46 @@
               "end": 87
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r19_v1_c01_modev_0_35",
+                  "start": 35,
+                  "end": 44
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r19_v1_c01_actn_0",
+                  "start": 0,
+                  "end": 34
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r19_v1_c01_constr_0",
+                  "start": 45,
+                  "end": 87
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -860,9 +1350,9 @@
     },
     "blood_donation_scenario/r19/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -873,28 +1363,46 @@
               "end": 91
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "permission",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r19_v2_c01_modev_0_35",
+                  "start": 35,
+                  "end": 48
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r19_v2_c01_actn_0",
+                  "start": 0,
+                  "end": 34
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r19_v2_c01_constr_0",
+                  "start": 49,
+                  "end": 91
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -905,9 +1413,9 @@
     },
     "blood_donation_scenario/r20/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -918,41 +1426,70 @@
               "end": 140
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r20_v1_c01_modev_0_90",
+                  "start": 90,
+                  "end": 108
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v1_c01_act_0",
+                  "start": 77,
+                  "end": 89
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v1_c01_actn_0",
+                  "start": 109,
+                  "end": 140
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 75
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "blood_donation_scenario_r20_v1_c01_act_0",
+            "action_span_id": "blood_donation_scenario_r20_v1_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "blood_donation_scenario/r20/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -963,41 +1500,70 @@
               "end": 141
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "id": "blood_donation_scenario_r20_v2_c01_modev_0_91",
+                  "start": 91,
+                  "end": 109
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v2_c01_act_0",
+                  "start": 78,
+                  "end": 90
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v2_c01_actn_0",
+                  "start": 110,
+                  "end": 141
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "blood_donation_scenario_r20_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 76
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "blood_donation_scenario_r20_v2_c01_act_0",
+            "action_span_id": "blood_donation_scenario_r20_v2_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "emergencies_scenario/r1/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1008,28 +1574,52 @@
               "end": 165
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r1_v1_c01_modev_0_100",
+                  "start": 100,
+                  "end": 104
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v1_c01_actn_0",
+                  "start": 105,
+                  "end": 113
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 86
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v1_c01_constr_0",
+                  "start": 114,
+                  "end": 130
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -1040,9 +1630,9 @@
     },
     "emergencies_scenario/r1/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1053,28 +1643,52 @@
               "end": 147
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r1_v2_c01_modev_0_110",
+                  "start": 110,
+                  "end": 114
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v2_c01_actn_0",
+                  "start": 115,
+                  "end": 130
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 86
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r1_v2_c01_constr_0",
+                  "start": 131,
+                  "end": 147
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -1085,9 +1699,9 @@
     },
     "emergencies_scenario/r2/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1095,44 +1709,138 @@
             "clause_id": "emergencies_scenario_r2_v1_c01",
             "clause_span": {
               "start": 0,
-              "end": 149
+              "end": 76
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c01_modev_0_42",
+                  "start": 42,
+                  "end": 46
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c01_act_0",
+                  "start": 32,
+                  "end": 41
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c01_actn_0",
+                  "start": 47,
+                  "end": 75
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c01_constr_0",
+                  "start": 0,
+                  "end": 30
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
+              "spans": []
+            }
+          },
+          {
+            "clause_id": "emergencies_scenario_r2_v1_c02",
+            "clause_span": {
+              "start": 77,
+              "end": 149
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c02_modev_0_112",
+                  "start": 112,
+                  "end": 116
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c02_act_0",
+                  "start": 102,
+                  "end": 111
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c02_actn_0",
+                  "start": 117,
+                  "end": 149
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v1_c02_constr_0",
+                  "start": 77,
+                  "end": 100
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
-        "order_relations": []
+        "actor_action_map": [
+          {
+            "actor_span_id": "emergencies_scenario_r2_v1_c01_act_0",
+            "action_span_id": "emergencies_scenario_r2_v1_c01_actn_0"
+          },
+          {
+            "actor_span_id": "emergencies_scenario_r2_v1_c02_act_0",
+            "action_span_id": "emergencies_scenario_r2_v1_c02_actn_0"
+          }
+        ],
+        "order_relations": [
+          {
+            "before_span_id": "emergencies_scenario_r2_v1_c01_actn_0",
+            "after_span_id": "emergencies_scenario_r2_v1_c02_actn_0"
+          }
+        ]
       }
     },
     "emergencies_scenario/r2/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1140,44 +1848,138 @@
             "clause_id": "emergencies_scenario_r2_v2_c01",
             "clause_span": {
               "start": 0,
-              "end": 151
+              "end": 76
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c01_modev_0_42",
+                  "start": 42,
+                  "end": 46
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c01_act_0",
+                  "start": 32,
+                  "end": 41
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c01_actn_0",
+                  "start": 47,
+                  "end": 75
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c01_constr_0",
+                  "start": 0,
+                  "end": 30
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
+              "spans": []
+            }
+          },
+          {
+            "clause_id": "emergencies_scenario_r2_v2_c02",
+            "clause_span": {
+              "start": 77,
+              "end": 151
+            },
+            "modality": {
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c02_modev_0_113",
+                  "start": 113,
+                  "end": 117
+                }
+              ]
+            },
+            "actor": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c02_act_0",
+                  "start": 102,
+                  "end": 112
+                }
+              ]
+            },
+            "action": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c02_actn_0",
+                  "start": 118,
+                  "end": 150
+                }
+              ]
+            },
+            "condition": {
+              "status": "absent",
+              "spans": []
+            },
+            "constraint": {
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r2_v2_c02_constr_0",
+                  "start": 77,
+                  "end": 100
+                }
+              ]
+            },
+            "exception": {
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
-        "order_relations": []
+        "actor_action_map": [
+          {
+            "actor_span_id": "emergencies_scenario_r2_v2_c01_act_0",
+            "action_span_id": "emergencies_scenario_r2_v2_c01_actn_0"
+          },
+          {
+            "actor_span_id": "emergencies_scenario_r2_v2_c02_act_0",
+            "action_span_id": "emergencies_scenario_r2_v2_c02_actn_0"
+          }
+        ],
+        "order_relations": [
+          {
+            "before_span_id": "emergencies_scenario_r2_v2_c01_actn_0",
+            "after_span_id": "emergencies_scenario_r2_v2_c02_actn_0"
+          }
+        ]
       }
     },
     "emergencies_scenario/r3/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1188,41 +1990,86 @@
               "end": 188
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_modev_0_35",
+                  "start": 35,
+                  "end": 39
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_act_0",
+                  "start": 27,
+                  "end": 34
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_actn_0",
+                  "start": 40,
+                  "end": 57
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_cond_0",
+                  "start": 0,
+                  "end": 25
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_constr_0",
+                  "start": 58,
+                  "end": 90
+                },
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_constr_1",
+                  "start": 116,
+                  "end": 150
+                },
+                {
+                  "id": "emergencies_scenario_r3_v1_c01_constr_2",
+                  "start": 164,
+                  "end": 187
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "emergencies_scenario_r3_v1_c01_act_0",
+            "action_span_id": "emergencies_scenario_r3_v1_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "emergencies_scenario/r3/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1233,41 +2080,81 @@
               "end": 160
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_modev_0_67",
+                  "start": 67,
+                  "end": 71
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_act_0",
+                  "start": 58,
+                  "end": 66
+                }
+              ]
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_actn_0",
+                  "start": 72,
+                  "end": 89
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 56
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_constr_0",
+                  "start": 90,
+                  "end": 122
+                },
+                {
+                  "id": "emergencies_scenario_r3_v2_c01_constr_1",
+                  "start": 136,
+                  "end": 159
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
         ],
-        "actor_action_map": [],
+        "actor_action_map": [
+          {
+            "actor_span_id": "emergencies_scenario_r3_v2_c01_act_0",
+            "action_span_id": "emergencies_scenario_r3_v2_c01_actn_0"
+          }
+        ],
         "order_relations": []
       }
     },
     "emergencies_scenario/r4/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1278,28 +2165,46 @@
               "end": 43
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r4_v1_c01_modev_0_24",
+                  "start": 24,
+                  "end": 30
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r4_v1_c01_actn_0",
+                  "start": 31,
+                  "end": 42
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r4_v1_c01_constr_0",
+                  "start": 0,
+                  "end": 16
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -1310,9 +2215,9 @@
     },
     "emergencies_scenario/r4/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1323,28 +2228,52 @@
               "end": 109
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r4_v2_c01_modev_0_76",
+                  "start": 76,
+                  "end": 82
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r4_v2_c01_actn_0",
+                  "start": 83,
+                  "end": 89
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r4_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 56
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r4_v2_c01_constr_0",
+                  "start": 90,
+                  "end": 108
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -1355,9 +2284,9 @@
     },
     "emergencies_scenario/r5/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1368,28 +2297,46 @@
               "end": 75
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r5_v1_c01_modev_0_36",
+                  "start": 36,
+                  "end": 48
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r5_v1_c01_actn_0",
+                  "start": 0,
+                  "end": 35
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r5_v1_c01_constr_0",
+                  "start": 49,
+                  "end": 74
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -1400,9 +2347,9 @@
     },
     "emergencies_scenario/r5/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1413,29 +2360,47 @@
               "end": 96
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "permission",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r5_v2_c01_modev_0_12",
+                  "start": 12,
+                  "end": 15
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r5_v2_c01_actn_0",
+                  "start": 16,
+                  "end": 23
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "exception": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r5_v2_c01_exc_0",
+                  "start": 24,
+                  "end": 95
+                }
+              ]
             }
           }
         ],
@@ -1445,9 +2410,9 @@
     },
     "emergencies_scenario/r6/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1458,28 +2423,46 @@
               "end": 50
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r6_v1_c01_modev_0_14",
+                  "start": 14,
+                  "end": 18
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r6_v1_c01_actn_0",
+                  "start": 19,
+                  "end": 31
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r6_v1_c01_constr_0",
+                  "start": 32,
+                  "end": 49
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -1490,9 +2473,9 @@
     },
     "emergencies_scenario/r6/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1503,28 +2486,46 @@
               "end": 60
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r6_v2_c01_modev_0_42",
+                  "start": 42,
+                  "end": 46
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r6_v2_c01_actn_0",
+                  "start": 47,
+                  "end": 59
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r6_v2_c01_cond_0",
+                  "start": 0,
+                  "end": 26
+                }
+              ]
             },
             "constraint": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -1535,9 +2536,9 @@
     },
     "emergencies_scenario/r7/v1": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1548,28 +2549,46 @@
               "end": 68
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r7_v1_c01_modev_0_52",
+                  "start": 52,
+                  "end": 56
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r7_v1_c01_actn_0",
+                  "start": 57,
+                  "end": 67
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r7_v1_c01_constr_0",
+                  "start": 0,
+                  "end": 39
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             }
           }
@@ -1580,9 +2599,9 @@
     },
     "emergencies_scenario/r7/v2": {
       "review_metadata": {
-        "review_state": "unreviewed",
-        "reviewer": null,
-        "confirmation_event": null
+        "review_state": "adjudicated",
+        "reviewer": "hyc",
+        "confirmation_event": "configs\\s2_11_batch_import_confirmation_event_v3.json"
       },
       "canonical": {
         "clauses": [
@@ -1593,29 +2612,53 @@
               "end": 123
             },
             "modality": {
-              "status": "unresolved",
-              "label": null,
-              "evidence": []
+              "status": "present",
+              "label": "obligation",
+              "evidence": [
+                {
+                  "id": "emergencies_scenario_r7_v2_c01_modev_0_11",
+                  "start": 11,
+                  "end": 17
+                }
+              ]
             },
             "actor": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "action": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r7_v2_c01_actn_0",
+                  "start": 18,
+                  "end": 28
+                }
+              ]
             },
             "condition": {
-              "status": "unresolved",
+              "status": "absent",
               "spans": []
             },
             "constraint": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r7_v2_c01_constr_0",
+                  "start": 29,
+                  "end": 54
+                }
+              ]
             },
             "exception": {
-              "status": "unresolved",
-              "spans": []
+              "status": "present",
+              "spans": [
+                {
+                  "id": "emergencies_scenario_r7_v2_c01_exc_0",
+                  "start": 60,
+                  "end": 122
+                }
+              ]
             }
           }
         ],

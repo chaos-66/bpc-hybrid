@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 """Independent verifier for the S2.12 execution readiness v3 (Checkpoint
-F). Re-derives everything from disk:
+G). Re-derives everything from disk:
 
-  * proposal v3 report is 36/36, human_approved=false, gold_created=false
-    and declares v2 superseded (pending-targeted-correction status)
+  * proposal v3 report is 36/36, unapproved, no Gold and declares v2
+    superseded (pending-targeted-correction status)
   * importer v3 dry-run stats are blocked=0/unresolved=0/adjudicable=36
   * the parity check is RE-RUN in-process (evaluator v2 unchanged) and
     must pass and match the committed readiness v3 claim
-  * S2.11 freeze is 0/36 and the real run stays refused
+  * S2.11 freeze is 36/36 (user-confirmed proposal v3, Checkpoint G) and
+    the real run stays refused on the API budget authorization only
   * API readiness remains a dry-run with the v2 missing items (input
     token cap, cost cap) and NO final authorization sentence
-  * bindings exact; zero API; no Gold
+  * bindings exact (incl. the confirmation event); zero API; no Gold
 
 Exit 0 only when every check passes (fail-closed).
 """
@@ -35,6 +36,8 @@ DECISIONS_V2_REL = "data/development/human_review/s2_11_review_decisions_v2.json
 PROPOSAL_REPORT_V3_REL = "outputs/reports/s2_11_proposal_report_v3.json"
 IMPORTER_DRY_RUN_V3_REL = "outputs/reports/s2_11_batch_import_dry_run_v3.json"
 API_READINESS_V2_REL = "outputs/reports/s2_12_api_readiness_v2.json"
+CONFIRMATION_EVENT_REL = \
+    "configs/s2_11_batch_import_confirmation_event_v3.json"
 READINESS_V3_REL = "outputs/reports/s2_12_execution_readiness_v3.json"
 
 
@@ -56,7 +59,7 @@ def verify() -> dict[str, Any]:
             problems.append(name + (f": {detail}" if detail else ""))
 
     proposal = _load_json(ROOT / PROPOSAL_REPORT_V3_REL)
-    check("proposal v3 unadjudicated and supersedes v2",
+    check("proposal v3 report unapproved/supersedes v2",
           proposal.get("coverage") == "36/36"
           and proposal.get("human_approved") is False
           and proposal.get("gold_created") is False
@@ -89,8 +92,12 @@ def verify() -> dict[str, Any]:
         1 for e in decisions["records"].values()
         if (e.get("review_metadata") or {}).get("review_state")
         == "adjudicated")
-    check("freeze 0/36 and run refused",
-          adjudicated == 0
+    confirmation_event = ROOT / CONFIRMATION_EVENT_REL
+    check("freeze 36/36 user-confirmed; run refused on API auth only",
+          adjudicated == 36
+          and confirmation_event.is_file()
+          and readiness["proposal_v3"]["human_approved"] is True
+          and readiness["gates"]["s2_11_freeze"]["ready"] is True
           and readiness["runner"]["real_run_refused"] is True
           and readiness["ready_claims"]["gold_or_formal_evaluation_complete"]
           is False)
@@ -113,6 +120,7 @@ def verify() -> dict[str, Any]:
         DECISIONS_V2_REL: _sha256_file(ROOT / DECISIONS_V2_REL),
         PROPOSAL_REPORT_V3_REL: _sha256_file(ROOT / PROPOSAL_REPORT_V3_REL),
         IMPORTER_DRY_RUN_V3_REL: _sha256_file(ROOT / IMPORTER_DRY_RUN_V3_REL),
+        CONFIRMATION_EVENT_REL: _sha256_file(ROOT / CONFIRMATION_EVENT_REL),
         "configs/s2_12_execution_plan_v2.json": _sha256_file(
             ROOT / "configs/s2_12_execution_plan_v2.json"),
         "outputs/reports/s2_12_execution_plan_v2.json": _sha256_file(

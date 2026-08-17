@@ -1,0 +1,922 @@
+{
+  "schema_version": "s2_13_s3_7_transition_readiness@7.0.0",
+  "report_id": "s2_13_s3_7_transition_readiness_v7",
+  "build_note": "Every state judgment in this report is re-derived from current on-disk assets, manifests, hashes, or executed independent verifiers; no hardcoded existence conclusions and no wall-clock timestamps. v2 added the three-state Gold-Rule-Record probe, exact in-memory reconstruction of the manifest and the export index (no entry-level iteration that could miss missing or extra entries), and the strict non-JSON verifier verdict; v3/v4 carry those guarantees forward. v4 derives the S2.11 adjudication workload from the closed 40/4/36 review population (blank pack) instead of the 29-candidate run, and reports the S2.12 execution readiness (frozen plan, synthetic runner/evaluator readiness, zero-call API budget dry-run). v5 supersedes v4's S2.11 judgment with the CANONICAL v2 model (unresolved/absent/present, modality label + byte-verified evidence spans, multi-span fields, actor-action map, order relations; proposal v1 superseded/not approvable; proposal v2 unadjudicated; importer v2 dry-run blocked=0) and the S2.12 judgment with the formal-contract-aligned evaluator v2 (parity verified), plan/readiness v2 and API readiness v2 (cost_cap_unresolved; no final authorization sentence). v6 supersedes v5's S2.11 judgment with proposal v3 (targeted, evidence-based corrections: r10v1 actor occurrence disambiguation + mapping, r4v2/r8v1/r18v2 action/constraint overlap elimination with exact raw spans + normalized values, r3v1/r3v2 temporal-validity constraints; canonical validator v3: unique span/clause ids, actor-action mapping coverage, distinct order relations; proposal v1 AND v2 superseded, proposal v3 unadjudicated, importer v3 dry-run blocked=0) and the S2.12 judgment with execution readiness v3 (parity re-run; proposal/readiness hashes re-bound). v7 supersedes v6's S2.11/S2.12 judgments with the CHECKPOINT G freeze: the user CONFIRMED proposal v3 (confirmation event binds the SHA, reviewer hyc), the importer v3 apply committed the 36/36 adjudication (v2 decisions frozen; dry-run report refreshed), the freeze validator v3 reports frozen=true; execution readiness v3 is refreshed (freeze 36/36; the real S2.12 run stays refused ONLY on the API budget authorization - input token cap + cost cap, no final authorization sentence). Rebuilding on identical inputs produces byte-identical outputs; existing outputs with different bytes are refused.",
+  "supersedes": [
+    {
+      "path": "outputs/reports/s2_13_stage2_freeze_gap_capsule.json",
+      "sha256": "eb934910c2e046c43cfae063ff8eac69e124fda65830f5c50cb2e1fd50abc311",
+      "reason": "2026-08-11 current-state judgment predates the S1.7 freeze (2026-08-13) and still lists S1.7 as blocked ('true Gold Process Records'); the remaining-items list is superseded by this v2 ledger while the historical file stays unmodified."
+    },
+    {
+      "path": "outputs/reports/s2_13_stage2_freeze_gap_capsule.md",
+      "sha256": "ca369600d594359bbbe1977c16ee4443d9ee16c0a5e7accf0e4b5081bf3a18ac",
+      "reason": "2026-08-11 Markdown rendering of the same superseded gap capsule; preserved unmodified as historical provenance."
+    },
+    {
+      "path": "outputs/reports/s3_7_oracle_readiness_v2.json",
+      "sha256": "0e79232bb17b172ea6f5f105e6a3e75a9aa2d67a42614c66a1e65a566da9827b",
+      "reason": "2026-08-11 current-state judgment is stale: it hardcodes gold_process_records.exist=false with 'S1.5 human Process Gold not started', which the 2026-08-13 Stage 1 Process Gold publication and S1.7 freeze invalidated; superseded by this v2 ledger, historical content preserved."
+    },
+    {
+      "path": "outputs/reports/s37_oracle_readiness_v1.json",
+      "sha256": "7bd3e8dec72be75a4b3414c889839b5891e59e47707b3845a59e510328dd5a7b",
+      "reason": "2026-08-09 current-state judgment is stale: 'true Gold Process Records not present' and the S1.7 gap no longer hold after 2026-08-13; its Gold-Rule-Records absence finding remains true and is carried forward; superseded by this v2 ledger, historical content preserved."
+    },
+    {
+      "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+      "sha256": "8b3cbd2e6081a31bb3d2fec018f11ed9c5bf45d0ec51507050bb9472c3ed4447",
+      "reason": "Its publication-time exclusions block ('gold_process_records DO NOT EXIST', 'gold_rule_records DO NOT EXIST') is a historical snapshot: the gold_process_records exclusion is now stale (Stage 1 Process Gold published 2026-08-13) while the gold_rule_records exclusion remains true; the release manifest file itself stays unmodified."
+    },
+    {
+      "path": "scripts/build_s1_5_s3_7_readiness_v1.py",
+      "sha256": "dc474b80485dd1d355f8a677be0988834a78f4fd56601de8ecf1b8e1fd1ee68b",
+      "reason": "Historical builder that hardcodes the pre-freeze conclusion 'true Gold Process Records DO NOT EXIST (S1.5 human Process Gold not started)'; preserved unmodified as provenance; its current-state output logic is superseded by this deterministic v2 builder."
+    },
+    {
+      "path": "scripts/build_s3_7_oracle_readiness.py",
+      "sha256": "71881cb446e1aa492e69ec07f1f1fdcd6331568ac36b70d0f0d99c2b849b9b09",
+      "reason": "Historical builder for s37_oracle_readiness_v1.json that hardcodes 'true Gold Process Records ... NOT present'; preserved unmodified as provenance; its current-state output logic is superseded by this deterministic v2 builder."
+    },
+    {
+      "path": "configs/schemas/s2_13_s3_7_transition_readiness.schema.json",
+      "sha256": "df270ee8ee27bd2c59686d396df7c37ecf6cafb1dd35ceb0aba48a63464f6786",
+      "reason": "v1 schema; kept byte-exact. v2 supersedes v1's verifier-completeness guarantees (v1 schema cannot express the three-state Gold-Rule-Record probe, the exact manifest/export reconstruction checks, or the strict verifier verdict)."
+    },
+    {
+      "path": "scripts/build_s2_13_s3_7_transition_readiness_v1.py",
+      "sha256": "38b9d2f9c2e9f5215b28040f710857913f9c432d54c21cadb16255e210fff269",
+      "reason": "v1 builder; kept byte-exact. Its Gold-Rule-Record probe computed candidates but unconditionally returned exist=false, its manifest and export checks only iterated existing entries, and its non-JSON verifier verdict accepted the bare 'VERIFIED' substring (which 'NOT VERIFIED' also contains); these v1 fail-closed gaps are superseded by the v2 builder."
+    },
+    {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v1.py",
+      "sha256": "5ee35fa837c05dc2e6c15168dcee0a4704486212c81c2710d16435e3e668ad1a",
+      "reason": "v1 verifier; kept byte-exact. Its manifest/export checks only re-verified entries already present in the files (missing or empty maps escaped), so v2 supersedes that completeness guarantee."
+    },
+    {
+      "path": "tests/test_s2_13_s3_7_transition_readiness_v1.py",
+      "sha256": "f85c0bcf0e0075a64604898d0c6720384375e76effef82ec0d97ba5315d3fc4f",
+      "reason": "v1 focused tests; kept byte-exact. v2 adds the three-state Gold-Rule-Record candidate, exact manifest/export reconstruction and strict verdict negative cases."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v1.json",
+      "sha256": "10913862225ba4b8b5ffcf02b5ba553ab6110ec6a59bc2b01913b3a60aa79524",
+      "reason": "v1 transition ledger report; its current-state conclusions remain basically correct and are carried forward by v2, while its verifier-completeness / fail-closed guarantees are superseded by v2; the file stays byte-exact."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v1.md",
+      "sha256": "589fc8cee52ce443d503afad1e7fe6dbb05010cfba167b9449de3bcda5e0fa27",
+      "reason": "v1 Markdown rendering; preserved byte-exact as historical provenance; the current-state report is superseded by the v2 report."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v1.manifest.json",
+      "sha256": "d399e2c9f98d24b4f66fae1ba76723c1547d18d9070fea8b86eb8d1b63620a87",
+      "reason": "v1 manifest; preserved byte-exact; v2's manifest is independently re-constructed and compared exactly (v1 manifest structure is not modified)."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v1_export_index.json",
+      "sha256": "37289ac54f6f3994ce385c5bd335cd6f145823da29cc2bb8bd9f4b18600c312a",
+      "reason": "v1 export index; preserved byte-exact; v2's export index is exactly re-constructed from disk bytes and compared (no entry-level iteration that could miss missing or extra entries)."
+    },
+    {
+      "path": "configs/schemas/s2_13_s3_7_transition_readiness_v2.schema.json",
+      "sha256": "2b0d9418e748eb49753dea75ca46db072dc60226b7dc08ea1eafc6ecfd8bbaaf",
+      "reason": "v2 schema; kept byte-exact (historical lifecycle semantics)."
+    },
+    {
+      "path": "scripts/build_s2_13_s3_7_transition_readiness_v2.py",
+      "sha256": "c20c8a1f198ab357cd567a3746758b6668e4ca0f50262ee97c789829388f21d1",
+      "reason": "v2 builder; kept byte-exact; its S2.11 current-state judgment (blocked on authorization) is superseded by v3."
+    },
+    {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v2.py",
+      "sha256": "b9639016634af014e9e779ff127de49da2f26b277eef3360a202260aab7996ab",
+      "reason": "v2 verifier; kept byte-exact; its active-verification role is superseded by v3."
+    },
+    {
+      "path": "tests/test_s2_13_s3_7_transition_readiness_v2.py",
+      "sha256": "b39b8fe3b2daf5fa7a4902142edc9f514964fce8189def3f71b8b932dfb149c2",
+      "reason": "v2 pytest file: CORRECTED lifecycle test semantics only (v3); the v2 core assets are untouched."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v2.json",
+      "sha256": "6fca5c03349dd66a34b68e9e3eba2f99c724377ed88d38a2827a860c875a1995",
+      "reason": "v2 transition ledger report; byte-exact historical provenance; its S2.11=blocked judgment is superseded by v3."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v2.md",
+      "sha256": "7f598664d73219e3d43f62137d31ecce669ba5d642bbf4faa5f9e6def652d916",
+      "reason": "v2 Markdown rendering; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v2.manifest.json",
+      "sha256": "d86494ffd03a4e78a9d2aa93a1b21dfde060ed68c3214c42bfb3134dd32825a1",
+      "reason": "v2 manifest; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v2_export_index.json",
+      "sha256": "71b418a958e6bc9b2505c5c71cb6b66766feaa7c6f3483fba3a2736ae3ca881a",
+      "reason": "v2 export index; byte-exact historical provenance."
+    },
+    {
+      "path": "configs/schemas/s2_13_s3_7_transition_readiness_v3.schema.json",
+      "sha256": "ed823a75543975fe00242685bcb02c8495926113f8ea3a805c0c8234e4444622",
+      "reason": "v3 schema; kept byte-exact (historical lifecycle semantics)."
+    },
+    {
+      "path": "scripts/build_s2_13_s3_7_transition_readiness_v3.py",
+      "sha256": "f412eaf553b57e9c5bd0892f05700bb53611769e0c1eee2f1e7cab3d40afac08",
+      "reason": "v3 builder; kept byte-exact; its S2.11/S2.12 current-state judgments are superseded by v4."
+    },
+    {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v3.py",
+      "sha256": "d9f9094f44b2f6112b98f22e5de161da1a923f8d8cb0ab383a78388adf1445d0",
+      "reason": "v3 verifier; kept byte-exact; its active-verification role is superseded by v4."
+    },
+    {
+      "path": "tests/test_s2_13_s3_7_transition_readiness_v3.py",
+      "sha256": "d397735df92dd24c69343ffc22221f1e904cb40892036e127d714f56c211757e",
+      "reason": "v3 pytest file: lifecycle test semantics only (v4); the v3 core assets are untouched."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v3.json",
+      "sha256": "496b5e142f8b2dfb316f62e6533b5ab8a69cd3282eff4847cb163fdc10212fe4",
+      "reason": "v3 transition ledger report; byte-exact historical provenance; its S2.11 workload (29-candidate run) and S2.12 retrospective-only judgments are superseded by v4."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v3.md",
+      "sha256": "f50b31bf76f9a4d96ff7440cd30f64cbff89ff186b2a629c27f6b85c34fcaa9b",
+      "reason": "v3 Markdown rendering; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v3.manifest.json",
+      "sha256": "dab6a0440974b116c52af2f3f59565f1f2d72099da1227f5e5d2740751d07d1d",
+      "reason": "v3 manifest; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v3_export_index.json",
+      "sha256": "945f12e89136a3b3f0b187e82729a0a7d96587973b9ce6c5dceb7a776abbaaff",
+      "reason": "v3 export index; byte-exact historical provenance."
+    },
+    {
+      "path": "configs/schemas/s2_13_s3_7_transition_readiness_v4.schema.json",
+      "sha256": "5ed63a9cb2e0cd0dbe83604e8aae06feb1b5acad47c03fa20bcfa0354e9c528c",
+      "reason": "v4 schema; kept byte-exact (historical lifecycle semantics)."
+    },
+    {
+      "path": "scripts/build_s2_13_s3_7_transition_readiness_v4.py",
+      "sha256": "7b3c88bec0314e7abe7bd28d323910126e94061d28b568e0c9504b689a387d7b",
+      "reason": "v4 builder; kept byte-exact; its S2.11/S2.12 current-state judgments are superseded by v5."
+    },
+    {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v4.py",
+      "sha256": "92460b61d7de6d9b28d79ec1872865532af5cfc64bc58408e472dd01ecfb6c34",
+      "reason": "v4 verifier; kept byte-exact; its active-verification role is superseded by v5."
+    },
+    {
+      "path": "tests/test_s2_13_s3_7_transition_readiness_v4.py",
+      "sha256": "fff583d9977599a1d598b05227e6902fd52225f01077cc3287d124f8c798db70",
+      "reason": "v4 pytest file: lifecycle test semantics only (v5); the v4 core assets are untouched."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v4.json",
+      "sha256": "57a2153cfee1d75cf7bef752815aebfebe2728c052b685653a574ba7dfd43294",
+      "reason": "v4 transition ledger report; byte-exact historical provenance; its S2.11 (v1 proposals) and S2.12 (v1 evaluator) judgments are superseded by v5."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v4.md",
+      "sha256": "6468e83c7aee19746890e66402da1c475ce1ba904498c82d1cb8d325e197194a",
+      "reason": "v4 Markdown rendering; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v4.manifest.json",
+      "sha256": "a22be0eeacc7b7ee125e1790f2e043bc3d769761afdc96d8fae6b2254649be2b",
+      "reason": "v4 manifest; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v4_export_index.json",
+      "sha256": "e5a001170e0936a363b653227c454615ce3bc9101a47175cd7d05806d27bc28b",
+      "reason": "v4 export index; byte-exact historical provenance."
+    },
+    {
+      "path": "configs/schemas/s2_13_s3_7_transition_readiness_v5.schema.json",
+      "sha256": "8f50d3023b056ee78aa137d296f291f55438cd4f4a93ee1579ec1786ef0274e2",
+      "reason": "v5 schema; kept byte-exact (historical lifecycle semantics)."
+    },
+    {
+      "path": "scripts/build_s2_13_s3_7_transition_readiness_v5.py",
+      "sha256": "f1b7c230e7d78f9840eeca8c7c77f96a71e4247ee98764978450de6f34ef51b3",
+      "reason": "v5 builder; kept byte-exact; its S2.11/S2.12 current-state judgments are superseded (by v6 then v7)."
+    },
+    {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v5.py",
+      "sha256": "6dea78c5f2e6a4dbe7bd07deec0a56785019bee722a97f3720f5ae7a8a3333c4",
+      "reason": "v5 verifier; kept byte-exact; its active-verification role is superseded (by v6 then v7)."
+    },
+    {
+      "path": "tests/test_s2_13_s3_7_transition_readiness_v5.py",
+      "sha256": "07a7b779795adbdf75ab073a216a685c6589cd056489ca46be735d800623d494",
+      "reason": "v5 pytest file: lifecycle test semantics only (v6); the v5 core assets are untouched."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v5.json",
+      "sha256": "96c153c54f6fb2f188e00da2a7530808c34e014b08707a43b6a8b8e56131790e",
+      "reason": "v5 transition ledger report; byte-exact historical provenance; its S2.11 (proposal v2) and S2.12 (readiness v2) judgments are superseded (by v6 then v7)."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v5.md",
+      "sha256": "c77026c4b9fd1070ce99f185ef2ffb1e2abad4a6eb3b8ab1c5e62a07b67ad181",
+      "reason": "v5 Markdown rendering; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v5.manifest.json",
+      "sha256": "e4bf8fdbf0f2bceb57ade34a3d4b0dc15eeba6384b04ac3c5d459706f8605767",
+      "reason": "v5 manifest; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v5_export_index.json",
+      "sha256": "d839045cccc590e16960809d7ad1fa5261db4c5c5542cd0086a7b0e32866138e",
+      "reason": "v5 export index; byte-exact historical provenance."
+    },
+    {
+      "path": "configs/schemas/s2_13_s3_7_transition_readiness_v6.schema.json",
+      "sha256": "08af2fe038525e38638eb9af8fb0ca576936e6350baae17e4e50761796863a61",
+      "reason": "v6 schema; kept byte-exact (historical lifecycle semantics)."
+    },
+    {
+      "path": "scripts/build_s2_13_s3_7_transition_readiness_v6.py",
+      "sha256": "9204d7afcfc3c0add4b7324b7e83276552a61d5b12b571961fa03bb5f1fe22c4",
+      "reason": "v6 builder; kept byte-exact; its S2.11/S2.12 current-state judgments are superseded by v7 (Checkpoint G freeze)."
+    },
+    {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v6.py",
+      "sha256": "88a6f890a3af73b43bca571752bc577ff698380c147056d4300c103ada8102e8",
+      "reason": "v6 verifier; kept byte-exact; its active-verification role is superseded by v7."
+    },
+    {
+      "path": "tests/test_s2_13_s3_7_transition_readiness_v6.py",
+      "sha256": "39787fdda49eb178ed1482cd85349b2d7e8c958c0a88f7ac7d7a09038c63d09f",
+      "reason": "v6 pytest file: lifecycle test semantics only (v7); the v6 core assets are untouched."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v6.json",
+      "sha256": "e2c2278726a76ad56dedde599defd272cb9ca0e87a17be61583ab7b943fd91c7",
+      "reason": "v6 transition ledger report; byte-exact historical provenance; its S2.11 (proposal v3 unadjudicated) and S2.12 (freeze 0/36) judgments are superseded by v7."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v6.md",
+      "sha256": "e188be0a6635284df4c10ca6f384858c5d8ba610d85acd46e9a8b2135d3a1931",
+      "reason": "v6 Markdown rendering; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v6.manifest.json",
+      "sha256": "4ef345ba63eca4f19dd8aaf5ecb40794bd1abe7e52d0f391e8c810547106f385",
+      "reason": "v6 manifest; byte-exact historical provenance."
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v6_export_index.json",
+      "sha256": "29d515863a725ce961e998160cc758b0103a18385cb1135536b6b259085bfc79",
+      "reason": "v6 export index; byte-exact historical provenance."
+    }
+  ],
+  "dependency_matrix": {
+    "stage1": [
+      {
+        "task_id": "S1.5",
+        "status": "verified",
+        "note": "Stage 1 Process Gold frozen and published (user-authorized 2026-08-13; 7/7 records, 135/135 label fields, 7/7 structure decisions); independent verifier scripts/verify_stage1_process_gold.py VERIFIED.",
+        "evidence": [
+          {
+            "path": "data/gold/stage1/process_records/stage1_process_gold_v1.json",
+            "kind": "disk_asset",
+            "sha256": "f33aa857a0796d0517a9d04cc96b0a4f316202603fe0adf66693aeb5cb444bca"
+          },
+          {
+            "path": "data/gold/stage1/manifest.json",
+            "kind": "manifest",
+            "sha256": "1885dad26f43b19324f2e779a7bbed0db5b19699145d8607a59439423b23e587"
+          },
+          {
+            "path": "outputs/reports/s1_5_process_gold_freeze_authorization_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "4b97762cfe3cb336a2a163bd85cbc850f9963a513af8a33185efae7d0486e25c"
+          },
+          {
+            "path": "scripts/verify_stage1_process_gold.py",
+            "kind": "independent_verifier",
+            "sha256": "26deb38f9b4b3787c6a2a795b659c5cdd7675a1fc05109f0bcc37a010f0f3cc8"
+          }
+        ]
+      },
+      {
+        "task_id": "S1.6",
+        "status": "verified",
+        "note": "Fixed-GDPR-7 formal descriptive component evaluation (target-aware claim: post-Gold development, strict_test_blind=false, no held-out generalization claim); P2 config/implementation/runtime, predictions and ORIGINAL metrics byte-unchanged.",
+        "evidence": [
+          {
+            "path": "data/predictions/stage1_formal_v1/formal_predictions_v1.json",
+            "kind": "disk_asset",
+            "sha256": "79a9b2c17185d63dc5ab5d9c47c8c592469b30f3cf7298740e593838166a94a8"
+          },
+          {
+            "path": "data/results/stage1_formal_v1/stage1_formal_evaluation_v1.json",
+            "kind": "disk_asset",
+            "sha256": "a072db39b37167d76aa4e49b9845b5b563255d980b9ee00cd811f43c116a7392"
+          },
+          {
+            "path": "outputs/reports/stage1_formal_evaluation_v2.json",
+            "kind": "disk_asset",
+            "sha256": "954122d4ed893a5d8bafc19afe627fe9a44f42cfdacd8af3ff747e798502c988"
+          },
+          {
+            "path": "outputs/reports/stage1_formal_evaluation_v2.manifest.json",
+            "kind": "manifest",
+            "sha256": "0d7736f81a3c01367398d9ce787d006bd718e328fa050d254321454f32337473"
+          }
+        ]
+      },
+      {
+        "task_id": "S1.7",
+        "status": "frozen",
+        "note": "Formal Stage 1 freeze APPLIED (user-authorized 2026-08-13): non-tuned P2 method, existing P0/P1/P2 predictions, ORIGINAL metrics, Stage 1 Process Gold and the verified evaluation capsule are frozen; zero LLM/API; the freeze does NOT auto-authorize the Stage 3 Oracle.",
+        "evidence": [
+          {
+            "path": "outputs/reports/s1_7_freezer_authorization_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "7712176c877c982e11ec670625aedb266f052d3d5b7a898d1a8504285990850a"
+          },
+          {
+            "path": "outputs/reports/s1_7_freezer_readiness_dry_run_v2.json",
+            "kind": "disk_asset",
+            "sha256": "be5d4b80d807d66606f265e024c2a0b8d3743380dd8649643aee4fcfc9d4997f"
+          },
+          {
+            "path": "scripts/verify_s1_7_freezer_authorization.py",
+            "kind": "independent_verifier",
+            "sha256": "e7fb0005e4ed8fa1bf2bb26b0e3cbab6e9504dae715ef48f58225d1b89ada88d"
+          }
+        ]
+      }
+    ],
+    "stage2": [
+      {
+        "task_id": "S2.10",
+        "status": "verified",
+        "note": "Three-method formal capsules, hash-consistent shared comparison capsule and the formal three-method comparison report are published and independently verified (authorized G0.4 evaluation views; new LLM calls 0).",
+        "evidence": [
+          {
+            "path": "data/predictions/b0_formal_arm_v1/predictions.json",
+            "kind": "disk_asset",
+            "sha256": "fa94991d246db9876b55d6a473644a4a1b93404bc35d3e314d3dba4768d9278d"
+          },
+          {
+            "path": "data/results/b0_formal_arm_v1/evaluation_coarse.json",
+            "kind": "disk_asset",
+            "sha256": "abd2b7972fe539b50cdaa597799aeb190b06e134c1e2f57fe87fc6b8ce346130"
+          },
+          {
+            "path": "outputs/reports/b0_formal_arm_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "095a839fe7a98ed24de3afb3d840d1af5596f28988dae0429154f5b024f47c09"
+          },
+          {
+            "path": "outputs/reports/verify_b0_formal_arm_v1.py",
+            "kind": "independent_verifier",
+            "sha256": "01e20bd01173186620837ed86e5802f3a9ba1af187f1778e84d915e893fdd1ae"
+          },
+          {
+            "path": "data/predictions/direct_llm_formal_arm_v1/predictions.json",
+            "kind": "disk_asset",
+            "sha256": "bbadb6834572e58fb8321204b3bc975c887d23d9ae60bd804bf91137bb46072b"
+          },
+          {
+            "path": "data/results/direct_llm_formal_arm_v1/evaluation_coarse.json",
+            "kind": "disk_asset",
+            "sha256": "471447b0494d735f9b5ea20ce4ba7687f2fc3304bec00c29e0b4905f3c830212"
+          },
+          {
+            "path": "outputs/reports/direct_llm_formal_arm_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "f0f86318259de87c9557781b69d2573a13bb25469db194905cfc216fef94d133"
+          },
+          {
+            "path": "outputs/reports/verify_direct_llm_formal_arm_v1.py",
+            "kind": "independent_verifier",
+            "sha256": "e48bba8919e81c1d60939ee5c2db7101f57f7fa6fade664bd4d75f31b6aad6c8"
+          },
+          {
+            "path": "data/predictions/sun_llm_fallback_formal_arm_v1/predictions.json",
+            "kind": "disk_asset",
+            "sha256": "65286d86ddb93c361a846c4c4fcc7cd9c4c4fe8a19392dbaa88d3617c1978be2"
+          },
+          {
+            "path": "data/results/sun_llm_fallback_formal_arm_v1/evaluation_coarse.json",
+            "kind": "disk_asset",
+            "sha256": "31e7afbb0139d281eb3e64be216dd3b8b7cc1a0d081b13fd7febbbb93aff455c"
+          },
+          {
+            "path": "outputs/reports/sun_llm_fallback_formal_arm_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "0b5e32852028d83b920da7fd9695f0985def37724f792d6e81630a057ea41f18"
+          },
+          {
+            "path": "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py",
+            "kind": "independent_verifier",
+            "sha256": "932d13273ee573ca15af95c5972b6f868851cbd35536829f955fb7dce7db8b9c"
+          },
+          {
+            "path": "outputs/reports/stage2_formal_three_method_comparison_v1.json",
+            "kind": "disk_asset",
+            "sha256": "c9d76544a36ca4c27939d8090a8bfafc6da690a2e5d2b5d09624b27b4f9cf740"
+          },
+          {
+            "path": "outputs/reports/stage2_formal_three_method_comparison_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "dc41eb4bee6b1cd06afc184f27ae63dcd9e93b6e5b4869a2d3e6b876d47236c6"
+          },
+          {
+            "path": "outputs/reports/verify_stage2_formal_comparison_v1.py",
+            "kind": "independent_verifier",
+            "sha256": "22c23331ad6875c7cb72817070c4c3780bc7d45c310250717f8fa3861efa0d57"
+          }
+        ]
+      },
+      {
+        "task_id": "S2.11",
+        "status": "frozen",
+        "note": "Complex legal corpus ACTIVATED under the user-authorized local read-only non-redistributive containment policy: Checkpoint A applied G1/G2/G3/G4/G6 and froze G0.5; Checkpoint B generated candidates and opened the blank review surface; Checkpoint C closed the review population to 40/4/36; Checkpoint E1 established the CANONICAL v2 model; Checkpoint F produced proposal v3 with targeted, evidence-based corrections (r10v1 actor occurrence disambiguation + actor-action mapping; r4v2/r8v1/r18v2 action/constraint overlap elimination with exact raw spans + normalized values; r3v1/r3v2 temporal-validity constraints) and the strengthened canonical v3 validator (unique span/clause ids, actor-action mapping coverage, distinct order relations). proposal v1 AND v2 are superseded and NOT approvable; Checkpoint G: the USER CONFIRMED proposal v3 (ONE content confirmation bound to the proposal v3 SHA 9882ba45d8486235df7fc2411eb7a1c3e5977f87ade527898ff29e45396e6a3b, reviewer hyc), the importer v3 apply committed the 36/36 adjudication (atomic write + backup; dry-run report refreshed), and the freeze validator v3 reports frozen=true (36/36 adjudicated, zero unresolved). No Gold is created or published.",
+        "evidence": [
+          {
+            "path": "outputs/reports/s2_11_candidate_run_v1.json",
+            "kind": "disk_asset",
+            "sha256": "5fe8225f6be56cd41974d26473142d77858cd2ed62b0626b3af56600ba5734fd"
+          },
+          {
+            "path": "outputs/reports/s2_11_g5_review_surface_v1.json",
+            "kind": "disk_asset",
+            "sha256": "571ba7ae3c39cde5deafeffa55e1e0ac67b8dcd9e1564568832513128ff14da4"
+          },
+          {
+            "path": "data/development/human_review/s2_11_blank_review_v2.json",
+            "kind": "disk_asset",
+            "sha256": "ddf9b3cf3bd026b905a125dc714b33424706e188c369721699c5845a2e6567f5"
+          },
+          {
+            "path": "data/development/human_review/s2_11_review_decisions_v2.json",
+            "kind": "disk_asset",
+            "sha256": "8dacfbd0244e6e7afa6336e5ddd679818b2a196b09de4a585e1628254a476d54"
+          },
+          {
+            "path": "outputs/reports/s2_11_corpus_membership_v1.json",
+            "kind": "disk_asset",
+            "sha256": "a63c50ea3164e6629a66746531ad379c3970c8dfa86971eaa35186693bb7a2af"
+          },
+          {
+            "path": "outputs/reports/s2_11_proposal_report_v3.json",
+            "kind": "disk_asset",
+            "sha256": "0cd725b4e7e14c88a97ca005ec10dac3f7fc77c2ebf3955eb746abdc9479616a"
+          },
+          {
+            "path": "outputs/reports/s2_11_batch_import_dry_run_v3.json",
+            "kind": "disk_asset",
+            "sha256": "7bd71b71dad13a6d38ba05ffb6e866624c53f87832a3d06bfb9ce516a90ebd9d"
+          },
+          {
+            "path": "configs/s2_11_batch_import_confirmation_event_v3.json",
+            "kind": "disk_asset",
+            "sha256": "226b47982934dafce987b34df857144a046c7cbf54b5969efa4fb19e2d079405"
+          },
+          {
+            "path": "derived: S2.11 = frozen from the canonical v2 blank pack population (36 = 29 + 7), the user-confirmed proposal v3 (confirmation event binds the SHA), the 36/36 adjudicated decisions v2, the importer v3 dry-run (blocked=0) and the executed freeze validator v3; no Gold created",
+            "kind": "derivation"
+          }
+        ]
+      },
+      {
+        "task_id": "S2.12",
+        "status": "partial",
+        "note": "Execution-ready v3 (Checkpoint F, refreshed in Checkpoint G): the S2.12 execution plan v2 stays FROZEN (pre-registered G0.5 L1/L2/L3 stratification); the stratified evaluator v2 reuses the Stage 2 FORMAL contract (modality label accuracy/macro-F1/per-class + five-field Sun literal-overlap span P/R/F1) with the parity check RE-RUN in execution readiness v3, which re-binds the proposal v3 / importer v3 assets and the S2.11 confirmation event; S2.11 freeze is 36/36 (user-confirmed, Checkpoint G). API readiness stays a dry-run (deepseek-v4-pro both arms, 36/72/108 calls, output cap 4096, input cap unresolved, cost_cap_unresolved - NO final authorization sentence); the REAL run stays blocked ONLY on the API budget authorization (missing items: input token cap, cost cap).",
+        "evidence": [
+          {
+            "path": "outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json",
+            "kind": "disk_asset",
+            "sha256": "9f6c734002fd4d6761454e8e751e172e543ce4f1808b19d3f3513f05374619fd"
+          },
+          {
+            "path": "outputs/reports/s2_12_formal_descriptive_error_analysis_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "89b3f1209c193ec872b9b01319f9003e0ba26387cbce0830f86e2054040dda06"
+          },
+          {
+            "path": "configs/s2_12_execution_plan_v2.json",
+            "kind": "disk_asset",
+            "sha256": "0fde9dec2beddd8c14fc8f2b71b20ada9cca47c6cbf8e62d2309df532a321fbe"
+          },
+          {
+            "path": "outputs/reports/s2_12_execution_plan_v2.json",
+            "kind": "disk_asset",
+            "sha256": "7130f9bd4ec2f45b5562adfeecb51995406ede11fcd9d1b7ca9f64015cea63a8"
+          },
+          {
+            "path": "outputs/reports/s2_12_execution_readiness_v2.json",
+            "kind": "disk_asset",
+            "sha256": "38be851dc25a7fa9e4803d5401e65b61c8147ab7bf1175d1a32cb18680898852"
+          },
+          {
+            "path": "outputs/reports/s2_12_execution_readiness_v3.json",
+            "kind": "disk_asset",
+            "sha256": "810862c130740f0f91ff5fe25b775040c7649061f216bea9e1dc4626acbefabd"
+          },
+          {
+            "path": "outputs/reports/s2_12_api_readiness_v2.json",
+            "kind": "disk_asset",
+            "sha256": "d9c3c5e24ec9bf475c63864ec9de7e744d4d0abf93f1923df2027fc2612b84b9"
+          },
+          {
+            "path": "scripts/verify_s2_12_execution_ready_v2.py",
+            "kind": "independent_verifier",
+            "sha256": "b7f2ce29fbdd22814172a1092fcacfd3c2f28c5cd5a2884afc57a928da95b389"
+          },
+          {
+            "path": "scripts/verify_s2_12_readiness_v3.py",
+            "kind": "independent_verifier",
+            "sha256": "9d54e65307f5fc66156b0132d9dd780687fd35d9924b7b8c0692686f942c00e6"
+          },
+          {
+            "path": "derived: S2.12 = partial + execution-ready v3 from the frozen plan v2 (status=frozen, supersedes_v1), the readiness v2/v3 (S2.11 freeze 36/36 user-confirmed; real_run_refused on the API budget authorization; parity rerun passed) and the executed independent S2.12 verifiers",
+            "kind": "derivation"
+          }
+        ]
+      },
+      {
+        "task_id": "S2.13",
+        "status": "blocked",
+        "blockers": [
+          "S2.12 full DoD not met (execution-ready v3 and S2.11 freeze 36/36 are done, but the real stratified run is blocked on the API budget authorization: missing input token cap + cost cap)"
+        ],
+        "note": "Stage 2 freeze: S2.11 IS frozen (36/36 adjudicated, user-confirmed, Checkpoint G) but the Stage 2 final-metric DoD (S2.1-S2.12 full DoD) is NOT met because the S2.12 real evaluation still requires the API authorization and no formal evaluation/Gold has been produced. The Gold-Rule-Record existence is derived separately by derive_gold_rule_records (no hardcoded conclusion here). NOT decomposed into new formal tasks and NOT modified by this round's grant; final_experiment_ready=true does NOT complete S2.13.",
+        "evidence": [
+          {
+            "path": "derived: S2.11 frozen AND S2.12 partial (real run refused on API authorization) -> S2.13 blocked; Stage 2 freeze DoD unchanged this round (see this round's change event)",
+            "kind": "derivation"
+          },
+          {
+            "path": "outputs/reports/s2_13_stage2_freeze_gap_capsule.json",
+            "kind": "disk_asset",
+            "sha256": "eb934910c2e046c43cfae063ff8eac69e124fda65830f5c50cb2e1fd50abc311"
+          },
+          {
+            "path": "outputs/reports/s2_11_license_adapter_readiness_v2.json",
+            "kind": "disk_asset",
+            "sha256": "8d271f59e2c6d24006ab7139509a6cf3b96d4a276a3d88c019b1a83db4b5a2e0"
+          }
+        ]
+      }
+    ],
+    "stage3": [
+      {
+        "task_id": "S3.2",
+        "status": "verified",
+        "note": "25 matching decision Gold frozen and published (data/gold/stage3/stage3_matching_gold_v1.json); these relevance decisions are NOT Gold Rule Records.",
+        "evidence": [
+          {
+            "path": "data/gold/stage3/stage3_matching_gold_v1.json",
+            "kind": "disk_asset",
+            "sha256": "55dffbcaf7d6510c11a06f10b134dfb449af0bd687d0cf40f7839be19bc2e618"
+          },
+          {
+            "path": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+            "kind": "disk_asset",
+            "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f"
+          },
+          {
+            "path": "outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "f37ae1164b19e1e86d007f83202a125c31c295e415b899b83cec9eb0f51a04e7"
+          },
+          {
+            "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+            "kind": "manifest",
+            "sha256": "8b3cbd2e6081a31bb3d2fec018f11ed9c5bf45d0ec51507050bb9472c3ed4447"
+          },
+          {
+            "path": "scripts/verify_formal_benchmark_release_v2.py",
+            "kind": "independent_verifier",
+            "sha256": "b9e1b9e29468fcc332ff139a4bda82c4420119ca409b4d2b89df4c6b8f3dbd58"
+          }
+        ]
+      },
+      {
+        "task_id": "S3.3",
+        "status": "verified",
+        "note": "33 violation decision Gold frozen and published (data/gold/stage3/stage3_violation_gold_v1.json); these type/evidence decisions are NOT Gold Rule Records.",
+        "evidence": [
+          {
+            "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+            "kind": "disk_asset",
+            "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550"
+          },
+          {
+            "path": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+            "kind": "disk_asset",
+            "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f"
+          },
+          {
+            "path": "outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json",
+            "kind": "manifest",
+            "sha256": "f37ae1164b19e1e86d007f83202a125c31c295e415b899b83cec9eb0f51a04e7"
+          },
+          {
+            "path": "outputs/reports/formal_benchmark_release_v2.manifest.json",
+            "kind": "manifest",
+            "sha256": "8b3cbd2e6081a31bb3d2fec018f11ed9c5bf45d0ec51507050bb9472c3ed4447"
+          },
+          {
+            "path": "scripts/verify_formal_benchmark_release_v2.py",
+            "kind": "independent_verifier",
+            "sha256": "b9e1b9e29468fcc332ff139a4bda82c4420119ca409b4d2b89df4c6b8f3dbd58"
+          }
+        ]
+      },
+      {
+        "task_id": "S3.4",
+        "status": "development_only",
+        "note": "Winter wrapper development evidence only; formal completion still blocked: S1.7 dependency is now SATISFIED (frozen 2026-08-13), S2.13 remains blocked.",
+        "evidence": [
+          {
+            "path": "outputs/development/s34_winter_stage3_development_v3_clean/manifest.json",
+            "kind": "manifest",
+            "sha256": "74b918548d0e5aa839f50446e359e04e3ec3ce7fb6aa86b3637a11a98e4ff649"
+          },
+          {
+            "path": "outputs/development/s34_winter_stage3_development_v3_prototype_literal/manifest.json",
+            "kind": "manifest",
+            "sha256": "91dda78fedc33e47ab70e86f2726c6673e8bdb52ccf3aec652b6819564807dd8"
+          }
+        ]
+      },
+      {
+        "task_id": "S3.5",
+        "status": "development_only",
+        "note": "Sun Stage 3 method-level reconstruction development evidence only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied).",
+        "evidence": [
+          {
+            "path": "outputs/development/s35_sun_stage3_development_v2/manifest.json",
+            "kind": "manifest",
+            "sha256": "48c61dbc85a0fd28b1fa21c1b2563c65ca029107afe503e35586698ea7388b21"
+          }
+        ]
+      },
+      {
+        "task_id": "S3.6",
+        "status": "development_only",
+        "note": "BM25 v3 + TF-IDF/SVD development baselines only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied); threshold 0.5 remains a fixed development setting.",
+        "evidence": [
+          {
+            "path": "outputs/development/s36_bm25_stage3_development_v3/manifest.json",
+            "kind": "manifest",
+            "sha256": "f81988c5522d3f897ec0155d755f0c6f580ebaff999f9a53be941638055d012a"
+          },
+          {
+            "path": "outputs/development/s36_tfidf_svd_stage3_development_v2/manifest.json",
+            "kind": "manifest",
+            "sha256": "56e40e3e81a9a76b3fb93f5a77726348d8b1d2305cb1cd69798c529a85ce1082"
+          }
+        ]
+      },
+      {
+        "task_id": "S3.7",
+        "status": "blocked",
+        "blockers": [
+          "Formal, user-adjudicated and frozen GDPR Gold Rule Records for the 9 rule IDs do not exist",
+          "S2.13 blocked",
+          "S3.4/S3.5/S3.6 formal completion pending"
+        ],
+        "note": "Formal Oracle NOT started and NOT authorized; development Stage 3 numbers must not be promoted; the oracle_control block records the fail-closed flags.",
+        "evidence": [
+          {
+            "path": "outputs/reports/s37_oracle_readiness_v1.json",
+            "kind": "disk_asset",
+            "sha256": "7bd3e8dec72be75a4b3414c889839b5891e59e47707b3845a59e510328dd5a7b"
+          },
+          {
+            "path": "outputs/reports/s3_7_oracle_readiness_v2.json",
+            "kind": "disk_asset",
+            "sha256": "0e79232bb17b172ea6f5f105e6a3e75a9aa2d67a42614c66a1e65a566da9827b"
+          },
+          {
+            "path": "derived: no oracle authorization manifest and no formal oracle run/result assets found on disk",
+            "kind": "derivation"
+          }
+        ]
+      }
+    ]
+  },
+  "stage1_process_gold": {
+    "exists": true,
+    "path": "data/gold/stage1/process_records/stage1_process_gold_v1.json",
+    "sha256": "f33aa857a0796d0517a9d04cc96b0a4f316202603fe0adf66693aeb5cb444bca",
+    "manifest_path": "data/gold/stage1/manifest.json",
+    "manifest_sha256": "1885dad26f43b19324f2e779a7bbed0db5b19699145d8607a59439423b23e587",
+    "counts": {
+      "process_records": 7,
+      "label_fields": 135,
+      "structure_decisions": 7
+    }
+  },
+  "stage3_decision_gold": {
+    "matching": {
+      "path": "data/gold/stage3/stage3_matching_gold_v1.json",
+      "sha256": "55dffbcaf7d6510c11a06f10b134dfb449af0bd687d0cf40f7839be19bc2e618",
+      "count": 25
+    },
+    "violation": {
+      "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+      "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550",
+      "count": 33
+    },
+    "frozen_correction": {
+      "path": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
+      "sha256": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f"
+    },
+    "consistency_with_frozen_correction": true,
+    "note": "The published matching/violation decisions are DECISION Gold only; they are NOT complete Rule/Process Gold and must never be used as Gold Rule Records."
+  },
+  "gold_rule_records": {
+    "exist": false,
+    "absence_derived_from": "no file under data/gold/ or outputs/reports/ matches a Gold Rule Record artifact name pattern (rule_record / rule-record) and no concrete rule-record path mentioned by the historical readiness reports exists on disk; data/gold/stage2/estg150_formal_gold_v1.json was explicitly checked and bound below - it is the EStG-150 Stage 2 six-element span Gold and is NOT a GDPR Rule Record",
+    "candidate_probe": {
+      "patterns": [
+        "data/gold/** file name contains rule_record or rule-record (case-insensitive; known non-Gold assets excluded)",
+        "outputs/reports/** file name contains rule_record or rule-record (defensive)",
+        "concrete rule-record paths mentioned by historical readiness reports (s37_oracle_readiness_v1 / s3_7_oracle_readiness_v2) that exist on disk"
+      ],
+      "history_sources": [
+        "outputs/reports/s37_oracle_readiness_v1.json",
+        "outputs/reports/s3_7_oracle_readiness_v2.json"
+      ],
+      "found": []
+    },
+    "covered_rule_ids": [
+      "article6",
+      "article7",
+      "article15",
+      "article16",
+      "article17",
+      "article20",
+      "article22",
+      "article33",
+      "article34"
+    ],
+    "rule_ids_derived_from": [
+      "data/gold/stage3/stage3_matching_gold_v1.json",
+      "data/gold/stage3/stage3_violation_gold_v1.json"
+    ],
+    "stage2_estg150_gold_is_not_gdpr_rule_records": true,
+    "checked_stage2_estg150_gold": {
+      "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+      "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+    },
+    "note": "Formal, user-adjudicated and frozen GDPR Gold Rule Records for the 9 rule IDs do NOT exist. This round did NOT create, infer, or auto-fill any Gold Rule Record; their production remains a user-owned adjudication + freeze task, and exist=true would require a separate user-authorized freeze/publication path with formal schema, manifest and independent verifier (NOT implemented by v2)."
+  },
+  "stage3_development_only": {
+    "s3_4": {
+      "status": "development_only",
+      "formal_completion": "Winter wrapper development evidence only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied by the 2026-08-13 freeze).",
+      "evidence": [
+        {
+          "path": "outputs/development/s34_winter_stage3_development_v3_clean/manifest.json",
+          "kind": "manifest",
+          "sha256": "74b918548d0e5aa839f50446e359e04e3ec3ce7fb6aa86b3637a11a98e4ff649"
+        },
+        {
+          "path": "outputs/development/s34_winter_stage3_development_v3_prototype_literal/manifest.json",
+          "kind": "manifest",
+          "sha256": "91dda78fedc33e47ab70e86f2726c6673e8bdb52ccf3aec652b6819564807dd8"
+        }
+      ]
+    },
+    "s3_5": {
+      "status": "development_only",
+      "formal_completion": "Sun Stage 3 development evidence only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied).",
+      "evidence": [
+        {
+          "path": "outputs/development/s35_sun_stage3_development_v2/manifest.json",
+          "kind": "manifest",
+          "sha256": "48c61dbc85a0fd28b1fa21c1b2563c65ca029107afe503e35586698ea7388b21"
+        }
+      ]
+    },
+    "s3_6": {
+      "status": "development_only",
+      "formal_completion": "BM25 v3 + TF-IDF/SVD development baselines only; formal completion still blocked on S2.13 (S1.7 dependency now satisfied).",
+      "evidence": [
+        {
+          "path": "outputs/development/s36_bm25_stage3_development_v3/manifest.json",
+          "kind": "manifest",
+          "sha256": "f81988c5522d3f897ec0155d755f0c6f580ebaff999f9a53be941638055d012a"
+        },
+        {
+          "path": "outputs/development/s36_tfidf_svd_stage3_development_v2/manifest.json",
+          "kind": "manifest",
+          "sha256": "56e40e3e81a9a76b3fb93f5a77726348d8b1d2305cb1cd69798c529a85ce1082"
+        }
+      ]
+    }
+  },
+  "oracle_control": {
+    "formal_oracle_started": false,
+    "formal_oracle_authorized": false,
+    "ready_for_oracle_authorization": false,
+    "ready_for_oracle_authorization_reason": "Substantive dependencies remain, so readiness is NOT reducible to a single authorization: S2.13 is blocked, formal user-adjudicated frozen GDPR Gold Rule Records for the 9 rule IDs do not exist, and S3.4/S3.5/S3.6 formal completion is pending.",
+    "authorization_sentence": null,
+    "authorization_sentence_reason": "No 'directly start the formal Oracle' authorization sentence may be generated now: substantive dependencies remain (S2.13 freeze; formal, user-adjudicated and frozen GDPR Gold Rule Records for the 9 rule IDs; S3.4-S3.6 formal promotion). Oracle readiness is not reducible to a single authorization.",
+    "no_pseudo_oracle": true,
+    "probe_evidence": [
+      {
+        "path": "probe outputs/reports/*oracle_authorization* -> no matches",
+        "kind": "derivation"
+      },
+      {
+        "path": "probe data/results/*oracle* + outputs/evidence/*oracle* -> no matches",
+        "kind": "derivation"
+      }
+    ]
+  },
+  "prohibitions": [
+    "Stage 2 method predictions must NOT be treated as Gold Rule Records.",
+    "Parser candidates must NOT be treated as Gold Process Records.",
+    "Stage 3 matching/violation decision labels must NOT be treated as complete Rule/Process Gold.",
+    "Development Stage 3 numbers must NOT be promoted to formal results.",
+    "audit_project.py --require-final-ready returning 0 must NOT bypass the MASTER_PIPELINE S2.13 / S3.7 dependencies."
+  ],
+  "audit_consistency": {
+    "final_experiment_ready": true,
+    "semantics": "final_experiment_ready=true means ONLY that the Stage 2 three-method formal evaluation / final-metric MACHINE gates are ready (three verified formal capsules, hash-consistent shared comparison capsule, user-authorized G0.4 contract); it does NOT mean S2.13, S3.7, or full MASTER_PIPELINE completion.",
+    "derived_from": "formal_experiment.audit.collect_project_audit() run in-process at build time",
+    "claim_boundary_contradiction_free": true
+  },
+  "verification_scope": {
+    "exact_manifest_reconstruction": true,
+    "exact_export_reconstruction": true,
+    "strict_verifier_verdict": true,
+    "gold_rule_record_three_state_probe": true,
+    "markdown_single_eof_newline": true
+  },
+  "verifiers_executed": {
+    "scripts/verify_stage1_process_gold.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 21
+    },
+    "scripts/verify_s1_7_freezer_authorization.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 16
+    },
+    "scripts/verify_formal_benchmark_release_v2.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 53
+    },
+    "scripts/verify_s2_12_execution_ready.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 15
+    },
+    "scripts/verify_s2_12_execution_ready_v2.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 14
+    },
+    "scripts/verify_s2_11_review_freeze_v3.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 7
+    },
+    "scripts/verify_s2_12_readiness_v3.py": {
+      "verified": true,
+      "exit_code": 0,
+      "checks": 7
+    },
+    "outputs/reports/verify_b0_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_direct_llm_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_sun_llm_fallback_formal_arm_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    },
+    "outputs/reports/verify_stage2_formal_comparison_v1.py": {
+      "verified": true,
+      "exit_code": 0
+    }
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

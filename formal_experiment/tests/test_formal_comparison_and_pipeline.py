@@ -111,5 +111,6 @@ def test_s2_13_gap_capsule_semantics() -> None:
 def test_s2_10_and_s2_12_rows_updated() -> None:
     src = (ROOT / "docs" / "MASTER_PIPELINE.md").read_text(encoding="utf-8")
     assert "| S2.10 | 主数据组件评价 | S2.2/S2.6-S2.9 | **verified（2026-08-11" in src
-    assert "| S2.12 | 复杂度分层与误差分析 | S2.10/S2.11 | **partial + execution-ready v3（2026-08-17，Checkpoint F）" in src
-    assert "真实运行仍 refused（proposal v3 未确认 + API 授权缺项）" in src
+    assert "| S2.12 | 复杂度分层与误差分析 | S2.10/S2.11 | **partial + execution-ready v3（2026-08-17，Checkpoint F；Checkpoint G 刷新）" in src
+    assert "真实运行仅 refused on API 预算授权" in src
+    assert "S2.11 冻结已达成" in src

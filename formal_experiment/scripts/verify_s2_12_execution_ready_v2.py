@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Independent verifier for the S2.12 execution-ready v2 assets (Checkpoint
-E3). Re-derives everything from disk:
+E3, refreshed for Checkpoint G). Re-derives everything from disk:
 
   * membership closure 40/4/36; frozen G0.5 strata counts recomputed
     (must equal the committed plan v2)
@@ -11,13 +11,18 @@ E3). Re-derives everything from disk:
   * the parity check is recomputed in-process (formal Stage 2 evaluator
     vs stratified v2 on the same synthetic fixture) and must match the
     committed readiness v2 claim AND pass
-  * S2.11 freeze v2 is 0/36 and the real run stays refused; readiness
-    claims only schema/importer/evaluator/method-adapter readiness
+  * S2.11 freeze v2 is 36/36 (Checkpoint G: the user confirmed proposal
+    v3 and the decisions v2 carry the 36/36 adjudication) and the real
+    run stays refused; readiness claims only schema/importer/evaluator/
+    method-adapter readiness
   * API readiness v2: exact model ids (deepseek-v4-pro for both arms with
     their sources), max calls (36 / 72), output token cap 4096, input cap
     unresolved, cost_cap_unresolved, calls_made=0, no final
     authorization sentence issued (missing items listed)
-  * bindings exact; zero API; no Gold
+  * bindings exact except the S2.11 decisions v2 SHA, which the CHECKPOINT
+    G apply legitimately changed (plan v2/readiness v2 keep their pre-apply
+    snapshot; the decisions integrity is verified separately as 36/36
+    adjudicated); zero API; no Gold
 
 Exit 0 only when every check passes (fail-closed).
 """
@@ -119,10 +124,9 @@ def verify() -> dict[str, Any]:
         1 for e in decisions["records"].values()
         if (e.get("review_metadata") or {}).get("review_state")
         == "adjudicated")
-    check("S2.11 freeze v2 not reached and run refused",
-          adjudicated == 0
+    check("S2.11 freeze v2 reached (36/36) and run refused",
+          adjudicated == 36
           and readiness["runner"]["real_run_refused"] is True
-          and readiness["gates"]["s2_11_freeze_v2"]["ready"] is False
           and readiness["ready_claims"]["gold_or_formal_evaluation_complete"]
           is False)
 
@@ -175,11 +179,26 @@ def verify() -> dict[str, Any]:
         "outputs/reports/s2_12_execution_readiness_v1.json": _sha256_file(
             ROOT / "outputs/reports/s2_12_execution_readiness_v1.json"),
     }
-    check("plan v2 bindings exact", plan.get("bindings") == bindings)
-    check("plan report v2 bindings exact",
-          plan_report.get("bindings") == bindings)
-    check("readiness v2 bindings exact",
-          readiness.get("bindings") == bindings)
+    # Bindings: exact against every expected asset EXCEPT the S2.11
+    # decisions v2 SHA, which the Checkpoint G apply legitimately changed
+    # (plan v2 / readiness v2 keep their pre-apply snapshot; decisions
+    # integrity is verified separately as 36/36 adjudicated above and by
+    # the freeze validator v3 executed by the transition capsule).
+    def _without_decisions(d: dict[str, Any]) -> dict[str, Any]:
+        return {k: v for k, v in d.items() if k != DECISIONS_V2_REL}
+
+    check("plan v2 bindings exact (decisions v2 apply exempted)",
+          _without_decisions(plan.get("bindings") or {})
+          == _without_decisions(bindings)
+          and DECISIONS_V2_REL in (plan.get("bindings") or {}))
+    check("plan report v2 bindings exact (decisions v2 apply exempted)",
+          _without_decisions(plan_report.get("bindings") or {})
+          == _without_decisions(bindings)
+          and DECISIONS_V2_REL in (plan_report.get("bindings") or {}))
+    check("readiness v2 bindings exact (decisions v2 apply exempted)",
+          _without_decisions(readiness.get("bindings") or {})
+          == _without_decisions(bindings)
+          and DECISIONS_V2_REL in (readiness.get("bindings") or {}))
     check("zero API and no Gold in v2 assets",
           plan["zero_api"] == {"new_llm_api_calls": 0}
           and readiness["zero_api"] == {"new_llm_api_calls": 0}

@@ -34,6 +34,7 @@ import json
 import re
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -393,15 +394,19 @@ def test_proposal_v3_builder_deterministic() -> None:
 # Importer v3
 # ---------------------------------------------------------------------------
 def test_import_v3_dry_run_accept_all() -> None:
+    """Post-apply (Checkpoint G): the committed dry-run report was
+    refreshed, so confirmation_event_present is true and the live
+    decisions file carries the 36/36 adjudicated state from the real
+    apply (dry-run remains a would-be report, applied=false)."""
     report = batch.run_dry_run(None)
     assert report["import_stats"] == {
         "samples": 36, "blocked_fields": 0, "blocked_samples": 0,
         "unresolved_fields": 0, "adjudicable": 36}
-    assert report["fail_closed"]["confirmation_event_present"] is False
+    assert report["fail_closed"]["confirmation_event_present"] is True
     assert report["fail_closed"]["applied"] is False
     assert report["fail_closed"]["wrote_decisions"] is False
     decisions = _load(DECISIONS_V2_REL)
-    assert all(e["review_metadata"]["review_state"] == "unreviewed"
+    assert all(e["review_metadata"]["review_state"] == "adjudicated"
                for e in decisions["records"].values())
 
 
@@ -431,11 +436,20 @@ def test_import_v3_dry_run_would_be_passes_freeze_v3(tmp_path: Path) -> None:
         freeze_v3.ROOT = old
 
 
-def test_import_v3_apply_refused_without_event() -> None:
+def test_import_v3_apply_refused_without_event(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+    """Post-apply (Checkpoint G): the real confirmation event now exists,
+    so point CONFIRMATION_EVENT_REL at a non-existent path to prove the
+    fail-closed refusal, and assert the live decisions file is untouched
+    (still the 36/36 adjudicated version from the real apply)."""
+    monkeypatch.setattr(batch, "CONFIRMATION_EVENT_REL",
+                        "configs/__no_such_confirmation_event_v3__.json")
+    before = _sha((ROOT / DECISIONS_V2_REL).read_bytes())
     with pytest.raises(batch.ImportFail, match="no user confirmation"):
         batch.run_apply(None, None)
+    assert _sha((ROOT / DECISIONS_V2_REL).read_bytes()) == before
     decisions = _load(DECISIONS_V2_REL)
-    assert all(e["review_metadata"]["review_state"] == "unreviewed"
+    assert all(e["review_metadata"]["review_state"] == "adjudicated"
                for e in decisions["records"].values())
 
 
@@ -476,3 +490,71 @@ def test_import_v3_wrong_revisions_sha_refused(tmp_path: Path) -> None:
     with pytest.raises(batch.ImportFail, match="does not bind the "
                                                "revisions SHA"):
         batch.run_apply(event_path, rev_path)
+
+
+def test_import_v3_main_apply_print_branch(
+        monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture[str],
+        tmp_path: Path) -> None:
+    """Regression (Checkpoint G): main()'s human-readable branch must not
+    crash on the apply-shaped report, which has {applied, reviewer,
+    records, decisions_file, backup} and NO import_stats/fail_closed."""
+    event_path = tmp_path / "event3c.json"
+    event_path.write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(
+        batch, "run_apply",
+        lambda *a, **k: {
+            "applied": True, "reviewer": "hyc", "records": 36,
+            "decisions_file": DECISIONS_V2_REL, "backup": "x.bak",
+        })
+    monkeypatch.setattr(batch, "refresh_dry_run_report_after_apply",
+                        lambda *a, **k: {})
+    monkeypatch.setattr(sys, "argv",
+                        ["s2_11_batch_import_v3", "--apply",
+                         "--confirmation-event", str(event_path)])
+    rc = batch.main()
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "batch import v3 APPLIED" in out
+    assert "reviewer: hyc" in out
+    assert "records: 36" in out
+
+
+def test_import_v3_main_dry_run_print_branch(
+        monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture[str]) -> None:
+    """Dry-run human-readable branch keeps printing import_stats and the
+    fail_closed wrote_decisions flag (no regression)."""
+    monkeypatch.setattr(
+        batch, "run_dry_run",
+        lambda *a, **k: {
+            "import_stats": {"blocked": 0, "unresolved": 0,
+                             "adjudicable": 36},
+            "fail_closed": {"wrote_decisions": False},
+        })
+    monkeypatch.setattr(sys, "argv", ["s2_11_batch_import_v3"])
+    rc = batch.main()
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "import_stats" in out
+    assert "wrote_decisions: False" in out
+
+
+def test_import_v3_refresh_dry_run_report_after_apply(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Post-apply refresh writes the dry-run report with
+    confirmation_event_present=true (the real confirmation event now
+    exists), keeping run_dry_run byte-reproducible."""
+    target = tmp_path / "dry_run_refreshed.json"
+    monkeypatch.setattr(batch, "DRY_RUN_REPORT_REL", str(target))
+    report = batch.refresh_dry_run_report_after_apply(None)
+    assert report["fail_closed"]["confirmation_event_present"] is True
+    assert report["fail_closed"]["applied"] is False
+    on_disk = json.loads(target.read_text(encoding="utf-8"))
+    assert on_disk["fail_closed"]["confirmation_event_present"] is True
+    assert on_disk["import_stats"]["adjudicable"] == 36
+    # byte-identical rebuild via run_dry_run onto the same target
+    report2 = batch.run_dry_run(None)
+    assert report2["fail_closed"]["confirmation_event_present"] is True
+    assert target.read_bytes() == json.dumps(
+        report2, ensure_ascii=False, indent=2).encode("utf-8") + b"\n"

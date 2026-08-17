@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
-"""Focused tests for the S2.13 -> S3.7 transition readiness capsule v5.
+"""Focused tests for the S2.13 -> S3.7 transition readiness capsule v7.
 
 Covers:
-  * v1/v2/v3/v4 files stay byte-exact (v1/v2/v3/v4 verifiers keep
+  * v1/v2/v3/v4/v5/v6 files stay byte-exact (their verifiers keep
     rejecting as superseded historical capsules; git hash-object
     comparison against HEAD)
-  * v5 deterministic, byte-identical builder rebuild + no-overwrite refusal
+  * v7 deterministic, byte-identical builder rebuild + no-overwrite refusal
   * the builder never touches Gold / predictions / results / contract /
     methods / gates
-  * the v5 independent verifier passes on the canonical outputs (NINE
+  * the v7 independent verifier passes on the canonical outputs (ELEVEN
     independent verifiers executed incl. verify_s2_12_execution_ready_v2,
     audit re-run)
-  * v5 derives the S2.11 adjudication workload from the CLOSED 40/4/36
-    CANONICAL v2 blank pack (36 = 29 available + 7 unavailable), the
-    unadjudicated proposal v2 (human_approved=false) and the importer v2
-    dry-run (blocked=0), and reports S2.12 as partial + execution-ready
-    v2 (formal-contract-aligned evaluator, parity, API readiness v2 with
-    cost_cap_unresolved and no final authorization sentence)
+  * v7 derives S2.11 = FROZEN from the user-confirmed proposal v3
+    (confirmation event binds the SHA), the 36/36 adjudicated decisions
+    v2 and the importer v3 dry-run (blocked=0), and reports S2.12 as
+    partial + execution-ready v3 with the real run refused ONLY on the
+    API budget authorization (input token cap, cost cap; no final
+    authorization sentence)
   * Gold Rule Record THREE-STATE probe: a forged gdpr_rule_records.json
     under a synthetic tmp data/gold and a prediction copy named
     rule_record BOTH make the derivation fail closed; a clean tmp tree
@@ -59,16 +59,16 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-BUILDER_SCRIPT = ROOT / "scripts" / "build_s2_13_s3_7_transition_readiness_v5.py"
-VERIFIER_SCRIPT = ROOT / "scripts" / "verify_s2_13_s3_7_transition_readiness_v5.py"
+BUILDER_SCRIPT = ROOT / "scripts" / "build_s2_13_s3_7_transition_readiness_v7.py"
+VERIFIER_SCRIPT = ROOT / "scripts" / "verify_s2_13_s3_7_transition_readiness_v7.py"
 OUT_JSON = ROOT / "outputs" / "reports" / \
-    "s2_13_s3_7_transition_readiness_v5.json"
+    "s2_13_s3_7_transition_readiness_v7.json"
 OUT_MD = ROOT / "outputs" / "reports" / \
-    "s2_13_s3_7_transition_readiness_v5.md"
+    "s2_13_s3_7_transition_readiness_v7.md"
 OUT_MANIFEST = ROOT / "outputs" / "reports" / \
-    "s2_13_s3_7_transition_readiness_v5.manifest.json"
+    "s2_13_s3_7_transition_readiness_v7.manifest.json"
 OUT_EXPORT = ROOT / "outputs" / "reports" / \
-    "s2_13_s3_7_transition_readiness_v5_export_index.json"
+    "s2_13_s3_7_transition_readiness_v7_export_index.json"
 
 V1_FILES = [
     "configs/schemas/s2_13_s3_7_transition_readiness.schema.json",
@@ -115,6 +115,42 @@ V4_FILES = [
     "outputs/reports/s2_13_s3_7_transition_readiness_v4_export_index.json",
 ]
 
+V5_FILES = [
+    "configs/schemas/s2_13_s3_7_transition_readiness_v5.schema.json",
+    "scripts/build_s2_13_s3_7_transition_readiness_v5.py",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v5.py",
+    "tests/test_s2_13_s3_7_transition_readiness_v5.py",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v5.json",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v5.md",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v5.manifest.json",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v5_export_index.json",
+]
+
+V6_FILES = [
+    "configs/schemas/s2_13_s3_7_transition_readiness_v6.schema.json",
+    "scripts/build_s2_13_s3_7_transition_readiness_v6.py",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v6.py",
+    "tests/test_s2_13_s3_7_transition_readiness_v6.py",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v6.json",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v6.md",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v6.manifest.json",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v6_export_index.json",
+]
+
+# Checkpoint G update: the v5 and v6 focused-test files were updated to
+# express the superseded snapshot semantics (their verifiers/builders can
+# no longer certify a stale pre-apply decisions snapshot), so those test
+# files are excluded from the strict byte-exactness check against HEAD;
+# every other v5/v6 asset stays byte-exact.
+V5_FILES_BYTE_EXACT = [
+    f for f in V5_FILES
+    if f != "tests/test_s2_13_s3_7_transition_readiness_v5.py"
+]
+V6_FILES_BYTE_EXACT = [
+    f for f in V6_FILES
+    if f != "tests/test_s2_13_s3_7_transition_readiness_v6.py"
+]
+
 EXPECTED_RULE_IDS = [
     "article6", "article7", "article15", "article16", "article17",
     "article20", "article22", "article33", "article34",
@@ -123,7 +159,7 @@ EXPECTED_RULE_IDS = [
 
 def _load_builder() -> Any:
     spec = importlib.util.spec_from_file_location(
-        "s2_13_s3_7_transition_readiness_builder_v5", BUILDER_SCRIPT)
+        "s2_13_s3_7_transition_readiness_builder_v7", BUILDER_SCRIPT)
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
     assert spec.loader is not None
@@ -133,7 +169,7 @@ def _load_builder() -> Any:
 
 def _load_verifier() -> Any:
     spec = importlib.util.spec_from_file_location(
-        "s2_13_s3_7_transition_readiness_verifier_v5", VERIFIER_SCRIPT)
+        "s2_13_s3_7_transition_readiness_verifier_v7", VERIFIER_SCRIPT)
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
     assert spec.loader is not None
@@ -216,9 +252,10 @@ def _make_tmp_gold_tree(tmp_path: Path) -> Path:
 
 
 # ---------------------------------------------------------------------------
-# v1/v2/v3/v4 byte-exactness
+# v1/v2/v3/v4/v5/v6 byte-exactness
 # ---------------------------------------------------------------------------
-@pytest.mark.parametrize("files", [V1_FILES, V2_FILES, V3_FILES, V4_FILES])
+@pytest.mark.parametrize("files", [V1_FILES, V2_FILES, V3_FILES, V4_FILES,
+                                   V5_FILES_BYTE_EXACT, V6_FILES_BYTE_EXACT])
 def test_previous_versions_files_byte_exact_against_head(
         files: list[str]) -> None:
     repo = ROOT.parent  # repository root (formal_experiment is a subdir)
@@ -237,6 +274,11 @@ def test_previous_versions_files_byte_exact_against_head(
             "HEAD")
 
 
+# v1-v4 verifiers keep passing on their historical capsules. v5/v6 are
+# NOT re-run here: their bindings snapshot the S2.11 decisions v2 from
+# BEFORE the Checkpoint G apply, so after the apply they can no longer
+# rebuild byte-identically (the decisions SHA legitimately changed). The
+# v7 capsule supersedes them and re-derives the current state.
 @pytest.mark.parametrize("ver", ["v1", "v2", "v3", "v4"])
 def test_previous_verifiers_still_pass(ver: str) -> None:
     proc = subprocess.run(
@@ -249,15 +291,9 @@ def test_previous_verifiers_still_pass(ver: str) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Builder fail-closed under drifted inputs + no-overwrite
+# Builder determinism and no-overwrite
 # ---------------------------------------------------------------------------
-def test_builder_fail_closed_after_checkpoint_g_and_no_sensitive_touches() -> None:
-    """Checkpoint G update: the v5 capsule snapshots the pre-apply S2.11
-    decisions v2, so after the user-confirmed apply the v5 builder now
-    derives a DIFFERENT report (decisions 36/36). Its no-overwrite guard
-    must fail closed (exit != 0) instead of overwriting the committed v5
-    report with drifted input, and it must never touch Gold / predictions
-    / results / contract / methods. Later capsules supersede v5."""
+def test_builder_byte_identical_rebuild_and_no_sensitive_touches() -> None:
     sensitive = [
         ROOT / "data" / "gold" / "stage1" / "process_records" /
         "stage1_process_gold_v1.json",
@@ -276,13 +312,12 @@ def test_builder_fail_closed_after_checkpoint_g_and_no_sensitive_touches() -> No
     proc = subprocess.run(
         [sys.executable, str(BUILDER_SCRIPT)], cwd=ROOT,
         capture_output=True, text=True, check=False)
-    assert proc.returncode != 0, (
-        "v5 builder unexpectedly rebuilt a v5 report that is no longer "
-        "byte-derivable after the Checkpoint G apply (must fail closed)")
-    second = {p: p.read_bytes() if p.exists() else None for p in outputs}
+    assert proc.returncode == 0, (
+        f"builder failed: {proc.returncode}\n{proc.stdout}\n{proc.stderr}")
+    second = {p: p.read_bytes() for p in outputs}
     for p in outputs:
         assert second[p] == first[p], (
-            f"v5 outputs were overwritten despite fail-closed: {p}")
+            f"builder rebuild is not byte-identical: {p}")
     after = {p: _sha(p.read_bytes()) for p in sensitive}
     assert after == before, (
         "builder touched Gold / predictions / results / contract / methods")
@@ -301,20 +336,11 @@ def test_builder_no_overwrite_refusal(tmp_path: Path) -> None:
 # ---------------------------------------------------------------------------
 # Positive verifier run (executes the nine verifiers + audit)
 # ---------------------------------------------------------------------------
-def test_verifier_rejects_drifted_current_state_after_checkpoint_g() -> None:
-    """Checkpoint G update: the v5 capsule snapshots the pre-apply S2.11
-    decisions v2, so the v5 verifier MUST now fail closed on the current
-    disk (decisions 36/36; v5 manifest bindings and the re-derived
-    dependency matrix diverge). This is the expected superseding of the
-    v5 snapshot; the verifier correctly refuses to certify a stale
-    current state."""
+def test_verifier_passes_on_canonical_outputs() -> None:
     verifier = _load_verifier()
     result = verifier.verify(run_external=True)
-    assert result["verified"] is False, (
-        "v5 verifier must NOT certify the stale pre-apply snapshot after "
-        "the Checkpoint G apply")
-    assert any("bindings" in c["name"] or "dependency matrix" in c["name"]
-               for c in result["checks"] if not c["ok"])
+    assert result["verified"] is True, (
+        "canonical v5 capsule must verify: " + _failed_details(result))
 
 
 def test_report_declares_and_binds_superseded_stale_reports_and_v1() -> None:
@@ -328,7 +354,7 @@ def test_report_declares_and_binds_superseded_stale_reports_and_v1() -> None:
         "outputs/reports/formal_benchmark_release_v2.manifest.json",
         "scripts/build_s1_5_s3_7_readiness_v1.py",
         "scripts/build_s3_7_oracle_readiness.py",
-    ] + V1_FILES + V2_FILES + V3_FILES + V4_FILES
+    ] + V1_FILES + V2_FILES + V3_FILES + V4_FILES + V5_FILES
     for path in required:
         assert path in declared, f"missing supersedes declaration: {path}"
     for item in report["supersedes"]:
@@ -344,28 +370,35 @@ def test_report_declares_and_binds_superseded_stale_reports_and_v1() -> None:
     assert report["verification_scope"]["markdown_single_eof_newline"] is True
 
 
-def test_report_v5_derives_s2_11_from_canonical_v2_assets() -> None:
-    """v5 must derive the S2.11 workload from the CANONICAL v2 blank pack
-    (36 = 29 available + 7 unavailable), the unadjudicated proposal v2 and
-    the importer v2 dry-run (blocked=0)."""
+def test_report_v7_derives_s2_11_frozen() -> None:
+    """v7 must derive S2.11 = frozen from the user-confirmed proposal v3
+    (confirmation event), the 36/36 adjudicated decisions v2 and the
+    importer v3 dry-run (blocked=0); S2.12 stays partial with the real
+    run refused on the API budget authorization."""
     report = _load(OUT_JSON)
     matrix = {i["task_id"]: i
               for i in report["dependency_matrix"]["stage2"]}
     s2_11 = matrix["S2.11"]
-    assert s2_11["status"] == "in_progress_human_adjudication"
-    assert any("ONE user content confirmation bound to the proposal v2 SHA"
-               in b for b in s2_11["blockers"])
-    assert any("importer v2 dry-run: blocked=0 / unresolved=0 / "
-               "adjudicable=36" in b for b in s2_11["blockers"])
+    assert s2_11["status"] == "frozen"
+    assert s2_11.get("blockers", []) == []
+    assert "user confirmed proposal v3" in s2_11["note"].lower()
+    assert "freeze validator v3" in s2_11["note"]
+    assert "configs/s2_11_batch_import_confirmation_event_v3.json" in \
+        [ev["path"] for ev in s2_11["evidence"]]
     s2_12 = matrix["S2.12"]
     assert s2_12["status"] == "partial"
-    assert "execution-ready v2" in s2_12["note"].lower()
+    assert "execution-ready v3" in s2_12["note"].lower()
     assert "scripts/verify_s2_12_execution_ready_v2.py" in \
         report["verifiers_executed"]
     assert "scripts/verify_s2_12_execution_ready.py" in \
         report["verifiers_executed"]
+    assert "scripts/verify_s2_11_review_freeze_v3.py" in \
+        report["verifiers_executed"]
+    assert "scripts/verify_s2_12_readiness_v3.py" in \
+        report["verifiers_executed"]
+    assert len(report["verifiers_executed"]) == 11
     assert report["schema_version"] == \
-        "s2_13_s3_7_transition_readiness@5.0.0"
+        "s2_13_s3_7_transition_readiness@7.0.0"
 
 
 def test_no_gold_rule_record_created_or_inferred() -> None:
@@ -638,7 +671,7 @@ def test_export_fails_even_when_hashes_recomputed(tmp_path: Path) -> None:
     def mutate(e: dict[str, Any]) -> None:
         entry = e["artifacts"]["report_md"]
         other = OUT_JSON.read_bytes()
-        entry["path"] = "outputs/reports/s2_13_s3_7_transition_readiness_v5.json"
+        entry["path"] = "outputs/reports/s2_13_s3_7_transition_readiness_v7.json"
         entry["sha256"] = _sha(other)
         entry["byte_size"] = len(other)
     exp_p = _tamper_export(tmp_path, mutate)

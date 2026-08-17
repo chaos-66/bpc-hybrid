@@ -42,6 +42,7 @@ import verify_s2_12_execution_ready_v2 as verifier
 ROOT = Path(__file__).resolve().parents[1]
 
 MEMBERSHIP_REL = "outputs/reports/s2_11_corpus_membership_v1.json"
+DECISIONS_V2_REL = "data/development/human_review/s2_11_review_decisions_v2.json"
 PLAN_CONFIG_V2_REL = "configs/s2_12_execution_plan_v2.json"
 PLAN_REPORT_V2_REL = "outputs/reports/s2_12_execution_plan_v2.json"
 READINESS_V2_REL = "outputs/reports/s2_12_execution_readiness_v2.json"
@@ -237,10 +238,39 @@ def test_builder_v2_deterministic() -> None:
 
 
 def test_committed_v2_assets_match_builder() -> None:
+    """Checkpoint G update: plan/readiness v2 snapshot the PRE-apply S2.11
+    decisions v2 (0/36 pending). After the user-confirmed apply the v2
+    builder derives the frozen state (36/36), so the committed v2 assets
+    can no longer be reproduced byte-identically. This asserts the exact
+    expected Checkpoint G delta: only the derived decisions state
+    (gold.state / gates adjudicated) and the decisions binding SHA differ;
+    the binding set is otherwise identical and the API readiness v2 is
+    byte-identical."""
     plan_config, plan_report, readiness, api = builder.build()
-    assert plan_config == _load(PLAN_CONFIG_V2_REL)
-    assert plan_report == _load(PLAN_REPORT_V2_REL)
-    assert readiness == _load(READINESS_V2_REL)
+    committed_plan = _load(PLAN_CONFIG_V2_REL)
+    committed_report = _load(PLAN_REPORT_V2_REL)
+    committed_readiness = _load(READINESS_V2_REL)
+    # bindings: only the decisions v2 SHA drift is expected (apply)
+    for built, committed in ((plan_config, committed_plan),
+                             (plan_report, committed_report),
+                             (readiness, committed_readiness)):
+        b_built = {k: v for k, v in (built.get("bindings") or {}).items()
+                   if k != DECISIONS_V2_REL}
+        b_comm = {k: v for k, v in (committed.get("bindings") or {}).items()
+                  if k != DECISIONS_V2_REL}
+        assert b_built == b_comm, "unexpected non-decisions binding drift"
+        assert DECISIONS_V2_REL in (built.get("bindings") or {})
+        assert DECISIONS_V2_REL in (committed.get("bindings") or {})
+    # committed v2 is the pre-apply pending snapshot
+    assert committed_plan["gold"]["state"] == "pending"
+    assert committed_plan["gold"]["adjudicated"] == 0
+    assert committed_plan["gold"]["gold_files_created"] is False
+    assert committed_readiness["gates"]["s2_11_freeze_v2"]["adjudicated"] == 0
+    # the builder now derives the frozen (Checkpoint G) state
+    assert plan_config["gold"]["state"] == "frozen"
+    assert plan_config["gold"]["adjudicated"] == 36
+    assert readiness["gates"]["s2_11_freeze_v2"]["adjudicated"] == 36
+    # API readiness v2 is identical (neither drift nor superseded)
     assert api == _load(API_READINESS_V2_REL)
 
 

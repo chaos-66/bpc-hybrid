@@ -312,22 +312,33 @@ def test_blank_pack_v2_all_unresolved() -> None:
     assert set(decisions["records"]) == set(pack["samples"] and
                                             [s["sample_id"] for s in
                                              pack["samples"]])
-    for sid, entry in decisions["records"].items():
-        assert entry["review_metadata"]["review_state"] == "unreviewed"
-        assert entry["review_metadata"]["reviewer"] is None
-        for clause in entry["canonical"]["clauses"]:
+    # The blank pack template is the all-unresolved PRE-ADJUDICATION shape;
+    # the live decisions file was adjudicated by the v3 apply (Checkpoint G).
+    for sample in pack["samples"]:
+        assert sample["review_metadata"]["review_state"] == "unreviewed"
+        for clause in sample["canonical"]["clauses"]:
             assert clause["modality"]["status"] == "unresolved"
-            for field in ORDINARY_FIELDS:
-                assert clause[field]["status"] == "unresolved"
+
+def test_decisions_v2_adjudicated_by_v3_apply() -> None:
+    decisions = _load(DECISIONS_V2_REL)
+    assert decisions["applied"] is True
+    assert decisions["adjudication_pending_user_confirmation"] is False
+    event = _load(
+        "configs/s2_11_batch_import_confirmation_event_v3.json")
+    for sid, entry in decisions["records"].items():
+        assert entry["review_metadata"]["review_state"] == "adjudicated"
+        assert entry["review_metadata"]["reviewer"] == event["reviewer"]
+        for clause in entry["canonical"]["clauses"]:
+            assert clause["modality"]["status"] in ("present", "absent")
 
 
 def test_freeze_validator_v2_current_state() -> None:
     result = freeze_v2.verify()
     assert result["verified"] is True
-    assert result["frozen"] is False
-    assert result["progress"] == {"unreviewed": 36, "reviewed": 0,
-                                  "adjudicated": 0}
-    assert result["remaining_for_user"] == 36
+    assert result["frozen"] is True
+    assert result["progress"] == {"unreviewed": 0, "reviewed": 0,
+                                  "adjudicated": 36}
+    assert result["remaining_for_user"] == 0
     assert result["gold_rule_records_created"] is False
 
 
@@ -335,11 +346,8 @@ def test_freeze_validator_v2_refuses_adjudicated_with_unresolved(
         tmp_path: Path) -> None:
     doc = _load(DECISIONS_V2_REL)
     first = sorted(doc["records"])[0]
-    doc["records"][first]["review_metadata"] = {
-        "review_state": "adjudicated",
-        "reviewer": "SomeUser",
-        "confirmation_event": "configs/fake_event.json",
-    }
+    doc["records"][first]["canonical"]["clauses"][0]["modality"] = {
+        "status": "unresolved", "label": None, "evidence": []}
     target = tmp_path / DECISIONS_V2_REL
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
@@ -372,9 +380,9 @@ def test_import_v2_dry_run_accept_all_zero_blocked() -> None:
     assert report["fail_closed"]["wrote_decisions"] is False
     assert report["fail_closed"]["reviewer_never_user"] is True
     assert report["zero_api"] == {"new_llm_api_calls": 0}
-    # live decisions file untouched
+    # live decisions file untouched (still the adjudicated v3-apply state)
     decisions = _load(DECISIONS_V2_REL)
-    assert all(e["review_metadata"]["review_state"] == "unreviewed"
+    assert all(e["review_metadata"]["review_state"] == "adjudicated"
                for e in decisions["records"].values())
 
 
@@ -465,9 +473,9 @@ def test_import_v2_invalid_revision_refused(tmp_path: Path) -> None:
 def test_import_v2_apply_refused_without_event() -> None:
     with pytest.raises(batch.ImportFail, match="no user confirmation"):
         batch.run_apply(None, None)
-    # live decisions file untouched
+    # live decisions file untouched (still the adjudicated v3-apply state)
     decisions = _load(DECISIONS_V2_REL)
-    assert all(e["review_metadata"]["review_state"] == "unreviewed"
+    assert all(e["review_metadata"]["review_state"] == "adjudicated"
                for e in decisions["records"].values())
 
 

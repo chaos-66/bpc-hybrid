@@ -1,0 +1,15 @@
+{
+  "kind": "s2_11_batch_import_confirmation",
+  "event_id": "s2-11-batch-confirm-v3-2026-08-17",
+  "source": "user_instruction_in_current_task",
+  "user_instruction_utf8": "我确认接受 S2.11 全部 36 条 canonical proposal v3 作为我的裁决（无 revisions），proposal 文件 SHA-256 = 9882ba45d8486235df7fc2411eb7a1c3e5977f87ade527898ff29e45396e6a3b，reviewer 署名：hyc。",
+  "user_instruction_utf8_sha256": "7414a38de5e5441b1881978caa0b2bd893c0463d247ce19d4651da54aa685b82",
+  "proposal_file_sha256": "9882ba45d8486235df7fc2411eb7a1c3e5977f87ade527898ff29e45396e6a3b",
+  "proposal_source": "deepseek_offline_proposal_v3",
+  "revisions_file": null,
+  "revisions_file_sha256": null,
+  "reviewer": "hyc",
+  "decisions_target": "data/development/human_review/s2_11_review_decisions_v2.json",
+  "gold_created": false,
+  "append_only": true
+}

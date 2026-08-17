@@ -1,13 +1,14 @@
-"""Focused tests for S2.12 execution readiness v3 (Checkpoint F; zero
+"""Focused tests for S2.12 execution readiness v3 (Checkpoint G; zero
 API).
 
 Covers:
   * parity RE-RUN (evaluator v2 unchanged) passes and matches the
     committed readiness v3 claim
   * readiness v3 re-binds proposal v3 / importer v3 (blocked=0/
-    unresolved=0/adjudicable=36), refuses the real run (proposal v3
-    unconfirmed; freeze 0/36) and keeps the API readiness dry-run with
-    the v2 missing items and NO final authorization sentence
+    unresolved=0/adjudicable=36) and the user confirmation event;
+    S2.11 freeze is 36/36 (user-confirmed, Checkpoint G); the real run
+    stays refused ONLY on the API budget authorization (input token cap,
+    cost cap; NO final authorization sentence)
   * independent verifier passes on the committed assets and fails closed
     on a tampered proposal binding
 """
@@ -31,6 +32,8 @@ PROPOSAL_REPORT_V3_REL = "outputs/reports/s2_11_proposal_report_v3.json"
 IMPORTER_DRY_RUN_V3_REL = "outputs/reports/s2_11_batch_import_dry_run_v3.json"
 READINESS_V3_REL = "outputs/reports/s2_12_execution_readiness_v3.json"
 API_READINESS_V2_REL = "outputs/reports/s2_12_api_readiness_v2.json"
+CONFIRMATION_EVENT_REL = \
+    "configs/s2_11_batch_import_confirmation_event_v3.json"
 
 
 def _load(rel: str) -> dict[str, Any]:
@@ -55,13 +58,20 @@ def test_readiness_v3_parity_rerun_and_bindings() -> None:
         proposal["proposal_file_sha256"]
     assert readiness["proposal_v3"]["supersedes_v2_status"] == \
         "superseded_pending_targeted_correction_do_not_approve"
+    assert readiness["proposal_v3"]["human_approved"] is True
+    assert readiness["proposal_v3"]["confirmation_event"] == \
+        CONFIRMATION_EVENT_REL
     assert readiness["ready_claims"]["importer_ready"] == {
         "samples": 36, "blocked_fields": 0, "blocked_samples": 0,
         "unresolved_fields": 0, "adjudicable": 36}
     assert readiness["runner"]["real_run_refused"] is True
     assert readiness["ready_claims"]["gold_or_formal_evaluation_complete"] \
         is False
-    assert readiness["gates"]["s2_11_freeze"]["adjudicated"] == 0
+    assert readiness["gates"]["s2_11_freeze"]["adjudicated"] == 36
+    assert readiness["gates"]["s2_11_freeze"]["ready"] is True
+    assert readiness["gates"]["s2_11_freeze"]["confirmation_event"] == \
+        CONFIRMATION_EVENT_REL
+    assert (ROOT / CONFIRMATION_EVENT_REL).is_file()
     assert readiness["api_readiness"]["calls_made"] == 0
     assert readiness["api_readiness"]["final_copyable_authorization_"
                                       "sentence"] is None
@@ -87,6 +97,7 @@ VERIFIER_INPUTS = [
     "data/development/human_review/s2_11_review_decisions_v2.json",
     PROPOSAL_REPORT_V3_REL,
     IMPORTER_DRY_RUN_V3_REL,
+    CONFIRMATION_EVENT_REL,
     "configs/s2_12_execution_plan_v2.json",
     "outputs/reports/s2_12_execution_plan_v2.json",
     "outputs/reports/s2_12_execution_readiness_v2.json",

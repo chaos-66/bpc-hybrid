@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-"""S2.11 canonical batch accept/revisions importer v3 (Checkpoint F).
+"""S2.11 canonical batch accept/revisions importer v3 (Checkpoint G).
 
 Imports the 36 canonical proposal v3 payloads into the v2 decisions file
 ("accept-all with listed revisions"). v3 re-binds the importer to the
-proposal v3 report (proposal v1/v2 superseded; v3 is current and
-unconfirmed by the user).
+proposal v3 report (proposal v1/v2 superseded; v3 is current).
 
-DRY-RUN (default, the ONLY mode executed this round):
+DRY-RUN (default mode):
   * binds the proposal v3 file SHA-256 (proposal_file_sha256 in the
     committed proposal report v3)
   * validates the 36-sample membership + all hashes
@@ -18,15 +17,18 @@ DRY-RUN (default, the ONLY mode executed this round):
     structure checks pass
   * writes a LOCAL would-be decisions file + a COMMITTED dry-run report
 
-APPLY (refused this round - no user confirmation event exists):
+APPLY (executed on 2026-08-17 after the user confirmed proposal v3):
   * requires a user confirmation event that EXACTLY binds the proposal v3
     SHA, the optional revisions SHA and the reviewer name
   * atomic write with a pre-write backup of the decisions file
   * reviewer is taken ONLY from the confirmation event (never invented)
   * any hash drift / mismatch refuses with exit 2 and writes nothing
+  * after a successful apply the committed dry-run report is refreshed
+    (confirmation_event_present=true) so run_dry_run stays
+    byte-reproducible
 
-This round: dry-run only; no confirmation event is created; --apply is
-never executed; no Gold is created or published; freeze stays false.
+Post-apply state: 36/36 adjudicated, freeze validator frozen=true, no
+Gold is created or published.
 """
 
 from __future__ import annotations
@@ -316,26 +318,14 @@ def build_would_be(revisions: dict[str, Any]) -> tuple[dict[str, Any],
     return would_be, stats, []
 
 
-def run_dry_run(revisions_path: Path | None) -> dict[str, Any]:
-    revisions: dict[str, Any] = {}
-    revisions_sha256: str | None = None
-    if revisions_path is not None:
-        try:
-            revisions = json.loads(
-                revisions_path.read_text(encoding="utf-8"))
-        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
-            raise ImportFail(
-                f"revisions file {revisions_path.name} is not valid "
-                f"UTF-8 JSON: {exc}") from exc
-        revisions_sha256 = _sha256_bytes(revisions_path.read_bytes())
-
-    would_be, stats, _ = build_would_be(revisions)
-
-    local_path = LOCAL_DIR / LOCAL_WOULD_BE_REL
-    local_data = (json.dumps(would_be, ensure_ascii=False, indent=2) + "\n") \
-        .encode("utf-8")
-    _write(local_path, local_data)
-
+def _dry_run_payload(revisions_path: Path | None,
+                     revisions_sha256: str | None,
+                     local_data: bytes,
+                     stats: dict[str, Any]) -> tuple[dict[str, Any], bytes]:
+    """Build the dry-run report dict and its UTF-8 bytes. The report is
+    DERIVED from the current repository state, so
+    fail_closed.confirmation_event_present flips to true once the user
+    confirmation event exists (i.e. after a successful apply)."""
     report = _load_json(ROOT / PROPOSAL_REPORT_V3_REL)
     membership = _load_json(ROOT / MEMBERSHIP_REL)
     confirmation_event = ROOT / CONFIRMATION_EVENT_REL
@@ -355,7 +345,7 @@ def run_dry_run(revisions_path: Path | None) -> dict[str, Any]:
         "revisions_file": (_rel_or_abs(revisions_path)
                            if revisions_path is not None else None),
         "revisions_file_sha256": revisions_sha256,
-        "would_be_decisions_file": _rel_or_abs(local_path),
+        "would_be_decisions_file": _rel_or_abs(LOCAL_DIR / LOCAL_WOULD_BE_REL),
         "would_be_decisions_sha256": _sha256_bytes(local_data),
         "would_be_decisions": {
             "records": 36,
@@ -379,7 +369,64 @@ def run_dry_run(revisions_path: Path | None) -> dict[str, Any]:
     }
     data = (json.dumps(dry_run_report, ensure_ascii=False, indent=2) + "\n") \
         .encode("utf-8")
+    return dry_run_report, data
+
+
+def run_dry_run(revisions_path: Path | None) -> dict[str, Any]:
+    revisions: dict[str, Any] = {}
+    revisions_sha256: str | None = None
+    if revisions_path is not None:
+        try:
+            revisions = json.loads(
+                revisions_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            raise ImportFail(
+                f"revisions file {revisions_path.name} is not valid "
+                f"UTF-8 JSON: {exc}") from exc
+        revisions_sha256 = _sha256_bytes(revisions_path.read_bytes())
+
+    would_be, stats, _ = build_would_be(revisions)
+
+    local_path = LOCAL_DIR / LOCAL_WOULD_BE_REL
+    local_data = (json.dumps(would_be, ensure_ascii=False, indent=2) + "\n") \
+        .encode("utf-8")
+    _write(local_path, local_data)
+
+    dry_run_report, data = _dry_run_payload(
+        revisions_path, revisions_sha256, local_data, stats)
     _write(ROOT / DRY_RUN_REPORT_REL, data)
+    return dry_run_report
+
+
+def refresh_dry_run_report_after_apply(
+        revisions_path: Path | None = None) -> dict[str, Any]:
+    """Post-apply refresh of the committed dry-run report (explicit
+    overwrite with a .bak backup).
+
+    A successful apply creates the user confirmation event, so the
+    derived fail_closed.confirmation_event_present flips to true and the
+    committed dry-run report must be brought in sync; otherwise run_dry_run
+    could no longer rebuild its own report byte-identically (the no-
+    overwrite guard is intentionally bypassed HERE ONLY, after an
+    explicit user-confirmed apply, never by run_dry_run itself)."""
+    revisions: dict[str, Any] = {}
+    revisions_sha256: str | None = None
+    if revisions_path is not None:
+        revisions = json.loads(
+            revisions_path.read_text(encoding="utf-8"))
+        revisions_sha256 = _sha256_bytes(revisions_path.read_bytes())
+    would_be, stats, _ = build_would_be(revisions)
+    local_data = (json.dumps(would_be, ensure_ascii=False, indent=2) + "\n") \
+        .encode("utf-8")
+    dry_run_report, data = _dry_run_payload(
+        revisions_path, revisions_sha256, local_data, stats)
+    target = ROOT / DRY_RUN_REPORT_REL
+    backup = ROOT / (DRY_RUN_REPORT_REL + ".bak")
+    if target.is_file():
+        shutil.copy2(target, backup)
+    tmp = ROOT / (DRY_RUN_REPORT_REL + ".tmp")
+    tmp.write_bytes(data)
+    tmp.replace(target)
     return dry_run_report
 
 
@@ -453,7 +500,7 @@ def main() -> int:
                         help="optional user revisions JSON")
     parser.add_argument("--apply", action="store_true",
                         help="apply path (refused without a matching user "
-                             "confirmation event; NOT run this round)")
+                             "confirmation event)")
     parser.add_argument("--confirmation-event", metavar="FILE")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
@@ -463,6 +510,13 @@ def main() -> int:
                 Path(args.confirmation_event).resolve()
                 if args.confirmation_event else None,
                 Path(args.revisions).resolve() if args.revisions else None)
+            try:
+                refresh_dry_run_report_after_apply(
+                    Path(args.revisions).resolve()
+                    if args.revisions else None)
+            except (ImportFail, OSError, json.JSONDecodeError) as exc:
+                print(f"WARNING: dry-run report refresh failed after "
+                      f"apply: {exc}", file=sys.stderr)
         else:
             report = run_dry_run(
                 Path(args.revisions).resolve() if args.revisions else None)
@@ -472,6 +526,10 @@ def main() -> int:
         return 2
     if args.json:
         print(json.dumps(report, ensure_ascii=False, indent=2))
+    elif report.get("applied"):
+        print(f"batch import v3 APPLIED: {report['decisions_file']}")
+        print(f"applied: True | reviewer: {report['reviewer']} | "
+              f"records: {report['records']} | backup: {report['backup']}")
     else:
         print(f"batch import v3 dry-run written: {DRY_RUN_REPORT_REL}")
         print(f"import_stats: {report['import_stats']}")
