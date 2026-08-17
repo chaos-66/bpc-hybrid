@@ -1,0 +1,59 @@
+{
+  "schema_version": "s2_12_execution_plan_report@1.0.0",
+  "plan_config": "configs/s2_12_execution_plan_v1.json",
+  "status": "frozen",
+  "membership": "outputs/reports/s2_11_corpus_membership_v1.json",
+  "population": {
+    "inventory": 40,
+    "objective_exclusions": 4,
+    "nonempty_membership": 36,
+    "review_population": 36
+  },
+  "strata_level_counts": {
+    "L1": 31,
+    "L2": 5,
+    "L3": 0
+  },
+  "freeze_state": "pending_user_adjudication",
+  "adjudicated": 0,
+  "api_budget_dry_run": {
+    "status": "dry_run_not_applied",
+    "records": 36,
+    "per_method": {
+      "sun_rule_only": {
+        "api_calls_per_record": 0,
+        "total": 0
+      },
+      "sun_llm_fallback": {
+        "api_calls_per_record": 1,
+        "total": 36
+      },
+      "direct_llm": {
+        "api_calls_per_record": 1,
+        "total": 36
+      }
+    },
+    "typical_total": 72,
+    "hard_cap": 100,
+    "calls_made": 0,
+    "authorized": false,
+    "copyable_authorization_sentence": "我授权在 S2.12 复杂度分层误差分析中，对 36 条 Barrientos 复杂语料记录运行 sun_llm_fallback 与 direct_llm 两臂，合计 LLM API 调用硬上限 100 次（typical 72 次：36 条 × 2 臂 × 1 次/条），仅用于 S2.12 分层误差分析；不使用人工 Gold 作为 prompt 内容；实际调用数如实记录；超出上限立即停止。",
+    "sentence_used": false
+  },
+  "raw_text_committed": false,
+  "gold_created": false,
+  "zero_api": {
+    "new_llm_api_calls": 0
+  },
+  "bindings": {
+    "configs/g05_authorization_manifest_v1.json": "6ada674e066ec79db7ea2232c79a1ad40e2ea6cc47182d4431f025299b3fb684",
+    "configs/g05_complexity_candidate_draft_v1.json": "61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586",
+    "configs/g05_complexity_frozen_v1.json": "6f632dd4965cbd21c6889471080c731e3ccaf0b9158fa71e5ba874ea561ffa4b",
+    "data/development/human_review/s2_11_review_decisions_v1.json": "9764a6a03bb65b13195225e664c7b5ba3679f7bfb114c2406f4d4a3b3ce35fdb",
+    "outputs/reports/s2_11_batch_import_dry_run_v1.json": "ce7d8f9b570c7c5b15a8e3892cb2e3016aa98511ec5433e94a943d88eedbecfc",
+    "outputs/reports/s2_11_candidate_run_v1.json": "5fe8225f6be56cd41974d26473142d77858cd2ed62b0626b3af56600ba5734fd",
+    "outputs/reports/s2_11_corpus_membership_v1.json": "a63c50ea3164e6629a66746531ad379c3970c8dfa86971eaa35186693bb7a2af",
+    "outputs/reports/s2_11_g5_review_surface_v1.json": "571ba7ae3c39cde5deafeffa55e1e0ac67b8dcd9e1564568832513128ff14da4",
+    "outputs/reports/s2_11_proposal_report_v1.json": "1f889494ef5ec07addb1d9dd3f6fa8c3abb92c4a5f3c77e875966fca3be50260"
+  }
+}

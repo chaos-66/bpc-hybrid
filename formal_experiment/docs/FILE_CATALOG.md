@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-17
-**收录文件**：1248 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1263 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -94,6 +94,7 @@
 | `configs/s28d_r6c1_h1_remaining_pilot_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s2_11_mapping_policy_m1_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s2_11_user_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/s2_12_execution_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/dataset_manifest.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_ai_review_model_output.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -108,6 +109,7 @@
 | `configs/schemas/s2_13_s3_7_transition_readiness.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_13_s3_7_transition_readiness_v2.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_13_s3_7_transition_readiness_v3.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/s2_13_s3_7_transition_readiness_v4.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_evaluation_report.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_human_annotation.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_label_semantics.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -796,6 +798,8 @@
 | `outputs/reports/s2_11_license_adapter_readiness_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s2_11_proposal_report_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_review_surface_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_12_execution_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_12_execution_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -811,6 +815,10 @@
 | `outputs/reports/s2_13_s3_7_transition_readiness_v3.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_s3_7_transition_readiness_v3.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s2_13_s3_7_transition_readiness_v3_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v4.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v4.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v4.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v4_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_stage2_freeze_gap_capsule.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_stage2_freeze_gap_capsule.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s32_s33_gold_annotation_blank_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -957,6 +965,7 @@
 | `scripts/build_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s2_13_s3_7_transition_readiness_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_7_oracle_readiness.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_adjudication_asset.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
@@ -1024,6 +1033,7 @@
 | `scripts/s2_11_generate_proposals.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s2_11_inventory_corpus.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s2_11_run_candidates.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/s2_12_build_execution_ready.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/stage1_review_tool.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/stage3_run_common.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/status.py` | 活动 | Python 实现、脚本或测试 |
@@ -1048,9 +1058,11 @@
 | `scripts/verify_s2_11_g0_5_pre_authorization_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_11_gates_applied_checkpoint_a.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_11_review_freeze.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_s2_12_execution_ready.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_s2_13_s3_7_transition_readiness_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_solcand_prompt_examples_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_annotation_protocol_s15.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_evaluator_s16.py` | 活动 | Python 实现、脚本或测试 |
@@ -1119,6 +1131,7 @@
 | `src/bpc_hybrid/prompt_loader.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s2_11_barrientos_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s2_11_corpus_ingestion.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s2_12_stratified_evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/smoke.py` | 活动 | Python 实现、脚本或测试 |
@@ -1313,9 +1326,11 @@
 | `tests/test_s2_11_g0_5_pre_authorization_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_11_gates_applied_checkpoint_a.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_11_proposals_and_batch_import.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s2_12_execution_ready.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s2_13_s3_7_transition_readiness_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_2_s3_3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |

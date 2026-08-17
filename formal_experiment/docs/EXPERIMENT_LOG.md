@@ -3622,3 +3622,16 @@
 - 仍存在 blocker：无
 - 备注：review_population=36（29 available/7 unavailable，候选失败不缩减）；提案 human_approved=false/gold=false/8 needs_attention；批量导入 dry-run 无确认事件不写决策、reviewer 永不=user；transition v3 横幅修复+字节一致重建；S2.11=in_progress_human_adjudication、S2.12 partial、S2.13 blocked、S3.7 未动
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-17T05:23:52.078185+00:00 - S2.12/S2.13 执行就绪（Checkpoint D）：S2.12 执行计划冻结 + fail-closed runner/evaluator readiness + API 预算 dry-run + transition v4（零 LLM/API）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2336 passed, 24 skipped, 19 warnings in 1315.59s (0:21:55)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`0376f766b946f6128e451d52ac926cba6cc7f456`；相关未提交路径：19 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：S2.12 计划冻结（预注册 G0.5 L1/L2/L3，L1 31/L2 5/L3 0）；分层评估器 synthetic 通过、真实运行拒绝（待 S2.11 36/36 用户裁决+API 授权）；API 预算 typical 72/cap 100、calls_made=0、可复制授权句未使用；transition v4 supersede v3（S2.11 workload 改从空白 pack 36=29+7 推导、S2.12=partial+execution-ready），v1/v2/v3 字节保留；S2.12=partial+execution-ready、S2.13 blocked、S3.7 未动
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
