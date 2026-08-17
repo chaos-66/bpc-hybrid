@@ -3583,3 +3583,16 @@
 - 仍存在 blocker：无
 - 备注：v6 capsule supersede v3/v4/v5 当前状态判断（28 项 supersedes 全部 hash 绑定）；全量审计 2175 passed/24 skipped/19 warnings（1061.25s）exit 0；G0.5 仍 draft_not_frozen（原始字节 61938c99…，51a6e4fe… 永不使用）、G3/G4 仅 dry-run、G1/G2/G5/G6 ready=false+null、S3.7 全 false/null、零 gate 翻转、零 LLM/API、Gold/contract/methods/predictions/results/references 未改、未生成 Oracle 授权句
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-17T00:18:16.164156+00:00 - S2.11/G0.5 Checkpoint A：非 API 决策应用与 G0.5 冻结（用户授权；G1 containment / G2 local_read_only 激活 / G3 M1 / G4 G0.5 frozen 经 v6 密封链验证 / G6 S0；G5 待 Checkpoint B）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2193 passed, 24 skipped, 19 warnings in 1139.53s (0:18:59)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`518047d4c97ab691fdf0edeeea27c6cf1674765e`；相关未提交路径：19 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：用户转发授权原句 除了用apikey的时候要授权，其他直接正常进行即可。（UTF-8 SHA-256 a8a1dec4…）记录于 configs/s2_11_user_authorization_event_v1.json；G0.5 冻结 configs/g05_complexity_frozen_v1.json（frozen_before_new_results、retrospective/s2_10 forbidden、scope=future_external_complex_corpora_only，draft 61938c99… 不变，v6 密封链完整验证，冻结前零候选）；v6 capsule 转历史安全基线（核心资产字节不变）；全量审计 2193 passed/24 skipped/19 warnings（1139.53s）exit 0；零 LLM/API、未伪造 Gold、未发布受限原文、S2.13/S3.7 未动
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,0 +1,12 @@
+{
+  "kind": "g05_authorization_event",
+  "event_id": "g05-freeze-event-2026-08-17-v1",
+  "authorization_sentence": "I authorize a future gate-application checkpoint that freezes configs/g05_complexity_candidate_draft_v1.json (RAW BYTE sha256 61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586) as the G0.5 complexity contract (scope: future external complex corpora only; retrospective_use_forbidden=true; must take effect before any new complex-corpus results are produced). This sentence authorizes ONLY that future gate-application checkpoint; it does NOT freeze G0.5 this round.",
+  "scope": "future_external_complex_corpora_only",
+  "manifest_id": "g05-auth-manifest-2026-08-17-v1",
+  "append_only": true,
+  "gate_application": "G4_G0_5_future_corpus_freeze",
+  "user_authorization_event_id": "s2-11-user-auth-2026-08-17-v1",
+  "user_instruction_utf8_sha256": "a8a1dec4c826b1303fde64f2ac111ea2886ad0b08fd8a20af68b5a67130bfc64",
+  "user_instruction_source": "user_instruction_forwarded_in_current_task"
+}

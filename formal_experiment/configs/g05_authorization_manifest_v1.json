@@ -1,0 +1,28 @@
+{
+  "schema_version": "g05_authorization_manifest@1.0.0",
+  "manifest_id": "g05-auth-manifest-2026-08-17-v1",
+  "authorization_applied": true,
+  "draft_config_path": "configs/g05_complexity_candidate_draft_v1.json",
+  "draft_config_sha256": "61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586",
+  "approved_frozen_config_path": "configs/g05_complexity_frozen_v1.json",
+  "approved_frozen_config_sha256": "6f632dd4965cbd21c6889471080c731e3ccaf0b9158fa71e5ba874ea561ffa4b",
+  "scope": "future_external_complex_corpora_only",
+  "authorization_sentence": "I authorize a future gate-application checkpoint that freezes configs/g05_complexity_candidate_draft_v1.json (RAW BYTE sha256 61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586) as the G0.5 complexity contract (scope: future external complex corpora only; retrospective_use_forbidden=true; must take effect before any new complex-corpus results are produced). This sentence authorizes ONLY that future gate-application checkpoint; it does NOT freeze G0.5 this round.",
+  "authorization_sentence_sha256": "d18f2e9b5027ed339842d77ab6e4e36ea94f3dafcdb4e8a9ddff1670444f86c8",
+  "retrospective_use_forbidden": true,
+  "frozen_before_new_results": true,
+  "s2_10_retrospective_use_forbidden": true,
+  "prior_results_scan_sha256": "998a87e6dfb785d5fd8a6da382ab5a9c694b72e7aab07893d327bdeed57c9adf",
+  "authorization_event_id": "g05-freeze-event-2026-08-17-v1",
+  "authorization_event_path": "configs/g05_authorization_event_v1.json",
+  "authorization_event_sha256": "0b1bd93223b34e7d1c0b8e279308b36beb39f34833123423b6da1ff892df5c5f",
+  "application_checkpoint": {
+    "pending_commit_not_applied": true,
+    "commit_sha256": null
+  },
+  "user_authorization": {
+    "event_id": "s2-11-user-auth-2026-08-17-v1",
+    "instruction_utf8_sha256": "a8a1dec4c826b1303fde64f2ac111ea2886ad0b08fd8a20af68b5a67130bfc64",
+    "source": "user_instruction_forwarded_in_current_task"
+  }
+}

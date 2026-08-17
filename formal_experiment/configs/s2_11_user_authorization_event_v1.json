@@ -1,0 +1,35 @@
+{
+  "kind": "user_authorization",
+  "event_id": "s2-11-user-auth-2026-08-17-v1",
+  "event_seq": 1,
+  "source": "user_instruction_forwarded_in_current_task",
+  "user_instruction_utf8": "除了用apikey的时候要授权，其他直接正常进行即可。",
+  "user_instruction_utf8_sha256": "a8a1dec4c826b1303fde64f2ac111ea2886ad0b08fd8a20af68b5a67130bfc64",
+  "normalized_scope": [
+    "all non-API, non-destructive, local pipeline operations may proceed directly and be recorded",
+    "G2/G3/G4/G5/G6 may be applied under conservative schemes and recorded",
+    "real LLM/API calls are NOT authorized",
+    "no third-party intellectual property grant is claimed on behalf of the user",
+    "when the artifact license is unknown, only local read-only research use is authorized; raw redistribution and raw publication are forbidden",
+    "the agent must not fabricate human Gold"
+  ],
+  "authorization_scope": "local_read_only_nonredistributive_s2_11",
+  "gates_covered": [
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "G6"
+  ],
+  "containment_policy": {
+    "artifact_license_verified": false,
+    "artifact_license_status": "unknown_pending_confirmation",
+    "local_read_only_research_use_authorized_by_user": true,
+    "raw_redistribution_allowed": false,
+    "raw_publication_allowed": false,
+    "references_mutation_allowed": false,
+    "formal_export_may_include_only_hashes_ids_aggregates_and_user_created_decisions": true
+  },
+  "append_only": true
+}

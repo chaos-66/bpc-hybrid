@@ -178,20 +178,21 @@ def test_frozen_config_refuses_plain_classify() -> None:
 # ---------------------------------------------------------------------------
 # Current promotion readiness (real project disk state)
 # ---------------------------------------------------------------------------
-def test_current_project_promotion_readiness_is_draft_not_frozen() -> None:
+def test_current_project_promotion_readiness_is_frozen_after_checkpoint_a() -> None:
     from pathlib import Path as _Path
     import bpc_hybrid.g05_complexity_candidate as g05
     root = _Path(g05.__file__).resolve().parents[2]
     readiness = derive_promotion_readiness(root)
-    assert readiness["g0_5_status"] == "draft_not_frozen"
+    # Checkpoint A applied the user-authorized G4 freeze: the sealed chain
+    # validates a real frozen config + authorization manifest combination.
+    assert readiness["g0_5_status"] == \
+        "frozen_for_future_external_complex_corpora"
     assert readiness["promotion_ready_for_application"] is False
-    assert any("user authorization manifest" in m
-               for m in readiness["missing"])
-    assert readiness["authorization_manifests_found"] == []
-    assert readiness["frozen_configs_found"] == []
+    assert readiness["validated_asset_combinations"] >= 1
     assert readiness["prior_results_found"] == []
-    assert readiness["validated_asset_combinations"] == 0
     assert readiness["preregistration_claim_allowed"] is False
+    assert readiness["authorization_manifests_found"] != []
+    assert readiness["frozen_configs_found"] != []
 
 
 def test_derive_promotion_readiness_ignores_bare_filenames(

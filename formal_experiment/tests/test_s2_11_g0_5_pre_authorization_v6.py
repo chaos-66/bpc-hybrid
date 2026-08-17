@@ -1,11 +1,22 @@
 """Focused tests for the S2.11 / G0.5 pre-authorization decision capsule v6
-(ACTIVE capsule; v3/v4/v5 are superseded historical capsules).
+(now a SUPERSEDED HISTORICAL capsule after Checkpoint A of the
+user-authorized non-API application round; the applied-gates assets and
+the review surface are the current entries).
+
+v6's core assets (schema/builder/verifier/four outputs) stay byte-exact,
+anchored to the FIXED v6 ORIGIN COMMIT 518047d4c97ab691fdf0edeeea27c6cf1674765e
+(hardcoded SHA-256 map, independent of HEAD). Once the assets its
+manifest binds legitimately evolve (Checkpoint A applies G1-G4/G6 and
+freezes G0.5), the historical v6 builder MUST fail closed and the
+historical v6 verifier MUST reject with a declared binding/state-drift
+diagnosis.
 
 Covers:
-  * ACTIVE v6 builder: deterministic byte-identical rebuild from current
-    disk, no-overwrite refusal, no sensitive touches, references read-only
-  * v6 verifier passes on the canonical outputs (seven independent
-    verifiers executed, audit re-run)
+  * historical core assets match the FIXED ORIGIN map (disk bytes AND
+    origin-commit git blobs); the historical builder fails closed and
+    never touches Gold/predictions/results/contract/methods/references
+  * the historical verifier rejection belongs to the declared
+    binding/state-drift patterns and never modifies outputs
   * v5 audit facts recorded exactly (green receipt 2118 passed / 24
     skipped / 19 warnings in 941.91s; NOT a red checkpoint; hand-built
     validation-result protection overturned) and v6 counterexamples
@@ -13,15 +24,10 @@ Covers:
     and the hardcoded SHA-256 maps; disk AND origin-commit blobs match;
     the v5 HEAD-relative blind spot is demonstrated and closed (same
     wrong bytes in HEAD+disk still fail the fixed check)
-  * G0.5 SEALED chain: classify_frozen has NO validation-result parameter;
-    the exact v5 hand-built 64-hex dict is rejected; forged manifests,
-    replaced sentences/scopes/events and results-then-authorization are
-    rejected; prior results are derived from disk evidence
+  * G0.5 SEALED chain regression: classify_frozen has NO validation-result
+    parameter; the exact v5 hand-built 64-hex dict is rejected; prior
+    results are derived from disk evidence
   * supersedes declares v3 decision entries + full v3/v4/v5 capsules
-  * G0.5 raw-byte authorization hash domain (61938c99…) is the ONLY
-    authorization hash; draft_not_frozen; not promotion-ready
-  * gate ordering G1/G2/G5/G6 false+null, G3/G4 dry-run with raw-byte
-    sentence binding
   * manifest/export exact-reconstruction negative cases
   * report-content tamper negative cases
 """
@@ -90,6 +96,16 @@ V4_CAPSULE = HistoricalCapsule(
              "outputs/reports/s2_11_g0_5_pre_authorization_v4.md",
              "outputs/reports/s2_11_g0_5_pre_authorization_v4.manifest.json",
              "outputs/reports/s2_11_g0_5_pre_authorization_v4_export_index.json"),
+)
+V6_CAPSULE = HistoricalCapsule(
+    name="s2_11_g0_5_pre_authorization_v6",
+    schema_rel="configs/schemas/s2_11_g0_5_pre_authorization_v6.schema.json",
+    builder_rel="scripts/build_s2_11_g0_5_pre_authorization_v6.py",
+    verifier_rel="scripts/verify_s2_11_g0_5_pre_authorization_v6.py",
+    outputs=("outputs/reports/s2_11_g0_5_pre_authorization_v6.json",
+             "outputs/reports/s2_11_g0_5_pre_authorization_v6.md",
+             "outputs/reports/s2_11_g0_5_pre_authorization_v6.manifest.json",
+             "outputs/reports/s2_11_g0_5_pre_authorization_v6_export_index.json"),
 )
 V5_CAPSULE = HistoricalCapsule(
     name="s2_11_g0_5_pre_authorization_v5",
@@ -176,9 +192,16 @@ def _failed_details(result: dict[str, Any]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# ACTIVE v6 builder determinism
+# Historical capsule lifecycle semantics (v6 is SUPERSEDED after Checkpoint
+# A): its core assets stay byte-exact against the FIXED v6 ORIGIN COMMIT
+# (518047d…; hardcoded SHA-256 map, independent of HEAD). Once the assets
+# its manifest binds legitimately evolve (Checkpoint A applies G1-G4/G6
+# and freezes G0.5), the historical builder MUST fail closed and the
+# historical verifier MUST reject with a binding/state-drift diagnosis.
 # ---------------------------------------------------------------------------
-def test_v6_builder_byte_identical_rebuild_and_no_sensitive_touches() -> None:
+def test_historical_core_assets_match_fixed_origin_and_builder_fails_closed() -> None:
+    ok, detail = historical_core_assets_match_fixed_origin(ROOT, "v6")
+    assert ok, f"v6 core assets drifted from the fixed origin anchor: {detail}"
     sensitive = [
         ROOT / "data" / "gold" / "stage1" / "process_records" /
         "stage1_process_gold_v1.json",
@@ -192,34 +215,28 @@ def test_v6_builder_byte_identical_rebuild_and_no_sensitive_touches() -> None:
         ROOT / "configs" / "methods.json",
     ]
     before = {p: _sha(p.read_bytes()) for p in sensitive}
-    outputs = [OUT_JSON, OUT_MD, OUT_MANIFEST, OUT_EXPORT]
-    first = {p: p.read_bytes() if p.exists() else None for p in outputs}
-    proc = subprocess.run(
-        [sys.executable, str(BUILDER_SCRIPT)], cwd=ROOT,
-        capture_output=True, text=True, check=False)
-    assert proc.returncode == 0, (
-        f"v6 builder failed: {proc.returncode}\n{proc.stdout}\n{proc.stderr}")
-    second = {p: p.read_bytes() for p in outputs}
-    for p in outputs:
-        assert second[p] == first[p], (
-            f"v6 builder rebuild is not byte-identical: {p}")
+    drift_ok, detail2 = builder_rejects_with_no_overwrite_drift(
+        ROOT, V6_CAPSULE)
+    assert drift_ok, (
+        "v6 builder must fail closed when its bound assets evolved: "
+        f"{detail2}")
     after = {p: _sha(p.read_bytes()) for p in sensitive}
     assert after == before, (
-        "v6 builder touched Gold / predictions / results / contract / methods")
+        "historical builder touched Gold / predictions / results / "
+        "contract / methods")
 
 
-def test_v6_builder_never_modifies_references() -> None:
+def test_historical_builder_never_modifies_references() -> None:
     ref_files = sorted(p for p in REF_DIR.rglob("*") if p.is_file())
     ref_files.append(PDF_PATH)
     before = {str(p.relative_to(ROOT.parent)): _sha(p.read_bytes())
               for p in ref_files}
-    proc = subprocess.run(
-        [sys.executable, str(BUILDER_SCRIPT)], cwd=ROOT,
-        capture_output=True, text=True, check=False)
-    assert proc.returncode == 0, proc.stderr
+    drift_ok, detail = builder_rejects_with_no_overwrite_drift(ROOT,
+                                                               V6_CAPSULE)
+    assert drift_ok, detail
     after = {str(p.relative_to(ROOT.parent)): _sha(p.read_bytes())
              for p in ref_files}
-    assert after == before, "v6 builder modified references/"
+    assert after == before, "historical builder modified references/"
 
 
 def test_v6_builder_no_overwrite_refusal(tmp_path: Path) -> None:
@@ -233,13 +250,25 @@ def test_v6_builder_no_overwrite_refusal(tmp_path: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
-# ACTIVE v6 verifier
+# Historical verifier rejection semantics
 # ---------------------------------------------------------------------------
-def test_v6_verifier_passes_on_canonical_outputs() -> None:
-    verifier = _load_verifier()
-    result = verifier.verify(run_external=True)
-    assert result["verified"] is True, (
-        "canonical v6 capsule must verify: " + _failed_details(result))
+def test_historical_verifier_rejection_is_binding_drift() -> None:
+    is_drift, detail = verifier_rejection_is_binding_drift(ROOT, V6_CAPSULE)
+    assert is_drift, (
+        "v6 verifier must reject with failures that all belong to the "
+        f"declared binding/state-drift patterns: {detail}")
+
+
+def test_historical_verifier_never_touches_outputs() -> None:
+    before = {}
+    for rel in V6_CAPSULE.outputs:
+        p = ROOT / rel
+        before[rel] = p.read_bytes() if p.is_file() else None
+    is_drift, detail = verifier_rejection_is_binding_drift(ROOT, V6_CAPSULE)
+    assert is_drift, detail
+    for rel, data in before.items():
+        p = ROOT / rel
+        assert (p.read_bytes() if p.is_file() else None) == data
 
 
 # ---------------------------------------------------------------------------
@@ -320,9 +349,10 @@ def test_same_wrong_bytes_in_head_and_disk_still_fails_fixed_origin(
     assert "disk_mismatch" in detail
 
 
-@pytest.mark.parametrize("version", ["v3", "v4", "v5"])
+@pytest.mark.parametrize("version", ["v3", "v4", "v5", "v6"])
 def test_historical_capsule_lifecycle_semantics(version: str) -> None:
-    capsule = {"v3": V3_CAPSULE, "v4": V4_CAPSULE, "v5": V5_CAPSULE}[version]
+    capsule = {"v3": V3_CAPSULE, "v4": V4_CAPSULE, "v5": V5_CAPSULE,
+               "v6": V6_CAPSULE}[version]
     ok, detail = historical_core_assets_match_fixed_origin(ROOT, version)
     assert ok, f"{capsule.name} core assets drifted from the fixed origin " \
                f"anchor: {detail}"

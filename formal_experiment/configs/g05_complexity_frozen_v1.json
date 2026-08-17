@@ -1,0 +1,182 @@
+{
+  "config_version": "g05_complexity_candidate@1.0.0",
+  "status": "frozen",
+  "status_reason": "G0.5 frozen for future external complex corpora by user authorization (Checkpoint A, 2026-08-17); the draft config stays byte-unchanged as historical provenance; S2.10 results are never re-labeled preregistered",
+  "scope": "future_external_complex_corpora_only",
+  "retrospective_use_forbidden": true,
+  "priorities": [
+    "1. L3 hard triggers are evaluated first: ANY hit classifies the record as L3 (highest level wins).",
+    "2. Otherwise L1 is assigned iff EVERY L1 maximum and the L1 language rule are satisfied.",
+    "3. Otherwise L2 (conservative middle) is assigned."
+  ],
+  "conflict_policy": "highest level wins: an L3 hard trigger overrides any L1 satisfaction; partial L1 satisfaction with no L3 trigger yields L2.",
+  "missing_value_policy": "fail_closed: any missing required feature field raises a classification error (no silent default).",
+  "invalid_value_policy": "fail_closed: unknown feature fields, wrong types, or negative values raise a classification error.",
+  "fields": {
+    "text_length": {
+      "type": "int",
+      "required": true,
+      "unit": "chars",
+      "meaning": "source text length"
+    },
+    "clause_count": {
+      "type": "int",
+      "required": true,
+      "meaning": "number of clauses"
+    },
+    "dependency_depth": {
+      "type": "int",
+      "required": true,
+      "meaning": "max syntactic dependency depth"
+    },
+    "actor_count": {
+      "type": "int",
+      "required": true,
+      "meaning": "number of actors"
+    },
+    "action_count": {
+      "type": "int",
+      "required": true,
+      "meaning": "number of actions"
+    },
+    "condition_count": {
+      "type": "int",
+      "required": true,
+      "meaning": "number of condition elements"
+    },
+    "constraint_count": {
+      "type": "int",
+      "required": true,
+      "meaning": "number of constraint elements"
+    },
+    "exception_count": {
+      "type": "int",
+      "required": true,
+      "meaning": "number of exception elements"
+    },
+    "nesting_depth": {
+      "type": "int",
+      "required": true,
+      "meaning": "max condition/constraint/exception nesting depth"
+    },
+    "passive_voice_count": {
+      "type": "int",
+      "required": true,
+      "meaning": "passive-voice constructions"
+    },
+    "implicit_actor_count": {
+      "type": "int",
+      "required": true,
+      "meaning": "implicit / omitted actors"
+    },
+    "cross_reference_count": {
+      "type": "int",
+      "required": true,
+      "meaning": "cross-sentence / cross-clause references"
+    },
+    "language_markers": {
+      "type": "string",
+      "required": true,
+      "enum": [
+        "original",
+        "translated",
+        "mixed"
+      ],
+      "meaning": "original-language / translation markers"
+    },
+    "bpmn_activities": {
+      "type": "int",
+      "required": true,
+      "meaning": "BPMN activity count"
+    },
+    "bpmn_gateways": {
+      "type": "int",
+      "required": true,
+      "meaning": "BPMN gateway count"
+    },
+    "bpmn_flows": {
+      "type": "int",
+      "required": true,
+      "meaning": "BPMN sequence-flow count"
+    },
+    "bpmn_pools_lanes": {
+      "type": "int",
+      "required": true,
+      "meaning": "BPMN pools + lanes count"
+    },
+    "bpmn_parallel_branches": {
+      "type": "int",
+      "required": true,
+      "meaning": "parallel branches"
+    },
+    "bpmn_cycles": {
+      "type": "int",
+      "required": true,
+      "meaning": "control-flow cycles"
+    }
+  },
+  "levels": {
+    "L1": {
+      "description": "simple",
+      "maxima": {
+        "text_length": 200,
+        "clause_count": 3,
+        "dependency_depth": 4,
+        "actor_count": 2,
+        "action_count": 2,
+        "condition_count": 2,
+        "constraint_count": 1,
+        "exception_count": 1,
+        "nesting_depth": 1,
+        "passive_voice_count": 1,
+        "implicit_actor_count": 1,
+        "cross_reference_count": 1,
+        "bpmn_activities": 10,
+        "bpmn_gateways": 3,
+        "bpmn_flows": 15,
+        "bpmn_pools_lanes": 2,
+        "bpmn_parallel_branches": 1,
+        "bpmn_cycles": 0
+      },
+      "language_rule": {
+        "allowed": [
+          "original",
+          "translated"
+        ]
+      }
+    },
+    "L3": {
+      "description": "complex",
+      "hard_triggers": {
+        "text_length_min": 500,
+        "clause_count_min": 6,
+        "dependency_depth_min": 8,
+        "nesting_depth_min": 3,
+        "passive_voice_count_min": 3,
+        "implicit_actor_count_min": 3,
+        "cross_reference_count_min": 3,
+        "bpmn_activities_min": 25,
+        "bpmn_gateways_min": 8,
+        "bpmn_pools_lanes_min": 4,
+        "bpmn_parallel_branches_min": 3,
+        "bpmn_cycles_min": 2
+      },
+      "language_rule": {
+        "any_hit_l3": [
+          "mixed"
+        ]
+      }
+    }
+  },
+  "definition_of_done_for_freeze": "user authorizes freezing this candidate contract via a recorded decision; the config status flips to frozen only through an experiment-contract / gate change with a recorded event; no results may be produced on the new corpus before that freeze.",
+  "frozen_before_new_results": true,
+  "s2_10_retrospective_use_forbidden": true,
+  "draft_config_path": "configs/g05_complexity_candidate_draft_v1.json",
+  "draft_config_sha256": "61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586",
+  "authorization_manifest_id": "g05-auth-manifest-2026-08-17-v1",
+  "authorization_event_id": "g05-freeze-event-2026-08-17-v1",
+  "application_checkpoint": {
+    "pending_commit_not_applied": true,
+    "commit_sha256": null
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": "s2_11_gates_applied@1.0.0",
+  "report_id": "s2_11_gates_applied_checkpoint_a_v1",
+  "build_note": "Checkpoint A of the user-authorized non-API application round: G1/G2/G3/G4/G6 applied and recorded; G5 opens in Checkpoint B after membership/workload are known; the v6 pre-authorization capsule stays as the historical safety baseline (byte-exact); no real LLM/API calls; no Gold created; no S2.13/S3.7 advancement.",
+  "user_authorization": {
+    "event_id": "s2-11-user-auth-2026-08-17-v1",
+    "instruction_utf8_sha256": "a8a1dec4c826b1303fde64f2ac111ea2886ad0b08fd8a20af68b5a67130bfc64",
+    "source": "user_instruction_forwarded_in_current_task",
+    "scope": "local_read_only_nonredistributive_s2_11"
+  },
+  "gates": {
+    "G1": {
+      "status": "resolved_for_local_nonredistributive_analysis",
+      "artifact_license_verified": false,
+      "artifact_license_status": "unknown_pending_confirmation",
+      "report": "outputs/reports/s2_11_g1_license_containment_v1.json"
+    },
+    "G2": {
+      "status": "applied_local_read_only",
+      "scope": "local_read_only_nonredistributive_s2_11",
+      "report": "outputs/reports/s2_11_g2_activation_v1.json"
+    },
+    "G3": {
+      "status": "applied",
+      "policy_id": "s2-11-m1-candidate-modality-identity",
+      "option": "M1",
+      "policy": "configs/s2_11_mapping_policy_m1_v1.json"
+    },
+    "G4": {
+      "status": "applied",
+      "frozen_config": "configs/g05_complexity_frozen_v1.json",
+      "frozen_config_sha256": "6f632dd4965cbd21c6889471080c731e3ccaf0b9158fa71e5ba874ea561ffa4b",
+      "authorization_manifest": "configs/g05_authorization_manifest_v1.json",
+      "authorization_event": "configs/g05_authorization_event_v1.json",
+      "chain_validation": {
+        "frozen_application_valid": true,
+        "validation_token_prefix": "6ada674e066e",
+        "draft_config_sha256": "61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586",
+        "approved_frozen_config_sha256": "6f632dd4965cbd21c6889471080c731e3ccaf0b9158fa71e5ba874ea561ffa4b",
+        "authorization_event_id": "g05-freeze-event-2026-08-17-v1",
+        "prior_results_found": []
+      }
+    },
+    "G5": {
+      "status": "not_applied_until_checkpoint_b",
+      "reason": "membership/workload unknown until the corpus inventory completes"
+    },
+    "G6": {
+      "status": "applied",
+      "policy": "S0_no_automatic_structural_mapping",
+      "field_mapping": {},
+      "policy_config": "configs/s2_11_mapping_policy_m1_v1.json"
+    }
+  },
+  "g0_5": {
+    "status": "frozen_for_future_external_complex_corpora",
+    "draft_config": "configs/g05_complexity_candidate_draft_v1.json",
+    "draft_config_sha256": "61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586",
+    "frozen_config_sha256": "6f632dd4965cbd21c6889471080c731e3ccaf0b9158fa71e5ba874ea561ffa4b",
+    "scope": "future_external_complex_corpora_only",
+    "preregistration_claim_allowed": false
+  },
+  "no_candidates_before_freeze": true,
+  "s2_13_s3_7_not_advanced": true,
+  "zero_api": {
+    "new_llm_api_calls": 0
+  },
+  "bindings": {
+    "configs/s2_11_user_authorization_event_v1.json": "152eee77e10079f9c9ab3ed893e792284f252b03feb5f2c8c3eda9667962d078",
+    "configs/g05_complexity_frozen_v1.json": "6f632dd4965cbd21c6889471080c731e3ccaf0b9158fa71e5ba874ea561ffa4b",
+    "configs/g05_authorization_event_v1.json": "0b1bd93223b34e7d1c0b8e279308b36beb39f34833123423b6da1ff892df5c5f",
+    "configs/g05_authorization_manifest_v1.json": "6ada674e066ec79db7ea2232c79a1ad40e2ea6cc47182d4431f025299b3fb684",
+    "configs/s2_11_mapping_policy_m1_v1.json": "2a63d7dea43b36d303162f3f2c59be5c9bdeea4f14a1de40c7a117e475b2869f",
+    "outputs/reports/s2_11_g1_license_containment_v1.json": "194a8775eddfa375e32ba190f55fc89c082914fa240f939ef8d4e7ccd22cae0e",
+    "outputs/reports/s2_11_g2_activation_v1.json": "314654c90ec0d82e0f02ea4741e3d0e57e88b18437bdfcebd4ab278930bb9283",
+    "src/bpc_hybrid/g05_complexity_candidate.py": "086431d6ea2375b52c9dc045e9dec2238dfedaf50b41aaa71d20662d57ab1fe1",
+    "src/bpc_hybrid/s2_11_barrientos_adapter.py": "283c2b1843b401d80ddffb1fb632b43afef3302c84efd27a022998ff5aab8585",
+    "configs/g05_complexity_candidate_draft_v1.json": "61938c99a012f36b2b3b3d66a346b31a6c33fdd3f14be0179291ef1982a97586"
+  }
+}

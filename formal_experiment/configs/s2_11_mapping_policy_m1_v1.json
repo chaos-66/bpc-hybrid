@@ -1,0 +1,23 @@
+{
+  "schema_version": "s2_11_mapping_policy@1.0.0",
+  "policy_id": "s2-11-m1-candidate-modality-identity",
+  "selected_option": "M1",
+  "modality_identity": {
+    "obligation": "obligation",
+    "permission": "permission",
+    "prohibition": "prohibition"
+  },
+  "structural_policy": "S0_no_automatic_structural_mapping",
+  "structural_policy_reason": "the real artifact requirement records are {ID, version, text} natural-language sentences; the compliance_requirements_format.json schema defines precondition/temporal_validity as NESTED logical objects (and/or/not actions), not verifiable leaf-text spans; no structure field is auto-mapped; actor/action/exception are never inferred from missing structure; unresolvable fields stay blank for human adjudication",
+  "field_mapping": {},
+  "candidate_only": true,
+  "definition_handling": "never auto-produced; definition-class records require separate human adjudication",
+  "external_annotation_role": "review aid only; never the final answer",
+  "gold_authorization": false,
+  "bindings": {
+    "user_authorization_event_id": "s2-11-user-auth-2026-08-17-v1",
+    "user_authorization_event_sha256": "152eee77e10079f9c9ab3ed893e792284f252b03feb5f2c8c3eda9667962d078",
+    "adapter_source_path": "src/bpc_hybrid/s2_11_barrientos_adapter.py",
+    "adapter_source_sha256": "283c2b1843b401d80ddffb1fb632b43afef3302c84efd27a022998ff5aab8585"
+  }
+}

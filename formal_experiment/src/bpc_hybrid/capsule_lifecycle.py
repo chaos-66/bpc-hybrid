@@ -56,9 +56,15 @@ DRIFT_FAILURE_PATTERNS = (
     "superseded",
     "S2.11",
     "S2.13",
+    # post-user-authorization lifecycle drift: the G0.5 contract moved
+    # from draft_not_frozen to frozen_for_future_external_complex_corpora
+    # and promotion readiness flipped accordingly
+    "G0.5 promotion readiness",
+    "G0.5 candidate",
 )
 
 NO_OVERWRITE_MARKER = "refusing to overwrite different existing content"
+FAIL_CLOSED_MARKER = "BUILD FAILED (fail-closed)"
 
 # ---------------------------------------------------------------------------
 # v6 fixed origin anchors: origin commit per historical capsule version.
@@ -67,6 +73,7 @@ FIXED_ORIGIN_COMMITS: dict[str, str] = {
     "v3": "31ac757d821b7e451650edbd70b1899ed0104616",
     "v4": "8e8b488ea6d91ef0e6d0cf942ff9729e3e6776f6",
     "v5": "78837391167639da1bdef74faf67b817fa604813",
+    "v6": "518047d4c97ab691fdf0edeeea27c6cf1674765e",
 }
 
 CORE_ASSET_REL_TEMPLATES: tuple[tuple[str, str], ...] = (
@@ -113,6 +120,15 @@ FIXED_CORE_ASSET_HASHES: dict[str, dict[str, str]] = {
         "md": "8aa3cd622f0e41d710382c0aebe1edd0aee518c74b9161e848f5ff3566f21d0a",
         "manifest": "e6aaf0bb65725e89cb437f84128c430032768976270686701af909be5e6c0ac6",
         "export_index": "7263df3015ee34e437df1c8d544ef26449cdebd2b507dc121e14593f32d1cf73",
+    },
+    "v6": {
+        "schema": "a762ee55446ddc9f379b5ac941187cf29e42dc82af7ac0970a59044ba2be9575",
+        "builder": "ac50855f0ee52e67ecb77d3de3221444110195f8a9caa79d97f2ac6940ae8b66",
+        "verifier": "8d521a4c803a762477896e0a880418113069ecaaf3b600b2c6ffd3c61c584ae6",
+        "json": "f36cb9a8be117f3ff1fb6d1341dc7ffe8d1049daeaec494080deb3262e6ef1df",
+        "md": "d3540eb6b30074b7d38df741bc21f55ff19491c236e2d6946027761296694d79",
+        "manifest": "d335296cb5819d7c6eb8c4e1ad8a00553fbe82761884a5bc15c49195ab1dd3cd",
+        "export_index": "6e18749da7cdcdecc79e7a200ab14ec565cca79a1226258e32d1ec4aaf6f1ee9",
     },
 }
 
@@ -244,8 +260,9 @@ def historical_core_assets_match_head(root: Path, capsule: HistoricalCapsule,
 def builder_rejects_with_no_overwrite_drift(
         root: Path, capsule: HistoricalCapsule,
         ) -> tuple[bool, str]:
-    """The historical builder must fail closed with a no-overwrite
-    rejection (exit 2) and must NOT modify its own published outputs."""
+    """The historical builder must fail closed (exit 2) with either a
+    no-overwrite rejection or an earlier fail-closed derivation abort, and
+    must NOT modify its own published outputs."""
     before = {}
     for rel in capsule.outputs:
         p = root / rel
@@ -253,9 +270,11 @@ def builder_rejects_with_no_overwrite_drift(
     proc = subprocess.run(
         [sys.executable, str(root / capsule.builder_rel)],
         cwd=str(root), capture_output=True, text=True, check=False)
+    stderr_lower = (proc.stderr or "").lower()
     drift_ok = bool(
         proc.returncode == 2
-        and NO_OVERWRITE_MARKER in (proc.stderr or "").lower())
+        and (NO_OVERWRITE_MARKER in stderr_lower
+             or FAIL_CLOSED_MARKER.lower() in stderr_lower))
     outputs_untouched = all(
         (root / rel).read_bytes() == data
         for rel, data in before.items() if data is not None)
@@ -264,7 +283,7 @@ def builder_rejects_with_no_overwrite_drift(
         if data is None)
     ok = drift_ok and outputs_untouched and not after_created
     detail = (
-        f"rc={proc.returncode} no_overwrite={drift_ok} "
+        f"rc={proc.returncode} fail_closed={drift_ok} "
         f"outputs_untouched={outputs_untouched} "
         f"unexpected_created={after_created}\n"
         f"stderr={proc.stderr[:400]}")

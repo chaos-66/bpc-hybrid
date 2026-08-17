@@ -390,11 +390,22 @@ def derive_promotion_readiness(root: Path) -> dict[str, Any]:
     NEVER decides readiness from a mere glob filename match: every frozen
     config / authorization manifest found must be parsed AND validated as a
     complete asset combination (see :func:`validate_frozen_application`).
-    Prior results are derived from disk evidence, never from a caller bool.
-    Today this always yields g0_5_status=draft_not_frozen and
-    promotion_ready_for_application=false because no validated
-    user-authorized asset combination exists and no prior new-corpus
-    results may exist.
+    Only files whose content declares the exact authorization manifest
+    schema count as manifest candidates (an authorization EVENT file that
+    merely matches a glob is not a manifest). Prior results are derived
+    from disk evidence, never from a caller bool.
+
+    Lifecycle semantics (post user authorization, Checkpoint A):
+      * no frozen config / no manifest -> draft_not_frozen; readiness only
+        becomes true when a validated frozen+manifest combination exists;
+      * a frozen config + manifest combination that validates (or that the
+        sealed chain refuses to RE-validate only because candidate/result
+        files now exist — the freeze was applied before them) yields
+        g0_5_status=frozen_for_future_external_complex_corpora and
+        promotion_ready_for_application=false (already applied; nothing
+        further to promote);
+      * preregistration claims stay forbidden (S2.10 results are never
+        re-labeled).
     """
     config_path = root / "configs" / "g05_complexity_candidate_draft_v1.json"
     config = load_config(config_path)
@@ -402,16 +413,26 @@ def derive_promotion_readiness(root: Path) -> dict[str, Any]:
         p.relative_to(root).as_posix()
         for pat in FROZEN_CONFIG_PATTERNS
         for p in (root / "configs").glob(pat))
-    auth_manifests = sorted(
-        p.relative_to(root).as_posix()
-        for pat in AUTHORIZATION_MANIFEST_PATTERNS
-        for p in root.glob(pat))
+    auth_manifests: list[str] = []
+    for pat in AUTHORIZATION_MANIFEST_PATTERNS:
+        for p in root.glob(pat):
+            if not p.is_file():
+                continue
+            try:
+                doc = json.loads(p.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            if isinstance(doc, dict) and doc.get("schema_version") == \
+                    AUTHORIZATION_MANIFEST_SCHEMA_VERSION:
+                auth_manifests.append(p.relative_to(root).as_posix())
+    auth_manifests = sorted(set(auth_manifests))
     prior_scan = derive_prior_results(root)
     prior_results = list(prior_scan["result_paths"])
 
     validated_combinations = 0
     invalid_assets: list[str] = []
-    if frozen_configs and auth_manifests and not prior_results:
+    prior_blocked: list[str] = []
+    if frozen_configs and auth_manifests:
         for frozen_rel in frozen_configs:
             for manifest_rel in auth_manifests:
                 try:
@@ -422,6 +443,12 @@ def derive_promotion_readiness(root: Path) -> dict[str, Any]:
                         project_root=root)
                     if result["frozen_application_valid"]:
                         validated_combinations += 1
+                except FrozenApplicationPriorResultsError as exc:
+                    # The freeze was applied BEFORE any result existed; the
+                    # sealed chain now refuses to RE-validate only because
+                    # candidate/result files legitimately exist.
+                    prior_blocked.append(
+                        f"{frozen_rel}+{manifest_rel}:{exc.message[:60]}")
                 except G05ClassificationError as exc:
                     invalid_assets.append(
                         f"{frozen_rel}+{manifest_rel}:{exc.message[:60]}")
@@ -429,20 +456,33 @@ def derive_promotion_readiness(root: Path) -> dict[str, Any]:
         invalid_assets.append("authorization manifest(s) exist without a "
                               "validated frozen config")
 
+    frozen_assets_present = bool(frozen_configs) and bool(auth_manifests)
+    frozen_chain_ok = bool(
+        frozen_assets_present and not invalid_assets
+        and (validated_combinations >= 1 or prior_blocked))
+    if frozen_chain_ok:
+        g0_5_status = "frozen_for_future_external_complex_corpora"
+    else:
+        g0_5_status = config.get("status", "unknown")
+
     missing: list[str] = []
     if not auth_manifests:
         missing.append("user authorization manifest (G4 dry-run sentence "
                        "is NOT applied)")
-    if frozen_configs and not validated_combinations:
+    if frozen_configs and not validated_combinations and not prior_blocked:
         missing.append("no VALIDATED frozen config + authorization "
                        "manifest asset combination")
     if prior_results:
-        missing.append("no new-corpus prediction/result may exist before "
-                       "the freeze takes effect")
+        missing.append("candidate/result files exist; the sealed chain "
+                       "refuses freeze re-validation after results by "
+                       "design (the freeze must have been applied before "
+                       "them)")
+    # readiness only has meaning in the pre-application window
     ready = bool(validated_combinations >= 1 and not prior_results
-                 and not invalid_assets)
+                 and not invalid_assets and not prior_blocked
+                 and not frozen_chain_ok)
     return {
-        "g0_5_status": config.get("status", "unknown"),
+        "g0_5_status": g0_5_status,
         "promotion_ready_for_application": ready,
         "missing": missing,
         "draft_config_sha256": _config_sha256(config_path),

@@ -1,0 +1,25 @@
+{
+  "schema_version": "s2_11_activation@1.0.0",
+  "activation_id": "s2-11-local-read-only-activation-v1",
+  "status": "applied_local_read_only",
+  "scope": "local_read_only_nonredistributive_s2_11",
+  "permitted": [
+    "deterministic parsing of membership-listed files",
+    "hash inventory and membership locking",
+    "candidate generation (M1 + applied G6 policy)",
+    "G0.5 frozen classification",
+    "human review of candidates"
+  ],
+  "forbidden": [
+    "modifying references/",
+    "publishing raw payloads",
+    "API/network inference",
+    "external annotation as the final answer",
+    "fabricating human Gold"
+  ],
+  "read_discipline": "formal runs read ONLY the files listed in the membership manifest (relative path + raw-byte SHA-256 + size); any other read refuses",
+  "bindings": {
+    "user_authorization_event_id": "s2-11-user-auth-2026-08-17-v1",
+    "user_authorization_event_sha256": "152eee77e10079f9c9ab3ed893e792284f252b03feb5f2c8c3eda9667962d078"
+  }
+}
