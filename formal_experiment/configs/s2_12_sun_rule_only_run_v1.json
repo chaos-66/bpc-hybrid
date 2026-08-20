@@ -1,0 +1,61 @@
+{
+  "schema_version": "s2_12_sun_rule_only_lock@1.0.0",
+  "run_id": "s2_12_sun_rule_only_v1",
+  "status": "locked_before_gold_read",
+  "locked_date": "2026-08-18",
+  "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+  "input": {
+    "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+    "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "records": 36,
+    "raw_text_committed": false
+  },
+  "method": {
+    "method_id": "sun_rule_only",
+    "method_variant": "b0_enhanced_v10a",
+    "device": "cpu",
+    "parameters_or_thresholds_changed_for_complex_corpus": false,
+    "post_result_tuning_forbidden": true,
+    "language_boundary": {
+      "corpus_language": "en",
+      "phrase_extractor_input": "local verified English source text",
+      "legacy_classifier_slot_input": "the same local verified English source text",
+      "translation_performed": false,
+      "limitation": "the locked modality classifier was developed with a German inference-language contract; this English pass-through result is descriptive and is not a language-matched classifier validation"
+    }
+  },
+  "gold_isolation": {
+    "runner_reads_gold": false,
+    "runner_reads_decisions": false,
+    "runner_reads_proposals": false,
+    "evaluation_allowed_only_after_prediction_capsule_exists": true
+  },
+  "runtime": {
+    "required_distribution": "stanford-corenlp-4.5.10",
+    "runtime_home_is_cli_supplied_local_path": true,
+    "network_allowed": false,
+    "llm_api_allowed": false
+  },
+  "output": {
+    "directory": "data/predictions/s2_12_sun_rule_only_v1",
+    "atomic_directory_publish": true,
+    "no_overwrite": true,
+    "raw_text_committed": false
+  },
+  "bindings": {
+    "scripts/run_s2_12_sun_rule_only_v1.py": "1f473cfdf665920d75b7f1f80e8f1d12c9e00d72c2404750c7b331bcf581da18",
+    "src/bpc_hybrid/estg150_b0_development_v10.py": "540a51b9faccfbb3e4a046ad9f8cbd177f4e01fca5dc0f11bddfbad594a1b674",
+    "src/bpc_hybrid/s2_12_method_adapter.py": "03d37a4a49da2c19b93fc73a75135eb9904269522e8747a6acfdd59dcabd84c2",
+    "configs/models/estg150_b0_enhanced_s27_v10a.json": "151c0cd2261075c1cd2dfe45757213736bd8c66b184bd70c6a4cd511551597d8",
+    "configs/models/sun_b0_s26_candidate_B_v1.json": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126",
+    "configs/sun_corenlp_runtime.json": "30bddb43bdb6f5ec477d9445b413f5e0891675c3855226a5b04747178336e74c",
+    "data/input/s2_12_complex_corpus_formal_input_v1.json": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1"
+  },
+  "safety": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "gold_rule_records_created": false,
+    "oracle_started": false
+  }
+}

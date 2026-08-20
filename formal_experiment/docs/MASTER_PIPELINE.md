@@ -1,8 +1,8 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.23
+**文档版本**：3.6.24
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
-**最后更新**：2026-08-17
+**最后更新**：2026-08-18
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
 **当前实施优先级**：实验先完成 Stage 2，再补 Stage 1 和 Stage 3；论文非结果章节从现在并行写作；2026-08-08 导师汇报后方向锁定见 §8.8
 
@@ -216,8 +216,8 @@ condition/constraint/exception 的数量与嵌套、被动语态、隐含 actor�
 | S2.9 | 锁定 D1 prompt/few-shot/model/budget | S2.2 | **verified (2026-08-06)** | **D1 侧达成（2026-08-06，D1-R2）**：v6 prompt hash 3aa64877 固定、model/sampling/seed 策略与预算合同锁定于 `configs/models/estg150_d1_active_registry_v1.json`；Gold 不可见（few-shot 为合成 fixture、runner 不读 Gold）；S2.2 frozen（150/150 adjudicated，2026-08-06 恢复后 freeze validator 通过），依赖满足 |
 | S2.10 | 主数据组件评价 | S2.2/S2.6-S2.9 | **verified（2026-08-11，授权后 DoD）**：按用户授权 G0.4 口径，模态与六字段指标分别报告已真实完成——主报告=句子级粗粒度五 span 字段（P/R/F1）+ 单独四分类 modality label（accuracy/macro-F1/per-class）逐方法报告，细粒度五字段诊断/对照；modality evidence-span 结构性 unavailable 为授权口径明示项（不置零不纳入 aggregate）；三方法 formal capsule 全部独立 verifier 通过；正式三方法比较报告 stage2_formal_three_method_comparison_v1 已发布并自校验 | 模态与六字段指标分别报告（授权口径完成；历史六字段 aggregate 仅 development provenance） |
 | S2.11 | 复杂法律语料集冻结 | G0.5 | **verified / frozen / Gold published（2026-08-17）**：Checkpoint G 完成 proposal v3 用户确认、importer v3 原子导入与 freeze 36/36；随后正式发布 `data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json`（SHA-256 `039ae8b2…`，36/36、0 unresolved、0 blocked）。Gold 逐记录等值复制 adjudicated canonical decisions，不增加/推断/改写标签、span、actor-action map 或 order relation；provenance 明示 `deepseek_offline_proposal_v3` + `user_batch_confirmation`（reviewer=hyc、无 revisions），不得表述为独立专家从零标注。版本化 schema/publisher/manifest/export/capsule/独立 verifier 已建立，publisher fail-closed 覆盖确认事件、proposal、reviewer、freeze、source/proposal drift；重放 byte-identical。提交资产只含 source path/file/text hashes、坐标与必要标签，第三方原文继续 local-only；零 LLM/API；未创建 predictions/results/Gold Rule Records，未启动 Oracle。 | 数据资格、canonical 裁决、冻结与正式 Gold 发布全部验证；S2.11 DoD 完成。 |
-| S2.12 | 复杂度分层与误差分析 | S2.10/S2.11 | **partial + execution-ready v3（2026-08-17，Checkpoint F；Checkpoint G 刷新）**：描述性分析保持历史/retrospective；**执行计划 v2 冻结**（`configs/s2_12_execution_plan_v2.json`：预注册 G0.5 L1/L2/L3 分层，supersede v1）；**评估器 v2 对齐正式 Stage 2 合同**（`src/bpc_hybrid/s2_12_stratified_evaluator_v2.py`：modality label acc/macro-F1/per-class + 五字段 Sun literal-overlap span P/R/F1；parity 重跑通过并绑定于 `outputs/reports/s2_12_execution_readiness_v3.json`（re-bind proposal v3/importer v3/确认事件；S2.11 freeze 36/36））；**API readiness v2 dry-run**（两臂 deepseek-v4-pro、max_calls 36/72/总 108、输出 token 4096、输入 token 未文档化、cost_cap_unresolved——**未发出最终授权句**，缺项精确列出）；S2.11 冻结已达成，真实运行仅 refused on API 预算授权（input token cap+cost cap 缺项） | 预注册分层曲线和错误类型（计划 v2 已预注册冻结；描述性部分完成；S2.11=36/36 冻结 done，真实运行仅 blocked on API 授权） |
-| S2.13 | Stage 2 冻结 | S2.1-S2.12 | blocked | 方法、数据、Gold、指标、成本、manifest 完整 |
+| S2.12 | 复杂度分层与误差分析 | S2.10/S2.11 | **partial；zero-API arm complete；两个 API arms pending explicit authorization（2026-08-18）**：36 条固定 ID 的 Gold-blind 正式输入仅提交 source locator/file/text hashes，不含 Gold label/span/decision。读取 Gold 前已锁定并运行 `sun_rule_only`（B0 v10a、CPU、0 API/0 network、cost=$0），预测锁定后才用 frozen S2.11 Gold 与 evaluator v2/G0.4 parity 口径评价：overall modality acc/macro-F1=`0.638889/0.535461`，span P/R/F1=`0.862319/0.802721/0.831453`；L1=31、L2=5、L3=0（no samples，不报性能）。这是**单一 zero-API arm**，不是三方法比较；未据 Gold/结果调整方法、规则、prompt 或 threshold。API preflight v1 在 0 次调用下重建最终 payload：direct_llm=36、sun_llm_fallback=27（总 63；配置绝对 call cap 108）、单次/总请求体≤17,493/749,805 UTF-8 bytes、本地 Legal-BERT proxy tokens 单次/总≤4,960/207,468（明确非 DeepSeek billing tokens）、output cap 4,096/call 与 258,048 total、retry=0；模型 `deepseek-v4-pro` 与 prompt/config/payload hashes 全锁定。官方价格已绑定，但实际计费 input tokens/cost 仅能从真实响应 usage 获得；readiness v4 仅待用户明确 API/input-token/USD cap 授权。 | 零 API arm 与分层评价完成；API arms 仍未运行，三方法比较/冻结仍待完成。 |
+| S2.13 | Stage 2 冻结 | S2.1-S2.12 | **blocked only on remaining S2.12 DoD** | 两个 API arms、三方法 comparison 与 S2.12 completion freeze 完成后进入冻结；无其他 S2.13 blocker。 |
 
 Stage 2 完成时，B0/H1/D1 和选定 baseline 必须共享 test IDs、Gold、schema、
 normalization 和 evaluator，并分别报告 modality、phrase 和完整 Rule Record 指标。
@@ -653,7 +653,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
 `PW1`–`PW6` 中已解锁的非结果章节。未经合同变更，不要提前启动 Stage 3 LLM，
 也不要因 Stage 3 尚未就绪而修改 Stage 2 Gold 门禁。
 
-### 12.0 下一真实路径（2026-08-17 核账，见 `outputs/reports/s2_13_s3_7_transition_readiness_v7.json`（当前 fail-closed capsule；v6 为上一版本、v1-v5 为历史 provenance））
+### 12.0 下一真实路径（2026-08-18 核账，见 `outputs/reports/s2_13_s3_7_transition_readiness_v8.json`（当前 fail-closed capsule；v7 及更早为 byte-exact 历史 provenance））
 
 `final_experiment_ready=true` 仅代表 Stage 2 三方法正式评价/最终指标机器门禁
 就绪；S1.7 已 frozen（2026-08-13）但 **S2.13 仍 blocked、S3.7 正式 Oracle 未启动
@@ -672,7 +672,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
    硬编码 SHA-256 map，与 HEAD 无关）；adapter 为 hardened v6
    synthetic/shadow implementation verified（严格 mode 枚举、真实文件级
    evidence binding、formal_evidence_provenance、受控 scope 枚举、
-   resolved-path 逃逸防护）；分离门禁 G1–G6（G1/G2/G3/G4/G6 已应用，G5=applied_review_surface_open；**S2.11=verified/frozen/Gold published（36/36；Gold SHA `039ae8b2…`）**；**S2.12=partial + execution-ready v3（S2.11 dependency done；复杂语料三臂运行尚未完成）**）；
+   resolved-path 逃逸防护）；分离门禁 G1–G6（G1/G2/G3/G4/G6 已应用，G5=applied_review_surface_open；**S2.11=verified/frozen/Gold published（36/36；Gold SHA `039ae8b2…`）**；**S2.12=partial：Gold-blind input + `sun_rule_only` zero-API arm + evaluator v2 分层评价已完成，direct_llm/sun_llm_fallback 两个 API arms 只待显式授权；preflight v1 锁定 63 个 payload、0 retry 与硬停止条件**）；
 2. **S2.13 冻结**（DoD 不变：S2.1–S2.12 完整）；
 3. **GDPR Gold Rule Records 人工裁决与冻结**：由用户完成 9 个 rule IDs
    （article6/7/15/16/17/20/22/33/34）的正式 Gold Rule Records；Agent 不得创建、
@@ -682,7 +682,7 @@ split、指标定义、源码/权重可得性、许可、适配器、复现忠�
    `authorization_sentence=null`；在以上实质依赖完成前，`ready_for_oracle_authorization`
    保持 false。
 
-本轮（2026-08-15）只做核账与 readiness 加固，未翻转上述任何正式 gate。
+本轮（2026-08-18）完成 S2.11 正式 Gold 发布后的 S2.12 零 API 前半程与 API preflight；未调用真实 LLM/API，未启动 Oracle，S2.12 仍为 partial，S2.13 与 S3.7 正式 gate 未翻转。
 
 ### 12.0b S2.11/G0.5 授权前工程收口（2026-08-15，v5 纠正，见 `outputs/reports/s2_11_g0_5_pre_authorization_v5.json`；**v5 为历史 checkpoint，当前入口为 v6，见 §12.0c**）
 
@@ -840,8 +840,34 @@ manifest、export index 与独立 verifier 均已建立；重放命令 byte-iden
 verifier 27 项全过，focused 9 项（含 extra-field/event/reviewer/G0.5/manifest/export
 篡改）全过。提交 Gold 不含第三方原文，只含本地 source path/file/text hashes、
 坐标和必要标签；零 LLM/API，未生成 predictions/results/Gold Rule Records，未启动
-Stage 3 Oracle。S2.11 因此为 verified/frozen/Gold published；S2.12 仍须完成三臂
-复杂语料运行与分层评价。
+Stage 3 Oracle。S2.11 因此为 verified/frozen/Gold published；S2.12 的零 API arm
+已在 §12.0g 完成，仍须运行两个 API arms、完成三方法比较与最终冻结。
+
+### 12.0g S2.12 零 API 前半程与 API preflight（2026-08-18，见 `outputs/reports/s2_12_execution_readiness_v4.json`）
+
+在 S2.11 Gold 冻结发布后，构造 `s2_12_complex_corpus_formal_input_v1.json`：36 个
+固定 IDs，仅保存本地 source locator、file/text hashes 与 text byte size；没有 Gold
+labels、spans、decisions 或原文。`sun_rule_only` 的 method/config/input hashes 在读取 Gold
+前锁定，随后以 B0 v10a、CPU、同一英文 source pass-through 运行（明确限制：legacy
+classifier 原开发合同为德语，本结果是描述性 English pass-through，而非 language-matched
+classifier validation）。预测 capsule 36/36 成功、runtime 18.5112149s、LLM/API/network=0、
+cost=$0，并在评价前锁定；之后 evaluator v2 才读取 frozen Gold，报告 overall 及 L1/L2/L3，
+其中 L3=0 仅为 no samples。overall modality accuracy=0.638889、macro-F1=0.535461；五字段
+span P/R/F1=0.862319/0.802721/0.831453。该结果只代表一个 zero-API arm，不是三方法完整
+比较；未根据 Gold/结果调整方法、规则、prompt 或 threshold。
+
+`s2_12_api_preflight_v1.json` 在不读取 Gold、不读取 `.env`、不调用网络/API 的条件下，
+从最终 OpenAI-compatible request body 精确计算 payload：direct_llm 36 calls、
+sun_llm_fallback 27 triggered calls，总 63；UTF-8 body 最大 17,493 bytes、总 749,805 bytes；
+本地 `nlpaueb/legal-bert-base-uncased` WordPiece proxy 最大 4,960、总 207,468 tokens（非
+DeepSeek tokenizer、非 billing count）；output cap 4,096/call、258,048 total；retry=0。
+官方 `deepseek-v4-pro` 价格与 1M context 已绑定，实际 billing input token/cost 仍只能以
+真实响应 usage 为准；建议的绝对保守授权上限为 input 63,000,000 tokens、US$27.63，且
+运行前须重验官方价格。当前未获授权、实际成本为 null、调用数为 0。transition v8 保留
+v7 八个资产 byte-exact，明确历史 verifier 生命周期：v1-v4/v7 正常通过，v5/v6 因被
+Checkpoint G 后状态合法 supersede 而以精确预期签名 fail-closed。当前状态：S2.11
+verified/frozen；S2.12 partial；S2.13 只 blocked on remaining S2.12 DoD；S3.4-S3.6
+development-only；S3.7 formal Oracle not started；Gold Rule Records absent。
 
 
 
@@ -900,6 +926,7 @@ Stage 3 Oracle。S2.11 因此为 verified/frozen/Gold published；S2.12 仍须�
 
 | 版本 | 日期 | 变更 | 依据 |
 |---|---|---|---|
+| 3.6.24 | 2026-08-18 | **S2.12 零 API 前半程 + API preflight + transition v8（零真实调用）**：构造 36-ID Gold-blind 正式输入（仅 locator/hashes）；Gold 读取前锁定并运行 `sun_rule_only`，36/36 成功、runtime 18.5112149s、0 API/network、cost=$0，预测锁定后用 evaluator v2/G0.4 parity 评价（overall modality acc/macro-F1 0.638889/0.535461；span P/R/F1 0.862319/0.802721/0.831453；L1=31/L2=5/L3=0 no samples），明确仅单一 arm、无 post-result tuning。API preflight v1 重建 direct 36 + H1 27=63 个最终 payload（max bytes 17,493、total 749,805；Legal-BERT proxy 4,960/207,468，非 billing tokens；output 4,096/call、258,048 total；retry=0），锁定 deepseek-v4-pro/prompt/config/payload hashes、官方价格与硬停止条件；实际 billing tokens/cost 仍待 response usage，0 calls。readiness v4 与 transition v8：S2.11 verified/frozen；S2.12 partial，两个 API arms pending explicit authorization；S2.13 blocked only on remaining S2.12 DoD；S3.4-S3.6 development-only；S3.7 formal Oracle not started；GRR absent；v7 保留 byte-exact，v1-v7 verifier 生命周期精确锁定。 | Gold-blind input/zero arm/evaluator + API preflight/verifier + readiness v4 + transition v8 + focused/full audit |
 | 3.6.23 | 2026-08-17 | **S2.11 正式 Gold 发布（零 API）**：从 Checkpoint G 已确认且 frozen 的 36/36 canonical decisions 等值派生正式复杂语料 Gold（SHA `039ae8b2…`）；provenance 明示 `deepseek_offline_proposal_v3` + user batch confirmation by hyc（无 revisions、非从零独立专家标注）；确认事件文件 SHA `226b4798…` 与用户原句 SHA `7414a38d…` 分开绑定；source/proposal/reviewer/freeze/G0.5 drift 全部 fail-closed；版本化 schema/publisher/capsule/manifest/export/独立 verifier/replay 完成；只提交 hashes/coordinates/必要 labels，无第三方原文；S2.11=verified/frozen/Gold published，S2.12 仍 partial；零 LLM/API、无 predictions/results/GRR/Oracle | Gold publisher + independent verifier + focused tests + audit pass |
 | 3.6.22 | 2026-08-17 | **S2.11 用户确认裁决与冻结 + S2.12/S2.13 状态推进（Checkpoint G，用户确认 proposal v3 一次性内容，零 LLM/API）**：(1) **用户确认**：`configs/s2_11_batch_import_confirmation_event_v3.json`（kind=s2_11_batch_import_confirmation，source=user_instruction_in_current_task，`user_instruction_utf8`=“我确认接受 S2.11 全部 36 条 canonical proposal v3 作为我的裁决（无 revisions），proposal 文件 SHA-256 = 9882ba45…，reviewer 署名：hyc”，其 UTF-8 SHA-256 7414a38d…，proposal_file_sha256 精确绑定 `9882ba45…`，revisions=null，gold_created=false，append_only=true）。(2) **importer v3 --apply 原子写入**（`scripts/s2_11_batch_import_v3.py` fail-closed）：decisions v2 36/36 adjudicated（reviewer=hyc 仅来自事件、confirmation_event 路径写入每记录）、逐字节不变备份 `.bak`、apply 后 committed dry-run 报告刷新（confirmation_event_present=true 使 run_dry_run 保持 byte-reproducible；新增 `refresh_dry_run_report_after_apply`）；main() 修复 apply 打印分支（run_apply 返回 {applied,reviewer,records,decisions_file,backup} 无 import_stats）；freeze validator v3 `frozen=true`（36/36 adjudicated、剩余 0、无 Gold）。(3) **S2.12 readiness v3 刷新**（`scripts/s2_12_build_readiness_v3.py --refresh` + `verify_s2_12_readiness_v3.py`）：schema 3.1.0，S2.11 freeze 36/36 + 确认事件 disk 绑定加入 bindings，proposal_v3.human_approved=true，runner.real_run_refused 理由更新为仅缺 API 预算授权（input token cap+cost cap），仍无最终授权句。(4) **transition capsule v7**（`build/verify_s2_13_s3_7_transition_readiness_v7.py` + schema/test/4 outputs；supersede v1-v6，55 项 superseded 全部 byte-exact 保留）：S2.11=frozen（从磁盘重推导：确认事件绑定 SHA+reviewer、decisions 36/36 adjudicated、freeze validator v3 执行）、S2.12=partial+execution-ready v3（真实运行 refused on API 授权）、S2.13=blocked、S3.7=blocked（GRR 三态 probe exist=false）；v7 VERIFIED（11 独立 verifier 全执行）。(5) **Checkpoint G 快照连锁（记录在案）**：verify_s2_12_execution_ready_v2.py 更新为 freeze 36/36 + 对 decisions v2 的 bindings 豁免（apply 合法改变其 SHA；decisions 完整性由 freeze validator v3 单独验证）；v5/v6 transition 测试更新为 superseded 快照语义（其 verifier/builder 依赖 apply 前 decisions 快照故不再自证当前有效，新增失败-关闭断言；这是对两个历史测试文件的 Checkpoint G 例外，其余 v1-v6 资产全部 byte-exact，v7 测试相应豁免这两个文件）；零 LLM/API、未创建 Gold/predictions/results、未发 API 授权句、未发布受限原文 | 确认事件 + importer apply + freeze 验证 + readiness v3 刷新 + transition v7 + focused tests + record_change 事件 + audit --with-tests |
 | 3.6.21 | 2026-08-17 | **S2.11 proposal v3 最终校正与一次性确认就绪（Checkpoint F，零 LLM/API）**：(1) **六个已确认问题的复现与修复**：r10v1 双 actor span 同 ID + 条件内 customer 混入 actor + 缺 actor-action mapping → v3 显式 occurrence=1 仅保留主句执行者 `[41:53] the customer` 并建 mapping；canonical validator v2 仅查 modality evidence ID 且 collect_span_ids 字典覆盖 → **canonical v3**（`src/bpc_hybrid/s2_11_canonical_v3.py`）强制全 record 普通 span ID 唯一、clause ID 唯一、aam 边存在/同 clause/无重复/全覆盖（有 actor 的 clause 每个 action 必须有 mapping）、order 必须引用两个不同有效 action、list-based 收集（不隐藏重复）；r4v2 action/constraint overlap 18 字符 → action=raw `happen`（normalized 仅本地）+ constraint `before the surgery`，overlap=0；r8v1 `longer than 30 days` 恢复为 constraint + action=raw `sending the SIM card`（normalized）；r18v2 `immediately` 恢复为 constraint + action=raw `sent the reason for rejection`（normalized）；r3v1/r3v2 纳入 temporal-validity constraints `valid from 2024 to 2030`/`2025 to 2031`（规范性 clause span 扩展至全文，无伪 clause）；其余 30 条机械回归无证据不改写。(2) **proposal v3**（`scripts/s2_11_build_proposals_v3.py`）：span spec 支持显式 occurrence，同一文本多 occurrence 无明确选择 fail-closed；36/36 验收全零（exact-slice=0、duplicate span/clause ids=0、ambiguous auto-occurrence=0、invalid/missing aam=0、invalid orders=0、action/constraint overlap=0、evidence missing=0、unresolved=0、display None=0）；本地完整包 `adjudication_proposals_v3/`（proposals.jsonl/decision_package.md/v2→v3 diff/quality report；SHA `9882ba45…`）；提交报告 `s2_11_proposal_report_v3.json`（坐标/hash/计数，零 ≥40 字符原文片段）；**proposal v1/v2 superseded（v2 状态 superseded_pending_targeted_correction_do_not_approve），v1/v2 文件逐字节保留**。(3) **importer v3**（`scripts/s2_11_batch_import_v3.py` re-bind proposal v3）：dry-run blocked=0/unresolved=0/adjudicable=36/36；`--apply` fail-closed（确认事件绑定 proposal v3 SHA+revisions SHA+reviewer、原子写+备份）；freeze validator v3（canonical v3 + 7 项 checks）+ review tool v3；**本轮未创建确认事件、未 apply、freeze=false、无 Gold**。(4) **S2.12 readiness v3**（`scripts/s2_12_build_readiness_v3.py` + `verify_s2_12_readiness_v3.py`）：评估器 v2 不重写，parity 重跑通过并 re-bind proposal v3/importer v3 hash；API readiness 保持 dry-run（两臂 deepseek-v4-pro、36/72/108 calls、输出 4096、输入未文档化、cost_cap_unresolved、**无最终授权句**、缺项精确列出）。(5) **transition v6**（47 项 supersedes、11 个独立 verifier、V6 VERIFIED；v1–v5 逐字节保留且各自 verifier 继续通过；S2.11=只剩绑定 proposal v3 SHA 的一次性用户内容确认、S2.12=partial+execution-ready v3、S2.13 blocked、S3.7 未启动、GRR 不存在、无 Oracle 授权句）；零 LLM/API、未伪造 Gold、未发布受限原文 | Checkpoint F 构建器/验证器 + focused tests + record_change 事件 + audit --with-tests |

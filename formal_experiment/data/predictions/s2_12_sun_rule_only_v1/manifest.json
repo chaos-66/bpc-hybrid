@@ -1,0 +1,102 @@
+{
+  "schema_version": "s2_12_sun_rule_only_manifest@1.0.0",
+  "run_id": "s2_12_sun_rule_only_v1",
+  "status": "predictions_locked_before_gold_evaluation",
+  "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+  "method_id": "sun_rule_only",
+  "method_variant": "b0_enhanced_v10a",
+  "single_arm_only": true,
+  "input_binding": {
+    "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+    "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "records": 36
+  },
+  "run_lock": {
+    "path": "configs/s2_12_sun_rule_only_run_v1.json",
+    "sha256": "90277f2671c01056167fd11d2467b03867fd5bb9f3c7c8b5814925d32e944280"
+  },
+  "method_bindings": {
+    "scripts/run_s2_12_sun_rule_only_v1.py": "1f473cfdf665920d75b7f1f80e8f1d12c9e00d72c2404750c7b331bcf581da18",
+    "src/bpc_hybrid/estg150_b0_development_v10.py": "540a51b9faccfbb3e4a046ad9f8cbd177f4e01fca5dc0f11bddfbad594a1b674",
+    "src/bpc_hybrid/s2_12_method_adapter.py": "03d37a4a49da2c19b93fc73a75135eb9904269522e8747a6acfdd59dcabd84c2",
+    "configs/models/estg150_b0_enhanced_s27_v10a.json": "151c0cd2261075c1cd2dfe45757213736bd8c66b184bd70c6a4cd511551597d8",
+    "configs/models/sun_b0_s26_candidate_B_v1.json": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126",
+    "configs/sun_corenlp_runtime.json": "30bddb43bdb6f5ec477d9445b413f5e0891675c3855226a5b04747178336e74c",
+    "data/input/s2_12_complex_corpus_formal_input_v1.json": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1"
+  },
+  "language_boundary": {
+    "corpus_language": "en",
+    "phrase_extractor_input": "local verified English source text",
+    "legacy_classifier_slot_input": "the same local verified English source text",
+    "translation_performed": false,
+    "limitation": "the locked modality classifier was developed with a German inference-language contract; this English pass-through result is descriptive and is not a language-matched classifier validation"
+  },
+  "gold_isolation": {
+    "gold_read_by_runner": false,
+    "predictions_locked_before_evaluation": true,
+    "post_result_tuning_forbidden": true
+  },
+  "runtime_summary": {
+    "schema_version": "s2_12_sun_rule_only_telemetry@1.0.0",
+    "record_count": 36,
+    "predicted_clause_count": 41,
+    "corenlp_seconds": 7.6966657000011764,
+    "bridge_seconds": 0.41467879997799173,
+    "classifier_seconds": 10.350868000008631,
+    "compose_seconds": 0.04900240001734346,
+    "total_seconds": 18.511214900005143,
+    "device": "cpu",
+    "modality_route_counts": {
+      "heuristic_aligned_classifier": 13,
+      "marker_obligation": 22,
+      "marker_permission": 2,
+      "prohibition_negation": 2,
+      "record_level_classifier_fallback": 1,
+      "validated_aligned_classifier": 1
+    },
+    "label_counts": {
+      "definition": 15,
+      "obligation": 22,
+      "permission": 2,
+      "prohibition": 2
+    },
+    "alignment_summary": {
+      "total": 41,
+      "heuristic_supported": 40,
+      "validated": 1,
+      "unsupported": 1,
+      "by_status": {
+        "equal_count_candidate": 37,
+        "heuristic_monotone_pack_unvalidated": 2,
+        "unsupported": 1,
+        "validated_anchor_alignment": 1
+      },
+      "note": "heuristic_supported is not verified alignment"
+    },
+    "text_or_gold_payload_committed": false
+  },
+  "artifacts": {
+    "predictions.json": {
+      "sha256": "f1e88ac5167ec1d3f0644dfcbeac60ead18932f766231baf3cb8e86b4af77006",
+      "byte_size": 59951
+    },
+    "telemetry.json": {
+      "sha256": "62ff840c560368434312d9497ca4765afb4af768f631188822465435489d7852",
+      "byte_size": 1090
+    },
+    "cost.json": {
+      "sha256": "d4e31093f195eab082462e4ca5a64666ad879fc60bd497b7d737bb2e70d0b081",
+      "byte_size": 179
+    }
+  },
+  "safety": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "cost_usd": 0.0,
+    "raw_text_committed": false,
+    "gold_rule_records_created": false,
+    "oracle_started": false
+  },
+  "reproduce_command": "python formal_experiment/scripts/run_s2_12_sun_rule_only_v1.py --runtime-home D:/environment/stanford-corenlp-4.5.10 --device cpu"
+}

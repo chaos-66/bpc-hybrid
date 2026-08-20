@@ -1,0 +1,39 @@
+{
+  "schema_version": "s2_12_sun_rule_only_telemetry@1.0.0",
+  "record_count": 36,
+  "predicted_clause_count": 41,
+  "corenlp_seconds": 7.6966657000011764,
+  "bridge_seconds": 0.41467879997799173,
+  "classifier_seconds": 10.350868000008631,
+  "compose_seconds": 0.04900240001734346,
+  "total_seconds": 18.511214900005143,
+  "device": "cpu",
+  "modality_route_counts": {
+    "heuristic_aligned_classifier": 13,
+    "marker_obligation": 22,
+    "marker_permission": 2,
+    "prohibition_negation": 2,
+    "record_level_classifier_fallback": 1,
+    "validated_aligned_classifier": 1
+  },
+  "label_counts": {
+    "definition": 15,
+    "obligation": 22,
+    "permission": 2,
+    "prohibition": 2
+  },
+  "alignment_summary": {
+    "total": 41,
+    "heuristic_supported": 40,
+    "validated": 1,
+    "unsupported": 1,
+    "by_status": {
+      "equal_count_candidate": 37,
+      "heuristic_monotone_pack_unvalidated": 2,
+      "unsupported": 1,
+      "validated_anchor_alignment": 1
+    },
+    "note": "heuristic_supported is not verified alignment"
+  },
+  "text_or_gold_payload_committed": false
+}

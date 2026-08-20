@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "s2_12_api_preflight_v1.schema.json",
+  "title": "S2.12 API arms zero-call preflight report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "dataset_id", "preflight_lock", "input",
+    "model", "gold_isolation", "token_measurement", "arms", "global",
+    "pricing", "authorization", "safety", "reproduce_command"
+  ],
+  "properties": {
+    "schema_version": {"const": "s2_12_api_preflight_report@1.0.0"},
+    "status": {"const": "payloads_locked_zero_api_authorization_pending"},
+    "dataset_id": {"const": "s2_11_barrientos_complex_corpus_36_v1"},
+    "preflight_lock": {"$ref": "#/$defs/path_binding"},
+    "input": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "records", "raw_text_committed"],
+      "properties": {
+        "path": {"type": "string"}, "sha256": {"$ref": "#/$defs/sha"},
+        "records": {"const": 36}, "raw_text_committed": {"const": false}
+      }
+    },
+    "model": {"type": "object"},
+    "gold_isolation": {"type": "object"},
+    "token_measurement": {"type": "object"},
+    "arms": {
+      "type": "object", "additionalProperties": false,
+      "required": ["direct_llm", "sun_llm_fallback"],
+      "properties": {
+        "direct_llm": {"$ref": "#/$defs/arm"},
+        "sun_llm_fallback": {"$ref": "#/$defs/arm"}
+      }
+    },
+    "global": {"type": "object"},
+    "pricing": {"type": "object"},
+    "authorization": {"type": "object"},
+    "safety": {"type": "object"},
+    "reproduce_command": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "path_binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string"}, "sha256": {"$ref": "#/$defs/sha"}}
+    },
+    "call": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "call_index", "sample_id", "clause_id", "request_body_sha256",
+        "request_body_utf8_bytes", "system_prompt_utf8_bytes",
+        "user_prompt_utf8_bytes", "local_proxy_tokens"
+      ],
+      "properties": {
+        "call_index": {"type": "integer", "minimum": 1},
+        "sample_id": {"type": "string", "minLength": 1},
+        "clause_id": {"type": ["string", "null"]},
+        "request_body_sha256": {"$ref": "#/$defs/sha"},
+        "request_body_utf8_bytes": {"type": "integer", "minimum": 1},
+        "system_prompt_utf8_bytes": {"type": "integer", "minimum": 1},
+        "user_prompt_utf8_bytes": {"type": "integer", "minimum": 1},
+        "local_proxy_tokens": {"type": "integer", "minimum": 1}
+      }
+    },
+    "arm": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "prompt_name", "prompt_sha256", "transport_policy", "planned_calls",
+        "max_calls", "max_output_tokens_per_call", "max_output_tokens_total",
+        "retry_count", "request_body_utf8_bytes", "local_proxy_tokens", "calls"
+      ],
+      "properties": {
+        "prompt_name": {"type": "string"},
+        "prompt_sha256": {"$ref": "#/$defs/sha"},
+        "transport_policy": {"type": "object"},
+        "planned_calls": {"type": "integer", "minimum": 0},
+        "max_calls": {"type": "integer", "minimum": 0},
+        "max_output_tokens_per_call": {"const": 4096},
+        "max_output_tokens_total": {"type": "integer", "minimum": 0},
+        "retry_count": {"const": 0},
+        "request_body_utf8_bytes": {"type": "object"},
+        "local_proxy_tokens": {"type": "object"},
+        "calls": {"type": "array", "items": {"$ref": "#/$defs/call"}}
+      }
+    }
+  }
+}

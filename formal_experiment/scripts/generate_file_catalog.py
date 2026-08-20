@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / "docs" / "FILE_CATALOG.md"
 IGNORED_DIRS = {".pytest_cache", "__pycache__", ".tmp"}
 IGNORED_FILES = {".env"}
+IGNORED_SUFFIXES = {".bak"}
 
 
 def _status(path: Path) -> str:
@@ -106,6 +107,8 @@ def collect_files() -> list[Path]:
             continue
         relative = path.relative_to(ROOT)
         if relative.name in IGNORED_FILES:
+            continue
+        if relative.suffix.lower() in IGNORED_SUFFIXES:
             continue
         if any(part in IGNORED_DIRS for part in relative.parts):
             continue

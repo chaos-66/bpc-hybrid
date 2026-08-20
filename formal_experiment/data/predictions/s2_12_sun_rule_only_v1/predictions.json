@@ -1,0 +1,2301 @@
+{
+  "schema_version": "s2_12_sun_rule_only_predictions@1.0.0",
+  "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+  "method_id": "sun_rule_only",
+  "record_count": 36,
+  "gold_read_by_runner": false,
+  "raw_text_committed": false,
+  "records": [
+    {
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "SIM_card_scenario/r10/v1",
+        "source_id": "estg_legacy_SIM_card_scenario_r10_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0001.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 95
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 95
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 39,
+                "id": "s212_0001.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "SIM_card_scenario/r10/v2",
+        "source_id": "estg_legacy_SIM_card_scenario_r10_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0002.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 136
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 59,
+                  "end": 63
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 41,
+                "end": 58,
+                "id": "s212_0002.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 39,
+                "end": 85,
+                "id": "s212_0002.c1.action.1"
+              },
+              {
+                "start": 111,
+                "end": 136,
+                "id": "s212_0002.c1.action.2"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 39,
+                "id": "s212_0002.c1.condition.1"
+              },
+              {
+                "start": 89,
+                "end": 136,
+                "id": "s212_0002.c1.condition.2"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "s212_0002.c1.actor.1",
+                "action_id": "s212_0002.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "SIM_card_scenario/r11/v1",
+        "source_id": "estg_legacy_SIM_card_scenario_r11_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0003.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 70
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 70
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 17,
+                "id": "s212_0003.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 18,
+                "end": 70,
+                "id": "s212_0003.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 54,
+                "end": 69,
+                "id": "s212_0003.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "s212_0003.c1.actor.1",
+                "action_id": "s212_0003.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "SIM_card_scenario/r11/v2",
+        "source_id": "estg_legacy_SIM_card_scenario_r11_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0004.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 126
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 126
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 67,
+                "end": 86,
+                "id": "s212_0004.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 94,
+                "end": 126,
+                "id": "s212_0004.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 0,
+                "end": 65,
+                "id": "s212_0004.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "s212_0004.c1.actor.1",
+                "action_id": "s212_0004.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "SIM_card_scenario/r12/v1",
+        "source_id": "estg_legacy_SIM_card_scenario_r12_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0005.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 101
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 68,
+                  "end": 72
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 37,
+                "end": 101,
+                "id": "s212_0005.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 37,
+                "id": "s212_0005.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "SIM_card_scenario/r13/v1",
+        "source_id": "estg_legacy_SIM_card_scenario_r13_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0006.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 89
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 89
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 10,
+                "end": 47,
+                "id": "s212_0006.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "SIM_card_scenario/r13/v2",
+        "source_id": "estg_legacy_SIM_card_scenario_r13_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0007.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 88
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 88
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 10,
+                "end": 46,
+                "id": "s212_0007.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "SIM_card_scenario/r8/v1",
+        "source_id": "estg_legacy_SIM_card_scenario_r8_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0008.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 71
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 71
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 17,
+                "id": "s212_0008.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 22,
+                "end": 71,
+                "id": "s212_0008.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 27,
+                "end": 46,
+                "id": "s212_0008.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "s212_0008.c1.actor.1",
+                "action_id": "s212_0008.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "SIM_card_scenario/r8/v2",
+        "source_id": "estg_legacy_SIM_card_scenario_r8_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0009.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 92
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 29,
+                  "end": 33
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 34,
+                "end": 47,
+                "id": "s212_0009.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 48,
+                "end": 92,
+                "id": "s212_0009.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 60,
+                "end": 92,
+                "id": "s212_0009.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "SIM_card_scenario/r9/v2",
+        "source_id": "estg_legacy_SIM_card_scenario_r9_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0010.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 124
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 124
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 0,
+                "end": 51,
+                "id": "s212_0010.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r14/v1",
+        "source_id": "estg_legacy_blood_donation_scenario_r14_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0011.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 148
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 148
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 94,
+                "end": 148,
+                "id": "s212_0011.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 43,
+                "id": "s212_0011.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 115,
+                "end": 127,
+                "id": "s212_0011.c1.constraint.1"
+              },
+              {
+                "start": 128,
+                "end": 148,
+                "id": "s212_0011.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r14/v2",
+        "source_id": "estg_legacy_blood_donation_scenario_r14_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0012.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 103
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 103
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 49,
+                "end": 103,
+                "id": "s212_0012.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 70,
+                "end": 82,
+                "id": "s212_0012.c1.constraint.1"
+              },
+              {
+                "start": 83,
+                "end": 103,
+                "id": "s212_0012.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r15/v1",
+        "source_id": "estg_legacy_blood_donation_scenario_r15_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0013.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 79
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 79
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 49,
+                "end": 79,
+                "id": "s212_0013.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 49,
+                "id": "s212_0013.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r15/v2",
+        "source_id": "estg_legacy_blood_donation_scenario_r15_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0014.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 59
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 59
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 29,
+                "end": 59,
+                "id": "s212_0014.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 29,
+                "id": "s212_0014.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r16/v1",
+        "source_id": "estg_legacy_blood_donation_scenario_r16_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0015.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 83
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 83
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 0,
+                "end": 83,
+                "id": "s212_0015.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 0,
+                "end": 26,
+                "id": "s212_0015.c1.constraint.1"
+              },
+              {
+                "start": 51,
+                "end": 83,
+                "id": "s212_0015.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r17/v1",
+        "source_id": "estg_legacy_blood_donation_scenario_r17_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0016.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 128
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 128
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 73,
+                "end": 91,
+                "id": "s212_0016.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 73,
+                "id": "s212_0016.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 3,
+                "end": 19,
+                "id": "s212_0016.c1.constraint.1"
+              },
+              {
+                "start": 64,
+                "end": 73,
+                "id": "s212_0016.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r17/v2",
+        "source_id": "estg_legacy_blood_donation_scenario_r17_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0017.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 65
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 65
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 47,
+                "end": 65,
+                "id": "s212_0017.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 47,
+                "id": "s212_0017.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 3,
+                "end": 19,
+                "id": "s212_0017.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r18/v2",
+        "source_id": "estg_legacy_blood_donation_scenario_r18_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0018.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 88
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 39,
+                  "end": 43
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 32,
+                "end": 88,
+                "id": "s212_0018.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 32,
+                "id": "s212_0018.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r19/v1",
+        "source_id": "estg_legacy_blood_donation_scenario_r19_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0019.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 87
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 87
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 35,
+                "end": 87,
+                "id": "s212_0019.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r19/v2",
+        "source_id": "estg_legacy_blood_donation_scenario_r19_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0020.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 91
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 91
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 35,
+                "end": 91,
+                "id": "s212_0020.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r20/v1",
+        "source_id": "estg_legacy_blood_donation_scenario_r20_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0021.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 140
+            },
+            "modality": {
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 140
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 75,
+                "end": 140,
+                "id": "s212_0021.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 75,
+                "id": "s212_0021.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "blood_donation_scenario/r20/v2",
+        "source_id": "estg_legacy_blood_donation_scenario_r20_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0022.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 141
+            },
+            "modality": {
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 141
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 76,
+                "end": 141,
+                "id": "s212_0022.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 76,
+                "id": "s212_0022.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r1/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r1/v1",
+        "source_id": "estg_legacy_emergencies_scenario_r1_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0023.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 165
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 100,
+                  "end": 104
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 86,
+                "end": 165,
+                "id": "s212_0023.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 86,
+                "id": "s212_0023.c1.condition.1"
+              },
+              {
+                "start": 114,
+                "end": 164,
+                "id": "s212_0023.c1.condition.2"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 73,
+                "end": 86,
+                "id": "s212_0023.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r1/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r1/v2",
+        "source_id": "estg_legacy_emergencies_scenario_r1_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0024.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 147
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 110,
+                  "end": 114
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 86,
+                "end": 147,
+                "id": "s212_0024.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 86,
+                "id": "s212_0024.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 73,
+                "end": 86,
+                "id": "s212_0024.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r2/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r2/v1",
+        "source_id": "estg_legacy_emergencies_scenario_r2_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0025.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 76
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 42,
+                  "end": 46
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 0,
+                "end": 76,
+                "id": "s212_0025.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 0,
+                "end": 30,
+                "id": "s212_0025.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "s212_0025.c2",
+            "clause_span": {
+              "start": 77,
+              "end": 149
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 112,
+                  "end": 116
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 77,
+                "end": 149,
+                "id": "s212_0025.c2.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 77,
+                "end": 100,
+                "id": "s212_0025.c2.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r2/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r2/v2",
+        "source_id": "estg_legacy_emergencies_scenario_r2_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0026.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 76
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 42,
+                  "end": 46
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 0,
+                "end": 76,
+                "id": "s212_0026.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 0,
+                "end": 30,
+                "id": "s212_0026.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "s212_0026.c2",
+            "clause_span": {
+              "start": 77,
+              "end": 151
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 113,
+                  "end": 117
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 77,
+                "end": 151,
+                "id": "s212_0026.c2.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 77,
+                "end": 100,
+                "id": "s212_0026.c2.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r3/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r3/v1",
+        "source_id": "estg_legacy_emergencies_scenario_r3_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0027.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 91
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 35,
+                  "end": 39
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 25,
+                "end": 91,
+                "id": "s212_0027.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 25,
+                "id": "s212_0027.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 58,
+                "end": 91,
+                "id": "s212_0027.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "s212_0027.c2",
+            "clause_span": {
+              "start": 92,
+              "end": 151
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 105,
+                  "end": 109
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 110,
+                "end": 131,
+                "id": "s212_0027.c2.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 116,
+                "end": 131,
+                "id": "s212_0027.c2.constraint.1"
+              },
+              {
+                "start": 132,
+                "end": 150,
+                "id": "s212_0027.c2.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "s212_0027.c3",
+            "clause_span": {
+              "start": 152,
+              "end": 188
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 152,
+                  "end": 188
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 170,
+                "end": 187,
+                "id": "s212_0027.c3.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r3/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r3/v2",
+        "source_id": "estg_legacy_emergencies_scenario_r3_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0028.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 123
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 67,
+                  "end": 71
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 72,
+                "end": 89,
+                "id": "s212_0028.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 56,
+                "id": "s212_0028.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 33,
+                "end": 56,
+                "id": "s212_0028.c1.constraint.1"
+              },
+              {
+                "start": 90,
+                "end": 122,
+                "id": "s212_0028.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "s212_0028.c2",
+            "clause_span": {
+              "start": 124,
+              "end": 160
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 124,
+                  "end": 160
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 142,
+                "end": 159,
+                "id": "s212_0028.c2.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r4/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r4/v1",
+        "source_id": "estg_legacy_emergencies_scenario_r4_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0029.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 43
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 0,
+                "end": 43,
+                "id": "s212_0029.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "s212_0029.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r4/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r4/v2",
+        "source_id": "estg_legacy_emergencies_scenario_r4_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0030.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 109
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 109
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 56,
+                "end": 109,
+                "id": "s212_0030.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 56,
+                "id": "s212_0030.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 90,
+                "end": 108,
+                "id": "s212_0030.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r5/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r5/v1",
+        "source_id": "estg_legacy_emergencies_scenario_r5_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0031.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 75
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 75
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 36,
+                "end": 75,
+                "id": "s212_0031.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 49,
+                "end": 74,
+                "id": "s212_0031.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r5/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r5/v2",
+        "source_id": "estg_legacy_emergencies_scenario_r5_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0032.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 96
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 12,
+                  "end": 15
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 16,
+                "end": 96,
+                "id": "s212_0032.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 24,
+                "end": 95,
+                "id": "s212_0032.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 24,
+                "end": 95,
+                "id": "s212_0032.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r6/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r6/v1",
+        "source_id": "estg_legacy_emergencies_scenario_r6_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0033.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 50
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 14,
+                  "end": 18
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 19,
+                "end": 50,
+                "id": "s212_0033.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r6/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r6/v2",
+        "source_id": "estg_legacy_emergencies_scenario_r6_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0034.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 60
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 42,
+                  "end": 46
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 26,
+                "end": 60,
+                "id": "s212_0034.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 26,
+                "id": "s212_0034.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r7/v1",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r7/v1",
+        "source_id": "estg_legacy_emergencies_scenario_r7_v1",
+        "clauses": [
+          {
+            "clause_id": "s212_0035.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 68
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 52,
+                  "end": 56
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 39,
+                "end": 68,
+                "id": "s212_0035.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 0,
+                "end": 39,
+                "id": "s212_0035.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "emergencies_scenario/r7/v2",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "emergencies_scenario/r7/v2",
+        "source_id": "estg_legacy_emergencies_scenario_r7_v2",
+        "clauses": [
+          {
+            "clause_id": "s212_0036.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 123
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 123
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 21,
+                "end": 101,
+                "id": "s212_0036.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 29,
+                "end": 54,
+                "id": "s212_0036.c1.constraint.1"
+              },
+              {
+                "start": 102,
+                "end": 122,
+                "id": "s212_0036.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "sun_rule_only",
+          "method_variant": "b0_enhanced_v10a"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    }
+  ]
+}

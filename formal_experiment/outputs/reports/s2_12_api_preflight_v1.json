@@ -1,0 +1,827 @@
+{
+  "schema_version": "s2_12_api_preflight_report@1.0.0",
+  "status": "payloads_locked_zero_api_authorization_pending",
+  "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+  "preflight_lock": {
+    "path": "configs/s2_12_api_arms_preflight_v1.json",
+    "sha256": "3b62ba6658531a09469c7ecdecacc5797674ed795d62c55f389600586b2f221c"
+  },
+  "input": {
+    "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+    "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "records": 36,
+    "raw_text_committed": false
+  },
+  "model": {
+    "provider": "openai_compatible",
+    "base_url": "https://api.deepseek.com/v1",
+    "id": "deepseek-v4-pro",
+    "fail_closed": true,
+    "common_sampling": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_output_tokens_per_call": 4096,
+      "seed": null,
+      "seed_supported": false,
+      "retry_count": 0
+    },
+    "implementation_bindings": {
+      "scripts/run_direct_llm.py": "e30aaeea010608b33891551c11ba79cfdfd1165215241741e3aee1e1d0085014",
+      "scripts/run_sun_llm_fallback.py": "75716ecb5b7fc0501d4addf29abf4a14b5b7cd577ef20643d012415b96d314bd",
+      "src/bpc_hybrid/llm_client.py": "232284dadc2b1f867ee885db1d111360f005b29a52662619af2dffee4f128e24",
+      "src/bpc_hybrid/h1_transport.py": "f9efba42509eb85be522a45ee9ee4cf728ec1437945dfb4189bd7f4cc0d45b77"
+    }
+  },
+  "gold_isolation": {
+    "preflight_reads_gold": false,
+    "preflight_reads_decisions": false,
+    "preflight_reads_proposals": false,
+    "api_arms_must_not_read_gold": true,
+    "evaluation_only_after_predictions_are_locked": true,
+    "diagnostic_replay_equal_to_locked_predictions": true
+  },
+  "token_measurement": {
+    "exact_measurement": "final request body serialized by default json.dumps then UTF-8",
+    "official_deepseek_v4_pro_tokenizer_available_locally": false,
+    "official_billing_input_tokens": null,
+    "official_billing_input_tokens_status": "available only from response usage after a real call",
+    "local_proxy": {
+      "model_id": "nlpaueb/legal-bert-base-uncased",
+      "revision": "15b570cbf88259610b082a167dacc190124f60f6",
+      "kind": "Bert WordPiece local planning proxy",
+      "is_deepseek_tokenizer": false,
+      "is_billing_token_count": false,
+      "add_special_tokens": true,
+      "truncation": false
+    }
+  },
+  "arms": {
+    "direct_llm": {
+      "prompt_name": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "transport_policy": {
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        },
+        "response_format": null,
+        "tools_sent": false
+      },
+      "planned_calls": 36,
+      "max_calls": 36,
+      "max_output_tokens_per_call": 4096,
+      "max_output_tokens_total": 147456,
+      "retry_count": 0,
+      "request_body_utf8_bytes": {
+        "minimum": 17348,
+        "maximum": 17493,
+        "total": 626848
+      },
+      "local_proxy_tokens": {
+        "minimum": 4931,
+        "maximum": 4960,
+        "total": 177967
+      },
+      "calls": [
+        {
+          "call_index": 1,
+          "sample_id": "SIM_card_scenario/r10/v1",
+          "clause_id": null,
+          "request_body_sha256": "07aaf11c5cacd56670be2bc638c377f96efb2c28b4eb5501a2a39b451a7bd12c",
+          "request_body_utf8_bytes": 17396,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9732,
+          "local_proxy_tokens": 4943
+        },
+        {
+          "call_index": 2,
+          "sample_id": "SIM_card_scenario/r10/v2",
+          "clause_id": null,
+          "request_body_sha256": "cd1f5634a4941ad01b0aa49494786f2b99176d9e29be96197022e5d0ad77b069",
+          "request_body_utf8_bytes": 17437,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9773,
+          "local_proxy_tokens": 4950
+        },
+        {
+          "call_index": 3,
+          "sample_id": "SIM_card_scenario/r11/v1",
+          "clause_id": null,
+          "request_body_sha256": "dc551085ebfd1cbf2c148236a7f1e812b0757a90c73784d859aef4be3992528f",
+          "request_body_utf8_bytes": 17371,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9707,
+          "local_proxy_tokens": 4938
+        },
+        {
+          "call_index": 4,
+          "sample_id": "SIM_card_scenario/r11/v2",
+          "clause_id": null,
+          "request_body_sha256": "14f292aef94a4afb679fc8aa0331e6edfe936138171bc4ede551fde62a6b9454",
+          "request_body_utf8_bytes": 17427,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9763,
+          "local_proxy_tokens": 4948
+        },
+        {
+          "call_index": 5,
+          "sample_id": "SIM_card_scenario/r12/v1",
+          "clause_id": null,
+          "request_body_sha256": "5a37ac57aae52d6dbb87f6a279a787f836327785d6d4cb2ab69b8ceebd1c9d5a",
+          "request_body_utf8_bytes": 17407,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9740,
+          "local_proxy_tokens": 4945
+        },
+        {
+          "call_index": 6,
+          "sample_id": "SIM_card_scenario/r13/v1",
+          "clause_id": null,
+          "request_body_sha256": "3a1ee7efa5473c0db02332497ca82f5b440d3a72a35f5c43416a5c78a88b892d",
+          "request_body_utf8_bytes": 17395,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9728,
+          "local_proxy_tokens": 4939
+        },
+        {
+          "call_index": 7,
+          "sample_id": "SIM_card_scenario/r13/v2",
+          "clause_id": null,
+          "request_body_sha256": "021c4f958f1328e5ea90dcbf4f955ab845989b1f26fa4dbeaaf7c3686beab102",
+          "request_body_utf8_bytes": 17394,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9727,
+          "local_proxy_tokens": 4939
+        },
+        {
+          "call_index": 8,
+          "sample_id": "SIM_card_scenario/r8/v1",
+          "clause_id": null,
+          "request_body_sha256": "f659407b75ce5cc8e12f94d80e8465fdbfcde3c18b4a271044e0e02de4f9b0ce",
+          "request_body_utf8_bytes": 17370,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9706,
+          "local_proxy_tokens": 4939
+        },
+        {
+          "call_index": 9,
+          "sample_id": "SIM_card_scenario/r8/v2",
+          "clause_id": null,
+          "request_body_sha256": "3c0789bc2ef67ba88bbe2fd5e24fb942b93ea8cd7e04a29153a1f2a79a68c159",
+          "request_body_utf8_bytes": 17391,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9727,
+          "local_proxy_tokens": 4942
+        },
+        {
+          "call_index": 10,
+          "sample_id": "SIM_card_scenario/r9/v2",
+          "clause_id": null,
+          "request_body_sha256": "f7a0203bc1bc39a7d2c764fbc179c9f7f933341baf3c90bd0907736905e1c5cd",
+          "request_body_utf8_bytes": 17428,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9761,
+          "local_proxy_tokens": 4944
+        },
+        {
+          "call_index": 11,
+          "sample_id": "blood_donation_scenario/r14/v1",
+          "clause_id": null,
+          "request_body_sha256": "7761992327196891582c3e845b5e3c4484f70a985b5a6a7096756f72d7591c91",
+          "request_body_utf8_bytes": 17461,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9797,
+          "local_proxy_tokens": 4953
+        },
+        {
+          "call_index": 12,
+          "sample_id": "blood_donation_scenario/r14/v2",
+          "clause_id": null,
+          "request_body_sha256": "3df2f8f69a8db83a7bda6c41aa1c7bf96a0fb37e13e36b446a781f30633b2399",
+          "request_body_utf8_bytes": 17416,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9752,
+          "local_proxy_tokens": 4942
+        },
+        {
+          "call_index": 13,
+          "sample_id": "blood_donation_scenario/r15/v1",
+          "clause_id": null,
+          "request_body_sha256": "e369a2476c0abc414aa910fa1ae733047fbbf3180e152a8f581d6862ec08b9f3",
+          "request_body_utf8_bytes": 17392,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9728,
+          "local_proxy_tokens": 4940
+        },
+        {
+          "call_index": 14,
+          "sample_id": "blood_donation_scenario/r15/v2",
+          "clause_id": null,
+          "request_body_sha256": "0cfcd1b06925ff4e10e56cc5ecc7cc94c75e47f063947cfc55ce637a3d97d106",
+          "request_body_utf8_bytes": 17372,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9708,
+          "local_proxy_tokens": 4936
+        },
+        {
+          "call_index": 15,
+          "sample_id": "blood_donation_scenario/r16/v1",
+          "clause_id": null,
+          "request_body_sha256": "e8577f1c2190a08a74058bd01dda88d4ead9173ecc61659d62866b8f436f84d2",
+          "request_body_utf8_bytes": 17396,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9732,
+          "local_proxy_tokens": 4939
+        },
+        {
+          "call_index": 16,
+          "sample_id": "blood_donation_scenario/r17/v1",
+          "clause_id": null,
+          "request_body_sha256": "1b8b4730d7ca7d07b7e2f45982c962510493116e1e42c44c1a77c4393a6f0f1a",
+          "request_body_utf8_bytes": 17441,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9777,
+          "local_proxy_tokens": 4949
+        },
+        {
+          "call_index": 17,
+          "sample_id": "blood_donation_scenario/r17/v2",
+          "clause_id": null,
+          "request_body_sha256": "b9f8d9e506854d2c9b5d6a82bf10e4627e04710a9438e565fa95a9473be7774f",
+          "request_body_utf8_bytes": 17378,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9714,
+          "local_proxy_tokens": 4937
+        },
+        {
+          "call_index": 18,
+          "sample_id": "blood_donation_scenario/r18/v2",
+          "clause_id": null,
+          "request_body_sha256": "7d92fe8f48b7709a34524e5d1295a889db2b302c3e3b33870f06d90927bc0cab",
+          "request_body_utf8_bytes": 17401,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9737,
+          "local_proxy_tokens": 4940
+        },
+        {
+          "call_index": 19,
+          "sample_id": "blood_donation_scenario/r19/v1",
+          "clause_id": null,
+          "request_body_sha256": "9665c9fe064a7913a1cc146efdca25abe7ff3823fd3b9e607b42a3dca32d0701",
+          "request_body_utf8_bytes": 17400,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9736,
+          "local_proxy_tokens": 4938
+        },
+        {
+          "call_index": 20,
+          "sample_id": "blood_donation_scenario/r19/v2",
+          "clause_id": null,
+          "request_body_sha256": "061da0c9566bd1c74a68eb5ee94a5518544d531bda897cb13ea4dc31e66eedcf",
+          "request_body_utf8_bytes": 17404,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9740,
+          "local_proxy_tokens": 4939
+        },
+        {
+          "call_index": 21,
+          "sample_id": "blood_donation_scenario/r20/v1",
+          "clause_id": null,
+          "request_body_sha256": "346e0aed391e529a2d47229b3f64a0c0fe9bdd3301891fd30f5916848cc5a477",
+          "request_body_utf8_bytes": 17453,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9789,
+          "local_proxy_tokens": 4947
+        },
+        {
+          "call_index": 22,
+          "sample_id": "blood_donation_scenario/r20/v2",
+          "clause_id": null,
+          "request_body_sha256": "bcf6697169274710082657a01526852a2c2d5bd5afe4acad83b543eefbf391cc",
+          "request_body_utf8_bytes": 17454,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9790,
+          "local_proxy_tokens": 4947
+        },
+        {
+          "call_index": 23,
+          "sample_id": "emergencies_scenario/r1/v1",
+          "clause_id": null,
+          "request_body_sha256": "169616ed8b71fc6a6a50063a0f071267aac5300631747ce119a9b740ed4b522d",
+          "request_body_utf8_bytes": 17470,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9806,
+          "local_proxy_tokens": 4959
+        },
+        {
+          "call_index": 24,
+          "sample_id": "emergencies_scenario/r1/v2",
+          "clause_id": null,
+          "request_body_sha256": "2064e38bb110288da8a589715d57b187f006bf97e3d905bf14020bd554abed85",
+          "request_body_utf8_bytes": 17452,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9788,
+          "local_proxy_tokens": 4954
+        },
+        {
+          "call_index": 25,
+          "sample_id": "emergencies_scenario/r2/v1",
+          "clause_id": null,
+          "request_body_sha256": "c877c122e2fcf74b5fc59a67d88fdb5911236815115bce269a82d6aa22ba9421",
+          "request_body_utf8_bytes": 17459,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9792,
+          "local_proxy_tokens": 4953
+        },
+        {
+          "call_index": 26,
+          "sample_id": "emergencies_scenario/r2/v2",
+          "clause_id": null,
+          "request_body_sha256": "14c0fa7d022f55947cd94c90178636af6b2bce7017ccfa46cb056dc121f20704",
+          "request_body_utf8_bytes": 17461,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9794,
+          "local_proxy_tokens": 4954
+        },
+        {
+          "call_index": 27,
+          "sample_id": "emergencies_scenario/r3/v1",
+          "clause_id": null,
+          "request_body_sha256": "c48eec186aa916e6afec016bd0f3cb76fc5fb614fb432a0aa2cceeb70409b0d5",
+          "request_body_utf8_bytes": 17493,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9829,
+          "local_proxy_tokens": 4960
+        },
+        {
+          "call_index": 28,
+          "sample_id": "emergencies_scenario/r3/v2",
+          "clause_id": null,
+          "request_body_sha256": "6dbd3b4d94de70676a075084b0b7d062707ef5ff7c4c026305690e5d5ed96482",
+          "request_body_utf8_bytes": 17465,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9801,
+          "local_proxy_tokens": 4956
+        },
+        {
+          "call_index": 29,
+          "sample_id": "emergencies_scenario/r4/v1",
+          "clause_id": null,
+          "request_body_sha256": "ad6cf13cb33b7a9a2492cd9dd1bc9c09413e3b668ac61cb70fd5ba1e83265e17",
+          "request_body_utf8_bytes": 17348,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9684,
+          "local_proxy_tokens": 4932
+        },
+        {
+          "call_index": 30,
+          "sample_id": "emergencies_scenario/r4/v2",
+          "clause_id": null,
+          "request_body_sha256": "0deb6bc078af7544d87f1dc5582b47d847077a3f8e419aed3aaaafde37b3b9fd",
+          "request_body_utf8_bytes": 17414,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9750,
+          "local_proxy_tokens": 4943
+        },
+        {
+          "call_index": 31,
+          "sample_id": "emergencies_scenario/r5/v1",
+          "clause_id": null,
+          "request_body_sha256": "071b6c333c194ada8a590cd88057e1fb663016dd7afaa43811cf1758c45c0a6a",
+          "request_body_utf8_bytes": 17380,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9716,
+          "local_proxy_tokens": 4934
+        },
+        {
+          "call_index": 32,
+          "sample_id": "emergencies_scenario/r5/v2",
+          "clause_id": null,
+          "request_body_sha256": "c4aa4fce8d41018d07ffef9111bd6e0342105791cd68807e501aca98d0b35604",
+          "request_body_utf8_bytes": 17401,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9737,
+          "local_proxy_tokens": 4940
+        },
+        {
+          "call_index": 33,
+          "sample_id": "emergencies_scenario/r6/v1",
+          "clause_id": null,
+          "request_body_sha256": "33881000b251618d12050c0da5aa3758a348cdb82f3513203345d71061c276ba",
+          "request_body_utf8_bytes": 17355,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9691,
+          "local_proxy_tokens": 4931
+        },
+        {
+          "call_index": 34,
+          "sample_id": "emergencies_scenario/r6/v2",
+          "clause_id": null,
+          "request_body_sha256": "50ca391a0286ef98c7daf6299cb1d7bdf78ffd8a7c843c0a47408eaff5abdb7e",
+          "request_body_utf8_bytes": 17365,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9701,
+          "local_proxy_tokens": 4935
+        },
+        {
+          "call_index": 35,
+          "sample_id": "emergencies_scenario/r7/v1",
+          "clause_id": null,
+          "request_body_sha256": "741bea099b1885b724eb292034cc55761a8acbcd4408547c411cafb4bdc94a16",
+          "request_body_utf8_bytes": 17373,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9709,
+          "local_proxy_tokens": 4936
+        },
+        {
+          "call_index": 36,
+          "sample_id": "emergencies_scenario/r7/v2",
+          "clause_id": null,
+          "request_body_sha256": "59463938eaed653be14a9af5875620236ea8c6d790a60d0512a1bfd1cc1afd08",
+          "request_body_utf8_bytes": 17428,
+          "system_prompt_utf8_bytes": 6172,
+          "user_prompt_utf8_bytes": 9764,
+          "local_proxy_tokens": 4946
+        }
+      ]
+    },
+    "sun_llm_fallback": {
+      "prompt_name": "rule_first_llm_fallback_prompt",
+      "prompt_sha256": "00fe02996914e17f30962147d7a9f2c71a92d2479ba4eff343583a139bb1537b",
+      "transport_policy": {
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        },
+        "response_format": {
+          "type": "json_object"
+        },
+        "tools_sent": false
+      },
+      "planned_calls": 27,
+      "max_calls": 72,
+      "max_output_tokens_per_call": 4096,
+      "max_output_tokens_total": 110592,
+      "retry_count": 0,
+      "request_body_utf8_bytes": {
+        "minimum": 4010,
+        "maximum": 5133,
+        "total": 122957
+      },
+      "local_proxy_tokens": {
+        "minimum": 961,
+        "maximum": 1258,
+        "total": 29501
+      },
+      "calls": [
+        {
+          "call_index": 1,
+          "sample_id": "emergencies_scenario/r3/v1",
+          "clause_id": "s212_0027.c1",
+          "request_body_sha256": "dff2f214e300d082e56610af0759688150305c108c1ed4991cb90eef412075fe",
+          "request_body_utf8_bytes": 4720,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2026,
+          "local_proxy_tokens": 1139
+        },
+        {
+          "call_index": 2,
+          "sample_id": "emergencies_scenario/r3/v1",
+          "clause_id": "s212_0027.c2",
+          "request_body_sha256": "e1d12a393e966381ccde2d5357b666d2168f3653af5d6a65ee848cf36cf8cf9b",
+          "request_body_utf8_bytes": 4557,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1864,
+          "local_proxy_tokens": 1105
+        },
+        {
+          "call_index": 3,
+          "sample_id": "SIM_card_scenario/r12/v1",
+          "clause_id": "s212_0005.c1",
+          "request_body_sha256": "c93e114b3a227170ff76c4e0026341c9de7f443c3d56d16c02dfd22c935992bd",
+          "request_body_utf8_bytes": 4423,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1741,
+          "local_proxy_tokens": 1060
+        },
+        {
+          "call_index": 4,
+          "sample_id": "SIM_card_scenario/r8/v2",
+          "clause_id": "s212_0009.c1",
+          "request_body_sha256": "80fe99ea29cf53a44dcfd36632dd21ab7a0071549c74a87ba2a47f09fb89c404",
+          "request_body_utf8_bytes": 4514,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1820,
+          "local_proxy_tokens": 1096
+        },
+        {
+          "call_index": 5,
+          "sample_id": "blood_donation_scenario/r15/v1",
+          "clause_id": "s212_0013.c1",
+          "request_body_sha256": "85e19138a250b3e7b1f313eaf11493033b38df43df1dbf87b7e28ed66b71f7b1",
+          "request_body_utf8_bytes": 4405,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1735,
+          "local_proxy_tokens": 1055
+        },
+        {
+          "call_index": 6,
+          "sample_id": "blood_donation_scenario/r15/v2",
+          "clause_id": "s212_0014.c1",
+          "request_body_sha256": "ba28b6a59f70d8afb34b37356d6d9f4acc9fbb0f6495142e3ef65ea14096c156",
+          "request_body_utf8_bytes": 4305,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1635,
+          "local_proxy_tokens": 1035
+        },
+        {
+          "call_index": 7,
+          "sample_id": "blood_donation_scenario/r18/v2",
+          "clause_id": "s212_0018.c1",
+          "request_body_sha256": "d34b97ed72ac7081421737405f30004a0ecc0cfbc4237f7f11cab91c99679600",
+          "request_body_utf8_bytes": 4367,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1697,
+          "local_proxy_tokens": 1040
+        },
+        {
+          "call_index": 8,
+          "sample_id": "blood_donation_scenario/r20/v1",
+          "clause_id": "s212_0021.c1",
+          "request_body_sha256": "cec1f4d5da7647b833d1c22bbd88374d14777b1d7ef6203164061cd44e030714",
+          "request_body_utf8_bytes": 4714,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2044,
+          "local_proxy_tokens": 1090
+        },
+        {
+          "call_index": 9,
+          "sample_id": "blood_donation_scenario/r20/v2",
+          "clause_id": "s212_0022.c1",
+          "request_body_sha256": "ad4194d0d4a6354099392c0fd3e803ea898b542e74c20db25c32a4096adafba9",
+          "request_body_utf8_bytes": 4719,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2049,
+          "local_proxy_tokens": 1090
+        },
+        {
+          "call_index": 10,
+          "sample_id": "emergencies_scenario/r1/v1",
+          "clause_id": "s212_0023.c1",
+          "request_body_sha256": "1bbca39f37d6e9c319236f6170990b903dec45d446228b5a90906ded510b258c",
+          "request_body_utf8_bytes": 5105,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2388,
+          "local_proxy_tokens": 1244
+        },
+        {
+          "call_index": 11,
+          "sample_id": "emergencies_scenario/r1/v2",
+          "clause_id": "s212_0024.c1",
+          "request_body_sha256": "cbcd337d136229564502a4e37c47000c9f36e105b8352c7032228f3857841d3a",
+          "request_body_utf8_bytes": 4778,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2084,
+          "local_proxy_tokens": 1157
+        },
+        {
+          "call_index": 12,
+          "sample_id": "emergencies_scenario/r2/v1",
+          "clause_id": "s212_0025.c1",
+          "request_body_sha256": "687be4e38c687d5c596088d2d48e4c873ba4558e42c64fe900e60dbc15f89024",
+          "request_body_utf8_bytes": 4460,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1778,
+          "local_proxy_tokens": 1057
+        },
+        {
+          "call_index": 13,
+          "sample_id": "emergencies_scenario/r2/v1",
+          "clause_id": "s212_0025.c2",
+          "request_body_sha256": "3a773db6062fb209e8315c7bb692b96715c3d2e0c735a0968f64f5edb6219723",
+          "request_body_utf8_bytes": 4427,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1754,
+          "local_proxy_tokens": 1058
+        },
+        {
+          "call_index": 14,
+          "sample_id": "emergencies_scenario/r2/v2",
+          "clause_id": "s212_0026.c1",
+          "request_body_sha256": "cf5f5b1ad15063edd51218ac322ce264ae360ebc949f98e583001c8c5b6f49be",
+          "request_body_utf8_bytes": 4462,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1780,
+          "local_proxy_tokens": 1058
+        },
+        {
+          "call_index": 15,
+          "sample_id": "emergencies_scenario/r2/v2",
+          "clause_id": "s212_0026.c2",
+          "request_body_sha256": "1b86201c54586942c25c8231f2a5cc73fe1d1d7e6c7e5e46a62be18104f5bec3",
+          "request_body_utf8_bytes": 4435,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1762,
+          "local_proxy_tokens": 1062
+        },
+        {
+          "call_index": 16,
+          "sample_id": "emergencies_scenario/r3/v2",
+          "clause_id": "s212_0028.c1",
+          "request_body_sha256": "0a979d96afc8abc3233412a7e7b91f22f8ce3e03a5097e26868b6e3fe7f1f15e",
+          "request_body_utf8_bytes": 4855,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2138,
+          "local_proxy_tokens": 1182
+        },
+        {
+          "call_index": 17,
+          "sample_id": "emergencies_scenario/r4/v1",
+          "clause_id": "s212_0029.c1",
+          "request_body_sha256": "af03d05678afb5f6119af58e8e945dbeb23ed08b111e214401e042c4e8f1f781",
+          "request_body_utf8_bytes": 4245,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1575,
+          "local_proxy_tokens": 1033
+        },
+        {
+          "call_index": 18,
+          "sample_id": "emergencies_scenario/r4/v2",
+          "clause_id": "s212_0030.c1",
+          "request_body_sha256": "b8454370126ec63d8d6e0224b52a3f50e1882b10af279551fe759988af83e328",
+          "request_body_utf8_bytes": 4740,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2046,
+          "local_proxy_tokens": 1135
+        },
+        {
+          "call_index": 19,
+          "sample_id": "emergencies_scenario/r5/v2",
+          "clause_id": "s212_0032.c1",
+          "request_body_sha256": "0b904faaea136ec1bca2fbd2ce27a8443d45e6d13bec77bae9a67153dd54dfde",
+          "request_body_utf8_bytes": 4795,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2101,
+          "local_proxy_tokens": 1139
+        },
+        {
+          "call_index": 20,
+          "sample_id": "emergencies_scenario/r6/v1",
+          "clause_id": "s212_0033.c1",
+          "request_body_sha256": "4672bd8ba95bd364ef242fd1bf6bf3b6552ec8fbfa97f7abbc59b0a67e58b095",
+          "request_body_utf8_bytes": 4010,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1364,
+          "local_proxy_tokens": 961
+        },
+        {
+          "call_index": 21,
+          "sample_id": "emergencies_scenario/r6/v2",
+          "clause_id": "s212_0034.c1",
+          "request_body_sha256": "3933669a7799afa9faf6f9ae925751346886fa5733fd6e86799568cfacbb7556",
+          "request_body_utf8_bytes": 4243,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1573,
+          "local_proxy_tokens": 1025
+        },
+        {
+          "call_index": 22,
+          "sample_id": "emergencies_scenario/r7/v1",
+          "clause_id": "s212_0035.c1",
+          "request_body_sha256": "c3ac7339815d8987c494118ce0d879b4d040b0a421c1ac55c0203f76f12facd6",
+          "request_body_utf8_bytes": 4276,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1606,
+          "local_proxy_tokens": 1029
+        },
+        {
+          "call_index": 23,
+          "sample_id": "emergencies_scenario/r7/v2",
+          "clause_id": "s212_0036.c1",
+          "request_body_sha256": "a56abfa891a58feb35b193c35a59d178a3d87d3c93f0645c2606ab94dbba3c16",
+          "request_body_utf8_bytes": 4778,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2085,
+          "local_proxy_tokens": 1131
+        },
+        {
+          "call_index": 24,
+          "sample_id": "SIM_card_scenario/r10/v2",
+          "clause_id": "s212_0002.c1",
+          "request_body_sha256": "dbd74af7faf83080bd5a7c629b186bce7ae89972c71521dd600496e1bb0b4a63",
+          "request_body_utf8_bytes": 5133,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2380,
+          "local_proxy_tokens": 1258
+        },
+        {
+          "call_index": 25,
+          "sample_id": "SIM_card_scenario/r11/v2",
+          "clause_id": "s212_0004.c1",
+          "request_body_sha256": "5507b5a90fc651824eba02e48139179f0cf49b15c899d4f3ea2ddeda66e0dd2f",
+          "request_body_utf8_bytes": 4815,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 2108,
+          "local_proxy_tokens": 1159
+        },
+        {
+          "call_index": 26,
+          "sample_id": "SIM_card_scenario/r8/v1",
+          "clause_id": "s212_0008.c1",
+          "request_body_sha256": "240a5a6a32425d69aea6e28bf8c6e503e770eb5b4e49416145db490e189e6978",
+          "request_body_utf8_bytes": 4582,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1875,
+          "local_proxy_tokens": 1126
+        },
+        {
+          "call_index": 27,
+          "sample_id": "emergencies_scenario/r3/v1",
+          "clause_id": "s212_0027.c3",
+          "request_body_sha256": "7aa93e0a3527617fa060ed20ed883c51c1f9c1c51a8c1f642d10ae4e8068a503",
+          "request_body_utf8_bytes": 4094,
+          "system_prompt_utf8_bytes": 2187,
+          "user_prompt_utf8_bytes": 1448,
+          "local_proxy_tokens": 977
+        }
+      ]
+    }
+  },
+  "global": {
+    "planned_calls": 63,
+    "configured_hard_call_cap": 108,
+    "retry_count": 0,
+    "request_body_utf8_bytes": {
+      "maximum_per_call": 17493,
+      "total": 749805
+    },
+    "local_proxy_tokens": {
+      "maximum_per_call": 4960,
+      "total": 207468
+    },
+    "max_output_tokens_per_call": 4096,
+    "max_output_tokens_total": 258048
+  },
+  "pricing": {
+    "checked_date": "2026-08-18",
+    "official_source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "official_token_usage_source": "https://api-docs.deepseek.com/quick_start/token_usage",
+    "currency": "USD",
+    "per_million_tokens": {
+      "input_cache_hit": 0.003625,
+      "input_cache_miss": 0.435,
+      "output": 0.87
+    },
+    "proxy_based_planning_only_not_billable_exact": {
+      "all_input_cache_hit_usd": 0.0007520715,
+      "all_input_cache_miss_usd": 0.09024858,
+      "max_output_usd": 0.22450176000000002,
+      "cache_miss_input_plus_max_output_usd": 0.31475034
+    },
+    "official_context_derived_absolute_bound": {
+      "input_tokens": 63000000,
+      "assumption": "each planned call consumes the full official 1M context as cache-miss input, plus the configured 4096 output cap; deliberately conservative",
+      "cache_miss_input_plus_max_output_usd": 27.62950176,
+      "recommended_rounded_hard_cost_cap_usd": 27.63
+    },
+    "actual_cost_usd": null,
+    "actual_cost_status": "no API call made; exact billing requires response usage",
+    "recheck_official_price_before_run": true
+  },
+  "authorization": {
+    "real_api_calls_made": 0,
+    "real_api_calls_authorized": false,
+    "pending": [
+      "explicit total input-token cap",
+      "explicit total USD cap",
+      "exact user API authorization"
+    ],
+    "recommended_hard_limits": {
+      "max_calls": 63,
+      "max_request_body_utf8_bytes_per_call": 17493,
+      "max_request_body_utf8_bytes_total": 749805,
+      "max_billed_input_tokens_total": 63000000,
+      "max_output_tokens_per_call": 4096,
+      "max_output_tokens_total": 258048,
+      "max_cost_usd": 27.63,
+      "retry_count": 0
+    },
+    "hard_stops": [
+      "no exact matching user API authorization",
+      "model or returned model mismatch",
+      "input, source, prompt, implementation, config, prediction, or payload drift",
+      "call, request-body byte, input-token, output-token, or USD cap would be exceeded",
+      "retry requested or retry_count is not zero",
+      "Gold, decisions, proposals, Oracle, or Gold Rule Records visible to an arm",
+      "official price cannot be revalidated immediately before an authorized run"
+    ]
+  },
+  "safety": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "raw_payload_or_source_text_committed": false,
+    "gold_rule_records_created": false,
+    "oracle_started": false
+  },
+  "reproduce_command": "python formal_experiment/scripts/build_s2_12_api_preflight_v1.py --runtime-home D:/environment/stanford-corenlp-4.5.10 --tokenizer-snapshot <local-nlpaueb-legal-bert-snapshot> --check"
+}

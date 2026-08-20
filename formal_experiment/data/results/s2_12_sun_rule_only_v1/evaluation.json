@@ -1,0 +1,380 @@
+{
+  "schema_version": "s2_12_sun_rule_only_evaluation@1.0.0",
+  "status": "verified_zero_api_arm_complete",
+  "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+  "arm": "sun_rule_only",
+  "scope_boundary": {
+    "single_zero_api_arm_only": true,
+    "three_method_comparison_complete": false,
+    "direct_llm_pending_api_authorization": true,
+    "sun_llm_fallback_pending_api_authorization": true,
+    "post_result_tuning_performed": false,
+    "no_method_rule_prompt_threshold_adjustment_from_gold_or_results": true
+  },
+  "prediction_lock": {
+    "manifest_path": "data/predictions/s2_12_sun_rule_only_v1/manifest.json",
+    "manifest_sha256": "e96d76016e815736fc5b4a588187ee42b3b1c9cc702e28cc607a6da82cd0c3c2",
+    "predictions_path": "data/predictions/s2_12_sun_rule_only_v1/predictions.json",
+    "predictions_sha256": "f1e88ac5167ec1d3f0644dfcbeac60ead18932f766231baf3cb8e86b4af77006",
+    "status": "predictions_locked_before_gold_evaluation",
+    "gold_read_by_runner": false
+  },
+  "gold_binding": {
+    "path": "data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json",
+    "sha256": "039ae8b2429826ae2b320667fb4a0dff96de6408b0a9637c1d9911565129c804",
+    "read_only_after_prediction_lock": true
+  },
+  "strata": {
+    "source": "outputs/reports/s2_11_proposal_report_v3.json",
+    "sha256": "0cd725b4e7e14c88a97ca005ec10dac3f7fc77c2ebf3955eb746abdc9479616a",
+    "counts": {
+      "L1": 31,
+      "L2": 5,
+      "L3": 0
+    },
+    "l3_policy": "no samples; no performance conclusion"
+  },
+  "evaluator": {
+    "module": "src/bpc_hybrid/s2_12_stratified_evaluator_v2.py",
+    "module_sha256": "2d1bdcf4ddab94220ad3108d9145c0d8d306ec70519e39ac62396fcb3d9cac6d",
+    "g0_4_parity_contract": "configs/stage2_evaluator_s210_v3.json",
+    "g0_4_parity_contract_sha256": "28ce332564c5d10da08dea515aefe31cc2aacd91b6c6877aa1bfebe44f39ae7f"
+  },
+  "metrics": {
+    "schema_version": "s2_12_stratified_evaluator@2.0.0",
+    "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+    "method_id": "sun_rule_only",
+    "strata": {
+      "L1": {
+        "samples": 31,
+        "span_fields": {
+          "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+          "overall": {
+            "ground_truth": 113,
+            "extracted": 104,
+            "matched_predictions": 91,
+            "matched_ground_truth": 91,
+            "misclassified": 13,
+            "missed": 22,
+            "precision": 0.875,
+            "recall": 0.8053097345132744,
+            "f1": 0.8387096774193548
+          },
+          "span_fields": {
+            "actor": {
+              "ground_truth": 11,
+              "extracted": 4,
+              "precision": 1.0,
+              "recall": 0.36363636363636365,
+              "f1": 0.5333333333333333
+            },
+            "action": {
+              "ground_truth": 31,
+              "extracted": 28,
+              "precision": 0.8571428571428571,
+              "recall": 0.7741935483870968,
+              "f1": 0.8135593220338982
+            },
+            "condition": {
+              "ground_truth": 15,
+              "extracted": 18,
+              "precision": 0.8333333333333334,
+              "recall": 1.0,
+              "f1": 0.9090909090909091
+            },
+            "constraint": {
+              "ground_truth": 23,
+              "extracted": 22,
+              "precision": 0.7272727272727273,
+              "recall": 0.6956521739130435,
+              "f1": 0.711111111111111
+            },
+            "exception": {
+              "ground_truth": 2,
+              "extracted": 1,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            }
+          }
+        },
+        "modality_labels": {
+          "classes": [
+            "obligation",
+            "permission",
+            "prohibition",
+            "definition"
+          ],
+          "records": 31,
+          "accuracy": 0.6129032258064516,
+          "macro_f1": 0.5307017543859649,
+          "per_class": [
+            {
+              "class": "obligation",
+              "precision": 1.0,
+              "recall": 0.6521739130434783,
+              "f1": 0.7894736842105263
+            },
+            {
+              "class": "permission",
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            {
+              "class": "prohibition",
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            {
+              "class": "definition",
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          ],
+          "separate_from_span_metrics": true
+        }
+      },
+      "L2": {
+        "samples": 5,
+        "span_fields": {
+          "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+          "overall": {
+            "ground_truth": 34,
+            "extracted": 34,
+            "matched_predictions": 28,
+            "matched_ground_truth": 27,
+            "misclassified": 6,
+            "missed": 7,
+            "precision": 0.8235294117647058,
+            "recall": 0.7941176470588235,
+            "f1": 0.8085561497326202
+          },
+          "span_fields": {
+            "actor": {
+              "ground_truth": 6,
+              "extracted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "action": {
+              "ground_truth": 8,
+              "extracted": 8,
+              "precision": 0.875,
+              "recall": 0.875,
+              "f1": 0.875
+            },
+            "condition": {
+              "ground_truth": 3,
+              "extracted": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "constraint": {
+              "ground_truth": 10,
+              "extracted": 13,
+              "precision": 0.8461538461538461,
+              "recall": 1.0,
+              "f1": 0.9166666666666666
+            },
+            "exception": {
+              "ground_truth": 0,
+              "extracted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          }
+        },
+        "modality_labels": {
+          "classes": [
+            "obligation",
+            "permission",
+            "prohibition",
+            "definition"
+          ],
+          "records": 5,
+          "accuracy": 0.8,
+          "macro_f1": 0.22222222222222224,
+          "per_class": [
+            {
+              "class": "obligation",
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.888888888888889
+            },
+            {
+              "class": "permission",
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            {
+              "class": "prohibition",
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            {
+              "class": "definition",
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          ],
+          "separate_from_span_metrics": true
+        }
+      },
+      "L3": {
+        "samples": 0,
+        "note": "no samples in this stratum; no performance conclusion is reported",
+        "span_fields": null,
+        "modality_labels": null
+      }
+    },
+    "overall": {
+      "samples": 36,
+      "span_fields": {
+        "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+        "overall": {
+          "ground_truth": 147,
+          "extracted": 138,
+          "matched_predictions": 119,
+          "matched_ground_truth": 118,
+          "misclassified": 19,
+          "missed": 29,
+          "precision": 0.8623188405797102,
+          "recall": 0.8027210884353742,
+          "f1": 0.8314533558338515
+        },
+        "span_fields": {
+          "actor": {
+            "ground_truth": 17,
+            "extracted": 4,
+            "precision": 1.0,
+            "recall": 0.23529411764705882,
+            "f1": 0.38095238095238093
+          },
+          "action": {
+            "ground_truth": 39,
+            "extracted": 36,
+            "precision": 0.8611111111111112,
+            "recall": 0.7948717948717948,
+            "f1": 0.8266666666666667
+          },
+          "condition": {
+            "ground_truth": 18,
+            "extracted": 21,
+            "precision": 0.8571428571428571,
+            "recall": 1.0,
+            "f1": 0.923076923076923
+          },
+          "constraint": {
+            "ground_truth": 33,
+            "extracted": 35,
+            "precision": 0.7714285714285715,
+            "recall": 0.7878787878787878,
+            "f1": 0.7795669072737368
+          },
+          "exception": {
+            "ground_truth": 2,
+            "extracted": 1,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          }
+        }
+      },
+      "modality_labels": {
+        "classes": [
+          "obligation",
+          "permission",
+          "prohibition",
+          "definition"
+        ],
+        "records": 36,
+        "accuracy": 0.6388888888888888,
+        "macro_f1": 0.5354609929078014,
+        "per_class": [
+          {
+            "class": "obligation",
+            "precision": 1.0,
+            "recall": 0.6785714285714286,
+            "f1": 0.8085106382978724
+          },
+          {
+            "class": "permission",
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          {
+            "class": "prohibition",
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          {
+            "class": "definition",
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        "separate_from_span_metrics": true
+      }
+    },
+    "parity_anchor": "overall equals formal_stage2_evaluation on the same fixture (span metrics via evaluate_sun_literal_overlap; modality labels via the shared four-class computation)",
+    "zero_api": {
+      "new_llm_api_calls": 0
+    }
+  },
+  "runtime": {
+    "schema_version": "s2_12_sun_rule_only_telemetry@1.0.0",
+    "record_count": 36,
+    "predicted_clause_count": 41,
+    "corenlp_seconds": 7.6966657000011764,
+    "bridge_seconds": 0.41467879997799173,
+    "classifier_seconds": 10.350868000008631,
+    "compose_seconds": 0.04900240001734346,
+    "total_seconds": 18.511214900005143,
+    "device": "cpu",
+    "modality_route_counts": {
+      "heuristic_aligned_classifier": 13,
+      "marker_obligation": 22,
+      "marker_permission": 2,
+      "prohibition_negation": 2,
+      "record_level_classifier_fallback": 1,
+      "validated_aligned_classifier": 1
+    },
+    "label_counts": {
+      "definition": 15,
+      "obligation": 22,
+      "permission": 2,
+      "prohibition": 2
+    },
+    "alignment_summary": {
+      "total": 41,
+      "heuristic_supported": 40,
+      "validated": 1,
+      "unsupported": 1,
+      "by_status": {
+        "equal_count_candidate": 37,
+        "heuristic_monotone_pack_unvalidated": 2,
+        "unsupported": 1,
+        "validated_anchor_alignment": 1
+      },
+      "note": "heuristic_supported is not verified alignment"
+    },
+    "text_or_gold_payload_committed": false
+  },
+  "cost": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "actual_cost_usd": 0.0
+  }
+}

@@ -183,7 +183,7 @@ def test_gold_file_delete_fails() -> None:
     assert _verified() is True
 
 
-def test_extra_gold_file_fails(tmp_path: Path) -> None:
+def test_extra_gold_file_fails() -> None:
     """An unexpected file inside data/gold/stage1 must fail (only the
     published artifact + manifest are allowed)."""
     extra = ROOT / "data" / "gold" / "stage1" / "unexpected.json"

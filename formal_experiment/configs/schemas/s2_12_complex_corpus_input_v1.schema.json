@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bpc-hybrid.local/schemas/s2_12_complex_corpus_input_v1.schema.json",
+  "title": "S2.12 complex-corpus Gold-blind formal input v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "input_id",
+    "gold_blind",
+    "record_count",
+    "source_policy",
+    "membership_binding",
+    "records"
+  ],
+  "properties": {
+    "schema_version": {"const": "s2_12_complex_corpus_input@1.0.0"},
+    "dataset_id": {"const": "s2_11_barrientos_complex_corpus_36_v1"},
+    "input_id": {"const": "s2_12_complex_corpus_formal_input_v1"},
+    "gold_blind": {"const": true},
+    "record_count": {"const": 36},
+    "source_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw_text_committed",
+        "runtime_resolution",
+        "forbidden_payload_fields"
+      ],
+      "properties": {
+        "raw_text_committed": {"const": false},
+        "runtime_resolution": {
+          "const": "resolve local source record only after verifying file and text SHA-256"
+        },
+        "forbidden_payload_fields": {
+          "type": "array",
+          "const": [
+            "text",
+            "clauses",
+            "modality",
+            "actor",
+            "action",
+            "condition",
+            "constraint",
+            "exception",
+            "actor_action_map",
+            "order_relations",
+            "decision",
+            "gold"
+          ]
+        }
+      }
+    },
+    "membership_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"const": "outputs/reports/s2_11_corpus_membership_v1.json"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 36,
+      "maxItems": 36,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sample_id", "source"],
+        "properties": {
+          "sample_id": {"type": "string", "minLength": 1},
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "file_sha256",
+              "text_sha256",
+              "text_byte_size",
+              "record_id",
+              "version"
+            ],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "text_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "text_byte_size": {"type": "integer", "minimum": 1},
+              "record_id": {"type": "string", "pattern": "^r[0-9]+$"},
+              "version": {"type": "integer", "minimum": 1}
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": "s2_13_s3_7_transition_readiness_manifest@8.0.0",
+  "manifest_id": "s2_13_s3_7_transition_readiness_v8.manifest",
+  "artifacts": {
+    "report_json": {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v8.json",
+      "sha256": "365880c25403d4fe766bcf9d8a94851c6a91d3f993c2f8e97107d6173c018e22",
+      "byte_size": 9683
+    },
+    "report_md": {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v8.md",
+      "sha256": "20f5201999477b70948b23e2851c186f85727790e684fa7204acb842ccc0bb2c",
+      "byte_size": 712
+    }
+  },
+  "bindings": {
+    "configs/schemas/s2_13_s3_7_transition_readiness_v7.schema.json": "15e5eb74dc124e1401061a132d38a6f7d1852f120546e297e3491430b719fe3d",
+    "scripts/build_s2_13_s3_7_transition_readiness_v7.py": "8441c0dc8b3078026ac0be7056042b030f6756bc9b7e71ad11610f6e4ca72bef",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v7.py": "0c792395478ea8c42b7db38eeed0baa8d75575bad3092a1a10067ddd346d2a01",
+    "tests/test_s2_13_s3_7_transition_readiness_v7.py": "85989563f025c96cea589f308897361d937c4cb09f5a8492f18dd096f1b41fcb",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v7.json": "1faa862f3924fe5d86aba0f9d5d106b78baf8898a22e52bd5e440a984077e784",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v7.md": "915f3bc38f550abdcf4634f08cd2be7677e0a6cd2199ad7ee445f8e3928a401d",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v7.manifest.json": "3b09820abc633e45b15821d2255029014061ff21cf5ac5a4f92bd710b08094f9",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v7_export_index.json": "464ab65eb038827a1427ada8d1b12936802945b21c75c71d265a83cae692bd78",
+    "outputs/reports/s2_12_execution_readiness_v4.json": "ce249166173b7cfbf42932e9ac76f7b45266ff2b11f917f777425b9f5e77b73f",
+    "outputs/reports/s2_12_api_preflight_v1.json": "c7d33f956464f54b9b76145a1874d9111e3e41f1a904bc3751edc8b8e3c90314",
+    "data/input/s2_12_complex_corpus_formal_input_v1.json": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "data/results/s2_12_sun_rule_only_v1/evaluation.json": "1696dbf9dcf85ef30f6056fc109c9952f0465ac21ac080314e57f7fa33799e16",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v1.py": "5ee35fa837c05dc2e6c15168dcee0a4704486212c81c2710d16435e3e668ad1a",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v2.py": "b9639016634af014e9e779ff127de49da2f26b277eef3360a202260aab7996ab",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v3.py": "d9f9094f44b2f6112b98f22e5de161da1a923f8d8cb0ab383a78388adf1445d0",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v4.py": "92460b61d7de6d9b28d79ec1872865532af5cfc64bc58408e472dd01ecfb6c34",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v5.py": "6dea78c5f2e6a4dbe7bd07deec0a56785019bee722a97f3720f5ae7a8a3333c4",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v6.py": "88a6f890a3af73b43bca571752bc577ff698380c147056d4300c103ada8102e8"
+  },
+  "implementation": {
+    "builder": {
+      "path": "scripts/build_s2_13_s3_7_transition_readiness_v8.py",
+      "sha256": "3508c8331d05a4cc3c1336b74b6b6d46712084858a12c7f4e287cc91258d4c7f",
+      "byte_size": 13346
+    },
+    "verifier": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v8.py",
+      "sha256": "562ce2de55992c2291b2f7bd066b53549460b32c7d6037df36e72739617ade2a",
+      "byte_size": 5748
+    },
+    "schema": {
+      "path": "configs/schemas/s2_13_s3_7_transition_readiness_v8.schema.json",
+      "sha256": "df75b975f17af000f5f5974983196edda1835df1cd5b9a91a8eccfa8144d3375",
+      "byte_size": 1011
+    }
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0
+  }
+}

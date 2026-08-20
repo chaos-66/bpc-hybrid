@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "s2_12_execution_readiness_v4.schema.json",
+  "title": "S2.12 partial execution readiness after zero-API arm",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "report_id", "status", "s2_11", "s2_12",
+    "api_preflight", "remaining_dod", "downstream", "verifiers",
+    "authorization", "safety", "reproduce_command"
+  ],
+  "properties": {
+    "schema_version": {"const": "s2_12_execution_readiness@4.0.0"},
+    "report_id": {"const": "s2_12_execution_readiness_v4"},
+    "status": {"const": "partial_zero_api_arm_complete_api_arms_pending_authorization"},
+    "s2_11": {"type": "object"},
+    "s2_12": {"type": "object"},
+    "api_preflight": {"type": "object"},
+    "remaining_dod": {"type": "array", "minItems": 3, "items": {"type": "string"}},
+    "downstream": {"type": "object"},
+    "verifiers": {"type": "object"},
+    "authorization": {"type": "object"},
+    "safety": {"type": "object"},
+    "reproduce_command": {"type": "string"}
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "schema_version": "s2_13_s3_7_transition_readiness@8.0.0",
+  "report_id": "s2_13_s3_7_transition_readiness_v8",
+  "supersedes": [
+    {
+      "path": "configs/schemas/s2_13_s3_7_transition_readiness_v7.schema.json",
+      "sha256": "15e5eb74dc124e1401061a132d38a6f7d1852f120546e297e3491430b719fe3d",
+      "byte_size": 15663,
+      "reason": "v8 supersedes v7 current-state judgments while preserving the v7 asset byte-exact"
+    },
+    {
+      "path": "scripts/build_s2_13_s3_7_transition_readiness_v7.py",
+      "sha256": "8441c0dc8b3078026ac0be7056042b030f6756bc9b7e71ad11610f6e4ca72bef",
+      "byte_size": 96784,
+      "reason": "v8 supersedes v7 current-state judgments while preserving the v7 asset byte-exact"
+    },
+    {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v7.py",
+      "sha256": "0c792395478ea8c42b7db38eeed0baa8d75575bad3092a1a10067ddd346d2a01",
+      "byte_size": 27591,
+      "reason": "v8 supersedes v7 current-state judgments while preserving the v7 asset byte-exact"
+    },
+    {
+      "path": "tests/test_s2_13_s3_7_transition_readiness_v7.py",
+      "sha256": "85989563f025c96cea589f308897361d937c4cb09f5a8492f18dd096f1b41fcb",
+      "byte_size": 35259,
+      "reason": "v8 supersedes v7 current-state judgments while preserving the v7 asset byte-exact"
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v7.json",
+      "sha256": "1faa862f3924fe5d86aba0f9d5d106b78baf8898a22e52bd5e440a984077e784",
+      "byte_size": 50120,
+      "reason": "v8 supersedes v7 current-state judgments while preserving the v7 asset byte-exact"
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v7.md",
+      "sha256": "915f3bc38f550abdcf4634f08cd2be7677e0a6cd2199ad7ee445f8e3928a401d",
+      "byte_size": 34628,
+      "reason": "v8 supersedes v7 current-state judgments while preserving the v7 asset byte-exact"
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v7.manifest.json",
+      "sha256": "3b09820abc633e45b15821d2255029014061ff21cf5ac5a4f92bd710b08094f9",
+      "byte_size": 19480,
+      "reason": "v8 supersedes v7 current-state judgments while preserving the v7 asset byte-exact"
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v7_export_index.json",
+      "sha256": "464ab65eb038827a1427ada8d1b12936802945b21c75c71d265a83cae692bd78",
+      "byte_size": 963,
+      "reason": "v8 supersedes v7 current-state judgments while preserving the v7 asset byte-exact"
+    }
+  ],
+  "pipeline_state": {
+    "S1.7": "frozen",
+    "S2.11": "verified_frozen",
+    "S2.12": "partial_zero_api_arm_complete_api_arms_pending",
+    "S2.13": "blocked_only_on_remaining_S2.12_DoD",
+    "S3.4_S3.6": "development_only",
+    "S3.7": "formal_oracle_not_started"
+  },
+  "s2_11": {
+    "status": "verified_frozen",
+    "adjudicated": 36,
+    "unresolved": 0,
+    "reviewer": "hyc",
+    "formal_gold": {
+      "path": "data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json",
+      "sha256": "039ae8b2429826ae2b320667fb4a0dff96de6408b0a9637c1d9911565129c804",
+      "byte_size": 83915
+    },
+    "formal_gold_payload_sha256": "039ae8b2429826ae2b320667fb4a0dff96de6408b0a9637c1d9911565129c804",
+    "confirmation_event": {
+      "path": "configs/s2_11_batch_import_confirmation_event_v3.json",
+      "sha256": "226b47982934dafce987b34df857144a046c7cbf54b5969efa4fb19e2d079405",
+      "byte_size": 871
+    },
+    "provenance": "deepseek_offline_proposal_v3 + user batch confirmation by hyc; not independent-from-scratch expert annotation"
+  },
+  "s2_12": {
+    "status": "partial",
+    "readiness_v4": {
+      "path": "outputs/reports/s2_12_execution_readiness_v4.json",
+      "sha256": "ce249166173b7cfbf42932e9ac76f7b45266ff2b11f917f777425b9f5e77b73f",
+      "byte_size": 14613
+    },
+    "gold_blind_input": {
+      "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+      "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+      "byte_size": 17784
+    },
+    "sun_rule_only": {
+      "status": "verified_complete",
+      "single_zero_api_arm_only": true,
+      "evaluation": {
+        "path": "data/results/s2_12_sun_rule_only_v1/evaluation.json",
+        "sha256": "1696dbf9dcf85ef30f6056fc109c9952f0465ac21ac080314e57f7fa33799e16",
+        "byte_size": 11532
+      },
+      "actual_cost_usd": 0.0
+    },
+    "direct_llm": "pending_explicit_api_authorization",
+    "sun_llm_fallback": "pending_explicit_api_authorization",
+    "api_preflight": {
+      "path": "outputs/reports/s2_12_api_preflight_v1.json",
+      "sha256": "c7d33f956464f54b9b76145a1874d9111e3e41f1a904bc3751edc8b8e3c90314",
+      "byte_size": 32349
+    },
+    "three_method_comparison_complete": false,
+    "post_result_tuning_performed": false
+  },
+  "s2_13": {
+    "status": "blocked",
+    "blockers": [
+      "S2.12 remaining DoD: two API arms, three-method comparison, and S2.12 completion freeze"
+    ]
+  },
+  "stage3": {
+    "S3.4": "development_only",
+    "S3.5": "development_only",
+    "S3.6": "development_only",
+    "S3.7": {
+      "status": "formal_oracle_not_started",
+      "authorized": false,
+      "blockers": [
+        "S2.13",
+        "formal GDPR Gold Rule Records",
+        "formal promotion of S3.4-S3.6"
+      ]
+    }
+  },
+  "gold_rule_records": {
+    "exist": false,
+    "candidate_probe_found": [],
+    "covered_rule_ids": [
+      "article6",
+      "article7",
+      "article15",
+      "article16",
+      "article17",
+      "article20",
+      "article22",
+      "article33",
+      "article34"
+    ],
+    "note": "formal user-adjudicated frozen GDPR Gold Rule Records remain absent; none were created in this checkpoint"
+  },
+  "historical_transition_verifiers": {
+    "v1": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v1.py",
+      "sha256": "5ee35fa837c05dc2e6c15168dcee0a4704486212c81c2710d16435e3e668ad1a",
+      "exit_code": 0,
+      "verified": true,
+      "outcome": "verified_current_or_preserved",
+      "failed_checks": []
+    },
+    "v2": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v2.py",
+      "sha256": "b9639016634af014e9e779ff127de49da2f26b277eef3360a202260aab7996ab",
+      "exit_code": 0,
+      "verified": true,
+      "outcome": "verified_current_or_preserved",
+      "failed_checks": []
+    },
+    "v3": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v3.py",
+      "sha256": "d9f9094f44b2f6112b98f22e5de161da1a923f8d8cb0ab383a78388adf1445d0",
+      "exit_code": 0,
+      "verified": true,
+      "outcome": "verified_current_or_preserved",
+      "failed_checks": []
+    },
+    "v4": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v4.py",
+      "sha256": "92460b61d7de6d9b28d79ec1872865532af5cfc64bc58408e472dd01ecfb6c34",
+      "exit_code": 0,
+      "verified": true,
+      "outcome": "verified_current_or_preserved",
+      "failed_checks": []
+    },
+    "v5": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v5.py",
+      "sha256": "6dea78c5f2e6a4dbe7bd07deec0a56785019bee722a97f3720f5ae7a8a3333c4",
+      "exit_code": 1,
+      "verified": false,
+      "outcome": "expected_fail_closed_superseded_snapshot",
+      "failed_checks": [
+        "dependency matrix re-derived and compared item-by-item",
+        "manifest bindings match disk",
+        "manifest exact reconstruction matches disk (structure, keys, values; no missing/extra entries)"
+      ]
+    },
+    "v6": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v6.py",
+      "sha256": "88a6f890a3af73b43bca571752bc577ff698380c147056d4300c103ada8102e8",
+      "exit_code": 1,
+      "verified": false,
+      "outcome": "expected_fail_closed_superseded_snapshot",
+      "failed_checks": [
+        "dependency matrix re-derived and compared item-by-item",
+        "manifest bindings match disk",
+        "manifest exact reconstruction matches disk (structure, keys, values; no missing/extra entries)",
+        "superseded historical reports + full v1-v5 capsule present, byte-unchanged and declared"
+      ]
+    },
+    "v7": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v7.py",
+      "sha256": "0c792395478ea8c42b7db38eeed0baa8d75575bad3092a1a10067ddd346d2a01",
+      "exit_code": 0,
+      "verified": true,
+      "outcome": "verified_current_or_preserved",
+      "failed_checks": []
+    }
+  },
+  "authorization": {
+    "api_authorized": false,
+    "suggested_copyable_sentence_is_not_itself_authorization": true,
+    "suggested_copyable_sentence": "我授权在 S2.12 复杂语料上运行 direct_llm（36 次）和 sun_llm_fallback（27 次）真实 DeepSeek API，模型仅限 deepseek-v4-pro，严格使用 preflight v1 锁定的 63 个请求体（单次≤17493 字节、总计≤749805 字节），最多 63 次调用、0 次重试、单次输出≤4096 tokens、总输出≤258048 tokens、总计费输入≤63000000 tokens、总费用≤US$27.63；任一模型/返回模型、输入、source、prompt、config、payload/hash、官方价格、Gold 隔离或上限不匹配时必须在调用前硬停止，不得调用 Oracle。",
+    "recommended_hard_limits": {
+      "max_calls": 63,
+      "max_request_body_utf8_bytes_per_call": 17493,
+      "max_request_body_utf8_bytes_total": 749805,
+      "max_billed_input_tokens_total": 63000000,
+      "max_output_tokens_per_call": 4096,
+      "max_output_tokens_total": 258048,
+      "max_cost_usd": 27.63,
+      "retry_count": 0
+    }
+  },
+  "safety": {
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "gold_rule_records_created": false,
+    "oracle_started": false,
+    "historical_transition_assets_modified": false,
+    "project_audit_md_modified": false
+  }
+}

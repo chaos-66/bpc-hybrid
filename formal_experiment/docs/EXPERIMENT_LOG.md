@@ -3687,3 +3687,20 @@
 - 仍存在 blocker：无
 - 备注：Derived byte-equivalently from proposal v3 plus user batch confirmation by hyc; not independent-from-scratch expert annotation. Committed artifact excludes third-party raw text. Zero LLM/API; no Gold Rule Records; Oracle not started. PROJECT_AUDIT.md intentionally untouched because its historical encoding is not safely repairable in this checkpoint. A prior sandbox-only audit attempt failed on temporary-directory permissions; the required non-sandbox offline rerun passed.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-17T17:55:29.963399+00:00 - Checkpoint G S2.12 complex-corpus zero-API arm, API preflight, readiness v4, and transition v8
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s2_12_sun_rule_only_v1；阶段=stage2；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_s2_12_sun_rule_only_v1.py --runtime-home D:/environment/stanford-corenlp-4.5.10 --device cpu`
+- manifest：data/results/s2_12_sun_rule_only_v1/manifest.json
+- 结果摘要：36/36 predictions; modality accuracy 0.6388888888888888, macro-F1 0.5354609929078014, span F1 0.8314533558338515; one zero-API arm only, not a three-method comparison
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2572 passed, 24 skipped, 19 warnings in 1004.47s (0:16:44)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`357e3474a93770efd24edf09b746ea444fdaaba7`；相关未提交路径：44 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Predictions were locked before Gold evaluation; no post-result tuning. API preflight only: direct_llm and sun_llm_fallback remain pending explicit authorization with hard caps. S2.11 remains verified/frozen; S2.13 waits only on remaining S2.12 DoD; S3.7 Oracle not started; Gold Rule Records absent. Full audit: 2572 passed, 24 skipped, 19 warnings.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

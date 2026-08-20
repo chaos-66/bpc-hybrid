@@ -1,0 +1,131 @@
+{
+  "schema_version": "s2_12_api_arms_preflight_lock@1.0.0",
+  "status": "locked_without_api_authorization",
+  "locked_date": "2026-08-18",
+  "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+  "input": {
+    "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+    "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "records": 36,
+    "gold_blind": true,
+    "raw_text_committed": false
+  },
+  "locked_b0_predictions": {
+    "path": "data/predictions/s2_12_sun_rule_only_v1/predictions.json",
+    "sha256": "f1e88ac5167ec1d3f0644dfcbeac60ead18932f766231baf3cb8e86b4af77006",
+    "manifest_path": "data/predictions/s2_12_sun_rule_only_v1/manifest.json",
+    "manifest_sha256": "e96d76016e815736fc5b4a588187ee42b3b1c9cc702e28cc607a6da82cd0c3c2",
+    "preflight_diagnostic_replay_must_equal_locked_predictions": true
+  },
+  "provider": {
+    "kind": "openai_compatible",
+    "base_url": "https://api.deepseek.com/v1",
+    "model": "deepseek-v4-pro",
+    "model_fail_closed": true,
+    "returned_model_must_match": true
+  },
+  "common_sampling": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_output_tokens_per_call": 4096,
+    "seed": null,
+    "seed_supported": false,
+    "retry_count": 0
+  },
+  "arms": {
+    "direct_llm": {
+      "max_calls": 36,
+      "prompt_name": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "prompt_registry_path": "configs/models/estg150_d1_active_registry_v1.json",
+      "prompt_registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+      "transport_policy": {
+        "stream": false,
+        "thinking": {"type": "disabled"},
+        "response_format": null,
+        "tools_sent": false
+      }
+    },
+    "sun_llm_fallback": {
+      "max_calls": 72,
+      "selection": "build_repair_plans_then_risk_descending_budget",
+      "prompt_variant": "full_b0_v4",
+      "prompt_name": "rule_first_llm_fallback_prompt",
+      "prompt_sha256": "00fe02996914e17f30962147d7a9f2c71a92d2479ba4eff343583a139bb1537b",
+      "transport_policy": {
+        "stream": false,
+        "thinking": {"type": "disabled"},
+        "response_format": {"type": "json_object"},
+        "tools_sent": false
+      }
+    }
+  },
+  "global_caps": {
+    "max_calls": 108,
+    "max_output_tokens": 442368,
+    "retry_count": 0
+  },
+  "implementation_bindings": {
+    "scripts/run_direct_llm.py": "e30aaeea010608b33891551c11ba79cfdfd1165215241741e3aee1e1d0085014",
+    "scripts/run_sun_llm_fallback.py": "75716ecb5b7fc0501d4addf29abf4a14b5b7cd577ef20643d012415b96d314bd",
+    "src/bpc_hybrid/llm_client.py": "232284dadc2b1f867ee885db1d111360f005b29a52662619af2dffee4f128e24",
+    "src/bpc_hybrid/h1_transport.py": "f9efba42509eb85be522a45ee9ee4cf728ec1437945dfb4189bd7f4cc0d45b77"
+  },
+  "local_tokenizer_proxy": {
+    "model_id": "nlpaueb/legal-bert-base-uncased",
+    "revision": "15b570cbf88259610b082a167dacc190124f60f6",
+    "kind": "Bert WordPiece local planning proxy",
+    "is_deepseek_tokenizer": false,
+    "is_billing_token_count": false,
+    "snapshot_is_cli_supplied": true,
+    "file_sha256": {
+      "vocab.txt": "3aaa02f2e3a397eee0f813caa567c87cddab1045a4a6b8ac6261f0cc799efb8f",
+      "tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+      "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+      "config.json": "716ea70c3c3e74bfe8496cc04cba7cd52f4ca45401e74042bb1058fe0390a1b6"
+    }
+  },
+  "pricing": {
+    "checked_date": "2026-08-18",
+    "official_models_and_pricing_url": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "official_token_usage_url": "https://api-docs.deepseek.com/quick_start/token_usage",
+    "currency": "USD",
+    "per_million_tokens": {
+      "input_cache_hit": 0.003625,
+      "input_cache_miss": 0.435,
+      "output": 0.87
+    },
+    "official_context_tokens_per_call": 1000000,
+    "actual_billing_tokens_available_only_from_response_usage": true,
+    "prices_may_change_recheck_before_authorized_run": true
+  },
+  "gold_isolation": {
+    "preflight_reads_gold": false,
+    "preflight_reads_decisions": false,
+    "preflight_reads_proposals": false,
+    "api_arms_must_not_read_gold": true,
+    "evaluation_only_after_predictions_are_locked": true
+  },
+  "hard_stops": [
+    "no exact matching user API authorization",
+    "model or returned model mismatch",
+    "input, source, prompt, implementation, config, prediction, or payload drift",
+    "call, request-body byte, input-token, output-token, or USD cap would be exceeded",
+    "retry requested or retry_count is not zero",
+    "Gold, decisions, proposals, Oracle, or Gold Rule Records visible to an arm",
+    "official price cannot be revalidated immediately before an authorized run"
+  ],
+  "authorization": {
+    "real_api_calls_allowed_by_this_lock": false,
+    "pending_explicit_user_decisions": [
+      "total billed input-token cap",
+      "total USD cost cap"
+    ]
+  },
+  "safety": {
+    "llm_api_calls_during_preflight": 0,
+    "network_calls_during_preflight": 0,
+    "gold_rule_records_created": false,
+    "oracle_started": false
+  }
+}

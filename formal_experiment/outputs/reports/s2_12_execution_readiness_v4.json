@@ -1,0 +1,436 @@
+{
+  "schema_version": "s2_12_execution_readiness@4.0.0",
+  "report_id": "s2_12_execution_readiness_v4",
+  "status": "partial_zero_api_arm_complete_api_arms_pending_authorization",
+  "s2_11": {
+    "status": "verified_frozen",
+    "adjudicated": 36,
+    "unresolved": 0,
+    "blocked": 0,
+    "reviewer": "hyc",
+    "formal_gold": {
+      "path": "data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json",
+      "sha256": "039ae8b2429826ae2b320667fb4a0dff96de6408b0a9637c1d9911565129c804",
+      "byte_size": 83915
+    },
+    "formal_gold_manifest": {
+      "path": "outputs/reports/s2_11_formal_gold_v1.manifest.json",
+      "sha256": "12ab299d98468401745fe300cb8bbf9c0fd91c4ca9b295fb6a57fcb4446d2101",
+      "byte_size": 4067
+    },
+    "formal_gold_payload_sha256": "039ae8b2429826ae2b320667fb4a0dff96de6408b0a9637c1d9911565129c804",
+    "confirmation_event": {
+      "path": "configs/s2_11_batch_import_confirmation_event_v3.json",
+      "sha256": "226b47982934dafce987b34df857144a046c7cbf54b5969efa4fb19e2d079405",
+      "byte_size": 871
+    },
+    "freeze_publication_capsule": {
+      "path": "outputs/reports/s2_11_freeze_publication_capsule_v1.json",
+      "sha256": "90ea94217c4450356a5b20678b36995c48aa220fc6b66bd962ee1705bd1cefed",
+      "byte_size": 2384
+    },
+    "frozen": true
+  },
+  "s2_12": {
+    "status": "partial",
+    "gold_blind_input_records": 36,
+    "sun_rule_only": {
+      "status": "verified_complete",
+      "single_zero_api_arm_only": true,
+      "manifest": {
+        "path": "data/predictions/s2_12_sun_rule_only_v1/manifest.json",
+        "sha256": "e96d76016e815736fc5b4a588187ee42b3b1c9cc702e28cc607a6da82cd0c3c2",
+        "byte_size": 4250
+      },
+      "evaluation": {
+        "path": "data/results/s2_12_sun_rule_only_v1/evaluation.json",
+        "sha256": "1696dbf9dcf85ef30f6056fc109c9952f0465ac21ac080314e57f7fa33799e16",
+        "byte_size": 11532
+      },
+      "evaluation_manifest": {
+        "path": "data/results/s2_12_sun_rule_only_v1/manifest.json",
+        "sha256": "1d3152f18c211233d3e050c27f85412f6c0b3464da83b2ceee31aa252c269e90",
+        "byte_size": 1996
+      },
+      "runtime_seconds": 18.511214900005143,
+      "actual_cost_usd": 0.0,
+      "overall": {
+        "samples": 36,
+        "span_fields": {
+          "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+          "overall": {
+            "ground_truth": 147,
+            "extracted": 138,
+            "matched_predictions": 119,
+            "matched_ground_truth": 118,
+            "misclassified": 19,
+            "missed": 29,
+            "precision": 0.8623188405797102,
+            "recall": 0.8027210884353742,
+            "f1": 0.8314533558338515
+          },
+          "span_fields": {
+            "actor": {
+              "ground_truth": 17,
+              "extracted": 4,
+              "precision": 1.0,
+              "recall": 0.23529411764705882,
+              "f1": 0.38095238095238093
+            },
+            "action": {
+              "ground_truth": 39,
+              "extracted": 36,
+              "precision": 0.8611111111111112,
+              "recall": 0.7948717948717948,
+              "f1": 0.8266666666666667
+            },
+            "condition": {
+              "ground_truth": 18,
+              "extracted": 21,
+              "precision": 0.8571428571428571,
+              "recall": 1.0,
+              "f1": 0.923076923076923
+            },
+            "constraint": {
+              "ground_truth": 33,
+              "extracted": 35,
+              "precision": 0.7714285714285715,
+              "recall": 0.7878787878787878,
+              "f1": 0.7795669072737368
+            },
+            "exception": {
+              "ground_truth": 2,
+              "extracted": 1,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            }
+          }
+        },
+        "modality_labels": {
+          "classes": [
+            "obligation",
+            "permission",
+            "prohibition",
+            "definition"
+          ],
+          "records": 36,
+          "accuracy": 0.6388888888888888,
+          "macro_f1": 0.5354609929078014,
+          "per_class": [
+            {
+              "class": "obligation",
+              "precision": 1.0,
+              "recall": 0.6785714285714286,
+              "f1": 0.8085106382978724
+            },
+            {
+              "class": "permission",
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            {
+              "class": "prohibition",
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            {
+              "class": "definition",
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          ],
+          "separate_from_span_metrics": true
+        }
+      },
+      "strata": {
+        "L1": {
+          "samples": 31,
+          "span_fields": {
+            "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+            "overall": {
+              "ground_truth": 113,
+              "extracted": 104,
+              "matched_predictions": 91,
+              "matched_ground_truth": 91,
+              "misclassified": 13,
+              "missed": 22,
+              "precision": 0.875,
+              "recall": 0.8053097345132744,
+              "f1": 0.8387096774193548
+            },
+            "span_fields": {
+              "actor": {
+                "ground_truth": 11,
+                "extracted": 4,
+                "precision": 1.0,
+                "recall": 0.36363636363636365,
+                "f1": 0.5333333333333333
+              },
+              "action": {
+                "ground_truth": 31,
+                "extracted": 28,
+                "precision": 0.8571428571428571,
+                "recall": 0.7741935483870968,
+                "f1": 0.8135593220338982
+              },
+              "condition": {
+                "ground_truth": 15,
+                "extracted": 18,
+                "precision": 0.8333333333333334,
+                "recall": 1.0,
+                "f1": 0.9090909090909091
+              },
+              "constraint": {
+                "ground_truth": 23,
+                "extracted": 22,
+                "precision": 0.7272727272727273,
+                "recall": 0.6956521739130435,
+                "f1": 0.711111111111111
+              },
+              "exception": {
+                "ground_truth": 2,
+                "extracted": 1,
+                "precision": 1.0,
+                "recall": 0.5,
+                "f1": 0.6666666666666666
+              }
+            }
+          },
+          "modality_labels": {
+            "classes": [
+              "obligation",
+              "permission",
+              "prohibition",
+              "definition"
+            ],
+            "records": 31,
+            "accuracy": 0.6129032258064516,
+            "macro_f1": 0.5307017543859649,
+            "per_class": [
+              {
+                "class": "obligation",
+                "precision": 1.0,
+                "recall": 0.6521739130434783,
+                "f1": 0.7894736842105263
+              },
+              {
+                "class": "permission",
+                "precision": 1.0,
+                "recall": 0.5,
+                "f1": 0.6666666666666666
+              },
+              {
+                "class": "prohibition",
+                "precision": 1.0,
+                "recall": 0.5,
+                "f1": 0.6666666666666666
+              },
+              {
+                "class": "definition",
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            ],
+            "separate_from_span_metrics": true
+          }
+        },
+        "L2": {
+          "samples": 5,
+          "span_fields": {
+            "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+            "overall": {
+              "ground_truth": 34,
+              "extracted": 34,
+              "matched_predictions": 28,
+              "matched_ground_truth": 27,
+              "misclassified": 6,
+              "missed": 7,
+              "precision": 0.8235294117647058,
+              "recall": 0.7941176470588235,
+              "f1": 0.8085561497326202
+            },
+            "span_fields": {
+              "actor": {
+                "ground_truth": 6,
+                "extracted": 0,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "action": {
+                "ground_truth": 8,
+                "extracted": 8,
+                "precision": 0.875,
+                "recall": 0.875,
+                "f1": 0.875
+              },
+              "condition": {
+                "ground_truth": 3,
+                "extracted": 3,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "constraint": {
+                "ground_truth": 10,
+                "extracted": 13,
+                "precision": 0.8461538461538461,
+                "recall": 1.0,
+                "f1": 0.9166666666666666
+              },
+              "exception": {
+                "ground_truth": 0,
+                "extracted": 0,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            }
+          },
+          "modality_labels": {
+            "classes": [
+              "obligation",
+              "permission",
+              "prohibition",
+              "definition"
+            ],
+            "records": 5,
+            "accuracy": 0.8,
+            "macro_f1": 0.22222222222222224,
+            "per_class": [
+              {
+                "class": "obligation",
+                "precision": 1.0,
+                "recall": 0.8,
+                "f1": 0.888888888888889
+              },
+              {
+                "class": "permission",
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              {
+                "class": "prohibition",
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              {
+                "class": "definition",
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            ],
+            "separate_from_span_metrics": true
+          }
+        },
+        "L3": {
+          "samples": 0,
+          "note": "no samples in this stratum; no performance conclusion is reported",
+          "span_fields": null,
+          "modality_labels": null
+        }
+      }
+    },
+    "direct_llm": "pending_explicit_api_authorization",
+    "sun_llm_fallback": "pending_explicit_api_authorization",
+    "three_method_comparison_complete": false,
+    "post_result_tuning_performed": false
+  },
+  "api_preflight": {
+    "report": {
+      "path": "outputs/reports/s2_12_api_preflight_v1.json",
+      "sha256": "c7d33f956464f54b9b76145a1874d9111e3e41f1a904bc3751edc8b8e3c90314",
+      "byte_size": 32349
+    },
+    "lock": {
+      "path": "configs/s2_12_api_arms_preflight_v1.json",
+      "sha256": "3b62ba6658531a09469c7ecdecacc5797674ed795d62c55f389600586b2f221c",
+      "byte_size": 5231
+    },
+    "model": "deepseek-v4-pro",
+    "planned_calls": 63,
+    "direct_llm_calls": 36,
+    "sun_llm_fallback_calls": 27,
+    "request_body_utf8_bytes": {
+      "maximum_per_call": 17493,
+      "total": 749805
+    },
+    "local_proxy_tokens": {
+      "maximum_per_call": 4960,
+      "total": 207468
+    },
+    "official_billing_input_tokens": null,
+    "max_output_tokens": 258048,
+    "retry_count": 0,
+    "actual_cost_usd": null,
+    "official_price_source": "https://api-docs.deepseek.com/quick_start/pricing/"
+  },
+  "remaining_dod": [
+    "explicit user API authorization with total billed input-token and USD caps",
+    "locked direct_llm and sun_llm_fallback executions",
+    "frozen three-method evaluation/comparison and S2.12 completion checkpoint"
+  ],
+  "downstream": {
+    "S2.13": "blocked_only_on_remaining_S2.12_DoD",
+    "S3.4_S3.6": "development_only",
+    "S3.7": "formal_oracle_not_started",
+    "gold_rule_records": "absent"
+  },
+  "verifiers": {
+    "s2_11_freeze_v3": {
+      "path": "scripts/verify_s2_11_review_freeze_v3.py",
+      "sha256": "3910f6d9c439895976f5ec492e442ca3b4526b13a35fec72b75cc1e1675a4623",
+      "verified": true,
+      "exit_code": 0
+    },
+    "s2_11_formal_gold_v1": {
+      "path": "scripts/verify_s2_11_formal_gold_v1.py",
+      "sha256": "7fae1777152449d4736b2b109069060de09201bcad164ade54e67bcb61500238",
+      "verified": true,
+      "exit_code": 0
+    },
+    "s2_12_zero_api_v1": {
+      "path": "scripts/verify_s2_12_sun_rule_only_v1.py",
+      "sha256": "a1ced97fd5f01b6b9fea0462ddca702747cabe939e136255cb25bcf0d578f213",
+      "verified": true,
+      "exit_code": 0
+    },
+    "s2_12_api_preflight_v1": {
+      "path": "scripts/verify_s2_12_api_preflight_v1.py",
+      "sha256": "bc2a576d731bc8abfc3cdc966dedb714747496c02e3343647fae71d097fa652e",
+      "verified": true,
+      "exit_code": 0
+    }
+  },
+  "authorization": {
+    "api_authorized": false,
+    "suggested_copyable_sentence_is_not_itself_authorization": true,
+    "suggested_copyable_sentence": "我授权在 S2.12 复杂语料上运行 direct_llm（36 次）和 sun_llm_fallback（27 次）真实 DeepSeek API，模型仅限 deepseek-v4-pro，严格使用 preflight v1 锁定的 63 个请求体（单次≤17493 字节、总计≤749805 字节），最多 63 次调用、0 次重试、单次输出≤4096 tokens、总输出≤258048 tokens、总计费输入≤63000000 tokens、总费用≤US$27.63；任一模型/返回模型、输入、source、prompt、config、payload/hash、官方价格、Gold 隔离或上限不匹配时必须在调用前硬停止，不得调用 Oracle。",
+    "recommended_hard_limits": {
+      "max_calls": 63,
+      "max_request_body_utf8_bytes_per_call": 17493,
+      "max_request_body_utf8_bytes_total": 749805,
+      "max_billed_input_tokens_total": 63000000,
+      "max_output_tokens_per_call": 4096,
+      "max_output_tokens_total": 258048,
+      "max_cost_usd": 27.63,
+      "retry_count": 0
+    }
+  },
+  "safety": {
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "gold_rule_records_created": false,
+    "oracle_started": false,
+    "project_audit_md_modified": false
+  },
+  "reproduce_command": "python formal_experiment/scripts/s2_12_build_readiness_v4.py --check"
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "s2_13_s3_7_transition_readiness_v8.schema.json",
+  "title": "S2.13 to S3.7 transition readiness v8",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "report_id", "supersedes", "pipeline_state",
+    "s2_11", "s2_12", "s2_13", "stage3", "gold_rule_records",
+    "historical_transition_verifiers", "authorization", "safety"
+  ],
+  "properties": {
+    "schema_version": {"const": "s2_13_s3_7_transition_readiness@8.0.0"},
+    "report_id": {"const": "s2_13_s3_7_transition_readiness_v8"},
+    "supersedes": {"type": "array", "minItems": 8},
+    "pipeline_state": {"type": "object"},
+    "s2_11": {"type": "object"},
+    "s2_12": {"type": "object"},
+    "s2_13": {"type": "object"},
+    "stage3": {"type": "object"},
+    "gold_rule_records": {"type": "object"},
+    "historical_transition_verifiers": {"type": "object"},
+    "authorization": {"type": "object"},
+    "safety": {"type": "object"}
+  }
+}
