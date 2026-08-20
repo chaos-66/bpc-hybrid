@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-20
-**收录文件**：1360 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1362 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -483,6 +483,7 @@
 | `docs/AGENT_RUNBOOK.md` | 活动 | Agent 分阶段派工规则与可复制 Prompt |
 | `docs/AI_CHANGE_PROTOCOL.md` | 活动 | 实验日志与自动检查协议 |
 | `docs/ANNOTATION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
+| `docs/API_AUTHORIZATION_REQUEST.md` | 活动 | 说明、规范或研究文档 |
 | `docs/B0_ERROR_ANALYSIS.md` | 活动 | 说明、规范或研究文档 |
 | `docs/B0_R2_METHOD_CROSSWALK.md` | 活动 | 说明、规范或研究文档 |
 | `docs/B0_RECONSTRUCTION_DESIGN.md` | 活动 | 说明、规范或研究文档 |
@@ -911,6 +912,7 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `paper/ABLATION_MATRIX.md` | 活动 | 说明、规范或研究文档 |
 | `paper/CLAIM_EVIDENCE_MATRIX.md` | 活动 | 科学主张、证据状态和解锁条件 |
 | `paper/README.md` | 活动 | 所在目录的入口说明 |
 | `paper/THESIS_DRAFT.md` | 活动 | 中文论文连续工作稿与结果占位 |

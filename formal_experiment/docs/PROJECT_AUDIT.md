@@ -45,12 +45,14 @@ B0-R0–R5 已全部完成（各批次 verified，R5 正式结论包 2026-08-11 
 | 用户要求 | 当前验收 | 证据与剩余缺口 |
 |---|---|---|
 | H1 不再深究，仅作对照；解释为何差、难点与优化方向 | **已完成** | §8.8.1 已给出全量 150 负结果、actor 过抽、Gold-blind trigger 错位、字段边界约束与仅供未来参考的保守优化方向；正式结论已固定为 comparison-only，不再派发优化。 |
-| 列出并举例解释 B0 / D1 局限 | **实验与证据文档已完成；论文回填未完成** | §8.8.2、`B0_ERROR_ANALYSIS.md`、`D1_ERROR_ANALYSIS.md` 已有数字和例子；`paper/THESIS_DRAFT.md` 的讨论/局限章节仍未定向回填。 |
-| B0/H1/D1 改为直观命名 | **注册表与活动实验文档已完成；论文正文未完成迁移** | 正式名为 Rules-Only / Rules+LLM-Repair / Direct-LLM，机器 ID 仅为兼容保留；当前论文草稿的方法标题和结果模板仍使用 B0/H1/D1，PW3/PW7 必须改为正式名并仅在首次出现给 legacy 映射。 |
-| 严格对比 Barrientos、做模块替换/移除消融、把贡献写成 4–5 页 | **部分完成，不能宣称完成** | 已完成原论文/artifact 边界核验、adapter、复杂语料 36 条 Gold 与 Rules-Only 零 API arm；但 AB-1..AB-10 尚未形成完整正式表，Direct-LLM 与 Rules+LLM-Repair 的复杂语料 API arms 未运行，style-equivalent 与 5-run 稳定性未完成，4–5 页方法正文也未写入论文。2026-08-20 原文复核纠正：论文稳定性是 36 条要求×5 次独立运行；20×2×2=80 是专家标注数，不存在“20 条×20 次模型重跑”。 |
+| 列出并举例解释 B0 / D1 局限 | **已完成（实验/证据文档 + 论文回填，2026-08-20）** | §8.8.2、`B0_ERROR_ANALYSIS.md`、`D1_ERROR_ANALYSIS.md` 已有数字和例子；`paper/THESIS_DRAFT.md` §8 已按量化证据逐条回填（Rules-Only 5 类、Direct-LLM 5 类：每条含定量证据/文本例子/错误原因/方法边界/优化方向/为何未继续）；H1 写为负结果对照。 |
+| B0/H1/D1 改为直观命名 | **已完成（注册表 + 论文正文迁移，2026-08-20）** | 正式名为 Rules-Only / Rules+LLM-Repair / Direct-LLM，机器 ID 仅为兼容保留；`paper/THESIS_DRAFT.md` 方法标题/正文已改正式名（legacy B0/H1/D1 仅首现映射与 §7.1 模板机器 ID 行、§7.2 正式表附注），PW3 状态更新为 in_progress。 |
+| 严格对比 Barrientos、做模块替换/移除消融、把贡献写成 4–5 页 | **方法写作 / 消融矩阵 / 授权申请完成；实验本体未完成** | 已完成：原论文/artifact 边界核验、adapter、复杂语料 36 条 Gold 与 Rules-Only 零 API arm；论文 §4 方法章节 8+8 模块 + §4.4 Barrientos 15 维对比表已写入 `paper/THESIS_DRAFT.md`；`paper/ABLATION_MATRIX.md` 登记 AB-1..AB-10 现状（仅已有历史证据项可引用）；精确 API 授权申请 `docs/API_AUTHORIZATION_REQUEST.md` 已备。**未完成（需授权/实验）**：Direct-LLM 与 Rules+LLM-Repair 复杂语料 API arms、AB-2/AB-4/AB-9、AB-10 style-equivalent 实现、5-run 稳定性执行。2026-08-20 原文复核纠正：论文稳定性是 36 条要求×5 次独立运行；20×2×2=80 是专家标注数，不存在“20 条×20 次模型重跑”。 |
 
-因此，四项要求的**决策记录已经完整进入控制面**，但整体验收仍为
-**PARTIAL：1 已完成；2/3 的论文落地未完成；4 的核心消融和论文写作未完成**。
+因此，四项要求的**决策记录已经完整进入控制面，且论文侧落地（命名迁移、局限回填、
+8+8 模块方法章节、Barrientos 对比表、消融矩阵、授权申请）已于 2026-08-20 完成**，
+但整体验收仍为 **PARTIAL**：1 / 2 / 3 的论文落地已完成；4 的核心消融实验（真实
+LLM arms + AB-2/4/9 + AB-10 + 5-run 稳定性）仍待授权执行。
 后续 Agent 不得把“AB 矩阵已列出”写成“AB 实验已完成”，也不得把 Barrientos 的
 专家标注协议、自动方法评价与稳定性实验混为一谈。
 

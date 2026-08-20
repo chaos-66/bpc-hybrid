@@ -45,6 +45,10 @@ GitHub 同步是“每次 push 后可刷新”，不是秒级实时共享。本�
 
 - `THESIS_DRAFT.md`：中文论文连续工作稿、章节骨架和结果空表。
 - `CLAIM_EVIDENCE_MATRIX.md`：每项科学主张的证据、时态、解锁任务和禁止表述。
+- `ABLATION_MATRIX.md`：AB-1–AB-10 受控消融矩阵现状（我的模块 vs 换 Barrientos
+  模块 vs 去掉模块；仅有历史证据项可引用，未跑项必须标“待运行/待授权”）。
+- （治理文档）`docs/API_AUTHORIZATION_REQUEST.md`：S2.12 复杂语料真实 LLM/API
+  精确授权申请（0 调用；获得用户授权前不得运行）。
 
 ## 写作规则
 

@@ -3717,3 +3717,16 @@
 - 仍存在 blocker：无
 - 备注：结论：四项要求已在主 pipeline 固化，但整体仅部分完成；H1 降级为对照已完成，B0/D1 局限与直观命名的实验文档已完成但论文迁移待做，Barrientos 模块互换/去除消融和 4–5 页贡献叙述仍待正式数据。原文纠正：自动化流程为 36 条需求、5 次完整运行；80 annotations 与 kappa=0.52 属专家协议，不能当作 LLM 稳定性。新增回归测试防止再次混淆。未调用真实 LLM/API，未修改 Gold。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-20T18:06:36.923423+00:00 - 论文侧导师要求落地：命名迁移(B0/H1/D1→Rules-Only/Rules+LLM-Repair/Direct-LLM)、Rules-Only与Direct-LLM量化局限回填、方法章节8+8细模块、Barrientos 15维对比表、消融矩阵AB-1..AB-10现状登记、S2.12 API授权申请；§7.2正式三方法比较与§7.3零API臂回填
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2573 passed, 24 skipped, 19 warnings in 1808.60s (0:30:08)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`d424d7cc193012a787a33afa6e3c070af3fc4cf6`；相关未提交路径：15 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：零LLM/API；未改Gold；未启动Oracle；新增paper/ABLATION_MATRIX.md与docs/API_AUTHORIZATION_REQUEST.md；PW3 in_progress、PW7/PW9 partial；MASTER_PIPELINE changelog 3.6.25；全文audit 2573 passed/24 skipped/19 warnings exit 0
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

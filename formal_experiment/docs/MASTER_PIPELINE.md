@@ -1,8 +1,8 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.24
+**文档版本**：3.6.25
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
-**最后更新**：2026-08-18
+**最后更新**：2026-08-20
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
 **当前实施优先级**：实验先完成 Stage 2，再补 Stage 1 和 Stage 3；论文非结果章节从现在并行写作；2026-08-08 导师汇报后方向锁定见 §8.8
 
@@ -887,13 +887,13 @@ development-only；S3.7 formal Oracle not started；Gold Rule Records absent。
 | PW0 | 论文目录、骨架、主张矩阵、TODO 和空表 | verified | 本轮建立且无虚构结果 |
 | PW1 | 引言、背景、RQ0–RQ4 | ready | 全部结果性表述为待检验或 TODO |
 | PW2 | Sun/Winter/Sleimi/Michel/Barrientos 相关工作 | ready | 内部证据回到可核验原论文 |
-| PW3 | 三阶段架构和 Rules-Only / Rules+LLM-Repair / Direct-LLM（旧代号 B0/H1/D1）方法设计稿，贡献按 §8.8.4 细模块化（8 模块 Direct-LLM + 7 模块 Rules-Only） | ready | 未完成组件使用 TODO-STATUS |
+| PW3 | 三阶段架构和 Rules-Only / Rules+LLM-Repair / Direct-LLM（旧代号 B0/H1/D1）方法设计稿，贡献按 §8.8.4 细模块化（Direct-LLM 8 模块 + Rules-Only 8 模块 + H1 负结果对照 + Barrientos 15 维对比表） | in_progress（2026-08-20：方法章节已按 8+8 模块与 15 维对比表写入 `paper/THESIS_DRAFT.md` §4，命名迁移为正式名；模块有效性未验证） | 模块有效性结论待 AB-1–AB-10 正式消融；未完成组件使用 TODO-STATUS |
 | PW4 | 数据、五层 Gold 与标注协议 | partial-ready | S2.1/S2.2 后回填实际统计 |
 | PW5 | baseline、指标、统计与复现设计 | ready | 参数在对应任务冻结后回填 |
-| PW6 | 结果表和图模板 | ready-template-only | 禁止填非正式数字 |
-| PW7 | Stage 2 正式结果 | blocked | S2.10/S2.12/S2.13 + manifests |
+| PW6 | 结果表和图模板 | ready-template-only | 禁止填非正式数字（§7.2 正式三方法比较表已按 manifest 回填） |
+| PW7 | Stage 2 正式结果 | partial（2026-08-20：三方法正式比较表已回填 §7.2；复杂度分层待 S2.12 API 授权后补齐） | S2.12 API arms + 三方法复杂语料比较 + S2.13 freeze |
 | PW8 | Stage 1/3/端到端结果 | blocked | S1.7、S3.7–S3.10、P8 |
-| PW9 | 讨论、结论、摘要与终稿 | partial/blocked | 主张矩阵全部有正式证据 |
+| PW9 | 讨论、结论、摘要与终稿 | partial（2026-08-20：§8 局限按量化证据逐条撰写；结论/摘要仍 blocked） | S2.12 API、S3.7、主张矩阵全绿 |
 
 论文占位符统一使用 `TODO-RESULT`、`TODO-SOURCE`、`TODO-STATUS`、
 `TODO-DECISION`。开发结果只能标 `DEV_ONLY`；正式数字必须对应 `experiment_run`
@@ -932,6 +932,7 @@ development-only；S3.7 formal Oracle not started；Gold Rule Records absent。
 
 | 版本 | 日期 | 变更 | 依据 |
 |---|---|---|---|
+| 3.6.25 | 2026-08-20 | **论文侧导师要求落地（P1/P2/P3）与消融矩阵、API 授权申请（零 API）**：(1) **命名迁移 + 局限**：`paper/THESIS_DRAFT.md` 方法标题/正文迁移为正式命名（Rules-Only/Direct-LLM/Rules+LLM-Repair，legacy B0/H1/D1 仅首现映射与机器 ID），增补 Rules-Only 5 类局限与 Direct-LLM 5 类局限（每条含定量证据/文本例子/错误原因/方法边界/优化方向/为何未继续），H1 写为负结果对照（§8.8.1）。(2) **方法细模块**：Direct-LLM 拆 8 模块、Rules-Only 拆 8 模块（§4.1/§4.2），每模块含问题/输入输出不变量/去掉的失败/验证/与 Barrientos 对照；H1 对照（§4.3）。(3) **Barrientos 15 维对比表**（§4.4）与条件化综合结论，禁止单一 F1 宣称综合优劣。(4) **消融矩阵**：新建 `paper/ABLATION_MATRIX.md` 登记 AB-1–AB-10 现状（仅已有历史证据项可引用：AB-1 v5→v6 历史证据、AB-6 150/150 有效 0 事故、AB-7 细/粗/Sun-marker、AB-8 B0-R1 批次；AB-3 离线可评 def=39/231；AB-2/AB-4/AB-9 待授权、AB-10 待实现）。(5) **API 授权申请**：新建 `docs/API_AUTHORIZATION_REQUEST.md`（模型 deepseek-v4-pro、63 计划/108 硬上限、retry=0、input cap 63M、output 258,048、USD 27.63、硬停止条件、运行命令、manifest 路径、授权句模板）。(6) **正式结果回填**：论文 §7.2 填入 2026-08-11 三方法正式比较表（粗 Gold 五字段 F1 + modality label），§7.3 填入 S2.12 零 API arm。未调用真实 LLM/API、未修改 Gold、未启动 Oracle；PW3 in_progress、PW7/PW9 partial。 | 导师四项要求论文侧落地 + MASTER_PIPELINE §8.8.4 + formal comparison + S2.12 preflight + focused/full audit |
 | 3.6.24 | 2026-08-18 | **S2.12 零 API 前半程 + API preflight + transition v8（零真实调用）**：构造 36-ID Gold-blind 正式输入（仅 locator/hashes）；Gold 读取前锁定并运行 `sun_rule_only`，36/36 成功、runtime 18.5112149s、0 API/network、cost=$0，预测锁定后用 evaluator v2/G0.4 parity 评价（overall modality acc/macro-F1 0.638889/0.535461；span P/R/F1 0.862319/0.802721/0.831453；L1=31/L2=5/L3=0 no samples），明确仅单一 arm、无 post-result tuning。API preflight v1 重建 direct 36 + H1 27=63 个最终 payload（max bytes 17,493、total 749,805；Legal-BERT proxy 4,960/207,468，非 billing tokens；output 4,096/call、258,048 total；retry=0），锁定 deepseek-v4-pro/prompt/config/payload hashes、官方价格与硬停止条件；实际 billing tokens/cost 仍待 response usage，0 calls。readiness v4 与 transition v8：S2.11 verified/frozen；S2.12 partial，两个 API arms pending explicit authorization；S2.13 blocked only on remaining S2.12 DoD；S3.4-S3.6 development-only；S3.7 formal Oracle not started；GRR absent；v7 保留 byte-exact，v1-v7 verifier 生命周期精确锁定。 | Gold-blind input/zero arm/evaluator + API preflight/verifier + readiness v4 + transition v8 + focused/full audit |
 | 3.6.23 | 2026-08-17 | **S2.11 正式 Gold 发布（零 API）**：从 Checkpoint G 已确认且 frozen 的 36/36 canonical decisions 等值派生正式复杂语料 Gold（SHA `039ae8b2…`）；provenance 明示 `deepseek_offline_proposal_v3` + user batch confirmation by hyc（无 revisions、非从零独立专家标注）；确认事件文件 SHA `226b4798…` 与用户原句 SHA `7414a38d…` 分开绑定；source/proposal/reviewer/freeze/G0.5 drift 全部 fail-closed；版本化 schema/publisher/capsule/manifest/export/独立 verifier/replay 完成；只提交 hashes/coordinates/必要 labels，无第三方原文；S2.11=verified/frozen/Gold published，S2.12 仍 partial；零 LLM/API、无 predictions/results/GRR/Oracle | Gold publisher + independent verifier + focused tests + audit pass |
 | 3.6.22 | 2026-08-17 | **S2.11 用户确认裁决与冻结 + S2.12/S2.13 状态推进（Checkpoint G，用户确认 proposal v3 一次性内容，零 LLM/API）**：(1) **用户确认**：`configs/s2_11_batch_import_confirmation_event_v3.json`（kind=s2_11_batch_import_confirmation，source=user_instruction_in_current_task，`user_instruction_utf8`=“我确认接受 S2.11 全部 36 条 canonical proposal v3 作为我的裁决（无 revisions），proposal 文件 SHA-256 = 9882ba45…，reviewer 署名：hyc”，其 UTF-8 SHA-256 7414a38d…，proposal_file_sha256 精确绑定 `9882ba45…`，revisions=null，gold_created=false，append_only=true）。(2) **importer v3 --apply 原子写入**（`scripts/s2_11_batch_import_v3.py` fail-closed）：decisions v2 36/36 adjudicated（reviewer=hyc 仅来自事件、confirmation_event 路径写入每记录）、逐字节不变备份 `.bak`、apply 后 committed dry-run 报告刷新（confirmation_event_present=true 使 run_dry_run 保持 byte-reproducible；新增 `refresh_dry_run_report_after_apply`）；main() 修复 apply 打印分支（run_apply 返回 {applied,reviewer,records,decisions_file,backup} 无 import_stats）；freeze validator v3 `frozen=true`（36/36 adjudicated、剩余 0、无 Gold）。(3) **S2.12 readiness v3 刷新**（`scripts/s2_12_build_readiness_v3.py --refresh` + `verify_s2_12_readiness_v3.py`）：schema 3.1.0，S2.11 freeze 36/36 + 确认事件 disk 绑定加入 bindings，proposal_v3.human_approved=true，runner.real_run_refused 理由更新为仅缺 API 预算授权（input token cap+cost cap），仍无最终授权句。(4) **transition capsule v7**（`build/verify_s2_13_s3_7_transition_readiness_v7.py` + schema/test/4 outputs；supersede v1-v6，55 项 superseded 全部 byte-exact 保留）：S2.11=frozen（从磁盘重推导：确认事件绑定 SHA+reviewer、decisions 36/36 adjudicated、freeze validator v3 执行）、S2.12=partial+execution-ready v3（真实运行 refused on API 授权）、S2.13=blocked、S3.7=blocked（GRR 三态 probe exist=false）；v7 VERIFIED（11 独立 verifier 全执行）。(5) **Checkpoint G 快照连锁（记录在案）**：verify_s2_12_execution_ready_v2.py 更新为 freeze 36/36 + 对 decisions v2 的 bindings 豁免（apply 合法改变其 SHA；decisions 完整性由 freeze validator v3 单独验证）；v5/v6 transition 测试更新为 superseded 快照语义（其 verifier/builder 依赖 apply 前 decisions 快照故不再自证当前有效，新增失败-关闭断言；这是对两个历史测试文件的 Checkpoint G 例外，其余 v1-v6 资产全部 byte-exact，v7 测试相应豁免这两个文件）；零 LLM/API、未创建 Gold/predictions/results、未发 API 授权句、未发布受限原文 | 确认事件 + importer apply + freeze 验证 + readiness v3 刷新 + transition v7 + focused tests + record_change 事件 + audit --with-tests |
