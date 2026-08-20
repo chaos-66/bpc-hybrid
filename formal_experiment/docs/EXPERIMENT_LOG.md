@@ -3704,3 +3704,16 @@
 - 仍存在 blocker：无
 - 备注：Predictions were locked before Gold evaluation; no post-result tuning. API preflight only: direct_llm and sun_llm_fallback remain pending explicit authorization with hard caps. S2.11 remains verified/frozen; S2.13 waits only on remaining S2.12 DoD; S3.7 Oracle not started; Gold Rule Records absent. Full audit: 2572 passed, 24 skipped, 19 warnings.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-20T08:50:15.945251+00:00 - 核对导师四项要求并纠正 Barrientos 2026 来源分层、稳定性与专家协议事实
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2573 passed, 24 skipped, 19 warnings in 1108.80s (0:18:28)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`acbd67670e0da62bba294d9f95584653d192e88c`；相关未提交路径：13 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：结论：四项要求已在主 pipeline 固化，但整体仅部分完成；H1 降级为对照已完成，B0/D1 局限与直观命名的实验文档已完成但论文迁移待做，Barrientos 模块互换/去除消融和 4–5 页贡献叙述仍待正式数据。原文纠正：自动化流程为 36 条需求、5 次完整运行；80 annotations 与 kappa=0.52 属专家协议，不能当作 LLM 稳定性。新增回归测试防止再次混淆。未调用真实 LLM/API，未修改 Gold。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

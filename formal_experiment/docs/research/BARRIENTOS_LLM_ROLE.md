@@ -17,9 +17,17 @@ assessment baseline compared by Sun.
 
 Sun is the main methodological backbone.
 
-Barrientos 2026 is only an LLM-assistance reference. It must not replace Sun's
-rule-record representation, Sun's Stage 2 extraction targets, or Sun's Stage 3
-checking goal.
+Barrientos 2026 is a **direct engineering-method reference** for LLM structured
+output, validation, controlled vocabularies, normalization, traceability, and
+evaluation discipline. It is not the project's task/schema backbone and must
+not replace Sun's rule-record representation, Sun's Stage 2 extraction targets,
+or Sun's Stage 3 checking goal.
+
+Source-fidelity rule (verified against the paper on 2026-08-20): keep the paper's
+automated RC4PC evaluation separate from the artifact's expert-annotation
+protocol. The paper evaluates 36 requirements and repeats the complete approach
+five times; the artifact's 20 requirements x 2 versions x 2 experts = 80 records
+are annotations, not 20 x 20 LLM stability runs.
 
 ## What We Borrow From Barrientos
 

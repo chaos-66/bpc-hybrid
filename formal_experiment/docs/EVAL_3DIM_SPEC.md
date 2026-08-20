@@ -1,7 +1,7 @@
 # Stage 2 Evaluation Spec (Wave 1.1 v2)
 
 > **版本**：v2 (2026-07-12)
-> **依据**：`docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` §3.1 + Wave 1.1 §5 修正
+> **依据**：Barrientos artifact 的专家标注协议（不是论文自动方法主表）+ `docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` §3.1 的 2026-08-20 来源分层纠正 + Wave 1.1 §5 修正
 > **目的**：定义 Stage 2 输出的评估指标体系，包括主指标、3 维度的准确拆分、和语义等价性测试方式
 > **范围**：仅 spec；**不**实现 `three_dim_eval.py`（Wave 2 才开始）
 > **配套**：`docs/STYLE_EQUIVALENT_SPEC.md`（评估体系内的 normalization-aware matching 部分）
@@ -194,7 +194,10 @@ clause_id uniqueness 是 **validation invariant**，不是准确率：
 
 ## 7. 与 Barrientos 的对比
 
-借鉴：3 维度（semantic / structural / deontic）+ style-equivalent 概念
+借鉴：artifact 专家协议的 3 维度（semantic / structural / deontic）+
+style-equivalent 概念。Barrientos 论文对自动 RC4PC 的主评价实际是 Step-specific
+P/R/F1、strict-JSON 合法性与 36 requirements × 5 次运行的 self-consistency；本 spec
+是项目适配设计，不能写成 Barrientos 已直接采用的自动评价器。
 
 不借鉴：
 - "output 是什么"（用 Sun 4 类，不用 Barrientos 3 类）

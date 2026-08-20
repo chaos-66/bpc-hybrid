@@ -9,6 +9,13 @@
 >
 > **结论先行**：✅ **可借鉴工程纪律和评估方法**；❌ **不能照搬 schema**（不同任务）；⚠️ **modality 类别需扩展**（3 → 4 类）。
 
+> **2026-08-20 原文复核纠正（优先于本文较早措辞）**：必须区分三类证据：
+> (1) 论文正文的 RC4PC 自动方法评价；(2) 随附 artifact 的专家标注协议；
+> (3) 本项目提出、尚待实现的适配指标。论文对 36 条 requirement 的完整流程独立
+> 运行 5 次；artifact 的“20 requirements × 2 versions × 2 experts = 80”是专家
+> annotations，不是“20 条×20 次”LLM 稳定性实验。任何论文写作或 Agent 派工均不得
+> 再混用这三个样本数与评价口径。
+
 ---
 
 ## 1. 关键事实：Modality 类别数差异 ⚠️
@@ -51,16 +58,26 @@
 
 ## 3. 可借鉴的具体项（按价值排序）
 
-### 3.1 评估方法（⭐⭐⭐⭐⭐ 最高价值）
+### 3.1 评估方法（⭐⭐⭐⭐⭐ 最高价值；必须分清论文正文与专家协议）
 
-**Barrientos 做了什么**（`protocol_and_results.md` §2.2）：
+**论文正文对自动 RC4PC 做了什么**（PDF §6.1–§6.2、Table 4–5）：
+- 数据为 3 个场景、共 **36 条 requirements**；Step 2 有 26 个 change operations，
+  Step 3 有 25 个 deviations；
+- Step 1 报告 precondition/norm 的 P/R/F1，并验证 strict JSON schema；
+- 完整流程独立运行 **5 次**。Step 1 稳定性使用 self-consistency：同一 requirement
+  不同运行两两比较，元素 distance≤2 的 pairwise comparison 比例；temperature=0；
+- Step 3 对 deviation type / reason / process-model reference 分别报告跨 5 次运行的
+  P/R/F1 均值与标准差；Step 2 是确定性脚本，不做稳定性重复。
+
+**随附专家标注协议做了什么**（`protocol_and_results.md` §2.2）：
 - 每个专家标注对照 ground truth 评估 3 个维度：
   1. **Semantic coverage**：所有必需元素是否都覆盖
   2. **Structural encoding**：precondition vs embedded、explicit vs implicit、single vs multiple norms、control-flow vs temporal
   3. **Deontic correctness**：obligation vs permission vs prohibition 是否对、无意外加强/削弱
 - 引入 **"style-equivalent alignment"** 概念：表达不同但语义相同算正确
 - 专家 1：100% 语义对齐；专家 2：97.5%；平均 98.75%
-- Cohen's κ = 0.52（多专家一致性）
+- Cohen's κ = 0.52（20 个 changed requirements 的 NC/OC/NE 判断一致性；不是 LLM
+  self-consistency，也不是 80 条 formalization annotation 的统一 κ）
 
 **可借鉴到我们的 Stage 2 评估**：
 
@@ -71,7 +88,9 @@
 | Deontic correctness | modality 4 类分类是否对？P/R/F1 |
 | **Style-equivalent alignment** ⭐ | **创新点**：允许标注表达不同但语义相同算正确（避免过度惩罚标注风格差异） |
 
-**关键创新点**：style-equivalent alignment 概念。
+**可借鉴点**：style-equivalent alignment 概念来自专家标注比较协议；它不是论文
+自动方法主表中的独立数值指标。若移植到本项目，必须标为项目的辅助敏感性分析，
+并与主 span/modality 指标分表。
 - 我们的评估可能会遇到"两个标注都合理但格式不同"的情况
 - 这种"风格差异"被 Barrientos 证明是 37.5% 的标注情况
 - 借鉴这个概念能**显著提高评估稳健性**
@@ -109,18 +128,23 @@
 - action 字段加 `dimension` + `compliance_pattern` enum（4 选 1 + 44 选 1）
 - 增加 "version consistency rule"（同一句多次跑要稳定）
 
-### 3.4 温度 0 + 固定 seed（⭐⭐⭐⭐⭐ 必须）
+### 3.4 温度 0 + 5 次独立运行（⭐⭐⭐⭐⭐ 必须）
 
-**Barrientos 的稳定性测试**（`analysis_of_results/analyzed_stability/`）：
-- 20 个 requirement × 20 次稳定性跑 = 400 个结果文件
-- 计算 stability_ratio（多次跑结果一致的比例）
+**Barrientos 的稳定性测试**（论文 §6.2；artifact 保存运行结果）：
+- 36 个 requirement 的完整流程独立运行 5 次；
+- Step 1 计算 pairwise self-consistency（元素 distance≤2），不是简单 byte-identical
+  ratio；
+- temperature=0。论文正文未把固定 seed 写成该设计的必要组成，因而“seed=42”只能
+  是本项目自己的可复现性选择，不能归因给 Barrientos。
 
-**借鉴到我们的 D1**：
-- 同一句跑 5 次（`temperature=0, seed=42`）
-- 算 stability ratio（field/span agreement）
+**借鉴到我们的 Direct-LLM**：
+- 对同一冻结输入做 5 次独立运行（temperature=0；是否固定 seed 由本项目合同另定）；
+- 同时报告 Barrientos-style self-consistency 与本项目 field/span agreement，二者分列；
 - 报告"5 次跑里 X% 的字段结果一致"
 
-**当前状态**：D1 prompt 没说温度和 seed。**必须加**。
+**当前状态（2026-08-20）**：Direct-LLM 的执行注册表已锁定 temperature=0、
+top_p=1 与 seed 策略；这些是运行合同，不要求重复写入 prompt。尚缺的是 AB-9 的
+5 次独立正式重跑与 self-consistency / field-span agreement 报告。
 
 ### 3.5 Temporal Validity 字段（⭐⭐ 低价值）
 
@@ -224,7 +248,7 @@ Output: {
 
 ## 5. 建议的 Stage 2 评估升级（创新点）
 
-### 5.1 三维度评估（借鉴 Barrientos §2.2）
+### 5.1 三维度评估（借鉴 Barrientos artifact 的专家标注协议，不是论文自动主表）
 
 | 维度 | 我们的指标 |
 |---|---|
@@ -277,9 +301,10 @@ Output: {
 ## 8. 总结一句话
 
 > **Barrientos 是 3 类 modality + change-impact schema**（不能直接借鉴）；
-> **可借鉴的是评估方法（3 维度 + style-equivalent）和工程纪律（controlled vocabulary + 温度 0 + 稳定性测试）**。
+> **可借鉴的是专家评估协议（3 维度 + style-equivalent）和工程纪律（controlled vocabulary + 温度 0 + 5-run 稳定性测试）**；论文自动方法主表仍是 Step-specific P/R/F1、schema validity 与 self-consistency。
 >
-> D1 prompt 需要扩展 1 类 modality（4 类）+ 加温度 seed + 加 few-shot + （可选）加 compliance pattern。
+> Direct-LLM 已采用 Sun 4 类 modality、锁定 sampling/seed 策略并配置合成 few-shot；
+> compliance pattern dual-view 与 5-run stability 仍是待消融项，不能写成已完成贡献。
 > Stage 2 评估可以引入 style-equivalent alignment 概念（**CCFC 创新点**）。
 
 ---

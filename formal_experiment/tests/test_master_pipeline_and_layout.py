@@ -106,3 +106,18 @@ def test_paper_writing_track_starts_without_unlocking_results() -> None:
     assert "Agent-E1" in project
     assert "Agent-P1" in project
     assert "S2.1-A" in project
+
+
+def test_barrientos_paper_runs_and_expert_annotations_are_not_conflated() -> None:
+    pipeline = (DOCS / "MASTER_PIPELINE.md").read_text(encoding="utf-8")
+    project = (DOCS / "PROJECT_AUDIT.md").read_text(encoding="utf-8")
+    borrowing_audit = (
+        DOCS / "research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md"
+    ).read_text(encoding="utf-8")
+
+    combined = "\n".join((pipeline, project, borrowing_audit))
+    assert "36 条 requirement" in combined
+    assert "完整流程独立运行 **5 次**" in borrowing_audit
+    assert "20 requirements × 2 versions × 2 experts = 80" in borrowing_audit
+    assert "Barrientos 20 句×20 次" not in combined
+    assert "20 个 requirement × 20 次稳定性跑" not in combined

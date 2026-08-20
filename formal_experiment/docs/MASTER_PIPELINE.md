@@ -420,14 +420,20 @@ deepseek-v4-pro，用户授权 150 calls）：
 3. **受控词汇**：Barrientos 44 模式 4 维度（control_flow/resource/data/time）约束
    normalized view；我们=public marker lexicon（64 marker）+ 受控 six-field schema
    （normalized view 受控，原文 span 不覆盖）。
-4. **评估纪律**：Barrientos 3 维度（semantic coverage / structural encoding /
-   deontic correctness）+ **style-equivalent alignment**（表达不同但语义相同算正确）
-   + 专家核验（κ=0.52）；我们=span overlap 主口径 + 细/粗 Gold 双口径 + 失败类型
-   归因 + label 面板 → style-equivalent 概念列为论文方法学贡献候选。
+4. **评估纪律（来源分层）**：Barrientos 论文正文对自动化 Step 1 报告 P/R/F1、
+   strict-JSON 合法性与 5 次独立运行的 self-consistency；其随附专家标注协议另用
+   semantic coverage / structural encoding / deontic correctness 与
+   **style-equivalent alignment**（表达不同但语义相同算正确），κ=0.52 属于专家对
+   20 个变更影响判断的 NC/OC/NE 一致性，不是 LLM 输出一致性。我们=span overlap
+   主口径 + 细/粗 Gold 双口径 + 失败类型归因 + label 面板；style-equivalent 只能
+   作为有明确适配合同的辅助敏感性分析，不能冒充 Barrientos 论文的主指标。
 5. **工程纪律**：strict JSON schema、temperature 0、稳定性测试、deterministic
    normalization → 我们已实现（D1-R2 锁定配方、预算合同、prompt hash 三方一致）。
-6. **稳定性实验差距**：Barrientos 20 句×20 次；我们当前 temp0 + prompt hash 锁定，
-   正式 5 次重跑稳定性实验**尚未执行** → 列入消融计划 AB-9。
+6. **稳定性实验差距（2026-08-20 原文纠正）**：Barrientos 论文是 36 条 requirement
+   的完整流程独立运行 **5 次**，Step 1 用 pairwise distance≤2 的 self-consistency；
+   “20 条×2 版本×2 专家=80 annotations”来自专家标注协议，**不是 20 条×20 次模型
+   重跑**。我们当前 temp0 + prompt hash 已锁定，但同协议正式重跑仍**尚未执行** →
+   列入消融计划 AB-9。
 
 **贡献细模块化（论文方法章节 4–5 页的叙述骨架；禁止只写"调用了 LLM"）**：
 
@@ -470,7 +476,7 @@ Rules-Only 的可叙述模块：public marker lexicon 重建（来源/哈希/版
 | AB-6 | transport | thinking-disabled/无 json_object vs 默认配方 | 事故率与可复现性 | 已有 0 事故证据，可整理 |
 | AB-7 | 评价口径 | 细 Gold vs 粗 Gold vs Sun-marker 收敛 | 口径敏感性（已有 0.7186/0.7986、0.7756/0.8726） | 有证据，整理成表 |
 | AB-8 | B0 模块 | lexicon 逐来源（Sleimi/LexNLP/Wiktionary）、marker 路由、跨语言验证开关 | 每个规则模块的边际贡献 | 部分有证据（R1 各批次） |
-| AB-9 | 稳定性 | 5 次重跑 agreement（对照 Barrientos 20 次） | 成本-收益的稳定性保证 | 待授权 |
+| AB-9 | 稳定性 | 5 次独立重跑 agreement / self-consistency（对齐 Barrientos 论文的 5-run 设计） | 成本-收益的稳定性保证 | 待授权 |
 | AB-10 | style-equivalent 评估 | 开启 vs 关闭该评估维度 | 评估鲁棒性（借鉴 Barrientos 的贡献） | 待实现 |
 
 **输出要求**：每项消融至少一行结论表——「我的模块 vs 换 Barrientos 模块 vs 去掉
