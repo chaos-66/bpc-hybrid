@@ -1,0 +1,515 @@
+{
+  "schema_version": "s2_12_fallback_trigger_plan@1.0.0",
+  "plan_id": "s2-12-fallback-trigger-plan-v1",
+  "status": "frozen_locked_before_api_authorization",
+  "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+  "method_id": "sun_llm_fallback",
+  "role": "comparison_only_negative_result_control",
+  "source": {
+    "preflight_report": "outputs/reports/s2_12_api_preflight_v1.json",
+    "preflight_report_sha256": "c7d33f956464f54b9b76145a1874d9111e3e41f1a904bc3751edc8b8e3c90314",
+    "locked_calls": 27,
+    "derivation": "locked risk-descending budget allocation replayed by build_s2_12_api_preflight_v1.diagnostics; per-call request-body SHA must match the locked preflight report"
+  },
+  "input": {
+    "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+    "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "records": 36
+  },
+  "prompt": {
+    "name": "rule_first_llm_fallback_prompt",
+    "sha256": "00fe02996914e17f30962147d7a9f2c71a92d2479ba4eff343583a139bb1537b"
+  },
+  "retry": 0,
+  "gold_isolation": {
+    "gold_read_by_derivation": false,
+    "selected_from_locked_preflight_only": true,
+    "post_result_selection_forbidden": true
+  },
+  "selected_plans": [
+    {
+      "execution_order": 1,
+      "sample_id": "emergencies_scenario/r3/v1",
+      "clause_id": "s212_0027.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "risk_score": 160,
+      "request_body_sha256": "dff2f214e300d082e56610af0759688150305c108c1ed4991cb90eef412075fe",
+      "request_body_utf8_bytes": 4720
+    },
+    {
+      "execution_order": 2,
+      "sample_id": "emergencies_scenario/r3/v1",
+      "clause_id": "s212_0027.c2",
+      "clause_index": 1,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement",
+        "alignment_confidence_below_0_65"
+      ],
+      "risk_score": 160,
+      "request_body_sha256": "e1d12a393e966381ccde2d5357b666d2168f3653af5d6a65ee848cf36cf8cf9b",
+      "request_body_utf8_bytes": 4557
+    },
+    {
+      "execution_order": 3,
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "clause_id": "s212_0005.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "c93e114b3a227170ff76c4e0026341c9de7f443c3d56d16c02dfd22c935992bd",
+      "request_body_utf8_bytes": 4423
+    },
+    {
+      "execution_order": 4,
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "clause_id": "s212_0009.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "80fe99ea29cf53a44dcfd36632dd21ab7a0071549c74a87ba2a47f09fb89c404",
+      "request_body_utf8_bytes": 4514
+    },
+    {
+      "execution_order": 5,
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "clause_id": "s212_0013.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "85e19138a250b3e7b1f313eaf11493033b38df43df1dbf87b7e28ed66b71f7b1",
+      "request_body_utf8_bytes": 4405
+    },
+    {
+      "execution_order": 6,
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "clause_id": "s212_0014.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "ba28b6a59f70d8afb34b37356d6d9f4acc9fbb0f6495142e3ef65ea14096c156",
+      "request_body_utf8_bytes": 4305
+    },
+    {
+      "execution_order": 7,
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "clause_id": "s212_0018.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "d34b97ed72ac7081421737405f30004a0ecc0cfbc4237f7f11cab91c99679600",
+      "request_body_utf8_bytes": 4367
+    },
+    {
+      "execution_order": 8,
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "clause_id": "s212_0021.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "cec1f4d5da7647b833d1c22bbd88374d14777b1d7ef6203164061cd44e030714",
+      "request_body_utf8_bytes": 4714
+    },
+    {
+      "execution_order": 9,
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "clause_id": "s212_0022.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "ad4194d0d4a6354099392c0fd3e803ea898b542e74c20db25c32a4096adafba9",
+      "request_body_utf8_bytes": 4719
+    },
+    {
+      "execution_order": 10,
+      "sample_id": "emergencies_scenario/r1/v1",
+      "clause_id": "s212_0023.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "1bbca39f37d6e9c319236f6170990b903dec45d446228b5a90906ded510b258c",
+      "request_body_utf8_bytes": 5105
+    },
+    {
+      "execution_order": 11,
+      "sample_id": "emergencies_scenario/r1/v2",
+      "clause_id": "s212_0024.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "cbcd337d136229564502a4e37c47000c9f36e105b8352c7032228f3857841d3a",
+      "request_body_utf8_bytes": 4778
+    },
+    {
+      "execution_order": 12,
+      "sample_id": "emergencies_scenario/r2/v1",
+      "clause_id": "s212_0025.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "687be4e38c687d5c596088d2d48e4c873ba4558e42c64fe900e60dbc15f89024",
+      "request_body_utf8_bytes": 4460
+    },
+    {
+      "execution_order": 13,
+      "sample_id": "emergencies_scenario/r2/v1",
+      "clause_id": "s212_0025.c2",
+      "clause_index": 1,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "3a773db6062fb209e8315c7bb692b96715c3d2e0c735a0968f64f5edb6219723",
+      "request_body_utf8_bytes": 4427
+    },
+    {
+      "execution_order": 14,
+      "sample_id": "emergencies_scenario/r2/v2",
+      "clause_id": "s212_0026.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "cf5f5b1ad15063edd51218ac322ce264ae360ebc949f98e583001c8c5b6f49be",
+      "request_body_utf8_bytes": 4462
+    },
+    {
+      "execution_order": 15,
+      "sample_id": "emergencies_scenario/r2/v2",
+      "clause_id": "s212_0026.c2",
+      "clause_index": 1,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "1b86201c54586942c25c8231f2a5cc73fe1d1d7e6c7e5e46a62be18104f5bec3",
+      "request_body_utf8_bytes": 4435
+    },
+    {
+      "execution_order": 16,
+      "sample_id": "emergencies_scenario/r3/v2",
+      "clause_id": "s212_0028.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "0a979d96afc8abc3233412a7e7b91f22f8ce3e03a5097e26868b6e3fe7f1f15e",
+      "request_body_utf8_bytes": 4855
+    },
+    {
+      "execution_order": 17,
+      "sample_id": "emergencies_scenario/r4/v1",
+      "clause_id": "s212_0029.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "af03d05678afb5f6119af58e8e945dbeb23ed08b111e214401e042c4e8f1f781",
+      "request_body_utf8_bytes": 4245
+    },
+    {
+      "execution_order": 18,
+      "sample_id": "emergencies_scenario/r4/v2",
+      "clause_id": "s212_0030.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "b8454370126ec63d8d6e0224b52a3f50e1882b10af279551fe759988af83e328",
+      "request_body_utf8_bytes": 4740
+    },
+    {
+      "execution_order": 19,
+      "sample_id": "emergencies_scenario/r5/v2",
+      "clause_id": "s212_0032.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "0b904faaea136ec1bca2fbd2ce27a8443d45e6d13bec77bae9a67153dd54dfde",
+      "request_body_utf8_bytes": 4795
+    },
+    {
+      "execution_order": 20,
+      "sample_id": "emergencies_scenario/r6/v1",
+      "clause_id": "s212_0033.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "4672bd8ba95bd364ef242fd1bf6bf3b6552ec8fbfa97f7abbc59b0a67e58b095",
+      "request_body_utf8_bytes": 4010
+    },
+    {
+      "execution_order": 21,
+      "sample_id": "emergencies_scenario/r6/v2",
+      "clause_id": "s212_0034.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "3933669a7799afa9faf6f9ae925751346886fa5733fd6e86799568cfacbb7556",
+      "request_body_utf8_bytes": 4243
+    },
+    {
+      "execution_order": 22,
+      "sample_id": "emergencies_scenario/r7/v1",
+      "clause_id": "s212_0035.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "c3ac7339815d8987c494118ce0d879b4d040b0a421c1ac55c0203f76f12facd6",
+      "request_body_utf8_bytes": 4276
+    },
+    {
+      "execution_order": 23,
+      "sample_id": "emergencies_scenario/r7/v2",
+      "clause_id": "s212_0036.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality",
+        "actors",
+        "actor_action_map"
+      ],
+      "reasons": [
+        "non_definition_missing_actor",
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 130,
+      "request_body_sha256": "a56abfa891a58feb35b193c35a59d178a3d87d3c93f0645c2606ab94dbba3c16",
+      "request_body_utf8_bytes": 4778
+    },
+    {
+      "execution_order": 24,
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "clause_id": "s212_0002.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality"
+      ],
+      "reasons": [
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 80,
+      "request_body_sha256": "dbd74af7faf83080bd5a7c629b186bce7ae89972c71521dd600496e1bb0b4a63",
+      "request_body_utf8_bytes": 5133
+    },
+    {
+      "execution_order": 25,
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "clause_id": "s212_0004.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality"
+      ],
+      "reasons": [
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 80,
+      "request_body_sha256": "5507b5a90fc651824eba02e48139179f0cf49b15c899d4f3ea2ddeda66e0dd2f",
+      "request_body_utf8_bytes": 4815
+    },
+    {
+      "execution_order": 26,
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "clause_id": "s212_0008.c1",
+      "clause_index": 0,
+      "repair_fields": [
+        "modality"
+      ],
+      "reasons": [
+        "classifier_marker_disagreement"
+      ],
+      "risk_score": 80,
+      "request_body_sha256": "240a5a6a32425d69aea6e28bf8c6e503e770eb5b4e49416145db490e189e6978",
+      "request_body_utf8_bytes": 4582
+    },
+    {
+      "execution_order": 27,
+      "sample_id": "emergencies_scenario/r3/v1",
+      "clause_id": "s212_0027.c3",
+      "clause_index": 2,
+      "repair_fields": [
+        "modality"
+      ],
+      "reasons": [
+        "alignment_confidence_below_0_65"
+      ],
+      "risk_score": 30,
+      "request_body_sha256": "7aa93e0a3527617fa060ed20ed883c51c1f9c1c51a8c1f642d10ae4e8068a503",
+      "request_body_utf8_bytes": 4094
+    }
+  ],
+  "safety": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "raw_text_committed": false,
+    "h1_trigger_or_prompt_or_repair_logic_modified": false,
+    "gold_rule_records_created": false,
+    "oracle_started": false
+  }
+}

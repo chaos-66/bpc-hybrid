@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "S2.12 API Authorization Contract v1",
+  "description": "Machine-verifiable user authorization for the two locked S2.12 arms (direct_llm 36 + sun_llm_fallback 27). A real authorization file is ONLY created by the user; this repo ships the schema and synthetic fixtures. Missing any required field makes the runner refuse before the first transport call.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "authorization_sentence_utf8_sha256",
+    "authorization_event_file",
+    "authorization_event_file_sha256",
+    "model",
+    "calls",
+    "payload_hashes",
+    "retry",
+    "input_token_cap",
+    "output_token_cap",
+    "usd_cost_cap",
+    "allowed_windows",
+    "price_snapshot",
+    "price_checked_at_utc",
+    "runner_implementation_hashes",
+    "input_config_prompt_hashes",
+    "gold_isolation"
+  ],
+  "properties": {
+    "schema_version": { "const": "s2_12_api_authorization@1.0.0" },
+    "authorization_sentence_utf8_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "authorization_event_file": { "type": "string" },
+    "authorization_event_file_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "model": { "const": "deepseek-v4-pro" },
+    "calls": {
+      "type": "object",
+      "required": ["direct_llm", "sun_llm_fallback"],
+      "properties": {
+        "direct_llm": { "const": 36 },
+        "sun_llm_fallback": { "const": 27 }
+      },
+      "additionalProperties": false
+    },
+    "payload_hashes": {
+      "type": "array",
+      "minItems": 63,
+      "maxItems": 63,
+      "items": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+      "uniqueItems": true
+    },
+    "retry": { "const": 0 },
+    "input_token_cap": { "type": "integer", "exclusiveMinimum": 0 },
+    "output_token_cap": { "type": "integer", "exclusiveMinimum": 0 },
+    "usd_cost_cap": { "type": "number", "exclusiveMinimum": 0 },
+    "allowed_windows": { "enum": ["any_time", "off_peak_only"] },
+    "price_snapshot": { "type": "string" },
+    "price_checked_at_utc": { "type": "string", "format": "date-time" },
+    "runner_implementation_hashes": {
+      "type": "object",
+      "required": ["run_s2_12_direct_llm_v1", "run_s2_12_sun_llm_fallback_v1"]
+    },
+    "input_config_prompt_hashes": {
+      "type": "object",
+      "required": [
+        "input_sha256",
+        "lock_sha256",
+        "prompt_direct_sha256",
+        "prompt_fallback_sha256"
+      ],
+      "properties": {
+        "input_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "lock_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "prompt_direct_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "prompt_fallback_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "gold_isolation": {
+      "type": "object",
+      "required": ["api_arms_must_not_read_gold"],
+      "properties": {
+        "api_arms_must_not_read_gold": { "const": true },
+        "evaluation_only_after_predictions_are_locked": { "const": true }
+      }
+    }
+  },
+  "additionalProperties": false
+}

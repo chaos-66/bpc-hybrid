@@ -3743,3 +3743,16 @@
 - 仍存在 blocker：无
 - 备注：仅更新 docs/API_AUTHORIZATION_REQUEST.md（v2）与 FILE_CATALOG.md 日期回归；零 API 零网络调用模型；未改 Gold；.bak 未触碰；full audit 2573 passed/24 skipped/19 warnings exit 0
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-21T22:24:25.948116+00:00 - S2.12 runner wiring batch (zero-API/zero-network): implement run_s2_12_direct_llm_v1.py (36 calls), run_s2_12_sun_llm_fallback_v1.py (27 calls, frozen plan, transport capture), shared s2_12_execution.py contract (63/63 payload SHA rebuild+verify, authorization gate, Beijing off-peak window, payload-locked fake transport, atomic publish, text/secret containment), frozen fallback trigger plan, auth schema, independent verifier, 21 focused tests; update MASTER_PIPELINE 3.6.26 + API_AUTHORIZATION_REQUEST v3; RUNNER READY / API NOT AUTHORIZED / ZERO CALLS
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2594 passed, 24 skipped, 23 warnings in 2321.32s (0:38:41)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`5e67695f6aec059fc7933d66653ae4f45f56ce4b`；相关未提交路径：19 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：零 LLM/API/网络；未创建真实授权文件；正式预测目录未写入；.bak 未触碰；官方价格上涨已核账（USD cap 84.18 peak/42.09 off-peak）；full audit 2594 passed/24 skipped/23 warnings exit 0
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
