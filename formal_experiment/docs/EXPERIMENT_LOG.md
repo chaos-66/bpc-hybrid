@@ -3730,3 +3730,16 @@
 - 仍存在 blocker：无
 - 备注：零LLM/API；未改Gold；未启动Oracle；新增paper/ABLATION_MATRIX.md与docs/API_AUTHORIZATION_REQUEST.md；PW3 in_progress、PW7/PW9 partial；MASTER_PIPELINE changelog 3.6.25；全文audit 2573 passed/24 skipped/19 warnings exit 0
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-21T18:19:32.162616+00:00 - S2.12 授权前最终核验：preflight 重建通过（exit 0，0 API）；63 payload/108 硬上限/retry0 核验通过；官方价格复核发现 2026-08-19/20 上调（v4-pro input cache-miss 0.435→0.66/1.32、output 0.87→1.98/3.96），USD cap 重算 84.18（peak）/42.09（off-peak）并更新授权申请 v2；S2.12 专属 runner/plan/capture 接线缺失为 blocker，未调用 API
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2573 passed, 24 skipped, 19 warnings in 1946.08s (0:32:26)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`a5acad4eb3be434f5bdd5617b236c50a1107fbe0`；相关未提交路径：9 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：仅更新 docs/API_AUTHORIZATION_REQUEST.md（v2）与 FILE_CATALOG.md 日期回归；零 API 零网络调用模型；未改 Gold；.bak 未触碰；full audit 2573 passed/24 skipped/19 warnings exit 0
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
