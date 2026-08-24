@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-22
-**收录文件**：1370 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-08-25
+**收录文件**：1373 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -1018,6 +1018,7 @@
 | `scripts/build_s2_11_g0_5_pre_authorization_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_11_gates_applied_checkpoint_a.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_api_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s2_12_auth_event_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_complex_corpus_input_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_fallback_trigger_plan_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_formal_error_analysis_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1143,6 +1144,7 @@
 | `scripts/verify_s2_12_execution_ready_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_12_readiness_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_12_readiness_v4.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_s2_12_runner_safety_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_12_runner_wiring.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_12_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1428,6 +1430,7 @@
 | `tests/test_s2_12_execution_ready_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_12_readiness_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_12_readiness_v4.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s2_12_runner_safety_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_12_runner_wiring.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_12_zero_api_and_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |

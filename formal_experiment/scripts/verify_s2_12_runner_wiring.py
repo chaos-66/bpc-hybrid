@@ -94,18 +94,20 @@ def verify() -> dict[str, Any]:
     plan_shas = {e["request_body_sha256"] for e in plan["selected_plans"]}
     check("plan_shas_subset_of_report", plan_shas <= report_fb)
 
-    # 4) Authorization schema present with the required field set.
+    # 4) Authorization schema present with the required field set (v1.1.0).
     schema = json.loads(AUTH_SCHEMA.read_text(encoding="utf-8"))
     check(
         "auth_schema_fields",
         {
             "schema_version", "authorization_sentence_utf8_sha256",
             "authorization_event_file", "authorization_event_file_sha256",
-            "model", "calls", "payload_hashes", "retry",
-            "input_token_cap", "output_token_cap", "usd_cost_cap",
+            "model", "calls", "stage_id", "stage_payload_hashes",
+            "stage_call_cap", "global_input_token_cap",
+            "global_output_token_cap", "global_usd_cost_cap",
             "allowed_windows", "price_snapshot", "price_checked_at_utc",
             "runner_implementation_hashes", "input_config_prompt_hashes",
-            "gold_isolation",
+            "prev_stage_ledger_hash", "final_63_payload_hashes",
+            "retry", "gold_isolation",
         } == set(schema.get("required", [])),
     )
 

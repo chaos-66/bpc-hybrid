@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "S2.12 API Authorization Contract v1",
-  "description": "Machine-verifiable user authorization for the two locked S2.12 arms (direct_llm 36 + sun_llm_fallback 27). A real authorization file is ONLY created by the user; this repo ships the schema and synthetic fixtures. Missing any required field makes the runner refuse before the first transport call.",
+  "title": "S2.12 API Authorization Contract v1.1",
+  "description": "Machine-verifiable user authorization for a SINGLE pre-registered S2.12 stage (D-CAL, D-REST, F-1..F-3). Created only by the user (via the offline builder after the user supplies the authorization sentence verbatim). Missing any required field makes the runner refuse before the first transport call. This repo ships the schema and synthetic fixtures; it never creates a real authorization event.",
   "type": "object",
   "required": [
     "schema_version",
@@ -10,20 +10,24 @@
     "authorization_event_file_sha256",
     "model",
     "calls",
-    "payload_hashes",
-    "retry",
-    "input_token_cap",
-    "output_token_cap",
-    "usd_cost_cap",
+    "stage_id",
+    "stage_payload_hashes",
+    "stage_call_cap",
+    "global_input_token_cap",
+    "global_output_token_cap",
+    "global_usd_cost_cap",
     "allowed_windows",
     "price_snapshot",
     "price_checked_at_utc",
     "runner_implementation_hashes",
     "input_config_prompt_hashes",
+    "prev_stage_ledger_hash",
+    "final_63_payload_hashes",
+    "retry",
     "gold_isolation"
   ],
   "properties": {
-    "schema_version": { "const": "s2_12_api_authorization@1.0.0" },
+    "schema_version": { "const": "s2_12_api_authorization@1.1.0" },
     "authorization_sentence_utf8_sha256": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
@@ -43,23 +47,47 @@
       },
       "additionalProperties": false
     },
-    "payload_hashes": {
+    "stage_id": { "enum": ["D-CAL", "D-REST", "F-1", "F-2", "F-3"] },
+    "stage_payload_hashes": {
       "type": "array",
-      "minItems": 63,
-      "maxItems": 63,
+      "minItems": 1,
       "items": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
       "uniqueItems": true
     },
-    "retry": { "const": 0 },
-    "input_token_cap": { "type": "integer", "exclusiveMinimum": 0 },
-    "output_token_cap": { "type": "integer", "exclusiveMinimum": 0 },
-    "usd_cost_cap": { "type": "number", "exclusiveMinimum": 0 },
+    "stage_call_cap": { "type": "integer", "exclusiveMinimum": 0 },
+    "global_input_token_cap": { "type": "integer", "exclusiveMinimum": 0 },
+    "global_output_token_cap": { "type": "integer", "exclusiveMinimum": 0 },
+    "global_usd_cost_cap": { "type": "number", "exclusiveMinimum": 0 },
     "allowed_windows": { "enum": ["any_time", "off_peak_only"] },
-    "price_snapshot": { "type": "string" },
+    "price_snapshot": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "currency",
+        "input_cache_hit_per_million",
+        "input_cache_miss_per_million",
+        "output_per_million"
+      ],
+      "properties": {
+        "schema_version": { "const": "s2_12_price_snapshot@1.0.0" },
+        "currency": { "const": "USD" },
+        "input_cache_hit_per_million": { "type": "number", "minimum": 0 },
+        "input_cache_miss_per_million": { "type": "number", "minimum": 0 },
+        "output_per_million": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
     "price_checked_at_utc": { "type": "string", "format": "date-time" },
     "runner_implementation_hashes": {
       "type": "object",
-      "required": ["run_s2_12_direct_llm_v1", "run_s2_12_sun_llm_fallback_v1"]
+      "required": [
+        "run_s2_12_direct_llm_v1",
+        "run_s2_12_sun_llm_fallback_v1",
+        "s2_12_execution",
+        "llm_client",
+        "h1_transport"
+      ],
+      "additionalProperties": true
     },
     "input_config_prompt_hashes": {
       "type": "object",
@@ -77,6 +105,15 @@
       },
       "additionalProperties": false
     },
+    "prev_stage_ledger_hash": { "type": "string" },
+    "final_63_payload_hashes": {
+      "type": "array",
+      "minItems": 63,
+      "maxItems": 63,
+      "items": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+      "uniqueItems": true
+    },
+    "retry": { "const": 0 },
     "gold_isolation": {
       "type": "object",
       "required": ["api_arms_must_not_read_gold"],

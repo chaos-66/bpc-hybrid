@@ -3756,3 +3756,16 @@
 - 仍存在 blocker：无
 - 备注：零 LLM/API/网络；未创建真实授权文件；正式预测目录未写入；.bak 未触碰；官方价格上涨已核账（USD cap 84.18 peak/42.09 off-peak）；full audit 2594 passed/24 skipped/23 warnings exit 0
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-24T16:14:47.110442+00:00 - S2.12 runner safety v2 (zero-API/zero-network): per-call payload lock, usage+real cost capture, per-call caps+off-peak, append-only ledger+resume, stage contract (D-CAL/D-REST/F-1..F-3), .env ban, per-arm runner hash binding, auth schema v1.1.0, offline auth-event builder, safety verifier, scripted real-like tests; status RUNNER SAFETY V2 VERIFIED / API NOT AUTHORIZED / ZERO CALLS
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2625 passed, 24 skipped, 40 warnings in 2763.61s (0:46:03)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`3971f14d7628ecff0bc07e55aac7401f49572cb3`；相关未提交路径：20 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：零 LLM/API/网络；未创建真实授权文件；正式预测目录未写入；.bak 未触碰；full audit 2625 passed/24 skipped/40 warnings exit 0
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

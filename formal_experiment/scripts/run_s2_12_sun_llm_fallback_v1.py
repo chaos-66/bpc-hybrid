@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-"""Run the locked S2.12 ``sun_llm_fallback`` arm (27 triggered calls) as a
-fail-closed comparison-only control.
+"""Run a locked S2.12 ``sun_llm_fallback`` stage (F-1/F-2/F-3) with the v2
+real-execution safety contract.
 
-* Replays the locked risk-descending trigger selection (frozen plan) and
-  verifies every one of the 27 request bodies against the frozen plan AND
-  the locked preflight report before any transport call.
-* Zero API by default (payload-locked fake transport, deterministic no-op
-  patch envelopes, no network, no ``.env``).
-* Real transport requires ``--allow-llm`` + ``--auth-file`` (full S2.12
-  authorization contract).  This batch does NOT create a real authorization
-  file; real calls remain pending user authorization.
-* H1/Rules+LLM-Repair remains comparison-only: trigger, prompt, actor
-  limits, and repair logic are NOT modified here.
+* ZERO API by default: ``--transport fake`` (payload-locked fake transport).
+* Real transport requires ``--allow-llm`` AND ``--auth-file`` (S2.12
+  authorization v1.1.0).  Config is built with
+  ``LLMConfig.from_env(project_root, load_project_env=False)`` — a project
+  ``.env`` file is NEVER opened; only the process environment is used.
+* Every call is payload-locked (final body SHA + sample/clause IDs + order),
+  capped (input/output/USD), time-gated (off-peak per call), and recorded in
+  an append-only hash-chained ledger with resume support.
+* Stages F-1/F-2/F-3 partition the 27 locked fallback payloads (9/9/9).
+  Rules+LLM-Repair remains comparison-only; triggers, prompts, and repair
+  logic are NOT modified here.
 """
 
 from __future__ import annotations
@@ -19,7 +20,6 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -31,402 +31,210 @@ for candidate in (SRC, SCRIPTS):
         sys.path.insert(0, str(candidate))
 
 from bpc_hybrid.s2_12_execution import (  # noqa: E402
-    INPUT,
     OUTPUT_DIRS,
     PREFLIGHT_LOCK,
-    PREFLIGHT_REPORT,
     REQUIRED_MODEL,
     S212ExecutionError,
+    StageExecutor,
+    PayloadLock,
     PayloadLockedFakeTransport,
-    _FORBIDDEN_SECRET_KEYS,
-    _FORBIDDEN_TEXT_KEYS,
-    _contains_forbidden,
-    _json_bytes,
+    PayloadLockedRealTransport,
     _sha,
-    atomic_publish_directory,
-    build_cost_doc,
-    check_off_peak_only,
+    all_arm_payloads_called,
+    arm_policy,
     load_and_validate_authorization,
     load_lock,
     load_report,
-    manifest_capsule,
+    publish_stage_capsule,
     rebuild_and_verify_payloads,
-    verify_63_count,
 )
-from bpc_hybrid.llm_client import (  # noqa: E402
-    LLMClientError,
-    LLMRequest,
-    RealAPITransport,
-)
-from bpc_hybrid.h1_transport import (  # noqa: E402
-    DEEPSEEK_V4_PRO_H1_POLICY,
-    build_transport_capture_row,
-)
-from run_sun_llm_fallback import (  # noqa: E402
-    _patch_event_base,
-    apply_patch_envelope,
-)
-from bpc_hybrid.b0_artifact import prediction_hash  # noqa: E402
+from bpc_hybrid.llm_client import OpenAICompatibleRequestBuilder  # noqa: E402
+from run_s2_12_sun_rule_only_v1 import _resolve_records  # noqa: E402
 
-FROZEN_PLAN = ROOT / "configs/s2_12_fallback_trigger_plan_v1.json"
+ARM = "sun_llm_fallback"
 
 
-def _assemble_capsule(
-    outputs: dict[str, dict[str, Any]],
-    events: list[dict[str, Any]],
-    capture_rows: list[dict[str, Any]],
-    stats: dict[str, Any],
-    output_dir: Path,
-) -> Any:
-    """Assemble the fallback prediction capsule (predictions/manifest/
-    telemetry/cost/transport_capture) and return an object with ``files``."""
-    from dataclasses import dataclass
+def _runner_hash() -> str:
+    return _sha(Path(__file__))
 
-    @dataclass
-    class Capsule:
-        files: dict[str, bytes]
 
-    from bpc_hybrid.s2_12_execution import _strip_text_fields
+def _implementation_hashes() -> dict[str, str]:
+    import importlib.util
 
-    records = [
-        {
-            "sample_id": sample_id,
-            "request_status": "ok",
-            "error_category": None,
-            "record": _strip_text_fields(record),
-        }
-        for sample_id, record in sorted(outputs.items())
-    ]
-    if len(records) != 36:
+    def module_file(name: str, rel: str) -> Path:
+        spec = importlib.util.find_spec(name)
+        if spec and spec.origin and Path(spec.origin).is_file():
+            return Path(spec.origin)
+        return ROOT / rel
+
+    return {
+        "s2_12_execution": _sha(ROOT / "src/bpc_hybrid/s2_12_execution.py"),
+        "llm_client": _sha(module_file("bpc_hybrid.llm_client",
+                                        "src/bpc_hybrid/llm_client.py")),
+        "h1_transport": _sha(module_file("bpc_hybrid.h1_transport",
+                                         "src/bpc_hybrid/h1_transport.py")),
+    }
+
+
+def _build_transport(args, payload_lock, lock):
+    if not args.allow_llm:
+        return PayloadLockedFakeTransport(payload_lock, ARM), True
+    from bpc_hybrid.llm_config import LLMConfig
+    config = LLMConfig.from_env(project_root=ROOT, load_project_env=False)
+    if config.provider == "mock" or not config.enabled:
+        raise S212ExecutionError("real provider is not enabled (process env only)")
+    if config.model != REQUIRED_MODEL:
         raise S212ExecutionError(
-            f"fallback capsule must contain 36 records, got {len(records)}"
+            f"resolved model {config.model!r} != {REQUIRED_MODEL!r}"
         )
-    prediction_doc = {
-        "schema_version": "s2_12_sun_llm_fallback_predictions@1.0.0",
-        "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
-        "method_id": "sun_llm_fallback",
-        "record_count": len(records),
-        "gold_read_by_runner": False,
-        "raw_text_committed": False,
-        "records": records,
-    }
-    if _contains_forbidden(prediction_doc, _FORBIDDEN_TEXT_KEYS):
-        raise S212ExecutionError("text containment failed for committed predictions")
-    if _contains_forbidden(prediction_doc, _FORBIDDEN_SECRET_KEYS):
-        raise S212ExecutionError("secret containment failed for committed predictions")
+    return PayloadLockedRealTransport(
+        payload_lock, config, timeout_seconds=args.transport_timeout
+    ), False
 
-    telemetry = {
-        "schema_version": "s2_12_sun_llm_fallback_telemetry@1.0.0",
-        "transport": "fake_payload_locked" if stats["fake"] else "real_authorized",
-        "llm_calls": stats["llm_calls"],
-        "max_calls": stats["max_calls"],
-        "returned_models": stats["returned_models"],
-        "patch_events": events,
-        "patch_accepted": stats["accepted"],
-        "prediction_changed": stats["changed"],
-        "text_or_gold_payload_committed": False,
+
+def _synthetic_auth_for_fake(stage_id, rows_by_arm):
+    price = {
+        "schema_version": "s2_12_price_snapshot@1.0.0",
+        "currency": "USD",
+        "input_cache_hit_per_million": 0.044,
+        "input_cache_miss_per_million": 1.32,
+        "output_per_million": 3.96,
     }
-    cost = build_cost_doc(
-        llm_calls=stats["llm_calls"],
-        max_calls=stats["max_calls"],
-        input_tokens_billed=stats["input_tokens_billed"],
-        output_tokens_billed=stats["output_tokens_billed"],
-        actual_cost_usd=stats["cost_usd"],
-        fake=stats["fake"],
-    )
-    files = {
-        "predictions.json": _json_bytes(prediction_doc),
-        "telemetry.json": _json_bytes(telemetry),
-        "cost.json": _json_bytes(cost),
-    }
-    if stats["fake"]:
-        files["transport_capture.jsonl"] = "".join(
-            json.dumps(row, ensure_ascii=False) + "\n" for row in capture_rows
-        ).encode("utf-8")
-    manifest = {
-        "schema_version": "s2_12_sun_llm_fallback_manifest@1.0.0",
-        "run_id": "s2_12_sun_llm_fallback_v1",
-        "status": (
-            "completed_fake_zero_api" if stats["fake"]
-            else "completed_real_authorized"
-        ),
-        "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
-        "method_id": "sun_llm_fallback",
-        "role": "comparison_only_negative_result_control",
-        "frozen_trigger_plan": {
-            "path": "configs/s2_12_fallback_trigger_plan_v1.json",
-            "sha256": _sha(FROZEN_PLAN),
+    payloads = [row["request_body_sha256"] for row in rows_by_arm[ARM]]
+    return {
+        "schema_version": "s2_12_api_authorization@1.1.0",
+        "authorization_sentence_utf8_sha256": "synthetic-fake",
+        "authorization_event_file": "synthetic",
+        "authorization_event_file_sha256": "synthetic",
+        "model": REQUIRED_MODEL,
+        "calls": {"direct_llm": 36, "sun_llm_fallback": 27},
+        "stage_id": stage_id,
+        "stage_payload_hashes": payloads,
+        "stage_call_cap": len(payloads),
+        "global_input_token_cap": 63000000,
+        "global_output_token_cap": 258048,
+        "global_usd_cost_cap": 84.18,
+        "allowed_windows": "any_time",
+        "price_snapshot": price,
+        "price_checked_at_utc": "2026-08-22T00:00:00Z",
+        "runner_implementation_hashes": {
+            "run_s2_12_direct_llm_v1": "synthetic",
+            "run_s2_12_sun_llm_fallback_v1": _runner_hash(),
+            "s2_12_execution": _sha(ROOT / "src/bpc_hybrid/s2_12_execution.py"),
+            "llm_client": _implementation_hashes()["llm_client"],
+            "h1_transport": _implementation_hashes()["h1_transport"],
         },
-        "input_binding": {
-            "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
-            "sha256": _sha(INPUT),
-            "records": 36,
+        "input_config_prompt_hashes": {
+            "input_sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+            "lock_sha256": _sha(PREFLIGHT_LOCK),
+            "prompt_direct_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+            "prompt_fallback_sha256": "00fe02996914e17f30962147d7a9f2c71a92d2479ba4eff343583a139bb1537b",
         },
-        "run_lock": {
-            "path": "configs/s2_12_api_arms_preflight_v1.json",
-            "sha256": _sha(PREFLIGHT_LOCK),
-        },
-        "preflight_report": {
-            "path": "outputs/reports/s2_12_api_preflight_v1.json",
-            "sha256": _sha(PREFLIGHT_REPORT),
-        },
+        "prev_stage_ledger_hash": "",
+        "final_63_payload_hashes": payloads,
+        "retry": 0,
         "gold_isolation": {
-            "gold_read_by_runner": False,
-            "predictions_locked_before_evaluation": True,
-            "post_result_tuning_forbidden": True,
+            "api_arms_must_not_read_gold": True,
+            "evaluation_only_after_predictions_are_locked": True,
         },
-        "runtime_summary": telemetry,
-        "artifacts": manifest_capsule(files),
-        "safety": {
-            "llm_api_calls": stats["llm_calls"],
-            "network_calls": 0 if stats["fake"] else stats["llm_calls"],
-            "cost_usd": stats["cost_usd"],
-            "raw_text_committed": False,
-            "gold_rule_records_created": False,
-            "oracle_started": False,
-        },
-        "reproduce_command": "python formal_experiment/scripts/"
-        "run_s2_12_sun_llm_fallback_v1.py --runtime-home "
-        "D:/environment/stanford-corenlp-4.5.10",
     }
-    files["manifest.json"] = _json_bytes(manifest)
-    return Capsule(files=files)
-
-
-def _load_auth(args, lock, report) -> dict[str, Any] | None:
-    if not args.auth_file:
-        return None
-    runner_hash = _sha(Path(__file__))
-    auth = load_and_validate_authorization(
-        args.auth_file, lock, report, runner_hash
-    )
-    return auth
 
 
 def run(args) -> dict[str, Any]:
     lock = load_lock()
     report = load_report()
-    # FROZEN plan binding: replay must reproduce byte-identical plan.
-    frozen = json.loads(FROZEN_PLAN.read_text(encoding="utf-8"))
-    if frozen.get("schema_version") != "s2_12_fallback_trigger_plan@1.0.0":
-        raise S212ExecutionError("frozen trigger plan schema identity drift")
-    if frozen.get("status") != "frozen_locked_before_api_authorization":
-        raise S212ExecutionError("frozen trigger plan status drift")
-    if frozen.get("retry") != 0:
-        raise S212ExecutionError("frozen trigger plan retry must be 0")
+    rows_by_arm = rebuild_and_verify_payloads(lock, report, args.runtime_home)
+    policy = arm_policy(ARM)
+    builder = OpenAICompatibleRequestBuilder(_config_for_builder(lock))
 
-    output_dir = (args.output_dir or OUTPUT_DIRS["sun_llm_fallback"]).resolve()
+    payload_lock = PayloadLock(ARM, rows_by_arm[ARM], builder, policy)
+
+    input_doc = json.loads(_input_path().read_text(encoding="utf-8"))
+    records, runtime_to_formal = _resolve_records(input_doc)
+    runtime_text = {rec["sample_id"]: rec["approved_text_en"] for rec in records}
+    source_by_id = {
+        formal_id: runtime_text[runtime_id]
+        for runtime_id, formal_id in runtime_to_formal.items()
+    }
+
+    output_dir = (args.output_dir or OUTPUT_DIRS[ARM]).resolve()
     fake = not args.allow_llm
     if fake and output_dir in {path.resolve() for path in OUTPUT_DIRS.values()}:
         raise S212ExecutionError(
             "fake transport must not publish to a formal prediction directory"
         )
 
-    auth = _load_auth(args, lock, report) if args.allow_llm else None
-    if args.allow_llm and auth is None:
-        raise S212ExecutionError(
-            "real transport requires --allow-llm AND --auth-file (no call made)"
-        )
-    if args.allow_llm and args.transport != "real":
-        raise S212ExecutionError("--allow-llm requires --transport real")
+    auth = None
     if args.allow_llm:
-        check_off_peak_only(auth)
-
-    # Rebuild + verify the 27 fallback payloads against the frozen plan AND
-    # the locked preflight report.
-    rows_by_arm = rebuild_and_verify_payloads(lock, report, args.runtime_home)
-    verify_63_count(rows_by_arm)
-    fallback = rows_by_arm["sun_llm_fallback"]
-    frozen_entries = {
-        (e["sample_id"], e["clause_id"]): e for e in frozen["selected_plans"]
-    }
-    if len(frozen_entries) != 27:
-        raise S212ExecutionError("frozen trigger plan must contain exactly 27 entries")
-    for row in fallback:
-        entry = frozen_entries.get((row["sample_id"], row["clause_id"]))
-        if entry is None:
+        if args.auth_file is None:
             raise S212ExecutionError(
-                f"rebuilt fallback call not in frozen plan: "
-                f"{row['sample_id']}/{row['clause_id']}"
+                "real transport requires --allow-llm AND --auth-file"
             )
-        if entry["request_body_sha256"] != row["request_body_sha256"]:
+        if args.transport != "real":
+            raise S212ExecutionError("--allow-llm requires --transport real")
+        auth = load_and_validate_authorization(
+            args.auth_file, lock, report, ARM, _runner_hash(),
+            _implementation_hashes(),
+        )
+        if auth["stage_id"] != args.stage_id:
             raise S212ExecutionError(
-                f"frozen plan body sha mismatch for "
-                f"{row['sample_id']}/{row['clause_id']}"
-            )
-        if list(entry["repair_fields"]) != list(row["plan"].repair_fields):
-            raise S212ExecutionError(
-                f"frozen plan repair_fields drift for "
-                f"{row['sample_id']}/{row['clause_id']}"
+                f"CLI stage {args.stage_id!r} != authorized stage {auth['stage_id']!r}"
             )
 
-    # Full B0 batch (all 36) for the prediction capsule.
-    from build_s2_12_api_preflight_v1 import _rerun_b0 as _rerun
-    _adapted, batch = _rerun(args.runtime_home)
-    records_by_id = {item.record["sample_id"]: item.record for item in batch}
-    if len(records_by_id) != 36:
-        raise S212ExecutionError(f"full B0 batch != 36 records")
-
-    transport = PayloadLockedFakeTransport(
-        {row["request_body_sha256"]: row for row in fallback},
-        "sun_llm_fallback",
-        policy=DEEPSEEK_V4_PRO_H1_POLICY,
+    transport, fake = _build_transport(args, payload_lock, lock)
+    output_dir.parent.mkdir(parents=True, exist_ok=True)
+    ledger_path = output_dir.parent / f"{output_dir.name}.ledger.jsonl"
+    if args.resume_from_ledger is not None:
+        if not args.resume_from_ledger.is_file():
+            raise S212ExecutionError(
+                f"resume ledger not found: {args.resume_from_ledger}"
+            )
+        if ledger_path.exists():
+            raise S212ExecutionError(
+                "refusing to overwrite an existing live ledger with a resume ledger"
+            )
+        ledger_path.write_bytes(args.resume_from_ledger.read_bytes())
+    executor = StageExecutor(
+        arm=ARM, stage_id=args.stage_id,
+        auth=auth or _synthetic_auth_for_fake(args.stage_id, rows_by_arm),
+        lock=lock, report=report, rows_by_arm=rows_by_arm,
+        payload_lock=payload_lock, transport=transport,
+        ledger_path=ledger_path, source_by_id=source_by_id,
     )
-    if not fake:
-        from bpc_hybrid.llm_config import LLMConfig
-        config = LLMConfig.from_env(project_root=ROOT)
-        if config.provider == "mock" or not config.enabled:
-            raise S212ExecutionError("real provider is not enabled")
-        if config.model != REQUIRED_MODEL:
-            raise S212ExecutionError("resolved model != deepseek-v4-pro")
-        transport = RealAPITransport(config, timeout_seconds=args.transport_timeout)
-
-    capture_rows: list[dict[str, Any]] = []
-    events: list[dict[str, Any]] = []
-    outputs: dict[str, dict[str, Any]] = dict(records_by_id)
-    returned_models: set[str] = set()
-    llm_calls = 0
-    max_calls = 27
-    input_tokens_billed = 0
-    output_tokens_billed = 0
-    cost_usd = 0.0
-    accepted = 0
-    changed = 0
-
-    for row in fallback:
-        if llm_calls >= max_calls:
-            raise S212ExecutionError(
-                "max-calls would be exceeded before the next transport call"
-            )
-        plan = row["plan"]
-        record = row["plan_record"]
-        request = LLMRequest(
-            source_id=plan.sample_id,
-            source_text=record.get("source_text", ""),
-            system_prompt=row["system_prompt"],
-            user_prompt=row["user_prompt"],
-        )
-        try:
-            response = transport.send(request)
-        except LLMClientError as exc:
-            raise S212ExecutionError(
-                f"transport failure on {plan.sample_id}/{plan.clause_id}: {exc}"
-            ) from exc
-        llm_calls += 1
-        returned = getattr(response, "model", None)
-        if returned:
-            returned_models.add(str(returned))
-            if str(returned) != REQUIRED_MODEL:
-                raise S212ExecutionError(
-                    f"returned model {returned!r} != {REQUIRED_MODEL!r} "
-                    f"({plan.sample_id}/{plan.clause_id})"
-                )
-
-        event = _patch_event_base(plan)
-        event["selected_for_call"] = True
-        event["llm_call_performed"] = True
-        try:
-            envelope = json.loads(response.content)
-        except json.JSONDecodeError as exc:
-            event["status"] = "invalid_patch_json"
-            event["rejection_reasons"] = [f"invalid JSON: {exc}"]
-            events.append(event)
-            capture_rows.append(
-                build_transport_capture_row(
-                    request_id=f"{plan.sample_id}/{plan.clause_id}",
-                    sample_id=plan.sample_id,
-                    clause_id=plan.clause_id,
-                    clause_index=plan.clause_index,
-                    prompt_sha256=frozen["prompt"]["sha256"],
-                    prompt_variant="full_b0_v4",
-                    b0_prediction_sha256=prediction_hash(record),
-                    request_body_sha256=row["request_body_sha256"],
-                    request_policy=DEEPSEEK_V4_PRO_H1_POLICY.to_dict(),
-                    http_status=None,
-                    endpoint_descriptor={"host": None},
-                    requested_model=REQUIRED_MODEL,
-                    resolved_model=REQUIRED_MODEL,
-                    decode={"status": "invalid_patch_json",
-                            "usage": {}, "model": None},
-                    sanitized_response_envelope=None,
-                )
-            )
-            continue
-        if not isinstance(envelope, dict):
-            event["status"] = "invalid_patch_envelope"
-            event["rejection_reasons"] = ["envelope is not an object"]
-            events.append(event)
-            capture_rows.append(
-                build_transport_capture_row(
-                    request_id=f"{plan.sample_id}/{plan.clause_id}",
-                    sample_id=plan.sample_id,
-                    clause_id=plan.clause_id,
-                    clause_index=plan.clause_index,
-                    prompt_sha256=frozen["prompt"]["sha256"],
-                    prompt_variant="full_b0_v4",
-                    b0_prediction_sha256=prediction_hash(record),
-                    request_body_sha256=row["request_body_sha256"],
-                    request_policy=DEEPSEEK_V4_PRO_H1_POLICY.to_dict(),
-                    http_status=None,
-                    endpoint_descriptor={"host": None},
-                    requested_model=REQUIRED_MODEL,
-                    resolved_model=REQUIRED_MODEL,
-                    decode={"status": "invalid_patch_envelope",
-                            "usage": {}, "model": None},
-                    sanitized_response_envelope=None,
-                )
-            )
-            continue
-
-        outputs[plan.sample_id], patch_event = apply_patch_envelope(
-            records_by_id[plan.sample_id], envelope, plan
-        )
-        event.update(patch_event)
-        events.append(event)
-        capture_rows.append(
-            build_transport_capture_row(
-                request_id=f"{plan.sample_id}/{plan.clause_id}",
-                sample_id=plan.sample_id,
-                clause_id=plan.clause_id,
-                clause_index=plan.clause_index,
-                prompt_sha256=frozen["prompt"]["sha256"],
-                prompt_variant="full_b0_v4",
-                b0_prediction_sha256=prediction_hash(record),
-                request_body_sha256=row["request_body_sha256"],
-                request_policy=DEEPSEEK_V4_PRO_H1_POLICY.to_dict(),
-                http_status=None,
-                endpoint_descriptor={"host": None},
-                requested_model=REQUIRED_MODEL,
-                resolved_model=REQUIRED_MODEL,
-                decode={"status": "ok_message_content",
-                        "usage": {}, "model": REQUIRED_MODEL},
-                sanitized_response_envelope=None,
-            )
-        )
-        if patch_event.get("patch_accepted"):
-            accepted += 1
-            if prediction_hash(record) != prediction_hash(outputs[plan.sample_id]):
-                changed += 1
-        if not fake:
-            usage = getattr(response, "usage", None) or {}
-            input_tokens_billed += int(usage.get("prompt_tokens", 0))
-            output_tokens_billed += int(usage.get("completion_tokens", 0))
-
-    if llm_calls != 27:
-        raise S212ExecutionError(f"expected 27 calls, made {llm_calls}")
-
-    stats = {
-        "llm_calls": llm_calls,
-        "max_calls": max_calls,
-        "returned_models": sorted(returned_models),
-        "accepted": accepted,
-        "changed": changed,
-        "input_tokens_billed": input_tokens_billed,
-        "output_tokens_billed": output_tokens_billed,
-        "cost_usd": cost_usd,
+    result = executor.run()
+    arm_complete = all_arm_payloads_called(
+        executor.ledger, ARM, rows_by_arm
+    )
+    auth_for_capsule = auth or _synthetic_auth_for_fake(
+        args.stage_id, rows_by_arm
+    )
+    output_dir.parent.mkdir(parents=True, exist_ok=True)
+    manifest = publish_stage_capsule(
+        arm=ARM, stage_id=args.stage_id, output_dir=output_dir,
+        ledger=executor.ledger, state=result["state"],
+        response_records=executor.response_records,
+        auth=auth_for_capsule, fake=fake, arm_complete=arm_complete,
+        lock=lock, report=report,
+    )
+    return {
+        "executor": executor,
+        "result": result,
+        "output_dir": output_dir,
         "fake": fake,
+        "auth": auth,
+        "manifest": manifest,
+        "arm_complete": arm_complete,
     }
-    return outputs, events, capture_rows, stats, output_dir
+
+
+def _config_for_builder(lock):
+    from build_s2_12_api_preflight_v1 import _config
+    return _config(lock)
+
+
+def _input_path():
+    from bpc_hybrid.s2_12_execution import INPUT
+    return INPUT
 
 
 def main() -> int:
@@ -437,34 +245,36 @@ def main() -> int:
     )
     parser.add_argument(
         "--output-dir", type=Path, default=None,
-        help="Override the formal output directory (tests only; the formal "
-             "path is used when omitted).",
     )
     parser.add_argument(
         "--transport", choices=("fake", "real"), default="fake",
     )
     parser.add_argument("--allow-llm", action="store_true")
     parser.add_argument("--auth-file", type=Path)
+    parser.add_argument(
+        "--stage-id", choices=("F-1", "F-2", "F-3"), default="F-1",
+        help="Pre-registered fallback stage (9/9/9 partition of the 27 "
+             "locked payloads).",
+    )
+    parser.add_argument("--resume-from-ledger", type=Path, default=None)
     parser.add_argument("--transport-timeout", type=float, default=180.0)
     args = parser.parse_args()
     try:
-        outputs, events, capture_rows, stats, output_dir = run(args)
-        capsule = _assemble_capsule(
-            outputs, events, capture_rows, stats, output_dir
-        )
-        if output_dir is not None:
-            atomic_publish_directory(output_dir, capsule.files)
+        out = run(args)
     except S212ExecutionError as exc:
         print(f"S2.12 sun_llm_fallback refused: {exc}")
         return 2
+    result = out["result"]
+    status = "stage_complete" if result["status"] == "stage_complete" else "partial"
+    print(f"S2.12 sun_llm_fallback stage {args.stage_id}: {status} (fake={out['fake']})")
     print(
-        "S2.12 sun_llm_fallback predictions locked before Gold evaluation "
-        f"(fake={stats['fake']})"
+        f"calls={result['state']['calls']} "
+        f"input={result['state']['input_tokens']} "
+        f"output={result['state']['output_tokens']} "
+        f"cost_usd={result['state']['cost_usd']}"
     )
-    print(
-        f"records=36 calls={stats['llm_calls']} accepted={stats['accepted']} "
-        f"changed={stats['changed']}"
-    )
+    print(f"arm_complete={out['arm_complete']} predictions_published="
+          f"{out['manifest']['artifacts'].__contains__('predictions.json')}")
     return 0
 
 
