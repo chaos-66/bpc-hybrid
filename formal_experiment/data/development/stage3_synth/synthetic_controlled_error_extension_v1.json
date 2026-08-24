@@ -1,0 +1,1448 @@
+{
+  "schema_version": "s3_synthetic_controlled_error_extension@1.0.0",
+  "panel_id": "synthetic_controlled_error_extension_v1",
+  "panel_label": "synthetic_controlled_error_extension",
+  "status": "dev_only_panel_not_human_gold",
+  "selection_discipline": "targets derived from ORIGINAL process records only; locked before any Stage 3 method ran; no result-driven selection",
+  "counts": {
+    "missing_action": 10,
+    "incorrect_actor": 10,
+    "out_of_order": 10,
+    "total": 30
+  },
+  "originals": {
+    "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+    "bpmn_file_count": 7,
+    "source_hashes": {
+      "gdpr_1_data_breach": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "gdpr_2_consent_to_use_the_data": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "gdpr_3_right_to_access": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "gdpr_4_right_of_portability": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "gdpr_5_right_to_withdraw": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "gdpr_6_right_to_rectify": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "gdpr_7_right_to_be_forgotten": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+    },
+    "aggregate_sha256": "f5306e209c95d352c21f905f9f43273bd147d873439d6fb76d083781f164455c",
+    "membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d"
+  },
+  "rule_binding": {
+    "source": "data/development/human_review/stage3_gold_inference_v1.json",
+    "inference_pack_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+    "per_variant": {
+      "syn_missing_action_01": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33"
+      },
+      "syn_missing_action_02": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33"
+      },
+      "syn_missing_action_03": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22"
+      },
+      "syn_missing_action_04": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22"
+      },
+      "syn_missing_action_05": {
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15"
+      },
+      "syn_missing_action_06": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17"
+      },
+      "syn_missing_action_07": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17"
+      },
+      "syn_missing_action_08": {
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16"
+      },
+      "syn_missing_action_09": {
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20"
+      },
+      "syn_missing_action_10": {
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16"
+      },
+      "syn_incorrect_actor_01": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33"
+      },
+      "syn_incorrect_actor_02": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33"
+      },
+      "syn_incorrect_actor_03": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22"
+      },
+      "syn_incorrect_actor_04": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22"
+      },
+      "syn_incorrect_actor_05": {
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15"
+      },
+      "syn_incorrect_actor_06": {
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20"
+      },
+      "syn_incorrect_actor_07": {
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20"
+      },
+      "syn_incorrect_actor_08": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17"
+      },
+      "syn_incorrect_actor_09": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17"
+      },
+      "syn_incorrect_actor_10": {
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16"
+      },
+      "syn_out_of_order_01": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33"
+      },
+      "syn_out_of_order_02": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33"
+      },
+      "syn_out_of_order_03": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22"
+      },
+      "syn_out_of_order_04": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22"
+      },
+      "syn_out_of_order_05": {
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15"
+      },
+      "syn_out_of_order_06": {
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20"
+      },
+      "syn_out_of_order_07": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17"
+      },
+      "syn_out_of_order_08": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17"
+      },
+      "syn_out_of_order_09": {
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16"
+      },
+      "syn_out_of_order_10": {
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15"
+      }
+    }
+  },
+  "outputs": {
+    "aggregate_variant_sha256": "5008ad8e4ac32684c10dc958d11c8e2d56f6c1b570641f1c3995b6f17e0d33a9",
+    "variant_dir": "data/development/stage3_synth"
+  },
+  "variants": [
+    {
+      "variant_id": "syn_missing_action_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_01/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "689657bbfe6df78c908d1ef669f79381c24cbb16b22fa7834b29d4d0d9403410",
+      "mutation_type": "missing_action",
+      "expected_violation": "missing_action",
+      "target_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+      "mutation_config": {
+        "spec": [
+          "gdpr_1_data_breach",
+          "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+          "Retrieve breached subjects"
+        ],
+        "diff": {
+          "removed_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+          "removed_activity_name": "Retrieve breached subjects",
+          "incoming_flow_id": "sid-546B4F9D-79D6-4E61-9F6B-576FEF21B922",
+          "outgoing_flow_id": "sid-4642CAB5-D074-4AA7-8021-A31E87A4BDF4",
+          "bypass_from": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "bypass_to": "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "removed_only_target_id": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_missing_action_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_02/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "903cb8684b609c91e014ce36292ba89225612d71216b0fcec5594b7ded6c5224",
+      "mutation_type": "missing_action",
+      "expected_violation": "missing_action",
+      "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "mutation_config": {
+        "spec": [
+          "gdpr_1_data_breach",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "Retrieve breached data"
+        ],
+        "diff": {
+          "removed_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "removed_activity_name": "Retrieve breached data",
+          "incoming_flow_id": "sid-D98E9AAE-0B19-447A-9685-52325ECF735B",
+          "outgoing_flow_id": "sid-546B4F9D-79D6-4E61-9F6B-576FEF21B922",
+          "bypass_from": "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690",
+          "bypass_to": "sid-20C5FDD3-8014-432D-8595-CD780D866E38"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "removed_only_target_id": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_missing_action_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "de259b8b8256784fd4e2eb8fec1cec5c980e0e36461f9d10543af37fc8faa829",
+      "mutation_type": "missing_action",
+      "expected_violation": "missing_action",
+      "target_activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+      "mutation_config": {
+        "spec": [
+          "gdpr_2_consent_to_use_the_data",
+          "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+          "Add \"existence of the right to withdraw\""
+        ],
+        "diff": {
+          "removed_activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+          "removed_activity_name": "Add \"existence of the right to withdraw\"",
+          "incoming_flow_id": "sid-3E17B37A-D4C6-4994-BA13-642DA45260EF",
+          "outgoing_flow_id": "sid-F95A1C80-D862-458D-9888-16D0FBBB489D",
+          "bypass_from": "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+          "bypass_to": "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "removed_only_target_id": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_missing_action_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "6a82ae727ea8cfad85294636e3a1e0b92937bdf9ce41f0dad6a2da0e7f842016",
+      "mutation_type": "missing_action",
+      "expected_violation": "missing_action",
+      "target_activity_id": "sid-2CFD3957-D6FB-4CA6-95B4-86EEC4B4B4B8",
+      "mutation_config": {
+        "spec": [
+          "gdpr_2_consent_to_use_the_data",
+          "sid-2CFD3957-D6FB-4CA6-95B4-86EEC4B4B4B8",
+          "Add \"existence of the right to rectify of personal data\""
+        ],
+        "diff": {
+          "removed_activity_id": "sid-2CFD3957-D6FB-4CA6-95B4-86EEC4B4B4B8",
+          "removed_activity_name": "Add \"existence of the right to rectify of personal data\"",
+          "incoming_flow_id": "sid-0BDACC38-8B7D-44F3-A3A8-071F9697F072",
+          "outgoing_flow_id": "sid-F0AE7BF9-D547-40B1-BC9E-14CE18F5141A",
+          "bypass_from": "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+          "bypass_to": "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "removed_only_target_id": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_missing_action_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_05/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256": "f23f1a6c0c6d55aa69bdcade86ca7f05cb071341eb2df2cdd0a394146a697589",
+      "mutation_type": "missing_action",
+      "expected_violation": "missing_action",
+      "target_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+      "mutation_config": {
+        "spec": [
+          "gdpr_3_right_to_access",
+          "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "Communicate data and elaborations"
+        ],
+        "diff": {
+          "removed_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "removed_activity_name": "Communicate data and elaborations",
+          "incoming_flow_id": "sid-9484B5C0-E2C1-4F11-A37B-5F23C8E75974",
+          "outgoing_flow_id": "sid-77AE095B-39CC-440A-9A6F-1F3AB4610A50",
+          "bypass_from": "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A",
+          "bypass_to": "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "removed_only_target_id": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_missing_action_06",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_06/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "044a7245b2db98f031e28c835d4316011b3b73b823336526f9ba46fc524bd7c6",
+      "mutation_type": "missing_action",
+      "expected_violation": "missing_action",
+      "target_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+      "mutation_config": {
+        "spec": [
+          "gdpr_5_right_to_withdraw",
+          "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "Stop running BPs using withdrawn data"
+        ],
+        "diff": {
+          "removed_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "removed_activity_name": "Stop running BPs using withdrawn data",
+          "incoming_flow_id": "sid-A1740EB1-8B06-455E-809D-E60DC85AD139",
+          "outgoing_flow_id": "sid-FFA84E6A-D312-4A1F-934D-A17034B0DB22",
+          "bypass_from": "sid-32DED13A-06FA-4A9D-BC9D-2B13766E878D",
+          "bypass_to": "sid-614A49D9-5B63-4E26-9D17-123A91008776"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "removed_only_target_id": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_missing_action_07",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_07/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "fc0dc0e9b804391ea69792f16665ec1adac5ab34e2c177bd45d96b1d72571a49",
+      "mutation_type": "missing_action",
+      "expected_violation": "missing_action",
+      "target_activity_id": "sid-A9B97678-298C-4EE7-82A3-836179299938",
+      "mutation_config": {
+        "spec": [
+          "gdpr_5_right_to_withdraw",
+          "sid-A9B97678-298C-4EE7-82A3-836179299938",
+          "Check if withdrawn data are relevant"
+        ],
+        "diff": {
+          "removed_activity_id": "sid-A9B97678-298C-4EE7-82A3-836179299938",
+          "removed_activity_name": "Check if withdrawn data are relevant",
+          "incoming_flow_id": "sid-6DEDFB7B-8EDC-421C-AA3A-68AC5E141688",
+          "outgoing_flow_id": "sid-EA9ED3B9-E035-4462-A12C-A6D8E3184054",
+          "bypass_from": "sid-C8822EE6-038D-4B46-B701-088DCA525E81",
+          "bypass_to": "sid-F4998816-41A2-476E-9C55-4E097F0388E4"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "removed_only_target_id": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_missing_action_08",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_08/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256": "b151a7c2c6d96a7e85895e01724f5d709751cf6773660e74830c38f26aa01558",
+      "mutation_type": "missing_action",
+      "expected_violation": "missing_action",
+      "target_activity_id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+      "mutation_config": {
+        "spec": [
+          "gdpr_6_right_to_rectify",
+          "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+          "Communicate the rectification\n"
+        ],
+        "diff": {
+          "removed_activity_id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+          "removed_activity_name": "Communicate the rectification\n",
+          "incoming_flow_id": "sid-5600A460-FE6A-41EB-A21B-20EAC23AF88D",
+          "outgoing_flow_id": "sid-6BEC0E3B-9289-4FBC-933B-A3A7BEAB5A82",
+          "bypass_from": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "bypass_to": "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "removed_only_target_id": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_missing_action_09",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_09/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256": "7eefc1f9f396ead1551b8b72a090844b7d9b109f7b0d187338b78f61417e1c3c",
+      "mutation_type": "missing_action",
+      "expected_violation": "missing_action",
+      "target_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+      "mutation_config": {
+        "spec": [
+          "gdpr_4_right_of_portability",
+          "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "Communicate data and elaborations"
+        ],
+        "diff": {
+          "removed_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "removed_activity_name": "Communicate data and elaborations",
+          "incoming_flow_id": "sid-9484B5C0-E2C1-4F11-A37B-5F23C8E75974",
+          "outgoing_flow_id": "sid-77AE095B-39CC-440A-9A6F-1F3AB4610A50",
+          "bypass_from": "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A",
+          "bypass_to": "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "removed_only_target_id": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_missing_action_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_10/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256": "e0c5e851835a708379df3f865bb8d3ab7ed2ce749dc3f694bd51d6eac51f4735",
+      "mutation_type": "missing_action",
+      "expected_violation": "missing_action",
+      "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "mutation_config": {
+        "spec": [
+          "gdpr_6_right_to_rectify",
+          "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "Rectify data"
+        ],
+        "diff": {
+          "removed_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "removed_activity_name": "Rectify data",
+          "incoming_flow_id": "sid-C47C687B-ED5F-490A-82CA-78E17FCE5BDF",
+          "outgoing_flow_id": "sid-5600A460-FE6A-41EB-A21B-20EAC23AF88D",
+          "bypass_from": "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0",
+          "bypass_to": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "removed_only_target_id": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_incorrect_actor_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_01/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "82195c9c3ea3c5f6763aec4192b8faef124d801033d34e45ae6bf19e6b4dde67",
+      "mutation_type": "incorrect_actor",
+      "expected_violation": "incorrect_actor",
+      "target_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+      "mutation_config": {
+        "spec": [
+          "gdpr_1_data_breach",
+          "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+          "Retrieve breached subjects",
+          "Lane:Data subject"
+        ],
+        "diff": {
+          "moved_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+          "target_lane_id": "syn_lane_sid-20C5FDD3-8014-432D-8595-CD780D866E38_0D866E38",
+          "injected_lane_name": "Data subject"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "added_lane_is_actor_lane": true,
+        "only_target_relaned": true,
+        "non_target_lanes_unchanged": true,
+        "names_unchanged": true,
+        "order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_incorrect_actor_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_02/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "29db23fb8cbd1c8d96be1e9ce3574d9c46593fa283b048ada5bd2a1baec219e3",
+      "mutation_type": "incorrect_actor",
+      "expected_violation": "incorrect_actor",
+      "target_activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+      "mutation_config": {
+        "spec": [
+          "gdpr_1_data_breach",
+          "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+          "Handle delay",
+          "Lane:Data subject"
+        ],
+        "diff": {
+          "moved_activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+          "target_lane_id": "syn_lane_sid-28448355-C13E-462C-8D66-8CEB2F6B557C_2F6B557C",
+          "injected_lane_name": "Data subject"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "added_lane_is_actor_lane": true,
+        "only_target_relaned": true,
+        "non_target_lanes_unchanged": true,
+        "names_unchanged": true,
+        "order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_incorrect_actor_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "39da2e3721e963a33b3e8d8ed4d40cb4312fa9581ac51803e7fc0f9fdd7cb08f",
+      "mutation_type": "incorrect_actor",
+      "expected_violation": "incorrect_actor",
+      "target_activity_id": "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+      "mutation_config": {
+        "spec": [
+          "gdpr_2_consent_to_use_the_data",
+          "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+          "Retrieve identity and contact details",
+          "Lane:Data Controller"
+        ],
+        "diff": {
+          "moved_activity_id": "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+          "target_lane_id": "syn_lane_sid-17C48064-C83F-44C6-998A-8DB69B109E8D_9B109E8D",
+          "injected_lane_name": "Data Controller"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "added_lane_is_actor_lane": true,
+        "only_target_relaned": true,
+        "non_target_lanes_unchanged": true,
+        "names_unchanged": true,
+        "order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_incorrect_actor_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "3cc31db884671749f2dc359f3c243eaba60759caf1fc7efbf468bb394419c7c1",
+      "mutation_type": "incorrect_actor",
+      "expected_violation": "incorrect_actor",
+      "target_activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+      "mutation_config": {
+        "spec": [
+          "gdpr_2_consent_to_use_the_data",
+          "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+          "Add \"existence of the right to withdraw\"",
+          "Lane:Data Controller"
+        ],
+        "diff": {
+          "moved_activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+          "target_lane_id": "syn_lane_sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F_2F8D7F6F",
+          "injected_lane_name": "Data Controller"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "added_lane_is_actor_lane": true,
+        "only_target_relaned": true,
+        "non_target_lanes_unchanged": true,
+        "names_unchanged": true,
+        "order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_incorrect_actor_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_05/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256": "6596370efc95d0873f2f9bbc488b242da66a131bf731629c6f4b24579b0204ad",
+      "mutation_type": "incorrect_actor",
+      "expected_violation": "incorrect_actor",
+      "target_activity_id": "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+      "mutation_config": {
+        "spec": [
+          "gdpr_3_right_to_access",
+          "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+          "Retrieve elaborations",
+          "Lane:Data Subject"
+        ],
+        "diff": {
+          "moved_activity_id": "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+          "target_lane_id": "syn_lane_sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824_63548824",
+          "injected_lane_name": "Data Subject"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "added_lane_is_actor_lane": true,
+        "only_target_relaned": true,
+        "non_target_lanes_unchanged": true,
+        "names_unchanged": true,
+        "order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_incorrect_actor_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_06/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256": "5817be69d03641a31a0c37689e728dec41def704bcf554075e7aaf0a402c9f82",
+      "mutation_type": "incorrect_actor",
+      "expected_violation": "incorrect_actor",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "mutation_config": {
+        "spec": [
+          "gdpr_4_right_of_portability",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "Retrieve available data of the data subject",
+          "Lane:Data Subject"
+        ],
+        "diff": {
+          "moved_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "target_lane_id": "syn_lane_sid-2E045BBD-9F82-497F-8458-49AA9129F991_9129F991",
+          "injected_lane_name": "Data Subject"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "added_lane_is_actor_lane": true,
+        "only_target_relaned": true,
+        "non_target_lanes_unchanged": true,
+        "names_unchanged": true,
+        "order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_incorrect_actor_07",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_07/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256": "c1c2807503a1a3c9af149f6f2c3fc9585685a7e71d762c352632f46c48c5c155",
+      "mutation_type": "incorrect_actor",
+      "expected_violation": "incorrect_actor",
+      "target_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+      "mutation_config": {
+        "spec": [
+          "gdpr_4_right_of_portability",
+          "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "Communicate data and elaborations",
+          "Lane:Data Subject"
+        ],
+        "diff": {
+          "moved_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "target_lane_id": "syn_lane_sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D_01C57A8D",
+          "injected_lane_name": "Data Subject"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "added_lane_is_actor_lane": true,
+        "only_target_relaned": true,
+        "non_target_lanes_unchanged": true,
+        "names_unchanged": true,
+        "order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_incorrect_actor_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_08/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "0a2a895d5577941ddb54575c0fe277e506a14d471ceb0cf33aaa2f7834fe1da0",
+      "mutation_type": "incorrect_actor",
+      "expected_violation": "incorrect_actor",
+      "target_activity_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+      "mutation_config": {
+        "spec": [
+          "gdpr_5_right_to_withdraw",
+          "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "Stop using withdrawn data",
+          "Lane:Data subject"
+        ],
+        "diff": {
+          "moved_activity_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "target_lane_id": "syn_lane_sid-1A48D305-CB15-4C57-A988-B39ED62DE531_D62DE531",
+          "injected_lane_name": "Data subject"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "added_lane_is_actor_lane": true,
+        "only_target_relaned": true,
+        "non_target_lanes_unchanged": true,
+        "names_unchanged": true,
+        "order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_incorrect_actor_09",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_09/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "4b1bc60375dfc413874739e848cb320fa6d718dfda5b1bd788993151b23687c7",
+      "mutation_type": "incorrect_actor",
+      "expected_violation": "incorrect_actor",
+      "target_activity_id": "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+      "mutation_config": {
+        "spec": [
+          "gdpr_5_right_to_withdraw",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "Communicate the withdraw",
+          "Lane:Data subject"
+        ],
+        "diff": {
+          "moved_activity_id": "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "target_lane_id": "syn_lane_sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB_23B048FB",
+          "injected_lane_name": "Data subject"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "added_lane_is_actor_lane": true,
+        "only_target_relaned": true,
+        "non_target_lanes_unchanged": true,
+        "names_unchanged": true,
+        "order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_incorrect_actor_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_10/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256": "72b492c26c8a4af160df898c4ac84fd23ef34faf3552eaa24c9341c17d402284",
+      "mutation_type": "incorrect_actor",
+      "expected_violation": "incorrect_actor",
+      "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "mutation_config": {
+        "spec": [
+          "gdpr_6_right_to_rectify",
+          "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "Rectify data",
+          "Lane:Data Subject"
+        ],
+        "diff": {
+          "moved_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "target_lane_id": "syn_lane_sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814_7DBED814",
+          "injected_lane_name": "Data Subject"
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "added_lane_is_actor_lane": true,
+        "only_target_relaned": true,
+        "non_target_lanes_unchanged": true,
+        "names_unchanged": true,
+        "order_unchanged": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_out_of_order_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_01/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "a30f85acd99afe1b6bb9b39199c8b97fb88c63a88931af93a24f961a73fddafc",
+      "mutation_type": "out_of_order",
+      "expected_violation": "out_of_order",
+      "target_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+      "mutation_config": {
+        "spec": [
+          "gdpr_1_data_breach",
+          "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+        ],
+        "diff": {
+          "pair": [
+            "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+            "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+          ],
+          "path_nodes": [
+            "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43",
+            "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+          ],
+          "f_in_id": "sid-546B4F9D-79D6-4E61-9F6B-576FEF21B922",
+          "f_in": [
+            "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+            "sid-20C5FDD3-8014-432D-8595-CD780D866E38"
+          ],
+          "f_first_id": "sid-4642CAB5-D074-4AA7-8021-A31E87A4BDF4",
+          "f_last_id": "sid-694CA9E1-C3D4-4CB3-8439-064C78DB114B",
+          "f_out_id": "sid-61D58D7F-36BC-43C2-98B1-48D6F2338C45",
+          "f_out": [
+            "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+            "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761"
+          ]
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "lanes_identical": true,
+        "names_unchanged": true,
+        "order_changed_only_around_pair": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_out_of_order_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_02/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "b7cce6eb272ddf518b0df3145a3cfb25788a307e236b64d337c58c6d75db95e8",
+      "mutation_type": "out_of_order",
+      "expected_violation": "out_of_order",
+      "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "mutation_config": {
+        "spec": [
+          "gdpr_1_data_breach",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-20C5FDD3-8014-432D-8595-CD780D866E38"
+        ],
+        "diff": {
+          "pair": [
+            "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+            "sid-20C5FDD3-8014-432D-8595-CD780D866E38"
+          ],
+          "path_nodes": [
+            "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+            "sid-20C5FDD3-8014-432D-8595-CD780D866E38"
+          ],
+          "f_in_id": "sid-D98E9AAE-0B19-447A-9685-52325ECF735B",
+          "f_in": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690",
+            "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+          ],
+          "f_first_id": "sid-546B4F9D-79D6-4E61-9F6B-576FEF21B922",
+          "f_last_id": "sid-546B4F9D-79D6-4E61-9F6B-576FEF21B922",
+          "f_out_id": "sid-4642CAB5-D074-4AA7-8021-A31E87A4BDF4",
+          "f_out": [
+            "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ]
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "lanes_identical": true,
+        "names_unchanged": true,
+        "order_changed_only_around_pair": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_out_of_order_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "a664859d048e4c37e8ddb988cb9fef48e9c5f944a8be3db6aa2e4b79d2e5b36d",
+      "mutation_type": "out_of_order",
+      "expected_violation": "out_of_order",
+      "target_activity_id": "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+      "mutation_config": {
+        "spec": [
+          "gdpr_2_consent_to_use_the_data",
+          "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77"
+        ],
+        "diff": {
+          "pair": [
+            "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+            "sid-141B6C65-D86C-443C-BC7F-05783264AF77"
+          ],
+          "path_nodes": [
+            "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+            "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568",
+            "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5",
+            "sid-141B6C65-D86C-443C-BC7F-05783264AF77"
+          ],
+          "f_in_id": "sid-7A17B840-0505-4FD7-8986-1642DA7BEEEC",
+          "f_in": [
+            "sid-AB0B4F0A-B4F9-4379-9225-B4F27DFD6BC6",
+            "sid-17C48064-C83F-44C6-998A-8DB69B109E8D"
+          ],
+          "f_first_id": "sid-8B9FD591-2070-4AAA-BD6F-E01029692ACA",
+          "f_last_id": "sid-09430D76-9565-428D-AE47-06DB42235E15",
+          "f_out_id": "sid-AF48C040-F375-43C5-A5D0-AE077F62C645",
+          "f_out": [
+            "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+            "sid-C643FE0C-2557-46F6-A0A3-8BF3A3AFF47C"
+          ]
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "lanes_identical": true,
+        "names_unchanged": true,
+        "order_changed_only_around_pair": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_out_of_order_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "f11423f8b77b42c278faf4bd182c5dd337269db09eef0f0248120e8c1a5e9a38",
+      "mutation_type": "out_of_order",
+      "expected_violation": "out_of_order",
+      "target_activity_id": "sid-1C0F89DD-F7D8-403C-B629-EBBCC78D6CE0",
+      "mutation_config": {
+        "spec": [
+          "gdpr_2_consent_to_use_the_data",
+          "sid-1C0F89DD-F7D8-403C-B629-EBBCC78D6CE0",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77"
+        ],
+        "diff": {
+          "pair": [
+            "sid-1C0F89DD-F7D8-403C-B629-EBBCC78D6CE0",
+            "sid-141B6C65-D86C-443C-BC7F-05783264AF77"
+          ],
+          "path_nodes": [
+            "sid-1C0F89DD-F7D8-403C-B629-EBBCC78D6CE0",
+            "sid-B80CDCB8-79EA-45F1-BBE3-32DCC77D4372",
+            "sid-E10BA220-5E23-424F-BA7D-2C7F49607128",
+            "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5",
+            "sid-141B6C65-D86C-443C-BC7F-05783264AF77"
+          ],
+          "f_in_id": "sid-F4A3276A-C586-4324-BE65-E902C80C2F01",
+          "f_in": [
+            "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+            "sid-1C0F89DD-F7D8-403C-B629-EBBCC78D6CE0"
+          ],
+          "f_first_id": "sid-63683B4A-1D80-49E7-A25E-00F30B78986C",
+          "f_last_id": "sid-09430D76-9565-428D-AE47-06DB42235E15",
+          "f_out_id": "sid-AF48C040-F375-43C5-A5D0-AE077F62C645",
+          "f_out": [
+            "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+            "sid-C643FE0C-2557-46F6-A0A3-8BF3A3AFF47C"
+          ]
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "lanes_identical": true,
+        "names_unchanged": true,
+        "order_changed_only_around_pair": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_out_of_order_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_05/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256": "9d9834fed4b5fa426f2068bf1e596a17f10d5e2e30de6cd63233e5d7112a1d38",
+      "mutation_type": "out_of_order",
+      "expected_violation": "out_of_order",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "mutation_config": {
+        "spec": [
+          "gdpr_3_right_to_access",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+        ],
+        "diff": {
+          "pair": [
+            "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+            "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+          ],
+          "path_nodes": [
+            "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A",
+            "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+          ],
+          "f_in_id": "sid-EED28100-1DA8-4965-98EE-FBDDC4EDA4B7",
+          "f_in": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+          ],
+          "f_first_id": "sid-823C8F29-5084-4FC4-8D9A-88A19FBCF6C7",
+          "f_last_id": "sid-9484B5C0-E2C1-4F11-A37B-5F23C8E75974",
+          "f_out_id": "sid-77AE095B-39CC-440A-9A6F-1F3AB4610A50",
+          "f_out": [
+            "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ]
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "lanes_identical": true,
+        "names_unchanged": true,
+        "order_changed_only_around_pair": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_out_of_order_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_06/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256": "468011b29a7d81a8303946600701ef4f0230596378ece0a3400ef6a8ba2128ee",
+      "mutation_type": "out_of_order",
+      "expected_violation": "out_of_order",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "mutation_config": {
+        "spec": [
+          "gdpr_4_right_of_portability",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+        ],
+        "diff": {
+          "pair": [
+            "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+            "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+          ],
+          "path_nodes": [
+            "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A",
+            "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+          ],
+          "f_in_id": "sid-EED28100-1DA8-4965-98EE-FBDDC4EDA4B7",
+          "f_in": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+          ],
+          "f_first_id": "sid-823C8F29-5084-4FC4-8D9A-88A19FBCF6C7",
+          "f_last_id": "sid-9484B5C0-E2C1-4F11-A37B-5F23C8E75974",
+          "f_out_id": "sid-77AE095B-39CC-440A-9A6F-1F3AB4610A50",
+          "f_out": [
+            "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ]
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "lanes_identical": true,
+        "names_unchanged": true,
+        "order_changed_only_around_pair": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_out_of_order_07",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_07/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "f6fa62e4d2f2a4cced85a3c358703fb85301a93787ef9b5815fb51fe3e5be575",
+      "mutation_type": "out_of_order",
+      "expected_violation": "out_of_order",
+      "target_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+      "mutation_config": {
+        "spec": [
+          "gdpr_5_right_to_withdraw",
+          "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "sid-1A48D305-CB15-4C57-A988-B39ED62DE531"
+        ],
+        "diff": {
+          "pair": [
+            "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+            "sid-1A48D305-CB15-4C57-A988-B39ED62DE531"
+          ],
+          "path_nodes": [
+            "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+            "sid-614A49D9-5B63-4E26-9D17-123A91008776",
+            "sid-1A48D305-CB15-4C57-A988-B39ED62DE531"
+          ],
+          "f_in_id": "sid-A1740EB1-8B06-455E-809D-E60DC85AD139",
+          "f_in": [
+            "sid-32DED13A-06FA-4A9D-BC9D-2B13766E878D",
+            "sid-07817A82-69C2-45A1-9ABC-277F17D93747"
+          ],
+          "f_first_id": "sid-FFA84E6A-D312-4A1F-934D-A17034B0DB22",
+          "f_last_id": "sid-EB41EE5D-7D9A-4014-9CCC-D52DE371392A",
+          "f_out_id": "sid-314D9A79-5FF8-4181-A795-058B16493872",
+          "f_out": [
+            "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+            "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB"
+          ]
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "lanes_identical": true,
+        "names_unchanged": true,
+        "order_changed_only_around_pair": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_out_of_order_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_08/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "f856697f84f7aeb1b2b11f6e328048a3b65ad1749eec03bf6544f1d49acf628e",
+      "mutation_type": "out_of_order",
+      "expected_violation": "out_of_order",
+      "target_activity_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+      "mutation_config": {
+        "spec": [
+          "gdpr_5_right_to_withdraw",
+          "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB"
+        ],
+        "diff": {
+          "pair": [
+            "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+            "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB"
+          ],
+          "path_nodes": [
+            "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+            "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB"
+          ],
+          "f_in_id": "sid-EB41EE5D-7D9A-4014-9CCC-D52DE371392A",
+          "f_in": [
+            "sid-614A49D9-5B63-4E26-9D17-123A91008776",
+            "sid-1A48D305-CB15-4C57-A988-B39ED62DE531"
+          ],
+          "f_first_id": "sid-314D9A79-5FF8-4181-A795-058B16493872",
+          "f_last_id": "sid-314D9A79-5FF8-4181-A795-058B16493872",
+          "f_out_id": "sid-99821C6F-009C-4EBE-B884-BCBCA6B23EAB",
+          "f_out": [
+            "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+            "sid-BBE4AD40-63CE-49C4-84D5-180971257813"
+          ]
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "lanes_identical": true,
+        "names_unchanged": true,
+        "order_changed_only_around_pair": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_out_of_order_09",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_09/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256": "ba514072c73ed0b306ab873344cbda0f79082d024bd301cf96e1677aed131895",
+      "mutation_type": "out_of_order",
+      "expected_violation": "out_of_order",
+      "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "mutation_config": {
+        "spec": [
+          "gdpr_6_right_to_rectify",
+          "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
+        ],
+        "diff": {
+          "pair": [
+            "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+            "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
+          ],
+          "path_nodes": [
+            "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+            "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
+          ],
+          "f_in_id": "sid-C47C687B-ED5F-490A-82CA-78E17FCE5BDF",
+          "f_in": [
+            "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0",
+            "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814"
+          ],
+          "f_first_id": "sid-5600A460-FE6A-41EB-A21B-20EAC23AF88D",
+          "f_last_id": "sid-5600A460-FE6A-41EB-A21B-20EAC23AF88D",
+          "f_out_id": "sid-6BEC0E3B-9289-4FBC-933B-A3A7BEAB5A82",
+          "f_out": [
+            "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+            "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28"
+          ]
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "lanes_identical": true,
+        "names_unchanged": true,
+        "order_changed_only_around_pair": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    },
+    {
+      "variant_id": "syn_out_of_order_10",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_10/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256": "ddd5a5bb40b9b9cb2504ecaf90dc29a52b2b6a16e8a8d016a503d5fb0b573e23",
+      "mutation_type": "out_of_order",
+      "expected_violation": "out_of_order",
+      "target_activity_id": "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+      "mutation_config": {
+        "spec": [
+          "gdpr_3_right_to_access",
+          "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+          "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+        ],
+        "diff": {
+          "pair": [
+            "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+            "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+          ],
+          "path_nodes": [
+            "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A",
+            "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+          ],
+          "f_in_id": "sid-63674F65-DD36-4CB3-AC06-681DAEE16C6A",
+          "f_in": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824"
+          ],
+          "f_first_id": "sid-4D03640E-9984-45FD-AB72-3D8405E41FD9",
+          "f_last_id": "sid-9484B5C0-E2C1-4F11-A37B-5F23C8E75974",
+          "f_out_id": "sid-77AE095B-39CC-440A-9A6F-1F3AB4610A50",
+          "f_out": [
+            "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ]
+        }
+      },
+      "validation_checks": {
+        "xml_parse": true,
+        "structure_valid": true,
+        "activity_set_identical": true,
+        "lanes_identical": true,
+        "names_unchanged": true,
+        "order_changed_only_around_pair": true,
+        "source_bytes_untouched": true,
+        "status": "passed"
+      },
+      "generator_sha256": "d655e90e561944d741eb1c4247c082e5b97acf03a0e9453664699b64ee79a6f2"
+    }
+  ],
+  "safety": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "gold_modified": false,
+    "original_bpmn_modified": false,
+    "oracle_started": false,
+    "panel_is_human_gold": false
+  }
+}

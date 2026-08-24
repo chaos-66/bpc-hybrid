@@ -3769,3 +3769,16 @@
 - 仍存在 blocker：无
 - 备注：零 LLM/API/网络；未创建真实授权文件；正式预测目录未写入；.bak 未触碰；full audit 2625 passed/24 skipped/40 warnings exit 0
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-24T22:05:10.427447+00:00 - S3.9 synthetic controlled-error extension (2026-08-22, zero API): 30 locked variants (missing_action 10 / incorrect_actor 10 / out_of_order 10) on frozen GDPR-7 with exactly-one-error, structure validation, replay byte-identical, rule binding from frozen inference pack + input/output aggregate hashes; four-method panel run (Winter/Sun/BM25/TF-IDF) with same evaluator; MASTER_PIPELINE 3.6.28 mainline switch (paper-first; S2.12 pending auth not a blocker)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2641 passed, 24 skipped, 40 warnings in 2624.45s (0:43:44)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b70d1280495929965e0e201e9de0fcdfb96f463b`；相关未提交路径：46 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：零 LLM/API/网络；未修改 33 条人工 violation Gold；合成 panel 明确 dev-only 不并入 Gold 不冒充 Oracle；.bak 未触碰；full audit 2641 passed/24 skipped/40 warnings exit 0
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

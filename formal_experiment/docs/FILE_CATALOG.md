@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-25
-**收录文件**：1373 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1407 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -413,6 +413,37 @@
 | `data/development/predictions/exploratory_spacy.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/predictions/sun_llm_fallback.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/predictions/sun_rule_only.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/stage3_synth/syn_incorrect_actor_01/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_incorrect_actor_02/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_incorrect_actor_03/gdpr_2_consent_to_use_the_data.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_incorrect_actor_04/gdpr_2_consent_to_use_the_data.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_incorrect_actor_05/gdpr_3_right_to_access.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_incorrect_actor_06/gdpr_4_right_of_portability.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_incorrect_actor_07/gdpr_4_right_of_portability.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_incorrect_actor_08/gdpr_5_right_to_withdraw.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_incorrect_actor_09/gdpr_5_right_to_withdraw.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_incorrect_actor_10/gdpr_6_right_to_rectify.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_missing_action_01/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_missing_action_02/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_missing_action_03/gdpr_2_consent_to_use_the_data.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_missing_action_04/gdpr_2_consent_to_use_the_data.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_missing_action_05/gdpr_3_right_to_access.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_missing_action_06/gdpr_5_right_to_withdraw.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_missing_action_07/gdpr_5_right_to_withdraw.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_missing_action_08/gdpr_6_right_to_rectify.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_missing_action_09/gdpr_4_right_of_portability.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_missing_action_10/gdpr_6_right_to_rectify.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_out_of_order_01/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_out_of_order_02/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_out_of_order_03/gdpr_2_consent_to_use_the_data.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_out_of_order_04/gdpr_2_consent_to_use_the_data.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_out_of_order_05/gdpr_3_right_to_access.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_out_of_order_06/gdpr_4_right_of_portability.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_out_of_order_07/gdpr_5_right_to_withdraw.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_out_of_order_08/gdpr_5_right_to_withdraw.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_out_of_order_09/gdpr_6_right_to_rectify.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/syn_out_of_order_10/gdpr_3_right_to_access.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_synth/synthetic_controlled_error_extension_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/sun_modality/raw/.gitignore` | 开发/溯源 | 项目文件 |
 | `data/development/sun_modality/source_manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/gold/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
@@ -1031,6 +1062,7 @@
 | `scripts/build_s2_13_s3_7_transition_readiness_v7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v8.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_7_oracle_readiness.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s3_error_injection_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_adjudication_asset.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
@@ -1088,6 +1120,7 @@
 | `scripts/run_s2_12_direct_llm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s2_12_sun_llm_fallback_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s2_12_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_synthetic_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_formal_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_p2_inference.py` | 活动 | Python 实现、脚本或测试 |
@@ -1442,6 +1475,7 @@
 | `tests/test_s2_13_s3_7_transition_readiness_v7.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v8.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_2_s3_3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_9_synthetic_panel.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
