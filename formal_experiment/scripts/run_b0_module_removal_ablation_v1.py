@@ -363,24 +363,116 @@ def _label_accuracy(rows: Sequence[Mapping[str, Any]],
     }
     return {"clause_label_total": total, "clause_label_correct": correct,
             "clause_label_accuracy": round(correct / total, 6) if total else 0.0,
-            "per_class": per_class_accuracy}
+            "per_class": per_class_accuracy,
+            "per_class_confusion": per_class}
 
 
-def _map_change_ratio(full_rows: Sequence[Mapping[str, Any]],
-                      flag_rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
-    """Fraction of samples whose actor-action map changed vs full."""
-    def maps(rows):
+def _map_metrics(rows: Sequence[Mapping[str, Any]],
+                 gold: Sequence[Mapping[str, Any]],
+                 full_rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    """Actor-action map structural metrics (honest given the frozen gold).
+
+    The canonical EStG-150 gold's actor_action_map uses short unresolved IDs
+    (e.g. ``a01``, ``c1_action_1``, or ``None``) that do NOT resolve to the
+    gold clause's actor/action span IDs (``estg_..._spNNN``), so an exact
+    gold-vs-predicted ID comparison is NOT computable.  We therefore report:
+
+    * ``gold_map_resolvable`` : fraction of gold edge IDs that resolve within
+      their own clause (expected ~0; documents the gold-side limitation);
+    * ``predicted_map_internal_validity`` : fraction of PREDICTED edges whose
+      actor_id/action_id exist in the predicted clause's actor/action lists —
+      the structural-quality metric we CAN compute;
+    * ``map_change_vs_full`` : samples whose map differs from the full
+      condition (captures module-removal structural impact);
+    * ``example_change_cases`` : sample-level change examples.
+    """
+    gold_total = 0
+    gold_resolved = 0
+    for rec in gold:
+        for clause in rec.get("clauses", []):
+            actor_ids = {a.get("id") for a in clause.get("actors") or []}
+            action_ids = {a.get("id") for a in clause.get("actions") or []}
+            for e in clause.get("actor_action_map") or []:
+                gold_total += 1
+                if (e.get("actor_id") in actor_ids
+                        and e.get("action_id") in action_ids):
+                    gold_resolved += 1
+
+    def predicted_validity(rows_: Sequence[Mapping[str, Any]]) -> tuple[int, int]:
+        total = valid = 0
+        for row in rows_:
+            rec = row.get("record") or {}
+            for clause in rec.get("clauses", []):
+                actor_ids = {a.get("id") for a in clause.get("actors") or []}
+                action_ids = {a.get("id") for a in clause.get("actions") or []}
+                for e in clause.get("actor_action_map") or []:
+                    total += 1
+                    if (e.get("actor_id") in actor_ids
+                            and e.get("action_id") in action_ids):
+                        valid += 1
+        return total, valid
+
+    pred_total, pred_valid = predicted_validity(rows)
+    full_total, full_valid = predicted_validity(full_rows)
+
+    def maps(rows_):
         out = {}
-        for row in rows:
+        for row in rows_:
             rec = row.get("record") or {}
             out[row.get("sample_id")] = [
                 (cl.get("actor_action_map") or []) for cl in rec.get("clauses", [])
             ]
         return out
-    fm, vm = maps(full_rows), maps(flag_rows)
-    changed = sum(1 for sid in fm if fm.get(sid) != vm.get(sid))
-    return {"samples_with_changed_map": changed,
-            "samples_total": len(fm)}
+
+    fm, vm = maps(full_rows), maps(rows)
+    changed_ids = [sid for sid in fm if fm.get(sid) != vm.get(sid)]
+    examples = []
+    for sid in changed_ids[:6]:
+        examples.append({
+            "sample_id": sid,
+            "full_clause_maps": len(fm[sid]),
+            "flag_clause_maps": len(vm.get(sid, [])),
+        })
+
+    return {
+        "gold_map_resolvable": (
+            round(gold_resolved / gold_total, 6) if gold_total else 0.0),
+        "gold_map_total_edges": gold_total,
+        "predicted_map_internal_validity": (
+            round(pred_valid / pred_total, 6) if pred_total else 0.0),
+        "predicted_map_total_edges": pred_total,
+        "full_predicted_map_internal_validity": (
+            round(full_valid / full_total, 6) if full_total else 0.0),
+        "map_change_vs_full_samples": len(changed_ids),
+        "example_change_cases": examples,
+        "limitation": (
+            "gold actor-action map uses unresolved short IDs (a01/None); "
+            "gold-vs-predicted exact ID matching is not computable; reported "
+            "metrics are gold resolvability, predicted internal validity, and "
+            "map-change vs the full condition"
+        ),
+    }
+
+
+def _label_macro_f1(rows: Sequence[Mapping[str, Any]],
+                    gold: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    """Modality label macro-F1 (4 classes, gold reference). Reuses the same
+    clause-overlap alignment as _label_accuracy (reads per_class_confusion)."""
+    details = _label_accuracy(rows, gold)
+    confusion = details.get("per_class_confusion", {})
+    classes = ("obligation", "permission", "prohibition", "definition")
+    f1s = []
+    per_class_f1 = {}
+    for cls in classes:
+        d = confusion.get(cls, {"tp": 0, "fn": 0, "fp": 0})
+        tp, fn_, fp_ = d.get("tp", 0), d.get("fn", 0), d.get("fp", 0)
+        prec = tp / (tp + fp_) if (tp + fp_) else 0.0
+        rec = tp / (tp + fn_) if (tp + fn_) else 0.0
+        f1 = 2 * prec * rec / (prec + rec) if (prec + rec) else 0.0
+        f1s.append(round(f1, 6))
+        per_class_f1[cls] = round(f1, 6)
+    return {"per_class_f1": per_class_f1,
+            "macro_f1": round(sum(f1s) / len(f1s), 6)}
 
 
 # ---------------------------------------------------------------------------
@@ -476,6 +568,12 @@ def run(runtime_home: Path, work_root: Path) -> int:
         "runtime_seconds": round(full_seconds, 3),
         "metrics": full_metrics,
         "modality_label_accuracy": _label_accuracy(full_attempts, gold),
+        "modality_label_macro_f1": _label_macro_f1(full_attempts, gold),
+        "actor_action_map_metrics": _map_metrics(full_attempts, gold,
+                                                 full_attempts),
+        "valid_outputs": sum(1 for a in full_attempts
+                             if a.get("request_status") == "ok"),
+        "records": full_attempts,
         "runtime_info": {
             k: runtime_info.get(k) for k in
             ("corenlp_seconds", "bridge_seconds", "classifier_seconds",
@@ -521,11 +619,48 @@ def run(runtime_home: Path, work_root: Path) -> int:
             "runtime_seconds": round(time.time() - t1, 3),
             "metrics": metrics,
             "failed_samples": sum(1 for r in rows if r["request_status"] != "ok"),
+            "valid_outputs": sum(1 for r in rows if r["request_status"] == "ok"),
             "modality_label_accuracy": _label_accuracy(rows, gold),
-            "actor_action_map_change": _map_change_ratio(full_attempts, rows),
+            "modality_label_macro_f1": _label_macro_f1(rows, gold),
+            "actor_action_map_metrics": _map_metrics(rows, gold,
+                                                     full_attempts),
+            "per_field_f1": {
+                k: metrics["per_field"][k]["f1"]
+                for k in metrics["per_field"]
+            },
+            "records": rows,
         }
+        # typical change cases vs the full condition (span-level)
+        change_cases: list[dict[str, Any]] = []
+        full_by_id = {a["sample_id"]: a for a in full_attempts}
+        for r in rows:
+            if len(change_cases) >= 5:
+                break
+            sid = r["sample_id"]
+            full_rec = full_by_id.get(sid, {}).get("record") or {}
+            flag_rec = r.get("record") or {}
+            if full_rec == flag_rec:
+                continue
+            change_cases.append({
+                "sample_id": sid,
+                "full_clause_count": len(full_rec.get("clauses", [])),
+                "flag_clause_count": len(flag_rec.get("clauses", [])),
+                "full_actor_action_edges": sum(
+                    len(c.get("actor_action_map") or [])
+                    for c in full_rec.get("clauses", [])),
+                "flag_actor_action_edges": sum(
+                    len(c.get("actor_action_map") or [])
+                    for c in flag_rec.get("clauses", [])),
+            })
+        results[flag]["example_change_cases"] = change_cases
+        results[flag]["note"] = (
+            "span metrics do not cover the structural actor-action map; "
+            "map exact accuracy/F1 and modality label metrics are reported "
+            "separately"
+        )
         print(f"[{flag}] overall F1={metrics['overall']['f1']:.4f} "
               f"label_acc={results[flag]['modality_label_accuracy']['clause_label_accuracy']:.4f} "
+              f"map_change={results[flag]['actor_action_map_metrics']['map_change_vs_full_samples']} "
               f"({time.time()-t1:.1f}s)")
 
     full_f1 = results["full"]["metrics"]["overall"]["f1"]

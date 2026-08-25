@@ -1,0 +1,866 @@
+{
+  "schema_version": "barrientos_ablation_comparison@2.0.0",
+  "generated_zero_api": true,
+  "summary": {
+    "A": {
+      "nature": "OFFLINE APPROXIMATION SENSITIVITY ANALYSIS: full_locked is the locked D1-R3 canonical result; schema_only_approx and raw_approx are constructed from the post-canonical output by first-occurrence re-anchoring because the raw model JSON was not persisted. They are NOT exact raw-response ablations.",
+      "condition_metrics": {
+        "full_locked": {
+          "overall": {
+            "ground_truth": 1055,
+            "extracted": 820,
+            "matched_predictions": 721,
+            "matched_ground_truth": 732,
+            "misclassified": 99,
+            "missed": 323,
+            "precision": 0.8792682926829268,
+            "recall": 0.6938388625592417,
+            "f1": 0.7756248645193052
+          },
+          "per_field_f1": {
+            "modality": 0.92151,
+            "actor": 0.722222,
+            "action": 0.879983,
+            "condition": 0.786316,
+            "constraint": 0.548151,
+            "exception": 0.695652
+          }
+        },
+        "schema_only_approx": {
+          "overall": {
+            "ground_truth": 1055,
+            "extracted": 820,
+            "matched_predictions": 721,
+            "matched_ground_truth": 728,
+            "misclassified": 99,
+            "missed": 327,
+            "precision": 0.8792682926829268,
+            "recall": 0.6900473933649289,
+            "f1": 0.7732501482379025
+          },
+          "per_field_f1": {
+            "modality": 0.92151,
+            "actor": 0.722222,
+            "action": 0.870521,
+            "condition": 0.786316,
+            "constraint": 0.548151,
+            "exception": 0.695652
+          }
+        },
+        "raw_approx": {
+          "overall": {
+            "ground_truth": 1055,
+            "extracted": 820,
+            "matched_predictions": 721,
+            "matched_ground_truth": 728,
+            "misclassified": 99,
+            "missed": 327,
+            "precision": 0.8792682926829268,
+            "recall": 0.6900473933649289,
+            "f1": 0.7732501482379025
+          },
+          "per_field_f1": {
+            "modality": 0.92151,
+            "actor": 0.722222,
+            "action": 0.870521,
+            "condition": 0.786316,
+            "constraint": 0.548151,
+            "exception": 0.695652
+          }
+        }
+      }
+    },
+    "B": {
+      "experiment": "B_rules_only_module_removal",
+      "status": "executed",
+      "full": {
+        "overall_f1": 0.7186482580011335,
+        "per_field_f1": {
+          "modality": 0.864500195765443,
+          "actor": 0.8038834951456311,
+          "action": 0.8554026399759472,
+          "condition": 0.705423471848942,
+          "constraint": 0.4913493402728364,
+          "exception": 0.8148148148148148
+        },
+        "modality_label_accuracy": {
+          "clause_label_total": 231,
+          "clause_label_correct": 169,
+          "clause_label_accuracy": 0.731602,
+          "per_class": {
+            "obligation": {
+              "support": 97,
+              "accuracy": 0.886598
+            },
+            "permission": {
+              "support": 62,
+              "accuracy": 0.66129
+            },
+            "definition": {
+              "support": 39,
+              "accuracy": 0.487179
+            },
+            "prohibition": {
+              "support": 33,
+              "accuracy": 0.69697
+            }
+          },
+          "per_class_confusion": {
+            "obligation": {
+              "tp": 86,
+              "fn": 11,
+              "fp": 34
+            },
+            "permission": {
+              "tp": 41,
+              "fn": 21,
+              "fp": 7
+            },
+            "definition": {
+              "tp": 19,
+              "fn": 20,
+              "fp": 15
+            },
+            "prohibition": {
+              "tp": 23,
+              "fn": 10,
+              "fp": 6
+            }
+          }
+        },
+        "modality_label_macro_f1": {
+          "per_class_f1": {
+            "obligation": 0.792627,
+            "permission": 0.745455,
+            "prohibition": 0.741935,
+            "definition": 0.520548
+          },
+          "macro_f1": 0.700141
+        },
+        "actor_action_map_metrics": {
+          "gold_map_resolvable": 0.2,
+          "gold_map_total_edges": 245,
+          "predicted_map_internal_validity": 1.0,
+          "predicted_map_total_edges": 45,
+          "full_predicted_map_internal_validity": 1.0,
+          "map_change_vs_full_samples": 0,
+          "example_change_cases": [],
+          "limitation": "gold actor-action map uses unresolved short IDs (a01/None); gold-vs-predicted exact ID matching is not computable; reported metrics are gold resolvability, predicted internal validity, and map-change vs the full condition"
+        },
+        "valid_outputs": 150
+      },
+      "per_flag": {
+        "no_lexicon_extensions": {
+          "overall_f1": 0.7120496762363695,
+          "delta_vs_full_f1": -0.006599,
+          "per_field_f1": {
+            "modality": 0.864500195765443,
+            "actor": 0.6698382492863939,
+            "action": 0.8554026399759472,
+            "condition": 0.705423471848942,
+            "constraint": 0.4913493402728364,
+            "exception": 0.8148148148148148
+          },
+          "modality_label_accuracy": {
+            "clause_label_total": 231,
+            "clause_label_correct": 169,
+            "clause_label_accuracy": 0.731602,
+            "per_class": {
+              "obligation": {
+                "support": 97,
+                "accuracy": 0.886598
+              },
+              "permission": {
+                "support": 62,
+                "accuracy": 0.66129
+              },
+              "definition": {
+                "support": 39,
+                "accuracy": 0.487179
+              },
+              "prohibition": {
+                "support": 33,
+                "accuracy": 0.69697
+              }
+            },
+            "per_class_confusion": {
+              "obligation": {
+                "tp": 86,
+                "fn": 11,
+                "fp": 34
+              },
+              "permission": {
+                "tp": 41,
+                "fn": 21,
+                "fp": 7
+              },
+              "definition": {
+                "tp": 19,
+                "fn": 20,
+                "fp": 15
+              },
+              "prohibition": {
+                "tp": 23,
+                "fn": 10,
+                "fp": 6
+              }
+            }
+          },
+          "modality_label_macro_f1": {
+            "per_class_f1": {
+              "obligation": 0.792627,
+              "permission": 0.745455,
+              "prohibition": 0.741935,
+              "definition": 0.520548
+            },
+            "macro_f1": 0.700141
+          },
+          "actor_action_map_metrics": {
+            "gold_map_resolvable": 0.2,
+            "gold_map_total_edges": 245,
+            "predicted_map_internal_validity": 1.0,
+            "predicted_map_total_edges": 31,
+            "full_predicted_map_internal_validity": 1.0,
+            "map_change_vs_full_samples": 12,
+            "example_change_cases": [
+              {
+                "sample_id": "estg_000080",
+                "full_clause_maps": 2,
+                "flag_clause_maps": 2
+              },
+              {
+                "sample_id": "estg_000206",
+                "full_clause_maps": 3,
+                "flag_clause_maps": 3
+              },
+              {
+                "sample_id": "estg_000207",
+                "full_clause_maps": 2,
+                "flag_clause_maps": 2
+              },
+              {
+                "sample_id": "estg_000220",
+                "full_clause_maps": 2,
+                "flag_clause_maps": 2
+              },
+              {
+                "sample_id": "estg_000231",
+                "full_clause_maps": 1,
+                "flag_clause_maps": 1
+              },
+              {
+                "sample_id": "estg_000601",
+                "full_clause_maps": 1,
+                "flag_clause_maps": 1
+              }
+            ],
+            "limitation": "gold actor-action map uses unresolved short IDs (a01/None); gold-vs-predicted exact ID matching is not computable; reported metrics are gold resolvability, predicted internal validity, and map-change vs the full condition"
+          },
+          "failed_samples": 0,
+          "valid_outputs": 150,
+          "example_change_cases": [
+            {
+              "sample_id": "estg_000080",
+              "full_clause_count": 2,
+              "flag_clause_count": 2,
+              "full_actor_action_edges": 1,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000206",
+              "full_clause_count": 3,
+              "flag_clause_count": 3,
+              "full_actor_action_edges": 1,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000207",
+              "full_clause_count": 2,
+              "flag_clause_count": 2,
+              "full_actor_action_edges": 1,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000208",
+              "full_clause_count": 2,
+              "flag_clause_count": 2,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000220",
+              "full_clause_count": 2,
+              "flag_clause_count": 2,
+              "full_actor_action_edges": 1,
+              "flag_actor_action_edges": 0
+            }
+          ],
+          "note": "span metrics do not cover the structural actor-action map; map exact accuracy/F1 and modality label metrics are reported separately"
+        },
+        "no_modality_classifier": {
+          "overall_f1": 0.7186482580011335,
+          "delta_vs_full_f1": 0.0,
+          "per_field_f1": {
+            "modality": 0.864500195765443,
+            "actor": 0.8038834951456311,
+            "action": 0.8554026399759472,
+            "condition": 0.705423471848942,
+            "constraint": 0.4913493402728364,
+            "exception": 0.8148148148148148
+          },
+          "modality_label_accuracy": {
+            "clause_label_total": 231,
+            "clause_label_correct": 157,
+            "clause_label_accuracy": 0.679654,
+            "per_class": {
+              "obligation": {
+                "support": 97,
+                "accuracy": 0.948454
+              },
+              "permission": {
+                "support": 62,
+                "accuracy": 0.66129
+              },
+              "definition": {
+                "support": 39,
+                "accuracy": 0.076923
+              },
+              "prohibition": {
+                "support": 33,
+                "accuracy": 0.636364
+              }
+            },
+            "per_class_confusion": {
+              "obligation": {
+                "tp": 92,
+                "fn": 5,
+                "fp": 60
+              },
+              "permission": {
+                "tp": 41,
+                "fn": 21,
+                "fp": 7
+              },
+              "definition": {
+                "tp": 3,
+                "fn": 36,
+                "fp": 1
+              },
+              "prohibition": {
+                "tp": 21,
+                "fn": 12,
+                "fp": 6
+              }
+            }
+          },
+          "modality_label_macro_f1": {
+            "per_class_f1": {
+              "obligation": 0.738956,
+              "permission": 0.745455,
+              "prohibition": 0.7,
+              "definition": 0.139535
+            },
+            "macro_f1": 0.580986
+          },
+          "actor_action_map_metrics": {
+            "gold_map_resolvable": 0.2,
+            "gold_map_total_edges": 245,
+            "predicted_map_internal_validity": 1.0,
+            "predicted_map_total_edges": 45,
+            "full_predicted_map_internal_validity": 1.0,
+            "map_change_vs_full_samples": 0,
+            "example_change_cases": [],
+            "limitation": "gold actor-action map uses unresolved short IDs (a01/None); gold-vs-predicted exact ID matching is not computable; reported metrics are gold resolvability, predicted internal validity, and map-change vs the full condition"
+          },
+          "failed_samples": 0,
+          "valid_outputs": 150,
+          "example_change_cases": [
+            {
+              "sample_id": "estg_000002",
+              "full_clause_count": 2,
+              "flag_clause_count": 2,
+              "full_actor_action_edges": 1,
+              "flag_actor_action_edges": 1
+            },
+            {
+              "sample_id": "estg_000003",
+              "full_clause_count": 3,
+              "flag_clause_count": 3,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000004",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000020",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 1,
+              "flag_actor_action_edges": 1
+            },
+            {
+              "sample_id": "estg_000021",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            }
+          ],
+          "note": "span metrics do not cover the structural actor-action map; map exact accuracy/F1 and modality label metrics are reported separately"
+        },
+        "no_actor_action_ownership": {
+          "overall_f1": 0.7186482580011335,
+          "delta_vs_full_f1": 0.0,
+          "per_field_f1": {
+            "modality": 0.864500195765443,
+            "actor": 0.8038834951456311,
+            "action": 0.8554026399759472,
+            "condition": 0.705423471848942,
+            "constraint": 0.4913493402728364,
+            "exception": 0.8148148148148148
+          },
+          "modality_label_accuracy": {
+            "clause_label_total": 231,
+            "clause_label_correct": 169,
+            "clause_label_accuracy": 0.731602,
+            "per_class": {
+              "obligation": {
+                "support": 97,
+                "accuracy": 0.886598
+              },
+              "permission": {
+                "support": 62,
+                "accuracy": 0.66129
+              },
+              "definition": {
+                "support": 39,
+                "accuracy": 0.487179
+              },
+              "prohibition": {
+                "support": 33,
+                "accuracy": 0.69697
+              }
+            },
+            "per_class_confusion": {
+              "obligation": {
+                "tp": 86,
+                "fn": 11,
+                "fp": 34
+              },
+              "permission": {
+                "tp": 41,
+                "fn": 21,
+                "fp": 7
+              },
+              "definition": {
+                "tp": 19,
+                "fn": 20,
+                "fp": 15
+              },
+              "prohibition": {
+                "tp": 23,
+                "fn": 10,
+                "fp": 6
+              }
+            }
+          },
+          "modality_label_macro_f1": {
+            "per_class_f1": {
+              "obligation": 0.792627,
+              "permission": 0.745455,
+              "prohibition": 0.741935,
+              "definition": 0.520548
+            },
+            "macro_f1": 0.700141
+          },
+          "actor_action_map_metrics": {
+            "gold_map_resolvable": 0.2,
+            "gold_map_total_edges": 245,
+            "predicted_map_internal_validity": 1.0,
+            "predicted_map_total_edges": 53,
+            "full_predicted_map_internal_validity": 1.0,
+            "map_change_vs_full_samples": 12,
+            "example_change_cases": [
+              {
+                "sample_id": "estg_000020",
+                "full_clause_maps": 1,
+                "flag_clause_maps": 1
+              },
+              {
+                "sample_id": "estg_000075",
+                "full_clause_maps": 1,
+                "flag_clause_maps": 1
+              },
+              {
+                "sample_id": "estg_000077",
+                "full_clause_maps": 3,
+                "flag_clause_maps": 3
+              },
+              {
+                "sample_id": "estg_000208",
+                "full_clause_maps": 2,
+                "flag_clause_maps": 2
+              },
+              {
+                "sample_id": "estg_000222",
+                "full_clause_maps": 2,
+                "flag_clause_maps": 2
+              },
+              {
+                "sample_id": "estg_000283",
+                "full_clause_maps": 1,
+                "flag_clause_maps": 1
+              }
+            ],
+            "limitation": "gold actor-action map uses unresolved short IDs (a01/None); gold-vs-predicted exact ID matching is not computable; reported metrics are gold resolvability, predicted internal validity, and map-change vs the full condition"
+          },
+          "failed_samples": 0,
+          "valid_outputs": 150,
+          "example_change_cases": [
+            {
+              "sample_id": "estg_000020",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 1,
+              "flag_actor_action_edges": 1
+            },
+            {
+              "sample_id": "estg_000075",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 1
+            },
+            {
+              "sample_id": "estg_000077",
+              "full_clause_count": 3,
+              "flag_clause_count": 3,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 1
+            },
+            {
+              "sample_id": "estg_000208",
+              "full_clause_count": 2,
+              "flag_clause_count": 2,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 1
+            },
+            {
+              "sample_id": "estg_000222",
+              "full_clause_count": 2,
+              "flag_clause_count": 2,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 1
+            }
+          ],
+          "note": "span metrics do not cover the structural actor-action map; map exact accuracy/F1 and modality label metrics are reported separately"
+        },
+        "no_multi_match_guard": {
+          "overall_f1": 0.7239090266213474,
+          "delta_vs_full_f1": 0.005261,
+          "per_field_f1": {
+            "modality": 0.8686668864710407,
+            "actor": 0.8038834951456311,
+            "action": 0.8554026399759472,
+            "condition": 0.6939957603081242,
+            "constraint": 0.4788897347309246,
+            "exception": 0.8148148148148148
+          },
+          "modality_label_accuracy": {
+            "clause_label_total": 231,
+            "clause_label_correct": 169,
+            "clause_label_accuracy": 0.731602,
+            "per_class": {
+              "obligation": {
+                "support": 97,
+                "accuracy": 0.886598
+              },
+              "permission": {
+                "support": 62,
+                "accuracy": 0.66129
+              },
+              "definition": {
+                "support": 39,
+                "accuracy": 0.487179
+              },
+              "prohibition": {
+                "support": 33,
+                "accuracy": 0.69697
+              }
+            },
+            "per_class_confusion": {
+              "obligation": {
+                "tp": 86,
+                "fn": 11,
+                "fp": 34
+              },
+              "permission": {
+                "tp": 41,
+                "fn": 21,
+                "fp": 7
+              },
+              "definition": {
+                "tp": 19,
+                "fn": 20,
+                "fp": 15
+              },
+              "prohibition": {
+                "tp": 23,
+                "fn": 10,
+                "fp": 6
+              }
+            }
+          },
+          "modality_label_macro_f1": {
+            "per_class_f1": {
+              "obligation": 0.792627,
+              "permission": 0.745455,
+              "prohibition": 0.741935,
+              "definition": 0.520548
+            },
+            "macro_f1": 0.700141
+          },
+          "actor_action_map_metrics": {
+            "gold_map_resolvable": 0.2,
+            "gold_map_total_edges": 245,
+            "predicted_map_internal_validity": 1.0,
+            "predicted_map_total_edges": 45,
+            "full_predicted_map_internal_validity": 1.0,
+            "map_change_vs_full_samples": 0,
+            "example_change_cases": [],
+            "limitation": "gold actor-action map uses unresolved short IDs (a01/None); gold-vs-predicted exact ID matching is not computable; reported metrics are gold resolvability, predicted internal validity, and map-change vs the full condition"
+          },
+          "failed_samples": 0,
+          "valid_outputs": 150,
+          "example_change_cases": [
+            {
+              "sample_id": "estg_000002",
+              "full_clause_count": 2,
+              "flag_clause_count": 2,
+              "full_actor_action_edges": 1,
+              "flag_actor_action_edges": 1
+            },
+            {
+              "sample_id": "estg_000021",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000027",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000028",
+              "full_clause_count": 2,
+              "flag_clause_count": 2,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000037",
+              "full_clause_count": 4,
+              "flag_clause_count": 4,
+              "full_actor_action_edges": 2,
+              "flag_actor_action_edges": 2
+            }
+          ],
+          "note": "span metrics do not cover the structural actor-action map; map exact accuracy/F1 and modality label metrics are reported separately"
+        },
+        "no_de_en_alignment_validation": {
+          "overall_f1": 0.7186482580011335,
+          "delta_vs_full_f1": 0.0,
+          "per_field_f1": {
+            "modality": 0.864500195765443,
+            "actor": 0.8038834951456311,
+            "action": 0.8554026399759472,
+            "condition": 0.705423471848942,
+            "constraint": 0.4913493402728364,
+            "exception": 0.8148148148148148
+          },
+          "modality_label_accuracy": {
+            "clause_label_total": 231,
+            "clause_label_correct": 169,
+            "clause_label_accuracy": 0.731602,
+            "per_class": {
+              "obligation": {
+                "support": 97,
+                "accuracy": 0.886598
+              },
+              "permission": {
+                "support": 62,
+                "accuracy": 0.66129
+              },
+              "definition": {
+                "support": 39,
+                "accuracy": 0.487179
+              },
+              "prohibition": {
+                "support": 33,
+                "accuracy": 0.69697
+              }
+            },
+            "per_class_confusion": {
+              "obligation": {
+                "tp": 86,
+                "fn": 11,
+                "fp": 34
+              },
+              "permission": {
+                "tp": 41,
+                "fn": 21,
+                "fp": 7
+              },
+              "definition": {
+                "tp": 19,
+                "fn": 20,
+                "fp": 15
+              },
+              "prohibition": {
+                "tp": 23,
+                "fn": 10,
+                "fp": 6
+              }
+            }
+          },
+          "modality_label_macro_f1": {
+            "per_class_f1": {
+              "obligation": 0.792627,
+              "permission": 0.745455,
+              "prohibition": 0.741935,
+              "definition": 0.520548
+            },
+            "macro_f1": 0.700141
+          },
+          "actor_action_map_metrics": {
+            "gold_map_resolvable": 0.2,
+            "gold_map_total_edges": 245,
+            "predicted_map_internal_validity": 1.0,
+            "predicted_map_total_edges": 45,
+            "full_predicted_map_internal_validity": 1.0,
+            "map_change_vs_full_samples": 0,
+            "example_change_cases": [],
+            "limitation": "gold actor-action map uses unresolved short IDs (a01/None); gold-vs-predicted exact ID matching is not computable; reported metrics are gold resolvability, predicted internal validity, and map-change vs the full condition"
+          },
+          "failed_samples": 0,
+          "valid_outputs": 150,
+          "example_change_cases": [
+            {
+              "sample_id": "estg_000020",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 1,
+              "flag_actor_action_edges": 1
+            },
+            {
+              "sample_id": "estg_000021",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000027",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000030",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            },
+            {
+              "sample_id": "estg_000033",
+              "full_clause_count": 1,
+              "flag_clause_count": 1,
+              "full_actor_action_edges": 0,
+              "flag_actor_action_edges": 0
+            }
+          ],
+          "note": "span metrics do not cover the structural actor-action map; map exact accuracy/F1 and modality label metrics are reported separately"
+        }
+      },
+      "note": "span P/R/F1 does not cover the structural actor-action map; gold-vs-predicted exact ID matching is not computable (gold map uses unresolved short IDs); reported map metrics are gold resolvability, predicted internal validity and map-change-vs-full samples"
+    },
+    "C": {
+      "experiment": "C_modality_4_vs_3",
+      "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+      "four_class_counts": {
+        "definition": 39,
+        "obligation": 97,
+        "permission": 62,
+        "prohibition": 33
+      },
+      "three_class_shared_counts": {
+        "obligation": 97,
+        "permission": 62,
+        "prohibition": 33
+      },
+      "definition_excluded_count": 39,
+      "definition_coverage_loss_ratio": 0.168831,
+      "note": "schema-coverage comparison only; NOT a Barrientos-method performance comparison; definition must not be silently merged into other classes"
+    },
+    "D_E": {
+      "experiment": "D_E_real_model_arms",
+      "status": "ready_to_execute_not_executed",
+      "blocker": "real model API calls require explicit user authorization; this zero-API batch does not execute them",
+      "D_arms": {
+        "D-full": {
+          "status": "reuse_locked_formal_result"
+        },
+        "D-no-fewshot": {
+          "status": "ready_to_execute"
+        },
+        "D-minimal": {
+          "status": "ready_to_execute"
+        },
+        "D-barrientos-style": {
+          "status": "ready_to_execute"
+        }
+      },
+      "E_arms": {
+        "E-ours": {
+          "status": "ready_to_execute"
+        },
+        "E-barrientos-faithful": {
+          "status": "ready_to_execute"
+        },
+        "E-module-swapped": {
+          "status": "ready_to_execute"
+        },
+        "stability": {
+          "E-ours_runs": 5,
+          "E-barrientos-faithful_runs": 5,
+          "E-module-swapped_runs": 1,
+          "note": "first main comparison run counts toward the five"
+        }
+      },
+      "e_contract_v2": {
+        "path": "configs/ablations/e_same_data_input_contract_v2.json",
+        "sha256": "43aeeac51c49f5e93cefddde6fd9a4090d0fe5d00971d08a7f2d35e4a83a7c43",
+        "count": 36,
+        "unique_ids": 36
+      },
+      "real_execution_command": "python scripts/run_barrientos_ablation_suite_v2.py --execute-de --auth-file <USER_AUTH> --runtime-home D:/environment/stanford-corenlp-4.5.10 (requires user API authorization)"
+    }
+  },
+  "full_results": "outputs\\development\\barrientos_ablation_suite_v2\\results.json",
+  "notes": {
+    "A": "offline approximation sensitivity analysis (raw JSON not persisted)",
+    "B": "with structural map + modality label metrics",
+    "D_E": "ready_to_execute; real model calls require authorization"
+  }
+}

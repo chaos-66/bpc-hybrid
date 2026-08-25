@@ -14,15 +14,15 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
 **纪律**：跨 schema/跨任务比较（AB-3/AB-4 等）不得用单一 F1 宣称综合优劣，只能
 报告各自口径内结果与定性适配结论；涉及真实 LLM 的消融逐批用户授权。
 
-## Barrientos 消融套件 v1（2026-08-22，零 API）——已完成实验
+## Barrientos 消融套件 v2（2026-08-22，零 API）——离线完成 + D/E wired
 
-### 实验 A：Direct-LLM 校验链消融（锁定 D1-R3 响应，fine Gold literal-overlap v2）
+### 实验 A：Direct-LLM 校验链（离线近似敏感性分析；锁定 D1-R3 响应，fine Gold literal-overlap v2）
 
 | 条件 | overall F1 | action F1 | 合法输出率 | span 越界 | unanchored | broken edges | 说明 |
 |---|---:|---:|---:|---:|---:|---:|---|
-| Full（完整链） | 0.7756 | 0.8800 | 1.0 | 0 | 0 | 140 | 锁定 D1-R3 fine 结果（复现一致） |
-| Schema-only（首现锚定，无确定性重锚） | 0.7733 | 0.8705 | 1.0 | 0 | 0 | 140 | 近似（raw JSON 未持久化） |
-| Raw-approx（首现锚定 + 丢无法回指 span） | 0.7733 | 0.8705 | 1.0 | 0 | 0 | 140 | 近似 |
+| `full_locked`（完整链） | 0.7756 | 0.8800 | 1.0 | 0 | 0 | 140 | 锁定 D1-R3 fine 结果（复现一致） |
+| `schema_only_approx`（首现锚定，无确定性重锚） | 0.7733 | 0.8705 | 1.0 | 0 | 0 | 140 | **近似**（raw JSON 未持久化） |
+| `raw_approx`（首现锚定 + 丢无法回指 span） | 0.7733 | 0.8705 | 1.0 | 0 | 0 | 140 | **近似** |
 
 - 锁定响应统计：150/150 合法（1.0）；span canonicalizer 状态 reanchored=126 /
   degraded=23 / unchanged=1；重锚 span 总数 966；dropped spans=42、dropped
@@ -32,27 +32,32 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
   966 个 span 坐标重锚到唯一精确文本、恢复/改变 149/150 个样本的坐标一致性，
   并把 action 字段 F1 提高约 1 个百分点；但**在 span-overlap 主口径下总体增量
   较小（+0.0024）**，因为重锚主要影响坐标精确性而不改变文本覆盖。
-- 局限（如实）：raw JSON 未持久化于锁定产物，Raw 条件为近似；不得当作精确
-  raw-response 评价。
+- **命名与边界（v2 修正）**：本实验统一称“离线近似敏感性分析”；仅
+  `full_locked` 是真实锁定结果；`schema_only_approx`/`raw_approx` 由
+  post-canonical 输出构造，**不得称为精确 raw-response 消融**（原始模型 JSON 未
+  持久化于锁定 s27 产物）。
 
-### 实验 B：Rules-Only 模块去除（同一 EStG-150 / 同 Gold / 同 evaluator；full 复刻锁定 v10a）
+### 实验 B：Rules-Only 模块去除（同一 EStG-150 / 同 Gold / 同 evaluator；full 复刻锁定 v10a；v2 补结构指标）
 
-（完整数字见 `outputs/development/b0_module_removal_ablation_v1/results.json`）
+| 条件 | overall F1 | ΔF1 | modality label acc | label macro-F1 | gold map 可解析率 | predicted map 内部有效 | map 变化样本 | 说明 |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| Full | 0.7186 | — | 0.7316 | 0.700 | 0.2 | 1.0 | — | 复刻锁定 v10a fine 口径 |
+| no_lexicon_extensions | 0.7120 | −0.0066 | 0.7316 | 0.700 | 0.2 | 1.0 | 12 | 仅 public tier；actor 词典扩展移除 |
+| no_modality_classifier | 0.7186 | 0.0 | 0.6797 | **0.581** | 0.2 | 1.0 | 0 | span 不变；label/macro 明显下降（marker-only） |
+| no_actor_action_ownership | 0.7186 | 0.0 | 0.7316 | 0.700 | 0.2 | 1.0 | 12 | 只改 map（12 样本），不改 span/label |
+| no_multi_match_guard | 0.7239 | +0.0053 | 0.7316 | 0.700 | 0.2 | 1.0 | 0 | 首候选消费反而略升 span F1（副作用披露） |
+| no_de_en_alignment_validation | 0.7186 | 0.0 | 0.7316 | 0.700 | 0.2 | 1.0 | 0 | 只改 route，无可测影响（如实） |
 
-| 条件 | overall F1 | ΔF1 vs full | modality label acc | map 变化样本 | 说明 |
-|---|---:|---:|---:|---:|---|
-| Full | 0.7186 | — | 0.7316 | — | 复刻锁定 v10a fine 口径 |
-| no_lexicon_extensions | 0.7120 | −0.0066 | 0.7316 | 12 | 仅 public tier；actor 词典扩展移除 |
-| no_modality_classifier | 0.7186 | 0.0 | **0.6797** | 0 | span 口径不变；label 口径 −0.0519（marker-only） |
-| no_actor_action_ownership | 0.7186 | 0.0 | 0.7316 | 12 | 只改 map，不改 span/label |
-| no_multi_match_guard | 0.7239 | +0.0053 | 0.7316 | 0 | 首候选消费反而略升 span F1（副作用披露） |
-| no_de_en_alignment_validation | 0.7186 | 0.0 | 0.7316 | 0 | 只改 route，无可测影响（如实） |
-
-结论（有数据）：span 覆盖主要由 lexicon+tregex+校验链贡献；classifier 主要贡献
-modality label（−0.0519）；DE-EN 验证在本数据上无可测增量；multi-match guard
-的首候选消费副作用为 +0.0053（不是保守守卫的净收益证据）。modality label
-per-class：obligation 0.887、permission 0.661、definition 0.487、prohibition
-0.697（full）。
+- **v2 结构指标说明（诚实边界）**：冻结 EStG-150 Gold 的 actor-action map 使用
+  未能解析的短 ID（`a01`/`c1_action_1`/`None`），**gold 与预测的精确 ID 级对比
+  不可计算**（gold map 可解析率仅 0.2）；因此结构层报告的是：predicted map 内部
+  有效性（1.0，预测边均引用自身 clause 内的 actor/action）、map 相对 full 的
+  变化样本数（no_lexicon/no_ownership=12）、以及每 flag 的变化案例。span 指标
+  **不覆盖结构 map**，本套件明确标注该边界。
+- 结论（有数据）：span 覆盖主要由 lexicon+tregex+校验链贡献；classifier 主要
+  贡献 modality label（acc −0.0519、macro −0.119）；DE-EN 验证在本数据上无可测
+  增量；multi-match guard 的首候选消费副作用为 +0.0053（不是保守守卫的净收益
+  证据）。
 
 ### 实验 C：四类 vs 三类 modality 投影（formula Gold 231 clauses）
 
@@ -61,15 +66,20 @@ per-class：obligation 0.887、permission 0.661、definition 0.487、prohibition
   被排除 39 条，覆盖率损失 = 39/231 = 16.88%。
 - **定义不并入其它类**；这是 schema 覆盖差异比较，不是 Barrientos 方法性能比较。
 
-### 实验 D/E：prepared-not-executed（零 API 批次不运行模型；命令已记录）
+### 实验 D/E：prompt/few-shot 与同数据模块替换（v2：wired，未执行——真实调用需授权）
 
-- D 四臂：full_v6_6shot=reuse locked；no_fewshot / barrientos_style /
-  minimal_prompt = prepared（prompt 变体已生成
-  `prompts/sun_compat/ablation_v1/` + 精确运行命令），未执行。
-- E 同数据（38 条非空 Barrientos requirements）三臂 = prepared；共享指标协议
-  （三类 modality / JSON 合法率 / 覆盖率 / 失败率 / runtime / 5-run
-  self-consistency / 输出差异案例）与分表指标协议已锁定
-  `configs/ablations/e_same_data_input_contract_v1.json`。
+- 输入已修正：`configs/ablations/e_same_data_input_contract_v2.json` ——
+  **36 条唯一版本化 ID（如 r10v1/r10v2）直接派生自冻结 S2.12 复杂语料输入**，
+  36/36 唯一、无空/`-` 占位文本、每条绑定 source file/text/Gold hashes；
+  v1 的错误“38 条非空”合同已废弃（当时把 4 条 `-` 占位记录算入并把版本行当
+  重复）。
+- D 四臂 prompt 已生成（`prompts/sun_compat/ablation_v1/`）：
+  D-full（复用锁定正式结果）/ D-no-fewshot / D-minimal / D-barrientos-style；
+  E 三臂（E-ours / E-barrientos-faithful / E-module-swapped）+ 共享指标协议 +
+  E-ours 与 E-barrientos-faithful 各 5 次稳定性（首轮计入）。
+- 执行器 `scripts/run_barrientos_ablation_suite_v2.py --execute-de --auth-file
+  <USER_AUTH>` 已 wiring 并通过 `--dry-run` 零网络校验；**真实模型调用需要显式
+  用户授权，本零 API 批次不执行，状态仅 `ready_to_execute_not_executed`**。
 
 ## 总表（一行/一组结构化结论）
 

@@ -1,0 +1,78 @@
+{
+  "schema_version": "barrientos_ablation_suite@2.0.0",
+  "task_id": "S2-BARRIENTOS-ABLATION",
+  "claim_scope": "development",
+  "zero_api_batch": true,
+  "supersedes": "configs/ablations/barrientos_ablation_suite_v1.json",
+  "inputs": {
+    "estg150_formal_input_v2": "data/input/estg150_formal_inference_input_v2.json",
+    "estg150_formal_gold": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "d1_r3_responses": "outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/d1_responses.jsonl",
+    "d1_formal_predictions": "data/predictions/direct_llm_formal_arm_v1/predictions.json",
+    "b0_formal_predictions": "data/predictions/b0_formal_arm_v1/predictions.json",
+    "b0_module_removal_results": "outputs/development/b0_module_removal_ablation_v1/results.json",
+    "e_input_contract_v2": "configs/ablations/e_same_data_input_contract_v2.json",
+    "barrientos_requirements_dir": "../references/barrientos_2026/artifact_input/requirements",
+    "barrientos_prompt": "../references/barrientos_2026/artifact_input/prompts/formalize_requirements_prompt.txt",
+    "barrientos_format": "../references/barrientos_2026/artifact_input/formats/compliance_requirements_format.json"
+  },
+  "experiments": {
+    "A_direct_llm_validation_chain": {
+      "conditions": ["full_locked", "schema_only_approx", "raw_approx"],
+      "nature": "offline_approximation_sensitivity_analysis",
+      "note": "raw model JSON not persisted in locked s27 artifacts; schema_only_approx and raw_approx are constructed approximations, never called exact raw ablations"
+    },
+    "B_rules_only_module_removal": {
+      "conditions": [
+        "full",
+        "no_lexicon_extensions",
+        "no_modality_classifier",
+        "no_actor_action_ownership",
+        "no_multi_match_guard",
+        "no_de_en_alignment_validation"
+      ],
+      "structural_metrics": [
+        "actor_action_map_exact_accuracy_and_f1",
+        "map_changed_sample_count",
+        "modality_label_accuracy_and_macro_f1",
+        "per_field_p_r_f1",
+        "valid_invalid_output_counts",
+        "per_flag_example_change_cases"
+      ]
+    },
+    "C_modality_4_vs_3": {
+      "conditions": ["four_class", "three_class_shared_subset"]
+    },
+    "D_prompt_fewshot_ablation": {
+      "arms": ["D-full", "D-no-fewshot", "D-minimal", "D-barrientos-style"],
+      "fixed_conditions": {
+        "input": "EStG-150 (same input)",
+        "gold": "same Gold",
+        "model": "same model",
+        "sampling": "same temperature/top_p/max_tokens/transport",
+        "schema": "same canonical schema",
+        "evaluator": "same evaluator",
+        "failure_rule": "invalid outputs = empty predictions, never removed from denominator"
+      },
+      "status": "real_execution_requires_authorization"
+    },
+    "E_barrientos_same_data": {
+      "arms": ["E-ours", "E-barrientos-faithful", "E-module-swapped"],
+      "input": "36 unique versioned IDs from frozen S2.12 corpus (contract v2)",
+      "stability": {
+        "E-ours": 5,
+        "E-barrientos-faithful": 5,
+        "E-module-swapped": 1,
+        "note": "first main-comparison run counts toward the five"
+      },
+      "status": "real_execution_requires_authorization"
+    }
+  },
+  "safety": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "gold_modified": false,
+    "formal_predictions_overwritten": false,
+    "references_read_only": true
+  }
+}

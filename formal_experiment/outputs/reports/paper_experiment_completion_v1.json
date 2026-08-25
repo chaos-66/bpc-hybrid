@@ -1,0 +1,57 @@
+{
+  "schema_version": "paper_experiment_completion@1.0.0",
+  "generated": "2026-08-22",
+  "zero_api_batch": true,
+  "scope": "master check of paper-scope experiments (per advisor item 4)",
+  "items": {
+    "Stage1_method_level_reproduction": {
+      "status": "complete",
+      "evidence": "formal Stage 1 P0/P1/P2 results locked (outputs/reports/stage1_formal_evaluation_v2.json); no innovation, no expansion"
+    },
+    "Stage2_three_methods_P_R_F1": {
+      "status": "complete",
+      "evidence": "formal three-method comparison (outputs/reports/stage2_formal_three_method_comparison_v1.json)"
+    },
+    "H1_negative_control": {
+      "status": "complete",
+      "evidence": "Rules+LLM-Repair kept as negative control; no further tuning"
+    },
+    "Stage3_30_controlled_errors": {
+      "status": "complete",
+      "evidence": "synthetic_controlled_error_extension panel (30 variants, 10/10/10) + four-method run"
+    },
+    "Barrientos_A_offline_validation_chain": {
+      "status": "complete",
+      "conditions": ["full_locked", "schema_only_approx", "raw_approx"],
+      "evidence": "offline approximation sensitivity analysis on locked D1-R3; raw JSON not persisted"
+    },
+    "Barrientos_B_offline_module_removal": {
+      "status": "complete",
+      "evidence": "b0_module_removal_ablation_v1 with span + structural map + modality label metrics"
+    },
+    "Barrientos_C_offline_modality_projection": {
+      "status": "complete",
+      "evidence": "4-vs-3 modality projection; definition coverage loss 16.88%"
+    },
+    "Barrientos_D_prompt_fewshot": {
+      "status": "ready_to_execute_not_executed",
+      "arms": ["D-full", "D-no-fewshot", "D-minimal", "D-barrientos-style"],
+      "blocker": "real model API calls require explicit user authorization",
+      "wiring": "prompts built + run_barrientos_ablation_suite_v2.py --dry-run verified (zero calls)",
+      "honest_note": "not counted as executed until real responses + evaluation exist"
+    },
+    "Barrientos_E_same_data": {
+      "status": "ready_to_execute_not_executed",
+      "input": "e_same_data_input_contract_v2.json (36 unique versioned IDs from frozen S2.12)",
+      "arms": ["E-ours", "E-barrientos-faithful", "E-module-swapped"],
+      "blocker": "real model API calls require explicit user authorization",
+      "honest_note": "not counted as executed until real responses + evaluation exist"
+    },
+    "Five_run_stability": {
+      "status": "supplementary_not_required_until_E_executed",
+      "note": "5 independent runs of E-ours and E-barrientos-faithful; first main-comparison run counts toward the five; gated on E execution"
+    }
+  },
+  "claim": "Paper-scope experiments: offline items (A/B/C + Stage 1/2/3 + H1) complete; real-model items (D/E + five-run stability) are wired and gated on explicit API authorization, NOT claimed as executed.",
+  "never": ["prepared", "runner-ready", "contract-ready", "waiting-for-finalization"]
+}

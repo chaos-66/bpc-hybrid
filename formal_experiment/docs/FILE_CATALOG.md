@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-25
-**收录文件**：1420 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-08-26
+**收录文件**：1428 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -57,7 +57,9 @@
 | 文件 | 状态 | 用途 |
 |---|---|---|
 | `configs/ablations/barrientos_ablation_suite_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/ablations/barrientos_ablation_suite_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/e_same_data_input_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/ablations/e_same_data_input_contract_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/bm25_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/bm25_stage3_development_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/datasets/stage1_stage3_gdpr7_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -777,6 +779,8 @@
 | `outputs/reports/b0_formal_arm_v1_replay_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_ablation_comparison_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_ablation_comparison_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/barrientos_ablation_comparison_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/barrientos_ablation_comparison_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/direct_llm_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -799,6 +803,7 @@
 | `outputs/reports/g04_main_view_decision_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/paper_experiment_completion_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s15_s31_gdpr7_membership_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1039,6 +1044,7 @@
 | `scripts/build_d1_h1_zero_api_reevaluation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_d1_prompt_ablation_arms_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_e_same_data_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_e_same_data_contract_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg150_review_layers.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg_human_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_final_readiness_hardening_dry_run.py` | 活动 | Python 实现、脚本或测试 |
@@ -1122,6 +1128,7 @@
 | `scripts/run_b0_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_b0_module_removal_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_barrientos_ablation_suite_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_barrientos_ablation_suite_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_ai_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v10_development.py` | 活动 | Python 实现、脚本或测试 |
@@ -1404,6 +1411,7 @@
 | `tests/test_b0_v10_integration_contract.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_v10_scope_and_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_barrientos_ablation_suite.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_barrientos_ablation_suite_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_canonical_text_hash_policy.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_coarse_gold_b0_condition_constraint.py` | 活动 | Python 实现、脚本或测试 |

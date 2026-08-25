@@ -3821,3 +3821,16 @@
 - 仍存在 blocker：无
 - 备注：零 LLM/API/网络；prompt 内容无变化仅移除 markdown 行尾空格并重算 manifest hash；full audit 2654 passed/24 skipped exit 0
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-25T17:55:34.427675+00:00 - Barrientos ablation suite v2 (2026-08-22, zero API): (1) E input corrected — e_same_data_input_contract_v2.json with 36 unique versioned IDs (r10v1/r10v2) derived from frozen S2.12 corpus, rejects dup/placeholder/missing/extra (v1's wrong 38-record contract superseded); (2) A conditions renamed full_locked/schema_only_approx/raw_approx, framed as offline approximation sensitivity analysis; (3) B structural metrics — gold map resolvability (0.2, documented gold short-ID limitation), predicted map internal validity (1.0), map-change-vs-full (12), modality label macro-F1 (full 0.700 vs no-classifier 0.581), per-field P/R/F1, valid/invalid, per-flag cases; (4) D/E real-execution runner wired (4 D arms + 3 E arms + 5-run stability), dry-run verified zero network, gated on user authorization (not executed in this batch)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2669 passed, 24 skipped, 40 warnings in 2638.98s (0:43:58)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`1e54f3472a7d38c0f802818340eadd6e34614f06`；相关未提交路径：18 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：零 LLM/API/网络；未修改 Gold/正式预测/正式方法；references 只读；D/E 真实模型臂仅 wiring + dry-run，未执行不冒充执行；full audit 2669 passed/24 skipped exit 0
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
