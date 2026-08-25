@@ -1,0 +1,39 @@
+{
+  "schema_version": "d1_prompt_ablation_arms@1.0.0",
+  "created_offline": true,
+  "status": {
+    "full_v6_6shot": "reuse_locked_formal_result",
+    "no_fewshot": "prepared_not_executed_no_api",
+    "minimal_prompt": "prepared_not_executed_no_api",
+    "barrientos_style": "prepared_not_executed_no_api"
+  },
+  "inputs": {
+    "v6_prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "barrientos_prompt_sha256": "49af69cc8ff6063db97fbdeab74cd4c7f0506d1bae7d86233971749f3ad4738a"
+  },
+  "artifacts": {
+    "no_fewshot": {
+      "path": "prompts/sun_compat/ablation_v1/direct_llm_no_fewshot_prompt_v1.md",
+      "sha256": "86ed137bb02a65b4d20b83afc948fee2b755efff4525bc6c005f9d2e2f4b657a"
+    },
+    "minimal_prompt": {
+      "path": "prompts/sun_compat/ablation_v1/direct_llm_minimal_prompt_prompt_v1.md",
+      "sha256": "95027fe293a42e44a59b18bb4a8efaed032d91b010c42c9705270a1dcc33ed4f"
+    },
+    "barrientos_style": {
+      "path": "prompts/sun_compat/ablation_v1/direct_llm_barrientos_style_prompt_v1.md",
+      "sha256": "09bb61e2b7c9b2ea60c36f65e67f08cadf860f05295a29021f4f26814b97d9c4"
+    }
+  },
+  "note": "trailing markdown hard-break whitespace stripped from generated arms (content inside code fences unchanged)",
+  "run_commands": {
+    "no_fewshot": "python scripts/run_direct_llm.py --input data/input/estg150_input_v1.jsonl --prompt prompts/sun_compat/ablation_v1/direct_llm_no_fewshot_prompt_v1.md --output <OUT> --manifest <MF> --allow-llm  (requires user API authorization)",
+    "minimal_prompt": "python scripts/run_direct_llm.py --input data/input/estg150_input_v1.jsonl --prompt prompts/sun_compat/ablation_v1/direct_llm_minimal_prompt_prompt_v1.md --output <OUT> --manifest <MF> --allow-llm  (requires user API authorization)",
+    "barrientos_style": "python scripts/run_direct_llm.py --input data/input/estg150_input_v1.jsonl --prompt prompts/sun_compat/ablation_v1/direct_llm_barrientos_style_prompt_v1.md --output <OUT> --manifest <MF> --allow-llm  (requires user API authorization)"
+  },
+  "safety": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "v6_prompt_unmodified": true
+  }
+}

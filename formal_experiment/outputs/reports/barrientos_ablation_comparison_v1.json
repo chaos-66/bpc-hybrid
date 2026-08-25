@@ -1,0 +1,189 @@
+{
+  "schema_version": "barrientos_ablation_comparison@1.0.0",
+  "generated_zero_api": true,
+  "summary": {
+    "A": {
+      "legal_output_rate": 1.0,
+      "canonicalization_status_counts": {
+        "reanchored": 126,
+        "degraded": 23,
+        "unchanged": 1
+      },
+      "samples_changed_by_canonicalizer": 149,
+      "condition_metrics": {
+        "full": {
+          "overall": {
+            "ground_truth": 1055,
+            "extracted": 820,
+            "matched_predictions": 721,
+            "matched_ground_truth": 732,
+            "misclassified": 99,
+            "missed": 323,
+            "precision": 0.8792682926829268,
+            "recall": 0.6938388625592417,
+            "f1": 0.7756248645193052
+          },
+          "per_field_f1": {
+            "modality": 0.92151,
+            "actor": 0.722222,
+            "action": 0.879983,
+            "condition": 0.786316,
+            "constraint": 0.548151,
+            "exception": 0.695652
+          }
+        },
+        "schema_only": {
+          "overall": {
+            "ground_truth": 1055,
+            "extracted": 820,
+            "matched_predictions": 721,
+            "matched_ground_truth": 728,
+            "misclassified": 99,
+            "missed": 327,
+            "precision": 0.8792682926829268,
+            "recall": 0.6900473933649289,
+            "f1": 0.7732501482379025
+          },
+          "per_field_f1": {
+            "modality": 0.92151,
+            "actor": 0.722222,
+            "action": 0.870521,
+            "condition": 0.786316,
+            "constraint": 0.548151,
+            "exception": 0.695652
+          }
+        },
+        "raw_approximation": {
+          "overall": {
+            "ground_truth": 1055,
+            "extracted": 820,
+            "matched_predictions": 721,
+            "matched_ground_truth": 728,
+            "misclassified": 99,
+            "missed": 327,
+            "precision": 0.8792682926829268,
+            "recall": 0.6900473933649289,
+            "f1": 0.7732501482379025
+          },
+          "per_field_f1": {
+            "modality": 0.92151,
+            "actor": 0.722222,
+            "action": 0.870521,
+            "condition": 0.786316,
+            "constraint": 0.548151,
+            "exception": 0.695652
+          }
+        }
+      },
+      "condition_diagnostics": {
+        "full": {
+          "total_spans": 590,
+          "span_out_of_range": 0,
+          "unanchored_spans": 0,
+          "broken_actor_action_edges": 140
+        },
+        "schema_only": {
+          "total_spans": 590,
+          "span_out_of_range": 0,
+          "unanchored_spans": 0,
+          "broken_actor_action_edges": 140
+        },
+        "raw_approximation": {
+          "total_spans": 590,
+          "span_out_of_range": 0,
+          "unanchored_spans": 0,
+          "broken_actor_action_edges": 140
+        }
+      },
+      "deltas": {
+        "full_vs_schema_only": {
+          "overall_f1_delta": 0.002375,
+          "per_field_f1_delta": {
+            "modality": 0.0,
+            "actor": 0.0,
+            "action": 0.009462,
+            "condition": 0.0,
+            "constraint": 0.0,
+            "exception": 0.0
+          }
+        },
+        "full_vs_raw_approx": {
+          "overall_f1_delta": 0.002375,
+          "per_field_f1_delta": {
+            "modality": 0.0,
+            "actor": 0.0,
+            "action": 0.009462,
+            "condition": 0.0,
+            "constraint": 0.0,
+            "exception": 0.0
+          }
+        }
+      },
+      "before_after_examples_count": 5
+    },
+    "B": {
+      "status": "executed",
+      "full_f1": 0.7186482580011335,
+      "full_label_accuracy": 0.731602,
+      "per_flag": {
+        "no_lexicon_extensions": {
+          "overall_f1": 0.7120496762363695,
+          "delta_vs_full_f1": -0.006599,
+          "label_accuracy": 0.731602
+        },
+        "no_modality_classifier": {
+          "overall_f1": 0.7186482580011335,
+          "delta_vs_full_f1": 0.0,
+          "label_accuracy": 0.679654
+        },
+        "no_actor_action_ownership": {
+          "overall_f1": 0.7186482580011335,
+          "delta_vs_full_f1": 0.0,
+          "label_accuracy": 0.731602
+        },
+        "no_multi_match_guard": {
+          "overall_f1": 0.7239090266213474,
+          "delta_vs_full_f1": 0.005261,
+          "label_accuracy": 0.731602
+        },
+        "no_de_en_alignment_validation": {
+          "overall_f1": 0.7186482580011335,
+          "delta_vs_full_f1": 0.0,
+          "label_accuracy": 0.731602
+        }
+      },
+      "results_path": "outputs/development/b0_module_removal_ablation_v1/results.json"
+    },
+    "C": {
+      "four_class_counts": {
+        "definition": 39,
+        "obligation": 97,
+        "permission": 62,
+        "prohibition": 33
+      },
+      "three_class_shared_counts": {
+        "obligation": 97,
+        "permission": 62,
+        "prohibition": 33
+      },
+      "definition_excluded_count": 39,
+      "definition_coverage_loss_ratio": 0.168831
+    },
+    "D_E": {
+      "nonempty_requirements": 38,
+      "status": {
+        "D_full_v6_6shot": "reuse_locked_formal_result",
+        "D_no_fewshot": "prepared_not_executed_no_api",
+        "D_barrientos_style": "prepared_not_executed_no_api",
+        "D_minimal_prompt": "prepared_not_executed_no_api",
+        "E_arms": "prepared_not_executed_no_api"
+      }
+    }
+  },
+  "full_results": "outputs\\development\\barrientos_ablation_suite_v1\\results.json",
+  "notes": {
+    "A_raw_approximation": "raw model JSON not persisted in locked artifacts; raw condition approximated via first-occurrence anchoring",
+    "D_E_not_executed": "model arms prepared but NOT executed (zero-API batch); no fabricated results",
+    "B_composition": "executed (shared CoreNLP+classifier pass; 5 removal flags) + modality-label panel"
+  }
+}

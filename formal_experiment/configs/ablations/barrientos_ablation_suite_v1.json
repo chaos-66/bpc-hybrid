@@ -1,0 +1,60 @@
+{
+  "schema_version": "barrientos_ablation_suite@1.0.0",
+  "task_id": "S2-BARRIENTOS-ABLATION",
+  "claim_scope": "development",
+  "zero_api": true,
+  "inputs": {
+    "estg150_formal_input_v2": "data/input/estg150_formal_inference_input_v2.json",
+    "estg150_formal_gold": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "d1_r3_responses": "outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/d1_responses.jsonl",
+    "d1_r3_output": "outputs/development/s27_d1_v6_r3_clean_rerun_150_hist56d_v1/output.jsonl",
+    "d1_formal_predictions": "data/predictions/direct_llm_formal_arm_v1/predictions.json",
+    "b0_formal_predictions": "data/predictions/b0_formal_arm_v1/predictions.json",
+    "stage2_formal_comparison": "outputs/reports/stage2_formal_three_method_comparison_v1.json",
+    "barrientos_requirements_dir": "../references/barrientos_2026/artifact_input/requirements",
+    "barrientos_prompt": "../references/barrientos_2026/artifact_input/prompts/formalize_requirements_prompt.txt",
+    "barrientos_format": "../references/barrientos_2026/artifact_input/formats/compliance_requirements_format.json"
+  },
+  "experiments": {
+    "A_direct_llm_validation_chain": {
+      "conditions": ["full", "schema_only", "raw_approximation"],
+      "note": "raw model JSON is not persisted in the locked s27 artifacts; raw condition is approximated by first-occurrence anchoring on the persisted canonical records and explicitly labelled; exact raw reconstruction is not possible from locked artifacts"
+    },
+    "B_rules_only_module_removal": {
+      "conditions": [
+        "full",
+        "no_lexicon_extensions",
+        "no_modality_classifier",
+        "no_actor_action_ownership",
+        "no_multi_match_guard",
+        "no_de_en_alignment_validation"
+      ],
+      "note": "one-factor-at-a-time; full = v10a persisted formal predictions (locked); each removal re-composes from shared CoreNLP/classifier artifacts"
+    },
+    "C_modality_4_vs_3": {
+      "conditions": ["four_class", "three_class_shared_subset"],
+      "note": "definition excluded from the 3-class shared subset; coverage loss reported explicitly; NOT a Barrientos-method performance comparison"
+    },
+    "D_prompt_fewshot_ablation": {
+      "arms": ["full_v6_6shot", "no_fewshot", "barrientos_style", "minimal_prompt"],
+      "status": {
+        "full_v6_6shot": "reuse_locked_formal_result",
+        "no_fewshot": "prepared_not_executed_no_api",
+        "barrientos_style": "prepared_not_executed_no_api",
+        "minimal_prompt": "prepared_not_executed_no_api"
+      }
+    },
+    "E_barrientos_same_data": {
+      "arms": ["ours_six_field", "barrientos_faithful", "ours_with_barrientos_style_module"],
+      "status": "prepared_not_executed_no_api",
+      "input_contract": "38 non-empty Barrientos requirements (artifact-verifiable count; S2.12 corpus is a 36-sample versioned subset of the same files)"
+    }
+  },
+  "safety": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "gold_modified": false,
+    "formal_predictions_overwritten": false,
+    "references_read_only": true
+  }
+}

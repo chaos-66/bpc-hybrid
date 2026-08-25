@@ -447,9 +447,35 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` 与 `docs/EVAL_3DIM_SPEC.md`。）
   这些是任务/表示差异，不构成方法优劣。
 - 哪些结论已有数据：温度 0、严格 JSON schema、确定性验证/归一化、traceability、
   成本/失败率纪律——本文 Direct-LLM 已实现并有运行证据。
-- 哪些仍是假设、必须等待消融：模块级替换/去除的影响（AB-1–AB-5）、稳定性 5 次
-  重跑（AB-9）、style-equivalent（AB-10）——这些必须等真实数据，不得现在写成
-  “已完成”。
+- 哪些仍是假设、必须等待消融：**2026-08-22 Barrientos 离线消融套件已把其中
+  AB-2/AB-3/AB-5/AB-8 的前置证据做实（见 §6.6 与 `paper/ABLATION_MATRIX.md`）**；
+  仍需真实 LLM 臂：AB-2 few-shot/Barrientos-style prompt、AB-4 dual-view
+  adapter、AB-9 五次稳定性重跑、AB-10 style-equivalent——这些必须等授权数据，
+  不得现在写成“已完成”。
+
+### 4.5 实验结果对 Barrientos 模块对照的更新（2026-08-22，零 API）
+
+§4.4 的**模块级对照现在有离线实验证据**（套件 v1，见 §6.6）：
+
+1. **校验/确定性后处理（对应 Barrientos 的 strict-JSON）**：实验 A 显示 span
+   canonicalizer 在 150 条锁定响应上重锚 966 个 span、改变/恢复 149/150 个样本
+   的坐标、并带来 action 字段 F1 +0.0095（overall +0.0024）。**这回答“校验链是否
+   是本文真实贡献模块”：是**——Barrientos 论文只报告 strict-JSON 合法性，不逐
+   字段 re-anchor；本文的 unique exact-text re-anchor 是可测量的额外层次。
+2. **受控词汇（对应 Barrientos 44 模式）**：实验 B 的 no_lexicon_extensions 显示
+   去掉词典扩展（public tier 之外的本地 frozen-gap 扩展）overall F1 −0.0066，
+   主要由 actor 词典扩展驱动。两边的受控词汇服务于不同表示层（six-field vs
+   change-impact），不互相替代（C4）。
+3. **schema 类别（4 类 vs 3 类）**：实验 C 显示 4 类覆盖比 3 类多
+   definition=39 条（231 clauses 的 16.88%）；definition 是本文六要素任务中
+   可度量的类别，Barrientos 的 3 类 enum 会排除它——这是 schema 覆盖差异，
+   不是方法优劣。
+4. **各模块去掉后的实际影响（实验 B）**：lexicon 扩展 −0.0066、modality
+   classifier 在 label 口径下降（span 口径不变）、multi-match guard 首候选消费
+   反而 +0.0053（副作用已披露）、actor-action 归属与 DE-EN 验证只改 label/map/
+   route 不改 span 覆盖。整体结论：**本文六要素抽取的 span 覆盖主要由 lexicon +
+   tregex + 校验链贡献；classifier 与 alignment 验证主要影响 modality label 质量**
+   （full clause-label accuracy 0.7316；definition 类最弱 0.487）。
 
 ### 4.5 Stage 3 受控错误注入方法（synthetic_controlled_error_extension）
 
@@ -557,17 +583,45 @@ AP/MAP/Recall@k 和违规分类 P/R/F1。所有方法共享输入、Gold、schem
 和 evaluator，复杂度分层在查看 test 结果前冻结。与 Barrientos 的数字比较必须
 分表并标证据等级（C1–C4）。
 
-### 6.6 受控消融 AB-1–AB-10（现状）
+### 6.6 受控消融 AB-1–AB-10 与 Barrientos 消融套件（现状）
 
-“模块替换/去除”消融矩阵的设计与现状见 `paper/ABLATION_MATRIX.md`。原则：
+模块替换/去除矩阵的完整结构化结论见 `paper/ABLATION_MATRIX.md`。原则：
 (1) 每项消融输出“我的完整模块 / 换成 Barrientos 模块 / 去掉模块 / 我的优势 /
 Barrientos 优势 / 综合结论 / 可比较性限制”的结构化结论；(2) 没有正式数据时标记
 “待运行”或“仅已有历史证据”，不得把“已经设计矩阵”写成“已经完成实验”；
-(3) 涉及真实 LLM 的 AB-2/AB-4/AB-9 必须逐批用户授权。已锁定零 API 消融项：
-AB-1（v5→v6 历史证据：constraint R 0.288→0.417）、AB-3（4 类→3 类投影需新
-离线脚本，输入已具备）、AB-5（validator/canonicalizer 的离线作用分析，仅设计 +
-历史证据）、AB-6（150/150 有效、0 事故历史证据）、AB-7（细/粗/Sun-marker 三
-口径已成表）、AB-8（Rules-Only 各模块批次的既有结果）。
+(3) 涉及真实 LLM 的 AB-2/AB-4/AB-9 必须逐批用户授权。
+
+**Barrientos 离线消融套件 v1（2026-08-22，零 API）已运行**（脚本
+`scripts/run_barrientos_ablation_suite_v1.py`、
+`scripts/run_b0_module_removal_ablation_v1.py`；结果
+`outputs/development/barrientos_ablation_suite_v1/`、
+`outputs/development/b0_module_removal_ablation_v1/`、
+`outputs/reports/barrientos_ablation_comparison_v1.json`）：
+
+- **实验 A（Direct-LLM 校验链，锁定 D1-R3 响应）**：Full 0.7756 / Schema-only
+  0.7733 / Raw-approx 0.7733（fine Gold literal-overlap v2）；canonicalizer 重锚
+  966 spans、改变/恢复 149/150 样本、dropped spans 42 / edges 18；Full vs
+  Schema-only Δoverall F1 +0.0024、Δaction F1 +0.0095。结论：**校验+确定性后处理
+  是真实贡献模块**（坐标恢复证据充分），但 span-overlap 主口径总体增量小。
+- **实验 B（Rules-Only 模块去除，同一 150/同 Gold/同 evaluator）**：full 0.7186
+  （复刻锁定 v10a）；no_lexicon_extensions −0.0066；no_multi_match_guard
+  +0.0053（首候选消费副作用，如实披露）；其余 span 口径 0.0（只改 label/map/
+  route 不改 span 覆盖）；modality clause-label accuracy full 0.7316，
+  no_modality_classifier 下降（marker-only），definition 类 0.487 为最弱。
+- **实验 C（4→3 modality 投影）**：四类 39/97/62/33；三类共享 97/62/33；
+  definition 覆盖率损失 16.88%；definition 不并入其它类；仅 schema 覆盖比较，
+  非 Barrientos 方法性能比较。
+- **实验 D/E（prompt/few-shot 与同数据比较）**：full arm 复用锁定 formal 结果；
+  no_fewshot / barrientos_style / minimal_prompt 三臂 prompt 已生成
+  （`prompts/sun_compat/ablation_v1/`）并记录精确运行命令；E 同数据输入合同
+  （38 条非空 Barrientos requirements，`configs/ablations/e_same_data_input_contract_v1.json`）
+  与共享/分表指标协议已锁定；**未执行**（零 API 批次，需授权后运行）。
+
+已锁定零 API 项：AB-1（v5→v6 历史证据：constraint R 0.288→0.417）、AB-3（4 类
+→3 类投影，2026-08-22 完成）、AB-5（validator/canonicalizer 离线作用，2026-08-22
+实验 A 量化）、AB-6（150/150 有效、0 事故历史证据）、AB-7（细/粗/Sun-marker 三
+口径已成表）、AB-8（Rules-Only 逐模块去除，2026-08-22 实验 B 量化）、AB-2/AB-4/
+AB-9（prepared / 待授权）。
 
 ## 7. 结果
 

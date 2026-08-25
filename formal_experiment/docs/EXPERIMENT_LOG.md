@@ -3795,3 +3795,29 @@
 - 仍存在 blocker：无
 - 备注：零 LLM/API/网络；正文只使用已有正式/DEV 证据；S2.12 API arms 保持 pending authorized extension；synthetic panel 结果以 DEV 标注不并入人工 Gold；full audit 2641 passed/24 skipped 复用 receipt
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-25T10:45:24.387789+00:00 - Barrientos et al. (2026) 模块级消融套件 v1（2026-08-22，零 API）：实验 A Direct-LLM 校验链（Full 0.7756 / Schema-only 0.7733 / Raw-approx 0.7733；canonicalizer 重锚 966 spans、149/150 样本被改变/恢复；action Δ+0.0095）、实验 B Rules-Only 逐模块去除（full 0.7186 复刻锁定 v10a；no_lexicon −0.0066、no_classifier label −0.0519、no_guard +0.0053 副作用披露、DE-EN/ownership 无可测 span 增量；modality label 0.7316、definition 0.487 最弱）、实验 C 4→3 modality 投影（definition 39/231=16.88% 覆盖率损失）、实验 D/E prepared-not-executed（三臂 prompt 生成 + E 同数据合同 38 非空 requirements + 指标协议）；ABLATION_MATRIX v2 + THESIS_DRAFT 6.6/4.4 回填；13 项 focused tests
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2654 passed, 24 skipped, 40 warnings in 2491.33s (0:41:31)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`0826d8e032e9a062275b6f93737f0d25dc9197df`；相关未提交路径：23 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：零 LLM/API/网络；未修改 Gold/正式预测/正式方法；references 只读；full audit 2654 passed/24 skipped（首轮全审因北京 peak 时段 D-CAL off-peak 门禁误报 9 项，为既有时间窗口 flake，非本批回归；off-peak 重跑全绿）
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-25T11:28:13.009839+00:00 - Barrientos ablation suite v1 finalize (2026-08-22, zero API): D-prompt arms trailing-whitespace strip (markdown hard-break, content unchanged) + arms manifest sha256 regeneration; final tree re-audited
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2654 passed, 24 skipped, 40 warnings in 2417.24s (0:40:17)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`0826d8e032e9a062275b6f93737f0d25dc9197df`；相关未提交路径：25 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：零 LLM/API/网络；prompt 内容无变化仅移除 markdown 行尾空格并重算 manifest hash；full audit 2654 passed/24 skipped exit 0
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
