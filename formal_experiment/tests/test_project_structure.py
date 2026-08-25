@@ -93,7 +93,10 @@ def test_paper_draft_has_claim_gates_and_no_fabricated_result_rows() -> None:
     claims = (ROOT / "paper/CLAIM_EVIDENCE_MATRIX.md").read_text(encoding="utf-8")
     assert "DRAFT — 已启动写作，但无正式实验结果" in draft
     assert "[[TODO-RESULT:S2.10" in draft
-    assert "| B0 | TEMPLATE | —" in draft
+    # 2026-08-22: Stage 1 formal rows backfilled (P0/P1/P2 with locked numbers);
+    # the original template row marker was replaced by real, source-labelled rows.
+    assert "Stage 1 正式复现结果（FORMAL，2026-08-13 冻结；描述性，非 held-out）" in draft
+    assert "P0（structural baseline）" in draft and "P2（模型上下文+依赖+style recognition）" in draft
     assert "BLOCKED_RESULT" in claims
     assert "PROHIBITED_CLAIM" in claims
     # 2026-08-11: formal three-method comparison + conclusion exist

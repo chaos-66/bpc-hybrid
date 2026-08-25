@@ -24,11 +24,18 @@ Direct-LLM / Rules+LLM-Repair**；`B0`、`H1`、`D1` 仅作为 legacy 机器 ID�
 Direct-LLM（直接 LLM）和 Rules+LLM-Repair（选择性混合），并在预先冻结的复杂
 法律语料上检验不同方法随复杂度增加的退化边界。
 
-[[TODO-RESULT:S2.10：回填 Stage 2 主数据结果（正式三方法比较已于 2026-08-11
-发布，见 §7.2，本处摘要待 S2.13 后回填复杂度分层）]]
-[[TODO-RESULT:S2.12：回填复杂度分层结果]]  
-[[TODO-RESULT:S3.7/S3.10：回填 Oracle 与端到端结果]]  
-在上述正式结果产生前，本摘要不写性能提升、最佳方法或最终结论。
+已落地的正式/DEV 结果（均为描述性）：Stage 1 固定 GDPR-7 复现（P2 语义
+micro-F1 0.8185 / accuracy 0.6928 / triple 0.4222，structure 1.0 仅共享解析，
+§7.1）；Stage 2 正式三方法比较（无整体胜者；Direct-LLM 对 action/condition/
+constraint/modality label 更优，Rules-Only 对 actor/exception 更优，
+Rules+LLM-Repair 为净负对照，§7.2）；Stage 3 在人工 33 条 panel 与新增 30 条
+合成受控错误 panel 上的四方法违规检测（missing_action 最易、incorrect_actor
+依赖参与者语义、out_of_order 最难，§7.4）。
+
+[[TODO-RESULT:S2.12：回填复杂度分层结果（Direct/Fallback 为 pending
+authorized extension，不阻塞本文主体）]]
+[[TODO-RESULT:S3.7/S3.10：回填 Oracle 与端到端结果]]
+在上述事项完成前，本摘要对 Oracle/端到端不写性能提升、最佳方法或最终结论。
 
 ## 1. 引言
 
@@ -59,18 +66,29 @@ reconstruction。[[TODO-SOURCE:SUN2024:核对三阶段描述与方法资产页�
 - RQ2：法律文本复杂度增加时，各 Stage 2 方法如何退化，错误类型如何变化？
 - RQ3：在 Gold Rule/Process Records 下，多个 Stage 3 baseline 与 LLM/Hybrid
   方法在匹配和违规类型分类上如何比较？
+- RQ3a（2026-08-22 新增）：在人工裁决的 33 条 violation panel 之外，现有非 LLM
+  Stage 3 方法（Winter、Sun、BM25、TF-IDF）在 30 条**合成受控错误**（三类各 10
+  条）上分别表现如何？哪种错误类型最易/最难检测？（§7.4.2–7.4.4）
+- RQ3b：Stage 1 的结构/语义标签质量如何传播到 Stage 3 的违规类型判定？（§7.4.5）
 - RQ4：Stage 2 或 Stage 3 的局部改进能否转化为端到端提升？
 
 ### 1.2 预期贡献（待验证）
 
 本文计划交付：三阶段独立重建及其可复现边界；统一 canonical contract 下的 Stage 2
-多 baseline 比较；复杂法律语料上的复杂度分层与错误分析；Stage 3 Oracle 与
-end-to-end 分离评价；以及解释 Stage 2、Stage 3 和二者交互贡献的受控消融。
-方法层面，本文把 Direct-LLM 的实现拆分为 8 个可独立叙述与消融的模块，把
-Rules-Only 拆分为 8 个模块，并逐模块与 Barrientos et al. (2026) 的直接借鉴来源
-做对照（见 §4、§6.4）。
+多 baseline 比较（正式结果见 §7.2）；复杂法律语料上的复杂度分层与错误分析；Stage 1
+描述性复现（正式结果见 §7.1）与 Stage 3 违规检测（人工 33 条 panel + 30 条合成
+受控错误 panel，见 §7.4）；Stage 3 Oracle 与 end-to-end 分离评价；以及解释
+Stage 2、Stage 3 和二者交互贡献的受控消融。方法层面，本文把 Direct-LLM 的实现
+拆分为 8 个可独立叙述与消融的模块，把 Rules-Only 拆分为 8 个模块，并逐模块与
+Barrientos et al. (2026) 的直接借鉴来源做对照（见 §4、§6.6）。
 
-[[TODO-STATUS:S2.13/S1.7/S3.11：各阶段冻结后将“计划”改为已完成贡献]]
+**已落地（2026-08-22 论文优先主线）**：Stage 1 reproduction 完成（§7.1）；Stage 2
+正式三方法比较完成（§7.2）；Stage 3 人工 panel + 合成受控错误 panel 完成（§7.4）；
+S2.12 复杂语料 Direct/Fallback 为 pending authorized extension，不是论文主体阻塞
+（§7.3 保留零 API arm）。
+
+[[TODO-STATUS:S2.13/S3.7/S3.11：Stage 2/3 冻结与 Oracle/端到端完成后将“计划”改为
+已完成贡献]]
 
 ## 2. 相关工作
 
@@ -113,7 +131,12 @@ Sun 六要素 Rule Record（详见 §4.4 对比表）。
 
 ### 3.1 Stage 1：Process Record
 
-[[TODO-STATUS:S1.7：回填冻结实现与字段]]
+Stage 1 把 BPMN 解析为 canonical Process Record：process/lane/pool 身份、活动
+（activity/event/gateway）集合、sequenceFlow 与控制流（direct edges、reachable
+pairs、activity order relations、start/end、分支/并行网关、环）。S1.7 已冻结
+（2026-08-13）：固定 GDPR-7 上 7 个流程、45 个 activities、135 个人工裁决标签
+字段；正式评价见 §7.1。方法语义（P0/P1/P2）见 §4.1 与 Stage 1 描述性复现
+（structure micro-F1=1.0 来自共享解析组件，不构成泛化证据）。
 
 ### 3.2 Stage 2：Rule Record
 
@@ -123,7 +146,12 @@ actor-action map、order relations 及 provenance。
 
 ### 3.3 Stage 3：Violation Report
 
-[[TODO-STATUS:S3.11：回填 matching、violation type、证据和 BPMN 定位实现]]
+Stage 3 输出 matching（rule→process 候选相关性）与 violation（三类）：
+`missing_action`（法规义务在流程中缺失）、`incorrect_actor`（义务动作由错误
+参与者执行）、`out_of_order`（顺序违反法规规定的先后）。Gold = 25 条 matching
+decision Gold + 33 条 violation decision Gold（人工裁决，2026-08-08 冻结）；
+验证方法包括 Winter wrapper、Sun Def 4–7 重建、BM25、TF-IDF/SVD（§7.4），
+以及 2026-08-22 新增的 30 条合成受控错误 panel（§4.5/§6.4）。
 
 ## 4. 方法
 
@@ -423,6 +451,40 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` 与 `docs/EVAL_3DIM_SPEC.md`。）
   重跑（AB-9）、style-equivalent（AB-10）——这些必须等真实数据，不得现在写成
   “已完成”。
 
+### 4.5 Stage 3 受控错误注入方法（synthetic_controlled_error_extension）
+
+为把 Stage 3 从 33 条人工裁决 panel（人工 Gold）扩展到可量化错误类型的
+受控实验，本文在上游冻结 GDPR-7 上构造独立、明确标记为
+`synthetic_controlled_error_extension` 的合成错误注入 panel（30 条 = 三类各
+10；**不是人工 Gold，不并入 33 条正式 Gold，不得冒充 Oracle**）。生成器
+`scripts/build_s3_error_injection_v1.py` 实现三类最小变异，目标锁定自原始
+Process Record（先锁定后运行，无任何方法结果参与选择）：
+
+**missing_action（10 条）**：删除一个与法规义务对应的任务并在 sequence-flow
+层面重接前后节点。要求：原始 BPMN 不修改；变体可解析；只产生这一个目标错误；
+记录被删 activity ID、label、前后 flow；不同时制造 actor/order 错误。
+
+**incorrect_actor（10 条）**：把目标任务的 lane/performer 映射替换为同一数据集
+participant vocabulary 中的合法 actor（如 Data subject、National Authority），
+通过加入命名 actor lane 并移动该任务的 flowNodeRef 实现。要求：action 文本与
+控制流不变；wrong actor 来自合法词汇表；记录正确 actor、注入 actor 与目标
+activity；不同时改变 action 或顺序。
+
+**out_of_order（10 条）**：对具有明确先后义务的任务对（A before B）重接
+sequence flow 使顺序逆转（f_in→B、路径首流→B、末流→A、B 的出流→A），保持
+activity 集合、actor、label 完全不变，只改变目标顺序；记录原顺序、变更后
+顺序与受影响 flows。
+
+每个变体在发布前通过机器校验：XML parse、BPMN 结构校验（冻结 parser）、原始
+BPMN byte-unchanged、mutation diff、exactly-one-targeted-error、非目标字段
+（其余 activity/lane/order/label）不变、deterministic replay（生成器重复运行
+byte-identical）。规则绑定（variant → process → rule_id）与输入 aggregate hash、
+输出 aggregate hash 一并锁定在面板 manifest
+`data/development/stage3_synth/synthetic_controlled_error_extension_v1.json`。
+运行器 `scripts/run_s3_synthetic_panel_v1.py` 以与人工 panel 完全相同的
+`evaluate_stage3_common.py` 口径对四种非 LLM 方法评分；方法无法提供的信号
+明确写 `not applicable`/unobservable，不补 0 冒充支持。
+
 ## 5. 数据与人工 Gold
 
 ### 5.1 官方 modality 数据
@@ -460,17 +522,42 @@ P/R/F1 主表，modality evidence-span 单独/辅助）分别报告，不能用�
 
 ### 6.2 Stage 3 baseline
 
-最低覆盖：词法/检索下限、Winter、完整 Sun、一个现代 embedding/graph baseline；
-LLM/Hybrid 只在 Oracle 非 LLM 比较稳定后加入。
+最低覆盖：词法/检索下限、Winter、完整 Sun、一个现代 embedding/graph baseline
+（TF-IDF/SVD）；LLM/Hybrid 只在 Oracle 非 LLM 比较稳定后加入。实测（2026-08-22）：
+Winter wrapper（`winter_stage3_development_v1` 配方）、Sun Stage 3 重建
+（`sun_stage3_development_v1`，Def 4–7）、BM25（`bm25_stage3_development_v3`）、
+TF-IDF/SVD（`tfidf_svd_stage3_development_v1`）四者共享同一 inference pack、
+同一 `evaluate_stage3_common.py` 评估器；在 33 条人工 panel 与 30 条合成受控错误
+panel 上分别报告（§7.4）。
 
-### 6.3 指标与统计控制
+### 6.3 Stage 1 实验设置（描述性复现）
+
+固定 GDPR-7（7 流程 / 45 activities / 135 语义字段人工裁决标签），构造
+P0（结构基线）/ P1（简单规则）/ P2（模型上下文+依赖+style recognition）三方法，
+pre-evaluation lock、无 post-evaluation tuning；metrics = 语义 micro-P/R/F1、
+exact value accuracy、triple exact accuracy；仅作描述性报告，禁止 held-out
+泛化声明。正式结果见 §7.1。
+
+### 6.4 Stage 3 合成受控错误实验设置
+
+- 面板：`synthetic_controlled_error_extension_v1`（30 变体 = MA 10 / IA 10 /
+  OO 10），生成器/校验/规则绑定/aggregate hash 全部锁定（§4.5）；
+- 运行：同一 evaluator、同一四个方法配方、同一阈值（development 冻结值，
+  非盲预注册）；
+- 报告：overall accuracy、macro-F1、per-error P/R/F1、exact match、false
+  positive/negative、unobservable 数量、每类检测率、runtime、失败案例
+  （详见 `s39_synthetic_panel_<method>_v1/` 与 compare capsule）；
+- 纪律：样本选择不依据 Winter/Sun/BM25/TF-IDF 预测调整；合成 panel 结果
+  以 DEV 标注，不并入人工 Gold。
+
+### 6.5 指标与统计控制
 
 Stage 2 分别报告模态分类和六字段/完整 Rule Record 指标；Stage 3 分别报告 matching
 AP/MAP/Recall@k 和违规分类 P/R/F1。所有方法共享输入、Gold、schema、normalization
 和 evaluator，复杂度分层在查看 test 结果前冻结。与 Barrientos 的数字比较必须
 分表并标证据等级（C1–C4）。
 
-### 6.4 受控消融 AB-1–AB-10（现状）
+### 6.6 受控消融 AB-1–AB-10（现状）
 
 “模块替换/去除”消融矩阵的设计与现状见 `paper/ABLATION_MATRIX.md`。原则：
 (1) 每项消融输出“我的完整模块 / 换成 Barrientos 模块 / 去掉模块 / 我的优势 /
@@ -484,18 +571,43 @@ AB-1（v5→v6 历史证据：constraint R 0.288→0.417）、AB-3（4 类→3 �
 
 ## 7. 结果
 
-### 7.1 结果模板（legacy 机器 ID；正式数字见 §7.2 与 §7.3）
+### 7.1 Stage 1 正式复现结果（FORMAL，2026-08-13 冻结；描述性，非 held-out）
 
-| 方法 | 状态 | Modality Macro-F1 | 六字段指标 | 完整记录指标 | 失败/invalid | 成本 |
-|---|---:|---:|---:|---:|---:|---:|
-| 简单规则 | TEMPLATE | — | — | — | — | — |
-| 强监督 baseline | TEMPLATE | — | — | — | — | — |
-| B0 | TEMPLATE | — | — | — | — | — |
-| H1 | TEMPLATE | — | — | — | — | — |
-| D1 | TEMPLATE | — | — | — | — | — |
+来源：`outputs/reports/stage1_formal_evaluation_v2.json`（status=
+claim_corrected_numbers_locked；numeric body
+`data/results/stage1_formal_v1/stage1_formal_evaluation_v1.json`，SHA
+a072db39…；claim：post-Gold、target-aware Sun/Leopold-style method-level
+reconstruction with Gold-isolated inference、pre-evaluation lock、no
+post-evaluation tuning）。固定 GDPR-7：7 个流程、45 个 activities、135 个
+semantic-field 人工裁决标签。
 
-[[TODO-RESULT:S2.10：只从 formal manifest 回填（正式三方法比较见 §7.2，模板保留
-legacy 行以对应机器 ID）]]
+**表 1：Stage 1 三方法正式结果（固定 GDPR-7，描述性）**
+
+| 方法 | 语义 micro F1 | Accuracy | Triple 准确率 |
+|---|---:|---:|---:|
+| P0（structural baseline） | 0.0000 | 0.0000 | 0.0000 |
+| P1（简单规则） | 0.5956 | 0.4241 | 0.0000 |
+| P2（模型上下文+依赖+style recognition） | 0.8185 | 0.6928 | 0.4222 |
+| structure micro F1（共享解析组件） | 1.0000 | — | — |
+
+- **P0 为什么不能恢复语义**：P0 只做结构转换（BPMN → Process Record 的活动/事件/
+  网关/流骨架），不附加任何标签语义；135 个语义字段全部未填充（precision/recall/F1
+  全 0）。它验证的是解析管线本身，而不是语义抽取。
+- **P1 为什么有明显提升但组合仍然弱**：简单规则利用公开 marker/依存模板可恢复
+  actor/action/condition 的**词面**语义（语义 micro-F1 0.5956、Accuracy 0.4241），
+  但三元组（actor–action–object）需要跨字段一致对齐；P1 的 triple exact=0，
+  说明字段间组合（谁对谁做什么）没有被规则层保证。
+- **P2 为什么有效**：P2 引入模型上下文（BERT 表示）、依赖结构和 style recognition
+  （label-style 信号），把词面规则升级为上下文感知的字段分配，语义 micro-F1
+  0.5956→0.8185、Accuracy 0.4241→0.6928、triple 0→0.4222。
+- **structure micro-F1=1.0 的读法**：来自共享解析组件（全部方法共用），只证明
+  BPMN→记录结构的转换无错，**不能作为外部泛化证据**（见 §7.4.5 误差传播）。
+- **边界**：这是 fixed GDPR-7 上的描述性复现（formal descriptive component
+  evaluation）；held-out generalization claim 被明确禁止（eval v2 claim:
+  held_out_generalization_claim_allowed=false、target_labels_seen_during_
+  development=true、developer_blind=false）。不再为 Stage 1 增加新方法或新门禁。
+
+[[TODO-RESULT:S2.10：Stage 2 六字段正式 manifest 回填（三方法比较见 §7.2）]]
 
 ### 7.2 Stage 2 正式三方法比较（FORMAL，2026-08-11）
 
@@ -532,9 +644,106 @@ Direct-LLM 与 Rules+LLM-Repair 两个 API arms 仍 pending explicit authorizati
 [[TODO-RESULT:S2.12：API 授权后回填 Direct-LLM / Rules+LLM-Repair 复杂语料臂与
 三方法完整比较、最终冻结]]
 
-### 7.4 Oracle Stage 3
+### 7.4 Stage 3 违规检测：人工裁决 panel（33 条，已冻结）与合成受控错误 panel（30 条，DEV）
 
-[[TODO-RESULT:S3.7：与 end-to-end 分表]]
+#### 7.4.1 两个独立评价面板
+
+**人工裁决 panel（正式，2026-08-08 冻结）**：`data/gold/stage3/stage3_violation_gold_v1.json`
+（SHA `039ae8b2…`，33 条）= 人工裁决的 violation type/evidence Gold：
+missing_action 11 / incorrect_actor 11 / out_of_order 11（11 个 process-rule 对 × 3
+类）。这是**人工 Gold**，用于论文正式 Stage 3 表格。
+
+**合成受控错误 panel（DEV，2026-08-22）**：`data/development/stage3_synth/
+synthetic_controlled_error_extension_v1.json`（`synthetic_controlled_error_extension`
+面板，30 条 = missing_action 10 / incorrect_actor 10 / out_of_order 10）。生成器
+`scripts/build_s3_error_injection_v1.py` 在冻结 GDPR-7 上做**最小受控变异**：
+missing_action = 删除一个与法规义务对应的任务并重接 sequence flow（保留被删
+activity ID/label/前后 flow；仅一个目标错误）；incorrect_actor = 把目标任务移到
+同一数据集 participant vocabulary（如 Data subject/National Authority）中新的
+actor lane（action 文本与控制流不变）；out_of_order = 对具有明确先后义务的任务
+交换 sequence flow 末端使其顺序逆转（activity 集合、actor、label 均不变）。每个
+变体通过 XML parse、结构校验、源 BPMN byte-unchanged、mutation diff、exactly-one-
+targeted-error、非目标字段不变与 deterministic replay 检查；规则绑定自冻结
+inference pack；生成器重复运行 byte-identical。**该 panel 不是人工 Gold，不得并入
+33 条正式 Gold，也不得冒充 Oracle**；全部结果以 DEV 标注。
+
+#### 7.4.2 表 A：原 33 条人工裁决 panel（已锁定开发结果）
+
+| 方法 | Missing-action F1 | Incorrect-actor F1 | Out-of-order F1 | Macro-F1 | Exact type acc | Unobservable |
+|---|---:|---:|---:|---:|---:|---:|
+| Winter wrapper | 0.9524 | 0.0000 | 0.1667 | 0.3730 | 0.3333 | 0 |
+| Sun Stage 3 重建 | 1.0000 | 0.1667 | 0.0000 | 0.3889 | 0.3636 | 10 |
+| BM25 | 1.0000 | 0.0000 | 0.0000 | 0.3333 | 0.3333 | 11 |
+| TF-IDF/SVD | 1.0000 | 0.6250 | 0.0000 | 0.5417 | 0.4848 | 6 |
+
+来源：`outputs/development/s34_winter_stage3_development_v3_clean/`、
+`s35_sun_stage3_development_v2/`、`s36_bm25_stage3_development_v3/`、
+`s36_tfidf_svd_stage3_development_v2/` 的 evaluation.json；同一
+`evaluate_stage3_common.py` 口径。
+
+#### 7.4.3 表 B：新增 30 条合成受控错误 panel（DEV，同一 evaluator）
+
+| 方法 | Missing-action F1 | Incorrect-actor F1 | Out-of-order F1 | Macro-F1 | Exact | Unobservable |
+|---|---:|---:|---:|---:|---:|---:|
+| Winter wrapper | 1.0000 | 0.0000 | 0.0000 | 0.3333 | 0.3333 | 0 |
+| Sun Stage 3 重建 | 0.3333 | 0.3333 | 0.3333 | 0.3333 | 0.2000 | 8 |
+| BM25 | 1.0000 | 0.0000 | 0.0000 | 0.3333 | 0.3333 | 10 |
+| TF-IDF/SVD | 1.0000 | 0.5714 | 0.3333 | 0.6349 | 0.5333 | 6 |
+
+来源：`outputs/development/s39_synthetic_panel_<method>_v1/`；逐条
+per-error P/R/F1、detected/missed/wrong-type、检测率与 runtime 见各 run
+evaluation.json（Winter 3.9s、Sun 15.0s、BM25 6.0s、TF-IDF/SVD 12.7s）；
+失败案例（FN/FP 明细）见 `predictions.jsonl` 与对比胶囊
+`s39_synthetic_panel_compare_v1/comparison.json`。
+
+#### 7.4.4 表 C：错误类型分析
+
+| 错误类型 | 最容易的方法 | 最困难的方法 | 主要失败原因 | 对应方法模块 |
+|---|---|---|---|---|
+| missing_action | Winter / BM25 / TF-IDF（合成 panel R=1.0） | Sun（合成 panel R=0.2，8 条 action_mapping_below_gamma） | 规则 action 与删除任务的词面相似度低于 gamma；Sun Def-5 对映射阈值敏感 | Sun Def-5 similarity mapping；Winter cost_obligation |
+| incorrect_actor | TF-IDF/SVD（人工 0.625 / 合成 0.5714） | Winter / BM25（恒 0） | 这三个方法不引入参与者的语义标签：Winter 只读 process participant，BM25 对 actor 候选池的检索不足以支撑 min-sim<θ 判定 | actor vocabulary / pool-lane 解析；Def-6 actor matching |
+| out_of_order | 全部薄弱（人工 panel 最优 0.1667） | Sun/BM25/TF-IDF（合成 0.3333，人工 0） | 顺序违规依赖控制流可达关系；现有方法对 gateway 分支与可达性的粒度不足，多数顺序变异在可达关系上不可观测 | control-flow reachability；Def-7 顺序约束 |
+
+#### 7.4.5 讨论
+
+- **哪种错误最容易检测**：missing_action——凡规则含明确义务 action 且词面可映射，
+  Winter/BM25/TF-IDF 在合成 panel 上 R=1.0（人工 panel 亦 0.95–1.0）。原因：删除任务
+  直接改变 action 集合，检索/词面方法对这一信号最敏感。
+- **哪种错误最难**：out_of_order——人工 panel 最优仅 0.1667（Winter），合成 panel
+  最高 0.3333（TF-IDF/SVD）。**actor 与 order 错误都比 missing_action 难**。
+- **actor 错误是否需要 Stage 1 更好的语义标签**：是。TF-IDF/SVD 的 actor 优势来自把
+  business-object/actor 文本纳入同一 dense 空间并参与 min-sim 判定；Winter/BM25 因
+  依赖有限的 pool/lane 名或独立候选池而恒 0。GDPR-7 中 lane 名为空、actor 只存在于
+  participant，Stage 1 更完整的 actor 语义标签（而非仅结构解析）是 actor 类检测的
+  前置条件。
+- **order 错误是否依赖控制流可达关系**：是。Sun Def-7 与 Winter cost_so 都以可达
+  关系为唯一顺序信号；合成 panel 的 OO 变异若落在 gateway 分支/并行结构上，可达
+  关系不变即不可观测。需要 sequence-flow 级的 directly-follows 或执行语义信号。
+- **missing action 为何不能只靠词面相似度**：合成 panel 中 Sun 对 8/10 条
+  missing_action 变异给出 action_mapping_below_gamma（规则 action 与模型 action
+  的相似度低于 gamma，Def-5 分母为 0 或映射失败）。**删除动作后词面相似度取决于
+  剩余任务中是否存在同义表达**；只靠词面会把“同义保留”（规则义务以不同措辞仍
+  存在）误判为缺失，或把删除漏判为未缺失。
+- **Stage 1 错误如何传播到 Stage 3**：Stage 1 结构 micro-F1=1.0（共享解析组件）只
+  保证 BPMN-Process Record 的结构转换无错，**不证明语义标签正确**。actor 类错误
+  检测为 0 的 Winter/BM25 正说明：Stage 1 未提供参与者语义（lane 名为空、participant
+  未绑定到活动），该语义缺失直接传递到 Stage 3 的 actor 判定；而组合三元组（P2
+  triple exact 0.4222）与 stage 1 标签质量共同决定 Stage 3 的证据链。
+- **各方法擅长什么**：Winter=义务/缺失动作（obligation cost）与可达顺序；Sun=
+  约束驱动的匹配（MAP 0.8175）与缺失动作（Def-5 强于 actor/order）；BM25=词面
+  极大化（missing action 强、语义 actor 弱）；TF-IDF/SVD=两个领域共享 dense 表示，
+  对 actor 类错误最有效（人工 0.625、合成 0.5714），整体 macro 最优。
+- **synthetic 与人工 Gold 是否一致**：一致点=missing_action 两类 panel 都是最易
+  检测、顺序错误都最弱；合成 panel 复现了人工 panel 中 Winter/BM25 的 actor=0。
+  差异点=Sun 在合成 panel 的 missing_action R 降至 0.2（人工 panel R=1.0）——
+  因为合成变异删除的任务未必与绑定 rule 的 action 词面匹配（生成器按语法结构
+  选择目标，而非按 rule 词面），人工 panel 的 11 条则由人工基于 rule 语义构建。
+- **哪些结论只能作为受控实验结论**：合成 panel 的精确检测率、easiest/hardest
+  排序、与人工 panel 的差异归因，均为**受控变异上的描述性结论**，不是真实
+  process-model 犯罪的泛化结论；正式 Stage 3 claim 仍以人工 panel 为依据，Oracle
+  与端到端仍需 S3.7/S3.10。
+
+[[TODO-RESULT:S3.7：Oracle Stage 3 与 end-to-end 分表]]
 
 ### 7.5 端到端消融
 
@@ -700,6 +909,66 @@ Rules-Only 0.7986（−0.0365）、actor P 0.7077→0.2754。结论引用
 
 [[TODO-RESULT:S2.12/S3.10：结合复杂语料与 Stage 3 结果讨论适用边界和失败案例]]
 
+### 8.4 Threats to Validity
+
+**内部效度**：
+- Stage 1 为固定 GDPR-7 上的描述性复现：target labels 在开发期可见、
+  developer_blind=false、无 held-out 分割（§7.1 claim 逐项披露）；structure
+  micro-F1=1.0 仅来自共享解析组件，不可外推为语义能力。
+- Stage 3 双手工 panel 指标使用 dev 阈值（0.5/fixed gamma/delta，非 blind
+  预注册）；同一 evaluator 的 observability 政策（incorrect_actor 的
+  unobservable 计为 FN）影响宏观口径，表 B 的 per-type F1 与 unobservable
+  列须一起读。
+- 合成受控错误 panel 的生成目标按**语法/结构**锁定（非按规则词面选择），因此
+  “方法检测不到”可能部分反映目标与原 rule 的词面对齐程度，而不仅是错误本身
+  的固有难度；此点已在 §7.4.5 如实讨论。
+
+**外部效度**：
+- 全部 Stage 3 违规结果基于 7 个 GDPR 流程（45 activities）与 GDPR 义务类型
+  （通知、同意、访问、可携、撤回、更正、删除）；扩展到其他法规域与更复杂的
+  流程拓扑（gateway 并发、循环）需要新面板。
+- 合成错误是**最小、单一**变异；真实流程模型可能同时存在多重违规与跨阶段
+  交互错误，本文的 exactly-one-error 设计不能代表其分布。
+
+**构建效度**：
+- violation type 的定义采用 Sun Def 5–7 / Winter cost_* 的映射口径；
+  不同论文对 missing_action/incorrect_actor/out_of_order 的边界定义可能不同。
+- 合成 panel 的 “expected violation” 是生成器契约的一部分，与人工 Gold 的
+  decision 语义分离（不混用、不冒充）。
+
+**结论效度**：
+- 样本量小（33/30 条、7 流程），不做显著性推断；表 A/B 均为描述性数值。
+- actor/order 检测率（尤其 Winter/BM25 的 0）不能解释为“真实流程无此类违规”，
+  只能解释为“这些方法在该表示上没有对应信号”。
+
+### 8.5 Stage 1 → Stage 3 误差传播小结（§7.4.5 的汇总）
+
+- Stage 1 结构正确（micro-F1=1.0）保证 Stage 3 的流程图输入无转换错误，但
+  不提供参与者语义；GDPR-7 的 lane 名为空，actor 只存在于 participant，
+  Winter/BM25 的 actor=0 与该语义缺失直接对应。
+- Stage 1 的组合三元组准确率（P2 0.4222）与标签质量决定了 Stage 3 的
+  rule-action 映射：Sun 在合成 missing_action 上 8/10 为
+  action_mapping_below_gamma，本质是 Stage 1/规则抽取的词面对齐不足向
+  Stage 3 的传播。
+- 结论：Stage 3 违规检测的瓶颈不只在于匹配/顺序算法，还在于 Stage 1 语义
+  标签（actor、组合三元组）的质量；改进 Stage 3 需先补 Stage 1 的参与者
+  语义与三元组一致性（见 §7.4.5 讨论）。
+
 ## 9. 结论
 
-[[TODO-RESULT:P8：所有正式实验和主张复核完成后撰写]]
+本文围绕 Sun et al. 的三阶段框架完成了可追溯的独立重建与扩展实验，并产出
+正式或 DEV 标注的结果：(1) Stage 1 在固定 GDPR-7 上完成描述性复现（P2
+语义 micro-F1 0.8185、accuracy 0.6928、triple 0.4222；structure 1.0 仅
+共享解析；P0 0/P1 0.5956 提供下限与规则基准）；(2) Stage 2 正式三方法
+比较显示无整体胜者——Direct-LLM 在 action/condition/constraint/modality
+label 领先，Rules-Only 在 actor/exception 领先，Rules+LLM-Repair 因 actor
+过度抽取成为净负对照（§7.2）；(3) Stage 3 在人工 33 条 panel 与新增 30 条
+合成受控错误 panel 上量化了四类非 LLM 方法：missing_action 最易检测，
+incorrect_actor 依赖 Stage 1 参与者语义（TF-IDF/SVD 相对最优），out_of_order
+最难且依赖控制流可达信号（§7.4）；(4) 误差传播分析表明 Stage 3 的 actor/order
+瓶颈部分来自 Stage 1 语义标签缺失。S2.12 复杂语料 Direct/Fallback 为
+pending authorized extension，不阻塞本文主体方法描述；Stage 3 Oracle 与
+端到端评价仍待 S3.7/S3.10。综合来看，本文的贡献是“分阶段、可追溯的方法级
+重建 + 类型化违规检测的受控证据”，而不是对单一全局指标的胜者宣称。
+
+[[TODO-RESULT:P8：S2.12 API arms、S3.7 Oracle 与端到端完成后复核并回填]]

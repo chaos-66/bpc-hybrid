@@ -3782,3 +3782,16 @@
 - 仍存在 blocker：无
 - 备注：零 LLM/API/网络；未修改 33 条人工 violation Gold；合成 panel 明确 dev-only 不并入 Gold 不冒充 Oracle；.bak 未触碰；full audit 2641 passed/24 skipped/40 warnings exit 0
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-25T01:13:48.178172+00:00 - 论文 Checkpoint B（2026-08-22）：THESIS_DRAFT.md 正文回填——Stage 1 正式结果（7.1 P0/P1/P2 表及解释）、Stage 3 受控错误注入方法（4.5）与双 panel 实验设置（6.3/6.4）、Stage 3 人工与合成 panel 结果讨论（7.4 表 A/B/C、错误类型分析、误差传播）、Threats to Validity（8.4）、Stage1 到 Stage3 误差传播小结（8.5）、结论（9）、摘要与 RQ3a/RQ3b；test_project_structure 门禁更新
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2641 passed, 24 skipped, 40 warnings in 2740.16s (0:45:40)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`4cdc99b4ddbf6f408efe738bd5b828e3743904b2`；相关未提交路径：9 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：零 LLM/API/网络；正文只使用已有正式/DEV 证据；S2.12 API arms 保持 pending authorized extension；synthetic panel 结果以 DEV 标注不并入人工 Gold；full audit 2641 passed/24 skipped 复用 receipt
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
