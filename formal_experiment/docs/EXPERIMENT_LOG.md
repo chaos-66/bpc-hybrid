@@ -3834,3 +3834,16 @@
 - 仍存在 blocker：无
 - 备注：零 LLM/API/网络；未修改 Gold/正式预测/正式方法；references 只读；D/E 真实模型臂仅 wiring + dry-run，未执行不冒充执行；full audit 2669 passed/24 skipped exit 0
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-26T06:04:36.040845+00:00 - Barrientos D/E executor repair (2026-08-22, zero API, pure executor fix): eliminated double-call bug (raw+canonical now from ONE send per sample/repeat; call_once is the only transport.send() site), added same-response provenance binding (request_id + response_sha256 in raw and canonical rows), plan-driven execution with --stability-runs {1,5} (558/846 calls; D-full reused=0 calls), real evaluators wired (Stage-2 literal+modality for D, S2.12 stratified for E-ours/swapped, Barrientos-specific validity/coverage/modality for E-faithful), stability evaluation (validity/modality/presence agreements), failed samples kept in the evaluator denominator, artifact contract (raw/canonical/failed/evaluation/manifest per repeat with aggregate hashes), auth file content-validated against the repo S2.12 schema (empty/arbitrary/missing rejected; synthetic fixture only on fake paths), fake-transport end-to-end fixture (16 calls, 0 network, sha-matched)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2680 passed, 24 skipped, 40 warnings in 2714.19s (0:45:14)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`4ac4d75b1b23057159f7c6026c0b8f884aec6c30`；相关未提交路径：9 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：零 LLM/API/网络；未改 prompt/Gold/正式预测；fake fixture 验证 send_count=sample_count、evaluation.json 由真实 evaluator 计算、失败进分母、计划 558/846、D-full 0 calls；full audit 2680 passed/24 skipped exit 0（首轮全审出现已知 Windows Errno-22 临时文件锁致 73 项 stage1 tamper 级联失败，恢复被中断修改的文件后重跑全绿）
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

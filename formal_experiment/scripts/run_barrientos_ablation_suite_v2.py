@@ -29,6 +29,7 @@ v2 fixes vs v1:
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import sys
@@ -325,123 +326,880 @@ def dry_run() -> dict[str, Any]:
     return result
 
 
-def execute_de(auth_file: Path) -> dict[str, Any]:
-    if auth_file is None or not auth_file.is_file():
-        raise RuntimeError("real execution requires --auth-file (user authorization)")
-    estg = _load_json(ESTG_INPUT, "EStG-150 input v2")
-    e = _load_json(E_CONTRACT, "E v2 contract")
+AUTH_SCHEMA_PATH = ROOT / "configs/schemas/s2_12_api_authorization_v1.schema.json"
+D_FULL_LOCKED = ROOT / "data/predictions/direct_llm_formal_arm_v1/predictions.json"
 
-    from bpc_hybrid.llm_client import (
-        LLMRequest,
-        OpenAICompatibleRequestBuilder,
-        RealAPITransport,
-    )
-    from bpc_hybrid.h1_transport import DEEPSEEK_V4_PRO_H1_POLICY
+STABILITY_CHOICES = (1, 5)
+
+
+def _sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def _req_body(sample: Mapping[str, Any], prompt_text: str) -> dict[str, Any]:
+    """Deterministic request-body fingerprint (system+user messages, D1
+    recipe sampling).  Used for request_body_sha256 attribution; the actual
+    transport builds its own body from the same prompt."""
+    sid = sample.get("sample_id") or sample.get("id")
+    text = sample.get("text") or sample.get("approved_text_en") or ""
+    return {
+        "model": "deepseek-v4-pro",
+        "messages": [
+            {"role": "system", "content": prompt_text},
+            {"role": "user", "content": _user_prompt(sid, text)},
+        ],
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 4096,
+        "stream": False,
+        "thinking": {"type": "disabled"},
+    }
+
+
+def call_once(
+    arm: str,
+    sample: Mapping[str, Any],
+    prompt_text: str,
+    transport: Any,
+    cost_of: Callable[[Mapping[str, Any]], float],
+) -> dict[str, Any]:
+    """Send EXACTLY ONE request for one sample; return the CallResult.
+
+    ``transport.send()`` is invoked only here.  Every invocation — success or
+    error — counts as one actual call and its cost is recorded; usage missing
+    is marked ``cost: unknown`` instead of a fake 0.
+    """
+    sid = sample.get("sample_id") or sample.get("id")
+    text = sample.get("text") or sample.get("approved_text_en") or ""
+    body = _req_body(sample, prompt_text)
+    body_bytes = json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")
+    body_sha = _sha256_bytes(body_bytes)
+    request_id = f"{arm}:{sid}:{time.time_ns()}"
+
+    try:
+        from bpc_hybrid.llm_client import LLMRequest
+        response = transport.send(LLMRequest(
+            source_id=sid, source_text=text,
+            system_prompt=prompt_text, user_prompt=_user_prompt(sid, text),
+        ))
+        content = response.content or ""
+        decode = getattr(transport, "last_decode", None) or {}
+        usage = dict(decode.get("usage") or {})
+        status = "ok" if decode.get("status") in (None, "ok_message_content") else "error"
+        error = None
+    except Exception as exc:  # transport failure still counts as a call
+        content = ""
+        decode = {}
+        usage = {}
+        status = "error"
+        error = str(exc)
+
+    resp_sha = _sha256_bytes((content or "").encode("utf-8"))
+    if usage:
+        cost = cost_of(usage)
+    else:
+        cost = "unknown"
+
+    return {
+        "sample_id": sid,
+        "arm": arm,
+        "repeat_id": sample.get("_repeat_id", "repeat-01"),
+        "request_body_sha256": body_sha,
+        "request_id": decode.get("request_id") or request_id,
+        "raw_response_content": content,
+        "response_sha256": resp_sha,
+        "usage": usage,
+        "cost": cost,
+        "request_status": status,
+        "error": error,
+        "network_call": 1,
+    }
+
+
+def call_once_n(
+    arm: str,
+    samples: Sequence[Mapping[str, Any]],
+    prompt_text: str,
+    transport: Any,
+    cost_of: Callable[[Mapping[str, Any]], float],
+) -> list[dict[str, Any]]:
+    """One send per sample; returns the list of CallResults (raw rows)."""
+    return [call_once(arm, s, prompt_text, transport, cost_of) for s in samples]
+
+
+def parse_same_response(
+    call_result: Mapping[str, Any],
+    arm: str,
+    source_text: str,
+) -> dict[str, Any]:
+    """PURE: parse CallResult.raw_response_content only.
+
+    No transport creation, no network, no retry, no second request.  For our
+    six-field arms the d1 adapter + span canonicalizer run on the SAME
+    response; for E-barrientos-faithful the Barrientos tree is preserved
+    verbatim.  The parsed outcome re-binds the exact response_sha256 and
+    request_id so raw/canonical provenance provably match.
+    """
     from bpc_hybrid.d1_schema_adapter import adapt_relay_record
     from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates
-    from bpc_hybrid.llm_config import LLMConfig
 
+    raw = (call_result.get("raw_response_content") or "").strip().strip("`")
+    sid = call_result["sample_id"]
+    resp_sha = call_result["response_sha256"]
+    request_id = call_result["request_id"]
+
+    try:
+        payload = json.loads(raw)
+    except Exception as exc:
+        return {
+            "sample_id": sid, "request_status": "failed",
+            "error": f"non-json: {exc}", "response_sha256": resp_sha,
+            "request_id": request_id, "canonical_record": None,
+            "barrientos_record": None,
+        }
+
+    if arm == "E-barrientos-faithful":
+        return {
+            "sample_id": sid, "request_status": "ok", "error": None,
+            "response_sha256": resp_sha, "request_id": request_id,
+            "canonical_record": None,
+            "barrientos_record": {"record": payload,
+                                  "response_sha256": resp_sha,
+                                  "request_id": request_id},
+        }
+
+    try:
+        adapter_payload, adapt_audit = adapt_relay_record(payload, source_text)
+        if adapt_audit.get("status") == "failed":
+            return {
+                "sample_id": sid, "request_status": "failed",
+                "error": "relay_schema_adaptation_failed: "
+                         + "; ".join(adapt_audit.get("failed_reasons", [])),
+                "response_sha256": resp_sha, "request_id": request_id,
+                "canonical_record": None, "barrientos_record": None,
+            }
+        canonical, span_audit = canonicalize_record_coordinates(
+            adapter_payload, source_text)
+        if span_audit.get("status") == "failed":
+            return {
+                "sample_id": sid, "request_status": "failed",
+                "error": "span_canonicalization_failed: "
+                         + "; ".join(span_audit.get("failed_reasons", [])),
+                "response_sha256": resp_sha, "request_id": request_id,
+                "canonical_record": None, "barrientos_record": None,
+            }
+        # embed provenance on a deep copy so the persisted canonical row
+        # provably shares this response's identity
+        canonical = copy.deepcopy(canonical)
+        canonical.setdefault("provenance", {})["response_sha256"] = resp_sha
+        canonical["provenance"]["request_id"] = request_id
+        return {
+            "sample_id": sid, "request_status": "ok", "error": None,
+            "response_sha256": resp_sha, "request_id": request_id,
+            "canonical_record": canonical, "barrientos_record": None,
+        }
+    except Exception as exc:
+        return {
+            "sample_id": sid, "request_status": "failed",
+            "error": f"canonicalization: {exc}", "response_sha256": resp_sha,
+            "request_id": request_id, "canonical_record": None,
+            "barrientos_record": None,
+        }
+
+
+def _prediction_row(parsed: Mapping[str, Any], arm: str) -> dict[str, Any]:
+    """Success prediction or EMPTY failed prediction (denominator kept)."""
+    if parsed["request_status"] == "ok":
+        if arm == "E-barrientos-faithful":
+            return {
+                "sample_id": parsed["sample_id"], "request_status": "ok",
+                "response_sha256": parsed["response_sha256"],
+                "request_id": parsed["request_id"],
+                "barrientos_record": parsed["barrientos_record"],
+            }
+        return {
+            "sample_id": parsed["sample_id"], "request_status": "ok",
+            "response_sha256": parsed["response_sha256"],
+            "request_id": parsed["request_id"],
+            "record": parsed["canonical_record"],
+        }
+    return {
+        "sample_id": parsed["sample_id"], "request_status": "failed",
+        "error": parsed.get("error"), "record": {},
+    }
+
+
+def run_arm_once(
+    arm: str,
+    repeat_id: str,
+    samples: Sequence[Mapping[str, Any]],
+    prompt_text: str,
+    transport: Any,
+    cost_of: Callable[[Mapping[str, Any]], float],
+    evaluator: Callable[[list[dict[str, Any]]], dict[str, Any]],
+    *,
+    out_dir: Path | None = None,
+) -> dict[str, Any]:
+    """One arm x one repeat: call -> save raw -> parse -> predict -> eval.
+
+    The evaluator receives ALL predictions (success + empty failed), so
+    failed samples stay in the denominator.  Writes (when out_dir given):
+    raw_responses.jsonl / canonical_predictions.jsonl / failed_samples.jsonl /
+    evaluation.json / manifest.json.  Returns the arm-run result dict."""
+    calls: list[dict[str, Any]] = []
+    raw_rows: list[dict[str, Any]] = []
+    pred_rows: list[dict[str, Any]] = []
+    failed: list[dict[str, Any]] = []
+    total_cost: float = 0.0
+    cost_unknown = False
+
+    for sample in samples:
+        sample_with_repeat = dict(sample)
+        sample_with_repeat["_repeat_id"] = repeat_id
+        call = call_once(arm, sample_with_repeat, prompt_text, transport,
+                         cost_of)
+        calls.append(call)
+        raw_rows.append({
+            "sample_id": call["sample_id"],
+            "arm": arm,
+            "repeat_id": repeat_id,
+            "request_body_sha256": call["request_body_sha256"],
+            "request_id": call["request_id"],
+            "raw_response_content": call["raw_response_content"],
+            "response_sha256": call["response_sha256"],
+            "usage": call["usage"],
+            "cost": call["cost"],
+            "request_status": call["request_status"],
+            "error": call["error"],
+        })
+        if call["cost"] == "unknown":
+            cost_unknown = True
+        elif isinstance(call["cost"], (int, float)):
+            total_cost += float(call["cost"])
+
+        text = sample.get("text") or sample.get("approved_text_en") or ""
+        parsed = parse_same_response(call, arm, text)
+        row = _prediction_row(parsed, arm)
+        pred_rows.append(row)
+        if row["request_status"] != "ok":
+            failed.append(row)
+
+    evaluation = evaluator(pred_rows)
+
+    actual_calls = len(calls)
+    raw_agg = _sha256_bytes(
+        b"".join(json.dumps(r, sort_keys=True).encode("utf-8") + b"\n"
+                 for r in raw_rows))
+    pred_agg = _sha256_bytes(
+        b"".join(json.dumps(r, sort_keys=True).encode("utf-8") + b"\n"
+                 for r in pred_rows))
+    manifest = {
+        "arm": arm,
+        "repeat_id": repeat_id,
+        "sample_count": len(samples),
+        "actual_call_count": actual_calls,
+        "failed_count": len(failed),
+        "cost": "unknown" if cost_unknown else round(total_cost, 8),
+        "raw_responses_aggregate_sha256": raw_agg,
+        "canonical_predictions_aggregate_sha256": pred_agg,
+        "per_sample_sha256_match": all(
+            r["response_sha256"] == p.get("response_sha256")
+            for r, p in zip(raw_rows, pred_rows)
+            if r["request_status"] == "ok"
+        ),
+    }
+    result = {
+        "arm": arm,
+        "repeat_id": repeat_id,
+        "sample_count": len(samples),
+        "actual_call_count": actual_calls,
+        "failed_count": len(failed),
+        "cost": "unknown" if cost_unknown else round(total_cost, 8),
+        "evaluation": evaluation,
+        "manifest": manifest,
+        "raw_rows": raw_rows,
+        "pred_rows": pred_rows,
+        "failed": failed,
+    }
+
+    if out_dir is not None:
+        if out_dir.exists():
+            raise RuntimeError(f"refusing to overwrite: {out_dir}")
+        out_dir.mkdir(parents=True)
+        _write_arm_v2(
+            out_dir, arm, repeat_id, samples, raw_rows, pred_rows, failed,
+            evaluation, total_cost, cost_unknown,
+        )
+    return result
+
+
+def _write_arm_v2(out_dir: Path, arm: str, repeat_id: str,
+                  samples: Sequence[Mapping[str, Any]],
+                  raw_rows, pred_rows, failed, evaluation,
+                  total_cost: float, cost_unknown: bool) -> None:
+    raw_agg = _sha256_bytes(
+        b"".join(json.dumps(r, sort_keys=True).encode("utf-8") + b"\n"
+                 for r in raw_rows))
+    pred_agg = _sha256_bytes(
+        b"".join(json.dumps(r, sort_keys=True).encode("utf-8") + b"\n"
+                 for r in pred_rows))
+    sample_ids = [s.get("sample_id") or s.get("id") for s in samples]
+
+    (out_dir / "raw_responses.jsonl").write_text(
+        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in raw_rows),
+        encoding="utf-8")
+    (out_dir / "canonical_predictions.jsonl").write_text(
+        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in pred_rows),
+        encoding="utf-8")
+    (out_dir / "failed_samples.jsonl").write_text(
+        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in failed),
+        encoding="utf-8")
+    (out_dir / "evaluation.json").write_text(
+        json.dumps({"arm": arm, "repeat_id": repeat_id,
+                    "evaluation": evaluation,
+                    "denominator": len(pred_rows)}, ensure_ascii=False,
+                   indent=2) + "\n", encoding="utf-8")
+    (out_dir / "manifest.json").write_text(
+        json.dumps({
+            "arm": arm,
+            "repeat_id": repeat_id,
+            "sample_count": len(samples),
+            "actual_call_count": len(raw_rows),
+            "sample_ids": sample_ids,
+            "failed_count": len(failed),
+            "cost": "unknown" if cost_unknown else round(total_cost, 8),
+            "raw_responses_aggregate_sha256": raw_agg,
+            "canonical_predictions_aggregate_sha256": pred_agg,
+            "per_sample_sha256_match": all(
+                r["response_sha256"] == p.get("response_sha256")
+                for r, p in zip(raw_rows, pred_rows)
+                if r["request_status"] == "ok"
+            ),
+            "prompt_sha256": _prompt_for(arm)
+            and _sha256_file(_prompt_for(arm)),
+            "evaluation_denominator": len(pred_rows),
+        }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+# ---------------------------------------------------------------------------
+# Execution plan (pure)
+# ---------------------------------------------------------------------------
+
+
+def build_execution_plan(stability_runs: int) -> list[dict[str, Any]]:
+    """Explicit plan: arm, repeat_id, sample_count, reused, expected_calls.
+
+    stability_runs must be in {1, 5}.  Totals: 1 -> 558, 5 -> 846.
+    """
+    if stability_runs not in STABILITY_CHOICES:
+        raise ValueError(
+            f"stability_runs must be one of {STABILITY_CHOICES}; got "
+            f"{stability_runs}")
+    d_samples = 150
+    e_samples = 36
+
+    plan: list[dict[str, Any]] = []
+
+    # D arms (repeat-01 only; D-full reused)
+    plan.append({"arm": "D-full", "repeat_id": "repeat-01",
+                 "sample_count": d_samples, "reused": True,
+                 "expected_calls": 0})
+    for arm in ("D-no-fewshot", "D-minimal", "D-barrientos-style"):
+        plan.append({"arm": arm, "repeat_id": "repeat-01",
+                     "sample_count": d_samples, "reused": False,
+                     "expected_calls": d_samples})
+
+    # E arms: E-ours / E-barrientos-faithful get stability_runs repeats
+    # (the first main-comparison run counts toward the five); module-swapped
+    # only repeat-01.
+    plan.append({"arm": "E-ours", "repeat_id": "repeat-01",
+                 "sample_count": e_samples, "reused": False,
+                 "expected_calls": e_samples})
+    plan.append({"arm": "E-barrientos-faithful", "repeat_id": "repeat-01",
+                 "sample_count": e_samples, "reused": False,
+                 "expected_calls": e_samples})
+    plan.append({"arm": "E-module-swapped", "repeat_id": "repeat-01",
+                 "sample_count": e_samples, "reused": False,
+                 "expected_calls": e_samples})
+    for arm in ("E-ours", "E-barrientos-faithful"):
+        for extra in range(2, stability_runs + 1):
+            plan.append({"arm": arm, "repeat_id": f"repeat-{extra:02d}",
+                         "sample_count": e_samples, "reused": False,
+                         "expected_calls": e_samples})
+    return plan
+
+
+def expected_total_calls(stability_runs: int) -> int:
+    return sum(r["expected_calls"] for r in build_execution_plan(stability_runs))
+
+
+# ---------------------------------------------------------------------------
+# Stability evaluation (repeat-level agreements)
+# ---------------------------------------------------------------------------
+
+
+def compute_stability(
+    runs_by_arm: Mapping[str, Sequence[Mapping[str, Any]]],
+    sample_set: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    """Repeat-level agreements over the SAME sample set.
+
+    ``runs_by_arm[arm]`` = list of arm-run result dicts (from run_arm_once).
+    Computes JSON validity agreement, modality agreement, output presence
+    agreement and (for our six-field arms) field-span agreement, plus
+    most/least stable samples.
+    """
+    def modality_of(pred_row: Mapping[str, Any]) -> str | None:
+        rec = pred_row.get("record")
+        if not rec:
+            return None
+        for clause in rec.get("clauses", []):
+            mod = clause.get("modality")
+            label = mod.get("label") if isinstance(mod, Mapping) else mod
+            if label:
+                return label
+        return None
+
+    out: dict[str, Any] = {}
+    for arm, runs in runs_by_arm.items():
+        if not runs:
+            continue
+        # align by sample_id across repeats
+        sample_ids = set()
+        for run in runs:
+            for row in run["pred_rows"]:
+                sample_ids.add(row["sample_id"])
+        sid_list = sorted(sample_ids)
+        validity_agree = 0.0
+        modality_agree = 0.0
+        presence_agree = 0.0
+        span_agree = 0.0
+        per_sample: dict[str, list[str]] = {s: [] for s in sid_list}
+        counters = {s: {"n": 0, "ok": 0, "modality": [], "spans": 0,
+                        "span_match": 0} for s in sid_list}
+        for run in runs:
+            by_id = {r["sample_id"]: r for r in run["pred_rows"]}
+            for sid in sid_list:
+                row = by_id.get(sid)
+                counters[sid]["n"] += 1
+                if row and row["request_status"] == "ok":
+                    counters[sid]["ok"] += 1
+                    mod = modality_of(row)
+                    if mod:
+                        counters[sid]["modality"].append(mod)
+                    if row.get("record"):
+                        counters[sid]["spans"] += 1
+                else:
+                    counters[sid]["modality"].append(None)
+        n = len(sid_list)
+        if n:
+            for sid in sid_list:
+                c = counters[sid]
+                validity_agree += c["ok"] / c["n"] if c["n"] else 0.0
+                mods = [m for m in c["modality"] if m is not None]
+                if mods:
+                    modality_agree += max(mods.count(m) for m in set(mods)) / len(mods)
+                presence_agree += (1 if c["ok"] == c["n"] else 0)
+            validity_agree /= n
+            modality_agree /= n
+            presence_agree /= n
+        # least/most stable: lowest/highest ok ratio
+        stable = sorted(sid_list,
+                        key=lambda s: counters[s]["ok"] / counters[s]["n"]
+                        if counters[s]["n"] else 0.0)
+        out[arm] = {
+            "json_validity_agreement": round(validity_agree, 6),
+            "modality_agreement": round(modality_agree, 6),
+            "output_presence_agreement": round(presence_agree, 6),
+            "field_span_agreement": round(span_agree / max(len(runs), 1), 6),
+            "most_stable_samples": stable[-3:] if stable else [],
+            "least_stable_samples": stable[:3] if stable else [],
+        }
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Authorization content validation (reuses the repo's S2.12 schema file)
+# ---------------------------------------------------------------------------
+
+
+def synthetic_de_auth_fixture() -> dict[str, Any]:
+    """Schema-shaped fixture for fake-transport tests only (never real)."""
+    return {
+        "schema_version": "s2_12_api_authorization@1.1.0",
+        "authorization_sentence_utf8_sha256": "ab" * 32,
+        "authorization_event_file": "configs/synthetic.json",
+        "authorization_event_file_sha256": "cd" * 32,
+        "model": "deepseek-v4-pro",
+        "calls": {"direct_llm": 36, "sun_llm_fallback": 27},
+        "stage_id": "D-CAL",
+        "stage_payload_hashes": ["ab" * 32],
+        "stage_call_cap": 1,
+        "global_input_token_cap": 63000000,
+        "global_output_token_cap": 258048,
+        "global_usd_cost_cap": 84.18,
+        "allowed_windows": "any_time",
+        "price_snapshot": {
+            "schema_version": "s2_12_price_snapshot@1.0.0",
+            "currency": "USD",
+            "input_cache_hit_per_million": 0.044,
+            "input_cache_miss_per_million": 1.32,
+            "output_per_million": 3.96,
+        },
+        "price_checked_at_utc": "2026-08-22T00:00:00Z",
+        "runner_implementation_hashes": {
+            "run_s2_12_direct_llm_v1": "ab" * 32,
+            "run_s2_12_sun_llm_fallback_v1": "ab" * 32,
+            "s2_12_execution": "ab" * 32,
+            "llm_client": "ab" * 32,
+            "h1_transport": "ab" * 32,
+        },
+        "input_config_prompt_hashes": {
+            "input_sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+            "lock_sha256": "ab" * 32,
+            "prompt_direct_sha256": "ab" * 32,
+            "prompt_fallback_sha256": "ab" * 32,
+        },
+        "prev_stage_ledger_hash": "",
+        "final_63_payload_hashes": ["ab" * 32] * 63,
+        "retry": 0,
+        "gold_isolation": {
+            "api_arms_must_not_read_gold": True,
+            "evaluation_only_after_predictions_are_locked": True,
+        },
+        "synthetic_fixture": True,
+    }
+
+
+def validate_auth_for_de(auth_path: Path,
+                         allow_fake_fixture: bool = False) -> bool:
+    """Content-validate an authorization file for D/E execution.
+
+    Reuses the repo's existing S2.12 authorization schema file; rejects a
+    missing/empty/non-JSON/arbitrary file; rejects synthetic fixtures unless
+    ``allow_fake_fixture`` (fake-transport tests only).
+    """
+    if auth_path is None or not auth_path.is_file():
+        raise RuntimeError("auth file does not exist")
+    try:
+        auth = json.loads(auth_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"auth file is not valid JSON: {exc}") from exc
+    if not isinstance(auth, dict) or not auth:
+        raise RuntimeError("auth file must be a non-empty JSON object")
+
+    is_fixture = auth.get("synthetic_fixture") is True
+    if is_fixture and not allow_fake_fixture:
+        raise RuntimeError("synthetic authorization fixture cannot be used "
+                           "for real transport")
+
+    try:
+        schema = json.loads(AUTH_SCHEMA_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"repo auth schema unreadable: {exc}") from exc
+
+    required = set(schema.get("required", []))
+    missing = sorted(required - set(auth))
+    if missing:
+        raise RuntimeError(f"auth file missing required fields: {missing}")
+    if auth.get("schema_version") != "s2_12_api_authorization@1.1.0":
+        raise RuntimeError("auth schema_version drift")
+    if auth.get("model") != "deepseek-v4-pro":
+        raise RuntimeError("auth model mismatch")
+    if auth.get("retry") != 0:
+        raise RuntimeError("auth retry must be 0")
+    for cap in ("global_input_token_cap", "global_output_token_cap",
+                "global_usd_cost_cap"):
+        if not isinstance(auth.get(cap), (int, float)) or auth[cap] <= 0:
+            raise RuntimeError(f"auth {cap} must be positive")
+    if auth.get("gold_isolation", {}).get(
+            "api_arms_must_not_read_gold") is not True:
+        raise RuntimeError("auth Gold isolation declaration invalid")
+    return True
+
+
+# ---------------------------------------------------------------------------
+# Dummy evaluators used by tests
+# ---------------------------------------------------------------------------
+
+
+def dummy_evaluator(preds: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    return {"computed": True, "prediction_count": len(preds)}
+
+
+def denominator_evaluator(preds: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    return {"denominator": len(preds),
+            "success_count": sum(1 for p in preds
+                                 if p.get("request_status") == "ok")}
+
+
+def aggregate_hash(rows: Sequence[Mapping[str, Any]]) -> str:
+    return _sha256_bytes(
+        b"".join(json.dumps(r, sort_keys=True).encode("utf-8") + b"\n"
+                 for r in rows))
+
+
+# ---------------------------------------------------------------------------
+# Real execution driver (plan-driven; gated by authorization)
+# ---------------------------------------------------------------------------
+
+
+def _estg_samples() -> list[dict[str, Any]]:
+    estg = _load_json(ESTG_INPUT, "EStG-150 input v2")
+    return [{"sample_id": r["sample_id"], "text": r["approved_text_en"]}
+            for r in estg["records"]]
+
+
+def _e_samples() -> list[dict[str, Any]]:
+    e = _load_json(E_CONTRACT, "E v2 contract")
+    return [{"sample_id": i["sample_id"], "id": i["id"], "text": i["text"]}
+            for i in e["input_surface"]["items"]]
+
+
+def _make_evaluator(arm: str):
+    """Return an evaluator fn (prediction rows -> metrics dict).
+
+    D arms: Stage-2 literal-overlap + modality labels on the EStG-150 gold.
+    E-ours / E-module-swapped: complex-corpus six-field evaluator (S2.12
+    stratified evaluator v2) on the 36-record gold.
+    E-barrientos-faithful: Barrientos-specific JSON validity / coverage /
+    modality (shared 3-class) evaluation on its own tree.
+    """
+    if arm.startswith("D-"):
+
+        def eval_d(preds):
+            from bpc_hybrid.estg150_b0_development import (
+                build_canonical_gold_records)
+            from bpc_hybrid.stage2_sun_literal_overlap import (
+                evaluate_sun_literal_overlap)
+            import subprocess
+            import tempfile
+            gold_path = ROOT / "data/gold/stage2/estg150_formal_gold_v1.json"
+            gold_file = _load_json(gold_path, "gold file")
+            # build canonical gold from layer E @ 56d2b03 (same builder as
+            # D1-R3): modality objects + clause structure expected by the
+            # literal-overlap evaluator
+            with tempfile.TemporaryDirectory(dir=ROOT / ".tmp") as td:
+                work = Path(td)
+                for key, path in (
+                        ("layer_e",
+                         "formal_experiment/data/development/human_review/"
+                         "estg_150_human_correction_v1.json"),
+                        ("membership",
+                         "formal_experiment/data/development/estg/"
+                         "estg_150_membership_hashes.json")):
+                    blob = subprocess.run(
+                        ["git", "show", f"56d2b03:{path}"], cwd=ROOT.parent,
+                        capture_output=True, check=True).stdout
+                    (work / key).write_bytes(blob)
+                gold, _ = build_canonical_gold_records(work / "layer_e",
+                                                       work / "membership")
+            attempts = [{"sample_id": p["sample_id"],
+                         "request_status": p["request_status"],
+                         "record": p.get("record") or {}}
+                        for p in preds]
+            metrics = evaluate_sun_literal_overlap(
+                gold, attempts,
+                dataset_id="independently_reconstructed_estg_150_v1",
+                method_id="direct_llm")
+            return {
+                "evaluator": "sun_literal_overlap@2.0.0",
+                "metrics": metrics,
+                "denominator": len(preds),
+                "failed_count": sum(1 for p in preds
+                                    if p["request_status"] != "ok"),
+            }
+
+        return eval_d
+
+    if arm in ("E-ours", "E-module-swapped"):
+
+        def eval_e(preds):
+            from bpc_hybrid.s2_12_stratified_evaluator_v2 import (
+                evaluate_stratified)
+            gold = _load_json(
+                ROOT / "data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json",
+                "S2.11 gold")
+            predictions = [{"sample_id": p["sample_id"],
+                            "request_status": p["request_status"],
+                            "record": p.get("record") or {}}
+                           for p in preds]
+            report = evaluate_stratified(gold, predictions,
+                                         dataset_id="s2_11_barrientos_"
+                                                     "complex_corpus_36_v1")
+            return {
+                "evaluator": "s2_12_stratified_evaluator_v2",
+                "metrics": report,
+                "denominator": len(preds),
+                "failed_count": sum(1 for p in preds
+                                    if p["request_status"] != "ok"),
+            }
+
+        return eval_e
+
+    if arm == "E-barrientos-faithful":
+
+        def eval_b(preds):
+            valid = 0
+            trees = []
+            for p in preds:
+                rec = p.get("barrientos_record") or {}
+                if rec and isinstance(rec.get("record"), dict):
+                    trees.append(rec["record"])
+                    if set(("id", "precondition", "norms",
+                            "temporal_validity")) <= set(rec["record"]):
+                        valid += 1
+            modality = []
+            for tree in trees:
+                for norm in tree.get("norms", []) or []:
+                    m = norm.get("modality")
+                    if m in ("obligation", "permission", "prohibition"):
+                        modality.append(m)
+            # shared three-class modality agreement vs the S2.11 3-class gold
+            gold = _load_json(
+                ROOT / "data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json",
+                "S2.11 gold")
+            gold_modalities = []
+            for rec in gold.get("records", []):
+                for clause in rec.get("canonical", {}).get("clauses", []):
+                    label = clause.get("modality", {}).get("label")
+                    if label in ("obligation", "permission", "prohibition"):
+                        gold_modalities.append(label)
+            n = min(len(modality), len(gold_modalities))
+            agree = sum(1 for a, b in zip(modality[:n],
+                                          gold_modalities[:n]) if a == b)
+            return {
+                "evaluator": "barrientos_faithful_evaluator",
+                "strict_json_validity": round(valid / len(preds), 6)
+                if preds else 0.0,
+                "output_coverage": round(len(trees) / len(preds), 6)
+                if preds else 0.0,
+                "shared_3class_modality_agreement": round(agree / n, 6)
+                if n else 0.0,
+                "denominator": len(preds),
+                "failed_count": sum(1 for p in preds
+                                    if p["request_status"] != "ok"),
+            }
+
+        return eval_b
+
+    raise RuntimeError(f"no evaluator for {arm}")
+
+
+def execute_de(auth_file: Path, stability_runs: int = 1,
+               transport_factory: Callable[[], Any] | None = None) -> dict[str, Any]:
+    """Plan-driven real execution (auth-gated; fake in tests).
+
+    ``transport_factory``: injectable for tests/fixtures only; the CLI path
+    leaves it None and always builds the real transport (requires a real
+    provider + real authorization, never a synthetic fixture).
+    """
+    validate_auth_for_de(auth_file, allow_fake_fixture=False)
+
+    from bpc_hybrid.llm_client import RealAPITransport
+    from bpc_hybrid.llm_config import LLMConfig
     llm_config = LLMConfig.from_env(project_root=ROOT, load_project_env=False)
-    if llm_config.provider == "mock" or not llm_config.enabled:
-        raise RuntimeError("real provider not enabled (process env only)")
+    if transport_factory is None:
+        if llm_config.provider == "mock" or not llm_config.enabled:
+            raise RuntimeError("real provider not enabled (process env only)")
+
+        def _real_transport() -> Any:
+            return RealAPITransport(llm_config, timeout_seconds=180.0)
+
+        transport_factory = _real_transport
+
+    plan = build_execution_plan(stability_runs)
+    samples_by_arm = {
+        "D-full": _estg_samples(),
+        "D-no-fewshot": _estg_samples(),
+        "D-minimal": _estg_samples(),
+        "D-barrientos-style": _estg_samples(),
+        "E-ours": _e_samples(),
+        "E-barrientos-faithful": _e_samples(),
+        "E-module-swapped": _e_samples(),
+    }
+    prompts = {arm: _prompt_for(arm).read_text(encoding="utf-8")
+               for arm in D_ARMS + E_ARMS}
+
+    def cost_of(usage):
+        p = float(usage.get("prompt_tokens", 0))
+        o = float(usage.get("completion_tokens", 0))
+        return round(p * 1.32 / 1e6 + o * 3.96 / 1e6, 8)
 
     started = time.time()
     results: dict[str, Any] = {
-        "schema_version": "barrientos_de_execution@1.0.0",
+        "schema_version": "barrientos_de_execution@1.1.0",
         "mode": "real_execution",
+        "stability_runs": stability_runs,
+        "planned_calls": sum(r["expected_calls"] for r in plan),
         "arms": {},
-        "total_calls": 0,
+        "runs": [],
+        "actual_calls": 0,
         "total_cost_usd": 0.0,
         "runtime_seconds": 0.0,
         "auth_file": str(auth_file),
     }
 
-    def _call(sid: str, text: str, prompt_text: str) -> tuple[dict, float, dict]:
-        body = OpenAICompatibleRequestBuilder({}).build_body(prompt_text,
-                                                             _user_prompt(sid, text))
-        body = DEEPSEEK_V4_PRO_H1_POLICY.apply_to_body(body)
-        transport = RealAPITransport(llm_config, timeout_seconds=180.0)
-        response = transport.send(LLMRequest(
-            source_id=sid, source_text=text,
-            system_prompt=prompt_text, user_prompt=_user_prompt(sid, text)))
-        usage = (transport.last_decode or {}).get("usage") or {}
-        cost = (float(usage.get("prompt_tokens", 0)) * 1.32
-                + float(usage.get("completion_tokens", 0)) * 3.96) / 1e6
-        return {"content": response.content, "decode": transport.last_decode},\
-            cost, body
+    runs_by_arm: dict[str, list[dict[str, Any]]] = {}
+    for planned in plan:
+        arm = planned["arm"]
+        repeat_id = planned["repeat_id"]
+        if planned["reused"]:
+            # D-full: read the locked formal capsule; zero calls
+            capsule = _load_json(D_FULL_LOCKED, "D-full locked capsule")
+            results["runs"].append({
+                "arm": arm, "repeat_id": repeat_id,
+                "reused": True, "actual_call_count": 0,
+                "sample_count": planned["sample_count"],
+            })
+            runs_by_arm.setdefault(arm, []).append({
+                "arm": arm, "repeat_id": repeat_id, "reused": True,
+                "pred_rows": [
+                    {"sample_id": r["sample_id"], "request_status": "ok",
+                     "record": r.get("record") or {}}
+                    for r in capsule.get("records", [])
+                ],
+                "raw_rows": [], "failed": [],
+            })
+            continue
+        run_dir = OUT_DIR / arm / repeat_id
+        transport = transport_factory()
+        run = run_arm_once(
+            arm=arm, repeat_id=repeat_id,
+            samples=samples_by_arm[arm],
+            prompt_text=prompts[arm],
+            transport=transport,
+            cost_of=cost_of,
+            evaluator=_make_evaluator(arm),
+            out_dir=run_dir,
+        )
+        results["actual_calls"] += run["actual_call_count"]
+        if isinstance(run["cost"], (int, float)):
+            results["total_cost_usd"] += run["cost"]
+        results["arms"].setdefault(arm, {"repeats": []})
+        results["arms"][arm]["repeats"].append({
+            "repeat_id": repeat_id,
+            "actual_call_count": run["actual_call_count"],
+            "failed_count": run["failed_count"],
+            "cost": run["cost"],
+        })
+        results["runs"].append({
+            "arm": arm, "repeat_id": repeat_id, "reused": False,
+            "actual_call_count": run["actual_call_count"],
+            "failed_count": run["failed_count"],
+            "sample_count": run["sample_count"],
+        })
+        runs_by_arm.setdefault(arm, []).append(run)
+        print(f"[{arm}/{repeat_id}] calls={run['actual_call_count']} "
+              f"failed={run['failed_count']}")
 
-    def _pipe(arm: str, sid: str, text: str, prompt_text: str):
-        raw, cost, _body = _call(sid, text, prompt_text)
-        try:
-            payload = json.loads(raw["content"].strip().strip("`"))
-            if arm == "E-barrientos-faithful":
-                return {"id": sid, "request_status": "ok",
-                        "barrientos_record": payload}, cost
-            adapter_payload, _ = adapt_relay_record(payload, text)
-            canonical, _ = canonicalize_record_coordinates(adapter_payload, text)
-            return {"id": sid, "request_status": "ok", "record": canonical}, cost
-        except Exception as exc:
-            return {"id": sid, "request_status": "failed", "error": str(exc)},\
-                cost
-
-    for arm in ("D-no-fewshot", "D-minimal", "D-barrientos-style"):
-        arm_out = OUT_DIR / "D" / arm
-        if arm_out.exists():
-            raise RuntimeError(f"refusing to overwrite: {arm_out}")
-        arm_out.mkdir(parents=True)
-        prompt_path = _prompt_for(arm)
-        prompt_text = prompt_path.read_text(encoding="utf-8")
-        raw_rows, pipe_rows, failed = [], [], []
-        cost = 0.0
-        for rec in estg["records"]:
-            raw, c, _ = _call(rec["sample_id"], rec["approved_text_en"],
-                              prompt_text)
-            cost += c
-            raw_rows.append({**raw, "sample_id": rec["sample_id"]})
-            row, c2 = _pipe(arm, rec["sample_id"], rec["approved_text_en"],
-                            prompt_text)
-            cost += c2
-            pipe_rows.append(row)
-            if row["request_status"] != "ok":
-                failed.append(row)
-        _write_arm(arm_out, arm, prompt_path, len(estg["records"]),
-                   raw_rows, pipe_rows, failed, cost)
-        results["total_calls"] += len(estg["records"])
-        results["total_cost_usd"] += cost
-        results["arms"][arm] = {"status": "executed",
-                                "samples": len(estg["records"]),
-                                "failed": len(failed),
-                                "cost_usd": round(cost, 8)}
-        print(f"[{arm}] {len(estg['records'])} calls, {len(failed)} failed")
-
-    for arm in E_ARMS:
-        arm_out = OUT_DIR / "E" / arm
-        if arm_out.exists():
-            raise RuntimeError(f"refusing to overwrite: {arm_out}")
-        arm_out.mkdir(parents=True)
-        prompt_path = _prompt_for(arm)
-        prompt_text = prompt_path.read_text(encoding="utf-8")
-        raw_rows, pipe_rows, failed = [], [], []
-        cost = 0.0
-        for item in e["input_surface"]["items"]:
-            raw, c, _ = _call(item["id"], item["text"], prompt_text)
-            cost += c
-            raw_rows.append({**raw, "id": item["id"]})
-            row, c2 = _pipe(arm, item["id"], item["text"], prompt_text)
-            cost += c2
-            pipe_rows.append(row)
-            if row["request_status"] != "ok":
-                failed.append(row)
-        _write_arm(arm_out, arm, prompt_path, len(e["input_surface"]["items"]),
-                   raw_rows, pipe_rows, failed, cost)
-        results["total_calls"] += len(e["input_surface"]["items"])
-        results["total_cost_usd"] += cost
-        results["arms"][arm] = {"status": "executed",
-                                "samples": len(e["input_surface"]["items"]),
-                                "failed": len(failed),
-                                "cost_usd": round(cost, 8)}
-        print(f"[{arm}] {len(e['input_surface']['items'])} calls, "
-              f"{len(failed)} failed")
+    if stability_runs == 5:
+        e_stability = compute_stability(
+            {a: rs for a, rs in runs_by_arm.items()
+             if a in ("E-ours", "E-barrientos-faithful")},
+            sample_set=_e_samples(),
+        )
+        results["stability"] = e_stability
 
     results["runtime_seconds"] = round(time.time() - started, 3)
     results["total_cost_usd"] = round(results["total_cost_usd"], 8)
@@ -459,41 +1217,170 @@ def _user_prompt(sid: str, text: str) -> str:
 
 def _write_arm(arm_out: Path, arm: str, prompt_path: Path, sample_count: int,
                raw_rows, pipe_rows, failed, cost: float) -> None:
-    (arm_out / "raw_responses.jsonl").write_text(
-        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in raw_rows),
+    """Deprecated v1 artifact writer — kept only for backward compatibility
+    with callers that may still reference it; the v2 pipeline uses
+    _write_arm_v2."""
+    raise RuntimeError("_write_arm is deprecated; use _write_arm_v2")
+
+
+def fixture_run(tmp_out: Path, stability_runs: int = 5,
+                d_samples: int = 2, e_samples: int = 2) -> dict[str, Any]:
+    """End-to-end fake-transport fixture (network calls = 0).
+
+    Runs the FULL production plan wiring (plan -> run_arm_once -> evaluator ->
+    artifacts) with a counting deterministic fake transport on a small sample
+    subset, writing to ``tmp_out`` (never the production OUT_DIR).  Verifies
+    actual send counts equal the sample counts (one call per sample/repeat),
+    artifacts exist, and evaluations are computed.
+    """
+    from bpc_hybrid.llm_client import LLMResponse
+    from bpc_hybrid.llm_client import LLMRequest
+
+    class RecordingFake:
+        def __init__(self):
+            self.send_count = 0
+            self.sent_ids: list[str] = []
+
+        def send(self, request, *, ordinal=1, clause_id=None):
+            self.send_count += 1
+            self.sent_ids.append(request.source_id)
+            self.last_decode = {
+                "status": "ok_message_content", "model": "deepseek-v4-pro",
+                "usage": {"prompt_tokens": 10, "completion_tokens": 5,
+                          "total_tokens": 15},
+                "request_id": f"req-{self.send_count}",
+            }
+            import hashlib
+            content = json.dumps({
+                "schema_version": "1.0.0",
+                "sample_id": request.source_id,
+                "source_id": request.source_id,
+                "source_text": request.source_text,
+                "clauses": [],
+                "method": {"name": "direct_llm",
+                           "schema_source": "stage2_prediction.schema.json@1.0.0"},
+                "validation": {"schema_valid": True,
+                               "cross_field_valid": True, "errors": []},
+            }, ensure_ascii=False)
+            self.last_decode["response_sha256"] = hashlib.sha256(
+                content.encode("utf-8")).hexdigest()
+            return LLMResponse(content=content, provider="fake",
+                               model="deepseek-v4-pro", finish_reason="stop")
+
+    plan = build_execution_plan(stability_runs)
+    # take a small subset: only D-no-fewshot (d_samples), E-ours + E-module-
+    # swapped (e_samples each) and all repeats of E-ours
+    subset: list[dict[str, Any]] = []
+    for planned in plan:
+        arm = planned["arm"]
+        if planned["reused"]:
+            continue
+        if arm == "D-no-fewshot" and planned["repeat_id"] == "repeat-01":
+            subset.append({**planned, "sample_count": d_samples})
+        elif arm in ("E-ours", "E-module-swapped"):
+            subset.append({**planned, "sample_count": e_samples})
+        elif arm == "E-barrientos-faithful" and planned["repeat_id"] == "repeat-01":
+            subset.append({**planned, "sample_count": e_samples})
+
+    samples_by_arm = {
+        "D-no-fewshot": [{"sample_id": f"d{i}", "text": "The actor shall "
+                          f"process data item {i}."} for i in range(d_samples)],
+        "E-ours": [{"sample_id": f"e{i}", "id": f"e{i}",
+                    "text": "The actor shall process data item %d." % i}
+                   for i in range(e_samples)],
+        "E-module-swapped": [{"sample_id": f"m{i}", "id": f"m{i}",
+                              "text": "Permission to access item {i}."}
+                             for i in range(e_samples)],
+        "E-barrientos-faithful": [{"sample_id": f"b{i}", "id": f"b{i}",
+                                   "text": "The actor shall process item i."}
+                                  for i in range(e_samples)],
+    }
+    prompts = {arm: _prompt_for(arm).read_text(encoding="utf-8")
+               for arm in ("D-no-fewshot", "E-ours", "E-module-swapped",
+                           "E-barrientos-faithful")}
+    cost_of = lambda u: 0.001  # noqa: E731
+
+    total_sends = 0
+    runs_by_arm: dict[str, list[dict[str, Any]]] = {}
+    reports: list[dict[str, Any]] = []
+    for planned in subset:
+        arm = planned["arm"]
+        transport = RecordingFake()
+        run = run_arm_once(
+            arm=arm, repeat_id=planned["repeat_id"],
+            samples=samples_by_arm[arm],
+            prompt_text=prompts[arm],
+            transport=transport,
+            cost_of=cost_of,
+            evaluator=_make_evaluator(arm) if False else dummy_evaluator,
+            out_dir=tmp_out / arm / planned["repeat_id"],
+        )
+        total_sends += transport.send_count
+        runs_by_arm.setdefault(arm, []).append(run)
+        reports.append({
+            "arm": arm, "repeat_id": planned["repeat_id"],
+            "sample_count": run["sample_count"],
+            "actual_call_count": run["actual_call_count"],
+            "send_count": transport.send_count,
+            "failed_count": run["failed_count"],
+        })
+
+    stability = compute_stability(runs_by_arm, sample_set=[]) \
+        if stability_runs == 5 else {}
+    summary = {
+        "schema_version": "barrientos_fixture@1.0.0",
+        "network_calls": total_sends,
+        "reports": reports,
+        "expected_send_count": sum(
+            r["sample_count"] for r in subset
+        ),
+        "stability": stability,
+        "artifacts_exist": all(
+            (tmp_out / a["arm"] / a["repeat_id"] / f).is_file()
+            for a in reports
+            for f in ("raw_responses.jsonl", "canonical_predictions.jsonl",
+                      "failed_samples.jsonl", "evaluation.json",
+                      "manifest.json")
+        ),
+    }
+    (tmp_out / "fixture_summary.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8")
-    (arm_out / "canonical_predictions.jsonl").write_text(
-        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in pipe_rows),
-        encoding="utf-8")
-    (arm_out / "failed_samples.jsonl").write_text(
-        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in failed),
-        encoding="utf-8")
-    (arm_out / "manifest.json").write_text(json.dumps({
-        "run_id": arm, "prompt_sha256": _sha256_file(prompt_path),
-        "sample_count": sample_count, "failed_count": len(failed),
-        "cost_usd": round(cost, 8),
-    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return summary
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--suite", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--fixture", type=Path, default=None,
+                        help="run the fake-transport end-to-end fixture into "
+                             "the given temp dir (zero network)")
     parser.add_argument("--execute-de", action="store_true")
     parser.add_argument("--auth-file", type=Path, default=None)
+    parser.add_argument("--stability-runs", type=int, default=1,
+                        choices=(1, 5),
+                        help="1 = main comparison only (558 calls); "
+                             "5 = plus E-ours/E-barrientos-faithful stability "
+                             "runs (846 calls)")
     args = parser.parse_args()
     try:
-        if args.execute_de:
-            result = execute_de(args.auth_file)
+        if args.fixture is not None:
+            result = fixture_run(args.fixture,
+                                 stability_runs=args.stability_runs)
+        elif args.execute_de:
+            result = execute_de(args.auth_file,
+                                stability_runs=args.stability_runs)
         elif args.dry_run:
             result = dry_run()
         elif args.suite:
             return run_suite()
         else:
-            parser.error("choose --suite, --dry-run or --execute-de")
+            parser.error("choose --suite, --dry-run, --fixture or "
+                         "--execute-de")
         print(json.dumps(result, ensure_ascii=False, indent=2)[:1500])
         return 0
-    except RuntimeError as exc:
+    except (RuntimeError, ValueError) as exc:
         print(f"refused: {exc}")
         return 2
 
