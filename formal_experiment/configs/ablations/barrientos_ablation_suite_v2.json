@@ -18,7 +18,11 @@
   },
   "experiments": {
     "A_direct_llm_validation_chain": {
-      "conditions": ["full_locked", "schema_only_approx", "raw_approx"],
+      "conditions": [
+        "full_locked",
+        "schema_only_approx",
+        "raw_approx"
+      ],
       "nature": "offline_approximation_sensitivity_analysis",
       "note": "raw model JSON not persisted in locked s27 artifacts; schema_only_approx and raw_approx are constructed approximations, never called exact raw ablations"
     },
@@ -41,10 +45,18 @@
       ]
     },
     "C_modality_4_vs_3": {
-      "conditions": ["four_class", "three_class_shared_subset"]
+      "conditions": [
+        "four_class",
+        "three_class_shared_subset"
+      ]
     },
     "D_prompt_fewshot_ablation": {
-      "arms": ["D-full", "D-no-fewshot", "D-minimal", "D-barrientos-style"],
+      "arms": [
+        "D-full",
+        "D-no-fewshot",
+        "D-minimal",
+        "D-barrientos-style"
+      ],
       "fixed_conditions": {
         "input": "EStG-150 (same input)",
         "gold": "same Gold",
@@ -57,13 +69,30 @@
       "status": "real_execution_requires_authorization"
     },
     "E_barrientos_same_data": {
-      "arms": ["E-ours", "E-barrientos-faithful", "E-module-swapped"],
+      "arms": [
+        {
+          "name": "BARR-FULL",
+          "protocol": "Barrientos published Step-1 reproduction (original prompt + compliance_requirements_format.json + 3-class modality + 44-pattern controlled vocabulary, no six-field additions)"
+        },
+        {
+          "name": "BARR-NO-PATTERN",
+          "protocol": "artifact-supported ablation (NOT a paper-table arm); formalize_requirements_prompt_no_patterns.txt drops the Allowed Compliance Patterns section; other conditions identical to BARR-FULL; optional via --include-no-pattern"
+        },
+        {
+          "name": "OURS-FULL",
+          "protocol": "our complete Direct-LLM six-field method on the SAME 36 inputs"
+        },
+        {
+          "name": "OURS-BARRIENTOS-MODULE",
+          "protocol": "our method with ONLY the prompt organization / controlled-vocabulary discipline / schema-instruction style swapped to Barrientos-style; six-field schema and evaluator unchanged; prompt diff vs OURS-FULL is the single change"
+        }
+      ],
       "input": "36 unique versioned IDs from frozen S2.12 corpus (contract v2)",
+      "runs_per_arm": 5,
       "stability": {
-        "E-ours": 5,
-        "E-barrientos-faithful": 5,
-        "E-module-swapped": 1,
-        "note": "first main-comparison run counts toward the five"
+        "runs": 5,
+        "note": "protocol mandates 5 independent runs per 36-requirement arm; first main comparison run counts toward the five",
+        "metric": "Barrientos pairwise distance<=2 ratio (self-consistency); field/span agreement is an additional column only"
       },
       "status": "real_execution_requires_authorization"
     }

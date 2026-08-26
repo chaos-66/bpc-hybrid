@@ -3847,3 +3847,16 @@
 - 仍存在 blocker：无
 - 备注：零 LLM/API/网络；未改 prompt/Gold/正式预测；fake fixture 验证 send_count=sample_count、evaluation.json 由真实 evaluator 计算、失败进分母、计划 558/846、D-full 0 calls；full audit 2680 passed/24 skipped exit 0（首轮全审出现已知 Windows Errno-22 临时文件锁致 73 项 stage1 tamper 级联失败，恢复被中断修改的文件后重跑全绿）
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-26T12:57:38.334818+00:00 - Barrientos D/E executor faithfulness+correctness repair (zero API, executor-only): (1) prompt rendering now faithful per arm — BARR-FULL/BARR-NO-PATTERN send the full original artifact prompt as system and the artifact's {ID,version,text} JSON envelope as user (notebook query_llm/process_formalization protocol); OURS-FULL/D-full render the locked D1 recipe via prompt_loader (system section + user template + few-shot block); D-no-fewshot drops only the few-shot block; D-minimal keeps task+JSON structure as system with the standard D1 user envelope; D-barrientos-style/OURS-BARRIENTOS-MODULE join the discipline preamble + v6 field definitions and render the v6 user template (empty few-shot); (2) OURS evaluator fixed: evaluate_stratified now receives the frozen G0.5 levels mapping + method_id + gold converted to evaluator-compatible records (previously missing levels/method_id and raw gold shape -> TypeError at real execution); (3) BARR evaluator fixed: versioned step_1_baseline gold resolved per sample version (both_versions=false -> versions.version_N), null precondition = count 0, per-sample first-norm vs first-gold-clause 3-class modality agreement (was order-dependent zip), strict JSON/schema validity now structurally mirrors compliance_requirements_format.json (jsonschema not a repo dep), fenced `json responses parsed like the artifact's safe_json_load; (4) stability: BARR modality agreement reads barrientos norms (was always None), field/span agreement now actually computed for six-field arms (was always 0.0), provenance excluded from pairwise distance so run-identity metadata cannot inflate distance; (5) fake-transport fixture now drives the REAL per-arm evaluators on the REAL 36/EStG-150 sample sets (was dummy evaluator, which masked the wiring bugs); (6) real transport in execute_de now applies the locked D1 request policy (stream=False, thinking disabled, response_format=None). All invariants preserved: one send per sample/repeat, raw+canonical same response hash, failed samples in denominator, per-repeat evaluation.json, D-full reuse 0 calls, plan-derived counts 990/1170, artifacts on disk. 39 focused tests pass; full audit 2693 passed/24 skipped exit 0.
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2693 passed, 24 skipped, 40 warnings in 2746.50s (0:45:46)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`a506d620d4733d028838c77051ebfa26c142c241`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Executor-only repair; no prompt/Gold/formal-prediction changes; references read-only; D/E real model execution still gated on user authorization (990 calls without BARR-NO-PATTERN, 1170 with); zero LLM/API/network this batch
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

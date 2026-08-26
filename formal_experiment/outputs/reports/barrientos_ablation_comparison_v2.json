@@ -816,7 +816,7 @@
     "D_E": {
       "experiment": "D_E_real_model_arms",
       "status": "ready_to_execute_not_executed",
-      "blocker": "real model API calls require explicit user authorization; this zero-API batch does not execute them",
+      "blocker": "real model API calls require explicit user authorization; this zero-API batch does not execute them. Executor verification status: the D/E runner (one send per sample/repeat, raw+canonical same response hash, failed samples kept in the denominator, per-repeat evaluation.json, D-full reuse 0 calls, plan-derived call counts 990/1170) is verified end-to-end with a fake transport against the REAL per-arm evaluators (BARR native, OURS stratified, D literal-overlap); 39 focused tests pass.",
       "D_arms": {
         "D-full": {
           "status": "reuse_locked_formal_result"
@@ -832,20 +832,26 @@
         }
       },
       "E_arms": {
-        "E-ours": {
-          "status": "ready_to_execute"
+        "BARR-FULL": {
+          "status": "ready_to_execute",
+          "protocol": "Barrientos published Step-1 (original prompt/schema/44-patterns, 36x5)"
         },
-        "E-barrientos-faithful": {
-          "status": "ready_to_execute"
+        "BARR-NO-PATTERN": {
+          "status": "ready_to_execute",
+          "protocol": "artifact-supported ablation (NOT a paper-table arm)",
+          "optional": true
         },
-        "E-module-swapped": {
-          "status": "ready_to_execute"
+        "OURS-FULL": {
+          "status": "ready_to_execute",
+          "protocol": "our six-field method on the SAME 36 inputs, 36x5"
+        },
+        "OURS-BARRIENTOS-MODULE": {
+          "status": "ready_to_execute",
+          "protocol": "our method with the prompt/schema module swapped to Barrientos style, 36x5"
         },
         "stability": {
-          "E-ours_runs": 5,
-          "E-barrientos-faithful_runs": 5,
-          "E-module-swapped_runs": 1,
-          "note": "first main comparison run counts toward the five"
+          "runs": 5,
+          "note": "protocol mandates 5 independent runs per 36-requirement arm; first main comparison run counts toward the five"
         }
       },
       "e_contract_v2": {
@@ -854,13 +860,13 @@
         "count": 36,
         "unique_ids": 36
       },
-      "real_execution_command": "python scripts/run_barrientos_ablation_suite_v2.py --execute-de --auth-file <USER_AUTH> --runtime-home D:/environment/stanford-corenlp-4.5.10 (requires user API authorization)"
+      "real_execution_command": "python scripts/run_barrientos_ablation_suite_v2.py --execute-de --auth-file <USER_AUTH> --stability-runs 5 [--include-no-pattern] --runtime-home D:/environment/stanford-corenlp-4.5.10 (990 calls without BARR-NO-PATTERN; 1170 with; requires user API authorization)"
     }
   },
   "full_results": "outputs\\development\\barrientos_ablation_suite_v2\\results.json",
   "notes": {
     "A": "offline approximation sensitivity analysis (raw JSON not persisted)",
     "B": "with structural map + modality label metrics",
-    "D_E": "ready_to_execute; real model calls require authorization"
+    "D_E": "ready_to_execute_not_executed; real model calls require authorization; executor verified end-to-end with a fake transport against the real per-arm evaluators"
   }
 }
