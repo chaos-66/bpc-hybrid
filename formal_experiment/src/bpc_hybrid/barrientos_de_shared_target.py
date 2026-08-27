@@ -193,9 +193,9 @@ def modality_prf(gold_labels: Sequence[str | None],
                        / len(classes))
     macro_recall = (sum(v["recall"] for v in per_class.values())
                     / len(classes))
-    macro_f1 = (2 * macro_precision * macro_recall
-                / (macro_precision + macro_recall)
-                if (macro_precision + macro_recall) else 0.0)
+    # macro-F1 is the ARITHMETIC MEAN of the per-class F1 scores
+    # (NOT the harmonic mean of macro precision/recall)
+    macro_f1 = (sum(v["f1"] for v in per_class.values()) / len(classes))
     return {
         "classes": list(classes),
         "samples_expressible": len(gold_labels),

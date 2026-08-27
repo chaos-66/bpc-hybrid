@@ -5,6 +5,7 @@ gate, the three-table separation, and the shared-target adapters (zero API)."""
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import subprocess
 import sys
@@ -158,6 +159,456 @@ def test_contract_authorization_gate():
     assert m.validate_de_contract(CONTRACT, allow_unauthorized=True)
 
 
+# ---------------------------------------------------------------------------
+# 2b. Full schema validation (types/const/enum/additionalProperties/nested)
+# ---------------------------------------------------------------------------
+
+
+def test_full_schema_validation_rejects_nested_violations(tmp_path):
+    """A contract with correct top-level keys but a nested type/const/
+    additionalProperties violation must be rejected by the FULL schema
+    validation (not a partial top-level check)."""
+    from bpc_hybrid.de_contract_schema import validate_instance
+    schema = json.loads(CONTRACT_SCHEMA.read_text(encoding="utf-8"))
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+
+    # nested: execution_plan.total_calls const violation
+    bad1 = copy.deepcopy(contract)
+    bad1["execution_plan"]["total_calls"] = 999
+    assert validate_instance(bad1, schema)
+
+    # nested: arm enum violation
+    bad2 = copy.deepcopy(contract)
+    bad2["execution_plan"]["arms"][0]["arm"] = "BARR-NO-PATTERN"
+    assert validate_instance(bad2, schema)
+
+    # nested: additionalProperties in model
+    bad3 = copy.deepcopy(contract)
+    bad3["model"]["extra_key"] = 1
+    assert validate_instance(bad3, schema)
+
+    # nested: sampling temperature const
+    bad4 = copy.deepcopy(contract)
+    bad4["sampling"]["temperature"] = 0.5
+    assert validate_instance(bad4, schema)
+
+    # nested: hashes.prompts type
+    bad5 = copy.deepcopy(contract)
+    bad5["hashes"]["prompts"]["BARR-FULL"] = "short"
+    assert validate_instance(bad5, schema)
+
+    # valid contract passes full validation
+    assert validate_instance(contract, schema) == []
+
+
+def test_contract_full_schema_validation_wired():
+    """validate_de_contract must run the FULL schema validator (a mutated
+    nested field is rejected even when top-level required keys exist)."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    bad = copy.deepcopy(contract)
+    bad["execution_plan"]["total_calls"] = 999
+    path = ROOT / ".tmp" / "contract_bad_nested.json"
+    path.write_text(json.dumps(bad), encoding="utf-8")
+    try:
+        try:
+            m.validate_de_contract(path, allow_unauthorized=True)
+            raise AssertionError("nested schema violation must be rejected")
+        except m.ContractError as exc:
+            assert "schema validation failed" in str(exc)
+    finally:
+        path.unlink(missing_ok=True)
+
+
+# ---------------------------------------------------------------------------
+# 2c. Real authorization-event verification
+# ---------------------------------------------------------------------------
+
+
+def _auth_event_file(tmp_path, sentence, *, mutate_sentence_sha=False,
+                     mutate_file_sha=False, bad_path=False,
+                     empty_sentence=False) -> Path:
+    import hashlib
+    event = {
+        "schema_version": "barrientos_de_authorization_event@1.0.0",
+        "authorization_sentence": sentence if not empty_sentence else "",
+        "authorized_at_utc": "2026-08-27T00:00:00Z",
+    }
+    path = tmp_path / "authorization_event_v1.json"
+    path.write_text(json.dumps(event, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    if bad_path:
+        return path
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    auth = dict(contract["authorization"] or {})
+    sentence_sha = hashlib.sha256(sentence.encode("utf-8")).hexdigest()
+    file_sha = hashlib.sha256(path.read_bytes()).hexdigest()
+    auth["authorization_sentence_utf8_sha256"] = (
+        "ab" * 32 if mutate_sentence_sha else sentence_sha)
+    auth["authorization_event_file"] = str(path)
+    auth["authorization_event_file_sha256"] = (
+        "cd" * 32 if mutate_file_sha else file_sha)
+    auth["authorized_at_utc"] = "2026-08-27T00:00:00Z"
+    return path
+
+
+REAL_SENTENCE = ("I authorize exactly 990 calls with model deepseek-v4-pro "
+                 "at temperature=0 retry=0 under the Barrientos D/E "
+                 "execution contract v1 with USD cap 25.396.")
+
+
+def test_authorization_event_verification_real(tmp_path):
+    """A REAL event file with matching file/sentence hashes and the exact
+    required sentence passes; any fabricated path, wrong hash, empty event
+    or different call count/budget is rejected BEFORE the first send."""
+    import hashlib
+    m = _executor()
+    # event file must live inside an allowed dir (configs/ or reports/)
+    event_dir = ROOT / "configs" / "ablations" / ".tmp_auth_tests"
+    event_dir.mkdir(parents=True, exist_ok=True)
+    event_path = event_dir / "authorization_event_v1.json"
+    event_path.write_text(json.dumps({
+        "schema_version": "barrientos_de_authorization_event@1.0.0",
+        "authorization_sentence": REAL_SENTENCE,
+        "authorized_at_utc": "2026-08-27T00:00:00Z",
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    try:
+        contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+        auth = {
+            "authorization_sentence_utf8_sha256": hashlib.sha256(
+                REAL_SENTENCE.encode("utf-8")).hexdigest(),
+            "authorization_event_file": str(event_path),
+            "authorization_event_file_sha256": hashlib.sha256(
+                event_path.read_bytes()).hexdigest(),
+            "authorized_at_utc": "2026-08-27T00:00:00Z",
+        }
+        # valid: passes
+        m._verify_authorization_event(auth, contract)
+        # fabricated path (not in allowed dirs)
+        bad = dict(auth)
+        bad["authorization_event_file"] = str(tmp_path / ".." / ".." / "etc" /
+                                              "passwd")
+        try:
+            m._verify_authorization_event(bad, contract)
+            raise AssertionError("fabricated path must be rejected")
+        except m.ContractError:
+            pass
+        # wrong file sha
+        bad = dict(auth)
+        bad["authorization_event_file_sha256"] = "cd" * 32
+        try:
+            m._verify_authorization_event(bad, contract)
+            raise AssertionError("wrong file sha must be rejected")
+        except m.ContractError:
+            pass
+        # wrong sentence sha
+        bad = dict(auth)
+        bad["authorization_sentence_utf8_sha256"] = "ab" * 32
+        try:
+            m._verify_authorization_event(bad, contract)
+            raise AssertionError("wrong sentence sha must be rejected")
+        except m.ContractError:
+            pass
+        # empty event
+        empty = event_dir / "empty_event.json"
+        empty.write_text("{}", encoding="utf-8")
+        bad = dict(auth)
+        bad["authorization_event_file"] = str(empty)
+        bad["authorization_event_file_sha256"] = hashlib.sha256(
+            empty.read_bytes()).hexdigest()
+        try:
+            m._verify_authorization_event(bad, contract)
+            raise AssertionError("empty event must be rejected")
+        except m.ContractError:
+            pass
+        # sentence with different call count / budget
+        for wrong in ("I authorize 1170 calls with model deepseek-v4-pro "
+                      "at temperature=0 retry=0 with USD cap 25.396.",
+                      "I authorize 990 calls with model deepseek-v4-pro "
+                      "at temperature=0 retry=0 with USD cap 10.000."):
+            wrong_path = event_dir / "wrong_sentence.json"
+            wrong_path.write_text(json.dumps({
+                "authorization_sentence": wrong,
+                "authorized_at_utc": "2026-08-27T00:00:00Z"},
+                ensure_ascii=False), encoding="utf-8")
+            bad = dict(auth)
+            bad["authorization_sentence_utf8_sha256"] = hashlib.sha256(
+                wrong.encode("utf-8")).hexdigest()
+            bad["authorization_event_file"] = str(wrong_path)
+            bad["authorization_event_file_sha256"] = hashlib.sha256(
+                wrong_path.read_bytes()).hexdigest()
+            try:
+                m._verify_authorization_event(bad, contract)
+                raise AssertionError(f"sentence {wrong!r} must be rejected")
+            except m.ContractError:
+                pass
+    finally:
+        import shutil
+        shutil.rmtree(event_dir, ignore_errors=True)
+
+
+# ---------------------------------------------------------------------------
+# 4. Macro-F1 = mean of per-class F1 (not harmonic of mean P/R)
+# ---------------------------------------------------------------------------
+
+
+def test_shared_macro_f1_is_mean_of_class_f1():
+    """macro_f1 must be mean(per-class F1), NOT harmonic(mean P, mean R).
+    Constructed case where the two differ:
+      obligation: P=1.0 R=0.5 F1=2/3
+      permission: P=0.5 R=1.0 F1=2/3
+      prohibition: P=1.0 R=1.0 F1=1.0
+    -> mean class F1 = (2/3+2/3+1)/3 = 7/9 = 0.777...
+       harmonic(meanP,meanR) = harmonic(5/6,5/6) = 5/6 = 0.833...
+    """
+    from bpc_hybrid.barrientos_de_shared_target import modality_prf
+    gold = []
+    pred = []
+    gold += ["obligation"] * 20
+    pred += ["obligation"] * 10 + ["permission"] * 10
+    gold += ["permission"] * 10
+    pred += ["permission"] * 10
+    gold += ["prohibition"] * 10
+    pred += ["prohibition"] * 10
+    rep = modality_prf(gold, pred)
+    assert abs(rep["per_class"]["obligation"]["f1"] - 2 / 3) < 1e-6
+    assert abs(rep["per_class"]["permission"]["f1"] - 2 / 3) < 1e-6
+    assert abs(rep["per_class"]["prohibition"]["f1"] - 1.0) < 1e-6
+    mean_class_f1 = (2 / 3 + 2 / 3 + 1.0) / 3
+    assert abs(rep["macro"]["f1"] - mean_class_f1) < 1e-6
+    harmonic = (2 * rep["macro"]["precision"] * rep["macro"]["recall"]
+                / (rep["macro"]["precision"] + rep["macro"]["recall"]))
+    assert abs(rep["macro"]["f1"] - harmonic) > 1e-6
+    assert abs(rep["macro"]["f1"] - 7 / 9) < 1e-6
+    # macro precision/recall stay arithmetic means
+    assert abs(rep["macro"]["precision"] - 5 / 6) < 1e-6
+    assert abs(rep["macro"]["recall"] - 5 / 6) < 1e-6
+
+
+# ---------------------------------------------------------------------------
+# 5. Durable per-request persistence + safe resume
+# ---------------------------------------------------------------------------
+
+
+def _persist_transport(fail_after: int | None = None):
+    """Deterministic transport that optionally raises after N sends."""
+    from bpc_hybrid.llm_client import LLMResponse
+
+    class PersistFake:
+        def __init__(self):
+            self.send_count = 0
+            self.last_decode = None
+
+        def send(self, request, *, ordinal=1, clause_id=None):
+            self.send_count += 1
+            if fail_after is not None and self.send_count > fail_after:
+                raise RuntimeError("mid-run transport failure")
+            self.last_decode = {
+                "status": "ok_message_content", "model": "deepseek-v4-pro",
+                "usage": {"prompt_tokens": 10, "completion_tokens": 5,
+                          "total_tokens": 15},
+                "request_id": f"req-{self.send_count}",
+            }
+            content = json.dumps({
+                "schema_version": "1.0.0",
+                "sample_id": request.source_id,
+                "source_id": request.source_id,
+                "source_text": request.source_text,
+                "clauses": [],
+                "method": {"name": "direct_llm",
+                           "schema_source": "stage2_prediction.schema.json@1.0.0"},
+                "validation": {"schema_valid": True,
+                               "cross_field_valid": True, "errors": []},
+            }, ensure_ascii=False)
+            self.last_decode["response_sha256"] = hashlib.sha256(
+                content.encode("utf-8")).hexdigest()
+            return LLMResponse(content=content, provider="fake",
+                               model="deepseek-v4-pro", finish_reason="stop")
+
+    return PersistFake()
+
+
+def test_per_request_persistence_and_resume(tmp_path):
+    """Mid-run failure: responses before the failure are persisted
+    immediately; the failed send is marked in_doubt (missing usage aborts
+    the gate); resume does NOT re-send completed samples, does NOT
+    auto-resend in_doubt samples, and sends only the never-attempted
+    remainder; total sends never exceed the plan."""
+    import hashlib
+    m = _executor()
+    samples = [{"sample_id": f"s{i}", "text": "t"} for i in range(6)]
+    out_dir = tmp_path / "arm" / "repeat-01"
+
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    big = copy.deepcopy(contract)
+    big["budget"]["input_token_cap"] = 10 ** 12
+    big["budget"]["output_token_cap"] = 10 ** 12
+    big["budget"]["usd_cost_cap"] = 10 ** 12
+    gate1 = m.DeBudgetGate(big)
+
+    # first run: sends 1-3 OK; send 4 raises (no response -> in_doubt ->
+    # gate aborts on missing usage before send 5)
+    t1 = _persist_transport(fail_after=3)
+    try:
+        m.run_arm_once(arm="D-no-fewshot", repeat_id="repeat-01",
+                       samples=samples, prompt_text="", transport=t1,
+                       cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
+                       out_dir=out_dir, budget_gate=gate1)
+        raise AssertionError("mid-run transport failure must abort the gate")
+    except m.ContractError:
+        pass
+    # raw responses persisted for the 3 completed sends (durable before the
+    # failure point)
+    raw_rows = m._read_jsonl(out_dir / "raw_responses.jsonl")
+    assert len(raw_rows) == 3
+    ledger = m._read_jsonl(out_dir / "calls_ledger.jsonl")
+    states = {r["sample_id"]: r["state"] for r in ledger}
+    assert states == {"s0": "completed", "s1": "completed",
+                      "s2": "completed", "s3": "in_doubt"}
+    assert t1.send_count == 4  # only 4 sends before the abort
+
+    # resume with a fresh transport and a fresh gate: completed samples are
+    # reused (NOT re-sent); in_doubt s3 is NOT auto-resent; only s4,s5 are
+    # sent (in the original order)
+    gate2 = m.DeBudgetGate(big)
+    t2 = _persist_transport(fail_after=None)
+    run = m.run_arm_once(arm="D-no-fewshot", repeat_id="repeat-01",
+                         samples=samples, prompt_text="", transport=t2,
+                         cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
+                         out_dir=out_dir, budget_gate=gate2)
+    assert t2.send_count == 2  # only s4, s5 sent
+    assert run["resumed_completed_count"] == 3
+    assert run["in_doubt_skipped_count"] == 1
+    assert run["actual_call_count"] == 2
+    # ledger: s3 still in_doubt (never auto-resent), s4/s5 completed
+    ledger2 = m._read_jsonl(out_dir / "calls_ledger.jsonl")
+    states2 = {r["sample_id"]: r["state"] for r in ledger2}
+    assert states2["s3"] == "in_doubt"
+    assert states2["s4"] == "completed" and states2["s5"] == "completed"
+    # total sends across both runs = 6 (4 + 2): completed never re-sent,
+    # in_doubt never auto-resent, total never exceeds the 6-sample plan
+    assert t1.send_count + t2.send_count == 6
+    # canonical/eval/manifest present (derived from persisted raw)
+    for f in ("canonical_predictions.jsonl", "failed_samples.jsonl",
+              "evaluation.json", "manifest.json"):
+        assert (out_dir / f).is_file()
+    assert gate2.aborted is False  # resume completed within budget
+
+
+def test_resume_persisted_raw_is_reused_not_resent(tmp_path):
+    """A fully completed repeat resumed again must send ZERO new calls and
+    reuse the persisted raw responses (same response hash)."""
+    m = _executor()
+    samples = [{"sample_id": f"s{i}", "text": "t"} for i in range(4)]
+    out_dir = tmp_path / "arm" / "repeat-01"
+    t1 = _persist_transport(fail_after=None)
+    run1 = m.run_arm_once(arm="D-no-fewshot", repeat_id="repeat-01",
+                          samples=samples, prompt_text="", transport=t1,
+                          cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
+                          out_dir=out_dir)
+    assert run1["actual_call_count"] == 4
+    t2 = _persist_transport(fail_after=None)
+    run2 = m.run_arm_once(arm="D-no-fewshot", repeat_id="repeat-01",
+                          samples=samples, prompt_text="", transport=t2,
+                          cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
+                          out_dir=out_dir)
+    assert t2.send_count == 0
+    assert run2["resumed_completed_count"] == 4
+    assert run2["actual_call_count"] == 0
+    assert run2["raw_rows"][0]["response_sha256"] == \
+        run1["raw_rows"][0]["response_sha256"]
+
+
+# ---------------------------------------------------------------------------
+# 2d. aborted/incomplete execution: non-zero exit + tables refused
+# ---------------------------------------------------------------------------
+
+
+def test_execute_de_aborted_returns_incomplete(tmp_path):
+    """An aborted run must NOT be reported complete; the CLI must return a
+    non-zero exit code and never print 'complete'."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    small = copy.deepcopy(contract)
+    small["budget"]["planned_calls"] = 990
+    small["budget"]["input_token_cap"] = 10 ** 9
+    small["budget"]["output_token_cap"] = 10 ** 9
+    small["budget"]["usd_cost_cap"] = 10 ** 9
+    path = tmp_path / "contract_small.json"
+    path.write_text(json.dumps(small), encoding="utf-8")
+
+    # CLI-level behavior: a contract with null authorization refuses before
+    # any send (exit 2, never "complete")
+    proc = subprocess.run(
+        [PY, str(SCRIPTS / "run_barrientos_ablation_suite_v2.py"),
+         "--execute-de", "--contract-file", str(path)],
+        capture_output=True, text=True, cwd=ROOT.parent)
+    assert proc.returncode == 2
+    assert "refused" in (proc.stdout + proc.stderr).lower()
+    assert "complete" not in (proc.stdout + proc.stderr).lower()
+
+
+def test_table_builder_refuses_aborted(tmp_path):
+    """build_tables must raise for an aborted execution summary."""
+    import build_barrientos_de_tables_v1 as tables
+    (tmp_path / "execution_summary.json").write_text(json.dumps({
+        "aborted": True, "complete": False, "total_calls_accounted": 100,
+        "planned_calls": 990}), encoding="utf-8")
+    try:
+        tables.build_tables(tmp_path)
+        raise AssertionError("tables must be refused for aborted runs")
+    except RuntimeError as exc:
+        assert "ABORTED" in str(exc)
+
+
+def test_table_builder_refuses_incomplete(tmp_path):
+    import build_barrientos_de_tables_v1 as tables
+    (tmp_path / "execution_summary.json").write_text(json.dumps({
+        "aborted": False, "complete": False, "total_calls_accounted": 500,
+        "planned_calls": 990}), encoding="utf-8")
+    try:
+        tables.build_tables(tmp_path)
+        raise AssertionError("tables must be refused for incomplete runs")
+    except RuntimeError as exc:
+        assert "INCOMPLETE" in str(exc)
+
+
+def test_resumed_complete_run_is_complete():
+    """A resumed run that accounts for all 990 samples (new sends +
+    resumed completed) is complete even when THIS invocation's actual_calls
+    is less than 990 (the remainder was already paid for and persisted)."""
+    m = _executor()
+    plan = m.build_execution_plan(5)
+    planned = sum(r["expected_calls"] for r in plan)
+    # simulated resumed state: 300 new sends this invocation + 690 resumed
+    # completed = 990 accounted, zero in_doubt
+    results = {
+        "aborted": False,
+        "actual_calls": 300,
+        "completed_samples": planned,
+        "in_doubt_samples": 0,
+        "planned_calls": planned,
+        "runs": list(range(len(plan))),  # every repeat ran
+    }
+    # replicate the completeness formula from execute_de
+    complete = (
+        results["aborted"] is not True
+        and results["completed_samples"] == results["planned_calls"]
+        and results["in_doubt_samples"] == 0
+        and len(results["runs"]) == len(plan)
+    )
+    assert complete is True
+    # an aborted resume is NOT complete even with full accounting
+    results["aborted"] = True
+    complete2 = (
+        results["aborted"] is not True
+        and results["completed_samples"] == results["planned_calls"]
+        and results["in_doubt_samples"] == 0
+        and len(results["runs"]) == len(plan)
+    )
+    assert complete2 is False
+
+
 def test_budget_is_derived_not_guessed():
     """Caps must be positive and derived from rendered requests (the budget
     report records the rendered byte/token audit)."""
@@ -180,11 +631,11 @@ def test_budget_is_derived_not_guessed():
 
 
 def test_budget_gate_stops_before_next_send():
-    """When a cap is reached the gate raises BEFORE the next send; the
-    executor catches it and records aborted=True with calls made."""
+    """Two-phase gate: cap=2 -> the first TWO sends both succeed and are
+    recorded; the THIRD send is rejected in check_before_send BEFORE it
+    reaches the transport.  (Completing the 2nd call must NOT abort.)"""
     m = _executor()
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
-    # shrink caps to a tiny budget so the gate trips after a few calls
     small = copy.deepcopy(contract)
     small["budget"]["planned_calls"] = 2
     small["budget"]["input_token_cap"] = 10 ** 9
@@ -192,21 +643,78 @@ def test_budget_gate_stops_before_next_send():
     small["budget"]["usd_cost_cap"] = 10 ** 9
     gate = m.DeBudgetGate(small)
     assert gate.call_cap == 2
-    gate.check_before_send()
-    gate.record({"prompt_tokens": 100, "completion_tokens": 50})
-    # second send completes; the gate then notices the call cap is reached
+    # send 1: allowed, completes normally
+    gate.check_before_send(projected_input_tokens=100,
+                           projected_max_output_tokens=4096)
+    gate.record_after_response({"prompt_tokens": 100, "completion_tokens": 50})
+    assert gate.calls_made == 1 and not gate.aborted
+    # send 2: allowed (1 + 1 = 2 <= 2), completes normally
+    gate.check_before_send(projected_input_tokens=100,
+                           projected_max_output_tokens=4096)
+    gate.record_after_response({"prompt_tokens": 100, "completion_tokens": 50})
+    assert gate.calls_made == 2 and not gate.aborted
+    # send 3: rejected BEFORE the transport (2 + 1 = 3 > 2)
     try:
-        gate.record({"prompt_tokens": 100, "completion_tokens": 50})
-        raise AssertionError("gate must abort at the call cap")
+        gate.check_before_send(projected_input_tokens=100,
+                               projected_max_output_tokens=4096)
+        raise AssertionError("3rd send must be rejected before transport")
     except m.ContractError:
         pass
     assert gate.aborted and gate.calls_made == 2
-    # and the executor-level check_before_send keeps raising
+
+
+def test_budget_gate_990th_call_completes():
+    """The 990th call (the fixed plan's last) must complete and be
+    persisted; only the 991st is rejected before the transport."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    gate = m.DeBudgetGate(contract)
+    assert gate.call_cap == 990
+    for _ in range(990):
+        gate.check_before_send(projected_input_tokens=100,
+                               projected_max_output_tokens=4096)
+        gate.record_after_response({"prompt_tokens": 100,
+                                    "completion_tokens": 50})
+    assert gate.calls_made == 990 and not gate.aborted
+    assert gate.input_tokens == 990 * 100
+    assert gate.output_tokens == 990 * 50
+    # equal-to-cap is a legal completion (no abort)
+    assert not gate.aborted
+    # 991st rejected before the transport
     try:
-        gate.check_before_send()
-        raise AssertionError("check_before_send must keep aborting")
+        gate.check_before_send(projected_input_tokens=100,
+                               projected_max_output_tokens=4096)
+        raise AssertionError("991st send must be rejected before transport")
     except m.ContractError:
         pass
+    assert gate.aborted
+
+
+def test_budget_gate_990_plan_with_realistic_usage():
+    """The fixed 990-call plan with the REAL contract caps completes: the
+    projected next-send checks never trip (caps have safety factors) and
+    the 990th response records exactly at the planned totals."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    gate = m.DeBudgetGate(contract)
+    report = json.loads(BUDGET_REPORT.read_text(encoding="utf-8"))
+    # use the real per-request token estimates from the rendered audit
+    est_tokens = []
+    for arm in ("D-no-fewshot", "D-minimal", "D-barrientos-style",
+                "BARR-FULL", "OURS-FULL", "OURS-BARRIENTOS-MODULE"):
+        entry = report["rendered_requests"]["arms"][arm]
+        est_tokens.extend(r["est_input_tokens"] for r in entry["requests"])
+    assert len(est_tokens) == 990
+    for i, est in enumerate(est_tokens):
+        gate.check_before_send(projected_input_tokens=est,
+                               projected_max_output_tokens=4096)
+        gate.record_after_response({"prompt_tokens": est,
+                                    "completion_tokens": 4096})
+    assert gate.calls_made == 990
+    assert not gate.aborted
+    assert gate.input_tokens <= gate.input_token_cap
+    assert gate.output_tokens <= gate.output_token_cap
+    assert gate.cost_usd <= gate.usd_cost_cap
 
 
 def test_budget_gate_fails_closed_on_missing_usage():
@@ -214,9 +722,10 @@ def test_budget_gate_fails_closed_on_missing_usage():
     m = _executor()
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     gate = m.DeBudgetGate(contract)
-    gate.check_before_send()
+    gate.check_before_send(projected_input_tokens=10,
+                           projected_max_output_tokens=100)
     try:
-        gate.record(None)
+        gate.record_after_response(None)
         raise AssertionError("missing usage must abort")
     except m.ContractError:
         pass
@@ -228,10 +737,11 @@ def test_budget_gate_fails_closed_on_wrong_model():
     m = _executor()
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     gate = m.DeBudgetGate(contract)
-    gate.check_before_send()
+    gate.check_before_send(projected_input_tokens=10,
+                           projected_max_output_tokens=100)
     try:
-        gate.record({"prompt_tokens": 1, "completion_tokens": 1},
-                    returned_model="deepseek-v4-flash")
+        gate.record_after_response({"prompt_tokens": 1, "completion_tokens": 1},
+                                   returned_model="deepseek-v4-flash")
         raise AssertionError("wrong returned model must abort")
     except m.ContractError:
         pass

@@ -391,7 +391,22 @@ def table_c(run_dir: Path) -> dict[str, Any]:
 def build_tables(run_dir: Path | None = None) -> dict[str, Any]:
     if run_dir is None:
         run_dir = OUT_DIR
-    _summary(run_dir)  # existence check (execution or fixture summary)
+    summary = _summary(run_dir)  # existence check (execution or fixture summary)
+    if (run_dir / "execution_summary.json").is_file():
+        # a REAL run must be complete before tables are produced
+        if summary.get("aborted"):
+            raise RuntimeError(
+                "execution was ABORTED; tables are refused for aborted runs")
+        if summary.get("complete") is False:
+            raise RuntimeError(
+                "execution is INCOMPLETE; tables are refused until all "
+                "planned calls and artifacts are present")
+        accounted = summary.get("total_calls_accounted",
+                                summary.get("completed_samples"))
+        if accounted != summary.get("planned_calls"):
+            raise RuntimeError(
+                f"execution incomplete: calls accounted {accounted} != "
+                f"planned {summary.get('planned_calls')}; tables refused")
     missing = [a for a in ALL_ARMS
                if not (run_dir / a / "repeat-01" / "evaluation.json").is_file()]
     if missing:

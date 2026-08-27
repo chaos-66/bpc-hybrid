@@ -223,11 +223,12 @@ def _run_de() -> dict[str, Any]:
                     "BARR-NO-PATTERN excluded",
         },
         "real_execution_command": (
-            "python scripts/run_barrientos_ablation_suite_v2.py --execute-de "
-            "--contract-file configs/ablations/"
+            "python formal_experiment/scripts/run_barrientos_ablation_suite_v2.py "
+            "--execute-de --contract-file formal_experiment/configs/ablations/"
             "barrientos_de_execution_contract_v1.json "
-            "(990 calls; requires an authorized contract; BARR-NO-PATTERN "
-            "is NOT part of the fixed plan)"
+            "(run from the repository root; 990 calls; requires an "
+            "authorized contract; BARR-NO-PATTERN is NOT part of the fixed "
+            "plan)"
         ),
     }
 
@@ -553,7 +554,15 @@ def call_once(
     request_id = f"{arm}:{sid}:{time.time_ns()}"
 
     if budget_gate is not None:
-        budget_gate.check_before_send()
+        # projected input tokens of THIS rendered request (conservative
+        # estimate, same bytes/3 rule as the contract budget builder) and
+        # the full per-call max output tokens; the 990th send is allowed,
+        # the 991st is rejected here BEFORE the transport.
+        import math
+        est_input = math.ceil(len(body_bytes) / 3)
+        budget_gate.check_before_send(
+            projected_input_tokens=est_input,
+            projected_max_output_tokens=4096)
 
     try:
         from bpc_hybrid.llm_client import LLMRequest
@@ -574,8 +583,17 @@ def call_once(
         error = str(exc)
 
     if budget_gate is not None:
-        budget_gate.record(usage if usage else None,
-                           returned_model=decode.get("model"))
+        try:
+            budget_gate.record_after_response(
+                usage if usage else None,
+                returned_model=decode.get("model"))
+        except ContractError:
+            # gate aborted AFTER the send (e.g. missing usage): the caller
+            # must persist this call's raw/in_doubt state BEFORE the abort
+            # propagates, so swallow here and let the caller re-raise after
+            # durable append.  check_before_send aborts (before the send)
+            # still propagate directly above.
+            pass
 
     resp_sha = _sha256_bytes((content or "").encode("utf-8"))
     if usage:
@@ -717,6 +735,25 @@ def _prediction_row(parsed: Mapping[str, Any], arm: str) -> dict[str, Any]:
     }
 
 
+def _append_jsonl(path: Path, row: Mapping[str, Any]) -> None:
+    """Append one row and fsync (durable before the next send)."""
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(json.dumps(row, ensure_ascii=False) + "\n")
+        f.flush()
+        import os
+        os.fsync(f.fileno())
+
+
+def _read_jsonl(path: Path) -> list[dict[str, Any]]:
+    if not path.is_file():
+        return []
+    rows = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            rows.append(json.loads(line))
+    return rows
+
+
 def run_arm_once(
     arm: str,
     repeat_id: str,
@@ -731,39 +768,114 @@ def run_arm_once(
 ) -> dict[str, Any]:
     """One arm x one repeat: call -> save raw -> parse -> predict -> eval.
 
-    The evaluator receives ALL predictions (success + empty failed), so
-    failed samples stay in the denominator.  Writes (when out_dir given):
-    raw_responses.jsonl / canonical_predictions.jsonl / failed_samples.jsonl /
-    evaluation.json / manifest.json.  Returns the arm-run result dict.
-    ``budget_gate`` (DeBudgetGate) is checked before every send; a gate
-    abort propagates as ContractError so the caller stops before the next
-    send."""
+    DURABLE PER-REQUEST PERSISTENCE + SAFE RESUME:
+
+    * every response is appended to ``raw_responses.jsonl`` immediately
+      after the send and fsynced BEFORE the next send, so a mid-run crash
+      never loses already-paid responses;
+    * ``calls_ledger.jsonl`` records the per-sample state: ``completed``
+      (raw response persisted) or ``in_doubt`` (send attempted but no
+      response was persisted — e.g. transport failure before the response
+      arrived);
+    * on resume, ``completed`` samples are NEVER re-sent (their persisted
+      raw row is reused and the canonical prediction is regenerated from
+      that same raw response); ``in_doubt`` samples are NEVER auto-resent;
+      only samples with no ledger entry are sent, in the ORIGINAL order;
+    * resume never changes the arm, repeat, input order or the five-run
+      definition; retry stays 0;
+    * the budget gate (DeBudgetGate) is checked before every send (the
+      next-send projection) and recorded after each response; a gate abort
+      propagates as ContractError so the caller stops before the next send.
+
+    Writes (when out_dir given): raw_responses.jsonl / calls_ledger.jsonl
+    (append-only, durable), then canonical_predictions.jsonl /
+    failed_samples.jsonl / evaluation.json / manifest.json derived from the
+    persisted raw rows.  The evaluator receives ALL predictions (success +
+    empty failed), so failed samples stay in the denominator.
+    """
+    raw_path = None
+    ledger_path = None
+    if out_dir is not None:
+        out_dir.mkdir(parents=True, exist_ok=True)
+        raw_path = out_dir / "raw_responses.jsonl"
+        ledger_path = out_dir / "calls_ledger.jsonl"
+
+    # load persisted state for resume
+    persisted_raw: dict[str, dict[str, Any]] = {}
+    persisted_ledger: dict[str, dict[str, Any]] = {}
+    if raw_path is not None and raw_path.is_file():
+        for row in _read_jsonl(raw_path):
+            persisted_raw[row["sample_id"]] = row
+    if ledger_path is not None and ledger_path.is_file():
+        for row in _read_jsonl(ledger_path):
+            persisted_ledger[row["sample_id"]] = row
+
     calls: list[dict[str, Any]] = []
     raw_rows: list[dict[str, Any]] = []
     pred_rows: list[dict[str, Any]] = []
     failed: list[dict[str, Any]] = []
     total_cost: float = 0.0
     cost_unknown = False
+    resumed_completed = 0
+    in_doubt_skipped = 0
+    new_sends = 0
 
     for sample in samples:
-        sample_with_repeat = dict(sample)
-        sample_with_repeat["_repeat_id"] = repeat_id
-        call = call_once(arm, sample_with_repeat, prompt_text, transport,
-                         cost_of, budget_gate=budget_gate)
-        calls.append(call)
-        raw_rows.append({
-            "sample_id": call["sample_id"],
-            "arm": arm,
-            "repeat_id": repeat_id,
-            "request_body_sha256": call["request_body_sha256"],
-            "request_id": call["request_id"],
-            "raw_response_content": call["raw_response_content"],
-            "response_sha256": call["response_sha256"],
-            "usage": call["usage"],
-            "cost": call["cost"],
-            "request_status": call["request_status"],
-            "error": call["error"],
-        })
+        sid = sample.get("sample_id") or sample.get("id")
+        # resume: never re-send a persisted completed sample
+        if sid in persisted_raw:
+            call = persisted_raw[sid]
+            calls.append(call)
+            raw_rows.append(call)
+            resumed_completed += 1
+        elif sid in persisted_ledger \
+                and persisted_ledger[sid].get("state") == "in_doubt":
+            # in_doubt: send was attempted, no persisted response; NEVER
+            # auto-resend.  Keep the failure in the denominator.
+            in_doubt_skipped += 1
+            row = {"sample_id": sid, "request_status": "failed",
+                   "error": persisted_ledger[sid].get("error")
+                   or "in_doubt (previous send attempted, no response "
+                      "persisted; not auto-resent)"}
+            pred_rows.append(row)
+            failed.append(row)
+            calls.append({"sample_id": sid, "request_status": "error",
+                          "error": row["error"], "cost": "unknown"})
+            cost_unknown = True
+            continue
+        else:
+            sample_with_repeat = dict(sample)
+            sample_with_repeat["_repeat_id"] = repeat_id
+            call = call_once(arm, sample_with_repeat, prompt_text, transport,
+                             cost_of, budget_gate=budget_gate)
+            new_sends += 1
+            calls.append(call)
+            raw_rows.append(call)
+            # durable append BEFORE any further send; only a response that
+            # was actually persisted counts as completed — a transport
+            # error without a response body is recorded as in_doubt and is
+            # NEVER auto-resent on resume
+            if raw_path is not None:
+                if call["request_status"] == "error" \
+                        and not call.get("raw_response_content"):
+                    _append_jsonl(ledger_path,
+                                  {"sample_id": sid, "arm": arm,
+                                   "repeat_id": repeat_id,
+                                   "state": "in_doubt",
+                                   "error": call.get("error")})
+                else:
+                    _append_jsonl(raw_path, call)
+                    _append_jsonl(ledger_path,
+                                  {"sample_id": sid, "arm": arm,
+                                   "repeat_id": repeat_id,
+                                   "state": "completed",
+                                   "response_sha256": call["response_sha256"]})
+            if budget_gate is not None and budget_gate.aborted:
+                # the gate aborted AFTER this send (e.g. missing usage);
+                # the raw/in_doubt state is durably persisted above, so the
+                # abort can now propagate and stop before the next send
+                raise ContractError(
+                    f"budget gate: {budget_gate.abort_reason}")
         if call["cost"] == "unknown":
             cost_unknown = True
         elif isinstance(call["cost"], (int, float)):
@@ -778,7 +890,7 @@ def run_arm_once(
 
     evaluation = evaluator(pred_rows)
 
-    actual_calls = len(calls)
+    actual_calls = new_sends
     raw_agg = _sha256_bytes(
         b"".join(json.dumps(r, sort_keys=True).encode("utf-8") + b"\n"
                  for r in raw_rows))
@@ -791,6 +903,8 @@ def run_arm_once(
         "sample_count": len(samples),
         "actual_call_count": actual_calls,
         "failed_count": len(failed),
+        "resumed_completed_count": resumed_completed,
+        "in_doubt_skipped_count": in_doubt_skipped,
         "cost": "unknown" if cost_unknown else round(total_cost, 8),
         "raw_responses_aggregate_sha256": raw_agg,
         "canonical_predictions_aggregate_sha256": pred_agg,
@@ -806,6 +920,8 @@ def run_arm_once(
         "sample_count": len(samples),
         "actual_call_count": actual_calls,
         "failed_count": len(failed),
+        "resumed_completed_count": resumed_completed,
+        "in_doubt_skipped_count": in_doubt_skipped,
         "cost": "unknown" if cost_unknown else round(total_cost, 8),
         "evaluation": evaluation,
         "manifest": manifest,
@@ -815,12 +931,14 @@ def run_arm_once(
     }
 
     if out_dir is not None:
-        if out_dir.exists():
-            raise RuntimeError(f"refusing to overwrite: {out_dir}")
-        out_dir.mkdir(parents=True)
+        # canonical/eval/manifest are DERIVED from the persisted raw rows;
+        # they are rewritten on resume (raw_responses.jsonl is the source
+        # of truth and is only ever appended)
         _write_arm_v2(
             out_dir, arm, repeat_id, samples, raw_rows, pred_rows, failed,
             evaluation, total_cost, cost_unknown,
+            resumed_completed=resumed_completed,
+            in_doubt_skipped=in_doubt_skipped,
         )
     return result
 
@@ -828,7 +946,9 @@ def run_arm_once(
 def _write_arm_v2(out_dir: Path, arm: str, repeat_id: str,
                   samples: Sequence[Mapping[str, Any]],
                   raw_rows, pred_rows, failed, evaluation,
-                  total_cost: float, cost_unknown: bool) -> None:
+                  total_cost: float, cost_unknown: bool,
+                  resumed_completed: int = 0,
+                  in_doubt_skipped: int = 0) -> None:
     raw_agg = _sha256_bytes(
         b"".join(json.dumps(r, sort_keys=True).encode("utf-8") + b"\n"
                  for r in raw_rows))
@@ -837,9 +957,6 @@ def _write_arm_v2(out_dir: Path, arm: str, repeat_id: str,
                  for r in pred_rows))
     sample_ids = [s.get("sample_id") or s.get("id") for s in samples]
 
-    (out_dir / "raw_responses.jsonl").write_text(
-        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in raw_rows),
-        encoding="utf-8")
     (out_dir / "canonical_predictions.jsonl").write_text(
         "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in pred_rows),
         encoding="utf-8")
@@ -859,6 +976,8 @@ def _write_arm_v2(out_dir: Path, arm: str, repeat_id: str,
             "actual_call_count": len(raw_rows),
             "sample_ids": sample_ids,
             "failed_count": len(failed),
+            "resumed_completed_count": resumed_completed,
+            "in_doubt_skipped_count": in_doubt_skipped,
             "cost": "unknown" if cost_unknown else round(total_cost, 8),
             "raw_responses_aggregate_sha256": raw_agg,
             "canonical_predictions_aggregate_sha256": pred_agg,
@@ -1330,14 +1449,28 @@ def validate_de_contract(contract_path: Path | None = None,
                          allow_unauthorized: bool = False) -> dict[str, Any]:
     """Full content validation of the dedicated D/E execution contract.
 
-    Binds: schema_version, suite_id, bound_commit == current HEAD, fixed
+    Binds: schema_version, suite_id, bound_commit (ancestor of HEAD), fixed
     990-call plan (arms/repeats/sample counts exactly matching
     build_execution_plan(5) WITHOUT BARR-NO-PATTERN), model pin, sampling
     (temperature=0, top_p=1, max_tokens=4096, retry=0), hash set
     (estg input / e contract / executor / config / per-arm prompts), and
-    positive budget caps.  ``authorization`` must be present unless
-    ``allow_unauthorized`` (fixture/dry checks).  This contract does NOT
-    reuse the S2.12 36+27 authorization schema.
+    positive budget caps.  The FULL contract schema is validated (types,
+    const, enum, required, additionalProperties, arrays, nested objects)
+    via ``bpc_hybrid.de_contract_schema`` — ``jsonschema`` when installed,
+    otherwise this repo's complete dependency-free validator; a contract
+    that merely has the right top-level keys is REJECTED.
+
+    When ``authorization`` is present it is verified against the REAL event
+    file: the file must exist inside the allowed config directory, its
+    SHA-256 must equal ``authorization_event_file_sha256``, the file must
+    contain the authorization sentence whose UTF-8 SHA-256 equals
+    ``authorization_sentence_utf8_sha256``, and the sentence must
+    explicitly name 990 calls, deepseek-v4-pro, temperature=0, retry=0 and
+    the exact USD cap from the contract budget.  Any fabricated path,
+    wrong hash, empty event, different call count or different budget is
+    rejected before the first send.  ``allow_unauthorized`` is for
+    fixture/dry checks only.  This contract does NOT reuse the S2.12
+    36+27 authorization schema.
     """
     if contract_path is None:
         contract_path = DE_CONTRACT_PATH
@@ -1355,12 +1488,15 @@ def validate_de_contract(contract_path: Path | None = None,
     except (OSError, json.JSONDecodeError) as exc:
         raise ContractError(f"contract schema unreadable: {exc}") from exc
 
-    required = set(schema.get("required", []))
-    missing = sorted(required - set(contract))
-    if missing:
-        raise ContractError(f"contract missing required fields: {missing}")
-    if contract.get("schema_version") != "barrientos_de_execution_contract@1.0.0":
-        raise ContractError("contract schema_version drift")
+    # FULL schema validation (types/const/enum/required/additionalProperties/
+    # arrays/nested), not a partial top-level check
+    from bpc_hybrid.de_contract_schema import (
+        validate_with_jsonschema_if_available)
+    schema_errors = validate_with_jsonschema_if_available(contract, schema)
+    if schema_errors:
+        raise ContractError(
+            "contract schema validation failed:\n  "
+            + "\n  ".join(schema_errors[:20]))
 
     # commit binding: the contract binds a code commit that must be part of
     # the executed tree (ancestor of HEAD); the content-hash checks below are
@@ -1447,26 +1583,121 @@ def validate_de_contract(contract_path: Path | None = None,
         raise ContractError("contract authorization is null; the user has "
                             "not authorized real API execution")
     if auth is not None:
-        for field in ("authorization_sentence_utf8_sha256",
-                      "authorization_event_file",
-                      "authorization_event_file_sha256"):
-            if not auth.get(field):
-                raise ContractError(f"contract authorization missing {field}")
-        if auth.get("authorization_event_file_sha256") and len(
-                auth["authorization_event_file_sha256"]) != 64:
-            raise ContractError("contract authorization event sha malformed")
+        _verify_authorization_event(auth, contract)
 
     return contract
 
 
-class DeBudgetGate:
-    """Hard budget gate enforced before EVERY send.
+# directories the authorization event file may live in (fail closed on
+# fabricated absolute paths / escapes)
+AUTH_ALLOWED_DIRS = (ROOT / "configs", ROOT / "outputs/reports")
 
-    Tracks calls, input tokens, output tokens and USD cost against the
-    contract caps.  ``check_before_send`` raises ``ContractError`` as soon
-    as a cap is reached or the budget can no longer be verified; the
-    executor stops before the next send.  Missing usage is NEVER treated as
-    zero cost — it raises and aborts.
+
+def _verify_authorization_event(auth: Mapping[str, Any],
+                                contract: Mapping[str, Any]) -> None:
+    """Verify the REAL authorization event file and sentence.
+
+    Checks, in order:
+    1. the event file path exists and resolves inside an allowed dir;
+    2. the file's actual SHA-256 equals ``authorization_event_file_sha256``;
+    3. the file parses as JSON and carries a non-empty authorization
+       sentence string;
+    4. the sentence's UTF-8 SHA-256 equals
+       ``authorization_sentence_utf8_sha256``;
+    5. the sentence explicitly names: 990 calls, deepseek-v4-pro,
+       temperature=0, retry=0 and the exact USD cap from the contract.
+    """
+    for field in ("authorization_sentence_utf8_sha256",
+                  "authorization_event_file",
+                  "authorization_event_file_sha256"):
+        if not auth.get(field):
+            raise ContractError(f"contract authorization missing {field}")
+    if len(auth["authorization_sentence_utf8_sha256"]) != 64:
+        raise ContractError("authorization sentence sha malformed")
+    if len(auth["authorization_event_file_sha256"]) != 64:
+        raise ContractError("authorization event file sha malformed")
+
+    event_path = Path(str(auth["authorization_event_file"]))
+    if not event_path.is_absolute():
+        event_path = ROOT / event_path
+    try:
+        resolved = event_path.resolve()
+    except OSError as exc:
+        raise ContractError(f"authorization event path unresolvable: {exc}") \
+            from exc
+    allowed = any(
+        str(resolved).lower().startswith(str(d.resolve()).lower())
+        for d in AUTH_ALLOWED_DIRS)
+    if not allowed:
+        raise ContractError(
+            f"authorization event file outside allowed dirs: {resolved}")
+    if not resolved.is_file():
+        raise ContractError(f"authorization event file does not exist: "
+                            f"{resolved}")
+
+    actual_sha = _sha256_file(resolved)
+    if actual_sha != auth["authorization_event_file_sha256"]:
+        raise ContractError(
+            f"authorization event file SHA-256 mismatch: got "
+            f"{actual_sha[:16]}..., contract says "
+            f"{auth['authorization_event_file_sha256'][:16]}...")
+
+    try:
+        event = json.loads(resolved.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ContractError(f"authorization event file is not valid JSON: "
+                            f"{exc}") from exc
+    sentence = event.get("authorization_sentence") \
+        if isinstance(event, dict) else None
+    if not isinstance(sentence, str) or not sentence.strip():
+        raise ContractError("authorization event file has an empty or "
+                            "missing authorization_sentence")
+
+    sentence_sha = _sha256_bytes(sentence.encode("utf-8"))
+    if sentence_sha != auth["authorization_sentence_utf8_sha256"]:
+        raise ContractError(
+            f"authorization sentence SHA-256 mismatch: got "
+            f"{sentence_sha[:16]}..., contract says "
+            f"{auth['authorization_sentence_utf8_sha256'][:16]}...")
+
+    usd_cap = (contract.get("budget") or {}).get("usd_cost_cap")
+    usd_cap_str = f"{usd_cap:.3f}" if isinstance(usd_cap, (int, float)) \
+        else str(usd_cap)
+    required_tokens = {
+        "990 calls": "990",
+        "model deepseek-v4-pro": "deepseek-v4-pro",
+        "temperature=0": "temperature=0",
+        "retry=0": "retry=0",
+        f"USD cap {usd_cap_str}": usd_cap_str,
+    }
+    for label, token in required_tokens.items():
+        if token not in sentence:
+            raise ContractError(
+                f"authorization sentence does not explicitly name "
+                f"{label} ({token!r} missing)")
+
+
+class DeBudgetGate:
+    """Hard budget gate enforced around EVERY send.
+
+    Two-phase protocol:
+
+    * ``check_before_send(projected_input_tokens, projected_max_output_tokens)``
+      runs BEFORE ``transport.send()``.  It verifies that the NEXT send is
+      still within the contract: ``calls_made + 1 <= call_cap`` and that the
+      conservative cost of the next request (its rendered input tokens plus
+      the full per-call max output tokens) would not push the cumulative
+      input/output token or USD totals above the caps.  The 990th send is
+      therefore ALLOWED (989 + 1 = 990 <= 990).
+    * ``record_after_response(usage, returned_model)`` runs AFTER the
+      response.  It records actual usage and only treats the run as
+      exceeded when a CUMULATIVE total is strictly greater than its cap
+      (equal to the cap is a legal completion — the 990th response must be
+      persisted).  Missing usage aborts (never treated as 0 cost).
+      A transport error still counts as one call.
+
+    The 991st send is rejected inside ``check_before_send`` BEFORE any
+    request reaches the transport.
     """
 
     def __init__(self, contract: Mapping[str, Any]):
@@ -1492,24 +1723,42 @@ class DeBudgetGate:
             self.abort(f"returned model {returned_model!r} != contract "
                        f"model {self.model_id!r}")
 
-    def check_before_send(self) -> None:
+    def check_before_send(self,
+                          projected_input_tokens: int = 0,
+                          projected_max_output_tokens: int = 0) -> None:
+        """Reject the NEXT send before it reaches the transport.
+
+        ``projected_input_tokens`` is the estimated input-token count of the
+        rendered request body; ``projected_max_output_tokens`` is the
+        conservative per-call output bound (the contract's max_tokens)."""
         if self.aborted:
             raise ContractError(f"budget gate aborted: {self.abort_reason}")
-        if self.calls_made >= self.call_cap:
-            self.abort(f"call cap reached ({self.calls_made}/{self.call_cap})")
-        if self.cost_usd >= self.usd_cost_cap:
-            self.abort(f"USD cap reached ({self.cost_usd:.4f}/"
-                       f"{self.usd_cost_cap:.4f})")
-        if self.input_tokens >= self.input_token_cap:
-            self.abort(f"input token cap reached "
-                       f"({self.input_tokens}/{self.input_token_cap})")
-        if self.output_tokens >= self.output_token_cap:
-            self.abort(f"output token cap reached "
-                       f"({self.output_tokens}/{self.output_token_cap})")
+        if self.calls_made + 1 > self.call_cap:
+            self.abort(f"next send would exceed the call cap "
+                       f"({self.calls_made} made, cap {self.call_cap})")
+        proj_input = self.input_tokens + projected_input_tokens
+        proj_output = self.output_tokens + projected_max_output_tokens
+        proj_cost = (self.cost_usd
+                     + (projected_input_tokens * self.input_price
+                        + projected_max_output_tokens * self.output_price)
+                     / 1e6)
+        if proj_input > self.input_token_cap:
+            self.abort(f"next send would exceed the input token cap "
+                       f"({proj_input:.0f} > {self.input_token_cap:.0f})")
+        if proj_output > self.output_token_cap:
+            self.abort(f"next send would exceed the output token cap "
+                       f"({proj_output:.0f} > {self.output_token_cap:.0f})")
+        if proj_cost > self.usd_cost_cap:
+            self.abort(f"next send would exceed the USD cap "
+                       f"({proj_cost:.4f} > {self.usd_cost_cap:.4f})")
 
-    def record(self, usage: Mapping[str, Any] | None,
-               returned_model: str | None = None) -> None:
-        """Record one completed send.  Missing usage aborts (never 0)."""
+    def record_after_response(self,
+                              usage: Mapping[str, Any] | None,
+                              returned_model: str | None = None) -> None:
+        """Record one completed send (called after the response arrived).
+
+        Cumulative totals strictly greater than a cap abort; equal to the
+        cap is a legal completion.  Missing usage aborts (never 0 cost)."""
         self.calls_made += 1
         self.check_model(returned_model)
         if not usage or not isinstance(usage, Mapping):
@@ -1527,7 +1776,18 @@ class DeBudgetGate:
         self.cost_usd += (float(prompt_tokens) * self.input_price
                           + float(completion_tokens) * self.output_price) \
             / 1e6
-        self.check_before_send()
+        if self.calls_made > self.call_cap:
+            self.abort(f"call cap exceeded "
+                       f"({self.calls_made} > {self.call_cap})")
+        if self.input_tokens > self.input_token_cap:
+            self.abort(f"input token cap exceeded "
+                       f"({self.input_tokens} > {self.input_token_cap})")
+        if self.output_tokens > self.output_token_cap:
+            self.abort(f"output token cap exceeded "
+                       f"({self.output_tokens} > {self.output_token_cap})")
+        if self.cost_usd > self.usd_cost_cap:
+            self.abort(f"USD cap exceeded "
+                       f"({self.cost_usd:.4f} > {self.usd_cost_cap:.4f})")
 
     def abort(self, reason: str) -> None:
         self.aborted = True
@@ -1905,7 +2165,8 @@ def _make_evaluator(arm: str):
                 "output_coverage": round(len(trees) / len(preds), 6)
                 if preds else 0.0,
                 "shared_3class_modality_agreement": round(agree / n, 6)
-                if n else 0.0,                "denominator": len(preds),
+                if n else 0.0,
+                "denominator": len(preds),
                 "failed_count": sum(1 for p in preds
                                     if p["request_status"] != "ok"),
                 "note": (
@@ -2008,6 +2269,8 @@ def execute_de(contract_path: Path | None = None,
     }
 
     runs_by_arm: dict[str, list[dict[str, Any]]] = {}
+    completed_samples = 0   # new sends + resumed completed
+    in_doubt_samples = 0
     try:
         for planned in plan:
             arm = planned["arm"]
@@ -2043,18 +2306,25 @@ def execute_de(contract_path: Path | None = None,
                 budget_gate=gate,
             )
             results["actual_calls"] += run["actual_call_count"]
+            completed_samples += (run["actual_call_count"]
+                                  + run["resumed_completed_count"])
+            in_doubt_samples += run["in_doubt_skipped_count"]
             if isinstance(run["cost"], (int, float)):
                 results["total_cost_usd"] += run["cost"]
             results["arms"].setdefault(arm, {"repeats": []})
             results["arms"][arm]["repeats"].append({
                 "repeat_id": repeat_id,
                 "actual_call_count": run["actual_call_count"],
+                "resumed_completed_count": run["resumed_completed_count"],
+                "in_doubt_skipped_count": run["in_doubt_skipped_count"],
                 "failed_count": run["failed_count"],
                 "cost": run["cost"],
             })
             results["runs"].append({
                 "arm": arm, "repeat_id": repeat_id, "reused": False,
                 "actual_call_count": run["actual_call_count"],
+                "resumed_completed_count": run["resumed_completed_count"],
+                "in_doubt_skipped_count": run["in_doubt_skipped_count"],
                 "failed_count": run["failed_count"],
                 "sample_count": run["sample_count"],
             })
@@ -2066,8 +2336,13 @@ def execute_de(contract_path: Path | None = None,
         results["abort_reason"] = str(exc)
         results["budget_gate"] = gate.to_dict()
         print(f"ABORTED by contract gate: {exc}")
+    except Exception as exc:  # unexpected failure still writes the ledger
+        results["aborted"] = True
+        results["abort_reason"] = f"unexpected: {type(exc).__name__}: {exc}"
+        results["budget_gate"] = gate.to_dict()
+        print(f"ABORTED by unexpected error: {exc}")
 
-    if stability_runs_for(plan) == 5 and not results.get("aborted"):
+    if not results.get("aborted") and stability_runs_for(plan) == 5:
         stability_arms = ["OURS-FULL", "BARR-FULL",
                           "OURS-BARRIENTOS-MODULE"]
         e_stability = compute_stability(
@@ -2079,11 +2354,48 @@ def execute_de(contract_path: Path | None = None,
     results["budget_gate"] = gate.to_dict()
     results["runtime_seconds"] = round(time.time() - started, 3)
     results["total_cost_usd"] = round(results["total_cost_usd"], 8)
+    results["completed_samples"] = completed_samples
+    results["in_doubt_samples"] = in_doubt_samples
+    # total calls accounted = new sends this run + resumed completed
+    # (a resumed run that finishes the plan accounts for all 990 samples)
+    results["total_calls_accounted"] = completed_samples
+    # completeness gate: exit 0 / "complete" ONLY when every planned sample
+    # is accounted for as completed (new send OR resumed), no sample is
+    # in_doubt, every plan repeat ran, artifacts exist and the gate never
+    # aborted.  ``actual_calls`` is the number of NEW sends made by this
+    # invocation (== 990 for a fresh run; less for a resumed run whose
+    # remaining samples were sent).
+    results["complete"] = (
+        results.get("aborted") is not True
+        and completed_samples == results["planned_calls"]
+        and in_doubt_samples == 0
+        and len(results["runs"]) == len(plan)
+        and gate.aborted is False
+        and _arm_artifacts_complete(plan)
+    )
     summary_path = OUT_DIR / "execution_summary.json"
     summary_path.write_text(json.dumps(results, ensure_ascii=False, indent=2)
                             + "\n", encoding="utf-8")
-    print(f"D/E real execution complete: {_rel(summary_path)}")
+    if results["complete"]:
+        print(f"D/E real execution complete: {_rel(summary_path)}")
+    else:
+        print(f"D/E real execution INCOMPLETE/ABORTED: {_rel(summary_path)}")
     return results
+
+
+def _arm_artifacts_complete(plan: Sequence[Mapping[str, Any]]) -> bool:
+    """True when every non-reused plan repeat has its five artifacts."""
+    required = ("raw_responses.jsonl", "canonical_predictions.jsonl",
+                "failed_samples.jsonl", "evaluation.json", "manifest.json")
+    for planned in plan:
+        if planned.get("reused"):
+            continue
+        run_dir = OUT_DIR / planned["arm"] / planned["repeat_id"]
+        if not run_dir.is_dir():
+            return False
+        if not all((run_dir / f).is_file() for f in required):
+            return False
+    return True
 
 
 def stability_runs_for(plan: Sequence[Mapping[str, Any]]) -> int:
@@ -2261,6 +2573,9 @@ def main() -> int:
                                  stability_runs=args.stability_runs)
         elif args.execute_de:
             result = execute_de(args.contract_file)
+            if not result.get("complete"):
+                print(json.dumps(result, ensure_ascii=False, indent=2)[:1500])
+                return 3  # aborted or incomplete execution is a failure
         elif args.dry_run:
             result = dry_run()
         elif args.suite:

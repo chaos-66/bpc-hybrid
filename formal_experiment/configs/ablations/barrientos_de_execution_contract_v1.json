@@ -1,7 +1,7 @@
 {
   "schema_version": "barrientos_de_execution_contract@1.0.0",
   "suite_id": "S2-BARRIENTOS-DE-001",
-  "bound_commit": "d8e61e02cc84df44e467e30524530b0504c4b61f",
+  "bound_commit": "4dfd18fbee215c03b6d43e61f1f1fbb9ee07bf56",
   "execution_plan": {
     "total_calls": 990,
     "arms": [
@@ -157,7 +157,7 @@
   "hashes": {
     "estg_input_v2": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
     "e_contract_v2": "43aeeac51c49f5e93cefddde6fd9a4090d0fe5d00971d08a7f2d35e4a83a7c43",
-    "executor": "300bf9ad0b65f24064e60babfc07af7e004d3d019b311c1043cc223f5f5252fb",
+    "executor": "8fb85a53d31dd1fbffc52a738bed402c789f083863689a9a1bcd3cf9e21640b1",
     "config": "a5956cdb247761f1ac3074a2870991a60d93ba948698564fde24792a627248b9",
     "prompts": {
       "D-full": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
@@ -181,7 +181,7 @@
       "output_per_million": 3.96
     },
     "input_estimate_note": "estimated input tokens=2578113 over 990 rendered requests (ceil(utf8_bytes/3), conservative over-estimate); input cap = x1.5; output cap = 990*4096; USD cap = (input_cap*1.32/1M + output_cap*3.96/1M)*1.2 rounded up; not a guess, derived from rendered requests",
-    "computed_at_utc": "2026-08-26T22:00:42Z"
+    "computed_at_utc": "2026-08-27T10:41:15Z"
   },
   "authorization": null,
   "gold_isolation": {
