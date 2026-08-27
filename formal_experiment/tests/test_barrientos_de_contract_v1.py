@@ -646,12 +646,14 @@ def test_budget_gate_stops_before_next_send():
     # send 1: allowed, completes normally
     gate.check_before_send(projected_input_tokens=100,
                            projected_max_output_tokens=4096)
-    gate.record_after_response({"prompt_tokens": 100, "completion_tokens": 50})
+    gate.record_after_response({"prompt_tokens": 100, "completion_tokens": 50},
+                               returned_model="deepseek-v4-pro")
     assert gate.calls_made == 1 and not gate.aborted
     # send 2: allowed (1 + 1 = 2 <= 2), completes normally
     gate.check_before_send(projected_input_tokens=100,
                            projected_max_output_tokens=4096)
-    gate.record_after_response({"prompt_tokens": 100, "completion_tokens": 50})
+    gate.record_after_response({"prompt_tokens": 100, "completion_tokens": 50},
+                               returned_model="deepseek-v4-pro")
     assert gate.calls_made == 2 and not gate.aborted
     # send 3: rejected BEFORE the transport (2 + 1 = 3 > 2)
     try:
@@ -674,7 +676,8 @@ def test_budget_gate_990th_call_completes():
         gate.check_before_send(projected_input_tokens=100,
                                projected_max_output_tokens=4096)
         gate.record_after_response({"prompt_tokens": 100,
-                                    "completion_tokens": 50})
+                                    "completion_tokens": 50},
+                                   returned_model="deepseek-v4-pro")
     assert gate.calls_made == 990 and not gate.aborted
     assert gate.input_tokens == 990 * 100
     assert gate.output_tokens == 990 * 50
@@ -709,7 +712,8 @@ def test_budget_gate_990_plan_with_realistic_usage():
         gate.check_before_send(projected_input_tokens=est,
                                projected_max_output_tokens=4096)
         gate.record_after_response({"prompt_tokens": est,
-                                    "completion_tokens": 4096})
+                                    "completion_tokens": 4096},
+                                   returned_model="deepseek-v4-pro")
     assert gate.calls_made == 990
     assert not gate.aborted
     assert gate.input_tokens <= gate.input_token_cap
@@ -725,7 +729,7 @@ def test_budget_gate_fails_closed_on_missing_usage():
     gate.check_before_send(projected_input_tokens=10,
                            projected_max_output_tokens=100)
     try:
-        gate.record_after_response(None)
+        gate.record_after_response(None, returned_model="deepseek-v4-pro")
         raise AssertionError("missing usage must abort")
     except m.ContractError:
         pass
@@ -949,3 +953,325 @@ def test_three_tables_build_from_fixture_output(tmp_path):
         for field in ("actor_action_exception", "definition",
                       "precondition"):
             assert field in c["not_expressible"]
+
+
+# ---------------------------------------------------------------------------
+# 9. Resume must restore the GLOBAL budget state (no fresh-gate bypass)
+# ---------------------------------------------------------------------------
+
+
+def _persisted_rows(n: int, *, model: str = "deepseek-v4-pro",
+                    prompt_tokens: int = 100, completion_tokens: int = 50):
+    """n completed raw+ledger rows shaped like the executor's persisted
+    files (returned_model included)."""
+    raw = []
+    ledger = []
+    for i in range(n):
+        content = json.dumps({"sample_id": f"s{i}", "clauses": []})
+        resp_sha = hashlib.sha256(content.encode("utf-8")).hexdigest()
+        raw.append({
+            "sample_id": f"s{i}", "arm": "D-no-fewshot",
+            "repeat_id": "repeat-01",
+            "request_body_sha256": "ab" * 32,
+            "request_id": f"req-{i}",
+            "raw_response_content": content,
+            "response_sha256": resp_sha,
+            "usage": {"prompt_tokens": prompt_tokens,
+                      "completion_tokens": completion_tokens},
+            "cost": 0.001, "request_status": "ok", "error": None,
+            "returned_model": model, "network_call": 1,
+        })
+        ledger.append({"sample_id": f"s{i}", "arm": "D-no-fewshot",
+                       "repeat_id": "repeat-01", "state": "completed",
+                       "response_sha256": resp_sha})
+    return raw, ledger
+
+
+def test_resume_restores_400_completed_gate_state():
+    """Restoring 400 persisted completed requests must yield
+    gate.calls_made == 400 (NOT 0) and token/cost equal to the cumulative
+    persisted usage."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    gate = m.DeBudgetGate(contract)
+    raw, ledger = _persisted_rows(400)
+    gate.restore_from_persisted(raw, ledger)
+    assert gate.calls_made == 400, f"expected 400, got {gate.calls_made}"
+    assert gate.input_tokens == 400 * 100
+    assert gate.output_tokens == 400 * 50
+    expected_cost = (400 * 100 * 1.32 + 400 * 50 * 3.96) / 1e6
+    assert abs(gate.cost_usd - expected_cost) < 1e-9
+    assert not gate.aborted
+
+
+def test_resume_restore_then_projected_overflow_rejected_before_send():
+    """After restoring persisted state, a next request whose projected
+    cost would exceed the budget must be rejected in check_before_send
+    BEFORE any transport.send."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    # shrink the USD cap so the restored cost leaves no room for another call
+    small = copy.deepcopy(contract)
+    small["budget"]["usd_cost_cap"] = (400 * 100 * 1.32 + 400 * 50 * 3.96) / 1e6
+    gate = m.DeBudgetGate(small)
+    raw, ledger = _persisted_rows(400)
+    gate.restore_from_persisted(raw, ledger)
+    assert not gate.aborted  # restored == cap is legal
+    # the next send would exceed the USD cap -> rejected before transport
+    try:
+        gate.check_before_send(projected_input_tokens=1000,
+                               projected_max_output_tokens=4096)
+        raise AssertionError("next send must be rejected before transport")
+    except m.ContractError:
+        pass
+    assert gate.aborted
+
+
+def test_resume_with_in_doubt_fails_closed_zero_sends():
+    """A persisted in_doubt ledger entry must fail closed on resume BEFORE
+    any new send; the previous missing-usage abort is not bypassed."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    gate = m.DeBudgetGate(contract)
+    raw, ledger = _persisted_rows(3)
+    ledger.append({"sample_id": "s3", "arm": "D-no-fewshot",
+                   "repeat_id": "repeat-01", "state": "in_doubt",
+                   "error": "mid-run transport failure"})
+    try:
+        gate.restore_from_persisted(raw, ledger)
+        raise AssertionError("in_doubt must fail closed on restore")
+    except m.ContractError as exc:
+        assert "in_doubt" in str(exc)
+    assert gate.aborted
+    # a fresh gate must NOT be created to bypass: restoring the same state
+    # into a second gate also fails (no auto-resend)
+    gate2 = m.DeBudgetGate(contract)
+    try:
+        gate2.restore_from_persisted(raw, ledger)
+        raise AssertionError("in_doubt must fail closed on every resume")
+    except m.ContractError:
+        pass
+
+
+def test_resume_restore_verifies_ledger_and_response_hashes():
+    """Restore must verify the ledger state and the raw/ledger response
+    hash match; a tampered ledger entry is rejected."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    raw, ledger = _persisted_rows(2)
+    # tamper: ledger response_sha256 differs from raw
+    ledger[1]["response_sha256"] = "cd" * 32
+    gate = m.DeBudgetGate(contract)
+    try:
+        gate.restore_from_persisted(raw, ledger)
+        raise AssertionError("hash mismatch must be rejected on restore")
+    except m.ContractError as exc:
+        assert "hash mismatch" in str(exc)
+
+
+def test_resume_restore_verifies_returned_model():
+    """A persisted completed row with a missing or wrong returned_model
+    must fail closed on restore (cannot be accepted as conforming)."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    raw, ledger = _persisted_rows(1)
+    raw[0]["returned_model"] = None
+    gate = m.DeBudgetGate(contract)
+    try:
+        gate.restore_from_persisted(raw, ledger)
+        raise AssertionError("missing returned_model must fail on restore")
+    except m.ContractError as exc:
+        assert "returned model" in str(exc)
+    raw2, ledger2 = _persisted_rows(1)
+    raw2[0]["returned_model"] = "deepseek-v4-flash"
+    gate2 = m.DeBudgetGate(contract)
+    try:
+        gate2.restore_from_persisted(raw2, ledger2)
+        raise AssertionError("wrong returned_model must fail on restore")
+    except m.ContractError:
+        pass
+
+
+def test_resume_restore_missing_usage_fails_closed():
+    """A persisted completed row without verifiable usage must fail closed
+    on restore (cost never treated as 0)."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    raw, ledger = _persisted_rows(1)
+    raw[0]["usage"] = {}
+    gate = m.DeBudgetGate(contract)
+    try:
+        gate.restore_from_persisted(raw, ledger)
+        raise AssertionError("missing usage must fail on restore")
+    except m.ContractError as exc:
+        assert "usage" in str(exc)
+
+
+def test_resume_restore_then_run_completes_within_budget(tmp_path):
+    """End-to-end resume: restore the global gate from persisted rows,
+    then run the remaining samples through run_arm_once with the SAME gate
+    (never a fresh one); completed samples are not re-sent and the totals
+    stay within the contract caps."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    big = copy.deepcopy(contract)
+    big["budget"]["input_token_cap"] = 10 ** 12
+    big["budget"]["output_token_cap"] = 10 ** 12
+    big["budget"]["usd_cost_cap"] = 10 ** 12
+    # 400 completed rows persisted for arm/repeat-01 + 2 remaining samples
+    raw, ledger = _persisted_rows(400)
+    out_dir = tmp_path / "D-no-fewshot" / "repeat-01"
+    out_dir.mkdir(parents=True)
+    (out_dir / "raw_responses.jsonl").write_text(
+        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in raw),
+        encoding="utf-8")
+    (out_dir / "calls_ledger.jsonl").write_text(
+        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in ledger),
+        encoding="utf-8")
+
+    gate = m.DeBudgetGate(big)
+    gate.restore_from_persisted(raw, ledger)
+    assert gate.calls_made == 400
+
+    samples = [{"sample_id": f"s{i}", "text": "t"} for i in range(402)]
+    transport = _persist_transport(fail_after=None)
+    run = m.run_arm_once(arm="D-no-fewshot", repeat_id="repeat-01",
+                         samples=samples, prompt_text="", transport=transport,
+                         cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
+                         out_dir=out_dir, budget_gate=gate)
+    # 400 resumed (reused, not re-sent) + 2 new sends
+    assert run["resumed_completed_count"] == 400
+    assert run["actual_call_count"] == 2
+    assert transport.send_count == 2
+    assert gate.calls_made == 402
+    assert not gate.aborted
+
+
+# ---------------------------------------------------------------------------
+# 10. Runtime LLMConfig must match the contract exactly
+# ---------------------------------------------------------------------------
+
+
+class _FakeLLMConfig:
+    def __init__(self, **kwargs):
+        self.enabled = kwargs.get("enabled", True)
+        self.provider = kwargs.get("provider", "openai_compatible")
+        self.model = kwargs.get("model", "deepseek-v4-pro")
+        self.temperature = kwargs.get("temperature", 0.0)
+        self.top_p = kwargs.get("top_p", 1.0)
+        self.max_tokens = kwargs.get("max_tokens", 4096)
+        self.seed = None
+        self.seed_supported = False
+
+
+def test_runtime_config_binding_all_fields():
+    """provider/model/temperature/top_p/max_tokens must ALL match the
+    contract; any single deviation is rejected BEFORE the first send."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    # valid config passes
+    m._validate_runtime_config(_FakeLLMConfig(), contract)
+    for field, bad in (
+            ("provider", "azure"),
+            ("model", "deepseek-v4-flash"),
+            ("temperature", 0.7),
+            ("top_p", 0.5),
+            ("max_tokens", 1024),
+            ("enabled", False)):
+        cfg = _FakeLLMConfig()
+        setattr(cfg, field, bad)
+        try:
+            m._validate_runtime_config(cfg, contract)
+            raise AssertionError(f"runtime {field}={bad!r} must be rejected")
+        except m.ContractError as exc:
+            assert field in str(exc)
+
+
+def test_returned_model_missing_fails_closed():
+    """A response with NO returned model must fail closed (not pass)."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    gate = m.DeBudgetGate(contract)
+    gate.check_before_send(projected_input_tokens=10,
+                           projected_max_output_tokens=100)
+    try:
+        gate.record_after_response({"prompt_tokens": 10,
+                                    "completion_tokens": 5},
+                                   returned_model=None)
+        raise AssertionError("missing returned_model must fail closed")
+    except m.ContractError as exc:
+        assert "returned model" in str(exc)
+    assert gate.aborted
+
+
+def test_returned_model_mismatch_fails_closed():
+    """A response whose returned model differs from the contract must fail
+    closed."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    gate = m.DeBudgetGate(contract)
+    gate.check_before_send(projected_input_tokens=10,
+                           projected_max_output_tokens=100)
+    try:
+        gate.record_after_response({"prompt_tokens": 10,
+                                    "completion_tokens": 5},
+                                   returned_model="deepseek-v4-flash")
+        raise AssertionError("wrong returned_model must fail closed")
+    except m.ContractError:
+        pass
+    assert gate.aborted
+
+
+def test_usage_missing_after_response_fails_closed():
+    """usage missing after a response keeps failing closed."""
+    m = _executor()
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    gate = m.DeBudgetGate(contract)
+    gate.check_before_send(projected_input_tokens=10,
+                           projected_max_output_tokens=100)
+    try:
+        gate.record_after_response(None, returned_model="deepseek-v4-pro")
+        raise AssertionError("missing usage must fail closed")
+    except m.ContractError:
+        pass
+    assert gate.aborted
+
+
+# ---------------------------------------------------------------------------
+# 11. authorization dir check must be real path containment
+# ---------------------------------------------------------------------------
+
+
+def test_auth_dir_check_rejects_sibling_prefix():
+    """A sibling path like ``configs_evil`` must NOT be treated as inside
+    ``configs`` (Path.is_relative_to, not string startswith)."""
+    m = _executor()
+    import tempfile
+    base = ROOT / ".tmp" / "auth_dir_check"
+    base.mkdir(parents=True, exist_ok=True)
+    try:
+        evil = base / "configs_evil" / "event.json"
+        evil.parent.mkdir(parents=True, exist_ok=True)
+        evil.write_text("{}", encoding="utf-8")
+        # patch the allowed dirs to a sibling pair so the prefix collision
+        # is actually exercised
+        from run_barrientos_ablation_suite_v2 import AUTH_ALLOWED_DIRS
+        import run_barrientos_ablation_suite_v2 as _m
+        old = _m.AUTH_ALLOWED_DIRS
+        _m.AUTH_ALLOWED_DIRS = (base / "configs",)
+        try:
+            auth = {
+                "authorization_sentence_utf8_sha256": "ab" * 32,
+                "authorization_event_file": str(evil),
+                "authorization_event_file_sha256": "cd" * 32,
+            }
+            try:
+                _m._verify_authorization_event(auth, {})
+                raise AssertionError("configs_evil must be rejected")
+            except _m.ContractError:
+                pass
+        finally:
+            _m.AUTH_ALLOWED_DIRS = old
+    finally:
+        import shutil
+        shutil.rmtree(base, ignore_errors=True)

@@ -533,30 +533,22 @@ def test_d_full_reuses_locked_without_calling():
     assert dfull["expected_calls"] == 0
 
 
-def test_auth_file_content_validated_not_just_exists(tmp_path):
-    """Authorization must be content-validated with the repo's existing
-    validator, not merely is_file()."""
+def test_s2_12_auth_path_removed_from_de_executor():
+    """The dead S2.12 authorization path (validate_auth_for_de /
+    synthetic_de_auth_fixture) must be REMOVED from the D/E executor so the
+    real execution can never accidentally use the old 36+27 authorization
+    schema.  Only the dedicated contract path remains."""
     m = _executor_module()
-    missing = tmp_path / "missing.json"
-    empty = tmp_path / "empty.json"
-    empty.write_text("", encoding="utf-8")
-    arbitrary = tmp_path / "arbitrary.json"
-    arbitrary.write_text("{}", encoding="utf-8")
-
-    for bad in (missing, empty, arbitrary):
-        try:
-            m.validate_auth_for_de(bad)
-            raise AssertionError(f"{bad.name} must be rejected")
-        except Exception:
-            pass
-
-    # a schema-valid S2.12 authorization fixture (model/caps/retry present)
-    valid = tmp_path / "auth.json"
-    valid.write_text(json.dumps(m.synthetic_de_auth_fixture()), encoding="utf-8")
-    # the repo validator accepts it only when the static contract matches;
-    # for the fake-transport path we accept our documented fixture
-    outcome = m.validate_auth_for_de(valid, allow_fake_fixture=True)
-    assert outcome is True
+    assert not hasattr(m, "validate_auth_for_de")
+    assert not hasattr(m, "synthetic_de_auth_fixture")
+    assert not hasattr(m, "AUTH_SCHEMA_PATH")
+    # the real path is the dedicated contract only
+    assert hasattr(m, "validate_de_contract")
+    assert hasattr(m, "DE_CONTRACT_PATH")
+    src = (SCRIPTS / "run_barrientos_ablation_suite_v2.py").read_text(
+        encoding="utf-8")
+    assert "s2_12_api_authorization" not in src
+    assert "global_usd_cost_cap" not in src
 
 
 def test_executor_plan_never_duplicates_arm_repeat():

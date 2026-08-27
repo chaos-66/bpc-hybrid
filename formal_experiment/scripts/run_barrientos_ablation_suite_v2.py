@@ -377,7 +377,6 @@ def dry_run() -> dict[str, Any]:
     return result
 
 
-AUTH_SCHEMA_PATH = ROOT / "configs/schemas/s2_12_api_authorization_v1.schema.json"
 D_FULL_LOCKED = ROOT / "data/predictions/direct_llm_formal_arm_v1/predictions.json"
 
 STABILITY_CHOICES = (1, 5)
@@ -596,6 +595,7 @@ def call_once(
             pass
 
     resp_sha = _sha256_bytes((content or "").encode("utf-8"))
+    returned_model = decode.get("model")
     if usage:
         cost = cost_of(usage)
     else:
@@ -613,6 +613,7 @@ def call_once(
         "cost": cost,
         "request_status": status,
         "error": error,
+        "returned_model": returned_model,
         "network_call": 1,
     }
 
@@ -1311,106 +1312,6 @@ def _compute_agreements_one_arm(arm: str,
 
 
 # ---------------------------------------------------------------------------
-# Authorization content validation (reuses the repo's S2.12 schema file)
-# ---------------------------------------------------------------------------
-
-
-def synthetic_de_auth_fixture() -> dict[str, Any]:
-    """Schema-shaped fixture for fake-transport tests only (never real)."""
-    return {
-        "schema_version": "s2_12_api_authorization@1.1.0",
-        "authorization_sentence_utf8_sha256": "ab" * 32,
-        "authorization_event_file": "configs/synthetic.json",
-        "authorization_event_file_sha256": "cd" * 32,
-        "model": "deepseek-v4-pro",
-        "calls": {"direct_llm": 36, "sun_llm_fallback": 27},
-        "stage_id": "D-CAL",
-        "stage_payload_hashes": ["ab" * 32],
-        "stage_call_cap": 1,
-        "global_input_token_cap": 63000000,
-        "global_output_token_cap": 258048,
-        "global_usd_cost_cap": 84.18,
-        "allowed_windows": "any_time",
-        "price_snapshot": {
-            "schema_version": "s2_12_price_snapshot@1.0.0",
-            "currency": "USD",
-            "input_cache_hit_per_million": 0.044,
-            "input_cache_miss_per_million": 1.32,
-            "output_per_million": 3.96,
-        },
-        "price_checked_at_utc": "2026-08-22T00:00:00Z",
-        "runner_implementation_hashes": {
-            "run_s2_12_direct_llm_v1": "ab" * 32,
-            "run_s2_12_sun_llm_fallback_v1": "ab" * 32,
-            "s2_12_execution": "ab" * 32,
-            "llm_client": "ab" * 32,
-            "h1_transport": "ab" * 32,
-        },
-        "input_config_prompt_hashes": {
-            "input_sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
-            "lock_sha256": "ab" * 32,
-            "prompt_direct_sha256": "ab" * 32,
-            "prompt_fallback_sha256": "ab" * 32,
-        },
-        "prev_stage_ledger_hash": "",
-        "final_63_payload_hashes": ["ab" * 32] * 63,
-        "retry": 0,
-        "gold_isolation": {
-            "api_arms_must_not_read_gold": True,
-            "evaluation_only_after_predictions_are_locked": True,
-        },
-        "synthetic_fixture": True,
-    }
-
-
-def validate_auth_for_de(auth_path: Path,
-                         allow_fake_fixture: bool = False) -> bool:
-    """Content-validate an authorization file for D/E execution.
-
-    Reuses the repo's existing S2.12 authorization schema file; rejects a
-    missing/empty/non-JSON/arbitrary file; rejects synthetic fixtures unless
-    ``allow_fake_fixture`` (fake-transport tests only).
-    """
-    if auth_path is None or not auth_path.is_file():
-        raise RuntimeError("auth file does not exist")
-    try:
-        auth = json.loads(auth_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise RuntimeError(f"auth file is not valid JSON: {exc}") from exc
-    if not isinstance(auth, dict) or not auth:
-        raise RuntimeError("auth file must be a non-empty JSON object")
-
-    is_fixture = auth.get("synthetic_fixture") is True
-    if is_fixture and not allow_fake_fixture:
-        raise RuntimeError("synthetic authorization fixture cannot be used "
-                           "for real transport")
-
-    try:
-        schema = json.loads(AUTH_SCHEMA_PATH.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise RuntimeError(f"repo auth schema unreadable: {exc}") from exc
-
-    required = set(schema.get("required", []))
-    missing = sorted(required - set(auth))
-    if missing:
-        raise RuntimeError(f"auth file missing required fields: {missing}")
-    if auth.get("schema_version") != "s2_12_api_authorization@1.1.0":
-        raise RuntimeError("auth schema_version drift")
-    if auth.get("model") != "deepseek-v4-pro":
-        raise RuntimeError("auth model mismatch")
-    if auth.get("retry") != 0:
-        raise RuntimeError("auth retry must be 0")
-    for cap in ("global_input_token_cap", "global_output_token_cap",
-                "global_usd_cost_cap"):
-        if not isinstance(auth.get(cap), (int, float)) or auth[cap] <= 0:
-            raise RuntimeError(f"auth {cap} must be positive")
-    if auth.get("gold_isolation", {}).get(
-            "api_arms_must_not_read_gold") is not True:
-        raise RuntimeError("auth Gold isolation declaration invalid")
-    return True
-
-
-# ---------------------------------------------------------------------------
 # Dedicated D/E execution contract (v1) — NOT the S2.12 authorization schema
 # ---------------------------------------------------------------------------
 
@@ -1625,9 +1526,11 @@ def _verify_authorization_event(auth: Mapping[str, Any],
     except OSError as exc:
         raise ContractError(f"authorization event path unresolvable: {exc}") \
             from exc
-    allowed = any(
-        str(resolved).lower().startswith(str(d.resolve()).lower())
-        for d in AUTH_ALLOWED_DIRS)
+    # real path containment (Path.is_relative_to), NOT string startswith:
+    # a sibling like ``configs_evil`` must never be treated as inside
+    # ``configs``
+    allowed = any(resolved.is_relative_to(d.resolve())
+                  for d in AUTH_ALLOWED_DIRS)
     if not allowed:
         raise ContractError(
             f"authorization event file outside allowed dirs: {resolved}")
@@ -1718,8 +1621,14 @@ class DeBudgetGate:
         self.abort_reason: str | None = None
 
     def check_model(self, returned_model: str | None) -> None:
-        if returned_model and self.model_id \
-                and returned_model != self.model_id:
+        """Fail closed on a MISSING or MISMATCHED returned model.
+
+        A response without a returned model can never be accepted as
+        conforming to the contract; only an exact match passes."""
+        if not returned_model:
+            self.abort("returned model missing; cannot verify contract "
+                       "model conformance")
+        if self.model_id and returned_model != self.model_id:
             self.abort(f"returned model {returned_model!r} != contract "
                        f"model {self.model_id!r}")
 
@@ -1788,6 +1697,85 @@ class DeBudgetGate:
         if self.cost_usd > self.usd_cost_cap:
             self.abort(f"USD cap exceeded "
                        f"({self.cost_usd:.4f} > {self.usd_cost_cap:.4f})")
+
+    def restore_from_persisted(self, raw_rows: Sequence[Mapping[str, Any]],
+                               ledger_rows: Sequence[Mapping[str, Any]]) -> None:
+        """Restore the GLOBAL budget state from previously persisted rows.
+
+        Called before ANY new send on a resume.  ``raw_rows`` are the
+        persisted ``raw_responses.jsonl`` rows and ``ledger_rows`` the
+        persisted ``calls_ledger.jsonl`` rows for the WHOLE fixed 990 plan
+        (the gate is global; it is NEVER reset per arm/repeat).
+
+        For every completed request:
+          * ``calls_made`` is incremented (it already consumed a call);
+          * input/output tokens and USD cost are restored from its persisted
+            ``usage``;
+          * the persisted ``returned_model`` must be present and equal to
+            the contract model;
+          * the ledger entry must be ``completed`` and its
+            ``response_sha256`` must match the raw row's.
+
+        An ``in_doubt`` ledger entry means a send already happened whose
+        usage can never be verified: the restore FAILS CLOSED before any
+        subsequent request (the previous missing-usage abort is NOT
+        bypassed by a fresh gate).  The restored totals are then checked
+        against the caps (equal to a cap is legal; strictly greater fails
+        closed)."""
+        ledger_by_id = {r.get("sample_id"): r for r in ledger_rows}
+        for row in raw_rows:
+            sid = row.get("sample_id")
+            ledger = ledger_by_id.get(sid)
+            state = ledger.get("state") if isinstance(ledger, Mapping) \
+                else None
+            if state == "in_doubt":
+                self.abort(
+                    f"in_doubt sample {sid!r} in persisted ledger; resume "
+                    f"fails closed before any new send (usage unverifiable, "
+                    f"never auto-resent)")
+            if state != "completed":
+                self.abort(
+                    f"persisted raw row {sid!r} has no completed ledger "
+                    f"entry; resume state unverifiable")
+            if ledger.get("response_sha256") != row.get("response_sha256"):
+                self.abort(
+                    f"persisted ledger/raw response hash mismatch for "
+                    f"{sid!r}")
+            usage = row.get("usage")
+            if not isinstance(usage, Mapping) \
+                    or not isinstance(usage.get("prompt_tokens"), (int, float)) \
+                    or not isinstance(usage.get("completion_tokens"),
+                                      (int, float)):
+                self.abort(
+                    f"persisted completed row {sid!r} lacks verifiable "
+                    f"usage; cost cannot be restored (never 0)")
+            self.calls_made += 1
+            self.check_model(row.get("returned_model"))
+            self.input_tokens += int(usage["prompt_tokens"])
+            self.output_tokens += int(usage["completion_tokens"])
+            self.cost_usd += (float(usage["prompt_tokens"]) * self.input_price
+                              + float(usage["completion_tokens"])
+                              * self.output_price) / 1e6
+        # any in_doubt ledger entry without a raw row still blocks resume
+        for sid, ledger in ledger_by_id.items():
+            if isinstance(ledger, Mapping) \
+                    and ledger.get("state") == "in_doubt":
+                self.abort(
+                    f"in_doubt sample {sid!r} in persisted ledger; resume "
+                    f"fails closed before any new send")
+        # restored cumulative totals must be within the caps (== legal)
+        if self.calls_made > self.call_cap:
+            self.abort(f"restored calls {self.calls_made} exceed cap "
+                       f"{self.call_cap}")
+        if self.input_tokens > self.input_token_cap:
+            self.abort(f"restored input tokens {self.input_tokens} exceed "
+                       f"cap {self.input_token_cap}")
+        if self.output_tokens > self.output_token_cap:
+            self.abort(f"restored output tokens {self.output_tokens} exceed "
+                       f"cap {self.output_token_cap}")
+        if self.cost_usd > self.usd_cost_cap:
+            self.abort(f"restored cost {self.cost_usd:.4f} exceeds cap "
+                       f"{self.usd_cost_cap:.4f}")
 
     def abort(self, reason: str) -> None:
         self.aborted = True
@@ -2192,6 +2180,31 @@ def _make_evaluator(arm: str):
     raise RuntimeError(f"no evaluator for {arm}")
 
 
+def _validate_runtime_config(llm_config: Any,
+                             contract: Mapping[str, Any]) -> None:
+    """Bind the ACTUAL runtime LLMConfig to the contract BEFORE the first
+    send: enabled, provider, model, temperature, top_p, max_tokens must all
+    match exactly; stream/thinking/retry are validated at the policy level
+    (the real transport is always built with stream=False,
+    thinking=disabled, retry=0)."""
+    model = contract.get("model") or {}
+    sampling = contract.get("sampling") or {}
+    bindings = [
+        ("enabled", llm_config.enabled, True),
+        ("provider", llm_config.provider, model.get("provider")),
+        ("model", llm_config.model, model.get("id")),
+        ("temperature", llm_config.temperature,
+         sampling.get("temperature")),
+        ("top_p", llm_config.top_p, sampling.get("top_p")),
+        ("max_tokens", llm_config.max_tokens, sampling.get("max_tokens")),
+    ]
+    for name, actual, expected in bindings:
+        if actual != expected:
+            raise ContractError(
+                f"runtime LLMConfig.{name} {actual!r} != contract "
+                f"{expected!r}")
+
+
 def execute_de(contract_path: Path | None = None,
                *,
                transport_factory: Callable[[], Any] | None = None,
@@ -2202,10 +2215,17 @@ def execute_de(contract_path: Path | None = None,
     single source of truth: fixed 990-call plan, model/sampling pins, hash
     set and hard budget caps.  The budget gate is checked before EVERY
     send; reaching a cap or receiving missing usage aborts the run before
-    the next send (fail closed).  ``transport_factory`` is injectable for
-    tests/fixtures only; the CLI path leaves it None and always builds the
-    real transport (requires a real provider + an authorized contract,
-    never a synthetic fixture).
+    the next send (fail closed).
+
+    RESUME: before any new send the gate's GLOBAL budget state is restored
+    from every persisted ``raw_responses.jsonl``/``calls_ledger.jsonl``
+    under the fixed plan (completed requests count into calls/tokens/cost
+    with model + hash verification; any ``in_doubt`` entry fails closed
+    before the first new send).  The gate is never reset per arm/repeat.
+
+    ``transport_factory`` is injectable for tests/fixtures only; the CLI
+    path leaves it None and always builds the real transport (requires a
+    real provider + an authorized contract, never a synthetic fixture).
     """
     contract = validate_de_contract(contract_path,
                                     allow_unauthorized=allow_unauthorized)
@@ -2218,15 +2238,13 @@ def execute_de(contract_path: Path | None = None,
     if transport_factory is None:
         if llm_config.provider == "mock" or not llm_config.enabled:
             raise RuntimeError("real provider not enabled (process env only)")
-        # runtime model must match the authorized contract model
-        if llm_config.model != contract["model"]["id"]:
-            raise ContractError(
-                f"runtime model {llm_config.model!r} != contract model "
-                f"{contract['model']['id']!r}")
+        # runtime config must match the contract EXACTLY before any send
+        _validate_runtime_config(llm_config, contract)
 
         def _real_transport() -> Any:
             # D1 recipe: thinking-disabled WITHOUT json_object (the locked
-            # July recipe; see run_direct_llm.py)
+            # July recipe; see run_direct_llm.py); stream/thinking/retry
+            # are the contract's policy (retry=0 everywhere)
             return RealAPITransport(
                 llm_config, timeout_seconds=180.0,
                 policy=H1RequestPolicy(
@@ -2247,11 +2265,6 @@ def execute_de(contract_path: Path | None = None,
     }
     all_protocol_arms = list(S36_PAPER_ARMS)
 
-    def cost_of(usage):
-        p = float(usage.get("prompt_tokens", 0))
-        o = float(usage.get("completion_tokens", 0))
-        return round(p * 1.32 / 1e6 + o * 3.96 / 1e6, 8)
-
     started = time.time()
     results: dict[str, Any] = {
         "schema_version": "barrientos_de_execution@2.0.0",
@@ -2271,7 +2284,30 @@ def execute_de(contract_path: Path | None = None,
     runs_by_arm: dict[str, list[dict[str, Any]]] = {}
     completed_samples = 0   # new sends + resumed completed
     in_doubt_samples = 0
+
+    def cost_of(usage):
+        p = float(usage.get("prompt_tokens", 0))
+        o = float(usage.get("completion_tokens", 0))
+        return round(p * 1.32 / 1e6 + o * 3.96 / 1e6, 8)
+
     try:
+        # resume: restore the GLOBAL budget from every persisted run dir
+        # BEFORE any new send (completed -> calls/tokens/cost; in_doubt ->
+        # fail closed).  The gate is never reset per arm/repeat.
+        for planned in plan:
+            if planned.get("reused"):
+                continue
+            run_dir = OUT_DIR / planned["arm"] / planned["repeat_id"]
+            raw_path = run_dir / "raw_responses.jsonl"
+            ledger_path = run_dir / "calls_ledger.jsonl"
+            if not raw_path.is_file() and not ledger_path.is_file():
+                continue
+            raw_rows = _read_jsonl(raw_path) if raw_path.is_file() else []
+            ledger_rows = _read_jsonl(ledger_path) \
+                if ledger_path.is_file() else []
+            gate.restore_from_persisted(raw_rows, ledger_rows)
+        results["budget_gate"] = gate.to_dict()
+
         for planned in plan:
             arm = planned["arm"]
             repeat_id = planned["repeat_id"]

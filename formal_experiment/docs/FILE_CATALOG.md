@@ -1,6 +1,6 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-27
+**生成日期**：2026-08-28
 **收录文件**：1436 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
