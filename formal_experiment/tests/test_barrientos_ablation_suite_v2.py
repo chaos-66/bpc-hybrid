@@ -849,7 +849,9 @@ def test_fixture_uses_real_evaluators():
 
 def test_v2_scripts_are_offline():
     for name in ("run_barrientos_ablation_suite_v2.py",
-                 "build_e_same_data_contract_v2.py"):
+                 "build_e_same_data_contract_v2.py",
+                 "build_barrientos_de_execution_contract_v1.py",
+                 "build_barrientos_de_tables_v1.py"):
         src = (SCRIPTS / name).read_text(encoding="utf-8")
         for token in ("import urllib.request", "from urllib.request",
                       "import requests", "import httpx", "import openai"):

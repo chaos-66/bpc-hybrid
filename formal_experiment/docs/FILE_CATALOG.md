@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-26
-**收录文件**：1428 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-08-27
+**收录文件**：1435 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -58,6 +58,7 @@
 |---|---|---|
 | `configs/ablations/barrientos_ablation_suite_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/barrientos_ablation_suite_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/ablations/barrientos_de_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/e_same_data_input_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/e_same_data_input_contract_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/bm25_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -104,6 +105,7 @@
 | `configs/s2_12_execution_plan_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s2_12_fallback_trigger_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s2_12_sun_rule_only_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/barrientos_de_execution_contract_v1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/dataset_manifest.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_ai_review_model_output.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -781,6 +783,7 @@
 | `outputs/reports/barrientos_ablation_comparison_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/barrientos_ablation_comparison_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_ablation_comparison_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/barrientos_de_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1037,6 +1040,8 @@
 | `scripts/audit_stage2_to_stage3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/baseline_stage3_sensitivity.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_b0_d1_formal_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_barrientos_de_execution_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_barrientos_de_tables_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_d1_h1_gate_decision_packages.py` | 活动 | Python 实现、脚本或测试 |
@@ -1244,6 +1249,7 @@
 | `src/bpc_hybrid/b0_v10/scope.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/b0_v10/segmentation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/b0_v10/span_safety.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/barrientos_de_shared_target.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/capsule_lifecycle.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/d1_schema_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/d1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |
@@ -1412,6 +1418,7 @@
 | `tests/test_b0_v10_scope_and_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_barrientos_ablation_suite.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_barrientos_ablation_suite_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_barrientos_de_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_canonical_text_hash_policy.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_coarse_gold_b0_condition_constraint.py` | 活动 | Python 实现、脚本或测试 |

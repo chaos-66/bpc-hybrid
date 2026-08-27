@@ -10,10 +10,16 @@ Modes:
                            (zero API calls; prints per-arm sample counts and
                            prompt hashes).
 * ``--execute-de``       : real-model execution of the D and E arms.  Requires
-                           ``--auth-file`` (user API authorization).  Records
-                           raw responses, canonical predictions, evaluation,
-                           manifest, hashes, runtime, usage, cost and failed
-                           samples per arm.  NEVER runs without authorization.
+                           ``--contract-file`` (the dedicated D/E execution
+                           contract v1, NOT the S2.12 authorization schema).
+                           The contract binds the fixed 990-call plan, model/
+                           sampling pins, hashes and hard input/output-token +
+                           USD caps; a budget gate is checked before every
+                           send and aborts fail-closed at any cap or on
+                           missing usage.  Records raw responses, canonical
+                           predictions, evaluation, manifest, hashes, runtime,
+                           usage, cost and failed samples per arm.  NEVER runs
+                           without an authorized contract.
 
 v2 fixes vs v1:
 * A conditions renamed to full_locked / schema_only_approx / raw_approx and
@@ -159,15 +165,16 @@ def _run_de() -> dict[str, Any]:
         "experiment": "D_E_real_model_arms",
         "status": "ready_to_execute_not_executed",
         "blocker": (
-            "real model API calls require explicit user authorization; this "
-            "zero-API batch does not execute them. Executor verification "
-            "status: the D/E runner (one send per sample/repeat, raw+"
-            "canonical same response hash, failed samples kept in the "
-            "denominator, per-repeat evaluation.json, D-full reuse 0 calls, "
-            "plan-derived call counts 990/1170) is verified end-to-end with "
-            "a fake transport against the REAL per-arm evaluators (BARR "
-            "native, OURS stratified, D literal-overlap); 39 focused tests "
-            "pass."
+            "real model API calls require explicit user authorization via "
+            "the dedicated D/E execution contract v1 (NOT the S2.12 "
+            "authorization schema); this zero-API batch does not execute "
+            "them. Executor verification status: the D/E runner (one send "
+            "per sample/repeat, raw+canonical same response hash, failed "
+            "samples kept in the denominator, per-repeat evaluation.json, "
+            "D-full reuse 0 calls, plan-derived call count 990, contract "
+            "budget gate checked before every send) is verified end-to-end "
+            "with a fake transport against the REAL per-arm evaluators "
+            "(BARR native, OURS stratified, D literal-overlap)."
         ),
         "D_arms": {
             "D-full": {"status": "reuse_locked_formal_result"},
@@ -180,9 +187,11 @@ def _run_de() -> dict[str, Any]:
                           "protocol": "Barrientos published Step-1 "
                                       "(original prompt/schema/44-patterns, "
                                       "36x5)"},
-            "BARR-NO-PATTERN": {"status": "ready_to_execute",
+            "BARR-NO-PATTERN": {"status": "optional_not_in_fixed_990_plan",
                                 "protocol": "artifact-supported ablation "
-                                            "(NOT a paper-table arm)",
+                                            "(NOT a paper-table arm); "
+                                            "excluded from the fixed 990 "
+                                            "contract plan by user decision",
                                 "optional": True},
             "OURS-FULL": {"status": "ready_to_execute",
                           "protocol": "our six-field method on the SAME 36 "
@@ -195,7 +204,9 @@ def _run_de() -> dict[str, Any]:
             "stability": {
                 "runs": 5,
                 "note": "protocol mandates 5 independent runs per 36-requirement "
-                        "arm; first main comparison run counts toward the five",
+                        "arm; first main comparison run counts toward the five; "
+                        "stability is SAME-arm output consistency, never a "
+                        "cross-method accuracy comparison",
             },
         },
         "e_contract_v2": {
@@ -204,13 +215,19 @@ def _run_de() -> dict[str, Any]:
             "count": e["input_surface"]["count"],
             "unique_ids": e["input_surface"]["unique_ids"],
         },
+        "execution_contract_v1": {
+            "path": "configs/ablations/barrientos_de_execution_contract_v1.json",
+            "total_calls": 990,
+            "note": "dedicated D/E contract; binds commit, plan, model, "
+                    "sampling, hashes and input/output-token + USD caps; "
+                    "BARR-NO-PATTERN excluded",
+        },
         "real_execution_command": (
             "python scripts/run_barrientos_ablation_suite_v2.py --execute-de "
-            "--auth-file <USER_AUTH> --stability-runs 5 "
-            "[--include-no-pattern] "
-            "--runtime-home D:/environment/stanford-corenlp-4.5.10 "
-            "(990 calls without BARR-NO-PATTERN; 1170 with; requires user "
-            "API authorization)"
+            "--contract-file configs/ablations/"
+            "barrientos_de_execution_contract_v1.json "
+            "(990 calls; requires an authorized contract; BARR-NO-PATTERN "
+            "is NOT part of the fixed plan)"
         ),
     }
 
@@ -517,13 +534,16 @@ def call_once(
     prompt_text: str,
     transport: Any,
     cost_of: Callable[[Mapping[str, Any]], float],
+    budget_gate: Any = None,
 ) -> dict[str, Any]:
     """Send EXACTLY ONE request for one sample; return the CallResult.
 
     ``transport.send()`` is invoked only here.  Every invocation — success or
     error — counts as one actual call and its cost is recorded; usage missing
-    is marked ``cost: unknown`` instead of a fake 0.
-    """
+    is marked ``cost: unknown`` instead of a fake 0.  When a ``budget_gate``
+    is supplied it is checked BEFORE the send (fail closed at the cap) and
+    the returned usage/model are recorded AFTER the send; missing usage then
+    aborts the gate (never treated as zero cost)."""
     sid = sample.get("sample_id") or sample.get("id")
     text = sample.get("text") or sample.get("approved_text_en") or ""
     system_prompt, user_prompt = _render_prompt(arm, sid, text, sample)
@@ -531,6 +551,9 @@ def call_once(
     body_bytes = json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")
     body_sha = _sha256_bytes(body_bytes)
     request_id = f"{arm}:{sid}:{time.time_ns()}"
+
+    if budget_gate is not None:
+        budget_gate.check_before_send()
 
     try:
         from bpc_hybrid.llm_client import LLMRequest
@@ -549,6 +572,10 @@ def call_once(
         usage = {}
         status = "error"
         error = str(exc)
+
+    if budget_gate is not None:
+        budget_gate.record(usage if usage else None,
+                           returned_model=decode.get("model"))
 
     resp_sha = _sha256_bytes((content or "").encode("utf-8"))
     if usage:
@@ -700,13 +727,17 @@ def run_arm_once(
     evaluator: Callable[[list[dict[str, Any]]], dict[str, Any]],
     *,
     out_dir: Path | None = None,
+    budget_gate: Any = None,
 ) -> dict[str, Any]:
     """One arm x one repeat: call -> save raw -> parse -> predict -> eval.
 
     The evaluator receives ALL predictions (success + empty failed), so
     failed samples stay in the denominator.  Writes (when out_dir given):
     raw_responses.jsonl / canonical_predictions.jsonl / failed_samples.jsonl /
-    evaluation.json / manifest.json.  Returns the arm-run result dict."""
+    evaluation.json / manifest.json.  Returns the arm-run result dict.
+    ``budget_gate`` (DeBudgetGate) is checked before every send; a gate
+    abort propagates as ContractError so the caller stops before the next
+    send."""
     calls: list[dict[str, Any]] = []
     raw_rows: list[dict[str, Any]] = []
     pred_rows: list[dict[str, Any]] = []
@@ -718,7 +749,7 @@ def run_arm_once(
         sample_with_repeat = dict(sample)
         sample_with_repeat["_repeat_id"] = repeat_id
         call = call_once(arm, sample_with_repeat, prompt_text, transport,
-                         cost_of)
+                         cost_of, budget_gate=budget_gate)
         calls.append(call)
         raw_rows.append({
             "sample_id": call["sample_id"],
@@ -1261,6 +1292,266 @@ def validate_auth_for_de(auth_path: Path,
 
 
 # ---------------------------------------------------------------------------
+# Dedicated D/E execution contract (v1) — NOT the S2.12 authorization schema
+# ---------------------------------------------------------------------------
+
+DE_CONTRACT_PATH = ROOT / "configs/ablations/barrientos_de_execution_contract_v1.json"
+DE_CONTRACT_SCHEMA = ROOT / "configs/schemas/barrientos_de_execution_contract_v1.schema.json"
+DE_EXECUTOR_FILE = ROOT / "scripts/run_barrientos_ablation_suite_v2.py"
+
+
+class ContractError(RuntimeError):
+    """Fail-closed contract validation / budget gate error."""
+
+
+def _git_head() -> str:
+    import subprocess
+    proc = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT.parent,
+                          capture_output=True, text=True, check=False)
+    if proc.returncode != 0:
+        raise ContractError("cannot resolve git HEAD")
+    return proc.stdout.strip()
+
+
+def _git_is_ancestor(commit: str) -> bool:
+    """True when ``commit`` is an ancestor of the current HEAD (the bound
+    code commit is part of the executed tree; later commits may only touch
+    files NOT bound by the contract, and the content-hash checks below are
+    the authoritative binding)."""
+    import subprocess
+    proc = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", commit, "HEAD"],
+        cwd=ROOT.parent, capture_output=True, text=True, check=False)
+    return proc.returncode == 0
+
+
+def validate_de_contract(contract_path: Path | None = None,
+                         *,
+                         allow_unauthorized: bool = False) -> dict[str, Any]:
+    """Full content validation of the dedicated D/E execution contract.
+
+    Binds: schema_version, suite_id, bound_commit == current HEAD, fixed
+    990-call plan (arms/repeats/sample counts exactly matching
+    build_execution_plan(5) WITHOUT BARR-NO-PATTERN), model pin, sampling
+    (temperature=0, top_p=1, max_tokens=4096, retry=0), hash set
+    (estg input / e contract / executor / config / per-arm prompts), and
+    positive budget caps.  ``authorization`` must be present unless
+    ``allow_unauthorized`` (fixture/dry checks).  This contract does NOT
+    reuse the S2.12 36+27 authorization schema.
+    """
+    if contract_path is None:
+        contract_path = DE_CONTRACT_PATH
+    if contract_path is None or not contract_path.is_file():
+        raise ContractError("contract file does not exist")
+    try:
+        contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ContractError(f"contract is not valid JSON: {exc}") from exc
+    if not isinstance(contract, dict) or not contract:
+        raise ContractError("contract must be a non-empty JSON object")
+
+    try:
+        schema = json.loads(DE_CONTRACT_SCHEMA.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ContractError(f"contract schema unreadable: {exc}") from exc
+
+    required = set(schema.get("required", []))
+    missing = sorted(required - set(contract))
+    if missing:
+        raise ContractError(f"contract missing required fields: {missing}")
+    if contract.get("schema_version") != "barrientos_de_execution_contract@1.0.0":
+        raise ContractError("contract schema_version drift")
+
+    # commit binding: the contract binds a code commit that must be part of
+    # the executed tree (ancestor of HEAD); the content-hash checks below are
+    # the authoritative binding for every file the contract pins
+    bound = contract.get("bound_commit")
+    if not isinstance(bound, str) or len(bound) != 40:
+        raise ContractError("contract bound_commit malformed")
+    if not _git_is_ancestor(bound):
+        raise ContractError(
+            f"contract bound to commit {bound[:12]} which is not an "
+            f"ancestor of HEAD {_git_head()[:12]}")
+
+    # fixed 990-call plan, no BARR-NO-PATTERN
+    plan = contract.get("execution_plan") or {}
+    if plan.get("total_calls") != 990:
+        raise ContractError(f"contract plan must total exactly 990, got "
+                            f"{plan.get('total_calls')}")
+    expected = build_execution_plan(5, include_no_pattern=False)
+    expected_rows = [(r["arm"], r["repeat_id"], r["sample_count"],
+                      r["expected_calls"], bool(r.get("reused", False)))
+                     for r in expected]
+    actual_rows = [(r.get("arm"), r.get("repeat_id"), r.get("sample_count"),
+                    r.get("calls"), bool(r.get("reused", False)))
+                   for r in plan.get("arms", [])]
+    if actual_rows != expected_rows:
+        raise ContractError("contract plan rows do not match the fixed "
+                            "990-call protocol plan")
+    if any(r.get("arm") == "BARR-NO-PATTERN" for r in plan.get("arms", [])):
+        raise ContractError("BARR-NO-PATTERN is not part of the fixed 990 "
+                            "contract plan")
+
+    # model + sampling pins
+    model = contract.get("model") or {}
+    if model.get("id") != "deepseek-v4-pro" \
+            or model.get("provider") != "openai_compatible":
+        raise ContractError("contract model pin mismatch")
+    sampling = contract.get("sampling") or {}
+    if sampling.get("temperature") != 0.0 or sampling.get("top_p") != 1.0 \
+            or sampling.get("max_tokens") != 4096 \
+            or sampling.get("retry") != 0 \
+            or sampling.get("stream") is not False \
+            or (sampling.get("thinking") or {}).get("type") != "disabled":
+        raise ContractError("contract sampling pins mismatch")
+
+    # hash set
+    hashes = contract.get("hashes") or {}
+    expected_hashes = {
+        "estg_input_v2": _sha256_file(ESTG_INPUT),
+        "e_contract_v2": _sha256_file(E_CONTRACT),
+        "executor": _sha256_file(DE_EXECUTOR_FILE),
+        "config": _sha256_file(CONFIG),
+    }
+    for key, expected_hash in expected_hashes.items():
+        if hashes.get(key) != expected_hash:
+            raise ContractError(f"contract hash {key} drift")
+    prompts = hashes.get("prompts") or {}
+    for arm in tuple(D_ARMS) + tuple(S36_PAPER_ARMS):
+        if prompts.get(arm) != _sha256_file(_prompt_for(arm)):
+            raise ContractError(f"contract prompt hash drift: {arm}")
+
+    # budget caps
+    budget = contract.get("budget") or {}
+    for cap in ("planned_calls", "input_token_cap", "output_token_cap",
+                "usd_cost_cap"):
+        if not isinstance(budget.get(cap), (int, float)) or budget[cap] <= 0:
+            raise ContractError(f"contract budget {cap} must be positive")
+    if budget.get("planned_calls") != 990:
+        raise ContractError("contract budget planned_calls must be 990")
+    price = budget.get("price_snapshot") or {}
+    if price.get("currency") != "USD" \
+            or not isinstance(price.get("input_cache_miss_per_million"),
+                              (int, float)) \
+            or not isinstance(price.get("output_per_million"), (int, float)):
+        raise ContractError("contract price snapshot invalid")
+
+    # gold isolation
+    if contract.get("gold_isolation", {}).get(
+            "api_arms_must_not_read_gold") is not True:
+        raise ContractError("contract Gold isolation declaration invalid")
+
+    # authorization
+    auth = contract.get("authorization")
+    if auth is None and not allow_unauthorized:
+        raise ContractError("contract authorization is null; the user has "
+                            "not authorized real API execution")
+    if auth is not None:
+        for field in ("authorization_sentence_utf8_sha256",
+                      "authorization_event_file",
+                      "authorization_event_file_sha256"):
+            if not auth.get(field):
+                raise ContractError(f"contract authorization missing {field}")
+        if auth.get("authorization_event_file_sha256") and len(
+                auth["authorization_event_file_sha256"]) != 64:
+            raise ContractError("contract authorization event sha malformed")
+
+    return contract
+
+
+class DeBudgetGate:
+    """Hard budget gate enforced before EVERY send.
+
+    Tracks calls, input tokens, output tokens and USD cost against the
+    contract caps.  ``check_before_send`` raises ``ContractError`` as soon
+    as a cap is reached or the budget can no longer be verified; the
+    executor stops before the next send.  Missing usage is NEVER treated as
+    zero cost — it raises and aborts.
+    """
+
+    def __init__(self, contract: Mapping[str, Any]):
+        budget = contract.get("budget") or {}
+        self.call_cap = int(budget.get("planned_calls", 990))
+        self.input_token_cap = float(budget.get("input_token_cap", 0))
+        self.output_token_cap = float(budget.get("output_token_cap", 0))
+        self.usd_cost_cap = float(budget.get("usd_cost_cap", 0))
+        price = budget.get("price_snapshot") or {}
+        self.input_price = float(price.get("input_cache_miss_per_million", 0))
+        self.output_price = float(price.get("output_per_million", 0))
+        self.model_id = (contract.get("model") or {}).get("id")
+        self.calls_made = 0
+        self.input_tokens = 0
+        self.output_tokens = 0
+        self.cost_usd = 0.0
+        self.aborted = False
+        self.abort_reason: str | None = None
+
+    def check_model(self, returned_model: str | None) -> None:
+        if returned_model and self.model_id \
+                and returned_model != self.model_id:
+            self.abort(f"returned model {returned_model!r} != contract "
+                       f"model {self.model_id!r}")
+
+    def check_before_send(self) -> None:
+        if self.aborted:
+            raise ContractError(f"budget gate aborted: {self.abort_reason}")
+        if self.calls_made >= self.call_cap:
+            self.abort(f"call cap reached ({self.calls_made}/{self.call_cap})")
+        if self.cost_usd >= self.usd_cost_cap:
+            self.abort(f"USD cap reached ({self.cost_usd:.4f}/"
+                       f"{self.usd_cost_cap:.4f})")
+        if self.input_tokens >= self.input_token_cap:
+            self.abort(f"input token cap reached "
+                       f"({self.input_tokens}/{self.input_token_cap})")
+        if self.output_tokens >= self.output_token_cap:
+            self.abort(f"output token cap reached "
+                       f"({self.output_tokens}/{self.output_token_cap})")
+
+    def record(self, usage: Mapping[str, Any] | None,
+               returned_model: str | None = None) -> None:
+        """Record one completed send.  Missing usage aborts (never 0)."""
+        self.calls_made += 1
+        self.check_model(returned_model)
+        if not usage or not isinstance(usage, Mapping):
+            self.abort("usage missing; cost cannot be verified (never "
+                       "treated as 0)")
+            return
+        prompt_tokens = usage.get("prompt_tokens")
+        completion_tokens = usage.get("completion_tokens")
+        if not isinstance(prompt_tokens, (int, float)) \
+                or not isinstance(completion_tokens, (int, float)):
+            self.abort("usage missing token counts; cost cannot be verified")
+            return
+        self.input_tokens += int(prompt_tokens)
+        self.output_tokens += int(completion_tokens)
+        self.cost_usd += (float(prompt_tokens) * self.input_price
+                          + float(completion_tokens) * self.output_price) \
+            / 1e6
+        self.check_before_send()
+
+    def abort(self, reason: str) -> None:
+        self.aborted = True
+        self.abort_reason = reason
+        raise ContractError(f"budget gate: {reason}")
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "calls_made": self.calls_made,
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "cost_usd": round(self.cost_usd, 8),
+            "aborted": self.aborted,
+            "abort_reason": self.abort_reason,
+            "caps": {
+                "calls": self.call_cap,
+                "input_tokens": self.input_token_cap,
+                "output_tokens": self.output_token_cap,
+                "usd": self.usd_cost_cap,
+            },
+        }
+
+
+# ---------------------------------------------------------------------------
 # Dummy evaluators used by tests
 # ---------------------------------------------------------------------------
 
@@ -1640,16 +1931,24 @@ def _make_evaluator(arm: str):
     raise RuntimeError(f"no evaluator for {arm}")
 
 
-def execute_de(auth_file: Path, stability_runs: int = 5,
-               include_no_pattern: bool = False,
-               transport_factory: Callable[[], Any] | None = None) -> dict[str, Any]:
-    """Plan-driven real execution (auth-gated; fake in tests).
+def execute_de(contract_path: Path | None = None,
+               *,
+               transport_factory: Callable[[], Any] | None = None,
+               allow_unauthorized: bool = False) -> dict[str, Any]:
+    """Plan-driven real execution (contract-gated; fake in tests).
 
-    ``transport_factory``: injectable for tests/fixtures only; the CLI path
-    leaves it None and always builds the real transport (requires a real
-    provider + real authorization, never a synthetic fixture).
+    The contract (``barrientos_de_execution_contract_v1.json``) is the
+    single source of truth: fixed 990-call plan, model/sampling pins, hash
+    set and hard budget caps.  The budget gate is checked before EVERY
+    send; reaching a cap or receiving missing usage aborts the run before
+    the next send (fail closed).  ``transport_factory`` is injectable for
+    tests/fixtures only; the CLI path leaves it None and always builds the
+    real transport (requires a real provider + an authorized contract,
+    never a synthetic fixture).
     """
-    validate_auth_for_de(auth_file, allow_fake_fixture=False)
+    contract = validate_de_contract(contract_path,
+                                    allow_unauthorized=allow_unauthorized)
+    gate = DeBudgetGate(contract)
 
     from bpc_hybrid.llm_client import RealAPITransport
     from bpc_hybrid.llm_config import LLMConfig
@@ -1658,6 +1957,11 @@ def execute_de(auth_file: Path, stability_runs: int = 5,
     if transport_factory is None:
         if llm_config.provider == "mock" or not llm_config.enabled:
             raise RuntimeError("real provider not enabled (process env only)")
+        # runtime model must match the authorized contract model
+        if llm_config.model != contract["model"]["id"]:
+            raise ContractError(
+                f"runtime model {llm_config.model!r} != contract model "
+                f"{contract['model']['id']!r}")
 
         def _real_transport() -> Any:
             # D1 recipe: thinking-disabled WITHOUT json_object (the locked
@@ -1670,8 +1974,7 @@ def execute_de(auth_file: Path, stability_runs: int = 5,
 
         transport_factory = _real_transport
 
-    plan = build_execution_plan(stability_runs,
-                                include_no_pattern=include_no_pattern)
+    plan = build_execution_plan(5, include_no_pattern=False)
     samples_by_arm = {
         "D-full": _estg_samples(),
         "D-no-fewshot": _estg_samples(),
@@ -1679,12 +1982,9 @@ def execute_de(auth_file: Path, stability_runs: int = 5,
         "D-barrientos-style": _estg_samples(),
         "OURS-FULL": _e_samples(),
         "BARR-FULL": _e_samples(),
-        "BARR-NO-PATTERN": _e_samples(),
         "OURS-BARRIENTOS-MODULE": _e_samples(),
     }
     all_protocol_arms = list(S36_PAPER_ARMS)
-    if include_no_pattern:
-        all_protocol_arms.append("BARR-NO-PATTERN")
 
     def cost_of(usage):
         p = float(usage.get("prompt_tokens", 0))
@@ -1693,82 +1993,90 @@ def execute_de(auth_file: Path, stability_runs: int = 5,
 
     started = time.time()
     results: dict[str, Any] = {
-        "schema_version": "barrientos_de_execution@1.1.0",
+        "schema_version": "barrientos_de_execution@2.0.0",
         "mode": "real_execution",
-        "stability_runs": stability_runs,
+        "contract_path": str(contract_path or DE_CONTRACT_PATH),
+        "bound_commit": contract.get("bound_commit"),
+        "stability_runs": 5,
         "planned_calls": sum(r["expected_calls"] for r in plan),
         "arms": {},
         "runs": [],
         "actual_calls": 0,
         "total_cost_usd": 0.0,
         "runtime_seconds": 0.0,
-        "auth_file": str(auth_file),
+        "budget_gate": None,
     }
 
     runs_by_arm: dict[str, list[dict[str, Any]]] = {}
-    for planned in plan:
-        arm = planned["arm"]
-        repeat_id = planned["repeat_id"]
-        if planned["reused"]:
-            # D-full: read the locked formal capsule; zero calls
-            capsule = _load_json(D_FULL_LOCKED, "D-full locked capsule")
+    try:
+        for planned in plan:
+            arm = planned["arm"]
+            repeat_id = planned["repeat_id"]
+            if planned["reused"]:
+                # D-full: read the locked formal capsule; zero calls
+                capsule = _load_json(D_FULL_LOCKED, "D-full locked capsule")
+                results["runs"].append({
+                    "arm": arm, "repeat_id": repeat_id,
+                    "reused": True, "actual_call_count": 0,
+                    "sample_count": planned["sample_count"],
+                })
+                runs_by_arm.setdefault(arm, []).append({
+                    "arm": arm, "repeat_id": repeat_id, "reused": True,
+                    "pred_rows": [
+                        {"sample_id": r["sample_id"], "request_status": "ok",
+                         "record": r.get("record") or {}}
+                        for r in capsule.get("records", [])
+                    ],
+                    "raw_rows": [], "failed": [],
+                })
+                continue
+            run_dir = OUT_DIR / arm / repeat_id
+            transport = transport_factory()
+            run = run_arm_once(
+                arm=arm, repeat_id=repeat_id,
+                samples=samples_by_arm[arm],
+                prompt_text="",  # rendered per-sample by call_once
+                transport=transport,
+                cost_of=cost_of,
+                evaluator=_make_evaluator(arm),
+                out_dir=run_dir,
+                budget_gate=gate,
+            )
+            results["actual_calls"] += run["actual_call_count"]
+            if isinstance(run["cost"], (int, float)):
+                results["total_cost_usd"] += run["cost"]
+            results["arms"].setdefault(arm, {"repeats": []})
+            results["arms"][arm]["repeats"].append({
+                "repeat_id": repeat_id,
+                "actual_call_count": run["actual_call_count"],
+                "failed_count": run["failed_count"],
+                "cost": run["cost"],
+            })
             results["runs"].append({
-                "arm": arm, "repeat_id": repeat_id,
-                "reused": True, "actual_call_count": 0,
-                "sample_count": planned["sample_count"],
+                "arm": arm, "repeat_id": repeat_id, "reused": False,
+                "actual_call_count": run["actual_call_count"],
+                "failed_count": run["failed_count"],
+                "sample_count": run["sample_count"],
             })
-            runs_by_arm.setdefault(arm, []).append({
-                "arm": arm, "repeat_id": repeat_id, "reused": True,
-                "pred_rows": [
-                    {"sample_id": r["sample_id"], "request_status": "ok",
-                     "record": r.get("record") or {}}
-                    for r in capsule.get("records", [])
-                ],
-                "raw_rows": [], "failed": [],
-            })
-            continue
-        run_dir = OUT_DIR / arm / repeat_id
-        transport = transport_factory()
-        run = run_arm_once(
-            arm=arm, repeat_id=repeat_id,
-            samples=samples_by_arm[arm],
-            prompt_text="",  # rendered per-sample by call_once
-            transport=transport,
-            cost_of=cost_of,
-            evaluator=_make_evaluator(arm),
-            out_dir=run_dir,
-        )
-        results["actual_calls"] += run["actual_call_count"]
-        if isinstance(run["cost"], (int, float)):
-            results["total_cost_usd"] += run["cost"]
-        results["arms"].setdefault(arm, {"repeats": []})
-        results["arms"][arm]["repeats"].append({
-            "repeat_id": repeat_id,
-            "actual_call_count": run["actual_call_count"],
-            "failed_count": run["failed_count"],
-            "cost": run["cost"],
-        })
-        results["runs"].append({
-            "arm": arm, "repeat_id": repeat_id, "reused": False,
-            "actual_call_count": run["actual_call_count"],
-            "failed_count": run["failed_count"],
-            "sample_count": run["sample_count"],
-        })
-        runs_by_arm.setdefault(arm, []).append(run)
-        print(f"[{arm}/{repeat_id}] calls={run['actual_call_count']} "
-              f"failed={run['failed_count']}")
+            runs_by_arm.setdefault(arm, []).append(run)
+            print(f"[{arm}/{repeat_id}] calls={run['actual_call_count']} "
+                  f"failed={run['failed_count']}")
+    except ContractError as exc:
+        results["aborted"] = True
+        results["abort_reason"] = str(exc)
+        results["budget_gate"] = gate.to_dict()
+        print(f"ABORTED by contract gate: {exc}")
 
-    if stability_runs == 5:
+    if stability_runs_for(plan) == 5 and not results.get("aborted"):
         stability_arms = ["OURS-FULL", "BARR-FULL",
                           "OURS-BARRIENTOS-MODULE"]
-        if include_no_pattern:
-            stability_arms.append("BARR-NO-PATTERN")
         e_stability = compute_stability(
             {a: rs for a, rs in runs_by_arm.items() if a in stability_arms},
             sample_set=_e_samples(),
         )
         results["stability"] = e_stability
 
+    results["budget_gate"] = gate.to_dict()
     results["runtime_seconds"] = round(time.time() - started, 3)
     results["total_cost_usd"] = round(results["total_cost_usd"], 8)
     summary_path = OUT_DIR / "execution_summary.json"
@@ -1776,6 +2084,12 @@ def execute_de(auth_file: Path, stability_runs: int = 5,
                             + "\n", encoding="utf-8")
     print(f"D/E real execution complete: {_rel(summary_path)}")
     return results
+
+
+def stability_runs_for(plan: Sequence[Mapping[str, Any]]) -> int:
+    """5 when the plan contains the protocol arms' five repeats."""
+    repeats = [r for r in plan if r["arm"] == "OURS-FULL"]
+    return 5 if len(repeats) == 5 else 0
 
 
 def _write_arm(arm_out: Path, arm: str, prompt_path: Path, sample_count: int,
@@ -1931,24 +2245,22 @@ def main() -> int:
                         help="run the fake-transport end-to-end fixture into "
                              "the given temp dir (zero network)")
     parser.add_argument("--execute-de", action="store_true")
-    parser.add_argument("--auth-file", type=Path, default=None)
+    parser.add_argument("--contract-file", type=Path, default=None,
+                        help="path to the dedicated D/E execution contract "
+                             "v1 (default: configs/ablations/"
+                             "barrientos_de_execution_contract_v1.json)")
     parser.add_argument("--stability-runs", type=int, default=5,
                         choices=(5,),
                         help="protocol mandates 5 independent runs on the 36 "
-                             "requirements (990 calls; 1170 with "
-                             "--include-no-pattern)")
-    parser.add_argument("--include-no-pattern", action="store_true",
-                        help="also run BARR-NO-PATTERN (artifact-supported "
-                             "ablation, NOT a paper-table arm): +180 calls")
+                             "requirements (990 calls; the fixed contract "
+                             "plan never includes BARR-NO-PATTERN)")
     args = parser.parse_args()
     try:
         if args.fixture is not None:
             result = fixture_run(args.fixture,
                                  stability_runs=args.stability_runs)
         elif args.execute_de:
-            result = execute_de(args.auth_file,
-                                stability_runs=args.stability_runs,
-                                include_no_pattern=args.include_no_pattern)
+            result = execute_de(args.contract_file)
         elif args.dry_run:
             result = dry_run()
         elif args.suite:

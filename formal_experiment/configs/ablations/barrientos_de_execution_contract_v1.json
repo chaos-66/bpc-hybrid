@@ -1,0 +1,191 @@
+{
+  "schema_version": "barrientos_de_execution_contract@1.0.0",
+  "suite_id": "S2-BARRIENTOS-DE-001",
+  "bound_commit": "d8e61e02cc84df44e467e30524530b0504c4b61f",
+  "execution_plan": {
+    "total_calls": 990,
+    "arms": [
+      {
+        "arm": "D-full",
+        "repeat_id": "repeat-01",
+        "sample_count": 150,
+        "calls": 0,
+        "reused": true
+      },
+      {
+        "arm": "D-no-fewshot",
+        "repeat_id": "repeat-01",
+        "sample_count": 150,
+        "calls": 150,
+        "reused": false
+      },
+      {
+        "arm": "D-minimal",
+        "repeat_id": "repeat-01",
+        "sample_count": 150,
+        "calls": 150,
+        "reused": false
+      },
+      {
+        "arm": "D-barrientos-style",
+        "repeat_id": "repeat-01",
+        "sample_count": 150,
+        "calls": 150,
+        "reused": false
+      },
+      {
+        "arm": "BARR-FULL",
+        "repeat_id": "repeat-01",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "BARR-FULL",
+        "repeat_id": "repeat-02",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "BARR-FULL",
+        "repeat_id": "repeat-03",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "BARR-FULL",
+        "repeat_id": "repeat-04",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "BARR-FULL",
+        "repeat_id": "repeat-05",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "OURS-FULL",
+        "repeat_id": "repeat-01",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "OURS-FULL",
+        "repeat_id": "repeat-02",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "OURS-FULL",
+        "repeat_id": "repeat-03",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "OURS-FULL",
+        "repeat_id": "repeat-04",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "OURS-FULL",
+        "repeat_id": "repeat-05",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "OURS-BARRIENTOS-MODULE",
+        "repeat_id": "repeat-01",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "OURS-BARRIENTOS-MODULE",
+        "repeat_id": "repeat-02",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "OURS-BARRIENTOS-MODULE",
+        "repeat_id": "repeat-03",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "OURS-BARRIENTOS-MODULE",
+        "repeat_id": "repeat-04",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      },
+      {
+        "arm": "OURS-BARRIENTOS-MODULE",
+        "repeat_id": "repeat-05",
+        "sample_count": 36,
+        "calls": 36,
+        "reused": false
+      }
+    ]
+  },
+  "model": {
+    "id": "deepseek-v4-pro",
+    "provider": "openai_compatible"
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "hashes": {
+    "estg_input_v2": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "e_contract_v2": "43aeeac51c49f5e93cefddde6fd9a4090d0fe5d00971d08a7f2d35e4a83a7c43",
+    "executor": "300bf9ad0b65f24064e60babfc07af7e004d3d019b311c1043cc223f5f5252fb",
+    "config": "a5956cdb247761f1ac3074a2870991a60d93ba948698564fde24792a627248b9",
+    "prompts": {
+      "D-full": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "D-no-fewshot": "86ed137bb02a65b4d20b83afc948fee2b755efff4525bc6c005f9d2e2f4b657a",
+      "D-minimal": "95027fe293a42e44a59b18bb4a8efaed032d91b010c42c9705270a1dcc33ed4f",
+      "D-barrientos-style": "09bb61e2b7c9b2ea60c36f65e67f08cadf860f05295a29021f4f26814b97d9c4",
+      "BARR-FULL": "49af69cc8ff6063db97fbdeab74cd4c7f0506d1bae7d86233971749f3ad4738a",
+      "OURS-FULL": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "OURS-BARRIENTOS-MODULE": "09bb61e2b7c9b2ea60c36f65e67f08cadf860f05295a29021f4f26814b97d9c4"
+    }
+  },
+  "budget": {
+    "planned_calls": 990,
+    "input_token_cap": 3867170,
+    "output_token_cap": 4055040,
+    "usd_cost_cap": 25.396,
+    "price_snapshot": {
+      "schema_version": "s2_12_price_snapshot@1.0.0",
+      "currency": "USD",
+      "input_cache_miss_per_million": 1.32,
+      "output_per_million": 3.96
+    },
+    "input_estimate_note": "estimated input tokens=2578113 over 990 rendered requests (ceil(utf8_bytes/3), conservative over-estimate); input cap = x1.5; output cap = 990*4096; USD cap = (input_cap*1.32/1M + output_cap*3.96/1M)*1.2 rounded up; not a guess, derived from rendered requests",
+    "computed_at_utc": "2026-08-26T22:00:42Z"
+  },
+  "authorization": null,
+  "gold_isolation": {
+    "api_arms_must_not_read_gold": true,
+    "evaluation_only_after_predictions_are_locked": true
+  }
+}

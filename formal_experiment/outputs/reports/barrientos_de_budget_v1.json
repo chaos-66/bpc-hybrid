@@ -1,0 +1,5025 @@
+{
+  "schema_version": "barrientos_de_budget@1.0.0",
+  "contract_path": "configs\\ablations\\barrientos_de_execution_contract_v1.json",
+  "contract_sha256": "d8d54dd0ff2c2304387050a26642a977bb6a84aadb321c627153cd1baab0f845",
+  "rendered_requests": {
+    "plan_total_calls": 990,
+    "arms": {
+      "D-full": {
+        "calls": 0,
+        "requests": [],
+        "bytes": 0,
+        "est_tokens": 0
+      },
+      "D-no-fewshot": {
+        "calls": 150,
+        "requests": [
+          {
+            "sample_id": "estg_000002",
+            "utf8_bytes": 7068,
+            "est_input_tokens": 2356
+          },
+          {
+            "sample_id": "estg_000003",
+            "utf8_bytes": 6992,
+            "est_input_tokens": 2331
+          },
+          {
+            "sample_id": "estg_000004",
+            "utf8_bytes": 6980,
+            "est_input_tokens": 2327
+          },
+          {
+            "sample_id": "estg_000020",
+            "utf8_bytes": 6978,
+            "est_input_tokens": 2326
+          },
+          {
+            "sample_id": "estg_000021",
+            "utf8_bytes": 7008,
+            "est_input_tokens": 2336
+          },
+          {
+            "sample_id": "estg_000027",
+            "utf8_bytes": 7140,
+            "est_input_tokens": 2380
+          },
+          {
+            "sample_id": "estg_000028",
+            "utf8_bytes": 7013,
+            "est_input_tokens": 2338
+          },
+          {
+            "sample_id": "estg_000030",
+            "utf8_bytes": 6942,
+            "est_input_tokens": 2314
+          },
+          {
+            "sample_id": "estg_000031",
+            "utf8_bytes": 7000,
+            "est_input_tokens": 2334
+          },
+          {
+            "sample_id": "estg_000033",
+            "utf8_bytes": 6945,
+            "est_input_tokens": 2315
+          },
+          {
+            "sample_id": "estg_000035",
+            "utf8_bytes": 6968,
+            "est_input_tokens": 2323
+          },
+          {
+            "sample_id": "estg_000036",
+            "utf8_bytes": 6959,
+            "est_input_tokens": 2320
+          },
+          {
+            "sample_id": "estg_000037",
+            "utf8_bytes": 7416,
+            "est_input_tokens": 2472
+          },
+          {
+            "sample_id": "estg_000038",
+            "utf8_bytes": 7009,
+            "est_input_tokens": 2337
+          },
+          {
+            "sample_id": "estg_000039",
+            "utf8_bytes": 7190,
+            "est_input_tokens": 2397
+          },
+          {
+            "sample_id": "estg_000040",
+            "utf8_bytes": 7027,
+            "est_input_tokens": 2343
+          },
+          {
+            "sample_id": "estg_000043",
+            "utf8_bytes": 6994,
+            "est_input_tokens": 2332
+          },
+          {
+            "sample_id": "estg_000044",
+            "utf8_bytes": 6957,
+            "est_input_tokens": 2319
+          },
+          {
+            "sample_id": "estg_000046",
+            "utf8_bytes": 7116,
+            "est_input_tokens": 2372
+          },
+          {
+            "sample_id": "estg_000051",
+            "utf8_bytes": 6978,
+            "est_input_tokens": 2326
+          },
+          {
+            "sample_id": "estg_000052",
+            "utf8_bytes": 6998,
+            "est_input_tokens": 2333
+          },
+          {
+            "sample_id": "estg_000055",
+            "utf8_bytes": 7081,
+            "est_input_tokens": 2361
+          },
+          {
+            "sample_id": "estg_000056",
+            "utf8_bytes": 7738,
+            "est_input_tokens": 2580
+          },
+          {
+            "sample_id": "estg_000057",
+            "utf8_bytes": 7055,
+            "est_input_tokens": 2352
+          },
+          {
+            "sample_id": "estg_000059",
+            "utf8_bytes": 7258,
+            "est_input_tokens": 2420
+          },
+          {
+            "sample_id": "estg_000060",
+            "utf8_bytes": 7137,
+            "est_input_tokens": 2379
+          },
+          {
+            "sample_id": "estg_000061",
+            "utf8_bytes": 7462,
+            "est_input_tokens": 2488
+          },
+          {
+            "sample_id": "estg_000062",
+            "utf8_bytes": 7103,
+            "est_input_tokens": 2368
+          },
+          {
+            "sample_id": "estg_000068",
+            "utf8_bytes": 7022,
+            "est_input_tokens": 2341
+          },
+          {
+            "sample_id": "estg_000070",
+            "utf8_bytes": 8007,
+            "est_input_tokens": 2669
+          },
+          {
+            "sample_id": "estg_000071",
+            "utf8_bytes": 7087,
+            "est_input_tokens": 2363
+          },
+          {
+            "sample_id": "estg_000074",
+            "utf8_bytes": 7026,
+            "est_input_tokens": 2342
+          },
+          {
+            "sample_id": "estg_000075",
+            "utf8_bytes": 7461,
+            "est_input_tokens": 2487
+          },
+          {
+            "sample_id": "estg_000077",
+            "utf8_bytes": 7712,
+            "est_input_tokens": 2571
+          },
+          {
+            "sample_id": "estg_000079",
+            "utf8_bytes": 7038,
+            "est_input_tokens": 2346
+          },
+          {
+            "sample_id": "estg_000080",
+            "utf8_bytes": 7569,
+            "est_input_tokens": 2523
+          },
+          {
+            "sample_id": "estg_000082",
+            "utf8_bytes": 7064,
+            "est_input_tokens": 2355
+          },
+          {
+            "sample_id": "estg_000083",
+            "utf8_bytes": 7027,
+            "est_input_tokens": 2343
+          },
+          {
+            "sample_id": "estg_000087",
+            "utf8_bytes": 6986,
+            "est_input_tokens": 2329
+          },
+          {
+            "sample_id": "estg_000091",
+            "utf8_bytes": 6973,
+            "est_input_tokens": 2325
+          },
+          {
+            "sample_id": "estg_000092",
+            "utf8_bytes": 7129,
+            "est_input_tokens": 2377
+          },
+          {
+            "sample_id": "estg_000094",
+            "utf8_bytes": 7085,
+            "est_input_tokens": 2362
+          },
+          {
+            "sample_id": "estg_000095",
+            "utf8_bytes": 6954,
+            "est_input_tokens": 2318
+          },
+          {
+            "sample_id": "estg_000098",
+            "utf8_bytes": 7091,
+            "est_input_tokens": 2364
+          },
+          {
+            "sample_id": "estg_000103",
+            "utf8_bytes": 7072,
+            "est_input_tokens": 2358
+          },
+          {
+            "sample_id": "estg_000104",
+            "utf8_bytes": 6994,
+            "est_input_tokens": 2332
+          },
+          {
+            "sample_id": "estg_000105",
+            "utf8_bytes": 7004,
+            "est_input_tokens": 2335
+          },
+          {
+            "sample_id": "estg_000106",
+            "utf8_bytes": 7077,
+            "est_input_tokens": 2359
+          },
+          {
+            "sample_id": "estg_000108",
+            "utf8_bytes": 6990,
+            "est_input_tokens": 2330
+          },
+          {
+            "sample_id": "estg_000109",
+            "utf8_bytes": 7014,
+            "est_input_tokens": 2338
+          },
+          {
+            "sample_id": "estg_000111",
+            "utf8_bytes": 7105,
+            "est_input_tokens": 2369
+          },
+          {
+            "sample_id": "estg_000112",
+            "utf8_bytes": 7342,
+            "est_input_tokens": 2448
+          },
+          {
+            "sample_id": "estg_000113",
+            "utf8_bytes": 6988,
+            "est_input_tokens": 2330
+          },
+          {
+            "sample_id": "estg_000114",
+            "utf8_bytes": 7105,
+            "est_input_tokens": 2369
+          },
+          {
+            "sample_id": "estg_000115",
+            "utf8_bytes": 6960,
+            "est_input_tokens": 2320
+          },
+          {
+            "sample_id": "estg_000118",
+            "utf8_bytes": 6963,
+            "est_input_tokens": 2321
+          },
+          {
+            "sample_id": "estg_000119",
+            "utf8_bytes": 6997,
+            "est_input_tokens": 2333
+          },
+          {
+            "sample_id": "estg_000121",
+            "utf8_bytes": 6957,
+            "est_input_tokens": 2319
+          },
+          {
+            "sample_id": "estg_000123",
+            "utf8_bytes": 7033,
+            "est_input_tokens": 2345
+          },
+          {
+            "sample_id": "estg_000124",
+            "utf8_bytes": 6971,
+            "est_input_tokens": 2324
+          },
+          {
+            "sample_id": "estg_000125",
+            "utf8_bytes": 6952,
+            "est_input_tokens": 2318
+          },
+          {
+            "sample_id": "estg_000127",
+            "utf8_bytes": 7114,
+            "est_input_tokens": 2372
+          },
+          {
+            "sample_id": "estg_000128",
+            "utf8_bytes": 7109,
+            "est_input_tokens": 2370
+          },
+          {
+            "sample_id": "estg_000130",
+            "utf8_bytes": 6927,
+            "est_input_tokens": 2309
+          },
+          {
+            "sample_id": "estg_000131",
+            "utf8_bytes": 7065,
+            "est_input_tokens": 2355
+          },
+          {
+            "sample_id": "estg_000133",
+            "utf8_bytes": 7004,
+            "est_input_tokens": 2335
+          },
+          {
+            "sample_id": "estg_000134",
+            "utf8_bytes": 6952,
+            "est_input_tokens": 2318
+          },
+          {
+            "sample_id": "estg_000135",
+            "utf8_bytes": 7107,
+            "est_input_tokens": 2369
+          },
+          {
+            "sample_id": "estg_000136",
+            "utf8_bytes": 6970,
+            "est_input_tokens": 2324
+          },
+          {
+            "sample_id": "estg_000139",
+            "utf8_bytes": 6986,
+            "est_input_tokens": 2329
+          },
+          {
+            "sample_id": "estg_000143",
+            "utf8_bytes": 7071,
+            "est_input_tokens": 2357
+          },
+          {
+            "sample_id": "estg_000145",
+            "utf8_bytes": 7010,
+            "est_input_tokens": 2337
+          },
+          {
+            "sample_id": "estg_000146",
+            "utf8_bytes": 6996,
+            "est_input_tokens": 2332
+          },
+          {
+            "sample_id": "estg_000148",
+            "utf8_bytes": 6969,
+            "est_input_tokens": 2323
+          },
+          {
+            "sample_id": "estg_000161",
+            "utf8_bytes": 7988,
+            "est_input_tokens": 2663
+          },
+          {
+            "sample_id": "estg_000164",
+            "utf8_bytes": 7628,
+            "est_input_tokens": 2543
+          },
+          {
+            "sample_id": "estg_000173",
+            "utf8_bytes": 7186,
+            "est_input_tokens": 2396
+          },
+          {
+            "sample_id": "estg_000183",
+            "utf8_bytes": 7177,
+            "est_input_tokens": 2393
+          },
+          {
+            "sample_id": "estg_000195",
+            "utf8_bytes": 7066,
+            "est_input_tokens": 2356
+          },
+          {
+            "sample_id": "estg_000206",
+            "utf8_bytes": 7473,
+            "est_input_tokens": 2491
+          },
+          {
+            "sample_id": "estg_000207",
+            "utf8_bytes": 7193,
+            "est_input_tokens": 2398
+          },
+          {
+            "sample_id": "estg_000208",
+            "utf8_bytes": 7980,
+            "est_input_tokens": 2660
+          },
+          {
+            "sample_id": "estg_000209",
+            "utf8_bytes": 7477,
+            "est_input_tokens": 2493
+          },
+          {
+            "sample_id": "estg_000210",
+            "utf8_bytes": 7525,
+            "est_input_tokens": 2509
+          },
+          {
+            "sample_id": "estg_000214",
+            "utf8_bytes": 7058,
+            "est_input_tokens": 2353
+          },
+          {
+            "sample_id": "estg_000218",
+            "utf8_bytes": 7239,
+            "est_input_tokens": 2413
+          },
+          {
+            "sample_id": "estg_000220",
+            "utf8_bytes": 7252,
+            "est_input_tokens": 2418
+          },
+          {
+            "sample_id": "estg_000222",
+            "utf8_bytes": 7069,
+            "est_input_tokens": 2357
+          },
+          {
+            "sample_id": "estg_000223",
+            "utf8_bytes": 7159,
+            "est_input_tokens": 2387
+          },
+          {
+            "sample_id": "estg_000230",
+            "utf8_bytes": 6964,
+            "est_input_tokens": 2322
+          },
+          {
+            "sample_id": "estg_000231",
+            "utf8_bytes": 6905,
+            "est_input_tokens": 2302
+          },
+          {
+            "sample_id": "estg_000232",
+            "utf8_bytes": 7125,
+            "est_input_tokens": 2375
+          },
+          {
+            "sample_id": "estg_000245",
+            "utf8_bytes": 6970,
+            "est_input_tokens": 2324
+          },
+          {
+            "sample_id": "estg_000247",
+            "utf8_bytes": 6997,
+            "est_input_tokens": 2333
+          },
+          {
+            "sample_id": "estg_000271",
+            "utf8_bytes": 7203,
+            "est_input_tokens": 2401
+          },
+          {
+            "sample_id": "estg_000273",
+            "utf8_bytes": 7624,
+            "est_input_tokens": 2542
+          },
+          {
+            "sample_id": "estg_000277",
+            "utf8_bytes": 7869,
+            "est_input_tokens": 2623
+          },
+          {
+            "sample_id": "estg_000283",
+            "utf8_bytes": 7187,
+            "est_input_tokens": 2396
+          },
+          {
+            "sample_id": "estg_000285",
+            "utf8_bytes": 7178,
+            "est_input_tokens": 2393
+          },
+          {
+            "sample_id": "estg_000286",
+            "utf8_bytes": 7609,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "estg_000293",
+            "utf8_bytes": 7422,
+            "est_input_tokens": 2474
+          },
+          {
+            "sample_id": "estg_000302",
+            "utf8_bytes": 6959,
+            "est_input_tokens": 2320
+          },
+          {
+            "sample_id": "estg_000306",
+            "utf8_bytes": 7628,
+            "est_input_tokens": 2543
+          },
+          {
+            "sample_id": "estg_000308",
+            "utf8_bytes": 6949,
+            "est_input_tokens": 2317
+          },
+          {
+            "sample_id": "estg_000313",
+            "utf8_bytes": 7001,
+            "est_input_tokens": 2334
+          },
+          {
+            "sample_id": "estg_000326",
+            "utf8_bytes": 6931,
+            "est_input_tokens": 2311
+          },
+          {
+            "sample_id": "estg_000347",
+            "utf8_bytes": 6962,
+            "est_input_tokens": 2321
+          },
+          {
+            "sample_id": "estg_000366",
+            "utf8_bytes": 7342,
+            "est_input_tokens": 2448
+          },
+          {
+            "sample_id": "estg_000375",
+            "utf8_bytes": 6910,
+            "est_input_tokens": 2304
+          },
+          {
+            "sample_id": "estg_000393",
+            "utf8_bytes": 7343,
+            "est_input_tokens": 2448
+          },
+          {
+            "sample_id": "estg_000396",
+            "utf8_bytes": 6964,
+            "est_input_tokens": 2322
+          },
+          {
+            "sample_id": "estg_000399",
+            "utf8_bytes": 7329,
+            "est_input_tokens": 2443
+          },
+          {
+            "sample_id": "estg_000414",
+            "utf8_bytes": 7126,
+            "est_input_tokens": 2376
+          },
+          {
+            "sample_id": "estg_000417",
+            "utf8_bytes": 7041,
+            "est_input_tokens": 2347
+          },
+          {
+            "sample_id": "estg_000433",
+            "utf8_bytes": 7004,
+            "est_input_tokens": 2335
+          },
+          {
+            "sample_id": "estg_000452",
+            "utf8_bytes": 7056,
+            "est_input_tokens": 2352
+          },
+          {
+            "sample_id": "estg_000457",
+            "utf8_bytes": 7148,
+            "est_input_tokens": 2383
+          },
+          {
+            "sample_id": "estg_000458",
+            "utf8_bytes": 6913,
+            "est_input_tokens": 2305
+          },
+          {
+            "sample_id": "estg_000465",
+            "utf8_bytes": 7020,
+            "est_input_tokens": 2340
+          },
+          {
+            "sample_id": "estg_000504",
+            "utf8_bytes": 7123,
+            "est_input_tokens": 2375
+          },
+          {
+            "sample_id": "estg_000505",
+            "utf8_bytes": 7027,
+            "est_input_tokens": 2343
+          },
+          {
+            "sample_id": "estg_000507",
+            "utf8_bytes": 7643,
+            "est_input_tokens": 2548
+          },
+          {
+            "sample_id": "estg_000509",
+            "utf8_bytes": 7014,
+            "est_input_tokens": 2338
+          },
+          {
+            "sample_id": "estg_000522",
+            "utf8_bytes": 7330,
+            "est_input_tokens": 2444
+          },
+          {
+            "sample_id": "estg_000525",
+            "utf8_bytes": 7298,
+            "est_input_tokens": 2433
+          },
+          {
+            "sample_id": "estg_000539",
+            "utf8_bytes": 7460,
+            "est_input_tokens": 2487
+          },
+          {
+            "sample_id": "estg_000546",
+            "utf8_bytes": 6952,
+            "est_input_tokens": 2318
+          },
+          {
+            "sample_id": "estg_000555",
+            "utf8_bytes": 7010,
+            "est_input_tokens": 2337
+          },
+          {
+            "sample_id": "estg_000560",
+            "utf8_bytes": 6992,
+            "est_input_tokens": 2331
+          },
+          {
+            "sample_id": "estg_000569",
+            "utf8_bytes": 7120,
+            "est_input_tokens": 2374
+          },
+          {
+            "sample_id": "estg_000572",
+            "utf8_bytes": 7009,
+            "est_input_tokens": 2337
+          },
+          {
+            "sample_id": "estg_000578",
+            "utf8_bytes": 7138,
+            "est_input_tokens": 2380
+          },
+          {
+            "sample_id": "estg_000599",
+            "utf8_bytes": 7069,
+            "est_input_tokens": 2357
+          },
+          {
+            "sample_id": "estg_000601",
+            "utf8_bytes": 6982,
+            "est_input_tokens": 2328
+          },
+          {
+            "sample_id": "estg_000635",
+            "utf8_bytes": 7108,
+            "est_input_tokens": 2370
+          },
+          {
+            "sample_id": "estg_000659",
+            "utf8_bytes": 6987,
+            "est_input_tokens": 2329
+          },
+          {
+            "sample_id": "estg_000664",
+            "utf8_bytes": 7138,
+            "est_input_tokens": 2380
+          },
+          {
+            "sample_id": "estg_000704",
+            "utf8_bytes": 6964,
+            "est_input_tokens": 2322
+          },
+          {
+            "sample_id": "estg_000713",
+            "utf8_bytes": 7082,
+            "est_input_tokens": 2361
+          },
+          {
+            "sample_id": "estg_000716",
+            "utf8_bytes": 7260,
+            "est_input_tokens": 2420
+          },
+          {
+            "sample_id": "estg_000720",
+            "utf8_bytes": 7013,
+            "est_input_tokens": 2338
+          },
+          {
+            "sample_id": "estg_000773",
+            "utf8_bytes": 7108,
+            "est_input_tokens": 2370
+          },
+          {
+            "sample_id": "estg_000776",
+            "utf8_bytes": 6989,
+            "est_input_tokens": 2330
+          },
+          {
+            "sample_id": "estg_000785",
+            "utf8_bytes": 7148,
+            "est_input_tokens": 2383
+          },
+          {
+            "sample_id": "estg_000786",
+            "utf8_bytes": 7350,
+            "est_input_tokens": 2450
+          },
+          {
+            "sample_id": "estg_000800",
+            "utf8_bytes": 7736,
+            "est_input_tokens": 2579
+          },
+          {
+            "sample_id": "estg_000812",
+            "utf8_bytes": 7030,
+            "est_input_tokens": 2344
+          },
+          {
+            "sample_id": "estg_000816",
+            "utf8_bytes": 7131,
+            "est_input_tokens": 2377
+          },
+          {
+            "sample_id": "estg_000854",
+            "utf8_bytes": 7267,
+            "est_input_tokens": 2423
+          },
+          {
+            "sample_id": "estg_000861",
+            "utf8_bytes": 6960,
+            "est_input_tokens": 2320
+          }
+        ],
+        "bytes": 1071134,
+        "est_tokens": 357099
+      },
+      "D-minimal": {
+        "calls": 150,
+        "requests": [
+          {
+            "sample_id": "estg_000002",
+            "utf8_bytes": 1278,
+            "est_input_tokens": 426
+          },
+          {
+            "sample_id": "estg_000003",
+            "utf8_bytes": 1202,
+            "est_input_tokens": 401
+          },
+          {
+            "sample_id": "estg_000004",
+            "utf8_bytes": 1190,
+            "est_input_tokens": 397
+          },
+          {
+            "sample_id": "estg_000020",
+            "utf8_bytes": 1188,
+            "est_input_tokens": 396
+          },
+          {
+            "sample_id": "estg_000021",
+            "utf8_bytes": 1218,
+            "est_input_tokens": 406
+          },
+          {
+            "sample_id": "estg_000027",
+            "utf8_bytes": 1350,
+            "est_input_tokens": 450
+          },
+          {
+            "sample_id": "estg_000028",
+            "utf8_bytes": 1223,
+            "est_input_tokens": 408
+          },
+          {
+            "sample_id": "estg_000030",
+            "utf8_bytes": 1152,
+            "est_input_tokens": 384
+          },
+          {
+            "sample_id": "estg_000031",
+            "utf8_bytes": 1210,
+            "est_input_tokens": 404
+          },
+          {
+            "sample_id": "estg_000033",
+            "utf8_bytes": 1155,
+            "est_input_tokens": 385
+          },
+          {
+            "sample_id": "estg_000035",
+            "utf8_bytes": 1178,
+            "est_input_tokens": 393
+          },
+          {
+            "sample_id": "estg_000036",
+            "utf8_bytes": 1169,
+            "est_input_tokens": 390
+          },
+          {
+            "sample_id": "estg_000037",
+            "utf8_bytes": 1626,
+            "est_input_tokens": 542
+          },
+          {
+            "sample_id": "estg_000038",
+            "utf8_bytes": 1219,
+            "est_input_tokens": 407
+          },
+          {
+            "sample_id": "estg_000039",
+            "utf8_bytes": 1400,
+            "est_input_tokens": 467
+          },
+          {
+            "sample_id": "estg_000040",
+            "utf8_bytes": 1237,
+            "est_input_tokens": 413
+          },
+          {
+            "sample_id": "estg_000043",
+            "utf8_bytes": 1204,
+            "est_input_tokens": 402
+          },
+          {
+            "sample_id": "estg_000044",
+            "utf8_bytes": 1167,
+            "est_input_tokens": 389
+          },
+          {
+            "sample_id": "estg_000046",
+            "utf8_bytes": 1326,
+            "est_input_tokens": 442
+          },
+          {
+            "sample_id": "estg_000051",
+            "utf8_bytes": 1188,
+            "est_input_tokens": 396
+          },
+          {
+            "sample_id": "estg_000052",
+            "utf8_bytes": 1208,
+            "est_input_tokens": 403
+          },
+          {
+            "sample_id": "estg_000055",
+            "utf8_bytes": 1291,
+            "est_input_tokens": 431
+          },
+          {
+            "sample_id": "estg_000056",
+            "utf8_bytes": 1948,
+            "est_input_tokens": 650
+          },
+          {
+            "sample_id": "estg_000057",
+            "utf8_bytes": 1265,
+            "est_input_tokens": 422
+          },
+          {
+            "sample_id": "estg_000059",
+            "utf8_bytes": 1468,
+            "est_input_tokens": 490
+          },
+          {
+            "sample_id": "estg_000060",
+            "utf8_bytes": 1347,
+            "est_input_tokens": 449
+          },
+          {
+            "sample_id": "estg_000061",
+            "utf8_bytes": 1672,
+            "est_input_tokens": 558
+          },
+          {
+            "sample_id": "estg_000062",
+            "utf8_bytes": 1313,
+            "est_input_tokens": 438
+          },
+          {
+            "sample_id": "estg_000068",
+            "utf8_bytes": 1232,
+            "est_input_tokens": 411
+          },
+          {
+            "sample_id": "estg_000070",
+            "utf8_bytes": 2217,
+            "est_input_tokens": 739
+          },
+          {
+            "sample_id": "estg_000071",
+            "utf8_bytes": 1297,
+            "est_input_tokens": 433
+          },
+          {
+            "sample_id": "estg_000074",
+            "utf8_bytes": 1236,
+            "est_input_tokens": 412
+          },
+          {
+            "sample_id": "estg_000075",
+            "utf8_bytes": 1671,
+            "est_input_tokens": 557
+          },
+          {
+            "sample_id": "estg_000077",
+            "utf8_bytes": 1922,
+            "est_input_tokens": 641
+          },
+          {
+            "sample_id": "estg_000079",
+            "utf8_bytes": 1248,
+            "est_input_tokens": 416
+          },
+          {
+            "sample_id": "estg_000080",
+            "utf8_bytes": 1779,
+            "est_input_tokens": 593
+          },
+          {
+            "sample_id": "estg_000082",
+            "utf8_bytes": 1274,
+            "est_input_tokens": 425
+          },
+          {
+            "sample_id": "estg_000083",
+            "utf8_bytes": 1237,
+            "est_input_tokens": 413
+          },
+          {
+            "sample_id": "estg_000087",
+            "utf8_bytes": 1196,
+            "est_input_tokens": 399
+          },
+          {
+            "sample_id": "estg_000091",
+            "utf8_bytes": 1183,
+            "est_input_tokens": 395
+          },
+          {
+            "sample_id": "estg_000092",
+            "utf8_bytes": 1339,
+            "est_input_tokens": 447
+          },
+          {
+            "sample_id": "estg_000094",
+            "utf8_bytes": 1295,
+            "est_input_tokens": 432
+          },
+          {
+            "sample_id": "estg_000095",
+            "utf8_bytes": 1164,
+            "est_input_tokens": 388
+          },
+          {
+            "sample_id": "estg_000098",
+            "utf8_bytes": 1301,
+            "est_input_tokens": 434
+          },
+          {
+            "sample_id": "estg_000103",
+            "utf8_bytes": 1282,
+            "est_input_tokens": 428
+          },
+          {
+            "sample_id": "estg_000104",
+            "utf8_bytes": 1204,
+            "est_input_tokens": 402
+          },
+          {
+            "sample_id": "estg_000105",
+            "utf8_bytes": 1214,
+            "est_input_tokens": 405
+          },
+          {
+            "sample_id": "estg_000106",
+            "utf8_bytes": 1287,
+            "est_input_tokens": 429
+          },
+          {
+            "sample_id": "estg_000108",
+            "utf8_bytes": 1200,
+            "est_input_tokens": 400
+          },
+          {
+            "sample_id": "estg_000109",
+            "utf8_bytes": 1224,
+            "est_input_tokens": 408
+          },
+          {
+            "sample_id": "estg_000111",
+            "utf8_bytes": 1315,
+            "est_input_tokens": 439
+          },
+          {
+            "sample_id": "estg_000112",
+            "utf8_bytes": 1552,
+            "est_input_tokens": 518
+          },
+          {
+            "sample_id": "estg_000113",
+            "utf8_bytes": 1198,
+            "est_input_tokens": 400
+          },
+          {
+            "sample_id": "estg_000114",
+            "utf8_bytes": 1315,
+            "est_input_tokens": 439
+          },
+          {
+            "sample_id": "estg_000115",
+            "utf8_bytes": 1170,
+            "est_input_tokens": 390
+          },
+          {
+            "sample_id": "estg_000118",
+            "utf8_bytes": 1173,
+            "est_input_tokens": 391
+          },
+          {
+            "sample_id": "estg_000119",
+            "utf8_bytes": 1207,
+            "est_input_tokens": 403
+          },
+          {
+            "sample_id": "estg_000121",
+            "utf8_bytes": 1167,
+            "est_input_tokens": 389
+          },
+          {
+            "sample_id": "estg_000123",
+            "utf8_bytes": 1243,
+            "est_input_tokens": 415
+          },
+          {
+            "sample_id": "estg_000124",
+            "utf8_bytes": 1181,
+            "est_input_tokens": 394
+          },
+          {
+            "sample_id": "estg_000125",
+            "utf8_bytes": 1162,
+            "est_input_tokens": 388
+          },
+          {
+            "sample_id": "estg_000127",
+            "utf8_bytes": 1324,
+            "est_input_tokens": 442
+          },
+          {
+            "sample_id": "estg_000128",
+            "utf8_bytes": 1319,
+            "est_input_tokens": 440
+          },
+          {
+            "sample_id": "estg_000130",
+            "utf8_bytes": 1137,
+            "est_input_tokens": 379
+          },
+          {
+            "sample_id": "estg_000131",
+            "utf8_bytes": 1275,
+            "est_input_tokens": 425
+          },
+          {
+            "sample_id": "estg_000133",
+            "utf8_bytes": 1214,
+            "est_input_tokens": 405
+          },
+          {
+            "sample_id": "estg_000134",
+            "utf8_bytes": 1162,
+            "est_input_tokens": 388
+          },
+          {
+            "sample_id": "estg_000135",
+            "utf8_bytes": 1317,
+            "est_input_tokens": 439
+          },
+          {
+            "sample_id": "estg_000136",
+            "utf8_bytes": 1180,
+            "est_input_tokens": 394
+          },
+          {
+            "sample_id": "estg_000139",
+            "utf8_bytes": 1196,
+            "est_input_tokens": 399
+          },
+          {
+            "sample_id": "estg_000143",
+            "utf8_bytes": 1281,
+            "est_input_tokens": 427
+          },
+          {
+            "sample_id": "estg_000145",
+            "utf8_bytes": 1220,
+            "est_input_tokens": 407
+          },
+          {
+            "sample_id": "estg_000146",
+            "utf8_bytes": 1206,
+            "est_input_tokens": 402
+          },
+          {
+            "sample_id": "estg_000148",
+            "utf8_bytes": 1179,
+            "est_input_tokens": 393
+          },
+          {
+            "sample_id": "estg_000161",
+            "utf8_bytes": 2198,
+            "est_input_tokens": 733
+          },
+          {
+            "sample_id": "estg_000164",
+            "utf8_bytes": 1838,
+            "est_input_tokens": 613
+          },
+          {
+            "sample_id": "estg_000173",
+            "utf8_bytes": 1396,
+            "est_input_tokens": 466
+          },
+          {
+            "sample_id": "estg_000183",
+            "utf8_bytes": 1387,
+            "est_input_tokens": 463
+          },
+          {
+            "sample_id": "estg_000195",
+            "utf8_bytes": 1276,
+            "est_input_tokens": 426
+          },
+          {
+            "sample_id": "estg_000206",
+            "utf8_bytes": 1683,
+            "est_input_tokens": 561
+          },
+          {
+            "sample_id": "estg_000207",
+            "utf8_bytes": 1403,
+            "est_input_tokens": 468
+          },
+          {
+            "sample_id": "estg_000208",
+            "utf8_bytes": 2190,
+            "est_input_tokens": 730
+          },
+          {
+            "sample_id": "estg_000209",
+            "utf8_bytes": 1687,
+            "est_input_tokens": 563
+          },
+          {
+            "sample_id": "estg_000210",
+            "utf8_bytes": 1735,
+            "est_input_tokens": 579
+          },
+          {
+            "sample_id": "estg_000214",
+            "utf8_bytes": 1268,
+            "est_input_tokens": 423
+          },
+          {
+            "sample_id": "estg_000218",
+            "utf8_bytes": 1449,
+            "est_input_tokens": 483
+          },
+          {
+            "sample_id": "estg_000220",
+            "utf8_bytes": 1462,
+            "est_input_tokens": 488
+          },
+          {
+            "sample_id": "estg_000222",
+            "utf8_bytes": 1279,
+            "est_input_tokens": 427
+          },
+          {
+            "sample_id": "estg_000223",
+            "utf8_bytes": 1369,
+            "est_input_tokens": 457
+          },
+          {
+            "sample_id": "estg_000230",
+            "utf8_bytes": 1174,
+            "est_input_tokens": 392
+          },
+          {
+            "sample_id": "estg_000231",
+            "utf8_bytes": 1115,
+            "est_input_tokens": 372
+          },
+          {
+            "sample_id": "estg_000232",
+            "utf8_bytes": 1335,
+            "est_input_tokens": 445
+          },
+          {
+            "sample_id": "estg_000245",
+            "utf8_bytes": 1180,
+            "est_input_tokens": 394
+          },
+          {
+            "sample_id": "estg_000247",
+            "utf8_bytes": 1207,
+            "est_input_tokens": 403
+          },
+          {
+            "sample_id": "estg_000271",
+            "utf8_bytes": 1413,
+            "est_input_tokens": 471
+          },
+          {
+            "sample_id": "estg_000273",
+            "utf8_bytes": 1834,
+            "est_input_tokens": 612
+          },
+          {
+            "sample_id": "estg_000277",
+            "utf8_bytes": 2079,
+            "est_input_tokens": 693
+          },
+          {
+            "sample_id": "estg_000283",
+            "utf8_bytes": 1397,
+            "est_input_tokens": 466
+          },
+          {
+            "sample_id": "estg_000285",
+            "utf8_bytes": 1388,
+            "est_input_tokens": 463
+          },
+          {
+            "sample_id": "estg_000286",
+            "utf8_bytes": 1819,
+            "est_input_tokens": 607
+          },
+          {
+            "sample_id": "estg_000293",
+            "utf8_bytes": 1632,
+            "est_input_tokens": 544
+          },
+          {
+            "sample_id": "estg_000302",
+            "utf8_bytes": 1169,
+            "est_input_tokens": 390
+          },
+          {
+            "sample_id": "estg_000306",
+            "utf8_bytes": 1838,
+            "est_input_tokens": 613
+          },
+          {
+            "sample_id": "estg_000308",
+            "utf8_bytes": 1159,
+            "est_input_tokens": 387
+          },
+          {
+            "sample_id": "estg_000313",
+            "utf8_bytes": 1211,
+            "est_input_tokens": 404
+          },
+          {
+            "sample_id": "estg_000326",
+            "utf8_bytes": 1141,
+            "est_input_tokens": 381
+          },
+          {
+            "sample_id": "estg_000347",
+            "utf8_bytes": 1172,
+            "est_input_tokens": 391
+          },
+          {
+            "sample_id": "estg_000366",
+            "utf8_bytes": 1552,
+            "est_input_tokens": 518
+          },
+          {
+            "sample_id": "estg_000375",
+            "utf8_bytes": 1120,
+            "est_input_tokens": 374
+          },
+          {
+            "sample_id": "estg_000393",
+            "utf8_bytes": 1553,
+            "est_input_tokens": 518
+          },
+          {
+            "sample_id": "estg_000396",
+            "utf8_bytes": 1174,
+            "est_input_tokens": 392
+          },
+          {
+            "sample_id": "estg_000399",
+            "utf8_bytes": 1539,
+            "est_input_tokens": 513
+          },
+          {
+            "sample_id": "estg_000414",
+            "utf8_bytes": 1336,
+            "est_input_tokens": 446
+          },
+          {
+            "sample_id": "estg_000417",
+            "utf8_bytes": 1251,
+            "est_input_tokens": 417
+          },
+          {
+            "sample_id": "estg_000433",
+            "utf8_bytes": 1214,
+            "est_input_tokens": 405
+          },
+          {
+            "sample_id": "estg_000452",
+            "utf8_bytes": 1266,
+            "est_input_tokens": 422
+          },
+          {
+            "sample_id": "estg_000457",
+            "utf8_bytes": 1358,
+            "est_input_tokens": 453
+          },
+          {
+            "sample_id": "estg_000458",
+            "utf8_bytes": 1123,
+            "est_input_tokens": 375
+          },
+          {
+            "sample_id": "estg_000465",
+            "utf8_bytes": 1230,
+            "est_input_tokens": 410
+          },
+          {
+            "sample_id": "estg_000504",
+            "utf8_bytes": 1333,
+            "est_input_tokens": 445
+          },
+          {
+            "sample_id": "estg_000505",
+            "utf8_bytes": 1237,
+            "est_input_tokens": 413
+          },
+          {
+            "sample_id": "estg_000507",
+            "utf8_bytes": 1853,
+            "est_input_tokens": 618
+          },
+          {
+            "sample_id": "estg_000509",
+            "utf8_bytes": 1224,
+            "est_input_tokens": 408
+          },
+          {
+            "sample_id": "estg_000522",
+            "utf8_bytes": 1540,
+            "est_input_tokens": 514
+          },
+          {
+            "sample_id": "estg_000525",
+            "utf8_bytes": 1508,
+            "est_input_tokens": 503
+          },
+          {
+            "sample_id": "estg_000539",
+            "utf8_bytes": 1670,
+            "est_input_tokens": 557
+          },
+          {
+            "sample_id": "estg_000546",
+            "utf8_bytes": 1162,
+            "est_input_tokens": 388
+          },
+          {
+            "sample_id": "estg_000555",
+            "utf8_bytes": 1220,
+            "est_input_tokens": 407
+          },
+          {
+            "sample_id": "estg_000560",
+            "utf8_bytes": 1202,
+            "est_input_tokens": 401
+          },
+          {
+            "sample_id": "estg_000569",
+            "utf8_bytes": 1330,
+            "est_input_tokens": 444
+          },
+          {
+            "sample_id": "estg_000572",
+            "utf8_bytes": 1219,
+            "est_input_tokens": 407
+          },
+          {
+            "sample_id": "estg_000578",
+            "utf8_bytes": 1348,
+            "est_input_tokens": 450
+          },
+          {
+            "sample_id": "estg_000599",
+            "utf8_bytes": 1279,
+            "est_input_tokens": 427
+          },
+          {
+            "sample_id": "estg_000601",
+            "utf8_bytes": 1192,
+            "est_input_tokens": 398
+          },
+          {
+            "sample_id": "estg_000635",
+            "utf8_bytes": 1318,
+            "est_input_tokens": 440
+          },
+          {
+            "sample_id": "estg_000659",
+            "utf8_bytes": 1197,
+            "est_input_tokens": 399
+          },
+          {
+            "sample_id": "estg_000664",
+            "utf8_bytes": 1348,
+            "est_input_tokens": 450
+          },
+          {
+            "sample_id": "estg_000704",
+            "utf8_bytes": 1174,
+            "est_input_tokens": 392
+          },
+          {
+            "sample_id": "estg_000713",
+            "utf8_bytes": 1292,
+            "est_input_tokens": 431
+          },
+          {
+            "sample_id": "estg_000716",
+            "utf8_bytes": 1470,
+            "est_input_tokens": 490
+          },
+          {
+            "sample_id": "estg_000720",
+            "utf8_bytes": 1223,
+            "est_input_tokens": 408
+          },
+          {
+            "sample_id": "estg_000773",
+            "utf8_bytes": 1318,
+            "est_input_tokens": 440
+          },
+          {
+            "sample_id": "estg_000776",
+            "utf8_bytes": 1199,
+            "est_input_tokens": 400
+          },
+          {
+            "sample_id": "estg_000785",
+            "utf8_bytes": 1358,
+            "est_input_tokens": 453
+          },
+          {
+            "sample_id": "estg_000786",
+            "utf8_bytes": 1560,
+            "est_input_tokens": 520
+          },
+          {
+            "sample_id": "estg_000800",
+            "utf8_bytes": 1946,
+            "est_input_tokens": 649
+          },
+          {
+            "sample_id": "estg_000812",
+            "utf8_bytes": 1240,
+            "est_input_tokens": 414
+          },
+          {
+            "sample_id": "estg_000816",
+            "utf8_bytes": 1341,
+            "est_input_tokens": 447
+          },
+          {
+            "sample_id": "estg_000854",
+            "utf8_bytes": 1477,
+            "est_input_tokens": 493
+          },
+          {
+            "sample_id": "estg_000861",
+            "utf8_bytes": 1170,
+            "est_input_tokens": 390
+          }
+        ],
+        "bytes": 202634,
+        "est_tokens": 67599
+      },
+      "D-barrientos-style": {
+        "calls": 150,
+        "requests": [
+          {
+            "sample_id": "estg_000002",
+            "utf8_bytes": 7756,
+            "est_input_tokens": 2586
+          },
+          {
+            "sample_id": "estg_000003",
+            "utf8_bytes": 7680,
+            "est_input_tokens": 2560
+          },
+          {
+            "sample_id": "estg_000004",
+            "utf8_bytes": 7668,
+            "est_input_tokens": 2556
+          },
+          {
+            "sample_id": "estg_000020",
+            "utf8_bytes": 7666,
+            "est_input_tokens": 2556
+          },
+          {
+            "sample_id": "estg_000021",
+            "utf8_bytes": 7696,
+            "est_input_tokens": 2566
+          },
+          {
+            "sample_id": "estg_000027",
+            "utf8_bytes": 7828,
+            "est_input_tokens": 2610
+          },
+          {
+            "sample_id": "estg_000028",
+            "utf8_bytes": 7701,
+            "est_input_tokens": 2567
+          },
+          {
+            "sample_id": "estg_000030",
+            "utf8_bytes": 7630,
+            "est_input_tokens": 2544
+          },
+          {
+            "sample_id": "estg_000031",
+            "utf8_bytes": 7688,
+            "est_input_tokens": 2563
+          },
+          {
+            "sample_id": "estg_000033",
+            "utf8_bytes": 7633,
+            "est_input_tokens": 2545
+          },
+          {
+            "sample_id": "estg_000035",
+            "utf8_bytes": 7656,
+            "est_input_tokens": 2552
+          },
+          {
+            "sample_id": "estg_000036",
+            "utf8_bytes": 7647,
+            "est_input_tokens": 2549
+          },
+          {
+            "sample_id": "estg_000037",
+            "utf8_bytes": 8104,
+            "est_input_tokens": 2702
+          },
+          {
+            "sample_id": "estg_000038",
+            "utf8_bytes": 7697,
+            "est_input_tokens": 2566
+          },
+          {
+            "sample_id": "estg_000039",
+            "utf8_bytes": 7878,
+            "est_input_tokens": 2626
+          },
+          {
+            "sample_id": "estg_000040",
+            "utf8_bytes": 7715,
+            "est_input_tokens": 2572
+          },
+          {
+            "sample_id": "estg_000043",
+            "utf8_bytes": 7682,
+            "est_input_tokens": 2561
+          },
+          {
+            "sample_id": "estg_000044",
+            "utf8_bytes": 7645,
+            "est_input_tokens": 2549
+          },
+          {
+            "sample_id": "estg_000046",
+            "utf8_bytes": 7804,
+            "est_input_tokens": 2602
+          },
+          {
+            "sample_id": "estg_000051",
+            "utf8_bytes": 7666,
+            "est_input_tokens": 2556
+          },
+          {
+            "sample_id": "estg_000052",
+            "utf8_bytes": 7686,
+            "est_input_tokens": 2562
+          },
+          {
+            "sample_id": "estg_000055",
+            "utf8_bytes": 7769,
+            "est_input_tokens": 2590
+          },
+          {
+            "sample_id": "estg_000056",
+            "utf8_bytes": 8426,
+            "est_input_tokens": 2809
+          },
+          {
+            "sample_id": "estg_000057",
+            "utf8_bytes": 7743,
+            "est_input_tokens": 2581
+          },
+          {
+            "sample_id": "estg_000059",
+            "utf8_bytes": 7946,
+            "est_input_tokens": 2649
+          },
+          {
+            "sample_id": "estg_000060",
+            "utf8_bytes": 7825,
+            "est_input_tokens": 2609
+          },
+          {
+            "sample_id": "estg_000061",
+            "utf8_bytes": 8150,
+            "est_input_tokens": 2717
+          },
+          {
+            "sample_id": "estg_000062",
+            "utf8_bytes": 7791,
+            "est_input_tokens": 2597
+          },
+          {
+            "sample_id": "estg_000068",
+            "utf8_bytes": 7710,
+            "est_input_tokens": 2570
+          },
+          {
+            "sample_id": "estg_000070",
+            "utf8_bytes": 8695,
+            "est_input_tokens": 2899
+          },
+          {
+            "sample_id": "estg_000071",
+            "utf8_bytes": 7775,
+            "est_input_tokens": 2592
+          },
+          {
+            "sample_id": "estg_000074",
+            "utf8_bytes": 7714,
+            "est_input_tokens": 2572
+          },
+          {
+            "sample_id": "estg_000075",
+            "utf8_bytes": 8149,
+            "est_input_tokens": 2717
+          },
+          {
+            "sample_id": "estg_000077",
+            "utf8_bytes": 8400,
+            "est_input_tokens": 2800
+          },
+          {
+            "sample_id": "estg_000079",
+            "utf8_bytes": 7726,
+            "est_input_tokens": 2576
+          },
+          {
+            "sample_id": "estg_000080",
+            "utf8_bytes": 8257,
+            "est_input_tokens": 2753
+          },
+          {
+            "sample_id": "estg_000082",
+            "utf8_bytes": 7752,
+            "est_input_tokens": 2584
+          },
+          {
+            "sample_id": "estg_000083",
+            "utf8_bytes": 7715,
+            "est_input_tokens": 2572
+          },
+          {
+            "sample_id": "estg_000087",
+            "utf8_bytes": 7674,
+            "est_input_tokens": 2558
+          },
+          {
+            "sample_id": "estg_000091",
+            "utf8_bytes": 7661,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "estg_000092",
+            "utf8_bytes": 7817,
+            "est_input_tokens": 2606
+          },
+          {
+            "sample_id": "estg_000094",
+            "utf8_bytes": 7773,
+            "est_input_tokens": 2591
+          },
+          {
+            "sample_id": "estg_000095",
+            "utf8_bytes": 7642,
+            "est_input_tokens": 2548
+          },
+          {
+            "sample_id": "estg_000098",
+            "utf8_bytes": 7779,
+            "est_input_tokens": 2593
+          },
+          {
+            "sample_id": "estg_000103",
+            "utf8_bytes": 7760,
+            "est_input_tokens": 2587
+          },
+          {
+            "sample_id": "estg_000104",
+            "utf8_bytes": 7682,
+            "est_input_tokens": 2561
+          },
+          {
+            "sample_id": "estg_000105",
+            "utf8_bytes": 7692,
+            "est_input_tokens": 2564
+          },
+          {
+            "sample_id": "estg_000106",
+            "utf8_bytes": 7765,
+            "est_input_tokens": 2589
+          },
+          {
+            "sample_id": "estg_000108",
+            "utf8_bytes": 7678,
+            "est_input_tokens": 2560
+          },
+          {
+            "sample_id": "estg_000109",
+            "utf8_bytes": 7702,
+            "est_input_tokens": 2568
+          },
+          {
+            "sample_id": "estg_000111",
+            "utf8_bytes": 7793,
+            "est_input_tokens": 2598
+          },
+          {
+            "sample_id": "estg_000112",
+            "utf8_bytes": 8030,
+            "est_input_tokens": 2677
+          },
+          {
+            "sample_id": "estg_000113",
+            "utf8_bytes": 7676,
+            "est_input_tokens": 2559
+          },
+          {
+            "sample_id": "estg_000114",
+            "utf8_bytes": 7793,
+            "est_input_tokens": 2598
+          },
+          {
+            "sample_id": "estg_000115",
+            "utf8_bytes": 7648,
+            "est_input_tokens": 2550
+          },
+          {
+            "sample_id": "estg_000118",
+            "utf8_bytes": 7651,
+            "est_input_tokens": 2551
+          },
+          {
+            "sample_id": "estg_000119",
+            "utf8_bytes": 7685,
+            "est_input_tokens": 2562
+          },
+          {
+            "sample_id": "estg_000121",
+            "utf8_bytes": 7645,
+            "est_input_tokens": 2549
+          },
+          {
+            "sample_id": "estg_000123",
+            "utf8_bytes": 7721,
+            "est_input_tokens": 2574
+          },
+          {
+            "sample_id": "estg_000124",
+            "utf8_bytes": 7659,
+            "est_input_tokens": 2553
+          },
+          {
+            "sample_id": "estg_000125",
+            "utf8_bytes": 7640,
+            "est_input_tokens": 2547
+          },
+          {
+            "sample_id": "estg_000127",
+            "utf8_bytes": 7802,
+            "est_input_tokens": 2601
+          },
+          {
+            "sample_id": "estg_000128",
+            "utf8_bytes": 7797,
+            "est_input_tokens": 2599
+          },
+          {
+            "sample_id": "estg_000130",
+            "utf8_bytes": 7615,
+            "est_input_tokens": 2539
+          },
+          {
+            "sample_id": "estg_000131",
+            "utf8_bytes": 7753,
+            "est_input_tokens": 2585
+          },
+          {
+            "sample_id": "estg_000133",
+            "utf8_bytes": 7692,
+            "est_input_tokens": 2564
+          },
+          {
+            "sample_id": "estg_000134",
+            "utf8_bytes": 7640,
+            "est_input_tokens": 2547
+          },
+          {
+            "sample_id": "estg_000135",
+            "utf8_bytes": 7795,
+            "est_input_tokens": 2599
+          },
+          {
+            "sample_id": "estg_000136",
+            "utf8_bytes": 7658,
+            "est_input_tokens": 2553
+          },
+          {
+            "sample_id": "estg_000139",
+            "utf8_bytes": 7674,
+            "est_input_tokens": 2558
+          },
+          {
+            "sample_id": "estg_000143",
+            "utf8_bytes": 7759,
+            "est_input_tokens": 2587
+          },
+          {
+            "sample_id": "estg_000145",
+            "utf8_bytes": 7698,
+            "est_input_tokens": 2566
+          },
+          {
+            "sample_id": "estg_000146",
+            "utf8_bytes": 7684,
+            "est_input_tokens": 2562
+          },
+          {
+            "sample_id": "estg_000148",
+            "utf8_bytes": 7657,
+            "est_input_tokens": 2553
+          },
+          {
+            "sample_id": "estg_000161",
+            "utf8_bytes": 8676,
+            "est_input_tokens": 2892
+          },
+          {
+            "sample_id": "estg_000164",
+            "utf8_bytes": 8316,
+            "est_input_tokens": 2772
+          },
+          {
+            "sample_id": "estg_000173",
+            "utf8_bytes": 7874,
+            "est_input_tokens": 2625
+          },
+          {
+            "sample_id": "estg_000183",
+            "utf8_bytes": 7865,
+            "est_input_tokens": 2622
+          },
+          {
+            "sample_id": "estg_000195",
+            "utf8_bytes": 7754,
+            "est_input_tokens": 2585
+          },
+          {
+            "sample_id": "estg_000206",
+            "utf8_bytes": 8161,
+            "est_input_tokens": 2721
+          },
+          {
+            "sample_id": "estg_000207",
+            "utf8_bytes": 7881,
+            "est_input_tokens": 2627
+          },
+          {
+            "sample_id": "estg_000208",
+            "utf8_bytes": 8668,
+            "est_input_tokens": 2890
+          },
+          {
+            "sample_id": "estg_000209",
+            "utf8_bytes": 8165,
+            "est_input_tokens": 2722
+          },
+          {
+            "sample_id": "estg_000210",
+            "utf8_bytes": 8213,
+            "est_input_tokens": 2738
+          },
+          {
+            "sample_id": "estg_000214",
+            "utf8_bytes": 7746,
+            "est_input_tokens": 2582
+          },
+          {
+            "sample_id": "estg_000218",
+            "utf8_bytes": 7927,
+            "est_input_tokens": 2643
+          },
+          {
+            "sample_id": "estg_000220",
+            "utf8_bytes": 7940,
+            "est_input_tokens": 2647
+          },
+          {
+            "sample_id": "estg_000222",
+            "utf8_bytes": 7757,
+            "est_input_tokens": 2586
+          },
+          {
+            "sample_id": "estg_000223",
+            "utf8_bytes": 7847,
+            "est_input_tokens": 2616
+          },
+          {
+            "sample_id": "estg_000230",
+            "utf8_bytes": 7652,
+            "est_input_tokens": 2551
+          },
+          {
+            "sample_id": "estg_000231",
+            "utf8_bytes": 7593,
+            "est_input_tokens": 2531
+          },
+          {
+            "sample_id": "estg_000232",
+            "utf8_bytes": 7813,
+            "est_input_tokens": 2605
+          },
+          {
+            "sample_id": "estg_000245",
+            "utf8_bytes": 7658,
+            "est_input_tokens": 2553
+          },
+          {
+            "sample_id": "estg_000247",
+            "utf8_bytes": 7685,
+            "est_input_tokens": 2562
+          },
+          {
+            "sample_id": "estg_000271",
+            "utf8_bytes": 7891,
+            "est_input_tokens": 2631
+          },
+          {
+            "sample_id": "estg_000273",
+            "utf8_bytes": 8312,
+            "est_input_tokens": 2771
+          },
+          {
+            "sample_id": "estg_000277",
+            "utf8_bytes": 8557,
+            "est_input_tokens": 2853
+          },
+          {
+            "sample_id": "estg_000283",
+            "utf8_bytes": 7875,
+            "est_input_tokens": 2625
+          },
+          {
+            "sample_id": "estg_000285",
+            "utf8_bytes": 7866,
+            "est_input_tokens": 2622
+          },
+          {
+            "sample_id": "estg_000286",
+            "utf8_bytes": 8297,
+            "est_input_tokens": 2766
+          },
+          {
+            "sample_id": "estg_000293",
+            "utf8_bytes": 8110,
+            "est_input_tokens": 2704
+          },
+          {
+            "sample_id": "estg_000302",
+            "utf8_bytes": 7647,
+            "est_input_tokens": 2549
+          },
+          {
+            "sample_id": "estg_000306",
+            "utf8_bytes": 8316,
+            "est_input_tokens": 2772
+          },
+          {
+            "sample_id": "estg_000308",
+            "utf8_bytes": 7637,
+            "est_input_tokens": 2546
+          },
+          {
+            "sample_id": "estg_000313",
+            "utf8_bytes": 7689,
+            "est_input_tokens": 2563
+          },
+          {
+            "sample_id": "estg_000326",
+            "utf8_bytes": 7619,
+            "est_input_tokens": 2540
+          },
+          {
+            "sample_id": "estg_000347",
+            "utf8_bytes": 7650,
+            "est_input_tokens": 2550
+          },
+          {
+            "sample_id": "estg_000366",
+            "utf8_bytes": 8030,
+            "est_input_tokens": 2677
+          },
+          {
+            "sample_id": "estg_000375",
+            "utf8_bytes": 7598,
+            "est_input_tokens": 2533
+          },
+          {
+            "sample_id": "estg_000393",
+            "utf8_bytes": 8031,
+            "est_input_tokens": 2677
+          },
+          {
+            "sample_id": "estg_000396",
+            "utf8_bytes": 7652,
+            "est_input_tokens": 2551
+          },
+          {
+            "sample_id": "estg_000399",
+            "utf8_bytes": 8017,
+            "est_input_tokens": 2673
+          },
+          {
+            "sample_id": "estg_000414",
+            "utf8_bytes": 7814,
+            "est_input_tokens": 2605
+          },
+          {
+            "sample_id": "estg_000417",
+            "utf8_bytes": 7729,
+            "est_input_tokens": 2577
+          },
+          {
+            "sample_id": "estg_000433",
+            "utf8_bytes": 7692,
+            "est_input_tokens": 2564
+          },
+          {
+            "sample_id": "estg_000452",
+            "utf8_bytes": 7744,
+            "est_input_tokens": 2582
+          },
+          {
+            "sample_id": "estg_000457",
+            "utf8_bytes": 7836,
+            "est_input_tokens": 2612
+          },
+          {
+            "sample_id": "estg_000458",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "estg_000465",
+            "utf8_bytes": 7708,
+            "est_input_tokens": 2570
+          },
+          {
+            "sample_id": "estg_000504",
+            "utf8_bytes": 7811,
+            "est_input_tokens": 2604
+          },
+          {
+            "sample_id": "estg_000505",
+            "utf8_bytes": 7715,
+            "est_input_tokens": 2572
+          },
+          {
+            "sample_id": "estg_000507",
+            "utf8_bytes": 8331,
+            "est_input_tokens": 2777
+          },
+          {
+            "sample_id": "estg_000509",
+            "utf8_bytes": 7702,
+            "est_input_tokens": 2568
+          },
+          {
+            "sample_id": "estg_000522",
+            "utf8_bytes": 8018,
+            "est_input_tokens": 2673
+          },
+          {
+            "sample_id": "estg_000525",
+            "utf8_bytes": 7986,
+            "est_input_tokens": 2662
+          },
+          {
+            "sample_id": "estg_000539",
+            "utf8_bytes": 8148,
+            "est_input_tokens": 2716
+          },
+          {
+            "sample_id": "estg_000546",
+            "utf8_bytes": 7640,
+            "est_input_tokens": 2547
+          },
+          {
+            "sample_id": "estg_000555",
+            "utf8_bytes": 7698,
+            "est_input_tokens": 2566
+          },
+          {
+            "sample_id": "estg_000560",
+            "utf8_bytes": 7680,
+            "est_input_tokens": 2560
+          },
+          {
+            "sample_id": "estg_000569",
+            "utf8_bytes": 7808,
+            "est_input_tokens": 2603
+          },
+          {
+            "sample_id": "estg_000572",
+            "utf8_bytes": 7697,
+            "est_input_tokens": 2566
+          },
+          {
+            "sample_id": "estg_000578",
+            "utf8_bytes": 7826,
+            "est_input_tokens": 2609
+          },
+          {
+            "sample_id": "estg_000599",
+            "utf8_bytes": 7757,
+            "est_input_tokens": 2586
+          },
+          {
+            "sample_id": "estg_000601",
+            "utf8_bytes": 7670,
+            "est_input_tokens": 2557
+          },
+          {
+            "sample_id": "estg_000635",
+            "utf8_bytes": 7796,
+            "est_input_tokens": 2599
+          },
+          {
+            "sample_id": "estg_000659",
+            "utf8_bytes": 7675,
+            "est_input_tokens": 2559
+          },
+          {
+            "sample_id": "estg_000664",
+            "utf8_bytes": 7826,
+            "est_input_tokens": 2609
+          },
+          {
+            "sample_id": "estg_000704",
+            "utf8_bytes": 7652,
+            "est_input_tokens": 2551
+          },
+          {
+            "sample_id": "estg_000713",
+            "utf8_bytes": 7770,
+            "est_input_tokens": 2590
+          },
+          {
+            "sample_id": "estg_000716",
+            "utf8_bytes": 7948,
+            "est_input_tokens": 2650
+          },
+          {
+            "sample_id": "estg_000720",
+            "utf8_bytes": 7701,
+            "est_input_tokens": 2567
+          },
+          {
+            "sample_id": "estg_000773",
+            "utf8_bytes": 7796,
+            "est_input_tokens": 2599
+          },
+          {
+            "sample_id": "estg_000776",
+            "utf8_bytes": 7677,
+            "est_input_tokens": 2559
+          },
+          {
+            "sample_id": "estg_000785",
+            "utf8_bytes": 7836,
+            "est_input_tokens": 2612
+          },
+          {
+            "sample_id": "estg_000786",
+            "utf8_bytes": 8038,
+            "est_input_tokens": 2680
+          },
+          {
+            "sample_id": "estg_000800",
+            "utf8_bytes": 8424,
+            "est_input_tokens": 2808
+          },
+          {
+            "sample_id": "estg_000812",
+            "utf8_bytes": 7718,
+            "est_input_tokens": 2573
+          },
+          {
+            "sample_id": "estg_000816",
+            "utf8_bytes": 7819,
+            "est_input_tokens": 2607
+          },
+          {
+            "sample_id": "estg_000854",
+            "utf8_bytes": 7955,
+            "est_input_tokens": 2652
+          },
+          {
+            "sample_id": "estg_000861",
+            "utf8_bytes": 7648,
+            "est_input_tokens": 2550
+          }
+        ],
+        "bytes": 1174334,
+        "est_tokens": 391495
+      },
+      "BARR-FULL": {
+        "calls": 180,
+        "requests": [
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 4337,
+            "est_input_tokens": 1446
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 4378,
+            "est_input_tokens": 1460
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 4312,
+            "est_input_tokens": 1438
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 4368,
+            "est_input_tokens": 1456
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 4345,
+            "est_input_tokens": 1449
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 4332,
+            "est_input_tokens": 1444
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 4312,
+            "est_input_tokens": 1438
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 4367,
+            "est_input_tokens": 1456
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 4390,
+            "est_input_tokens": 1464
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 4345,
+            "est_input_tokens": 1449
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 4321,
+            "est_input_tokens": 1441
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 4301,
+            "est_input_tokens": 1434
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 4325,
+            "est_input_tokens": 1442
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 4370,
+            "est_input_tokens": 1457
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 4307,
+            "est_input_tokens": 1436
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 4330,
+            "est_input_tokens": 1444
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 4329,
+            "est_input_tokens": 1443
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 4382,
+            "est_input_tokens": 1461
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 4383,
+            "est_input_tokens": 1461
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 4406,
+            "est_input_tokens": 1469
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 4388,
+            "est_input_tokens": 1463
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 4392,
+            "est_input_tokens": 1464
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 4394,
+            "est_input_tokens": 1465
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 4429,
+            "est_input_tokens": 1477
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 4401,
+            "est_input_tokens": 1467
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 4284,
+            "est_input_tokens": 1428
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 4350,
+            "est_input_tokens": 1450
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 4316,
+            "est_input_tokens": 1439
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 4337,
+            "est_input_tokens": 1446
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 4291,
+            "est_input_tokens": 1431
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 4301,
+            "est_input_tokens": 1434
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 4309,
+            "est_input_tokens": 1437
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 4364,
+            "est_input_tokens": 1455
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 4337,
+            "est_input_tokens": 1446
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 4378,
+            "est_input_tokens": 1460
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 4312,
+            "est_input_tokens": 1438
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 4368,
+            "est_input_tokens": 1456
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 4345,
+            "est_input_tokens": 1449
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 4332,
+            "est_input_tokens": 1444
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 4312,
+            "est_input_tokens": 1438
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 4367,
+            "est_input_tokens": 1456
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 4390,
+            "est_input_tokens": 1464
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 4345,
+            "est_input_tokens": 1449
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 4321,
+            "est_input_tokens": 1441
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 4301,
+            "est_input_tokens": 1434
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 4325,
+            "est_input_tokens": 1442
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 4370,
+            "est_input_tokens": 1457
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 4307,
+            "est_input_tokens": 1436
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 4330,
+            "est_input_tokens": 1444
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 4329,
+            "est_input_tokens": 1443
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 4382,
+            "est_input_tokens": 1461
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 4383,
+            "est_input_tokens": 1461
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 4406,
+            "est_input_tokens": 1469
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 4388,
+            "est_input_tokens": 1463
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 4392,
+            "est_input_tokens": 1464
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 4394,
+            "est_input_tokens": 1465
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 4429,
+            "est_input_tokens": 1477
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 4401,
+            "est_input_tokens": 1467
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 4284,
+            "est_input_tokens": 1428
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 4350,
+            "est_input_tokens": 1450
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 4316,
+            "est_input_tokens": 1439
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 4337,
+            "est_input_tokens": 1446
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 4291,
+            "est_input_tokens": 1431
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 4301,
+            "est_input_tokens": 1434
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 4309,
+            "est_input_tokens": 1437
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 4364,
+            "est_input_tokens": 1455
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 4337,
+            "est_input_tokens": 1446
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 4378,
+            "est_input_tokens": 1460
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 4312,
+            "est_input_tokens": 1438
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 4368,
+            "est_input_tokens": 1456
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 4345,
+            "est_input_tokens": 1449
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 4332,
+            "est_input_tokens": 1444
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 4312,
+            "est_input_tokens": 1438
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 4367,
+            "est_input_tokens": 1456
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 4390,
+            "est_input_tokens": 1464
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 4345,
+            "est_input_tokens": 1449
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 4321,
+            "est_input_tokens": 1441
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 4301,
+            "est_input_tokens": 1434
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 4325,
+            "est_input_tokens": 1442
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 4370,
+            "est_input_tokens": 1457
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 4307,
+            "est_input_tokens": 1436
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 4330,
+            "est_input_tokens": 1444
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 4329,
+            "est_input_tokens": 1443
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 4382,
+            "est_input_tokens": 1461
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 4383,
+            "est_input_tokens": 1461
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 4406,
+            "est_input_tokens": 1469
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 4388,
+            "est_input_tokens": 1463
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 4392,
+            "est_input_tokens": 1464
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 4394,
+            "est_input_tokens": 1465
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 4429,
+            "est_input_tokens": 1477
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 4401,
+            "est_input_tokens": 1467
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 4284,
+            "est_input_tokens": 1428
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 4350,
+            "est_input_tokens": 1450
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 4316,
+            "est_input_tokens": 1439
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 4337,
+            "est_input_tokens": 1446
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 4291,
+            "est_input_tokens": 1431
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 4301,
+            "est_input_tokens": 1434
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 4309,
+            "est_input_tokens": 1437
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 4364,
+            "est_input_tokens": 1455
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 4337,
+            "est_input_tokens": 1446
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 4378,
+            "est_input_tokens": 1460
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 4312,
+            "est_input_tokens": 1438
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 4368,
+            "est_input_tokens": 1456
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 4345,
+            "est_input_tokens": 1449
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 4332,
+            "est_input_tokens": 1444
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 4312,
+            "est_input_tokens": 1438
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 4367,
+            "est_input_tokens": 1456
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 4390,
+            "est_input_tokens": 1464
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 4345,
+            "est_input_tokens": 1449
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 4321,
+            "est_input_tokens": 1441
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 4301,
+            "est_input_tokens": 1434
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 4325,
+            "est_input_tokens": 1442
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 4370,
+            "est_input_tokens": 1457
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 4307,
+            "est_input_tokens": 1436
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 4330,
+            "est_input_tokens": 1444
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 4329,
+            "est_input_tokens": 1443
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 4382,
+            "est_input_tokens": 1461
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 4383,
+            "est_input_tokens": 1461
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 4406,
+            "est_input_tokens": 1469
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 4388,
+            "est_input_tokens": 1463
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 4392,
+            "est_input_tokens": 1464
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 4394,
+            "est_input_tokens": 1465
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 4429,
+            "est_input_tokens": 1477
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 4401,
+            "est_input_tokens": 1467
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 4284,
+            "est_input_tokens": 1428
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 4350,
+            "est_input_tokens": 1450
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 4316,
+            "est_input_tokens": 1439
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 4337,
+            "est_input_tokens": 1446
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 4291,
+            "est_input_tokens": 1431
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 4301,
+            "est_input_tokens": 1434
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 4309,
+            "est_input_tokens": 1437
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 4364,
+            "est_input_tokens": 1455
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 4337,
+            "est_input_tokens": 1446
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 4378,
+            "est_input_tokens": 1460
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 4312,
+            "est_input_tokens": 1438
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 4368,
+            "est_input_tokens": 1456
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 4345,
+            "est_input_tokens": 1449
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 4332,
+            "est_input_tokens": 1444
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 4312,
+            "est_input_tokens": 1438
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 4367,
+            "est_input_tokens": 1456
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 4390,
+            "est_input_tokens": 1464
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 4345,
+            "est_input_tokens": 1449
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 4321,
+            "est_input_tokens": 1441
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 4301,
+            "est_input_tokens": 1434
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 4325,
+            "est_input_tokens": 1442
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 4370,
+            "est_input_tokens": 1457
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 4307,
+            "est_input_tokens": 1436
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 4330,
+            "est_input_tokens": 1444
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 4329,
+            "est_input_tokens": 1443
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 4333,
+            "est_input_tokens": 1445
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 4382,
+            "est_input_tokens": 1461
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 4383,
+            "est_input_tokens": 1461
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 4406,
+            "est_input_tokens": 1469
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 4388,
+            "est_input_tokens": 1463
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 4392,
+            "est_input_tokens": 1464
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 4394,
+            "est_input_tokens": 1465
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 4429,
+            "est_input_tokens": 1477
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 4401,
+            "est_input_tokens": 1467
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 4284,
+            "est_input_tokens": 1428
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 4350,
+            "est_input_tokens": 1450
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 4316,
+            "est_input_tokens": 1439
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 4337,
+            "est_input_tokens": 1446
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 4291,
+            "est_input_tokens": 1431
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 4301,
+            "est_input_tokens": 1434
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 4309,
+            "est_input_tokens": 1437
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 4364,
+            "est_input_tokens": 1455
+          }
+        ],
+        "bytes": 782475,
+        "est_tokens": 260895
+      },
+      "OURS-FULL": {
+        "calls": 180,
+        "requests": [
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 17378,
+            "est_input_tokens": 5793
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 17419,
+            "est_input_tokens": 5807
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 17353,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 17409,
+            "est_input_tokens": 5803
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 17386,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 17373,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 17352,
+            "est_input_tokens": 5784
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 17373,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 17407,
+            "est_input_tokens": 5803
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 17443,
+            "est_input_tokens": 5815
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 17398,
+            "est_input_tokens": 5800
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 17354,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 17378,
+            "est_input_tokens": 5793
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 17423,
+            "est_input_tokens": 5808
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 17360,
+            "est_input_tokens": 5787
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 17383,
+            "est_input_tokens": 5795
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 17382,
+            "est_input_tokens": 5794
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 17386,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 17435,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 17436,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 17452,
+            "est_input_tokens": 5818
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 17434,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 17438,
+            "est_input_tokens": 5813
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 17440,
+            "est_input_tokens": 5814
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 17475,
+            "est_input_tokens": 5825
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 17447,
+            "est_input_tokens": 5816
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 17330,
+            "est_input_tokens": 5777
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 17396,
+            "est_input_tokens": 5799
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 17362,
+            "est_input_tokens": 5788
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 17383,
+            "est_input_tokens": 5795
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 17337,
+            "est_input_tokens": 5779
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 17347,
+            "est_input_tokens": 5783
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 17355,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 17410,
+            "est_input_tokens": 5804
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 17378,
+            "est_input_tokens": 5793
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 17419,
+            "est_input_tokens": 5807
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 17353,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 17409,
+            "est_input_tokens": 5803
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 17386,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 17373,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 17352,
+            "est_input_tokens": 5784
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 17373,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 17407,
+            "est_input_tokens": 5803
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 17443,
+            "est_input_tokens": 5815
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 17398,
+            "est_input_tokens": 5800
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 17354,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 17378,
+            "est_input_tokens": 5793
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 17423,
+            "est_input_tokens": 5808
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 17360,
+            "est_input_tokens": 5787
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 17383,
+            "est_input_tokens": 5795
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 17382,
+            "est_input_tokens": 5794
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 17386,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 17435,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 17436,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 17452,
+            "est_input_tokens": 5818
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 17434,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 17438,
+            "est_input_tokens": 5813
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 17440,
+            "est_input_tokens": 5814
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 17475,
+            "est_input_tokens": 5825
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 17447,
+            "est_input_tokens": 5816
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 17330,
+            "est_input_tokens": 5777
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 17396,
+            "est_input_tokens": 5799
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 17362,
+            "est_input_tokens": 5788
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 17383,
+            "est_input_tokens": 5795
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 17337,
+            "est_input_tokens": 5779
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 17347,
+            "est_input_tokens": 5783
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 17355,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 17410,
+            "est_input_tokens": 5804
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 17378,
+            "est_input_tokens": 5793
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 17419,
+            "est_input_tokens": 5807
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 17353,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 17409,
+            "est_input_tokens": 5803
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 17386,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 17373,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 17352,
+            "est_input_tokens": 5784
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 17373,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 17407,
+            "est_input_tokens": 5803
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 17443,
+            "est_input_tokens": 5815
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 17398,
+            "est_input_tokens": 5800
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 17354,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 17378,
+            "est_input_tokens": 5793
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 17423,
+            "est_input_tokens": 5808
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 17360,
+            "est_input_tokens": 5787
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 17383,
+            "est_input_tokens": 5795
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 17382,
+            "est_input_tokens": 5794
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 17386,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 17435,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 17436,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 17452,
+            "est_input_tokens": 5818
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 17434,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 17438,
+            "est_input_tokens": 5813
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 17440,
+            "est_input_tokens": 5814
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 17475,
+            "est_input_tokens": 5825
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 17447,
+            "est_input_tokens": 5816
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 17330,
+            "est_input_tokens": 5777
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 17396,
+            "est_input_tokens": 5799
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 17362,
+            "est_input_tokens": 5788
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 17383,
+            "est_input_tokens": 5795
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 17337,
+            "est_input_tokens": 5779
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 17347,
+            "est_input_tokens": 5783
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 17355,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 17410,
+            "est_input_tokens": 5804
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 17378,
+            "est_input_tokens": 5793
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 17419,
+            "est_input_tokens": 5807
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 17353,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 17409,
+            "est_input_tokens": 5803
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 17386,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 17373,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 17352,
+            "est_input_tokens": 5784
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 17373,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 17407,
+            "est_input_tokens": 5803
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 17443,
+            "est_input_tokens": 5815
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 17398,
+            "est_input_tokens": 5800
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 17354,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 17378,
+            "est_input_tokens": 5793
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 17423,
+            "est_input_tokens": 5808
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 17360,
+            "est_input_tokens": 5787
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 17383,
+            "est_input_tokens": 5795
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 17382,
+            "est_input_tokens": 5794
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 17386,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 17435,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 17436,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 17452,
+            "est_input_tokens": 5818
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 17434,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 17438,
+            "est_input_tokens": 5813
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 17440,
+            "est_input_tokens": 5814
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 17475,
+            "est_input_tokens": 5825
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 17447,
+            "est_input_tokens": 5816
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 17330,
+            "est_input_tokens": 5777
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 17396,
+            "est_input_tokens": 5799
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 17362,
+            "est_input_tokens": 5788
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 17383,
+            "est_input_tokens": 5795
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 17337,
+            "est_input_tokens": 5779
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 17347,
+            "est_input_tokens": 5783
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 17355,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 17410,
+            "est_input_tokens": 5804
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 17378,
+            "est_input_tokens": 5793
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 17419,
+            "est_input_tokens": 5807
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 17353,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 17409,
+            "est_input_tokens": 5803
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 17386,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 17373,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 17352,
+            "est_input_tokens": 5784
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 17373,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 17407,
+            "est_input_tokens": 5803
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 17443,
+            "est_input_tokens": 5815
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 17398,
+            "est_input_tokens": 5800
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 17354,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 17378,
+            "est_input_tokens": 5793
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 17423,
+            "est_input_tokens": 5808
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 17360,
+            "est_input_tokens": 5787
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 17383,
+            "est_input_tokens": 5795
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 17382,
+            "est_input_tokens": 5794
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 17386,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 17435,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 17436,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 17452,
+            "est_input_tokens": 5818
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 17434,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 17438,
+            "est_input_tokens": 5813
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 17440,
+            "est_input_tokens": 5814
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 17475,
+            "est_input_tokens": 5825
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 17447,
+            "est_input_tokens": 5816
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 17330,
+            "est_input_tokens": 5777
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 17396,
+            "est_input_tokens": 5799
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 17362,
+            "est_input_tokens": 5788
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 17383,
+            "est_input_tokens": 5795
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 17337,
+            "est_input_tokens": 5779
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 17347,
+            "est_input_tokens": 5783
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 17355,
+            "est_input_tokens": 5785
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 17410,
+            "est_input_tokens": 5804
+          }
+        ],
+        "bytes": 3130910,
+        "est_tokens": 1043710
+      },
+      "OURS-BARRIENTOS-MODULE": {
+        "calls": 180,
+        "requests": [
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 7605,
+            "est_input_tokens": 2535
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 7646,
+            "est_input_tokens": 2549
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 7580,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 7636,
+            "est_input_tokens": 2546
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 7613,
+            "est_input_tokens": 2538
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 7600,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 7579,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 7600,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 7634,
+            "est_input_tokens": 2545
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 7670,
+            "est_input_tokens": 2557
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 7625,
+            "est_input_tokens": 2542
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 7581,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 7605,
+            "est_input_tokens": 2535
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 7650,
+            "est_input_tokens": 2550
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 7587,
+            "est_input_tokens": 2529
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 7610,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 7609,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 7613,
+            "est_input_tokens": 2538
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 7662,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 7663,
+            "est_input_tokens": 2555
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 7679,
+            "est_input_tokens": 2560
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 7661,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 7665,
+            "est_input_tokens": 2555
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 7667,
+            "est_input_tokens": 2556
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 7702,
+            "est_input_tokens": 2568
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 7674,
+            "est_input_tokens": 2558
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 7557,
+            "est_input_tokens": 2519
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 7623,
+            "est_input_tokens": 2541
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 7589,
+            "est_input_tokens": 2530
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 7610,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 7564,
+            "est_input_tokens": 2522
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 7574,
+            "est_input_tokens": 2525
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 7582,
+            "est_input_tokens": 2528
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 7637,
+            "est_input_tokens": 2546
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 7605,
+            "est_input_tokens": 2535
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 7646,
+            "est_input_tokens": 2549
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 7580,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 7636,
+            "est_input_tokens": 2546
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 7613,
+            "est_input_tokens": 2538
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 7600,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 7579,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 7600,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 7634,
+            "est_input_tokens": 2545
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 7670,
+            "est_input_tokens": 2557
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 7625,
+            "est_input_tokens": 2542
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 7581,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 7605,
+            "est_input_tokens": 2535
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 7650,
+            "est_input_tokens": 2550
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 7587,
+            "est_input_tokens": 2529
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 7610,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 7609,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 7613,
+            "est_input_tokens": 2538
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 7662,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 7663,
+            "est_input_tokens": 2555
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 7679,
+            "est_input_tokens": 2560
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 7661,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 7665,
+            "est_input_tokens": 2555
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 7667,
+            "est_input_tokens": 2556
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 7702,
+            "est_input_tokens": 2568
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 7674,
+            "est_input_tokens": 2558
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 7557,
+            "est_input_tokens": 2519
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 7623,
+            "est_input_tokens": 2541
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 7589,
+            "est_input_tokens": 2530
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 7610,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 7564,
+            "est_input_tokens": 2522
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 7574,
+            "est_input_tokens": 2525
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 7582,
+            "est_input_tokens": 2528
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 7637,
+            "est_input_tokens": 2546
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 7605,
+            "est_input_tokens": 2535
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 7646,
+            "est_input_tokens": 2549
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 7580,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 7636,
+            "est_input_tokens": 2546
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 7613,
+            "est_input_tokens": 2538
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 7600,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 7579,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 7600,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 7634,
+            "est_input_tokens": 2545
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 7670,
+            "est_input_tokens": 2557
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 7625,
+            "est_input_tokens": 2542
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 7581,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 7605,
+            "est_input_tokens": 2535
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 7650,
+            "est_input_tokens": 2550
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 7587,
+            "est_input_tokens": 2529
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 7610,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 7609,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 7613,
+            "est_input_tokens": 2538
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 7662,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 7663,
+            "est_input_tokens": 2555
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 7679,
+            "est_input_tokens": 2560
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 7661,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 7665,
+            "est_input_tokens": 2555
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 7667,
+            "est_input_tokens": 2556
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 7702,
+            "est_input_tokens": 2568
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 7674,
+            "est_input_tokens": 2558
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 7557,
+            "est_input_tokens": 2519
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 7623,
+            "est_input_tokens": 2541
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 7589,
+            "est_input_tokens": 2530
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 7610,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 7564,
+            "est_input_tokens": 2522
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 7574,
+            "est_input_tokens": 2525
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 7582,
+            "est_input_tokens": 2528
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 7637,
+            "est_input_tokens": 2546
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 7605,
+            "est_input_tokens": 2535
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 7646,
+            "est_input_tokens": 2549
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 7580,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 7636,
+            "est_input_tokens": 2546
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 7613,
+            "est_input_tokens": 2538
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 7600,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 7579,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 7600,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 7634,
+            "est_input_tokens": 2545
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 7670,
+            "est_input_tokens": 2557
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 7625,
+            "est_input_tokens": 2542
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 7581,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 7605,
+            "est_input_tokens": 2535
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 7650,
+            "est_input_tokens": 2550
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 7587,
+            "est_input_tokens": 2529
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 7610,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 7609,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 7613,
+            "est_input_tokens": 2538
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 7662,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 7663,
+            "est_input_tokens": 2555
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 7679,
+            "est_input_tokens": 2560
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 7661,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 7665,
+            "est_input_tokens": 2555
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 7667,
+            "est_input_tokens": 2556
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 7702,
+            "est_input_tokens": 2568
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 7674,
+            "est_input_tokens": 2558
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 7557,
+            "est_input_tokens": 2519
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 7623,
+            "est_input_tokens": 2541
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 7589,
+            "est_input_tokens": 2530
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 7610,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 7564,
+            "est_input_tokens": 2522
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 7574,
+            "est_input_tokens": 2525
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 7582,
+            "est_input_tokens": 2528
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 7637,
+            "est_input_tokens": 2546
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v1",
+            "utf8_bytes": 7605,
+            "est_input_tokens": 2535
+          },
+          {
+            "sample_id": "SIM_card_scenario/r10/v2",
+            "utf8_bytes": 7646,
+            "est_input_tokens": 2549
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v1",
+            "utf8_bytes": 7580,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "SIM_card_scenario/r11/v2",
+            "utf8_bytes": 7636,
+            "est_input_tokens": 2546
+          },
+          {
+            "sample_id": "SIM_card_scenario/r12/v1",
+            "utf8_bytes": 7613,
+            "est_input_tokens": 2538
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v1",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r13/v2",
+            "utf8_bytes": 7600,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v1",
+            "utf8_bytes": 7579,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "SIM_card_scenario/r8/v2",
+            "utf8_bytes": 7600,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "SIM_card_scenario/r9/v2",
+            "utf8_bytes": 7634,
+            "est_input_tokens": 2545
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v1",
+            "utf8_bytes": 7670,
+            "est_input_tokens": 2557
+          },
+          {
+            "sample_id": "blood_donation_scenario/r14/v2",
+            "utf8_bytes": 7625,
+            "est_input_tokens": 2542
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v1",
+            "utf8_bytes": 7601,
+            "est_input_tokens": 2534
+          },
+          {
+            "sample_id": "blood_donation_scenario/r15/v2",
+            "utf8_bytes": 7581,
+            "est_input_tokens": 2527
+          },
+          {
+            "sample_id": "blood_donation_scenario/r16/v1",
+            "utf8_bytes": 7605,
+            "est_input_tokens": 2535
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v1",
+            "utf8_bytes": 7650,
+            "est_input_tokens": 2550
+          },
+          {
+            "sample_id": "blood_donation_scenario/r17/v2",
+            "utf8_bytes": 7587,
+            "est_input_tokens": 2529
+          },
+          {
+            "sample_id": "blood_donation_scenario/r18/v2",
+            "utf8_bytes": 7610,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v1",
+            "utf8_bytes": 7609,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "blood_donation_scenario/r19/v2",
+            "utf8_bytes": 7613,
+            "est_input_tokens": 2538
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v1",
+            "utf8_bytes": 7662,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "blood_donation_scenario/r20/v2",
+            "utf8_bytes": 7663,
+            "est_input_tokens": 2555
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v1",
+            "utf8_bytes": 7679,
+            "est_input_tokens": 2560
+          },
+          {
+            "sample_id": "emergencies_scenario/r1/v2",
+            "utf8_bytes": 7661,
+            "est_input_tokens": 2554
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v1",
+            "utf8_bytes": 7665,
+            "est_input_tokens": 2555
+          },
+          {
+            "sample_id": "emergencies_scenario/r2/v2",
+            "utf8_bytes": 7667,
+            "est_input_tokens": 2556
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v1",
+            "utf8_bytes": 7702,
+            "est_input_tokens": 2568
+          },
+          {
+            "sample_id": "emergencies_scenario/r3/v2",
+            "utf8_bytes": 7674,
+            "est_input_tokens": 2558
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v1",
+            "utf8_bytes": 7557,
+            "est_input_tokens": 2519
+          },
+          {
+            "sample_id": "emergencies_scenario/r4/v2",
+            "utf8_bytes": 7623,
+            "est_input_tokens": 2541
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v1",
+            "utf8_bytes": 7589,
+            "est_input_tokens": 2530
+          },
+          {
+            "sample_id": "emergencies_scenario/r5/v2",
+            "utf8_bytes": 7610,
+            "est_input_tokens": 2537
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v1",
+            "utf8_bytes": 7564,
+            "est_input_tokens": 2522
+          },
+          {
+            "sample_id": "emergencies_scenario/r6/v2",
+            "utf8_bytes": 7574,
+            "est_input_tokens": 2525
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v1",
+            "utf8_bytes": 7582,
+            "est_input_tokens": 2528
+          },
+          {
+            "sample_id": "emergencies_scenario/r7/v2",
+            "utf8_bytes": 7637,
+            "est_input_tokens": 2546
+          }
+        ],
+        "bytes": 1371770,
+        "est_tokens": 457315
+      }
+    },
+    "grand_total_bytes": 7733257,
+    "grand_total_est_input_tokens": 2578113
+  },
+  "budget": {
+    "planned_calls": 990,
+    "input_token_cap": 3867170,
+    "output_token_cap": 4055040,
+    "usd_cost_cap": 25.396,
+    "price_snapshot": {
+      "schema_version": "s2_12_price_snapshot@1.0.0",
+      "currency": "USD",
+      "input_cache_miss_per_million": 1.32,
+      "output_per_million": 3.96
+    },
+    "input_estimate_note": "estimated input tokens=2578113 over 990 rendered requests (ceil(utf8_bytes/3), conservative over-estimate); input cap = x1.5; output cap = 990*4096; USD cap = (input_cap*1.32/1M + output_cap*3.96/1M)*1.2 rounded up; not a guess, derived from rendered requests",
+    "computed_at_utc": "2026-08-26T22:00:42Z"
+  },
+  "note": "all request bodies rendered offline with the exact executor prompt rendering; zero network; zero API"
+}

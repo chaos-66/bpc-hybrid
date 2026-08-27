@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Barrientos D/E Execution Contract v1",
+  "description": "Dedicated execution contract for the Barrientos same-data experiment (S2-BARRIENTOS-DE). Binds suite identity, commit/hash, the fixed 990-call plan (arms/repeats/samples), runtime model, sampling (temperature=0, retry=0), input/prompt/config/executor hashes, and hard input-token / output-token / USD cost caps. This contract deliberately does NOT reuse the S2.12 36+27 authorization schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "suite_id",
+    "bound_commit",
+    "execution_plan",
+    "model",
+    "sampling",
+    "hashes",
+    "budget",
+    "authorization",
+    "gold_isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "barrientos_de_execution_contract@1.0.0"
+    },
+    "suite_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable suite identifier, e.g. S2-BARRIENTOS-DE-001"
+    },
+    "bound_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$",
+      "description": "Git commit (full sha256 hex) that the contract is bound to; the executor refuses to run when the current HEAD differs."
+    },
+    "execution_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_calls", "arms"],
+      "properties": {
+        "total_calls": {
+          "type": "integer",
+          "const": 990,
+          "description": "FIXED 990 real calls: 3 D prompt arms x 150 + 3 protocol arms x 36 x 5. BARR-NO-PATTERN is NOT part of this contract."
+        },
+        "arms": {
+          "type": "array",
+          "minItems": 18,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["arm", "repeat_id", "sample_count", "calls"],
+            "properties": {
+              "arm": {
+                "type": "string",
+                "enum": [
+                  "D-full",
+                  "D-no-fewshot",
+                  "D-minimal",
+                  "D-barrientos-style",
+                  "BARR-FULL",
+                  "OURS-FULL",
+                  "OURS-BARRIENTOS-MODULE"
+                ]
+              },
+              "repeat_id": { "type": "string", "pattern": "^repeat-\\d{2}$" },
+              "sample_count": { "type": "integer", "minimum": 1 },
+              "calls": { "type": "integer", "minimum": 0 },
+              "reused": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "provider"],
+      "properties": {
+        "id": { "type": "string", "const": "deepseek-v4-pro" },
+        "provider": { "type": "string", "const": "openai_compatible" }
+      }
+    },
+    "sampling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["temperature", "top_p", "max_tokens", "retry", "stream", "thinking"],
+      "properties": {
+        "temperature": { "type": "number", "const": 0.0 },
+        "top_p": { "type": "number", "const": 1.0 },
+        "max_tokens": { "type": "integer", "const": 4096 },
+        "retry": { "type": "integer", "const": 0 },
+        "stream": { "type": "boolean", "const": false },
+        "thinking": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type"],
+          "properties": { "type": { "type": "string", "const": "disabled" } }
+        }
+      }
+    },
+    "hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["estg_input_v2", "e_contract_v2", "executor", "config", "prompts"],
+      "properties": {
+        "estg_input_v2": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "e_contract_v2": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "executor": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "config": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "prompts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "D-full",
+            "D-no-fewshot",
+            "D-minimal",
+            "D-barrientos-style",
+            "BARR-FULL",
+            "OURS-FULL",
+            "OURS-BARRIENTOS-MODULE"
+          ],
+          "patternProperties": {
+            "^(D-full|D-no-fewshot|D-minimal|D-barrientos-style|BARR-FULL|OURS-FULL|OURS-BARRIENTOS-MODULE)$": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planned_calls",
+        "input_token_cap",
+        "output_token_cap",
+        "usd_cost_cap",
+        "price_snapshot",
+        "input_estimate_note",
+        "computed_at_utc"
+      ],
+      "properties": {
+        "planned_calls": { "type": "integer", "const": 990 },
+        "input_token_cap": { "type": "number", "exclusiveMinimum": 0 },
+        "output_token_cap": { "type": "number", "exclusiveMinimum": 0 },
+        "usd_cost_cap": { "type": "number", "exclusiveMinimum": 0 },
+        "price_snapshot": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["schema_version", "currency", "input_cache_miss_per_million", "output_per_million"],
+          "properties": {
+            "schema_version": { "type": "string", "const": "s2_12_price_snapshot@1.0.0" },
+            "currency": { "type": "string", "const": "USD" },
+            "input_cache_miss_per_million": { "type": "number", "exclusiveMinimum": 0 },
+            "output_per_million": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        },
+        "input_estimate_note": { "type": "string" },
+        "computed_at_utc": { "type": "string" }
+      }
+    },
+    "authorization": {
+      "type": ["object", "null"],
+      "description": "null until the user authorizes; once present it MUST carry authorization_sentence_utf8_sha256 and an event file reference",
+      "properties": {
+        "authorization_sentence_utf8_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "authorization_event_file": { "type": "string" },
+        "authorization_event_file_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "authorized_at_utc": { "type": "string" }
+      }
+    },
+    "gold_isolation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["api_arms_must_not_read_gold", "evaluation_only_after_predictions_are_locked"],
+      "properties": {
+        "api_arms_must_not_read_gold": { "type": "boolean", "const": true },
+        "evaluation_only_after_predictions_are_locked": { "type": "boolean", "const": true }
+      }
+    }
+  }
+}
