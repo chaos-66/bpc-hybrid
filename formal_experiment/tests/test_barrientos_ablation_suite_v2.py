@@ -231,13 +231,13 @@ def test_de_runner_dry_run_zero_calls():
     out = proc.stdout
     assert '"llm_api_calls": 0' in out
     assert '"network_calls": 0' in out
-    assert "D-full" in out
+    assert "D-full-0813" in out
     # assert the full arm set via the module function (CLI pretty-print is
     # truncated for display only)
     m = _executor_module()
     dr = m.dry_run()
-    assert set(dr["d_arms"]) == {"D-full", "D-no-fewshot", "D-minimal",
-                                 "D-barrientos-style"}
+    assert set(dr["d_arms"]) == {"D-full-0813", "D-no-fewshot-0813",
+                                 "D-minimal-0813", "D-barrientos-style-0813"}
     assert set(dr["e_arms"]) == {"BARR-FULL", "BARR-NO-PATTERN",
                                  "OURS-FULL", "OURS-BARRIENTOS-MODULE"}
     assert dr["e_arms"]["BARR-NO-PATTERN"]["optional"] is True
@@ -253,9 +253,9 @@ def test_de_runner_execution_gated():
 
 # ---------------------------------------------------------------------------
 # Executor repair tests (double-call elimination, same-response provenance,
-# evaluation, plan counts, stability, failed-in-denominator, D-full reuse,
-# auth content validation).  Drive the refactored pure components directly
-# with a counting deterministic fake transport (zero network).
+# evaluation, plan counts, stability, failed-in-denominator, D-full-0813 as
+# a real arm, auth content validation).  Drive the refactored pure components
+# directly with a counting deterministic fake transport (zero network).
 # ---------------------------------------------------------------------------
 
 
@@ -320,7 +320,7 @@ def test_executor_uses_one_call_per_sample_per_repeat():
     samples = [{"sample_id": "s1", "text": "The actor shall process data."},
                {"sample_id": "s2", "text": "Permission to access is granted."}]
     calls = m.call_once_n(
-        arm="D-no-fewshot", samples=samples, prompt_text="PROMPT",
+        arm="D-no-fewshot-0813", samples=samples, prompt_text="PROMPT",
         transport=transport, cost_of=lambda u: 0.001,
     )
     assert transport.send_count == 2, f"expected 2 sends, got {transport.send_count}"
@@ -334,9 +334,9 @@ def test_raw_and_canonical_share_response_hash():
     m = _executor_module()
     transport = CountingFakeTransport()
     samples = [{"sample_id": "s1", "text": "The actor shall process data."}]
-    calls = m.call_once_n("D-no-fewshot", samples, "PROMPT", transport,
+    calls = m.call_once_n("D-no-fewshot-0813", samples, "PROMPT", transport,
                           cost_of=lambda u: 0.001)
-    parsed = m.parse_same_response(calls[0], "D-no-fewshot",
+    parsed = m.parse_same_response(calls[0], "D-no-fewshot-0813",
                                    samples[0]["text"])
     assert parsed["response_sha256"] == calls[0]["response_sha256"]
     assert parsed["request_id"] == calls[0]["request_id"]
@@ -365,32 +365,39 @@ def test_barr_fenced_json_parsed_like_artifact_safe_json_load():
     assert parsed["request_id"] == "req-1"
 
 
-def test_execution_plan_counts_990_and_1170():
-    """Protocol-aligned plan: 990 calls without BARR-NO-PATTERN, 1170 with.
+def test_execution_plan_counts_1140_and_1320():
+    """Protocol-aligned plan: 1140 calls without BARR-NO-PATTERN, 1320 with.
 
-    3 D prompt arms x 150 = 450; BARR-FULL/OURS-FULL/OURS-BARRIENTOS-MODULE
-    each 36 x 5 = 180; BARR-NO-PATTERN (artifact-supported) +36x5 = 180.
+    D four arms x 150 = 600 (including D-full-0813, a REAL 150-call arm);
+    BARR-FULL/OURS-FULL/OURS-BARRIENTOS-MODULE each 36 x 5 = 540;
+    BARR-NO-PATTERN (artifact-supported) +36x5 = 180.
     """
     m = _executor_module()
     plan = m.build_execution_plan(stability_runs=5)
     total = sum(r["expected_calls"] for r in plan)
-    assert total == 990, f"protocol plan must be 990, got {total}"
+    assert total == 1140, f"protocol plan must be 1140, got {total}"
     plan_np = m.build_execution_plan(stability_runs=5,
                                      include_no_pattern=True)
     total_np = sum(r["expected_calls"] for r in plan_np)
-    assert total_np == 1170, f"with BARR-NO-PATTERN must be 1170, got {total_np}"
-    # never double: 1980/2340 would mean the double-call bug
-    assert total != 1980 and total_np != 2340
-    # D-full always 0 calls (reused)
-    dfull = [r for r in plan if r["arm"] == "D-full"]
-    assert dfull and dfull[0]["expected_calls"] == 0
-    assert dfull[0]["reused"] is True
+    assert total_np == 1320, f"with BARR-NO-PATTERN must be 1320, got {total_np}"
+    # never double: 2280/2640 would mean the double-call bug
+    assert total != 2280 and total_np != 2640
+    # D-full-0813 is a REAL 150-call arm (NO reuse of the old Preview result)
+    dfull = [r for r in plan if r["arm"] == "D-full-0813"]
+    assert dfull and dfull[0]["expected_calls"] == 150
+    assert dfull[0]["reused"] is False
+    d_total = sum(r["expected_calls"] for r in plan
+                  if r["arm"].startswith("D-"))
+    assert d_total == 600
     # each 36-protocol arm has exactly 5 repeats of 36
     for arm in ("BARR-FULL", "OURS-FULL", "OURS-BARRIENTOS-MODULE"):
         runs = [r for r in plan if r["arm"] == arm]
         assert len(runs) == 5, f"{arm} must have 5 repeats"
         assert all(r["sample_count"] == 36 for r in runs)
         assert all(r["expected_calls"] == 36 for r in runs)
+    e_total = sum(r["expected_calls"] for r in plan
+                  if not r["arm"].startswith("D-"))
+    assert e_total == 540
     # BARR-NO-PATTERN only appears when requested
     assert not any(r["arm"] == "BARR-NO-PATTERN" for r in plan)
     np_runs = [r for r in plan_np if r["arm"] == "BARR-NO-PATTERN"]
@@ -420,7 +427,7 @@ def test_every_arm_generates_evaluation_json():
     # drive run_arm_once with a FIXED sample set and the Stage-2 literal eval
     sample = [{"sample_id": "s1", "text": "The actor shall process data."}]
     result = m.run_arm_once(
-        arm="D-no-fewshot", repeat_id="repeat-01", samples=sample,
+        arm="D-no-fewshot-0813", repeat_id="repeat-01", samples=sample,
         prompt_text="PROMPT", transport=transport,
         cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
     )
@@ -478,7 +485,7 @@ def test_failed_samples_stay_in_denominator():
         {"sample_id": "rejected", "text": "The actor shall process data."},
     ]
     result = m.run_arm_once(
-        arm="D-no-fewshot", repeat_id="repeat-01", samples=samples,
+        arm="D-no-fewshot-0813", repeat_id="repeat-01", samples=samples,
         prompt_text="PROMPT", transport=transport,
         cost_of=lambda u: 0.001, evaluator=m.denominator_evaluator,
     )
@@ -523,14 +530,18 @@ def test_stability_five_runs_real():
     assert stability["BARR-FULL"]["pairwise_distance_le2_ratio"] is not None
 
 
-def test_d_full_reuses_locked_without_calling():
-    """D-full reuses the locked formal capsule; a fake transport must record
-    0 sends for it; D-full still appears in the plan."""
+def test_d_full_0813_is_real_150_call_arm():
+    """MODEL-CONSISTENCY FIX: D-full-0813 is a REAL 150-call arm under the
+    0813 release window, NOT a reuse of the historical 2026-08-06 D-full
+    (deepseek-v4-pro -> DeepSeek-V4-Pro Preview) capsule.  The plan must
+    schedule 150 fresh calls for it."""
     m = _executor_module()
     plan = m.build_execution_plan(stability_runs=5)
-    dfull = [r for r in plan if r["arm"] == "D-full"][0]
-    assert dfull["reused"] is True
-    assert dfull["expected_calls"] == 0
+    dfull = [r for r in plan if r["arm"] == "D-full-0813"]
+    assert len(dfull) == 1
+    assert dfull[0]["reused"] is False
+    assert dfull[0]["sample_count"] == 150
+    assert dfull[0]["expected_calls"] == 150
 
 
 def test_s2_12_auth_path_removed_from_de_executor():
@@ -779,7 +790,7 @@ def test_ours_full_prompt_matches_locked_d1_recipe():
 def test_no_fewshot_prompt_has_empty_few_shot_block():
     m = _executor_module()
     sys_p, user_p = m._render_prompt(
-        "D-no-fewshot", "estg_000001", "The taxpayer shall file.")
+        "D-no-fewshot-0813", "estg_000001", "The taxpayer shall file.")
     assert "Example 1" not in user_p
     assert "## Examples" not in user_p
 
@@ -787,7 +798,7 @@ def test_no_fewshot_prompt_has_empty_few_shot_block():
 def test_minimal_prompt_system_is_task_plus_schema():
     m = _executor_module()
     sys_p, user_p = m._render_prompt(
-        "D-minimal", "estg_000001", "The taxpayer shall file.")
+        "D-minimal-0813", "estg_000001", "The taxpayer shall file.")
     assert "regulatory text formalization expert" in sys_p
     assert "top-level keys: schema_version" in sys_p
     # user stays the standard D1 envelope (ablation isolates system only)
@@ -797,7 +808,7 @@ def test_minimal_prompt_system_is_task_plus_schema():
 def test_barrientos_style_prompt_includes_discipline_preamble():
     m = _executor_module()
     sys_p, _ = m._render_prompt(
-        "D-barrientos-style", "estg_000001", "The taxpayer shall file.")
+        "D-barrientos-style-0813", "estg_000001", "The taxpayer shall file.")
     assert "controlled six-field vocabulary" in sys_p
     assert "no code fences" in sys_p
     # and the v6 field definitions are retained
@@ -821,12 +832,18 @@ def test_fixture_uses_real_evaluators():
         assert proc.returncode == 0, proc.stdout + proc.stderr
         summary = json.loads(
             (Path(td) / "fixture_summary.json").read_text(encoding="utf-8"))
-        # network-call accounting: exactly one send per sample per repeat
+        # network-call accounting: exactly one send per sample per repeat,
+        # and the FULL fixed plan is 1140 calls (4 D arms x 150 + 3 E arms
+        # x 36 x 5) with BARR-NO-PATTERN excluded
         assert summary["network_calls"] == summary["expected_send_count"]
+        assert summary["network_calls"] == 1140, summary["network_calls"]
         reports = {r["arm"]: r for r in summary["reports"]}
+        assert set(reports) == {"D-full-0813", "D-no-fewshot-0813",
+                                "D-minimal-0813", "D-barrientos-style-0813",
+                                "BARR-FULL", "OURS-FULL",
+                                "OURS-BARRIENTOS-MODULE"}
         # every arm evaluation carries a real evaluator identity
-        for arm in ("BARR-FULL", "BARR-NO-PATTERN", "OURS-FULL",
-                    "OURS-BARRIENTOS-MODULE", "D-no-fewshot"):
+        for arm in reports:
             ev = json.loads(
                 (Path(td) / arm / "repeat-01" / "evaluation.json")
                 .read_text(encoding="utf-8"))

@@ -51,6 +51,15 @@ REPORT_MD = ROOT / "outputs/reports/barrientos_de_tables_v1.md"
 BARR_ARMS = ("BARR-FULL",)
 OURS_ARMS = ("OURS-FULL", "OURS-BARRIENTOS-MODULE")
 ALL_ARMS = BARR_ARMS + OURS_ARMS
+# D prompt/few-shot ablation arms — ALL run under the SAME
+# DeepSeek-V4-Pro-0813 window; D-full-0813 is the baseline; the old
+# 2026-08-06 Preview D-full is a HISTORICAL result and is NEVER part of
+# this table's deltas.
+D_ARMS_0813 = ("D-full-0813", "D-no-fewshot-0813", "D-minimal-0813",
+               "D-barrientos-style-0813")
+D_MAIN_ARMS_0813 = ("D-no-fewshot-0813", "D-minimal-0813",
+                    "D-barrientos-style-0813")
+D_BASELINE_0813 = "D-full-0813"
 REPEATS = (f"repeat-{i:02d}" for i in range(1, 6))
 
 
@@ -223,6 +232,101 @@ def table_b(run_dir: Path) -> dict[str, Any]:
                  "A's Barrientos-native F1."),
         "arms": arms,
         "delta_swap_minus_full": delta,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Table D: D prompt/few-shot ablation (ALL under DeepSeek-V4-Pro-0813)
+# ---------------------------------------------------------------------------
+
+
+def _d_row(arm: str, run_dir: Path) -> dict[str, Any]:
+    """One D arm's evaluation row (single run, repeat-01)."""
+    ev = _load_json(run_dir / arm / "repeat-01" / "evaluation.json")
+    e = ev["evaluation"]
+    metrics = e["metrics"] or {}
+    per_field = metrics.get("per_field") or {}
+    overall = metrics.get("overall") or {}
+    modality = metrics.get("modality_labels") or {}
+    denominator = e["denominator"]
+    failed = e["failed_count"]
+    row: dict[str, Any] = {
+        "arm": arm,
+        "valid_rate": round((denominator - failed) / denominator, 6)
+        if denominator else None,
+        "failure_rate": round(failed / denominator, 6) if denominator else None,
+        "modality_label_accuracy": modality.get("accuracy"),
+        "modality_label_macro_f1": modality.get("macro_f1"),
+    }
+    for field in ("actor", "action", "condition", "constraint", "exception"):
+        f = per_field.get(field) or {}
+        row[f"{field}_p"] = f.get("precision")
+        row[f"{field}_r"] = f.get("recall")
+        row[f"{field}_f1"] = f.get("f1")
+    row["overall_p"] = overall.get("precision")
+    row["overall_r"] = overall.get("recall")
+    row["overall_f1"] = overall.get("f1")
+    return row
+
+
+def table_d(run_dir: Path) -> dict[str, Any]:
+    """New-model D prompt/few-shot ablation: D-full-0813 is the baseline;
+    only 0813-window arms are compared.  The old Preview D-full is NEVER
+    part of any delta here."""
+    metrics = ("actor_p", "actor_r", "actor_f1", "action_p", "action_r",
+               "action_f1", "condition_p", "condition_r", "condition_f1",
+               "constraint_p", "constraint_r", "constraint_f1",
+               "exception_p", "exception_r", "exception_f1",
+               "overall_p", "overall_r", "overall_f1",
+               "valid_rate", "failure_rate",
+               "modality_label_accuracy", "modality_label_macro_f1")
+    rows = {arm: _d_row(arm, run_dir) for arm in D_ARMS_0813}
+    baseline = rows[D_BASELINE_0813]
+    delta: dict[str, Any] = {}
+    for arm in D_MAIN_ARMS_0813:
+        delta[arm] = {}
+        for k in metrics:
+            b = baseline.get(k)
+            a = rows[arm].get(k)
+            if isinstance(b, (int, float)) and isinstance(a, (int, float)):
+                delta[arm][k] = _round3(a - b)
+    return {
+        "table": "D",
+        "title": ("D prompt/few-shot ablation (all arms under "
+                  "DeepSeek-V4-Pro-0813, EStG-150, same Gold, same "
+                  "evaluator)"),
+        "evaluator": "sun_literal_overlap@2.0.0",
+        "baseline": D_BASELINE_0813,
+        "model": {
+            "requested_alias": "deepseek-v4-pro",
+            "documented_release": "DeepSeek-V4-Pro-0813",
+            "note": ("the 2026-08-06 Preview D-full is a historical Stage 2 "
+                     "result and is NOT a baseline for this table; model "
+                     "drift is reported separately (model-version "
+                     "sensitivity), never as module ablation"),
+        },
+        "note": ("deltas are relative to D-full-0813 ONLY; the old Preview "
+                 "D-full is excluded from all module deltas"),
+        "rows": rows,
+        "delta_vs_full_0813": delta,
+        "model_drift_appendix": {
+            "status": "reserved_not_fabricated",
+            "preview_d_full": {
+                "requested_alias": "deepseek-v4-pro",
+                "release": "DeepSeek-V4-Pro Preview",
+                "execution_date": "2026-08-06",
+                "role": ("historical Stage 2 formal result; NOT a "
+                         "V4-Pro-0813 prompt-ablation baseline"),
+                "locked_result": ("data/predictions/direct_llm_formal_arm_v1/"
+                                  "predictions.json (unchanged)"),
+            },
+            "v4_pro_0813_d_full": {
+                "status": "generated_after_execution",
+                "note": "filled only after the 0813 execution completes",
+            },
+            "label": ("model-version sensitivity (Preview vs V4-Pro-0813); "
+                      "explicitly NOT a prompt/module ablation contribution"),
+        },
     }
 
 
@@ -407,29 +511,52 @@ def build_tables(run_dir: Path | None = None) -> dict[str, Any]:
             raise RuntimeError(
                 f"execution incomplete: calls accounted {accounted} != "
                 f"planned {summary.get('planned_calls')}; tables refused")
-    missing = [a for a in ALL_ARMS
+    missing = [a for a in ALL_ARMS + D_ARMS_0813
                if not (run_dir / a / "repeat-01" / "evaluation.json").is_file()]
     if missing:
         raise RuntimeError(f"missing arm evaluations: {missing}")
     return {
-        "schema_version": "barrientos_de_tables@1.0.0",
+        "schema_version": "barrientos_de_tables@1.1.0",
         "tables": {
+            "D_prompt_ablation_0813": table_d(run_dir),
             "A_barrientos_native": table_a(run_dir),
             "B_ours_native": table_b(run_dir),
             "C_shared_target": table_c(run_dir),
         },
         "comparability_rule": (
+            "Table D F1 (0813-window D prompt/few-shot ablation) and "
             "Table A F1 (Barrientos-native) and Table B F1 (Ours-native) "
             "use different schemas/evaluators and MUST NOT be compared "
             "directly. Only Table C (same Gold, same metric function via "
             "deterministic adapters) is a legitimate cross-method "
-            "comparison, and only on the pre-defined shared targets."),
+            "comparison, and only on the pre-defined shared targets. The "
+            "old Preview D-full is NEVER part of any module delta."),
     }
 
 
 def _md(tables: dict[str, Any]) -> str:
-    lines = ["# Barrientos D/E Result Tables v1 (three-table separation)", ""]
+    lines = ["# Barrientos D/E Result Tables v1.1 (four-table separation)", ""]
     t = tables["tables"]
+    lines += ["## Table D — D prompt/few-shot ablation (DeepSeek-V4-Pro-0813)",
+              "", "| arm | overall F1 | overall P | overall R | valid% | "
+              "fail% |"]
+    d = t["D_prompt_ablation_0813"]
+    for arm in d["rows"]:
+        r = d["rows"][arm]
+        lines.append("| {} | {:.3f} | {:.3f} | {:.3f} | {:.3f} | {:.3f} |"
+                     .format(arm, r["overall_f1"] or 0.0,
+                             r["overall_p"] or 0.0, r["overall_r"] or 0.0,
+                             r["valid_rate"] or 0.0,
+                             r["failure_rate"] or 0.0))
+    lines += ["", "delta vs " + d["baseline"] + " (module effect, 0813 "
+              "window only):"]
+    for arm in D_MAIN_ARMS_0813:
+        dv = d["delta_vs_full_0813"].get(arm) or {}
+        f1 = dv.get("overall_f1")
+        lines.append("- {}: overall F1 {:+.3f}".format(
+            arm, f1 if f1 is not None else float("nan")))
+    lines += ["", "model-drift appendix: " +
+              d["model_drift_appendix"]["label"], ""]
     lines += ["## Table A — Barrientos-native (BARR-FULL)", "",
               "| repeat | pre P | pre R | pre F1 | norm P | norm R | norm F1 "
               "| validity | coverage | fail% |"]

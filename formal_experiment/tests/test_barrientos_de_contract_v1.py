@@ -33,25 +33,31 @@ def _executor():
 
 
 # ---------------------------------------------------------------------------
-# 1. Default plan is exactly 990 and never contains BARR-NO-PATTERN
+# 1. Default plan is exactly 1140 (D 600 + E 540) and never contains
+# BARR-NO-PATTERN; D-full-0813 is a REAL 150-call arm (no reuse)
 # ---------------------------------------------------------------------------
 
 
-def test_default_plan_is_exactly_990():
+def test_default_plan_is_exactly_1140():
     m = _executor()
     plan = m.build_execution_plan(5)
     total = sum(r["expected_calls"] for r in plan)
-    assert total == 990
+    assert total == 1140
     assert all(r["arm"] != "BARR-NO-PATTERN" for r in plan)
     # arm/repeat structure is fixed
     keys = [(r["arm"], r["repeat_id"]) for r in plan]
     assert len(keys) == len(set(keys))
     d = [r for r in plan if r["arm"].startswith("D-")]
-    assert [r["arm"] for r in d] == ["D-full", "D-no-fewshot", "D-minimal",
-                                     "D-barrientos-style"]
-    assert d[0]["expected_calls"] == 0  # D-full reused
-    for r in d[1:]:
+    assert [r["arm"] for r in d] == ["D-full-0813", "D-no-fewshot-0813",
+                                     "D-minimal-0813",
+                                     "D-barrientos-style-0813"]
+    # NO reuse: every D arm is a real 150-call arm
+    for r in d:
         assert r["expected_calls"] == 150 and r["repeat_id"] == "repeat-01"
+        assert r["reused"] is False
+    assert sum(r["expected_calls"] for r in d) == 600  # D total
+    e = [r for r in plan if not r["arm"].startswith("D-")]
+    assert sum(r["expected_calls"] for r in e) == 540  # E total
     for arm in ("BARR-FULL", "OURS-FULL", "OURS-BARRIENTOS-MODULE"):
         runs = [r for r in plan if r["arm"] == arm]
         assert len(runs) == 5
@@ -64,13 +70,13 @@ def test_plan_never_contains_no_pattern_by_default():
     assert not any(r["arm"] == "BARR-NO-PATTERN" for r in plan)
     # even the optional flag is NOT in the fixed contract path
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
-    assert contract["execution_plan"]["total_calls"] == 990
+    assert contract["execution_plan"]["total_calls"] == 1140
     assert all(r["arm"] != "BARR-NO-PATTERN"
                for r in contract["execution_plan"]["arms"])
 
 
 # ---------------------------------------------------------------------------
-# 2. Contract validation: schema, 990, model, tokens, cost
+# 2. Contract validation: schema, 1140, model, tokens, cost
 # ---------------------------------------------------------------------------
 
 
@@ -95,13 +101,13 @@ def test_contract_rejects_wrong_plan_total():
     m = _executor()
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     bad = copy.deepcopy(contract)
-    bad["execution_plan"]["total_calls"] = 1170
+    bad["execution_plan"]["total_calls"] = 1320
     path = ROOT / ".tmp" / "contract_bad_plan.json"
     path.write_text(json.dumps(bad), encoding="utf-8")
     try:
         try:
             m.validate_de_contract(path, allow_unauthorized=True)
-            raise AssertionError("1170 plan must be rejected")
+            raise AssertionError("1320 plan must be rejected")
         except m.ContractError:
             pass
     finally:
@@ -252,9 +258,10 @@ def _auth_event_file(tmp_path, sentence, *, mutate_sentence_sha=False,
     return path
 
 
-REAL_SENTENCE = ("I authorize exactly 990 calls with model deepseek-v4-pro "
-                 "at temperature=0 retry=0 under the Barrientos D/E "
-                 "execution contract v1 with USD cap 25.396.")
+REAL_SENTENCE = ("I authorize exactly 1140 calls with model deepseek-v4-pro "
+                 "release DeepSeek-V4-Pro-0813 at temperature=0 retry=0 "
+                 "under the Barrientos D/E execution contract v1 with USD "
+                 "cap 30.407.")
 
 
 def test_authorization_event_verification_real(tmp_path):
@@ -321,11 +328,15 @@ def test_authorization_event_verification_real(tmp_path):
             raise AssertionError("empty event must be rejected")
         except m.ContractError:
             pass
-        # sentence with different call count / budget
-        for wrong in ("I authorize 1170 calls with model deepseek-v4-pro "
-                      "at temperature=0 retry=0 with USD cap 25.396.",
-                      "I authorize 990 calls with model deepseek-v4-pro "
-                      "at temperature=0 retry=0 with USD cap 10.000."):
+        # sentence with different call count / budget / missing release
+        for wrong in ("I authorize 1320 calls with model deepseek-v4-pro "
+                      "release DeepSeek-V4-Pro-0813 at temperature=0 retry=0 "
+                      "with USD cap 30.407.",
+                      "I authorize 1140 calls with model deepseek-v4-pro "
+                      "release DeepSeek-V4-Pro-0813 at temperature=0 retry=0 "
+                      "with USD cap 10.000.",
+                      "I authorize 1140 calls with model deepseek-v4-pro "
+                      "at temperature=0 retry=0 with USD cap 30.407."):
             wrong_path = event_dir / "wrong_sentence.json"
             wrong_path.write_text(json.dumps({
                 "authorization_sentence": wrong,
@@ -450,7 +461,7 @@ def test_per_request_persistence_and_resume(tmp_path):
     # gate aborts on missing usage before send 5)
     t1 = _persist_transport(fail_after=3)
     try:
-        m.run_arm_once(arm="D-no-fewshot", repeat_id="repeat-01",
+        m.run_arm_once(arm="D-no-fewshot-0813", repeat_id="repeat-01",
                        samples=samples, prompt_text="", transport=t1,
                        cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
                        out_dir=out_dir, budget_gate=gate1)
@@ -472,7 +483,7 @@ def test_per_request_persistence_and_resume(tmp_path):
     # sent (in the original order)
     gate2 = m.DeBudgetGate(big)
     t2 = _persist_transport(fail_after=None)
-    run = m.run_arm_once(arm="D-no-fewshot", repeat_id="repeat-01",
+    run = m.run_arm_once(arm="D-no-fewshot-0813", repeat_id="repeat-01",
                          samples=samples, prompt_text="", transport=t2,
                          cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
                          out_dir=out_dir, budget_gate=gate2)
@@ -502,13 +513,13 @@ def test_resume_persisted_raw_is_reused_not_resent(tmp_path):
     samples = [{"sample_id": f"s{i}", "text": "t"} for i in range(4)]
     out_dir = tmp_path / "arm" / "repeat-01"
     t1 = _persist_transport(fail_after=None)
-    run1 = m.run_arm_once(arm="D-no-fewshot", repeat_id="repeat-01",
+    run1 = m.run_arm_once(arm="D-no-fewshot-0813", repeat_id="repeat-01",
                           samples=samples, prompt_text="", transport=t1,
                           cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
                           out_dir=out_dir)
     assert run1["actual_call_count"] == 4
     t2 = _persist_transport(fail_after=None)
-    run2 = m.run_arm_once(arm="D-no-fewshot", repeat_id="repeat-01",
+    run2 = m.run_arm_once(arm="D-no-fewshot-0813", repeat_id="repeat-01",
                           samples=samples, prompt_text="", transport=t2,
                           cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
                           out_dir=out_dir)
@@ -574,14 +585,15 @@ def test_table_builder_refuses_incomplete(tmp_path):
 
 
 def test_resumed_complete_run_is_complete():
-    """A resumed run that accounts for all 990 samples (new sends +
+    """A resumed run that accounts for all 1140 samples (new sends +
     resumed completed) is complete even when THIS invocation's actual_calls
-    is less than 990 (the remainder was already paid for and persisted)."""
+    is less than 1140 (the remainder was already paid for and persisted)."""
     m = _executor()
     plan = m.build_execution_plan(5)
     planned = sum(r["expected_calls"] for r in plan)
-    # simulated resumed state: 300 new sends this invocation + 690 resumed
-    # completed = 990 accounted, zero in_doubt
+    assert planned == 1140
+    # simulated resumed state: 300 new sends this invocation + 840 resumed
+    # completed = 1140 accounted, zero in_doubt
     results = {
         "aborted": False,
         "actual_calls": 300,
@@ -614,13 +626,13 @@ def test_budget_is_derived_not_guessed():
     report records the rendered byte/token audit)."""
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     budget = contract["budget"]
-    assert budget["planned_calls"] == 990
+    assert budget["planned_calls"] == 1140
     assert budget["input_token_cap"] > 0
-    assert budget["output_token_cap"] == 990 * 4096
+    assert budget["output_token_cap"] == 1140 * 4096
     assert budget["usd_cost_cap"] > 0
     report = json.loads(BUDGET_REPORT.read_text(encoding="utf-8"))
     assert report["rendered_requests"]["grand_total_est_input_tokens"] > 0
-    assert report["rendered_requests"]["plan_total_calls"] == 990
+    assert report["rendered_requests"]["plan_total_calls"] == 1140
     assert "not a guess" in budget["input_estimate_note"] or \
         "derived" in budget["input_estimate_note"]
 
@@ -665,56 +677,57 @@ def test_budget_gate_stops_before_next_send():
     assert gate.aborted and gate.calls_made == 2
 
 
-def test_budget_gate_990th_call_completes():
-    """The 990th call (the fixed plan's last) must complete and be
-    persisted; only the 991st is rejected before the transport."""
+def test_budget_gate_1140th_call_completes():
+    """The 1140th call (the fixed plan's last) must complete and be
+    persisted; only the 1141st is rejected before the transport."""
     m = _executor()
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     gate = m.DeBudgetGate(contract)
-    assert gate.call_cap == 990
-    for _ in range(990):
+    assert gate.call_cap == 1140
+    for _ in range(1140):
         gate.check_before_send(projected_input_tokens=100,
                                projected_max_output_tokens=4096)
         gate.record_after_response({"prompt_tokens": 100,
                                     "completion_tokens": 50},
                                    returned_model="deepseek-v4-pro")
-    assert gate.calls_made == 990 and not gate.aborted
-    assert gate.input_tokens == 990 * 100
-    assert gate.output_tokens == 990 * 50
+    assert gate.calls_made == 1140 and not gate.aborted
+    assert gate.input_tokens == 1140 * 100
+    assert gate.output_tokens == 1140 * 50
     # equal-to-cap is a legal completion (no abort)
     assert not gate.aborted
-    # 991st rejected before the transport
+    # 1141st rejected before the transport
     try:
         gate.check_before_send(projected_input_tokens=100,
                                projected_max_output_tokens=4096)
-        raise AssertionError("991st send must be rejected before transport")
+        raise AssertionError("1141st send must be rejected before transport")
     except m.ContractError:
         pass
     assert gate.aborted
 
 
-def test_budget_gate_990_plan_with_realistic_usage():
-    """The fixed 990-call plan with the REAL contract caps completes: the
+def test_budget_gate_1140_plan_with_realistic_usage():
+    """The fixed 1140-call plan with the REAL contract caps completes: the
     projected next-send checks never trip (caps have safety factors) and
-    the 990th response records exactly at the planned totals."""
+    the 1140th response records exactly at the planned totals."""
     m = _executor()
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     gate = m.DeBudgetGate(contract)
     report = json.loads(BUDGET_REPORT.read_text(encoding="utf-8"))
     # use the real per-request token estimates from the rendered audit
     est_tokens = []
-    for arm in ("D-no-fewshot", "D-minimal", "D-barrientos-style",
-                "BARR-FULL", "OURS-FULL", "OURS-BARRIENTOS-MODULE"):
+    for arm in ("D-full-0813", "D-no-fewshot-0813", "D-minimal-0813",
+                "D-barrientos-style-0813", "BARR-FULL", "OURS-FULL",
+                "OURS-BARRIENTOS-MODULE"):
         entry = report["rendered_requests"]["arms"][arm]
         est_tokens.extend(r["est_input_tokens"] for r in entry["requests"])
-    assert len(est_tokens) == 990
+    assert len(est_tokens) == 1140
     for i, est in enumerate(est_tokens):
         gate.check_before_send(projected_input_tokens=est,
                                projected_max_output_tokens=4096)
         gate.record_after_response({"prompt_tokens": est,
                                     "completion_tokens": 4096},
                                    returned_model="deepseek-v4-pro")
-    assert gate.calls_made == 990
+    assert gate.calls_made == 1140
     assert not gate.aborted
     assert gate.input_tokens <= gate.input_token_cap
     assert gate.output_tokens <= gate.output_token_cap
@@ -767,7 +780,7 @@ def test_no_retry_extra_calls():
 
     transport = AlwaysFail()
     samples = [{"sample_id": f"s{i}", "text": "t"} for i in range(4)]
-    calls = m.call_once_n("D-no-fewshot", samples, "PROMPT", transport,
+    calls = m.call_once_n("D-no-fewshot-0813", samples, "PROMPT", transport,
                           cost_of=lambda u: 0.001)
     assert transport.send_count == 4  # no retry
     assert all(c["request_status"] == "error" for c in calls)
@@ -884,22 +897,22 @@ def test_ours_arms_differ_only_by_registered_module():
 def test_raw_canonical_same_source_and_denominator_anchor():
     m = _executor()
     plan = m.build_execution_plan(5)
-    assert sum(r["expected_calls"] for r in plan) == 990
+    assert sum(r["expected_calls"] for r in plan) == 1140
     # one send per sample per repeat is asserted by the fixture tests;
     # raw/canonical same response hash is asserted by
     # test_raw_and_canonical_share_response_hash; failed-in-denominator by
     # test_failed_samples_stay_in_denominator. This test keeps the contract
     # plan in lockstep with those invariants.
     for r in plan:
-        assert r["expected_calls"] == r["sample_count"] or r["reused"]
+        assert r["expected_calls"] == r["sample_count"]
 
 
 # ---------------------------------------------------------------------------
-# 7. Contract builder determinism (990 rendered requests)
+# 7. Contract builder determinism (1140 rendered requests)
 # ---------------------------------------------------------------------------
 
 
-def test_contract_builder_renders_990_requests(tmp_path):
+def test_contract_builder_renders_1140_requests(tmp_path):
     proc = subprocess.run(
         [PY, str(SCRIPTS / "build_barrientos_de_execution_contract_v1.py")],
         capture_output=True, text=True, cwd=ROOT.parent)
@@ -909,7 +922,16 @@ def test_contract_builder_renders_990_requests(tmp_path):
     report = json.loads(BUDGET_REPORT.read_text(encoding="utf-8"))
     total = sum(v["calls"] for v in
                 report["rendered_requests"]["arms"].values())
-    assert total == 990
+    assert total == 1140
+    # D 600 + E 540 split
+    d_total = sum(v["calls"] for k, v in
+                  report["rendered_requests"]["arms"].items()
+                  if k.startswith("D-"))
+    e_total = sum(v["calls"] for k, v in
+                  report["rendered_requests"]["arms"].items()
+                  if not k.startswith("D-"))
+    assert d_total == 600
+    assert e_total == 540
 
 
 # ---------------------------------------------------------------------------
@@ -919,8 +941,8 @@ def test_contract_builder_renders_990_requests(tmp_path):
 
 def test_three_tables_build_from_fixture_output(tmp_path):
     """The table builder must consume the executor's own output layout
-    (per-arm per-repeat evaluation.json + summary) and emit three separate
-    tables with the mandated separation."""
+    (per-arm per-repeat evaluation.json + summary) and emit the separated
+    tables with the mandated separation (D / A / B / C)."""
     import tempfile
     from build_barrientos_de_tables_v1 import build_tables
     with tempfile.TemporaryDirectory(dir=ROOT / ".tmp") as td:
@@ -931,8 +953,20 @@ def test_three_tables_build_from_fixture_output(tmp_path):
         assert proc.returncode == 0, proc.stdout + proc.stderr
         tables = build_tables(Path(td))
         tabs = tables["tables"]
-        assert set(tabs) == {"A_barrientos_native", "B_ours_native",
-                             "C_shared_target"}
+        assert set(tabs) == {"D_prompt_ablation_0813", "A_barrientos_native",
+                             "B_ours_native", "C_shared_target"}
+        # Table D: 0813-window D prompt/few-shot ablation
+        d = tabs["D_prompt_ablation_0813"]
+        assert d["baseline"] == "D-full-0813"
+        assert set(d["rows"]) == {"D-full-0813", "D-no-fewshot-0813",
+                                  "D-minimal-0813",
+                                  "D-barrientos-style-0813"}
+        assert set(d["delta_vs_full_0813"]) == {"D-no-fewshot-0813",
+                                                "D-minimal-0813",
+                                                "D-barrientos-style-0813"}
+        # the old Preview D-full must never appear in the D table
+        assert "Preview" in d["model_drift_appendix"]["preview_d_full"]["release"]
+        assert d["model_drift_appendix"]["status"] == "reserved_not_fabricated"
         # Table A: Barrientos-native only
         a = tabs["A_barrientos_native"]
         assert a["evaluator"] == "barrientos_step1_artifact_evaluator"
@@ -970,7 +1004,7 @@ def _persisted_rows(n: int, *, model: str = "deepseek-v4-pro",
         content = json.dumps({"sample_id": f"s{i}", "clauses": []})
         resp_sha = hashlib.sha256(content.encode("utf-8")).hexdigest()
         raw.append({
-            "sample_id": f"s{i}", "arm": "D-no-fewshot",
+            "sample_id": f"s{i}", "arm": "D-no-fewshot-0813",
             "repeat_id": "repeat-01",
             "request_body_sha256": "ab" * 32,
             "request_id": f"req-{i}",
@@ -981,7 +1015,7 @@ def _persisted_rows(n: int, *, model: str = "deepseek-v4-pro",
             "cost": 0.001, "request_status": "ok", "error": None,
             "returned_model": model, "network_call": 1,
         })
-        ledger.append({"sample_id": f"s{i}", "arm": "D-no-fewshot",
+        ledger.append({"sample_id": f"s{i}", "arm": "D-no-fewshot-0813",
                        "repeat_id": "repeat-01", "state": "completed",
                        "response_sha256": resp_sha})
     return raw, ledger
@@ -1034,7 +1068,7 @@ def test_resume_with_in_doubt_fails_closed_zero_sends():
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     gate = m.DeBudgetGate(contract)
     raw, ledger = _persisted_rows(3)
-    ledger.append({"sample_id": "s3", "arm": "D-no-fewshot",
+    ledger.append({"sample_id": "s3", "arm": "D-no-fewshot-0813",
                    "repeat_id": "repeat-01", "state": "in_doubt",
                    "error": "mid-run transport failure"})
     try:
@@ -1120,7 +1154,7 @@ def test_resume_restore_then_run_completes_within_budget(tmp_path):
     big["budget"]["usd_cost_cap"] = 10 ** 12
     # 400 completed rows persisted for arm/repeat-01 + 2 remaining samples
     raw, ledger = _persisted_rows(400)
-    out_dir = tmp_path / "D-no-fewshot" / "repeat-01"
+    out_dir = tmp_path / "D-no-fewshot-0813" / "repeat-01"
     out_dir.mkdir(parents=True)
     (out_dir / "raw_responses.jsonl").write_text(
         "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in raw),
@@ -1135,7 +1169,7 @@ def test_resume_restore_then_run_completes_within_budget(tmp_path):
 
     samples = [{"sample_id": f"s{i}", "text": "t"} for i in range(402)]
     transport = _persist_transport(fail_after=None)
-    run = m.run_arm_once(arm="D-no-fewshot", repeat_id="repeat-01",
+    run = m.run_arm_once(arm="D-no-fewshot-0813", repeat_id="repeat-01",
                          samples=samples, prompt_text="", transport=transport,
                          cost_of=lambda u: 0.001, evaluator=m.dummy_evaluator,
                          out_dir=out_dir, budget_gate=gate)

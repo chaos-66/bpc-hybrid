@@ -1,17 +1,768 @@
 {
-  "schema_version": "barrientos_de_budget@1.0.0",
+  "schema_version": "barrientos_de_budget@2.0.0",
   "contract_path": "configs\\ablations\\barrientos_de_execution_contract_v1.json",
-  "contract_sha256": "f102b756d509fc2db54564f36466446adfd7a95201de0da9a0bc02474516012c",
+  "contract_sha256": "788e289ea4322b71e4bc38eaaef82c5a4678e0574ec555549a286abbaef20d03",
   "rendered_requests": {
-    "plan_total_calls": 990,
+    "plan_total_calls": 1140,
     "arms": {
-      "D-full": {
-        "calls": 0,
-        "requests": [],
-        "bytes": 0,
-        "est_tokens": 0
+      "D-full-0813": {
+        "calls": 150,
+        "requests": [
+          {
+            "sample_id": "estg_000002",
+            "utf8_bytes": 17529,
+            "est_input_tokens": 5843
+          },
+          {
+            "sample_id": "estg_000003",
+            "utf8_bytes": 17453,
+            "est_input_tokens": 5818
+          },
+          {
+            "sample_id": "estg_000004",
+            "utf8_bytes": 17441,
+            "est_input_tokens": 5814
+          },
+          {
+            "sample_id": "estg_000020",
+            "utf8_bytes": 17439,
+            "est_input_tokens": 5813
+          },
+          {
+            "sample_id": "estg_000021",
+            "utf8_bytes": 17469,
+            "est_input_tokens": 5823
+          },
+          {
+            "sample_id": "estg_000027",
+            "utf8_bytes": 17601,
+            "est_input_tokens": 5867
+          },
+          {
+            "sample_id": "estg_000028",
+            "utf8_bytes": 17474,
+            "est_input_tokens": 5825
+          },
+          {
+            "sample_id": "estg_000030",
+            "utf8_bytes": 17403,
+            "est_input_tokens": 5801
+          },
+          {
+            "sample_id": "estg_000031",
+            "utf8_bytes": 17461,
+            "est_input_tokens": 5821
+          },
+          {
+            "sample_id": "estg_000033",
+            "utf8_bytes": 17406,
+            "est_input_tokens": 5802
+          },
+          {
+            "sample_id": "estg_000035",
+            "utf8_bytes": 17429,
+            "est_input_tokens": 5810
+          },
+          {
+            "sample_id": "estg_000036",
+            "utf8_bytes": 17420,
+            "est_input_tokens": 5807
+          },
+          {
+            "sample_id": "estg_000037",
+            "utf8_bytes": 17877,
+            "est_input_tokens": 5959
+          },
+          {
+            "sample_id": "estg_000038",
+            "utf8_bytes": 17470,
+            "est_input_tokens": 5824
+          },
+          {
+            "sample_id": "estg_000039",
+            "utf8_bytes": 17651,
+            "est_input_tokens": 5884
+          },
+          {
+            "sample_id": "estg_000040",
+            "utf8_bytes": 17488,
+            "est_input_tokens": 5830
+          },
+          {
+            "sample_id": "estg_000043",
+            "utf8_bytes": 17455,
+            "est_input_tokens": 5819
+          },
+          {
+            "sample_id": "estg_000044",
+            "utf8_bytes": 17418,
+            "est_input_tokens": 5806
+          },
+          {
+            "sample_id": "estg_000046",
+            "utf8_bytes": 17577,
+            "est_input_tokens": 5859
+          },
+          {
+            "sample_id": "estg_000051",
+            "utf8_bytes": 17439,
+            "est_input_tokens": 5813
+          },
+          {
+            "sample_id": "estg_000052",
+            "utf8_bytes": 17459,
+            "est_input_tokens": 5820
+          },
+          {
+            "sample_id": "estg_000055",
+            "utf8_bytes": 17542,
+            "est_input_tokens": 5848
+          },
+          {
+            "sample_id": "estg_000056",
+            "utf8_bytes": 18199,
+            "est_input_tokens": 6067
+          },
+          {
+            "sample_id": "estg_000057",
+            "utf8_bytes": 17516,
+            "est_input_tokens": 5839
+          },
+          {
+            "sample_id": "estg_000059",
+            "utf8_bytes": 17719,
+            "est_input_tokens": 5907
+          },
+          {
+            "sample_id": "estg_000060",
+            "utf8_bytes": 17598,
+            "est_input_tokens": 5866
+          },
+          {
+            "sample_id": "estg_000061",
+            "utf8_bytes": 17923,
+            "est_input_tokens": 5975
+          },
+          {
+            "sample_id": "estg_000062",
+            "utf8_bytes": 17564,
+            "est_input_tokens": 5855
+          },
+          {
+            "sample_id": "estg_000068",
+            "utf8_bytes": 17483,
+            "est_input_tokens": 5828
+          },
+          {
+            "sample_id": "estg_000070",
+            "utf8_bytes": 18468,
+            "est_input_tokens": 6156
+          },
+          {
+            "sample_id": "estg_000071",
+            "utf8_bytes": 17548,
+            "est_input_tokens": 5850
+          },
+          {
+            "sample_id": "estg_000074",
+            "utf8_bytes": 17487,
+            "est_input_tokens": 5829
+          },
+          {
+            "sample_id": "estg_000075",
+            "utf8_bytes": 17922,
+            "est_input_tokens": 5974
+          },
+          {
+            "sample_id": "estg_000077",
+            "utf8_bytes": 18173,
+            "est_input_tokens": 6058
+          },
+          {
+            "sample_id": "estg_000079",
+            "utf8_bytes": 17499,
+            "est_input_tokens": 5833
+          },
+          {
+            "sample_id": "estg_000080",
+            "utf8_bytes": 18030,
+            "est_input_tokens": 6010
+          },
+          {
+            "sample_id": "estg_000082",
+            "utf8_bytes": 17525,
+            "est_input_tokens": 5842
+          },
+          {
+            "sample_id": "estg_000083",
+            "utf8_bytes": 17488,
+            "est_input_tokens": 5830
+          },
+          {
+            "sample_id": "estg_000087",
+            "utf8_bytes": 17447,
+            "est_input_tokens": 5816
+          },
+          {
+            "sample_id": "estg_000091",
+            "utf8_bytes": 17434,
+            "est_input_tokens": 5812
+          },
+          {
+            "sample_id": "estg_000092",
+            "utf8_bytes": 17590,
+            "est_input_tokens": 5864
+          },
+          {
+            "sample_id": "estg_000094",
+            "utf8_bytes": 17546,
+            "est_input_tokens": 5849
+          },
+          {
+            "sample_id": "estg_000095",
+            "utf8_bytes": 17415,
+            "est_input_tokens": 5805
+          },
+          {
+            "sample_id": "estg_000098",
+            "utf8_bytes": 17552,
+            "est_input_tokens": 5851
+          },
+          {
+            "sample_id": "estg_000103",
+            "utf8_bytes": 17533,
+            "est_input_tokens": 5845
+          },
+          {
+            "sample_id": "estg_000104",
+            "utf8_bytes": 17455,
+            "est_input_tokens": 5819
+          },
+          {
+            "sample_id": "estg_000105",
+            "utf8_bytes": 17465,
+            "est_input_tokens": 5822
+          },
+          {
+            "sample_id": "estg_000106",
+            "utf8_bytes": 17538,
+            "est_input_tokens": 5846
+          },
+          {
+            "sample_id": "estg_000108",
+            "utf8_bytes": 17451,
+            "est_input_tokens": 5817
+          },
+          {
+            "sample_id": "estg_000109",
+            "utf8_bytes": 17475,
+            "est_input_tokens": 5825
+          },
+          {
+            "sample_id": "estg_000111",
+            "utf8_bytes": 17566,
+            "est_input_tokens": 5856
+          },
+          {
+            "sample_id": "estg_000112",
+            "utf8_bytes": 17803,
+            "est_input_tokens": 5935
+          },
+          {
+            "sample_id": "estg_000113",
+            "utf8_bytes": 17449,
+            "est_input_tokens": 5817
+          },
+          {
+            "sample_id": "estg_000114",
+            "utf8_bytes": 17566,
+            "est_input_tokens": 5856
+          },
+          {
+            "sample_id": "estg_000115",
+            "utf8_bytes": 17421,
+            "est_input_tokens": 5807
+          },
+          {
+            "sample_id": "estg_000118",
+            "utf8_bytes": 17424,
+            "est_input_tokens": 5808
+          },
+          {
+            "sample_id": "estg_000119",
+            "utf8_bytes": 17458,
+            "est_input_tokens": 5820
+          },
+          {
+            "sample_id": "estg_000121",
+            "utf8_bytes": 17418,
+            "est_input_tokens": 5806
+          },
+          {
+            "sample_id": "estg_000123",
+            "utf8_bytes": 17494,
+            "est_input_tokens": 5832
+          },
+          {
+            "sample_id": "estg_000124",
+            "utf8_bytes": 17432,
+            "est_input_tokens": 5811
+          },
+          {
+            "sample_id": "estg_000125",
+            "utf8_bytes": 17413,
+            "est_input_tokens": 5805
+          },
+          {
+            "sample_id": "estg_000127",
+            "utf8_bytes": 17575,
+            "est_input_tokens": 5859
+          },
+          {
+            "sample_id": "estg_000128",
+            "utf8_bytes": 17570,
+            "est_input_tokens": 5857
+          },
+          {
+            "sample_id": "estg_000130",
+            "utf8_bytes": 17388,
+            "est_input_tokens": 5796
+          },
+          {
+            "sample_id": "estg_000131",
+            "utf8_bytes": 17526,
+            "est_input_tokens": 5842
+          },
+          {
+            "sample_id": "estg_000133",
+            "utf8_bytes": 17465,
+            "est_input_tokens": 5822
+          },
+          {
+            "sample_id": "estg_000134",
+            "utf8_bytes": 17413,
+            "est_input_tokens": 5805
+          },
+          {
+            "sample_id": "estg_000135",
+            "utf8_bytes": 17568,
+            "est_input_tokens": 5856
+          },
+          {
+            "sample_id": "estg_000136",
+            "utf8_bytes": 17431,
+            "est_input_tokens": 5811
+          },
+          {
+            "sample_id": "estg_000139",
+            "utf8_bytes": 17447,
+            "est_input_tokens": 5816
+          },
+          {
+            "sample_id": "estg_000143",
+            "utf8_bytes": 17532,
+            "est_input_tokens": 5844
+          },
+          {
+            "sample_id": "estg_000145",
+            "utf8_bytes": 17471,
+            "est_input_tokens": 5824
+          },
+          {
+            "sample_id": "estg_000146",
+            "utf8_bytes": 17457,
+            "est_input_tokens": 5819
+          },
+          {
+            "sample_id": "estg_000148",
+            "utf8_bytes": 17430,
+            "est_input_tokens": 5810
+          },
+          {
+            "sample_id": "estg_000161",
+            "utf8_bytes": 18449,
+            "est_input_tokens": 6150
+          },
+          {
+            "sample_id": "estg_000164",
+            "utf8_bytes": 18089,
+            "est_input_tokens": 6030
+          },
+          {
+            "sample_id": "estg_000173",
+            "utf8_bytes": 17647,
+            "est_input_tokens": 5883
+          },
+          {
+            "sample_id": "estg_000183",
+            "utf8_bytes": 17638,
+            "est_input_tokens": 5880
+          },
+          {
+            "sample_id": "estg_000195",
+            "utf8_bytes": 17527,
+            "est_input_tokens": 5843
+          },
+          {
+            "sample_id": "estg_000206",
+            "utf8_bytes": 17934,
+            "est_input_tokens": 5978
+          },
+          {
+            "sample_id": "estg_000207",
+            "utf8_bytes": 17654,
+            "est_input_tokens": 5885
+          },
+          {
+            "sample_id": "estg_000208",
+            "utf8_bytes": 18441,
+            "est_input_tokens": 6147
+          },
+          {
+            "sample_id": "estg_000209",
+            "utf8_bytes": 17938,
+            "est_input_tokens": 5980
+          },
+          {
+            "sample_id": "estg_000210",
+            "utf8_bytes": 17986,
+            "est_input_tokens": 5996
+          },
+          {
+            "sample_id": "estg_000214",
+            "utf8_bytes": 17519,
+            "est_input_tokens": 5840
+          },
+          {
+            "sample_id": "estg_000218",
+            "utf8_bytes": 17700,
+            "est_input_tokens": 5900
+          },
+          {
+            "sample_id": "estg_000220",
+            "utf8_bytes": 17713,
+            "est_input_tokens": 5905
+          },
+          {
+            "sample_id": "estg_000222",
+            "utf8_bytes": 17530,
+            "est_input_tokens": 5844
+          },
+          {
+            "sample_id": "estg_000223",
+            "utf8_bytes": 17620,
+            "est_input_tokens": 5874
+          },
+          {
+            "sample_id": "estg_000230",
+            "utf8_bytes": 17425,
+            "est_input_tokens": 5809
+          },
+          {
+            "sample_id": "estg_000231",
+            "utf8_bytes": 17366,
+            "est_input_tokens": 5789
+          },
+          {
+            "sample_id": "estg_000232",
+            "utf8_bytes": 17586,
+            "est_input_tokens": 5862
+          },
+          {
+            "sample_id": "estg_000245",
+            "utf8_bytes": 17431,
+            "est_input_tokens": 5811
+          },
+          {
+            "sample_id": "estg_000247",
+            "utf8_bytes": 17458,
+            "est_input_tokens": 5820
+          },
+          {
+            "sample_id": "estg_000271",
+            "utf8_bytes": 17664,
+            "est_input_tokens": 5888
+          },
+          {
+            "sample_id": "estg_000273",
+            "utf8_bytes": 18085,
+            "est_input_tokens": 6029
+          },
+          {
+            "sample_id": "estg_000277",
+            "utf8_bytes": 18330,
+            "est_input_tokens": 6110
+          },
+          {
+            "sample_id": "estg_000283",
+            "utf8_bytes": 17648,
+            "est_input_tokens": 5883
+          },
+          {
+            "sample_id": "estg_000285",
+            "utf8_bytes": 17639,
+            "est_input_tokens": 5880
+          },
+          {
+            "sample_id": "estg_000286",
+            "utf8_bytes": 18070,
+            "est_input_tokens": 6024
+          },
+          {
+            "sample_id": "estg_000293",
+            "utf8_bytes": 17883,
+            "est_input_tokens": 5961
+          },
+          {
+            "sample_id": "estg_000302",
+            "utf8_bytes": 17420,
+            "est_input_tokens": 5807
+          },
+          {
+            "sample_id": "estg_000306",
+            "utf8_bytes": 18089,
+            "est_input_tokens": 6030
+          },
+          {
+            "sample_id": "estg_000308",
+            "utf8_bytes": 17410,
+            "est_input_tokens": 5804
+          },
+          {
+            "sample_id": "estg_000313",
+            "utf8_bytes": 17462,
+            "est_input_tokens": 5821
+          },
+          {
+            "sample_id": "estg_000326",
+            "utf8_bytes": 17392,
+            "est_input_tokens": 5798
+          },
+          {
+            "sample_id": "estg_000347",
+            "utf8_bytes": 17423,
+            "est_input_tokens": 5808
+          },
+          {
+            "sample_id": "estg_000366",
+            "utf8_bytes": 17803,
+            "est_input_tokens": 5935
+          },
+          {
+            "sample_id": "estg_000375",
+            "utf8_bytes": 17371,
+            "est_input_tokens": 5791
+          },
+          {
+            "sample_id": "estg_000393",
+            "utf8_bytes": 17804,
+            "est_input_tokens": 5935
+          },
+          {
+            "sample_id": "estg_000396",
+            "utf8_bytes": 17425,
+            "est_input_tokens": 5809
+          },
+          {
+            "sample_id": "estg_000399",
+            "utf8_bytes": 17790,
+            "est_input_tokens": 5930
+          },
+          {
+            "sample_id": "estg_000414",
+            "utf8_bytes": 17587,
+            "est_input_tokens": 5863
+          },
+          {
+            "sample_id": "estg_000417",
+            "utf8_bytes": 17502,
+            "est_input_tokens": 5834
+          },
+          {
+            "sample_id": "estg_000433",
+            "utf8_bytes": 17465,
+            "est_input_tokens": 5822
+          },
+          {
+            "sample_id": "estg_000452",
+            "utf8_bytes": 17517,
+            "est_input_tokens": 5839
+          },
+          {
+            "sample_id": "estg_000457",
+            "utf8_bytes": 17609,
+            "est_input_tokens": 5870
+          },
+          {
+            "sample_id": "estg_000458",
+            "utf8_bytes": 17374,
+            "est_input_tokens": 5792
+          },
+          {
+            "sample_id": "estg_000465",
+            "utf8_bytes": 17481,
+            "est_input_tokens": 5827
+          },
+          {
+            "sample_id": "estg_000504",
+            "utf8_bytes": 17584,
+            "est_input_tokens": 5862
+          },
+          {
+            "sample_id": "estg_000505",
+            "utf8_bytes": 17488,
+            "est_input_tokens": 5830
+          },
+          {
+            "sample_id": "estg_000507",
+            "utf8_bytes": 18104,
+            "est_input_tokens": 6035
+          },
+          {
+            "sample_id": "estg_000509",
+            "utf8_bytes": 17475,
+            "est_input_tokens": 5825
+          },
+          {
+            "sample_id": "estg_000522",
+            "utf8_bytes": 17791,
+            "est_input_tokens": 5931
+          },
+          {
+            "sample_id": "estg_000525",
+            "utf8_bytes": 17759,
+            "est_input_tokens": 5920
+          },
+          {
+            "sample_id": "estg_000539",
+            "utf8_bytes": 17921,
+            "est_input_tokens": 5974
+          },
+          {
+            "sample_id": "estg_000546",
+            "utf8_bytes": 17413,
+            "est_input_tokens": 5805
+          },
+          {
+            "sample_id": "estg_000555",
+            "utf8_bytes": 17471,
+            "est_input_tokens": 5824
+          },
+          {
+            "sample_id": "estg_000560",
+            "utf8_bytes": 17453,
+            "est_input_tokens": 5818
+          },
+          {
+            "sample_id": "estg_000569",
+            "utf8_bytes": 17581,
+            "est_input_tokens": 5861
+          },
+          {
+            "sample_id": "estg_000572",
+            "utf8_bytes": 17470,
+            "est_input_tokens": 5824
+          },
+          {
+            "sample_id": "estg_000578",
+            "utf8_bytes": 17599,
+            "est_input_tokens": 5867
+          },
+          {
+            "sample_id": "estg_000599",
+            "utf8_bytes": 17530,
+            "est_input_tokens": 5844
+          },
+          {
+            "sample_id": "estg_000601",
+            "utf8_bytes": 17443,
+            "est_input_tokens": 5815
+          },
+          {
+            "sample_id": "estg_000635",
+            "utf8_bytes": 17569,
+            "est_input_tokens": 5857
+          },
+          {
+            "sample_id": "estg_000659",
+            "utf8_bytes": 17448,
+            "est_input_tokens": 5816
+          },
+          {
+            "sample_id": "estg_000664",
+            "utf8_bytes": 17599,
+            "est_input_tokens": 5867
+          },
+          {
+            "sample_id": "estg_000704",
+            "utf8_bytes": 17425,
+            "est_input_tokens": 5809
+          },
+          {
+            "sample_id": "estg_000713",
+            "utf8_bytes": 17543,
+            "est_input_tokens": 5848
+          },
+          {
+            "sample_id": "estg_000716",
+            "utf8_bytes": 17721,
+            "est_input_tokens": 5907
+          },
+          {
+            "sample_id": "estg_000720",
+            "utf8_bytes": 17474,
+            "est_input_tokens": 5825
+          },
+          {
+            "sample_id": "estg_000773",
+            "utf8_bytes": 17569,
+            "est_input_tokens": 5857
+          },
+          {
+            "sample_id": "estg_000776",
+            "utf8_bytes": 17450,
+            "est_input_tokens": 5817
+          },
+          {
+            "sample_id": "estg_000785",
+            "utf8_bytes": 17609,
+            "est_input_tokens": 5870
+          },
+          {
+            "sample_id": "estg_000786",
+            "utf8_bytes": 17811,
+            "est_input_tokens": 5937
+          },
+          {
+            "sample_id": "estg_000800",
+            "utf8_bytes": 18197,
+            "est_input_tokens": 6066
+          },
+          {
+            "sample_id": "estg_000812",
+            "utf8_bytes": 17491,
+            "est_input_tokens": 5831
+          },
+          {
+            "sample_id": "estg_000816",
+            "utf8_bytes": 17592,
+            "est_input_tokens": 5864
+          },
+          {
+            "sample_id": "estg_000854",
+            "utf8_bytes": 17728,
+            "est_input_tokens": 5910
+          },
+          {
+            "sample_id": "estg_000861",
+            "utf8_bytes": 17421,
+            "est_input_tokens": 5807
+          }
+        ],
+        "bytes": 2640284,
+        "est_tokens": 880149
       },
-      "D-no-fewshot": {
+      "D-no-fewshot-0813": {
         "calls": 150,
         "requests": [
           {
@@ -768,7 +1519,7 @@
         "bytes": 1071134,
         "est_tokens": 357099
       },
-      "D-minimal": {
+      "D-minimal-0813": {
         "calls": 150,
         "requests": [
           {
@@ -1525,7 +2276,7 @@
         "bytes": 202634,
         "est_tokens": 67599
       },
-      "D-barrientos-style": {
+      "D-barrientos-style-0813": {
         "calls": 150,
         "requests": [
           {
@@ -5004,22 +5755,35 @@
         "est_tokens": 457315
       }
     },
-    "grand_total_bytes": 7733257,
-    "grand_total_est_input_tokens": 2578113
+    "grand_total_bytes": 10373541,
+    "grand_total_est_input_tokens": 3458262
   },
   "budget": {
-    "planned_calls": 990,
-    "input_token_cap": 3867170,
-    "output_token_cap": 4055040,
-    "usd_cost_cap": 25.396,
+    "planned_calls": 1140,
+    "input_token_cap": 5187393,
+    "output_token_cap": 4669440,
+    "usd_cost_cap": 30.407,
     "price_snapshot": {
-      "schema_version": "s2_12_price_snapshot@1.0.0",
+      "schema_version": "barrientos_de_price@1.0.0",
+      "version": "deepseek_v4_peak_off_peak@2026-08-17",
       "currency": "USD",
+      "mode_used_for_cap": "peak",
       "input_cache_miss_per_million": 1.32,
-      "output_per_million": 3.96
+      "output_per_million": 3.96,
+      "peak": {
+        "input_cache_miss_per_million": 1.32,
+        "output_per_million": 3.96
+      },
+      "off_peak": {
+        "input_cache_miss_per_million": 0.66,
+        "output_per_million": 1.98
+      },
+      "source_url": "https://pandaily.com/deepseek-v4-peak-off-peak-pricing-effective-august-17-up-to-1100-percent-aug2026",
+      "verified_at_utc": "2026-08-27T00:00:00Z",
+      "note": "DeepSeek V4 series peak/off-peak pricing effective 2026-08-17; PEAK price is used for the fail-closed USD cap (conservative); actual runs should prefer off-peak hours; the old 990-contract snapshot is NOT reused without this documentation"
     },
-    "input_estimate_note": "estimated input tokens=2578113 over 990 rendered requests (ceil(utf8_bytes/3), conservative over-estimate); input cap = x1.5; output cap = 990*4096; USD cap = (input_cap*1.32/1M + output_cap*3.96/1M)*1.2 rounded up; not a guess, derived from rendered requests",
-    "computed_at_utc": "2026-08-27T19:34:36Z"
+    "input_estimate_note": "estimated input tokens=3458262 over 1140 rendered requests (ceil(utf8_bytes/3), conservative over-estimate); input cap = x1.5; output cap = 1140*4096; USD cap = (input_cap*1.32/1M + output_cap*3.96/1M)*1.2 (PEAK price) rounded up; not a guess, derived from rendered requests",
+    "computed_at_utc": "2026-08-27T23:32:21Z"
   },
-  "note": "all request bodies rendered offline with the exact executor prompt rendering; zero network; zero API"
+  "note": "all request bodies rendered offline with the exact executor prompt rendering; zero network; zero API; 1140 calls = D 600 + E 540 under DeepSeek-V4-Pro-0813"
 }

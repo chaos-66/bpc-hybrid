@@ -1,33 +1,33 @@
 {
   "schema_version": "barrientos_de_execution_contract@1.0.0",
   "suite_id": "S2-BARRIENTOS-DE-001",
-  "bound_commit": "2f3ff93c0920d4df682743ac77af26596c429bfd",
+  "bound_commit": "cf51ecfaaa3675135cb09e52323f00cdd69c11dd",
   "execution_plan": {
-    "total_calls": 990,
+    "total_calls": 1140,
     "arms": [
       {
-        "arm": "D-full",
-        "repeat_id": "repeat-01",
-        "sample_count": 150,
-        "calls": 0,
-        "reused": true
-      },
-      {
-        "arm": "D-no-fewshot",
+        "arm": "D-full-0813",
         "repeat_id": "repeat-01",
         "sample_count": 150,
         "calls": 150,
         "reused": false
       },
       {
-        "arm": "D-minimal",
+        "arm": "D-no-fewshot-0813",
         "repeat_id": "repeat-01",
         "sample_count": 150,
         "calls": 150,
         "reused": false
       },
       {
-        "arm": "D-barrientos-style",
+        "arm": "D-minimal-0813",
+        "repeat_id": "repeat-01",
+        "sample_count": 150,
+        "calls": 150,
+        "reused": false
+      },
+      {
+        "arm": "D-barrientos-style-0813",
         "repeat_id": "repeat-01",
         "sample_count": 150,
         "calls": 150,
@@ -142,7 +142,15 @@
   },
   "model": {
     "id": "deepseek-v4-pro",
-    "provider": "openai_compatible"
+    "provider": "openai_compatible",
+    "documented_mapping": {
+      "release": "DeepSeek-V4-Pro-0813",
+      "historical_release": "DeepSeek-V4-Pro Preview",
+      "historical_execution_date": "2026-08-06",
+      "source_url": "https://llm-stats.com/blog/research/deepseek-v4-pro-0813-launch",
+      "verified_at_utc": "2026-08-27T00:00:00Z",
+      "note": "requested alias deepseek-v4-pro maps to the official DeepSeek-V4-Pro-0813 release since 2026-08-13; no immutable dated endpoint is claimed; the old Preview D-full (2026-08-06) is a historical result, never an ablation baseline"
+    }
   },
   "sampling": {
     "temperature": 0.0,
@@ -157,31 +165,44 @@
   "hashes": {
     "estg_input_v2": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
     "e_contract_v2": "43aeeac51c49f5e93cefddde6fd9a4090d0fe5d00971d08a7f2d35e4a83a7c43",
-    "executor": "cae913ee9c4782dbda623e17b05d2f13f7a819524f65d815a9f78005cde0be6b",
+    "executor": "321d218a650f5d55c306f11cdd017be88eb2bca4af95e97b62bf6bdc2eb69122",
     "config": "a5956cdb247761f1ac3074a2870991a60d93ba948698564fde24792a627248b9",
     "prompts": {
-      "D-full": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
-      "D-no-fewshot": "86ed137bb02a65b4d20b83afc948fee2b755efff4525bc6c005f9d2e2f4b657a",
-      "D-minimal": "95027fe293a42e44a59b18bb4a8efaed032d91b010c42c9705270a1dcc33ed4f",
-      "D-barrientos-style": "09bb61e2b7c9b2ea60c36f65e67f08cadf860f05295a29021f4f26814b97d9c4",
+      "D-full-0813": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "D-no-fewshot-0813": "86ed137bb02a65b4d20b83afc948fee2b755efff4525bc6c005f9d2e2f4b657a",
+      "D-minimal-0813": "95027fe293a42e44a59b18bb4a8efaed032d91b010c42c9705270a1dcc33ed4f",
+      "D-barrientos-style-0813": "09bb61e2b7c9b2ea60c36f65e67f08cadf860f05295a29021f4f26814b97d9c4",
       "BARR-FULL": "49af69cc8ff6063db97fbdeab74cd4c7f0506d1bae7d86233971749f3ad4738a",
       "OURS-FULL": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
       "OURS-BARRIENTOS-MODULE": "09bb61e2b7c9b2ea60c36f65e67f08cadf860f05295a29021f4f26814b97d9c4"
     }
   },
   "budget": {
-    "planned_calls": 990,
-    "input_token_cap": 3867170,
-    "output_token_cap": 4055040,
-    "usd_cost_cap": 25.396,
+    "planned_calls": 1140,
+    "input_token_cap": 5187393,
+    "output_token_cap": 4669440,
+    "usd_cost_cap": 30.407,
     "price_snapshot": {
-      "schema_version": "s2_12_price_snapshot@1.0.0",
+      "schema_version": "barrientos_de_price@1.0.0",
+      "version": "deepseek_v4_peak_off_peak@2026-08-17",
       "currency": "USD",
+      "mode_used_for_cap": "peak",
       "input_cache_miss_per_million": 1.32,
-      "output_per_million": 3.96
+      "output_per_million": 3.96,
+      "peak": {
+        "input_cache_miss_per_million": 1.32,
+        "output_per_million": 3.96
+      },
+      "off_peak": {
+        "input_cache_miss_per_million": 0.66,
+        "output_per_million": 1.98
+      },
+      "source_url": "https://pandaily.com/deepseek-v4-peak-off-peak-pricing-effective-august-17-up-to-1100-percent-aug2026",
+      "verified_at_utc": "2026-08-27T00:00:00Z",
+      "note": "DeepSeek V4 series peak/off-peak pricing effective 2026-08-17; PEAK price is used for the fail-closed USD cap (conservative); actual runs should prefer off-peak hours; the old 990-contract snapshot is NOT reused without this documentation"
     },
-    "input_estimate_note": "estimated input tokens=2578113 over 990 rendered requests (ceil(utf8_bytes/3), conservative over-estimate); input cap = x1.5; output cap = 990*4096; USD cap = (input_cap*1.32/1M + output_cap*3.96/1M)*1.2 rounded up; not a guess, derived from rendered requests",
-    "computed_at_utc": "2026-08-27T19:34:36Z"
+    "input_estimate_note": "estimated input tokens=3458262 over 1140 rendered requests (ceil(utf8_bytes/3), conservative over-estimate); input cap = x1.5; output cap = 1140*4096; USD cap = (input_cap*1.32/1M + output_cap*3.96/1M)*1.2 (PEAK price) rounded up; not a guess, derived from rendered requests",
+    "computed_at_utc": "2026-08-27T23:32:21Z"
   },
   "authorization": null,
   "gold_isolation": {

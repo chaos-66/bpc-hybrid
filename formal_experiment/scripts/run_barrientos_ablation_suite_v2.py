@@ -12,14 +12,16 @@ Modes:
 * ``--execute-de``       : real-model execution of the D and E arms.  Requires
                            ``--contract-file`` (the dedicated D/E execution
                            contract v1, NOT the S2.12 authorization schema).
-                           The contract binds the fixed 990-call plan, model/
-                           sampling pins, hashes and hard input/output-token +
-                           USD caps; a budget gate is checked before every
-                           send and aborts fail-closed at any cap or on
-                           missing usage.  Records raw responses, canonical
-                           predictions, evaluation, manifest, hashes, runtime,
-                           usage, cost and failed samples per arm.  NEVER runs
-                           without an authorized contract.
+                           The contract binds the fixed 1140-call plan
+                           (D four arms x 150 + E three arms x 36 x 5 under
+                           the SAME ``DeepSeek-V4-Pro-0813`` release window),
+                           model/sampling pins, hashes and hard
+                           input/output-token + USD caps; a budget gate is
+                           checked before every send and aborts fail-closed at
+                           any cap or on missing usage.  Records raw responses,
+                           canonical predictions, evaluation, manifest,
+                           hashes, runtime, usage, cost and failed samples per
+                           arm.  NEVER runs without an authorized contract.
 
 v2 fixes vs v1:
 * A conditions renamed to full_locked / schema_only_approx / raw_approx and
@@ -59,14 +61,32 @@ OUT_DIR = ROOT / "outputs/development/barrientos_ablation_suite_v2"
 REPORT_DIR = ROOT / "outputs/reports"
 B_RESULTS = ROOT / "outputs/development/b0_module_removal_ablation_v1/results.json"
 
-D_ARMS = ("D-full", "D-no-fewshot", "D-minimal", "D-barrientos-style")
-D_MAIN_ARMS = ("D-no-fewshot", "D-minimal", "D-barrientos-style")
+# D prompt arms — ALL run under the SAME model release window
+# (requested alias ``deepseek-v4-pro`` -> documented release
+# ``DeepSeek-V4-Pro-0813``; the old 2026-08-06 Preview D-full is a
+# historical result and is NEVER used as an ablation baseline).
+D_ARMS = ("D-full-0813", "D-no-fewshot-0813", "D-minimal-0813",
+          "D-barrientos-style-0813")
+D_BASELINE_ARM = "D-full-0813"
+D_MAIN_ARMS = ("D-no-fewshot-0813", "D-minimal-0813",
+               "D-barrientos-style-0813")
 # 36-requirement protocol arms (Barrientos Step-1 faithful + ours on the SAME
 # 36 inputs, 5 independent runs each per the published protocol).
 S36_ARMS = ("BARR-FULL", "BARR-NO-PATTERN", "OURS-FULL",
             "OURS-BARRIENTOS-MODULE")
 S36_PAPER_ARMS = ("BARR-FULL", "OURS-FULL", "OURS-BARRIENTOS-MODULE")
 S36_OPTIONAL_ABLATION_ARMS = ("BARR-NO-PATTERN",)  # artifact-supported only
+
+# model-version drift facts (documented, verified 2026-08-19/20)
+MODEL_ALIAS = "deepseek-v4-pro"
+MODEL_RELEASE_0813 = "DeepSeek-V4-Pro-0813"
+MODEL_RELEASE_PREVIEW = "DeepSeek-V4-Pro Preview"
+MODEL_RELEASE_SOURCE_URL = (
+    "https://llm-stats.com/blog/research/deepseek-v4-pro-0813-launch")
+MODEL_MAPPING_VERIFIED_UTC = "2026-08-27T00:00:00Z"
+OLD_D_FULL_DATE = "2026-08-06"
+OLD_D_FULL_ROLE = ("historical Stage 2 formal result; NOT a baseline for "
+                   "V4-Pro-0813 prompt ablation")
 
 
 def _sha256_file(path: Path) -> str:
@@ -164,6 +184,19 @@ def _run_de() -> dict[str, Any]:
     return {
         "experiment": "D_E_real_model_arms",
         "status": "ready_to_execute_not_executed",
+        "model_consistency": {
+            "requested_alias": MODEL_ALIAS,
+            "documented_release": MODEL_RELEASE_0813,
+            "historical_release": MODEL_RELEASE_PREVIEW,
+            "old_d_full_date": OLD_D_FULL_DATE,
+            "old_d_full_role": OLD_D_FULL_ROLE,
+            "mapping_source_url": MODEL_RELEASE_SOURCE_URL,
+            "mapping_verified_at_utc": MODEL_MAPPING_VERIFIED_UTC,
+            "note": ("all D and E arms must run in the SAME "
+                     f"{MODEL_RELEASE_0813} window; the old "
+                     f"{MODEL_RELEASE_PREVIEW} D-full is NEVER an ablation "
+                     "baseline"),
+        },
         "blocker": (
             "real model API calls require explicit user authorization via "
             "the dedicated D/E execution contract v1 (NOT the S2.12 "
@@ -171,26 +204,31 @@ def _run_de() -> dict[str, Any]:
             "them. Executor verification status: the D/E runner (one send "
             "per sample/repeat, raw+canonical same response hash, failed "
             "samples kept in the denominator, per-repeat evaluation.json, "
-            "D-full reuse 0 calls, plan-derived call count 990, contract "
-            "budget gate checked before every send) is verified end-to-end "
-            "with a fake transport against the REAL per-arm evaluators "
-            "(BARR native, OURS stratified, D literal-overlap)."
+            "plan-derived call count 1140 = D 600 + E 540, contract budget "
+            "gate checked before every send) is verified end-to-end with a "
+            "fake transport against the REAL per-arm evaluators (BARR "
+            "native, OURS stratified, D literal-overlap)."
         ),
         "D_arms": {
-            "D-full": {"status": "reuse_locked_formal_result"},
-            "D-no-fewshot": {"status": "ready_to_execute"},
-            "D-minimal": {"status": "ready_to_execute"},
-            "D-barrientos-style": {"status": "ready_to_execute"},
+            "D-full-0813": {"status": "ready_to_execute",
+                            "protocol": "v6 prompt under DeepSeek-V4-Pro-0813",
+                            "calls": 150},
+            "D-no-fewshot-0813": {"status": "ready_to_execute", "calls": 150},
+            "D-minimal-0813": {"status": "ready_to_execute", "calls": 150},
+            "D-barrientos-style-0813": {"status": "ready_to_execute",
+                                        "calls": 150},
+            "note": "the 2026-08-06 Preview D-full is kept as a historical "
+                    "result and is NOT part of the 0813 D ablation",
         },
         "E_arms": {
             "BARR-FULL": {"status": "ready_to_execute",
                           "protocol": "Barrientos published Step-1 "
                                       "(original prompt/schema/44-patterns, "
                                       "36x5)"},
-            "BARR-NO-PATTERN": {"status": "optional_not_in_fixed_990_plan",
+            "BARR-NO-PATTERN": {"status": "optional_not_in_fixed_1140_plan",
                                 "protocol": "artifact-supported ablation "
                                             "(NOT a paper-table arm); "
-                                            "excluded from the fixed 990 "
+                                            "excluded from the fixed 1140 "
                                             "contract plan by user decision",
                                 "optional": True},
             "OURS-FULL": {"status": "ready_to_execute",
@@ -217,8 +255,11 @@ def _run_de() -> dict[str, Any]:
         },
         "execution_contract_v1": {
             "path": "configs/ablations/barrientos_de_execution_contract_v1.json",
-            "total_calls": 990,
-            "note": "dedicated D/E contract; binds commit, plan, model, "
+            "total_calls": 1140,
+            "d_calls": 600,
+            "e_calls": 540,
+            "note": "dedicated D/E contract; binds commit, plan, model "
+                    "mapping (deepseek-v4-pro -> DeepSeek-V4-Pro-0813), "
                     "sampling, hashes and input/output-token + USD caps; "
                     "BARR-NO-PATTERN excluded",
         },
@@ -226,9 +267,9 @@ def _run_de() -> dict[str, Any]:
             "python formal_experiment/scripts/run_barrientos_ablation_suite_v2.py "
             "--execute-de --contract-file formal_experiment/configs/ablations/"
             "barrientos_de_execution_contract_v1.json "
-            "(run from the repository root; 990 calls; requires an "
-            "authorized contract; BARR-NO-PATTERN is NOT part of the fixed "
-            "plan)"
+            "(run from the repository root; 1140 calls = D 600 + E 540; "
+            "requires an authorized contract; BARR-NO-PATTERN is NOT part "
+            "of the fixed plan)"
         ),
     }
 
@@ -332,10 +373,10 @@ def _rel(path: Path) -> str:
 
 def _prompt_for(arm: str) -> Path:
     prompts = {
-        "D-full": ROOT / "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
-        "D-no-fewshot": ROOT / "prompts/sun_compat/ablation_v1/direct_llm_no_fewshot_prompt_v1.md",
-        "D-minimal": ROOT / "prompts/sun_compat/ablation_v1/direct_llm_minimal_prompt_prompt_v1.md",
-        "D-barrientos-style": ROOT / "prompts/sun_compat/ablation_v1/direct_llm_barrientos_style_prompt_v1.md",
+        "D-full-0813": ROOT / "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
+        "D-no-fewshot-0813": ROOT / "prompts/sun_compat/ablation_v1/direct_llm_no_fewshot_prompt_v1.md",
+        "D-minimal-0813": ROOT / "prompts/sun_compat/ablation_v1/direct_llm_minimal_prompt_prompt_v1.md",
+        "D-barrientos-style-0813": ROOT / "prompts/sun_compat/ablation_v1/direct_llm_barrientos_style_prompt_v1.md",
         "OURS-FULL": ROOT / "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
         "OURS-BARRIENTOS-MODULE": ROOT / "prompts/sun_compat/ablation_v1/direct_llm_barrientos_style_prompt_v1.md",
         "BARR-FULL": ROOT.parent / "references/barrientos_2026/artifact_input/prompts/formalize_requirements_prompt.txt",
@@ -446,19 +487,19 @@ def _render_prompt(arm: str, sid: str, text: str,
       ``load_prompt`` = ``f.read().strip()``); user = the JSON envelope
       ``{"ID": <record_id>, "version": <version>, "text": <text>}`` exactly
       as the artifact's ``process_formalization`` builds ``user_input``.
-    * D-full / OURS-FULL: the locked D1 recipe (``run_direct_llm.py``):
+    * D-full-0813 / OURS-FULL: the locked D1 recipe (``run_direct_llm.py``):
       system = prompt's ``## System Prompt`` section; user = ``## User
       Prompt Template`` rendered with sample_id/source_id/source_text and the
       raw ``## Examples`` few-shot block.
-    * D-no-fewshot: same recipe on the no-fewshot prompt (no Examples
+    * D-no-fewshot-0813: same recipe on the no-fewshot prompt (no Examples
       section -> empty few-shot block; field definitions unchanged).
-    * D-minimal: task + JSON structure only (the ``## System Prompt`` and
-      ``## Output JSON Structure`` blocks); user = the raw requirement text
-      (most minimal input surface).
-    * D-barrientos-style / OURS-BARRIENTOS-MODULE: the discipline preamble
-      AND the v6 field definitions (both ``## System Prompt*`` blocks) as
-      system; user = the v6 user template rendered with an empty few-shot
-      block.
+    * D-minimal-0813: task + JSON structure only (the ``## System Prompt``
+      and ``## Output JSON Structure`` blocks); user = the raw requirement
+      text (most minimal input surface).
+    * D-barrientos-style-0813 / OURS-BARRIENTOS-MODULE: the discipline
+      preamble AND the v6 field definitions (both ``## System Prompt*``
+      blocks) as system; user = the v6 user template rendered with an empty
+      few-shot block.
     """
     if arm in ("BARR-FULL", "BARR-NO-PATTERN"):
         system = _prompt_for(arm).read_text(encoding="utf-8").strip()
@@ -470,16 +511,16 @@ def _render_prompt(arm: str, sid: str, text: str,
         user = json.dumps({"ID": rid, "version": version, "text": text},
                           ensure_ascii=False)
         return system, user
-    if arm in ("D-full", "OURS-FULL", "D-no-fewshot"):
+    if arm in ("D-full-0813", "OURS-FULL", "D-no-fewshot-0813"):
         from bpc_hybrid.prompt_loader import load_prompt
         prompt = load_prompt(_prompt_name_for(arm))
-        few_shot = _few_shot_block(prompt) if arm in ("D-full", "OURS-FULL") \
-            else ""
+        few_shot = _few_shot_block(prompt) \
+            if arm in ("D-full-0813", "OURS-FULL") else ""
         user = prompt.user_prompt_template.format(
             sample_id=sid, source_id=sid, source_text=text,
             few_shot_block=few_shot)
         return prompt.system_prompt, user
-    if arm == "D-minimal":
+    if arm == "D-minimal-0813":
         from bpc_hybrid.prompt_loader import load_prompt
         raw = _prompt_for(arm).read_text(encoding="utf-8")
         blocks = _fenced_blocks(raw, "System Prompt") \
@@ -492,7 +533,7 @@ def _render_prompt(arm: str, sid: str, text: str,
             sample_id=sid, source_id=sid, source_text=text,
             few_shot_block="")
         return "\n\n".join(blocks), user
-    if arm in ("D-barrientos-style", "OURS-BARRIENTOS-MODULE"):
+    if arm in ("D-barrientos-style-0813", "OURS-BARRIENTOS-MODULE"):
         from bpc_hybrid.prompt_loader import load_prompt
         raw = _prompt_for(arm).read_text(encoding="utf-8")
         system = "\n\n".join(_fenced_blocks(raw, "System Prompt"))
@@ -506,11 +547,11 @@ def _render_prompt(arm: str, sid: str, text: str,
 
 def _prompt_name_for(arm: str) -> str:
     names = {
-        "D-full": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+        "D-full-0813": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
         "OURS-FULL": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
-        "D-no-fewshot": "ablation_v1/direct_llm_no_fewshot_prompt_v1",
-        "D-minimal": "ablation_v1/direct_llm_minimal_prompt_prompt_v1",
-        "D-barrientos-style": "ablation_v1/direct_llm_barrientos_style_prompt_v1",
+        "D-no-fewshot-0813": "ablation_v1/direct_llm_no_fewshot_prompt_v1",
+        "D-minimal-0813": "ablation_v1/direct_llm_minimal_prompt_prompt_v1",
+        "D-barrientos-style-0813": "ablation_v1/direct_llm_barrientos_style_prompt_v1",
         "OURS-BARRIENTOS-MODULE": "ablation_v1/direct_llm_barrientos_style_prompt_v1",
     }
     return names[arm]
@@ -555,8 +596,8 @@ def call_once(
     if budget_gate is not None:
         # projected input tokens of THIS rendered request (conservative
         # estimate, same bytes/3 rule as the contract budget builder) and
-        # the full per-call max output tokens; the 990th send is allowed,
-        # the 991st is rejected here BEFORE the transport.
+        # the full per-call max output tokens; the 1140th send is allowed,
+        # the 1141st is rejected here BEFORE the transport.
         import math
         est_input = math.ceil(len(body_bytes) / 3)
         budget_gate.check_before_send(
@@ -1002,15 +1043,24 @@ def build_execution_plan(stability_runs: int = 5,
                          include_no_pattern: bool = False) -> list[dict[str, Any]]:
     """Protocol-aligned execution plan (derived, never hand-counted).
 
-    * D prompt arms (EStG-150): D-full reused (0 calls); D-no-fewshot,
-      D-minimal, D-barrientos-style each 150 calls once (repeat-01).
+    MODEL-CONSISTENCY FIX (2026-08-27): the old D-full (2026-08-06,
+    ``deepseek-v4-pro`` -> DeepSeek-V4-Pro Preview) is a HISTORICAL result
+    and is NEVER reused as an ablation baseline.  All D arms now run under
+    the SAME model release window (``deepseek-v4-pro`` ->
+    ``DeepSeek-V4-Pro-0813``):
+
+    * D prompt arms (EStG-150, one run each):
+      D-full-0813 / D-no-fewshot-0813 / D-minimal-0813 /
+      D-barrientos-style-0813 -> 4 x 150 = 600 calls.
     * 36-requirement protocol arms (Barrientos published Step-1 protocol:
       36 inputs, 5 independent runs, temperature=0): each of
-      BARR-FULL / OURS-FULL / OURS-BARRIENTOS-MODULE runs 36 x 5.
+      BARR-FULL / OURS-FULL / OURS-BARRIENTOS-MODULE runs 36 x 5
+      -> 3 x 180 = 540 calls.
     * BARR-NO-PATTERN (artifact-supported ablation; NOT a paper-table arm)
-      only when ``include_no_pattern=True``: 36 x 5.
+      only when ``include_no_pattern=True``: 36 x 5 (excluded from the
+      fixed 1140 contract plan).
 
-    Totals: 990 (without BARR-NO-PATTERN) or 1170 (with).
+    Totals: 1140 (without BARR-NO-PATTERN) or 1320 (with).
     """
     if stability_runs not in STABILITY_CHOICES:
         raise ValueError(
@@ -1025,11 +1075,9 @@ def build_execution_plan(stability_runs: int = 5,
 
     plan: list[dict[str, Any]] = []
 
-    # D prompt arms (single run; no five-repeat)
-    plan.append({"arm": "D-full", "repeat_id": "repeat-01",
-                 "sample_count": d_samples, "reused": True,
-                 "expected_calls": 0})
-    for arm in D_MAIN_ARMS:
+    # D prompt arms (single run each; NO reuse — every arm is a real call
+    # under the 0813 release window)
+    for arm in D_ARMS:
         plan.append({"arm": arm, "repeat_id": "repeat-01",
                      "sample_count": d_samples, "reused": False,
                      "expected_calls": d_samples})
@@ -1351,13 +1399,15 @@ def validate_de_contract(contract_path: Path | None = None,
     """Full content validation of the dedicated D/E execution contract.
 
     Binds: schema_version, suite_id, bound_commit (ancestor of HEAD), fixed
-    990-call plan (arms/repeats/sample counts exactly matching
-    build_execution_plan(5) WITHOUT BARR-NO-PATTERN), model pin, sampling
-    (temperature=0, top_p=1, max_tokens=4096, retry=0), hash set
-    (estg input / e contract / executor / config / per-arm prompts), and
-    positive budget caps.  The FULL contract schema is validated (types,
-    const, enum, required, additionalProperties, arrays, nested objects)
-    via ``bpc_hybrid.de_contract_schema`` — ``jsonschema`` when installed,
+    1140-call plan (D four arms x 150 + E three arms x 36 x 5, exactly
+    matching build_execution_plan(5) WITHOUT BARR-NO-PATTERN), model pin
+    (requested alias ``deepseek-v4-pro`` -> documented release
+    ``DeepSeek-V4-Pro-0813``), sampling (temperature=0, top_p=1,
+    max_tokens=4096, retry=0), hash set (estg input / e contract /
+    executor / config / per-arm prompts), and positive budget caps.  The
+    FULL contract schema is validated (types, const, enum, required,
+    additionalProperties, arrays, nested objects) via
+    ``bpc_hybrid.de_contract_schema`` — ``jsonschema`` when installed,
     otherwise this repo's complete dependency-free validator; a contract
     that merely has the right top-level keys is REJECTED.
 
@@ -1366,7 +1416,7 @@ def validate_de_contract(contract_path: Path | None = None,
     SHA-256 must equal ``authorization_event_file_sha256``, the file must
     contain the authorization sentence whose UTF-8 SHA-256 equals
     ``authorization_sentence_utf8_sha256``, and the sentence must
-    explicitly name 990 calls, deepseek-v4-pro, temperature=0, retry=0 and
+    explicitly name 1140 calls, deepseek-v4-pro, temperature=0, retry=0 and
     the exact USD cap from the contract budget.  Any fabricated path,
     wrong hash, empty event, different call count or different budget is
     rejected before the first send.  ``allow_unauthorized`` is for
@@ -1410,10 +1460,10 @@ def validate_de_contract(contract_path: Path | None = None,
             f"contract bound to commit {bound[:12]} which is not an "
             f"ancestor of HEAD {_git_head()[:12]}")
 
-    # fixed 990-call plan, no BARR-NO-PATTERN
+    # fixed 1140-call plan, no BARR-NO-PATTERN
     plan = contract.get("execution_plan") or {}
-    if plan.get("total_calls") != 990:
-        raise ContractError(f"contract plan must total exactly 990, got "
+    if plan.get("total_calls") != 1140:
+        raise ContractError(f"contract plan must total exactly 1140, got "
                             f"{plan.get('total_calls')}")
     expected = build_execution_plan(5, include_no_pattern=False)
     expected_rows = [(r["arm"], r["repeat_id"], r["sample_count"],
@@ -1424,16 +1474,26 @@ def validate_de_contract(contract_path: Path | None = None,
                    for r in plan.get("arms", [])]
     if actual_rows != expected_rows:
         raise ContractError("contract plan rows do not match the fixed "
-                            "990-call protocol plan")
+                            "1140-call protocol plan")
     if any(r.get("arm") == "BARR-NO-PATTERN" for r in plan.get("arms", [])):
-        raise ContractError("BARR-NO-PATTERN is not part of the fixed 990 "
+        raise ContractError("BARR-NO-PATTERN is not part of the fixed 1140 "
                             "contract plan")
 
     # model + sampling pins
     model = contract.get("model") or {}
-    if model.get("id") != "deepseek-v4-pro" \
+    if model.get("id") != MODEL_ALIAS \
             or model.get("provider") != "openai_compatible":
         raise ContractError("contract model pin mismatch")
+    mapping = model.get("documented_mapping") or {}
+    if mapping.get("release") != MODEL_RELEASE_0813:
+        raise ContractError("contract documented model release must be "
+                            f"{MODEL_RELEASE_0813!r}")
+    if not mapping.get("source_url") or not mapping.get("verified_at_utc"):
+        raise ContractError("contract model mapping must record source URL "
+                            "and verification time")
+    if mapping.get("historical_release") != MODEL_RELEASE_PREVIEW:
+        raise ContractError("contract must record the historical Preview "
+                            "release for drift disclosure")
     sampling = contract.get("sampling") or {}
     if sampling.get("temperature") != 0.0 or sampling.get("top_p") != 1.0 \
             or sampling.get("max_tokens") != 4096 \
@@ -1464,14 +1524,22 @@ def validate_de_contract(contract_path: Path | None = None,
                 "usd_cost_cap"):
         if not isinstance(budget.get(cap), (int, float)) or budget[cap] <= 0:
             raise ContractError(f"contract budget {cap} must be positive")
-    if budget.get("planned_calls") != 990:
-        raise ContractError("contract budget planned_calls must be 990")
+    if budget.get("planned_calls") != 1140:
+        raise ContractError("contract budget planned_calls must be 1140")
     price = budget.get("price_snapshot") or {}
     if price.get("currency") != "USD" \
             or not isinstance(price.get("input_cache_miss_per_million"),
                               (int, float)) \
             or not isinstance(price.get("output_per_million"), (int, float)):
         raise ContractError("contract price snapshot invalid")
+    # fail-closed price must be the PEAK price (conservative) and the
+    # snapshot must document its version/source/verification time
+    if price.get("mode_used_for_cap") != "peak":
+        raise ContractError("fail-closed budget must use the PEAK price")
+    if not price.get("version") or not price.get("source_url") \
+            or not price.get("verified_at_utc"):
+        raise ContractError("price snapshot must record version, source URL "
+                            "and verification time")
 
     # gold isolation
     if contract.get("gold_isolation", {}).get(
@@ -1505,8 +1573,8 @@ def _verify_authorization_event(auth: Mapping[str, Any],
        sentence string;
     4. the sentence's UTF-8 SHA-256 equals
        ``authorization_sentence_utf8_sha256``;
-    5. the sentence explicitly names: 990 calls, deepseek-v4-pro,
-       temperature=0, retry=0 and the exact USD cap from the contract.
+    5. the sentence explicitly names: 1140 calls, deepseek-v4-pro,
+       DeepSeek-V4-Pro-0813, temperature=0, retry=0 and the exact USD cap from the contract.
     """
     for field in ("authorization_sentence_utf8_sha256",
                   "authorization_event_file",
@@ -1567,8 +1635,9 @@ def _verify_authorization_event(auth: Mapping[str, Any],
     usd_cap_str = f"{usd_cap:.3f}" if isinstance(usd_cap, (int, float)) \
         else str(usd_cap)
     required_tokens = {
-        "990 calls": "990",
-        "model deepseek-v4-pro": "deepseek-v4-pro",
+        "1140 calls": "1140",
+        "model deepseek-v4-pro": MODEL_ALIAS,
+        "release DeepSeek-V4-Pro-0813": MODEL_RELEASE_0813,
         "temperature=0": "temperature=0",
         "retry=0": "retry=0",
         f"USD cap {usd_cap_str}": usd_cap_str,
@@ -1590,22 +1659,22 @@ class DeBudgetGate:
       still within the contract: ``calls_made + 1 <= call_cap`` and that the
       conservative cost of the next request (its rendered input tokens plus
       the full per-call max output tokens) would not push the cumulative
-      input/output token or USD totals above the caps.  The 990th send is
-      therefore ALLOWED (989 + 1 = 990 <= 990).
+      input/output token or USD totals above the caps.  The 1140th send is
+      therefore ALLOWED (1139 + 1 = 1140 <= 1140).
     * ``record_after_response(usage, returned_model)`` runs AFTER the
       response.  It records actual usage and only treats the run as
       exceeded when a CUMULATIVE total is strictly greater than its cap
-      (equal to the cap is a legal completion — the 990th response must be
+      (equal to the cap is a legal completion — the 1140th response must be
       persisted).  Missing usage aborts (never treated as 0 cost).
       A transport error still counts as one call.
 
-    The 991st send is rejected inside ``check_before_send`` BEFORE any
+    The 1141st send is rejected inside ``check_before_send`` BEFORE any
     request reaches the transport.
     """
 
     def __init__(self, contract: Mapping[str, Any]):
         budget = contract.get("budget") or {}
-        self.call_cap = int(budget.get("planned_calls", 990))
+        self.call_cap = int(budget.get("planned_calls", 1140))
         self.input_token_cap = float(budget.get("input_token_cap", 0))
         self.output_token_cap = float(budget.get("output_token_cap", 0))
         self.usd_cost_cap = float(budget.get("usd_cost_cap", 0))
@@ -1704,7 +1773,7 @@ class DeBudgetGate:
 
         Called before ANY new send on a resume.  ``raw_rows`` are the
         persisted ``raw_responses.jsonl`` rows and ``ledger_rows`` the
-        persisted ``calls_ledger.jsonl`` rows for the WHOLE fixed 990 plan
+        persisted ``calls_ledger.jsonl`` rows for the WHOLE fixed 1140 plan
         (the gate is global; it is NEVER reset per arm/repeat).
 
         For every completed request:
@@ -2212,7 +2281,7 @@ def execute_de(contract_path: Path | None = None,
     """Plan-driven real execution (contract-gated; fake in tests).
 
     The contract (``barrientos_de_execution_contract_v1.json``) is the
-    single source of truth: fixed 990-call plan, model/sampling pins, hash
+    single source of truth: fixed 1140-call plan, model/sampling pins, hash
     set and hard budget caps.  The budget gate is checked before EVERY
     send; reaching a cap or receiving missing usage aborts the run before
     the next send (fail closed).
@@ -2255,10 +2324,10 @@ def execute_de(contract_path: Path | None = None,
 
     plan = build_execution_plan(5, include_no_pattern=False)
     samples_by_arm = {
-        "D-full": _estg_samples(),
-        "D-no-fewshot": _estg_samples(),
-        "D-minimal": _estg_samples(),
-        "D-barrientos-style": _estg_samples(),
+        "D-full-0813": _estg_samples(),
+        "D-no-fewshot-0813": _estg_samples(),
+        "D-minimal-0813": _estg_samples(),
+        "D-barrientos-style-0813": _estg_samples(),
         "OURS-FULL": _e_samples(),
         "BARR-FULL": _e_samples(),
         "OURS-BARRIENTOS-MODULE": _e_samples(),
@@ -2311,24 +2380,6 @@ def execute_de(contract_path: Path | None = None,
         for planned in plan:
             arm = planned["arm"]
             repeat_id = planned["repeat_id"]
-            if planned["reused"]:
-                # D-full: read the locked formal capsule; zero calls
-                capsule = _load_json(D_FULL_LOCKED, "D-full locked capsule")
-                results["runs"].append({
-                    "arm": arm, "repeat_id": repeat_id,
-                    "reused": True, "actual_call_count": 0,
-                    "sample_count": planned["sample_count"],
-                })
-                runs_by_arm.setdefault(arm, []).append({
-                    "arm": arm, "repeat_id": repeat_id, "reused": True,
-                    "pred_rows": [
-                        {"sample_id": r["sample_id"], "request_status": "ok",
-                         "record": r.get("record") or {}}
-                        for r in capsule.get("records", [])
-                    ],
-                    "raw_rows": [], "failed": [],
-                })
-                continue
             run_dir = OUT_DIR / arm / repeat_id
             transport = transport_factory()
             run = run_arm_once(
@@ -2393,13 +2444,13 @@ def execute_de(contract_path: Path | None = None,
     results["completed_samples"] = completed_samples
     results["in_doubt_samples"] = in_doubt_samples
     # total calls accounted = new sends this run + resumed completed
-    # (a resumed run that finishes the plan accounts for all 990 samples)
+    # (a resumed run that finishes the plan accounts for all 1140 samples)
     results["total_calls_accounted"] = completed_samples
     # completeness gate: exit 0 / "complete" ONLY when every planned sample
     # is accounted for as completed (new send OR resumed), no sample is
     # in_doubt, every plan repeat ran, artifacts exist and the gate never
     # aborted.  ``actual_calls`` is the number of NEW sends made by this
-    # invocation (== 990 for a fresh run; less for a resumed run whose
+    # invocation (== 1140 for a fresh run; less for a resumed run whose
     # remaining samples were sent).
     results["complete"] = (
         results.get("aborted") is not True
@@ -2512,26 +2563,21 @@ def fixture_run(tmp_out: Path, stability_runs: int = 5,
             return LLMResponse(content=content, provider="fake",
                                model="deepseek-v4-pro", finish_reason="stop")
 
-    plan = build_execution_plan(stability_runs, include_no_pattern=True)
-    # D-no-fewshot (repeat-01) runs on the REAL EStG-150 input; the
-    # 36-protocol arms run their full 5 repeats on the REAL contract items.
-    subset: list[dict[str, Any]] = []
-    for planned in plan:
-        arm = planned["arm"]
-        if planned["reused"]:
-            continue
-        if arm == "D-no-fewshot" and planned["repeat_id"] == "repeat-01":
-            subset.append({**planned, "sample_count": 150})
-        elif arm in ("BARR-FULL", "BARR-NO-PATTERN", "OURS-FULL",
-                     "OURS-BARRIENTOS-MODULE"):
-            subset.append({**planned, "sample_count": 36})
+    plan = build_execution_plan(stability_runs, include_no_pattern=False)
+    # the fake-transport fixture runs the FULL fixed 1140 plan: all four
+    # D arms (150 each) on the real EStG-150 input and the three 36-protocol
+    # arms on the real contract items (36 x 5 each).  BARR-NO-PATTERN is not
+    # part of the fixed plan and is not run here.
+    subset: list[dict[str, Any]] = list(plan)
 
     samples_by_arm = {
-        "D-no-fewshot": _estg_samples(),
+        "D-full-0813": _estg_samples(),
+        "D-no-fewshot-0813": _estg_samples(),
+        "D-minimal-0813": _estg_samples(),
+        "D-barrientos-style-0813": _estg_samples(),
         "OURS-FULL": _e_samples(),
         "OURS-BARRIENTOS-MODULE": _e_samples(),
         "BARR-FULL": _e_samples(),
-        "BARR-NO-PATTERN": _e_samples(),
     }
     cost_of = lambda u: 0.001  # noqa: E731
 
@@ -2600,7 +2646,8 @@ def main() -> int:
     parser.add_argument("--stability-runs", type=int, default=5,
                         choices=(5,),
                         help="protocol mandates 5 independent runs on the 36 "
-                             "requirements (990 calls; the fixed contract "
+                             "requirements (1140 calls = D 600 + E 540; the "
+                             "fixed contract "
                              "plan never includes BARR-NO-PATTERN)")
     args = parser.parse_args()
     try:

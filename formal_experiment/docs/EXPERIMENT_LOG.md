@@ -3899,3 +3899,16 @@
 - 仍存在 blocker：无
 - 备注：Stage-1 tamper-test file-lock flake (Windows Errno-22, OneDrive/AV touching frozen gold during long audits) recurred but is environmental: affected tests pass in isolation, frozen files restored byte-exactly to manifest-locked hashes (gold=f33aa857..., correction=6a9c055a...), final full audit exit 0. references/ untouched; 990 plan, three tables, prompts, Gold and evaluation methods unchanged; BARR-NO-PATTERN still excluded.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-28T00:27:21.538301+00:00 - 模型一致性批次：Barrientos D/E 套件从 990 调用迁移至固定 1140 调用计划（D 四臂 x150=600 + E 三臂 x36x5=540），全部绑定 deepseek-v4-pro -> DeepSeek-V4-Pro-0813 发布窗口；旧 Preview D-full 仅保留为模型漂移附录（预留未捏造），不作为消融基线；新增 Table D（0813 提示词消融，基线 D-full-0813）；授权语句/预算门/恢复持久化全部按 1140 更新（第 1140 次完成、第 1141 次发送前拒绝），预算采用峰值价格（输入 1.32/M、输出 3.96/M）失败关闭，USD 上限 30.407
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2736 passed, 24 skipped, 40 warnings in 2845.85s (0:47:25)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`cf51ecfaaa3675135cb09e52323f00cdd69c11dd`；相关未提交路径：16 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：新增/更新测试 29 个（函数级）；D-full-0813 为真实 150 调用臂（无复用）；模型映射记录请求别名 deepseek-v4-pro + 文档化发布 DeepSeek-V4-Pro-0813 + 来源 URL + 验证时间；旧 990 快照价格不重用（有文档）；BARR-NO-PATTERN 不在固定计划内（可选 1320）
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
