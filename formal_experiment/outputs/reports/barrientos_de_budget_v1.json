@@ -1,7 +1,7 @@
 {
   "schema_version": "barrientos_de_budget@2.0.0",
   "contract_path": "configs\\ablations\\barrientos_de_execution_contract_v1.json",
-  "contract_sha256": "788e289ea4322b71e4bc38eaaef82c5a4678e0574ec555549a286abbaef20d03",
+  "contract_sha256": "57f59993e4870f9a160dbf8ceadabfb7587ae1614b6565dd34a92adafb754311",
   "rendered_requests": {
     "plan_total_calls": 1140,
     "arms": {
@@ -5778,12 +5778,12 @@
         "input_cache_miss_per_million": 0.66,
         "output_per_million": 1.98
       },
-      "source_url": "https://pandaily.com/deepseek-v4-peak-off-peak-pricing-effective-august-17-up-to-1100-percent-aug2026",
-      "verified_at_utc": "2026-08-27T00:00:00Z",
+      "source_url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "verified_at_utc": "2026-08-29T02:19:45Z",
       "note": "DeepSeek V4 series peak/off-peak pricing effective 2026-08-17; PEAK price is used for the fail-closed USD cap (conservative); actual runs should prefer off-peak hours; the old 990-contract snapshot is NOT reused without this documentation"
     },
     "input_estimate_note": "estimated input tokens=3458262 over 1140 rendered requests (ceil(utf8_bytes/3), conservative over-estimate); input cap = x1.5; output cap = 1140*4096; USD cap = (input_cap*1.32/1M + output_cap*3.96/1M)*1.2 (PEAK price) rounded up; not a guess, derived from rendered requests",
-    "computed_at_utc": "2026-08-27T23:32:21Z"
+    "computed_at_utc": "2026-08-29T07:05:35Z"
   },
   "note": "all request bodies rendered offline with the exact executor prompt rendering; zero network; zero API; 1140 calls = D 600 + E 540 under DeepSeek-V4-Pro-0813"
 }

@@ -43,6 +43,7 @@ import json
 import re
 import sys
 import time
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -77,13 +78,14 @@ S36_ARMS = ("BARR-FULL", "BARR-NO-PATTERN", "OURS-FULL",
 S36_PAPER_ARMS = ("BARR-FULL", "OURS-FULL", "OURS-BARRIENTOS-MODULE")
 S36_OPTIONAL_ABLATION_ARMS = ("BARR-NO-PATTERN",)  # artifact-supported only
 
-# model-version drift facts (documented, verified 2026-08-19/20)
+# Model-version drift facts re-verified against DeepSeek's official API docs
+# immediately before the authorized run on 2026-08-29.
 MODEL_ALIAS = "deepseek-v4-pro"
 MODEL_RELEASE_0813 = "DeepSeek-V4-Pro-0813"
 MODEL_RELEASE_PREVIEW = "DeepSeek-V4-Pro Preview"
 MODEL_RELEASE_SOURCE_URL = (
-    "https://llm-stats.com/blog/research/deepseek-v4-pro-0813-launch")
-MODEL_MAPPING_VERIFIED_UTC = "2026-08-27T00:00:00Z"
+    "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/")
+MODEL_MAPPING_VERIFIED_UTC = "2026-08-29T02:19:45Z"
 OLD_D_FULL_DATE = "2026-08-06"
 OLD_D_FULL_ROLE = ("historical Stage 2 formal result; NOT a baseline for "
                    "V4-Pro-0813 prompt ablation")
@@ -807,6 +809,7 @@ def run_arm_once(
     *,
     out_dir: Path | None = None,
     budget_gate: Any = None,
+    before_send: Callable[[], None] | None = None,
 ) -> dict[str, Any]:
     """One arm x one repeat: call -> save raw -> parse -> predict -> eval.
 
@@ -886,6 +889,11 @@ def run_arm_once(
             cost_unknown = True
             continue
         else:
+            if before_send is not None:
+                # The authorized real run is Beijing off-peak only.  Check
+                # immediately before every transport call so crossing into a
+                # peak window pauses safely before the next paid request.
+                before_send()
             sample_with_repeat = dict(sample)
             sample_with_repeat["_repeat_id"] = repeat_id
             call = call_once(arm, sample_with_repeat, prompt_text, transport,
@@ -2274,6 +2282,33 @@ def _validate_runtime_config(llm_config: Any,
                 f"{expected!r}")
 
 
+_BEIJING_OFFSET = timedelta(hours=8)
+
+
+def _is_beijing_peak(now_utc: datetime | None = None) -> bool:
+    """Return True in DeepSeek's weekday Beijing peak windows.
+
+    Peak windows are 09:00-12:00 and 14:00-18:00 Beijing time on
+    Monday-Friday.  Weekends are entirely off-peak; the end points 12:00
+    and 18:00 are off-peak on weekdays as well.
+    """
+    current = now_utc or datetime.now(timezone.utc)
+    beijing = current.astimezone(timezone.utc) + _BEIJING_OFFSET
+    if beijing.weekday() >= 5:
+        return False
+    minute = beijing.hour * 60 + beijing.minute
+    return (9 * 60 <= minute < 12 * 60
+            or 14 * 60 <= minute < 18 * 60)
+
+
+def _require_beijing_off_peak() -> None:
+    if _is_beijing_peak():
+        raise ContractError(
+            "authorized execution window closed: Beijing peak period; "
+            "no request was sent and the persisted run may resume in the "
+            "next off-peak window")
+
+
 def execute_de(contract_path: Path | None = None,
                *,
                transport_factory: Callable[[], Any] | None = None,
@@ -2304,6 +2339,7 @@ def execute_de(contract_path: Path | None = None,
     from bpc_hybrid.llm_config import LLMConfig
     from bpc_hybrid.h1_transport import H1RequestPolicy
     llm_config = LLMConfig.from_env(project_root=ROOT, load_project_env=False)
+    enforce_off_peak = transport_factory is None
     if transport_factory is None:
         if llm_config.provider == "mock" or not llm_config.enabled:
             raise RuntimeError("real provider not enabled (process env only)")
@@ -2391,6 +2427,8 @@ def execute_de(contract_path: Path | None = None,
                 evaluator=_make_evaluator(arm),
                 out_dir=run_dir,
                 budget_gate=gate,
+                before_send=_require_beijing_off_peak
+                if enforce_off_peak else None,
             )
             results["actual_calls"] += run["actual_call_count"]
             completed_samples += (run["actual_call_count"]

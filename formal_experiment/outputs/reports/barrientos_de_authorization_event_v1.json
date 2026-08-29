@@ -1,0 +1,9 @@
+{
+  "schema_version": "barrientos_de_authorization_event@1.0.0",
+  "suite_id": "S2-BARRIENTOS-DE-001",
+  "authorization_sentence": "我明确授权执行 Barrientos D/E 消融实验：1140 calls，模型 deepseek-v4-pro（DeepSeek-V4-Pro-0813），temperature=0，retry=0，USD cap 30.407；仅在北京时间闲时执行，超过任一合同上限立即停止。",
+  "authorized_at_utc": "2026-08-29T02:19:45Z",
+  "authorized_in_thread": true,
+  "execution_time_constraint": "Beijing off-peak only",
+  "gold_policy": "read_only_evaluation_after_predictions_locked"
+}

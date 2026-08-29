@@ -165,6 +165,9 @@ def test_beijing_peak_windows():
     assert ex.is_beijing_peak(bj(2026, 8, 20, 8, 0)) is False
     # 12:00 exactly is END of first window -> off-peak (12:00-14:00 gap)
     assert ex.is_beijing_peak(bj(2026, 8, 20, 12, 0)) is False
+    # Saturday is entirely off-peak, even at weekday peak clock times.
+    assert ex.is_beijing_peak(bj(2026, 8, 29, 10, 0)) is False
+    assert ex.is_beijing_peak(bj(2026, 8, 29, 15, 0)) is False
 
 
 def test_off_peak_only_gate():

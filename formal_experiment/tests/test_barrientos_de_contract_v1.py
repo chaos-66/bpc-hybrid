@@ -9,6 +9,7 @@ import hashlib
 import json
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -153,16 +154,99 @@ def test_contract_rejects_wrong_model_or_sampling():
             path.unlink(missing_ok=True)
 
 
-def test_contract_authorization_gate():
+def test_contract_authorization_gate(tmp_path):
     m = _executor()
-    # null authorization blocks the real path
+    # The checked-in contract is authorized only after the user's explicit
+    # 2026-08-29 event; its real event/hash chain must validate.
+    assert m.validate_de_contract(CONTRACT, allow_unauthorized=False)
+
+    # A structurally identical contract with authorization removed still
+    # blocks the real path.  This preserves the fail-closed gate after the
+    # repository transitions from prepared to authorized state.
+    unauthorized = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    unauthorized["authorization"] = None
+    unauthorized_path = tmp_path / "unauthorized_contract.json"
+    unauthorized_path.write_text(
+        json.dumps(unauthorized, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8")
     try:
-        m.validate_de_contract(CONTRACT, allow_unauthorized=False)
+        m.validate_de_contract(unauthorized_path, allow_unauthorized=False)
         raise AssertionError("null authorization must be rejected")
     except m.ContractError:
         pass
     # allow_unauthorized is only for fixtures/offline checks
-    assert m.validate_de_contract(CONTRACT, allow_unauthorized=True)
+    assert m.validate_de_contract(unauthorized_path, allow_unauthorized=True)
+
+
+def test_contract_binds_beijing_off_peak_execution_window():
+    """The authorized real run is limited to the explicit Beijing
+    off-peak window; deleting or weakening that binding is invalid."""
+    from bpc_hybrid.de_contract_schema import validate_instance
+
+    schema = json.loads(CONTRACT_SCHEMA.read_text(encoding="utf-8"))
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    assert contract["authorization"]["execution_window"] == \
+        "beijing_off_peak_only"
+    assert validate_instance(contract, schema) == []
+
+    missing = copy.deepcopy(contract)
+    del missing["authorization"]["execution_window"]
+    assert validate_instance(missing, schema)
+
+    weakened = copy.deepcopy(contract)
+    weakened["authorization"]["execution_window"] = "any_time"
+    assert validate_instance(weakened, schema)
+
+
+def test_beijing_peak_windows_apply_weekdays_only():
+    """DeepSeek peak windows apply Monday-Friday only; weekends are
+    entirely off-peak, including clock times that are peak on weekdays."""
+    m = _executor()
+    # UTC + 8 = Beijing time.
+    # Monday 2026-08-31: both weekday peak windows are enforced.
+    assert m._is_beijing_peak(
+        datetime(2026, 8, 31, 2, 0, tzinfo=timezone.utc)) is True   # 10:00
+    assert m._is_beijing_peak(
+        datetime(2026, 8, 31, 7, 0, tzinfo=timezone.utc)) is True   # 15:00
+    assert m._is_beijing_peak(
+        datetime(2026, 8, 31, 4, 0, tzinfo=timezone.utc)) is False  # 12:00
+    assert m._is_beijing_peak(
+        datetime(2026, 8, 31, 10, 0, tzinfo=timezone.utc)) is False # 18:00
+    # Saturday 2026-08-29: the whole day is off-peak.
+    assert m._is_beijing_peak(
+        datetime(2026, 8, 29, 2, 0, tzinfo=timezone.utc)) is False  # 10:00
+    assert m._is_beijing_peak(
+        datetime(2026, 8, 29, 7, 0, tzinfo=timezone.utc)) is False  # 15:00
+
+
+def test_off_peak_guard_stops_before_transport_send(tmp_path):
+    """Crossing into a peak window pauses before the next paid request,
+    leaving no attempted/in-doubt call and no transport activity."""
+    m = _executor()
+    transport = _persist_transport(fail_after=None)
+    checked = {"count": 0}
+
+    def closed_window():
+        checked["count"] += 1
+        raise m.ContractError("Beijing peak period")
+
+    try:
+        m.run_arm_once(
+            arm="D-no-fewshot-0813", repeat_id="repeat-01",
+            samples=[{"sample_id": "s0", "text": "t"}],
+            prompt_text="", transport=transport,
+            cost_of=lambda usage: 0.001, evaluator=m.dummy_evaluator,
+            out_dir=tmp_path / "arm" / "repeat-01",
+            before_send=closed_window,
+        )
+        raise AssertionError("closed execution window must stop the run")
+    except m.ContractError as exc:
+        assert "peak period" in str(exc)
+
+    assert checked["count"] == 1
+    assert transport.send_count == 0
+    assert not (tmp_path / "arm" / "repeat-01" /
+                "calls_ledger.jsonl").exists()
 
 
 # ---------------------------------------------------------------------------

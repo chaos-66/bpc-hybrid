@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-28
-**收录文件**：1436 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-08-29
+**收录文件**：1438 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -783,6 +783,7 @@
 | `outputs/reports/barrientos_ablation_comparison_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/barrientos_ablation_comparison_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_ablation_comparison_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/barrientos_de_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1359,6 +1360,7 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `tests/conftest.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/fixtures/bpmn/minimal_bpmn_incorrect_actor.bpmn` | 活动 | 流程模型或测试 fixture |
 | `tests/fixtures/bpmn/minimal_bpmn_missing_action.bpmn` | 活动 | 流程模型或测试 fixture |
 | `tests/fixtures/bpmn/minimal_bpmn_out_of_order.bpmn` | 活动 | 流程模型或测试 fixture |

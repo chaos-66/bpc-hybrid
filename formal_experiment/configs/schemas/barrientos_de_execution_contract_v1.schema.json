@@ -221,13 +221,15 @@
         "authorization_sentence_utf8_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
         "authorization_event_file": { "type": "string", "minLength": 1 },
         "authorization_event_file_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-        "authorized_at_utc": { "type": "string", "minLength": 1 }
+        "authorized_at_utc": { "type": "string", "minLength": 1 },
+        "execution_window": { "type": "string", "const": "beijing_off_peak_only" }
       },
       "required": [
         "authorization_sentence_utf8_sha256",
         "authorization_event_file",
         "authorization_event_file_sha256",
-        "authorized_at_utc"
+        "authorized_at_utc",
+        "execution_window"
       ],
       "additionalProperties": false
     },

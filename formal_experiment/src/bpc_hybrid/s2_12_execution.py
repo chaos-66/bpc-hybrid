@@ -112,7 +112,8 @@ OUTPUT_DIRS = {
 EXPECTED_INPUT_SHA = "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e"
 REQUIRED_MODEL = "deepseek-v4-pro"
 
-# Beijing-time off-peak window: peak 09:00-12:00 and 14:00-18:00 (UTC+8).
+# Beijing-time pricing window: peak 09:00-12:00 and 14:00-18:00 (UTC+8)
+# on Monday-Friday only.  Weekends are entirely off-peak.
 _BJ_OFFSET = timedelta(hours=8)
 
 # Undesired keys that must never appear in committed outputs.
@@ -706,6 +707,8 @@ def beijing_time(now_utc: datetime | None = None) -> datetime:
 
 def is_beijing_peak(now_utc: datetime | None = None) -> bool:
     bj = beijing_time(now_utc)
+    if bj.weekday() >= 5:
+        return False
     minutes = bj.hour * 60 + bj.minute
     return (9 * 60 <= minutes < 12 * 60) or (14 * 60 <= minutes < 18 * 60)
 

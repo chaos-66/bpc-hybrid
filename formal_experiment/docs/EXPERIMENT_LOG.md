@@ -3912,3 +3912,16 @@
 - 仍存在 blocker：无
 - 备注：新增/更新测试 29 个（函数级）；D-full-0813 为真实 150 调用臂（无复用）；模型映射记录请求别名 deepseek-v4-pro + 文档化发布 DeepSeek-V4-Pro-0813 + 来源 URL + 验证时间；旧 990 快照价格不重用（有文档）；BARR-NO-PATTERN 不在固定计划内（可选 1320）
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-29T08:50:47.017551+00:00 - Barrientos D/E 1140-call authorization, official 0813 pricing evidence, weekday-only peak guard, and Windows tamper-test restore hardening
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2739 passed, 24 skipped, 40 warnings in 2850.84s (0:47:30)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`cec4abc5c34de5d2ac6303f7d29427e4e01efe39`；相关未提交路径：19 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：User authorized 1140 calls, deepseek-v4-pro/DeepSeek-V4-Pro-0813, temperature=0, retry=0, USD cap 30.407. Official pricing corrected: peak windows Monday-Friday only; weekends off-peak. Focused Barrientos/S2 tests 102 passed; Stage1 tamper tests 107 passed; full audit 2739 passed / 24 skipped / 40 warnings. Zero API before checkpoint.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,7 +1,7 @@
 {
   "schema_version": "barrientos_de_execution_contract@1.0.0",
   "suite_id": "S2-BARRIENTOS-DE-001",
-  "bound_commit": "cf51ecfaaa3675135cb09e52323f00cdd69c11dd",
+  "bound_commit": "cec4abc5c34de5d2ac6303f7d29427e4e01efe39",
   "execution_plan": {
     "total_calls": 1140,
     "arms": [
@@ -147,8 +147,8 @@
       "release": "DeepSeek-V4-Pro-0813",
       "historical_release": "DeepSeek-V4-Pro Preview",
       "historical_execution_date": "2026-08-06",
-      "source_url": "https://llm-stats.com/blog/research/deepseek-v4-pro-0813-launch",
-      "verified_at_utc": "2026-08-27T00:00:00Z",
+      "source_url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "verified_at_utc": "2026-08-29T02:19:45Z",
       "note": "requested alias deepseek-v4-pro maps to the official DeepSeek-V4-Pro-0813 release since 2026-08-13; no immutable dated endpoint is claimed; the old Preview D-full (2026-08-06) is a historical result, never an ablation baseline"
     }
   },
@@ -165,7 +165,7 @@
   "hashes": {
     "estg_input_v2": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
     "e_contract_v2": "43aeeac51c49f5e93cefddde6fd9a4090d0fe5d00971d08a7f2d35e4a83a7c43",
-    "executor": "321d218a650f5d55c306f11cdd017be88eb2bca4af95e97b62bf6bdc2eb69122",
+    "executor": "2dfaafc7e43b5d2abcd2a9a0cfc00e003b18ad2d853fcddc14350c9148223ec3",
     "config": "a5956cdb247761f1ac3074a2870991a60d93ba948698564fde24792a627248b9",
     "prompts": {
       "D-full-0813": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
@@ -197,14 +197,20 @@
         "input_cache_miss_per_million": 0.66,
         "output_per_million": 1.98
       },
-      "source_url": "https://pandaily.com/deepseek-v4-peak-off-peak-pricing-effective-august-17-up-to-1100-percent-aug2026",
-      "verified_at_utc": "2026-08-27T00:00:00Z",
+      "source_url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "verified_at_utc": "2026-08-29T02:19:45Z",
       "note": "DeepSeek V4 series peak/off-peak pricing effective 2026-08-17; PEAK price is used for the fail-closed USD cap (conservative); actual runs should prefer off-peak hours; the old 990-contract snapshot is NOT reused without this documentation"
     },
     "input_estimate_note": "estimated input tokens=3458262 over 1140 rendered requests (ceil(utf8_bytes/3), conservative over-estimate); input cap = x1.5; output cap = 1140*4096; USD cap = (input_cap*1.32/1M + output_cap*3.96/1M)*1.2 (PEAK price) rounded up; not a guess, derived from rendered requests",
-    "computed_at_utc": "2026-08-27T23:32:21Z"
+    "computed_at_utc": "2026-08-29T07:05:35Z"
   },
-  "authorization": null,
+  "authorization": {
+    "authorization_sentence_utf8_sha256": "f739d7409f0d6dcf00401bb3e0e1b4bf9428fe7e2621e86a0e631c9af8c79ae8",
+    "authorization_event_file": "outputs/reports/barrientos_de_authorization_event_v1.json",
+    "authorization_event_file_sha256": "0d3605a5faf100488e073d414b6f70e0047963d06a48a5ead1495ed1564a754a",
+    "authorized_at_utc": "2026-08-29T02:19:45Z",
+    "execution_window": "beijing_off_peak_only"
+  },
   "gold_isolation": {
     "api_arms_must_not_read_gold": true,
     "evaluation_only_after_predictions_are_locked": true

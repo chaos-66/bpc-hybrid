@@ -33,8 +33,8 @@ token counts and therefore the USD cap (a conservative bound, not a guess).
 Input cap = 1.5 x estimated input tokens; output cap = 1140 x 4096 (every
 call may emit the full max_tokens); USD cap uses the PEAK price (the
 fail-closed conservative choice) with an additional 1.2x safety factor.
-Peak/off-peak prices (DeepSeek V4 series, effective 2026-08-17, verified
-2026-08-19/20 in the repo): input cache-miss 1.32 peak / 0.66 off-peak
+Peak/off-peak prices (DeepSeek V4 series, effective 2026-08-17, re-verified
+against the official pricing page on 2026-08-29): input cache-miss 1.32 peak / 0.66 off-peak
 USD per M; output 3.96 peak / 1.98 off-peak USD per M.  All numbers are
 derived, never hand-written.
 """
@@ -80,17 +80,16 @@ CONTRACT_PATH = ROOT / "configs/ablations/barrientos_de_execution_contract_v1.js
 SCHEMA_PATH = ROOT / "configs/schemas/barrientos_de_execution_contract_v1.schema.json"
 BUDGET_REPORT = ROOT / "outputs/reports/barrientos_de_budget_v1.json"
 
-# DeepSeek V4 series peak/off-peak pricing (effective 2026-08-17; verified
-# in the repo on 2026-08-19/20; see MASTER_PIPELINE S2.12 line).
+# DeepSeek V4 series peak/off-peak pricing (effective 2026-08-17;
+# re-verified against the official pricing page immediately before the
+# authorized run on 2026-08-29).
 PRICE_VERSION = "deepseek_v4_peak_off_peak@2026-08-17"
 INPUT_PRICE_PEAK_PER_M = 1.32    # USD per 1M input tokens (cache miss, peak)
 INPUT_PRICE_OFFPEAK_PER_M = 0.66  # USD per 1M input tokens (cache miss, off)
 OUTPUT_PRICE_PEAK_PER_M = 3.96   # USD per 1M output tokens (peak)
 OUTPUT_PRICE_OFFPEAK_PER_M = 1.98  # USD per 1M output tokens (off-peak)
-PRICE_SOURCE_URL = (
-    "https://pandaily.com/deepseek-v4-peak-off-peak-pricing-effective-"
-    "august-17-up-to-1100-percent-aug2026")
-PRICE_VERIFIED_UTC = "2026-08-27T00:00:00Z"
+PRICE_SOURCE_URL = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/"
+PRICE_VERIFIED_UTC = "2026-08-29T02:19:45Z"
 INPUT_SAFETY_FACTOR = 1.5
 USD_SAFETY_FACTOR = 1.2
 BYTES_PER_TOKEN = 3  # conservative: real tokenizers average > 3 bytes/token
