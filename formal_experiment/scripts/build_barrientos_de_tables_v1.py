@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Build the THREE cross-method result tables for the Barrientos D/E run.
+"""Build the four separated result tables for the Barrientos D/E run.
 
 The user contract (2026-08-26) forbids comparing F1 numbers from different
 evaluators.  This builder therefore emits three SEPARATE tables:
@@ -10,7 +10,7 @@ evaluators.  This builder therefore emits three SEPARATE tables:
     computed with the Barrientos artifact evaluator semantics only.
 * Table B — Ours-native (OURS-FULL vs OURS-BARRIENTOS-MODULE):
     the SAME six-field Gold and the SAME evaluator for both arms; per-field
-    and overall P/R/F1, valid rate, failure rate; five-run mean/SD/min/max
+    and overall P/R/F1, parse/nonempty/failure rates; five-run mean/SD/min/max
     and per-field delta (module-swap effect).  This is the core
     "is replacing the prompt module with Barrientos-style better?" ablation.
 * Table C — Shared-target (BARR-FULL vs OURS-FULL vs
@@ -60,11 +60,54 @@ D_ARMS_0813 = ("D-full-0813", "D-no-fewshot-0813", "D-minimal-0813",
 D_MAIN_ARMS_0813 = ("D-no-fewshot-0813", "D-minimal-0813",
                     "D-barrientos-style-0813")
 D_BASELINE_0813 = "D-full-0813"
-REPEATS = (f"repeat-{i:02d}" for i in range(1, 6))
+DISPLAY_NAMES = {
+    "D-full-0813": "完整六字段提示（含 4-shot）",
+    "D-no-fewshot-0813": "去掉 few-shot 示例",
+    "D-minimal-0813": "极简任务与 JSON 要求",
+    "D-barrientos-style-0813": "Barrientos 风格结构约束替换",
+    "BARR-FULL": "Barrientos 原生方法",
+    "OURS-FULL": "本文完整方法",
+    "OURS-BARRIENTOS-MODULE": "本文方法替换为 Barrientos 提示模块",
+}
+# This collection is traversed independently by Tables A, B, and C.  A
+# generator is incorrect here because Table A would exhaust it and leave the
+# later tables with empty aggregates (null/NaN) despite complete repeat files.
+REPEATS = tuple(f"repeat-{i:02d}" for i in range(1, 6))
 
 
 def _load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _nonempty_canonical_clause_rate(
+    arm: str,
+    repeat: str,
+    run_dir: Path,
+    denominator: int,
+) -> float | None:
+    """Fraction of all planned samples with at least one canonical clause.
+
+    Parser acceptance alone is not semantic usability: a relay-format response
+    can be accepted while every span is dropped and ``clauses`` becomes empty.
+    Keep this observable separate from parse failures and include every sample
+    in the denominator.
+    """
+    path = run_dir / arm / repeat / "canonical_predictions.jsonl"
+    rows = [json.loads(line) for line in path.read_text(
+        encoding="utf-8").splitlines() if line.strip()]
+    if len(rows) != denominator:
+        raise RuntimeError(
+            f"{arm}/{repeat}: canonical rows {len(rows)} != denominator "
+            f"{denominator}")
+    if not denominator:
+        return None
+    nonempty = sum(
+        1 for row in rows
+        if row.get("request_status") == "ok"
+        and isinstance(row.get("record"), dict)
+        and isinstance(row["record"].get("clauses"), list)
+        and len(row["record"]["clauses"]) > 0)
+    return round(nonempty / denominator, 6)
 
 
 def _summary(run_dir: Path) -> dict[str, Any]:
@@ -169,8 +212,10 @@ def _ours_row(arm: str, repeat: str, run_dir: Path) -> dict[str, Any]:
     failed = e["failed_count"]
     row: dict[str, Any] = {
         "repeat_id": repeat,
-        "valid_rate": round((denominator - failed) / denominator, 6)
+        "parse_success_rate": round((denominator - failed) / denominator, 6)
         if denominator else None,
+        "nonempty_canonical_clause_rate": _nonempty_canonical_clause_rate(
+            arm, repeat, run_dir, denominator),
         "failure_rate": round(failed / denominator, 6) if denominator else None,
         "modality_label_accuracy": modality.get("accuracy"),
         "modality_label_macro_f1": modality.get("macro_f1"),
@@ -194,7 +239,8 @@ def table_b(run_dir: Path) -> dict[str, Any]:
                "constraint_p", "constraint_r", "constraint_f1",
                "exception_p", "exception_r", "exception_f1",
                "overall_p", "overall_r", "overall_f1",
-               "valid_rate", "failure_rate",
+               "parse_success_rate", "nonempty_canonical_clause_rate",
+               "failure_rate",
                "modality_label_accuracy", "modality_label_macro_f1")
     arms: dict[str, Any] = {}
     for arm in OURS_ARMS:
@@ -208,7 +254,8 @@ def table_b(run_dir: Path) -> dict[str, Any]:
             mean, std = _mean_std(vals)
             agg[k] = {"mean": _round3(mean), "sd": _round3(std),
                       "min": _round3(min(vals)), "max": _round3(max(vals))}
-        arms[arm] = {"per_repeat": rows, "aggregate": agg}
+        arms[arm] = {"display_name": DISPLAY_NAMES[arm],
+                     "per_repeat": rows, "aggregate": agg}
     # per-field delta: OURS-BARRIENTOS-MODULE minus OURS-FULL (mean F1)
     delta: dict[str, Any] = {}
     for k in metrics:
@@ -225,7 +272,10 @@ def table_b(run_dir: Path) -> dict[str, Any]:
         "evaluator": "s2_12_stratified_evaluator_v2",
         "note": ("both arms scored with the SAME evaluator on the SAME "
                  "S2.11 six-field Gold; per-field and overall literal-"
-                 "overlap P/R/F1; modality label accuracy/macro-F1; "
+                 "overlap P/R/F1; modality label accuracy/macro-F1; parser "
+                 "success and nonempty canonical-clause rates are reported "
+                 "separately so accepted-but-empty relay records are not "
+                 "mislabelled as schema-valid; "
                  "five-run mean/SD/min/max; delta = module-swapped minus "
                  "full. This is the core module-replacement ablation. F1 "
                  "here is Ours-native and MUST NOT be compared with Table "
@@ -252,8 +302,11 @@ def _d_row(arm: str, run_dir: Path) -> dict[str, Any]:
     failed = e["failed_count"]
     row: dict[str, Any] = {
         "arm": arm,
-        "valid_rate": round((denominator - failed) / denominator, 6)
+        "display_name": DISPLAY_NAMES[arm],
+        "parse_success_rate": round((denominator - failed) / denominator, 6)
         if denominator else None,
+        "nonempty_canonical_clause_rate": _nonempty_canonical_clause_rate(
+            arm, "repeat-01", run_dir, denominator),
         "failure_rate": round(failed / denominator, 6) if denominator else None,
         "modality_label_accuracy": modality.get("accuracy"),
         "modality_label_macro_f1": modality.get("macro_f1"),
@@ -278,7 +331,8 @@ def table_d(run_dir: Path) -> dict[str, Any]:
                "constraint_p", "constraint_r", "constraint_f1",
                "exception_p", "exception_r", "exception_f1",
                "overall_p", "overall_r", "overall_f1",
-               "valid_rate", "failure_rate",
+               "parse_success_rate", "nonempty_canonical_clause_rate",
+               "failure_rate",
                "modality_label_accuracy", "modality_label_macro_f1")
     rows = {arm: _d_row(arm, run_dir) for arm in D_ARMS_0813}
     baseline = rows[D_BASELINE_0813]
@@ -306,7 +360,9 @@ def table_d(run_dir: Path) -> dict[str, Any]:
                      "sensitivity), never as module ablation"),
         },
         "note": ("deltas are relative to D-full-0813 ONLY; the old Preview "
-                 "D-full is excluded from all module deltas"),
+                 "D-full is excluded from all module deltas. Parse success "
+                 "and nonempty canonical-clause rates are separate: JSON or "
+                 "relay acceptance does not imply a usable six-field record."),
         "rows": rows,
         "delta_vs_full_0813": delta,
         "model_drift_appendix": {
@@ -480,6 +536,7 @@ def table_c(run_dir: Path) -> dict[str, Any]:
         },
         "no_overall_f1_synthesized_across_schemas": True,
         "modality": {"per_repeat": modality_repeats, "arms": arms_agg},
+        "display_names": {arm: DISPLAY_NAMES[arm] for arm in ALL_ARMS},
         "norm_count_type": {
             "per_repeat": norm_repeats,
             "note": "adapter-defined secondary metric; reported separately",
@@ -516,7 +573,7 @@ def build_tables(run_dir: Path | None = None) -> dict[str, Any]:
     if missing:
         raise RuntimeError(f"missing arm evaluations: {missing}")
     return {
-        "schema_version": "barrientos_de_tables@1.1.0",
+        "schema_version": "barrientos_de_tables@1.2.0",
         "tables": {
             "D_prompt_ablation_0813": table_d(run_dir),
             "A_barrientos_native": table_a(run_dir),
@@ -535,18 +592,20 @@ def build_tables(run_dir: Path | None = None) -> dict[str, Any]:
 
 
 def _md(tables: dict[str, Any]) -> str:
-    lines = ["# Barrientos D/E Result Tables v1.1 (four-table separation)", ""]
+    lines = ["# Barrientos D/E Result Tables v1.2 (four-table separation)", ""]
     t = tables["tables"]
     lines += ["## Table D — D prompt/few-shot ablation (DeepSeek-V4-Pro-0813)",
-              "", "| arm | overall F1 | overall P | overall R | valid% | "
-              "fail% |"]
+              "", "| arm | overall F1 | overall P | overall R | parse ok | "
+              "nonempty canonical | fail% |"]
     d = t["D_prompt_ablation_0813"]
     for arm in d["rows"]:
         r = d["rows"][arm]
-        lines.append("| {} | {:.3f} | {:.3f} | {:.3f} | {:.3f} | {:.3f} |"
-                     .format(arm, r["overall_f1"] or 0.0,
+        lines.append("| {} | {:.3f} | {:.3f} | {:.3f} | {:.3f} | {:.3f} | "
+                     "{:.3f} |"
+                     .format(r["display_name"], r["overall_f1"] or 0.0,
                              r["overall_p"] or 0.0, r["overall_r"] or 0.0,
-                             r["valid_rate"] or 0.0,
+                             r["parse_success_rate"] or 0.0,
+                             r["nonempty_canonical_clause_rate"] or 0.0,
                              r["failure_rate"] or 0.0))
     lines += ["", "delta vs " + d["baseline"] + " (module effect, 0813 "
               "window only):"]
@@ -554,7 +613,7 @@ def _md(tables: dict[str, Any]) -> str:
         dv = d["delta_vs_full_0813"].get(arm) or {}
         f1 = dv.get("overall_f1")
         lines.append("- {}: overall F1 {:+.3f}".format(
-            arm, f1 if f1 is not None else float("nan")))
+            DISPLAY_NAMES[arm], f1 if f1 is not None else float("nan")))
     lines += ["", "model-drift appendix: " +
               d["model_drift_appendix"]["label"], ""]
     lines += ["## Table A — Barrientos-native (BARR-FULL)", "",
@@ -578,7 +637,8 @@ def _md(tables: dict[str, Any]) -> str:
     b = t["B_ours_native"]
     for k in ("overall_f1", "overall_p", "overall_r",
               "actor_f1", "action_f1", "condition_f1", "constraint_f1",
-              "exception_f1", "valid_rate", "failure_rate",
+              "exception_f1", "parse_success_rate",
+              "nonempty_canonical_clause_rate", "failure_rate",
               "modality_label_macro_f1"):
         mf = b["arms"]["OURS-FULL"]["aggregate"].get(k)
         ms = b["arms"]["OURS-BARRIENTOS-MODULE"]["aggregate"].get(k)
@@ -593,7 +653,7 @@ def _md(tables: dict[str, Any]) -> str:
               "| arm | ob F1 | per F1 | pro F1 | macro F1 |"]
     for arm, agg in c["modality"]["arms"].items():
         lines.append("| {} | {:.3f} | {:.3f} | {:.3f} | {:.3f} |".format(
-            arm,
+            c["display_names"][arm],
             agg["per_class"]["obligation"]["f1"]["mean"],
             agg["per_class"]["permission"]["f1"]["mean"],
             agg["per_class"]["prohibition"]["f1"]["mean"],

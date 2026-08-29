@@ -1,0 +1,2017 @@
+{
+  "schema_version": "barrientos_de_tables@1.2.0",
+  "tables": {
+    "D_prompt_ablation_0813": {
+      "table": "D",
+      "title": "D prompt/few-shot ablation (all arms under DeepSeek-V4-Pro-0813, EStG-150, same Gold, same evaluator)",
+      "evaluator": "sun_literal_overlap@2.0.0",
+      "baseline": "D-full-0813",
+      "model": {
+        "requested_alias": "deepseek-v4-pro",
+        "documented_release": "DeepSeek-V4-Pro-0813",
+        "note": "the 2026-08-06 Preview D-full is a historical Stage 2 result and is NOT a baseline for this table; model drift is reported separately (model-version sensitivity), never as module ablation"
+      },
+      "note": "deltas are relative to D-full-0813 ONLY; the old Preview D-full is excluded from all module deltas. Parse success and nonempty canonical-clause rates are separate: JSON or relay acceptance does not imply a usable six-field record.",
+      "rows": {
+        "D-full-0813": {
+          "arm": "D-full-0813",
+          "display_name": "完整六字段提示（含 4-shot）",
+          "parse_success_rate": 1.0,
+          "nonempty_canonical_clause_rate": 0.986667,
+          "failure_rate": 0.0,
+          "modality_label_accuracy": null,
+          "modality_label_macro_f1": null,
+          "actor_p": 0.5487804878048781,
+          "actor_r": 0.9166666666666666,
+          "actor_f1": 0.6865464632454924,
+          "action_p": 0.8977777777777778,
+          "action_r": 0.8259109311740891,
+          "action_f1": 0.8603461594671901,
+          "condition_p": 0.9057971014492754,
+          "condition_r": 0.6915887850467289,
+          "condition_f1": 0.78433035146479,
+          "constraint_p": 0.6535433070866141,
+          "constraint_r": 0.5496688741721855,
+          "constraint_f1": 0.5971223021582733,
+          "exception_p": 0.7777777777777778,
+          "exception_r": 0.5384615384615384,
+          "exception_f1": 0.6363636363636364,
+          "overall_p": 0.8202959830866807,
+          "overall_r": 0.728909952606635,
+          "overall_f1": 0.7719075848848173
+        },
+        "D-no-fewshot-0813": {
+          "arm": "D-no-fewshot-0813",
+          "display_name": "去掉 few-shot 示例",
+          "parse_success_rate": 0.98,
+          "nonempty_canonical_clause_rate": 0.0,
+          "failure_rate": 0.02,
+          "modality_label_accuracy": null,
+          "modality_label_macro_f1": null,
+          "actor_p": 0.0,
+          "actor_r": 0.0,
+          "actor_f1": 0.0,
+          "action_p": 0.0,
+          "action_r": 0.0,
+          "action_f1": 0.0,
+          "condition_p": 0.0,
+          "condition_r": 0.0,
+          "condition_f1": 0.0,
+          "constraint_p": 0.0,
+          "constraint_r": 0.0,
+          "constraint_f1": 0.0,
+          "exception_p": 0.0,
+          "exception_r": 0.0,
+          "exception_f1": 0.0,
+          "overall_p": 0.0,
+          "overall_r": 0.0,
+          "overall_f1": 0.0
+        },
+        "D-minimal-0813": {
+          "arm": "D-minimal-0813",
+          "display_name": "极简任务与 JSON 要求",
+          "parse_success_rate": 0.0,
+          "nonempty_canonical_clause_rate": 0.0,
+          "failure_rate": 1.0,
+          "modality_label_accuracy": null,
+          "modality_label_macro_f1": null,
+          "actor_p": 0.0,
+          "actor_r": 0.0,
+          "actor_f1": 0.0,
+          "action_p": 0.0,
+          "action_r": 0.0,
+          "action_f1": 0.0,
+          "condition_p": 0.0,
+          "condition_r": 0.0,
+          "condition_f1": 0.0,
+          "constraint_p": 0.0,
+          "constraint_r": 0.0,
+          "constraint_f1": 0.0,
+          "exception_p": 0.0,
+          "exception_r": 0.0,
+          "exception_f1": 0.0,
+          "overall_p": 0.0,
+          "overall_r": 0.0,
+          "overall_f1": 0.0
+        },
+        "D-barrientos-style-0813": {
+          "arm": "D-barrientos-style-0813",
+          "display_name": "Barrientos 风格结构约束替换",
+          "parse_success_rate": 0.993333,
+          "nonempty_canonical_clause_rate": 0.0,
+          "failure_rate": 0.006667,
+          "modality_label_accuracy": null,
+          "modality_label_macro_f1": null,
+          "actor_p": 0.0,
+          "actor_r": 0.0,
+          "actor_f1": 0.0,
+          "action_p": 0.0,
+          "action_r": 0.0,
+          "action_f1": 0.0,
+          "condition_p": 0.0,
+          "condition_r": 0.0,
+          "condition_f1": 0.0,
+          "constraint_p": 0.0,
+          "constraint_r": 0.0,
+          "constraint_f1": 0.0,
+          "exception_p": 0.0,
+          "exception_r": 0.0,
+          "exception_f1": 0.0,
+          "overall_p": 0.0,
+          "overall_r": 0.0,
+          "overall_f1": 0.0
+        }
+      },
+      "delta_vs_full_0813": {
+        "D-no-fewshot-0813": {
+          "actor_p": -0.549,
+          "actor_r": -0.917,
+          "actor_f1": -0.687,
+          "action_p": -0.898,
+          "action_r": -0.826,
+          "action_f1": -0.86,
+          "condition_p": -0.906,
+          "condition_r": -0.692,
+          "condition_f1": -0.784,
+          "constraint_p": -0.654,
+          "constraint_r": -0.55,
+          "constraint_f1": -0.597,
+          "exception_p": -0.778,
+          "exception_r": -0.538,
+          "exception_f1": -0.636,
+          "overall_p": -0.82,
+          "overall_r": -0.729,
+          "overall_f1": -0.772,
+          "parse_success_rate": -0.02,
+          "nonempty_canonical_clause_rate": -0.987,
+          "failure_rate": 0.02
+        },
+        "D-minimal-0813": {
+          "actor_p": -0.549,
+          "actor_r": -0.917,
+          "actor_f1": -0.687,
+          "action_p": -0.898,
+          "action_r": -0.826,
+          "action_f1": -0.86,
+          "condition_p": -0.906,
+          "condition_r": -0.692,
+          "condition_f1": -0.784,
+          "constraint_p": -0.654,
+          "constraint_r": -0.55,
+          "constraint_f1": -0.597,
+          "exception_p": -0.778,
+          "exception_r": -0.538,
+          "exception_f1": -0.636,
+          "overall_p": -0.82,
+          "overall_r": -0.729,
+          "overall_f1": -0.772,
+          "parse_success_rate": -1.0,
+          "nonempty_canonical_clause_rate": -0.987,
+          "failure_rate": 1.0
+        },
+        "D-barrientos-style-0813": {
+          "actor_p": -0.549,
+          "actor_r": -0.917,
+          "actor_f1": -0.687,
+          "action_p": -0.898,
+          "action_r": -0.826,
+          "action_f1": -0.86,
+          "condition_p": -0.906,
+          "condition_r": -0.692,
+          "condition_f1": -0.784,
+          "constraint_p": -0.654,
+          "constraint_r": -0.55,
+          "constraint_f1": -0.597,
+          "exception_p": -0.778,
+          "exception_r": -0.538,
+          "exception_f1": -0.636,
+          "overall_p": -0.82,
+          "overall_r": -0.729,
+          "overall_f1": -0.772,
+          "parse_success_rate": -0.007,
+          "nonempty_canonical_clause_rate": -0.987,
+          "failure_rate": 0.007
+        }
+      },
+      "model_drift_appendix": {
+        "status": "reserved_not_fabricated",
+        "preview_d_full": {
+          "requested_alias": "deepseek-v4-pro",
+          "release": "DeepSeek-V4-Pro Preview",
+          "execution_date": "2026-08-06",
+          "role": "historical Stage 2 formal result; NOT a V4-Pro-0813 prompt-ablation baseline",
+          "locked_result": "data/predictions/direct_llm_formal_arm_v1/predictions.json (unchanged)"
+        },
+        "v4_pro_0813_d_full": {
+          "status": "generated_after_execution",
+          "note": "filled only after the 0813 execution completes"
+        },
+        "label": "model-version sensitivity (Preview vs V4-Pro-0813); explicitly NOT a prompt/module ablation contribution"
+      }
+    },
+    "A_barrientos_native": {
+      "table": "A",
+      "title": "Barrientos-native (BARR-FULL, 36 requirements x 5 runs)",
+      "evaluator": "barrientos_step1_artifact_evaluator",
+      "note": "pooled precondition/norm P/R/F1 vs step_1_baseline.json (automated proxy of the paper's pooled TP/FP/FN; the paper used expert annotation), strict JSON/schema validity, output coverage, failure rate, and the paper's pairwise distance<=2 self-consistency. F1 here is Barrientos-native and MUST NOT be compared with Table B's six-field F1.",
+      "per_repeat": [
+        {
+          "repeat_id": "repeat-01",
+          "precondition_p": 0.75,
+          "precondition_r": 0.818182,
+          "precondition_f1": 0.782609,
+          "norm_p": 0.948718,
+          "norm_r": 0.711538,
+          "norm_f1": 0.813187,
+          "strict_json_validity": 1.0,
+          "output_coverage": 1.0,
+          "failure_rate": 0.0
+        },
+        {
+          "repeat_id": "repeat-02",
+          "precondition_p": 0.692308,
+          "precondition_r": 0.818182,
+          "precondition_f1": 0.75,
+          "norm_p": 0.95122,
+          "norm_r": 0.75,
+          "norm_f1": 0.83871,
+          "strict_json_validity": 1.0,
+          "output_coverage": 1.0,
+          "failure_rate": 0.0
+        },
+        {
+          "repeat_id": "repeat-03",
+          "precondition_p": 0.75,
+          "precondition_r": 0.818182,
+          "precondition_f1": 0.782609,
+          "norm_p": 0.928571,
+          "norm_r": 0.75,
+          "norm_f1": 0.829787,
+          "strict_json_validity": 1.0,
+          "output_coverage": 1.0,
+          "failure_rate": 0.0
+        },
+        {
+          "repeat_id": "repeat-04",
+          "precondition_p": 0.75,
+          "precondition_r": 0.818182,
+          "precondition_f1": 0.782609,
+          "norm_p": 0.926829,
+          "norm_r": 0.730769,
+          "norm_f1": 0.817204,
+          "strict_json_validity": 1.0,
+          "output_coverage": 1.0,
+          "failure_rate": 0.0
+        },
+        {
+          "repeat_id": "repeat-05",
+          "precondition_p": 0.73913,
+          "precondition_r": 0.772727,
+          "precondition_f1": 0.755556,
+          "norm_p": 0.95,
+          "norm_r": 0.730769,
+          "norm_f1": 0.826087,
+          "strict_json_validity": 1.0,
+          "output_coverage": 1.0,
+          "failure_rate": 0.0
+        }
+      ],
+      "aggregate": {
+        "precondition_p": {
+          "mean": 0.736,
+          "sd": 0.022,
+          "min": 0.692,
+          "max": 0.75
+        },
+        "precondition_r": {
+          "mean": 0.809,
+          "sd": 0.018,
+          "min": 0.773,
+          "max": 0.818
+        },
+        "precondition_f1": {
+          "mean": 0.771,
+          "sd": 0.015,
+          "min": 0.75,
+          "max": 0.783
+        },
+        "norm_p": {
+          "mean": 0.941,
+          "sd": 0.011,
+          "min": 0.927,
+          "max": 0.951
+        },
+        "norm_r": {
+          "mean": 0.735,
+          "sd": 0.014,
+          "min": 0.712,
+          "max": 0.75
+        },
+        "norm_f1": {
+          "mean": 0.825,
+          "sd": 0.009,
+          "min": 0.813,
+          "max": 0.839
+        },
+        "strict_json_validity": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "output_coverage": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "failure_rate": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      },
+      "self_consistency": {
+        "paper_distance_le2_ratio": 0.880556,
+        "pairwise_comparisons": 360,
+        "per_requirement_mean_ratio": 0.880556,
+        "per_requirement_std_ratio": 0.223382,
+        "definition": "same-arm five-run output consistency on the same 36 inputs; NOT a cross-method accuracy metric"
+      }
+    },
+    "B_ours_native": {
+      "table": "B",
+      "title": "Ours-native (OURS-FULL vs OURS-BARRIENTOS-MODULE, 36 requirements x 5 runs; same six-field Gold, same evaluator)",
+      "evaluator": "s2_12_stratified_evaluator_v2",
+      "note": "both arms scored with the SAME evaluator on the SAME S2.11 six-field Gold; per-field and overall literal-overlap P/R/F1; modality label accuracy/macro-F1; parser success and nonempty canonical-clause rates are reported separately so accepted-but-empty relay records are not mislabelled as schema-valid; five-run mean/SD/min/max; delta = module-swapped minus full. This is the core module-replacement ablation. F1 here is Ours-native and MUST NOT be compared with Table A's Barrientos-native F1.",
+      "arms": {
+        "OURS-FULL": {
+          "display_name": "本文完整方法",
+          "per_repeat": [
+            {
+              "repeat_id": "repeat-01",
+              "parse_success_rate": 1.0,
+              "nonempty_canonical_clause_rate": 1.0,
+              "failure_rate": 0.0,
+              "modality_label_accuracy": 0.9444444444444444,
+              "modality_label_macro_f1": 0.6166666666666667,
+              "actor_p": 0.7619047619047619,
+              "actor_r": 0.9411764705882353,
+              "actor_f1": 0.8421052631578947,
+              "action_p": 0.9512195121951219,
+              "action_r": 0.9743589743589743,
+              "action_f1": 0.9626502111075024,
+              "condition_p": 0.6551724137931034,
+              "condition_r": 1.0,
+              "condition_f1": 0.7916666666666666,
+              "constraint_p": 0.9545454545454546,
+              "constraint_r": 0.6363636363636364,
+              "constraint_f1": 0.7636363636363637,
+              "exception_p": 0.0,
+              "exception_r": 0.0,
+              "exception_f1": 0.0,
+              "overall_p": 0.869281045751634,
+              "overall_r": 0.8843537414965986,
+              "overall_f1": 0.8767526178342333
+            },
+            {
+              "repeat_id": "repeat-02",
+              "parse_success_rate": 1.0,
+              "nonempty_canonical_clause_rate": 1.0,
+              "failure_rate": 0.0,
+              "modality_label_accuracy": 0.9444444444444444,
+              "modality_label_macro_f1": 0.6166666666666667,
+              "actor_p": 0.7272727272727273,
+              "actor_r": 0.9411764705882353,
+              "actor_f1": 0.8205128205128205,
+              "action_p": 0.9512195121951219,
+              "action_r": 0.9743589743589743,
+              "action_f1": 0.9626502111075024,
+              "condition_p": 0.6551724137931034,
+              "condition_r": 1.0,
+              "condition_f1": 0.7916666666666666,
+              "constraint_p": 0.9545454545454546,
+              "constraint_r": 0.6363636363636364,
+              "constraint_f1": 0.7636363636363637,
+              "exception_p": 0.0,
+              "exception_r": 0.0,
+              "exception_f1": 0.0,
+              "overall_p": 0.864516129032258,
+              "overall_r": 0.891156462585034,
+              "overall_f1": 0.8776341774366921
+            },
+            {
+              "repeat_id": "repeat-03",
+              "parse_success_rate": 1.0,
+              "nonempty_canonical_clause_rate": 1.0,
+              "failure_rate": 0.0,
+              "modality_label_accuracy": 0.9444444444444444,
+              "modality_label_macro_f1": 0.6166666666666667,
+              "actor_p": 0.7272727272727273,
+              "actor_r": 0.9411764705882353,
+              "actor_f1": 0.8205128205128205,
+              "action_p": 0.9512195121951219,
+              "action_r": 0.9743589743589743,
+              "action_f1": 0.9626502111075024,
+              "condition_p": 0.6551724137931034,
+              "condition_r": 1.0,
+              "condition_f1": 0.7916666666666666,
+              "constraint_p": 0.9545454545454546,
+              "constraint_r": 0.6363636363636364,
+              "constraint_f1": 0.7636363636363637,
+              "exception_p": 0.0,
+              "exception_r": 0.0,
+              "exception_f1": 0.0,
+              "overall_p": 0.864516129032258,
+              "overall_r": 0.8843537414965986,
+              "overall_f1": 0.8743224252158202
+            },
+            {
+              "repeat_id": "repeat-04",
+              "parse_success_rate": 1.0,
+              "nonempty_canonical_clause_rate": 1.0,
+              "failure_rate": 0.0,
+              "modality_label_accuracy": 0.9444444444444444,
+              "modality_label_macro_f1": 0.6166666666666667,
+              "actor_p": 0.6956521739130435,
+              "actor_r": 0.9411764705882353,
+              "actor_f1": 0.7999999999999999,
+              "action_p": 0.9512195121951219,
+              "action_r": 0.9743589743589743,
+              "action_f1": 0.9626502111075024,
+              "condition_p": 0.6428571428571429,
+              "condition_r": 1.0,
+              "condition_f1": 0.782608695652174,
+              "constraint_p": 0.9545454545454546,
+              "constraint_r": 0.6363636363636364,
+              "constraint_f1": 0.7636363636363637,
+              "exception_p": 0.0,
+              "exception_r": 0.0,
+              "exception_f1": 0.0,
+              "overall_p": 0.8471337579617835,
+              "overall_r": 0.891156462585034,
+              "overall_f1": 0.8685876663841667
+            },
+            {
+              "repeat_id": "repeat-05",
+              "parse_success_rate": 1.0,
+              "nonempty_canonical_clause_rate": 1.0,
+              "failure_rate": 0.0,
+              "modality_label_accuracy": 0.9444444444444444,
+              "modality_label_macro_f1": 0.6166666666666667,
+              "actor_p": 0.7272727272727273,
+              "actor_r": 0.9411764705882353,
+              "actor_f1": 0.8205128205128205,
+              "action_p": 0.9512195121951219,
+              "action_r": 0.9743589743589743,
+              "action_f1": 0.9626502111075024,
+              "condition_p": 0.6551724137931034,
+              "condition_r": 1.0,
+              "condition_f1": 0.7916666666666666,
+              "constraint_p": 0.9545454545454546,
+              "constraint_r": 0.6363636363636364,
+              "constraint_f1": 0.7636363636363637,
+              "exception_p": 0.0,
+              "exception_r": 0.0,
+              "exception_f1": 0.0,
+              "overall_p": 0.864516129032258,
+              "overall_r": 0.8843537414965986,
+              "overall_f1": 0.8743224252158202
+            }
+          ],
+          "aggregate": {
+            "actor_p": {
+              "mean": 0.728,
+              "sd": 0.021,
+              "min": 0.696,
+              "max": 0.762
+            },
+            "actor_r": {
+              "mean": 0.941,
+              "sd": 0.0,
+              "min": 0.941,
+              "max": 0.941
+            },
+            "actor_f1": {
+              "mean": 0.821,
+              "sd": 0.013,
+              "min": 0.8,
+              "max": 0.842
+            },
+            "action_p": {
+              "mean": 0.951,
+              "sd": 0.0,
+              "min": 0.951,
+              "max": 0.951
+            },
+            "action_r": {
+              "mean": 0.974,
+              "sd": 0.0,
+              "min": 0.974,
+              "max": 0.974
+            },
+            "action_f1": {
+              "mean": 0.963,
+              "sd": 0.0,
+              "min": 0.963,
+              "max": 0.963
+            },
+            "condition_p": {
+              "mean": 0.653,
+              "sd": 0.005,
+              "min": 0.643,
+              "max": 0.655
+            },
+            "condition_r": {
+              "mean": 1.0,
+              "sd": 0.0,
+              "min": 1.0,
+              "max": 1.0
+            },
+            "condition_f1": {
+              "mean": 0.79,
+              "sd": 0.004,
+              "min": 0.783,
+              "max": 0.792
+            },
+            "constraint_p": {
+              "mean": 0.955,
+              "sd": 0.0,
+              "min": 0.955,
+              "max": 0.955
+            },
+            "constraint_r": {
+              "mean": 0.636,
+              "sd": 0.0,
+              "min": 0.636,
+              "max": 0.636
+            },
+            "constraint_f1": {
+              "mean": 0.764,
+              "sd": 0.0,
+              "min": 0.764,
+              "max": 0.764
+            },
+            "exception_p": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "exception_r": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "exception_f1": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "overall_p": {
+              "mean": 0.862,
+              "sd": 0.008,
+              "min": 0.847,
+              "max": 0.869
+            },
+            "overall_r": {
+              "mean": 0.887,
+              "sd": 0.003,
+              "min": 0.884,
+              "max": 0.891
+            },
+            "overall_f1": {
+              "mean": 0.874,
+              "sd": 0.003,
+              "min": 0.869,
+              "max": 0.878
+            },
+            "parse_success_rate": {
+              "mean": 1.0,
+              "sd": 0.0,
+              "min": 1.0,
+              "max": 1.0
+            },
+            "nonempty_canonical_clause_rate": {
+              "mean": 1.0,
+              "sd": 0.0,
+              "min": 1.0,
+              "max": 1.0
+            },
+            "failure_rate": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "modality_label_accuracy": {
+              "mean": 0.944,
+              "sd": 0.0,
+              "min": 0.944,
+              "max": 0.944
+            },
+            "modality_label_macro_f1": {
+              "mean": 0.617,
+              "sd": 0.0,
+              "min": 0.617,
+              "max": 0.617
+            }
+          }
+        },
+        "OURS-BARRIENTOS-MODULE": {
+          "display_name": "本文方法替换为 Barrientos 提示模块",
+          "per_repeat": [
+            {
+              "repeat_id": "repeat-01",
+              "parse_success_rate": 1.0,
+              "nonempty_canonical_clause_rate": 0.0,
+              "failure_rate": 0.0,
+              "modality_label_accuracy": 0.0,
+              "modality_label_macro_f1": 0.0,
+              "actor_p": 0.0,
+              "actor_r": 0.0,
+              "actor_f1": 0.0,
+              "action_p": 0.0,
+              "action_r": 0.0,
+              "action_f1": 0.0,
+              "condition_p": 0.0,
+              "condition_r": 0.0,
+              "condition_f1": 0.0,
+              "constraint_p": 0.0,
+              "constraint_r": 0.0,
+              "constraint_f1": 0.0,
+              "exception_p": 0.0,
+              "exception_r": 0.0,
+              "exception_f1": 0.0,
+              "overall_p": 0.0,
+              "overall_r": 0.0,
+              "overall_f1": 0.0
+            },
+            {
+              "repeat_id": "repeat-02",
+              "parse_success_rate": 1.0,
+              "nonempty_canonical_clause_rate": 0.0,
+              "failure_rate": 0.0,
+              "modality_label_accuracy": 0.0,
+              "modality_label_macro_f1": 0.0,
+              "actor_p": 0.0,
+              "actor_r": 0.0,
+              "actor_f1": 0.0,
+              "action_p": 0.0,
+              "action_r": 0.0,
+              "action_f1": 0.0,
+              "condition_p": 0.0,
+              "condition_r": 0.0,
+              "condition_f1": 0.0,
+              "constraint_p": 0.0,
+              "constraint_r": 0.0,
+              "constraint_f1": 0.0,
+              "exception_p": 0.0,
+              "exception_r": 0.0,
+              "exception_f1": 0.0,
+              "overall_p": 0.0,
+              "overall_r": 0.0,
+              "overall_f1": 0.0
+            },
+            {
+              "repeat_id": "repeat-03",
+              "parse_success_rate": 1.0,
+              "nonempty_canonical_clause_rate": 0.0,
+              "failure_rate": 0.0,
+              "modality_label_accuracy": 0.0,
+              "modality_label_macro_f1": 0.0,
+              "actor_p": 0.0,
+              "actor_r": 0.0,
+              "actor_f1": 0.0,
+              "action_p": 0.0,
+              "action_r": 0.0,
+              "action_f1": 0.0,
+              "condition_p": 0.0,
+              "condition_r": 0.0,
+              "condition_f1": 0.0,
+              "constraint_p": 0.0,
+              "constraint_r": 0.0,
+              "constraint_f1": 0.0,
+              "exception_p": 0.0,
+              "exception_r": 0.0,
+              "exception_f1": 0.0,
+              "overall_p": 0.0,
+              "overall_r": 0.0,
+              "overall_f1": 0.0
+            },
+            {
+              "repeat_id": "repeat-04",
+              "parse_success_rate": 1.0,
+              "nonempty_canonical_clause_rate": 0.0,
+              "failure_rate": 0.0,
+              "modality_label_accuracy": 0.0,
+              "modality_label_macro_f1": 0.0,
+              "actor_p": 0.0,
+              "actor_r": 0.0,
+              "actor_f1": 0.0,
+              "action_p": 0.0,
+              "action_r": 0.0,
+              "action_f1": 0.0,
+              "condition_p": 0.0,
+              "condition_r": 0.0,
+              "condition_f1": 0.0,
+              "constraint_p": 0.0,
+              "constraint_r": 0.0,
+              "constraint_f1": 0.0,
+              "exception_p": 0.0,
+              "exception_r": 0.0,
+              "exception_f1": 0.0,
+              "overall_p": 0.0,
+              "overall_r": 0.0,
+              "overall_f1": 0.0
+            },
+            {
+              "repeat_id": "repeat-05",
+              "parse_success_rate": 1.0,
+              "nonempty_canonical_clause_rate": 0.0,
+              "failure_rate": 0.0,
+              "modality_label_accuracy": 0.0,
+              "modality_label_macro_f1": 0.0,
+              "actor_p": 0.0,
+              "actor_r": 0.0,
+              "actor_f1": 0.0,
+              "action_p": 0.0,
+              "action_r": 0.0,
+              "action_f1": 0.0,
+              "condition_p": 0.0,
+              "condition_r": 0.0,
+              "condition_f1": 0.0,
+              "constraint_p": 0.0,
+              "constraint_r": 0.0,
+              "constraint_f1": 0.0,
+              "exception_p": 0.0,
+              "exception_r": 0.0,
+              "exception_f1": 0.0,
+              "overall_p": 0.0,
+              "overall_r": 0.0,
+              "overall_f1": 0.0
+            }
+          ],
+          "aggregate": {
+            "actor_p": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "actor_r": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "actor_f1": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "action_p": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "action_r": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "action_f1": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "condition_p": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "condition_r": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "condition_f1": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "constraint_p": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "constraint_r": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "constraint_f1": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "exception_p": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "exception_r": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "exception_f1": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "overall_p": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "overall_r": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "overall_f1": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "parse_success_rate": {
+              "mean": 1.0,
+              "sd": 0.0,
+              "min": 1.0,
+              "max": 1.0
+            },
+            "nonempty_canonical_clause_rate": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "failure_rate": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "modality_label_accuracy": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "modality_label_macro_f1": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      "delta_swap_minus_full": {
+        "actor_p": -0.728,
+        "actor_r": -0.941,
+        "actor_f1": -0.821,
+        "action_p": -0.951,
+        "action_r": -0.974,
+        "action_f1": -0.963,
+        "condition_p": -0.653,
+        "condition_r": -1.0,
+        "condition_f1": -0.79,
+        "constraint_p": -0.955,
+        "constraint_r": -0.636,
+        "constraint_f1": -0.764,
+        "exception_p": 0.0,
+        "exception_r": 0.0,
+        "exception_f1": 0.0,
+        "overall_p": -0.862,
+        "overall_r": -0.887,
+        "overall_f1": -0.874,
+        "parse_success_rate": 0.0,
+        "nonempty_canonical_clause_rate": -1.0,
+        "failure_rate": 0.0,
+        "modality_label_accuracy": -0.944,
+        "modality_label_macro_f1": -0.617
+      }
+    },
+    "C_shared_target": {
+      "table": "C",
+      "title": "Shared-target (deterministic adapters; same Gold; same metric function per target)",
+      "adapters": {
+        "modality": "Barrientos: first norms[].modality; Ours: first clauses[].modality.label projected to the shared 3 classes; gold: first clause label of the frozen S2.11 gold; definition-gold samples excluded and reported",
+        "norm_count_type": "adapter-defined (disclosed): Barrientos len(norms)/first modality; Ours count of 3-class-modal clauses/first label"
+      },
+      "not_expressible": {
+        "actor_action_exception": {
+          "status": "not_expressible_in_barrientos_schema",
+          "reason": "the Barrientos Step-1 schema has no actor/action/exception fields at the same semantic level; never hard-computed as 0"
+        },
+        "definition": {
+          "status": "not_expressible_in_barrientos_schema",
+          "reason": "3-class Barrientos modality cannot express definition; excluded from shared modality denominator, never counted as 0"
+        },
+        "precondition": {
+          "status": "not_strictly_alignable",
+          "reason": "Barrientos precondition is an AND/OR/NOT action list; Ours condition is a span-based field"
+        }
+      },
+      "no_overall_f1_synthesized_across_schemas": true,
+      "modality": {
+        "per_repeat": {
+          "repeat-01": {
+            "target": "shared_3class_modality_v1",
+            "gold_samples": 36,
+            "gold_expressible_samples": 36,
+            "excluded_gold_definition_samples": 0,
+            "arms": {
+              "BARR-FULL": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 28,
+                    "fp": 0,
+                    "fn": 0,
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1": 1.0
+                  },
+                  "permission": {
+                    "tp": 2,
+                    "fp": 0,
+                    "fn": 2,
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "f1": 0.666667
+                  },
+                  "prohibition": {
+                    "tp": 4,
+                    "fp": 1,
+                    "fn": 0,
+                    "precision": 0.8,
+                    "recall": 1.0,
+                    "f1": 0.888889
+                  }
+                },
+                "macro": {
+                  "precision": 0.933333,
+                  "recall": 0.833333,
+                  "f1": 0.851852
+                },
+                "pooled_tp": 34,
+                "pooled_fp": 1,
+                "pooled_fn": 2,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              },
+              "OURS-FULL": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 28,
+                    "fp": 0,
+                    "fn": 0,
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1": 1.0
+                  },
+                  "permission": {
+                    "tp": 2,
+                    "fp": 0,
+                    "fn": 2,
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "f1": 0.666667
+                  },
+                  "prohibition": {
+                    "tp": 4,
+                    "fp": 2,
+                    "fn": 0,
+                    "precision": 0.666667,
+                    "recall": 1.0,
+                    "f1": 0.8
+                  }
+                },
+                "macro": {
+                  "precision": 0.888889,
+                  "recall": 0.833333,
+                  "f1": 0.822222
+                },
+                "pooled_tp": 34,
+                "pooled_fp": 2,
+                "pooled_fn": 2,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              },
+              "OURS-BARRIENTOS-MODULE": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 28,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  },
+                  "permission": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 4,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  },
+                  "prohibition": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 4,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  }
+                },
+                "macro": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0
+                },
+                "pooled_tp": 0,
+                "pooled_fp": 0,
+                "pooled_fn": 36,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              }
+            }
+          },
+          "repeat-02": {
+            "target": "shared_3class_modality_v1",
+            "gold_samples": 36,
+            "gold_expressible_samples": 36,
+            "excluded_gold_definition_samples": 0,
+            "arms": {
+              "BARR-FULL": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 28,
+                    "fp": 0,
+                    "fn": 0,
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1": 1.0
+                  },
+                  "permission": {
+                    "tp": 3,
+                    "fp": 0,
+                    "fn": 1,
+                    "precision": 1.0,
+                    "recall": 0.75,
+                    "f1": 0.857143
+                  },
+                  "prohibition": {
+                    "tp": 4,
+                    "fp": 1,
+                    "fn": 0,
+                    "precision": 0.8,
+                    "recall": 1.0,
+                    "f1": 0.888889
+                  }
+                },
+                "macro": {
+                  "precision": 0.933333,
+                  "recall": 0.916667,
+                  "f1": 0.915344
+                },
+                "pooled_tp": 35,
+                "pooled_fp": 1,
+                "pooled_fn": 1,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              },
+              "OURS-FULL": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 28,
+                    "fp": 0,
+                    "fn": 0,
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1": 1.0
+                  },
+                  "permission": {
+                    "tp": 2,
+                    "fp": 0,
+                    "fn": 2,
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "f1": 0.666667
+                  },
+                  "prohibition": {
+                    "tp": 4,
+                    "fp": 2,
+                    "fn": 0,
+                    "precision": 0.666667,
+                    "recall": 1.0,
+                    "f1": 0.8
+                  }
+                },
+                "macro": {
+                  "precision": 0.888889,
+                  "recall": 0.833333,
+                  "f1": 0.822222
+                },
+                "pooled_tp": 34,
+                "pooled_fp": 2,
+                "pooled_fn": 2,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              },
+              "OURS-BARRIENTOS-MODULE": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 28,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  },
+                  "permission": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 4,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  },
+                  "prohibition": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 4,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  }
+                },
+                "macro": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0
+                },
+                "pooled_tp": 0,
+                "pooled_fp": 0,
+                "pooled_fn": 36,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              }
+            }
+          },
+          "repeat-03": {
+            "target": "shared_3class_modality_v1",
+            "gold_samples": 36,
+            "gold_expressible_samples": 36,
+            "excluded_gold_definition_samples": 0,
+            "arms": {
+              "BARR-FULL": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 28,
+                    "fp": 0,
+                    "fn": 0,
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1": 1.0
+                  },
+                  "permission": {
+                    "tp": 3,
+                    "fp": 0,
+                    "fn": 1,
+                    "precision": 1.0,
+                    "recall": 0.75,
+                    "f1": 0.857143
+                  },
+                  "prohibition": {
+                    "tp": 4,
+                    "fp": 1,
+                    "fn": 0,
+                    "precision": 0.8,
+                    "recall": 1.0,
+                    "f1": 0.888889
+                  }
+                },
+                "macro": {
+                  "precision": 0.933333,
+                  "recall": 0.916667,
+                  "f1": 0.915344
+                },
+                "pooled_tp": 35,
+                "pooled_fp": 1,
+                "pooled_fn": 1,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              },
+              "OURS-FULL": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 28,
+                    "fp": 0,
+                    "fn": 0,
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1": 1.0
+                  },
+                  "permission": {
+                    "tp": 2,
+                    "fp": 0,
+                    "fn": 2,
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "f1": 0.666667
+                  },
+                  "prohibition": {
+                    "tp": 4,
+                    "fp": 2,
+                    "fn": 0,
+                    "precision": 0.666667,
+                    "recall": 1.0,
+                    "f1": 0.8
+                  }
+                },
+                "macro": {
+                  "precision": 0.888889,
+                  "recall": 0.833333,
+                  "f1": 0.822222
+                },
+                "pooled_tp": 34,
+                "pooled_fp": 2,
+                "pooled_fn": 2,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              },
+              "OURS-BARRIENTOS-MODULE": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 28,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  },
+                  "permission": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 4,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  },
+                  "prohibition": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 4,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  }
+                },
+                "macro": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0
+                },
+                "pooled_tp": 0,
+                "pooled_fp": 0,
+                "pooled_fn": 36,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              }
+            }
+          },
+          "repeat-04": {
+            "target": "shared_3class_modality_v1",
+            "gold_samples": 36,
+            "gold_expressible_samples": 36,
+            "excluded_gold_definition_samples": 0,
+            "arms": {
+              "BARR-FULL": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 28,
+                    "fp": 0,
+                    "fn": 0,
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1": 1.0
+                  },
+                  "permission": {
+                    "tp": 3,
+                    "fp": 0,
+                    "fn": 1,
+                    "precision": 1.0,
+                    "recall": 0.75,
+                    "f1": 0.857143
+                  },
+                  "prohibition": {
+                    "tp": 4,
+                    "fp": 1,
+                    "fn": 0,
+                    "precision": 0.8,
+                    "recall": 1.0,
+                    "f1": 0.888889
+                  }
+                },
+                "macro": {
+                  "precision": 0.933333,
+                  "recall": 0.916667,
+                  "f1": 0.915344
+                },
+                "pooled_tp": 35,
+                "pooled_fp": 1,
+                "pooled_fn": 1,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              },
+              "OURS-FULL": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 28,
+                    "fp": 0,
+                    "fn": 0,
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1": 1.0
+                  },
+                  "permission": {
+                    "tp": 2,
+                    "fp": 0,
+                    "fn": 2,
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "f1": 0.666667
+                  },
+                  "prohibition": {
+                    "tp": 4,
+                    "fp": 2,
+                    "fn": 0,
+                    "precision": 0.666667,
+                    "recall": 1.0,
+                    "f1": 0.8
+                  }
+                },
+                "macro": {
+                  "precision": 0.888889,
+                  "recall": 0.833333,
+                  "f1": 0.822222
+                },
+                "pooled_tp": 34,
+                "pooled_fp": 2,
+                "pooled_fn": 2,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              },
+              "OURS-BARRIENTOS-MODULE": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 28,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  },
+                  "permission": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 4,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  },
+                  "prohibition": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 4,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  }
+                },
+                "macro": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0
+                },
+                "pooled_tp": 0,
+                "pooled_fp": 0,
+                "pooled_fn": 36,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              }
+            }
+          },
+          "repeat-05": {
+            "target": "shared_3class_modality_v1",
+            "gold_samples": 36,
+            "gold_expressible_samples": 36,
+            "excluded_gold_definition_samples": 0,
+            "arms": {
+              "BARR-FULL": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 28,
+                    "fp": 0,
+                    "fn": 0,
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1": 1.0
+                  },
+                  "permission": {
+                    "tp": 2,
+                    "fp": 0,
+                    "fn": 2,
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "f1": 0.666667
+                  },
+                  "prohibition": {
+                    "tp": 4,
+                    "fp": 1,
+                    "fn": 0,
+                    "precision": 0.8,
+                    "recall": 1.0,
+                    "f1": 0.888889
+                  }
+                },
+                "macro": {
+                  "precision": 0.933333,
+                  "recall": 0.833333,
+                  "f1": 0.851852
+                },
+                "pooled_tp": 34,
+                "pooled_fp": 1,
+                "pooled_fn": 2,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              },
+              "OURS-FULL": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 28,
+                    "fp": 0,
+                    "fn": 0,
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1": 1.0
+                  },
+                  "permission": {
+                    "tp": 2,
+                    "fp": 0,
+                    "fn": 2,
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "f1": 0.666667
+                  },
+                  "prohibition": {
+                    "tp": 4,
+                    "fp": 2,
+                    "fn": 0,
+                    "precision": 0.666667,
+                    "recall": 1.0,
+                    "f1": 0.8
+                  }
+                },
+                "macro": {
+                  "precision": 0.888889,
+                  "recall": 0.833333,
+                  "f1": 0.822222
+                },
+                "pooled_tp": 34,
+                "pooled_fp": 2,
+                "pooled_fn": 2,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              },
+              "OURS-BARRIENTOS-MODULE": {
+                "classes": [
+                  "obligation",
+                  "permission",
+                  "prohibition"
+                ],
+                "samples_expressible": 36,
+                "per_class": {
+                  "obligation": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 28,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  },
+                  "permission": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 4,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  },
+                  "prohibition": {
+                    "tp": 0,
+                    "fp": 0,
+                    "fn": 4,
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1": 0.0
+                  }
+                },
+                "macro": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0
+                },
+                "pooled_tp": 0,
+                "pooled_fp": 0,
+                "pooled_fn": 36,
+                "match_rule": "same_gold_same_metric_shared_3class_modality",
+                "no_overall_f1_synthesized_across_schemas": true
+              }
+            }
+          }
+        },
+        "arms": {
+          "BARR-FULL": {
+            "per_class": {
+              "obligation": {
+                "precision": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                }
+              },
+              "permission": {
+                "precision": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 0.65,
+                  "sd": 0.122
+                },
+                "f1": {
+                  "mean": 0.781,
+                  "sd": 0.093
+                }
+              },
+              "prohibition": {
+                "precision": {
+                  "mean": 0.8,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.889,
+                  "sd": 0.0
+                }
+              }
+            },
+            "macro_f1": {
+              "mean": 0.89,
+              "sd": 0.031
+            }
+          },
+          "OURS-FULL": {
+            "per_class": {
+              "obligation": {
+                "precision": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                }
+              },
+              "permission": {
+                "precision": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 0.5,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.667,
+                  "sd": 0.0
+                }
+              },
+              "prohibition": {
+                "precision": {
+                  "mean": 0.667,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.8,
+                  "sd": 0.0
+                }
+              }
+            },
+            "macro_f1": {
+              "mean": 0.822,
+              "sd": 0.0
+            }
+          },
+          "OURS-BARRIENTOS-MODULE": {
+            "per_class": {
+              "obligation": {
+                "precision": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                }
+              },
+              "permission": {
+                "precision": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                }
+              },
+              "prohibition": {
+                "precision": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                }
+              }
+            },
+            "macro_f1": {
+              "mean": 0.0,
+              "sd": 0.0
+            }
+          }
+        }
+      },
+      "display_names": {
+        "BARR-FULL": "Barrientos 原生方法",
+        "OURS-FULL": "本文完整方法",
+        "OURS-BARRIENTOS-MODULE": "本文方法替换为 Barrientos 提示模块"
+      },
+      "norm_count_type": {
+        "per_repeat": {
+          "repeat-01": {
+            "target": "adapter_defined_norm_count_type_v1",
+            "adapter_rule": "Barrientos: len(norms) and first norm.modality; Ours: count of clauses with 3-class modality label and first such label. Clause<->norm mapping is this project's explicit adapter rule, not a schema identity claim.",
+            "precondition": {
+              "status": "not_strictly_alignable",
+              "reason": "Barrientos precondition is an AND/OR/NOT action list; Ours condition is a span-based field; no equivalence"
+            },
+            "arms": {
+              "BARR-FULL": {
+                "count_tp": 39,
+                "count_fp": 4,
+                "count_fn": 13,
+                "count_precision": 0.906977,
+                "count_recall": 0.75,
+                "count_f1": 0.821053,
+                "first_type_accuracy": 0.916667,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              },
+              "OURS-FULL": {
+                "count_tp": 38,
+                "count_fp": 0,
+                "count_fn": 14,
+                "count_precision": 1.0,
+                "count_recall": 0.730769,
+                "count_f1": 0.844444,
+                "first_type_accuracy": 0.916667,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              },
+              "OURS-BARRIENTOS-MODULE": {
+                "count_tp": 0,
+                "count_fp": 0,
+                "count_fn": 52,
+                "count_precision": 0.0,
+                "count_recall": 0.0,
+                "count_f1": 0.0,
+                "first_type_accuracy": 0.0,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              }
+            }
+          },
+          "repeat-02": {
+            "target": "adapter_defined_norm_count_type_v1",
+            "adapter_rule": "Barrientos: len(norms) and first norm.modality; Ours: count of clauses with 3-class modality label and first such label. Clause<->norm mapping is this project's explicit adapter rule, not a schema identity claim.",
+            "precondition": {
+              "status": "not_strictly_alignable",
+              "reason": "Barrientos precondition is an AND/OR/NOT action list; Ours condition is a span-based field; no equivalence"
+            },
+            "arms": {
+              "BARR-FULL": {
+                "count_tp": 41,
+                "count_fp": 4,
+                "count_fn": 11,
+                "count_precision": 0.911111,
+                "count_recall": 0.788462,
+                "count_f1": 0.845361,
+                "first_type_accuracy": 0.944444,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              },
+              "OURS-FULL": {
+                "count_tp": 38,
+                "count_fp": 0,
+                "count_fn": 14,
+                "count_precision": 1.0,
+                "count_recall": 0.730769,
+                "count_f1": 0.844444,
+                "first_type_accuracy": 0.916667,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              },
+              "OURS-BARRIENTOS-MODULE": {
+                "count_tp": 0,
+                "count_fp": 0,
+                "count_fn": 52,
+                "count_precision": 0.0,
+                "count_recall": 0.0,
+                "count_f1": 0.0,
+                "first_type_accuracy": 0.0,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              }
+            }
+          },
+          "repeat-03": {
+            "target": "adapter_defined_norm_count_type_v1",
+            "adapter_rule": "Barrientos: len(norms) and first norm.modality; Ours: count of clauses with 3-class modality label and first such label. Clause<->norm mapping is this project's explicit adapter rule, not a schema identity claim.",
+            "precondition": {
+              "status": "not_strictly_alignable",
+              "reason": "Barrientos precondition is an AND/OR/NOT action list; Ours condition is a span-based field; no equivalence"
+            },
+            "arms": {
+              "BARR-FULL": {
+                "count_tp": 41,
+                "count_fp": 4,
+                "count_fn": 11,
+                "count_precision": 0.911111,
+                "count_recall": 0.788462,
+                "count_f1": 0.845361,
+                "first_type_accuracy": 0.944444,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              },
+              "OURS-FULL": {
+                "count_tp": 38,
+                "count_fp": 0,
+                "count_fn": 14,
+                "count_precision": 1.0,
+                "count_recall": 0.730769,
+                "count_f1": 0.844444,
+                "first_type_accuracy": 0.916667,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              },
+              "OURS-BARRIENTOS-MODULE": {
+                "count_tp": 0,
+                "count_fp": 0,
+                "count_fn": 52,
+                "count_precision": 0.0,
+                "count_recall": 0.0,
+                "count_f1": 0.0,
+                "first_type_accuracy": 0.0,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              }
+            }
+          },
+          "repeat-04": {
+            "target": "adapter_defined_norm_count_type_v1",
+            "adapter_rule": "Barrientos: len(norms) and first norm.modality; Ours: count of clauses with 3-class modality label and first such label. Clause<->norm mapping is this project's explicit adapter rule, not a schema identity claim.",
+            "precondition": {
+              "status": "not_strictly_alignable",
+              "reason": "Barrientos precondition is an AND/OR/NOT action list; Ours condition is a span-based field; no equivalence"
+            },
+            "arms": {
+              "BARR-FULL": {
+                "count_tp": 40,
+                "count_fp": 3,
+                "count_fn": 12,
+                "count_precision": 0.930233,
+                "count_recall": 0.769231,
+                "count_f1": 0.842105,
+                "first_type_accuracy": 0.944444,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              },
+              "OURS-FULL": {
+                "count_tp": 38,
+                "count_fp": 1,
+                "count_fn": 14,
+                "count_precision": 0.974359,
+                "count_recall": 0.730769,
+                "count_f1": 0.835165,
+                "first_type_accuracy": 0.916667,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              },
+              "OURS-BARRIENTOS-MODULE": {
+                "count_tp": 0,
+                "count_fp": 0,
+                "count_fn": 52,
+                "count_precision": 0.0,
+                "count_recall": 0.0,
+                "count_f1": 0.0,
+                "first_type_accuracy": 0.0,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              }
+            }
+          },
+          "repeat-05": {
+            "target": "adapter_defined_norm_count_type_v1",
+            "adapter_rule": "Barrientos: len(norms) and first norm.modality; Ours: count of clauses with 3-class modality label and first such label. Clause<->norm mapping is this project's explicit adapter rule, not a schema identity claim.",
+            "precondition": {
+              "status": "not_strictly_alignable",
+              "reason": "Barrientos precondition is an AND/OR/NOT action list; Ours condition is a span-based field; no equivalence"
+            },
+            "arms": {
+              "BARR-FULL": {
+                "count_tp": 40,
+                "count_fp": 3,
+                "count_fn": 12,
+                "count_precision": 0.930233,
+                "count_recall": 0.769231,
+                "count_f1": 0.842105,
+                "first_type_accuracy": 0.916667,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              },
+              "OURS-FULL": {
+                "count_tp": 38,
+                "count_fp": 0,
+                "count_fn": 14,
+                "count_precision": 1.0,
+                "count_recall": 0.730769,
+                "count_f1": 0.844444,
+                "first_type_accuracy": 0.916667,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              },
+              "OURS-BARRIENTOS-MODULE": {
+                "count_tp": 0,
+                "count_fp": 0,
+                "count_fn": 52,
+                "count_precision": 0.0,
+                "count_recall": 0.0,
+                "count_f1": 0.0,
+                "first_type_accuracy": 0.0,
+                "note": "adapter-defined; reported separately, never merged with schema-native F1"
+              }
+            }
+          }
+        },
+        "note": "adapter-defined secondary metric; reported separately"
+      }
+    }
+  },
+  "comparability_rule": "Table D F1 (0813-window D prompt/few-shot ablation) and Table A F1 (Barrientos-native) and Table B F1 (Ours-native) use different schemas/evaluators and MUST NOT be compared directly. Only Table C (same Gold, same metric function via deterministic adapters) is a legitimate cross-method comparison, and only on the pre-defined shared targets. The old Preview D-full is NEVER part of any module delta."
+}

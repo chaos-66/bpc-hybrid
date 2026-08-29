@@ -3925,3 +3925,20 @@
 - 仍存在 blocker：无
 - 备注：User authorized 1140 calls, deepseek-v4-pro/DeepSeek-V4-Pro-0813, temperature=0, retry=0, USD cap 30.407. Official pricing corrected: peak windows Monday-Friday only; weekends off-peak. Focused Barrientos/S2 tests 102 passed; Stage1 tamper tests 107 passed; full audit 2739 passed / 24 skipped / 40 warnings. Zero API before checkpoint.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-29T12:17:14.700006+00:00 - Execute and evaluate the authorized 1140-call Barrientos D/E ablation on the fixed D/E plan
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=barrientos-de-0813-1140-v1；阶段=Barrientos D/E ablation；方法=DeepSeek-V4-Pro-0813: D prompt/few-shot + E module replacement；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_barrientos_ablation_suite_v2.py --execute-de --contract-file formal_experiment/configs/ablations/barrientos_de_execution_contract_v1.json`
+- manifest：formal_experiment/outputs/development/barrientos_ablation_suite_v2/execution_summary.json
+- 结果摘要：1140/1140 actual calls, complete=true, in_doubt=0; input=2428816, output=732374 tokens; conservative peak ledger USD 6.10623816; off-peak estimate USD 3.05311908; D-full overall F1=0.771908; BARR native precondition/norm F1 mean=0.771/0.825; OURS-FULL E overall F1 mean=0.874; Barrientos-module swap strict canonical F1=0 with nonempty canonical rate=0
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2739 passed, 24 skipped, 40 warnings in 1572.53s (0:26:12)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`40cb8f21bb221abe1ea03a575f60dccfb51f2c40`；相关未提交路径：13 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：User authorized exact 1140-call DeepSeek-V4-Pro-0813 plan, temperature=0, retry=0, USD cap=30.407, Beijing off-peak only. Raw responses and per-request ledgers persisted; failed samples stayed in denominators. Table builder generator-exhaustion bug was fixed offline and parse-success was separated from nonempty-canonical rate; no API rerun.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

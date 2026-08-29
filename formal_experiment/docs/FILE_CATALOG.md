@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-29
-**收录文件**：1438 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1440 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -785,6 +785,8 @@
 | `outputs/reports/barrientos_ablation_comparison_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/barrientos_de_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/barrientos_de_tables_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/barrientos_de_tables_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/direct_llm_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |

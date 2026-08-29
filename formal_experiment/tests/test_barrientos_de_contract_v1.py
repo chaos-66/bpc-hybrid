@@ -7,6 +7,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import math
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -1063,11 +1064,24 @@ def test_three_tables_build_from_fixture_output(tmp_path):
         assert b["evaluator"] == "s2_12_stratified_evaluator_v2"
         assert set(b["arms"]) == {"OURS-FULL", "OURS-BARRIENTOS-MODULE"}
         assert "delta_swap_minus_full" in b
+        for arm in ("OURS-FULL", "OURS-BARRIENTOS-MODULE"):
+            assert len(b["arms"][arm]["per_repeat"]) == 5
+            overall = b["arms"][arm]["aggregate"]["overall_f1"]
+            assert overall is not None
+            assert math.isfinite(overall["mean"])
+            nonempty = b["arms"][arm]["aggregate"][
+                "nonempty_canonical_clause_rate"]
+            assert nonempty is not None
+            assert math.isfinite(nonempty["mean"])
         # Table C: shared-target adapters only
         c = tabs["C_shared_target"]
         assert c["no_overall_f1_synthesized_across_schemas"] is True
         assert set(c["modality"]["arms"]) == {"BARR-FULL", "OURS-FULL",
                                               "OURS-BARRIENTOS-MODULE"}
+        assert len(c["modality"]["per_repeat"]) == 5
+        for arm in ("BARR-FULL", "OURS-FULL", "OURS-BARRIENTOS-MODULE"):
+            assert math.isfinite(
+                c["modality"]["arms"][arm]["macro_f1"]["mean"])
         for field in ("actor_action_exception", "definition",
                       "precondition"):
             assert field in c["not_expressible"]
