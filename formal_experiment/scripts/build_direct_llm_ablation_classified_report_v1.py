@@ -38,6 +38,20 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _event_sha256(event: dict[str, Any]) -> str:
+    """Stable hash of the selected run event, not the append-only log file.
+
+    Hashing the whole ``EXPERIMENT_EVENTS.jsonl`` made this report stale after
+    every unrelated later event.  The scientific provenance is the selected
+    immutable run event, so bind that exact object instead.
+    """
+    payload = json.dumps(
+        event, ensure_ascii=False, sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def _run_event(path: Path) -> dict[str, Any]:
     matches: list[dict[str, Any]] = []
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -150,7 +164,7 @@ def build_report(
             "source_tables_sha256": _sha256(source_tables),
             "experiment_events": str(events.relative_to(ROOT)).replace(
                 "\\", "/"),
-            "experiment_events_sha256": _sha256(events),
+            "source_event_sha256": _event_sha256(event),
             "source_event_timestamp_utc": event["timestamp_utc"],
             "source_event_git_commit": event["git_commit"],
         },
@@ -201,9 +215,13 @@ def build_report(
                     "overall F1 falls from 0.771908 to 0 and the nonempty "
                     "canonical-clause rate from 0.986667 to 0."),
                 "interpretation_limit": (
-                    "The 0 F1 is a strict end-to-end contract result. Parse "
-                    "success remains 0.98, so it must not be described as "
-                    "proof that the model produced no semantic content."),
+                    "The 0 F1 is a strict end-to-end output-contract result. "
+                    "Parse success remains 0.98 and the later interface "
+                    "diagnosis found nonempty raw clauses, so this arm mixes "
+                    "semantic-example removal with loss of demonstrated JSON/"
+                    "coordinate conventions. It must not be described as proof "
+                    "that the model produced no semantic content or as an "
+                    "isolated semantic contribution of few-shot examples."),
             },
             "2_multi_module_sensitivity_not_core_ablation": {
                 "status": "complete_for_existing_arm",
@@ -354,8 +372,9 @@ def build_report(
         ],
         "bottom_line": {
             "what_is_already_clear": [
-                "Few-shot examples are necessary for usable output in the "
-                "current strict Direct-LLM pipeline.",
+                "Few-shot examples are necessary for adherence to the current "
+                "strict Direct-LLM output interface; their independent semantic "
+                "contribution is not isolated by this arm.",
                 "The full six-field method is substantially better fitted to "
                 "the project's six-field, BPMN-facing interface than either "
                 "tested "
@@ -420,10 +439,12 @@ def to_markdown(report: dict[str, Any]) -> str:
     lines += [
         "",
         "结论：去掉 few-shot 后，Overall F1 从 0.772 降到 0，非空 canonical "
-        "记录率从 0.987 降到 0。few-shot 对当前严格输出链是必要模块。",
+        "记录率从 0.987 降到 0。它证明 few-shot 对当前严格输出接口的遵循非常"
+        "重要，但尚未单独证明其语义贡献。",
         "",
-        "边界：可解析率仍有 0.980，因此 0 F1 表示输出无法进入本文严格六字段"
-        "表示，不能简单写成“模型完全不懂语义”。",
+        "边界：可解析率仍有 0.980，后续接口诊断还发现146条原始响应包含非空"
+        "clauses；因此 0 F1 表示输出无法进入本文严格六字段表示，不能简单写成"
+        "“模型完全不懂语义”。",
         "",
         "字段层面的完整方法 F1：actor 0.687、action 0.860、condition 0.784、"
         "constraint 0.597、exception 0.636。",
@@ -512,7 +533,8 @@ def to_markdown(report: dict[str, Any]) -> str:
         "",
         "## 七、现在可以安全说到什么程度",
         "",
-        "- 已经能说：few-shot 是当前严格链中的关键模块；本文完整模块比两个"
+        "- 已经能说：few-shot 是当前严格输出接口的关键模块，但其独立语义贡献"
+        "尚未隔离；本文完整模块比两个"
         "Barrientos 替换版本更适合本文六字段、面向 BPMN 的输出接口。",
         "- 也必须说：Barrientos 在共享三类 modality 上更好，在自己的 schema 中"
         "也稳定有效。",

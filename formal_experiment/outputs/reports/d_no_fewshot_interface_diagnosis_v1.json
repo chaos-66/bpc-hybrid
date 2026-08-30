@@ -1,0 +1,367 @@
+{
+  "schema_version": "d_no_fewshot_interface_diagnosis@1.0.0",
+  "status": "retrospective_development_diagnostic_not_formal_ablation",
+  "scope": {
+    "source_arm": "D-no-fewshot-0813",
+    "source_run": "barrientos-de-0813-1140-v1",
+    "sample_count": 150,
+    "new_api_calls": 0,
+    "gold_read": true,
+    "gold_use": "evaluation_only_after_fixed_deterministic_bridge",
+    "post_hoc_adapter_designed_after_observing_output_shape": true,
+    "confirmatory_claim_allowed": false
+  },
+  "provenance": {
+    "raw_responses_path": "outputs/development/barrientos_ablation_suite_v2/D-no-fewshot-0813/repeat-01/raw_responses.jsonl",
+    "raw_responses_sha256": "6e6c0feaa73cf73b11eed8135f50cd57166fb9257e2ac1d63eb13ac07f59897c",
+    "raw_responses_distribution": "local_only_not_redistributed",
+    "current_canonical_path": "outputs/development/barrientos_ablation_suite_v2/D-no-fewshot-0813/repeat-01/canonical_predictions.jsonl",
+    "current_canonical_sha256": "601b3222ee1e25729426891fcb21ecb01a6df8a52257c68f9bc50a8ed4d55f4f",
+    "current_evaluation_path": "outputs/development/barrientos_ablation_suite_v2/D-no-fewshot-0813/repeat-01/evaluation.json",
+    "current_evaluation_sha256": "6493c6646e881447e893cd968ab498d57b5c77ad5809b8306c88ac395d8d1929"
+  },
+  "observed_failure_mechanism": {
+    "json_parse_success": 147,
+    "json_parse_failure": 3,
+    "raw_nonempty_clause_records": 146,
+    "raw_clause_count": 247,
+    "raw_clause_span_array_count": 247,
+    "raw_clause_span_object_count": 0,
+    "raw_field_span_count": 1272,
+    "raw_field_span_array_coordinate_count": 1114,
+    "raw_field_span_flat_coordinate_count": 137,
+    "current_canonical_nonempty_records": 0,
+    "current_canonical_clause_count": 0,
+    "root_cause": "The no-fewshot response used [start,end] arrays for all 247 clause spans and most field spans. The locked adapter expected named or nested object offsets; the canonicalizer then treated every array-shaped clause_span as structurally invalid and dropped every clause."
+  },
+  "retrospective_coordinate_bridge": {
+    "allowed_operations": [
+      "[start,end] -> {start,end}",
+      "source_text[start:end] -> missing span text",
+      "modality.type -> modality.label",
+      "field-specific id key -> id",
+      "casefold-whitespace normalized value when missing",
+      "existing unique-exact-text canonicalizer",
+      "existing canonical validator"
+    ],
+    "forbidden_operations": [
+      "Gold-based span selection",
+      "field reassignment",
+      "modality relabeling",
+      "fuzzy semantic recovery",
+      "new model request"
+    ],
+    "operation_counts": {
+      "records": 136,
+      "clause_coordinate_pairs_converted": 222,
+      "field_coordinate_pairs_converted": 1006,
+      "modality_type_keys_converted": 214,
+      "ids_filled_deterministically": 5,
+      "texts_filled_from_source": 235,
+      "unrecoverable_spans": 31,
+      "unrecoverable_clauses": 14,
+      "canonicalizer_reanchored": 687,
+      "canonicalizer_dropped_spans": 398,
+      "canonicalizer_dropped_clauses": 0
+    },
+    "valid_records": 136,
+    "nonempty_clause_records": 134,
+    "clause_count": 222,
+    "failed_records": 14,
+    "evaluation": {
+      "evaluator": "sun_literal_overlap@2.0.0",
+      "metrics": {
+        "schema_version": "sun_literal_overlap_evaluation@2.0.0",
+        "dataset_id": "independently_reconstructed_estg_150_v1",
+        "method_id": "direct_llm",
+        "sample_count": 150,
+        "invalid_attempt_count": 14,
+        "evaluation_unit": "statement",
+        "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+        "assignment": "none_independent_overlap_coverage",
+        "clause_alignment_required": false,
+        "overlap_threshold": "strictly_greater_than_zero_characters",
+        "modality_policy": "evidence_span_extraction_only_label_ignored",
+        "reporting_role": "primary_sun_phrase_extraction_metric",
+        "per_field": {
+          "modality": {
+            "ground_truth": 231,
+            "extracted": 199,
+            "matched_predictions": 159,
+            "matched_ground_truth": 155,
+            "misclassified": 40,
+            "missed": 76,
+            "precision": 0.7989949748743719,
+            "recall": 0.670995670995671,
+            "f1": 0.7294225589723858
+          },
+          "actor": {
+            "ground_truth": 48,
+            "extracted": 149,
+            "matched_predictions": 34,
+            "matched_ground_truth": 34,
+            "misclassified": 115,
+            "missed": 14,
+            "precision": 0.22818791946308725,
+            "recall": 0.7083333333333334,
+            "f1": 0.34517766497461927
+          },
+          "action": {
+            "ground_truth": 247,
+            "extracted": 213,
+            "matched_predictions": 152,
+            "matched_ground_truth": 139,
+            "misclassified": 61,
+            "missed": 108,
+            "precision": 0.7136150234741784,
+            "recall": 0.562753036437247,
+            "f1": 0.6292683653259072
+          },
+          "condition": {
+            "ground_truth": 214,
+            "extracted": 80,
+            "matched_predictions": 71,
+            "matched_ground_truth": 71,
+            "misclassified": 9,
+            "missed": 143,
+            "precision": 0.8875,
+            "recall": 0.3317757009345794,
+            "f1": 0.48299319727891155
+          },
+          "constraint": {
+            "ground_truth": 302,
+            "extracted": 101,
+            "matched_predictions": 63,
+            "matched_ground_truth": 66,
+            "misclassified": 38,
+            "missed": 236,
+            "precision": 0.6237623762376238,
+            "recall": 0.2185430463576159,
+            "f1": 0.32368052312003737
+          },
+          "exception": {
+            "ground_truth": 13,
+            "extracted": 3,
+            "matched_predictions": 3,
+            "matched_ground_truth": 3,
+            "misclassified": 0,
+            "missed": 10,
+            "precision": 1.0,
+            "recall": 0.23076923076923078,
+            "f1": 0.375
+          }
+        },
+        "overall": {
+          "ground_truth": 1055,
+          "extracted": 745,
+          "matched_predictions": 482,
+          "matched_ground_truth": 468,
+          "misclassified": 263,
+          "missed": 587,
+          "precision": 0.6469798657718121,
+          "recall": 0.44360189573459713,
+          "f1": 0.5263273329677893
+        }
+      },
+      "denominator": 150,
+      "failed_count": 14
+    },
+    "overall_precision": 0.6469798657718121,
+    "overall_recall": 0.44360189573459713,
+    "overall_f1": 0.5263273329677893,
+    "prediction_payload_sha256": "8b0e3fcb04a90843b3501e391b98b9dc21717d074ecf6a7ec93703f904ade3ec"
+  },
+  "current_locked_evaluation": {
+    "arm": "D-no-fewshot-0813",
+    "repeat_id": "repeat-01",
+    "evaluation": {
+      "evaluator": "sun_literal_overlap@2.0.0",
+      "metrics": {
+        "schema_version": "sun_literal_overlap_evaluation@2.0.0",
+        "dataset_id": "independently_reconstructed_estg_150_v1",
+        "method_id": "direct_llm",
+        "sample_count": 150,
+        "invalid_attempt_count": 3,
+        "evaluation_unit": "statement",
+        "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+        "assignment": "none_independent_overlap_coverage",
+        "clause_alignment_required": false,
+        "overlap_threshold": "strictly_greater_than_zero_characters",
+        "modality_policy": "evidence_span_extraction_only_label_ignored",
+        "reporting_role": "primary_sun_phrase_extraction_metric",
+        "per_field": {
+          "modality": {
+            "ground_truth": 231,
+            "extracted": 0,
+            "matched_predictions": 0,
+            "matched_ground_truth": 0,
+            "misclassified": 0,
+            "missed": 231,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "actor": {
+            "ground_truth": 48,
+            "extracted": 0,
+            "matched_predictions": 0,
+            "matched_ground_truth": 0,
+            "misclassified": 0,
+            "missed": 48,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "action": {
+            "ground_truth": 247,
+            "extracted": 0,
+            "matched_predictions": 0,
+            "matched_ground_truth": 0,
+            "misclassified": 0,
+            "missed": 247,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "condition": {
+            "ground_truth": 214,
+            "extracted": 0,
+            "matched_predictions": 0,
+            "matched_ground_truth": 0,
+            "misclassified": 0,
+            "missed": 214,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "constraint": {
+            "ground_truth": 302,
+            "extracted": 0,
+            "matched_predictions": 0,
+            "matched_ground_truth": 0,
+            "misclassified": 0,
+            "missed": 302,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "exception": {
+            "ground_truth": 13,
+            "extracted": 0,
+            "matched_predictions": 0,
+            "matched_ground_truth": 0,
+            "misclassified": 0,
+            "missed": 13,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "overall": {
+          "ground_truth": 1055,
+          "extracted": 0,
+          "matched_predictions": 0,
+          "matched_ground_truth": 0,
+          "misclassified": 0,
+          "missed": 1055,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": 150,
+      "failed_count": 3
+    },
+    "denominator": 150
+  },
+  "examples": [
+    {
+      "sample_id": "estg_000002",
+      "raw_clause_count": 2,
+      "recovered_clause_count": 2,
+      "response_sha256": "83e1e096f39058108346b03a142a12f8127542da69fba3e8ffead93282e5da90"
+    },
+    {
+      "sample_id": "estg_000003",
+      "raw_clause_count": 1,
+      "recovered_clause_count": 1,
+      "response_sha256": "b7ed409d92e35dcb0cb13404b6135f23658167732b1e0e0d417f66ebba0da62d"
+    },
+    {
+      "sample_id": "estg_000004",
+      "raw_clause_count": 1,
+      "recovered_clause_count": 1,
+      "response_sha256": "9a1e9316a23c9dc646a42964dbaf61cc2987e3c25df9711abd0231df53d56f46"
+    },
+    {
+      "sample_id": "estg_000020",
+      "raw_clause_count": 1,
+      "recovered_clause_count": 1,
+      "response_sha256": "e3b9255921bf19e2818ee0111b7e04df6b964b8f40b791e9805cf310fe38d431"
+    },
+    {
+      "sample_id": "estg_000021",
+      "raw_clause_count": 1,
+      "recovered_clause_count": 1,
+      "response_sha256": "464edbbb4ebfd9b3a4883f5e1f453206ce0b9fa4842853d9ff19a86494b63c5c"
+    }
+  ],
+  "failure_examples": [
+    {
+      "sample_id": "estg_000051",
+      "stage": "diagnostic_bridge_or_validation",
+      "error": "clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got None"
+    },
+    {
+      "sample_id": "estg_000061",
+      "stage": "json_parse",
+      "error": "Unterminated string starting at: line 806 column 17 (char 17250)"
+    },
+    {
+      "sample_id": "estg_000082",
+      "stage": "diagnostic_bridge_or_validation",
+      "error": "clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got None"
+    },
+    {
+      "sample_id": "estg_000098",
+      "stage": "diagnostic_bridge_or_validation",
+      "error": "clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got None"
+    },
+    {
+      "sample_id": "estg_000106",
+      "stage": "diagnostic_bridge_or_validation",
+      "error": "clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got None"
+    },
+    {
+      "sample_id": "estg_000127",
+      "stage": "diagnostic_bridge_or_validation",
+      "error": "clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got None"
+    },
+    {
+      "sample_id": "estg_000148",
+      "stage": "diagnostic_bridge_or_validation",
+      "error": "clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got None"
+    },
+    {
+      "sample_id": "estg_000207",
+      "stage": "json_parse",
+      "error": "Expecting ',' delimiter: line 131 column 5 (char 3221)"
+    },
+    {
+      "sample_id": "estg_000208",
+      "stage": "json_parse",
+      "error": "Expecting value: line 691 column 11 (char 17010)"
+    },
+    {
+      "sample_id": "estg_000231",
+      "stage": "diagnostic_bridge_or_validation",
+      "error": "clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got None"
+    }
+  ],
+  "scientific_interpretation": {
+    "what_the_zero_score_shows": "Removing the few-shot block broke end-to-end adherence to the locked six-field coordinate contract.",
+    "what_the_zero_score_does_not_show": "It does not show that the model extracted no semantic content: 146 records contained clauses before post-processing.",
+    "few_shot_semantic_contribution_isolated": false,
+    "reason": "The observed effect mixes semantic prompting with output-format demonstration. A future clean arm must keep a machine-readable coordinate example or force the schema while removing only semantic examples."
+  }
+}

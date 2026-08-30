@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.28
+**文档版本**：3.6.29
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-08-22
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -449,9 +449,12 @@ Direct-LLM 拆为 8 个可单独叙述/消融的模块：
    缺口，与 150 测试句零交叠（Gold 不可见保障，S2.9 DoD）；
 4. **结构化输出 transport 配方**：thinking-disabled、无 json_object、max_tokens
    4096、temp0/top_p1——150/150 有效、0 事故的可复现调用层；
-5. **确定性校验与后处理链**：canonical validator（格式/回指/字段权限）+ span
-   canonicalizer（fail-closed unique exact-text re-anchor）——把 LLM 输出转成严格
-   契约数据，坏 span/clause/边丢弃并审计；
+5. **确定性校验与后处理链**：relay-schema adapter + canonical validator（格式/回指/
+   字段权限）+ span canonicalizer（fail-closed unique exact-text re-anchor）——把 LLM
+   输出转成严格契约数据，坏 span/clause/边丢弃并审计；2026-08-30 固定响应离线
+   单因素结果：去 adapter ΔF1=0，去 canonicalizer ΔF1=−0.772（149/150 被 validator
+   拒绝），去 validator ΔF1=0且上游无效记录=0；后两项的“0增量”只适用于当前响应，
+   不取消其兼容/安全职责；
 6. **预算与授权合同**：逐批授权、`--max-calls` 硬上限、manifest 记录 llm_calls/
    max_calls/模型/采样/失败率；
 7. **双口径评价协议**：`sun_literal_overlap@2.0.0` 主口径 + 细 Gold（1055 spans）/
@@ -469,14 +472,14 @@ Rules-Only 的可叙述模块：public marker lexicon 重建（来源/哈希/版
 | 消融 ID | 变量 | 我的设计 vs 替换方案 | 回答的问题 | 状态 |
 |---|---|---|---|---|
 | AB-1 | prompt 字段定义 | v6 全字段定义 vs 去掉 constraint 子类定义 | 字段定义对 constraint R 的贡献（已有证据：v5→v6 0.288→0.417） | 部分有证据，正式表待补 |
-| AB-2 | few-shot | 6 合成 fixture vs 0-shot vs Barrientos 风格样例 | few-shot 对低资源字段的价值 | 待跑 |
-| AB-3 | modality 类别 | 4 类（Sun）vs 3 类（Barrientos 投影） | `definition` 类的独立价值 | 待跑（离线可评） |
-| AB-4 | 受控词汇 | 六字段受控 schema vs 移植 Barrientos 44 模式 dual-view | 我的归一化约束 vs 他的 pattern 约束 | 待跑 |
-| AB-5 | 校验链 | 有 validator/canonicalizer vs 无（裸 JSON 采纳） | 确定性后处理对有效率的贡献 | 可离线推理 |
+| AB-2 | few-shot | 6 合成 fixture vs 0-shot vs Barrientos 风格样例 | few-shot 对低资源字段的价值 | **端到端 arm 已跑但语义归因未隔离**：Full F1 0.772；no-fewshot 锁定链 F1 0；原始146/150非空，回顾性坐标兼容桥 F1 0.526，说明0分主要混入格式示范缺失；需补“保留结构模板、只删语义例子” |
+| AB-3 | modality 类别 | 4 类（Sun）vs 3 类（Barrientos 投影） | `definition` 类的独立价值 | **离线覆盖投影完成**：4类 39/97/62/33；三类共享97/62/33；排除 definition 造成39/231=16.88%覆盖损失；非准确率优劣 |
+| AB-4 | 受控词汇 | 六字段受控 schema vs 移植 Barrientos 44 模式 dual-view | 我的归一化约束 vs 他的 pattern 约束 | **模块替换已跑、纯受控词汇单因素未隔离**：两个 replacement arm 接口不兼容为0；不能当 Barrientos 原方法无效 |
+| AB-5 | 校验链 | 完整 adapter/canonicalizer/validator vs 每次只移除一个 | 确定性后处理对有效率的贡献 | **固定 D-full-0813 raw 离线完成（2026-08-30）**：full 0.772；−adapter 0.772；−canonicalizer 0（149/150 invalid）；−validator 0.772（0 invalid observed）；同一150/Gold/evaluator，零 API，回顾性 development |
 | AB-6 | transport | thinking-disabled/无 json_object vs 默认配方 | 事故率与可复现性 | 已有 0 事故证据，可整理 |
 | AB-7 | 评价口径 | 细 Gold vs 粗 Gold vs Sun-marker 收敛 | 口径敏感性（已有 0.7186/0.7986、0.7756/0.8726） | 有证据，整理成表 |
 | AB-8 | B0 模块 | lexicon 逐来源（Sleimi/LexNLP/Wiktionary）、marker 路由、跨语言验证开关 | 每个规则模块的边际贡献 | 部分有证据（R1 各批次） |
-| AB-9 | 稳定性 | 5 次独立重跑 agreement / self-consistency（对齐 Barrientos 论文的 5-run 设计） | 成本-收益的稳定性保证 | 待授权 |
+| AB-9 | 稳定性 | 5 次独立重跑 agreement / self-consistency（对齐 Barrientos 论文的 5-run 设计） | 成本-收益的稳定性保证 | **完成（36条×3臂×5）**：只作为同一 arm 输出一致性；不得当跨方法准确率 |
 | AB-10 | style-equivalent 评估 | 开启 vs 关闭该评估维度 | 评估鲁棒性（借鉴 Barrientos 的贡献） | 待实现 |
 
 **输出要求**：每项消融至少一行结论表——「我的模块 vs 换 Barrientos 模块 vs 去掉
@@ -930,6 +933,7 @@ development-only；S3.7 formal Oracle not started；Gold Rule Records absent。
 
 ## 15. Pipeline 变更日志
 
+| 3.6.29 | 2026-08-30 | **S2-BARR-4 消融证据纠错 + Direct-LLM 后处理三模块单因素（零 API）**：(1) no-fewshot 原始响应诊断：147/150 JSON 可解析、146/150 原始非空、247 clauses 的 clause_span 全为 `[start,end]`，锁定 adapter/canonicalizer 因接口形状删除全部 clauses；回顾性 Gold-blind 坐标桥（Gold 仅桥后评价）恢复 136 valid/134 nonempty、P/R/F1 0.647/0.444/0.526，明确只作 post-hoc 诊断，不取代锁定0分、不证明语义 few-shot贡献；(2) 同一 D-full-0813 raw、同150/Gold/evaluator 后处理单因素：full P/R/F1 0.820/0.729/0.772并逐位复刻锁定评价；−adapter ΔF1=0；−canonicalizer 149/150 validator reject、F1=0（Δ−0.772）；−validator ΔF1=0且 invalid observed=0（不取消安全价值）；(3) 修复分类报告把整个 append-only event log hash 当稳定 provenance 的缺陷，改绑定目标 run event canonical hash；few-shot 措辞纠正为输出合同贡献、语义贡献未隔离；(4) 原始/派生逐条预测因 EStG 许可边界继续 local-only，提交报告只含聚合/hash/失败边界；Gold/正式结果未改、真实 API=0。 | 两份诊断/消融报告 + 2脚本 + focused tests + audit --with-tests + record_change |
 | 3.6.28 | 2026-08-22 | **S2.12 → 论文优先主线切换（同步 Stage 3 可控错误扩展，零 API）**：① 主线：Stage 1=已完成复现不再扩展；Stage 2 用已有三方法/复杂语料结果；Stage 3 立即新增 30 条 `synthetic_controlled_error_extension` 可控错误并运行现有 Winter/Sun/BM25/TF-IDF；论文正文并行完善，不再因 S2.12 API 未授权而等待。② Stage 3 可控错误扩展 （S3.9）：生成器 `scripts/build_s3_error_injection_v1.py`（锁定 30 变体 10/10/10；每变体源 BPMN byte-unchanged、exactly-one-error、XML/结构/非目标字段不变校验、replay byte-identical；规则绑定来自冻结 inference pack）；面板 `data/development/stage3_synth/synthetic_controlled_error_extension_v1.json`（明确 dev-only、never 人类 Gold）；运行器 `scripts/run_s3_synthetic_panel_v1.py` 在同一 evaluator 口径下四方法 panel（DEV_ONLY：Winter macro 0.333/exact 0.333；Sun 0.333/0.200；BM25 0.333/0.333；TF-IDF 0.635/0.533）。③ S2.12 Direct/Fallback 保持 pending authorization（非论文 blocker）。④ Stage 3 formal Oracle 仍未启动，synthetic panel 不冒充 Oracle。 | 用户优先级切换 + S3.9 synthetic controlled-error panel + 四方法 panel 运行 + 16 项 focused tests + 零 API 审计 |
 | 3.6.27 | 2026-08-22 | **S2.12 runner safety v2（零 API 零网络；RUNNER SAFETY V2 VERIFIED / API NOT AUTHORIZED / ZERO CALLS）**：真实执行安全合同修复——per-call PayloadLock（每次真实调用前重建实际 body SHA + sample/clause/order 核验，policy 与 preflight 完全一致）、usage 捕获与真实成本计算（cache hit/miss 拆分、缺失保守 cache-miss、cost_usd 不再硬编码 0）、per-call caps + off-peak（每次调用前检查；运行中进入 peak 即停、partial 账本保留）、append-only hash-chained 账本与 resume（不重复、篡改拒绝）、预注册 stage 合同（D-CAL/D-REST/F-1..F-3，CLI `--stage-id`/`--auth-file`/`--resume-from-ledger`）、`.env` 禁读（`load_project_env=False`）、每 arm 独立 runner hash 绑定、授权 schema v1.1.0（stage 绑定 + final-63 承诺）、离线授权事件 builder（无原句拒绝、dry-run、本轮不 apply、固定输出路径）、新增 `verify_s2_12_runner_safety_v2.py` 与 scripted real-like focused tests（零网络）。真实 API calls=0、cost=$0；S2.12 仍 partial，S2.13 仍 blocked。 | runner safety v2 + auth v1.1.0 + auth-event builder + verifier + tests + v4 授权申请 + 零 API 审计 |
 | 3.6.26 | 2026-08-22 | **S2.12 runner wiring（零 API 零网络；RUNNER READY / API NOT AUTHORIZED / ZERO CALLS）**：实现 S2.12 专属执行接线——`scripts/run_s2_12_direct_llm_v1.py`（36 calls）与 `scripts/run_s2_12_sun_llm_fallback_v1.py`（27 calls、frozen plan、transport capture）、`configs/s2_12_fallback_trigger_plan_v1.json`（自锁定 preflight 触发集派生，replay byte-identical）、共享契约 `src/bpc_hybrid/s2_12_execution.py`（63 request-body SHA 逐条重建比对、授权合同校验、Beijing off-peak 时段、payload-locked fake transport、原子发布、文本/密钥 containment）、`configs/schemas/s2_12_api_authorization_v1.schema.json`、独立 verifier `scripts/verify_s2_12_runner_wiring.py`、21 项 focused tests（fake transport、fail-closed、零网络）。官方价格 2026-08-19/20 上调已核账，USD cap 84.18（peak）/42.09（off-peak），授权申请 v3 给出无占位符最终命令与分阶段成本建议；未创建真实授权文件，真实 API calls=0、cost=$0；S2.12 仍 partial，S2.13 仍 blocked。 | runner wiring + frozen plan + auth schema + verifier + focused tests + v3 授权申请 + 零 API 审计 |

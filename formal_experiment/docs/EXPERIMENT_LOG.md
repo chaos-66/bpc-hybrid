@@ -3955,3 +3955,16 @@
 - 仍存在 blocker：无
 - 备注：Zero API and no rescoring. Existing results only: Full vs no-fewshot is the sole completed one-factor internal ablation; minimal is multi-module sensitivity; Barrientos-style and OURS-BARRIENTOS-MODULE are replacement tests; Barrientos-native/shared three-class results are external comparators. Focused tests 53 passed; full audit 2746 passed/24 skipped/40 warnings, exit 0. Pre-existing .bak files and Stage-1 autocrlf display artifact were not touched or staged.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-30T08:50:45.986835+00:00 - S2-BARR-4 no-fewshot根因纠错与Direct-LLM后处理三模块单因素消融
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2755 passed, 24 skipped, 40 warnings in 3365.99s (0:56:05)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`ab98e3fe8bf102d2046be81a5e5a5bc9b92069b5`；相关未提交路径：23 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：零API；同一D-full-0813 raw离线重放；no-fewshot恢复值仅post-hoc诊断；仅纠正派生分类报告，原始响应、正式预测与Gold未覆盖；含本地受限逐条产物不提交。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

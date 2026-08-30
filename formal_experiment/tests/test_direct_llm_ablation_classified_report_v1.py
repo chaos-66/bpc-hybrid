@@ -87,6 +87,8 @@ def test_run_accounting_is_complete_and_classified_exactly_once():
     assert accounting["off_peak_estimate_usd"] == 3.05311908
     assert report["scope"]["new_api_calls_for_this_report"] == 0
     assert report["scope"]["gold_read_for_this_report"] is False
+    assert len(report["provenance"]["source_event_sha256"]) == 64
+    assert "experiment_events_sha256" not in report["provenance"]
 
 
 def test_pending_list_contains_only_explicitly_unrun_internal_removals():
@@ -113,3 +115,4 @@ def test_checked_in_reports_are_byte_reproducible():
     assert builder.REPORT_MD.read_text(encoding="utf-8") == expected_md
     assert "只有其中 Full vs 去 few-shot" in expected_md
     assert "不能把两边 native F1 强行排成总榜" in expected_md
+    assert "尚未单独证明其语义贡献" in expected_md

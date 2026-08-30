@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-30
-**收录文件**：1444 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1452 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -787,6 +787,10 @@
 | `outputs/reports/barrientos_de_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_tables_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_tables_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/d_full_postprocessing_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/d_full_postprocessing_ablation_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/d_no_fewshot_interface_diagnosis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/d_no_fewshot_interface_diagnosis_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/direct_llm_ablation_existing_results_classified_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_ablation_existing_results_classified_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/direct_llm_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1040,6 +1044,7 @@
 |---|---|---|
 | `scripts/_precheck_estg150.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/analyze_b0_error_types.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_d_no_fewshot_interface_failure_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/audit_ingest_sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/audit_project.py` | 活动 | 离线项目完整性检查（兼容文件名） |
 | `scripts/audit_stage2_to_stage3.py` | 活动 | Python 实现、脚本或测试 |
@@ -1140,6 +1145,7 @@
 | `scripts/run_b0_module_removal_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_barrientos_ablation_suite_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_barrientos_ablation_suite_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_d_full_postprocessing_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_ai_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v10_development.py` | 活动 | Python 实现、脚本或测试 |
@@ -1432,6 +1438,8 @@
 | `tests/test_coarse_gold_b0_condition_constraint.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d1_h1_zero_api_reeval.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d1_r2_lock_config.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_d_full_postprocessing_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_d_no_fewshot_interface_diagnosis_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_direct_llm_ablation_classified_report_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
