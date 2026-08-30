@@ -1,0 +1,43 @@
+{
+  "schema_version": "d1_prompt_factorial_arms@2.0.0",
+  "status": "prepared_offline_not_executed",
+  "llm_api_calls": 0,
+  "network_calls": 0,
+  "baseline": {
+    "arm": "D-full-0813",
+    "path": "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
+    "sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "semantic_example_count": 6
+  },
+  "comparison_rule": "each arm is compared only with D-full-0813 under the same DeepSeek-V4-Pro-0813 release, EStG-150 input, Gold and evaluator",
+  "arms": {
+    "D-no-semantic-examples-0813": {
+      "path": "prompts/sun_compat/ablation_v2/direct_llm_no_semantic_examples_prompt_v2.md",
+      "sha256": "261d7b23e015c9faa3bcb75ad49c440dfdd96c00567fb498edeed939f364f072",
+      "factor": "semantic input-output demonstrations",
+      "operation": "replace all six semantic input-output examples with one non-semantic key/type template; keep the full semantic rules and explicit JSON discipline",
+      "semantic_example_count": 0,
+      "source_prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895"
+    },
+    "D-no-semantic-guidance-0813": {
+      "path": "prompts/sun_compat/ablation_v2/direct_llm_no_semantic_guidance_prompt_v2.md",
+      "sha256": "fa5e9f0043809428b8034a08cb58ff0e98a7e5b69c5be99f88286724217f0aa3",
+      "factor": "detailed six-field semantic guidance",
+      "operation": "remove the detailed semantic-guidance headings and numbered rules 9-19 and 25-27 only; keep rules 1-8 and 20-24, the user envelope and all six examples",
+      "semantic_example_count": 6,
+      "source_prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895"
+    },
+    "D-no-explicit-json-contract-0813": {
+      "path": "prompts/sun_compat/ablation_v2/direct_llm_no_explicit_json_contract_prompt_v2.md",
+      "sha256": "0b7b93ad30e3d72f20fb809b48fdda694a2242233f203234a3f5d8dc91ab5da7",
+      "factor": "explicit JSON/schema output discipline",
+      "operation": "remove the explicit contract introduction and numbered rules 1-5, remove schema-only wording from rule 24 and the user instruction; keep all semantic rules and all six examples",
+      "semantic_example_count": 6,
+      "source_prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895"
+    }
+  },
+  "interpretation_limits": {
+    "no_semantic_examples": "a controlled substitution, not a pure deletion: the semantic demonstrations are replaced by a structure-only template to prevent output-interface collapse",
+    "other_arms": "single textual factor removals from the frozen prompt"
+  }
+}

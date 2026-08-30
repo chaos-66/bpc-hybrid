@@ -3968,3 +3968,16 @@
 - 仍存在 blocker：无
 - 备注：零API；同一D-full-0813 raw离线重放；no-fewshot恢复值仅post-hoc诊断；仅纠正派生分类报告，原始响应、正式预测与Gold未覆盖；含本地受限逐条产物不提交。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-30T10:07:20.234294+00:00 - S2-D1 Prompt三条严格单因素消融臂与独立450-call执行合同冻结
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2767 passed, 24 skipped, 40 warnings in 2889.48s (0:48:09)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`b05f499daeaf18ff027539c342524d2cdcfdc36d`；相关未提交路径：29 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：零API/零网络；新增语义示例结构保持替换、详细语义规则移除、显式JSON纪律移除三臂；固定450 calls但authorization=null；仅纠正派生结果表4-shot为实际6个合成示例，历史响应/指标/Gold未改。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

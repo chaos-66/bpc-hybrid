@@ -1,0 +1,32 @@
+{
+  "schema_version": "d1_prompt_factorial_budget@1.0.0",
+  "computed_at_utc": "2026-08-30T09:14:31.498188+00:00",
+  "per_arm_estimated_input_tokens": {
+    "D-no-semantic-examples-0813": 432849,
+    "D-no-semantic-guidance-0813": 703149,
+    "D-no-explicit-json-contract-0813": 829690
+  },
+  "budget": {
+    "planned_calls": 450,
+    "estimated_input_tokens": 1965688,
+    "input_token_cap": 2948532,
+    "output_token_cap": 1843200,
+    "usd_cost_cap": 13.43,
+    "cny_off_peak_envelope": 45.79,
+    "price_snapshot": {
+      "currency": "USD",
+      "mode_used_for_gate": "peak",
+      "input_cache_miss_per_million": 1.32,
+      "output_per_million": 3.96,
+      "off_peak_cny": {
+        "input_cache_miss_per_million": 4.5,
+        "output_per_million": 13.5
+      },
+      "source_url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "verified_at_utc": "2026-08-30T00:00:00Z"
+    },
+    "calculation": "render all 450 requests; estimate each input as ceil(UTF-8 request bytes/3); input cap=estimate*1.5; output cap=450*4096; USD gate=(caps at peak USD rates)*1.2 rounded up; CNY envelope=(caps at off-peak CNY rates)*1.2 rounded up"
+  },
+  "llm_api_calls": 0,
+  "network_calls": 0
+}

@@ -61,7 +61,7 @@ D_MAIN_ARMS_0813 = ("D-no-fewshot-0813", "D-minimal-0813",
                     "D-barrientos-style-0813")
 D_BASELINE_0813 = "D-full-0813"
 DISPLAY_NAMES = {
-    "D-full-0813": "完整六字段提示（含 4-shot）",
+    "D-full-0813": "完整六字段提示（含 6 个合成示例）",
     "D-no-fewshot-0813": "去掉 few-shot 示例",
     "D-minimal-0813": "极简任务与 JSON 要求",
     "D-barrientos-style-0813": "Barrientos 风格结构约束替换",

@@ -1,9 +1,9 @@
 # 受控消融矩阵 AB-1–AB-10 与 Barrientos 消融套件（现状与结构化结论）
 
-**版本**：v2（2026-08-22）
-**状态**：Barrientos 离线消融套件已运行（experiments A/B/C real offline，D/E
-prepared-not-executed）；其余项仍标“待运行”/“待授权”，**不得**把“已经设计矩阵”
-写成“已经完成实验”。
+**版本**：v3（2026-08-30）
+**状态**：Barrientos A/B/C 离线套件与 D/E 1140-call 固定计划均已运行；Direct-LLM
+后处理三模块离线单因素已完成；新一轮三个 Prompt 单因素已冻结为独立 450-call
+计划但尚未执行。**不得**把 prepared 写成 completed。
 **依据**：`MASTER_PIPELINE.md` §8.8.4 消融矩阵；`docs/research/
 BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
 `outputs/development/barrientos_ablation_suite_v1/`；
@@ -66,35 +66,38 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
   被排除 39 条，覆盖率损失 = 39/231 = 16.88%。
 - **定义不并入其它类**；这是 schema 覆盖差异比较，不是 Barrientos 方法性能比较。
 
-### 实验 D/E：prompt/few-shot 与同数据模块替换（v2：wired，未执行——真实调用需授权）
+### 实验 D/E：prompt/few-shot 与同数据模块替换（v2：1140/1140 已执行）
 
 - 输入已修正：`configs/ablations/e_same_data_input_contract_v2.json` ——
   **36 条唯一版本化 ID（如 r10v1/r10v2）直接派生自冻结 S2.12 复杂语料输入**，
   36/36 唯一、无空/`-` 占位文本、每条绑定 source file/text/Gold hashes；
   v1 的错误“38 条非空”合同已废弃（当时把 4 条 `-` 占位记录算入并把版本行当
   重复）。
-- D 四臂 prompt 已生成（`prompts/sun_compat/ablation_v1/`）：
-  D-full（复用锁定正式结果）/ D-no-fewshot / D-minimal / D-barrientos-style；
+- D 四臂均在 DeepSeek-V4-Pro-0813 同一 release window 真实运行：D-full / D-no-fewshot /
+  D-minimal / D-barrientos-style，各 150 条；旧 Preview D-full 不作基线。
   E 三臂（E-ours / E-barrientos-faithful / E-module-swapped）+ 共享指标协议 +
   E-ours 与 E-barrientos-faithful 各 5 次稳定性（首轮计入）。
-- 执行器 `scripts/run_barrientos_ablation_suite_v2.py --execute-de --auth-file
-  <USER_AUTH>` 已 wiring 并通过 `--dry-run` 零网络校验；**真实模型调用需要显式
-  用户授权，本零 API 批次不执行，状态仅 `ready_to_execute_not_executed`**。
+- 固定计划 1140/1140 已完成。D-full P/R/F1=0.8203/0.7289/0.7719；旧
+  no-fewshot/minimal/Barrientos-style 的锁定六字段结果为0，但 no-fewshot 原始响应
+  诊断证明其中混入坐标接口崩溃，不能把0直接解释为语义贡献。
+- 2026-08-30 新增严格 Prompt 单因素 v2（`prompts/sun_compat/ablation_v2/`）：
+  语义示例→纯结构模板、只删详细语义规则、只删显式 JSON 纪律；3×150=450 calls，
+  复用同 release D-full 基线，不重复调用。独立合同当前 `authorization=null`，状态为
+  `prepared_not_executed`。
 
 ## 总表（一行/一组结构化结论）
 
 | 消融 | 我的完整模块 | 换成 Barrientos 模块 | 去掉模块 | 我的优势 | Barrientos 优势 | 综合结论 | 可比较性限制 |
 |---|---|---|---|---|---|---|---|
-| AB-1 prompt 字段定义 | Six-field prompt v6 含 constraint 六子类显式定义（法律引用/时间/数量/within the meaning/pursuant to/subject to），empty=absent、禁止并入 action/condition | 移植其 prompt（3 类 modality、RC4PC 字段定义） | v5（无 v6 规则 25–27） | **已有历史证据**：v5→v6 实测 constraint R 0.2881→0.4172（+0.1291），Overall F1 0.7669→0.7735 | 其字段定义针对 change-impact 表示，不解决 Sun 六要素 constraint 归属 | 字段定义对 constraint R 有可测量贡献（历史证据）；正式“去掉定义”对照 arm 需授权真实验证 | 训练/测试同一 150 + 同 Gold 可 C1；但 v5 baseline 是 development、非 formal 对照 arm——正式表需补跑 |
-| AB-2 few-shot | 6 个 Gold-blind 合成 fixture（覆盖 condition/constraint/exception 缺口，与 150 测试句零交叠） | 0-shot；或 Barrientos-style 样例（可能引入测试句/领域偏置） | 0-shot | 合成 + 零交叠保障（S2.9 DoD），不泄漏 Gold | 无 Gold-invisible 设计；其样例更贴近真实 change-impact 场景 | **prepared-not-executed（2026-08-22）**：no_fewshot / barrientos_style / minimal_prompt 三臂 prompt 已生成（`prompts/sun_compat/ablation_v1/`）+ 精确运行命令已记录；full arm 复用锁定 formal 结果；真实 LLM 臂需授权后执行 | 不同 few-shot 集跨模型/跨预算可比性受限 |
+| AB-1 详细语义规则 | Six-field prompt v6 的规则9–19、25–27 | 移植其 prompt（3 类 modality、RC4PC 字段定义） | **严格 v2 臂**只删规则9–19、25–27，输出纪律和六个示例保持 | 历史 v5→v6：constraint R 0.2881→0.4172（+0.1291）；严格臂待运行 | 其字段定义更适合 change-impact，不解决 Sun 六字段边界 | v2 prompt/hash/150条计划已冻结；真实结果待450-call批次 | 历史 v5对比是开发证据；最终单因素结论只用 v2 同模型/同150/同Gold结果 |
+| AB-2 语义示例 | 6 个 Gold-blind 合成输入—输出 fixture | Barrientos-style 示例属于跨 schema 模块替换 | **严格 v2 臂**把六个语义例子替换为纯 key/type 结构模板 | Gold 零交叠；结构模板可避免输出格式崩溃污染语义归因 | 其示例贴近 change-impact 任务 | 旧 no-fewshot 锁定0分已运行，但原始146/150非空、兼容桥F1=0.526，故仅证明接口贡献；严格语义示例臂待450-call批次 | v2是受控替换而非纯删除；必须如实披露 |
 | AB-3 modality 类别 | 4 类（Sun，含 definition，明确“主要目的是定义”） | 3 类投影（obligation/permission/prohibition，Barrientos enum） | — | definition 独立价值可被度量 | 3 类更贴近其数据 | **已完成（2026-08-22，离线）**：formal Gold 231 clauses 中 definition=39（obligation 97/permission 62/prohibition 33），三类共享子集 = 97/62/33，definition 覆盖率损失 16.88%（39/231）；definition 不并入其它类；结果见 suite C | 跨 schema 类别数比较属 C4，禁止用单一 macro-F1 宣称优劣；只能报告投影后各自口径 |
-| AB-5 校验链 | canonical validator（格式/回指/字段权限）+ span canonicalizer（fail-closed unique exact-text re-anchor）+ 确定性后处理 | 其 strict JSON schema 校验 | 裸 JSON 直接采纳 | 已有历史证据 + **2026-08-22 实验 A（real offline）**：Full 0.7756 vs Schema-only 0.7733（Δ+0.0024 overall / action +0.0095）；canonicalizer 重锚 966 spans、改变/恢复 149/150 样本 | 论文只报告 strict-JSON 合法性，未逐字段 re-anchor | **校验链是真实贡献模块**（坐标恢复证据充分），但 span-overlap 主口径总体增量小；raw 条件因 raw JSON 未持久化为近似 | 有效/回指率可 C1 比较；坏 span 拒绝逻辑逐方法披露 |
+| AB-5 校验链 | adapter + span canonicalizer + canonical validator | 其 strict JSON schema 校验 | 每次仅去一个模块 | exact-text回指与fail-closed审计 | 其 schema 原生适配自己的表示 | **2026-08-30同一D-full raw离线单因素**：full F1 .7719；−adapter Δ0；−canonicalizer F1 0（149/150 invalid）；−validator Δ0（0 upstream invalid observed） | “Δ0”仅是该响应集无分数增量，不等于兼容/安全模块普遍无用 |
 | AB-4 受控词汇 | Six-field 受控 schema（normalized view 受控，原文 span 不覆盖）+ public marker lexicon | 移植其 44 模式 dual-view（control_flow/resource/data/time） | 无受控 schema（裸输出） | schema 受控 + verbatim span 回指 | 44 模式分类更适合 change-impact 表示层 | **待运行**（需实现 dual-view adapter 与消融脚本，真实 LLM 项逐批授权） | C4 跨 schema；pattern 层与 six-field 层不对齐 |
-| AB-5 校验链 | canonical validator（格式/回指/字段权限）+ span canonicalizer（fail-closed unique exact-text re-anchor）+ 确定性后处理 | 其 strict JSON schema 校验 | 裸 JSON 直接采纳 | 已有历史证据：H1 span canonicalizer 离线 replay 3/3 重锚、validator 通过、merge accepted（S2.8D-R3，0 API calls）；D1-R1/R3 150/150 有效、0 事故 | 论文只报告 strict-JSON 合法性，未逐字段 re-anchor | validator/canonicalizer 的高有效率与坐标恢复作用已有间接证据；“去掉校验链”的对照 arm 需专门实验（可离线用锁定输出估计，正式结论待运行） | 有效/回指率可 C1 比较；坏 span 拒绝逻辑逐方法披露 |
 | AB-6 transport | thinking-disabled、无 json_object、temp0/top_p1、max_tokens4096、stream=false | 默认 transport（provider 默认 thinking / json_object） | — | **已有历史证据**：D1-R3 干净重跑 150/150 有效、0 事故（lost=recovery=retry=0）；实证官方端点在默认 thinking 下返回空内容、json_object 下形状不同 | 论文未披露 transport 细节 | 锁定配方唯一、0 事故；默认配方事故率/形状差异为已披露动机 | 官方端点行为跨版本可能变化，需重验 |
 | AB-7 评价口径 | 细 Gold（1055 spans 对照）/ 粗 Gold（609 spans，Sun 句子级主口径）/ Sun-marker 收敛 | 其 Step-specific P/R/F1 + strict JSON + self-consistency | 单一口径 | **已有历史证据**（见 §口径表）：细 0.7186 vs 0.7756、粗 0.7986 vs 0.8726；Sun-marker 收敛后 B0 constraint R 1.0 (13/13)、condition R 0.989 (91/92) | 其主指标为结构化表示合法性与稳定率，与 span 口径不可直接换算 | 口径敏感性已有正式归因证据（2026-08-07 用户决策 + formal comparison）；两种口径必须分表 | 细/粗同 Gold 可 C1；span vs 结构化指标跨任务 C4 |
 | AB-8 Rules-Only 模块 | public marker lexicon / BERT-TextCNN / marker routing+DE-EN cue 验证 / CoreNLP / Tregex / Tsurgeon guard / actor-action 归属 / 确定性评价 | 其 44 模式分类 / LLM 结构化输出 | 逐模块去掉 | **已有历史证据 + 2026-08-22 实验 B（real offline，同一 150/同一 Gold/同一 evaluator）**：full 0.7186；no_lexicon −0.0066（actor 词典扩展移除）、no_modality_classifier label acc 下降（span 口径不变）、no_multi_match_guard +0.0053（首候选消费副作用，如实披露）、其余 0.0（只改 map/route 不改 span） | 其模块面向 change-impact 表示，与六要素抽取模块不对应 | 逐模块去除矩阵已跑（B）；每个模块贡献/副作用按数据如实报告 | C4：Barrientos 模块与 B0 模块语义不同，逐模块替换需 adapter |
-| AB-9 稳定性 | temp0 + prompt hash 三方锁定（D1-R2）；同协议 5 次独立重跑未执行 | 36 条 × 5 次完整运行、Step 1 pairwise distance≤2 self-consistency | — | 设计已锁定；未有 5-run 数据 | 论文已有完整 5-run self-consistency 报告 | **待授权**（需要同协议 5 次正式重跑 + self-consistency/field-span agreement 报告） | 对齐其 5-run 设计；field-span agreement 口径为本项目自定 |
+| AB-9 稳定性 | OURS-FULL 36条×5次、temp0、prompt hash锁定 | Barrientos 36条×5次、pairwise distance≤2 self-consistency | — | 同协议同输入重复运行已完成 | 其论文给出原生 self-consistency 定义 | **已完成**：BARR-FULL / OURS-FULL / OURS-BARRIENTOS-MODULE 各36×5；稳定性只报告同一arm内部一致性 | 稳定性不是准确率，不用于跨方法F1排名 |
 | AB-10 style-equivalent | 关闭（主表为 span-overlap 字面匹配） | 其专家协议的 style-equivalent alignment 概念 | — | 主指标不受风格差异污染 | 允许“表达不同语义相同”算正确（更宽容） | **待实现**（需新一代价指标与匹配规则，明确为辅助敏感性分析，不冒充主指标） | 只能作为敏感性分析分表；不得冒充论文主表 |
 
 ## AB-7 口径表（已有历史证据，development 归因，2026-08-07 用户决策 + formal 横向）

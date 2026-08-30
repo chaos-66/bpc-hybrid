@@ -1,0 +1,223 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "D1 Prompt Factorial Execution Contract v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "suite_id",
+    "bound_commit",
+    "execution_plan",
+    "model",
+    "sampling",
+    "hashes",
+    "budget",
+    "authorization",
+    "gold_isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "d1_prompt_factorial_execution_contract@1.0.0"
+    },
+    "suite_id": {
+      "type": "string",
+      "const": "S2-D1-PROMPT-FACTORIAL-001"
+    },
+    "bound_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "execution_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_calls", "arms"],
+      "properties": {
+        "total_calls": {"type": "integer", "const": 450},
+        "arms": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "arm", "repeat_id", "sample_count", "calls",
+              "baseline_reused"
+            ],
+            "properties": {
+              "arm": {
+                "type": "string",
+                "enum": [
+                  "D-no-semantic-examples-0813",
+                  "D-no-semantic-guidance-0813",
+                  "D-no-explicit-json-contract-0813"
+                ]
+              },
+              "repeat_id": {"type": "string", "const": "repeat-01"},
+              "sample_count": {"type": "integer", "const": 150},
+              "calls": {"type": "integer", "const": 150},
+              "baseline_reused": {"type": "string", "const": "D-full-0813"}
+            }
+          }
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "provider", "documented_mapping"],
+      "properties": {
+        "id": {"type": "string", "const": "deepseek-v4-pro"},
+        "provider": {"type": "string", "const": "openai_compatible"},
+        "documented_mapping": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["release", "source_url", "verified_at_utc", "note"],
+          "properties": {
+            "release": {"type": "string", "const": "DeepSeek-V4-Pro-0813"},
+            "source_url": {"type": "string", "minLength": 1},
+            "verified_at_utc": {"type": "string", "minLength": 1},
+            "note": {"type": "string"}
+          }
+        }
+      }
+    },
+    "sampling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "temperature", "top_p", "max_tokens", "retry", "stream", "thinking"
+      ],
+      "properties": {
+        "temperature": {"type": "number", "const": 0.0},
+        "top_p": {"type": "number", "const": 1.0},
+        "max_tokens": {"type": "integer", "const": 4096},
+        "retry": {"type": "integer", "const": 0},
+        "stream": {"type": "boolean", "const": false},
+        "thinking": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type"],
+          "properties": {"type": {"type": "string", "const": "disabled"}}
+        }
+      }
+    },
+    "hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "estg_input_v2", "executor", "prompt_builder", "prompt_manifest",
+        "prompts"
+      ],
+      "properties": {
+        "estg_input_v2": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "executor": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "prompt_builder": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "prompt_manifest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "prompts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "D-no-semantic-examples-0813",
+            "D-no-semantic-guidance-0813",
+            "D-no-explicit-json-contract-0813"
+          ],
+          "properties": {
+            "D-no-semantic-examples-0813": {
+              "type": "string", "pattern": "^[0-9a-f]{64}$"
+            },
+            "D-no-semantic-guidance-0813": {
+              "type": "string", "pattern": "^[0-9a-f]{64}$"
+            },
+            "D-no-explicit-json-contract-0813": {
+              "type": "string", "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planned_calls", "estimated_input_tokens", "input_token_cap",
+        "output_token_cap", "usd_cost_cap", "cny_off_peak_envelope",
+        "price_snapshot", "calculation"
+      ],
+      "properties": {
+        "planned_calls": {"type": "integer", "const": 450},
+        "estimated_input_tokens": {"type": "integer", "minimum": 1},
+        "input_token_cap": {"type": "integer", "minimum": 1},
+        "output_token_cap": {"type": "integer", "minimum": 1},
+        "usd_cost_cap": {"type": "number", "exclusiveMinimum": 0},
+        "cny_off_peak_envelope": {"type": "number", "exclusiveMinimum": 0},
+        "price_snapshot": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "currency", "mode_used_for_gate",
+            "input_cache_miss_per_million", "output_per_million",
+            "off_peak_cny", "source_url", "verified_at_utc"
+          ],
+          "properties": {
+            "currency": {"type": "string", "const": "USD"},
+            "mode_used_for_gate": {"type": "string", "const": "peak"},
+            "input_cache_miss_per_million": {"type": "number", "const": 1.32},
+            "output_per_million": {"type": "number", "const": 3.96},
+            "off_peak_cny": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "input_cache_miss_per_million", "output_per_million"
+              ],
+              "properties": {
+                "input_cache_miss_per_million": {"type": "number", "const": 4.5},
+                "output_per_million": {"type": "number", "const": 13.5}
+              }
+            },
+            "source_url": {"type": "string", "minLength": 1},
+            "verified_at_utc": {"type": "string", "minLength": 1}
+          }
+        },
+        "calculation": {"type": "string", "minLength": 1}
+      }
+    },
+    "authorization": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": [
+        "authorization_sentence_utf8_sha256", "authorization_event_file",
+        "authorization_event_file_sha256", "authorized_at_utc",
+        "execution_window"
+      ],
+      "properties": {
+        "authorization_sentence_utf8_sha256": {
+          "type": "string", "pattern": "^[0-9a-f]{64}$"
+        },
+        "authorization_event_file": {"type": "string", "minLength": 1},
+        "authorization_event_file_sha256": {
+          "type": "string", "pattern": "^[0-9a-f]{64}$"
+        },
+        "authorized_at_utc": {"type": "string", "minLength": 1},
+        "execution_window": {
+          "type": "string", "const": "beijing_off_peak_only"
+        }
+      }
+    },
+    "gold_isolation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "api_arms_must_not_read_gold",
+        "evaluation_only_after_predictions_are_locked"
+      ],
+      "properties": {
+        "api_arms_must_not_read_gold": {"type": "boolean", "const": true},
+        "evaluation_only_after_predictions_are_locked": {
+          "type": "boolean", "const": true
+        }
+      }
+    }
+  }
+}

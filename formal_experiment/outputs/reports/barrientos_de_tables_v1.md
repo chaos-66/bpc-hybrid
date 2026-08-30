@@ -3,7 +3,7 @@
 ## Table D — D prompt/few-shot ablation (DeepSeek-V4-Pro-0813)
 
 | arm | overall F1 | overall P | overall R | parse ok | nonempty canonical | fail% |
-| 完整六字段提示（含 4-shot） | 0.772 | 0.820 | 0.729 | 1.000 | 0.987 | 0.000 |
+| 完整六字段提示（含 6 个合成示例） | 0.772 | 0.820 | 0.729 | 1.000 | 0.987 | 0.000 |
 | 去掉 few-shot 示例 | 0.000 | 0.000 | 0.000 | 0.980 | 0.000 | 0.020 |
 | 极简任务与 JSON 要求 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 1.000 |
 | Barrientos 风格结构约束替换 | 0.000 | 0.000 | 0.000 | 0.993 | 0.000 | 0.007 |

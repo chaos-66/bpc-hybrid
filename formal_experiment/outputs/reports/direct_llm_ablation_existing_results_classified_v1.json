@@ -12,7 +12,7 @@
   },
   "provenance": {
     "source_tables": "outputs/reports/barrientos_de_tables_v1.json",
-    "source_tables_sha256": "f14da7ee509fbdfd8c786a88fa47d3bf180b340f45b5c9110f3a1f3e6b2e8e3f",
+    "source_tables_sha256": "587b1348e551839e5a37888981c45eb52058f8f41963d7410146d557a4a8cbbb",
     "experiment_events": "docs/EXPERIMENT_EVENTS.jsonl",
     "source_event_sha256": "26a86144db7dfe222e119878fb71db23a965a0b50134bdf0ed7156b80cf81956",
     "source_event_timestamp_utc": "2026-08-29T12:17:14.700006+00:00",
@@ -51,7 +51,7 @@
       "calls": 300,
       "baseline": {
         "arm": "D-full-0813",
-        "display_name": "完整六字段提示（含 4-shot）",
+        "display_name": "完整六字段提示（含 6 个合成示例）",
         "metrics": {
           "overall": {
             "precision": 0.8202959830866807,

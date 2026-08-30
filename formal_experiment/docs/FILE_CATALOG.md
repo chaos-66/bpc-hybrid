@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-30
-**收录文件**：1452 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1464 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -59,6 +59,7 @@
 | `configs/ablations/barrientos_ablation_suite_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/barrientos_ablation_suite_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/barrientos_de_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/ablations/d1_prompt_factorial_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/e_same_data_input_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/e_same_data_input_contract_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/bm25_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -106,6 +107,7 @@
 | `configs/s2_12_fallback_trigger_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s2_12_sun_rule_only_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/barrientos_de_execution_contract_v1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/d1_prompt_factorial_execution_contract_v1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/dataset_manifest.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_ai_review_model_output.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -787,6 +789,7 @@
 | `outputs/reports/barrientos_de_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_tables_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_tables_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/d1_prompt_factorial_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/d_full_postprocessing_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/d_full_postprocessing_ablation_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/d_no_fewshot_interface_diagnosis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -982,6 +985,10 @@
 | `prompts/sun_compat/ablation_v1/direct_llm_minimal_prompt_prompt_v1.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/ablation_v1/direct_llm_no_fewshot_prompt_v1.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/ablation_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `prompts/sun_compat/ablation_v2/direct_llm_no_explicit_json_contract_prompt_v2.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2/direct_llm_no_semantic_examples_prompt_v2.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2/direct_llm_no_semantic_guidance_prompt_v2.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `prompts/sun_compat/direct_llm_few_shot_fixtures.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `prompts/sun_compat/direct_llm_sun_record_prompt.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/direct_llm_sun_record_prompt_solcand_pilot_2026_08_07.md` | 活动 | 说明、规范或研究文档 |
@@ -1058,6 +1065,9 @@
 | `scripts/build_d1_h1_gate_decision_packages_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_d1_h1_zero_api_reevaluation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_d1_prompt_ablation_arms_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_d1_prompt_factorial_arms_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_d1_prompt_factorial_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_d1_prompt_factorial_results_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_direct_llm_ablation_classified_report_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_e_same_data_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_e_same_data_contract_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -1145,6 +1155,7 @@
 | `scripts/run_b0_module_removal_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_barrientos_ablation_suite_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_barrientos_ablation_suite_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_d1_prompt_factorial_ablation_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_d_full_postprocessing_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_ai_review.py` | 活动 | Python 实现、脚本或测试 |
@@ -1437,6 +1448,7 @@
 | `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_coarse_gold_b0_condition_constraint.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d1_h1_zero_api_reeval.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_d1_prompt_factorial_ablation_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d1_r2_lock_config.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d_full_postprocessing_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d_no_fewshot_interface_diagnosis_v1.py` | 活动 | Python 实现、脚本或测试 |
