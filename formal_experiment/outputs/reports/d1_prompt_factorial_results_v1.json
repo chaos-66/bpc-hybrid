@@ -1,0 +1,276 @@
+{
+  "schema_version": "d1_prompt_factorial_results@1.0.0",
+  "status": "complete_real_execution",
+  "execution": {
+    "planned_calls": 450,
+    "actual_calls": 450,
+    "completed_samples": 450,
+    "input_tokens": 1444632,
+    "output_tokens": 368212,
+    "cost_usd": 3.36503376,
+    "runtime_seconds": 3329.137,
+    "aborted": false
+  },
+  "comparison_scope": {
+    "input": "same EStG-150 records",
+    "model_release": "DeepSeek-V4-Pro-0813",
+    "sampling": "temperature=0, top_p=1, retry=0",
+    "gold": "same frozen EStG-150 Gold",
+    "evaluator": "sun_literal_overlap@2.0.0",
+    "baseline": "D-full-0813"
+  },
+  "rows": [
+    {
+      "arm": "D-full-0813",
+      "display_name": "完整方法（六个合成示例）",
+      "overall": {
+        "precision": 0.8202959830866807,
+        "recall": 0.728909952606635,
+        "f1": 0.7719075848848173
+      },
+      "per_field": {
+        "modality": {
+          "precision": 0.9705882352941176,
+          "recall": 0.8658008658008658,
+          "f1": 0.9152048810926992
+        },
+        "actor": {
+          "precision": 0.5487804878048781,
+          "recall": 0.9166666666666666,
+          "f1": 0.6865464632454924
+        },
+        "action": {
+          "precision": 0.8977777777777778,
+          "recall": 0.8259109311740891,
+          "f1": 0.8603461594671901
+        },
+        "condition": {
+          "precision": 0.9057971014492754,
+          "recall": 0.6915887850467289,
+          "f1": 0.78433035146479
+        },
+        "constraint": {
+          "precision": 0.6535433070866141,
+          "recall": 0.5496688741721855,
+          "f1": 0.5971223021582733
+        },
+        "exception": {
+          "precision": 0.7777777777777778,
+          "recall": 0.5384615384615384,
+          "f1": 0.6363636363636364
+        }
+      },
+      "failure_rate": 0.0,
+      "valid_output_rate": 1.0,
+      "evaluation_sha256": "0259150657253cce207ae37ed615bf8555973db037daea30532b8b0289c4e7db",
+      "manifest_sha256": "c2cbde7cfcf452e2ebe63a89f930a2627d8fec9915228d63c42ccfc2d394fd05",
+      "delta_vs_full": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "per_field_delta_f1_vs_full": {
+        "modality": 0.0,
+        "actor": 0.0,
+        "action": 0.0,
+        "condition": 0.0,
+        "constraint": 0.0,
+        "exception": 0.0
+      }
+    },
+    {
+      "arm": "D-no-semantic-examples-0813",
+      "display_name": "语义示例→纯结构模板",
+      "overall": {
+        "precision": 0.7808080808080808,
+        "recall": 0.7497630331753554,
+        "f1": 0.7649707088367671
+      },
+      "per_field": {
+        "modality": {
+          "precision": 0.9497716894977168,
+          "recall": 0.8917748917748918,
+          "f1": 0.9198600287670939
+        },
+        "actor": {
+          "precision": 0.40186915887850466,
+          "recall": 0.8958333333333334,
+          "f1": 0.5548387096774193
+        },
+        "action": {
+          "precision": 0.8630705394190872,
+          "recall": 0.8502024291497976,
+          "f1": 0.8565881591591002
+        },
+        "condition": {
+          "precision": 0.8841463414634146,
+          "recall": 0.7429906542056075,
+          "f1": 0.80744580254264
+        },
+        "constraint": {
+          "precision": 0.6454183266932271,
+          "recall": 0.5496688741721855,
+          "f1": 0.5937079147808809
+        },
+        "exception": {
+          "precision": 0.875,
+          "recall": 0.5384615384615384,
+          "f1": 0.6666666666666667
+        }
+      },
+      "failure_rate": 0.0,
+      "valid_output_rate": 1.0,
+      "evaluation_sha256": "aa1ee89a2e6caf3413981886ebcfd5d3528dc74c46ac9f68c94503794cc9e3cd",
+      "manifest_sha256": "00d2baa2073d6cba810f4e98bb60f36c1cb0715cec371ed55d2de9818539830f",
+      "delta_vs_full": {
+        "precision": -0.039487902278599885,
+        "recall": 0.020853080568720372,
+        "f1": -0.006936876048050156
+      },
+      "per_field_delta_f1_vs_full": {
+        "modality": 0.004655147674394788,
+        "actor": -0.13170775356807307,
+        "action": -0.003758000308089815,
+        "condition": 0.023115451077849958,
+        "constraint": -0.003414387377392414,
+        "exception": 0.030303030303030387
+      }
+    },
+    {
+      "arm": "D-no-semantic-guidance-0813",
+      "display_name": "去掉详细语义规则",
+      "overall": {
+        "precision": 0.8306010928961749,
+        "recall": 0.7279620853080568,
+        "f1": 0.7759019487942999
+      },
+      "per_field": {
+        "modality": {
+          "precision": 0.9644444444444444,
+          "recall": 0.8701298701298701,
+          "f1": 0.9148628240624214
+        },
+        "actor": {
+          "precision": 0.6103896103896104,
+          "recall": 0.9166666666666666,
+          "f1": 0.7328136073706591
+        },
+        "action": {
+          "precision": 0.7846153846153846,
+          "recall": 0.8340080971659919,
+          "f1": 0.8085581252164543
+        },
+        "condition": {
+          "precision": 0.8979591836734694,
+          "recall": 0.719626168224299,
+          "f1": 0.7989623865110247
+        },
+        "constraint": {
+          "precision": 0.7755102040816326,
+          "recall": 0.5099337748344371,
+          "f1": 0.6152875617705814
+        },
+        "exception": {
+          "precision": 0.8,
+          "recall": 0.6923076923076923,
+          "f1": 0.7422680412371134
+        }
+      },
+      "failure_rate": 0.0,
+      "valid_output_rate": 1.0,
+      "evaluation_sha256": "693f7487779ec834f83519f5ad4fc98340d890580e3afe14c6de14bf8fdb83e9",
+      "manifest_sha256": "a7fce4de859f90d907b17b9cfab9aab8b122b51716a9e4e3f2a8c678329e13d6",
+      "delta_vs_full": {
+        "precision": 0.010305109809494173,
+        "recall": -0.0009478672985782088,
+        "f1": 0.003994363909482601
+      },
+      "per_field_delta_f1_vs_full": {
+        "modality": -0.000342057030277787,
+        "actor": 0.04626714412516675,
+        "action": -0.05178803425073575,
+        "condition": 0.01463203504623467,
+        "constraint": 0.018165259612308082,
+        "exception": 0.10590440487347708
+      }
+    },
+    {
+      "arm": "D-no-explicit-json-contract-0813",
+      "display_name": "去掉显式 JSON 纪律",
+      "overall": {
+        "precision": 0.8220603537981269,
+        "recall": 0.7402843601895734,
+        "f1": 0.7790322040971193
+      },
+      "per_field": {
+        "modality": {
+          "precision": 0.9748953974895398,
+          "recall": 0.8874458874458875,
+          "f1": 0.9291174697037484
+        },
+        "actor": {
+          "precision": 0.5357142857142857,
+          "recall": 0.8958333333333334,
+          "f1": 0.6704781704781705
+        },
+        "action": {
+          "precision": 0.9247787610619469,
+          "recall": 0.8461538461538461,
+          "f1": 0.8837209302325582
+        },
+        "condition": {
+          "precision": 0.9051094890510949,
+          "recall": 0.677570093457944,
+          "f1": 0.7749832977737547
+        },
+        "constraint": {
+          "precision": 0.6439393939393939,
+          "recall": 0.5629139072847682,
+          "f1": 0.6007067137809187
+        },
+        "exception": {
+          "precision": 0.8181818181818182,
+          "recall": 0.6923076923076923,
+          "f1": 0.7500000000000001
+        }
+      },
+      "failure_rate": 0.0,
+      "valid_output_rate": 1.0,
+      "evaluation_sha256": "6b6ca0bde05cb1ded06738a91388cb682529380bd5fc61958252a9cd5a3a7020",
+      "manifest_sha256": "07e4cc9c8504053335c598f1339bba7cd2f2efbc270f675dddc69713fb1f3c62",
+      "delta_vs_full": {
+        "precision": 0.0017643707114461948,
+        "recall": 0.011374407582938395,
+        "f1": 0.007124619212302008
+      },
+      "per_field_delta_f1_vs_full": {
+        "modality": 0.01391258861104927,
+        "actor": -0.016068292767321912,
+        "action": 0.02337477076536809,
+        "condition": -0.009347053691035279,
+        "constraint": 0.0035844116226453338,
+        "exception": 0.11363636363636376
+      }
+    }
+  ],
+  "interpretation": "negative delta means the removed/replaced module contributed to end-to-end extraction on this dataset; zero delta means no measurable score contribution under this arm, not universal uselessness",
+  "factor_findings": {
+    "semantic_examples": {
+      "overall_effect": "small_positive_on_this_dataset",
+      "removal_delta_f1": -0.006936876048050156,
+      "strongest_supported_field_effect": "actor",
+      "actor_removal_delta_f1": -0.13170775356807307
+    },
+    "detailed_semantic_guidance": {
+      "overall_effect": "no_positive_overall_effect_observed",
+      "removal_delta_f1": 0.003994363909482601,
+      "supported_tradeoff": "removal improves actor/condition/constraint/exception but reduces action F1"
+    },
+    "explicit_json_discipline": {
+      "overall_effect": "no_positive_overall_effect_observed",
+      "removal_delta_f1": 0.007124619212302008,
+      "valid_output_rate_without_module": 1.0
+    },
+    "claim_boundary": "single fixed 150-record run per deletion arm; report as descriptive module effects, not significance or universal necessity"
+  }
+}

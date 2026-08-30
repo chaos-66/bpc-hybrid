@@ -1,0 +1,43 @@
+{
+  "schema_version": "d1_prompt_factorial_execution@1.0.0",
+  "planned_calls": 450,
+  "actual_calls": 450,
+  "completed_samples": 450,
+  "aborted": false,
+  "runs": [
+    {
+      "arm": "D-no-semantic-examples-0813",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "arm": "D-no-semantic-guidance-0813",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0
+    },
+    {
+      "arm": "D-no-explicit-json-contract-0813",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0
+    }
+  ],
+  "budget_gate": {
+    "calls_made": 450,
+    "input_tokens": 1444632,
+    "output_tokens": 368212,
+    "cost_usd": 3.36503376,
+    "aborted": false,
+    "abort_reason": null,
+    "caps": {
+      "calls": 450,
+      "input_tokens": 2948532.0,
+      "output_tokens": 1843200.0,
+      "usd": 13.43
+    }
+  },
+  "runtime_seconds": 3329.137,
+  "complete": true
+}

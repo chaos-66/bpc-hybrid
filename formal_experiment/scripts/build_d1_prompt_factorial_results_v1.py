@@ -112,6 +112,16 @@ def build(*, overwrite: bool = False) -> dict[str, Any]:
     report = {
         "schema_version": "d1_prompt_factorial_results@1.0.0",
         "status": "complete_real_execution",
+        "execution": {
+            "planned_calls": summary["planned_calls"],
+            "actual_calls": summary["actual_calls"],
+            "completed_samples": summary["completed_samples"],
+            "input_tokens": summary["budget_gate"]["input_tokens"],
+            "output_tokens": summary["budget_gate"]["output_tokens"],
+            "cost_usd": summary["budget_gate"]["cost_usd"],
+            "runtime_seconds": summary["runtime_seconds"],
+            "aborted": summary["aborted"],
+        },
         "comparison_scope": {
             "input": "same EStG-150 records",
             "model_release": "DeepSeek-V4-Pro-0813",
@@ -127,6 +137,34 @@ def build(*, overwrite: bool = False) -> dict[str, Any]:
             "measurable score contribution under this arm, not universal "
             "uselessness"
         ),
+        "factor_findings": {
+            "semantic_examples": {
+                "overall_effect": "small_positive_on_this_dataset",
+                "removal_delta_f1": rows[1]["delta_vs_full"]["f1"],
+                "strongest_supported_field_effect": "actor",
+                "actor_removal_delta_f1": rows[1][
+                    "per_field_delta_f1_vs_full"]["actor"],
+            },
+            "detailed_semantic_guidance": {
+                "overall_effect": "no_positive_overall_effect_observed",
+                "removal_delta_f1": rows[2]["delta_vs_full"]["f1"],
+                "supported_tradeoff": (
+                    "removal improves actor/condition/constraint/exception "
+                    "but reduces action F1"
+                ),
+            },
+            "explicit_json_discipline": {
+                "overall_effect": "no_positive_overall_effect_observed",
+                "removal_delta_f1": rows[3]["delta_vs_full"]["f1"],
+                "valid_output_rate_without_module": rows[3][
+                    "valid_output_rate"],
+            },
+            "claim_boundary": (
+                "single fixed 150-record run per deletion arm; report as "
+                "descriptive module effects, not significance or universal "
+                "necessity"
+            ),
+        },
     }
     OUT_JSON.write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n",
@@ -153,8 +191,40 @@ def build(*, overwrite: bool = False) -> dict[str, Any]:
             ))
     lines += [
         "",
-        "逐字段差值保存在 JSON 报告中。该表只回答本文提示模块在 EStG-150 上的贡献，"
-        "不与 Barrientos-native evaluator 的 F1 跨表比较。",
+        "## 逐字段 F1 差值（相对完整方法）",
+        "",
+        "| 条件 | modality | actor | action | condition | constraint | exception |",
+        "|---|---:|---:|---:|---:|---:|---:|",
+    ]
+    for row in rows[1:]:
+        delta = row["per_field_delta_f1_vs_full"]
+        lines.append(
+            "| {name} | {modality:+.4f} | {actor:+.4f} | {action:+.4f} | "
+            "{condition:+.4f} | {constraint:+.4f} | {exception:+.4f} |".format(
+                name=row["display_name"], **delta))
+    lines += [
+        "",
+        "## 可支持的结论",
+        "",
+        "- 六个语义示例具有小幅总体正贡献：替换为纯结构模板后 F1 下降 0.0069；"
+        "actor F1 下降 0.1317，是最明显的字段效应。",
+        "- 详细语义规则没有显示总体正增益：删除后整体 F1 上升 0.0040；但 action "
+        "F1 下降 0.0518，说明它带来字段间权衡，而不是对所有字段均无效。",
+        "- 显式 JSON 文字纪律没有显示总体正增益：删除后整体 F1 上升 0.0071，"
+        "且本批合法输出率仍为 1.0；这只说明在保留六个示例的当前模型/数据上未测得增益。",
+        "- 三个删除臂均为固定 150 条上的单次描述性运行，不作显著性推断，也不把"
+        "局部负增益解释为模块普遍无用。",
+        "",
+        "该表只回答本文提示模块在 EStG-150 上的贡献，不与 Barrientos-native "
+        "evaluator 的 F1 跨表比较。",
+        "",
+        "执行：450/450 calls，输入 {inp:,} tokens，输出 {out:,} tokens，"
+        "成本 ${cost:.4f}，运行 {runtime:.1f} 秒。".format(
+            inp=summary["budget_gate"]["input_tokens"],
+            out=summary["budget_gate"]["output_tokens"],
+            cost=summary["budget_gate"]["cost_usd"],
+            runtime=summary["runtime_seconds"],
+        ),
     ]
     OUT_MD.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     return report

@@ -156,15 +156,45 @@ def test_dry_run_is_zero_network_and_derived_counts():
             for arm, row in report["arms"].items()} == per_arm
 
 
-def test_contract_is_valid_but_unauthorized_and_hash_bound():
-    contract = runner.validate_contract(allow_unauthorized=True)
-    assert contract["authorization"] is None
+def test_contract_is_authorized_valid_and_hash_bound():
+    contract = runner.validate_contract()
+    authorization = contract["authorization"]
+    assert authorization["execution_window"] == "beijing_off_peak_only"
+    event_path = ROOT / authorization["authorization_event_file"]
+    assert event_path.is_file()
+    assert hashlib.sha256(event_path.read_bytes()).hexdigest() == (
+        authorization["authorization_event_file_sha256"])
     assert contract["execution_plan"]["total_calls"] == 450
     assert contract["budget"]["planned_calls"] == 450
     assert contract["budget"]["usd_cost_cap"] == pytest.approx(13.430)
     assert contract["budget"]["cny_off_peak_envelope"] == pytest.approx(45.79)
-    with pytest.raises(runner.ContractError, match="450-call batch"):
-        runner.validate_contract()
+
+
+def test_real_execution_summary_is_complete_and_within_budget():
+    summary = json.loads((
+        ROOT / "outputs" / "development" /
+        "d1_prompt_factorial_ablation_v2" /
+        "execution_summary.json").read_text(encoding="utf-8"))
+    assert summary["complete"] is True
+    assert summary["aborted"] is False
+    assert summary["planned_calls"] == 450
+    assert summary["actual_calls"] == 450
+    assert summary["completed_samples"] == 450
+    assert summary["budget_gate"]["calls_made"] == 450
+    assert summary["budget_gate"]["cost_usd"] <= 13.430
+    assert all(run["actual_call_count"] == 150 for run in summary["runs"])
+
+
+def test_result_report_preserves_honest_factor_findings():
+    report = json.loads((
+        ROOT / "outputs" / "reports" /
+        "d1_prompt_factorial_results_v1.json").read_text(encoding="utf-8"))
+    rows = {row["arm"]: row for row in report["rows"]}
+    assert rows["D-no-semantic-examples-0813"]["delta_vs_full"]["f1"] < 0
+    assert rows["D-no-semantic-guidance-0813"]["delta_vs_full"]["f1"] > 0
+    assert rows["D-no-explicit-json-contract-0813"]["delta_vs_full"]["f1"] > 0
+    assert report["factor_findings"]["explicit_json_discipline"][
+        "valid_output_rate_without_module"] == 1.0
 
 
 def test_nested_contract_drift_rejected_before_execution(tmp_path):

@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-30
-**收录文件**：1464 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1468 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -789,7 +789,11 @@
 | `outputs/reports/barrientos_de_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_tables_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_tables_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/d1_prompt_factorial_ablation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/d1_prompt_factorial_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/d1_prompt_factorial_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/d1_prompt_factorial_results_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/d1_prompt_factorial_results_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/d_full_postprocessing_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/d_full_postprocessing_ablation_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/d_no_fewshot_interface_diagnosis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |

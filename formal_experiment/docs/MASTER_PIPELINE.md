@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.30
+**文档版本**：3.6.31
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-08-30
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -471,29 +471,29 @@ Rules-Only 的可叙述模块：public marker lexicon 重建（来源/哈希/版
 
 | 消融 ID | 变量 | 我的设计 vs 替换方案 | 回答的问题 | 状态 |
 |---|---|---|---|---|
-| AB-1 | 详细语义规则 | v6 全字段定义 vs 只删规则9–19、25–27 | 字段语义、被动/指代与边界规则的贡献 | 历史 v5→v6 constraint R 0.288→0.417；**严格单因素臂已冻结，待450-call批次执行** |
-| AB-2 | 语义示例 | 6 合成 fixture vs 以纯 key/type 结构模板替换六个语义示例 | 排除输出格式崩溃后，语义示例本身的价值 | 旧0-shot端到端结果已诊断为接口混杂（锁定0；兼容桥0.526）；**结构保持替换臂已冻结，待450-call批次执行** |
+| AB-1 | 详细语义规则 | v6 全字段定义 vs 只删规则9–19、25–27 | 字段语义、被动/指代与边界规则的贡献 | **严格单因素完成（2026-08-30）**：full F1 0.7719；删除后 0.7759（Δ+0.0040），未观察到总体正增益；但 action F1 Δ−0.0518，存在字段间权衡 |
+| AB-2 | 语义示例 | 6 合成 fixture vs 以纯 key/type 结构模板替换六个语义示例 | 排除输出格式崩溃后，语义示例本身的价值 | **严格单因素完成（2026-08-30）**：full F1 0.7719；替换后 0.7650（Δ−0.0069），actor F1 Δ−0.1317；支持小幅总体正贡献 |
 | AB-3 | modality 类别 | 4 类（Sun）vs 3 类（Barrientos 投影） | `definition` 类的独立价值 | **离线覆盖投影完成**：4类 39/97/62/33；三类共享97/62/33；排除 definition 造成39/231=16.88%覆盖损失；非准确率优劣 |
 | AB-4 | 受控词汇 | 六字段受控 schema vs 移植 Barrientos 44 模式 dual-view | 我的归一化约束 vs 他的 pattern 约束 | **模块替换已跑、纯受控词汇单因素未隔离**：两个 replacement arm 接口不兼容为0；不能当 Barrientos 原方法无效 |
 | AB-5 | 校验链 | 完整 adapter/canonicalizer/validator vs 每次只移除一个 | 确定性后处理对有效率的贡献 | **固定 D-full-0813 raw 离线完成（2026-08-30）**：full 0.772；−adapter 0.772；−canonicalizer 0（149/150 invalid）；−validator 0.772（0 invalid observed）；同一150/Gold/evaluator，零 API，回顾性 development |
-| AB-5b | 显式 JSON 契约 | 完整提示 vs 只删 schema/固定键/仅JSON等明文纪律，保留全部语义规则与六个示例 | 明文输出纪律在示例已给出格式时是否仍有增量 | **严格单因素臂已冻结，待450-call批次执行** |
+| AB-5b | 显式 JSON 契约 | 完整提示 vs 只删 schema/固定键/仅JSON等明文纪律，保留全部语义规则与六个示例 | 明文输出纪律在示例已给出格式时是否仍有增量 | **严格单因素完成（2026-08-30）**：删除后 F1 0.7790（Δ+0.0071），合法输出率仍 1.0；当前模型/数据/保留示例条件下未测得正增益 |
 | AB-6 | transport | thinking-disabled/无 json_object vs 默认配方 | 事故率与可复现性 | 已有 0 事故证据，可整理 |
 | AB-7 | 评价口径 | 细 Gold vs 粗 Gold vs Sun-marker 收敛 | 口径敏感性（已有 0.7186/0.7986、0.7756/0.8726） | 有证据，整理成表 |
 | AB-8 | B0 模块 | lexicon 逐来源（Sleimi/LexNLP/Wiktionary）、marker 路由、跨语言验证开关 | 每个规则模块的边际贡献 | 部分有证据（R1 各批次） |
 | AB-9 | 稳定性 | 5 次独立重跑 agreement / self-consistency（对齐 Barrientos 论文的 5-run 设计） | 成本-收益的稳定性保证 | **完成（36条×3臂×5）**：只作为同一 arm 输出一致性；不得当跨方法准确率 |
 | AB-10 | style-equivalent 评估 | 开启 vs 关闭该评估维度 | 评估鲁棒性（借鉴 Barrientos 的贡献） | 待实现 |
 
-**Prompt 单因素执行冻结（2026-08-30，未调用 API）**：新目录
+**Prompt 单因素真实执行完成（2026-08-30，用户授权 450 calls）**：目录
 `prompts/sun_compat/ablation_v2/` 固定三条臂：`D-no-semantic-examples-0813`
 （六个语义示例→纯结构模板）、`D-no-semantic-guidance-0813`（仅删规则9–19、
 25–27）、`D-no-explicit-json-contract-0813`（仅删显式 JSON/schema 纪律）。三臂
-各150条，复用已完成且同 release 的 `D-full-0813` 为基线，不重复付费；固定新增
-计划=450 calls。独立合同
-`configs/ablations/d1_prompt_factorial_execution_contract_v1.json` 当前
-`authorization=null`；dry-run=0 network/0 API，渲染输入估算1,965,688 tokens，输入
-cap=2,948,532、输出cap=1,843,200、peak USD fail-closed cap=13.430、闲时人民币
-保守 envelope=45.79元。结果表生成器在 execution_summary 未完整450/450时拒绝输出，
-禁止把 prepared 条件写成实验结果。
+各150条，复用已完成且同 release 的 `D-full-0813` 为基线，不重复付费；实际
+450/450 calls、失败0、input/output=1,444,632/368,212 tokens、cost=$3.3650，未触及
+USD cap 13.430。总体 F1：full 0.7719；语义示例→结构模板 0.7650（Δ−0.0069）；
+删除详细语义规则 0.7759（Δ+0.0040）；删除显式 JSON 纪律 0.7790（Δ+0.0071，合法率
+仍1.0）。因此仅语义示例显示小幅总体正贡献；其余两模块在此固定数据上没有显示总体
+正增益，但存在逐字段权衡，不能写成普遍无用或显著性结论。报告：
+`outputs/reports/d1_prompt_factorial_results_v1.{json,md}`。
 
 **输出要求**：每项消融至少一行结论表——「我的模块 vs 换 Barrientos 模块 vs 去掉
 模块」三列指标，并写"我的好在哪里 / 他的好在哪里 / 综合谁好及原因 / 可比较性限制
@@ -946,6 +946,7 @@ development-only；S3.7 formal Oracle not started；Gold Rule Records absent。
 
 ## 15. Pipeline 变更日志
 
+| 3.6.31 | 2026-08-30 | **Direct-LLM Prompt 三条严格单因素真实执行完成**：用户明确授权 450 calls（DeepSeek-V4-Pro-0813、temperature=0、retry=0、USD cap 13.430、北京时间闲时），三臂各150条全部完成，失败0，执行器汇总 `complete=true`；实际 input/output=1,444,632/368,212 tokens、cost=$3.3650、runtime=3,329.1s。与同 release `D-full-0813`（F1 0.7719）比较：语义示例→纯结构模板 F1 0.7650（Δ−0.0069，actor Δ−0.1317），支持小幅总体正贡献；仅删详细语义规则 F1 0.7759（Δ+0.0040，action Δ−0.0518），显示字段权衡但无总体正增益；仅删显式 JSON 纪律 F1 0.7790（Δ+0.0071），合法率仍1.0，当前条件下未测得增益。全部为固定150条的描述性单次结果，不作显著性或普遍必要性推断；不与 Barrientos-native F1 跨 evaluator 比较。 | authorized 450-call run + per-arm raw/canonical/evaluation/manifest + execution summary + aggregate JSON/Markdown table |
 | 3.6.30 | 2026-08-30 | **Direct-LLM 三条严格 Prompt 单因素臂冻结（零 API）**：纠正旧 D-no-fewshot 的混杂后，新增 `ablation_v2` 三臂：①语义示例替换为纯 key/type 结构模板（保留输出接口支撑，不再把坐标格式崩溃误作语义能力为0）；②仅删详细语义规则9–19、25–27（输出纪律、六个示例不变）；③仅删显式 JSON/schema 纪律（语义规则、六个示例不变）。每臂均只与同 release、已完成的 D-full-0813 在同一 EStG-150/Gold/`sun_literal_overlap@2.0.0` 下比较；新增调用固定3×150=450，基线0次复用。独立执行器/合同/schema/结果表生成器均已接线；合同绑定输入、三 prompt、builder、executor、模型 DeepSeek-V4-Pro-0813、temp0/retry0、全局预算与Gold隔离，当前 `authorization=null`，execute 会在首次 send 前 exit3；dry-run=0 API/0 network，渲染输入估算1,965,688，input cap2,948,532、output cap1,843,200、peak USD cap13.430、off-peak CNY envelope45.79。另纠正历史结果表把实际六个合成示例误写成“4-shot”的显示标签；历史响应/分数不变。 | 3 prompts + manifest + dedicated 450-call runner/contract/schema/budget/results builder + focused tests + zero-API dry-run |
 | 3.6.29 | 2026-08-30 | **S2-BARR-4 消融证据纠错 + Direct-LLM 后处理三模块单因素（零 API）**：(1) no-fewshot 原始响应诊断：147/150 JSON 可解析、146/150 原始非空、247 clauses 的 clause_span 全为 `[start,end]`，锁定 adapter/canonicalizer 因接口形状删除全部 clauses；回顾性 Gold-blind 坐标桥（Gold 仅桥后评价）恢复 136 valid/134 nonempty、P/R/F1 0.647/0.444/0.526，明确只作 post-hoc 诊断，不取代锁定0分、不证明语义 few-shot贡献；(2) 同一 D-full-0813 raw、同150/Gold/evaluator 后处理单因素：full P/R/F1 0.820/0.729/0.772并逐位复刻锁定评价；−adapter ΔF1=0；−canonicalizer 149/150 validator reject、F1=0（Δ−0.772）；−validator ΔF1=0且 invalid observed=0（不取消安全价值）；(3) 修复分类报告把整个 append-only event log hash 当稳定 provenance 的缺陷，改绑定目标 run event canonical hash；few-shot 措辞纠正为输出合同贡献、语义贡献未隔离；(4) 原始/派生逐条预测因 EStG 许可边界继续 local-only，提交报告只含聚合/hash/失败边界；Gold/正式结果未改、真实 API=0。 | 两份诊断/消融报告 + 2脚本 + focused tests + audit --with-tests + record_change |
 | 3.6.28 | 2026-08-22 | **S2.12 → 论文优先主线切换（同步 Stage 3 可控错误扩展，零 API）**：① 主线：Stage 1=已完成复现不再扩展；Stage 2 用已有三方法/复杂语料结果；Stage 3 立即新增 30 条 `synthetic_controlled_error_extension` 可控错误并运行现有 Winter/Sun/BM25/TF-IDF；论文正文并行完善，不再因 S2.12 API 未授权而等待。② Stage 3 可控错误扩展 （S3.9）：生成器 `scripts/build_s3_error_injection_v1.py`（锁定 30 变体 10/10/10；每变体源 BPMN byte-unchanged、exactly-one-error、XML/结构/非目标字段不变校验、replay byte-identical；规则绑定来自冻结 inference pack）；面板 `data/development/stage3_synth/synthetic_controlled_error_extension_v1.json`（明确 dev-only、never 人类 Gold）；运行器 `scripts/run_s3_synthetic_panel_v1.py` 在同一 evaluator 口径下四方法 panel（DEV_ONLY：Winter macro 0.333/exact 0.333；Sun 0.333/0.200；BM25 0.333/0.333；TF-IDF 0.635/0.533）。③ S2.12 Direct/Fallback 保持 pending authorization（非论文 blocker）。④ Stage 3 formal Oracle 仍未启动，synthetic panel 不冒充 Oracle。 | 用户优先级切换 + S3.9 synthetic controlled-error panel + 四方法 panel 运行 + 16 项 focused tests + 零 API 审计 |

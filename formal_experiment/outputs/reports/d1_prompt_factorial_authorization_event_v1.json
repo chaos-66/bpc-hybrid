@@ -1,0 +1,16 @@
+{
+  "schema_version": "d1_prompt_factorial_authorization_event@1.0.0",
+  "suite_id": "S2-D1-PROMPT-FACTORIAL-001",
+  "authorization_sentence": "我明确授权执行 Direct-LLM Prompt 单因素消融实验：450 calls，模型 deepseek-v4-pro（DeepSeek-V4-Pro-0813），temperature=0，retry=0，USD cap 13.430；仅在北京时间闲时执行，超过任一合同上限立即停止。",
+  "authorized_at_utc": "2026-08-30T10:10:51Z",
+  "authorized_scope": {
+    "calls": 450,
+    "model": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "temperature": 0.0,
+    "retry": 0,
+    "usd_cap": 13.43,
+    "execution_window": "beijing_off_peak_only"
+  },
+  "source": "verbatim user message in the active Codex task"
+}

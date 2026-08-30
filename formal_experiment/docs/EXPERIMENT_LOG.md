@@ -3981,3 +3981,20 @@
 - 仍存在 blocker：无
 - 备注：零API/零网络；新增语义示例结构保持替换、详细语义规则移除、显式JSON纪律移除三臂；固定450 calls但authorization=null；仅纠正派生结果表4-shot为实际6个合成示例，历史响应/指标/Gold未改。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-30T12:39:35.753715+00:00 - Direct-LLM Prompt三模块严格单因素消融真实执行与结果汇总
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=d1-prompt-factorial-0813-450-v1；阶段=Stage 2 Direct-LLM ablation；方法=direct_llm；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_d1_prompt_factorial_ablation_v2.py --execute --contract-file formal_experiment/configs/ablations/d1_prompt_factorial_execution_contract_v1.json`
+- manifest：outputs/reports/d1_prompt_factorial_ablation_v2.json
+- 结果摘要：450/450 calls; 0 failures; cost USD 3.36503376; full F1 0.7719; no-semantic-examples 0.7650 (delta -0.0069); no-semantic-guidance 0.7759 (delta +0.0040); no-explicit-json-contract 0.7790 (delta +0.0071)
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2769 passed, 24 skipped, 40 warnings in 1598.55s (0:26:38)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`047a506dffb849ba9e6fcf61b468b2004e8d1942`；相关未提交路径：19 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：用户明确授权DeepSeek-V4-Pro-0813、temperature=0、retry=0、USD cap 13.430、北京时间闲时；实际450次，输入/输出tokens=1444632/368212，运行3329.137秒；Key仅本次进程内使用，未写入仓库/日志；三臂同150/Gold/evaluator且仅相对同版本D-full-0813比较；单次描述性消融，不作显著性推断，不跨Barrientos-native evaluator比较F1。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

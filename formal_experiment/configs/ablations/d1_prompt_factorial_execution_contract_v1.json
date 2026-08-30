@@ -80,7 +80,13 @@
     },
     "calculation": "render all 450 requests; estimate each input as ceil(UTF-8 request bytes/3); input cap=estimate*1.5; output cap=450*4096; USD gate=(caps at peak USD rates)*1.2 rounded up; CNY envelope=(caps at off-peak CNY rates)*1.2 rounded up"
   },
-  "authorization": null,
+  "authorization": {
+    "authorization_sentence_utf8_sha256": "279bb6af13be3bd6a01d64940adeaa2e4700c201b664a28ecc418c5723ab719e",
+    "authorization_event_file": "outputs/reports/d1_prompt_factorial_authorization_event_v1.json",
+    "authorization_event_file_sha256": "3496a3ad89f3dc3aecf854b7b83a2c34c7d25f0d86b931ed8f0c724fff1fd6d1",
+    "authorized_at_utc": "2026-08-30T10:10:51Z",
+    "execution_window": "beijing_off_peak_only"
+  },
   "gold_isolation": {
     "api_arms_must_not_read_gold": true,
     "evaluation_only_after_predictions_are_locked": true
