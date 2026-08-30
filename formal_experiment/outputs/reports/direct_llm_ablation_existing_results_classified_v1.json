@@ -1,0 +1,535 @@
+{
+  "schema_version": "direct_llm_ablation_existing_results_classified@1.0.0",
+  "status": "classified_existing_results_only_no_new_execution",
+  "scope": {
+    "run_id": "barrientos-de-0813-1140-v1",
+    "model": "DeepSeek-V4-Pro-0813",
+    "new_api_calls_for_this_report": 0,
+    "gold_read_for_this_report": false,
+    "rescore_performed": false,
+    "stage3_bpmn_evaluation_performed": false,
+    "purpose": "separate already-run evidence by scientific comparison type before any additional ablation is designed"
+  },
+  "provenance": {
+    "source_tables": "outputs/reports/barrientos_de_tables_v1.json",
+    "source_tables_sha256": "f14da7ee509fbdfd8c786a88fa47d3bf180b340f45b5c9110f3a1f3e6b2e8e3f",
+    "experiment_events": "docs/EXPERIMENT_EVENTS.jsonl",
+    "experiment_events_sha256": "a745fa0053e43d55ff78b25b80f0aae30d4ba26acf5f153e318adfb69ed6cb84",
+    "source_event_timestamp_utc": "2026-08-29T12:17:14.700006+00:00",
+    "source_event_git_commit": "40cb8f21bb221abe1ea03a575f60dccfb51f2c40"
+  },
+  "run_accounting": {
+    "actual_calls": 1140,
+    "planned_calls": 1140,
+    "input_tokens": 2428816,
+    "output_tokens": 732374,
+    "conservative_peak_ledger_usd": 6.10623816,
+    "off_peak_estimate_usd": 3.05311908,
+    "complete": true,
+    "in_doubt": 0,
+    "call_allocation": {
+      "internal_one_factor_reference_and_removal": 300,
+      "multi_module_sensitivity": 150,
+      "prompt_contract_replacement_estg150": 150,
+      "barrientos_native_external_comparator": 180,
+      "ours_full_same_data_reference": 180,
+      "barrientos_module_swap_same_data": 180
+    }
+  },
+  "classification_rule": {
+    "core_internal_ablation": "same model, data, Gold, evaluator and pipeline; change exactly one named component",
+    "multi_module_sensitivity": "several components are weakened or removed together; useful for stress testing but not for single-module attribution",
+    "module_replacement": "replace an interface or prompt module with the Barrientos design while holding the surrounding evaluation fixed",
+    "external_comparison": "evaluate each method in its native schema or on a predeclared shared target; never compare native F1 across evaluators"
+  },
+  "categories": {
+    "1_core_internal_one_factor_ablation": {
+      "status": "partially_complete",
+      "dataset": "EStG-150",
+      "evaluator": "sun_literal_overlap@2.0.0",
+      "repeats": 1,
+      "calls": 300,
+      "baseline": {
+        "arm": "D-full-0813",
+        "display_name": "完整六字段提示（含 4-shot）",
+        "metrics": {
+          "overall": {
+            "precision": 0.8202959830866807,
+            "recall": 0.728909952606635,
+            "f1": 0.7719075848848173
+          },
+          "field_f1": {
+            "actor": 0.6865464632454924,
+            "action": 0.8603461594671901,
+            "condition": 0.78433035146479,
+            "constraint": 0.5971223021582733,
+            "exception": 0.6363636363636364
+          },
+          "parse_success_rate": 1.0,
+          "nonempty_canonical_clause_rate": 0.986667,
+          "failure_rate": 0.0
+        }
+      },
+      "single_removed_component": {
+        "component": "few-shot examples",
+        "arm": "D-no-fewshot-0813",
+        "display_name": "去掉 few-shot 示例",
+        "metrics": {
+          "overall": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "field_f1": {
+            "actor": 0.0,
+            "action": 0.0,
+            "condition": 0.0,
+            "constraint": 0.0,
+            "exception": 0.0
+          },
+          "parse_success_rate": 0.98,
+          "nonempty_canonical_clause_rate": 0.0,
+          "failure_rate": 0.02
+        },
+        "delta_vs_full": {
+          "overall_p": -0.82,
+          "overall_r": -0.729,
+          "overall_f1": -0.772,
+          "parse_success_rate": -0.02,
+          "nonempty_canonical_clause_rate": -0.987,
+          "failure_rate": 0.02
+        }
+      },
+      "supported_conclusion": "Under the fixed 0813 pipeline, removing only the few-shot examples collapses usable canonical six-field output: overall F1 falls from 0.771908 to 0 and the nonempty canonical-clause rate from 0.986667 to 0.",
+      "interpretation_limit": "The 0 F1 is a strict end-to-end contract result. Parse success remains 0.98, so it must not be described as proof that the model produced no semantic content."
+    },
+    "2_multi_module_sensitivity_not_core_ablation": {
+      "status": "complete_for_existing_arm",
+      "dataset": "EStG-150",
+      "evaluator": "sun_literal_overlap@2.0.0",
+      "repeats": 1,
+      "calls": 150,
+      "arm": "D-minimal-0813",
+      "display_name": "极简任务与 JSON 要求",
+      "metrics": {
+        "overall": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "field_f1": {
+          "actor": 0.0,
+          "action": 0.0,
+          "condition": 0.0,
+          "constraint": 0.0,
+          "exception": 0.0
+        },
+        "parse_success_rate": 0.0,
+        "nonempty_canonical_clause_rate": 0.0,
+        "failure_rate": 1.0
+      },
+      "supported_conclusion": "The extreme minimal prompt fails completely under the strict pipeline (parse success 0, failure rate 1).",
+      "interpretation_limit": "This arm changes several prompt components together, so it cannot identify which individual module caused the failure and is not a core one-factor ablation."
+    },
+    "3_module_replacement": {
+      "status": "complete_for_two_existing_replacement_tests",
+      "estg150_prompt_contract_replacement": {
+        "dataset": "EStG-150",
+        "evaluator": "sun_literal_overlap@2.0.0",
+        "repeats": 1,
+        "calls": 150,
+        "reference_arm": "D-full-0813",
+        "replacement_arm": "D-barrientos-style-0813",
+        "metrics": {
+          "overall": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "field_f1": {
+            "actor": 0.0,
+            "action": 0.0,
+            "condition": 0.0,
+            "constraint": 0.0,
+            "exception": 0.0
+          },
+          "parse_success_rate": 0.993333,
+          "nonempty_canonical_clause_rate": 0.0,
+          "failure_rate": 0.006667
+        },
+        "delta_overall_f1": -0.772,
+        "supported_conclusion": "The Barrientos-style replacement does not produce a usable record for the current six-field pipeline: parse success is 0.993333 but nonempty canonical rate and strict F1 are 0."
+      },
+      "same_data_barrientos_module_swap": {
+        "dataset": "S2.11 complex corpus (36 requirements)",
+        "evaluator": "s2_12_stratified_evaluator_v2",
+        "repeats": 5,
+        "calls": 360,
+        "full": {
+          "arm": "OURS-FULL",
+          "overall_f1": {
+            "mean": 0.874,
+            "sd": 0.003,
+            "min": 0.869,
+            "max": 0.878
+          },
+          "field_f1": {
+            "actor": {
+              "mean": 0.821,
+              "sd": 0.013,
+              "min": 0.8,
+              "max": 0.842
+            },
+            "action": {
+              "mean": 0.963,
+              "sd": 0.0,
+              "min": 0.963,
+              "max": 0.963
+            },
+            "condition": {
+              "mean": 0.79,
+              "sd": 0.004,
+              "min": 0.783,
+              "max": 0.792
+            },
+            "constraint": {
+              "mean": 0.764,
+              "sd": 0.0,
+              "min": 0.764,
+              "max": 0.764
+            },
+            "exception": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            }
+          },
+          "parse_success_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          "nonempty_canonical_clause_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          }
+        },
+        "replacement": {
+          "arm": "OURS-BARRIENTOS-MODULE",
+          "overall_f1": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "parse_success_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          "nonempty_canonical_clause_rate": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          }
+        },
+        "delta_swap_minus_full": {
+          "actor_p": -0.728,
+          "actor_r": -0.941,
+          "actor_f1": -0.821,
+          "action_p": -0.951,
+          "action_r": -0.974,
+          "action_f1": -0.963,
+          "condition_p": -0.653,
+          "condition_r": -1.0,
+          "condition_f1": -0.79,
+          "constraint_p": -0.955,
+          "constraint_r": -0.636,
+          "constraint_f1": -0.764,
+          "exception_p": 0.0,
+          "exception_r": 0.0,
+          "exception_f1": 0.0,
+          "overall_p": -0.862,
+          "overall_r": -0.887,
+          "overall_f1": -0.874,
+          "parse_success_rate": 0.0,
+          "nonempty_canonical_clause_rate": -1.0,
+          "failure_rate": 0.0,
+          "modality_label_accuracy": -0.944,
+          "modality_label_macro_f1": -0.617
+        },
+        "supported_conclusion": "On the same 36-item six-field Gold and evaluator, OURS-FULL reaches mean overall F1 0.874 (SD 0.003), whereas the module-swapped output has strict F1 0 and nonempty canonical rate 0.",
+        "interpretation_limit": "This establishes interface/task-fit failure for the replacement. It does not establish that the complete Barrientos method is generally ineffective."
+      }
+    },
+    "4_external_native_and_shared_target_comparison": {
+      "status": "complete_for_existing_comparators",
+      "barrientos_native": {
+        "dataset": "Barrientos 36 requirements",
+        "evaluator": "barrientos_step1_artifact_evaluator",
+        "repeats": 5,
+        "calls": 180,
+        "precondition_f1": {
+          "mean": 0.771,
+          "sd": 0.015,
+          "min": 0.75,
+          "max": 0.783
+        },
+        "norm_f1": {
+          "mean": 0.825,
+          "sd": 0.009,
+          "min": 0.813,
+          "max": 0.839
+        },
+        "strict_json_validity": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "output_coverage": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "failure_rate": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "self_consistency": {
+          "paper_distance_le2_ratio": 0.880556,
+          "pairwise_comparisons": 360,
+          "per_requirement_mean_ratio": 0.880556,
+          "per_requirement_std_ratio": 0.223382,
+          "definition": "same-arm five-run output consistency on the same 36 inputs; NOT a cross-method accuracy metric"
+        }
+      },
+      "shared_three_class_modality": {
+        "dataset": "S2.11 complex corpus (36 requirements)",
+        "evaluator": "same shared-target Gold and metric via deterministic adapters",
+        "arms": {
+          "BARR-FULL": {
+            "per_class": {
+              "obligation": {
+                "precision": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                }
+              },
+              "permission": {
+                "precision": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 0.65,
+                  "sd": 0.122
+                },
+                "f1": {
+                  "mean": 0.781,
+                  "sd": 0.093
+                }
+              },
+              "prohibition": {
+                "precision": {
+                  "mean": 0.8,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.889,
+                  "sd": 0.0
+                }
+              }
+            },
+            "macro_f1": {
+              "mean": 0.89,
+              "sd": 0.031
+            }
+          },
+          "OURS-FULL": {
+            "per_class": {
+              "obligation": {
+                "precision": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                }
+              },
+              "permission": {
+                "precision": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 0.5,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.667,
+                  "sd": 0.0
+                }
+              },
+              "prohibition": {
+                "precision": {
+                  "mean": 0.667,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 1.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.8,
+                  "sd": 0.0
+                }
+              }
+            },
+            "macro_f1": {
+              "mean": 0.822,
+              "sd": 0.0
+            }
+          },
+          "OURS-BARRIENTOS-MODULE": {
+            "per_class": {
+              "obligation": {
+                "precision": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                }
+              },
+              "permission": {
+                "precision": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                }
+              },
+              "prohibition": {
+                "precision": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "recall": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                },
+                "f1": {
+                  "mean": 0.0,
+                  "sd": 0.0
+                }
+              }
+            },
+            "macro_f1": {
+              "mean": 0.0,
+              "sd": 0.0
+            }
+          }
+        },
+        "supported_conclusion": "On the expressible shared three-class modality target, BARR-FULL has macro-F1 0.890 (SD 0.031), above OURS-FULL at 0.822 (SD 0). Barrientos is stronger on this narrower shared target.",
+        "not_expressible_or_alignable": {
+          "actor_action_exception": {
+            "status": "not_expressible_in_barrientos_schema",
+            "reason": "the Barrientos Step-1 schema has no actor/action/exception fields at the same semantic level; never hard-computed as 0"
+          },
+          "definition": {
+            "status": "not_expressible_in_barrientos_schema",
+            "reason": "3-class Barrientos modality cannot express definition; excluded from shared modality denominator, never counted as 0"
+          },
+          "precondition": {
+            "status": "not_strictly_alignable",
+            "reason": "Barrientos precondition is an AND/OR/NOT action list; Ours condition is a span-based field"
+          }
+        }
+      },
+      "comparability_limit": "Barrientos-native precondition/norm F1 and Ours-native six-field F1 use different schemas and evaluators and must never be directly ranked."
+    }
+  },
+  "not_yet_run_core_internal_ablations": [
+    {
+      "component_id": "field_definitions_and_six_element_schema",
+      "display_name": "六要素字段定义与输出模式",
+      "status": "not_run_as_one_factor_arm"
+    },
+    {
+      "component_id": "span_evidence_anchoring",
+      "display_name": "原文证据与位置锚定规则",
+      "status": "not_run_as_one_factor_arm"
+    },
+    {
+      "component_id": "strict_json_schema_discipline",
+      "display_name": "严格 JSON 结构约束",
+      "status": "not_run_as_one_factor_arm"
+    },
+    {
+      "component_id": "canonicalizer",
+      "display_name": "坐标重锚与规范化器",
+      "status": "not_run_on_current_0813_full_raw_as_one_factor_arm",
+      "suggested_mode": "offline replay; no new API call required"
+    },
+    {
+      "component_id": "validator",
+      "display_name": "结构与字段校验器",
+      "status": "not_run_on_current_0813_full_raw_as_one_factor_arm",
+      "suggested_mode": "offline replay; no new API call required"
+    },
+    {
+      "component_id": "output_adapter",
+      "display_name": "模型输出到六字段记录的适配器",
+      "status": "not_run_on_current_0813_full_raw_as_one_factor_arm",
+      "suggested_mode": "offline replay; no new API call required"
+    }
+  ],
+  "bottom_line": {
+    "what_is_already_clear": [
+      "Few-shot examples are necessary for usable output in the current strict Direct-LLM pipeline.",
+      "The full six-field method is substantially better fitted to the project's six-field, BPMN-facing interface than either tested Barrientos-style replacement.",
+      "Barrientos is stronger on the narrower shared three-class modality target and works well in its own native schema."
+    ],
+    "what_is_not_yet_clear": "The independent contribution of the remaining Direct-LLM modules cannot be attributed until the listed one-factor removals are run.",
+    "global_winner_claim_allowed": false,
+    "stage3_performance_claim_allowed_from_this_run": false
+  }
+}

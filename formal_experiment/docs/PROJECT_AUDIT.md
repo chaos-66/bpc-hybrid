@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-08-20
+**更新时间**：2026-08-30
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -47,14 +47,14 @@ B0-R0–R5 已全部完成（各批次 verified，R5 正式结论包 2026-08-11 
 | H1 不再深究，仅作对照；解释为何差、难点与优化方向 | **已完成** | §8.8.1 已给出全量 150 负结果、actor 过抽、Gold-blind trigger 错位、字段边界约束与仅供未来参考的保守优化方向；正式结论已固定为 comparison-only，不再派发优化。 |
 | 列出并举例解释 B0 / D1 局限 | **已完成（实验/证据文档 + 论文回填，2026-08-20）** | §8.8.2、`B0_ERROR_ANALYSIS.md`、`D1_ERROR_ANALYSIS.md` 已有数字和例子；`paper/THESIS_DRAFT.md` §8 已按量化证据逐条回填（Rules-Only 5 类、Direct-LLM 5 类：每条含定量证据/文本例子/错误原因/方法边界/优化方向/为何未继续）；H1 写为负结果对照。 |
 | B0/H1/D1 改为直观命名 | **已完成（注册表 + 论文正文迁移，2026-08-20）** | 正式名为 Rules-Only / Rules+LLM-Repair / Direct-LLM，机器 ID 仅为兼容保留；`paper/THESIS_DRAFT.md` 方法标题/正文已改正式名（legacy B0/H1/D1 仅首现映射与 §7.1 模板机器 ID 行、§7.2 正式表附注），PW3 状态更新为 in_progress。 |
-| 严格对比 Barrientos、做模块替换/移除消融、把贡献写成 4–5 页 | **方法写作 / 消融矩阵 / 授权申请完成；实验本体未完成** | 已完成：原论文/artifact 边界核验、adapter、复杂语料 36 条 Gold 与 Rules-Only 零 API arm；论文 §4 方法章节 8+8 模块 + §4.4 Barrientos 15 维对比表已写入 `paper/THESIS_DRAFT.md`；`paper/ABLATION_MATRIX.md` 登记 AB-1..AB-10 现状（仅已有历史证据项可引用）；精确 API 授权申请 `docs/API_AUTHORIZATION_REQUEST.md` 已备。**未完成（需授权/实验）**：Direct-LLM 与 Rules+LLM-Repair 复杂语料 API arms、AB-2/AB-4/AB-9、AB-10 style-equivalent 实现、5-run 稳定性执行。2026-08-20 原文复核纠正：论文稳定性是 36 条要求×5 次独立运行；20×2×2=80 是专家标注数，不存在“20 条×20 次模型重跑”。 |
+| 严格对比 Barrientos、做模块替换/移除消融、把贡献写成 4–5 页 | **1140 次 D/E 运行完成；现有证据已分类；核心内部消融仍为部分完成** | 2026-08-29 已完成 DeepSeek-V4-Pro-0813 固定计划 1140/1140 调用。2026-08-30 按科学用途重分：① 真正的一因素内部消融只有 Full vs 去 few-shot（F1 0.772→0，非空 canonical 0.987→0）；② minimal 是多模块压力测试；③ Barrientos-style 与 OURS-BARRIENTOS-MODULE 是模块替换；④ Barrientos-native 与共享三类 modality 是外部/共享对照，禁止跨 evaluator 比 native F1。共享三类上 Barrientos macro-F1 0.890、本文 0.822；同一六字段 Gold 上本文完整方法 F1 0.874±0.003、替换模块为 0（接口不兼容，不能解释成 Barrientos 普遍无效）。分类报告见 `outputs/reports/direct_llm_ablation_existing_results_classified_v1.md`。**仍缺的一因素内部消融**：字段定义、span/evidence 规则、strict schema discipline，以及基于当前 0813 raw 的 adapter/canonicalizer/validator 离线移除。 |
 
-因此，四项要求的**决策记录已经完整进入控制面，且论文侧落地（命名迁移、局限回填、
-8+8 模块方法章节、Barrientos 对比表、消融矩阵、授权申请）已于 2026-08-20 完成**，
-但整体验收仍为 **PARTIAL**：1 / 2 / 3 的论文落地已完成；4 的核心消融实验（真实
-LLM arms + AB-2/4/9 + AB-10 + 5-run 稳定性）仍待授权执行。
-后续 Agent 不得把“AB 矩阵已列出”写成“AB 实验已完成”，也不得把 Barrientos 的
-专家标注协议、自动方法评价与稳定性实验混为一谈。
+因此，四项要求的**决策记录、方法拆分和首批真实 D/E 数据均已进入控制面**，但第 4 项
+仍只能验收为 **PARTIAL**：1140 次运行已经回答 few-shot、极简压力、模块替换、
+Barrientos-native 和共享三类目标；尚未逐一回答其余本文模块“只去掉一个会怎样”。
+后续 Agent 不得把 minimal 或模块替换写成一因素内部消融，不得把“已有 1140 次调用”
+写成“所有模块均已消融完成”，也不得把 Barrientos 的 native F1 与本文六字段 F1
+跨 evaluator 排名。
 
 根据导师最新要求，论文非结果章节从现在与实验并行：先写引言、相关工作、方法、
 数据/标注流程和实验设计；结果、摘要结论和“LLM 优势”只保留显式 TODO，直到正式

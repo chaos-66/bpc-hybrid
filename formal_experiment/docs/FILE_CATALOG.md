@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-29
-**收录文件**：1440 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-08-30
+**收录文件**：1444 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -787,6 +787,8 @@
 | `outputs/reports/barrientos_de_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_tables_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_tables_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/direct_llm_ablation_existing_results_classified_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/direct_llm_ablation_existing_results_classified_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/direct_llm_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_formal_arm_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1051,6 +1053,7 @@
 | `scripts/build_d1_h1_gate_decision_packages_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_d1_h1_zero_api_reevaluation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_d1_prompt_ablation_arms_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_direct_llm_ablation_classified_report_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_e_same_data_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_e_same_data_contract_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_estg150_review_layers.py` | 活动 | Python 实现、脚本或测试 |
@@ -1429,6 +1432,7 @@
 | `tests/test_coarse_gold_b0_condition_constraint.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d1_h1_zero_api_reeval.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d1_r2_lock_config.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_direct_llm_ablation_classified_report_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg_150_canonical_review.py` | 活动 | Python 实现、脚本或测试 |

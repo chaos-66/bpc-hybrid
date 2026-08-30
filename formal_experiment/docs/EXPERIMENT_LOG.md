@@ -3942,3 +3942,16 @@
 - 仍存在 blocker：无
 - 备注：User authorized exact 1140-call DeepSeek-V4-Pro-0813 plan, temperature=0, retry=0, USD cap=30.407, Beijing off-peak only. Raw responses and per-request ledgers persisted; failed samples stayed in denominators. Table builder generator-exhaustion bug was fixed offline and parse-success was separated from nonempty-canonical rate; no API rerun.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-30T01:56:22.209979+00:00 - Classify the completed 1140-call Direct-LLM/Barrientos results into one-factor internal ablation, multi-module sensitivity, module replacement, and external/shared-target comparison
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2746 passed, 24 skipped, 40 warnings in 2921.97s (0:48:41)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`25b74e49b67a761935f425ef5cec98d8927b3913`；相关未提交路径：14 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Zero API and no rescoring. Existing results only: Full vs no-fewshot is the sole completed one-factor internal ablation; minimal is multi-module sensitivity; Barrientos-style and OURS-BARRIENTOS-MODULE are replacement tests; Barrientos-native/shared three-class results are external comparators. Focused tests 53 passed; full audit 2746 passed/24 skipped/40 warnings, exit 0. Pre-existing .bak files and Stage-1 autocrlf display artifact were not touched or staged.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
