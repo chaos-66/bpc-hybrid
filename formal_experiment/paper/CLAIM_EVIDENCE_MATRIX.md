@@ -38,7 +38,7 @@
 | C26 | 论文方法章节按细模块撰写（Direct-LLM 8 模块、Rules-Only 8 模块、Rules+LLM-Repair 负结果、Barrientos 15 维对比表） | PLANNED_METHOD | `paper/THESIS_DRAFT.md` §4 已按 `MASTER_PIPELINE.md` §8.8.4 骨架撰写；每个模块含问题/输入输出不变量/去掉的失败/验证方式/与 Barrientos 对照 | 写作层面可写“方法按模块分解”；**不得**写“模块有效性已验证”（待 AB-1–AB-10 正式消融） | 写作完成（2026-08-20）；模块有效性待消融数据 |
 | C27 | AB-1–AB-10 消融矩阵已登记现状表（含已有历史证据与待运行/待授权状态） | VERIFIED_PROJECT_FACT（仅指“状态登记”，不含未跑数字） | `paper/ABLATION_MATRIX.md`；已有历史证据：AB-1 v5→v6（constraint R 0.2881→0.4172）、AB-6（D1-R1/R3 150/150 有效 0 事故）、AB-7（细 0.7186/0.7756、粗 0.7986/0.8726、Sun-marker 收敛）、AB-8（B0-R1 各批次）；AB-3 离线可评（def=39/231）、AB-5 设计+历史证据、AB-9/AB-10 待授权/待实现 | 已登记项可引用“仅已有历史证据”；未跑项必须标“待运行/待授权”，不得补造 | 状态登记完成（2026-08-20）；正式消融数据待 API 授权 |
 | C28 | Barrientos 2026 三类证据分层（论文自动实验 / 专家标注协议 / 本文适配指标）写入论文 §2.4，不与“20×20 重跑”混淆 | VERIFIED_PRIMARY_SOURCE | `docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`（2026-08-20 原文复核）+ 论文 §2.4 + `docs/research/BARRIENTOS_LLM_ROLE.md`；正确事实：36 条×5 次完整运行、80 annotations 为专家标注、κ=0.52 为专家 NC/OC/NE 一致性 | 论文可写“36 条×5 次完整流程独立运行”“20 requirements × 2 versions × 2 experts = 80 annotations” | 已完成（2026-07-12 审计 + 2026-08-20 纠正；论文 §2.4 回填） |
+| C29 | S3.9-EXT 四类扩展按六要素未覆盖字段选择：禁止动作、条件未落实、约束违反、例外未处理 | VERIFIED_PROJECT_FACT（仅 development controlled extension） | `scripts/run_s3_extended_violation_panel_v2.py` 的 `SELECTION_RATIONALE`；`outputs/reports/s3_extended_violation_comparison_v2.{json,md}`；论文 §7.4 | 可写“四类是最小字段覆盖扩展，并分别消费 modality+action / condition / constraint / exception”；必须同时写 DEV_ONLY、非穷尽分类、未改变三类人工 Gold/正式 Oracle | S3.9-EXT 已完成；不得据此声称七类正式 benchmark 或真实场景泛化 |
 
 新增任何结果性句子前，先在本表新增一行。正式回填必须记录 manifest 路径、事件
 时间、样本数、失败数、模型和 evaluator 版本；否则维持 `BLOCKED_RESULT`。
-

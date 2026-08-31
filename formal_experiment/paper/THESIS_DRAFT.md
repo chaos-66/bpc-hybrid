@@ -698,7 +698,7 @@ Direct-LLM 与 Rules+LLM-Repair 两个 API arms 仍 pending explicit authorizati
 [[TODO-RESULT:S2.12：API 授权后回填 Direct-LLM / Rules+LLM-Repair 复杂语料臂与
 三方法完整比较、最终冻结]]
 
-### 7.4 Stage 3 违规检测：人工裁决 panel（33 条，已冻结）与合成受控错误 panel（30 条，DEV）
+### 7.4 Stage 3 违规检测：人工裁决 panel（33 条，已冻结）与合成受控错误扩展（30+40 条，DEV）
 
 #### 7.4.1 两个独立评价面板
 
@@ -720,6 +720,26 @@ actor lane（action 文本与控制流不变）；out_of_order = 对具有明确
 targeted-error、非目标字段不变与 deterministic replay 检查；规则绑定自冻结
 inference pack；生成器重复运行 byte-identical。**该 panel 不是人工 Gold，不得并入
 33 条正式 Gold，也不得冒充 Oracle**；全部结果以 DEV 标注。
+
+**新增四类的选择动机（S3.9-EXT，DEV，2026-08-31）**：原三类只回答“必需
+动作是否存在、执行者是否正确、顺序是否正确”，主要消费 action、actor 与 order
+信息；它们无法判断一个流程是否执行了**被禁止的动作**，也无法判断正确动作是否
+满足其**适用条件、限制约束和例外处理**。因此，扩展不是任意增加标签，而是按照
+“未被 Stage 3 消费的 Rule Record 字段”选择四个最小、互不替代且可由 BPMN 表面
+证据验证的违规族：
+
+| 新违规类型 | 选择理由 | 使用的 Rule Record/BPMN 证据 |
+|---|---|---|
+| prohibited_action_present（出现禁止动作） | 补足 missing_action 只覆盖“应做而未做”的遗漏错误；即使必需动作、actor 和顺序全部正确，流程仍可能“做了不该做的事” | prohibition modality + action；activity/event label |
+| required_condition_not_enforced（必需条件未落实） | 法律义务常有适用条件；动作本身存在并不等于只有在合法条件下才执行 | condition + action；gateway、conditionExpression、sequence-flow label |
+| constraint_violated（约束被违反） | 动作、actor、顺序均正确时，仍可能违反期限、数量、用途或使用限制 | constraint + action；timer、data object、annotation 等 |
+| exception_not_handled（例外未处理） | 正常路径可以合规，但流程可能缺少法规要求的例外分支或处理器 | exception + action；boundary/error event、alternate branch、handler activity |
+
+四类的共同选择原则是：（1）补齐六要素的下游字段覆盖；（2）在原三类全部通过时
+仍可能独立发生，语义上不重复；（3）可构造 exactly-one-error 的受控 BPMN 变异；
+（4）对应明确的 BPMN 可观察表面，缺少表面时诚实记为 unobservable。该集合是
+**最小字段覆盖扩展，不是穷尽性的法律违规分类体系**；40 条结果保持 DEV_ONLY，
+不改变冻结的三类人工 Gold，也不把正式 Oracle 改称七类 benchmark。
 
 #### 7.4.2 表 A：原 33 条人工裁决 panel（已锁定开发结果）
 

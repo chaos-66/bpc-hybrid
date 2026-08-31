@@ -2,6 +2,26 @@
 
 **Scope**: 40 controlled synthetic variants over the frozen GDPR-7 BPMN membership (10 prohibited_action_present / 10 required_condition_not_enforced / 10 constraint_violated / 10 exception_not_handled). This panel is a **development-only synthetic controlled extension**: it is NOT human Gold and NOT the formal Oracle. Winter et al. (2020) and Sun et al. (2024) define none of the four new violation types — the methods below are project extensions (`Winter-style extension` / `Sun-style extension`) reusing each method's existing similarity backend and frozen action-mapping gamma; they share the SAME new-type formulas. Zero LLM/API.
 
+## Selection rationale
+
+The original Stage 3 taxonomy checks whether a required action is present, assigned to the correct actor, and ordered correctly. It does not consume four other parts of the six-element Rule Record: prohibition modality, condition, constraint, and exception. The extension therefore adds one operational violation family for each uncovered part instead of adding arbitrary labels.
+
+The four categories were selected by four fixed principles:
+
+- field coverage: each new type gives an existing Stage 2 field a distinct Stage 3 consumer
+- semantic non-redundancy: each type can occur even when action presence, actor, and order are all correct
+- controlled testability: each type permits a single targeted BPMN mutation with the other activity, actor, label, and order properties held fixed
+- BPMN observability: each type has an explicit process-model surface, while absent surfaces are reported as unobservable rather than fabricated
+
+| New type | Why it is needed beyond action/actor/order |
+|---|---|
+| prohibited_action_present | Complements missing_action by covering commission rather than omission: a process may contain every required task yet still perform an action that the rule explicitly prohibits. It makes prohibition modality and action jointly usable downstream. |
+| required_condition_not_enforced | Covers conditional applicability: the correct action, actor, and order are insufficient when the BPMN does not enforce the condition under which the action is permitted or required. It connects the condition field to gateways, condition expressions, and flow labels. |
+| constraint_violated | Covers limits on otherwise correct conduct: an action may be present, correctly assigned, and correctly ordered but still breach a deadline, quantity, purpose, or usage restriction. It connects the constraint field to timer, data, annotation, and related BPMN evidence. |
+| exception_not_handled | Covers defeasible rules and exceptional paths: a normal path may be compliant while the process has no branch or handler for a legally specified exception. It connects the exception field to boundary/error events, alternate branches, and handler activities. |
+
+**Boundary**: These four types are a minimal field-coverage extension, not an exhaustive legal-violation taxonomy. They are development-only controlled categories and do not convert the frozen three-type human Gold or the formal Oracle into a seven-type benchmark.
+
 ## 1. Four new types — per-method comparison
 
 | Method | prohibited P/R/F1 | condition P/R/F1 | constraint P/R/F1 | exception P/R/F1 | Macro-F1 | Exact | Unobservable | Runtime |

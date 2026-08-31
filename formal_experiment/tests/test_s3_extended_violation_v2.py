@@ -354,6 +354,11 @@ def test_comparison_report_exists_and_is_synthetic_only():
     assert set(data["methods"]) == set(METHODS)
     assert data["panel_counts_total"] == 40
     assert sum(data["panel_counts"].values()) == 40
+    rationale = data["selection_rationale"]
+    assert "prohibition modality" in rationale["research_gap"]
+    assert len(rationale["selection_principles"]) == 4
+    assert set(rationale["type_reasons"]) == set(V2_TYPES)
+    assert "not an exhaustive" in rationale["scope_boundary"]
     for m in data["methods"].values():
         assert m["evaluation"]["support"] == 40
     assert data["seven_class_synthetic_summary"]["v1_three_types"]
@@ -362,6 +367,9 @@ def test_comparison_report_exists_and_is_synthetic_only():
     assert "Winter-style extension" in md and "Sun-style extension" in md
     assert "NOT human Gold" in md or "not human Gold" in md
     assert "prohibited P/R/F1" in md
+    assert "## Selection rationale" in md
+    assert "commission rather than omission" in md
+    assert "minimal field-coverage extension" in md
 
 
 # ---------------------------------------------------------------------------
