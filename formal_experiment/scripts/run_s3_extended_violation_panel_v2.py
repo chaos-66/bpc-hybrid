@@ -57,11 +57,14 @@ from bpc_hybrid.stage1_process import (  # noqa: E402
 )
 from bpc_hybrid.stage3_extended_violations import (  # noqa: E402
     EXTENDED_TYPES,
+    NONE_LABEL,
     ExtendedViolationScorer,
     action_candidates,
     condition_candidates,
     constraint_candidates,
+    control_prediction_from_scores,
     evaluate_extended,
+    evaluate_paired,
     exception_candidates,
     extract_six_element_sentences,
     sentence_matches_locked,
@@ -435,12 +438,13 @@ def build_comparison(panel: dict[str, Any], results: dict[str, Any]) -> dict[str
             "display_name": METHOD_DISPLAY[method],
             "run_dir": f"outputs/development/s3_extended_violation_panel_v2_{method}",
             "runtime_seconds": r["runtime_seconds"],
-            "evaluation": ev,
+            "variant_only_evaluation": ev,
+            "paired_evaluation": r["paired"],
             "failures": r["failures"],
             "unobservable_cases": r["unobservable_cases"],
         }
     return {
-        "schema_version": "s3_extended_violation_comparison@1.0.0",
+        "schema_version": "s3_extended_violation_comparison@1.1.0",
         "panel": "synthetic_controlled_error_extension_v2",
         "panel_manifest_sha256": _sha256(PANEL),
         "panel_counts": panel["counts"],
@@ -449,7 +453,12 @@ def build_comparison(panel: dict[str, Any], results: dict[str, Any]) -> dict[str
             "development-only synthetic controlled extension; NOT human Gold; "
             "NOT the formal Oracle; Winter/Sun original papers define none of "
             "the four new violation types (Winter-style extension / Sun-style "
-            "extension naming)"
+            "extension naming). Two evaluation kinds are reported separately: "
+            "the original v2 table is the variant-only detection evaluation "
+            "(40 variants); the new paired control-plus-variant evaluation "
+            "covers 40 controls (Gold=none) + 40 variants (80 objects) and "
+            "asks whether the system can simultaneously NOT flag a compliant "
+            "process and flag the mutated one with the right type."
         ),
         "selection_rationale": SELECTION_RATIONALE,
         "thresholds": {
@@ -459,25 +468,24 @@ def build_comparison(panel: dict[str, Any], results: dict[str, Any]) -> dict[str
             },
         },
         "methods": methods_out,
-        "seven_class_synthetic_summary": {
+        "v1_three_type_synthetic": _load_v1_summary(),
+        "seven_class_overview": {
             "note": (
-                "synthetic-only 7-class overview combining the v1 three-type "
-                "panel (30 items, stored comparison) and the v2 four-type panel "
-                "(40 items); NEVER human Gold, NEVER the formal Oracle; the two "
-                "panels use different formulas/backends, so cross-panel F1 "
-                "comparison is descriptive only"
+                "type-coverage overview ONLY: the seven per-class F1 values "
+                "come from TWO different synthetic panels — the first three "
+                "types from the 30-item v1 synthetic panel, the last four from "
+                "the 40-item v2 synthetic panel. The two panels use different "
+                "samples, formulas and backends, so no joint Macro-F1, joint "
+                "Exact or joint Unobservable is computed, and this table must "
+                "not be used for overall performance ranking; NEVER human "
+                "Gold, NEVER the formal Oracle"
             ),
-            "v1_three_types": _load_v1_summary(),
-            "v2_four_types": {
+            "per_class_f1": {
                 method: {
-                    "per_type_f1": {
-                        t: results[method]["evaluation"]["per_type"][t]["f1"]
-                        for t in EXTENDED_TYPES
-                    },
-                    "macro_f1": results[method]["evaluation"]["macro_f1"],
-                    "exact": results[method]["evaluation"]["exact_type_accuracy"],
-                    "unobservable": results[method]["evaluation"]["unobservable"],
-                    "support": results[method]["evaluation"]["support"],
+                    **{t: _load_v1_summary()[method]["per_type_f1"][t]
+                       for t in ("missing_action", "incorrect_actor", "out_of_order")},
+                    **{t: results[method]["evaluation"]["per_type"][t]["f1"]
+                       for t in EXTENDED_TYPES},
                 }
                 for method in results
             },
@@ -486,31 +494,34 @@ def build_comparison(panel: dict[str, Any], results: dict[str, Any]) -> dict[str
     }
 
 
-def _case_rows(results: dict[str, Any], panel: dict[str, Any]) -> dict[str, Any]:
-    """Per type: up to 2 detected and 2 missed cases (across methods)."""
+def _paired_case_rows(results: dict[str, Any], panel: dict[str, Any]) -> dict[str, Any]:
+    """Per type: control FP / variant detected / variant missed cases (across
+    methods), taken from the persisted paired evaluation."""
     by_type: dict[str, dict[str, list[dict[str, Any]]]] = {
-        t: {"detected": [], "missed": []} for t in EXTENDED_TYPES
+        t: {"control_fp": [], "variant_detected": [], "variant_missed": []}
+        for t in EXTENDED_TYPES
     }
     for method, r in results.items():
-        for row in r["predictions"]:
-            t = row["expected_violation"]
-            bucket = "detected" if row["predicted_violation_type"] == t else "missed"
-            by_type[t][bucket].append({
-                "method": method,
-                "item_id": row["item_id"],
-                "process_id": row["process_id"],
-                "rule_id": row["rule_id"],
-                "predicted": row["predicted_violation_type"],
-                "scores": row["scores"],
-                "observability": row["observability"][t],
-            })
+        paired = r["paired"]
+        for t in EXTENDED_TYPES:
+            by_type[t]["control_fp"].extend(
+                {**case, "method": method}
+                for case in paired["cases"]["control_false_positive"]
+                if case["control_predicted"] == t
+            )
+        for case in paired["cases"]["variant_detected"]:
+            by_type[case["expected"]]["variant_detected"].append({**case, "method": method})
+        for case in paired["cases"]["variant_missed"]:
+            by_type[case["expected"]]["variant_missed"].append({**case, "method": method})
     out: dict[str, Any] = {}
     for t in EXTENDED_TYPES:
         out[t] = {
-            "detected_cases": by_type[t]["detected"][:2],
-            "missed_cases": by_type[t]["missed"][:2],
-            "detected_total": len(by_type[t]["detected"]),
-            "missed_total": len(by_type[t]["missed"]),
+            "control_fp_cases": by_type[t]["control_fp"][:2],
+            "control_fp_total": len(by_type[t]["control_fp"]),
+            "variant_detected_cases": by_type[t]["variant_detected"][:2],
+            "variant_detected_total": len(by_type[t]["variant_detected"]),
+            "variant_missed_cases": by_type[t]["variant_missed"][:2],
+            "variant_missed_total": len(by_type[t]["variant_missed"]),
         }
     return out
 
@@ -547,15 +558,42 @@ def _analysis(results: dict[str, Any]) -> dict[str, Any]:
             "constraint_violated": ["constraint", "action"],
             "exception_not_handled": ["exception", "action"],
         },
+        "per_type_support_conclusion": {
+            "prohibited_action_present": (
+                "supports the FEASIBILITY of the new detection type: insertion "
+                "of the prohibited-action task is detected with high precision "
+                "and recall by every backend except the BM25 length-scale "
+                "limit"
+            ),
+            "constraint_violated": (
+                "PARTIAL support: annotation/timer/data-object mutations are "
+                "detectable when the rule action maps and a constraint surface "
+                "exists, but the check remains limited by action mapping and "
+                "by the BPMN surface available in the frozen models"
+            ),
+            "required_condition_not_enforced": (
+                "current results mainly expose the OBSERVABILITY BOTTLENECK of "
+                "condition surfaces (subProcess-hidden named gateways) and of "
+                "action mapping under the frozen gamma; little positive "
+                "evidence is available on the frozen GDPR-7 models"
+            ),
+            "exception_not_handled": (
+                "current results mainly expose the lack of boundary events, "
+                "exception branches and parser-level observability; most "
+                "exception checks are unobservable or unmappable on the frozen "
+                "models"
+            ),
+        },
         "rule_record_downstream_value": (
-            "each new check consumes a DIFFERENT six-element Rule Record field "
-            "(modality+action / condition / constraint / exception) against a "
-            "DIFFERENT BPMN surface (action labels / gateway-condition-flow "
-            "labels / data-annotation-timer labels / boundary-error-branch "
-            "labels). The checks are therefore downstream consumers of Stage 2 "
-            "element extraction, not merely extra labels on the old three "
-            "scores: an empty or unextractable element makes the check "
-            "unobservable by construction."
+            "The four new types give four previously unused Rule Record fields "
+            "(prohibition modality, condition, constraint, exception) an "
+            "explicit Stage 3 consumption interface, each against a distinct "
+            "BPMN surface. However, the current controlled data provide strong "
+            "performance evidence only for some types; the remaining types "
+            "mainly reveal observability and mapping bottlenecks. This is NOT "
+            "evidence that all four types 'prove downstream value' — it is "
+            "evidence that the consumption interface exists and that "
+            "observability limits where performance can be demonstrated."
         ),
         "unobservable_by_reason": unobservable_by_reason,
         "expressiveness_limits": {
@@ -575,7 +613,7 @@ def render_markdown(panel: dict[str, Any], comparison: dict[str, Any],
     methods = comparison["methods"]
     rows = []
     for method in ("winter", "sun", "bm25", "tfidf_svd"):
-        ev = methods[method]["evaluation"]
+        ev = methods[method]["variant_only_evaluation"]
         cells = [METHOD_DISPLAY[method]]
         for t in EXTENDED_TYPES:
             cells.append(_p_r_f1_row(t, ev["per_type"]))
@@ -588,9 +626,91 @@ def render_markdown(panel: dict[str, Any], comparison: dict[str, Any],
               "P/R/F1 | exception P/R/F1 | Macro-F1 | Exact | Unobservable | "
               "Runtime |")
     sep = "|---|---|---|---|---|---|---|---|---|"
-    table = "\n".join([header, sep] + rows)
+    variant_only_table = "\n".join([header, sep] + rows)
 
-    cases = _case_rows(results, panel)
+    paired_rows = []
+    for method in ("winter", "sun", "bm25", "tfidf_svd"):
+        p = methods[method]["paired_evaluation"]
+        paired_rows.append(
+            "| " + " | ".join([
+                METHOD_DISPLAY[method],
+                f"{p['five_class_accuracy']:.3f}",
+                f"{p['variant_exact_type_accuracy']:.3f}",
+                f"{p['control_false_positive_rate']:.3f}",
+                f"{p['paired_accuracy']:.3f}",
+                f"{p['macro_f1_four_violation_types']:.3f}",
+                f"{p['macro_f1_five_classes']:.3f}",
+                str(p["unobservable"]["total"]),
+            ]) + " |"
+        )
+    paired_header = ("| Method | 5-class acc (80) | variant exact (40) | "
+                     "control FP rate (40) | paired acc (40) | 4-type "
+                     "Macro-F1 | 5-class Macro-F1 | Unobservable |")
+    paired_sep = "|---|---|---|---|---|---|---|---|"
+    paired_table = "\n".join([paired_header, paired_sep] + paired_rows)
+
+    per_type_compare_rows = []
+    for method in ("winter", "sun", "bm25", "tfidf_svd"):
+        vo = methods[method]["variant_only_evaluation"]
+        pa = methods[method]["paired_evaluation"]
+        for t in EXTENDED_TYPES:
+            v = vo["per_type"][t]
+            p = pa["per_type"][t]
+            per_type_compare_rows.append(
+                "| " + " | ".join([
+                    METHOD_DISPLAY[method], t,
+                    f"{v['precision']:.3f}/{v['recall']:.3f}/{v['f1']:.3f}",
+                    f"{p['precision']:.3f}/{p['recall']:.3f}/{p['f1']:.3f}",
+                ]) + " |"
+            )
+    per_type_header = ("| Method | Type | variant-only P/R/F1 (40 variants) | "
+                       "paired P/R/F1 (80 objects incl. controls) |")
+    per_type_sep = "|---|---|---|---|"
+    per_type_table = "\n".join([per_type_header, per_type_sep] + per_type_compare_rows)
+
+    v1_rows = []
+    v1 = comparison["v1_three_type_synthetic"]
+    for method in ("winter", "sun", "bm25", "tfidf_svd"):
+        m = v1[method]
+        v1_rows.append(
+            "| " + " | ".join([
+                METHOD_DISPLAY[method],
+                f"{m['per_type_f1']['missing_action']:.3f}",
+                f"{m['per_type_f1']['incorrect_actor']:.3f}",
+                f"{m['per_type_f1']['out_of_order']:.3f}",
+                f"{m['macro_f1']:.3f}",
+                f"{m['exact']:.3f}",
+                str(m["unobservable"]),
+            ]) + " |"
+        )
+    v1_header = ("| Method | missing_action F1 | incorrect_actor F1 | "
+                 "out_of_order F1 | Macro-F1 | Exact | Unobservable |")
+    v1_sep = "|---|---|---|---|---|---|---|"
+    v1_table = "\n".join([v1_header, v1_sep] + v1_rows)
+
+    seven_rows = []
+    seven = comparison["seven_class_overview"]
+    for method in ("winter", "sun", "bm25", "tfidf_svd"):
+        f1s = seven["per_class_f1"][method]
+        seven_rows.append(
+            "| " + " | ".join([
+                METHOD_DISPLAY[method],
+                f"{f1s['missing_action']:.3f}",
+                f"{f1s['incorrect_actor']:.3f}",
+                f"{f1s['out_of_order']:.3f}",
+                f"{f1s['prohibited_action_present']:.3f}",
+                f"{f1s['required_condition_not_enforced']:.3f}",
+                f"{f1s['constraint_violated']:.3f}",
+                f"{f1s['exception_not_handled']:.3f}",
+            ]) + " |"
+        )
+    seven_header = ("| Method | missing_action F1 | incorrect_actor F1 | "
+                    "out_of_order F1 | prohibited F1 | condition F1 | "
+                    "constraint F1 | exception F1 |")
+    seven_sep = "|---|---|---|---|---|---|---|---|"
+    seven_table = "\n".join([seven_header, seven_sep] + seven_rows)
+
+    paired_cases = _paired_case_rows(results, panel)
     rationale = comparison["selection_rationale"]
     lines = [
         "# S3.9-EXT synthetic extended-violation comparison v2 (development-only)",
@@ -598,13 +718,29 @@ def render_markdown(panel: dict[str, Any], comparison: dict[str, Any],
         "**Scope**: 40 controlled synthetic variants over the frozen GDPR-7 "
         "BPMN membership (10 prohibited_action_present / 10 "
         "required_condition_not_enforced / 10 constraint_violated / 10 "
-        "exception_not_handled). This panel is a **development-only synthetic "
-        "controlled extension**: it is NOT human Gold and NOT the formal "
-        "Oracle. Winter et al. (2020) and Sun et al. (2024) define none of the "
-        "four new violation types — the methods below are project extensions "
-        "(`Winter-style extension` / `Sun-style extension`) reusing each "
-        "method's existing similarity backend and frozen action-mapping gamma; "
-        "they share the SAME new-type formulas. Zero LLM/API.",
+        "exception_not_handled), each with a synthetic compliant CONTROL "
+        "(Gold = none) and one mutated VARIANT (Gold = its expected type). "
+        "This panel is a **development-only synthetic controlled extension**: "
+        "it is NOT human Gold and NOT the formal Oracle. Winter et al. (2020) "
+        "and Sun et al. (2024) define none of the four new violation types — "
+        "the methods below are project extensions (`Winter-style extension` / "
+        "`Sun-style extension`) reusing each method's existing similarity "
+        "backend and frozen action-mapping gamma; they share the SAME new-type "
+        "formulas. Zero LLM/API.",
+        "",
+        "Two evaluation kinds are reported separately:",
+        "",
+        "- **variant-only detection evaluation** (original v2 table): the 40 "
+        "variants only; unobservable items keep predicted=None and count as FN.",
+        "- **paired control-plus-variant evaluation** (new): 40 controls "
+        "(Gold=none) + 40 variants = 80 objects; it answers whether the system "
+        "can simultaneously NOT flag a compliant process (control -> none) and "
+        "flag the mutated one with the right type (variant -> expected). "
+        "Control predictions are re-derived OFFLINE from the persisted "
+        "`control_scores` with the original per-type rules, the frozen "
+        "gamma_ext, and a fixed EXTENDED_TYPES priority order; variant "
+        "predictions are the persisted `predicted_violation_type` of the "
+        "original run. No threshold or decision order was changed.",
         "",
         "## Selection rationale",
         "",
@@ -623,79 +759,89 @@ def render_markdown(panel: dict[str, Any], comparison: dict[str, Any],
         "",
         f"**Boundary**: {rationale['scope_boundary']}",
         "",
-        "## 1. Four new types — per-method comparison",
+        "## 1. Four new types — variant-only detection evaluation (40 variants)",
         "",
-        table,
+        variant_only_table,
         "",
-        "## 2. Synthetic 7-class overview (descriptive only)",
+        "## 2. Four new types — paired control-plus-variant evaluation "
+        "(80 objects: 40 controls + 40 variants)",
         "",
-        "Combines the v1 three-type panel (30 items, stored comparison) and "
-        "the v2 four-type panel (40 items). **Synthetic only; never merged "
-        "with the 33-item human-adjudicated Gold; not the formal Oracle.** "
-        "The two panels use different formulas, so cross-panel numbers are "
-        "descriptive, not comparable metrics.",
+        paired_table,
         "",
-        "| Method | missing_action F1 | incorrect_actor F1 | out_of_order F1 | "
-        "prohibited F1 | condition F1 | constraint F1 | exception F1 | "
-        "Macro-F1 | Exact | Unobservable |",
-        "|---|---|---|---|---|---|---|---|---|---|",
-    ]
-    v1 = comparison["seven_class_synthetic_summary"]["v1_three_types"]
-    v2 = comparison["seven_class_synthetic_summary"]["v2_four_types"]
-    for method in ("winter", "sun", "bm25", "tfidf_svd"):
-        v1m = v1[method]
-        v2m = v2[method]
-        lines.append(
-            "| " + " | ".join([
-                METHOD_DISPLAY[method],
-                f"{v1m['per_type_f1']['missing_action']:.3f}",
-                f"{v1m['per_type_f1']['incorrect_actor']:.3f}",
-                f"{v1m['per_type_f1']['out_of_order']:.3f}",
-                f"{v2m['per_type_f1']['prohibited_action_present']:.3f}",
-                f"{v2m['per_type_f1']['required_condition_not_enforced']:.3f}",
-                f"{v2m['per_type_f1']['constraint_violated']:.3f}",
-                f"{v2m['per_type_f1']['exception_not_handled']:.3f}",
-                f"{v2m['macro_f1']:.3f}",
-                f"{v2m['exact']:.3f}",
-                str(v2m["unobservable"]),
-            ]) + " |"
-        )
-    lines += [
+        "## 3. Per-type P/R/F1: variant-only vs paired",
         "",
-        "## 3. Per-type success and failure cases (across methods)",
+        per_type_table,
+        "",
+        "## 4. v1 three-type synthetic panel (30 variants, stored comparison)",
+        "",
+        v1_table,
+        "",
+        "## 5. Synthetic 7-class type-coverage overview (per-class F1 ONLY)",
+        "",
+        seven_table,
+        "",
+        "**This table shows type coverage only.** The first three columns come "
+        "from the 30-item v1 synthetic panel; the last four from the 40-item "
+        "v2 synthetic panel. The two panels use different samples, detection "
+        "formulas and backends, so **no joint Macro-F1, joint Exact or joint "
+        "Unobservable is computed** and this table must not be used for "
+        "overall performance ranking. Synthetic only; never merged with the "
+        "33-item human-adjudicated Gold; not the formal Oracle.",
+        "",
+        "## 6. Per-type cases (from the paired evaluation, across methods)",
         "",
     ]
     for t in EXTENDED_TYPES:
-        c = cases[t]
-        lines.append(f"### {t}  (detected {c['detected_total']} / missed {c['missed_total']} across 40 method-variant pairs)")
+        c = paired_cases[t]
+        lines.append(f"### {t}")
         lines.append("")
-        lines.append("Detected (up to 2):")
-        for case in c["detected_cases"]:
+        lines.append("Control false positives "
+                     f"(total {c['control_fp_total']} across methods; up to 2):")
+        for case in c["control_fp_cases"]:
+            lines.append(
+                f"- {case['method']} / {case['item_id']} ({case['process_id']} x "
+                f"{case['rule_id']}): control_predicted={case['control_predicted']}")
+        if not c["control_fp_cases"]:
+            lines.append("- none")
+        lines.append("")
+        lines.append("Variant detected "
+                     f"(total {c['variant_detected_total']} across methods; up to 2):")
+        for case in c["variant_detected_cases"]:
             lines.append(
                 f"- {case['method']} / {case['item_id']} ({case['process_id']} x "
                 f"{case['rule_id']}): pred={case['predicted']} scores={case['scores']}")
-        if not c["detected_cases"]:
-            lines.append("- (none)")
+        if not c["variant_detected_cases"]:
+            lines.append("- none")
         lines.append("")
-        lines.append("Missed (up to 2):")
-        for case in c["missed_cases"]:
+        lines.append("Variant missed "
+                     f"(total {c['variant_missed_total']} across methods; up to 2):")
+        for case in c["variant_missed_cases"]:
             lines.append(
                 f"- {case['method']} / {case['item_id']} ({case['process_id']} x "
-                f"{case['rule_id']}): pred={case['predicted']} scores={case['scores']} "
-                f"observability={case['observability']}")
-        if not c["missed_cases"]:
-            lines.append("- (none)")
+                f"{case['rule_id']}): pred={case['predicted']} scores={case['scores']}")
+        if not c["variant_missed_cases"]:
+            lines.append("- none")
         lines.append("")
     analysis = comparison["analysis"]
     lines += [
-        "## 4. Analysis",
+        "## 7. Analysis",
         "",
-        f"- **Easiest type (average F1)**: `{analysis['easiest_type']}` "
+        f"- **Easiest type (average variant-only F1)**: "
+        f"`{analysis['easiest_type']}` "
         f"({_fmt(analysis['average_per_type_f1'][analysis['easiest_type']])}).",
-        f"- **Hardest type (average F1)**: `{analysis['hardest_type']}` "
+        f"- **Hardest type (average variant-only F1)**: "
+        f"`{analysis['hardest_type']}` "
         f"({_fmt(analysis['average_per_type_f1'][analysis['hardest_type']])}).",
-        f"- **Best macro-F1 method**: `{analysis['best_macro_method']}` "
+        f"- **Best variant-only macro-F1 method**: "
+        f"`{analysis['best_macro_method']}` "
         f"({_fmt(analysis['macro_f1_by_method'][analysis['best_macro_method']])}).",
+        "",
+        "### Per-type support conclusions (DEV_ONLY)",
+        "",
+        *[
+            f"- **{t}**: {analysis['per_type_support_conclusion'][t]}"
+            for t in EXTENDED_TYPES
+        ],
         "",
         "### Stage 2 six-element Rule Record dependencies",
         "",
@@ -706,14 +852,9 @@ def render_markdown(panel: dict[str, Any], comparison: dict[str, Any],
         "| constraint_violated | constraint + action | activity/data-object/text-annotation/timer labels; explicit time-limit contradiction |",
         "| exception_not_handled | exception + action | boundary events, error/escalation events, alternate branches, handler labels |",
         "",
-        "The four new checks are **downstream value of the six-element Rule "
-        "Record**, not extra labels on the old three scores: each check "
-        "consumes a different element (modality+action / condition / "
-        "constraint / exception) and a different BPMN surface. When Stage 2 "
-        "produces an empty element, or the variant model has no matching "
-        "surface, the check is recorded unobservable (never hard 0/1).",
+        analysis["rule_record_downstream_value"],
         "",
-        "### Unobservable reasons (all methods combined)",
+        "### Unobservable reasons (all methods combined, variant-only)",
         "",
     ]
     for reason, count in sorted(analysis["unobservable_by_reason"].items()):
@@ -737,8 +878,7 @@ def render_markdown(panel: dict[str, Any], comparison: dict[str, Any],
         "subProcesses**, which the canonical parser treats as opaque "
         "activities. The process-level record therefore exposes no named "
         "gateway / condition surface, and condition checks on those variants "
-        "are `no_condition_candidates` unobservable (7 unobservables across "
-        "methods).",
+        "are `no_condition_candidates` unobservable.",
         "- The '72 hours' timer start event of gdpr_1 sits inside the 'Handle "
         "delay' subProcess: invisible to the record parser, observable only at "
         "the raw-XML level. The two timer-contradiction variants were still "
@@ -753,16 +893,17 @@ def render_markdown(panel: dict[str, Any], comparison: dict[str, Any],
         "frozen similarity functions, not a panel artifact.",
         "- **Action-mapping gate**: sun (gamma 0.8), BM25 (0.8) and TF-IDF "
         "(0.5) fail the action-mappable precondition on most condition/"
-        "constraint/exception variants (92 `action_mapping_below_gamma` "
-        "unobservables across methods). The new checks inherit the same "
-        "action-mapping bottleneck as the original three violation types; "
-        "only the Winter-style extension (gamma 0.4) maps most rule actions.",
+        "constraint/exception variants (`action_mapping_below_gamma` "
+        "unobservables). The new checks inherit the same action-mapping "
+        "bottleneck as the original three violation types; only the "
+        "Winter-style extension (gamma 0.4) maps most rule actions.",
         "",
-        "## 5. Safety",
+        "## 8. Safety",
         "",
         "- `llm_api_calls = 0`, `network_calls = 0`, `gold_read = False`.",
         "- The 33-item human-adjudicated violation Gold, the formal Stage 3 "
-        "schemas and the v1 three-type predictions/results are untouched "
+        "schemas, the 30-item v1 panel, the 40 v2 variants and the four "
+        "methods' original predictions/evaluations/manifests are untouched "
         "(byte-unchanged; see the focused tests).",
         "- This panel is a synthetic controlled extension; results must not be "
         "cited as formal Oracle or human-Gold performance.",
@@ -771,16 +912,104 @@ def render_markdown(panel: dict[str, Any], comparison: dict[str, Any],
     return "\n".join(lines)
 
 
+
+
 # ---------------------------------------------------------------------------
 # Runner
 # ---------------------------------------------------------------------------
+
+
+def _load_persisted_results(method: str, panel: dict[str, Any],
+                            gamma_ext: float) -> dict[str, Any]:
+    """Load one method's persisted run (predictions/evaluation/manifest) and
+    recompute failures, unobservable cases and the paired evaluation OFFLINE.
+    Used by ``--report-only``; never re-runs the method."""
+    run_dir = OUT_ROOT / f"s3_extended_violation_panel_v2_{method}"
+    if not run_dir.is_dir():
+        raise RuntimeError(f"missing persisted run dir: {run_dir}")
+    predictions = [
+        json.loads(line)
+        for line in run_dir.joinpath("predictions.jsonl")
+        .read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    if len(predictions) != panel["counts_total"]:
+        raise RuntimeError(
+            f"{method}: expected {panel['counts_total']} persisted predictions, "
+            f"got {len(predictions)}")
+    evaluation = _load_json(run_dir / "evaluation.json", f"{method} evaluation")
+    manifest = _load_json(run_dir / "manifest.json", f"{method} manifest")
+    failures = [
+        {
+            "item_id": p["item_id"], "process_id": p["process_id"],
+            "rule_id": p["rule_id"], "expected": p["expected_violation"],
+            "predicted": p["predicted_violation_type"],
+            "scores": p["scores"], "observability": p["observability"][p["expected_violation"]],
+        }
+        for p in predictions if p["predicted_violation_type"] != p["expected_violation"]
+    ]
+    unobservable_cases = [
+        {
+            "item_id": p["item_id"], "process_id": p["process_id"],
+            "rule_id": p["rule_id"], "expected": p["expected_violation"],
+            "reason": p["observability"][p["expected_violation"]].get("reason"),
+            "scores": p["scores"],
+        }
+        for p in predictions
+        if p["observability"][p["expected_violation"]].get("observable") is False
+    ]
+    return {
+        "predictions": predictions,
+        "evaluation": evaluation,
+        "paired": evaluate_paired(predictions, panel, gamma_ext),
+        "runtime_seconds": float(manifest.get("runtime_seconds", 0.0)),
+        "failures": failures,
+        "unobservable_cases": unobservable_cases,
+    }
+
+
+def _write_reports(panel: dict[str, Any], results: dict[str, Any],
+                   overwrite: bool) -> None:
+    comparison = build_comparison(panel, results)
+    REPORT_ROOT.mkdir(parents=True, exist_ok=True)
+    json_path = REPORT_ROOT / "s3_extended_violation_comparison_v2.json"
+    md_path = REPORT_ROOT / "s3_extended_violation_comparison_v2.md"
+    if (json_path.exists() or md_path.exists()) and not overwrite:
+        raise RuntimeError("refusing to overwrite existing comparison report")
+    json_path.write_text(
+        json.dumps(comparison, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    md_path.write_text(render_markdown(panel, comparison, results), encoding="utf-8")
+    print("S3.9-EXT comparison v2 written (zero API):",
+          json_path.relative_to(ROOT), md_path.relative_to(ROOT))
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--method", choices=("winter", "sun", "bm25", "tfidf_svd", "all"),
                         default="all")
+    parser.add_argument(
+        "--report-only",
+        action="store_true",
+        help="Regenerate the comparison reports from the PERSISTED per-method "
+             "predictions/evaluations only (offline; never re-runs methods; "
+             "overwrites the derived reports, never the run dirs)",
+    )
     args = parser.parse_args()
+
+    panel = _load_json(PANEL, "panel manifest")
+    extension_cfg = _load_json(EXTENSION_CONFIG, "extension config")
+    gamma_ext = float(extension_cfg["thresholds"]["gamma_ext"])
+    methods = ("winter", "sun", "bm25", "tfidf_svd") if args.method == "all" \
+        else (args.method,)
+
+    if args.report_only:
+        results: dict[str, Any] = {}
+        for method in methods:
+            results[method] = _load_persisted_results(method, panel, gamma_ext)
+        _write_reports(panel, results, overwrite=True)
+        return 0
 
     r = subprocess.run(
         [sys.executable, str(SCRIPTS / "build_s3_extended_violation_panel_v2.py"), "--check"],
@@ -789,17 +1018,11 @@ def main() -> int:
     if r.returncode != 0:
         print("panel replay check failed; refusing to run methods")
         return 2
-    panel = _load_json(PANEL, "panel manifest")
-    extension_cfg = _load_json(EXTENSION_CONFIG, "extension config")
-    gamma_ext = float(extension_cfg["thresholds"]["gamma_ext"])
     rule_texts = _rule_texts()
 
     nlp = spacy.load("en_core_web_sm")
     from bpc_hybrid.winter_stage3.winter_similarity import WinterSimilarity
     sim = WinterSimilarity(nlp)
-
-    methods = ("winter", "sun", "bm25", "tfidf_svd") if args.method == "all" \
-        else (args.method,)
 
     tfidf_config = _load_json(TFIDF_CONFIG, "tfidf config")
     tfidf_sims = _make_tfidf_sims(nlp, tfidf_config, _frozen_tfidf_corpus())
@@ -818,7 +1041,7 @@ def main() -> int:
         for v in panel["variants"]
     }
 
-    results: dict[str, Any] = {}
+    results = {}
     for method in methods:
         t0 = time.time()
         gamma = _gamma_for(method)
@@ -828,6 +1051,7 @@ def main() -> int:
         )
         elapsed = time.time() - t0
         evaluation = evaluate_extended(predictions, gold_synthetic)
+        paired = evaluate_paired(predictions, panel, gamma_ext)
 
         run_dir = OUT_ROOT / f"s3_extended_violation_panel_v2_{method}"
         if run_dir.exists():
@@ -896,6 +1120,7 @@ def main() -> int:
         results[method] = {
             "predictions": predictions,
             "evaluation": evaluation,
+            "paired": paired,
             "runtime_seconds": round(elapsed, 3),
             "failures": failures,
             "unobservable_cases": unobservable_cases,
@@ -904,22 +1129,12 @@ def main() -> int:
             f"[{method}] macro_f1={evaluation['macro_f1']} "
             f"exact={evaluation['exact_type_accuracy']} "
             f"unobservable={evaluation['unobservable']} "
+            f"paired_acc={paired['paired_accuracy']} "
+            f"control_fp={paired['control_false_positive_rate']} "
             f"({elapsed:.1f}s)"
         )
 
-    comparison = build_comparison(panel, results)
-    REPORT_ROOT.mkdir(parents=True, exist_ok=True)
-    json_path = REPORT_ROOT / "s3_extended_violation_comparison_v2.json"
-    md_path = REPORT_ROOT / "s3_extended_violation_comparison_v2.md"
-    if json_path.exists() or md_path.exists():
-        raise RuntimeError("refusing to overwrite existing comparison report")
-    json_path.write_text(
-        json.dumps(comparison, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    md_path.write_text(render_markdown(panel, comparison, results), encoding="utf-8")
-    print("S3.9-EXT comparison v2 written (zero API):",
-          json_path.relative_to(ROOT), md_path.relative_to(ROOT))
+    _write_reports(panel, results, overwrite=False)
     return 0
 
 

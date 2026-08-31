@@ -68,8 +68,8 @@ reconstruction。[[TODO-SOURCE:SUN2024:核对三阶段描述与方法资产页�
   方法在匹配和违规类型分类上如何比较？
 - RQ3a（2026-08-22 新增）：在人工裁决的 33 条 violation panel 之外，现有非 LLM
   Stage 3 方法（Winter、Sun、BM25、TF-IDF）在 30 条**合成受控错误**（三类各 10
-  条）上分别表现如何？哪种错误类型最易/最难检测？（§7.4.2–7.4.4）
-- RQ3b：Stage 1 的结构/语义标签质量如何传播到 Stage 3 的违规类型判定？（§7.4.5）
+  条）上分别表现如何？哪种错误类型最易/最难检测？（§7.4.2–7.4.6）
+- RQ3b：Stage 1 的结构/语义标签质量如何传播到 Stage 3 的违规类型判定？（§7.4.6）
 - RQ4：Stage 2 或 Stage 3 的局部改进能否转化为端到端提升？
 
 ### 1.2 预期贡献（待验证）
@@ -655,7 +655,7 @@ semantic-field 人工裁决标签。
   （label-style 信号），把词面规则升级为上下文感知的字段分配，语义 micro-F1
   0.5956→0.8185、Accuracy 0.4241→0.6928、triple 0→0.4222。
 - **structure micro-F1=1.0 的读法**：来自共享解析组件（全部方法共用），只证明
-  BPMN→记录结构的转换无错，**不能作为外部泛化证据**（见 §7.4.5 误差传播）。
+  BPMN→记录结构的转换无错，**不能作为外部泛化证据**（见 §7.4.6 误差传播）。
 - **边界**：这是 fixed GDPR-7 上的描述性复现（formal descriptive component
   evaluation）；held-out generalization claim 被明确禁止（eval v2 claim:
   held_out_generalization_claim_allowed=false、target_labels_seen_during_
@@ -770,7 +770,58 @@ evaluation.json（Winter 3.9s、Sun 15.0s、BM25 6.0s、TF-IDF/SVD 12.7s）；
 失败案例（FN/FP 明细）见 `predictions.jsonl` 与对比胶囊
 `s39_synthetic_panel_compare_v1/comparison.json`。
 
-#### 7.4.4 表 C：错误类型分析
+#### 7.4.4 S3.9-EXT 40 对受控扩展结果（DEV，variant-only 与 paired 分表）
+
+**选择动机见 7.4.1**。四类结果按两种口径分开报告（均 DEV_ONLY，来自持久化
+预测的离线统计，零重新运行）：
+
+- **variant-only detection evaluation**（40 个 variant）：只评价变异流程是否
+  被检出且类型正确；unobservable 保持 predicted=None 并计入 FN（原 v2 表）。
+- **paired control-plus-variant evaluation**（80 个对象 = 40 个 control
+  Gold=none + 40 个 variant）：额外要求同一对中 control 不得误报为违规，
+  回答“系统能否同时做到不误报正确流程、并检出违规流程”。control 预测
+  严格由持久化的 `control_scores` 按原四类规则、原 `gamma_ext` 与固定
+  EXTENDED_TYPES 优先级离线重建，未修改阈值或决策顺序；失败、none 与
+  unobservable 全部保留在分母中。
+
+| 方法 | variant-only：prohibited/condition/constraint/exception F1 | Macro-F1 | Exact | Unobservable |
+|---|---:|---:|---:|---:|
+| Winter-style extension | 1.000 / 0.333 / 0.824 / 0.462 | 0.655 | 0.550 | 17 |
+| Sun-style extension | 1.000 / 0.000 / 0.333 / 0.000 | 0.333 | 0.300 | 28 |
+| BM25 extension | 0.571 / 0.000 / 0.333 / 0.000 | 0.226 | 0.150 | 28 |
+| TF-IDF/SVD extension | 1.000 / 0.000 / 0.333 / 0.182 | 0.379 | 0.325 | 27 |
+
+| 方法 | paired：5-class acc (80) | variant exact (40) | control FP rate (40) | paired acc (40) | 4-type Macro-F1 | 5-class Macro-F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| Winter-style extension | 0.425 | 0.550 | 0.500 | 0.225 | 0.514 | 0.504 |
+| Sun-style extension | 0.263 | 0.300 | 0.125 | 0.175 | 0.283 | 0.300 |
+| BM25 extension | 0.250 | 0.150 | 0.000 | 0.100 | 0.226 | 0.285 |
+| TF-IDF/SVD extension | 0.338 | 0.325 | 0.275 | 0.300 | 0.330 | 0.368 |
+
+paired 口径下各方法 control 误报率显著（Winter 0.5、TF-IDF 0.275、
+Sun 0.125、BM25 0），paired accuracy 因此明显低于 variant-only exact：
+加入 control 后，Winter 的 prohibited 精度从 1.000 降至 0.667、
+condition 精度从 1.000 降至 0.182（control 侧误报进入 FP）。
+
+**结论（收紧措辞，仅限受控数据）**：
+
+- `prohibited_action_present`：**支持新增检测类型的可行性**——除 BM25
+  长度标度限制外，各后端对插入禁止动作任务的检出精度/召回都很高。
+- `constraint_violated`：**部分支持**——annotation/timer/data-object 变异在
+  动作可映射且存在约束表面时可检出，但仍受动作映射与冻结 BPMN 表面限制。
+- `required_condition_not_enforced`：当前结果**主要暴露 condition surface
+  与 action mapping 的可观察性瓶颈**（命名 gateway 藏在 subProcess 内、
+  动作映射低于 gamma），冻结 GDPR-7 上几乎没有正面证据。
+- `exception_not_handled`：当前结果**主要暴露 boundary event、异常分支与
+  parser 可观察性不足**，多数例外检查不可观察或不可映射。
+
+因此不写“全部四类都证明六要素下游价值”；准确表述为：**新增四类使四个此前
+未使用的规则字段（prohibition modality、condition、constraint、exception）
+获得明确的 Stage 3 消费接口，但当前受控数据只对部分类型提供了较强性能
+证据，其余类型主要揭示可观察性和映射瓶颈**。40 条结果始终标为 DEV_ONLY，
+不并入 33 条人工 Gold，也不把正式 Oracle 改称七类 benchmark。
+
+#### 7.4.5 表 C：错误类型分析
 
 | 错误类型 | 最容易的方法 | 最困难的方法 | 主要失败原因 | 对应方法模块 |
 |---|---|---|---|---|
@@ -778,7 +829,7 @@ evaluation.json（Winter 3.9s、Sun 15.0s、BM25 6.0s、TF-IDF/SVD 12.7s）；
 | incorrect_actor | TF-IDF/SVD（人工 0.625 / 合成 0.5714） | Winter / BM25（恒 0） | 这三个方法不引入参与者的语义标签：Winter 只读 process participant，BM25 对 actor 候选池的检索不足以支撑 min-sim<θ 判定 | actor vocabulary / pool-lane 解析；Def-6 actor matching |
 | out_of_order | 全部薄弱（人工 panel 最优 0.1667） | Sun/BM25/TF-IDF（合成 0.3333，人工 0） | 顺序违规依赖控制流可达关系；现有方法对 gateway 分支与可达性的粒度不足，多数顺序变异在可达关系上不可观测 | control-flow reachability；Def-7 顺序约束 |
 
-#### 7.4.5 讨论
+#### 7.4.6 讨论
 
 - **哪种错误最容易检测**：missing_action——凡规则含明确义务 action 且词面可映射，
   Winter/BM25/TF-IDF 在合成 panel 上 R=1.0（人工 panel 亦 0.95–1.0）。原因：删除任务
@@ -995,7 +1046,7 @@ Rules-Only 0.7986（−0.0365）、actor P 0.7077→0.2754。结论引用
   列须一起读。
 - 合成受控错误 panel 的生成目标按**语法/结构**锁定（非按规则词面选择），因此
   “方法检测不到”可能部分反映目标与原 rule 的词面对齐程度，而不仅是错误本身
-  的固有难度；此点已在 §7.4.5 如实讨论。
+  的固有难度；此点已在 §7.4.6 如实讨论。
 
 **外部效度**：
 - 全部 Stage 3 违规结果基于 7 个 GDPR 流程（45 activities）与 GDPR 义务类型
@@ -1015,7 +1066,7 @@ Rules-Only 0.7986（−0.0365）、actor P 0.7077→0.2754。结论引用
 - actor/order 检测率（尤其 Winter/BM25 的 0）不能解释为“真实流程无此类违规”，
   只能解释为“这些方法在该表示上没有对应信号”。
 
-### 8.5 Stage 1 → Stage 3 误差传播小结（§7.4.5 的汇总）
+### 8.5 Stage 1 → Stage 3 误差传播小结（§7.4.6 的汇总）
 
 - Stage 1 结构正确（micro-F1=1.0）保证 Stage 3 的流程图输入无转换错误，但
   不提供参与者语义；GDPR-7 的 lane 名为空，actor 只存在于 participant，
@@ -1026,7 +1077,7 @@ Rules-Only 0.7986（−0.0365）、actor P 0.7077→0.2754。结论引用
   Stage 3 的传播。
 - 结论：Stage 3 违规检测的瓶颈不只在于匹配/顺序算法，还在于 Stage 1 语义
   标签（actor、组合三元组）的质量；改进 Stage 3 需先补 Stage 1 的参与者
-  语义与三元组一致性（见 §7.4.5 讨论）。
+  语义与三元组一致性（见 §7.4.6 讨论）。
 
 ## 9. 结论
 

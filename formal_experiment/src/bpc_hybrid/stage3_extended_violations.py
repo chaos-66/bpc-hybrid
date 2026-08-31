@@ -53,7 +53,7 @@ violation Gold nor presented as the formal Oracle.
 from __future__ import annotations
 
 import re
-from typing import Any
+from typing import Any, Mapping, Sequence
 
 from bpc_hybrid.sun_stage3.sun_rule_extraction import _extract_actor  # noqa: E402
 
@@ -705,4 +705,255 @@ def evaluate_extended(predictions: list[dict[str, Any]],
                 "metric; unobservable scores are never hard-filled with 0.0 or 1.0"
             ),
         },
+    }
+
+
+# ---------------------------------------------------------------------------
+# Paired control-plus-variant evaluation (S3.9-EXT reporting, zero re-runs)
+# ---------------------------------------------------------------------------
+#
+# Each of the 40 v2 variants has a synthetic compliant CONTROL (Gold = none)
+# and one mutated VARIANT (Gold = its expected violation type).  The variant
+# prediction is the PERSISTED ``predicted_violation_type`` of the original run
+# (the frozen device: expected type or None).  The control prediction is
+# re-derived OFFLINE from the persisted ``control_scores`` with the SAME
+# per-type decision rules, the SAME frozen gamma_ext, and a FIXED priority
+# order (EXTENDED_TYPES order) for the rare multi-violation control case.
+#
+# This "paired control-plus-variant evaluation" answers whether the system can
+# simultaneously (a) not flag a compliant process (control -> none) and
+# (b) flag the mutated process with the right type (variant -> expected).
+# It is reported SEPARATELY from the "variant-only detection evaluation" of
+# the original v2 table; neither is merged into human Gold or the Oracle.
+
+NONE_LABEL = "none"
+
+_PAIRED_LABELS = (NONE_LABEL,) + EXTENDED_TYPES
+
+
+def control_prediction_from_scores(
+    control_scores: Mapping[str, Any], gamma_ext: float = 0.5
+) -> dict[str, Any]:
+    """Rebuild the control five-class prediction from persisted control_scores.
+
+    Per-type decision rules (identical to the original scorer):
+
+    * prohibited_action_present: observable AND ``score >= gamma_ext``;
+    * required_condition_not_enforced / exception_not_handled: observable AND
+      ``score > gamma_ext``;
+    * constraint_violated: observable AND (``score > gamma_ext`` OR recorded
+      exact time-limit contradiction).
+
+    Aggregation: the first violating type in the fixed EXTENDED_TYPES priority
+    order wins; no violation among the observable types -> ``none``; ALL four
+    types unobservable -> predicted ``None`` (indistinguishable from the
+    variant unobservable policy; counted as an error, never dropped).
+    """
+    per_type: dict[str, Any] = {}
+    for t in EXTENDED_TYPES:
+        cs = dict(control_scores.get(t) or {})
+        if not cs.get("observable"):
+            per_type[t] = None  # unobservable for this type
+            continue
+        score = cs.get("score")
+        if t == "prohibited_action_present":
+            per_type[t] = score is not None and score >= gamma_ext
+        elif t == "constraint_violated":
+            contradiction = bool((cs.get("exact_contradiction") or {}).get("contradiction"))
+            per_type[t] = (score is not None and score > gamma_ext) or contradiction
+        else:
+            per_type[t] = score is not None and score > gamma_ext
+    all_unobservable = all(value is None for value in per_type.values())
+    predicted = next(
+        (t for t in EXTENDED_TYPES if per_type.get(t) is True), None
+    )
+    if predicted is None and not all_unobservable:
+        predicted = NONE_LABEL
+    return {
+        "predicted": predicted,
+        "per_type": per_type,
+        "all_unobservable": all_unobservable,
+    }
+
+
+def evaluate_paired(predictions: Sequence[Mapping[str, Any]],
+                    panel: Mapping[str, Any],
+                    gamma_ext: float = 0.5) -> dict[str, Any]:
+    """Paired control-plus-variant evaluation over one method's persisted
+    predictions (40 controls + 40 variants = 80 evaluation objects).
+
+    No sample is dropped: failures, ``none`` gold items and unobservable
+    items all stay in every denominator (a None prediction is counted as an
+    error for both control and variant sides).
+    """
+    by_item = {p["item_id"]: p for p in predictions}
+    if len(by_item) != len(predictions):
+        raise ValueError("duplicate item_id in predictions")
+    variants = panel["variants"]
+    if len(variants) != 40:
+        raise ValueError(f"expected 40 variants, got {len(variants)}")
+
+    items: list[dict[str, Any]] = []
+    paired_ok = 0
+    variant_ok = 0
+    control_fp = 0
+    variant_unobservable = 0
+    control_unobservable = 0
+    unobservable_by_reason: dict[str, int] = {}
+    variant_unobservable_cases: list[dict[str, Any]] = []
+    control_unobservable_cases: list[dict[str, Any]] = []
+    control_fp_cases: list[dict[str, Any]] = []
+    variant_tp_cases: list[dict[str, Any]] = []
+    variant_fn_cases: list[dict[str, Any]] = []
+    wrong_type = 0
+
+    for v in variants:
+        vid = v["variant_id"]
+        row = by_item.get(vid)
+        if row is None:
+            raise ValueError(f"missing prediction for {vid}")
+        expected = v["expected_violation"]
+        if expected not in EXTENDED_TYPES:
+            raise ValueError(f"unexpected expected_violation {expected!r} for {vid}")
+        if row.get("expected_violation") != expected:
+            raise ValueError(f"{vid}: prediction expected_violation mismatch")
+
+        # -- control side --------------------------------------------------
+        control_decision = control_prediction_from_scores(row["control_scores"], gamma_ext)
+        control_pred = control_decision["predicted"]
+        if control_decision["all_unobservable"]:
+            control_unobservable += 1
+            reasons = sorted({
+                str((row["control_scores"].get(t) or {}).get("reason") or "unspecified")
+                for t in EXTENDED_TYPES
+            })
+            for reason in reasons:
+                unobservable_by_reason[reason] = unobservable_by_reason.get(reason, 0) + 1
+            control_unobservable_cases.append({
+                "item_id": vid, "process_id": v["process_id"], "rule_id": v["rule_id"],
+                "control_predicted": control_pred, "reasons": reasons,
+            })
+        items.append({
+            "side": "control", "item_id": vid, "gold": NONE_LABEL,
+            "predicted": control_pred,
+        })
+        if control_pred in EXTENDED_TYPES:
+            control_fp += 1
+            control_fp_cases.append({
+                "item_id": vid, "process_id": v["process_id"], "rule_id": v["rule_id"],
+                "control_predicted": control_pred,
+                "control_scores": row["control_scores"],
+            })
+
+        # -- variant side ---------------------------------------------------
+        var_pred = row.get("predicted_violation_type")
+        if var_pred not in (None,) + EXTENDED_TYPES:
+            raise ValueError(f"{vid}: unexpected variant prediction {var_pred!r}")
+        observability = row.get("observability", {})
+        obs = observability.get(expected, {"observable": True})
+        if obs.get("observable") is False:
+            variant_unobservable += 1
+            reason = obs.get("reason") or "unspecified"
+            unobservable_by_reason[reason] = unobservable_by_reason.get(reason, 0) + 1
+            variant_unobservable_cases.append({
+                "item_id": vid, "process_id": v["process_id"], "rule_id": v["rule_id"],
+                "expected": expected, "reason": reason,
+            })
+        items.append({
+            "side": "variant", "item_id": vid, "gold": expected,
+            "predicted": var_pred,
+        })
+        if var_pred == expected:
+            variant_ok += 1
+            variant_tp_cases.append({
+                "item_id": vid, "process_id": v["process_id"], "rule_id": v["rule_id"],
+                "expected": expected, "predicted": var_pred,
+                "scores": row.get("scores"),
+            })
+        else:
+            variant_fn_cases.append({
+                "item_id": vid, "process_id": v["process_id"], "rule_id": v["rule_id"],
+                "expected": expected, "predicted": var_pred,
+                "scores": row.get("scores"),
+            })
+            if var_pred in EXTENDED_TYPES:
+                wrong_type += 1
+        if control_pred == NONE_LABEL and var_pred == expected:
+            paired_ok += 1
+
+    if len(items) != 80:
+        raise RuntimeError(f"paired evaluation must cover 80 objects, got {len(items)}")
+
+    # -- five-class confusion over all 80 objects ---------------------------
+    per_type: dict[str, dict[str, int]] = {
+        label: {"tp": 0, "fp": 0, "fn": 0} for label in _PAIRED_LABELS
+    }
+    correct = 0
+    for item in items:
+        gold = item["gold"]
+        pred = item["predicted"]
+        if pred == gold:
+            correct += 1
+            per_type[gold]["tp"] += 1
+        else:
+            if gold in per_type:
+                per_type[gold]["fn"] += 1
+            if pred in per_type:
+                per_type[pred]["fp"] += 1
+    per_type_results = {
+        label: {
+            "support": per_type[label]["tp"] + per_type[label]["fn"],
+            "tp": per_type[label]["tp"],
+            "fp": per_type[label]["fp"],
+            "fn": per_type[label]["fn"],
+            **_p_r_f1(per_type[label]["tp"], per_type[label]["fp"], per_type[label]["fn"]),
+        }
+        for label in _PAIRED_LABELS
+    }
+    macro_f1_4 = round(
+        sum(per_type_results[t]["f1"] for t in EXTENDED_TYPES) / len(EXTENDED_TYPES), 4
+    )
+    macro_f1_5 = round(
+        sum(per_type_results[label]["f1"] for label in _PAIRED_LABELS) / len(_PAIRED_LABELS), 4
+    )
+    return {
+        "schema_version": "s3_extended_paired_evaluation@1.0.0",
+        "evaluation_kind": "paired_control_plus_variant",
+        "total_objects": len(items),
+        "control_objects": 40,
+        "variant_objects": 40,
+        "five_class_accuracy": round(correct / len(items), 4),
+        "variant_exact_type_accuracy": round(variant_ok / 40, 4),
+        "control_false_positive_rate": round(control_fp / 40, 4),
+        "paired_accuracy": round(paired_ok / 40, 4),
+        "per_type": per_type_results,
+        "macro_f1_four_violation_types": macro_f1_4,
+        "macro_f1_five_classes": macro_f1_5,
+        "wrong_type": wrong_type,
+        "unobservable": {
+            "total": variant_unobservable + control_unobservable,
+            "variant": variant_unobservable,
+            "control": control_unobservable,
+            "by_reason": unobservable_by_reason,
+        },
+        "cases": {
+            "control_false_positive": control_fp_cases,
+            "variant_detected": variant_tp_cases,
+            "variant_missed": variant_fn_cases,
+            "variant_unobservable": variant_unobservable_cases,
+            "control_unobservable": control_unobservable_cases,
+        },
+        "denominator_policy": (
+            "all 80 objects (40 control + 40 variant) stay in every denominator; "
+            "a None prediction (unobservable) counts as an error for both sides; "
+            "no sample is dropped"
+        ),
+        "decision_policy": (
+            "variant predictions are the PERSISTED predicted_violation_type of "
+            "the original run; control predictions are re-derived from the "
+            "PERSISTED control_scores with the original per-type rules, the "
+            "frozen gamma_ext, and fixed EXTENDED_TYPES priority order for the "
+            "rare multi-violation control case; no threshold or order was "
+            "changed to improve results"
+        ),
     }

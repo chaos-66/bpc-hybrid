@@ -4011,3 +4011,16 @@
 - 仍存在 blocker：无
 - 备注：新增 prohibited_action_present / required_condition_not_enforced / constraint_violated / exception_not_handled 各10条；每变体 synthetic compliant control + 单一目标错误 variant；源 BPMN byte-unchanged、exactly-one-error、replay byte-identical；四方法共享同一新类型公式仅替换各自冻结相似度后端（Winter-style/Sun-style/BM25/TF-IDF-SVD extension，gamma_ext=0.5）；DEV_ONLY：Winter macro 0.655/exact 0.550/unobs 17、Sun 0.333/0.300/28、BM25 0.226/0.150/28、TF-IDF 0.379/0.325/27；Winter/Sun 原论文未定义四类，命名一律 -style extension；原三类 Gold/schema/预测字节不变；17 项 focused tests 全绿；全量 audit 2786 passed/24 skipped（先前两次 flaky 失败分别由 PYTHONIOENCODING 环境与北京 peak 时段 S2.12 测试引起，已确认与本批无关）
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-31T11:27:10.235951+00:00 - S3.9-EXT 收尾：paired control-plus-variant 评价与报告/七类表/结论修正（零 API、零重跑）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2808 passed, 24 skipped, 40 warnings in 2843.34s (0:47:23)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`a0d63a565d6f342dd39302bc48969f58d0a8c249`；相关未提交路径：19 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：checkpoint a0d63a5 的四类选择动机保持不变（最小字段覆盖扩展，非穷尽分类）；本次仅从持久化四方法 predictions 离线新增 80 对象配对评价（40 control Gold=none + 40 variant；control 预测由持久化 control_scores 按原阈值 gamma_ext=0.5 与固定 EXTENDED_TYPES 优先级重建，未修改阈值/决策顺序/样本，失败、none、wrong-type、unobservable 全部保留在分母）；七类 overview 改为仅 7 个 per-class F1（删除联合 Macro-F1/Exact/Unobservable，注明 v1 30 条与 v2 40 条双 panel 差异、不计算联合指标、仅类型覆盖）；结论收紧（prohibited=可行性支持、constraint=部分支持、condition/exception=可观察性与映射瓶颈，不写全部四类都证明下游价值）；论文 §7.4 定向回填（新 7.4.4 小节，7.4.5/7.4.6 顺延并更新引用）与主张矩阵新增 C30；覆盖仅限用户明确授权的两个派生报告文件（outputs/reports/s3_extended_violation_comparison_v2.json/.md），未覆盖四方法原始 predictions/evaluation/manifest、40 变体、v1 panel 与三类人工 Gold（字节不变，focused tests 哈希锁）；新增 22 项 focused tests（共 39 项 Stage 3 focused）；全量 audit 2808 passed/24 skipped；真实 API calls=0、cost=0
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

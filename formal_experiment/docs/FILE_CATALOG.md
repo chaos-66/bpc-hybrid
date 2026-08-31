@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-08-31
-**收录文件**：1556 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1557 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -1624,6 +1624,7 @@
 | `tests/test_s2_13_s3_7_transition_readiness_v8.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_2_s3_3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_9_synthetic_panel.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_extended_violation_report_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_violation_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |

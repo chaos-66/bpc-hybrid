@@ -360,13 +360,23 @@ def test_comparison_report_exists_and_is_synthetic_only():
     assert set(rationale["type_reasons"]) == set(V2_TYPES)
     assert "not an exhaustive" in rationale["scope_boundary"]
     for m in data["methods"].values():
-        assert m["evaluation"]["support"] == 40
-    assert data["seven_class_synthetic_summary"]["v1_three_types"]
-    assert data["seven_class_synthetic_summary"]["v2_four_types"]
+        assert m["variant_only_evaluation"]["support"] == 40
+        assert m["paired_evaluation"]["total_objects"] == 80
+    assert data["v1_three_type_synthetic"]["winter"]["per_type_f1"]["missing_action"]
+    assert data["seven_class_overview"]["per_class_f1"]
+    # the 7-class overview must NOT carry joint metrics
+    overview = data["seven_class_overview"]
+    assert "macro_f1" not in overview
+    assert "exact" not in overview
+    assert "unobservable" not in overview
     md = md_path.read_text(encoding="utf-8")
     assert "Winter-style extension" in md and "Sun-style extension" in md
     assert "NOT human Gold" in md or "not human Gold" in md
     assert "prohibited P/R/F1" in md
+    assert "variant-only detection evaluation" in md
+    assert "paired control-plus-variant evaluation" in md
+    assert "no joint Macro-F1" in md
+    assert "paired acc (40)" in md
     assert "## Selection rationale" in md
     assert "commission rather than omission" in md
     assert "minimal field-coverage extension" in md
