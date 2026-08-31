@@ -1,0 +1,2317 @@
+{
+  "schema_version": "s3_synthetic_controlled_error_extension@2.0.0",
+  "panel_id": "synthetic_controlled_error_extension_v2",
+  "panel_label": "synthetic_controlled_error_extension_v2",
+  "status": "dev_only_panel_not_human_gold",
+  "selection_discipline": "40-item plan (rule sentence x process x sub-kind x anchor) locked in scripts/build_s3_extended_violation_panel_v2.py BEFORE any Stage 3 method ran; no result-driven selection; affinity target and anchors derived deterministically from the ORIGINAL process records and rule texts only",
+  "counts": {
+    "prohibited_action_present": 10,
+    "required_condition_not_enforced": 10,
+    "constraint_violated": 10,
+    "exception_not_handled": 10
+  },
+  "counts_total": 40,
+  "originals": {
+    "bpmn_dir": "data/input/stage1_stage3/gdpr7",
+    "bpmn_file_count": 7,
+    "source_hashes": {
+      "gdpr_1_data_breach": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "gdpr_2_consent_to_use_the_data": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "gdpr_3_right_to_access": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "gdpr_4_right_of_portability": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "gdpr_5_right_to_withdraw": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "gdpr_6_right_to_rectify": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "gdpr_7_right_to_be_forgotten": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+    },
+    "aggregate_sha256": "f5306e209c95d352c21f905f9f43273bd147d873439d6fb76d083781f164455c",
+    "membership_payload_sha256": "e88caf8157c4e6e5c2d789ed0f2b6bbac2aac2e89d2384db7762549751a1663d"
+  },
+  "rule_binding": {
+    "source": "data/development/human_review/stage3_gold_inference_v1.json",
+    "inference_pack_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+    "per_variant": {
+      "syn_v2_prohibited_action_01": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "sentence_idx": 0
+      },
+      "syn_v2_prohibited_action_02": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "sentence_idx": 0
+      },
+      "syn_v2_prohibited_action_03": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "sentence_idx": 1
+      },
+      "syn_v2_prohibited_action_04": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "sentence_idx": 1
+      },
+      "syn_v2_prohibited_action_05": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article7",
+        "sentence_idx": 2
+      },
+      "syn_v2_prohibited_action_06": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article7",
+        "sentence_idx": 2
+      },
+      "syn_v2_prohibited_action_07": {
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article7",
+        "sentence_idx": 4
+      },
+      "syn_v2_prohibited_action_08": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article15",
+        "sentence_idx": 12
+      },
+      "syn_v2_prohibited_action_09": {
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20",
+        "sentence_idx": 3
+      },
+      "syn_v2_prohibited_action_10": {
+        "process_id": "gdpr_7_right_to_be_forgotten",
+        "rule_id": "article17",
+        "sentence_idx": 8
+      },
+      "syn_v2_required_condition_01": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "sentence_idx": 0
+      },
+      "syn_v2_required_condition_02": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "sentence_idx": 1
+      },
+      "syn_v2_required_condition_03": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "sentence_idx": 2
+      },
+      "syn_v2_required_condition_04": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article34",
+        "sentence_idx": 0
+      },
+      "syn_v2_required_condition_05": {
+        "process_id": "gdpr_7_right_to_be_forgotten",
+        "rule_id": "article17",
+        "sentence_idx": 0
+      },
+      "syn_v2_required_condition_06": {
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20",
+        "sentence_idx": 0
+      },
+      "syn_v2_required_condition_07": {
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article20",
+        "sentence_idx": 0
+      },
+      "syn_v2_required_condition_08": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17",
+        "sentence_idx": 0
+      },
+      "syn_v2_required_condition_09": {
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15",
+        "sentence_idx": 0
+      },
+      "syn_v2_required_condition_10": {
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article15",
+        "sentence_idx": 0
+      },
+      "syn_v2_constraint_violated_01": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "sentence_idx": 0
+      },
+      "syn_v2_constraint_violated_02": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "sentence_idx": 1
+      },
+      "syn_v2_constraint_violated_03": {
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16",
+        "sentence_idx": 0
+      },
+      "syn_v2_constraint_violated_04": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article34",
+        "sentence_idx": 0
+      },
+      "syn_v2_constraint_violated_05": {
+        "process_id": "gdpr_7_right_to_be_forgotten",
+        "rule_id": "article17",
+        "sentence_idx": 0
+      },
+      "syn_v2_constraint_violated_06": {
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article17",
+        "sentence_idx": 0
+      },
+      "syn_v2_constraint_violated_07": {
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article20",
+        "sentence_idx": 0
+      },
+      "syn_v2_constraint_violated_08": {
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20",
+        "sentence_idx": 0
+      },
+      "syn_v2_constraint_violated_09": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17",
+        "sentence_idx": 0
+      },
+      "syn_v2_constraint_violated_10": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article7",
+        "sentence_idx": 1
+      },
+      "syn_v2_exception_not_handled_01": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "sentence_idx": 0
+      },
+      "syn_v2_exception_not_handled_02": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article34",
+        "sentence_idx": 2
+      },
+      "syn_v2_exception_not_handled_03": {
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article34",
+        "sentence_idx": 3
+      },
+      "syn_v2_exception_not_handled_04": {
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "sentence_idx": 1
+      },
+      "syn_v2_exception_not_handled_05": {
+        "process_id": "gdpr_7_right_to_be_forgotten",
+        "rule_id": "article17",
+        "sentence_idx": 8
+      },
+      "syn_v2_exception_not_handled_06": {
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article33",
+        "sentence_idx": 0
+      },
+      "syn_v2_exception_not_handled_07": {
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article20",
+        "sentence_idx": 1
+      },
+      "syn_v2_exception_not_handled_08": {
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20",
+        "sentence_idx": 1
+      },
+      "syn_v2_exception_not_handled_09": {
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article20",
+        "sentence_idx": 1
+      },
+      "syn_v2_exception_not_handled_10": {
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15",
+        "sentence_idx": 11
+      }
+    }
+  },
+  "config": {
+    "config_path": "configs/stage3_extended_violation_v2.json",
+    "config_sha256": "1efe2e4ee2c0914dc77e5f1d51fa2b19f656f4d7f7ae3db69fa34fdcc8d04ca9",
+    "gamma_ext": 0.5
+  },
+  "outputs": {
+    "aggregate_variant_sha256": "7230864e3d1bd2cad11d22dd35430a8eb9a900e2267c152c2c31f986233aac66",
+    "variant_dir": "data/development/stage3_synth",
+    "layout": "<variant_id>/control/<process_id>.bpmn and <variant_id>/variant/<process_id>.bpmn"
+  },
+  "variants": [
+    {
+      "variant_id": "syn_v2_prohibited_action_01",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "mutation_type": "prohibited_action_present",
+      "expected_violation": "prohibited_action_present",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_01/control/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_01/variant/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "28ee7b5b578e9a7c4852b552b6855a074c3aff983073bb8fe8033a791f43e89d",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": null,
+      "mutation_config": {
+        "inserted_task_id": "syn_task_syn_v2_prohibited_action_01",
+        "inserted_task_name": "affects similarly significantly him or her",
+        "anchor_id": "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+        "rewired_flow_id": "sid-AF48C040-F375-43C5-A5D0-AE077F62C645",
+        "rewired_flow_from": [
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-C643FE0C-2557-46F6-A0A3-8BF3A3AFF47C"
+        ],
+        "new_flows": [
+          "syn_flow_syn_v2_prohibited_action_01_1",
+          "syn_flow_syn_v2_prohibited_action_01_2"
+        ]
+      },
+      "rule_element": {
+        "field": "modality+action",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her.",
+        "modality": "prohibition",
+        "actor": "The data subject",
+        "action": "affects similarly significantly him or her",
+        "condition": null,
+        "constraint": null,
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "control_is_source": true,
+        "variant_has_only_inserted_task": true,
+        "events_and_gateways_identical": true,
+        "inserted_label_locked": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "lanes_identical": true,
+        "variant_differs_from_source": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_prohibited_action_02",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "mutation_type": "prohibited_action_present",
+      "expected_violation": "prohibited_action_present",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_02/control/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_02/variant/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "758d3973911609b1653232dc7fac065453539115fe6364bc65df64fb50dd76e0",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": null,
+      "mutation_config": {
+        "inserted_task_id": "syn_task_syn_v2_prohibited_action_02",
+        "inserted_task_name": "affects similarly significantly him or her",
+        "anchor_id": "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+        "rewired_flow_id": "sid-8B9FD591-2070-4AAA-BD6F-E01029692ACA",
+        "rewired_flow_from": [
+          "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+          "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568"
+        ],
+        "new_flows": [
+          "syn_flow_syn_v2_prohibited_action_02_1",
+          "syn_flow_syn_v2_prohibited_action_02_2"
+        ]
+      },
+      "rule_element": {
+        "field": "modality+action",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her.",
+        "modality": "prohibition",
+        "actor": "The data subject",
+        "action": "affects similarly significantly him or her",
+        "condition": null,
+        "constraint": null,
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "control_is_source": true,
+        "variant_has_only_inserted_task": true,
+        "events_and_gateways_identical": true,
+        "inserted_label_locked": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "lanes_identical": true,
+        "variant_differs_from_source": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_prohibited_action_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "mutation_type": "prohibited_action_present",
+      "expected_violation": "prohibited_action_present",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_03/control/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_03/variant/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "c0249ad1e4aaa2d6b48ef361f9308d58341e7e88074b15f8df8d847c5e10b523",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": null,
+      "mutation_config": {
+        "inserted_task_id": "syn_task_syn_v2_prohibited_action_03",
+        "inserted_task_name": "apply",
+        "anchor_id": "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+        "rewired_flow_id": "sid-AF48C040-F375-43C5-A5D0-AE077F62C645",
+        "rewired_flow_from": [
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-C643FE0C-2557-46F6-A0A3-8BF3A3AFF47C"
+        ],
+        "new_flows": [
+          "syn_flow_syn_v2_prohibited_action_03_1",
+          "syn_flow_syn_v2_prohibited_action_03_2"
+        ]
+      },
+      "rule_element": {
+        "field": "modality+action",
+        "sentence_idx": 1,
+        "sentence_text": "Paragraph 1 shall not apply if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller.",
+        "modality": "prohibition",
+        "actor": "Paragraph 1",
+        "action": "apply",
+        "condition": "if the decision is necessary for entering into",
+        "constraint": null,
+        "exception": "shall not apply if the decision is necessary for entering into"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "control_is_source": true,
+        "variant_has_only_inserted_task": true,
+        "events_and_gateways_identical": true,
+        "inserted_label_locked": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "lanes_identical": true,
+        "variant_differs_from_source": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_prohibited_action_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "mutation_type": "prohibited_action_present",
+      "expected_violation": "prohibited_action_present",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_04/control/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_04/variant/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "982c07118c69a81c5fb70f314c44560f4b516b40967e472019ea9d17dcabab3d",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": null,
+      "mutation_config": {
+        "inserted_task_id": "syn_task_syn_v2_prohibited_action_04",
+        "inserted_task_name": "apply",
+        "anchor_id": "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+        "rewired_flow_id": "sid-8B9FD591-2070-4AAA-BD6F-E01029692ACA",
+        "rewired_flow_from": [
+          "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+          "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568"
+        ],
+        "new_flows": [
+          "syn_flow_syn_v2_prohibited_action_04_1",
+          "syn_flow_syn_v2_prohibited_action_04_2"
+        ]
+      },
+      "rule_element": {
+        "field": "modality+action",
+        "sentence_idx": 1,
+        "sentence_text": "Paragraph 1 shall not apply if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller.",
+        "modality": "prohibition",
+        "actor": "Paragraph 1",
+        "action": "apply",
+        "condition": "if the decision is necessary for entering into",
+        "constraint": null,
+        "exception": "shall not apply if the decision is necessary for entering into"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "control_is_source": true,
+        "variant_has_only_inserted_task": true,
+        "events_and_gateways_identical": true,
+        "inserted_label_locked": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "lanes_identical": true,
+        "variant_differs_from_source": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_prohibited_action_05",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article7",
+      "mutation_type": "prohibited_action_present",
+      "expected_violation": "prohibited_action_present",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_05/control/gdpr_5_right_to_withdraw.bpmn",
+      "control_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_05/variant/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "39e8b14d7412d87d39abf1aaf2d80bb9c0024ff5ea0dbc176298188789e465dd",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": null,
+      "mutation_config": {
+        "inserted_task_id": "syn_task_syn_v2_prohibited_action_05",
+        "inserted_task_name": "binding",
+        "anchor_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+        "rewired_flow_id": "sid-FFA84E6A-D312-4A1F-934D-A17034B0DB22",
+        "rewired_flow_from": [
+          "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "sid-614A49D9-5B63-4E26-9D17-123A91008776"
+        ],
+        "new_flows": [
+          "syn_flow_syn_v2_prohibited_action_05_1",
+          "syn_flow_syn_v2_prohibited_action_05_2"
+        ]
+      },
+      "rule_element": {
+        "field": "modality+action",
+        "sentence_idx": 2,
+        "sentence_text": "Any part of such a declaration which constitutes an infringement of this Regulation shall not be binding.",
+        "modality": "prohibition",
+        "actor": "Any part of such a declaration which constitutes an infringement of this Regulation",
+        "action": "binding",
+        "condition": null,
+        "constraint": null,
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "control_is_source": true,
+        "variant_has_only_inserted_task": true,
+        "events_and_gateways_identical": true,
+        "inserted_label_locked": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "lanes_identical": true,
+        "variant_differs_from_source": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_prohibited_action_06",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article7",
+      "mutation_type": "prohibited_action_present",
+      "expected_violation": "prohibited_action_present",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_06/control/gdpr_5_right_to_withdraw.bpmn",
+      "control_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_06/variant/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "03080dd8d9769cf878d13e09e659c41af54f5a07e1bc65b9109773dfc2335874",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": null,
+      "mutation_config": {
+        "inserted_task_id": "syn_task_syn_v2_prohibited_action_06",
+        "inserted_task_name": "binding",
+        "anchor_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+        "rewired_flow_id": "sid-314D9A79-5FF8-4181-A795-058B16493872",
+        "rewired_flow_from": [
+          "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB"
+        ],
+        "new_flows": [
+          "syn_flow_syn_v2_prohibited_action_06_1",
+          "syn_flow_syn_v2_prohibited_action_06_2"
+        ]
+      },
+      "rule_element": {
+        "field": "modality+action",
+        "sentence_idx": 2,
+        "sentence_text": "Any part of such a declaration which constitutes an infringement of this Regulation shall not be binding.",
+        "modality": "prohibition",
+        "actor": "Any part of such a declaration which constitutes an infringement of this Regulation",
+        "action": "binding",
+        "condition": null,
+        "constraint": null,
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "control_is_source": true,
+        "variant_has_only_inserted_task": true,
+        "events_and_gateways_identical": true,
+        "inserted_label_locked": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "lanes_identical": true,
+        "variant_differs_from_source": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_prohibited_action_07",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article7",
+      "mutation_type": "prohibited_action_present",
+      "expected_violation": "prohibited_action_present",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_07/control/gdpr_3_right_to_access.bpmn",
+      "control_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_07/variant/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256": "b60b35b764ebc9e9e9c960c425211173883bc9b4dec56f6f2d0897adf3b166d3",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": null,
+      "mutation_config": {
+        "inserted_task_id": "syn_task_syn_v2_prohibited_action_07",
+        "inserted_task_name": "affect the lawfulness of processing",
+        "anchor_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+        "rewired_flow_id": "sid-823C8F29-5084-4FC4-8D9A-88A19FBCF6C7",
+        "rewired_flow_from": [
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+        ],
+        "new_flows": [
+          "syn_flow_syn_v2_prohibited_action_07_1",
+          "syn_flow_syn_v2_prohibited_action_07_2"
+        ]
+      },
+      "rule_element": {
+        "field": "modality+action",
+        "sentence_idx": 4,
+        "sentence_text": "The withdrawal of consent shall not affect the lawfulness of processing based on consent before its withdrawal.",
+        "modality": "prohibition",
+        "actor": "The withdrawal of consent",
+        "action": "affect the lawfulness of processing",
+        "condition": "before its withdrawal",
+        "constraint": null,
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "control_is_source": true,
+        "variant_has_only_inserted_task": true,
+        "events_and_gateways_identical": true,
+        "inserted_label_locked": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "lanes_identical": true,
+        "variant_differs_from_source": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_prohibited_action_08",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article15",
+      "mutation_type": "prohibited_action_present",
+      "expected_violation": "prohibited_action_present",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_08/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_08/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "b7d8896f7faa0e1dd80bfcf941316664fc6f7169c6eb1a2f07214460845ee26f",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": null,
+      "mutation_config": {
+        "inserted_task_id": "syn_task_syn_v2_prohibited_action_08",
+        "inserted_task_name": "affect adversely the rights and freedoms of others",
+        "anchor_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+        "rewired_flow_id": "sid-61D58D7F-36BC-43C2-98B1-48D6F2338C45",
+        "rewired_flow_from": [
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761"
+        ],
+        "new_flows": [
+          "syn_flow_syn_v2_prohibited_action_08_1",
+          "syn_flow_syn_v2_prohibited_action_08_2"
+        ]
+      },
+      "rule_element": {
+        "field": "modality+action",
+        "sentence_idx": 12,
+        "sentence_text": "The right to obtain a copy referred to in paragraph 3 shall not adversely affect the rights and freedoms of others.",
+        "modality": "prohibition",
+        "actor": "The right to obtain a copy referred to in paragraph 3",
+        "action": "affect adversely the rights and freedoms of others",
+        "condition": null,
+        "constraint": null,
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "control_is_source": true,
+        "variant_has_only_inserted_task": true,
+        "events_and_gateways_identical": true,
+        "inserted_label_locked": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "lanes_identical": true,
+        "variant_differs_from_source": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_prohibited_action_09",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "mutation_type": "prohibited_action_present",
+      "expected_violation": "prohibited_action_present",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_09/control/gdpr_4_right_of_portability.bpmn",
+      "control_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_09/variant/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256": "905d4b7bcfe9a3a831a41f709518eb4b3254c5459285f1547c5129b9704b0bae",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": null,
+      "mutation_config": {
+        "inserted_task_id": "syn_task_syn_v2_prohibited_action_09",
+        "inserted_task_name": "apply to processing necessary",
+        "anchor_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+        "rewired_flow_id": "sid-823C8F29-5084-4FC4-8D9A-88A19FBCF6C7",
+        "rewired_flow_from": [
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+        ],
+        "new_flows": [
+          "syn_flow_syn_v2_prohibited_action_09_1",
+          "syn_flow_syn_v2_prohibited_action_09_2"
+        ]
+      },
+      "rule_element": {
+        "field": "modality+action",
+        "sentence_idx": 3,
+        "sentence_text": "That right shall not apply to processing necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller.",
+        "modality": "prohibition",
+        "actor": "That right",
+        "action": "apply to processing necessary",
+        "condition": null,
+        "constraint": null,
+        "exception": "shall not apply to processing necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "control_is_source": true,
+        "variant_has_only_inserted_task": true,
+        "events_and_gateways_identical": true,
+        "inserted_label_locked": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "lanes_identical": true,
+        "variant_differs_from_source": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_prohibited_action_10",
+      "process_id": "gdpr_7_right_to_be_forgotten",
+      "rule_id": "article17",
+      "mutation_type": "prohibited_action_present",
+      "expected_violation": "prohibited_action_present",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn",
+      "source_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_10/control/gdpr_7_right_to_be_forgotten.bpmn",
+      "control_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_prohibited_action_10/variant/gdpr_7_right_to_be_forgotten.bpmn",
+      "variant_bpmn_sha256": "c23a444d714238f188f18540db138671bf313c5e03b090f165caa49936986d05",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": null,
+      "mutation_config": {
+        "inserted_task_id": "syn_task_syn_v2_prohibited_action_10",
+        "inserted_task_name": "apply to the extent that processing is necessary for exercising the right of freedom of expression and information",
+        "anchor_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+        "rewired_flow_id": "sid-45615EE8-6C4F-440C-B497-8DB259D27A59",
+        "rewired_flow_from": [
+          "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+          "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597"
+        ],
+        "new_flows": [
+          "syn_flow_syn_v2_prohibited_action_10_1",
+          "syn_flow_syn_v2_prohibited_action_10_2"
+        ]
+      },
+      "rule_element": {
+        "field": "modality+action",
+        "sentence_idx": 8,
+        "sentence_text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information.",
+        "modality": "prohibition",
+        "actor": "Paragraphs 1 and 2",
+        "action": "apply to the extent that processing is necessary for exercising the right of freedom of expression and information",
+        "condition": "to the extent that processing is necessary for exercising the right of freedom of expression and information",
+        "constraint": null,
+        "exception": "shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "control_is_source": true,
+        "variant_has_only_inserted_task": true,
+        "events_and_gateways_identical": true,
+        "inserted_label_locked": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "lanes_identical": true,
+        "variant_differs_from_source": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_required_condition_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "mutation_type": "required_condition_not_enforced",
+      "expected_violation": "required_condition_not_enforced",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_required_condition_01/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "a1970a5f93faff88f39c9d98089bd297ad08a8dd80858010e916f7793b53a77e",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_required_condition_01/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "mutation_config": {
+        "flow_id": "sid-D98E9AAE-0B19-447A-9685-52325ECF735B",
+        "condition_expression": "In the case of a personal data breach",
+        "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+      },
+      "rule_element": {
+        "field": "condition",
+        "sentence_idx": 0,
+        "sentence_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons.",
+        "modality": "obligation",
+        "actor": "the controller",
+        "action": "notify the personal data breach",
+        "condition": "In the case of a personal data breach",
+        "constraint": "not later than 72 hours",
+        "exception": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_one_locked_condition": true,
+        "control_minus_condition_is_source": true,
+        "variant_has_no_condition": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_required_condition_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "mutation_type": "required_condition_not_enforced",
+      "expected_violation": "required_condition_not_enforced",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_required_condition_02/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "7a011a207e9e54b2da4587910b1e4def6d1993d7dd62cc259cc1318bc23970a9",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_required_condition_02/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+      "mutation_config": {
+        "flow_id": "sid-1FC7DEFC-9314-4171-A008-4684D23CC0CE",
+        "condition_expression": "Where the notification to the supervisory authority is not made within 72 hours",
+        "target_activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+      },
+      "rule_element": {
+        "field": "condition",
+        "sentence_idx": 1,
+        "sentence_text": "Where the notification to the supervisory authority is not made within 72 hours, it shall be accompanied by reasons for the delay.",
+        "modality": "obligation",
+        "actor": "the notification to the supervisory authority",
+        "action": "accompanied by reasons for the delay",
+        "condition": "Where the notification to the supervisory authority is not made within 72 hours",
+        "constraint": "within 72 hours",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_one_locked_condition": true,
+        "control_minus_condition_is_source": true,
+        "variant_has_no_condition": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_required_condition_03",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "mutation_type": "required_condition_not_enforced",
+      "expected_violation": "required_condition_not_enforced",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_required_condition_03/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "4f888ed1097fff81ad9e76e5a24afea444342108bf0c6d7ead8ea53425f29ace",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_required_condition_03/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "mutation_config": {
+        "flow_id": "sid-694CA9E1-C3D4-4CB3-8439-064C78DB114B",
+        "condition_expression": "after becoming aware of a personal data breach",
+        "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+      },
+      "rule_element": {
+        "field": "condition",
+        "sentence_idx": 2,
+        "sentence_text": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach.",
+        "modality": "obligation",
+        "actor": "The processor",
+        "action": "notify the controller",
+        "condition": "after becoming aware of a personal data breach",
+        "constraint": "without undue delay",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_one_locked_condition": true,
+        "control_minus_condition_is_source": true,
+        "variant_has_no_condition": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_required_condition_04",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article34",
+      "mutation_type": "required_condition_not_enforced",
+      "expected_violation": "required_condition_not_enforced",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_required_condition_04/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "9a908d88fc42032284fdab5cef857d196c10adf6a6ff4ba2c592072ac059b9ee",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_required_condition_04/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "mutation_config": {
+        "flow_id": "sid-D98E9AAE-0B19-447A-9685-52325ECF735B",
+        "condition_expression": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons",
+        "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+      },
+      "rule_element": {
+        "field": "condition",
+        "sentence_idx": 0,
+        "sentence_text": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the personal data breach to the data subject without undue delay.",
+        "modality": "obligation",
+        "actor": "the personal data breach",
+        "action": "communicate the personal data breach",
+        "condition": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons",
+        "constraint": "without undue delay",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_one_locked_condition": true,
+        "control_minus_condition_is_source": true,
+        "variant_has_no_condition": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_required_condition_05",
+      "process_id": "gdpr_7_right_to_be_forgotten",
+      "rule_id": "article17",
+      "mutation_type": "required_condition_not_enforced",
+      "expected_violation": "required_condition_not_enforced",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn",
+      "source_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_required_condition_05/control/gdpr_7_right_to_be_forgotten.bpmn",
+      "control_bpmn_sha256": "806880f9f160058f797e7c11eb147119c9e25bae34dd5a44eccf734fbf66dd89",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_required_condition_05/variant/gdpr_7_right_to_be_forgotten.bpmn",
+      "variant_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+      "mutation_config": {
+        "flow_id": "sid-D815ED31-9CB7-4D23-9D2B-1602A3FAF12D",
+        "condition_expression": "where one of the following grounds applies",
+        "target_activity_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67"
+      },
+      "rule_element": {
+        "field": "condition",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+        "condition": "where one of the following grounds applies",
+        "constraint": "without undue delay",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_one_locked_condition": true,
+        "control_minus_condition_is_source": true,
+        "variant_has_no_condition": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_required_condition_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "mutation_type": "required_condition_not_enforced",
+      "expected_violation": "required_condition_not_enforced",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_required_condition_06/control/gdpr_4_right_of_portability.bpmn",
+      "control_bpmn_sha256": "c7e9fdc6821a08330cbcd72ce1ba333f2341f4b9d9d35928ac02be5d5aae118a",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_required_condition_06/variant/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "mutation_config": {
+        "flow_id": "sid-EED28100-1DA8-4965-98EE-FBDDC4EDA4B7",
+        "condition_expression": "where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1)",
+        "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+      },
+      "rule_element": {
+        "field": "condition",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and the processing is carried out by automated means.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided , where the processing is based on consent pursuant to point ( a ) of Article 6(1 ) or point ( a ) of Article 9(2 ) or",
+        "condition": "where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1)",
+        "constraint": "without hindrance",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_one_locked_condition": true,
+        "control_minus_condition_is_source": true,
+        "variant_has_no_condition": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_required_condition_07",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article20",
+      "mutation_type": "required_condition_not_enforced",
+      "expected_violation": "required_condition_not_enforced",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_required_condition_07/control/gdpr_3_right_to_access.bpmn",
+      "control_bpmn_sha256": "f78a86981150777959fb3a4c7c18b6b0014c677bad4bc922eb8752a7f9833392",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_required_condition_07/variant/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "mutation_config": {
+        "flow_id": "sid-EED28100-1DA8-4965-98EE-FBDDC4EDA4B7",
+        "condition_expression": "where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1)",
+        "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+      },
+      "rule_element": {
+        "field": "condition",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and the processing is carried out by automated means.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided , where the processing is based on consent pursuant to point ( a ) of Article 6(1 ) or point ( a ) of Article 9(2 ) or",
+        "condition": "where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1)",
+        "constraint": "without hindrance",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_one_locked_condition": true,
+        "control_minus_condition_is_source": true,
+        "variant_has_no_condition": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_required_condition_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "mutation_type": "required_condition_not_enforced",
+      "expected_violation": "required_condition_not_enforced",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_required_condition_08/control/gdpr_5_right_to_withdraw.bpmn",
+      "control_bpmn_sha256": "48aa0cbdf23a47615908d407bb61df42c65865ca8f9dda8e48a91823ba403e73",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_required_condition_08/variant/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+      "mutation_config": {
+        "flow_id": "sid-A1740EB1-8B06-455E-809D-E60DC85AD139",
+        "condition_expression": "where one of the following grounds applies",
+        "target_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747"
+      },
+      "rule_element": {
+        "field": "condition",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+        "condition": "where one of the following grounds applies",
+        "constraint": "without undue delay",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_one_locked_condition": true,
+        "control_minus_condition_is_source": true,
+        "variant_has_no_condition": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_required_condition_09",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "mutation_type": "required_condition_not_enforced",
+      "expected_violation": "required_condition_not_enforced",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_required_condition_09/control/gdpr_3_right_to_access.bpmn",
+      "control_bpmn_sha256": "868778b50337cab2bc81b8d52e0dbae0501ca0582b98b25ba2fb44d363ac2a5e",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_required_condition_09/variant/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "mutation_config": {
+        "flow_id": "sid-EED28100-1DA8-4965-98EE-FBDDC4EDA4B7",
+        "condition_expression": "where that is the case",
+        "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+      },
+      "rule_element": {
+        "field": "condition",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information the purposes of the processing.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed access to the personal data and the following information the purposes of the processing",
+        "condition": "where that is the case",
+        "constraint": null,
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_one_locked_condition": true,
+        "control_minus_condition_is_source": true,
+        "variant_has_no_condition": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_required_condition_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article15",
+      "mutation_type": "required_condition_not_enforced",
+      "expected_violation": "required_condition_not_enforced",
+      "sub_kind": null,
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_required_condition_10/control/gdpr_6_right_to_rectify.bpmn",
+      "control_bpmn_sha256": "2cec371be437e52cf85c4d43e2fdf1da9fe159e167c3ca161f439ca1e17ef854",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_required_condition_10/variant/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "mutation_config": {
+        "flow_id": "sid-C47C687B-ED5F-490A-82CA-78E17FCE5BDF",
+        "condition_expression": "where that is the case",
+        "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814"
+      },
+      "rule_element": {
+        "field": "condition",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information the purposes of the processing.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed access to the personal data and the following information the purposes of the processing",
+        "condition": "where that is the case",
+        "constraint": null,
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_one_locked_condition": true,
+        "control_minus_condition_is_source": true,
+        "variant_has_no_condition": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_constraint_violated_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "mutation_type": "constraint_violated",
+      "expected_violation": "constraint_violated",
+      "sub_kind": "timer",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_01/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_01/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "dcc50b0b6f391aa27ee9f7882f764f062e7114940407acee62d4653d7cf776cc",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "mutation_config": {
+        "event_id": "sid-3220E758-BAAF-4CBD-9087-8C8FCF784AA5",
+        "old_name": "72 hours",
+        "new_name": "7 days",
+        "conflict_value": "7 days",
+        "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+      },
+      "rule_element": {
+        "field": "constraint",
+        "sentence_idx": 0,
+        "sentence_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons.",
+        "modality": "obligation",
+        "actor": "the controller",
+        "action": "notify the personal data breach",
+        "condition": "In the case of a personal data breach",
+        "constraint": "not later than 72 hours",
+        "exception": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_is_source_bytes": true,
+        "timer_name_changed": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_constraint_violated_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "mutation_type": "constraint_violated",
+      "expected_violation": "constraint_violated",
+      "sub_kind": "timer",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_02/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_02/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "2ed90fce437d6fc6f128b9812c8b5506fa94577827fb4e8576f925a44fb758f8",
+      "control_equals_source_bytes": true,
+      "variant_equals_source_bytes": false,
+      "target_activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+      "mutation_config": {
+        "event_id": "sid-3220E758-BAAF-4CBD-9087-8C8FCF784AA5",
+        "old_name": "72 hours",
+        "new_name": "30 days",
+        "conflict_value": "30 days",
+        "target_activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+      },
+      "rule_element": {
+        "field": "constraint",
+        "sentence_idx": 1,
+        "sentence_text": "Where the notification to the supervisory authority is not made within 72 hours, it shall be accompanied by reasons for the delay.",
+        "modality": "obligation",
+        "actor": "the notification to the supervisory authority",
+        "action": "accompanied by reasons for the delay",
+        "condition": "Where the notification to the supervisory authority is not made within 72 hours",
+        "constraint": "within 72 hours",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_is_source_bytes": true,
+        "timer_name_changed": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_constraint_violated_03",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "mutation_type": "constraint_violated",
+      "expected_violation": "constraint_violated",
+      "sub_kind": "annotation",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_03/control/gdpr_6_right_to_rectify.bpmn",
+      "control_bpmn_sha256": "687fe35ec4bd78263c27bc654de358035b9ae561a4fcade8f19fb0cc4e7c6e9a",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_03/variant/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+      "mutation_config": {
+        "annotation_id": "syn_annotation_syn_v2_constraint_violated_03",
+        "association_id": "syn_assoc_syn_v2_constraint_violated_03",
+        "annotation_text": "without undue delay",
+        "target_id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+        "target_activity_id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
+      },
+      "rule_element": {
+        "field": "constraint",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the right to obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her",
+        "condition": null,
+        "constraint": "without undue delay",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_differs_from_source": true,
+        "control_has_annotation": true,
+        "variant_lacks_annotation": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_constraint_violated_04",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article34",
+      "mutation_type": "constraint_violated",
+      "expected_violation": "constraint_violated",
+      "sub_kind": "annotation",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_04/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "af76f23ed9de2f740dac7eaf64ebd986b872f74d222a7b5d16652cfa8271ae84",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_04/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "mutation_config": {
+        "annotation_id": "syn_annotation_syn_v2_constraint_violated_04",
+        "association_id": "syn_assoc_syn_v2_constraint_violated_04",
+        "annotation_text": "without undue delay",
+        "target_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+        "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+      },
+      "rule_element": {
+        "field": "constraint",
+        "sentence_idx": 0,
+        "sentence_text": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the personal data breach to the data subject without undue delay.",
+        "modality": "obligation",
+        "actor": "the personal data breach",
+        "action": "communicate the personal data breach",
+        "condition": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons",
+        "constraint": "without undue delay",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_differs_from_source": true,
+        "control_has_annotation": true,
+        "variant_lacks_annotation": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_constraint_violated_05",
+      "process_id": "gdpr_7_right_to_be_forgotten",
+      "rule_id": "article17",
+      "mutation_type": "constraint_violated",
+      "expected_violation": "constraint_violated",
+      "sub_kind": "annotation",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn",
+      "source_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_05/control/gdpr_7_right_to_be_forgotten.bpmn",
+      "control_bpmn_sha256": "ae8a427f45017e076f53cf4a0812405e3a9825f8ded4c11bf1ec8edc31177127",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_05/variant/gdpr_7_right_to_be_forgotten.bpmn",
+      "variant_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+      "mutation_config": {
+        "annotation_id": "syn_annotation_syn_v2_constraint_violated_05",
+        "association_id": "syn_assoc_syn_v2_constraint_violated_05",
+        "annotation_text": "without undue delay",
+        "target_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+        "target_activity_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67"
+      },
+      "rule_element": {
+        "field": "constraint",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+        "condition": "where one of the following grounds applies",
+        "constraint": "without undue delay",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_differs_from_source": true,
+        "control_has_annotation": true,
+        "variant_lacks_annotation": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_constraint_violated_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article17",
+      "mutation_type": "constraint_violated",
+      "expected_violation": "constraint_violated",
+      "sub_kind": "annotation",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_06/control/gdpr_4_right_of_portability.bpmn",
+      "control_bpmn_sha256": "74fe74878621de4fd6b119d3099235779abb2d211144c1295aba6e5ad893ff2e",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_06/variant/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "mutation_config": {
+        "annotation_id": "syn_annotation_syn_v2_constraint_violated_06",
+        "association_id": "syn_assoc_syn_v2_constraint_violated_06",
+        "annotation_text": "without undue delay",
+        "target_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+        "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+      },
+      "rule_element": {
+        "field": "constraint",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+        "condition": "where one of the following grounds applies",
+        "constraint": "without undue delay",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_differs_from_source": true,
+        "control_has_annotation": true,
+        "variant_lacks_annotation": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_constraint_violated_07",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article20",
+      "mutation_type": "constraint_violated",
+      "expected_violation": "constraint_violated",
+      "sub_kind": "annotation",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_07/control/gdpr_3_right_to_access.bpmn",
+      "control_bpmn_sha256": "50d95a26f264a53325cc61d11e2a52712df6400c4118bdac0597e4dd4608a382",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_07/variant/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "mutation_config": {
+        "annotation_id": "syn_annotation_syn_v2_constraint_violated_07",
+        "association_id": "syn_assoc_syn_v2_constraint_violated_07",
+        "annotation_text": "without hindrance",
+        "target_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+        "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+      },
+      "rule_element": {
+        "field": "constraint",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and the processing is carried out by automated means.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided , where the processing is based on consent pursuant to point ( a ) of Article 6(1 ) or point ( a ) of Article 9(2 ) or",
+        "condition": "where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1)",
+        "constraint": "without hindrance",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_differs_from_source": true,
+        "control_has_annotation": true,
+        "variant_lacks_annotation": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_constraint_violated_08",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "mutation_type": "constraint_violated",
+      "expected_violation": "constraint_violated",
+      "sub_kind": "dataobject",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_08/control/gdpr_4_right_of_portability.bpmn",
+      "control_bpmn_sha256": "cdcfc7f25aadca9b827486c8aa34cd347d78488a01dc80f2e77a189d9f0e320d",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_08/variant/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "mutation_config": {
+        "data_object_id": "syn_dataobj_syn_v2_constraint_violated_08",
+        "data_object_name": "without hindrance",
+        "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+      },
+      "rule_element": {
+        "field": "constraint",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and the processing is carried out by automated means.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided , where the processing is based on consent pursuant to point ( a ) of Article 6(1 ) or point ( a ) of Article 9(2 ) or",
+        "condition": "where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1)",
+        "constraint": "without hindrance",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_differs_from_source": true,
+        "control_has_data_object": true,
+        "variant_lacks_data_object": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_constraint_violated_09",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "mutation_type": "constraint_violated",
+      "expected_violation": "constraint_violated",
+      "sub_kind": "dataobject",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_09/control/gdpr_5_right_to_withdraw.bpmn",
+      "control_bpmn_sha256": "385f1f51710da89add848248c439ad192badeb0aca1453c2e36779a573e4c8eb",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_09/variant/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+      "mutation_config": {
+        "data_object_id": "syn_dataobj_syn_v2_constraint_violated_09",
+        "data_object_name": "without undue delay",
+        "target_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747"
+      },
+      "rule_element": {
+        "field": "constraint",
+        "sentence_idx": 0,
+        "sentence_text": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies.",
+        "modality": "obligation",
+        "actor": "The data subject",
+        "action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+        "condition": "where one of the following grounds applies",
+        "constraint": "without undue delay",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_differs_from_source": true,
+        "control_has_data_object": true,
+        "variant_lacks_data_object": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_constraint_violated_10",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article7",
+      "mutation_type": "constraint_violated",
+      "expected_violation": "constraint_violated",
+      "sub_kind": "dataobject",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_10/control/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_bpmn_sha256": "b50826f49292d9de8f1490f9dc8e33fcdd93ac6147ca6e379c9be08f297e45e7",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_constraint_violated_10/variant/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-84724963-837C-4BDB-80FC-61877E2077AA",
+      "mutation_config": {
+        "data_object_id": "syn_dataobj_syn_v2_constraint_violated_10",
+        "data_object_name": "clear and plain language",
+        "target_activity_id": "sid-84724963-837C-4BDB-80FC-61877E2077AA"
+      },
+      "rule_element": {
+        "field": "constraint",
+        "sentence_idx": 1,
+        "sentence_text": "If the data subject's consent is given in the context of a written declaration which also concerns other matters, the request for consent shall be presented in a manner which is clearly distinguishable from the other matters, in an intelligible and easily accessible form, using clear and plain language.",
+        "modality": "obligation",
+        "actor": "the data subject 's consent",
+        "action": "presented in a manner which is clearly distinguishable from the other matters",
+        "condition": "If the data subject's consent is given in the context of a written declaration which also concerns other matters",
+        "constraint": "clear and plain language",
+        "exception": null
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_differs_from_source": true,
+        "control_has_data_object": true,
+        "variant_lacks_data_object": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_exception_not_handled_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "mutation_type": "exception_not_handled",
+      "expected_violation": "exception_not_handled",
+      "sub_kind": "boundary",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_01/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "2860d5f17ddae2410bc6c441a5ec8cbbb7ce052f4e4105669793ec102c8ce151",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_01/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "mutation_config": {
+        "boundary_event_id": "syn_boundary_syn_v2_exception_not_handled_01",
+        "handler_task_id": "syn_handler_syn_v2_exception_not_handled_01",
+        "handler_name": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "attached_to": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+        "end_event_id": "sid-CC421101-EEDB-4967-B2BC-84169BBBD404",
+        "flows": [
+          "syn_flow_syn_v2_exception_not_handled_01_1",
+          "syn_flow_syn_v2_exception_not_handled_01_2"
+        ],
+        "error_id": "syn_error_syn_v2_exception_not_handled_01",
+        "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+      },
+      "rule_element": {
+        "field": "exception",
+        "sentence_idx": 0,
+        "sentence_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons.",
+        "modality": "obligation",
+        "actor": "the controller",
+        "action": "notify the personal data breach",
+        "condition": "In the case of a personal data breach",
+        "constraint": "not later than 72 hours",
+        "exception": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_boundary_and_handler": true,
+        "handler_labels_locked": true,
+        "variant_lacks_boundary_and_handler": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_exception_not_handled_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article34",
+      "mutation_type": "exception_not_handled",
+      "expected_violation": "exception_not_handled",
+      "sub_kind": "boundary",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_02/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "430e15b17e97695e55412221e6b78b18e6430bda25c8cc0010a90f7f1c34a8e3",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_02/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "mutation_config": {
+        "boundary_event_id": "syn_boundary_syn_v2_exception_not_handled_02",
+        "handler_task_id": "syn_handler_syn_v2_exception_not_handled_02",
+        "handler_name": "shall not be required if the controller has implemented appropriate technical and organisational protection measures",
+        "attached_to": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+        "end_event_id": "sid-CC421101-EEDB-4967-B2BC-84169BBBD404",
+        "flows": [
+          "syn_flow_syn_v2_exception_not_handled_02_1",
+          "syn_flow_syn_v2_exception_not_handled_02_2"
+        ],
+        "error_id": "syn_error_syn_v2_exception_not_handled_02",
+        "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+      },
+      "rule_element": {
+        "field": "exception",
+        "sentence_idx": 2,
+        "sentence_text": "The communication to the data subject referred to in paragraph 1 shall not be required if the controller has implemented appropriate technical and organisational protection measures, and those measures were applied to the personal data affected by the personal data breach, in particular those that render the personal data unintelligible to any person who is not authorised to access it, such as encryption.",
+        "modality": "prohibition",
+        "actor": "The communication to the data subject",
+        "action": "referred to",
+        "condition": "if the controller has implemented appropriate technical and organisational protection measures",
+        "constraint": null,
+        "exception": "shall not be required if the controller has implemented appropriate technical and organisational protection measures"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_boundary_and_handler": true,
+        "handler_labels_locked": true,
+        "variant_lacks_boundary_and_handler": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_exception_not_handled_03",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article34",
+      "mutation_type": "exception_not_handled",
+      "expected_violation": "exception_not_handled",
+      "sub_kind": "boundary",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_03/control/gdpr_1_data_breach.bpmn",
+      "control_bpmn_sha256": "343f10c648e3b29142142c8c0eb1c8394aff854d429fea35adbc913082ae62fd",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_03/variant/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "mutation_config": {
+        "boundary_event_id": "syn_boundary_syn_v2_exception_not_handled_03",
+        "handler_task_id": "syn_handler_syn_v2_exception_not_handled_03",
+        "handler_name": "shall not be required if the controller has taken subsequent measures which ensure that the high risk to the rights and freedoms of data subjects referred to in paragraph 1 is no longer likely to materialise",
+        "attached_to": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+        "end_event_id": "sid-CC421101-EEDB-4967-B2BC-84169BBBD404",
+        "flows": [
+          "syn_flow_syn_v2_exception_not_handled_03_1",
+          "syn_flow_syn_v2_exception_not_handled_03_2"
+        ],
+        "error_id": "syn_error_syn_v2_exception_not_handled_03",
+        "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+      },
+      "rule_element": {
+        "field": "exception",
+        "sentence_idx": 3,
+        "sentence_text": "The communication to the data subject referred to in paragraph 1 shall not be required if the controller has taken subsequent measures which ensure that the high risk to the rights and freedoms of data subjects referred to in paragraph 1 is no longer likely to materialise.",
+        "modality": "prohibition",
+        "actor": "The communication to the data subject",
+        "action": "referred to",
+        "condition": "if the controller has taken subsequent measures which ensure that the high risk to the rights and freedoms of data subjects referred to in paragraph 1 is no longer likely to materialise",
+        "constraint": null,
+        "exception": "shall not be required if the controller has taken subsequent measures which ensure that the high risk to the rights and freedoms of data subjects referred to in paragraph 1 is no longer likely to materialise"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_boundary_and_handler": true,
+        "handler_labels_locked": true,
+        "variant_lacks_boundary_and_handler": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_exception_not_handled_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "mutation_type": "exception_not_handled",
+      "expected_violation": "exception_not_handled",
+      "sub_kind": "boundary",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_04/control/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_bpmn_sha256": "dcb2a8412209fbc646d2cdaffc5094d043be1321864c0e51040de8e978a33d9f",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_04/variant/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+      "mutation_config": {
+        "boundary_event_id": "syn_boundary_syn_v2_exception_not_handled_04",
+        "handler_task_id": "syn_handler_syn_v2_exception_not_handled_04",
+        "handler_name": "shall not apply if the decision is necessary for entering into",
+        "attached_to": "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+        "end_event_id": "sid-27A240EB-AA42-4ECD-BFD9-85655F500308",
+        "flows": [
+          "syn_flow_syn_v2_exception_not_handled_04_1",
+          "syn_flow_syn_v2_exception_not_handled_04_2"
+        ],
+        "error_id": "syn_error_syn_v2_exception_not_handled_04",
+        "target_activity_id": "sid-141B6C65-D86C-443C-BC7F-05783264AF77"
+      },
+      "rule_element": {
+        "field": "exception",
+        "sentence_idx": 1,
+        "sentence_text": "Paragraph 1 shall not apply if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller.",
+        "modality": "prohibition",
+        "actor": "Paragraph 1",
+        "action": "apply",
+        "condition": "if the decision is necessary for entering into",
+        "constraint": null,
+        "exception": "shall not apply if the decision is necessary for entering into"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_boundary_and_handler": true,
+        "handler_labels_locked": true,
+        "variant_lacks_boundary_and_handler": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_exception_not_handled_05",
+      "process_id": "gdpr_7_right_to_be_forgotten",
+      "rule_id": "article17",
+      "mutation_type": "exception_not_handled",
+      "expected_violation": "exception_not_handled",
+      "sub_kind": "boundary",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn",
+      "source_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_05/control/gdpr_7_right_to_be_forgotten.bpmn",
+      "control_bpmn_sha256": "256cb05490c65e1d905232b4578f3c14a77d0bc0feb9495c9f8fe25449022b10",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_05/variant/gdpr_7_right_to_be_forgotten.bpmn",
+      "variant_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+      "mutation_config": {
+        "boundary_event_id": "syn_boundary_syn_v2_exception_not_handled_05",
+        "handler_task_id": "syn_handler_syn_v2_exception_not_handled_05",
+        "handler_name": "shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information",
+        "attached_to": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+        "end_event_id": "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597",
+        "flows": [
+          "syn_flow_syn_v2_exception_not_handled_05_1",
+          "syn_flow_syn_v2_exception_not_handled_05_2"
+        ],
+        "error_id": "syn_error_syn_v2_exception_not_handled_05",
+        "target_activity_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67"
+      },
+      "rule_element": {
+        "field": "exception",
+        "sentence_idx": 8,
+        "sentence_text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information.",
+        "modality": "prohibition",
+        "actor": "Paragraphs 1 and 2",
+        "action": "apply to the extent that processing is necessary for exercising the right of freedom of expression and information",
+        "condition": "to the extent that processing is necessary for exercising the right of freedom of expression and information",
+        "constraint": null,
+        "exception": "shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_boundary_and_handler": true,
+        "handler_labels_locked": true,
+        "variant_lacks_boundary_and_handler": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_exception_not_handled_06",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article33",
+      "mutation_type": "exception_not_handled",
+      "expected_violation": "exception_not_handled",
+      "sub_kind": "branch",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_06/control/gdpr_5_right_to_withdraw.bpmn",
+      "control_bpmn_sha256": "fec649717c558d5f477153e95097d0b5c448958d9aa773bdc68a3ce5123cd423",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_06/variant/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-F4998816-41A2-476E-9C55-4E097F0388E4",
+      "mutation_config": {
+        "handler_task_id": "syn_handler_syn_v2_exception_not_handled_06",
+        "handler_name": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "anchor_id": "sid-F4998816-41A2-476E-9C55-4E097F0388E4",
+        "end_event_id": "sid-7DF33B5E-FB19-4292-8060-378C473B2747",
+        "flows": [
+          "syn_flow_syn_v2_exception_not_handled_06_1",
+          "syn_flow_syn_v2_exception_not_handled_06_2"
+        ],
+        "target_activity_id": "sid-F4998816-41A2-476E-9C55-4E097F0388E4"
+      },
+      "rule_element": {
+        "field": "exception",
+        "sentence_idx": 0,
+        "sentence_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons.",
+        "modality": "obligation",
+        "actor": "the controller",
+        "action": "notify the personal data breach",
+        "condition": "In the case of a personal data breach",
+        "constraint": "not later than 72 hours",
+        "exception": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_handler": true,
+        "handler_label_locked": true,
+        "variant_lacks_handler": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_exception_not_handled_07",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article20",
+      "mutation_type": "exception_not_handled",
+      "expected_violation": "exception_not_handled",
+      "sub_kind": "branch",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_07/control/gdpr_3_right_to_access.bpmn",
+      "control_bpmn_sha256": "780508ce322f354f0b394665d4c132c807459f8c179e319fcdd426329dced84a",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_07/variant/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+      "mutation_config": {
+        "handler_task_id": "syn_handler_syn_v2_exception_not_handled_07",
+        "handler_name": "where technically feasible",
+        "anchor_id": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+        "end_event_id": "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D",
+        "flows": [
+          "syn_flow_syn_v2_exception_not_handled_07_1",
+          "syn_flow_syn_v2_exception_not_handled_07_2"
+        ],
+        "target_activity_id": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39"
+      },
+      "rule_element": {
+        "field": "exception",
+        "sentence_idx": 1,
+        "sentence_text": "In exercising his or her right to data portability pursuant to paragraph 1, the data subject shall have the right to have the personal data transmitted directly from one controller to another, where technically feasible.",
+        "modality": "obligation",
+        "actor": "the data subject",
+        "action": "have the right to have the personal data transmitted directly from one controller to another , where technically feasible",
+        "condition": "where technically feasible",
+        "constraint": null,
+        "exception": "where technically feasible"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_handler": true,
+        "handler_label_locked": true,
+        "variant_lacks_handler": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_exception_not_handled_08",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "mutation_type": "exception_not_handled",
+      "expected_violation": "exception_not_handled",
+      "sub_kind": "branch",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_08/control/gdpr_4_right_of_portability.bpmn",
+      "control_bpmn_sha256": "46c637ea668fbc74d239cb342eb9727016d5d522002ca78860ffd16c66799c85",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_08/variant/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+      "mutation_config": {
+        "handler_task_id": "syn_handler_syn_v2_exception_not_handled_08",
+        "handler_name": "where technically feasible",
+        "anchor_id": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+        "end_event_id": "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D",
+        "flows": [
+          "syn_flow_syn_v2_exception_not_handled_08_1",
+          "syn_flow_syn_v2_exception_not_handled_08_2"
+        ],
+        "target_activity_id": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39"
+      },
+      "rule_element": {
+        "field": "exception",
+        "sentence_idx": 1,
+        "sentence_text": "In exercising his or her right to data portability pursuant to paragraph 1, the data subject shall have the right to have the personal data transmitted directly from one controller to another, where technically feasible.",
+        "modality": "obligation",
+        "actor": "the data subject",
+        "action": "have the right to have the personal data transmitted directly from one controller to another , where technically feasible",
+        "condition": "where technically feasible",
+        "constraint": null,
+        "exception": "where technically feasible"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_handler": true,
+        "handler_label_locked": true,
+        "variant_lacks_handler": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_exception_not_handled_09",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article20",
+      "mutation_type": "exception_not_handled",
+      "expected_violation": "exception_not_handled",
+      "sub_kind": "branch",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_09/control/gdpr_6_right_to_rectify.bpmn",
+      "control_bpmn_sha256": "8a59d154e8ab22f330b8992a6c37aa854601506533be59d15254579001788862",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_09/variant/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "mutation_config": {
+        "handler_task_id": "syn_handler_syn_v2_exception_not_handled_09",
+        "handler_name": "where technically feasible",
+        "anchor_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+        "end_event_id": "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28",
+        "flows": [
+          "syn_flow_syn_v2_exception_not_handled_09_1",
+          "syn_flow_syn_v2_exception_not_handled_09_2"
+        ],
+        "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814"
+      },
+      "rule_element": {
+        "field": "exception",
+        "sentence_idx": 1,
+        "sentence_text": "In exercising his or her right to data portability pursuant to paragraph 1, the data subject shall have the right to have the personal data transmitted directly from one controller to another, where technically feasible.",
+        "modality": "obligation",
+        "actor": "the data subject",
+        "action": "have the right to have the personal data transmitted directly from one controller to another , where technically feasible",
+        "condition": "where technically feasible",
+        "constraint": null,
+        "exception": "where technically feasible"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_handler": true,
+        "handler_label_locked": true,
+        "variant_lacks_handler": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    },
+    {
+      "variant_id": "syn_v2_exception_not_handled_10",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "mutation_type": "exception_not_handled",
+      "expected_violation": "exception_not_handled",
+      "sub_kind": "branch",
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_10/control/gdpr_3_right_to_access.bpmn",
+      "control_bpmn_sha256": "b6ef2a26eccd3fbe5567be9d106f7ee7e105a434a3381c4b0a1178cb0e52c008",
+      "variant_bpmn": "data/development/stage3_synth/syn_v2_exception_not_handled_10/variant/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "control_equals_source_bytes": false,
+      "variant_equals_source_bytes": true,
+      "target_activity_id": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+      "mutation_config": {
+        "handler_task_id": "syn_handler_syn_v2_exception_not_handled_10",
+        "handler_name": "unless otherwise requested by the data subject",
+        "anchor_id": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+        "end_event_id": "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D",
+        "flows": [
+          "syn_flow_syn_v2_exception_not_handled_10_1",
+          "syn_flow_syn_v2_exception_not_handled_10_2"
+        ],
+        "target_activity_id": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39"
+      },
+      "rule_element": {
+        "field": "exception",
+        "sentence_idx": 11,
+        "sentence_text": "Where the data subject makes the request by electronic means, and unless otherwise requested by the data subject, the information shall be provided in a commonly used electronic form.",
+        "modality": "obligation",
+        "actor": "the data subject",
+        "action": "makes Where the request by electronic means",
+        "condition": "Where the data subject makes the request by electronic means",
+        "constraint": null,
+        "exception": "unless otherwise requested by the data subject"
+      },
+      "validation_checks": {
+        "control_xml_parse": true,
+        "control_structure_valid": true,
+        "variant_xml_parse": true,
+        "variant_structure_valid": true,
+        "variant_is_source": true,
+        "control_has_handler": true,
+        "handler_label_locked": true,
+        "variant_lacks_handler": true,
+        "non_target_activities_unchanged": true,
+        "non_target_order_unchanged": true,
+        "variant_differs_from_control": true,
+        "status": "passed"
+      },
+      "generator_sha256": "47528c5835fda574a6fee36a73878b22bef38c0284edccbbeedfbb2a9db9dd40"
+    }
+  ],
+  "safety": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "gold_modified": false,
+    "original_bpmn_modified": false,
+    "oracle_started": false,
+    "panel_is_human_gold": false
+  }
+}

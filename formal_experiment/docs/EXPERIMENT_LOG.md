@@ -3998,3 +3998,16 @@
 - 仍存在 blocker：无
 - 备注：用户明确授权DeepSeek-V4-Pro-0813、temperature=0、retry=0、USD cap 13.430、北京时间闲时；实际450次，输入/输出tokens=1444632/368212，运行3329.137秒；Key仅本次进程内使用，未写入仓库/日志；三臂同150/Gold/evaluator且仅相对同版本D-full-0813比较；单次描述性消融，不作显著性推断，不跨Barrientos-native evaluator比较F1。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-08-31T04:55:12.604968+00:00 - S3.9-EXT: Stage 3 新违规类别扩展（4 类×10=40 synthetic controlled variants + 四方法 panel + 对比报告，零 API）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2786 passed, 24 skipped, 40 warnings in 2906.14s (0:48:26)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`0cf777321b2b3bc75212be94f8413ffa11877792`；相关未提交路径：99 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：新增 prohibited_action_present / required_condition_not_enforced / constraint_violated / exception_not_handled 各10条；每变体 synthetic compliant control + 单一目标错误 variant；源 BPMN byte-unchanged、exactly-one-error、replay byte-identical；四方法共享同一新类型公式仅替换各自冻结相似度后端（Winter-style/Sun-style/BM25/TF-IDF-SVD extension，gamma_ext=0.5）；DEV_ONLY：Winter macro 0.655/exact 0.550/unobs 17、Sun 0.333/0.300/28、BM25 0.226/0.150/28、TF-IDF 0.379/0.325/27；Winter/Sun 原论文未定义四类，命名一律 -style extension；原三类 Gold/schema/预测字节不变；17 项 focused tests 全绿；全量 audit 2786 passed/24 skipped（先前两次 flaky 失败分别由 PYTHONIOENCODING 环境与北京 peak 时段 S2.12 测试引起，已确认与本批无关）
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

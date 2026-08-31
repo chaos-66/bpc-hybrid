@@ -1,0 +1,115 @@
+{
+  "schema_version": "stage3_extended_violation@1.0.0",
+  "config_version": "v2",
+  "task_id": "S3.9-EXT",
+  "claim": "Development-only Stage 3 extended violation panel v2: four NEW violation categories (prohibited_action_present / required_condition_not_enforced / constraint_violated / exception_not_handled), 10 controlled variants each (40 total), generated from the frozen GDPR-7 BPMN membership without modifying it. The four methods (Winter-style extension / Sun-style extension / BM25 extension / TF-IDF-SVD extension) share the SAME new-type formulas and only swap each method's existing similarity backend. Winter et al. (2020) and Sun et al. (2024) define none of these four types: this panel is a project extension and must never be presented as native capability of the original papers. The panel is NOT human Gold and NOT the formal Oracle.",
+  "types": {
+    "prohibited_action_present": {
+      "definition": "a regulation-prohibited action appears as a process activity",
+      "rule_fields": ["modality", "action"],
+      "formula": "score_prohibited = max sim(rule_action, process_activity)",
+      "decision": "violation iff rule modality == prohibition AND score_prohibited >= gamma_ext",
+      "candidate_surface": "activity and event labels of the variant process model"
+    },
+    "required_condition_not_enforced": {
+      "definition": "a required condition is not visible in any gateway / conditionExpression / sequence-flow label / adjacent control node",
+      "rule_fields": ["condition", "action"],
+      "formula": "score_condition = 1 - max sim(rule_condition, condition_candidates)",
+      "decision": "violation iff rule condition non-empty AND action mappable (>= per-method gamma) AND score_condition > gamma_ext",
+      "candidate_surface": "sequence-flow labels, conditionExpression texts, gateway labels, adjacent control nodes of the mapped activity"
+    },
+    "constraint_violated": {
+      "definition": "a time / quantity / usage constraint is missing from the model or explicitly contradicted",
+      "rule_fields": ["constraint", "action"],
+      "formula": "score_constraint = 1 - max sim(rule_constraint, constraint_candidates)",
+      "decision": "violation iff rule constraint non-empty AND action mappable AND (score_constraint > gamma_ext OR exact time-limit contradiction recorded)",
+      "candidate_surface": "activity labels, data object/data store labels, text annotations, timer/event labels, flow labels, adjacent-node visible time/quantity/restriction text",
+      "exact_contradiction": "deterministic (value, unit) time-limit comparison; a candidate limit strictly greater than the rule limit is recorded as exact contradiction (never hard-coded 0/1)"
+    },
+    "exception_not_handled": {
+      "definition": "a regulation exception has no boundary event / error-escalation event / alternate branch / exception-handler activity",
+      "rule_fields": ["exception", "action"],
+      "formula": "score_exception = 1 - max sim(rule_exception, exception_candidates)",
+      "decision": "violation iff rule exception non-empty AND action mappable AND score_exception > gamma_ext",
+      "candidate_surface": "boundary events, error/escalation event definitions, alternate outgoing branches, exception-cued activity/event labels"
+    }
+  },
+  "thresholds": {
+    "gamma_ext": 0.5,
+    "gamma_ext_rule": "unified fixed decision threshold for all four new types, frozen in this config, NOT tuned on any panel or method output; missing-evidence scores use score > gamma_ext, prohibited presence uses score >= gamma_ext",
+    "action_mapping_gamma": "per-method frozen action-mapping threshold from each method's own development config: winter 0.4, sun 0.8, bm25 0.8, tfidf_svd 0.5 (used only for the action-mappable precondition of condition/constraint/exception)",
+    "frozen_source": "configs/winter_stage3_development_v1.json (gamma 0.4), configs/sun_stage3_development_v1.json (gamma 0.8), configs/bm25_stage3_development_v3.json (gamma 0.8), configs/tfidf_svd_stage3_development_v1.json (gamma 0.5)"
+  },
+  "counts": {
+    "prohibited_action_present": 10,
+    "required_condition_not_enforced": 10,
+    "constraint_violated": 10,
+    "exception_not_handled": 10,
+    "total": 40
+  },
+  "methods": {
+    "winter": {
+      "method_id": "winter_style_extension",
+      "display_name": "Winter-style extension",
+      "backend": "WinterSimilarity (spaCy en_core_web_sm)",
+      "gamma": 0.4,
+      "note": "Winter et al. (2020) define no such violation types; this is a project extension reusing the Winter similarity backend and the frozen Winter gamma for action mapping"
+    },
+    "sun": {
+      "method_id": "sun_style_extension",
+      "display_name": "Sun-style extension",
+      "backend": "WinterSimilarity (spaCy en_core_web_sm), the shared dev backend of the Sun reconstruction",
+      "gamma": 0.8,
+      "note": "Sun et al. (2024) define no such violation types (paper Definitions 4-7 cover action/actor/order only); this is a project extension reusing the Sun development scoring backend and the frozen Sun gamma for action mapping"
+    },
+    "bm25": {
+      "method_id": "bm25_extension",
+      "display_name": "BM25 extension",
+      "backend": "BM25Index (S3.6-A v3, candidate-specific)",
+      "gamma": 0.8,
+      "note": "candidate collection for the new types is the per-variant union of the process candidate texts (documented extension of the S3.6-A v3 backend); action mapping keeps the action-label corpus"
+    },
+    "tfidf_svd": {
+      "method_id": "tfidf_svd_extension",
+      "display_name": "TF-IDF/SVD extension",
+      "backend": "TfidfSvd (S3.6-B, frozen fit corpus)",
+      "gamma": 0.5,
+      "note": "same frozen fit corpus as the S3.6-B development run: unlabeled rule texts + source process labels only"
+    }
+  },
+  "panel": {
+    "manifest": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+    "variant_dir": "data/development/stage3_synth",
+    "layout": "<variant_id>/control/<process_id>.bpmn and <variant_id>/variant/<process_id>.bpmn",
+    "source_bpmn_dir": "data/input/stage1_stage3/gdpr7",
+    "source_bpmn_file_count": 7,
+    "source_bpmn_modified": false,
+    "rule_binding_source": "data/development/human_review/stage3_gold_inference_v1.json (frozen inference pack, rule_text only)",
+    "controls": "development-only synthetic compliant controls derived from the frozen BPMN (byte-unchanged source recorded per variant); controls and variants are scored diagnostically, only variants are evaluated"
+  },
+  "observability_policy": {
+    "unobservable": "score=None and predicted=None; counts as FN in the primary macro/micro/exact denominators; never hard-filled with 0.0 or 1.0",
+    "reasons": [
+      "rule_modality_not_prohibition",
+      "empty_rule_action",
+      "empty_rule_condition",
+      "empty_rule_constraint",
+      "empty_rule_exception",
+      "action_mapping_below_gamma",
+      "no_condition_candidates",
+      "no_constraint_candidates",
+      "no_exception_candidates"
+    ]
+  },
+  "safety": {
+    "llm_api_calls": 0,
+    "network_calls": 0,
+    "gold_read": false,
+    "human_gold_modified": false,
+    "original_bpmn_modified": false,
+    "panel_is_human_gold": false,
+    "oracle_started": false,
+    "deterministic_replay": true,
+    "no_overwrite": true
+  }
+}
