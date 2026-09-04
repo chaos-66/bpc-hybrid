@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-08-31
-**收录文件**：1557 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-04
+**收录文件**：1563 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -1020,6 +1020,10 @@
 | `outputs/reports/s32_s33_gold_annotation_blank_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s34_winter_stage3_development_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s35_sun_stage3_threshold_sensitivity_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s35_sun_stage3_threshold_sensitivity_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s35_sun_stage3_threshold_sensitivity_v1_figA_gamma_missing_action_out_of_order.svg` | 活动 | 历史可视化或报告 |
+| `outputs/reports/s35_sun_stage3_threshold_sensitivity_v1_figB_theta_incorrect_actor.svg` | 活动 | 历史可视化或报告 |
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_7_oracle_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_extended_violation_comparison_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1205,6 +1209,7 @@
 | `scripts/build_stage3_method_registry.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_method_registry_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sun_rule_only_authorization_dry_run.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sun_stage3_threshold_sensitivity_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/clean_estg150_german.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/coarse_gold_b0_condition_constraint_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1651,6 +1656,7 @@
 | `tests/test_sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_source_manifest.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sun_stage3_threshold_sensitivity_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_verification_receipt.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 

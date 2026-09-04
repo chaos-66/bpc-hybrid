@@ -868,6 +868,45 @@ condition 精度从 1.000 降至 0.182（control 侧误报进入 FP）。
   process-model 犯罪的泛化结论；正式 Stage 3 claim 仍以人工 panel 为依据，Oracle
   与端到端仍需 S3.7/S3.10。
 
+#### 7.4.7 Stage 3 Sun 式阈值敏感性（τ/γ/ϑ 离散网格；DEV，2026-09-04，零 API）
+
+> 来源与复现：`outputs/reports/s35_sun_stage3_threshold_sensitivity_v1.{json,md}`
+> 与图 A/图 B（`..._figA_gamma_missing_action_out_of_order.svg`、
+> `..._figB_theta_incorrect_actor.svg`）；`scripts/build_sun_stage3_threshold_sensitivity_v1.py`
+> （全量离线重算与 `--report-only` 确定性重放）；同一 33 条人工 Gold、同一
+> Rule/Process Records、同一 Sun Definition 4–7 重建、同一 spaCy 相似度后端与
+> 同一 common evaluator，未修改任何 Gold/样本/预测/公式，API calls=0、cost=0。
+
+Sun et al. 将 γ 视为可调的语义等价门槛。其多数流程模型在 γ=0.8 时获得最高违规检测精度，但复杂度最高的模型在 γ=0.6 时表现更好；作者将其归因于复杂流程中文本相似度降低。本文首先直接迁移 γ=0.8，以保留方法级对照。结果表明，在本文七模型数据和 spaCy 相似度后端上，γ=0.8 使大量合法的 action mappings 无法通过门槛，导致 incorrect-actor 和 out-of-order 检查不可观察。按照 Sun 的离散阈值敏感性分析方式，γ=0.6 是测试值中表现最平衡的设置，Macro-F1 从 0.3889 提升至 0.8733。该结果说明阈值需要随数据复杂度和相似度后端重新校准，而不是说明 Sun 的公式无效。
+
+**表格/图形与两种口径**：
+
+- 表 A 的 Sun 行即 **Sun-transferred**（τ=0.8、γ=0.8、ϑ=0.8；Macro-F1 0.3889、
+  exact 0.3636、unobservable 10），本小节不删除、不隐藏该低分基线；
+- **Sun-style calibrated sensitivity** = tested values 中的 best observed setting
+  （τ=0.8、γ=0.6、ϑ=0.8；Missing F1 1.0、Incorrect-actor F1 0.7778、
+  Out-of-order F1 0.8421、Macro-F1 0.8733、exact 0.7879、unobservable 4）；
+- τ∈{0.0,…,0.9} 只评价 matching 的每流程 AP/MAP（Def-4 分数随 τ 重算后重排），
+  不把 matching MAP 当作 violation F1；γ∈{0.0,…,0.9}（ϑ 固定 0.8）与
+  ϑ∈{0.5,…,0.9}（固定 γ=0.8，Sun 图 9 协议）均由 SunScorer 真实重算
+  mappings/denominators/order endpoints/observability，不是对既有最终分数重切阈值；
+- 图 A = 不同 γ 下 missing action 与 out-of-order 的每流程结果（Sun 图 8 口径；
+  Sun 原图主要报告 Precision，图内另附 Recall/F1 补充面板）；图 B = 固定 γ=0.8 后
+  不同 ϑ 下 incorrect actor 的每流程结果（Sun 图 9 口径）。
+
+**边界与措辞（必须与正文一致）**：
+
+- Sun 原论文与本文数据不同（模型集合、规则库、相似度后端与 panel 构造均不同）；
+  “0.8 是其数据上多数模型表现较好的经验值”，不是“Sun 规定所有模型必须使用 0.8”；
+- 本文是 Sun 方法级独立重建，不是原代码精确复现；γ=0.6 只是本文数据与当前
+  相似度后端上的经验校准值，不得称数学全局最优阈值、Sun 原论文固定阈值、
+  held-out 最优值或“与 Sun 原始四模型完全相同的数据结果”；
+- 不把敏感性结果伪装成预注册正式结果：主阈值保持预注册 (τ,γ,ϑ)=(0.8,0.8,0.8)，
+  本小节与全部敏感性产物标注 DEV_ONLY；
+- 33 条人工 Gold 没有 Gold=none 合规样本，不能用它证明 specificity 或控制
+  false-positive rate；33 条 panel 每个测试点预路由单一 gold 类型，跨类型 FP
+  结构性不可能出现，Precision 面板仅按 Sun 口径保留，信息以 Recall/F1 为主。
+
 [[TODO-RESULT:S3.7：Oracle Stage 3 与 end-to-end 分表]]
 
 ### 7.5 端到端消融

@@ -4024,3 +4024,16 @@
 - 仍存在 blocker：无
 - 备注：checkpoint a0d63a5 的四类选择动机保持不变（最小字段覆盖扩展，非穷尽分类）；本次仅从持久化四方法 predictions 离线新增 80 对象配对评价（40 control Gold=none + 40 variant；control 预测由持久化 control_scores 按原阈值 gamma_ext=0.5 与固定 EXTENDED_TYPES 优先级重建，未修改阈值/决策顺序/样本，失败、none、wrong-type、unobservable 全部保留在分母）；七类 overview 改为仅 7 个 per-class F1（删除联合 Macro-F1/Exact/Unobservable，注明 v1 30 条与 v2 40 条双 panel 差异、不计算联合指标、仅类型覆盖）；结论收紧（prohibited=可行性支持、constraint=部分支持、condition/exception=可观察性与映射瓶颈，不写全部四类都证明下游价值）；论文 §7.4 定向回填（新 7.4.4 小节，7.4.5/7.4.6 顺延并更新引用）与主张矩阵新增 C30；覆盖仅限用户明确授权的两个派生报告文件（outputs/reports/s3_extended_violation_comparison_v2.json/.md），未覆盖四方法原始 predictions/evaluation/manifest、40 变体、v1 panel 与三类人工 Gold（字节不变，focused tests 哈希锁）；新增 22 项 focused tests（共 39 项 Stage 3 focused）；全量 audit 2808 passed/24 skipped；真实 API calls=0、cost=0
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-04T05:17:18.162905+00:00 - Stage 3 Sun 式阈值敏感性实验（τ/γ/ϑ 网格，DEV_ONLY，零 API）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2819 passed, 24 skipped, 42 warnings in 2769.75s (0:46:09)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`693115a71c7d9c973e542d9132e443a0e5675c09`；相关未提交路径：19 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：严格按 Sun 2024 §5.3/图8/图9 的离散网格离线重算（τ∈{0.0..0.9} 只评 matching AP/MAP；γ 同网格、ϑ 固定 0.8；ϑ∈{0.5..0.9} 固定 γ=0.8）；γ/ϑ 由 SunScorer 真实重算 mappings/denominators/order endpoints/observability；Sun-transferred (0.8,0.8,0.8) Macro-F1 0.3889/exact 0.3636/unobs 10（低分基线保留）；best observed (0.8,0.6,0.8) Macro-F1 0.8733/exact 0.7879/unobs 4（Missing 1.0/Incorrect-actor 0.7778/Out-of-order 0.8421）；重算 primary 行与 evidence 全部重叠行逐项一致；产物 outputs/reports/s35_sun_stage3_threshold_sensitivity_v1.{json,md} + 图 A/B SVG + builder（--report-only 确定性重放）；论文 §7.4.7 + 主张矩阵 C31 + PROJECT_AUDIT/MASTER 日志行；11 项新增 focused tests；全量 audit 2819 passed/24 skipped；API calls=0、cost=0；未改 Gold/样本/预测/既有 evidence；用户已有修改与 .bak 未触碰
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
