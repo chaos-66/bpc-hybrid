@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-08-30
+**更新时间**：2026-09-05
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -10,6 +10,16 @@
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
 ## 1. 当前结论
+
+**2026-09-05 S2-BARR-4 原文消融复核与执行准备**：按用户要求收敛到 Barrientos
+原文/随附 artifact。已定位第9页词表及PDF/XML两项消融，并核实两份词表提示
+实际同时改变“44模式清单+控制流冗余限制”；不再误称纯词表单因素。原生
+FULL/NO-PATTERNS 新入口与合同离线准备：36×2×5=360次，USD cap 9.70，retry=0，
+无历史基线复用；重点评价名单外模式与命名/可用性，不套用六字段F1。22项focused
+测试通过（含360次假响应链、未授权拒绝、账本校验）；**真实API=0，尚待该独立
+预算授权，未产生新性能结果**。PDF/XML代码已定位，仍需成对上游输入、可读PDF
+模型/文件上传预算及独立Stage 3门禁；未启动。源核对与命令见
+`outputs/reports/barrientos_paper_ablation_preflight_v1.md`。已有消融及正式结果未改。
 
 项目目标是完整重建并改进 Sun 的三阶段流程，而不是只做一个 Stage 2 小实验：
 

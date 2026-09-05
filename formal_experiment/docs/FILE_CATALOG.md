@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-09-04
-**收录文件**：1563 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-06
+**收录文件**：1568 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -59,6 +59,7 @@
 | `configs/ablations/barrientos_ablation_suite_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/barrientos_ablation_suite_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/barrientos_de_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/ablations/barrientos_paper_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/d1_prompt_factorial_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/e_same_data_input_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/e_same_data_input_contract_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -871,6 +872,8 @@
 | `outputs/reports/barrientos_de_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_tables_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/barrientos_de_tables_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/barrientos_paper_ablation_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/barrientos_paper_ablation_preflight_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/d1_prompt_factorial_ablation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/d1_prompt_factorial_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/d1_prompt_factorial_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1249,6 +1252,7 @@
 | `scripts/run_b0_module_removal_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_barrientos_ablation_suite_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_barrientos_ablation_suite_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_barrientos_paper_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_d1_prompt_factorial_ablation_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_d_full_postprocessing_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
@@ -1540,6 +1544,7 @@
 | `tests/test_barrientos_ablation_suite.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_barrientos_ablation_suite_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_barrientos_de_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_barrientos_paper_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_canonical_text_hash_policy.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_change_record.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_coarse_gold_b0_condition_constraint.py` | 活动 | Python 实现、脚本或测试 |

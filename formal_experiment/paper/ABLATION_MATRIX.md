@@ -1,5 +1,15 @@
 # 受控消融矩阵 AB-1–AB-10 与 Barrientos 消融套件（现状与结构化结论）
 
+> **2026-09-05 来源与后续范围纠正**：用户要求后续按 Barrientos 原文收敛。
+> 新增原生 FULL/NO-PATTERNS 两提示执行准备（36×2×5；真实API未授权/未运行），
+> 其 artifact 同时去掉44模式清单与控制流冗余限制，不是纯词表单因素。
+> 此项是 Barrientos artifact 换模型复现，不等于本文 AB-4 六字段受控词汇贡献
+> 已验证。重点统计名单外模式、维度错配、格式与非空可用率；原 schema 不限制
+> `compliance_pattern` enum，所以“JSON合法100%”不能代替模式合法率。
+> 原文PDF/XML消融已定位，但现有样例两版提示还含措辞差异；该阶段仍未启动。
+> 详细预检见 `outputs/reports/barrientos_paper_ablation_preflight_v1.md`；下文历史
+> 结果保留，新消融真实数值仍为TODO，不继续为了凑齐AB编号追加实验。
+
 **版本**：v3（2026-08-30）
 **状态**：Barrientos A/B/C 离线套件、D/E 1140-call 固定计划、Direct-LLM 后处理
 三模块离线单因素与三个 Prompt 单因素 450-call 批次均已运行。Prompt 批次失败0，

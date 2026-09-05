@@ -4037,3 +4037,16 @@
 - 仍存在 blocker：无
 - 备注：严格按 Sun 2024 §5.3/图8/图9 的离散网格离线重算（τ∈{0.0..0.9} 只评 matching AP/MAP；γ 同网格、ϑ 固定 0.8；ϑ∈{0.5..0.9} 固定 γ=0.8）；γ/ϑ 由 SunScorer 真实重算 mappings/denominators/order endpoints/observability；Sun-transferred (0.8,0.8,0.8) Macro-F1 0.3889/exact 0.3636/unobs 10（低分基线保留）；best observed (0.8,0.6,0.8) Macro-F1 0.8733/exact 0.7879/unobs 4（Missing 1.0/Incorrect-actor 0.7778/Out-of-order 0.8421）；重算 primary 行与 evidence 全部重叠行逐项一致；产物 outputs/reports/s35_sun_stage3_threshold_sensitivity_v1.{json,md} + 图 A/B SVG + builder（--report-only 确定性重放）；论文 §7.4.7 + 主张矩阵 C31 + PROJECT_AUDIT/MASTER 日志行；11 项新增 focused tests；全量 audit 2819 passed/24 skipped；API calls=0、cost=0；未改 Gold/样本/预测/既有 evidence；用户已有修改与 .bak 未触碰
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-05T22:03:46.464576+00:00 - S2-BARR-4 原文消融复核与原生FULL/NO-PATTERNS两条件执行准备
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2841 passed, 24 skipped, 42 warnings in 2924.45s (0:48:44)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`fc271efc069c5755b35b13fb9884375d948da2cb`；相关未提交路径：18 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：按用户要求核对Barrientos论文第9页两项消融及原始提示/notebook：无模式版同时删44模式清单与控制流冗余限制，PDF/XML版另含措辞差异；新建原生两提示成对执行入口、独立合同和预检报告，36条×2条件×5次=360次计划调用，DeepSeek-V4-Pro-0813替换原文GPT-4.1，USD上限9.70、retry=0，授权为空且真实API=0。原schema的模式名称为string，故分开统计名单外名称、维度错配、格式合法与非空可用性；22项定向测试含360次合成假响应、格式异常、失败分母、授权与账本边界。全量2841通过/24跳过，复用同状态凭证；无新性能结果、无Stage3调用、不改历史结果或Gold。用户原有修改与bak文件保持原状且不纳入提交；目录成员未变，跨日仅生成日期将在收尾刷新。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

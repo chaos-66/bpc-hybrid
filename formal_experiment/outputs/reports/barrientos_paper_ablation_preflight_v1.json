@@ -1,0 +1,56 @@
+{
+  "status": "offline_prepared_API_not_authorized",
+  "api_calls": 0,
+  "contract_sha256": "0528e3ef1ea15cf27eff8e7ea9d0c7ad026dd2c953f5469de8cdf5c71d060e9f",
+  "source_audit": {
+    "paper_pages": {
+      "step1_and_step3_ablation": 9,
+      "evaluation_population": 10,
+      "main_results_not_ablation_table": 11
+    },
+    "paper_model": "gpt-4.1",
+    "paper_temperature": 0,
+    "artifact_removed_sections": [
+      "Allowed Compliance Patterns",
+      "Control-Flow Exclusivity Rule"
+    ],
+    "other_difference": "remaining rule headings renumbered 3/4/5 -> 1/2/3",
+    "retained_no_pattern_instruction": "do NOT invent new patterns; refers to an absent list",
+    "is_pure_whitelist_one_factor": false,
+    "schema_pattern_is_enum": false,
+    "schema_note": "compliance_pattern is a string: schema validity does not imply vocabulary validity",
+    "step3": {
+      "artifact_cells_zero_based": [
+        6,
+        7
+      ],
+      "comparison": "uploaded PDF vs raw BPMN XML in user text",
+      "prompt_confound": "MIGHT violate becomes violates; deviation instructions and output descriptions also change",
+      "runnable_here": false,
+      "remaining_requirements": [
+        "freeze identical natural-language versions/formalizations/deltas for both arms",
+        "authorize a PDF-capable model and file uploads (paper uses GPT-4.1)",
+        "approve a separate Stage 3 reproduction contract; current Stage 3 gates unchanged"
+      ]
+    },
+    "five_repeats": "adopted from paper main evaluation; separate ablation sample/repeat counts not stated in the paper paragraphs",
+    "claim_scope": "development source-artifact reproduction with model substitution; not our six-field method ablation"
+  },
+  "budget": {
+    "input_token_cap": 1699050,
+    "output_token_cap": 1474560,
+    "usd_cost_cap": 9.7,
+    "retry": 0,
+    "input_cache_miss_usd_per_million": 1.32,
+    "output_usd_per_million": 3.96,
+    "price_source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verified_date": "2026-09-05",
+    "mode": "conservative peak, cache miss",
+    "calculation": "input reserves UTF-8 request bytes + 1024 per call; max output 4096; 20% USD margin"
+  },
+  "calls": 360,
+  "authorization_template": {
+    "contract_sha256": "0528e3ef1ea15cf27eff8e7ea9d0c7ad026dd2c953f5469de8cdf5c71d060e9f",
+    "user_authorization": "我授权 S2-BARR-4 Barrientos 原始 FULL/NO-PATTERNS 消融：36条×2条件×5次，360次 deepseek-v4-pro API 调用，费用上限 USD 9.70，retry=0，允许发送该36条输入。"
+  }
+}

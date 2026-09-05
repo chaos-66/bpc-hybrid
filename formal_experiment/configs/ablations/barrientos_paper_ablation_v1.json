@@ -1,0 +1,3017 @@
+{
+  "schema_version": "barrientos_paper_ablation@1.0.0",
+  "task_id": "S2-BARR-4",
+  "status": "prepared_not_authorized_not_run",
+  "source_audit": {
+    "paper_pages": {
+      "step1_and_step3_ablation": 9,
+      "evaluation_population": 10,
+      "main_results_not_ablation_table": 11
+    },
+    "paper_model": "gpt-4.1",
+    "paper_temperature": 0,
+    "artifact_removed_sections": [
+      "Allowed Compliance Patterns",
+      "Control-Flow Exclusivity Rule"
+    ],
+    "other_difference": "remaining rule headings renumbered 3/4/5 -> 1/2/3",
+    "retained_no_pattern_instruction": "do NOT invent new patterns; refers to an absent list",
+    "is_pure_whitelist_one_factor": false,
+    "schema_pattern_is_enum": false,
+    "schema_note": "compliance_pattern is a string: schema validity does not imply vocabulary validity",
+    "step3": {
+      "artifact_cells_zero_based": [
+        6,
+        7
+      ],
+      "comparison": "uploaded PDF vs raw BPMN XML in user text",
+      "prompt_confound": "MIGHT violate becomes violates; deviation instructions and output descriptions also change",
+      "runnable_here": false,
+      "remaining_requirements": [
+        "freeze identical natural-language versions/formalizations/deltas for both arms",
+        "authorize a PDF-capable model and file uploads (paper uses GPT-4.1)",
+        "approve a separate Stage 3 reproduction contract; current Stage 3 gates unchanged"
+      ]
+    },
+    "five_repeats": "adopted from paper main evaluation; separate ablation sample/repeat counts not stated in the paper paragraphs",
+    "claim_scope": "development source-artifact reproduction with model substitution; not our six-field method ablation"
+  },
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "model": "deepseek-v4-pro",
+  "model_release_reference": "DeepSeek-V4-Pro-0813",
+  "historical_baseline_reused": false,
+  "calls": 360,
+  "repeats": 5,
+  "plan": [
+    {
+      "key": "1/FULL/SIM_card_scenario/r10/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "body_sha256": "3d20a14cc69d75c5327946f3264152ec1f569758ddbddf3af2c38050e571ba9f",
+      "input_byte_bound": 4312
+    },
+    {
+      "key": "1/NO-PATTERNS/SIM_card_scenario/r10/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "body_sha256": "73694ba6dd440475f100056a37c155bbbdb5fa85e62280a240946497d5fb2b30",
+      "input_byte_bound": 3059
+    },
+    {
+      "key": "1/NO-PATTERNS/SIM_card_scenario/r10/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "body_sha256": "8a0207ad86a6d9b461e5aa11c95ce4167b1da32b390ffafbe2c6ef5ef2364176",
+      "input_byte_bound": 3100
+    },
+    {
+      "key": "1/FULL/SIM_card_scenario/r10/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "body_sha256": "19e74195ec46efee3deeb8a304e51186d60d670d6e072308f634a2b3b09a85af",
+      "input_byte_bound": 4353
+    },
+    {
+      "key": "1/FULL/SIM_card_scenario/r11/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "body_sha256": "636de0a7de6cf3720cc79d984de723582e2998e1bb534ede3937887037b85b1f",
+      "input_byte_bound": 4287
+    },
+    {
+      "key": "1/NO-PATTERNS/SIM_card_scenario/r11/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "body_sha256": "06ff1e0bc89bc9fd9e205497354d199b0d889872ef446551da2644fbeda6a219",
+      "input_byte_bound": 3034
+    },
+    {
+      "key": "1/NO-PATTERNS/SIM_card_scenario/r11/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "body_sha256": "b813685d6cb055edc9f9d82e5a5583d10535d68f3d51e6c1a13e84332d17a446",
+      "input_byte_bound": 3090
+    },
+    {
+      "key": "1/FULL/SIM_card_scenario/r11/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "body_sha256": "5756dc8a939af8e2140108d0647e7d02e08c6561cb703765ecdab44cb9f2f936",
+      "input_byte_bound": 4343
+    },
+    {
+      "key": "1/FULL/SIM_card_scenario/r12/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "body_sha256": "92c4a9d8472cd349251a9da20b4a9ee866b437e186c63b02c3ed150e074e85d8",
+      "input_byte_bound": 4320
+    },
+    {
+      "key": "1/NO-PATTERNS/SIM_card_scenario/r12/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "body_sha256": "2a0c4d25f67707a8be686dc5e84a8c06ebc831af033c13dfde0e45b6ec98f05f",
+      "input_byte_bound": 3067
+    },
+    {
+      "key": "1/NO-PATTERNS/SIM_card_scenario/r13/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "body_sha256": "75b7d85c66f6df949c5ae8067510913c9c0c3e82d60796a678e65c606e856845",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "1/FULL/SIM_card_scenario/r13/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "body_sha256": "c990e1e639f4b45de319795e22ce4af70144fdd0b7e30048aace9110dddb7d3a",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "1/FULL/SIM_card_scenario/r13/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "body_sha256": "5349cd6b27b5f21579602df2631bc0c31a2fcf10449d084580a84f2d4abb51d4",
+      "input_byte_bound": 4307
+    },
+    {
+      "key": "1/NO-PATTERNS/SIM_card_scenario/r13/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "body_sha256": "2d3a7589d6c8d3af10abcf8b9e4cd24ced1c958de511ac6ca86e0789677afe38",
+      "input_byte_bound": 3054
+    },
+    {
+      "key": "1/NO-PATTERNS/SIM_card_scenario/r8/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "body_sha256": "d2a1180c425a89af5c50c1f8e041302f50d754bcd9c3065a68af27d5fa8e4e21",
+      "input_byte_bound": 3034
+    },
+    {
+      "key": "1/FULL/SIM_card_scenario/r8/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "body_sha256": "037a3464a0875e6d1253bec97ba72a88b345222aa326887f4469a86cfbc46c5e",
+      "input_byte_bound": 4287
+    },
+    {
+      "key": "1/FULL/SIM_card_scenario/r8/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "body_sha256": "84044f4e16755c398af5b35dc3205e884ee5305b5815b154392b57217c8147eb",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "1/NO-PATTERNS/SIM_card_scenario/r8/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "body_sha256": "944a4f385450be72d9fbd164a239a80a5237f641c4565f920ebb9f5e82b7e333",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "1/NO-PATTERNS/SIM_card_scenario/r9/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "body_sha256": "7e2d057a18c1906aa01d4e14cb3bb7e27bb9fa44ce19d52a8833bb18a8db677d",
+      "input_byte_bound": 3089
+    },
+    {
+      "key": "1/FULL/SIM_card_scenario/r9/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "body_sha256": "0e7ff68d0e66aa274db8b446a5eb683b8e0b1166f32a0ef5776e5f074440a6ad",
+      "input_byte_bound": 4342
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r14/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "body_sha256": "bd27a7cf5f24f53f56150ad85d1e9c390d8ab418e9a899ea3e0dd2304e9305e4",
+      "input_byte_bound": 4365
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r14/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "body_sha256": "cd094aac36789b806e2e0b62d54ce9db8589ced3a76adbb73ec454c9c3568ea0",
+      "input_byte_bound": 3112
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r14/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "body_sha256": "c3f16e1e322b4184fd3e69ed069bab651f97ec3ac6b00766e28e901bc92c56d9",
+      "input_byte_bound": 3067
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r14/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "body_sha256": "c11b140c0c07b1f526f222e473084929cadffbb129d09ebe65f80d41a4a42cf5",
+      "input_byte_bound": 4320
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r15/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "body_sha256": "6804c4e5d7b36ea7ec2e0089ab885d7b2ffb67ac766fa4aa248251a712c59920",
+      "input_byte_bound": 4296
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r15/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "body_sha256": "3998b4e3bbfeddec74390df40ce61a6faa32f331a42c92fbe5399ca9b6494c69",
+      "input_byte_bound": 3043
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r15/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "body_sha256": "c7664d6c4efafefe4cefd053658a7cd123b0670dabf585c36d2a80063a2e418e",
+      "input_byte_bound": 3023
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r15/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "body_sha256": "057e660d1e2ff101c6e78fc0f790cd495197bb54f3185778b7a98347f91620ff",
+      "input_byte_bound": 4276
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r16/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "body_sha256": "fae4776e64a282d14120abaca5e176fba1d4aa150705e8c73a845b9ea57dff2e",
+      "input_byte_bound": 4300
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r16/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "body_sha256": "9e184744599dc514ae97d15f5048509289e66806649165a14cd948138cb028cf",
+      "input_byte_bound": 3047
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r17/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "body_sha256": "c07ec62e208950cd2ee1c4f4f523e35451ea85cf7869f702b966f6013d48838a",
+      "input_byte_bound": 3092
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r17/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "body_sha256": "14e66551a1d9939583e5481ccc125874cbada4f9bafc1f35c9f9b69ec6996cae",
+      "input_byte_bound": 4345
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r17/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "body_sha256": "b196c18182a04617939403a5a18c5356fedc46454795f0c1fdafe86b071bce9a",
+      "input_byte_bound": 4282
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r17/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "body_sha256": "adcad77459a366791ff300eb48f9d65953247769fb403feafb9a55ab825355db",
+      "input_byte_bound": 3029
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r18/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "body_sha256": "db77155eed6b2993c563410d940f21788d59bbbcbe6b69c01cc39bd531f3ecb4",
+      "input_byte_bound": 3052
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r18/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "body_sha256": "6a208deb05e22e0732a78229c3b39b0f4c5f2a11e22c7ce82c9c166b4bd0ca44",
+      "input_byte_bound": 4305
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r19/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "body_sha256": "08487afe49dc0fcaefbe94cfc5b8c1c74f76c67553f022010e573a1438603531",
+      "input_byte_bound": 4304
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r19/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "body_sha256": "7fe224e9938511c99d3a9ef0efadebfe73ebc9c87da0e23952e047e6cb9d3140",
+      "input_byte_bound": 3051
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r19/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "body_sha256": "74c11aeb1d8e0842077edd4eb02eacb86407cc7829910a8bd8fb030c3219b553",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r19/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "body_sha256": "0053038df86ef2d5c45dc2aa3bbf2a2c39be40c57ce54bdda4092a0e672d7305",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r20/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "body_sha256": "ebae902dfbe144be3c520895a7349993eb18e90d3a48b4cc47591ed9d72eb2b6",
+      "input_byte_bound": 4357
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r20/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "body_sha256": "30a5f5b5c8e1847f61a6853e7e1a2c136dbf52a8c363d49c42e8085a2e052149",
+      "input_byte_bound": 3104
+    },
+    {
+      "key": "1/NO-PATTERNS/blood_donation_scenario/r20/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "body_sha256": "501e04fdd7bb79d3ed081cb8e96c20b5194783fd3d616662a59d30820de9dccf",
+      "input_byte_bound": 3105
+    },
+    {
+      "key": "1/FULL/blood_donation_scenario/r20/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "body_sha256": "9008597880e57199cc58458da63e55aeca59d480fb8ee401bf74717d9025f2ee",
+      "input_byte_bound": 4358
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r1/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r1/v1",
+      "body_sha256": "dd934a4023829dbde43ae06aeffebdbb94689a8cfab78a687ae9c10425aeb3c7",
+      "input_byte_bound": 4381
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r1/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r1/v1",
+      "body_sha256": "426e964e571f0f0a53183fe8c89e486d9fedf7e15054972b74510f26e1a039ed",
+      "input_byte_bound": 3128
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r1/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r1/v2",
+      "body_sha256": "6e426a1bf2373796aa94420fb8e7bcde13e3eae6197952034a1167b0f1583d88",
+      "input_byte_bound": 3110
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r1/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r1/v2",
+      "body_sha256": "b99bd2aeb2ce7ba8e8a2cf285b8d76e4c3e3c3fd912db6ef7c7597bf39c093cb",
+      "input_byte_bound": 4363
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r2/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r2/v1",
+      "body_sha256": "74114dd807470b9d6172333fa6b00c7ff0343ce8884a2199bb68d8c0596cdc5f",
+      "input_byte_bound": 4367
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r2/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r2/v1",
+      "body_sha256": "9e6e2498303c26e6ca790e4d224ced8a587d66abc7b0d3b9cb7c559c2f96e2cc",
+      "input_byte_bound": 3114
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r2/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r2/v2",
+      "body_sha256": "9fe88569dbe5447ffd17209059a7c88e14233990778994213ff70c795d1f2993",
+      "input_byte_bound": 3116
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r2/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r2/v2",
+      "body_sha256": "38abfae28e4aa22fa8ad1f944117f0cfba1da69974358f929f78f26de2fb2bef",
+      "input_byte_bound": 4369
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r3/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r3/v1",
+      "body_sha256": "fdf784e649ad395e873d4e3a636556595504bca3b9296b8b733f1e21f743b7d9",
+      "input_byte_bound": 4404
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r3/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r3/v1",
+      "body_sha256": "3a0e7fe8287664f29650ee5d14dad9f90f76f38fd12c847c2143dfa886a21539",
+      "input_byte_bound": 3151
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r3/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r3/v2",
+      "body_sha256": "bb70ce1ea6a7affbc6b977f0a5312f742a6eee4fa8a8c346d0ae752da4a7abd8",
+      "input_byte_bound": 3123
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r3/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r3/v2",
+      "body_sha256": "2690fee55535dc7807818dec2f3f171e73865683d60cb280a2ba9e4e50902fae",
+      "input_byte_bound": 4376
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r4/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r4/v1",
+      "body_sha256": "f3fd0b2626b65a6f9326dd8b591f2a32d4a2f36e9982d7449b4b0a01fd36d8da",
+      "input_byte_bound": 4259
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r4/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r4/v1",
+      "body_sha256": "449358f598088f54348baf3df2e3da17797ce772df2cb928dedf9c8f515ea9a1",
+      "input_byte_bound": 3006
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r4/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r4/v2",
+      "body_sha256": "f6c051358d03ac8bca44f14d298054347140d69598509f68b73a9e4095159171",
+      "input_byte_bound": 3072
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r4/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r4/v2",
+      "body_sha256": "96b2b077d6e097bb44a7c365735b608907bbdf2408381f46bb6614885dbfd666",
+      "input_byte_bound": 4325
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r5/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r5/v1",
+      "body_sha256": "e07963405dc7c6cddecaf33240fc2c09f968e59581c988e53a91786fceea0984",
+      "input_byte_bound": 4291
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r5/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r5/v1",
+      "body_sha256": "ca33f839e0e9ba1a55c72984169bfe4193cc82a7e2d83aeea3a8383fd54a14c3",
+      "input_byte_bound": 3038
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r5/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r5/v2",
+      "body_sha256": "d5ccc3b0a03f8f1f2d58128c4e40e6912847815586fc78c3ffe50dbd2281ccbb",
+      "input_byte_bound": 3059
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r5/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r5/v2",
+      "body_sha256": "202848f105e5ea36191521a8fc17ca81d3075229a1e02aebaed4912b72a2d734",
+      "input_byte_bound": 4312
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r6/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r6/v1",
+      "body_sha256": "b5a16509a2cb8ff66fec156bb3d88d4261e45747b94ca7c7bc26f0c415067a32",
+      "input_byte_bound": 4266
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r6/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r6/v1",
+      "body_sha256": "15f3d303a78c410ab68b6f70db980e469b4cd91a6a5074f6a91294be508d68c2",
+      "input_byte_bound": 3013
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r6/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r6/v2",
+      "body_sha256": "02cf85175c9216f92d1d6092e840cf42ae2b462b5e34093764080d5b02a16b92",
+      "input_byte_bound": 3023
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r6/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r6/v2",
+      "body_sha256": "6f549d63455e18b17c1c96a99808ea879cc566bd284e93b2b31f6e04446170ef",
+      "input_byte_bound": 4276
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r7/v1",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r7/v1",
+      "body_sha256": "1bd8bfdb8a55f7b1077d6ed8e078ee7ff8d3c1e2ddc8017a4fc83993adac3832",
+      "input_byte_bound": 4284
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r7/v1",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r7/v1",
+      "body_sha256": "ae8974ab673c6584a15be7d846a22fce1e5f6caef1d651292664e9251b1abffa",
+      "input_byte_bound": 3031
+    },
+    {
+      "key": "1/NO-PATTERNS/emergencies_scenario/r7/v2",
+      "repeat": 1,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r7/v2",
+      "body_sha256": "a34ff2820a868e7e7b6ecf87e65dce5362c656ec35f22d0bba911519a29e2a4b",
+      "input_byte_bound": 3086
+    },
+    {
+      "key": "1/FULL/emergencies_scenario/r7/v2",
+      "repeat": 1,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r7/v2",
+      "body_sha256": "5b15942f86363a41177bfa19eb8d8735e885745e3ad96f49b2f1c83c1dde42dd",
+      "input_byte_bound": 4339
+    },
+    {
+      "key": "2/NO-PATTERNS/SIM_card_scenario/r10/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "body_sha256": "73694ba6dd440475f100056a37c155bbbdb5fa85e62280a240946497d5fb2b30",
+      "input_byte_bound": 3059
+    },
+    {
+      "key": "2/FULL/SIM_card_scenario/r10/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "body_sha256": "3d20a14cc69d75c5327946f3264152ec1f569758ddbddf3af2c38050e571ba9f",
+      "input_byte_bound": 4312
+    },
+    {
+      "key": "2/FULL/SIM_card_scenario/r10/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "body_sha256": "19e74195ec46efee3deeb8a304e51186d60d670d6e072308f634a2b3b09a85af",
+      "input_byte_bound": 4353
+    },
+    {
+      "key": "2/NO-PATTERNS/SIM_card_scenario/r10/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "body_sha256": "8a0207ad86a6d9b461e5aa11c95ce4167b1da32b390ffafbe2c6ef5ef2364176",
+      "input_byte_bound": 3100
+    },
+    {
+      "key": "2/NO-PATTERNS/SIM_card_scenario/r11/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "body_sha256": "06ff1e0bc89bc9fd9e205497354d199b0d889872ef446551da2644fbeda6a219",
+      "input_byte_bound": 3034
+    },
+    {
+      "key": "2/FULL/SIM_card_scenario/r11/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "body_sha256": "636de0a7de6cf3720cc79d984de723582e2998e1bb534ede3937887037b85b1f",
+      "input_byte_bound": 4287
+    },
+    {
+      "key": "2/FULL/SIM_card_scenario/r11/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "body_sha256": "5756dc8a939af8e2140108d0647e7d02e08c6561cb703765ecdab44cb9f2f936",
+      "input_byte_bound": 4343
+    },
+    {
+      "key": "2/NO-PATTERNS/SIM_card_scenario/r11/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "body_sha256": "b813685d6cb055edc9f9d82e5a5583d10535d68f3d51e6c1a13e84332d17a446",
+      "input_byte_bound": 3090
+    },
+    {
+      "key": "2/NO-PATTERNS/SIM_card_scenario/r12/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "body_sha256": "2a0c4d25f67707a8be686dc5e84a8c06ebc831af033c13dfde0e45b6ec98f05f",
+      "input_byte_bound": 3067
+    },
+    {
+      "key": "2/FULL/SIM_card_scenario/r12/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "body_sha256": "92c4a9d8472cd349251a9da20b4a9ee866b437e186c63b02c3ed150e074e85d8",
+      "input_byte_bound": 4320
+    },
+    {
+      "key": "2/FULL/SIM_card_scenario/r13/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "body_sha256": "c990e1e639f4b45de319795e22ce4af70144fdd0b7e30048aace9110dddb7d3a",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "2/NO-PATTERNS/SIM_card_scenario/r13/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "body_sha256": "75b7d85c66f6df949c5ae8067510913c9c0c3e82d60796a678e65c606e856845",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "2/NO-PATTERNS/SIM_card_scenario/r13/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "body_sha256": "2d3a7589d6c8d3af10abcf8b9e4cd24ced1c958de511ac6ca86e0789677afe38",
+      "input_byte_bound": 3054
+    },
+    {
+      "key": "2/FULL/SIM_card_scenario/r13/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "body_sha256": "5349cd6b27b5f21579602df2631bc0c31a2fcf10449d084580a84f2d4abb51d4",
+      "input_byte_bound": 4307
+    },
+    {
+      "key": "2/FULL/SIM_card_scenario/r8/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "body_sha256": "037a3464a0875e6d1253bec97ba72a88b345222aa326887f4469a86cfbc46c5e",
+      "input_byte_bound": 4287
+    },
+    {
+      "key": "2/NO-PATTERNS/SIM_card_scenario/r8/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "body_sha256": "d2a1180c425a89af5c50c1f8e041302f50d754bcd9c3065a68af27d5fa8e4e21",
+      "input_byte_bound": 3034
+    },
+    {
+      "key": "2/NO-PATTERNS/SIM_card_scenario/r8/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "body_sha256": "944a4f385450be72d9fbd164a239a80a5237f641c4565f920ebb9f5e82b7e333",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "2/FULL/SIM_card_scenario/r8/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "body_sha256": "84044f4e16755c398af5b35dc3205e884ee5305b5815b154392b57217c8147eb",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "2/FULL/SIM_card_scenario/r9/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "body_sha256": "0e7ff68d0e66aa274db8b446a5eb683b8e0b1166f32a0ef5776e5f074440a6ad",
+      "input_byte_bound": 4342
+    },
+    {
+      "key": "2/NO-PATTERNS/SIM_card_scenario/r9/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "body_sha256": "7e2d057a18c1906aa01d4e14cb3bb7e27bb9fa44ce19d52a8833bb18a8db677d",
+      "input_byte_bound": 3089
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r14/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "body_sha256": "cd094aac36789b806e2e0b62d54ce9db8589ced3a76adbb73ec454c9c3568ea0",
+      "input_byte_bound": 3112
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r14/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "body_sha256": "bd27a7cf5f24f53f56150ad85d1e9c390d8ab418e9a899ea3e0dd2304e9305e4",
+      "input_byte_bound": 4365
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r14/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "body_sha256": "c11b140c0c07b1f526f222e473084929cadffbb129d09ebe65f80d41a4a42cf5",
+      "input_byte_bound": 4320
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r14/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "body_sha256": "c3f16e1e322b4184fd3e69ed069bab651f97ec3ac6b00766e28e901bc92c56d9",
+      "input_byte_bound": 3067
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r15/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "body_sha256": "3998b4e3bbfeddec74390df40ce61a6faa32f331a42c92fbe5399ca9b6494c69",
+      "input_byte_bound": 3043
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r15/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "body_sha256": "6804c4e5d7b36ea7ec2e0089ab885d7b2ffb67ac766fa4aa248251a712c59920",
+      "input_byte_bound": 4296
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r15/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "body_sha256": "057e660d1e2ff101c6e78fc0f790cd495197bb54f3185778b7a98347f91620ff",
+      "input_byte_bound": 4276
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r15/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "body_sha256": "c7664d6c4efafefe4cefd053658a7cd123b0670dabf585c36d2a80063a2e418e",
+      "input_byte_bound": 3023
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r16/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "body_sha256": "9e184744599dc514ae97d15f5048509289e66806649165a14cd948138cb028cf",
+      "input_byte_bound": 3047
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r16/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "body_sha256": "fae4776e64a282d14120abaca5e176fba1d4aa150705e8c73a845b9ea57dff2e",
+      "input_byte_bound": 4300
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r17/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "body_sha256": "14e66551a1d9939583e5481ccc125874cbada4f9bafc1f35c9f9b69ec6996cae",
+      "input_byte_bound": 4345
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r17/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "body_sha256": "c07ec62e208950cd2ee1c4f4f523e35451ea85cf7869f702b966f6013d48838a",
+      "input_byte_bound": 3092
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r17/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "body_sha256": "adcad77459a366791ff300eb48f9d65953247769fb403feafb9a55ab825355db",
+      "input_byte_bound": 3029
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r17/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "body_sha256": "b196c18182a04617939403a5a18c5356fedc46454795f0c1fdafe86b071bce9a",
+      "input_byte_bound": 4282
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r18/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "body_sha256": "6a208deb05e22e0732a78229c3b39b0f4c5f2a11e22c7ce82c9c166b4bd0ca44",
+      "input_byte_bound": 4305
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r18/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "body_sha256": "db77155eed6b2993c563410d940f21788d59bbbcbe6b69c01cc39bd531f3ecb4",
+      "input_byte_bound": 3052
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r19/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "body_sha256": "7fe224e9938511c99d3a9ef0efadebfe73ebc9c87da0e23952e047e6cb9d3140",
+      "input_byte_bound": 3051
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r19/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "body_sha256": "08487afe49dc0fcaefbe94cfc5b8c1c74f76c67553f022010e573a1438603531",
+      "input_byte_bound": 4304
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r19/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "body_sha256": "0053038df86ef2d5c45dc2aa3bbf2a2c39be40c57ce54bdda4092a0e672d7305",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r19/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "body_sha256": "74c11aeb1d8e0842077edd4eb02eacb86407cc7829910a8bd8fb030c3219b553",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r20/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "body_sha256": "30a5f5b5c8e1847f61a6853e7e1a2c136dbf52a8c363d49c42e8085a2e052149",
+      "input_byte_bound": 3104
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r20/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "body_sha256": "ebae902dfbe144be3c520895a7349993eb18e90d3a48b4cc47591ed9d72eb2b6",
+      "input_byte_bound": 4357
+    },
+    {
+      "key": "2/FULL/blood_donation_scenario/r20/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "body_sha256": "9008597880e57199cc58458da63e55aeca59d480fb8ee401bf74717d9025f2ee",
+      "input_byte_bound": 4358
+    },
+    {
+      "key": "2/NO-PATTERNS/blood_donation_scenario/r20/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "body_sha256": "501e04fdd7bb79d3ed081cb8e96c20b5194783fd3d616662a59d30820de9dccf",
+      "input_byte_bound": 3105
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r1/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r1/v1",
+      "body_sha256": "426e964e571f0f0a53183fe8c89e486d9fedf7e15054972b74510f26e1a039ed",
+      "input_byte_bound": 3128
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r1/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r1/v1",
+      "body_sha256": "dd934a4023829dbde43ae06aeffebdbb94689a8cfab78a687ae9c10425aeb3c7",
+      "input_byte_bound": 4381
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r1/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r1/v2",
+      "body_sha256": "b99bd2aeb2ce7ba8e8a2cf285b8d76e4c3e3c3fd912db6ef7c7597bf39c093cb",
+      "input_byte_bound": 4363
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r1/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r1/v2",
+      "body_sha256": "6e426a1bf2373796aa94420fb8e7bcde13e3eae6197952034a1167b0f1583d88",
+      "input_byte_bound": 3110
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r2/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r2/v1",
+      "body_sha256": "9e6e2498303c26e6ca790e4d224ced8a587d66abc7b0d3b9cb7c559c2f96e2cc",
+      "input_byte_bound": 3114
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r2/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r2/v1",
+      "body_sha256": "74114dd807470b9d6172333fa6b00c7ff0343ce8884a2199bb68d8c0596cdc5f",
+      "input_byte_bound": 4367
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r2/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r2/v2",
+      "body_sha256": "38abfae28e4aa22fa8ad1f944117f0cfba1da69974358f929f78f26de2fb2bef",
+      "input_byte_bound": 4369
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r2/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r2/v2",
+      "body_sha256": "9fe88569dbe5447ffd17209059a7c88e14233990778994213ff70c795d1f2993",
+      "input_byte_bound": 3116
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r3/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r3/v1",
+      "body_sha256": "3a0e7fe8287664f29650ee5d14dad9f90f76f38fd12c847c2143dfa886a21539",
+      "input_byte_bound": 3151
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r3/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r3/v1",
+      "body_sha256": "fdf784e649ad395e873d4e3a636556595504bca3b9296b8b733f1e21f743b7d9",
+      "input_byte_bound": 4404
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r3/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r3/v2",
+      "body_sha256": "2690fee55535dc7807818dec2f3f171e73865683d60cb280a2ba9e4e50902fae",
+      "input_byte_bound": 4376
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r3/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r3/v2",
+      "body_sha256": "bb70ce1ea6a7affbc6b977f0a5312f742a6eee4fa8a8c346d0ae752da4a7abd8",
+      "input_byte_bound": 3123
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r4/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r4/v1",
+      "body_sha256": "449358f598088f54348baf3df2e3da17797ce772df2cb928dedf9c8f515ea9a1",
+      "input_byte_bound": 3006
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r4/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r4/v1",
+      "body_sha256": "f3fd0b2626b65a6f9326dd8b591f2a32d4a2f36e9982d7449b4b0a01fd36d8da",
+      "input_byte_bound": 4259
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r4/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r4/v2",
+      "body_sha256": "96b2b077d6e097bb44a7c365735b608907bbdf2408381f46bb6614885dbfd666",
+      "input_byte_bound": 4325
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r4/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r4/v2",
+      "body_sha256": "f6c051358d03ac8bca44f14d298054347140d69598509f68b73a9e4095159171",
+      "input_byte_bound": 3072
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r5/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r5/v1",
+      "body_sha256": "ca33f839e0e9ba1a55c72984169bfe4193cc82a7e2d83aeea3a8383fd54a14c3",
+      "input_byte_bound": 3038
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r5/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r5/v1",
+      "body_sha256": "e07963405dc7c6cddecaf33240fc2c09f968e59581c988e53a91786fceea0984",
+      "input_byte_bound": 4291
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r5/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r5/v2",
+      "body_sha256": "202848f105e5ea36191521a8fc17ca81d3075229a1e02aebaed4912b72a2d734",
+      "input_byte_bound": 4312
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r5/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r5/v2",
+      "body_sha256": "d5ccc3b0a03f8f1f2d58128c4e40e6912847815586fc78c3ffe50dbd2281ccbb",
+      "input_byte_bound": 3059
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r6/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r6/v1",
+      "body_sha256": "15f3d303a78c410ab68b6f70db980e469b4cd91a6a5074f6a91294be508d68c2",
+      "input_byte_bound": 3013
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r6/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r6/v1",
+      "body_sha256": "b5a16509a2cb8ff66fec156bb3d88d4261e45747b94ca7c7bc26f0c415067a32",
+      "input_byte_bound": 4266
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r6/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r6/v2",
+      "body_sha256": "6f549d63455e18b17c1c96a99808ea879cc566bd284e93b2b31f6e04446170ef",
+      "input_byte_bound": 4276
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r6/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r6/v2",
+      "body_sha256": "02cf85175c9216f92d1d6092e840cf42ae2b462b5e34093764080d5b02a16b92",
+      "input_byte_bound": 3023
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r7/v1",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r7/v1",
+      "body_sha256": "ae8974ab673c6584a15be7d846a22fce1e5f6caef1d651292664e9251b1abffa",
+      "input_byte_bound": 3031
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r7/v1",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r7/v1",
+      "body_sha256": "1bd8bfdb8a55f7b1077d6ed8e078ee7ff8d3c1e2ddc8017a4fc83993adac3832",
+      "input_byte_bound": 4284
+    },
+    {
+      "key": "2/FULL/emergencies_scenario/r7/v2",
+      "repeat": 2,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r7/v2",
+      "body_sha256": "5b15942f86363a41177bfa19eb8d8735e885745e3ad96f49b2f1c83c1dde42dd",
+      "input_byte_bound": 4339
+    },
+    {
+      "key": "2/NO-PATTERNS/emergencies_scenario/r7/v2",
+      "repeat": 2,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r7/v2",
+      "body_sha256": "a34ff2820a868e7e7b6ecf87e65dce5362c656ec35f22d0bba911519a29e2a4b",
+      "input_byte_bound": 3086
+    },
+    {
+      "key": "3/FULL/SIM_card_scenario/r10/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "body_sha256": "3d20a14cc69d75c5327946f3264152ec1f569758ddbddf3af2c38050e571ba9f",
+      "input_byte_bound": 4312
+    },
+    {
+      "key": "3/NO-PATTERNS/SIM_card_scenario/r10/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "body_sha256": "73694ba6dd440475f100056a37c155bbbdb5fa85e62280a240946497d5fb2b30",
+      "input_byte_bound": 3059
+    },
+    {
+      "key": "3/NO-PATTERNS/SIM_card_scenario/r10/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "body_sha256": "8a0207ad86a6d9b461e5aa11c95ce4167b1da32b390ffafbe2c6ef5ef2364176",
+      "input_byte_bound": 3100
+    },
+    {
+      "key": "3/FULL/SIM_card_scenario/r10/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "body_sha256": "19e74195ec46efee3deeb8a304e51186d60d670d6e072308f634a2b3b09a85af",
+      "input_byte_bound": 4353
+    },
+    {
+      "key": "3/FULL/SIM_card_scenario/r11/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "body_sha256": "636de0a7de6cf3720cc79d984de723582e2998e1bb534ede3937887037b85b1f",
+      "input_byte_bound": 4287
+    },
+    {
+      "key": "3/NO-PATTERNS/SIM_card_scenario/r11/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "body_sha256": "06ff1e0bc89bc9fd9e205497354d199b0d889872ef446551da2644fbeda6a219",
+      "input_byte_bound": 3034
+    },
+    {
+      "key": "3/NO-PATTERNS/SIM_card_scenario/r11/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "body_sha256": "b813685d6cb055edc9f9d82e5a5583d10535d68f3d51e6c1a13e84332d17a446",
+      "input_byte_bound": 3090
+    },
+    {
+      "key": "3/FULL/SIM_card_scenario/r11/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "body_sha256": "5756dc8a939af8e2140108d0647e7d02e08c6561cb703765ecdab44cb9f2f936",
+      "input_byte_bound": 4343
+    },
+    {
+      "key": "3/FULL/SIM_card_scenario/r12/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "body_sha256": "92c4a9d8472cd349251a9da20b4a9ee866b437e186c63b02c3ed150e074e85d8",
+      "input_byte_bound": 4320
+    },
+    {
+      "key": "3/NO-PATTERNS/SIM_card_scenario/r12/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "body_sha256": "2a0c4d25f67707a8be686dc5e84a8c06ebc831af033c13dfde0e45b6ec98f05f",
+      "input_byte_bound": 3067
+    },
+    {
+      "key": "3/NO-PATTERNS/SIM_card_scenario/r13/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "body_sha256": "75b7d85c66f6df949c5ae8067510913c9c0c3e82d60796a678e65c606e856845",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "3/FULL/SIM_card_scenario/r13/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "body_sha256": "c990e1e639f4b45de319795e22ce4af70144fdd0b7e30048aace9110dddb7d3a",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "3/FULL/SIM_card_scenario/r13/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "body_sha256": "5349cd6b27b5f21579602df2631bc0c31a2fcf10449d084580a84f2d4abb51d4",
+      "input_byte_bound": 4307
+    },
+    {
+      "key": "3/NO-PATTERNS/SIM_card_scenario/r13/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "body_sha256": "2d3a7589d6c8d3af10abcf8b9e4cd24ced1c958de511ac6ca86e0789677afe38",
+      "input_byte_bound": 3054
+    },
+    {
+      "key": "3/NO-PATTERNS/SIM_card_scenario/r8/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "body_sha256": "d2a1180c425a89af5c50c1f8e041302f50d754bcd9c3065a68af27d5fa8e4e21",
+      "input_byte_bound": 3034
+    },
+    {
+      "key": "3/FULL/SIM_card_scenario/r8/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "body_sha256": "037a3464a0875e6d1253bec97ba72a88b345222aa326887f4469a86cfbc46c5e",
+      "input_byte_bound": 4287
+    },
+    {
+      "key": "3/FULL/SIM_card_scenario/r8/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "body_sha256": "84044f4e16755c398af5b35dc3205e884ee5305b5815b154392b57217c8147eb",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "3/NO-PATTERNS/SIM_card_scenario/r8/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "body_sha256": "944a4f385450be72d9fbd164a239a80a5237f641c4565f920ebb9f5e82b7e333",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "3/NO-PATTERNS/SIM_card_scenario/r9/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "body_sha256": "7e2d057a18c1906aa01d4e14cb3bb7e27bb9fa44ce19d52a8833bb18a8db677d",
+      "input_byte_bound": 3089
+    },
+    {
+      "key": "3/FULL/SIM_card_scenario/r9/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "body_sha256": "0e7ff68d0e66aa274db8b446a5eb683b8e0b1166f32a0ef5776e5f074440a6ad",
+      "input_byte_bound": 4342
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r14/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "body_sha256": "bd27a7cf5f24f53f56150ad85d1e9c390d8ab418e9a899ea3e0dd2304e9305e4",
+      "input_byte_bound": 4365
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r14/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "body_sha256": "cd094aac36789b806e2e0b62d54ce9db8589ced3a76adbb73ec454c9c3568ea0",
+      "input_byte_bound": 3112
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r14/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "body_sha256": "c3f16e1e322b4184fd3e69ed069bab651f97ec3ac6b00766e28e901bc92c56d9",
+      "input_byte_bound": 3067
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r14/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "body_sha256": "c11b140c0c07b1f526f222e473084929cadffbb129d09ebe65f80d41a4a42cf5",
+      "input_byte_bound": 4320
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r15/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "body_sha256": "6804c4e5d7b36ea7ec2e0089ab885d7b2ffb67ac766fa4aa248251a712c59920",
+      "input_byte_bound": 4296
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r15/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "body_sha256": "3998b4e3bbfeddec74390df40ce61a6faa32f331a42c92fbe5399ca9b6494c69",
+      "input_byte_bound": 3043
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r15/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "body_sha256": "c7664d6c4efafefe4cefd053658a7cd123b0670dabf585c36d2a80063a2e418e",
+      "input_byte_bound": 3023
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r15/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "body_sha256": "057e660d1e2ff101c6e78fc0f790cd495197bb54f3185778b7a98347f91620ff",
+      "input_byte_bound": 4276
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r16/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "body_sha256": "fae4776e64a282d14120abaca5e176fba1d4aa150705e8c73a845b9ea57dff2e",
+      "input_byte_bound": 4300
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r16/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "body_sha256": "9e184744599dc514ae97d15f5048509289e66806649165a14cd948138cb028cf",
+      "input_byte_bound": 3047
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r17/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "body_sha256": "c07ec62e208950cd2ee1c4f4f523e35451ea85cf7869f702b966f6013d48838a",
+      "input_byte_bound": 3092
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r17/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "body_sha256": "14e66551a1d9939583e5481ccc125874cbada4f9bafc1f35c9f9b69ec6996cae",
+      "input_byte_bound": 4345
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r17/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "body_sha256": "b196c18182a04617939403a5a18c5356fedc46454795f0c1fdafe86b071bce9a",
+      "input_byte_bound": 4282
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r17/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "body_sha256": "adcad77459a366791ff300eb48f9d65953247769fb403feafb9a55ab825355db",
+      "input_byte_bound": 3029
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r18/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "body_sha256": "db77155eed6b2993c563410d940f21788d59bbbcbe6b69c01cc39bd531f3ecb4",
+      "input_byte_bound": 3052
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r18/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "body_sha256": "6a208deb05e22e0732a78229c3b39b0f4c5f2a11e22c7ce82c9c166b4bd0ca44",
+      "input_byte_bound": 4305
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r19/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "body_sha256": "08487afe49dc0fcaefbe94cfc5b8c1c74f76c67553f022010e573a1438603531",
+      "input_byte_bound": 4304
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r19/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "body_sha256": "7fe224e9938511c99d3a9ef0efadebfe73ebc9c87da0e23952e047e6cb9d3140",
+      "input_byte_bound": 3051
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r19/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "body_sha256": "74c11aeb1d8e0842077edd4eb02eacb86407cc7829910a8bd8fb030c3219b553",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r19/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "body_sha256": "0053038df86ef2d5c45dc2aa3bbf2a2c39be40c57ce54bdda4092a0e672d7305",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r20/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "body_sha256": "ebae902dfbe144be3c520895a7349993eb18e90d3a48b4cc47591ed9d72eb2b6",
+      "input_byte_bound": 4357
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r20/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "body_sha256": "30a5f5b5c8e1847f61a6853e7e1a2c136dbf52a8c363d49c42e8085a2e052149",
+      "input_byte_bound": 3104
+    },
+    {
+      "key": "3/NO-PATTERNS/blood_donation_scenario/r20/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "body_sha256": "501e04fdd7bb79d3ed081cb8e96c20b5194783fd3d616662a59d30820de9dccf",
+      "input_byte_bound": 3105
+    },
+    {
+      "key": "3/FULL/blood_donation_scenario/r20/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "body_sha256": "9008597880e57199cc58458da63e55aeca59d480fb8ee401bf74717d9025f2ee",
+      "input_byte_bound": 4358
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r1/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r1/v1",
+      "body_sha256": "dd934a4023829dbde43ae06aeffebdbb94689a8cfab78a687ae9c10425aeb3c7",
+      "input_byte_bound": 4381
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r1/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r1/v1",
+      "body_sha256": "426e964e571f0f0a53183fe8c89e486d9fedf7e15054972b74510f26e1a039ed",
+      "input_byte_bound": 3128
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r1/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r1/v2",
+      "body_sha256": "6e426a1bf2373796aa94420fb8e7bcde13e3eae6197952034a1167b0f1583d88",
+      "input_byte_bound": 3110
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r1/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r1/v2",
+      "body_sha256": "b99bd2aeb2ce7ba8e8a2cf285b8d76e4c3e3c3fd912db6ef7c7597bf39c093cb",
+      "input_byte_bound": 4363
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r2/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r2/v1",
+      "body_sha256": "74114dd807470b9d6172333fa6b00c7ff0343ce8884a2199bb68d8c0596cdc5f",
+      "input_byte_bound": 4367
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r2/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r2/v1",
+      "body_sha256": "9e6e2498303c26e6ca790e4d224ced8a587d66abc7b0d3b9cb7c559c2f96e2cc",
+      "input_byte_bound": 3114
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r2/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r2/v2",
+      "body_sha256": "9fe88569dbe5447ffd17209059a7c88e14233990778994213ff70c795d1f2993",
+      "input_byte_bound": 3116
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r2/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r2/v2",
+      "body_sha256": "38abfae28e4aa22fa8ad1f944117f0cfba1da69974358f929f78f26de2fb2bef",
+      "input_byte_bound": 4369
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r3/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r3/v1",
+      "body_sha256": "fdf784e649ad395e873d4e3a636556595504bca3b9296b8b733f1e21f743b7d9",
+      "input_byte_bound": 4404
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r3/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r3/v1",
+      "body_sha256": "3a0e7fe8287664f29650ee5d14dad9f90f76f38fd12c847c2143dfa886a21539",
+      "input_byte_bound": 3151
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r3/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r3/v2",
+      "body_sha256": "bb70ce1ea6a7affbc6b977f0a5312f742a6eee4fa8a8c346d0ae752da4a7abd8",
+      "input_byte_bound": 3123
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r3/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r3/v2",
+      "body_sha256": "2690fee55535dc7807818dec2f3f171e73865683d60cb280a2ba9e4e50902fae",
+      "input_byte_bound": 4376
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r4/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r4/v1",
+      "body_sha256": "f3fd0b2626b65a6f9326dd8b591f2a32d4a2f36e9982d7449b4b0a01fd36d8da",
+      "input_byte_bound": 4259
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r4/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r4/v1",
+      "body_sha256": "449358f598088f54348baf3df2e3da17797ce772df2cb928dedf9c8f515ea9a1",
+      "input_byte_bound": 3006
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r4/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r4/v2",
+      "body_sha256": "f6c051358d03ac8bca44f14d298054347140d69598509f68b73a9e4095159171",
+      "input_byte_bound": 3072
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r4/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r4/v2",
+      "body_sha256": "96b2b077d6e097bb44a7c365735b608907bbdf2408381f46bb6614885dbfd666",
+      "input_byte_bound": 4325
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r5/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r5/v1",
+      "body_sha256": "e07963405dc7c6cddecaf33240fc2c09f968e59581c988e53a91786fceea0984",
+      "input_byte_bound": 4291
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r5/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r5/v1",
+      "body_sha256": "ca33f839e0e9ba1a55c72984169bfe4193cc82a7e2d83aeea3a8383fd54a14c3",
+      "input_byte_bound": 3038
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r5/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r5/v2",
+      "body_sha256": "d5ccc3b0a03f8f1f2d58128c4e40e6912847815586fc78c3ffe50dbd2281ccbb",
+      "input_byte_bound": 3059
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r5/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r5/v2",
+      "body_sha256": "202848f105e5ea36191521a8fc17ca81d3075229a1e02aebaed4912b72a2d734",
+      "input_byte_bound": 4312
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r6/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r6/v1",
+      "body_sha256": "b5a16509a2cb8ff66fec156bb3d88d4261e45747b94ca7c7bc26f0c415067a32",
+      "input_byte_bound": 4266
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r6/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r6/v1",
+      "body_sha256": "15f3d303a78c410ab68b6f70db980e469b4cd91a6a5074f6a91294be508d68c2",
+      "input_byte_bound": 3013
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r6/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r6/v2",
+      "body_sha256": "02cf85175c9216f92d1d6092e840cf42ae2b462b5e34093764080d5b02a16b92",
+      "input_byte_bound": 3023
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r6/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r6/v2",
+      "body_sha256": "6f549d63455e18b17c1c96a99808ea879cc566bd284e93b2b31f6e04446170ef",
+      "input_byte_bound": 4276
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r7/v1",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r7/v1",
+      "body_sha256": "1bd8bfdb8a55f7b1077d6ed8e078ee7ff8d3c1e2ddc8017a4fc83993adac3832",
+      "input_byte_bound": 4284
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r7/v1",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r7/v1",
+      "body_sha256": "ae8974ab673c6584a15be7d846a22fce1e5f6caef1d651292664e9251b1abffa",
+      "input_byte_bound": 3031
+    },
+    {
+      "key": "3/NO-PATTERNS/emergencies_scenario/r7/v2",
+      "repeat": 3,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r7/v2",
+      "body_sha256": "a34ff2820a868e7e7b6ecf87e65dce5362c656ec35f22d0bba911519a29e2a4b",
+      "input_byte_bound": 3086
+    },
+    {
+      "key": "3/FULL/emergencies_scenario/r7/v2",
+      "repeat": 3,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r7/v2",
+      "body_sha256": "5b15942f86363a41177bfa19eb8d8735e885745e3ad96f49b2f1c83c1dde42dd",
+      "input_byte_bound": 4339
+    },
+    {
+      "key": "4/NO-PATTERNS/SIM_card_scenario/r10/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "body_sha256": "73694ba6dd440475f100056a37c155bbbdb5fa85e62280a240946497d5fb2b30",
+      "input_byte_bound": 3059
+    },
+    {
+      "key": "4/FULL/SIM_card_scenario/r10/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "body_sha256": "3d20a14cc69d75c5327946f3264152ec1f569758ddbddf3af2c38050e571ba9f",
+      "input_byte_bound": 4312
+    },
+    {
+      "key": "4/FULL/SIM_card_scenario/r10/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "body_sha256": "19e74195ec46efee3deeb8a304e51186d60d670d6e072308f634a2b3b09a85af",
+      "input_byte_bound": 4353
+    },
+    {
+      "key": "4/NO-PATTERNS/SIM_card_scenario/r10/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "body_sha256": "8a0207ad86a6d9b461e5aa11c95ce4167b1da32b390ffafbe2c6ef5ef2364176",
+      "input_byte_bound": 3100
+    },
+    {
+      "key": "4/NO-PATTERNS/SIM_card_scenario/r11/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "body_sha256": "06ff1e0bc89bc9fd9e205497354d199b0d889872ef446551da2644fbeda6a219",
+      "input_byte_bound": 3034
+    },
+    {
+      "key": "4/FULL/SIM_card_scenario/r11/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "body_sha256": "636de0a7de6cf3720cc79d984de723582e2998e1bb534ede3937887037b85b1f",
+      "input_byte_bound": 4287
+    },
+    {
+      "key": "4/FULL/SIM_card_scenario/r11/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "body_sha256": "5756dc8a939af8e2140108d0647e7d02e08c6561cb703765ecdab44cb9f2f936",
+      "input_byte_bound": 4343
+    },
+    {
+      "key": "4/NO-PATTERNS/SIM_card_scenario/r11/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "body_sha256": "b813685d6cb055edc9f9d82e5a5583d10535d68f3d51e6c1a13e84332d17a446",
+      "input_byte_bound": 3090
+    },
+    {
+      "key": "4/NO-PATTERNS/SIM_card_scenario/r12/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "body_sha256": "2a0c4d25f67707a8be686dc5e84a8c06ebc831af033c13dfde0e45b6ec98f05f",
+      "input_byte_bound": 3067
+    },
+    {
+      "key": "4/FULL/SIM_card_scenario/r12/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "body_sha256": "92c4a9d8472cd349251a9da20b4a9ee866b437e186c63b02c3ed150e074e85d8",
+      "input_byte_bound": 4320
+    },
+    {
+      "key": "4/FULL/SIM_card_scenario/r13/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "body_sha256": "c990e1e639f4b45de319795e22ce4af70144fdd0b7e30048aace9110dddb7d3a",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "4/NO-PATTERNS/SIM_card_scenario/r13/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "body_sha256": "75b7d85c66f6df949c5ae8067510913c9c0c3e82d60796a678e65c606e856845",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "4/NO-PATTERNS/SIM_card_scenario/r13/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "body_sha256": "2d3a7589d6c8d3af10abcf8b9e4cd24ced1c958de511ac6ca86e0789677afe38",
+      "input_byte_bound": 3054
+    },
+    {
+      "key": "4/FULL/SIM_card_scenario/r13/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "body_sha256": "5349cd6b27b5f21579602df2631bc0c31a2fcf10449d084580a84f2d4abb51d4",
+      "input_byte_bound": 4307
+    },
+    {
+      "key": "4/FULL/SIM_card_scenario/r8/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "body_sha256": "037a3464a0875e6d1253bec97ba72a88b345222aa326887f4469a86cfbc46c5e",
+      "input_byte_bound": 4287
+    },
+    {
+      "key": "4/NO-PATTERNS/SIM_card_scenario/r8/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "body_sha256": "d2a1180c425a89af5c50c1f8e041302f50d754bcd9c3065a68af27d5fa8e4e21",
+      "input_byte_bound": 3034
+    },
+    {
+      "key": "4/NO-PATTERNS/SIM_card_scenario/r8/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "body_sha256": "944a4f385450be72d9fbd164a239a80a5237f641c4565f920ebb9f5e82b7e333",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "4/FULL/SIM_card_scenario/r8/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "body_sha256": "84044f4e16755c398af5b35dc3205e884ee5305b5815b154392b57217c8147eb",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "4/FULL/SIM_card_scenario/r9/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "body_sha256": "0e7ff68d0e66aa274db8b446a5eb683b8e0b1166f32a0ef5776e5f074440a6ad",
+      "input_byte_bound": 4342
+    },
+    {
+      "key": "4/NO-PATTERNS/SIM_card_scenario/r9/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "body_sha256": "7e2d057a18c1906aa01d4e14cb3bb7e27bb9fa44ce19d52a8833bb18a8db677d",
+      "input_byte_bound": 3089
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r14/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "body_sha256": "cd094aac36789b806e2e0b62d54ce9db8589ced3a76adbb73ec454c9c3568ea0",
+      "input_byte_bound": 3112
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r14/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "body_sha256": "bd27a7cf5f24f53f56150ad85d1e9c390d8ab418e9a899ea3e0dd2304e9305e4",
+      "input_byte_bound": 4365
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r14/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "body_sha256": "c11b140c0c07b1f526f222e473084929cadffbb129d09ebe65f80d41a4a42cf5",
+      "input_byte_bound": 4320
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r14/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "body_sha256": "c3f16e1e322b4184fd3e69ed069bab651f97ec3ac6b00766e28e901bc92c56d9",
+      "input_byte_bound": 3067
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r15/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "body_sha256": "3998b4e3bbfeddec74390df40ce61a6faa32f331a42c92fbe5399ca9b6494c69",
+      "input_byte_bound": 3043
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r15/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "body_sha256": "6804c4e5d7b36ea7ec2e0089ab885d7b2ffb67ac766fa4aa248251a712c59920",
+      "input_byte_bound": 4296
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r15/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "body_sha256": "057e660d1e2ff101c6e78fc0f790cd495197bb54f3185778b7a98347f91620ff",
+      "input_byte_bound": 4276
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r15/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "body_sha256": "c7664d6c4efafefe4cefd053658a7cd123b0670dabf585c36d2a80063a2e418e",
+      "input_byte_bound": 3023
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r16/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "body_sha256": "9e184744599dc514ae97d15f5048509289e66806649165a14cd948138cb028cf",
+      "input_byte_bound": 3047
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r16/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "body_sha256": "fae4776e64a282d14120abaca5e176fba1d4aa150705e8c73a845b9ea57dff2e",
+      "input_byte_bound": 4300
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r17/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "body_sha256": "14e66551a1d9939583e5481ccc125874cbada4f9bafc1f35c9f9b69ec6996cae",
+      "input_byte_bound": 4345
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r17/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "body_sha256": "c07ec62e208950cd2ee1c4f4f523e35451ea85cf7869f702b966f6013d48838a",
+      "input_byte_bound": 3092
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r17/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "body_sha256": "adcad77459a366791ff300eb48f9d65953247769fb403feafb9a55ab825355db",
+      "input_byte_bound": 3029
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r17/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "body_sha256": "b196c18182a04617939403a5a18c5356fedc46454795f0c1fdafe86b071bce9a",
+      "input_byte_bound": 4282
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r18/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "body_sha256": "6a208deb05e22e0732a78229c3b39b0f4c5f2a11e22c7ce82c9c166b4bd0ca44",
+      "input_byte_bound": 4305
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r18/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "body_sha256": "db77155eed6b2993c563410d940f21788d59bbbcbe6b69c01cc39bd531f3ecb4",
+      "input_byte_bound": 3052
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r19/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "body_sha256": "7fe224e9938511c99d3a9ef0efadebfe73ebc9c87da0e23952e047e6cb9d3140",
+      "input_byte_bound": 3051
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r19/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "body_sha256": "08487afe49dc0fcaefbe94cfc5b8c1c74f76c67553f022010e573a1438603531",
+      "input_byte_bound": 4304
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r19/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "body_sha256": "0053038df86ef2d5c45dc2aa3bbf2a2c39be40c57ce54bdda4092a0e672d7305",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r19/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "body_sha256": "74c11aeb1d8e0842077edd4eb02eacb86407cc7829910a8bd8fb030c3219b553",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r20/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "body_sha256": "30a5f5b5c8e1847f61a6853e7e1a2c136dbf52a8c363d49c42e8085a2e052149",
+      "input_byte_bound": 3104
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r20/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "body_sha256": "ebae902dfbe144be3c520895a7349993eb18e90d3a48b4cc47591ed9d72eb2b6",
+      "input_byte_bound": 4357
+    },
+    {
+      "key": "4/FULL/blood_donation_scenario/r20/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "body_sha256": "9008597880e57199cc58458da63e55aeca59d480fb8ee401bf74717d9025f2ee",
+      "input_byte_bound": 4358
+    },
+    {
+      "key": "4/NO-PATTERNS/blood_donation_scenario/r20/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "body_sha256": "501e04fdd7bb79d3ed081cb8e96c20b5194783fd3d616662a59d30820de9dccf",
+      "input_byte_bound": 3105
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r1/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r1/v1",
+      "body_sha256": "426e964e571f0f0a53183fe8c89e486d9fedf7e15054972b74510f26e1a039ed",
+      "input_byte_bound": 3128
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r1/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r1/v1",
+      "body_sha256": "dd934a4023829dbde43ae06aeffebdbb94689a8cfab78a687ae9c10425aeb3c7",
+      "input_byte_bound": 4381
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r1/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r1/v2",
+      "body_sha256": "b99bd2aeb2ce7ba8e8a2cf285b8d76e4c3e3c3fd912db6ef7c7597bf39c093cb",
+      "input_byte_bound": 4363
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r1/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r1/v2",
+      "body_sha256": "6e426a1bf2373796aa94420fb8e7bcde13e3eae6197952034a1167b0f1583d88",
+      "input_byte_bound": 3110
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r2/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r2/v1",
+      "body_sha256": "9e6e2498303c26e6ca790e4d224ced8a587d66abc7b0d3b9cb7c559c2f96e2cc",
+      "input_byte_bound": 3114
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r2/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r2/v1",
+      "body_sha256": "74114dd807470b9d6172333fa6b00c7ff0343ce8884a2199bb68d8c0596cdc5f",
+      "input_byte_bound": 4367
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r2/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r2/v2",
+      "body_sha256": "38abfae28e4aa22fa8ad1f944117f0cfba1da69974358f929f78f26de2fb2bef",
+      "input_byte_bound": 4369
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r2/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r2/v2",
+      "body_sha256": "9fe88569dbe5447ffd17209059a7c88e14233990778994213ff70c795d1f2993",
+      "input_byte_bound": 3116
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r3/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r3/v1",
+      "body_sha256": "3a0e7fe8287664f29650ee5d14dad9f90f76f38fd12c847c2143dfa886a21539",
+      "input_byte_bound": 3151
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r3/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r3/v1",
+      "body_sha256": "fdf784e649ad395e873d4e3a636556595504bca3b9296b8b733f1e21f743b7d9",
+      "input_byte_bound": 4404
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r3/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r3/v2",
+      "body_sha256": "2690fee55535dc7807818dec2f3f171e73865683d60cb280a2ba9e4e50902fae",
+      "input_byte_bound": 4376
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r3/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r3/v2",
+      "body_sha256": "bb70ce1ea6a7affbc6b977f0a5312f742a6eee4fa8a8c346d0ae752da4a7abd8",
+      "input_byte_bound": 3123
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r4/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r4/v1",
+      "body_sha256": "449358f598088f54348baf3df2e3da17797ce772df2cb928dedf9c8f515ea9a1",
+      "input_byte_bound": 3006
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r4/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r4/v1",
+      "body_sha256": "f3fd0b2626b65a6f9326dd8b591f2a32d4a2f36e9982d7449b4b0a01fd36d8da",
+      "input_byte_bound": 4259
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r4/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r4/v2",
+      "body_sha256": "96b2b077d6e097bb44a7c365735b608907bbdf2408381f46bb6614885dbfd666",
+      "input_byte_bound": 4325
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r4/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r4/v2",
+      "body_sha256": "f6c051358d03ac8bca44f14d298054347140d69598509f68b73a9e4095159171",
+      "input_byte_bound": 3072
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r5/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r5/v1",
+      "body_sha256": "ca33f839e0e9ba1a55c72984169bfe4193cc82a7e2d83aeea3a8383fd54a14c3",
+      "input_byte_bound": 3038
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r5/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r5/v1",
+      "body_sha256": "e07963405dc7c6cddecaf33240fc2c09f968e59581c988e53a91786fceea0984",
+      "input_byte_bound": 4291
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r5/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r5/v2",
+      "body_sha256": "202848f105e5ea36191521a8fc17ca81d3075229a1e02aebaed4912b72a2d734",
+      "input_byte_bound": 4312
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r5/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r5/v2",
+      "body_sha256": "d5ccc3b0a03f8f1f2d58128c4e40e6912847815586fc78c3ffe50dbd2281ccbb",
+      "input_byte_bound": 3059
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r6/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r6/v1",
+      "body_sha256": "15f3d303a78c410ab68b6f70db980e469b4cd91a6a5074f6a91294be508d68c2",
+      "input_byte_bound": 3013
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r6/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r6/v1",
+      "body_sha256": "b5a16509a2cb8ff66fec156bb3d88d4261e45747b94ca7c7bc26f0c415067a32",
+      "input_byte_bound": 4266
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r6/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r6/v2",
+      "body_sha256": "6f549d63455e18b17c1c96a99808ea879cc566bd284e93b2b31f6e04446170ef",
+      "input_byte_bound": 4276
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r6/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r6/v2",
+      "body_sha256": "02cf85175c9216f92d1d6092e840cf42ae2b462b5e34093764080d5b02a16b92",
+      "input_byte_bound": 3023
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r7/v1",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r7/v1",
+      "body_sha256": "ae8974ab673c6584a15be7d846a22fce1e5f6caef1d651292664e9251b1abffa",
+      "input_byte_bound": 3031
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r7/v1",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r7/v1",
+      "body_sha256": "1bd8bfdb8a55f7b1077d6ed8e078ee7ff8d3c1e2ddc8017a4fc83993adac3832",
+      "input_byte_bound": 4284
+    },
+    {
+      "key": "4/FULL/emergencies_scenario/r7/v2",
+      "repeat": 4,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r7/v2",
+      "body_sha256": "5b15942f86363a41177bfa19eb8d8735e885745e3ad96f49b2f1c83c1dde42dd",
+      "input_byte_bound": 4339
+    },
+    {
+      "key": "4/NO-PATTERNS/emergencies_scenario/r7/v2",
+      "repeat": 4,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r7/v2",
+      "body_sha256": "a34ff2820a868e7e7b6ecf87e65dce5362c656ec35f22d0bba911519a29e2a4b",
+      "input_byte_bound": 3086
+    },
+    {
+      "key": "5/FULL/SIM_card_scenario/r10/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "body_sha256": "3d20a14cc69d75c5327946f3264152ec1f569758ddbddf3af2c38050e571ba9f",
+      "input_byte_bound": 4312
+    },
+    {
+      "key": "5/NO-PATTERNS/SIM_card_scenario/r10/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r10/v1",
+      "body_sha256": "73694ba6dd440475f100056a37c155bbbdb5fa85e62280a240946497d5fb2b30",
+      "input_byte_bound": 3059
+    },
+    {
+      "key": "5/NO-PATTERNS/SIM_card_scenario/r10/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "body_sha256": "8a0207ad86a6d9b461e5aa11c95ce4167b1da32b390ffafbe2c6ef5ef2364176",
+      "input_byte_bound": 3100
+    },
+    {
+      "key": "5/FULL/SIM_card_scenario/r10/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r10/v2",
+      "body_sha256": "19e74195ec46efee3deeb8a304e51186d60d670d6e072308f634a2b3b09a85af",
+      "input_byte_bound": 4353
+    },
+    {
+      "key": "5/FULL/SIM_card_scenario/r11/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "body_sha256": "636de0a7de6cf3720cc79d984de723582e2998e1bb534ede3937887037b85b1f",
+      "input_byte_bound": 4287
+    },
+    {
+      "key": "5/NO-PATTERNS/SIM_card_scenario/r11/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r11/v1",
+      "body_sha256": "06ff1e0bc89bc9fd9e205497354d199b0d889872ef446551da2644fbeda6a219",
+      "input_byte_bound": 3034
+    },
+    {
+      "key": "5/NO-PATTERNS/SIM_card_scenario/r11/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "body_sha256": "b813685d6cb055edc9f9d82e5a5583d10535d68f3d51e6c1a13e84332d17a446",
+      "input_byte_bound": 3090
+    },
+    {
+      "key": "5/FULL/SIM_card_scenario/r11/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r11/v2",
+      "body_sha256": "5756dc8a939af8e2140108d0647e7d02e08c6561cb703765ecdab44cb9f2f936",
+      "input_byte_bound": 4343
+    },
+    {
+      "key": "5/FULL/SIM_card_scenario/r12/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "body_sha256": "92c4a9d8472cd349251a9da20b4a9ee866b437e186c63b02c3ed150e074e85d8",
+      "input_byte_bound": 4320
+    },
+    {
+      "key": "5/NO-PATTERNS/SIM_card_scenario/r12/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r12/v1",
+      "body_sha256": "2a0c4d25f67707a8be686dc5e84a8c06ebc831af033c13dfde0e45b6ec98f05f",
+      "input_byte_bound": 3067
+    },
+    {
+      "key": "5/NO-PATTERNS/SIM_card_scenario/r13/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "body_sha256": "75b7d85c66f6df949c5ae8067510913c9c0c3e82d60796a678e65c606e856845",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "5/FULL/SIM_card_scenario/r13/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r13/v1",
+      "body_sha256": "c990e1e639f4b45de319795e22ce4af70144fdd0b7e30048aace9110dddb7d3a",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "5/FULL/SIM_card_scenario/r13/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "body_sha256": "5349cd6b27b5f21579602df2631bc0c31a2fcf10449d084580a84f2d4abb51d4",
+      "input_byte_bound": 4307
+    },
+    {
+      "key": "5/NO-PATTERNS/SIM_card_scenario/r13/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r13/v2",
+      "body_sha256": "2d3a7589d6c8d3af10abcf8b9e4cd24ced1c958de511ac6ca86e0789677afe38",
+      "input_byte_bound": 3054
+    },
+    {
+      "key": "5/NO-PATTERNS/SIM_card_scenario/r8/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "body_sha256": "d2a1180c425a89af5c50c1f8e041302f50d754bcd9c3065a68af27d5fa8e4e21",
+      "input_byte_bound": 3034
+    },
+    {
+      "key": "5/FULL/SIM_card_scenario/r8/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r8/v1",
+      "body_sha256": "037a3464a0875e6d1253bec97ba72a88b345222aa326887f4469a86cfbc46c5e",
+      "input_byte_bound": 4287
+    },
+    {
+      "key": "5/FULL/SIM_card_scenario/r8/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "body_sha256": "84044f4e16755c398af5b35dc3205e884ee5305b5815b154392b57217c8147eb",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "5/NO-PATTERNS/SIM_card_scenario/r8/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r8/v2",
+      "body_sha256": "944a4f385450be72d9fbd164a239a80a5237f641c4565f920ebb9f5e82b7e333",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "5/NO-PATTERNS/SIM_card_scenario/r9/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "body_sha256": "7e2d057a18c1906aa01d4e14cb3bb7e27bb9fa44ce19d52a8833bb18a8db677d",
+      "input_byte_bound": 3089
+    },
+    {
+      "key": "5/FULL/SIM_card_scenario/r9/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "SIM_card_scenario/r9/v2",
+      "body_sha256": "0e7ff68d0e66aa274db8b446a5eb683b8e0b1166f32a0ef5776e5f074440a6ad",
+      "input_byte_bound": 4342
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r14/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "body_sha256": "bd27a7cf5f24f53f56150ad85d1e9c390d8ab418e9a899ea3e0dd2304e9305e4",
+      "input_byte_bound": 4365
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r14/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r14/v1",
+      "body_sha256": "cd094aac36789b806e2e0b62d54ce9db8589ced3a76adbb73ec454c9c3568ea0",
+      "input_byte_bound": 3112
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r14/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "body_sha256": "c3f16e1e322b4184fd3e69ed069bab651f97ec3ac6b00766e28e901bc92c56d9",
+      "input_byte_bound": 3067
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r14/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r14/v2",
+      "body_sha256": "c11b140c0c07b1f526f222e473084929cadffbb129d09ebe65f80d41a4a42cf5",
+      "input_byte_bound": 4320
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r15/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "body_sha256": "6804c4e5d7b36ea7ec2e0089ab885d7b2ffb67ac766fa4aa248251a712c59920",
+      "input_byte_bound": 4296
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r15/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r15/v1",
+      "body_sha256": "3998b4e3bbfeddec74390df40ce61a6faa32f331a42c92fbe5399ca9b6494c69",
+      "input_byte_bound": 3043
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r15/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "body_sha256": "c7664d6c4efafefe4cefd053658a7cd123b0670dabf585c36d2a80063a2e418e",
+      "input_byte_bound": 3023
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r15/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r15/v2",
+      "body_sha256": "057e660d1e2ff101c6e78fc0f790cd495197bb54f3185778b7a98347f91620ff",
+      "input_byte_bound": 4276
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r16/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "body_sha256": "fae4776e64a282d14120abaca5e176fba1d4aa150705e8c73a845b9ea57dff2e",
+      "input_byte_bound": 4300
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r16/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r16/v1",
+      "body_sha256": "9e184744599dc514ae97d15f5048509289e66806649165a14cd948138cb028cf",
+      "input_byte_bound": 3047
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r17/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "body_sha256": "c07ec62e208950cd2ee1c4f4f523e35451ea85cf7869f702b966f6013d48838a",
+      "input_byte_bound": 3092
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r17/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r17/v1",
+      "body_sha256": "14e66551a1d9939583e5481ccc125874cbada4f9bafc1f35c9f9b69ec6996cae",
+      "input_byte_bound": 4345
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r17/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "body_sha256": "b196c18182a04617939403a5a18c5356fedc46454795f0c1fdafe86b071bce9a",
+      "input_byte_bound": 4282
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r17/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r17/v2",
+      "body_sha256": "adcad77459a366791ff300eb48f9d65953247769fb403feafb9a55ab825355db",
+      "input_byte_bound": 3029
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r18/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "body_sha256": "db77155eed6b2993c563410d940f21788d59bbbcbe6b69c01cc39bd531f3ecb4",
+      "input_byte_bound": 3052
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r18/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r18/v2",
+      "body_sha256": "6a208deb05e22e0732a78229c3b39b0f4c5f2a11e22c7ce82c9c166b4bd0ca44",
+      "input_byte_bound": 4305
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r19/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "body_sha256": "08487afe49dc0fcaefbe94cfc5b8c1c74f76c67553f022010e573a1438603531",
+      "input_byte_bound": 4304
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r19/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r19/v1",
+      "body_sha256": "7fe224e9938511c99d3a9ef0efadebfe73ebc9c87da0e23952e047e6cb9d3140",
+      "input_byte_bound": 3051
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r19/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "body_sha256": "74c11aeb1d8e0842077edd4eb02eacb86407cc7829910a8bd8fb030c3219b553",
+      "input_byte_bound": 3055
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r19/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r19/v2",
+      "body_sha256": "0053038df86ef2d5c45dc2aa3bbf2a2c39be40c57ce54bdda4092a0e672d7305",
+      "input_byte_bound": 4308
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r20/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "body_sha256": "ebae902dfbe144be3c520895a7349993eb18e90d3a48b4cc47591ed9d72eb2b6",
+      "input_byte_bound": 4357
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r20/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r20/v1",
+      "body_sha256": "30a5f5b5c8e1847f61a6853e7e1a2c136dbf52a8c363d49c42e8085a2e052149",
+      "input_byte_bound": 3104
+    },
+    {
+      "key": "5/NO-PATTERNS/blood_donation_scenario/r20/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "body_sha256": "501e04fdd7bb79d3ed081cb8e96c20b5194783fd3d616662a59d30820de9dccf",
+      "input_byte_bound": 3105
+    },
+    {
+      "key": "5/FULL/blood_donation_scenario/r20/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "blood_donation_scenario/r20/v2",
+      "body_sha256": "9008597880e57199cc58458da63e55aeca59d480fb8ee401bf74717d9025f2ee",
+      "input_byte_bound": 4358
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r1/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r1/v1",
+      "body_sha256": "dd934a4023829dbde43ae06aeffebdbb94689a8cfab78a687ae9c10425aeb3c7",
+      "input_byte_bound": 4381
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r1/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r1/v1",
+      "body_sha256": "426e964e571f0f0a53183fe8c89e486d9fedf7e15054972b74510f26e1a039ed",
+      "input_byte_bound": 3128
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r1/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r1/v2",
+      "body_sha256": "6e426a1bf2373796aa94420fb8e7bcde13e3eae6197952034a1167b0f1583d88",
+      "input_byte_bound": 3110
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r1/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r1/v2",
+      "body_sha256": "b99bd2aeb2ce7ba8e8a2cf285b8d76e4c3e3c3fd912db6ef7c7597bf39c093cb",
+      "input_byte_bound": 4363
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r2/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r2/v1",
+      "body_sha256": "74114dd807470b9d6172333fa6b00c7ff0343ce8884a2199bb68d8c0596cdc5f",
+      "input_byte_bound": 4367
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r2/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r2/v1",
+      "body_sha256": "9e6e2498303c26e6ca790e4d224ced8a587d66abc7b0d3b9cb7c559c2f96e2cc",
+      "input_byte_bound": 3114
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r2/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r2/v2",
+      "body_sha256": "9fe88569dbe5447ffd17209059a7c88e14233990778994213ff70c795d1f2993",
+      "input_byte_bound": 3116
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r2/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r2/v2",
+      "body_sha256": "38abfae28e4aa22fa8ad1f944117f0cfba1da69974358f929f78f26de2fb2bef",
+      "input_byte_bound": 4369
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r3/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r3/v1",
+      "body_sha256": "fdf784e649ad395e873d4e3a636556595504bca3b9296b8b733f1e21f743b7d9",
+      "input_byte_bound": 4404
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r3/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r3/v1",
+      "body_sha256": "3a0e7fe8287664f29650ee5d14dad9f90f76f38fd12c847c2143dfa886a21539",
+      "input_byte_bound": 3151
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r3/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r3/v2",
+      "body_sha256": "bb70ce1ea6a7affbc6b977f0a5312f742a6eee4fa8a8c346d0ae752da4a7abd8",
+      "input_byte_bound": 3123
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r3/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r3/v2",
+      "body_sha256": "2690fee55535dc7807818dec2f3f171e73865683d60cb280a2ba9e4e50902fae",
+      "input_byte_bound": 4376
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r4/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r4/v1",
+      "body_sha256": "f3fd0b2626b65a6f9326dd8b591f2a32d4a2f36e9982d7449b4b0a01fd36d8da",
+      "input_byte_bound": 4259
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r4/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r4/v1",
+      "body_sha256": "449358f598088f54348baf3df2e3da17797ce772df2cb928dedf9c8f515ea9a1",
+      "input_byte_bound": 3006
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r4/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r4/v2",
+      "body_sha256": "f6c051358d03ac8bca44f14d298054347140d69598509f68b73a9e4095159171",
+      "input_byte_bound": 3072
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r4/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r4/v2",
+      "body_sha256": "96b2b077d6e097bb44a7c365735b608907bbdf2408381f46bb6614885dbfd666",
+      "input_byte_bound": 4325
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r5/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r5/v1",
+      "body_sha256": "e07963405dc7c6cddecaf33240fc2c09f968e59581c988e53a91786fceea0984",
+      "input_byte_bound": 4291
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r5/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r5/v1",
+      "body_sha256": "ca33f839e0e9ba1a55c72984169bfe4193cc82a7e2d83aeea3a8383fd54a14c3",
+      "input_byte_bound": 3038
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r5/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r5/v2",
+      "body_sha256": "d5ccc3b0a03f8f1f2d58128c4e40e6912847815586fc78c3ffe50dbd2281ccbb",
+      "input_byte_bound": 3059
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r5/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r5/v2",
+      "body_sha256": "202848f105e5ea36191521a8fc17ca81d3075229a1e02aebaed4912b72a2d734",
+      "input_byte_bound": 4312
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r6/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r6/v1",
+      "body_sha256": "b5a16509a2cb8ff66fec156bb3d88d4261e45747b94ca7c7bc26f0c415067a32",
+      "input_byte_bound": 4266
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r6/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r6/v1",
+      "body_sha256": "15f3d303a78c410ab68b6f70db980e469b4cd91a6a5074f6a91294be508d68c2",
+      "input_byte_bound": 3013
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r6/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r6/v2",
+      "body_sha256": "02cf85175c9216f92d1d6092e840cf42ae2b462b5e34093764080d5b02a16b92",
+      "input_byte_bound": 3023
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r6/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r6/v2",
+      "body_sha256": "6f549d63455e18b17c1c96a99808ea879cc566bd284e93b2b31f6e04446170ef",
+      "input_byte_bound": 4276
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r7/v1",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r7/v1",
+      "body_sha256": "1bd8bfdb8a55f7b1077d6ed8e078ee7ff8d3c1e2ddc8017a4fc83993adac3832",
+      "input_byte_bound": 4284
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r7/v1",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r7/v1",
+      "body_sha256": "ae8974ab673c6584a15be7d846a22fce1e5f6caef1d651292664e9251b1abffa",
+      "input_byte_bound": 3031
+    },
+    {
+      "key": "5/NO-PATTERNS/emergencies_scenario/r7/v2",
+      "repeat": 5,
+      "arm": "NO-PATTERNS",
+      "sample_id": "emergencies_scenario/r7/v2",
+      "body_sha256": "a34ff2820a868e7e7b6ecf87e65dce5362c656ec35f22d0bba911519a29e2a4b",
+      "input_byte_bound": 3086
+    },
+    {
+      "key": "5/FULL/emergencies_scenario/r7/v2",
+      "repeat": 5,
+      "arm": "FULL",
+      "sample_id": "emergencies_scenario/r7/v2",
+      "body_sha256": "5b15942f86363a41177bfa19eb8d8735e885745e3ad96f49b2f1c83c1dde42dd",
+      "input_byte_bound": 4339
+    }
+  ],
+  "bindings": {
+    "formal_experiment/data/input/s2_12_complex_corpus_formal_input_v1.json": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "formal_experiment/scripts/run_barrientos_paper_ablation_v1.py": "e8e3425dbf0da55dcc5f49ef9a5045dfba7e1fa36a1eb5a9bb32dd422aa4c6df",
+    "formal_experiment/src/bpc_hybrid/de_contract_schema.py": "be8ccb789309f1b0706a221f38af3233330a4a2c45dfb7db36c31f8ec4f27fd3",
+    "references/barrientos_2026/artifact_input/formats/compliance_requirements_format.json": "791b1fd6018b3ba7ccba6ba40583e5a914dd8fa8104d01060c54bd3d9b6e7db1",
+    "references/barrientos_2026/artifact_input/prompts/formalize_requirements_prompt.txt": "49af69cc8ff6063db97fbdeab74cd4c7f0506d1bae7d86233971749f3ad4738a",
+    "references/barrientos_2026/artifact_input/prompts/formalize_requirements_prompt_no_patterns.txt": "2e2bf321fe48ee206ab851e7f24b83a677af30b2f9730544d295e62aa763b377",
+    "references/barrientos_2026/artifact_input/requirements/blood_donation_scenario/blood_donation_scenario.json": "d7cdd9a95dcf9dfc15a44e893d037ff2970bb71719d70b135b307f2ce437cb02",
+    "references/barrientos_2026/artifact_input/requirements/emergencies_scenario/emergencies_scenario.json": "c0ec30e69e082f686edbe813e8c8de071ea2150cb049bbb56235badd44ce9684",
+    "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+    "references/barrientos_2026/notebooks/AnalyzeImpactRequirementChangesBusinessProcessCompliance.ipynb": "dde3323ebde46380d05aba278acd457f78371255fbbfde815a91e1bb8f9226eb",
+    "references/papers/Barrientos_2026_Impact_analysis.pdf": "6ce91fd29557b0c4b5afc3908ff0d65d446566d645119f133e95ede9ff42251b"
+  },
+  "vocabulary": {
+    "control_flow": [
+      "existence_of_A",
+      "absence_of_A",
+      "A_requires_B",
+      "A_coexists_with_B",
+      "A_mutex_B",
+      "choose_A_or_B",
+      "choose_A_xor_B",
+      "A_followed_by_B",
+      "A_precedes_B",
+      "limit_A_to_N",
+      "A_blocks_B",
+      "A_blocks_B_until_C",
+      "A_immediately_followed_by_B"
+    ],
+    "resource": [
+      "performed_by",
+      "not_performed_by",
+      "static_SoD",
+      "static_bonded",
+      "automatic",
+      "dynamic_SoD",
+      "multi_segregated",
+      "dynamic_bonded",
+      "multi_bonded"
+    ],
+    "data": [
+      "data_available",
+      "data_formula",
+      "data_format",
+      "data_not_changed",
+      "data_not_used",
+      "data_consistent",
+      "data_equal",
+      "data_in_domain",
+      "data_in_range",
+      "data_missing",
+      "data_unique",
+      "data_unique_over_time",
+      "data_origin_known",
+      "data_purpose_known"
+    ],
+    "time": [
+      "time_lag",
+      "duration",
+      "schedule_restricted",
+      "validity_period",
+      "fixed_date",
+      "time_based",
+      "cyclic_elements",
+      "periodicity"
+    ]
+  },
+  "budget": {
+    "input_token_cap": 1699050,
+    "output_token_cap": 1474560,
+    "usd_cost_cap": 9.7,
+    "retry": 0,
+    "input_cache_miss_usd_per_million": 1.32,
+    "output_usd_per_million": 3.96,
+    "price_source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verified_date": "2026-09-05",
+    "mode": "conservative peak, cache miss",
+    "calculation": "input reserves UTF-8 request bytes + 1024 per call; max output 4096; 20% USD margin"
+  },
+  "authorization": null,
+  "primary_metrics": [
+    "out_of_vocabulary_action_rate",
+    "wrong_dimension_action_rate",
+    "records_with_vocabulary_errors/all_requests",
+    "raw_schema_valid_rate",
+    "usable_nonempty_rate",
+    "same_arguments_pattern_disagreement_proxy"
+  ],
+  "semantic_accuracy": "not scored automatically; no six-field F1 substitution; cases remain human-review candidates",
+  "stability": "nonempty schema-valid canonical-JSON exact agreement, 36*C(5,2) pairs/arm; auxiliary, not paper distance<=2"
+}

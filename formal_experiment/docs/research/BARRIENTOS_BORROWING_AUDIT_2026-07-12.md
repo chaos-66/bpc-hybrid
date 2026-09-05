@@ -1,5 +1,36 @@
 # Barrientos 借鉴审计 — 2026-07-12
 
+> **2026-09-05 原论文页面与 artifact 逐行复核（优先于下文历史建议）**：
+> PDF 第9页 §5.1 和 §5.3 明确提到两项消融：受控模式限制、PDF/XML 流程输入。
+> 第10–11页的36条、五次重复、Table 5属于主评价，论文这两段没有单独披露
+> 消融的完整逐条件数字、样本数或重复数。不能把本项目 AB-1–AB-10 归因给原文。
+>
+> 随附 `formalize_requirements_prompt_no_patterns.txt` 实际同时删除
+> `Allowed Compliance Patterns`（44项）与 `Control-Flow Exclusivity Rule`，并把
+> 后三条规则重新编号；其余正文一致。它仍保留“不得编造模式”及对下方清单的
+> 引用。因此按原 artifact 复现时必须称“两份原始提示的对照”，不能称纯词表
+> 单因素消融。原 JSON schema 的 `compliance_pattern` 是 string，不是 enum；
+> 格式合法与模式名称在清单内必须分别统计。本文过去把“整个结构化输出约束”
+> 等同于这项消融的说法不准确。
+>
+> Notebook `AnalyzeImpactRequirementChangesBusinessProcessCompliance.ipynb` 的
+> cell 6/7（从0编号）分别上传 PDF / 将 BPMN XML 放入 user text；XML 臂也把
+> “MIGHT violate”改成“violates”，并改动若干解释及输出描述，不是完全纯粹的
+> 媒介单因素。Step 3 同时需要法规两版本、形式化记录与 delta；不能仅给当前
+> 确定性 Stage 3 换一个输入扩展名。其独立模型/上传预算与阶段门禁保持待准备。
+>
+> 本轮按用户“模仿原文做、收敛消融范围”的要求，先准备 S2-BARR-4 原生 FULL /
+> NO-PATTERNS 两条件：冻结36条 × 2 × 5 = 360新调用，成对交错、无历史基线复用。
+> 五次是沿用主评价设计的本项目选择；采用当前 DeepSeek-V4-Pro-0813 而非原文
+> GPT-4.1，明确是换模型的 artifact 复现，不是本文六字段创新验证。主指标为
+> 名单外模式、维度错配、格式/非空可用率及明确标为 proxy 的同参数命名差异；
+> 不用六字段 F1 或计数代理冒充语义准确率。原始回答和待人工检查案例仅本地保存。
+> 对应代码/合同/预检报告为 `run_barrientos_paper_ablation_v1.py`、
+> `configs/ablations/barrientos_paper_ablation_v1.json`、
+> `outputs/reports/barrientos_paper_ablation_preflight_v1.json`。
+> 旧1140调用 executor 的“paper says nothing about it”注释已过时；该文件被历史
+> 授权与结果哈希绑定，保持字节不变，以本次来源复核纠正，不重写历史结果。
+
 > **目的**：明确 Barrientos 2026 论文哪些能借鉴、哪些不能借鉴、如何借鉴。
 > **依据**：
 > - `references/barrientos_2026/artifact_input/prompts/formalize_requirements_prompt.txt`（原文 prompt）
