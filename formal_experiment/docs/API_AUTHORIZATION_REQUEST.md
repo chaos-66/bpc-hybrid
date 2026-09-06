@@ -347,3 +347,118 @@ English mirror:
 
 **明确声明**：本合并申请（2026-09-06）未创建、也不要求创建任何授权文件；
 两批 `authorized: false`、`calls_made: 0` 将一直保持，直到用户授权。
+
+## 12. 2026-09-06 executor contract for GDPR 74-call batch
+
+> 本节记录 GDPR 74-call Direct-LLM 批次的**可执行链与执行契约**（零 API / 零网络 /
+> 零 `.env` 验证已完成；真实调用仍 pending 用户授权句 + 授权事件文件）。前面 §1–§11
+> 内容与数字**原样保留、不受影响**。本节不修改任何既有文件，仅新增三个交付物：
+> executor 脚本、执行契约、离线验证测试，以及本 doc 追加。
+
+### 12.1 交付物
+
+| 文件 | 作用 |
+|---|---|
+| `scripts/run_gdpr7_direct_llm_v1.py` | GDPR Stage-2 Direct-LLM 74-call 真实 executor（fake/real 双 transport、per-call payload lock、caps、off-peak、append-only hash-chained ledger + resume、raw JSONL、canonical 预测 capsule） |
+| `configs/ablations/gdpr7_direct_llm_execution_contract_v1.json` | 执行契约：bound commit `6263f08`、74-call 固定计划（preflight report 行、按 sample_id 顺序）、model/sampling/transport pins、hash set（input/preflight/registry/prompt/executor）、caps、authorization=null + 授权句模板（scope `gdpr7_direct_llm_v1:74`） |
+| `tests/test_gdpr7_direct_llm_executor_v1.py` | 离线 fake-transport 全 74 请求验证（8 场景 a–h，零网络） |
+
+### 12.2 Executor 入口命令
+
+Fake 验证（74/74、零网络、cost=0；程序验证专用，非实验结果）：
+
+```powershell
+python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py --fake-transport
+# 等价别名: --runtime-dry-run
+# 默认输出: outputs/development/gdpr7_direct_llm_raw_v1/
+#           (raw_responses.jsonl + ledger.jsonl) 和
+#           outputs/development/gdpr7_direct_llm_v1/
+#           (predictions.json / telemetry.json / cost.json / manifest.json)
+```
+
+真实运行（**用户授权后**；授权事件文件缺失 → 第一次 send 前硬拒绝）：
+
+```powershell
+python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py `
+  --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v1.json `
+  --authorization-file <gdpr7-direct-llm-authorization-event-file>
+```
+
+Resume（partial/aborted 后只重发从未尝试的请求；completed / in_doubt 绝不重发）：
+
+```powershell
+python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py --fake-transport --resume
+python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py `
+  --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v1.json `
+  --authorization-file <gdpr7-direct-llm-authorization-event-file> --resume
+```
+
+Contract 文件路径：`formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v1.json`
+（schema `gdpr7_direct_llm_execution_contract@1.0.0`；bound commit
+`6263f08bd5cfe54f21a826b28ce5f1bc48c97967`）。
+
+### 12.3 代码内硬上限（in code，非仅文档）
+
+- calls = 74（一次/句）；retry = 0；model pin `deepseek-v4-pro`
+  （published alias `DeepSeek-V4-Pro-0813`）；temperature 0、top_p 1、
+  max_tokens 4,096；stream=false、thinking disabled、response_format=None
+  （全部经每次调用的 payload-lock body SHA 与 preflight 报告锁定逐条一致而强制）。
+- global input ≤ **74,000,000**（74 × 官方 1M context 的保守 proxy-equivalent 上界，
+  见 preflight 报告）；output 单次 ≤ **4,096**、总计 ≤ **303,104**；
+  USD ≤ **2.61（peak）/ 1.31（off-peak）**（规划上界 + 20% margin 的 preflight 推荐值）。
+  planning（Legal-BERT proxy）tokens 是**规划代理，不是 billing tokens**；真实 billing
+  input 只能来自真实响应 usage；官方价格运行前必须重验（授权事件含价格快照 + 重验时间戳）。
+- 每次 send 前：授权事件校验（缺 → 硬拒绝）、off-peak（北京时间 peak 09:00–12:00 /
+  14:00–18:00，周一–五）逐次检查、call/input/output/USD caps（含本请求规划上界
+  的保守预检）；每次响应后：usage 捕获、returned model 校验、真实累计 caps 复查。
+  返回模型不符 → 中止；usage 缺失 / decode 非 ok → **in_doubt**（绝不自动重发）。
+
+### 12.4 授权事件要求 + 可复制的授权句模板
+
+真实执行在存在并验证以下授权事件文件前一律拒绝（缺 → 第一次 send 前硬停止、无任何
+输出发布）：schema `gdpr7_direct_llm_authorization_event@1.0.0`，含用户授权原句及其
+UTF-8 SHA-256、**scope 恰为 `gdpr7_direct_llm_v1:74`**、模型/别名/retry、calls=74、
+allowed_windows=`off_peak_only`、off-peak 官方价格快照 + `official_price_reverified_at_utc`、
+caps 与代码内硬上限一致、hash_set 与契约逐条一致（含契约文件自身 SHA）、Gold 隔离声明。
+
+可复制的授权句模板（须用户亲自逐字发出并据此生成授权事件文件；scope 固定为
+`gdpr7_direct_llm_v1:74`）：
+
+> 我授权在 GDPR Stage-2→Stage-3 衔接的 Direct-LLM 臂上（scope
+> `gdpr7_direct_llm_v1:74`）对 `gdpr7_stage2_input_v1.json` 的 74 个
+> `approved_text_en` 句子每句调用 1 次 `deepseek-v4-pro` 真实 API（DeepSeek-V4-Pro-0813），
+> 共 74 次、retry=0、off-peak only（北京时间 09:00–12:00 / 14:00–18:00 之外，
+> 每次调用前检查）；输入仅限 `gdpr7_direct_llm_preflight_v1.json` 锁定的 74 个请求体；
+> global input ≤74,000,000、output ≤303,104（单次 ≤4,096）、USD ≤1.31（off-peak 规划价
+> +20% margin；绝不超 2.61）；运行前重验官方价格；任一模型/返回模型/输入/source/prompt/
+> config/payload/hash/官方价格/Gold 隔离/cap/时段违背 → 调用前硬停止；存疑条目不自动
+> 重发；partial 运行保留账本；不读取 `.env`、不调用 Oracle。
+
+English mirror:
+
+> I authorize running the GDPR Stage-2->Stage-3 linkage Direct-LLM arm (scope
+> `gdpr7_direct_llm_v1:74`): 74 real `deepseek-v4-pro` API calls (published
+> alias DeepSeek-V4-Pro-0813), one per `approved_text_en` sentence of
+> `gdpr7_stage2_input_v1.json`, retry=0, off-peak only (outside Beijing
+> 09:00-12:00 / 14:00-18:00, checked before every call); input limited to the
+> 74 locked request bodies of `gdpr7_direct_llm_preflight_v1.json`; global
+> input <=74,000,000, output <=303,104 (per call <=4,096), USD <=1.31
+> (off-peak planning price +20% margin; never above 2.61); official prices
+> re-verified before the run; any model/returned-model/input/source/prompt/
+> config/payload/hash/price/Gold-isolation/cap/window violation hard-stops
+> before the call; in-doubt entries are never auto-resent; partial runs keep
+> their ledgers; no `.env` read, no Oracle.
+
+### 12.5 验证状态
+
+- **Fake verification（程序验证，非实验结果）：74/74 requests attempted，
+  74/74 ledger `completed`，74/74 canonical prediction rows `ok`
+  （error_category 全 null），in_doubt=0、failed=0，cost_usd=0.00，
+  零网络、零 API、不读取 `.env`；capsule 完整发布（predictions/telemetry/cost/
+  manifest），manifest 记录 arm capsule path/schema/计数/cost/runtime 与
+  reproduce 命令。**
+- 测试文件 9/9 passed（场景 a–h：fake 全量、无授权拒绝、USD cap 预检、in_doubt +
+  resume 只发余量、payload drift fail-closed、returned-model mismatch abort、
+  Gold/文本隔离、linkage schema dry-load）。
+- 真实调用数 = 0；未创建任何授权事件文件；`authorized: false` 保持到用户授权。
+

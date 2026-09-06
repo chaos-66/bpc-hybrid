@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-06
-**收录文件**：1594 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1612 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -63,6 +63,7 @@
 | `configs/ablations/d1_prompt_factorial_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/e_same_data_input_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/e_same_data_input_contract_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/ablations/gdpr7_direct_llm_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/bm25_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/bm25_stage3_development_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/datasets/stage1_stage3_gdpr7_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -654,6 +655,7 @@
 | `docs/research/S28D_R6_SMALL_PILOT_RESULTS.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/S28D_R6C1_REMAINING_PILOT_RESULTS.json` | 研究证据 | 机器可读配置、数据、事件或产物 |
 | `docs/research/S28D_R6C1_REMAINING_PILOT_RESULTS.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_BASELINE_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_MODALITY_DATASET_INGESTION.md` | 研究证据 | 说明、规范或研究文档 |
@@ -918,6 +920,10 @@
 | `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr7_direct_llm_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_3type_linkage_v1_reference.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_3type_linkage_v1_reference.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/gdpr_3type_linkage_v1_rules_only.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_3type_linkage_v1_rules_only.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr_s2_s3_linkage_v1_rules_only.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/gdpr_s2_s3_linkage_v1_rules_only.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/paper_experiment_completion_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1042,6 +1048,10 @@
 | `outputs/reports/s35_sun_stage3_threshold_sensitivity_v1_figB_theta_incorrect_actor.svg` | 活动 | 历史可视化或报告 |
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_7_oracle_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_extended_unified_v1_reference.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_extended_unified_v1_reference.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_extended_unified_v1_rules_only.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_extended_unified_v1_rules_only.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s3_extended_violation_comparison_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_extended_violation_comparison_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage1_formal_evaluation_v2.capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1259,6 +1269,7 @@
 | `scripts/publish_snapshot_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/rebuild_d1_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
+| `scripts/reevaluate_s3_extended_unified_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/restore_layer_e_adjudication_from_56d2b03.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/review_s2_11_candidates.py` | 活动 | Python 实现、脚本或测试 |
@@ -1278,7 +1289,9 @@
 | `scripts/run_estg150_b0_formal.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_gdpr7_direct_llm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_gdpr7_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_gdpr_3type_linkage_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_gdpr_s2_s3_linkage_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_llm_zh_aid.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s2_12_direct_llm_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1431,6 +1444,7 @@
 | `src/bpc_hybrid/s2_12_method_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s2_12_stratified_evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s2_12_stratified_evaluator_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_extended_unified.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/smoke.py` | 活动 | Python 实现、脚本或测试 |
@@ -1456,6 +1470,7 @@
 | `src/bpc_hybrid/sun_compat/similarity_engine.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/stage3_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_stage3/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_stage3/sun_model.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_stage3/sun_rule_extraction.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_stage3/sun_scorer.py` | 活动 | Python 实现、脚本或测试 |
@@ -1593,9 +1608,11 @@
 | `tests/test_g04_and_b0_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_g05_complexity_candidate_draft_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_g07_barrientos_adapter_contract.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gdpr7_direct_llm_executor_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_direct_llm_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_review_surface_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_stage2_input_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gdpr_3type_linkage_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr_s2_s3_linkage_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr_s2_s3_projection.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
@@ -1660,6 +1677,7 @@
 | `tests/test_s2_13_s3_7_transition_readiness_v8.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_2_s3_3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_9_synthetic_panel.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_extended_unified_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_violation_report_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_violation_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |

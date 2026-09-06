@@ -4076,3 +4076,16 @@
 - 仍存在 blocker：无
 - 备注：真实完成（零 API）：(1) GDPR 句子级 Gold-blind 输入 gdpr7_stage2_input_v1.json（9 条款=冻结 inference pack 规则文本，74 句，分句与 S3.9-EXT 锁定绑定 40/40 一致）；(2) Rules-Only 锁定 B0 v10a 真实运行 74/74 ok/82 clauses/0 失败/0 空输出（data/predictions/gdpr7_sun_rule_only_v1，英文 pass-through 披露，run-lock gdpr7_sun_rule_only_run_v1.json）；(3) 衔接 harness run_gdpr_s2_s3_linkage_v1.py 复用原始面板运行器后端/公式/阈值，外部预测 first-valid-span 投影、失败显式不回填；Rules-Only 臂（40 变体+40 对照，DEV_ONLY）winter macro 0.5208/exact 0.375/FP 0.45，sun 0.1875/0.15/0.05，bm25 0/0/0，tfidf 0.351/0.275/0.375，逐样本变化 7/6/6/4（案例：article22 s1 情态误标致禁止变体不可观察；tfidf constraint_violated_04 由不可观察变新检出）；(4) Direct-LLM 74 冻结请求预检 gdpr7_direct_llm_preflight_v1.json（body 1,297,742B/proxy 367,333/输出 303,104/USD 2.61 peak、1.31 off-peak），并入 API_AUTHORIZATION_REQUEST.md §11 合并申请（S2.12 63+GDPR 74=137，真实 API=0 待授权）；(5) 人工核对材料 gdpr7_six_element_review_blank_v1.json（9 条款/74 句，decision 全空）+验证器+中文指南；(6) 论文六条修正（THESIS_DRAFT/CLAIM_EVIDENCE_MATRIX C32/C33/ABLATION_MATRIX parse 澄清）+ 12 页汇报稿 MENTOR_REPORT_CONTENT_2026-09.md；MASTER 3.6.36/PROJECT_AUDIT 同步。全量 audit 2877 passed/24 skipped exit 0；未改 Gold/冻结面板/阈值/BPMN/历史产物；用户文件与 .bak 未触碰。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-06T15:13:11.990357+00:00 - 2026-09-06c 汇报前收尾：S3.9-EXT 统一五分类评价重算 + 原三类衔接实跑 + GDPR Direct-LLM 执行链离线验证 + 论文/汇报口径修正
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2897 passed, 24 skipped, 45 warnings in 2897.76s (0:48:17)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`6263f08bd5cfe54f21a826b28ce5f1bc48c97967`；相关未提交路径：34 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：零 LLM/API：(1) 统一预测规则（合规/违规同一五分类决策；不读 expected/gold；gold 仅预测固定后评价）离线重算 reference 与 Rules-Only 臂（scripts/reevaluate_s3_extended_unified_v1.py，基于保存分数；旧结果保留并标注为指定类型条件性检出）：统一口径 variant-only macro reference winter 0.499/sun 0.321/bm25 0.226/tfidf 0.375，rules_only 0.331/0.188/0.000/0.332；wrong-type reference 9/1/0/1、rules_only 10/0/0/6（撤回 P=1/无 wrong-type）；control FP 两口径一致（reference .500/.125/.000/.275；rules_only .450/.050/.000/.375，tfidf 0.275->0.375 升，撤回误报未升）；paired 5-class reference .375/.263/.250/.338、rules_only .263/.200/.150/.263；旧 paired 数字由持久化行精确复现（自检通过）。产物 outputs/reports/s3_extended_unified_v1_{reference,rules_only}.* + 注记 docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md。(2) 原三类衔接（33 条人工 violation Gold；scripts/run_gdpr_3type_linkage_v1.py + converter）：参考 macro 0.3889/exact 0.3636 vs Rules-Only 0.3333/0.3333；missing_action 11/11 F1=1.0 两侧；24 同/9 变，唯一判定翻转 v014；out_of_order 两侧 0（胶囊无 order_relations=缺失输入契约，如实）。 (3) GDPR Direct-LLM 74 执行链（run_gdpr7_direct_llm_v1.py + execution contract）：body-SHA PayloadLock、in-code caps（74M/303,104/USD2.61-1.31/retry0/off-peak）、授权门禁、账本断点、raw/canonical/cost/manifest、linkage schema 衔接；假响应 74/74 + 9 测试（程序验证）；真实调用待授权（§12；S2.12 63+GDPR 74=137）。 (4) THESIS 7.4.4/CLAIM C30/C34/C35/mentor 汇报稿统一口径；MASTER 3.6.37/PROJECT_AUDIT 同步；FILE_CATALOG 重建。全量 audit 2897 passed/24 skipped；未改 Gold/冻结面板/阈值/BPMN/历史产物；用户文件与 .bak 未触碰。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -11,6 +11,29 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 ## 1. 当前结论
 
+**2026-09-06c 汇报前收尾（零 LLM/API；统一评价已离线运行，旧结果保留）**：
+(1) **统一五分类评价修复并重算**：合规/违规两侧同一确定性决策（不读 expected/gold；
+gold 仅预测固定后评价），基于保存分数离线重算 reference 与 Rules-Only 臂（
+`scripts/reevaluate_s3_extended_unified_v1.py`）。统一口径 variant-only macro：
+reference winter 0.499/sun 0.321/bm25 0.226/tfidf 0.375；rules_only
+0.331/0.188/0.000/0.332；wrong-type 不再为 0（reference winter 9、tfidf 1；
+rules_only winter 10、tfidf 6）——撤回“P=1/无 wrong-type”；control FP 两口径一致：
+reference 0.500/0.125/0.000/0.275；rules_only 0.450/0.050/0.000/0.375
+（tfidf 0.275→0.375 升 0.10，“误报未升”撤回）。旧产物保留并标注为“指定类型
+条件性检出”。详见 `docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md`。
+(2) **原三类衔接已实跑**（33 条人工 violation decision Gold，dev Sun-style 固定
+参数；`scripts/run_gdpr_3type_linkage_v1.py`）：参考 macro 0.3889/exact 0.3636 vs
+Rules-Only 0.3333/0.3333；missing_action 两侧 11/11；24 同/9 变，唯一翻转 v014；
+out_of_order 两侧 0（外部胶囊无 order_relations=缺失输入契约，如实记录）。
+(3) **GDPR Direct-LLM 74 臂执行链实现并通过离线假响应全流程验证**（74/74；
+`run_gdpr7_direct_llm_v1.py` + 执行合同 + 9 项测试；in-code 硬上限 input 74M/
+output 303,104/USD 2.61-1.31；断点/账本/指纹/授权门禁齐全）；真实调用待授权
+（合并申请 §11-§12：S2.12 63 + GDPR 74 = 137 calls）。
+(4) THESIS §7.4.4/主张矩阵 C30/C34/C35 与 mentor 汇报稿（`paper/MENTOR_REPORT_
+CONTENT_2026-09.md`）已统一口径；MASTER 3.6.37。**仍需用户事项仅两项**：API 授权
+（137 calls 两笔独立 cap）与 9 段条款/74 句人工裁决（材料已备）；正式 Oracle 未
+完成状态如实保留。
+
 **2026-09-06b 论文收尾执行进展（全部零 LLM/API/网络；规则与授权边界未变）**：
 (1) **GDPR Stage2→Stage3 成对衔接实验（Rules-Only 臂）已运行并产出真实结果**
 （dev/受控合成口径）：句子级 Gold-blind 输入 9 条款/74 句

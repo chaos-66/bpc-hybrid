@@ -1,5 +1,31 @@
 # GDPR Stage-2→Stage-3 衔接结果注记：Rules-Only 臂（2026-09-06）
 
+> ⚠ **2026-09-06 统一口径修正（本注记下方的数字/结论须以本修正为准）**：原运行器
+> 的违规侧预测是“预置类型或 None”的**条件性检出**（读取 expected_violation），不是
+> 分类。已用合规/违规**同一确定性五分类决策**离线重评（复用已保存分数，不读
+> expected/Gold；旧结果与 manifest 保留）。统一口径结果见
+> `docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md` 与
+> `outputs/reports/s3_extended_unified_v1_rules_only.{json,md}`。下列修正逐条覆盖：
+> 1. variant macro 条件口径→分类口径：winter 0.5208→**0.3313**、sun 0.1875（不变）、
+>    bm25 0（不变）、tfidf 0.3510→**0.3321**；wrong-type 从 0 变为 winter **10**、
+>    tfidf **6**——**“P=1、无 wrong-type”撤回**。
+> 2. 合规误报率按方法分列：winter 0.500→0.450（降）、sun 0.125→0.050（降）、bm25
+>    0→0、**tfidf 0.275→0.375（升 0.10）**——“误报率未上升”整体表述**撤回**。
+> 3. 配对 5-class acc（条件口径→分类口径）：winter 0.3125→**0.2625**、sun 0.2→0.2、
+>    bm25 0.15→0.15、tfidf 0.2625→0.2625；control FP 同第 2 条。
+> 4. 案例 a 措辞中性化：参考确定性抽取判 article22 s1 prohibition、Rules-Only 判
+>    obligation——**两者情态标签不同并改变下游可检性**；无人工裁决不得认定谁正确。
+> 5. 归因限制：Rules-Only 为英文 GDPR 句经德语合同 classifier 槽的 pass-through
+>    （跨语言适用限制）；first-valid-span 投影是衔接适配规则，逐字段只取第一个有效
+>    span——下游差异不能全部归因于原始抽取方法本身。
+> 6. 参考确定性抽取不是人工 Gold；33 条人工 Gold、40 对合成面板、正式 Oracle 分表。
+> 7. 统一口径下逐样本变化（Rules-Only vs 参考，同一决策规则）：winter **10**/40、
+>    sun **7**/40、bm25 **8**/40、tfidf **6**/40（winter 含 2×prohibited→condition、
+>    3×prohibited→none、2×exception→constraint、1×constraint→None、1×condition→none、
+>    1×exception→None；tfidf 含 **2×None→constraint 新检出**、1×none→constraint、
+>    2×prohibited→condition、1×constraint→exception）；旧条件口径 7/6/6/4 仅作备用。
+> 统一口径逐类型/逐方法 P/R/F1、混淆矩阵与 old_vs_new 明细见统一注记与报告 JSON。
+
 > 本注记解释真实运行产物，不替代报告文件。机器可读结果：
 > `outputs/reports/gdpr_s2_s3_linkage_v1_rules_only.{json,md}`；
 > 逐方法行级产物：

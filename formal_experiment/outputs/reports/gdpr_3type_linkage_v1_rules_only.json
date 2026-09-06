@@ -1,0 +1,312 @@
+{
+  "schema_version": "gdpr_3type_linkage_report@1.0.0",
+  "report_id": "gdpr_3type_linkage_v1_rules_only",
+  "arm": "rules_only",
+  "arm_label": "EXTERNAL Rules-Only Stage-2 capsule (locked B0 v10a) via deterministic converter",
+  "thresholds": {
+    "tau": 0.8,
+    "gamma": 0.8,
+    "theta": 0.8,
+    "source_config": "configs/sun_stage3_development_v1.json"
+  },
+  "evaluation": {
+    "support": 33,
+    "per_type": {
+      "missing_action": {
+        "support": 11,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "incorrect_actor": {
+        "support": 11,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "out_of_order": {
+        "support": 11,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "observable_only_per_type": {
+      "missing_action": {
+        "support": 11,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "incorrect_actor": {
+        "support": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "out_of_order": {
+        "support": 11,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "macro_f1": 0.3333,
+    "micro_f1": 0.5,
+    "observable_only_macro_f1": 0.3333,
+    "observable_only_micro_f1": 0.6667,
+    "exact_type_accuracy": 0.3333,
+    "detected": 11,
+    "missed": 22,
+    "wrong_type": 0,
+    "unobservable": 11,
+    "denominator": {
+      "total_items": 33,
+      "per_type_support": {
+        "missing_action": 11,
+        "incorrect_actor": 11,
+        "out_of_order": 11
+      },
+      "per_type_observable": {
+        "missing_action": 11,
+        "incorrect_actor": 0,
+        "out_of_order": 11
+      },
+      "per_type_unobservable": {
+        "missing_action": 0,
+        "incorrect_actor": 11,
+        "out_of_order": 0
+      },
+      "unobservable_total": 11,
+      "unobservable_by_reason": {
+        "action_mapping_below_gamma": 9,
+        "empty_rule_actor_denominator": 2
+      },
+      "none_gold_items": 0,
+      "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+      "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+    }
+  },
+  "external_diagnostics": {
+    "rule_record_source": "EXTERNAL Rules-Only capsule converter (gdpr_capsule_rule_record_converter@1.0.0)",
+    "capsule_used": true,
+    "capsule_path": "data\\predictions\\gdpr7_sun_rule_only_v1\\predictions.json",
+    "capsule_sha256": "a993ef533489b7277d37eb0ad5074d9a8d1084b1aff03c2875499e0d103d136e",
+    "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+    "capsule_record_count": 74,
+    "capsule_manifest_path": "data\\predictions\\gdpr7_sun_rule_only_v1\\manifest.json",
+    "capsule_manifest_exists": true,
+    "conversion_summary": {
+      "converter": "gdpr_capsule_rule_record_converter@1.0.0",
+      "capsule_schema_ok": true,
+      "capsule_records": 74,
+      "sentence_texts_available": 74,
+      "include_modalities": [
+        "obligation"
+      ],
+      "per_rule": {
+        "article15": {
+          "sentence_count": 13,
+          "envelopes_ok": 13,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 13,
+          "included_clause_count": 10,
+          "excluded_modality_counts": {
+            "permission": 1,
+            "definition": 1,
+            "prohibition": 1
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 4,
+          "actor_count": 1,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article16": {
+          "sentence_count": 2,
+          "envelopes_ok": 2,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 2,
+          "included_clause_count": 1,
+          "excluded_modality_counts": {
+            "definition": 1
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 1,
+          "actor_count": 0,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article17": {
+          "sentence_count": 13,
+          "envelopes_ok": 13,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 14,
+          "included_clause_count": 3,
+          "excluded_modality_counts": {
+            "definition": 6,
+            "prohibition": 5
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 3,
+          "actor_count": 2,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article20": {
+          "sentence_count": 5,
+          "envelopes_ok": 5,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 5,
+          "included_clause_count": 2,
+          "excluded_modality_counts": {
+            "definition": 1,
+            "prohibition": 2
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 2,
+          "actor_count": 0,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article22": {
+          "sentence_count": 6,
+          "envelopes_ok": 6,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 6,
+          "included_clause_count": 2,
+          "excluded_modality_counts": {
+            "prohibition": 4
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 2,
+          "actor_count": 1,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article33": {
+          "sentence_count": 10,
+          "envelopes_ok": 10,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 10,
+          "included_clause_count": 9,
+          "excluded_modality_counts": {
+            "permission": 1
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 12,
+          "actor_count": 3,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article34": {
+          "sentence_count": 7,
+          "envelopes_ok": 7,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 8,
+          "included_clause_count": 3,
+          "excluded_modality_counts": {
+            "prohibition": 3,
+            "permission": 2
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 3,
+          "actor_count": 1,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article6": {
+          "sentence_count": 10,
+          "envelopes_ok": 10,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 16,
+          "included_clause_count": 11,
+          "excluded_modality_counts": {
+            "prohibition": 1,
+            "permission": 4
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 8,
+          "actor_count": 1,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article7": {
+          "sentence_count": 8,
+          "envelopes_ok": 8,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 8,
+          "included_clause_count": 6,
+          "excluded_modality_counts": {
+            "prohibition": 2
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 7,
+          "actor_count": 1,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        }
+      },
+      "total_envelopes": 74,
+      "total_envelopes_ok": 74,
+      "total_envelopes_failed": 0,
+      "failure_reasons": {},
+      "order_relations_absent_rules": [
+        "article15",
+        "article16",
+        "article17",
+        "article20",
+        "article22",
+        "article33",
+        "article34",
+        "article6",
+        "article7"
+      ],
+      "total_invalid_spans": 0
+    },
+    "failed_rules": []
+  },
+  "capsule_failure_accounting": {
+    "failed_row_count": 0,
+    "failed_item_ids": [],
+    "failure_reasons": []
+  },
+  "run_dir": "outputs\\development\\gdpr_3type_linkage_v1_rules_only",
+  "generated_deterministic": true
+}

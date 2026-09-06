@@ -785,33 +785,40 @@ evaluation.json（Winter 3.9s、Sun 15.0s、BM25 6.0s、TF-IDF/SVD 12.7s）；
 **选择动机见 7.4.1**。四类结果按两种口径分开报告（均 DEV_ONLY，来自持久化
 预测的离线统计，零重新运行）：
 
-- **variant-only detection evaluation**（40 个 variant）：只评价变异流程是否
-  被检出且类型正确；unobservable 保持 predicted=None 并计入 FN（原 v2 表）。
+- **variant-only classification evaluation（40 个 variant，统一五分类决策）**：
+  合规侧与违规侧现在共用同一确定性决策（固定 EXTENDED_TYPES 优先级、
+  gamma_ext、不可观察规则；决策不读 expected/gold，Gold 仅在预测固定后进入
+  评价；unobservable/无违规保持 None/none 并计入分母）。历史运行器的
+  “expected 条件性检出”（读取预置类型再输出“该类型或 None”）**不是分类
+  精度**：P=1、无 wrong-type 不能作为分类证据；其数字只作为条件性检出备用
+  （见 `docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md`）。
 - **paired control-plus-variant evaluation**（80 个对象 = 40 个 control
-  Gold=none + 40 个 variant）：额外要求同一对中 control 不得误报为违规，
-  回答“系统能否同时做到不误报正确流程、并检出违规流程”。control 预测
-  严格由持久化的 `control_scores` 按原四类规则、原 `gamma_ext` 与固定
-  EXTENDED_TYPES 优先级离线重建，未修改阈值或决策顺序；失败、none 与
-  unobservable 全部保留在分母中。
+  Gold=none + 40 个 variant）：control 与 variant 两侧同一决策函数
+  （`control_prediction_from_scores`），离线重建自持久化分数，未修改阈值或
+  决策顺序；失败、none 与 unobservable 全部保留在分母中。control FP rate
+  与旧口径一致（两侧控制侧规则本就相同）。
 
-| 方法 | variant-only：prohibited/condition/constraint/exception F1 | Macro-F1 | Exact | Unobservable |
-|---|---:|---:|---:|---:|
-| Winter-style extension | 1.000 / 0.333 / 0.824 / 0.462 | 0.655 | 0.550 | 17 |
-| Sun-style extension | 1.000 / 0.000 / 0.333 / 0.000 | 0.333 | 0.300 | 28 |
-| BM25 extension | 0.571 / 0.000 / 0.333 / 0.000 | 0.226 | 0.150 | 28 |
-| TF-IDF/SVD extension | 1.000 / 0.000 / 0.333 / 0.182 | 0.379 | 0.325 | 27 |
+| 方法 | variant-only（统一口径）：prohibited/condition/constraint/exception F1 | Macro-F1 | Exact | wrong-type | Unobservable |
+|---|---:|---:|---:|---:|---:|
+| Winter-style extension | 0.952 / 0.235 / 0.500 / 0.308 | 0.499 | 0.450 | 9 | 17 |
+| Sun-style extension | 0.952 / 0.000 / 0.333 / 0.000 | 0.321 | 0.300 | 1 | 28 |
+| BM25 extension | 0.571 / 0.000 / 0.333 / 0.000 | 0.226 | 0.150 | 0 | 28 |
+| TF-IDF/SVD extension | 1.000 / 0.000 / 0.333 / 0.167 | 0.375 | 0.325 | 1 | 27 |
 
-| 方法 | paired：5-class acc (80) | variant exact (40) | control FP rate (40) | paired acc (40) | 4-type Macro-F1 | 5-class Macro-F1 |
+| 方法 | paired（统一口径）：5-class acc (80) | variant exact (40) | control FP rate (40) | paired acc (40) | 4-type Macro-F1 | 5-class Macro-F1 |
 |---|---:|---:|---:|---:|---:|---:|
-| Winter-style extension | 0.425 | 0.550 | 0.500 | 0.225 | 0.514 | 0.504 |
-| Sun-style extension | 0.263 | 0.300 | 0.125 | 0.175 | 0.283 | 0.300 |
+| Winter-style extension | 0.375 | 0.450 | 0.500 | 0.225 | 0.397 | 0.410 |
+| Sun-style extension | 0.263 | 0.300 | 0.125 | 0.175 | 0.276 | 0.294 |
 | BM25 extension | 0.250 | 0.150 | 0.000 | 0.100 | 0.226 | 0.285 |
-| TF-IDF/SVD extension | 0.338 | 0.325 | 0.275 | 0.300 | 0.330 | 0.368 |
+| TF-IDF/SVD extension | 0.338 | 0.325 | 0.275 | 0.300 | 0.327 | 0.366 |
 
 paired 口径下各方法 control 误报率显著（Winter 0.5、TF-IDF 0.275、
-Sun 0.125、BM25 0），paired accuracy 因此明显低于 variant-only exact：
-加入 control 后，Winter 的 prohibited 精度从 1.000 降至 0.667、
-condition 精度从 1.000 降至 0.182（control 侧误报进入 FP）。
+Sun 0.125、BM25 0），paired accuracy 因此明显低于 variant-only exact；
+加入 control 后误报进入 FP。统一口径相对旧条件口径的主要变化是违规侧出现
+wrong-type（Winter 9/40、Sun 1、TF-IDF 1；旧口径恒为 0）：例如 Winter 把
+部分本应判定为 condition/constraint/exception 的样本判到其它类型或判为
+合规（none），因此不再有任何“P=1/无 wrong-type”的表述。规则文本上的
+“旧口径=条件性检出”表保留在 `docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md` 备用。
 
 **结论（收紧措辞，仅限受控数据）**：
 
