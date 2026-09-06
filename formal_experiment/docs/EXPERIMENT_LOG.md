@@ -4050,3 +4050,16 @@
 - 仍存在 blocker：无
 - 备注：按用户要求核对Barrientos论文第9页两项消融及原始提示/notebook：无模式版同时删44模式清单与控制流冗余限制，PDF/XML版另含措辞差异；新建原生两提示成对执行入口、独立合同和预检报告，36条×2条件×5次=360次计划调用，DeepSeek-V4-Pro-0813替换原文GPT-4.1，USD上限9.70、retry=0，授权为空且真实API=0。原schema的模式名称为string，故分开统计名单外名称、维度错配、格式合法与非空可用性；22项定向测试含360次合成假响应、格式异常、失败分母、授权与账本边界。全量2841通过/24跳过，复用同状态凭证；无新性能结果、无Stage3调用、不改历史结果或Gold。用户原有修改与bak文件保持原状且不纳入提交；目录成员未变，跨日仅生成日期将在收尾刷新。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-06T02:26:21.961971+00:00 - 2026-09-06 S2-BARR-4 原生FULL/NO-PATTERNS 360次方案撤回与定位澄清 + 三阶段实验事实核查与证据梳理文档
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2841 passed, 24 skipped, 42 warnings in 3327.50s (0:55:27)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`2c5181e99226eefdac2819c4ce00e5aaaea7cbe8`；相关未提交路径：13 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：用户澄清：直接使用 Barrientos 原始 FULL/NO-PATTERNS 两份提示运行 360 次（36x2x5）的方案是对其意图的误解，已撤回、不得执行；研究定位维持 Sun=整体改进对象与三阶段主干、Barrientos=Stage 2 方法借鉴来源（不承担必须整体优于 Barrientos）。MASTER_PIPELINE（§8.8.4 撤回说明+§15 3.6.35 行+文档头）、PROJECT_AUDIT（§1 撤回说明与定位澄清+过渡 capsule 指针 v8）、paper/ABLATION_MATRIX 顶部已原位标注撤回，2026-09-05 历史文本与准备产物（入口脚本/独立合同/预检报告/focused tests，checkpoint 2c5181e）原样保留为证据；真实 API=0。新增研究证据 docs/research/RESEARCH_EVIDENCE_REVIEW_2026-09-06.md：四方面（背景/方法/实验/总结）证据梳理——三方法正式比较、450-call prompt 单因素与后处理离线单因素、D/E 1140 真实运行（含 Table A/C 原生与共享目标对照）、S3.9-EXT 40+40 受控合成按类型分列与 control FP、Stage2->Stage3 同法衔接成对比较核验结论（无任何已执行产物；9 段 GDPR 条款无 Stage-2 预测；Gold Rule Records 缺失；最小前置缺口表 #1-#6 与必须完成/可选增强清单）。同步修正状态页两处过渡 capsule 过时指针（v2/v6/v7 -> v8 当前 fail-closed）。FILE_CATALOG 重建收录新文档。全量 audit 2841 passed/24 skipped exit 0；零 LLM/API/网络；未改 Gold/预测/正式产物；用户原有修改与 .bak 文件未触碰不纳入提交。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

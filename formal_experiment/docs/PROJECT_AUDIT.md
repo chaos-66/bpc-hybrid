@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-05
+**更新时间**：2026-09-06
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -10,6 +10,22 @@
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
 ## 1. 当前结论
+
+**2026-09-06 撤回说明与研究定位澄清（研究定位以此为准）**：用户澄清此前“直接使用
+Barrientos 原始 FULL/NO-PATTERNS 两份提示、在本项目冻结 36 条输入上运行 360 次
+（36×2×5）”的方案是对其意图的误解，**已经撤回、不得执行**。研究定位维持：Sun et al.
+(2024) 是整体改进对象与三阶段方法主干；Barrientos et al. (2026) 仅作为 **Stage 2 的
+方法借鉴来源**（LLM 结构化输出、验证、受控词汇、归一化与评估纪律）；本项目**不承担
+“必须整体优于 Barrientos”**，也不把原样运行其原生提示作为正式对照。下列 2026-09-05
+段及其入口脚本/独立合同/预检报告/22 项 focused tests（checkpoint `2c5181e`）保留为
+历史证据，状态 **withdrawn**——真实 API=0 不变，不再作为待授权执行计划；任何执行需
+用户另行明确授权与独立预算。Barrientos 相关已完成证据继续有效、不受撤回影响：
+2026-08-29 D/E 1140/1140 真实运行（含 BARR-FULL 原生臂）、2026-08-30 后处理单因素与
+450-call Prompt 单因素（AB-1/2/3/5/5b/9 有实测）；AB-4（纯受控词汇）与 AB-10
+（style-equivalent 敏感性）仍为未隔离缺口。详细证据梳理见
+`docs/research/RESEARCH_EVIDENCE_REVIEW_2026-09-06.md`。
+
+> 历史记录（2026-09-05 原文；2026-09-06 用户撤回，仅存档，不得执行）：
 
 **2026-09-05 S2-BARR-4 原文消融复核与执行准备**：按用户要求收敛到 Barrientos
 原文/随附 artifact。已定位第9页词表及PDF/XML两项消融，并核实两份词表提示
@@ -83,7 +99,7 @@ manifest 解锁。论文工作稿位于 `paper/`，不能反向定义实验状�
 | `human_review_input_ready` | true | Layer E 输入门禁已满足；历史 "0/150 可开始"语义不等于当前审核进度 |
 | `human_review_freeze_ready` | true | 150/150 adjudicated（2026-08-06 经授权恢复）；freeze validator 通过，仍不足以发布 formal Gold |
 | `formal_gold_publication_ready` | **true** | 用户 2026-08-10 按 formal_gold_authorization_packet_v2 授权：stage3.status=locked、publication gate=ready_for_formal_gold_publication（白名单精确匹配）、freeze_policy 重锁（治理/许可/禁止约束保留）；formal Gold 已发布（尚不代表 S1.7/S2.13/Gold Rule-Process Records/Oracle/最终实验完成） |
-| `final_experiment_ready` | **true（仅机器门禁）** | 正式方法、冻结输入/Gold 与三方法正式 capsule 机器门禁就绪；**仅代表 Stage 2 三方法正式评价/最终指标机器门禁就绪，不代表 S2.13、S3.7 或完整 MASTER_PIPELINE 完成**（2026-08-15 过渡核账：S2.13 仍 blocked、正式 Oracle 未启动未授权，见 `outputs/reports/s2_13_s3_7_transition_readiness_v2.json`（当前；v1 为历史 provenance）） |
+| `final_experiment_ready` | **true（仅机器门禁）** | 正式方法、冻结输入/Gold 与三方法正式 capsule 机器门禁就绪；**仅代表 Stage 2 三方法正式评价/最终指标机器门禁就绪，不代表 S2.13、S3.7 或完整 MASTER_PIPELINE 完成**（2026-08-15 过渡核账：S2.13 仍 blocked、正式 Oracle 未启动未授权；当前 fail-closed 入口为 `outputs/reports/s2_13_s3_7_transition_readiness_v8.json`，v7 及更早为 byte-exact 历史 provenance） |
 
 每次修改后的最新值以机器检查输出为准；若本表与机器检查冲突，以机器检查为准并
 立即修正本页。
@@ -217,7 +233,7 @@ development 准备可受控并行；Stage 3 LLM/Hybrid、正式 Oracle、端到�
 - 历史交接：`_retired/docs/2026-07/CURRENT_HANDOFF_2026-07-12.md`
 - 追加式实验日志：`docs/EXPERIMENT_LOG.md`、`docs/EXPERIMENT_EVENTS.jsonl`
 - Agent 派工与 Prompt：`docs/AGENT_RUNBOOK.md`
-- S2.13→S3.7 过渡核账（2026-08-17 更新）：**当前** `outputs/reports/s2_13_s3_7_transition_readiness_v6.json`（+ `.md` / `.manifest.json` / `_export_index.json`；schema `configs/schemas/s2_13_s3_7_transition_readiness_v6.schema.json`；builder `scripts/build_s2_13_s3_7_transition_readiness_v6.py`；verifier `scripts/verify_s2_13_s3_7_transition_readiness_v6.py`；测试 `tests/test_s2_13_s3_7_transition_readiness_v6.py`）；v5 为上一版本（`…_v5.*`，字节未改）；v1/v2/v3/v4 为历史版本（字节未改，各自 verifier 继续通过）
+- S2.13→S3.7 过渡核账（2026-08-18 更新）：**当前（fail-closed）** `outputs/reports/s2_13_s3_7_transition_readiness_v8.json`（+ `.md` / `.manifest.json` / `_export_index.json`；schema `configs/schemas/s2_13_s3_7_transition_readiness_v8.schema.json`；builder `scripts/build_s2_13_s3_7_transition_readiness_v8.py`；verifier `scripts/verify_s2_13_s3_7_transition_readiness_v8.py`）；v1–v7 为 byte-exact 历史版本（各自保留，v5/v6 按其 superseded 快照语义 fail-closed）
 - S2.12 执行就绪 v3（2026-08-17，Checkpoint F，**当前入口**）：`configs/s2_12_execution_plan_v2.json`（冻结预注册计划）+ `outputs/reports/s2_12_execution_plan_v2.json` + `outputs/reports/s2_12_execution_readiness_v2.json` + `outputs/reports/s2_12_execution_readiness_v3.json`（parity 重跑、re-bind proposal v3/importer v3；builder `scripts/s2_12_build_readiness_v3.py`；verifier `scripts/verify_s2_12_readiness_v3.py`）+ `outputs/reports/s2_12_api_readiness_v2.json`（两臂 deepseek-v4-pro、36/72/108 calls、输出 4096、输入未文档化、cost_cap_unresolved、无最终授权句）；评估器 `src/bpc_hybrid/s2_12_stratified_evaluator_v2.py`（正式口径+parity）；方法适配 `src/bpc_hybrid/s2_12_method_adapter.py`；v1 plan/readiness 保留为历史（superseded）；描述性分析保持历史/retrospective
 - S2.11 canonical v3（2026-08-17，Checkpoint F，**当前入口**）：`outputs/reports/s2_11_proposal_report_v3.json` + `outputs/reports/s2_11_batch_import_dry_run_v3.json`（+ `data/development/human_review/s2_11_blank_review_v2.json`（canonical，36 条全 unresolved）+ `s2_11_review_decisions_v2.json`；提案构建 `scripts/s2_11_build_proposals_v3.py`；importer v3 `scripts/s2_11_batch_import_v3.py`；canonical validator v3 `src/bpc_hybrid/s2_11_canonical_v3.py`；freeze validator v3 `scripts/verify_s2_11_review_freeze_v3.py`；review tool v3 `scripts/review_s2_11_v3.py`；测试 `tests/test_s2_11_canonical_v3.py`）；**proposal v1/v2 已 superseded 不可批准**（`s2_11_proposal_report_v1.json`/`_v2.json` 与本地包逐字节保留）；v1/v2 空白 pack/决策文件保留为历史；Checkpoint A 应用门禁 `outputs/reports/s2_11_gates_applied_checkpoint_a_v1.json`（用户授权事件 `configs/s2_11_user_authorization_event_v1.json`、G0.5 冻结 `configs/g05_complexity_frozen_v1.json`、M1 政策 `configs/s2_11_mapping_policy_m1_v1.json`）；v6 及更早为历史安全基线（核心资产字节未改）
 - 历史（superseded 当前状态判断，文件保留）：`outputs/reports/s2_13_stage2_freeze_gap_capsule.{json,md}`、`outputs/reports/s3_7_oracle_readiness_v2.json`、`outputs/reports/s37_oracle_readiness_v1.json`
