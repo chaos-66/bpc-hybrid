@@ -4063,3 +4063,16 @@
 - 仍存在 blocker：无
 - 备注：用户澄清：直接使用 Barrientos 原始 FULL/NO-PATTERNS 两份提示运行 360 次（36x2x5）的方案是对其意图的误解，已撤回、不得执行；研究定位维持 Sun=整体改进对象与三阶段主干、Barrientos=Stage 2 方法借鉴来源（不承担必须整体优于 Barrientos）。MASTER_PIPELINE（§8.8.4 撤回说明+§15 3.6.35 行+文档头）、PROJECT_AUDIT（§1 撤回说明与定位澄清+过渡 capsule 指针 v8）、paper/ABLATION_MATRIX 顶部已原位标注撤回，2026-09-05 历史文本与准备产物（入口脚本/独立合同/预检报告/focused tests，checkpoint 2c5181e）原样保留为证据；真实 API=0。新增研究证据 docs/research/RESEARCH_EVIDENCE_REVIEW_2026-09-06.md：四方面（背景/方法/实验/总结）证据梳理——三方法正式比较、450-call prompt 单因素与后处理离线单因素、D/E 1140 真实运行（含 Table A/C 原生与共享目标对照）、S3.9-EXT 40+40 受控合成按类型分列与 control FP、Stage2->Stage3 同法衔接成对比较核验结论（无任何已执行产物；9 段 GDPR 条款无 Stage-2 预测；Gold Rule Records 缺失；最小前置缺口表 #1-#6 与必须完成/可选增强清单）。同步修正状态页两处过渡 capsule 过时指针（v2/v6/v7 -> v8 当前 fail-closed）。FILE_CATALOG 重建收录新文档。全量 audit 2841 passed/24 skipped exit 0；零 LLM/API/网络；未改 Gold/预测/正式产物；用户原有修改与 .bak 文件未触碰不纳入提交。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-06T13:26:17.731376+00:00 - 2026-09-06b 论文收尾执行：GDPR Stage2→Stage3 成对衔接实验（Rules-Only 臂真实运行）+ Direct-LLM 预检与合并授权申请 + GDPR 人工核对材料 + 论文六条修正 + 12页汇报稿
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2877 passed, 24 skipped, 43 warnings in 2878.83s (0:47:58)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`8b4446008b174c7a8722a211df61776824c96363`；相关未提交路径：40 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：真实完成（零 API）：(1) GDPR 句子级 Gold-blind 输入 gdpr7_stage2_input_v1.json（9 条款=冻结 inference pack 规则文本，74 句，分句与 S3.9-EXT 锁定绑定 40/40 一致）；(2) Rules-Only 锁定 B0 v10a 真实运行 74/74 ok/82 clauses/0 失败/0 空输出（data/predictions/gdpr7_sun_rule_only_v1，英文 pass-through 披露，run-lock gdpr7_sun_rule_only_run_v1.json）；(3) 衔接 harness run_gdpr_s2_s3_linkage_v1.py 复用原始面板运行器后端/公式/阈值，外部预测 first-valid-span 投影、失败显式不回填；Rules-Only 臂（40 变体+40 对照，DEV_ONLY）winter macro 0.5208/exact 0.375/FP 0.45，sun 0.1875/0.15/0.05，bm25 0/0/0，tfidf 0.351/0.275/0.375，逐样本变化 7/6/6/4（案例：article22 s1 情态误标致禁止变体不可观察；tfidf constraint_violated_04 由不可观察变新检出）；(4) Direct-LLM 74 冻结请求预检 gdpr7_direct_llm_preflight_v1.json（body 1,297,742B/proxy 367,333/输出 303,104/USD 2.61 peak、1.31 off-peak），并入 API_AUTHORIZATION_REQUEST.md §11 合并申请（S2.12 63+GDPR 74=137，真实 API=0 待授权）；(5) 人工核对材料 gdpr7_six_element_review_blank_v1.json（9 条款/74 句，decision 全空）+验证器+中文指南；(6) 论文六条修正（THESIS_DRAFT/CLAIM_EVIDENCE_MATRIX C32/C33/ABLATION_MATRIX parse 澄清）+ 12 页汇报稿 MENTOR_REPORT_CONTENT_2026-09.md；MASTER 3.6.36/PROJECT_AUDIT 同步。全量 audit 2877 passed/24 skipped exit 0；未改 Gold/冻结面板/阈值/BPMN/历史产物；用户文件与 .bak 未触碰。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

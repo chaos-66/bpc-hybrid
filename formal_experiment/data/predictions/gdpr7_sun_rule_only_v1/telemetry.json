@@ -1,0 +1,47 @@
+{
+  "schema_version": "gdpr7_sun_rule_only_telemetry@1.0.0",
+  "record_count": 74,
+  "predicted_clause_count": 82,
+  "corenlp_seconds": 1430.8270998999942,
+  "bridge_seconds": 0.7525248000165448,
+  "classifier_seconds": 27.171851299935952,
+  "compose_seconds": 0.2513034000294283,
+  "total_seconds": 1459.0027793999761,
+  "device": "cpu",
+  "modality_route_counts": {
+    "definition_structure": 3,
+    "heuristic_aligned_classifier": 3,
+    "marker_obligation": 47,
+    "marker_permission": 8,
+    "prohibition_negation": 18,
+    "validated_aligned_classifier": 3
+  },
+  "label_counts": {
+    "definition": 9,
+    "obligation": 47,
+    "permission": 8,
+    "prohibition": 18
+  },
+  "alignment_summary": {
+    "total": 82,
+    "heuristic_supported": 69,
+    "validated": 11,
+    "unsupported": 13,
+    "by_status": {
+      "equal_count_candidate": 58,
+      "validated_anchor_alignment": 11,
+      "unsupported": 13
+    },
+    "note": "heuristic_supported is not verified alignment"
+  },
+  "empty_output_samples": {
+    "count": 0,
+    "sample_ids": []
+  },
+  "failed_attempts": {
+    "count": 0,
+    "sample_ids": [],
+    "error_categories": []
+  },
+  "text_or_gold_payload_committed": false
+}

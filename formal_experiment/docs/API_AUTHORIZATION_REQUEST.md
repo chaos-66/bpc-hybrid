@@ -259,3 +259,91 @@ input tokens 只能从真实响应 usage 获得**。本地 Legal-BERT WordPiece 
   独立事项，不随本申请自动解锁。
 - 未获授权前：0 calls、cost=null、不读取 `.env`；runner 默认 fake transport；
   API 状态保持 `API BLOCKED / ZERO CALLS`。
+
+## 11. 2026-09-06 论文收尾合并 API 授权申请
+
+> 本节为论文收尾阶段新增的**合并授权申请**（两批分开计费与 cap）。前面 §1–§10
+> 的内容与数字**原样保留、不受影响**。本申请仍然 ZERO API / ZERO CALLS：不读取
+> `.env`、不改 Gold、不启动 Oracle；本次准备**不创建任何授权文件**，实际调用保持 0，
+> 直到用户逐字发出授权句并另行批准/创建授权文件。
+
+### 11.1 合并请求一览（两批，合计 137 次调用）
+
+| 批次 | 内容 | 输入 | 调用数 | 模型 / prompt / retry | cap（引用报告） |
+|---|---|---|---|---|---|
+| **A（unchanged，S2.12 复杂语料）** | `direct_llm` 36 次 + `sun_llm_fallback` 27 次 = **63 次**；计划与 caps **不变** | `data/input/s2_12_complex_corpus_formal_input_v1.json`（sha256 `892d4284…`，36 records） | 63 | `deepseek-v4-pro`；direct 用 v6 prompt（sha `3aa64877…`）、fallback 用 `rule_first_llm_fallback_prompt`（sha `00fe0299…`）；retry=0 | 与既有请求完全一致（见 §2–§3 与 `outputs/reports/s2_12_execution_readiness_v4.json` + `outputs/reports/s2_12_api_preflight_v1.json`）：请求体 ≤17,493 B/次、总计 ≤749,805 B；global input ≤**63,000,000**、output ≤**258,048**（单次 ≤4,096）、USD ≤**84.18（peak）** / ≤**42.09（off-peak-only）**；官方价格运行前必须重新核验 |
+| **B（new，GDPR 衔接 Direct-LLM 臂）** | GDPR Stage-2→Stage-3 衔接的 `direct_llm` 臂：每句 1 次 = **74 次**；**不含** `sun_llm_fallback`（GDPR 衔接只需 direct_llm vs rules_only 配对）；本批**不覆盖**任何其它语料 | `data/input/gdpr7_stage2_input_v1.json`（sha256 `558b8013…`；9 条 GDPR 规则文本、**74 句**、Gold-blind；每句输入 = 该句 `approved_text_en`） | 74 | `deepseek-v4-pro`（发布别名 DeepSeek-V4-Pro-0813）；锁定的 D1 配方：prompt v6（sha `3aa64877…`）、temperature 0、top_p 1、max_tokens 4096、stream=false、thinking disabled、response_format=None；retry=0；**off-peak only**（每次调用前检查北京时间 peak 09:00–12:00 / 14:00–18:00） | 由 `outputs/reports/gdpr7_direct_llm_preflight_v1.json` 渲染并锁定（74 个请求体，逐条 body SHA/字节数/句子 hash 绑定，无原句提交）：请求体 ≤18,459 B/次、总计 1,297,742 B；Legal-BERT proxy 共 367,333 tokens（**规划代理，非计费**；官方 tokenizer 本地不可用，真实 billing input 只能来自响应 usage）；global input cap（保守公式 74×1M context）≤**74,000,000**、output ≤**303,104**（74×4,096）、USD ≤**2.61**（官方 2026-08-19/20 peak 价 input cache-miss $1.32/M、output $3.96/M 按 planning 上界 734,666 tokens + 20% margin 计算；off-peak 折半价下 ≤**1.31**）；官方价格运行前必须重新核验 |
+
+**合计**：63 + 74 = **137 次调用**；每批各自独立 cap（见上表），**不合并成单一总 USD
+cap**（若需单一保守加总上界 ≈ US$84.18 + US$2.61 ≈ **US$86.79**，仅供预算参考）。
+
+Batch B 的估算公式与 1.2× margin 依据（与既有实践一致）：
+
+```
+per-call body bytes   = UTF-8 length of json.dumps(final_body)      # S2.12 payload lock 约定
+local_proxy_tokens    = Legal-BERT WordPiece over system+"\n"+user  # 规划代理，非 billing
+planning_input_bound  = max(2 × proxy_total, body_bytes_total / 1.8) # S2.12 申请 §6 经验上界
+recommended_usd_cap   = ceil((planning_input_bound×1.32 + 303,104×3.96)/1e6 × 1.2 × 100)/100
+                        # = US$2.61（peak）；off-peak 价（0.66/1.98）下 = US$1.31
+```
+
+其中 ×1.2（20% USD margin）与
+`scripts/run_barrientos_paper_ablation_v1.py`（`budget.calculation: "20% USD margin"`）
+及 `scripts/build_d1_prompt_factorial_contract_v1.py`（`usd_cap = ceil(peak_cost × 1.2)`）
+的既有预算做法一致；peak 单价 $1.32/$3.96 与 §3 记录的 S2.12 v3 请求同一官方价。
+
+### 11.2 失败处理声明（两批通用，沿用 S2.12 executor 纪律）
+
+- **存疑条目绝不自动重发**：retry 恒 0；超时/丢失/ambiguous 的响应只记入账本并上报，
+  不据已有输出修改后续请求；恢复只从下一个预注册 payload 继续，且须先复核账本。
+- **调用后硬停止**：provider usage 缺失/损坏 → fail closed（不猜 token 数）；返回
+  model ≠ `deepseek-v4-pro` → 中止；累计 input/output/USD 或 call cap 任一将超 → 停止。
+- **partial 运行保留账本**：append-only hash-chained 账本（`.ledger.jsonl`）绝不覆盖，
+  resume 校验 hash 链、拒绝重复调用已记录 payload；partial 必须标 partial，正式
+  final predictions 只在整臂完成（A：36/27；B：74/74）后发布。
+- **官方价格重验**：每次真实运行前重验官方价格页；价格变动即重算并再次征得同意。
+- **Gold 隔离**：两批 API 臂均不得读取 Gold/decisions/proposals/Oracle/Gold Rule
+  Records；Batch B 输入 pack 本身 Gold-blind（仅法条文本与句子 hash）。
+
+### 11.3 授权句模板（复制即用；须用户亲自逐字发出并另行创建授权文件）
+
+> 我授权合并运行论文收尾 API 批次，共 **137 次**调用，模型仅限
+> `deepseek-v4-pro`（DeepSeek-V4-Pro-0813），`retry = 0`：
+> **Batch A（S2.12 复杂语料，unchanged）**：`direct_llm` 36 次 +
+> `sun_llm_fallback` 27 次，严格使用 `s2_12_api_preflight_v1.json` 锁定的 63 个
+> 请求体（单次 ≤17,493 B、总计 ≤749,805 B），global input ≤63,000,000、
+> output ≤258,048（单次 ≤4,096）、USD ≤84.18（仅 off-peak 运行则 ≤42.09）；
+> **Batch B（GDPR Stage-2→Stage-3 衔接 Direct-LLM 臂）**：对
+> `gdpr7_stage2_input_v1.json` 的 74 个 `approved_text_en` 句子每句 1 次调用，
+> 仅 `direct_llm`（不含 `sun_llm_fallback`），严格使用
+> `gdpr7_direct_llm_preflight_v1.json` 锁定的 74 个请求体，global input
+> ≤74,000,000、output ≤303,104（单次 ≤4,096）、USD ≤2.61（peak 规划价 +20%
+> margin；off-peak 折半价下 ≤1.31），**off-peak only**（北京时间 09:00–12:00 /
+> 14:00–18:00 之外，每次调用前检查）；运行前重验官方价格；两批任一模型/返回模型、
+> 输入、source、prompt、config、payload/hash、官方价格、Gold 隔离或 cap/时段违背
+> → 调用前硬停止；存疑条目不自动重发；partial 运行保留账本；不读取 `.env`、不调用
+> Oracle。我知晓实际 billing input tokens 与 cost 只能来自真实响应 usage；本准备未
+> 创建任何授权文件，授权事件与授权文件须由对应 builder 在收到本句后生成。
+
+English mirror:
+
+> I authorize the merged paper-wind-down API batches with **137 total calls**
+> on `deepseek-v4-pro` (DeepSeek-V4-Pro-0813) only, `retry = 0`:
+> **Batch A (S2.12 complex corpus, unchanged)**: 36 `direct_llm` + 27
+> `sun_llm_fallback` calls strictly using the 63 locked request bodies of
+> `s2_12_api_preflight_v1.json`, global input ≤63,000,000, output ≤258,048,
+> USD ≤84.18 (≤42.09 if off-peak-only); **Batch B (GDPR Stage-2→Stage-3
+> linkage Direct-LLM arm)**: 74 calls, one per `approved_text_en` sentence of
+> `gdpr7_stage2_input_v1.json` (direct_llm only; no sun_llm_fallback),
+> strictly using the 74 locked request bodies of
+> `gdpr7_direct_llm_preflight_v1.json`, global input ≤74,000,000, output
+> ≤303,104, USD ≤2.61 (off-peak half-price alternative ≤1.31), off-peak only;
+> official prices re-verified before the run; any model/input/source/prompt/
+> config/payload/hash/price/Gold-isolation/cap/window violation hard-stops
+> before the call; in-doubt entries are never auto-resent; partial runs keep
+> their ledgers; no `.env` read and no Oracle. This preparation created no
+> authorization file; the authorization event/file must be generated by the
+> corresponding builder only after I issue this sentence.
+
+**明确声明**：本合并申请（2026-09-06）未创建、也不要求创建任何授权文件；
+两批 `authorized: false`、`calls_made: 0` 将一直保持，直到用户授权。

@@ -95,9 +95,7 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
   D-minimal / D-barrientos-style，各 150 条；旧 Preview D-full 不作基线。
   E 三臂（E-ours / E-barrientos-faithful / E-module-swapped）+ 共享指标协议 +
   E-ours 与 E-barrientos-faithful 各 5 次稳定性（首轮计入）。
-- 固定计划 1140/1140 已完成。D-full P/R/F1=0.8203/0.7289/0.7719；旧
-  no-fewshot/minimal/Barrientos-style 的锁定六字段结果为0，但 no-fewshot 原始响应
-  诊断证明其中混入坐标接口崩溃，不能把0直接解释为语义贡献。
+- 固定计划 1140/1140 已完成。D-full P/R/F1=0.8203/0.7289/0.7719；no-fewshot/minimal/Barrientos-style 的锁定六字段结果为0。**逐臂 parse 率必须分开写**：full parse ok=1.000；no-fewshot parse ok=0.980、Barrientos-style parse ok=0.993——这两臂“可解析但 canonical 六字段非空率=0”（坐标接口/格式失配，no-fewshot 另有原始响应诊断）；minimal（极简任务+JSON）parse ok=**0.000**（根本无可解析 JSON）。**不能把三个零分臂一概写成“可解析、仅接口失配”**，也不能把 0 直接解释为语义贡献为 0。
 - 2026-08-30 严格 Prompt 单因素 v2 已完成（`prompts/sun_compat/ablation_v2/`）：
   语义示例→纯结构模板、只删详细语义规则、只删显式 JSON 纪律；3×150=450/450
   calls，失败0，复用同 release D-full 基线。完整/三删除臂 F1 分别为

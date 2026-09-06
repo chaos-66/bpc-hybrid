@@ -1,0 +1,830 @@
+{
+  "schema_version": "gdpr7_stage2_input@1.0.0",
+  "dataset_id": "gdpr7_stage2_sentences_v1",
+  "claim": "Gold-blind sentence-level Stage-2 input derived from the frozen Stage-3 inference pack rule texts (9 GDPR articles); sentence segmentation identical to the S3.9-EXT panel rule bindings. Contains no gold decisions, no expected violations, no panel labels; raw law text is public and already versioned inside the inference pack.",
+  "gold_visible": false,
+  "source": {
+    "inference_pack": "data/development/human_review/stage3_gold_inference_v1.json",
+    "inference_pack_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+    "rule_source_count": 9,
+    "total_sentence_count": 74
+  },
+  "rules": [
+    {
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "rule_text_byte_size": 3574,
+      "sentence_count": 13,
+      "sentences": [
+        {
+          "sample_id": "gdpr_article15_s001",
+          "sentence_idx": 0,
+          "char_span": [
+            0,
+            278
+          ],
+          "text_sha256": "4d55a1fb6743e546ba673fe377a388638f99a50ac240d482a0d2c394ce3256ac",
+          "approved_text_en": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information the purposes of the processing."
+        },
+        {
+          "sample_id": "gdpr_article15_s002",
+          "sentence_idx": 1,
+          "char_span": [
+            278,
+            541
+          ],
+          "text_sha256": "eeba2bdc8ddc3d6777aef618f07aae4249dbbd91389fd29bdad16a54642cfd77",
+          "approved_text_en": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the categories of personal data concerned."
+        },
+        {
+          "sample_id": "gdpr_article15_s003",
+          "sentence_idx": 2,
+          "char_span": [
+            541,
+            937
+          ],
+          "text_sha256": "6f5c0910697a5782ffd87fc2e5922da2e62cfedec4a99a7c2e70482de21a3d37",
+          "approved_text_en": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the recipients or categories of recipient to whom the personal data have been or will be disclosed, in particular recipients in third countries or international organisations."
+        },
+        {
+          "sample_id": "gdpr_article15_s004",
+          "sentence_idx": 3,
+          "char_span": [
+            937,
+            1303
+          ],
+          "text_sha256": "829f2844a9d545a915bce1afeb0616fe62bc7e06e1294f8fbe5d81fb61997ca1",
+          "approved_text_en": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and where possible, the envisaged period for which the personal data will be stored, or, if not possible, the criteria used to determine that period."
+        },
+        {
+          "sample_id": "gdpr_article15_s005",
+          "sentence_idx": 4,
+          "char_span": [
+            1303,
+            1730
+          ],
+          "text_sha256": "e73f34026c515df3f921bdfa22bfaea77abd6b551ef424edbb24a1d1e549067b",
+          "approved_text_en": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the existence of the right to request from the controller rectification or erasure of personal data or restriction of processing of personal data concerning the data subject or to object to such processing."
+        },
+        {
+          "sample_id": "gdpr_article15_s006",
+          "sentence_idx": 5,
+          "char_span": [
+            1730,
+            2011
+          ],
+          "text_sha256": "8e6e57e066bf7be23a221d4c11c7b0709a513017e251dfbfbe4d08ff24820108",
+          "approved_text_en": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the right to lodge a complaint with a supervisory authority."
+        },
+        {
+          "sample_id": "gdpr_article15_s007",
+          "sentence_idx": 6,
+          "char_span": [
+            2011,
+            2342
+          ],
+          "text_sha256": "ce802b7331e7825cb49ef049c70c8c291ab36241ca1f31487bd0afc66915fa64",
+          "approved_text_en": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and where the personal data are not collected from the data subject, any available information as to their source."
+        },
+        {
+          "sample_id": "gdpr_article15_s008",
+          "sentence_idx": 7,
+          "char_span": [
+            2342,
+            2843
+          ],
+          "text_sha256": "01bd2c647aed2ea32e9ed7644af252e90aa3ceed79d8301e0c22dc0570cde98a",
+          "approved_text_en": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the existence of automated decision-making, including profiling, referred to in Article 22(1) and (4) and, at least in those cases, meaningful information about the logic involved, as well as the significance and the envisaged consequences of such processing for the data subject."
+        },
+        {
+          "sample_id": "gdpr_article15_s009",
+          "sentence_idx": 8,
+          "char_span": [
+            2843,
+            3067
+          ],
+          "text_sha256": "473e53ffca9f146248ead57e9941de0bf1c3ecc1fc76b5a034d0aa302e972616",
+          "approved_text_en": "Where personal data are transferred to a third country or to an international organisation, the data subject shall have the right to be informed of the appropriate safeguards pursuant to Article 46 relating to the transfer."
+        },
+        {
+          "sample_id": "gdpr_article15_s010",
+          "sentence_idx": 9,
+          "char_span": [
+            3067,
+            3146
+          ],
+          "text_sha256": "229b77926f9d454ce81398619e8b2bcd19f0728e951515f419649b04c91d54ac",
+          "approved_text_en": "The controller shall provide a copy of the personal data undergoing processing."
+        },
+        {
+          "sample_id": "gdpr_article15_s011",
+          "sentence_idx": 10,
+          "char_span": [
+            3147,
+            3274
+          ],
+          "text_sha256": "36037726d5fa4458dcd1eca660d22517c3eacf08050fc4d807e755f0ea9d5078",
+          "approved_text_en": "For any further copies requested by the data subject, the controller may charge a reasonable fee based on administrative costs."
+        },
+        {
+          "sample_id": "gdpr_article15_s012",
+          "sentence_idx": 11,
+          "char_span": [
+            3275,
+            3459
+          ],
+          "text_sha256": "f5af35191012bd27ed11ce1d3d498856bf02b4a604bb13048fd6cbc57e7bf377",
+          "approved_text_en": "Where the data subject makes the request by electronic means, and unless otherwise requested by the data subject, the information shall be provided in a commonly used electronic form."
+        },
+        {
+          "sample_id": "gdpr_article15_s013",
+          "sentence_idx": 12,
+          "char_span": [
+            3459,
+            3574
+          ],
+          "text_sha256": "95f8546e99ba3f37fd7524d3d0ad155fd2c8e219b0586f3d892fd7c665d9e836",
+          "approved_text_en": "The right to obtain a copy referred to in paragraph 3 shall not adversely affect the rights and freedoms of others."
+        }
+      ]
+    },
+    {
+      "rule_id": "article16",
+      "rule_text_sha256": "a940d3bd5929888bcee109ecaa72a5ace8ab37f6a7db3b2faa6ad9e74918b3c0",
+      "rule_text_byte_size": 349,
+      "sentence_count": 2,
+      "sentences": [
+        {
+          "sample_id": "gdpr_article16_s001",
+          "sentence_idx": 0,
+          "char_span": [
+            0,
+            156
+          ],
+          "text_sha256": "1ae6c72eb70eb6b75ce1c88d6d50adbfd098ce38eab56c892f31d07b353adbe1",
+          "approved_text_en": "The data subject shall have the right to obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her."
+        },
+        {
+          "sample_id": "gdpr_article16_s002",
+          "sentence_idx": 1,
+          "char_span": [
+            157,
+            349
+          ],
+          "text_sha256": "cc2b0fec609f68d671a4820bfec3a52d72a401bd37bb22789a2dd2deb081d6a7",
+          "approved_text_en": "Taking into account the purposes of the processing, the data subject shall have the right to have incomplete personal data completed, including by means of providing a supplementary statement."
+        }
+      ]
+    },
+    {
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "rule_text_byte_size": 2800,
+      "sentence_count": 13,
+      "sentences": [
+        {
+          "sample_id": "gdpr_article17_s001",
+          "sentence_idx": 0,
+          "char_span": [
+            0,
+            271
+          ],
+          "text_sha256": "ffce4b993017dcb956e232f8d9afc93daa5f6ab08ecd4c72f06b4427796f8be2",
+          "approved_text_en": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies."
+        },
+        {
+          "sample_id": "gdpr_article17_s002",
+          "sentence_idx": 1,
+          "char_span": [
+            271,
+            395
+          ],
+          "text_sha256": "66693925476fcaecd988e0123ac78a0e9a949dd97dcbbc4f014966eb1a51e1d8",
+          "approved_text_en": "The personal data are no longer necessary in relation to the purposes for which they were collected or otherwise processed."
+        },
+        {
+          "sample_id": "gdpr_article17_s003",
+          "sentence_idx": 2,
+          "char_span": [
+            395,
+            594
+          ],
+          "text_sha256": "99b763e94c9a33139d34ce16f89f5f133c8538177c98a11e0d643d9ae4eb2126",
+          "approved_text_en": "The data subject withdraws consent on which the processing is based according to point (a) of Article 6(1), or point (a) of Article 9(2), and where there is no other legal ground for the processing."
+        },
+        {
+          "sample_id": "gdpr_article17_s004",
+          "sentence_idx": 3,
+          "char_span": [
+            594,
+            803
+          ],
+          "text_sha256": "680fc138ee22cf0322db6f1d3f36957c029ce07a151139141923c38fbe3907b3",
+          "approved_text_en": "The data subject objects to the processing pursuant to Article 21(1) and there are no overriding legitimate grounds for the processing, or the data subject objects to the processing pursuant to Article 21(2)."
+        },
+        {
+          "sample_id": "gdpr_article17_s005",
+          "sentence_idx": 4,
+          "char_span": [
+            803,
+            853
+          ],
+          "text_sha256": "6ff5941f3adea9c51658d4048163db8bb9bee61dfb01433779e4f0f468017227",
+          "approved_text_en": "The personal data have been unlawfully processed."
+        },
+        {
+          "sample_id": "gdpr_article17_s006",
+          "sentence_idx": 5,
+          "char_span": [
+            853,
+            993
+          ],
+          "text_sha256": "0b3d539d2253d687b0f87818c6246dcda3990117b4196ad357c828e28b8bb2f1",
+          "approved_text_en": "The personal data have to be erased for compliance with a legal obligation in Union or Member State law to which the controller is subject."
+        },
+        {
+          "sample_id": "gdpr_article17_s007",
+          "sentence_idx": 6,
+          "char_span": [
+            993,
+            1117
+          ],
+          "text_sha256": "39d2ecedaa4d14271039c533b258779c9d5916452699474b308022adcff45dd4",
+          "approved_text_en": "The personal data have been collected in relation to the offer of information society services referred to in Article 8(1)."
+        },
+        {
+          "sample_id": "gdpr_article17_s008",
+          "sentence_idx": 7,
+          "char_span": [
+            1117,
+            1579
+          ],
+          "text_sha256": "381c997c1dad6995317cb2010ebac3b05b0b8fe6a77136c1e1ab1799d3203ac6",
+          "approved_text_en": "Where the controller has made the personal data public and is obliged pursuant to paragraph 1 to erase the personal data, the controller, taking account of available technology and the cost of implementation, shall take reasonable steps, including technical measures, to inform controllers which are processing the personal data that the data subject has requested the erasure by such controllers of any links to, or copy or replication of, those personal data."
+        },
+        {
+          "sample_id": "gdpr_article17_s009",
+          "sentence_idx": 8,
+          "char_span": [
+            1579,
+            1724
+          ],
+          "text_sha256": "4a3bbbe4784529c72b889105bb865fa57c3ff83fa7e5724b5836118e85a63c70",
+          "approved_text_en": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information."
+        },
+        {
+          "sample_id": "gdpr_article17_s010",
+          "sentence_idx": 9,
+          "char_span": [
+            1724,
+            2066
+          ],
+          "text_sha256": "a8d1edd55d76185091a2888d70f4ecaed906636a4cc4b955818f999217066be2",
+          "approved_text_en": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for compliance with a legal obligation which requires processing by Union or Member State law to which the controller is subject or for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller."
+        },
+        {
+          "sample_id": "gdpr_article17_s011",
+          "sentence_idx": 10,
+          "char_span": [
+            2066,
+            2283
+          ],
+          "text_sha256": "ff827f73602755ced03b16bef2dc52467fab2f486eafdd2afe878a21fc537084",
+          "approved_text_en": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for reasons of public interest in the area of public health in accordance with points (h) and (i) of Article 9(2) as well as Article 9(3)."
+        },
+        {
+          "sample_id": "gdpr_article17_s012",
+          "sentence_idx": 11,
+          "char_span": [
+            2283,
+            2663
+          ],
+          "text_sha256": "356151b25175e174a2c800fe34f0b031834360dfdeb56065215374be319c7743",
+          "approved_text_en": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) in so far as the right referred to in paragraph 1 is likely to render impossible or seriously impair the achievement of the objectives of that processing."
+        },
+        {
+          "sample_id": "gdpr_article17_s013",
+          "sentence_idx": 12,
+          "char_span": [
+            2663,
+            2800
+          ],
+          "text_sha256": "a2c4e00c075d9b2c1a65a64305d366e20302f2bbd97e286b06fa26e3c306c9c9",
+          "approved_text_en": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for the establishment, exercise or defence of legal claims."
+        }
+      ]
+    },
+    {
+      "rule_id": "article20",
+      "rule_text_sha256": "f3e7951f23f068fe4786c0f016e72d60e19f6e4a84b518819f83ee21168e9f00",
+      "rule_text_byte_size": 1175,
+      "sentence_count": 5,
+      "sentences": [
+        {
+          "sample_id": "gdpr_article20_s001",
+          "sentence_idx": 0,
+          "char_span": [
+            0,
+            562
+          ],
+          "text_sha256": "5b63ec29d24bd77cbe3cc19136ae1b0c30f5378d28a25aebc101260d2e0023ca",
+          "approved_text_en": "The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and the processing is carried out by automated means."
+        },
+        {
+          "sample_id": "gdpr_article20_s002",
+          "sentence_idx": 1,
+          "char_span": [
+            562,
+            783
+          ],
+          "text_sha256": "170f622db8c7a49619e5c08aa097b5888bb24e74cfe2371461ce4d0da419ef50",
+          "approved_text_en": "In exercising his or her right to data portability pursuant to paragraph 1, the data subject shall have the right to have the personal data transmitted directly from one controller to another, where technically feasible."
+        },
+        {
+          "sample_id": "gdpr_article20_s003",
+          "sentence_idx": 2,
+          "char_span": [
+            783,
+            893
+          ],
+          "text_sha256": "d1a61e5172cd6117bd1270d859628c6eeae9b3a7add134778527dc3d419e75a2",
+          "approved_text_en": "The exercise of the right referred to in paragraph 1 of this Article shall be without prejudice to Article 17."
+        },
+        {
+          "sample_id": "gdpr_article20_s004",
+          "sentence_idx": 3,
+          "char_span": [
+            894,
+            1077
+          ],
+          "text_sha256": "63d54632d934c1ae327d03963d739189077a7997431a088ef8e017bc40bc6f24",
+          "approved_text_en": "That right shall not apply to processing necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller."
+        },
+        {
+          "sample_id": "gdpr_article20_s005",
+          "sentence_idx": 4,
+          "char_span": [
+            1077,
+            1175
+          ],
+          "text_sha256": "571228cb39ab5edbc78002c907e66f0d5f3cfb9b6e19b3abe4d7f15ecb91f43b",
+          "approved_text_en": "The right referred to in paragraph 1 shall not adversely affect the rights and freedoms of others."
+        }
+      ]
+    },
+    {
+      "rule_id": "article22",
+      "rule_text_sha256": "a6e181d9b2867f9c5475d9e895bf3c50d03241855985753cc3dcc05a57907385",
+      "rule_text_byte_size": 1343,
+      "sentence_count": 6,
+      "sentences": [
+        {
+          "sample_id": "gdpr_article22_s001",
+          "sentence_idx": 0,
+          "char_span": [
+            0,
+            227
+          ],
+          "text_sha256": "bb790f71f3fb93814ca7fe7d01f304eaa82acadc867dbfc8bfd724fe1cb04e1e",
+          "approved_text_en": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+        },
+        {
+          "sample_id": "gdpr_article22_s002",
+          "sentence_idx": 1,
+          "char_span": [
+            227,
+            381
+          ],
+          "text_sha256": "abdb2d697d2eecc02daf56475015a721abb31326b0a473567c842dfe76d8f1ec",
+          "approved_text_en": "Paragraph 1 shall not apply if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller."
+        },
+        {
+          "sample_id": "gdpr_article22_s003",
+          "sentence_idx": 2,
+          "char_span": [
+            381,
+            623
+          ],
+          "text_sha256": "d59dd79c162a959e8cc08227968cb115f3b4b3a7b3132acca19fe6f896006d78",
+          "approved_text_en": "Paragraph 1 shall not apply if the decision is authorised by Union or Member State law to which the controller is subject and which also lays down suitable measures to safeguard the data subject's rights and freedoms and legitimate interests."
+        },
+        {
+          "sample_id": "gdpr_article22_s004",
+          "sentence_idx": 3,
+          "char_span": [
+            624,
+            720
+          ],
+          "text_sha256": "4a82d9126bd4c1c7cbf7df40036da5e6f69284a370a0669bfaba0e7da19d88b4",
+          "approved_text_en": "or Paragraph 1 shall not apply if the decision is based on the data subject's explicit consent."
+        },
+        {
+          "sample_id": "gdpr_article22_s005",
+          "sentence_idx": 4,
+          "char_span": [
+            720,
+            1059
+          ],
+          "text_sha256": "f25a5cb8dee62cb457f918220a4ccc93bfabd88e42b4f46911c297d1637e3e5a",
+          "approved_text_en": "In the cases referred to in points (a) and (c) of paragraph 2, the data controller shall implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests, at least the right to obtain human intervention on the part of the controller, to express his or her point of view and to contest the decision."
+        },
+        {
+          "sample_id": "gdpr_article22_s006",
+          "sentence_idx": 5,
+          "char_span": [
+            1059,
+            1343
+          ],
+          "text_sha256": "690d4c9cc637a3e4f865c381860e3ea027d4e32af4e44b7477d669add825f404",
+          "approved_text_en": "Decisions referred to in paragraph 2 shall not be based on special categories of personal data referred to in Article 9(1), unless point (a) or (g) of Article 9(2) applies and suitable measures to safeguard the data subject's rights and freedoms and legitimate interests are in place."
+        }
+      ]
+    },
+    {
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "rule_text_byte_size": 1867,
+      "sentence_count": 10,
+      "sentences": [
+        {
+          "sample_id": "gdpr_article33_s001",
+          "sentence_idx": 0,
+          "char_span": [
+            0,
+            370
+          ],
+          "text_sha256": "d3327ce470720a494bfb05a72841a073e0c7bac1673f11545833dcce72ef0a65",
+          "approved_text_en": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons."
+        },
+        {
+          "sample_id": "gdpr_article33_s002",
+          "sentence_idx": 1,
+          "char_span": [
+            371,
+            502
+          ],
+          "text_sha256": "cd4a52281b7993bc9fecadd8633a791a6b35cca60b00306e41cdc007bad85df7",
+          "approved_text_en": "Where the notification to the supervisory authority is not made within 72 hours, it shall be accompanied by reasons for the delay."
+        },
+        {
+          "sample_id": "gdpr_article33_s003",
+          "sentence_idx": 2,
+          "char_span": [
+            502,
+            612
+          ],
+          "text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2",
+          "approved_text_en": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach."
+        },
+        {
+          "sample_id": "gdpr_article33_s004",
+          "sentence_idx": 3,
+          "char_span": [
+            612,
+            888
+          ],
+          "text_sha256": "039715a9c10424ec1e3c3b2fff320dcc49b9147b72dacd3355b9e36eb836ef20",
+          "approved_text_en": "The notification referred to in paragraph 1 shall at least describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned."
+        },
+        {
+          "sample_id": "gdpr_article33_s005",
+          "sentence_idx": 4,
+          "char_span": [
+            888,
+            1082
+          ],
+          "text_sha256": "9bf36822d80567b6a71f8bab416e2a7b4918852ce197842e27f320b2b7de1591",
+          "approved_text_en": "The notification referred to in paragraph 1 shall at least communicate the name and contact details of the data protection officer or other contact point where more information can be obtained."
+        },
+        {
+          "sample_id": "gdpr_article33_s006",
+          "sentence_idx": 5,
+          "char_span": [
+            1082,
+            1203
+          ],
+          "text_sha256": "15d881e261d9d9ecbdb1f3f0f5bfe84efda6224ef88ad8e197ffefb559de8538",
+          "approved_text_en": "The notification referred to in paragraph 1 shall at least describe the likely consequences of the personal data breach."
+        },
+        {
+          "sample_id": "gdpr_article33_s007",
+          "sentence_idx": 6,
+          "char_span": [
+            1203,
+            1450
+          ],
+          "text_sha256": "a05e1c585ae4ad1f300c02fd027f75ea0c9adbeb6fa957ec67d9787c0884a397",
+          "approved_text_en": "The notification referred to in paragraph 1 shall at least describe the measures taken or proposed to be taken by the controller to address the personal data breach, including, where appropriate, measures to mitigate its possible adverse effects."
+        },
+        {
+          "sample_id": "gdpr_article33_s008",
+          "sentence_idx": 7,
+          "char_span": [
+            1450,
+            1610
+          ],
+          "text_sha256": "cd0f630f007aa93bee1c3dc85067883afbbfd55bfc90cd2435b69ad3de1f87e0",
+          "approved_text_en": "Where, and in so far as, it is not possible to provide the information at the same time, the information may be provided in phases without undue further delay."
+        },
+        {
+          "sample_id": "gdpr_article33_s009",
+          "sentence_idx": 8,
+          "char_span": [
+            1610,
+            1769
+          ],
+          "text_sha256": "0877dee6e1c8bddf069409062af67fd8836f3ca2fbd28d8405b4bc7f7a8ed5dd",
+          "approved_text_en": "The controller shall document any personal data breaches, comprising the facts relating to the personal data breach, its effects and the remedial action taken."
+        },
+        {
+          "sample_id": "gdpr_article33_s010",
+          "sentence_idx": 9,
+          "char_span": [
+            1770,
+            1867
+          ],
+          "text_sha256": "97cb2d3529241dbfebcde505c980421687aa72b43194dbe1fcce5045d1f29f43",
+          "approved_text_en": "That documentation shall enable the supervisory authority to verify compliance with this Article."
+        }
+      ]
+    },
+    {
+      "rule_id": "article34",
+      "rule_text_sha256": "6e90103bc43195c02e960ac35305d35e3c331b0d9f853656b1c8f765cf8416fb",
+      "rule_text_byte_size": 1755,
+      "sentence_count": 7,
+      "sentences": [
+        {
+          "sample_id": "gdpr_article34_s001",
+          "sentence_idx": 0,
+          "char_span": [
+            0,
+            211
+          ],
+          "text_sha256": "15fe84681e44264818adbcb9f11162c02d9696a581f77b0e8dff56b3eb09e5a5",
+          "approved_text_en": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the personal data breach to the data subject without undue delay."
+        },
+        {
+          "sample_id": "gdpr_article34_s002",
+          "sentence_idx": 1,
+          "char_span": [
+            211,
+            481
+          ],
+          "text_sha256": "d4fffb5731bc634cc5911a424a8572e6d74a5a7d6559c001c0358d4dc4f811cc",
+          "approved_text_en": "The communication to the data subject referred to in paragraph 1 of this Article shall describe in clear and plain language the nature of the personal data breach and contain at least the information and measures referred to in points (b), (c) and (d) of Article 33(3)."
+        },
+        {
+          "sample_id": "gdpr_article34_s003",
+          "sentence_idx": 2,
+          "char_span": [
+            481,
+            890
+          ],
+          "text_sha256": "91fbe85b61f646e15362e63a2446cde57df4aacb43078b1d618598679a82819c",
+          "approved_text_en": "The communication to the data subject referred to in paragraph 1 shall not be required if the controller has implemented appropriate technical and organisational protection measures, and those measures were applied to the personal data affected by the personal data breach, in particular those that render the personal data unintelligible to any person who is not authorised to access it, such as encryption."
+        },
+        {
+          "sample_id": "gdpr_article34_s004",
+          "sentence_idx": 3,
+          "char_span": [
+            890,
+            1164
+          ],
+          "text_sha256": "accbba5528c9af207a891a7480a1b0ae4805379deabb4db412ca3cf33f4b582f",
+          "approved_text_en": "The communication to the data subject referred to in paragraph 1 shall not be required if the controller has taken subsequent measures which ensure that the high risk to the rights and freedoms of data subjects referred to in paragraph 1 is no longer likely to materialise."
+        },
+        {
+          "sample_id": "gdpr_article34_s005",
+          "sentence_idx": 4,
+          "char_span": [
+            1164,
+            1295
+          ],
+          "text_sha256": "7d01aa3b8aeebd9757599a5c3e6066976703816461eb83a196c43956c54d588b",
+          "approved_text_en": "The communication to the data subject referred to in paragraph 1 shall not be required if it would involve disproportionate effort."
+        },
+        {
+          "sample_id": "gdpr_article34_s006",
+          "sentence_idx": 5,
+          "char_span": [
+            1296,
+            1448
+          ],
+          "text_sha256": "3c3c2c92155f6c75224f096931d4c2fa3bbb5ae70f577f1133c508d00af4a58f",
+          "approved_text_en": "In such a case, there shall instead be a public communication or similar measure whereby the data subjects are informed in an equally effective manner."
+        },
+        {
+          "sample_id": "gdpr_article34_s007",
+          "sentence_idx": 6,
+          "char_span": [
+            1448,
+            1755
+          ],
+          "text_sha256": "a99659a91b4029cbf44507562b20753bbdc8fbb7c61c5b79c6675a4a707df027",
+          "approved_text_en": "If the controller has not already communicated the personal data breach to the data subject, the supervisory authority, having considered the likelihood of the personal data breach resulting in a high risk, may require it to do so or may decide that any of the conditions referred to in paragraph 3 are met."
+        }
+      ]
+    },
+    {
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "rule_text_byte_size": 4268,
+      "sentence_count": 10,
+      "sentences": [
+        {
+          "sample_id": "gdpr_article6_s001",
+          "sentence_idx": 0,
+          "char_span": [
+            0,
+            174
+          ],
+          "text_sha256": "ce0e6b4fb1fbb6f67a1f9c1f4b4b03c956853763ea9786c678f17970ca059a21",
+          "approved_text_en": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+        },
+        {
+          "sample_id": "gdpr_article6_s002",
+          "sentence_idx": 1,
+          "char_span": [
+            174,
+            1345
+          ],
+          "text_sha256": "51637f0f8a86398efe0aff728f7f034228724e25ffa10a16e05a6c370694c230",
+          "approved_text_en": "Processing shall be lawful only if and to the extent that processing is necessary for the performance of a contract to which the data subject is party or in order to take steps at the request of the data subject prior to entering into a contract; Processing shall be lawful only if and to the extent that processing is necessary for compliance with a legal obligation to which the controller is subject; Processing shall be lawful only if and to the extent that processing is necessary in order to protect the vital interests of the data subject or of another natural person; Processing shall be lawful only if and to the extent that processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller; Processing shall be lawful only if and to the extent that processing is necessary for the purposes of the legitimate interests pursued by the controller or by a third party, except where such interests are overridden by the interests or fundamental rights and freedoms of the data subject which require protection of personal data, in particular where the data subject is a child."
+        },
+        {
+          "sample_id": "gdpr_article6_s003",
+          "sentence_idx": 2,
+          "char_span": [
+            1345,
+            1480
+          ],
+          "text_sha256": "23f1bc968692552435235fdf3b7853d643ca2bb191780b4eeaa7815a3be0ac43",
+          "approved_text_en": "Point (f) of the first subparagraph shall not apply to processing carried out by public authorities in the performance of their tasks."
+        },
+        {
+          "sample_id": "gdpr_article6_s004",
+          "sentence_idx": 3,
+          "char_span": [
+            1480,
+            1891
+          ],
+          "text_sha256": "1728316c2cee351c497d24830d13c367dfe2da15eded34817600eb3461f7609b",
+          "approved_text_en": "Member States may maintain or introduce more specific provisions to adapt the application of the rules of this Regulation with regard to processing for compliance with points (c) and (e) of paragraph 1 by determining more precisely specific requirements for the processing and other measures to ensure lawful and fair processing including for other specific processing situations as provided for in Chapter IX."
+        },
+        {
+          "sample_id": "gdpr_article6_s005",
+          "sentence_idx": 4,
+          "char_span": [
+            1891,
+            2056
+          ],
+          "text_sha256": "2f9bf7fb1babfacce1668975d113a6c3dd0d4a6448aa077ebace5f5d63ae3b97",
+          "approved_text_en": "The basis for the processing referred to in point (c) and (e) of paragraph 1 shall be laid down by Union law or Member State law to which the controller is subject."
+        },
+        {
+          "sample_id": "gdpr_article6_s006",
+          "sentence_idx": 5,
+          "char_span": [
+            2056,
+            2347
+          ],
+          "text_sha256": "1fc9c4f76a175f260493103abbae1a250cea972fc3c681ef68835c291b351707",
+          "approved_text_en": "The purpose of the processing shall be determined in that legal basis or, as regards the processing referred to in point (e) of paragraph 1, shall be necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller."
+        },
+        {
+          "sample_id": "gdpr_article6_s007",
+          "sentence_idx": 6,
+          "char_span": [
+            2348,
+            2944
+          ],
+          "text_sha256": "09b8c9c4d4ee1fb5b81b20d4bac4347973f72c854719f33c427d8a282dc2cf2c",
+          "approved_text_en": "That legal basis may contain specific provisions to adapt the application of rules of this Regulation, inter alia: the general conditions governing the lawfulness of processing by the controller; the types of data which are subject to the processing; the data subjects concerned; the entities to, and the purposes for which, the personal data may be disclosed; the purpose limitation; storage periods; and processing operations and processing procedures, including measures to ensure lawful and fair processing such as those for other specific processing situations as provided for in Chapter IX."
+        },
+        {
+          "sample_id": "gdpr_article6_s008",
+          "sentence_idx": 7,
+          "char_span": [
+            2945,
+            3074
+          ],
+          "text_sha256": "a8ff1b9bc077e964bdc6d671966107e783552248b290d11a859f006808ed0661",
+          "approved_text_en": "The Union or the Member State law shall meet an objective of public interest and be proportionate to the legitimate aim pursued."
+        },
+        {
+          "sample_id": "gdpr_article6_s009",
+          "sentence_idx": 8,
+          "char_span": [
+            3074,
+            3586
+          ],
+          "text_sha256": "47b24356d04b70feacbc6e3a535850a9dfce28fd9d531173e4fe8f54f1be7f53",
+          "approved_text_en": "Where the processing for a purpose other than that for which the personal data have been collected is not based on the data subject's consent or on a Union or Member State law which constitutes a necessary and proportionate measure in a democratic society to safeguard the objectives referred to in Article 23(1), the controller shall, in order to ascertain whether processing for another purpose is compatible with the purpose for which the personal data are initially collected, take into account, inter alia:"
+        },
+        {
+          "sample_id": "gdpr_article6_s010",
+          "sentence_idx": 9,
+          "char_span": [
+            3586,
+            4268
+          ],
+          "text_sha256": "e8876540ea6f43dcbd2db2dcef0e3366e8a93173457145bd48d63051f958efd5",
+          "approved_text_en": "Any link between the purposes for which the personal data have been collected and the purposes of the intended further processing; The context in which the personal data have been collected, in particular regarding the relationship between data subjects and the controller; The nature of the personal data, in particular whether special categories of personal data are processed, pursuant to Article 9, or whether personal data related to criminal convictions and offences are processed, pursuant to Article 10; The possible consequences of the intended further processing for data subjects; The existence of appropriate safeguards, which may include encryption or pseudonymisation."
+        }
+      ]
+    },
+    {
+      "rule_id": "article7",
+      "rule_text_sha256": "6306b705540e3df738ead52895687e764641ddaa9a1822d294de1b369ae599f7",
+      "rule_text_byte_size": 1178,
+      "sentence_count": 8,
+      "sentences": [
+        {
+          "sample_id": "gdpr_article7_s001",
+          "sentence_idx": 0,
+          "char_span": [
+            0,
+            161
+          ],
+          "text_sha256": "e00763881eb6ffcb71cd7f3dfda726448d24731fa06d9b217e2dce6dd00bce87",
+          "approved_text_en": "Where processing is based on consent, the controller shall be able to demonstrate that the data subject has consented to processing of his or her personal data."
+        },
+        {
+          "sample_id": "gdpr_article7_s002",
+          "sentence_idx": 1,
+          "char_span": [
+            161,
+            465
+          ],
+          "text_sha256": "f581ee37c327378e68c9e88ccb4a19fb9d6c8130ad9d26517ba0d42b3126cbf3",
+          "approved_text_en": "If the data subject's consent is given in the context of a written declaration which also concerns other matters, the request for consent shall be presented in a manner which is clearly distinguishable from the other matters, in an intelligible and easily accessible form, using clear and plain language."
+        },
+        {
+          "sample_id": "gdpr_article7_s003",
+          "sentence_idx": 2,
+          "char_span": [
+            466,
+            572
+          ],
+          "text_sha256": "3bcd34645f3b91dc2a827b44a305fec3a22b87b4ec41263036498b7376923f8d",
+          "approved_text_en": "Any part of such a declaration which constitutes an infringement of this Regulation shall not be binding."
+        },
+        {
+          "sample_id": "gdpr_article7_s004",
+          "sentence_idx": 3,
+          "char_span": [
+            572,
+            653
+          ],
+          "text_sha256": "fc7bf7ae5fc16443c9fc807d9e88d87eb2d372e068ca88c28e0bf3c1dd7b2e51",
+          "approved_text_en": "The data subject shall have the right to withdraw his or her consent at any time."
+        },
+        {
+          "sample_id": "gdpr_article7_s005",
+          "sentence_idx": 4,
+          "char_span": [
+            654,
+            765
+          ],
+          "text_sha256": "6408bdcecb6f939df1289525e3751b8a86c83a8b87959e6d0bef1ea8d7fcf181",
+          "approved_text_en": "The withdrawal of consent shall not affect the lawfulness of processing based on consent before its withdrawal."
+        },
+        {
+          "sample_id": "gdpr_article7_s006",
+          "sentence_idx": 5,
+          "char_span": [
+            766,
+            834
+          ],
+          "text_sha256": "ca8b57790686197fef386cdd5bae07923ec87d0bb0af17b40d7d6750e576f7e5",
+          "approved_text_en": "Prior to giving consent, the data subject shall be informed thereof."
+        },
+        {
+          "sample_id": "gdpr_article7_s007",
+          "sentence_idx": 6,
+          "char_span": [
+            835,
+            887
+          ],
+          "text_sha256": "bdae30bae45fc4a004cb9fbb63941b00f600bb59418660160a998dba3f9d5a5d",
+          "approved_text_en": "It shall be as easy to withdraw as to give consent."
+        },
+        {
+          "sample_id": "gdpr_article7_s008",
+          "sentence_idx": 7,
+          "char_span": [
+            887,
+            1178
+          ],
+          "text_sha256": "7a5c82e05e06aed5e174c23dbbcea4a8e7b9916f0cae5695f6f5f43daad20619",
+          "approved_text_en": "When assessing whether consent is freely given, utmost account shall be taken of whether, inter alia, the performance of a contract, including the provision of a service, is conditional on consent to the processing of personal data that is not necessary for the performance of that contract."
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "rules": 9,
+    "sentences": 74
+  }
+}

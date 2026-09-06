@@ -370,7 +370,7 @@ Direct-LLM 拆为 8 个模块：
    - 如何验证：D1-R2 lock-config 测试（12 项，含 Gold 不可见核查）。
    - 与 Barrientos 对照：相同点 = temperature 0 + 稳定性设计；差异点 =
      Barrientos 论文是 36 条 requirements × 5 次完整运行报 self-consistency，
-     我们当前只有 temp0 + hash 锁定，同协议 5 次正式重跑尚未执行（AB-9 待授权）。
+     我们已 temp0 + hash 三方锁定，同协议 5 次稳定性重跑已执行（AB-9，见 `paper/ABLATION_MATRIX.md` v3）。
 
 **总体结果（formal，2026-08-11 三方法正式比较，粗 Gold 主口径）**：Direct-LLM
 五字段 F1——actor 0.7579、action 0.9437、condition 0.8380、constraint 0.7427、
@@ -429,7 +429,7 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` 与 `docs/EVAL_3DIM_SPEC.md`。）
 | controlled vocabulary | 44 模式 × 4 维度（control_flow/resource/data/time）约束 normalized view | public marker lexicon（英文 64 个）+ 受控 six-field schema | 都是“受控词汇”纪律，用途不同 |
 | JSON validation | strict JSON schema（对每个 LLM 输出验证） | canonical validator（格式/回指/字段权限） | 相同点=强验证 |
 | deterministic normalization | 有（论文声明 normalization） | fail-closed canonicalizer + span canonicalizer | 相同点=确定性归一化 |
-| stability design | 36 条 × 完整流程运行 5 次，Step 1 pairwise distance≤2 self-consistency | temp0 + prompt hash 三方锁定；同协议 5 次重跑未执行（AB-9） | 设计对齐、执行缺口 |
+| stability design | 36 条 × 完整流程运行 5 次，Step 1 pairwise distance≤2 self-consistency | temp0 + prompt hash 三方锁定；同协议 5 次重跑已执行（AB-9 已完成，见 `paper/ABLATION_MATRIX.md` v3） | 设计对齐、已执行 |
 | evaluation metrics | Step-specific P/R/F1 + strict JSON 合法性 + self-consistency | span-overlap 主口径 + 细/粗 Gold 双口径 + modality label 面板 | 主指标不同（span vs 结构化）；分表报告 |
 | expert protocol | artifact：semantic coverage / structural encoding / deontic correctness + style-equivalent alignment；κ=0.52（20 个变更影响的 NC/OC/NE 一致性） | 本项目拟新增 style-equivalent 敏感性（未实现，AB-10）；Gold 为 user-adjudicated | 专家协议指标≠论文自动实验主指标，禁止冒充 |
 | traceability | recording LLM 增加/修复的内容 | runner 记录 prompt/model/sampling/预算/失败率 + manifest | 相同点=traceability 纪律 |
@@ -447,11 +447,13 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` 与 `docs/EVAL_3DIM_SPEC.md`。）
   这些是任务/表示差异，不构成方法优劣。
 - 哪些结论已有数据：温度 0、严格 JSON schema、确定性验证/归一化、traceability、
   成本/失败率纪律——本文 Direct-LLM 已实现并有运行证据。
-- 哪些仍是假设、必须等待消融：**2026-08-22 Barrientos 离线消融套件已把其中
+- 哪些已实测、哪些仍待消融：**2026-08-22 Barrientos 离线消融套件已把其中
   AB-2/AB-3/AB-5/AB-8 的前置证据做实（见 §6.6 与 `paper/ABLATION_MATRIX.md`）**；
-  仍需真实 LLM 臂：AB-2 few-shot/Barrientos-style prompt、AB-4 dual-view
-  adapter、AB-9 五次稳定性重跑、AB-10 style-equivalent——这些必须等授权数据，
-  不得现在写成“已完成”。
+  2026-08-29/30 真实 LLM/后处理批次已执行：D/E 套件（1140 real calls，2026-08-29）、
+  450-call 严格 Prompt 单因素与后处理离线单因素（2026-08-30；AB-1/AB-2/AB-5b 严格
+  臂与 AB-5 均以 `paper/ABLATION_MATRIX.md` v3 行状态与数字为准）、AB-9 五次稳定性
+  重跑；仍未实现/未授权的只有 AB-4 dual-view adapter 与 AB-10 style-equivalent，
+  不得把未跑项写成“已完成”。
 
 ### 4.5 实验结果对 Barrientos 模块对照的更新（2026-08-22，零 API）
 
@@ -611,17 +613,25 @@ Barrientos 优势 / 综合结论 / 可比较性限制”的结构化结论；(2)
 - **实验 C（4→3 modality 投影）**：四类 39/97/62/33；三类共享 97/62/33；
   definition 覆盖率损失 16.88%；definition 不并入其它类；仅 schema 覆盖比较，
   非 Barrientos 方法性能比较。
-- **实验 D/E（prompt/few-shot 与同数据比较）**：full arm 复用锁定 formal 结果；
-  no_fewshot / barrientos_style / minimal_prompt 三臂 prompt 已生成
-  （`prompts/sun_compat/ablation_v1/`）并记录精确运行命令；E 同数据输入合同
-  （38 条非空 Barrientos requirements，`configs/ablations/e_same_data_input_contract_v1.json`）
-  与共享/分表指标协议已锁定；**未执行**（零 API 批次，需授权后运行）。
+- **实验 D/E（prompt/few-shot 与同数据比较；已于 2026-08-29 执行，共 1140
+  real calls，详见 `paper/ABLATION_MATRIX.md` 实验 D/E）**：D 四臂（full /
+  no-fewshot / minimal task+JSON / Barrientos-style）逐臂 parse 率为 full
+  1.000、no-fewshot 0.980、minimal task+JSON 0.000、Barrientos-style 0.993。
+  parse 结果须逐臂表述：no-fewshot 与 Barrientos-style 两臂**解析成功但产出零条
+  非空 canonical 六字段记录**（0.980 / 0.993 的 parse ok，canonical nonempty
+  均为 0.000，坐标接口/格式不匹配）；minimal task+JSON 臂 parse ok = 0.000，
+  **未产出可解析 JSON**，不能把三个零分臂一概写成“可解析、仅接口不匹配”。E
+  臂同批执行（同数据输入合同以 v2 为准：36 条唯一版本化 ID，派生自冻结 S2.12
+  输入；原 v1“38 条非空”合同废弃，见 `paper/ABLATION_MATRIX.md`），共享/分表
+  指标协议已锁定。
 
 已锁定零 API 项：AB-1（v5→v6 历史证据：constraint R 0.288→0.417）、AB-3（4 类
 →3 类投影，2026-08-22 完成）、AB-5（validator/canonicalizer 离线作用，2026-08-22
 实验 A 量化）、AB-6（150/150 有效、0 事故历史证据）、AB-7（细/粗/Sun-marker 三
-口径已成表）、AB-8（Rules-Only 逐模块去除，2026-08-22 实验 B 量化）、AB-2/AB-4/
-AB-9（prepared / 待授权）。
+口径已成表）、AB-8（Rules-Only 逐模块去除，2026-08-22 实验 B 量化）。真实 LLM/
+后处理批次（D/E 1140 calls，2026-08-29；450-call 严格 Prompt 单因素与后处理离线
+单因素，2026-08-30）已执行，各项 AB 状态以 `paper/ABLATION_MATRIX.md`（v3）为准；
+AB-4（dual-view adapter）/AB-10（style-equivalent）仍待实现/待授权。
 
 ## 7. 结果
 
@@ -1067,7 +1077,8 @@ phrase Gold 不可得；德文法规与英文公共 marker 之间需要显式语
 
 ### 8.3 Rules+LLM-Repair 的负结果对照（不写为贡献）
 
-选择性 LLM 修复在当前触发器设计下产生净负收益（§4.3）：主口径 F1 0.7621 vs
+选择性 LLM 修复在当前触发器设计下产生净负收益（§4.3；此处引用的是 **development
+全量 150 负结果，commit 74614e3，非正式三方法比较主结果**）：主口径 F1 0.7621 vs
 Rules-Only 0.7986（−0.0365）、actor P 0.7077→0.2754。结论引用
 `MASTER_PIPELINE.md` §8.8.1 三项困难，并只能作为对照臂解释“证据约束的必要性”。
 

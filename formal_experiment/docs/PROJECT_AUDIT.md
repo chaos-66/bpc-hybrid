@@ -11,6 +11,27 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 ## 1. 当前结论
 
+**2026-09-06b 论文收尾执行进展（全部零 LLM/API/网络；规则与授权边界未变）**：
+(1) **GDPR Stage2→Stage3 成对衔接实验（Rules-Only 臂）已运行并产出真实结果**
+（dev/受控合成口径）：句子级 Gold-blind 输入 9 条款/74 句
+（`data/input/gdpr7_stage2_input_v1.json`，分句与 S3.9-EXT 锁定绑定 40/40 一致）；
+Rules-Only 真实零 API 预测 74/74（`data/predictions/gdpr7_sun_rule_only_v1/`）；
+同一固定 Stage-3 四类型检测器消费外部预测（`scripts/run_gdpr_s2_s3_linkage_v1.py`，
+失败不回填）：variant macro winter 0.5208/sun 0.1875/bm25 0/tfidf 0.351，对照 FP
+0.45/0.05/0/0.375；与参考确定性抽取逐样本变化 7/6/6/4（例：article22 s1 被 B0 判
+obligation 使 2 个禁止变体不可观察；tfidf 一例由不可观察变为新检出）。分析与案例：
+`docs/research/LINKAGE_RULES_ONLY_RESULTS_NOTE_2026-09-06.md`。
+(2) **Direct-LLM 臂**：74 个冻结请求与预算已备（`outputs/reports/gdpr7_direct_llm_preflight_v1.json`），
+并入合并授权申请 `docs/API_AUTHORIZATION_REQUEST.md` §11（S2.12 63 + GDPR 74 = 137 calls）；
+**真实 API=0，等待授权**。
+(3) **GDPR 人工核对材料已备**：`data/development/human_review/gdpr7_six_element_review_blank_v1.json`
+（9 条款/74 句，candidate=确定性 dev 抽取，决策全空）+ 验证器 + 中文工作流指南；
+正式 Oracle 仍需该人工裁决与门禁（未完成项如实保留）。
+(4) 论文六条修正已落地（THESIS_DRAFT/CLAIM_EVIDENCE_MATRIX C32/C33/ABLATION_MATRIX）；
+12 页导师汇报内容稿 `paper/MENTOR_REPORT_CONTENT_2026-09.md` 已交付。状态页与主路线
+已同步（MASTER 3.6.36）。S2.12/S2.13/S3.7 门禁语义不变：S2.12 两个 API arms 与 S3.7
+仍 await 授权/人工前置。
+
 **2026-09-06 撤回说明与研究定位澄清（研究定位以此为准）**：用户澄清此前“直接使用
 Barrientos 原始 FULL/NO-PATTERNS 两份提示、在本项目冻结 36 条输入上运行 360 次
 （36×2×5）”的方案是对其意图的误解，**已经撤回、不得执行**。研究定位维持：Sun et al.

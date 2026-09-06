@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-06
-**收录文件**：1569 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1594 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -88,6 +88,7 @@
 | `configs/g05_authorization_manifest_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/g05_complexity_candidate_draft_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/g05_complexity_frozen_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/gdpr7_sun_rule_only_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_active_registry_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_enhanced_s27_v10a.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -401,6 +402,8 @@
 | `data/development/human_review/estg_150_llm_six_element_candidates_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/estg_150_review_aids_zh_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/estg_150_translation_en_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/gdpr7_six_element_review_blank_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/GDPR7_SIX_ELEMENT_REVIEW_WORKFLOW_V1.md` | 开发/溯源 | 说明、规范或研究文档 |
 | `data/development/human_review/s2_11_blank_review_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/s2_11_blank_review_v2.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/s2_11_review_decisions_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
@@ -548,6 +551,7 @@
 | `data/input/estg150_formal_inference_input_v2.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/input/estg150_formal_input_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/input/estg150_formal_input_v1.STATUS.md` | 正式区（受门禁） | 说明、规范或研究文档 |
+| `data/input/gdpr7_stage2_input_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/input/s2_12_complex_corpus_formal_input_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
 | `data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn` | 正式区（受门禁） | 流程模型或测试 fixture |
@@ -563,6 +567,10 @@
 | `data/predictions/b0_formal_arm_v1_replay/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/direct_llm_formal_arm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/direct_llm_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_sun_rule_only_v1/cost.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_sun_rule_only_v1/manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_sun_rule_only_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_sun_rule_only_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/s2_12_sun_rule_only_v1/cost.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/s2_12_sun_rule_only_v1/manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/s2_12_sun_rule_only_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
@@ -630,6 +638,7 @@
 | `docs/REPRODUCTION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
 | `docs/research/BARRIENTOS_BORROWING_AUDIT_2026-07-12.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/BARRIENTOS_LLM_ROLE.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/LINKAGE_RULES_ONLY_RESULTS_NOTE_2026-09-06.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/PUBLIC_MARKER_LEXICON_RECONSTRUCTION.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/RESEARCH_EVIDENCE_REVIEW_2026-09-06.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/S1_P2_CROSSWALK.md` | 研究证据 | 说明、规范或研究文档 |
@@ -908,6 +917,9 @@
 | `outputs/reports/g04_main_view_decision_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/gdpr7_direct_llm_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_s2_s3_linkage_v1_rules_only.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_s2_s3_linkage_v1_rules_only.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/paper_experiment_completion_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1067,6 +1079,7 @@
 |---|---|---|
 | `paper/ABLATION_MATRIX.md` | 活动 | 说明、规范或研究文档 |
 | `paper/CLAIM_EVIDENCE_MATRIX.md` | 活动 | 科学主张、证据状态和解锁条件 |
+| `paper/MENTOR_REPORT_CONTENT_2026-09.md` | 活动 | 说明、规范或研究文档 |
 | `paper/README.md` | 活动 | 所在目录的入口说明 |
 | `paper/THESIS_DRAFT.md` | 活动 | 中文论文连续工作稿与结果占位 |
 
@@ -1173,6 +1186,9 @@
 | `scripts/build_formal_coarse_view_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_formal_gold_authorization_packet.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_formal_gold_authorization_packet_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_gdpr7_direct_llm_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_gdpr7_review_surface_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_gdpr7_stage2_input_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
@@ -1262,6 +1278,8 @@
 | `scripts/run_estg150_b0_formal.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_gdpr7_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_gdpr_s2_s3_linkage_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_llm_zh_aid.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s2_12_direct_llm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s2_12_sun_llm_fallback_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1299,6 +1317,7 @@
 | `scripts/sun_stage3_sensitivity.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_estg_human_review.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/validate_gdpr7_review_surface_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_gold.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_human_correction.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -1393,6 +1412,7 @@
 | `src/bpc_hybrid/formal_stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/g04_coarse_view.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/g05_complexity_candidate.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/gdpr_s2_s3_projection.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_context.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_pilot_plan.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_span_canonicalizer.py` | 活动 | Python 实现、脚本或测试 |
@@ -1573,6 +1593,11 @@
 | `tests/test_g04_and_b0_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_g05_complexity_candidate_draft_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_g07_barrientos_adapter_contract.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gdpr7_direct_llm_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gdpr7_review_surface_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gdpr7_stage2_input_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gdpr_s2_s3_linkage_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gdpr_s2_s3_projection.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_effective_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_h1_fallback_runner.py` | 活动 | Python 实现、脚本或测试 |
