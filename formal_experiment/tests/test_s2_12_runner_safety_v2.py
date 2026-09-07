@@ -760,6 +760,11 @@ def test_auth_event_builder_refuses_without_sentence():
 
 
 def test_auth_event_builder_dry_run_writes_nothing(tmp_path):
+    # Post-authorization state (2026-09-07): real auth/event files exist for
+    # every stage; a dry run must leave them byte-identical.
+    auth = ROOT / "configs/s2_12_api_authorization_D-REST.json"
+    event = ROOT / "configs/s2_12_api_authorization_event_D-REST.json"
+    before = (auth.read_bytes(), event.read_bytes())
     proc = _run_cmd([
         str(SCRIPTS / "build_s2_12_auth_event_v1.py"),
         "--runtime-home", str(RUNTIME_HOME), "--stage-id", "D-REST", "--dry-run",
@@ -767,11 +772,12 @@ def test_auth_event_builder_dry_run_writes_nothing(tmp_path):
     ])
     assert proc.returncode == 0, proc.stdout + proc.stderr
     assert "No authorization created" in proc.stdout
-    assert not (ROOT / "configs/s2_12_api_authorization_D-REST.json").exists()
-    assert not (ROOT / "configs/s2_12_api_authorization_event_D-REST.json").exists()
+    assert (auth.read_bytes(), event.read_bytes()) == before
 
 
 def test_auth_event_builder_apply_refuses_synthetic():
+    auth = ROOT / "configs/s2_12_api_authorization_D-REST.json"
+    before = auth.read_bytes()
     proc = _run_cmd([
         str(SCRIPTS / "build_s2_12_auth_event_v1.py"),
         "--runtime-home", str(RUNTIME_HOME), "--stage-id", "D-REST", "--apply",
@@ -779,7 +785,7 @@ def test_auth_event_builder_apply_refuses_synthetic():
     ])
     assert proc.returncode == 2
     assert "synthetic" in proc.stdout.lower()
-    assert not (ROOT / "configs/s2_12_api_authorization_D-REST.json").exists()
+    assert auth.read_bytes() == before
 
 
 def test_auth_event_builder_apply_without_sentence_refuses():

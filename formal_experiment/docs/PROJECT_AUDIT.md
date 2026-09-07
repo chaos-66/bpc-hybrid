@@ -11,6 +11,27 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 ## 1. 当前结论
 
+**2026-09-07b 论文收尾授权落地与执行链补齐（零 LLM/API，ZERO CALLS）**：用户论文收尾指令
+（句哈希 `27426de7…`，副本 `configs/paper_winddown_api_authorization_sentence_2026_09_07.txt`）
+授权 137 次真实调用（S2.12 63 + GDPR 74，独立 cap、off-peak、retry=0）。本轮离线完成：
+(1) **授权文件已创建并通过 executor 同款校验**——批 A 五 stage
+`configs/s2_12_api_authorization_{D-CAL,D-REST,F-1,F-2,F-3}.json`（USD 1.00/42.09、off-peak_only、
+63M/258,048、retry=0）+ 批 B `configs/gdpr7_direct_llm_authorization_event_v1.json`
+（scope `gdpr7_direct_llm_v1:74`、74M/303,104/1.31、off-peak 价快照、官方价重验时间戳）；
+活动验证器 `scripts/verify_s2_12_authorization_files_v1.py` 70/70 PASS；旧 no_real_auth
+verifier 按设计 superseded（历史保留）。(2) **S2.12 执行链补齐**：raw 内容落盘（gitignored）、
+transport 失败/usage 缺失事故记账后中止且绝不自动重发、链式 resume 后骨架按完整账本重建；
+`finalize_s2_12_arm_v1.py`（正式胶囊唯一发布入口，坐标-only、成本按官方 off-peak 价重算、
+fallback 复用 H1 链逐 plan 审计）、`evaluate_s2_12_api_arm_v1.py --arm …`、
+`verify_s2_12_api_arm_v1.py`、`s2_12_response_convert.py`。(3) **GDPR 人工六要素裁决工作流 v1**
+可用：唯一编辑入口 `scripts/gdpr7_review_tool_v1.py`（进度 74/444）、editable
+`gdpr7_six_element_review_decisions_v1.json`、填写后校验/导入/冻结（38 项合成测试；blank 字节未动）。
+(4) 官方价格重验（2026-08-17 峰谷方案未变；off-peak 半价）。新增聚焦 60 项全绿 + s2_12 回归
+52 passed + 全量 2965 passed/24 skipped（FILE_CATALOG 重建）。**状态**：S2.12=authorized/ZERO
+CALLS/READY（真实调用 0，等待进程环境凭据）；S2.13 blocked only on S2.12 DoD；GDPR 裁决工具
+已可用（真实裁决 0/74）；S3.7 未动。真实运行命令：`docs/API_AUTHORIZATION_REQUEST.md` §13.3。
+本段之前的 2026-09-07（3.6.38）及更早段落为历史结论，保留。
+
 **2026-09-07 Stage 3 根因修复与同输入复算（零 API）**：已修复 Sun Def6 的规则/流程 actor-action 关联、数值时限的动作绑定与适用范围、五分类漏计 abstention/误判合规。原三类 33 条两侧判定不变（reference 0.3889/0.3636；Rules-Only 0.3333/0.3333）。四类 reference macro 更新为 0.4738/0.2381/0.1429/0.3750；Rules-Only 保持 0.3313/0.1875/0/0.3321。既有阈值网格已复算，主聚合不变。当前证据 `outputs/reports/s3_formula_repair_v2.{json,md}` 与 `outputs/evidence/s3_formula_repair_v2/manifest.json`；论文 §7.4.4 与汇报第 9–11 页使用此版本。历史 2026-09-06 的四类参考数字及五分类 P/R/F1 不再作为当前结果。137 次真实 API、人工 Rule Record Gold、正式 Oracle 状态仍未完成。
 
 **2026-09-06c 汇报前收尾（零 LLM/API；统一评价已离线运行，旧结果保留）**：
@@ -192,14 +213,40 @@ evidence span。Overall F1=76.69%，`invalid_attempt_count=1`。manifest 状态�
 
 ## 4. 当前工作队列
 
-当前真实下一路径（2026-08-15 核账，唯一执行顺序；S3.7 授权句仍未生成）：
+当前真实下一路径（2026-09-07b 刷新；S2.11 已完成并发布正式 Gold——见 MASTER
+§12.0f/§12.0g 与本页历史行，不再列为待办）：
 
-1. **S2.11/G0.5**：外部复杂语料资格、3→4 标签映射与人工 Gold 门禁；**Checkpoint A 已应用（2026-08-17，用户授权）**：G1=resolved_for_local_nonredistributive_analysis（artifact 许可未知、license_verified=false、本地只读研究使用）、G2=applied_local_read_only、G3=applied（M1）、G4=applied（G0.5 frozen，密封链验证）、G6=applied（S0 结构映射）；**Checkpoint B/C/D 已执行**（语料盘点 40/11、候选 29、review 人口封闭 40/4/36、S2.12 plan v1）；**Checkpoint E1 已执行（2026-08-17）**：**canonical v2 模型**（unresolved/absent/present、modality label+evidence spans、多 span、actor-action map、order relations）+ **36 条重新语义复核的 proposal v2**（proposal v1 superseded 不可批准；human_approved=false/gold=false；exact-slice=0/evidence missing=0/display None=0）+ **importer v2 dry-run blocked=0/unresolved=0/adjudicable=36**（本轮未创建确认事件、未 apply、freeze=false）；**Checkpoint F 已执行（2026-08-17）**：proposal v3 定点校正（r10v1 actor 消歧+aam、r4v2/r8v1/r18v2 overlap 消除、r3v1/r3v2 temporal-validity constraints；canonical validator v3 强化：唯一 span/clause ID、aam 覆盖、order 约束）；**proposal v1/v2 superseded 不可批准**；proposal v3 当前且未确认（SHA `9882ba45…`，human_approved=false/gold=false，验收计数全零）；importer v3 dry-run blocked=0/unresolved=0/adjudicable=36（本轮未创建确认事件、未 apply、freeze=false）；**当前入口 `outputs/reports/s2_11_proposal_report_v3.json` + `outputs/reports/s2_11_batch_import_dry_run_v3.json`**（+ `data/development/human_review/s2_11_blank_review_v2.json` + `s2_11_review_decisions_v2.json`；Checkpoint A 门禁报告 `s2_11_gates_applied_checkpoint_a_v1.json`；v6 及更早为历史安全基线）；
-2. **S2.12 full DoD**（预注册分层与错误类型）；**Checkpoint D/E3 已执行（2026-08-17，零 LLM/API）**：计划 v1 冻结后经 **Checkpoint E3 纠正为 plan/readiness v2**（supersede v1，reason=evaluator/Gold-shape correction；`configs/s2_12_execution_plan_v2.json`）；**评估器 v2 对齐正式 Stage 2 合同**（`src/bpc_hybrid/s2_12_stratified_evaluator_v2.py`：modality label acc/macro-F1/per-class + 五字段 Sun literal-overlap span P/R/F1，parity 与正式 evaluator 一致；`s2_12_method_adapter.py` dry-run ready；L3=0 无样本不造 0 分）；**API readiness v2**（`outputs/reports/s2_12_api_readiness_v2.json`：两臂均 deepseek-v4-pro、max_calls 36/72/108、输出 token 4096、输入 token 未文档化、cost_cap_unresolved——未发出最终授权句、缺项精确列出、calls_made=0）；**Checkpoint F：readiness v3 已交付**（`outputs/reports/s2_12_execution_readiness_v3.json`：评估器 v2 不重写、parity 重跑通过、re-bind proposal v3/importer v3 hash；API readiness 保持 dry-run、无最终授权句）；真实运行仍 blocked on **S2.11 一次性用户内容确认（绑定 proposal v3 SHA）+ API 授权缺项**；
-3. **S2.13 Stage 2 冻结**（DoD 不变）；
-4. **用户裁决并冻结 9 个 GDPR Gold Rule Records**（article6/7/15/16/17/20/22/33/34；Agent 不得创建/推断）；
-5. **S3.4–S3.6 formal readiness/promotion**（S1.7 已满足）；
-6. **S3.7 formal Oracle 单独授权**（authorization_sentence 仍为 null）。
+1. **S2.12 full DoD（批次 A，63 次）**：状态 `authorized (2026-09-07)/ZERO CALLS/READY`
+   ——授权事件/auth 文件齐备（§13.3 命令），真实运行只差进程环境凭据。运行序：
+   D-CAL → D-REST（链式 resume）→ F-1/F-2/F-3（链式）→
+   `finalize_s2_12_arm_v1.py --arm direct_llm|sun_llm_fallback` →
+   `evaluate_s2_12_api_arm_v1.py --arm …`（同 Gold/分层/同一 evaluator）→
+   三方法总体+分层（L1/L2/L3；L3=0 如实）+模态/要素/完整记录/失败分列 +
+   错误类型与逐样本变化 → 达到 DoD 后 S2.13 freeze（S2.13 只 blocked on 本项）。
+2. **批次 B（GDPR 74 次 Direct-LLM）**：授权事件齐备（scope `gdpr7_direct_llm_v1:74`）；
+   真实运行 → development capsule（executor 拒绝写 formal 路径）→ 独立显式 promotion
+   至 `data/predictions/gdpr7_direct_llm_v1` → 下游成对比较（33 条人工违规/30 条 v1/
+   40 对 v2 分开报告 + control FP + 逐样本变化与来源归类）；不空转等人工 Gold。
+3. **GDPR 人工六要素裁决（74 句）**：工具已可用——唯一编辑入口
+   `scripts/gdpr7_review_tool_v1.py`（`--next` 逐句；`--progress` 显示 74/已完成/剩余
+   与 444 字段进度；`--show <sample_id>`），editable
+   `data/development/human_review/gdpr7_six_element_review_decisions_v1.json`；
+   校验/导入/冻结配套就绪（合成测试全绿，blank 字节未动）。真实裁决完成数=0/74，
+   等待用户核对（每句可看原句+候选+提示后 a/r/e 确认或修正；不得由 Agent 代填）。
+4. **Direct-LLM 接入原三类/四类扩展的最小适配**（真预测产生后执行）：3-type converter
+   schema 参数化 + runner 第三来源；统一评价加 direct_llm 来源；阈值/优先级单点核对
+   （γ_ext 文档矛盾修正）；变化原因“抽取/适配/检测”机器归类。
+5. **用户裁决完成后的正式评价链**：校验→导入→生成正式 Gold Rule Records（9 条款/74 句
+   对应核验）→ 前置条件全满足后按锁定方案办理 Gold 发布/阶段冻结与 S3.7 正式 Oracle
+   授权记录与零 API 运行；Oracle 与 end-to-end 分表；此前不提前标记就绪/完成。
+6. **论文案例与交付**：Sun SIM 案例核对结论已备（references 提取文本 §5.4/表13/图10题注；
+   “欠款客户领取 SIM 卡”表述本地未找到，以实际文本为准）；推荐 GDPR article33/34
+   (gdpr_1) 为主案例锚点、article22 s1 情态翻转作方法差异小案例（标准答案确认项待用户）；
+   THESIS_DRAFT/CLAIM_EVIDENCE_MATRIX/MENTOR_REPORT_CONTENT_2026-09 随真实结果回填；
+   GitHub main 同步（禁强推）。
+7. **真实 API 运行前置**：进程环境凭据（`BPC_HYBRID_DeepSeek_*` 白名单键；runner 禁读
+   项目 `.env`）。未就绪时继续完成不依赖真实调用的实现/比较/图表/写作（按 2026-09-07
+   指令第九节）。
 
 下表为历史完成记录（provenance）。
 

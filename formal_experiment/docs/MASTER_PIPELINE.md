@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.38
+**文档版本**：3.6.39
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-09-07
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -16,6 +16,45 @@
 **2026-09-07 Stage 3 根因修复与同输入复算（零 API）**：已修复 Sun Def6 的规则/流程 actor-action 关联、数值时限的动作绑定与适用范围、五分类漏计 abstention/误判合规。原三类 33 条两侧判定不变（reference 0.3889/0.3636；Rules-Only 0.3333/0.3333）。四类 reference macro 更新为 0.4738/0.2381/0.1429/0.3750；Rules-Only 保持 0.3313/0.1875/0/0.3321。既有阈值网格已复算，主聚合不变。当前证据 `outputs/reports/s3_formula_repair_v2.{json,md}` 与 `outputs/evidence/s3_formula_repair_v2/manifest.json`；论文 §7.4.4 与汇报第 9–11 页使用此版本。历史 2026-09-06 的四类参考数字及五分类 P/R/F1 不再作为当前结果。137 次真实 API、人工 Rule Record Gold、正式 Oracle 状态仍未完成。
 
 验收：原三类公式量词/阈值保留；规则与流程关联可追溯；时间矛盾不绕过动作与适用门槛；80 对象逐项计入五分类统计；固定输入哈希不变；新旧预测差异逐样本记录。实现修复完成不等于方法性能已达预设高分，也不改变正式 Oracle 门禁。
+
+## 2026-09-07 修订 3.6.39：论文收尾授权落地与执行链补齐（全部离线，ZERO CALLS）
+
+**论文收尾指令（2026-09-07）已收到并记录**（逐字副本
+`configs/paper_winddown_api_authorization_sentence_2026_09_07.txt`，UTF-8 SHA-256
+`27426de7…`；依据文件 `configs/paper_winddown_api_authorization_basis_2026_09_07.json`）：
+授权两批共 137 次真实调用（批 A=S2.12 63 次：direct_llm 36 + sun_llm_fallback 27，
+off-peak、retry=0、USD≤42.09；批 B=GDPR scope `gdpr7_direct_llm_v1:74` 共 74 次，
+USD≤1.31），并按要求补齐必要执行接口。本轮（零 LLM/API/网络）完成：
+
+1. **授权事件/auth 文件已生成并通过 executor 同款校验**：批 A 五 stage
+   （`configs/s2_12_api_authorization_{D-CAL,D-REST,F-1,F-2,F-3}.json` + 5 事件，
+   caps 63M/258,048/USD 1.00 或 42.09/off-peak_only/retry=0）；批 B 事件
+   （`configs/gdpr7_direct_llm_authorization_event_v1.json`，caps
+   74M/303,104/4,096/USD 1.31、off-peak 价快照、官方价重验时间戳、6 项 hash 绑定）。
+   活动验证器 `scripts/verify_s2_12_authorization_files_v1.py` 70/70 PASS；
+   旧 zero-call verifier 的 no_real_auth 断言按设计 superseded（历史保留）。
+2. **S2.12 API 臂执行链补齐（真实运行前必需）**：StageExecutor 可选 raw 落盘
+   （内容只进 gitignored 目录）、transport 失败/usage 缺失事故记账后中止且绝不
+   自动重发、链式 resume 后 final predictions 骨架按完整账本重建；两个 runner
+   新增 `--raw-dir`；新增 `src/bpc_hybrid/s2_12_response_convert.py`（direct
+   响应→坐标-only canonical）；`scripts/finalize_s2_12_arm_v1.py`（正式胶囊唯一
+   发布入口：direct 转换 + fallback 经 `_rerun_b0` 文本重建与 H1 共享链按 frozen
+   plan 27 行应用并逐 plan 审计；成本按官方 off-peak 价从 usage 重算）；
+   `scripts/evaluate_s2_12_api_arm_v1.py --arm …`（与 sun_rule_only 同 Gold/分层/
+   同一 evaluator，非全 ok 拒绝评价）+ `verify_s2_12_api_arm_v1.py`。
+3. **GDPR 人工六要素裁决工作流 v1**：editable 派生
+   `data/development/human_review/gdpr7_six_element_review_decisions_v1.json`
+   + 共享规则模块 + 控制台工具（唯一编辑入口，进度 74/444）+ 填写后校验 +
+   用户决定导入（confirmation 绑定）+ 冻结闭包验证；38 项合成测试（真实 blank
+   字节未动）。
+4. **测试与审计**：新增聚焦 60 项全绿；s2_12 safety+wiring 回归 52 passed；
+   全量 audit --with-tests（2965 passed / 24 skipped，FILE_CATALOG 已重建）。
+
+**状态转移**：S2.12 API arms 由 `pending explicit authorization` 变为
+`authorized (2026-09-07) / ZERO CALLS / READY`——真实调用=0，等待进程环境凭据
+（runner 只读进程环境，不读项目 `.env`）；S2.13 仍 blocked only on S2.12 DoD；
+S3.7 未动；人工裁决工具已可用（真实裁决 0/74）。真实运行命令见
+`docs/API_AUTHORIZATION_REQUEST.md` §13.3。
 
 ## 1. 权威层级与更新规则
 
@@ -970,6 +1009,7 @@ development-only；S3.7 formal Oracle not started；Gold Rule Records absent。
 
 ## 15. Pipeline 变更日志
 
+| 3.6.39 | 2026-09-07 | **论文收尾授权落地与执行链补齐（零 LLM/API，ZERO CALLS）**：用户论文收尾指令（句哈希 `27426de7…`）授权 137 次调用（S2.12 63 + GDPR 74，两笔独立 cap、off-peak、retry=0、deepseek-v4-pro）。(1) 授权文件：批 A 五 stage auth+event（`configs/s2_12_api_authorization_*`，USD 1.00/42.09）与批 B GDPR 授权事件（builder `scripts/build_gdpr7_direct_llm_authorization_event_v1.py` + 8 测试；executor 同款校验通过；74/74 假响应彩排 complete）；新活动验证器 `verify_s2_12_authorization_files_v1.py` 70/70 PASS；旧 no_real_auth verifier 按设计 superseded。(2) S2.12 执行链补齐：`s2_12_execution.py` raw 落盘 + 事故记账（transport_error/usage_missing 后中止不重发）+ 链式骨架按账本重建；runner `--raw-dir`；`s2_12_response_convert.py`；`finalize_s2_12_arm_v1.py`（正式 capsule 唯一发布入口，坐标-only、off-peak 成本重算、fallback 复用 H1 链逐 plan 审计）；`evaluate_s2_12_api_arm_v1.py --arm …` + `verify_s2_12_api_arm_v1.py`（11 测试）。官方价格重验（2026-08-17 峰谷方案不变）。(3) GDPR 裁决工作流 v1：editable 文件 + 工具/校验/导入/冻结 + 38 合成测试（blank 字节未动）。(4) 新增聚焦 60 项全绿 + s2_12 回归 52 passed + 全量 2965 passed/24 skipped（FILE_CATALOG 重建）。真实 API=0；S2.12=authorized/ZERO CALLS/READY；S2.13 blocked only on S2.12 DoD；S3.7 未动。 | 授权依据/事件文件 + 执行链补齐（raw/finalize/evaluate/verify）+ GDPR 裁决工作流 + 验证器/测试 + 文档同步；record_change 事件 + audit --with-tests |
 | 3.6.37 | 2026-09-06 | **汇报前收尾：统一五分类评价重算 + 原三类衔接实跑 + GDPR Direct-LLM 执行链离线验证（零 API）**：(1) **统一预测规则修复**：合规/违规两侧改为同一确定性五分类决策（固定 EXTENDED_TYPES 优先级/阈值/不可观察规则；决策不读 expected/gold，gold 仅在预测固定后进入评价），基于已保存 scores/scores_detail/observability/control_scores 离线重算（`scripts/reevaluate_s3_extended_unified_v1.py`）；旧结果与 manifest 保留并明确标为“指定类型条件性检出评价”（非分类）。统一口径（reference/rules_only）：variant-only macro winter 0.499/0.331、sun 0.321/0.188、bm25 0.226/0.000、tfidf 0.375/0.332；wrong-type 出现（reference winter 9、tfidf 1；rules_only winter 10、tfidf 6）——撤回“P=1/无 wrong-type”表述；control FP 两口径一致（reference 0.500/0.125/0.000/0.275；rules_only 0.450/0.050/0.000/0.375——**tfidf 由 0.275 升 0.375，“误报未升”整体表述撤回**）；paired 5-class reference 0.375/0.263/0.250/0.338、rules_only 0.263/0.200/0.150/0.263；旧 paired 数字由持久化行精确复现（自检通过）。产物 `outputs/reports/s3_extended_unified_v1_{reference,rules_only}.*` + 逐方法 confusion/eval/manifest；注记 `docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md`。(2) **原三类衔接实跑（33 条人工 violation decision Gold，dev Sun-style 固定参数）**：`scripts/run_gdpr_3type_linkage_v1.py`（converter `src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py`：外部 Rules-Only 胶囊→Sun 规则记录，obligation-only 门控、span 校验、失败不虚构；gold 预测固定后才读，shuffle-gold 测试证明预测不变）。参考臂 macro 0.3889/exact 0.3636/unobs 10（与存储 s35 行逐字段一致）vs Rules-Only 臂 0.3333/0.3333/11；missing_action 两侧 11/11 F1=1.0；24 同/9 变，唯一判定翻转 v014（incorrect_actor→None）；out_of_order 两侧 0（外部胶囊无 order_relations——缺失输入契约+端点阈值瓶颈，如实记录）。(3) **GDPR Direct-LLM 74 臂执行链**（`scripts/run_gdpr7_direct_llm_v1.py` + `configs/ablations/gdpr7_direct_llm_execution_contract_v1.json`）：与预检报告 body SHA 逐一一致的 PayloadLock、in-code 硬上限（input 74M/output 303,104/USD 2.61 peak-1.31 off-peak、retry=0、off-peak only）、授权事件门禁、账本断点（in_doubt 不自动重发）、raw/canonical/cost/manifest 保存、输出与 linkage runner schema 衔接；**假响应 74/74 全流程离线验证 + 9 项测试通过（程序验证，非实验）**；真实调用待授权（合并申请 docs/API_AUTHORIZATION_REQUEST.md §11-§12：S2.12 63 + GDPR 74 = 137 calls）。(4) 论文/汇报口径修正：THESIS_DRAFT §7.4.4 与 CLAIM_EVIDENCE_MATRIX C30/C34/C35 更新为统一口径；mentor 汇报稿 `paper/MENTOR_REPORT_CONTENT_2026-09.md` 定稿（统一数字+状态表+来源速查）。全量 audit 通过；零 LLM/API；未改 Gold/冻结面板/阈值/BPMN/历史产物。 | 统一评价重算 + 3-type 衔接 + D1 执行链验证 + 文档修正；record_change 事件；audit --with-tests |
 | 3.6.36 | 2026-09-06 | **GDPR Stage2→Stage3 成对衔接实验（Rules-Only 臂已运行；Direct-LLM 臂待授权）+ 论文收尾工程（零 API/零网络）**：(1) GDPR 句子级 Gold-blind Stage-2 输入 `data/input/gdpr7_stage2_input_v1.json`（9 段 GDPR 条款=冻结 inference pack 规则文本，分句与 S3.9-EXT 面板锁定绑定逐条一致（40/40 验证），**74 句**：article33:10/article34:7/article15:13/article17:13/article7:8/article6:10/article22:6/article20:5/article16:2；含条款 ID/文本 hash/分句位置绑定，Gold-blind）；(2) Rules-Only 真实零 API 运行 `data/predictions/gdpr7_sun_rule_only_v1/`（锁定 B0 v10a、74/74 ok、82 clauses、0 失败/0 空输出；英文经德语合同 classifier 槽 pass-through 披露；run-lock `configs/gdpr7_sun_rule_only_run_v1.json`）；(3) 衔接 harness `scripts/run_gdpr_s2_s3_linkage_v1.py`：复用原始 S3.9-EXT 面板运行器同一后端/公式/阈值（winter 0.4/sun 0.8/bm25 0.5/tfidf 0.5，gamma_ext 0.5），每变体六要素记录改为外部预测 first-valid-span 投影，失败/缺失显式计数、**绝不回填**面板锁定抽取；Rules-Only 臂结果（40 变体 variant-only + 40 对照 paired，DEV_ONLY）：winter macro 0.5208/exact 0.375/unobs 23/control FP 0.45；sun 0.1875/0.15/32/0.05；bm25 0/0/32/0；tfidf 0.351/0.275/28/0.375；相对参考确定性抽取的逐样本变化 winter 7/sun 6/bm25 6/tfidf 4（案例：article22 s1 被 B0 判 obligation 致 2 个禁止动作变体不可观察；tfidf 下 constraint_violated_04 由不可观察变为新检出——替换 Stage-2 会真实改变最终违规判断且方向不唯一，本臂以检出下降为主、无 wrong-type、误报率未升）；(4) Direct-LLM 臂准备：`outputs/reports/gdpr7_direct_llm_preflight_v1.json`（74 个冻结请求渲染、body 1,297,742 B、Legal-BERT proxy 输入 367,333、output cap 303,104、建议 USD cap 2.61 peak/1.31 off-peak（S2.12 同价口径）、绝对上下文界 98.88），真实调用并入合并授权申请（docs/API_AUTHORIZATION_REQUEST.md §11：S2.12 63 + GDPR 74 = 137 calls，两笔独立 cap，授权文件未创建、calls=0）；(5) 人工核对材料：`data/development/human_review/gdpr7_six_element_review_blank_v1.json`（9 条款/74 句，candidate=确定性 dev 抽取、全部 decision 空、review_state=unreviewed）+ 验证器 + 中文工作流指南（agent 不得代填裁决）；(6) 论文六条修正落地（THESIS_DRAFT/CLAIM_EVIDENCE_MATRIX 新增 C32/C33/ABLATION_MATRIX D/E parse 率澄清：minimal parse=0.000，仅该臂不可解析；正式主结果与 H1 development 数字分离；Barrientos 表示含 activities/resources 为不同契约非“无法表达 actor/action”；删语义规则后 exception 上升如实写；坐标重锚关闭 0 分=接口可用性非语义归零；四类新错误按类型表述）+ 12 页导师汇报内容稿 `paper/MENTOR_REPORT_CONTENT_2026-09.md`。全量 audit 通过；零 LLM/API；未改 Gold/冻结面板/阈值/BPMN。 | 衔接实验输入/运行/评测/报告 + D1 预检 + 授权申请 + 人工核对材料 + 论文修正 + 汇报稿；record_change 事件；audit --with-tests |
 | 3.6.35 | 2026-09-06 | **S2-BARR-4 原生 FULL/NO-PATTERNS 360 次方案撤回（用户澄清；零 API，不执行）**：用户澄清此前“直接使用 Barrientos 原始 FULL/NO-PATTERNS 两份提示、在冻结 36 条输入上运行 360 次”的方案是对其意图的误解，**已经撤回、不得执行**。研究定位维持：Sun et al. (2024) 是整体改进对象与三阶段方法主干；Barrientos et al. (2026) 仅作为 Stage 2 的方法借鉴来源（LLM 结构化输出、验证、受控词汇、归一化与评估纪律），项目不承担“必须整体优于 Barrientos”、不把原样运行其原生提示作为正式对照。2026-09-05 段（§8.8.4）及其入口/合同/预检/测试保留为历史证据，状态=withdrawn（checkpoint `2c5181e` 后不再作为待授权执行计划）；任何恢复执行需用户另行明确授权。Barrientos 相关已完成证据（D/E 1140/1140、后处理与 450-call prompt 单因素）与 AB-1–AB-10 其余消融不受影响。文档同批修正：S3.7 行过渡核账入口指针 v7→v8（§12.0 当前 fail-closed capsule；v7 及更早为 byte-exact 历史 provenance）。 | 用户撤回说明 + 路线/状态页定位澄清 + 变更日志行；record_change 事件；审计检查 |

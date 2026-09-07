@@ -856,6 +856,13 @@ def ledger_record(
     return record
 
 
+def append_raw_response(path: Path, row: Mapping[str, Any]) -> None:
+    """Append one raw-response line (content stays in gitignored dev dirs)."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+
+
 class ExecutionLedger:
     """Append-only, hash-chained execution ledger with resume support.
 
@@ -1126,6 +1133,7 @@ class StageExecutor:
         ledger_path: Path,
         source_by_id: Mapping[str, str] | None = None,
         now_provider: Any = None,
+        raw_dir: Path | None = None,
     ) -> None:
         self.arm = arm
         self.stage_id = stage_id
@@ -1140,6 +1148,10 @@ class StageExecutor:
         self.now_provider = now_provider or datetime.now
         self.response_records: list[dict[str, Any]] = []
         self.state = CumulativeState()
+        # Optional append-only raw response store (content stays OUTSIDE any
+        # committed capsule; used by the arm finalizer to convert responses
+        # into evaluable canonical attempts).
+        self.raw_dir: Path | None = Path(raw_dir) if raw_dir is not None else None
         # Rebuild cumulative state from the ledger (resume support).
         for rec in self.ledger.records:
             usage = rec.get("usage", {})
@@ -1189,9 +1201,36 @@ class StageExecutor:
                     request, ordinal=ordinal, clause_id=clause_id
                 )
             except LLMClientError as exc:
+                # Incident discipline: the attempt is RECORDED (never silently
+                # retried on resume), then the stage aborts.  The payload is
+                # never re-sent automatically.
+                message = str(exc)[:300]
+                self.ledger.append(ledger_record(
+                    stage_id=self.stage_id,
+                    request_id=f"{row['sample_id']}/{row.get('clause_id') or '-'}",
+                    payload_sha=payload_sha,
+                    ordinal=ordinal,
+                    request_time_utc=datetime.now(timezone.utc).isoformat(),
+                    returned_model=None,
+                    usage={},
+                    cumulative_usage={
+                        "input_tokens": self.state.input_tokens,
+                        "output_tokens": self.state.output_tokens,
+                        "cache_hit_tokens": self.state.cache_hit_tokens,
+                        "cache_miss_tokens": self.state.cache_miss_tokens,
+                    },
+                    per_call_cost={"cost_usd": 0.0},
+                    cumulative_cost=self.state.cost_usd,
+                    response_content_sha="",
+                    decode_status=f"transport_error:{message}",
+                    accepted=None,
+                    prev_hash=self.ledger.last_hash,
+                ))
+                self._called.add(payload_sha)
                 raise S212ExecutionError(
                     f"transport failure on {row['sample_id']} "
-                    f"(ordinal {ordinal}): {exc}"
+                    f"(ordinal {ordinal}): {exc}; attempt recorded, never "
+                    f"auto-resent"
                 ) from exc
             returned = getattr(response, "model", None)
             if returned and str(returned) != REQUIRED_MODEL:
@@ -1206,9 +1245,34 @@ class StageExecutor:
                 decode_status = str(decode.get("status", "n/a"))
                 usage = dict(decode.get("usage") or {})
             if not usage:
+                # Billed-or-unknown response without provider usage: record as
+                # an incident (in_doubt semantics) and abort; NEVER re-send.
+                self.ledger.append(ledger_record(
+                    stage_id=self.stage_id,
+                    request_id=f"{row['sample_id']}/{row.get('clause_id') or '-'}",
+                    payload_sha=payload_sha,
+                    ordinal=ordinal,
+                    request_time_utc=datetime.now(timezone.utc).isoformat(),
+                    returned_model=str(returned) if returned else None,
+                    usage={},
+                    cumulative_usage={
+                        "input_tokens": self.state.input_tokens,
+                        "output_tokens": self.state.output_tokens,
+                        "cache_hit_tokens": self.state.cache_hit_tokens,
+                        "cache_miss_tokens": self.state.cache_miss_tokens,
+                    },
+                    per_call_cost={"cost_usd": 0.0},
+                    cumulative_cost=self.state.cost_usd,
+                    response_content_sha="",
+                    decode_status=f"usage_missing:decode_status:{decode_status}",
+                    accepted=None,
+                    prev_hash=self.ledger.last_hash,
+                ))
+                self._called.add(payload_sha)
                 raise S212ExecutionError(
                     f"provider usage missing for ordinal {ordinal} "
-                    f"(decode status {decode_status})"
+                    f"(decode status {decode_status}); attempt recorded as "
+                    f"in_doubt, never auto-resent"
                 )
             per_call = self.state.add_usage(usage, self.auth["price_snapshot"])
             check_post_call(auth=self.auth, state=self.state)
@@ -1235,6 +1299,7 @@ class StageExecutor:
             )
             self.ledger.append(record)
             self._called.add(payload_sha)
+            content = str(response.content)
             self.response_records.append({
                 "ordinal": ordinal,
                 "sample_id": row["sample_id"],
@@ -1244,8 +1309,21 @@ class StageExecutor:
                 "usage": dict(usage),
                 "decode_status": decode_status,
                 "per_call_cost_usd": per_call["cost_usd"],
-                "response_content_sha": _sha_text(response.content),
+                "response_content_sha": _sha_text(content),
             })
+            if self.raw_dir is not None:
+                raw_row = {
+                    "call_index": ordinal,
+                    "sample_id": row["sample_id"],
+                    "clause_id": row.get("clause_id"),
+                    "payload_sha": payload_sha,
+                    "returned_model": str(returned) if returned else None,
+                    "decode_status": decode_status,
+                    "usage": dict(usage),
+                    "content_sha256": _sha_text(content),
+                    "content": content,
+                }
+                append_raw_response(self.raw_dir / f"{self.stage_id}.jsonl", raw_row)
         status = "stage_complete" if not self._remaining(rows) else "partial"
         return {
             "ledger": self.ledger,
@@ -1336,13 +1414,24 @@ def publish_stage_capsule(
     ).encode("utf-8")
 
     if arm_complete:
-        # Final predictions only after the whole arm completed.
+        # Final predictions only after the whole arm completed.  The skeleton
+        # is rebuilt from the FULL chain ledger (resume copies earlier stage
+        # ledgers into the live one), so a chained D-CAL->D-REST or
+        # F-1->F-2->F-3 run still covers every arm payload in call order.
         records: list[dict[str, Any]] = []
-        for row in response_records:
+        for rec in sorted(ledger.records,
+                          key=lambda r: int(r.get("ordinal", 0))):
+            rid = str(rec.get("request_id") or "")
+            sample_id, _, clause_part = rid.partition("/")
+            if not sample_id:
+                sample_id = rid
+            clause_id = None if clause_part in ("", "-") else clause_part
             records.append({
-                "ordinal": row["ordinal"],
-                "sample_id": row["sample_id"],
-                "clause_id": row.get("clause_id"),
+                "ordinal": int(rec.get("ordinal", 0)),
+                "sample_id": sample_id,
+                "clause_id": clause_id,
+                "decode_status": rec.get("decode_status"),
+                "response_content_sha": rec.get("response_content_sha"),
             })
         predictions = {
             "schema_version": "s2_12_final_predictions@1.0.0",

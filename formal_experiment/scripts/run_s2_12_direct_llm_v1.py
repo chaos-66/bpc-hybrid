@@ -160,6 +160,7 @@ def run(args) -> dict[str, Any]:
         lock=lock, report=report, rows_by_arm=rows_by_arm,
         payload_lock=payload_lock, transport=transport,
         ledger_path=ledger_path, source_by_id=source_by_id,
+        raw_dir=args.raw_dir,
     )
     result = executor.run()
     arm_complete = all_arm_payloads_called(
@@ -261,6 +262,12 @@ def main() -> int:
              "D-REST = remaining 35 payloads.",
     )
     parser.add_argument("--resume-from-ledger", type=Path, default=None)
+    parser.add_argument(
+        "--raw-dir", type=Path, default=None,
+        help="Gitignored directory for append-only raw responses "
+             "(content stays outside any committed capsule; one "
+             "<STAGE>.jsonl per stage). Default: no raw capture.",
+    )
     parser.add_argument("--transport-timeout", type=float, default=180.0)
     args = parser.parse_args()
     try:

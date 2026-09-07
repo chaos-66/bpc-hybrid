@@ -1,11 +1,12 @@
 # S2.12 复杂语料真实 LLM/API 授权申请（精确版 v4）
 
 **版本**：v4（2026-08-22 runner safety v2 完成后）
-**状态**：**RUNNER SAFETY V2 VERIFIED / API NOT AUTHORIZED / ZERO CALLS**
+**状态**：**AUTHORIZED (2026-09-07 USER SENTENCE RECEIVED) / ZERO CALLS / READY**
 **前版**：v3（2026-08-22 runner wiring）；v2（2026-08-20 价格复核）；v1（初版）
-**边界**：不读取 `.env`、不调用真实 API、不改 Gold、不启动 Oracle。真实执行安全
-修复（v2 批次）已实现、测试、审计并提交；真实调用仍 pending 用户授权句 +
-授权文件。
+**边界**：不读取 `.env`、不调用真实 API、不改 Gold、不启动 Oracle。2026-09-07
+论文收尾指令（UTF-8 SHA-256 `27426de7…`，见 §13）授权两批共 137 次调用并已生成
+授权事件/auth 文件；真实调用仍为 **0**，等待进程环境凭据（runner 只读进程环境）。
+本节 §0–§12 的历史状态行保留；2026-09-07 之后的权威状态见 §13。
 
 ## 0. 状态摘要（v4 要求）
 
@@ -13,18 +14,19 @@
 |---|---|
 | 真实 payload 锁（**每次调用前**重建最终 body → SHA-256 → 与锁定逐条比对 → ID/顺序核验） | ✅ `PayloadLock` + fake/real transport 通用 |
 | Arm policy 与实际发送一致 | ✅ Direct（stream=false、thinking disabled、response_format=null、temp0/top_p1/4096）与 fallback（+json_object、tools_sent=false）由 `arm_policy` 强制 |
-| usage 捕获（prompt/completion/returned model/finish reason/缺失状态） | ✅ 从 `transport.last_decode["usage"]` 读取；缺失即 fail-closed |
+| usage 捕获（prompt/completion/returned model/finish reason/缺失状态） | ✅ 从 `transport.last_decode["usage"]` 读取；缺失即 fail-closed 并记账（2026-09-07 起事故记账后中止、绝不自动重发） |
 | 成本计算（cache hit/miss 拆分；缺失时保守 cache-miss；累积 USD） | ✅ `per_call_cost` + `CumulativeState`；`cost_usd` 不再硬编码 0 |
 | 每次调用前/后 caps（input/output/USD + 保守上界 + call cap） | ✅ `check_pre_call` / `check_post_call` |
 | off-peak **每次调用前**检查；运行中进入 peak 即停 | ✅ `check_off_peak_only` 在 StageExecutor 每轮调用 |
 | 分阶段运行（D-CAL 1 / D-REST 35；F-1/F-2/F-3 9×3）+ resume | ✅ `--stage-id`/`--auth-file`/`--resume-from-ledger`；任意 `--start` 拒绝 |
-| append-only hash-chained 账本 + resume 不重复 + 篡改拒绝 | ✅ `ExecutionLedger` |
+| append-only hash-chained 账本 + resume 不重复 + 篡改拒绝 | ✅ `ExecutionLedger`；resume 跳过已记账 payload（含事故记录） |
 | `.env` 禁读（仅进程环境） | ✅ 两个 runner 均 `LLMConfig.from_env(project_root=ROOT, load_project_env=False)` |
 | 每 arm 独立 runner hash 绑定（fallback 不再与 direct 比较） | ✅ `validate_authorization(arm, runner_hash, impl_hashes)` |
 | D-CAL 单请求计费校准（schema/builder/测试；不执行） | ✅ codec + 测试 |
-| 授权事件 builder（无原句拒绝；dry-run 默认；本轮不 apply） | ✅ `scripts/build_s2_12_auth_event_v1.py` |
+| 授权事件 builder（无原句拒绝；dry-run 默认） | ✅ `scripts/build_s2_12_auth_event_v1.py`；2026-09-07 已 apply 全部 5 个 stage |
+| 响应落盘与终态化（raw store / finalize / 参数化 evaluate） | ✅ 2026-09-07 补齐（§13）：raw 内容只落 gitignored 目录；正式 capsule=坐标-only canonical 36/27 行 |
 | 真实 API calls / billed tokens / USD | **0 / 0 / $0** |
-| 授权文件 | **未创建** |
+| 授权文件 | **已创建（2026-09-07，§13）**：5×auth + 5×event + GDPR 事件 + 授权依据；`verify_s2_12_authorization_files_v1.py` 70/70 PASS |
 
 ## 1. 待运行 arms（与 preflight 锁定一致）
 
@@ -148,9 +150,9 @@ output_tokens×output_price`（每 1M tokens 换算）；provider 不返回 cach
 
 | 资产 | SHA-256（完整） |
 |---|---|
-| `src/bpc_hybrid/s2_12_execution.py` | `df391a03577111fe5efb35c21aaf9bc165a0f824c0cc1d39f7cb523befff9620` |
-| `scripts/run_s2_12_direct_llm_v1.py` | `919444ec44a9789fc4d1304f9e8ebad5125a49d9a0bc0aa100ea03271da4fe00` |
-| `scripts/run_s2_12_sun_llm_fallback_v1.py` | `13f7d77511d1ba1c1ae3a8edfd5878ca9f81d07b10f84be808a4d5116244f877` |
+| `src/bpc_hybrid/s2_12_execution.py` | `53ad3d8ded9e404d17ae65b8dcfe7f77dce82c90b6ca02c03f9947319545d773`（2026-09-07 补齐 raw 落盘/事故记账/链式骨架后重算；旧值 `df391a03…` 为历史） |
+| `scripts/run_s2_12_direct_llm_v1.py` | `57c7cb9b4f66297e086871a32503163861ef0a7bbea9b57450c148ab38dd08f5`（2026-09-07 增加 `--raw-dir` 后重算；旧值 `919444ec…` 为历史） |
+| `scripts/run_s2_12_sun_llm_fallback_v1.py` | `1f5c0e5f5475e0635e99b913ecfa7629c6869588fcf0515384afb3bcdf522b52`（2026-09-07 增加 `--raw-dir` 后重算；旧值 `13f7d775…` 为历史） |
 | `scripts/build_s2_12_auth_event_v1.py` | `c7f4f2644de0b854738f2e40a388c1316a726d5a3b30c48bbb1c241d495e1484` |
 | `configs/s2_12_fallback_trigger_plan_v1.json` | `857149a6c5f4beb608969c2af119708f44db5f4575ac4d7f840bf2b58224cd72` |
 | `configs/schemas/s2_12_api_authorization_v1.schema.json` | `524d9c48bae181adff292e2d08d946d2e89162e239a78ff3eb7732cdb5fe00f1` |
@@ -462,3 +464,102 @@ English mirror:
   Gold/文本隔离、linkage schema dry-load）。
 - 真实调用数 = 0；未创建任何授权事件文件；`authorized: false` 保持到用户授权。
 
+
+## 13. 2026-09-07 授权落地与执行链补齐（论文收尾批）
+
+> 本节记录论文收尾阶段（2026-09-07）的状态转移：用户实际发出授权指令后，授权
+> 事件/auth 文件已生成并通过 executor 同款校验；两批真实调用仍为 0（等待进程
+> 环境凭据）。历史断言“授权文件未创建 / API NOT AUTHORIZED”的旧 verifier
+> （`verify_s2_12_runner_safety_v2.py`、`verify_s2_12_runner_wiring.py`）在其
+> `no_real_auth` 检查上按设计进入 superseded 语义（保留为授权前状态 provenance，
+> 不再作为活动入口）；活动入口为 `scripts/verify_s2_12_authorization_files_v1.py`
+> （70/70 PASS，绑定当前磁盘 hash 与用户 caps）。
+
+### 13.1 授权依据与授权文件（全部已提交/待提交于同一 checkpoint）
+
+- 用户原始指令逐字副本 `configs/paper_winddown_api_authorization_sentence_2026_09_07.txt`
+  与授权依据 `configs/paper_winddown_api_authorization_basis_2026_09_07.json`；
+  原句 UTF-8 SHA-256 = `27426de7a03cc8c75eae5d57ebbd11860b2ce229f7afdd55bce4fa9a08bc0dd6`。
+- 批 A：`configs/s2_12_api_authorization_{D-CAL,D-REST,F-1,F-2,F-3}.json` +
+  `configs/s2_12_api_authorization_event_{D-CAL,D-REST,F-1,F-2,F-3}.json`；
+  每份 caps：input 63,000,000 / output 258,048（单次 4,096）/ retry=0 /
+  allowed_windows=off_peak_only；USD：D-CAL=1.00、其余=42.09（用户授权 off-peak
+  上界；D-CAL 含在 63 次内）。价格快照为保守 peak 价（0.044/1.32/3.96），运行时
+  累计成本为保守上界；**最终成本报告由 finalize 按官方 off-peak 价
+  （0.022/0.66/1.98 每百万 tokens）从真实 usage 重算**。
+- 批 B：`configs/gdpr7_direct_llm_authorization_event_v1.json`（builder
+  `scripts/build_gdpr7_direct_llm_authorization_event_v1.py` + 8 项测试）；
+  scope=`gdpr7_direct_llm_v1:74`、caps 74,000,000/303,104/4,096/USD=1.31、
+  off-peak 价快照（与 executor 常量逐项相等）、`official_price_reverified_at_utc`
+  2026-09-07T12:05Z、hash_set 绑定 6 项磁盘资产；已用 executor
+  `validate_contract`+`validate_authorization_event` 实测通过；74/74 假响应彩排
+  complete（fresh dev 目录）。
+- 官方价格重验（2026-09-07）：官方定价页（api-docs.deepseek.com/zh-cn/quick_start/
+  pricing/）与 2026-08-17 生效的峰谷方案一致（deepseek-v4-pro：peak cache-hit
+  $0.044/M、cache-miss $1.32/M、output $3.96/M；off-peak 半价；周末全天 off-peak；
+  工作日 peak=北京时间 09:00–12:00、14:00–18:00）。未发现 2026-08-19/20 记录之后
+  的价格变动，cap 沿用用户授权值（42.09 / 1.31）。
+
+### 13.2 执行链补齐（真实运行前必须的离线实现，已测试）
+
+- `src/bpc_hybrid/s2_12_execution.py`（hash 见 §5）：StageExecutor 可选
+  `raw_dir` 参数（逐成功响应 append `content` 到 gitignored raw 目录，
+  `<STAGE>.jsonl`）；transport 失败/usage 缺失按事故记账（decode_status 带
+  transport_error/usage_missing 前缀）后中止、**绝不自动重发**；链式 resume
+  后 `publish_stage_capsule` 的 predictions 骨架按完整账本重建（修复 D-REST/F-3
+  只含本 stage 行的缺陷）。
+- `scripts/run_s2_12_direct_llm_v1.py` / `run_s2_12_sun_llm_fallback_v1.py`：
+  新增 `--raw-dir`。
+- `src/bpc_hybrid/s2_12_response_convert.py`：direct 响应→坐标-only canonical
+  （镜像 GDPR 转换链）；fallback envelope 解析。
+- `scripts/finalize_s2_12_arm_v1.py`（819 行）：正式胶囊唯一发布入口
+  （predictions/telemetry/cost/manifest，坐标-only、无文本/Gold 键、status=
+  predictions_locked_before_gold_evaluation、拒绝覆盖）；direct=逐行转换
+  （失败显式 in_doubt/failed 行）；fallback=`_rerun_b0` 文本重建后按 frozen plan
+  27 行经 H1 共享链（canonicalize_patch_coordinates + apply_patch_envelope）应用
+  并逐 plan 审计（accepted/rejected/unresolved）；成本按官方 off-peak 价重算。
+- `scripts/evaluate_s2_12_api_arm_v1.py --arm {direct_llm,sun_llm_fallback}`：
+  与 sun_rule_only 评价同 Gold（039ae8b2…）/分层（0cd725b4…，L1:31/L2:5/L3:0）/
+  同一 evaluator；非全 ok 胶囊拒绝评价（fail-closed）。
+- `scripts/verify_s2_12_api_arm_v1.py`：评价 capsule 独立重放验证。
+- GDPR 人工裁决工作流 v1（与 API 无关的收尾面）：editable 派生
+  `data/development/human_review/gdpr7_six_element_review_decisions_v1.json` +
+  `src/bpc_hybrid/gdpr7_review_rules_v1.py` + 工具/校验/导入/冻结 4 脚本 + 38 项
+  合成测试（真实 blank/裁决文件零触碰）。
+- 测试：新增聚焦 60 项全绿（GDPR builder 8、S2.12 authorization files 3、
+  S2.12 arm finalization 11、GDPR review workflow 38）；s2_12 safety+wiring 回归
+  52 passed；`verify_s2_12_authorization_files_v1.py` 70/70。
+
+### 13.3 真实运行命令（等待进程环境凭据后执行；每 stage 独立输出目录）
+
+```powershell
+# 进程环境（勿写入仓库）：BPC_HYBRID_DeepSeek_ENABLED=true / _PROVIDER /
+# _BASE_URL=https://api.deepseek.com/v1 / _API_KEY / _MODEL=deepseek-v4-pro /
+# _MAX_TOKENS=4096 / _TEMPERATURE=0 / _TOP_P=1
+# Batch A（off-peak 逐次检查；每 stage 独立 --output-dir；链式 --resume-from-ledger）
+python formal_experiment/scripts/run_s2_12_direct_llm_v1.py --transport real --allow-llm `
+  --auth-file formal_experiment/configs/s2_12_api_authorization_D-CAL.json --stage-id D-CAL `
+  --output-dir outputs/development/s2_12_direct_llm_stage_dcal_v1 `
+  --raw-dir outputs/development/s2_12_direct_llm_raw_dcal_v1
+python formal_experiment/scripts/run_s2_12_direct_llm_v1.py --transport real --allow-llm `
+  --auth-file formal_experiment/configs/s2_12_api_authorization_D-REST.json --stage-id D-REST `
+  --output-dir outputs/development/s2_12_direct_llm_stage_drest_v1 `
+  --raw-dir outputs/development/s2_12_direct_llm_raw_drest_v1 `
+  --resume-from-ledger outputs/development/s2_12_direct_llm_stage_dcal_v1.ledger.jsonl
+# F-1/F-2/F-3 同理（每 stage 独立 raw/capsule 目录，链式 resume）
+python formal_experiment/scripts/finalize_s2_12_arm_v1.py --arm direct_llm `
+  --raw-dir outputs/development/s2_12_direct_llm_raw_dcal_v1 `
+  --raw-dir outputs/development/s2_12_direct_llm_raw_drest_v1 `
+  --ledger outputs/development/s2_12_direct_llm_stage_drest_v1.ledger.jsonl
+python formal_experiment/scripts/evaluate_s2_12_api_arm_v1.py --arm direct_llm --evaluate
+# Batch B
+python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py `
+  --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v1.json `
+  --authorization-file formal_experiment/configs/gdpr7_direct_llm_authorization_event_v1.json `
+  --raw-dir outputs/development/gdpr7_direct_llm_raw_real_v1 `
+  --capsule-dir outputs/development/gdpr7_direct_llm_real_v1
+```
+
+每批完成后：direct/fallback→`finalize`+`evaluate_s2_12_api_arm_v1.py --arm …`；
+GDPR 74→`run_gdpr_s2_s3_linkage_v1.py` 消费 `data/predictions/gdpr7_direct_llm_v1`
+（promotion 为独立显式步骤）→ 成对比较与变化案例报告。

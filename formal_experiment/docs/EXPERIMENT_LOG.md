@@ -4106,3 +4106,16 @@
 - 仍存在 blocker：无
 - 备注：修复规则 actor-action 关联、流程活动归属和业务对象范围，保留 Sun Def6 存在量词；时间数值比较限定已映射动作、绑定证据和明确上限，禁止绕过适用条件；有效 clause order_relations 按 action ID 保留。新旧预测逐项对比，93 个输入哈希不变；旧实验产物和人工编辑均未改。原三类与40对合成分表，正式Oracle未运行。104项相关检查通过；全量2906 passed/24 skipped。论文7.4.4、汇报9至11页、主张C36、MASTER3.6.38和状态页同步。Git保存采用本轮产物局部字节规则及实现文本LF规范哈希，不扩大到其他资产。137次真实API和人工裁决仍未完成。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-07T14:30:17.590564+00:00 - 论文收尾（2026-09-07b）授权落地与执行链补齐（离线）：用户原句(27426de7…)授权 137 次调用；批 A 五 stage auth/event 文件与批 B GDPR 授权事件文件生成并通过 executor 同款校验；S2.12 执行链补齐（raw 落盘/事故记账/链式骨架修复/--raw-dir/finalize/evaluate/verify + 转换模块）；GDPR 六要素裁决工作流 v1（editable+工具/校验/导入/冻结+合成测试）；文档同步（API_AUTHORIZATION_REQUEST §0/§5/§13、MASTER 3.6.39、PROJECT_AUDIT 队列清理）；FILE_CATALOG 重建；真实 API=0
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2966 passed, 24 skipped, 48 warnings in 3073.46s (0:51:13)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`8853eddf0b7021af9b97ea0a365542ce83613574`；相关未提交路径：46 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：全量 audit 2966 passed/24 skipped exit 0；新增聚焦 60 项 + s2_12 回归 52 passed；verify_s2_12_authorization_files_v1.py 70/70；真实调用 0 等待进程环境凭据；不覆盖既有产物；用户文件与 .bak 未触碰
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
