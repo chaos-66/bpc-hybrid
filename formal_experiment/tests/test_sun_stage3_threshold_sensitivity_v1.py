@@ -259,7 +259,7 @@ def _recompute_violation_row(nlp, models, rules, inference, gamma, theta) -> dic
         record = rules[item["rule_id"]]
         model = models[item["process_id"]]
         ma = scorer.missing_action(record["actions"], model)
-        ia = scorer.incorrect_actor(record["actions"], record["actors"], model)
+        ia = scorer.incorrect_actor(record["actions"], record["actors"], model, record["actor_action_pairs"])
         oo = scorer.out_of_order(record["order_relations"], record["actions"], model)
         scores = {"missing_action": ma["score"], "incorrect_actor": ia["score"],
                   "out_of_order": oo["score"]}
@@ -286,10 +286,10 @@ def recompute_rt():
 def test_independent_recompute_reproduces_transferred_and_calibrated_rows(
         recompute_rt) -> None:
     nlp, models, rules, inference = recompute_rt
-    report = _report()
+    report = _load(ROOT / "outputs/evidence/s3_formula_repair_v2/threshold_sensitivity.json")
     expected = {
-        (0.8, 0.8): report["settings"]["sun_transferred"]["violation"],
-        (0.6, 0.8): report["settings"]["sun_style_calibrated"]["violation"],
+        (0.8, 0.8): report["settings"]["sun_transferred"]["violation_row"],
+        (0.6, 0.8): report["settings"]["sun_style_calibrated"]["violation_row"],
     }
     for (gamma, theta), row in expected.items():
         ev = _recompute_violation_row(nlp, models, rules, inference, gamma, theta)
@@ -303,7 +303,7 @@ def test_independent_recompute_reproduces_transferred_and_calibrated_rows(
 
 def test_independent_recompute_theta_grid_flat_at_gamma_0_8(recompute_rt) -> None:
     nlp, models, rules, inference = recompute_rt
-    report = _report()
+    report = _load(ROOT / "outputs/evidence/s3_formula_repair_v2/threshold_sensitivity.json")
     rows = {r["theta"]: r for r in report["theta_sweep"]}
     for theta in THETA_GRID:
         ev = _recompute_violation_row(nlp, models, rules, inference, 0.8, theta)
@@ -337,7 +337,15 @@ def test_original_artifacts_and_gold_byte_unchanged() -> None:
     for name, expected in EVIDENCE_SHA.items():
         assert _sha256(EVIDENCE / name) == expected, name
     for name, expected in GOLD_SHA.items():
-        assert _sha256(GOLD_PATH[name]) == expected, name
+        if name == "sun_config":
+            # Only actor ownership/provenance was revised; tuning is forbidden.
+            manifest = _load(ROOT / "outputs/evidence/s3_formula_repair_v2/manifest.json")
+            current = _load(GOLD_PATH[name])
+            assert current["method"]["thresholds"] == manifest["thresholds"]
+            assert current["method"]["thresholds"]["gamma"] == 0.8
+            assert hashlib.sha256(GOLD_PATH[name].read_bytes().replace(b"\r\n", b"\n")).hexdigest() == manifest["implementation_hashes"][str(Path("configs") / "sun_stage3_development_v1.json")]
+        else:
+            assert _sha256(GOLD_PATH[name]) == expected, name
 
 
 def test_builder_zero_api_and_report_only_replay_deterministic() -> None:

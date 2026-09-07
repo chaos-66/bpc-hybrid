@@ -1,0 +1,5340 @@
+{
+  "matching_tau_sweep": [
+    {
+      "tau": 0.0,
+      "per_process_ap": {
+        "gdpr_1_data_breach": 1.0,
+        "gdpr_2_consent_to_use_the_data": 1.0,
+        "gdpr_3_right_to_access": 1.0,
+        "gdpr_4_right_of_portability": 1.0,
+        "gdpr_5_right_to_withdraw": 1.0,
+        "gdpr_6_right_to_rectify": 1.0,
+        "gdpr_7_right_to_be_forgotten": 1.0
+      },
+      "MAP": 1.0,
+      "support": 25,
+      "runtime_seconds": 0.79
+    },
+    {
+      "tau": 0.2,
+      "per_process_ap": {
+        "gdpr_1_data_breach": 1.0,
+        "gdpr_2_consent_to_use_the_data": 1.0,
+        "gdpr_3_right_to_access": 1.0,
+        "gdpr_4_right_of_portability": 1.0,
+        "gdpr_5_right_to_withdraw": 1.0,
+        "gdpr_6_right_to_rectify": 1.0,
+        "gdpr_7_right_to_be_forgotten": 1.0
+      },
+      "MAP": 1.0,
+      "support": 25,
+      "runtime_seconds": 0.586
+    },
+    {
+      "tau": 0.4,
+      "per_process_ap": {
+        "gdpr_1_data_breach": 0.75,
+        "gdpr_2_consent_to_use_the_data": 1.0,
+        "gdpr_3_right_to_access": 1.0,
+        "gdpr_4_right_of_portability": 1.0,
+        "gdpr_5_right_to_withdraw": 1.0,
+        "gdpr_6_right_to_rectify": 1.0,
+        "gdpr_7_right_to_be_forgotten": 1.0
+      },
+      "MAP": 0.9643,
+      "support": 25,
+      "runtime_seconds": 0.609
+    },
+    {
+      "tau": 0.6,
+      "per_process_ap": {
+        "gdpr_1_data_breach": 0.4167,
+        "gdpr_2_consent_to_use_the_data": 0.5333,
+        "gdpr_3_right_to_access": 1.0,
+        "gdpr_4_right_of_portability": 0.5,
+        "gdpr_5_right_to_withdraw": 0.5,
+        "gdpr_6_right_to_rectify": 0.3333,
+        "gdpr_7_right_to_be_forgotten": 0.5
+      },
+      "MAP": 0.5405,
+      "support": 25,
+      "runtime_seconds": 0.598
+    },
+    {
+      "tau": 0.8,
+      "per_process_ap": {
+        "gdpr_1_data_breach": 0.5833,
+        "gdpr_2_consent_to_use_the_data": 0.6389,
+        "gdpr_3_right_to_access": 1.0,
+        "gdpr_4_right_of_portability": 1.0,
+        "gdpr_5_right_to_withdraw": 0.5,
+        "gdpr_6_right_to_rectify": 1.0,
+        "gdpr_7_right_to_be_forgotten": 1.0
+      },
+      "MAP": 0.8175,
+      "support": 25,
+      "runtime_seconds": 0.578
+    },
+    {
+      "tau": 0.9,
+      "per_process_ap": {
+        "gdpr_1_data_breach": 1.0,
+        "gdpr_2_consent_to_use_the_data": 1.0,
+        "gdpr_3_right_to_access": 1.0,
+        "gdpr_4_right_of_portability": 1.0,
+        "gdpr_5_right_to_withdraw": 0.5,
+        "gdpr_6_right_to_rectify": 1.0,
+        "gdpr_7_right_to_be_forgotten": 1.0
+      },
+      "MAP": 0.9286,
+      "support": 25,
+      "runtime_seconds": 0.604
+    }
+  ],
+  "gamma_sweep": [
+    {
+      "gamma": 0.0,
+      "label": "gamma=0.0",
+      "macro_f1": 0.6667,
+      "micro_f1": 0.8,
+      "exact_type_accuracy": 0.6667,
+      "detected": 22,
+      "missed": 11,
+      "wrong_type": 0,
+      "unobservable": 0,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 0,
+          "out_of_order": 0
+        },
+        "unobservable_total": 0,
+        "unobservable_by_reason": {},
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 4,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 6,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 4,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "_aggregate": {
+          "detected": 22,
+          "support": 33,
+          "unobservable": 0,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          }
+        }
+      },
+      "runtime_seconds": 1.172
+    },
+    {
+      "gamma": 0.2,
+      "label": "gamma=0.2",
+      "macro_f1": 0.6667,
+      "micro_f1": 0.8,
+      "exact_type_accuracy": 0.6667,
+      "detected": 22,
+      "missed": 11,
+      "wrong_type": 0,
+      "unobservable": 0,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 0,
+          "out_of_order": 0
+        },
+        "unobservable_total": 0,
+        "unobservable_by_reason": {},
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 4,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 6,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 4,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "_aggregate": {
+          "detected": 22,
+          "support": 33,
+          "unobservable": 0,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          }
+        }
+      },
+      "runtime_seconds": 1.174
+    },
+    {
+      "gamma": 0.4,
+      "label": "gamma=0.4",
+      "macro_f1": 0.7222,
+      "micro_f1": 0.8214,
+      "exact_type_accuracy": 0.697,
+      "detected": 23,
+      "missed": 10,
+      "wrong_type": 0,
+      "unobservable": 0,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 0,
+          "out_of_order": 0
+        },
+        "unobservable_total": 0,
+        "unobservable_by_reason": {},
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 5,
+          "exact_type_accuracy": 0.8333,
+          "macro_f1": 0.8889,
+          "micro_f1": 0.9091,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 6,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 4,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "_aggregate": {
+          "detected": 23,
+          "support": 33,
+          "unobservable": 0,
+          "exact_type_accuracy": 0.697,
+          "macro_f1": 0.7222,
+          "micro_f1": 0.8214,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 0.0909,
+              "f1": 0.1667
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          }
+        }
+      },
+      "runtime_seconds": 1.178
+    },
+    {
+      "gamma": 0.6,
+      "label": "gamma=0.6",
+      "macro_f1": 0.8733,
+      "micro_f1": 0.8814,
+      "exact_type_accuracy": 0.7879,
+      "detected": 26,
+      "missed": 7,
+      "wrong_type": 0,
+      "unobservable": 4,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.6364,
+          "f1": 0.7778
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.7273,
+          "f1": 0.8421
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 7,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.7273,
+          "f1": 0.8421
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 7,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 4,
+          "out_of_order": 0
+        },
+        "unobservable_total": 4,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 4
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 6,
+          "exact_type_accuracy": 1.0,
+          "macro_f1": 1.0,
+          "micro_f1": 1.0,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 9,
+          "exact_type_accuracy": 1.0,
+          "macro_f1": 1.0,
+          "micro_f1": 1.0,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 3,
+          "exact_type_accuracy": 1.0,
+          "macro_f1": 1.0,
+          "micro_f1": 1.0,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 2,
+          "exact_type_accuracy": 0.6667,
+          "macro_f1": 0.6667,
+          "micro_f1": 0.8,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 3,
+          "exact_type_accuracy": 1.0,
+          "macro_f1": 1.0,
+          "micro_f1": 1.0,
+          "unobservable": 0,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "_aggregate": {
+          "detected": 26,
+          "support": 33,
+          "unobservable": 4,
+          "exact_type_accuracy": 0.7879,
+          "macro_f1": 0.8733,
+          "micro_f1": 0.8814,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 0.6364,
+              "f1": 0.7778
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 0.7273,
+              "f1": 0.8421
+            }
+          }
+        }
+      },
+      "runtime_seconds": 1.085
+    },
+    {
+      "gamma": 0.8,
+      "label": "gamma=0.8",
+      "macro_f1": 0.3889,
+      "micro_f1": 0.5333,
+      "exact_type_accuracy": 0.3636,
+      "detected": 12,
+      "missed": 21,
+      "wrong_type": 0,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 4,
+          "exact_type_accuracy": 0.4444,
+          "macro_f1": 0.5,
+          "micro_f1": 0.6154,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 0.3333,
+              "f1": 0.5
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 0.3333,
+            "f1": 0.5
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "_aggregate": {
+          "detected": 12,
+          "support": 33,
+          "unobservable": 10,
+          "exact_type_accuracy": 0.3636,
+          "macro_f1": 0.3889,
+          "micro_f1": 0.5333,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 0.0909,
+              "f1": 0.1667
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          }
+        }
+      },
+      "runtime_seconds": 0.966,
+      "evidence_prediction_match": true
+    },
+    {
+      "gamma": 0.9,
+      "label": "gamma=0.9",
+      "macro_f1": 0.3333,
+      "micro_f1": 0.5,
+      "exact_type_accuracy": 0.3333,
+      "detected": 11,
+      "missed": 22,
+      "wrong_type": 0,
+      "unobservable": 11,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 0,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 11,
+          "out_of_order": 0
+        },
+        "unobservable_total": 11,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 11
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 3,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 3,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "_aggregate": {
+          "detected": 11,
+          "support": 33,
+          "unobservable": 11,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          }
+        }
+      },
+      "runtime_seconds": 1.014
+    }
+  ],
+  "theta_sweep": [
+    {
+      "theta": 0.5,
+      "label": "theta=0.5",
+      "macro_f1": 0.3889,
+      "micro_f1": 0.5333,
+      "exact_type_accuracy": 0.3636,
+      "detected": 12,
+      "missed": 21,
+      "wrong_type": 0,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 4,
+          "exact_type_accuracy": 0.4444,
+          "macro_f1": 0.5,
+          "micro_f1": 0.6154,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 0.3333,
+              "f1": 0.5
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 0.3333,
+            "f1": 0.5
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "_aggregate": {
+          "detected": 12,
+          "support": 33,
+          "unobservable": 10,
+          "exact_type_accuracy": 0.3636,
+          "macro_f1": 0.3889,
+          "micro_f1": 0.5333,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 0.0909,
+              "f1": 0.1667
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          }
+        }
+      },
+      "runtime_seconds": 0.983
+    },
+    {
+      "theta": 0.6,
+      "label": "theta=0.6",
+      "macro_f1": 0.3889,
+      "micro_f1": 0.5333,
+      "exact_type_accuracy": 0.3636,
+      "detected": 12,
+      "missed": 21,
+      "wrong_type": 0,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 4,
+          "exact_type_accuracy": 0.4444,
+          "macro_f1": 0.5,
+          "micro_f1": 0.6154,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 0.3333,
+              "f1": 0.5
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 0.3333,
+            "f1": 0.5
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "_aggregate": {
+          "detected": 12,
+          "support": 33,
+          "unobservable": 10,
+          "exact_type_accuracy": 0.3636,
+          "macro_f1": 0.3889,
+          "micro_f1": 0.5333,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 0.0909,
+              "f1": 0.1667
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          }
+        }
+      },
+      "runtime_seconds": 0.937
+    },
+    {
+      "theta": 0.7,
+      "label": "theta=0.7",
+      "macro_f1": 0.3889,
+      "micro_f1": 0.5333,
+      "exact_type_accuracy": 0.3636,
+      "detected": 12,
+      "missed": 21,
+      "wrong_type": 0,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 4,
+          "exact_type_accuracy": 0.4444,
+          "macro_f1": 0.5,
+          "micro_f1": 0.6154,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 0.3333,
+              "f1": 0.5
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 0.3333,
+            "f1": 0.5
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "_aggregate": {
+          "detected": 12,
+          "support": 33,
+          "unobservable": 10,
+          "exact_type_accuracy": 0.3636,
+          "macro_f1": 0.3889,
+          "micro_f1": 0.5333,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 0.0909,
+              "f1": 0.1667
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          }
+        }
+      },
+      "runtime_seconds": 0.993
+    },
+    {
+      "theta": 0.8,
+      "label": "theta=0.8",
+      "macro_f1": 0.3889,
+      "micro_f1": 0.5333,
+      "exact_type_accuracy": 0.3636,
+      "detected": 12,
+      "missed": 21,
+      "wrong_type": 0,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 4,
+          "exact_type_accuracy": 0.4444,
+          "macro_f1": 0.5,
+          "micro_f1": 0.6154,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 0.3333,
+              "f1": 0.5
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 0.3333,
+            "f1": 0.5
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "_aggregate": {
+          "detected": 12,
+          "support": 33,
+          "unobservable": 10,
+          "exact_type_accuracy": 0.3636,
+          "macro_f1": 0.3889,
+          "micro_f1": 0.5333,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 0.0909,
+              "f1": 0.1667
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          }
+        }
+      },
+      "runtime_seconds": 0.954
+    },
+    {
+      "theta": 0.9,
+      "label": "theta=0.9",
+      "macro_f1": 0.3889,
+      "micro_f1": 0.5333,
+      "exact_type_accuracy": 0.3636,
+      "detected": 12,
+      "missed": 21,
+      "wrong_type": 0,
+      "unobservable": 10,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "support": 9,
+          "detected": 4,
+          "exact_type_accuracy": 0.4444,
+          "macro_f1": 0.5,
+          "micro_f1": 0.6154,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 3,
+              "precision": 1.0,
+              "recall": 0.3333,
+              "f1": 0.5
+            },
+            "out_of_order": {
+              "support": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 1.0,
+            "recall": 0.3333,
+            "f1": 0.5
+          }
+        },
+        "gdpr_3_right_to_access": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_4_right_of_portability": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_5_right_to_withdraw": {
+          "support": 6,
+          "detected": 2,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 2,
+          "per_type": {
+            "missing_action": {
+              "support": 2,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_6_right_to_rectify": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "gdpr_7_right_to_be_forgotten": {
+          "support": 3,
+          "detected": 1,
+          "exact_type_accuracy": 0.3333,
+          "macro_f1": 0.3333,
+          "micro_f1": 0.5,
+          "unobservable": 1,
+          "per_type": {
+            "missing_action": {
+              "support": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "out_of_order": {
+              "support": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "pool_missing_action_out_of_order": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "pool_incorrect_actor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "_aggregate": {
+          "detected": 12,
+          "support": 33,
+          "unobservable": 10,
+          "exact_type_accuracy": 0.3636,
+          "macro_f1": 0.3889,
+          "micro_f1": 0.5333,
+          "per_type": {
+            "missing_action": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "incorrect_actor": {
+              "support": 11,
+              "precision": 1.0,
+              "recall": 0.0909,
+              "f1": 0.1667
+            },
+            "out_of_order": {
+              "support": 11,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          }
+        }
+      },
+      "runtime_seconds": 1.024
+    }
+  ],
+  "settings": {
+    "sun_transferred": {
+      "setting": "sun_transferred",
+      "tau": 0.8,
+      "gamma": 0.8,
+      "theta": 0.8,
+      "violation_row": {
+        "label": "sun_transferred",
+        "macro_f1": 0.3889,
+        "micro_f1": 0.5333,
+        "exact_type_accuracy": 0.3636,
+        "detected": 12,
+        "missed": 21,
+        "wrong_type": 0,
+        "unobservable": 10,
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.0909,
+            "f1": 0.1667
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "observable_only_per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "denominator": {
+          "total_items": 33,
+          "per_type_support": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_observable": {
+            "missing_action": 11,
+            "incorrect_actor": 1,
+            "out_of_order": 11
+          },
+          "per_type_unobservable": {
+            "missing_action": 0,
+            "incorrect_actor": 10,
+            "out_of_order": 0
+          },
+          "unobservable_total": 10,
+          "unobservable_by_reason": {
+            "action_mapping_below_gamma": 10
+          },
+          "none_gold_items": 0,
+          "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+          "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+        },
+        "per_process": {
+          "gdpr_1_data_breach": {
+            "support": 6,
+            "detected": 2,
+            "exact_type_accuracy": 0.3333,
+            "macro_f1": 0.3333,
+            "micro_f1": 0.5,
+            "unobservable": 2,
+            "per_type": {
+              "missing_action": {
+                "support": 2,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 2,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "out_of_order": {
+                "support": 2,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "pool_incorrect_actor": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "gdpr_2_consent_to_use_the_data": {
+            "support": 9,
+            "detected": 4,
+            "exact_type_accuracy": 0.4444,
+            "macro_f1": 0.5,
+            "micro_f1": 0.6154,
+            "unobservable": 2,
+            "per_type": {
+              "missing_action": {
+                "support": 3,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 3,
+                "precision": 1.0,
+                "recall": 0.3333,
+                "f1": 0.5
+              },
+              "out_of_order": {
+                "support": 3,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "pool_incorrect_actor": {
+              "precision": 1.0,
+              "recall": 0.3333,
+              "f1": 0.5
+            }
+          },
+          "gdpr_3_right_to_access": {
+            "support": 3,
+            "detected": 1,
+            "exact_type_accuracy": 0.3333,
+            "macro_f1": 0.3333,
+            "micro_f1": 0.5,
+            "unobservable": 1,
+            "per_type": {
+              "missing_action": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "out_of_order": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "pool_incorrect_actor": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "gdpr_4_right_of_portability": {
+            "support": 3,
+            "detected": 1,
+            "exact_type_accuracy": 0.3333,
+            "macro_f1": 0.3333,
+            "micro_f1": 0.5,
+            "unobservable": 1,
+            "per_type": {
+              "missing_action": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "out_of_order": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "pool_incorrect_actor": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "gdpr_5_right_to_withdraw": {
+            "support": 6,
+            "detected": 2,
+            "exact_type_accuracy": 0.3333,
+            "macro_f1": 0.3333,
+            "micro_f1": 0.5,
+            "unobservable": 2,
+            "per_type": {
+              "missing_action": {
+                "support": 2,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 2,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "out_of_order": {
+                "support": 2,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "pool_incorrect_actor": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "gdpr_6_right_to_rectify": {
+            "support": 3,
+            "detected": 1,
+            "exact_type_accuracy": 0.3333,
+            "macro_f1": 0.3333,
+            "micro_f1": 0.5,
+            "unobservable": 1,
+            "per_type": {
+              "missing_action": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "out_of_order": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "pool_incorrect_actor": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "gdpr_7_right_to_be_forgotten": {
+            "support": 3,
+            "detected": 1,
+            "exact_type_accuracy": 0.3333,
+            "macro_f1": 0.3333,
+            "micro_f1": 0.5,
+            "unobservable": 1,
+            "per_type": {
+              "missing_action": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "out_of_order": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "pool_incorrect_actor": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "_aggregate": {
+            "detected": 12,
+            "support": 33,
+            "unobservable": 10,
+            "exact_type_accuracy": 0.3636,
+            "macro_f1": 0.3889,
+            "micro_f1": 0.5333,
+            "per_type": {
+              "missing_action": {
+                "support": 11,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 11,
+                "precision": 1.0,
+                "recall": 0.0909,
+                "f1": 0.1667
+              },
+              "out_of_order": {
+                "support": 11,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            }
+          }
+        },
+        "runtime_seconds": 0.935
+      },
+      "matching_MAP": 0.8175,
+      "matching_per_process_ap": {
+        "gdpr_1_data_breach": 0.5833,
+        "gdpr_2_consent_to_use_the_data": 0.6389,
+        "gdpr_3_right_to_access": 1.0,
+        "gdpr_4_right_of_portability": 1.0,
+        "gdpr_5_right_to_withdraw": 0.5,
+        "gdpr_6_right_to_rectify": 1.0,
+        "gdpr_7_right_to_be_forgotten": 1.0
+      }
+    },
+    "sun_style_calibrated": {
+      "setting": "sun_style_calibrated",
+      "tau": 0.8,
+      "gamma": 0.6,
+      "theta": 0.8,
+      "violation_row": {
+        "label": "sun_style_calibrated",
+        "macro_f1": 0.8733,
+        "micro_f1": 0.8814,
+        "exact_type_accuracy": 0.7879,
+        "detected": 26,
+        "missed": 7,
+        "wrong_type": 0,
+        "unobservable": 4,
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.6364,
+            "f1": 0.7778
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.7273,
+            "f1": 0.8421
+          }
+        },
+        "observable_only_per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 7,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.7273,
+            "f1": 0.8421
+          }
+        },
+        "denominator": {
+          "total_items": 33,
+          "per_type_support": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_observable": {
+            "missing_action": 11,
+            "incorrect_actor": 7,
+            "out_of_order": 11
+          },
+          "per_type_unobservable": {
+            "missing_action": 0,
+            "incorrect_actor": 4,
+            "out_of_order": 0
+          },
+          "unobservable_total": 4,
+          "unobservable_by_reason": {
+            "action_mapping_below_gamma": 4
+          },
+          "none_gold_items": 0,
+          "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+          "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+        },
+        "per_process": {
+          "gdpr_1_data_breach": {
+            "support": 6,
+            "detected": 6,
+            "exact_type_accuracy": 1.0,
+            "macro_f1": 1.0,
+            "micro_f1": 1.0,
+            "unobservable": 0,
+            "per_type": {
+              "missing_action": {
+                "support": 2,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 2,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "out_of_order": {
+                "support": 2,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "pool_incorrect_actor": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "gdpr_2_consent_to_use_the_data": {
+            "support": 9,
+            "detected": 9,
+            "exact_type_accuracy": 1.0,
+            "macro_f1": 1.0,
+            "micro_f1": 1.0,
+            "unobservable": 0,
+            "per_type": {
+              "missing_action": {
+                "support": 3,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 3,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "out_of_order": {
+                "support": 3,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "pool_incorrect_actor": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "gdpr_3_right_to_access": {
+            "support": 3,
+            "detected": 3,
+            "exact_type_accuracy": 1.0,
+            "macro_f1": 1.0,
+            "micro_f1": 1.0,
+            "unobservable": 0,
+            "per_type": {
+              "missing_action": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "out_of_order": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "pool_incorrect_actor": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "gdpr_4_right_of_portability": {
+            "support": 3,
+            "detected": 2,
+            "exact_type_accuracy": 0.6667,
+            "macro_f1": 0.6667,
+            "micro_f1": 0.8,
+            "unobservable": 1,
+            "per_type": {
+              "missing_action": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "out_of_order": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "pool_incorrect_actor": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "gdpr_5_right_to_withdraw": {
+            "support": 6,
+            "detected": 2,
+            "exact_type_accuracy": 0.3333,
+            "macro_f1": 0.3333,
+            "micro_f1": 0.5,
+            "unobservable": 2,
+            "per_type": {
+              "missing_action": {
+                "support": 2,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 2,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "out_of_order": {
+                "support": 2,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "pool_incorrect_actor": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "gdpr_6_right_to_rectify": {
+            "support": 3,
+            "detected": 1,
+            "exact_type_accuracy": 0.3333,
+            "macro_f1": 0.3333,
+            "micro_f1": 0.5,
+            "unobservable": 1,
+            "per_type": {
+              "missing_action": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "out_of_order": {
+                "support": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "pool_incorrect_actor": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "gdpr_7_right_to_be_forgotten": {
+            "support": 3,
+            "detected": 3,
+            "exact_type_accuracy": 1.0,
+            "macro_f1": 1.0,
+            "micro_f1": 1.0,
+            "unobservable": 0,
+            "per_type": {
+              "missing_action": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "out_of_order": {
+                "support": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "pool_missing_action_out_of_order": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "pool_incorrect_actor": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "_aggregate": {
+            "detected": 26,
+            "support": 33,
+            "unobservable": 4,
+            "exact_type_accuracy": 0.7879,
+            "macro_f1": 0.8733,
+            "micro_f1": 0.8814,
+            "per_type": {
+              "missing_action": {
+                "support": 11,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "incorrect_actor": {
+                "support": 11,
+                "precision": 1.0,
+                "recall": 0.6364,
+                "f1": 0.7778
+              },
+              "out_of_order": {
+                "support": 11,
+                "precision": 1.0,
+                "recall": 0.7273,
+                "f1": 0.8421
+              }
+            }
+          }
+        },
+        "runtime_seconds": 1.129
+      },
+      "matching_MAP": 0.8175,
+      "matching_per_process_ap": {
+        "gdpr_1_data_breach": 0.5833,
+        "gdpr_2_consent_to_use_the_data": 0.6389,
+        "gdpr_3_right_to_access": 1.0,
+        "gdpr_4_right_of_portability": 1.0,
+        "gdpr_5_right_to_withdraw": 0.5,
+        "gdpr_6_right_to_rectify": 1.0,
+        "gdpr_7_right_to_be_forgotten": 1.0
+      }
+    }
+  },
+  "scorer_diagnostics": {
+    "sun_transferred": {
+      "v001": {
+        "check_type": "missing_action",
+        "ma_denominator": 10,
+        "ma_missing": 10
+      },
+      "v002": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v003": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v004": {
+        "check_type": "missing_action",
+        "ma_denominator": 7,
+        "ma_missing": 7
+      },
+      "v005": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v006": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v007": {
+        "check_type": "missing_action",
+        "ma_denominator": 8,
+        "ma_missing": 8
+      },
+      "v008": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v009": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v010": {
+        "check_type": "missing_action",
+        "ma_denominator": 10,
+        "ma_missing": 10
+      },
+      "v011": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v012": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v013": {
+        "check_type": "missing_action",
+        "ma_denominator": 6,
+        "ma_missing": 5
+      },
+      "v014": {
+        "check_type": "incorrect_actor",
+        "ia_observable": true,
+        "ia_reason": null,
+        "ia_min_actor_sim": 0.4066
+      },
+      "v015": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v016": {
+        "check_type": "missing_action",
+        "ma_denominator": 13,
+        "ma_missing": 13
+      },
+      "v017": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v018": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v019": {
+        "check_type": "missing_action",
+        "ma_denominator": 5,
+        "ma_missing": 5
+      },
+      "v020": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v021": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v022": {
+        "check_type": "missing_action",
+        "ma_denominator": 8,
+        "ma_missing": 8
+      },
+      "v023": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v024": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v025": {
+        "check_type": "missing_action",
+        "ma_denominator": 7,
+        "ma_missing": 7
+      },
+      "v026": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v027": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v028": {
+        "check_type": "missing_action",
+        "ma_denominator": 2,
+        "ma_missing": 2
+      },
+      "v029": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v030": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v031": {
+        "check_type": "missing_action",
+        "ma_denominator": 7,
+        "ma_missing": 7
+      },
+      "v032": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v033": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      }
+    },
+    "sun_style_calibrated": {
+      "v001": {
+        "check_type": "missing_action",
+        "ma_denominator": 10,
+        "ma_missing": 9
+      },
+      "v002": {
+        "check_type": "incorrect_actor",
+        "ia_observable": true,
+        "ia_reason": null,
+        "ia_min_actor_sim": 0.4079
+      },
+      "v003": {
+        "check_type": "out_of_order",
+        "oo_denominator": 1,
+        "oo_violations": 1,
+        "oo_satisfied": 0
+      },
+      "v004": {
+        "check_type": "missing_action",
+        "ma_denominator": 7,
+        "ma_missing": 6
+      },
+      "v005": {
+        "check_type": "incorrect_actor",
+        "ia_observable": true,
+        "ia_reason": null,
+        "ia_min_actor_sim": 0.3489
+      },
+      "v006": {
+        "check_type": "out_of_order",
+        "oo_denominator": 2,
+        "oo_violations": 2,
+        "oo_satisfied": 0
+      },
+      "v007": {
+        "check_type": "missing_action",
+        "ma_denominator": 8,
+        "ma_missing": 2
+      },
+      "v008": {
+        "check_type": "incorrect_actor",
+        "ia_observable": true,
+        "ia_reason": null,
+        "ia_min_actor_sim": 0.0123
+      },
+      "v009": {
+        "check_type": "out_of_order",
+        "oo_denominator": 7,
+        "oo_violations": 7,
+        "oo_satisfied": 0
+      },
+      "v010": {
+        "check_type": "missing_action",
+        "ma_denominator": 10,
+        "ma_missing": 7
+      },
+      "v011": {
+        "check_type": "incorrect_actor",
+        "ia_observable": true,
+        "ia_reason": null,
+        "ia_min_actor_sim": 0.099
+      },
+      "v012": {
+        "check_type": "out_of_order",
+        "oo_denominator": 8,
+        "oo_violations": 8,
+        "oo_satisfied": 0
+      },
+      "v013": {
+        "check_type": "missing_action",
+        "ma_denominator": 6,
+        "ma_missing": 4
+      },
+      "v014": {
+        "check_type": "incorrect_actor",
+        "ia_observable": true,
+        "ia_reason": null,
+        "ia_min_actor_sim": 0.2823
+      },
+      "v015": {
+        "check_type": "out_of_order",
+        "oo_denominator": 2,
+        "oo_violations": 2,
+        "oo_satisfied": 0
+      },
+      "v016": {
+        "check_type": "missing_action",
+        "ma_denominator": 13,
+        "ma_missing": 6
+      },
+      "v017": {
+        "check_type": "incorrect_actor",
+        "ia_observable": true,
+        "ia_reason": null,
+        "ia_min_actor_sim": 0.2823
+      },
+      "v018": {
+        "check_type": "out_of_order",
+        "oo_denominator": 11,
+        "oo_violations": 11,
+        "oo_satisfied": 0
+      },
+      "v019": {
+        "check_type": "missing_action",
+        "ma_denominator": 5,
+        "ma_missing": 5
+      },
+      "v020": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v021": {
+        "check_type": "out_of_order",
+        "oo_denominator": 1,
+        "oo_violations": 1,
+        "oo_satisfied": 0
+      },
+      "v022": {
+        "check_type": "missing_action",
+        "ma_denominator": 8,
+        "ma_missing": 8
+      },
+      "v023": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v024": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v025": {
+        "check_type": "missing_action",
+        "ma_denominator": 7,
+        "ma_missing": 7
+      },
+      "v026": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v027": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v028": {
+        "check_type": "missing_action",
+        "ma_denominator": 2,
+        "ma_missing": 2
+      },
+      "v029": {
+        "check_type": "incorrect_actor",
+        "ia_observable": false,
+        "ia_reason": "action_mapping_below_gamma"
+      },
+      "v030": {
+        "check_type": "out_of_order",
+        "oo_denominator": 0,
+        "oo_violations": 0,
+        "oo_satisfied": 0
+      },
+      "v031": {
+        "check_type": "missing_action",
+        "ma_denominator": 7,
+        "ma_missing": 6
+      },
+      "v032": {
+        "check_type": "incorrect_actor",
+        "ia_observable": true,
+        "ia_reason": null,
+        "ia_min_actor_sim": 0.2823
+      },
+      "v033": {
+        "check_type": "out_of_order",
+        "oo_denominator": 2,
+        "oo_violations": 2,
+        "oo_satisfied": 0
+      }
+    }
+  }
+}

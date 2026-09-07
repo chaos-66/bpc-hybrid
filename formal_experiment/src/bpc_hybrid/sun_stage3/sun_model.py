@@ -49,6 +49,17 @@ class SunProcessModel:
             name = (lane.get("name") or "").strip()
             if name:
                 self.actor_sources[name] = "lane"
+        # Definition 6 needs f_m: retain ownership, not just a bag of names.
+        # A pool belongs to its process; a lane belongs only to its flow nodes.
+        self.action_actor_names: dict[str, list[str]] = {}
+        for action in self.actions:
+            owners = [p["name"].strip() for p in record.get("pools", [])
+                      if (p.get("name") or "").strip()
+                      and p.get("process_ref") == record.get("process_id")]
+            owners += [lane["name"].strip() for lane in record.get("lanes", [])
+                       if (lane.get("name") or "").strip()
+                       and action["id"] in lane.get("flow_node_refs", [])]
+            self.action_actor_names[action["id"]] = list(dict.fromkeys(owners))
         # business objects from activity labels (dobj/pobj of root verb)
         self.business_objects: list[dict[str, str]] = []
         for act in record.get("activities", []):

@@ -115,7 +115,7 @@ def main() -> int:
             record = rules_by_id[item["rule_id"]]
             model = models[item["process_id"]]
             ma = scorer.missing_action(record["actions"], model)
-            ia = scorer.incorrect_actor(record["actions"], record["actors"], model)
+            ia = scorer.incorrect_actor(record["actions"], record["actors"], model, record.get("actor_action_pairs"))
             oo = scorer.out_of_order(record["order_relations"], record["actions"], model)
             scores = {"missing_action": ma["score"], "incorrect_actor": ia["score"],
                       "out_of_order": oo["score"]}

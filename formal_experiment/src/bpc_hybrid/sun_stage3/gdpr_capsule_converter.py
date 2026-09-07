@@ -58,8 +58,8 @@ every clause carries ``order_relations == []`` and the record-level field is
 capsule: the converter returns an empty ``order_relations`` list (never
 fabricated) and reports ``order_relations_absent`` per rule.  A capsule that
 did carry order relations with the same span contract would be converted the
-same way (documented in ``provenance.mapping``), but no such rows exist in
-the frozen capsule and the converter does not guess their shape.
+by resolving before_action_id/after_action_id into validated action spans;
+invalid endpoints are counted, never guessed.
 
 Failure/empty envelopes
 -----------------------
@@ -76,7 +76,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Sequence
 
-CONVERTER_NAME = "gdpr_capsule_rule_record_converter@1.0.0"
+CONVERTER_NAME = "gdpr_capsule_rule_record_converter@1.1.0"
 CAPSULE_SCHEMA = "gdpr7_sun_rule_only_predictions@1.0.0"
 DEFAULT_INCLUDE_MODALITIES = ("obligation",)
 RECORD_SCHEMA = "sun_rule_record_capsule_v1@1.0.0"
@@ -183,6 +183,7 @@ def build_rule_records(
         }
         actions: list[str] = []
         actors: list[str] = []
+        actor_action_pairs: list[dict[str, str]] = []
         order_relations: list[tuple[str, str]] = []
         failed_reasons: list[str] = []
 
@@ -241,15 +242,27 @@ def build_rule_records(
                     txt = _span_text(text, actor_span, f"{sid}.actors", bad)
                     if txt is not None:
                         actors.append(txt)
-                # Definition-7 order constraints: the frozen capsule carries
-                # none at clause level (and null at record level).  If a
-                # clause ever carried order relations under the same
-                # sentence-offset span contract, each relation's two
-                # endpoints would be sliced here; because no rows exist the
-                # field stays empty and the diagnostic is recorded.
-                cl_or = clause.get("order_relations")
-                if cl_or:
-                    per_rule["order_relations_count"] += len(cl_or)
+                action_by_id = {sp.get("id"): _span_text(text, sp, f"{sid}.actions", [])
+                                for sp in clause.get("actions") or []}
+                actor_by_id = {sp.get("id"): _span_text(text, sp, f"{sid}.actors", [])
+                               for sp in clause.get("actors") or []}
+                for link in clause.get("actor_action_map") or []:
+                    actor = actor_by_id.get(link.get("actor_id"))
+                    action = action_by_id.get(link.get("action_id"))
+                    if actor and action:
+                        actor_action_pairs.append({"actor": actor, "action": action})
+                    else:
+                        bad.append(f"{sid}: invalid actor_action_map endpoint")
+                # Preserve valid action-ID relations instead of counting and
+                # silently discarding them. No relation is inferred from Gold.
+                for relation in clause.get("order_relations") or []:
+                    before = action_by_id.get(relation.get("before_action_id"))
+                    after = action_by_id.get(relation.get("after_action_id"))
+                    if before and after:
+                        order_relations.append((before, after))
+                        per_rule["order_relations_count"] += 1
+                    else:
+                        bad.append(f"{sid}: invalid order relation endpoint")
                 per_rule["invalid_span_count"] += len(bad)
                 summary["total_invalid_spans"] += len(bad)
 
@@ -268,6 +281,7 @@ def build_rule_records(
             "modality": "obligation",
             "actions": actions,
             "actors": actors,
+            "actor_action_pairs": actor_action_pairs,
             "order_relations": order_relations,
             "failed": failed,
             "failure_reasons": _dedupe(failed_reasons),
@@ -280,9 +294,8 @@ def build_rule_records(
                     "texts reconstructed by slicing approved_text_en sentence "
                     "offsets (validated 0<=start<end<=len); conditions/"
                     "constraints/exceptions not consumed by the Sun scorer; "
-                    "order_relations not present in the capsule (empty at every "
-                    "clause, null at record level) so Definition-7 input is "
-                    "absent by contract, never fabricated"
+                    "actor_action_map and clause order_relations resolve validated "
+                    "action/actor IDs; absent relations remain absent, never fabricated"
                 ),
                 "gold_fields_read": False,
             },

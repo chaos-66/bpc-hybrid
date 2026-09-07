@@ -77,16 +77,19 @@ def test_reference_arm_double_run_byte_equal(tmp_path: Path) -> None:
     assert v["exact_type_accuracy"] == pytest.approx(0.3636, abs=1e-4)
     assert v["macro_f1"] == pytest.approx(0.3889, abs=1e-4)
     assert v["unobservable"] == 10
-    # and matches the stored s35 dev rows field-by-field (except the run
-    # provenance fields, which differ by design)
+    # Historical non-actor behavior must be unchanged. Definition 6 now
+    # preserves action associations, so actor diagnostics are versioned in v2.
     stored = {r["item_id"]: r for r in _read_rows(S35_DEV / "predictions.jsonl")
               if r["task"] == "violation"}
     for row in rows:
         ref = stored[row["item_id"]]
         for key, value in ref.items():
-            if key in ("run_id", "method_provenance"):
+            if key in ("run_id", "method_provenance", "incorrect_actor_score",
+                       "incorrect_actor_observable", "incorrect_actor_reason", "scores"):
                 continue
             assert row[key] == value, (row["item_id"], key)
+        for key in ("missing_action", "out_of_order", "missing_action_denominator", "out_of_order_denominator"):
+            assert row["scores"][key] == ref["scores"][key]
 
 
 # ------------------------------------------------------------------ (b)

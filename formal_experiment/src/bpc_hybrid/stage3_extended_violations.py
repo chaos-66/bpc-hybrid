@@ -33,7 +33,7 @@ similarity backend):
   AND ``score_condition > gamma_ext``;
 * ``score_constraint = 1 - max sim(rule_constraint, constraint_candidates)`` —
   same gate; an explicit conflicting time/quantity value is recorded as an
-  exact contradiction (never hard-coded to 0 or 1);
+  exact contradiction only after action binding and scope checks, scoring 1;
 * ``score_exception = 1 - max sim(rule_exception, exception_candidates)`` —
   same gate.
 
@@ -364,6 +364,21 @@ def _xml_named_elements(xml_root: Any, local_names: tuple[str, ...]) -> list[str
     return names
 
 
+class ConstraintSurface(list):
+    """Text surface plus explicitly action-bound numeric evidence.
+
+    List compatibility preserves the existing similarity corpus. Numeric
+    contradictions use only activity labels, attached boundary events and
+    directly associated annotations; global or merely adjacent timers are
+    insufficient to establish which action a deadline constrains.
+    """
+
+    def __init__(self, texts, bound_texts, activity_id):
+        super().__init__(texts)
+        self.bound_texts = bound_texts
+        self.activity_id = activity_id
+
+
 def constraint_candidates(record: dict[str, Any], xml_root: Any,
                           mapped_activity_id: str | None = None) -> list[str]:
     """constraint candidates: activity labels, data object/data store labels,
@@ -382,7 +397,23 @@ def constraint_candidates(record: dict[str, Any], xml_root: Any,
     )))
     if mapped_activity_id:
         cands.extend(_adjacent_control_nodes(record, mapped_activity_id))
-    return _dedup(cands)
+    bound = []
+    if mapped_activity_id:
+        bound.extend(a["name"] for a in record.get("activities", [])
+                     if a["id"] == mapped_activity_id and a.get("name"))
+        elements = {e.get("id"): e for e in xml_root.iter() if e.get("id")}
+        for el in xml_root.iter():
+            kind = _LOCAL(el.tag)
+            if kind == "boundaryEvent" and el.get("attachedToRef") == mapped_activity_id:
+                bound.extend(_xml_named_elements(el, ("boundaryEvent", "timeDuration")))
+            if kind == "association":
+                ends = (el.get("sourceRef"), el.get("targetRef"))
+                if mapped_activity_id in ends:
+                    other = ends[1] if ends[0] == mapped_activity_id else ends[0]
+                    annotation = elements.get(other)
+                    if annotation is not None and _LOCAL(annotation.tag) == "textAnnotation":
+                        bound.extend(_xml_named_elements(annotation, ("textAnnotation",)))
+    return ConstraintSurface(_dedup(cands), _dedup(bound), mapped_activity_id)
 
 
 def exception_candidates(record: dict[str, Any], xml_root: Any,
@@ -436,18 +467,25 @@ def detect_exact_constraint_contradiction(
 
     Extracts (value, unit) time limits from the rule constraint and from every
     candidate text; a candidate value STRICTLY GREATER than the rule limit
-    (time limits are treated as upper bounds, e.g. ``not later than 72
-    hours``) is an exact contradiction.  Returns a record with
-    ``contradiction`` bool; never guesses 0/1 scores."""
+    is compared only for explicit upper bounds. Callers must establish
+    action binding and applicability before using this numeric helper."""
     def limits(text: str) -> list[tuple[int, str]]:
         result = []
         for match in _TIME_VALUE_RE.finditer(text):
             unit = match.group(2).lower()
             unit = unit[:-1] if unit.endswith("s") else unit
+            if unit in ("month", "year"):
+                continue  # calendar durations have no fixed hour conversion
             hours = int(match.group(1)) * _UNIT_HOURS.get(unit, 1)
             result.append((hours, match.group(0)))
         return result
 
+    # This helper supports explicit upper bounds only, not generic durations.
+    upper = re.fullmatch(r"\s*(?:(?:not|no)\s+later\s+than|within|at\s+most)\s+"
+                         r"\d+\s*(?:hours?|hrs?|days?|weeks?)\s*[.,]?\s*",
+                         rule_constraint or "", flags=re.IGNORECASE)
+    if not upper:
+        return {"contradiction": False, "reason": "unsupported_or_ambiguous_time_bound"}
     rule_limits = limits(rule_constraint or "")
     if not rule_limits:
         return {"contradiction": False, "reason": "no_time_value_in_rule_constraint"}
@@ -533,17 +571,26 @@ class ExtendedViolationScorer:
 
     def constraint_violated(self, sentence: dict[str, Any], model: Any,
                             candidates: list[str]) -> dict[str, Any]:
-        """Constraint check: an explicit time-limit contradiction is recorded
-        FIRST (it is a direct observation, independent of action mapping);
-        otherwise fall back to the missing-evidence score with the standard
-        observability gates."""
-        contradiction = detect_exact_constraint_contradiction(
-            sentence.get("constraint") or "", candidates
-        )
+        """Numeric evidence must pass the same mapping and scope gates.
+
+        A duration occurring inside an applicability condition is not an
+        unconditional deadline for the sentence's main action.
+        """
         base = self._missing_evidence(
             "constraint", sentence, model, candidates,
             "constraint_violated",
         )
+        constraint = " ".join((sentence.get("constraint") or "").lower().split())
+        condition = " ".join((sentence.get("condition") or "").lower().split())
+        action_score, _, action_id = self._best_action(sentence.get("action") or "", model)
+        contradiction = {"contradiction": False, "reason": "no_action_bound_time_evidence"}
+        if not action_id or action_score < self.gamma:
+            contradiction["reason"] = "action_mapping_below_gamma"
+        elif constraint and constraint in condition:
+            contradiction["reason"] = "time_bound_inside_condition"
+        elif isinstance(candidates, ConstraintSurface) and candidates.activity_id == action_id:
+            contradiction = detect_exact_constraint_contradiction(
+                sentence.get("constraint") or "", candidates.bound_texts)
         base["exact_contradiction"] = contradiction
         if contradiction.get("contradiction"):
             base["observable"] = True
@@ -846,8 +893,8 @@ def evaluate_paired(predictions: Sequence[Mapping[str, Any]],
             })
 
         # -- variant side ---------------------------------------------------
-        var_pred = row.get("predicted_violation_type")
-        if var_pred not in (None,) + EXTENDED_TYPES:
+        var_pred = row.get("unified_predicted_raw", row.get("predicted_violation_type"))
+        if var_pred not in (None, NONE_LABEL) + EXTENDED_TYPES:
             raise ValueError(f"{vid}: unexpected variant prediction {var_pred!r}")
         observability = row.get("observability", {})
         obs = observability.get(expected, {"observable": True})

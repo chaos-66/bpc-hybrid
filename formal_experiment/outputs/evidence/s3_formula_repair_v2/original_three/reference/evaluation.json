@@ -1,0 +1,1164 @@
+{
+  "evaluation": {
+    "schema_version": "gdpr_3type_linkage_evaluation@1.0.0",
+    "gold": {
+      "path": "data\\gold\\stage3\\stage3_violation_gold_v1.json",
+      "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550",
+      "dataset_id": "stage3_violation_gold_v1",
+      "count": 33
+    },
+    "violation": {
+      "support": 33,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1": 0.1667
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "macro_f1": 0.3889,
+      "micro_f1": 0.5333,
+      "observable_only_macro_f1": 0.6667,
+      "observable_only_micro_f1": 0.6857,
+      "exact_type_accuracy": 0.3636,
+      "detected": 12,
+      "missed": 21,
+      "wrong_type": 0,
+      "unobservable": 10,
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 1,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 10,
+          "out_of_order": 0
+        },
+        "unobservable_total": 10,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 10
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    "items": [
+      {
+        "item_id": "v001",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 10,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v002",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 10,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v003",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 10,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v004",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article34",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v005",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article34",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v006",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article34",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v007",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article7",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 8,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v008",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article7",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 8,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v009",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article7",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 8,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v010",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article6",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 10,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v011",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article6",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 10,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v012",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article6",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 10,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v013",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": true,
+        "incorrect_actor_reason": null,
+        "scores": {
+          "incorrect_actor": 1.0,
+          "incorrect_actor_denominator": 1,
+          "incorrect_actor_observable": true,
+          "incorrect_actor_reason": null,
+          "missing_action": 0.833333,
+          "missing_action_denominator": 6,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v014",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": "incorrect_actor",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": true,
+        "incorrect_actor_reason": null,
+        "scores": {
+          "incorrect_actor": 1.0,
+          "incorrect_actor_denominator": 1,
+          "incorrect_actor_observable": true,
+          "incorrect_actor_reason": null,
+          "missing_action": 0.833333,
+          "missing_action_denominator": 6,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v015",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": true,
+        "incorrect_actor_reason": null,
+        "scores": {
+          "incorrect_actor": 1.0,
+          "incorrect_actor_denominator": 1,
+          "incorrect_actor_observable": true,
+          "incorrect_actor_reason": null,
+          "missing_action": 0.833333,
+          "missing_action_denominator": 6,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v016",
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 13,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v017",
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 13,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v018",
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 13,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v019",
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 5,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v020",
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 5,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v021",
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 5,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v022",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article7",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 8,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v023",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article7",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 8,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v024",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article7",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 8,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v025",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v026",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v027",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v028",
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 2,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v029",
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 2,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v030",
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 2,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v031",
+        "process_id": "gdpr_7_right_to_be_forgotten",
+        "rule_id": "article17",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v032",
+        "process_id": "gdpr_7_right_to_be_forgotten",
+        "rule_id": "article17",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v033",
+        "process_id": "gdpr_7_right_to_be_forgotten",
+        "rule_id": "article17",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      }
+    ]
+  },
+  "conversion": {
+    "rule_record_source": "development Sun Rule Record adapter (sun_rule_extraction.extract_rule_record)",
+    "capsule_used": false,
+    "failed_rules": [],
+    "rule_action_counts": {
+      "article15": 13,
+      "article16": 2,
+      "article17": 7,
+      "article20": 5,
+      "article22": 6,
+      "article33": 10,
+      "article34": 7,
+      "article6": 10,
+      "article7": 8
+    },
+    "rule_actor_counts": {
+      "article15": 13,
+      "article16": 2,
+      "article17": 7,
+      "article20": 5,
+      "article22": 6,
+      "article33": 10,
+      "article34": 7,
+      "article6": 10,
+      "article7": 7
+    },
+    "rule_order_relation_counts": {
+      "article15": 12,
+      "article16": 1,
+      "article17": 6,
+      "article20": 4,
+      "article22": 5,
+      "article33": 11,
+      "article34": 6,
+      "article6": 9,
+      "article7": 7
+    }
+  },
+  "changes": [
+    {
+      "item_id": "v001",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v002",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v003",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v004",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v005",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v006",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v007",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v008",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v009",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v010",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v011",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v012",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v016",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v017",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v018",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v019",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v020",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v021",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v022",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v023",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v024",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v025",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v026",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v027",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v028",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v029",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v030",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v031",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v032",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v033",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    }
+  ],
+  "verdict_changes": 0,
+  "no_eligible_order_pairs": 11,
+  "actor_unobservable_reasons": {
+    "action_mapping_below_gamma": 10
+  }
+}

@@ -17,7 +17,29 @@
       "gamma_source": "Sun 2024 Figure 8: violation-detection precision is highest at gamma=0.8 for most models",
       "theta": 0.8,
       "theta_source": "pre-registered development setting: Sun 2024 Figure 9 reports that two of the four GDPR models reach their highest incorrect-actor precision at theta=0.8 and the other two at theta=0.7 (gamma fixed at 0.8); 0.8 is the project's fixed pre-registration, reported together with a theta sweep",
-      "sweeps": {"tau": [0.2, 0.4, 0.6, 0.8, 0.9], "gamma": [0.2, 0.4, 0.6, 0.8, 0.9], "theta": [0.2, 0.4, 0.6, 0.8, 0.9]},
+      "sweeps": {
+        "tau": [
+          0.2,
+          0.4,
+          0.6,
+          0.8,
+          0.9
+        ],
+        "gamma": [
+          0.2,
+          0.4,
+          0.6,
+          0.8,
+          0.9
+        ],
+        "theta": [
+          0.2,
+          0.4,
+          0.6,
+          0.8,
+          0.9
+        ]
+      },
       "note": "sweeps are sensitivity reports only; primary thresholds are NOT selected from this project's data"
     },
     "matching_evaluation": {
@@ -28,7 +50,8 @@
       "package": "spacy",
       "model": "en_core_web_sm",
       "note": "same backend as the Winter baseline for a controlled comparison; differences come from Rule Record structure (action/actor separation, order relations), not from a stronger model; no download, no network"
-    }
+    },
+    "actor_scope_policy": "sun_def6_action_bound_v2: explicit rule actor-action pairs; process pool ownership/lane flow_node_refs and activity-bound business objects; original existential comparison retained"
   },
   "inputs": {
     "bpmn_membership_contract": {
@@ -53,25 +76,46 @@
     "winter_lexicon_dir": {
       "path": "references/winter_2020_model_check/model_check/input/files",
       "role": "EXTERNAL read-only provenance: signalwords.txt for obligation detection in the development Rule Record adapter",
-      "files": ["signalwords.txt"],
+      "files": [
+        "signalwords.txt"
+      ],
       "self_contained": false
     }
   },
   "rule_record_adapter": {
     "role": "development Sun Rule Record adapter (Gold-blind)",
-    "inputs": ["rule_text from the blank pack", "signalwords.txt (external)"],
+    "inputs": [
+      "rule_text from the blank pack",
+      "signalwords.txt (external)"
+    ],
     "method": "deterministic spaCy dependency extraction: sentence split -> obligation sentences (signalword) -> actor (nsubj/nsubjpass), action (ROOT verb phrase + objects), order relations (sequence markers 'after'/'then' + sentence order)",
     "differences_from_full_stage2_rules_only": [
       "full Stage 2 Rules-Only = BERT-TextCNN modality classifier + CoreNLP/Tregex/Tsurgeon phrase extraction + public marker lexicon (not run here: external CoreNLP runtime not available)",
       "this adapter uses only spaCy dependency parsing and the shared signalword lexicon",
       "no B0 predictions are used; adapter output is marked development-only and must not be presented as formal B0"
     ],
-    "forbidden_inputs": ["decision_relevant", "decision_violation_type", "candidate_relevant", "candidate_violation_type", "candidate_evidence", "candidate_location"]
+    "forbidden_inputs": [
+      "decision_relevant",
+      "decision_violation_type",
+      "candidate_relevant",
+      "candidate_violation_type",
+      "candidate_evidence",
+      "candidate_location"
+    ]
   },
   "process_record_input": {
     "source": "canonical Process Record via configs/stage1_structural_s11_s14.json parser (src/bpc_hybrid/stage1_process.py)",
-    "used_fields": ["activities (id/name/type)", "events", "pools (name)", "lanes (name)", "control_flow.reachable_pairs", "control_flow.activity_order_relations"],
-    "observability_note": "lanes carry empty names in the frozen GDPR7 files; pools carry names (e.g. 'Data Controller'); actor checks use pool + non-empty lane names; empty actor semantics are reported as unobservable, never inferred from Gold"
+    "used_fields": [
+      "activities (id/name/type)",
+      "events",
+      "pools (name)",
+      "lanes (name)",
+      "control_flow.reachable_pairs",
+      "control_flow.activity_order_relations",
+      "process_id / pools.process_ref",
+      "lanes.flow_node_refs"
+    ],
+    "observability_note": "Empty lane names remain unobservable as lane roles; named pools are bound through process_ref; named lanes through flow_node_refs; business objects through activity_id. Missing actor-action associations are explicit, never inferred from Gold."
   },
   "runner": {
     "entry": "scripts/run_sun_stage3_development.py",
@@ -85,8 +129,19 @@
   "evaluator": {
     "entry": "scripts/evaluate_stage3_common.py",
     "gold_input": "data/development/human_review/stage3_gold_annotation_human_correction_v1.json",
-    "metrics_matching": ["per_process_AP", "MAP", "binary P/R/F1 + confusion (pre-registered rule)"],
-    "metrics_violation": ["per_type P/R/F1", "macro/micro F1", "exact type accuracy", "detected/missed/wrong-type", "unobservable", "denominator"],
+    "metrics_matching": [
+      "per_process_AP",
+      "MAP",
+      "binary P/R/F1 + confusion (pre-registered rule)"
+    ],
+    "metrics_violation": [
+      "per_type P/R/F1",
+      "macro/micro F1",
+      "exact type accuracy",
+      "detected/missed/wrong-type",
+      "unobservable",
+      "denominator"
+    ],
     "note": "no compliant (none) gold items exist in the frozen violation pack, so specificity/compliant accuracy is N/A"
   }
 }

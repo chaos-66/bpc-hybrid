@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-06
+**更新时间**：2026-09-07
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -10,6 +10,8 @@
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
 ## 1. 当前结论
+
+**2026-09-07 Stage 3 根因修复与同输入复算（零 API）**：已修复 Sun Def6 的规则/流程 actor-action 关联、数值时限的动作绑定与适用范围、五分类漏计 abstention/误判合规。原三类 33 条两侧判定不变（reference 0.3889/0.3636；Rules-Only 0.3333/0.3333）。四类 reference macro 更新为 0.4738/0.2381/0.1429/0.3750；Rules-Only 保持 0.3313/0.1875/0/0.3321。既有阈值网格已复算，主聚合不变。当前证据 `outputs/reports/s3_formula_repair_v2.{json,md}` 与 `outputs/evidence/s3_formula_repair_v2/manifest.json`；论文 §7.4.4 与汇报第 9–11 页使用此版本。历史 2026-09-06 的四类参考数字及五分类 P/R/F1 不再作为当前结果。137 次真实 API、人工 Rule Record Gold、正式 Oracle 状态仍未完成。
 
 **2026-09-06c 汇报前收尾（零 LLM/API；统一评价已离线运行，旧结果保留）**：
 (1) **统一五分类评价修复并重算**：合规/违规两侧同一确定性决策（不读 expected/gold；

@@ -1,0 +1,1431 @@
+{
+  "variant_evaluation": {
+    "support": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "observable_only_per_type": {
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714
+      },
+      "required_condition_not_enforced": {
+        "support": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "constraint_violated": {
+        "support": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "exception_not_handled": {
+        "support": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "macro_f1": 0.1429,
+    "micro_f1": 0.1818,
+    "observable_only_macro_f1": 0.1429,
+    "observable_only_micro_f1": 0.5714,
+    "exact_type_accuracy": 0.1,
+    "detected": 4,
+    "missed": 36,
+    "wrong_type": 0,
+    "unobservable": 30,
+    "denominator": {
+      "total_items": 40,
+      "per_type_support": {
+        "prohibited_action_present": 10,
+        "required_condition_not_enforced": 10,
+        "constraint_violated": 10,
+        "exception_not_handled": 10
+      },
+      "per_type_observable": {
+        "prohibited_action_present": 10,
+        "required_condition_not_enforced": 0,
+        "constraint_violated": 0,
+        "exception_not_handled": 0
+      },
+      "per_type_unobservable": {
+        "prohibited_action_present": 0,
+        "required_condition_not_enforced": 10,
+        "constraint_violated": 10,
+        "exception_not_handled": 10
+      },
+      "unobservable_total": 30,
+      "unobservable_by_reason": {
+        "action_mapping_below_gamma": 30
+      },
+      "observability_policy": "unobservable items keep predicted=None and count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric; unobservable scores are never hard-filled with 0.0 or 1.0"
+    }
+  },
+  "paired_evaluation": {
+    "schema_version": "s3_extended_paired_evaluation@1.0.0",
+    "evaluation_kind": "paired_control_plus_variant",
+    "total_objects": 80,
+    "control_objects": 40,
+    "variant_objects": 40,
+    "five_class_accuracy": 0.225,
+    "variant_exact_type_accuracy": 0.1,
+    "control_false_positive_rate": 0.0,
+    "paired_accuracy": 0.1,
+    "per_type": {
+      "none": {
+        "support": 40,
+        "tp": 14,
+        "fp": 10,
+        "fn": 26,
+        "precision": 0.5833,
+        "recall": 0.35,
+        "f1": 0.4375
+      },
+      "prohibited_action_present": {
+        "support": 10,
+        "tp": 4,
+        "fp": 0,
+        "fn": 6,
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "constraint_violated": {
+        "support": 10,
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "macro_f1_four_violation_types": 0.1429,
+    "macro_f1_five_classes": 0.2018,
+    "wrong_type": 0,
+    "unobservable": {
+      "total": 56,
+      "variant": 30,
+      "control": 26,
+      "by_reason": {
+        "action_mapping_below_gamma": 56,
+        "rule_modality_not_prohibition": 26,
+        "empty_rule_exception": 18,
+        "empty_rule_constraint": 6,
+        "empty_rule_condition": 1
+      }
+    },
+    "cases": {
+      "control_false_positive": [],
+      "variant_detected": [
+        {
+          "item_id": "syn_v2_prohibited_action_03",
+          "process_id": "gdpr_2_consent_to_use_the_data",
+          "rule_id": "article22",
+          "expected": "prohibited_action_present",
+          "predicted": "prohibited_action_present",
+          "scores": {
+            "prohibited_action_present": 0.638259,
+            "required_condition_not_enforced": 1.0,
+            "constraint_violated": null,
+            "exception_not_handled": 0.942727
+          }
+        },
+        {
+          "item_id": "syn_v2_prohibited_action_04",
+          "process_id": "gdpr_2_consent_to_use_the_data",
+          "rule_id": "article22",
+          "expected": "prohibited_action_present",
+          "predicted": "prohibited_action_present",
+          "scores": {
+            "prohibited_action_present": 0.638259,
+            "required_condition_not_enforced": 1.0,
+            "constraint_violated": null,
+            "exception_not_handled": 0.942727
+          }
+        },
+        {
+          "item_id": "syn_v2_prohibited_action_05",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article7",
+          "expected": "prohibited_action_present",
+          "predicted": "prohibited_action_present",
+          "scores": {
+            "prohibited_action_present": 0.606557,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_prohibited_action_06",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article7",
+          "expected": "prohibited_action_present",
+          "predicted": "prohibited_action_present",
+          "scores": {
+            "prohibited_action_present": 0.606557,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        }
+      ],
+      "variant_missed": [
+        {
+          "item_id": "syn_v2_prohibited_action_01",
+          "process_id": "gdpr_2_consent_to_use_the_data",
+          "rule_id": "article22",
+          "expected": "prohibited_action_present",
+          "predicted": "none",
+          "scores": {
+            "prohibited_action_present": 0.400997,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_prohibited_action_02",
+          "process_id": "gdpr_2_consent_to_use_the_data",
+          "rule_id": "article22",
+          "expected": "prohibited_action_present",
+          "predicted": "none",
+          "scores": {
+            "prohibited_action_present": 0.400997,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_prohibited_action_07",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article7",
+          "expected": "prohibited_action_present",
+          "predicted": "none",
+          "scores": {
+            "prohibited_action_present": 0.34375,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_prohibited_action_08",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article15",
+          "expected": "prohibited_action_present",
+          "predicted": "none",
+          "scores": {
+            "prohibited_action_present": 0.266145,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_prohibited_action_09",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article20",
+          "expected": "prohibited_action_present",
+          "predicted": "none",
+          "scores": {
+            "prohibited_action_present": 0.375839,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_prohibited_action_10",
+          "process_id": "gdpr_7_right_to_be_forgotten",
+          "rule_id": "article17",
+          "expected": "prohibited_action_present",
+          "predicted": "none",
+          "scores": {
+            "prohibited_action_present": 0.217042,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_required_condition_01",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "required_condition_not_enforced",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_required_condition_02",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "required_condition_not_enforced",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_required_condition_03",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "required_condition_not_enforced",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_required_condition_04",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article34",
+          "expected": "required_condition_not_enforced",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_required_condition_05",
+          "process_id": "gdpr_7_right_to_be_forgotten",
+          "rule_id": "article17",
+          "expected": "required_condition_not_enforced",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_required_condition_06",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article20",
+          "expected": "required_condition_not_enforced",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_required_condition_07",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article20",
+          "expected": "required_condition_not_enforced",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_required_condition_08",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article17",
+          "expected": "required_condition_not_enforced",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_required_condition_09",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article15",
+          "expected": "required_condition_not_enforced",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_required_condition_10",
+          "process_id": "gdpr_6_right_to_rectify",
+          "rule_id": "article15",
+          "expected": "required_condition_not_enforced",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_01",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "constraint_violated",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_02",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "constraint_violated",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_03",
+          "process_id": "gdpr_6_right_to_rectify",
+          "rule_id": "article16",
+          "expected": "constraint_violated",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_04",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article34",
+          "expected": "constraint_violated",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_05",
+          "process_id": "gdpr_7_right_to_be_forgotten",
+          "rule_id": "article17",
+          "expected": "constraint_violated",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_06",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article17",
+          "expected": "constraint_violated",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_07",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article20",
+          "expected": "constraint_violated",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_08",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article20",
+          "expected": "constraint_violated",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_09",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article17",
+          "expected": "constraint_violated",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_10",
+          "process_id": "gdpr_2_consent_to_use_the_data",
+          "rule_id": "article7",
+          "expected": "constraint_violated",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_01",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "exception_not_handled",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_02",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article34",
+          "expected": "exception_not_handled",
+          "predicted": "none",
+          "scores": {
+            "prohibited_action_present": 0.0,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_03",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article34",
+          "expected": "exception_not_handled",
+          "predicted": "none",
+          "scores": {
+            "prohibited_action_present": 0.0,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_04",
+          "process_id": "gdpr_2_consent_to_use_the_data",
+          "rule_id": "article22",
+          "expected": "exception_not_handled",
+          "predicted": "none",
+          "scores": {
+            "prohibited_action_present": 0.0,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_05",
+          "process_id": "gdpr_7_right_to_be_forgotten",
+          "rule_id": "article17",
+          "expected": "exception_not_handled",
+          "predicted": "none",
+          "scores": {
+            "prohibited_action_present": 0.0,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_06",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article33",
+          "expected": "exception_not_handled",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_07",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article20",
+          "expected": "exception_not_handled",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_08",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article20",
+          "expected": "exception_not_handled",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_09",
+          "process_id": "gdpr_6_right_to_rectify",
+          "rule_id": "article20",
+          "expected": "exception_not_handled",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_10",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article15",
+          "expected": "exception_not_handled",
+          "predicted": null,
+          "scores": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        }
+      ],
+      "variant_unobservable": [
+        {
+          "item_id": "syn_v2_required_condition_01",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "required_condition_not_enforced",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_required_condition_02",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "required_condition_not_enforced",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_required_condition_03",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "required_condition_not_enforced",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_required_condition_04",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article34",
+          "expected": "required_condition_not_enforced",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_required_condition_05",
+          "process_id": "gdpr_7_right_to_be_forgotten",
+          "rule_id": "article17",
+          "expected": "required_condition_not_enforced",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_required_condition_06",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article20",
+          "expected": "required_condition_not_enforced",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_required_condition_07",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article20",
+          "expected": "required_condition_not_enforced",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_required_condition_08",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article17",
+          "expected": "required_condition_not_enforced",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_required_condition_09",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article15",
+          "expected": "required_condition_not_enforced",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_required_condition_10",
+          "process_id": "gdpr_6_right_to_rectify",
+          "rule_id": "article15",
+          "expected": "required_condition_not_enforced",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_01",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "constraint_violated",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_02",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "constraint_violated",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_03",
+          "process_id": "gdpr_6_right_to_rectify",
+          "rule_id": "article16",
+          "expected": "constraint_violated",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_04",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article34",
+          "expected": "constraint_violated",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_05",
+          "process_id": "gdpr_7_right_to_be_forgotten",
+          "rule_id": "article17",
+          "expected": "constraint_violated",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_06",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article17",
+          "expected": "constraint_violated",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_07",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article20",
+          "expected": "constraint_violated",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_08",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article20",
+          "expected": "constraint_violated",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_09",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article17",
+          "expected": "constraint_violated",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_10",
+          "process_id": "gdpr_2_consent_to_use_the_data",
+          "rule_id": "article7",
+          "expected": "constraint_violated",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_01",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "expected": "exception_not_handled",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_02",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article34",
+          "expected": "exception_not_handled",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_03",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article34",
+          "expected": "exception_not_handled",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_04",
+          "process_id": "gdpr_2_consent_to_use_the_data",
+          "rule_id": "article22",
+          "expected": "exception_not_handled",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_05",
+          "process_id": "gdpr_7_right_to_be_forgotten",
+          "rule_id": "article17",
+          "expected": "exception_not_handled",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_06",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article33",
+          "expected": "exception_not_handled",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_07",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article20",
+          "expected": "exception_not_handled",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_08",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article20",
+          "expected": "exception_not_handled",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_09",
+          "process_id": "gdpr_6_right_to_rectify",
+          "rule_id": "article20",
+          "expected": "exception_not_handled",
+          "reason": "action_mapping_below_gamma"
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_10",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article15",
+          "expected": "exception_not_handled",
+          "reason": "action_mapping_below_gamma"
+        }
+      ],
+      "control_unobservable": [
+        {
+          "item_id": "syn_v2_required_condition_01",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_required_condition_02",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_required_condition_03",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_required_condition_04",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article34",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_required_condition_05",
+          "process_id": "gdpr_7_right_to_be_forgotten",
+          "rule_id": "article17",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_required_condition_06",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article20",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_required_condition_07",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article20",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_required_condition_08",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article17",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_required_condition_09",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article15",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_constraint",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_required_condition_10",
+          "process_id": "gdpr_6_right_to_rectify",
+          "rule_id": "article15",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_constraint",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_01",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_02",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_03",
+          "process_id": "gdpr_6_right_to_rectify",
+          "rule_id": "article16",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_condition",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_04",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article34",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_05",
+          "process_id": "gdpr_7_right_to_be_forgotten",
+          "rule_id": "article17",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_06",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article17",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_07",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article20",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_08",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article20",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_09",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article17",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_10",
+          "process_id": "gdpr_2_consent_to_use_the_data",
+          "rule_id": "article7",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_exception",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_01",
+          "process_id": "gdpr_1_data_breach",
+          "rule_id": "article33",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_06",
+          "process_id": "gdpr_5_right_to_withdraw",
+          "rule_id": "article33",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_07",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article20",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_constraint",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_08",
+          "process_id": "gdpr_4_right_of_portability",
+          "rule_id": "article20",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_constraint",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_09",
+          "process_id": "gdpr_6_right_to_rectify",
+          "rule_id": "article20",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_constraint",
+            "rule_modality_not_prohibition"
+          ]
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_10",
+          "process_id": "gdpr_3_right_to_access",
+          "rule_id": "article15",
+          "control_predicted": null,
+          "reasons": [
+            "action_mapping_below_gamma",
+            "empty_rule_constraint",
+            "rule_modality_not_prohibition"
+          ]
+        }
+      ]
+    },
+    "denominator_policy": "all 80 objects (40 control + 40 variant) stay in every denominator; a None prediction (unobservable) counts as an error for both sides; no sample is dropped",
+    "decision_policy": "variant predictions are the PERSISTED predicted_violation_type of the original run; control predictions are re-derived from the PERSISTED control_scores with the original per-type rules, the frozen gamma_ext, and fixed EXTENDED_TYPES priority order for the rare multi-violation control case; no threshold or order was changed to improve results"
+  },
+  "confusion_matrix": {
+    "labels": [
+      "none",
+      "prohibited_action_present",
+      "required_condition_not_enforced",
+      "constraint_violated",
+      "exception_not_handled"
+    ],
+    "prediction_labels": [
+      "none",
+      "prohibited_action_present",
+      "required_condition_not_enforced",
+      "constraint_violated",
+      "exception_not_handled",
+      "unobservable"
+    ],
+    "matrix": {
+      "none": {
+        "none": 14,
+        "prohibited_action_present": 0,
+        "required_condition_not_enforced": 0,
+        "constraint_violated": 0,
+        "exception_not_handled": 0,
+        "unobservable": 26
+      },
+      "prohibited_action_present": {
+        "none": 6,
+        "prohibited_action_present": 4,
+        "required_condition_not_enforced": 0,
+        "constraint_violated": 0,
+        "exception_not_handled": 0,
+        "unobservable": 0
+      },
+      "required_condition_not_enforced": {
+        "none": 0,
+        "prohibited_action_present": 0,
+        "required_condition_not_enforced": 0,
+        "constraint_violated": 0,
+        "exception_not_handled": 0,
+        "unobservable": 10
+      },
+      "constraint_violated": {
+        "none": 0,
+        "prohibited_action_present": 0,
+        "required_condition_not_enforced": 0,
+        "constraint_violated": 0,
+        "exception_not_handled": 0,
+        "unobservable": 10
+      },
+      "exception_not_handled": {
+        "none": 4,
+        "prohibited_action_present": 0,
+        "required_condition_not_enforced": 0,
+        "constraint_violated": 0,
+        "exception_not_handled": 0,
+        "unobservable": 6
+      }
+    },
+    "per_class": {
+      "none": {
+        "support": 40,
+        "tp": 14,
+        "fp": 10,
+        "fn": 26,
+        "precision": 0.5833,
+        "recall": 0.35,
+        "f1": 0.4375
+      },
+      "prohibited_action_present": {
+        "support": 10,
+        "tp": 4,
+        "fp": 0,
+        "fn": 6,
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "constraint_violated": {
+        "support": 10,
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "predicted_none": {
+      "none_gold": 26,
+      "violation_gold": 26,
+      "violation_gold_compliant_observable": 10
+    },
+    "total_objects": 80,
+    "policy": "all objects; abstentions count as FN; false compliant answers count as FP for none"
+  },
+  "changes": [
+    {
+      "item_id": "syn_v2_constraint_violated_01",
+      "changes": {
+        "unified_predicted_raw": {
+          "old": "constraint_violated",
+          "new": null
+        },
+        "scores": {
+          "old": {
+            "constraint_violated": 1.0,
+            "exception_not_handled": null,
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null
+          },
+          "new": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        "observability": {
+          "old": {
+            "constraint_violated": {
+              "observable": true,
+              "reason": "exact_contradiction"
+            },
+            "exception_not_handled": {
+              "observable": false,
+              "reason": "action_mapping_below_gamma"
+            },
+            "prohibited_action_present": {
+              "observable": false,
+              "reason": "rule_modality_not_prohibition"
+            },
+            "required_condition_not_enforced": {
+              "observable": false,
+              "reason": "action_mapping_below_gamma"
+            }
+          },
+          "new": {
+            "prohibited_action_present": {
+              "observable": false,
+              "reason": "rule_modality_not_prohibition"
+            },
+            "required_condition_not_enforced": {
+              "observable": false,
+              "reason": "action_mapping_below_gamma"
+            },
+            "constraint_violated": {
+              "observable": false,
+              "reason": "action_mapping_below_gamma"
+            },
+            "exception_not_handled": {
+              "observable": false,
+              "reason": "action_mapping_below_gamma"
+            }
+          }
+        }
+      }
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_02",
+      "changes": {
+        "unified_predicted_raw": {
+          "old": "constraint_violated",
+          "new": null
+        },
+        "scores": {
+          "old": {
+            "constraint_violated": 1.0,
+            "exception_not_handled": null,
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null
+          },
+          "new": {
+            "prohibited_action_present": null,
+            "required_condition_not_enforced": null,
+            "constraint_violated": null,
+            "exception_not_handled": null
+          }
+        },
+        "observability": {
+          "old": {
+            "constraint_violated": {
+              "observable": true,
+              "reason": "exact_contradiction"
+            },
+            "exception_not_handled": {
+              "observable": false,
+              "reason": "empty_rule_exception"
+            },
+            "prohibited_action_present": {
+              "observable": false,
+              "reason": "rule_modality_not_prohibition"
+            },
+            "required_condition_not_enforced": {
+              "observable": false,
+              "reason": "action_mapping_below_gamma"
+            }
+          },
+          "new": {
+            "prohibited_action_present": {
+              "observable": false,
+              "reason": "rule_modality_not_prohibition"
+            },
+            "required_condition_not_enforced": {
+              "observable": false,
+              "reason": "action_mapping_below_gamma"
+            },
+            "constraint_violated": {
+              "observable": false,
+              "reason": "action_mapping_below_gamma"
+            },
+            "exception_not_handled": {
+              "observable": false,
+              "reason": "empty_rule_exception"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "verdict_changes": 2
+}

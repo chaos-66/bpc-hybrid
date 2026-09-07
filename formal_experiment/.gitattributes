@@ -55,3 +55,7 @@ outputs/development/s27_estg150_b0_enhanced_v10a_r2_r3_lex_hist56d_v1/*.json tex
 # to the exact registered membership directory; no `*.bpmn` or `text=auto`
 # widening, no renormalization of tracked content.
 data/input/stage1_stage3/gdpr7/*.bpmn text eol=lf
+
+# S3 formula repair v2: preserve exact bytes of this run capsule only.
+outputs/evidence/s3_formula_repair_v2/** -text
+outputs/reports/s3_formula_repair_v2.json -text

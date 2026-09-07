@@ -186,6 +186,10 @@ def build_runtime(use_cached_rules: bool = True):
                 record = json.loads(line)
                 rules[record["rule_id"]] = record
         source = "cached_run_rule_records"
+        # Old caches discarded f_r. Re-extract only from the frozen input.
+        if any("actor_action_pairs" not in r for r in rules.values()):
+            rules = {}
+            source = "fresh_extraction_actor_associations_v2"
     if not rules:
         inference = load_json(INFERENCE_PACK, "inference pack")
         seen: set[str] = set()
@@ -262,7 +266,7 @@ def rebuild_violation_predictions(runtime: dict[str, Any], gamma: float,
         record = runtime["rules"][item["rule_id"]]
         model = runtime["models"][item["process_id"]]
         ma = scorer.missing_action(record["actions"], model)
-        ia = scorer.incorrect_actor(record["actions"], record["actors"], model)
+        ia = scorer.incorrect_actor(record["actions"], record["actors"], model, record.get("actor_action_pairs"))
         oo = scorer.out_of_order(record["order_relations"], record["actions"], model)
         scores = {"missing_action": ma["score"], "incorrect_actor": ia["score"],
                   "out_of_order": oo["score"]}
@@ -538,7 +542,7 @@ def scorer_diagnostics(runtime: dict[str, Any],
                            "oo_violations": oo["violations"],
                            "oo_satisfied": oo["satisfied"]})
         elif item["check_type"] == "incorrect_actor":
-            ia = scorer.incorrect_actor(record["actions"], record["actors"], model)
+            ia = scorer.incorrect_actor(record["actions"], record["actors"], model, record.get("actor_action_pairs"))
             detail.update({"ia_observable": ia["observable"],
                            "ia_reason": ia.get("reason")})
             if ia["observable"]:

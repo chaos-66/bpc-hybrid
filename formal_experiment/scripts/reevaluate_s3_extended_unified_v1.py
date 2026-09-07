@@ -108,62 +108,37 @@ def _gold_synthetic(panel: Mapping[str, Any]) -> dict[str, Any]:
 def confusion_matrix(rows: Sequence[Mapping[str, Any]],
                      gold: Mapping[str, Any], gamma_ext: float,
                      panel: Mapping[str, Any]) -> dict[str, Any]:
-    """5x5 confusion over the 80 paired objects (controls gold=none).
+    """Five gold classes by five predictions plus an explicit abstention column.
 
-    Predicted None is not a class: it is reported separately as
-    ``predicted_none`` (errors never dropped, mirroring evaluate_paired).
+    Unknown is a prediction outcome, not a sixth gold class. Every object
+    contributes to support/FN, and a false compliant answer contributes FP
+    to the 'none' class. The paired evaluator is the metric source of truth.
     """
+    paired = evaluate_paired(rows, panel, gamma_ext)
     labels = (NONE_LABEL,) + EXTENDED_TYPES
-    matrix = {g: {p: 0 for p in labels} for g in labels}
-    predicted_none = {"none_gold": 0, "violation_gold": 0,
-                      "violation_gold_compliant_observable": 0}
-    by_gold_unobservable: dict[str, int] = {}
+    columns = labels + ("unobservable",)
+    matrix = {g: {p: 0 for p in columns} for g in labels}
+    by_id = {v["variant_id"]: v for v in panel["variants"]}
+    unknown = {"none_gold": 0, "violation_gold": 0,
+               "violation_gold_compliant_observable": 0}
     for row in rows:
-        variant = next((v for v in panel["variants"]
-                        if v["variant_id"] == row["item_id"]), None)
-        if variant is None:
-            raise ValueError(f"unknown item_id {row['item_id']}")
-        expected = variant["expected_violation"]
-        # control object
-        ctl = control_prediction_from_scores(row["control_scores"], gamma_ext)
-        cpred = ctl["predicted"]
-        if cpred is None:
-            predicted_none["none_gold"] += 1
-        else:
-            matrix[NONE_LABEL][cpred] += 1
-        # variant object (raw unified decision; 'none' = observable
-        # compliant, None = all four types unobservable)
-        vpred = row["unified_predicted_raw"]
-        if vpred == NONE_LABEL:
-            predicted_none["violation_gold"] += 1
-            predicted_none["violation_gold_compliant_observable"] = (
-                predicted_none.get("violation_gold_compliant_observable", 0) + 1)
-        elif vpred is None:
-            predicted_none["violation_gold"] += 1
-            obs = row.get("observability", {}).get(expected, {})
-            reason = obs.get("reason") or "unspecified"
-            by_gold_unobservable[reason] = by_gold_unobservable.get(reason, 0) + 1
-        else:
-            matrix[expected][vpred] += 1
-    per_class: dict[str, Any] = {}
-    for g in labels:
-        tp = matrix[g][g]
-        fp = sum(matrix[other][g] for other in labels if other != g)
-        fn = sum(matrix[g][other] for other in labels if other != g)
-        per_class[g] = {
-            "tp": tp, "fp": fp, "fn": fn,
-            "precision": round(tp / (tp + fp), 4) if tp + fp else 0.0,
-            "recall": round(tp / (tp + fn), 4) if tp + fn else 0.0,
-            "f1": round(2 * tp / (2 * tp + fp + fn), 4) if (2 * tp + fp + fn) else 0.0,
-        }
-    return {
-        "labels": list(labels),
-        "matrix": matrix,
-        "per_class": per_class,
-        "predicted_none": predicted_none,
-        "unobservable_by_reason_variants": by_gold_unobservable,
-        "total_objects": 80,
-    }
+        expected = by_id[row["item_id"]]["expected_violation"]
+        cp = control_prediction_from_scores(row["control_scores"], gamma_ext)["predicted"]
+        vp = row["unified_predicted_raw"]
+        matrix[NONE_LABEL][cp if cp is not None else "unobservable"] += 1
+        matrix[expected][vp if vp is not None else "unobservable"] += 1
+        unknown["none_gold"] += int(cp is None)
+        unknown["violation_gold"] += int(vp is None)
+        unknown["violation_gold_compliant_observable"] += int(vp == NONE_LABEL)
+    assert sum(sum(row.values()) for row in matrix.values()) == paired["total_objects"]
+    for label in labels:
+        counts = paired["per_type"][label]
+        assert sum(matrix[label].values()) == counts["support"]
+        assert matrix[label][label] == counts["tp"]
+    return {"labels": list(labels), "prediction_labels": list(columns),
+            "matrix": matrix, "per_class": paired["per_type"],
+            "predicted_none": unknown, "total_objects": paired["total_objects"],
+            "policy": "all objects; abstentions count as FN; false compliant answers count as FP for none"}
 
 
 def run_source(source: str, methods: Sequence[str],

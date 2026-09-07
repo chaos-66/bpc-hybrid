@@ -4089,3 +4089,20 @@
 - 仍存在 blocker：无
 - 备注：零 LLM/API：(1) 统一预测规则（合规/违规同一五分类决策；不读 expected/gold；gold 仅预测固定后评价）离线重算 reference 与 Rules-Only 臂（scripts/reevaluate_s3_extended_unified_v1.py，基于保存分数；旧结果保留并标注为指定类型条件性检出）：统一口径 variant-only macro reference winter 0.499/sun 0.321/bm25 0.226/tfidf 0.375，rules_only 0.331/0.188/0.000/0.332；wrong-type reference 9/1/0/1、rules_only 10/0/0/6（撤回 P=1/无 wrong-type）；control FP 两口径一致（reference .500/.125/.000/.275；rules_only .450/.050/.000/.375，tfidf 0.275->0.375 升，撤回误报未升）；paired 5-class reference .375/.263/.250/.338、rules_only .263/.200/.150/.263；旧 paired 数字由持久化行精确复现（自检通过）。产物 outputs/reports/s3_extended_unified_v1_{reference,rules_only}.* + 注记 docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md。(2) 原三类衔接（33 条人工 violation Gold；scripts/run_gdpr_3type_linkage_v1.py + converter）：参考 macro 0.3889/exact 0.3636 vs Rules-Only 0.3333/0.3333；missing_action 11/11 F1=1.0 两侧；24 同/9 变，唯一判定翻转 v014；out_of_order 两侧 0（胶囊无 order_relations=缺失输入契约，如实）。 (3) GDPR Direct-LLM 74 执行链（run_gdpr7_direct_llm_v1.py + execution contract）：body-SHA PayloadLock、in-code caps（74M/303,104/USD2.61-1.31/retry0/off-peak）、授权门禁、账本断点、raw/canonical/cost/manifest、linkage schema 衔接；假响应 74/74 + 9 测试（程序验证）；真实调用待授权（§12；S2.12 63+GDPR 74=137）。 (4) THESIS 7.4.4/CLAIM C30/C34/C35/mentor 汇报稿统一口径；MASTER 3.6.37/PROJECT_AUDIT 同步；FILE_CATALOG 重建。全量 audit 2897 passed/24 skipped；未改 Gold/冻结面板/阈值/BPMN/历史产物；用户文件与 .bak 未触碰。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-07T06:08:19.689053+00:00 - S3 公式与统计根因修复：保留 Sun 定义并完成固定数据离线复算
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s3_formula_repair_v2；阶段=stage3；方法=sun_2024_and_four_type_extensions；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_s3_formula_repair_v2.py`
+- manifest：outputs/evidence/s3_formula_repair_v2/manifest.json
+- 结果摘要：33 条人工违规标签两来源主判定不变；四类参考 macro=0.4738/0.2381/0.1429/0.3750，Rules-Only=0.3313/0.1875/0/0.3321；既有阈值网格聚合不变；五分类修复漏计 FN 与误判合规 FP。
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：2906 passed, 24 skipped, 45 warnings in 1714.33s (0:28:34)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`d93d9c9ebfd7650e7372512b6c0a975815e33781`；相关未提交路径：60 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：修复规则 actor-action 关联、流程活动归属和业务对象范围，保留 Sun Def6 存在量词；时间数值比较限定已映射动作、绑定证据和明确上限，禁止绕过适用条件；有效 clause order_relations 按 action ID 保留。新旧预测逐项对比，93 个输入哈希不变；旧实验产物和人工编辑均未改。原三类与40对合成分表，正式Oracle未运行。104项相关检查通过；全量2906 passed/24 skipped。论文7.4.4、汇报9至11页、主张C36、MASTER3.6.38和状态页同步。Git保存采用本轮产物局部字节规则及实现文本LF规范哈希，不扩大到其他资产。137次真实API和人工裁决仍未完成。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

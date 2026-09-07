@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-09-06
-**收录文件**：1612 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-07
+**收录文件**：1640 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -866,6 +866,30 @@
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/reference/bm25/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/reference/bm25/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/reference/sun/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/reference/sun/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/reference/tfidf_svd/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/reference/tfidf_svd/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/reference/winter/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/reference/winter/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/rules_only/bm25/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/rules_only/bm25/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/rules_only/sun/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/rules_only/sun/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/rules_only/tfidf_svd/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/rules_only/tfidf_svd/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/rules_only/winter/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/extended_four/rules_only/winter/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/original_three/reference/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/original_three/reference/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/original_three/reference/rule_records.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/original_three/rules_only/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/original_three/rules_only/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/original_three/rules_only/rule_records.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_formula_repair_v2/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/b0_d1_formal_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1054,6 +1078,8 @@
 | `outputs/reports/s3_extended_unified_v1_rules_only.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s3_extended_violation_comparison_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_extended_violation_comparison_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_formula_repair_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_formula_repair_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage1_formal_evaluation_v2.capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage1_formal_evaluation_v2.export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage1_formal_evaluation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1298,6 +1324,7 @@
 | `scripts/run_s2_12_sun_llm_fallback_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s2_12_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_formula_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_synthetic_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_formal_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
@@ -1680,6 +1707,7 @@
 | `tests/test_s3_extended_unified_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_violation_report_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_violation_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_formula_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |

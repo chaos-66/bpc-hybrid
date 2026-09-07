@@ -249,7 +249,7 @@ def build_violation_rows(arm: str, frozen: Mapping[str, Any],
             rows.append(row)
             continue
         ma = scorer.missing_action(record["actions"], model)
-        ia = scorer.incorrect_actor(record["actions"], record["actors"], model)
+        ia = scorer.incorrect_actor(record["actions"], record["actors"], model, record.get("actor_action_pairs"))
         oo = scorer.out_of_order(record["order_relations"], record["actions"], model)
         scores = {
             "missing_action": ma["score"],

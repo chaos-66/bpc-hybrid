@@ -48,6 +48,7 @@ def _load_json(path: Path) -> dict:
 def _simple_model(action_names: list[str], reachable: dict[str, list[str]] | None = None,
                   actors: list[str] | None = None, objects: list[str] | None = None):
     record = {
+        "process_id": "x",
         "activities": [{"id": f"a{i}", "name": name, "type": "task", "lane_ids": []}
                        for i, name in enumerate(action_names)],
         "events": [],
@@ -568,6 +569,7 @@ def test_bm25_order_relations_use_true_action_ids() -> None:
 def test_bm25_duplicate_labels_deterministic_first_id() -> None:
     from bpc_hybrid.stage3_baselines.baseline_stage3 import BaselineScorer
     record = {
+        "process_id": "x",
         "activities": [
             {"id": "a0", "name": "Notify authority", "type": "task", "lane_ids": []},
             {"id": "a1", "name": "Notify authority", "type": "task", "lane_ids": []},

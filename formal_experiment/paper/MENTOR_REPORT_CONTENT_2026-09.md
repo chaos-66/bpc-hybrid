@@ -175,97 +175,61 @@ parse 率——no-fewshot parse 0.980、Barrientos-style 0.993（可解析但 ca
 
 ---
 
-## 第 9 页｜Stage 3 扩展（统一五分类口径，DEV_ONLY 受控合成）
+## 第 9 页｜Stage 3：沿用 Sun，扩展四类检测
 
-**幻灯片标题**：四类新违规类型——按类型分列证据，不做“四类均已提升”结论
+**讲解主线**：保留 Sun 的缺失动作、执行者错误、顺序错误；增加禁止动作、条件未落实、约束违反、例外未处理。参照 Sun 的受控变异方式，分别改变流程中的一种因素，检查是否识别相应错误。
 
-**正文（口径修正说明）**：历史运行器把违规侧预测做成“预置类型或 None”（条件性
-检出，读取 expected），不是分类；本次已把**合规与违规两侧统一为同一五分类决策**
-（固定类型优先级、同一阈值与不可观察规则；决策不读 expected/Gold；失败与不可观察
-全部入分母）。旧数字仅作为“条件性检出”备用（
-`docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md`）。
+**结果：40 个变体，参考确定性抽取，开发性受控数据**
 
-**正文表（40 变体 variant-only，统一口径；参考确定性抽取——非人工 Gold）**：
-
-| 方法 | prohibited/condition/constraint/exception F1 | Macro-F1 | Exact | wrong-type | Unobservable |
+| 方法 | 禁止动作 / 条件 / 约束 / 例外 F1 | Macro-F1 | Exact | 错误类型数 | 目标类型不可观察数 |
 |---|---:|---:|---:|---:|---:|
-| Winter-style | 0.952 / 0.235 / 0.500 / 0.308 | 0.499 | 0.450 | 9 | 17 |
-| Sun-style | 0.952 / 0.000 / 0.333 / 0.000 | 0.321 | 0.300 | 1 | 28 |
-| BM25 | 0.571 / 0.000 / 0.333 / 0.000 | 0.226 | 0.150 | 0 | 28 |
+| Winter-style | 0.952 / 0.235 / 0.400 / 0.308 | 0.474 | 0.425 | 9 | 18 |
+| Sun-style | 0.952 / 0.000 / 0.000 / 0.000 | 0.238 | 0.250 | 1 | 30 |
+| BM25 | 0.571 / 0.000 / 0.000 / 0.000 | 0.143 | 0.100 | 0 | 30 |
 | TF-IDF/SVD | 1.000 / 0.000 / 0.333 / 0.167 | 0.375 | 0.325 | 1 | 27 |
 
-paired（40 合规 + 40 变体，control FP 两口径一致）：winter 0.375 / FP 0.500；sun
-0.263 / 0.125；bm25 0.250 / 0.000；tfidf 0.338 / 0.275。
-按类型结论：prohibited=可行性支持（除 BM25 长度刻度外 F1 高）；constraint=部分
-支持；condition/exception=主要揭示 BPMN 表面与动作映射的可观察性瓶颈。**不得写
-“四类均已有效提升”或“全部字段证明下游价值”**；33 条人工 Gold、40 对合成面板与
-正式 Oracle 严格分表。来源：`outputs/reports/s3_extended_unified_v1_reference.*`。
+这些是四个后端使用同一新增检测公式的比较；参考抽取不是人工 Gold，也不是 Direct-LLM。禁止动作有可行性证据，约束有部分证据，条件和例外仍受映射与流程可观察性限制。
 
-**演讲备注**：先讲口径修正（为什么不能看旧 P=1），再给数字；把“诚实测边界”讲成贡献。
+**备注**：40 对合成样本，按构造预设对照/变体标签；不并入 33 条人工 Gold。表内 Macro-F1 为 variant-only。目标类型不可观察可与错误类型预测重叠。当前来源：`outputs/reports/s3_formula_repair_v2.json`；逐样本与运行 manifest：`outputs/evidence/s3_formula_repair_v2/`。
 
 ---
 
-## 第 10 页｜衔接实验：只替换 Stage 2，违规判断怎么变
+## 第 10 页｜Stage 2 的输出是否会影响下游
 
-**幻灯片标题**：同法规/同流程/同检测器，Rules-Only 预测接入四类检测（真实运行；
-Direct-LLM 臂待授权）
+**设计**：固定法规、流程、检测器和阈值，仅替换规则记录来源。已有真实 Rules-Only 预测 74 句；Direct-LLM 的 GDPR 下游臂尚未运行。
 
-**正文**：输入=冻结 9 段 GDPR 条款分句 74 句（Gold-blind，分句与面板锁定一致）；
-Rules-Only（锁定 B0 v10a）真实零 API 预测 74/74；同一固定四类型检测器消费外部
-预测（first-valid-span 衔接适配投影，失败/缺失显式计数、绝不回填面板锁定抽取）。
+**结果：Rules-Only，40 个变体；另用 40 个对照测误报**
 
-**正文表（Rules-Only 臂，统一五分类口径，40 变体 + 40 对照）**：
-
-| 方法 | variant macro-F1 | variant exact | wrong-type | control FP | paired 5-class |
+| 方法 | 禁止动作 / 条件 / 约束 / 例外 F1 | Macro-F1 | Exact | 错误类型数 | 目标类型不可观察数 |
 |---|---:|---:|---:|---:|---:|
-| Winter-style | 0.331 | 0.275 | 10 | 0.450 | 0.263 |
-| Sun-style | 0.188 | 0.150 | 0 | 0.050 | 0.200 |
-| BM25 | 0.000 | 0.000 | 0 | 0.000 | 0.150 |
-| TF-IDF/SVD | 0.332 | 0.275 | 6 | 0.375 | 0.263 |
+| Winter-style | 0.750 / 0.222 / 0.353 / 0.000 | 0.331 | 0.275 | 10 | 23 |
+| Sun-style | 0.750 / 0.000 / 0.000 / 0.000 | 0.188 | 0.150 | 0 | 32 |
+| BM25 | 0.000 / 0.000 / 0.000 / 0.000 | 0.000 | 0.000 | 0 | 32 |
+| TF-IDF/SVD | 0.889 / 0.000 / 0.286 / 0.154 | 0.332 | 0.275 | 6 | 28 |
 
-与参考确定性抽取的逐样本变化（统一口径）：winter 10/40、sun 7/40、bm25 8/40、
-tfidf 6/40。案例：
-- (a) article22 s1（“shall have the right **not to be** subject…”）两种方法情态
-  标签不同（参考判 prohibition、Rules-Only 判 obligation）→ 2 个禁止动作变体
-  在 Rules-Only 臂不可检。**无人工裁决前不认定谁正确**；只陈述“标签不同改变下游
-  可检性”。(b) tfidf 下 2 个原不可观察项（action 映射 <γ）替换后变为可观察并检出
-  constraint_violated——替换效应方向不唯一。
-归因限制（必须讲）：Rules-Only 的英文句经**德语合同 classifier 槽 pass-through
-（跨语言适用限制）**；first-valid-span 投影逐字段只取第一个有效 span（衔接适配
-规则）——**下游差异不能全部归因于原始抽取方法或 LLM 创新**。
-来源：`outputs/reports/s3_extended_unified_v1_rules_only.*` +
-`docs/research/LINKAGE_RULES_ONLY_RESULTS_NOTE_2026-09-06.md`（含修正栏）。
+| 方法 | 80 对象准确率 | 合规对照误报率 | 40 对全部判对比例 | 四违规类 Macro-F1 | 五类 Macro-F1 |
+|---|---:|---:|---:|---:|---:|
+| Winter-style | 0.263 | 0.450 | 0.150 | 0.264 | 0.283 |
+| Sun-style | 0.200 | 0.050 | 0.150 | 0.167 | 0.205 |
+| BM25 | 0.150 | 0.000 | 0.000 | 0.000 | 0.075 |
+| TF-IDF/SVD | 0.263 | 0.375 | 0.225 | 0.268 | 0.287 |
 
-**演讲备注**：此页是“误差传播真实证据”：替换 Stage 2 会改变最终判断（本受控设置以
-漏检为主、类型错误出现、无合规误报整体上升结论——tfidf 臂 FP 由 0.275 升到 0.375
-照实写）。
+结论：规则字段的差异会改变部分下游判断，但目前还不能证明 LLM 的端到端优势。必须同时看检出和误报，不能只比较违规样本的 F1。
+
+**备注**：英文输入经德语 classifier 槽 pass-through、每字段首个有效 span 投影均会影响结果；差异不能全部归因于 Stage 2 方法。来源：`outputs/reports/s3_formula_repair_v2.json`；逐样本与运行 manifest：`outputs/evidence/s3_formula_repair_v2/`。
 
 ---
 
-## 第 11 页｜成功与失败案例
+## 第 11 页｜创新点与证据对应
 
-**幻灯片标题**：值得写进论文的正反证据索引
+1. Stage 2 用 LLM 替代传统抽取：150 句正式比较支持字段级互补；action、condition、constraint 与情态准确率方面 Direct-LLM 领先，不声称全面领先。
+2. 借鉴 Barrientos 的结构化生成与验证：已有提示和后处理消融，说明示例、语义规则、输出接口各自的作用及局限，不把接口失败当作语义能力崩溃。
+3. Stage 3 丰富错误类型：四类字段已接入检测，禁止动作可行性证据较强，其他类型支持程度不同。
+4. 原三类 33 条人工标签：参考 Macro-F1 0.389、Rules-Only 0.333。修复前后各自最终判定不变；两来源之间只有 v014 判定不同。缺失动作均为 11/11 检出；顺序类缺少可用关系或端点映射，0 分不能解释为流程合规。
 
-**正文表（每条：结论 → 证据与来源）**：
-1. Direct-LLM 高精度 + constraint 字段领先（正式比较；正式）。
-2. Rules-Only actor/exception 高召回（正式比较；正式）。
-3. 语义示例小幅正贡献；语义规则/JSON 纪律无总体增益但字段权衡（450-call 单因素；
-   development，描述性）。
-4. Rules+LLM-Repair 净负对照（development 全量 150；负结果保留）。
-5. 共享 3 类情态目标：Barrientos 原生 0.890 vs 本文 0.822（真实 1140 calls 中
-   D/E Table C；development，照实写对方高）。
-6. 统一口径下参考/受控四类：prohibited 可行性、condition/exception 瓶颈
-   （DEV_ONLY 合成）。
-7. 衔接：Rules-Only 替换后检出下降为主、wrong-type 出现、tfidf FP 升 0.10，
-   但存在“不可观察→新检出”反向案例（DEV_ONLY 合成；规则预测为真实运行）。
-8. 原三类 33 条（dev，人工 Gold 评价）：参考抽取 macro 0.389 vs Rules-Only
-   0.333（exact 0.364/0.333），逐样本 24 同/9 变，唯一判定翻转 v014
-   （incorrect_actor→None）；missing_action 两侧均 11/11 F1=1.0；
-   **out_of_order 两侧均 0：规则记录无 order_relations（胶囊为空）与端点相似度
-   不足——是缺失输入契约+检测瓶颈，不是方法差异**（来源
-   `outputs/reports/gdpr_3type_linkage_v1_{reference,rules_only}.*`）。
+**案例讲法**：同一句法规的禁止/义务标签不同，会使禁止动作检查可用或不可用；规则未提取到例外时，检测器无法检查例外。这说明抽取字段会影响下游，不能代替真实 LLM 臂的比较。
 
-**演讲备注**：讲“哪些是已验证、哪些是开发性观察、哪些仍未完成”，不声称实验全部结束。
+**备注**：Sun 原三类公式结构保留，本轮只修关联、时间适用范围和错误统计。原有 γ 网格复核后 0.8/0.6 的 Macro-F1 仍为 0.3889/0.8733；0.6 是同一开发集上的描述性适配值。来源：`outputs/reports/s3_formula_repair_v2.json`；逐样本与运行 manifest：`outputs/evidence/s3_formula_repair_v2/`。
 
 ---
 
@@ -287,7 +251,7 @@ Hybrid 对照净负（描述性）；提示与后处理消融定位了模块贡�
 | 正式 Oracle / 端到端正式化 | **未完成（如实）** | 上面两项 + S2.13/S3.7 门禁 |
 | 论文结果回填与投稿 | 部分（数字口径已统一） | 授权结果后按 manifest 回填 |
 
-内部备注（不进正文）：MASTER 3.6.37、Git 检查点、API 授权细节与撤回历史见内部文档。
+内部备注（不进正文）：MASTER 3.6.38、Git 检查点、API 授权细节与撤回历史见内部文档。
 
 ---
 
@@ -298,8 +262,8 @@ Hybrid 对照净负（描述性）；提示与后处理消融定位了模块贡�
 | Stage 2 逐字段 F1（0.820…0.880） | 150 句 / 句子级粗 Gold / 正式 | `stage2_formal_three_method_comparison_v1.*` |
 | Prompt 消融 0.7719/0.7650/0.7759/0.7790 | 150 句 / 同一 Gold+evaluator / development（真实 450 calls） | `d1_prompt_factorial_results_v1.*` |
 | 后处理 0.772/0/0.772 | 150 条 raw 离线 / development | `d_full_postprocessing_ablation_v1.md` |
-| 四类统一口径 macro 0.499/0.321/0.226/0.375（参考）与 0.331/0.188/0/0.332（Rules-Only 臂） | 40 变体+40 对照 / 统一五分类 / DEV_ONLY 合成 | `outputs/reports/s3_extended_unified_v1_{reference,rules_only}.*` |
-| 原三类 macro 0.389/0.333 | 33 条人工 Gold / dev Sun-style / development | `outputs/reports/gdpr_3type_linkage_v1_*.{json,md}` |
+| 四类修复后 macro 0.474/0.238/0.143/0.375（参考）与 0.331/0.188/0/0.332（Rules-Only 臂） | 40 变体+40 对照 / 统一五分类 / DEV_ONLY 合成 | `outputs/reports/s3_formula_repair_v2.json` |
+| 原三类 macro 0.389/0.333 | 33 条人工 Gold / dev Sun-style / development | `outputs/reports/s3_formula_repair_v2.json` |
 | 74 句输入、74/74 Rules-Only | 9 段条款 / Gold-blind / 已运行（零 API） | `data/input/gdpr7_stage2_input_v1.json`、`data/predictions/gdpr7_sun_rule_only_v1/` |
 | Direct-LLM 74 臂 | 假响应 74/74（程序验证，非实验）→ 真实待授权 | `run_gdpr7_direct_llm_v1.py --fake-transport`；申请 §12 |
 

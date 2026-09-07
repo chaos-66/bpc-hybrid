@@ -1,0 +1,1356 @@
+{
+  "evaluation": {
+    "schema_version": "gdpr_3type_linkage_evaluation@1.0.0",
+    "gold": {
+      "path": "data\\gold\\stage3\\stage3_violation_gold_v1.json",
+      "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550",
+      "dataset_id": "stage3_violation_gold_v1",
+      "count": 33
+    },
+    "violation": {
+      "support": 33,
+      "per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "observable_only_per_type": {
+        "missing_action": {
+          "support": 11,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "incorrect_actor": {
+          "support": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "out_of_order": {
+          "support": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "macro_f1": 0.3333,
+      "micro_f1": 0.5,
+      "observable_only_macro_f1": 0.3333,
+      "observable_only_micro_f1": 0.6667,
+      "exact_type_accuracy": 0.3333,
+      "detected": 11,
+      "missed": 22,
+      "wrong_type": 0,
+      "unobservable": 11,
+      "denominator": {
+        "total_items": 33,
+        "per_type_support": {
+          "missing_action": 11,
+          "incorrect_actor": 11,
+          "out_of_order": 11
+        },
+        "per_type_observable": {
+          "missing_action": 11,
+          "incorrect_actor": 0,
+          "out_of_order": 11
+        },
+        "per_type_unobservable": {
+          "missing_action": 0,
+          "incorrect_actor": 11,
+          "out_of_order": 0
+        },
+        "unobservable_total": 11,
+        "unobservable_by_reason": {
+          "action_mapping_below_gamma": 6,
+          "missing_rule_actor_action_map": 1,
+          "empty_rule_actor_denominator": 2,
+          "incomplete_rule_actor_action_map": 2
+        },
+        "none_gold_items": 0,
+        "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+        "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+      }
+    },
+    "items": [
+      {
+        "item_id": "v001",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 12,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v002",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 12,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v003",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article33",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 12,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v004",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article34",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 3,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v005",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article34",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 3,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v006",
+        "process_id": "gdpr_1_data_breach",
+        "rule_id": "article34",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 3,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v007",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article7",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v008",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article7",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v009",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article7",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v010",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article6",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "missing_rule_actor_action_map",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "missing_rule_actor_action_map",
+          "missing_action": 1.0,
+          "missing_action_denominator": 8,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v011",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article6",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "missing_rule_actor_action_map",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "missing_rule_actor_action_map",
+          "missing_action": 1.0,
+          "missing_action_denominator": 8,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v012",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article6",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "missing_rule_actor_action_map",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "missing_rule_actor_action_map",
+          "missing_action": 1.0,
+          "missing_action_denominator": 8,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v013",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 2,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v014",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 2,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v015",
+        "process_id": "gdpr_2_consent_to_use_the_data",
+        "rule_id": "article22",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 2,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v016",
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 4,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v017",
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 4,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v018",
+        "process_id": "gdpr_3_right_to_access",
+        "rule_id": "article15",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 4,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v019",
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "empty_rule_actor_denominator",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "empty_rule_actor_denominator",
+          "missing_action": 1.0,
+          "missing_action_denominator": 2,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v020",
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "empty_rule_actor_denominator",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "empty_rule_actor_denominator",
+          "missing_action": 1.0,
+          "missing_action_denominator": 2,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v021",
+        "process_id": "gdpr_4_right_of_portability",
+        "rule_id": "article20",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "empty_rule_actor_denominator",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "empty_rule_actor_denominator",
+          "missing_action": 1.0,
+          "missing_action_denominator": 2,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v022",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article7",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v023",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article7",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v024",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article7",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "action_mapping_below_gamma",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "action_mapping_below_gamma",
+          "missing_action": 1.0,
+          "missing_action_denominator": 7,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v025",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+          "missing_action": 1.0,
+          "missing_action_denominator": 3,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v026",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+          "missing_action": 1.0,
+          "missing_action_denominator": 3,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v027",
+        "process_id": "gdpr_5_right_to_withdraw",
+        "rule_id": "article17",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+          "missing_action": 1.0,
+          "missing_action_denominator": 3,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v028",
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "empty_rule_actor_denominator",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "empty_rule_actor_denominator",
+          "missing_action": 1.0,
+          "missing_action_denominator": 1,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v029",
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "empty_rule_actor_denominator",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "empty_rule_actor_denominator",
+          "missing_action": 1.0,
+          "missing_action_denominator": 1,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v030",
+        "process_id": "gdpr_6_right_to_rectify",
+        "rule_id": "article16",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "empty_rule_actor_denominator",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "empty_rule_actor_denominator",
+          "missing_action": 1.0,
+          "missing_action_denominator": 1,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v031",
+        "process_id": "gdpr_7_right_to_be_forgotten",
+        "rule_id": "article17",
+        "check_type": "missing_action",
+        "gold_type": "missing_action",
+        "predicted_type": "missing_action",
+        "correct": true,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+          "missing_action": 1.0,
+          "missing_action_denominator": 3,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v032",
+        "process_id": "gdpr_7_right_to_be_forgotten",
+        "rule_id": "article17",
+        "check_type": "incorrect_actor",
+        "gold_type": "incorrect_actor",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+          "missing_action": 1.0,
+          "missing_action_denominator": 3,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      },
+      {
+        "item_id": "v033",
+        "process_id": "gdpr_7_right_to_be_forgotten",
+        "rule_id": "article17",
+        "check_type": "out_of_order",
+        "gold_type": "out_of_order",
+        "predicted_type": null,
+        "correct": false,
+        "external_failure": null,
+        "rule_record_failed": false,
+        "incorrect_actor_observable": false,
+        "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+        "scores": {
+          "incorrect_actor": null,
+          "incorrect_actor_denominator": 0,
+          "incorrect_actor_observable": false,
+          "incorrect_actor_reason": "incomplete_rule_actor_action_map",
+          "missing_action": 1.0,
+          "missing_action_denominator": 3,
+          "out_of_order": 0.0,
+          "out_of_order_denominator": 0
+        }
+      }
+    ]
+  },
+  "conversion": {
+    "rule_record_source": "EXTERNAL Rules-Only capsule converter (gdpr_capsule_rule_record_converter@1.1.0)",
+    "capsule_used": true,
+    "capsule_path": "data\\predictions\\gdpr7_sun_rule_only_v1\\predictions.json",
+    "capsule_sha256": "a993ef533489b7277d37eb0ad5074d9a8d1084b1aff03c2875499e0d103d136e",
+    "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+    "capsule_record_count": 74,
+    "capsule_manifest_path": "data\\predictions\\gdpr7_sun_rule_only_v1\\manifest.json",
+    "capsule_manifest_exists": true,
+    "conversion_summary": {
+      "converter": "gdpr_capsule_rule_record_converter@1.1.0",
+      "capsule_schema_ok": true,
+      "capsule_records": 74,
+      "sentence_texts_available": 74,
+      "include_modalities": [
+        "obligation"
+      ],
+      "per_rule": {
+        "article15": {
+          "sentence_count": 13,
+          "envelopes_ok": 13,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 13,
+          "included_clause_count": 10,
+          "excluded_modality_counts": {
+            "permission": 1,
+            "definition": 1,
+            "prohibition": 1
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 4,
+          "actor_count": 1,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article16": {
+          "sentence_count": 2,
+          "envelopes_ok": 2,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 2,
+          "included_clause_count": 1,
+          "excluded_modality_counts": {
+            "definition": 1
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 1,
+          "actor_count": 0,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article17": {
+          "sentence_count": 13,
+          "envelopes_ok": 13,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 14,
+          "included_clause_count": 3,
+          "excluded_modality_counts": {
+            "definition": 6,
+            "prohibition": 5
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 3,
+          "actor_count": 2,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article20": {
+          "sentence_count": 5,
+          "envelopes_ok": 5,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 5,
+          "included_clause_count": 2,
+          "excluded_modality_counts": {
+            "definition": 1,
+            "prohibition": 2
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 2,
+          "actor_count": 0,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article22": {
+          "sentence_count": 6,
+          "envelopes_ok": 6,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 6,
+          "included_clause_count": 2,
+          "excluded_modality_counts": {
+            "prohibition": 4
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 2,
+          "actor_count": 1,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article33": {
+          "sentence_count": 10,
+          "envelopes_ok": 10,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 10,
+          "included_clause_count": 9,
+          "excluded_modality_counts": {
+            "permission": 1
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 12,
+          "actor_count": 3,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article34": {
+          "sentence_count": 7,
+          "envelopes_ok": 7,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 8,
+          "included_clause_count": 3,
+          "excluded_modality_counts": {
+            "prohibition": 3,
+            "permission": 2
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 3,
+          "actor_count": 1,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article6": {
+          "sentence_count": 10,
+          "envelopes_ok": 10,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 16,
+          "included_clause_count": 11,
+          "excluded_modality_counts": {
+            "prohibition": 1,
+            "permission": 4
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 8,
+          "actor_count": 1,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        },
+        "article7": {
+          "sentence_count": 8,
+          "envelopes_ok": 8,
+          "envelopes_failed": 0,
+          "failure_reasons": {},
+          "clause_count": 8,
+          "included_clause_count": 6,
+          "excluded_modality_counts": {
+            "prohibition": 2
+          },
+          "actor_span_count": 0,
+          "action_span_count": 0,
+          "invalid_span_count": 0,
+          "order_relations_count": 0,
+          "action_count": 7,
+          "actor_count": 1,
+          "order_relations_absent": true,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+        }
+      },
+      "total_envelopes": 74,
+      "total_envelopes_ok": 74,
+      "total_envelopes_failed": 0,
+      "failure_reasons": {},
+      "order_relations_absent_rules": [
+        "article15",
+        "article16",
+        "article17",
+        "article20",
+        "article22",
+        "article33",
+        "article34",
+        "article6",
+        "article7"
+      ],
+      "total_invalid_spans": 0
+    },
+    "failed_rules": []
+  },
+  "changes": [
+    {
+      "item_id": "v001",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v002",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v003",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v004",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v005",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v006",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v007",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v008",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v009",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v010",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        },
+        "incorrect_actor_reason": {
+          "old": "action_mapping_below_gamma",
+          "new": "missing_rule_actor_action_map"
+        }
+      }
+    },
+    {
+      "item_id": "v011",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        },
+        "incorrect_actor_reason": {
+          "old": "action_mapping_below_gamma",
+          "new": "missing_rule_actor_action_map"
+        }
+      }
+    },
+    {
+      "item_id": "v012",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        },
+        "incorrect_actor_reason": {
+          "old": "action_mapping_below_gamma",
+          "new": "missing_rule_actor_action_map"
+        }
+      }
+    },
+    {
+      "item_id": "v013",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v014",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v015",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v016",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v017",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v018",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v022",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v023",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v024",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        }
+      }
+    },
+    {
+      "item_id": "v025",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        },
+        "incorrect_actor_reason": {
+          "old": "action_mapping_below_gamma",
+          "new": "incomplete_rule_actor_action_map"
+        }
+      }
+    },
+    {
+      "item_id": "v026",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        },
+        "incorrect_actor_reason": {
+          "old": "action_mapping_below_gamma",
+          "new": "incomplete_rule_actor_action_map"
+        }
+      }
+    },
+    {
+      "item_id": "v027",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        },
+        "incorrect_actor_reason": {
+          "old": "action_mapping_below_gamma",
+          "new": "incomplete_rule_actor_action_map"
+        }
+      }
+    },
+    {
+      "item_id": "v031",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        },
+        "incorrect_actor_reason": {
+          "old": "action_mapping_below_gamma",
+          "new": "incomplete_rule_actor_action_map"
+        }
+      }
+    },
+    {
+      "item_id": "v032",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        },
+        "incorrect_actor_reason": {
+          "old": "action_mapping_below_gamma",
+          "new": "incomplete_rule_actor_action_map"
+        }
+      }
+    },
+    {
+      "item_id": "v033",
+      "changes": {
+        "incorrect_actor_score": {
+          "old": 0.0,
+          "new": null
+        },
+        "incorrect_actor_reason": {
+          "old": "action_mapping_below_gamma",
+          "new": "incomplete_rule_actor_action_map"
+        }
+      }
+    }
+  ],
+  "verdict_changes": 0,
+  "no_eligible_order_pairs": 11,
+  "actor_unobservable_reasons": {
+    "action_mapping_below_gamma": 6,
+    "missing_rule_actor_action_map": 1,
+    "empty_rule_actor_denominator": 2,
+    "incomplete_rule_actor_action_map": 2
+  }
+}

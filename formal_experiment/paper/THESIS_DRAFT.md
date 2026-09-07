@@ -780,65 +780,50 @@ evaluation.json（Winter 3.9s、Sun 15.0s、BM25 6.0s、TF-IDF/SVD 12.7s）；
 失败案例（FN/FP 明细）见 `predictions.jsonl` 与对比胶囊
 `s39_synthetic_panel_compare_v1/comparison.json`。
 
-#### 7.4.4 S3.9-EXT 40 对受控扩展结果（DEV，variant-only 与 paired 分表）
+#### 7.4.4 S3.9-EXT 40 对受控扩展结果（DEV，2026-09-07 修复后重算）
 
-**选择动机见 7.4.1**。四类结果按两种口径分开报告（均 DEV_ONLY，来自持久化
-预测的离线统计，零重新运行）：
+四类检测在同一输入、相同阈值、相同决策顺序下重跑。合规/违规两侧共用固定五分类决策；规则先生成预测，再根据标签评价。失败及无法判断计入完整分母。40 对合成面板与 33 条人工违规标签分开，不作为正式 Oracle。
 
-- **variant-only classification evaluation（40 个 variant，统一五分类决策）**：
-  合规侧与违规侧现在共用同一确定性决策（固定 EXTENDED_TYPES 优先级、
-  gamma_ext、不可观察规则；决策不读 expected/gold，Gold 仅在预测固定后进入
-  评价；unobservable/无违规保持 None/none 并计入分母）。历史运行器的
-  “expected 条件性检出”（读取预置类型再输出“该类型或 None”）**不是分类
-  精度**：P=1、无 wrong-type 不能作为分类证据；其数字只作为条件性检出备用
-  （见 `docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md`）。
-- **paired control-plus-variant evaluation**（80 个对象 = 40 个 control
-  Gold=none + 40 个 variant）：control 与 variant 两侧同一决策函数
-  （`control_prediction_from_scores`），离线重建自持久化分数，未修改阈值或
-  决策顺序；失败、none 与 unobservable 全部保留在分母中。control FP rate
-  与旧口径一致（两侧控制侧规则本就相同）。
+Sun 原三类公式保留。执行者检查已恢复规则与动作、流程对象与动作的关联；时间数值矛盾仅使用映射通过且明确绑定同一动作的上限证据；五分类混淆矩阵增设无法判断列，修复漏计 FN 与误判合规 FP 的问题。见修复报告，历史结果仅留作溯源。
 
-| 方法 | variant-only（统一口径）：prohibited/condition/constraint/exception F1 | Macro-F1 | Exact | wrong-type | Unobservable |
+参考确定性抽取（非人工 Gold、非 Direct-LLM）：
+
+| 方法 | 禁止动作 / 条件 / 约束 / 例外 F1 | Macro-F1 | Exact | 错误类型数 | 目标类型不可观察数 |
 |---|---:|---:|---:|---:|---:|
-| Winter-style extension | 0.952 / 0.235 / 0.500 / 0.308 | 0.499 | 0.450 | 9 | 17 |
-| Sun-style extension | 0.952 / 0.000 / 0.333 / 0.000 | 0.321 | 0.300 | 1 | 28 |
-| BM25 extension | 0.571 / 0.000 / 0.333 / 0.000 | 0.226 | 0.150 | 0 | 28 |
-| TF-IDF/SVD extension | 1.000 / 0.000 / 0.333 / 0.167 | 0.375 | 0.325 | 1 | 27 |
+| Winter-style | 0.952 / 0.235 / 0.400 / 0.308 | 0.474 | 0.425 | 9 | 18 |
+| Sun-style | 0.952 / 0.000 / 0.000 / 0.000 | 0.238 | 0.250 | 1 | 30 |
+| BM25 | 0.571 / 0.000 / 0.000 / 0.000 | 0.143 | 0.100 | 0 | 30 |
+| TF-IDF/SVD | 1.000 / 0.000 / 0.333 / 0.167 | 0.375 | 0.325 | 1 | 27 |
 
-| 方法 | paired（统一口径）：5-class acc (80) | variant exact (40) | control FP rate (40) | paired acc (40) | 4-type Macro-F1 | 5-class Macro-F1 |
-|---|---:|---:|---:|---:|---:|---:|
-| Winter-style extension | 0.375 | 0.450 | 0.500 | 0.225 | 0.397 | 0.410 |
-| Sun-style extension | 0.263 | 0.300 | 0.125 | 0.175 | 0.276 | 0.294 |
-| BM25 extension | 0.250 | 0.150 | 0.000 | 0.100 | 0.226 | 0.285 |
-| TF-IDF/SVD extension | 0.338 | 0.325 | 0.275 | 0.300 | 0.327 | 0.366 |
+| 方法 | 80 对象准确率 | 合规对照误报率 | 40 对全部判对比例 | 四违规类 Macro-F1 | 五类 Macro-F1 |
+|---|---:|---:|---:|---:|---:|
+| Winter-style | 0.362 | 0.500 | 0.225 | 0.376 | 0.390 |
+| Sun-style | 0.237 | 0.125 | 0.175 | 0.192 | 0.223 |
+| BM25 | 0.225 | 0.000 | 0.100 | 0.143 | 0.202 |
+| TF-IDF/SVD | 0.338 | 0.275 | 0.300 | 0.327 | 0.355 |
 
-paired 口径下各方法 control 误报率显著（Winter 0.5、TF-IDF 0.275、
-Sun 0.125、BM25 0），paired accuracy 因此明显低于 variant-only exact；
-加入 control 后误报进入 FP。统一口径相对旧条件口径的主要变化是违规侧出现
-wrong-type（Winter 9/40、Sun 1、TF-IDF 1；旧口径恒为 0）：例如 Winter 把
-部分本应判定为 condition/constraint/exception 的样本判到其它类型或判为
-合规（none），因此不再有任何“P=1/无 wrong-type”的表述。规则文本上的
-“旧口径=条件性检出”表保留在 `docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md` 备用。
+外部 Rules-Only 预测接入相同检测器：
 
-**结论（收紧措辞，仅限受控数据）**：
+| 方法 | 禁止动作 / 条件 / 约束 / 例外 F1 | Macro-F1 | Exact | 错误类型数 | 目标类型不可观察数 |
+|---|---:|---:|---:|---:|---:|
+| Winter-style | 0.750 / 0.222 / 0.353 / 0.000 | 0.331 | 0.275 | 10 | 23 |
+| Sun-style | 0.750 / 0.000 / 0.000 / 0.000 | 0.188 | 0.150 | 0 | 32 |
+| BM25 | 0.000 / 0.000 / 0.000 / 0.000 | 0.000 | 0.000 | 0 | 32 |
+| TF-IDF/SVD | 0.889 / 0.000 / 0.286 / 0.154 | 0.332 | 0.275 | 6 | 28 |
 
-- `prohibited_action_present`：**支持新增检测类型的可行性**——除 BM25
-  长度标度限制外，各后端对插入禁止动作任务的检出精度/召回都很高。
-- `constraint_violated`：**部分支持**——annotation/timer/data-object 变异在
-  动作可映射且存在约束表面时可检出，但仍受动作映射与冻结 BPMN 表面限制。
-- `required_condition_not_enforced`：当前结果**主要暴露 condition surface
-  与 action mapping 的可观察性瓶颈**（命名 gateway 藏在 subProcess 内、
-  动作映射低于 gamma），冻结 GDPR-7 上几乎没有正面证据。
-- `exception_not_handled`：当前结果**主要暴露 boundary event、异常分支与
-  parser 可观察性不足**，多数例外检查不可观察或不可映射。
+| 方法 | 80 对象准确率 | 合规对照误报率 | 40 对全部判对比例 | 四违规类 Macro-F1 | 五类 Macro-F1 |
+|---|---:|---:|---:|---:|---:|
+| Winter-style | 0.263 | 0.450 | 0.150 | 0.264 | 0.283 |
+| Sun-style | 0.200 | 0.050 | 0.150 | 0.167 | 0.205 |
+| BM25 | 0.150 | 0.000 | 0.000 | 0.000 | 0.075 |
+| TF-IDF/SVD | 0.263 | 0.375 | 0.225 | 0.268 | 0.287 |
 
-因此不写“全部四类都证明六要素下游价值”；准确表述为：**新增四类使四个此前
-未使用的规则字段（prohibition modality、condition、constraint、exception）
-获得明确的 Stage 3 消费接口，但当前受控数据只对部分类型提供了较强性能
-证据，其余类型主要揭示可观察性和映射瓶颈**。40 条结果始终标为 DEV_ONLY，
-不并入 33 条人工 Gold，也不把正式 Oracle 改称七类 benchmark。
+目标类型不可观察是诊断量，不等于全类型无法判断；可能与 wrong-type 重叠。
+新增禁止动作检测有可行性证据；约束检测仅部分支持；条件与例外主要受动作映射和 BPMN 可观察性限制。不得声称四类均已证明性能提升。Rules-Only 存在英文输入经德语 classifier 槽 pass-through 的跨语言限制及 first-valid-span 投影限制，观察到的下游差异不能全部归因于抽取方法本身。
 
-#### 7.4.5 表 C：错误类型分析
+来源：`outputs/reports/s3_formula_repair_v2.json`；逐样本与运行 manifest：`outputs/evidence/s3_formula_repair_v2/`。
+
+#### 7.4.5 表 C：历史对照的错误类型分析（各自旧版实现，非本轮重新验证）
 
 | 错误类型 | 最容易的方法 | 最困难的方法 | 主要失败原因 | 对应方法模块 |
 |---|---|---|---|---|
@@ -847,6 +832,8 @@ wrong-type（Winter 9/40、Sun 1、TF-IDF 1；旧口径恒为 0）：例如 Wint
 | out_of_order | 全部薄弱（人工 panel 最优 0.1667） | Sun/BM25/TF-IDF（合成 0.3333，人工 0） | 顺序违规依赖控制流可达关系；现有方法对 gateway 分支与可达性的粒度不足，多数顺序变异在可达关系上不可观测 | control-flow reachability；Def-7 顺序约束 |
 
 #### 7.4.6 讨论
+
+以下旧版对照归因是待验证解释；不能据低分断言特定模块必然是唯一原因。当前 Sun 已按活动绑定 participant/业务对象，旧版“participant 未绑定活动”的原因仅适用于修复前；本轮确认的原因和证据以 §7.4.4 修复报告为准。
 
 - **哪种错误最容易检测**：missing_action——凡规则含明确义务 action 且词面可映射，
   Winter/BM25/TF-IDF 在合成 panel 上 R=1.0（人工 panel 亦 0.95–1.0）。原因：删除任务
@@ -885,7 +872,9 @@ wrong-type（Winter 9/40、Sun 1、TF-IDF 1；旧口径恒为 0）：例如 Wint
   process-model 犯罪的泛化结论；正式 Stage 3 claim 仍以人工 panel 为依据，Oracle
   与端到端仍需 S3.7/S3.10。
 
-#### 7.4.7 Stage 3 Sun 式阈值敏感性（τ/γ/ϑ 离散网格；DEV，2026-09-04，零 API）
+#### 7.4.7 Stage 3 Sun 式阈值敏感性（既有网格，2026-09-07 修复后复核，零 API）
+
+当前复核：`outputs/evidence/s3_formula_repair_v2/threshold_sensitivity.json`。修复执行者关联后各网格主指标不变；历史图仅作为这些相同聚合数值的展示。
 
 > 来源与复现：`outputs/reports/s35_sun_stage3_threshold_sensitivity_v1.{json,md}`
 > 与图 A/图 B（`..._figA_gamma_missing_action_out_of_order.svg`、

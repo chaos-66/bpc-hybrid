@@ -176,7 +176,7 @@ def score_sun(nlp, sim, signalwords, config: dict[str, Any],
     scorer = SunScorer(sim, tau, gamma, theta, nlp=nlp)
     record_r = extract_rule_record(variant["rule_id"], rule_text, nlp, signalwords)
     ma = scorer.missing_action(record_r["actions"], model)
-    ia = scorer.incorrect_actor(record_r["actions"], record_r["actors"], model)
+    ia = scorer.incorrect_actor(record_r["actions"], record_r["actors"], model, record_r.get("actor_action_pairs"))
     oo = scorer.out_of_order(record_r["order_relations"], record_r["actions"], model)
     scores = {
         "missing_action": ma["score"],

@@ -60,6 +60,7 @@ def _simple_model(action_names: list[str], reachable: dict[str, list[str]] | Non
                   actors: list[str] | None = None, objects: list[str] | None = None):
     """Build a minimal SunProcessModel with fake records (unit-level)."""
     record = {
+        "process_id": "x",
         "activities": [{"id": f"a{i}", "name": name, "type": "task", "lane_ids": []}
                        for i, name in enumerate(action_names)],
         "events": [],

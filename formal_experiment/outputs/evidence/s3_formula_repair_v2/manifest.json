@@ -1,0 +1,710 @@
+{
+  "run_id": "s3_formula_repair_v2",
+  "scope": "development_only",
+  "command": "python scripts\\run_s3_formula_repair_v2.py",
+  "git_commit": "d93d9c9ebfd7650e7372512b6c0a975815e33781",
+  "inputs": {
+    "data\\development\\human_review\\stage3_gold_inference_v1.json": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+    "data\\input\\gdpr7_stage2_input_v1.json": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+    "data\\gold\\stage3\\stage3_violation_gold_v1.json": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550",
+    "data\\predictions\\gdpr7_sun_rule_only_v1\\predictions.json": "a993ef533489b7277d37eb0ad5074d9a8d1084b1aff03c2875499e0d103d136e",
+    "data\\development\\stage3_synth\\synthetic_controlled_error_extension_v2.json": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+    "data\\development\\human_review\\stage3_gold_annotation_human_correction_v1.json": "3310d624b03d5f509b33f143cf64c9450c93a4a6463055cf0fdb79f38072ca2f",
+    "data\\input\\stage1_stage3\\gdpr7\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\input\\stage1_stage3\\gdpr7\\gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+    "data\\input\\stage1_stage3\\gdpr7\\gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+    "data\\input\\stage1_stage3\\gdpr7\\gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+    "data\\input\\stage1_stage3\\gdpr7\\gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+    "data\\input\\stage1_stage3\\gdpr7\\gdpr_6_right_to_rectify.bpmn": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+    "data\\input\\stage1_stage3\\gdpr7\\gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_01\\control\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_01\\variant\\gdpr_1_data_breach.bpmn": "dcc50b0b6f391aa27ee9f7882f764f062e7114940407acee62d4653d7cf776cc",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_02\\control\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_02\\variant\\gdpr_1_data_breach.bpmn": "2ed90fce437d6fc6f128b9812c8b5506fa94577827fb4e8576f925a44fb758f8",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_03\\control\\gdpr_6_right_to_rectify.bpmn": "687fe35ec4bd78263c27bc654de358035b9ae561a4fcade8f19fb0cc4e7c6e9a",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_03\\variant\\gdpr_6_right_to_rectify.bpmn": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_04\\control\\gdpr_1_data_breach.bpmn": "af76f23ed9de2f740dac7eaf64ebd986b872f74d222a7b5d16652cfa8271ae84",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_04\\variant\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_05\\control\\gdpr_7_right_to_be_forgotten.bpmn": "ae8a427f45017e076f53cf4a0812405e3a9825f8ded4c11bf1ec8edc31177127",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_05\\variant\\gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_06\\control\\gdpr_4_right_of_portability.bpmn": "74fe74878621de4fd6b119d3099235779abb2d211144c1295aba6e5ad893ff2e",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_06\\variant\\gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_07\\control\\gdpr_3_right_to_access.bpmn": "50d95a26f264a53325cc61d11e2a52712df6400c4118bdac0597e4dd4608a382",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_07\\variant\\gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_08\\control\\gdpr_4_right_of_portability.bpmn": "cdcfc7f25aadca9b827486c8aa34cd347d78488a01dc80f2e77a189d9f0e320d",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_08\\variant\\gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_09\\control\\gdpr_5_right_to_withdraw.bpmn": "385f1f51710da89add848248c439ad192badeb0aca1453c2e36779a573e4c8eb",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_09\\variant\\gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_10\\control\\gdpr_2_consent_to_use_the_data.bpmn": "b50826f49292d9de8f1490f9dc8e33fcdd93ac6147ca6e379c9be08f297e45e7",
+    "data\\development\\stage3_synth\\syn_v2_constraint_violated_10\\variant\\gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_01\\control\\gdpr_1_data_breach.bpmn": "2860d5f17ddae2410bc6c441a5ec8cbbb7ce052f4e4105669793ec102c8ce151",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_01\\variant\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_02\\control\\gdpr_1_data_breach.bpmn": "430e15b17e97695e55412221e6b78b18e6430bda25c8cc0010a90f7f1c34a8e3",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_02\\variant\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_03\\control\\gdpr_1_data_breach.bpmn": "343f10c648e3b29142142c8c0eb1c8394aff854d429fea35adbc913082ae62fd",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_03\\variant\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_04\\control\\gdpr_2_consent_to_use_the_data.bpmn": "dcb2a8412209fbc646d2cdaffc5094d043be1321864c0e51040de8e978a33d9f",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_04\\variant\\gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_05\\control\\gdpr_7_right_to_be_forgotten.bpmn": "256cb05490c65e1d905232b4578f3c14a77d0bc0feb9495c9f8fe25449022b10",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_05\\variant\\gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_06\\control\\gdpr_5_right_to_withdraw.bpmn": "fec649717c558d5f477153e95097d0b5c448958d9aa773bdc68a3ce5123cd423",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_06\\variant\\gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_07\\control\\gdpr_3_right_to_access.bpmn": "780508ce322f354f0b394665d4c132c807459f8c179e319fcdd426329dced84a",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_07\\variant\\gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_08\\control\\gdpr_4_right_of_portability.bpmn": "46c637ea668fbc74d239cb342eb9727016d5d522002ca78860ffd16c66799c85",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_08\\variant\\gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_09\\control\\gdpr_6_right_to_rectify.bpmn": "8a59d154e8ab22f330b8992a6c37aa854601506533be59d15254579001788862",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_09\\variant\\gdpr_6_right_to_rectify.bpmn": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_10\\control\\gdpr_3_right_to_access.bpmn": "b6ef2a26eccd3fbe5567be9d106f7ee7e105a434a3381c4b0a1178cb0e52c008",
+    "data\\development\\stage3_synth\\syn_v2_exception_not_handled_10\\variant\\gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_01\\control\\gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_01\\variant\\gdpr_2_consent_to_use_the_data.bpmn": "28ee7b5b578e9a7c4852b552b6855a074c3aff983073bb8fe8033a791f43e89d",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_02\\control\\gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_02\\variant\\gdpr_2_consent_to_use_the_data.bpmn": "758d3973911609b1653232dc7fac065453539115fe6364bc65df64fb50dd76e0",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_03\\control\\gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_03\\variant\\gdpr_2_consent_to_use_the_data.bpmn": "c0249ad1e4aaa2d6b48ef361f9308d58341e7e88074b15f8df8d847c5e10b523",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_04\\control\\gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_04\\variant\\gdpr_2_consent_to_use_the_data.bpmn": "982c07118c69a81c5fb70f314c44560f4b516b40967e472019ea9d17dcabab3d",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_05\\control\\gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_05\\variant\\gdpr_5_right_to_withdraw.bpmn": "39e8b14d7412d87d39abf1aaf2d80bb9c0024ff5ea0dbc176298188789e465dd",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_06\\control\\gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_06\\variant\\gdpr_5_right_to_withdraw.bpmn": "03080dd8d9769cf878d13e09e659c41af54f5a07e1bc65b9109773dfc2335874",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_07\\control\\gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_07\\variant\\gdpr_3_right_to_access.bpmn": "b60b35b764ebc9e9e9c960c425211173883bc9b4dec56f6f2d0897adf3b166d3",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_08\\control\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_08\\variant\\gdpr_1_data_breach.bpmn": "b7d8896f7faa0e1dd80bfcf941316664fc6f7169c6eb1a2f07214460845ee26f",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_09\\control\\gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_09\\variant\\gdpr_4_right_of_portability.bpmn": "905d4b7bcfe9a3a831a41f709518eb4b3254c5459285f1547c5129b9704b0bae",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_10\\control\\gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+    "data\\development\\stage3_synth\\syn_v2_prohibited_action_10\\variant\\gdpr_7_right_to_be_forgotten.bpmn": "c23a444d714238f188f18540db138671bf313c5e03b090f165caa49936986d05",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_01\\control\\gdpr_1_data_breach.bpmn": "a1970a5f93faff88f39c9d98089bd297ad08a8dd80858010e916f7793b53a77e",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_01\\variant\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_02\\control\\gdpr_1_data_breach.bpmn": "7a011a207e9e54b2da4587910b1e4def6d1993d7dd62cc259cc1318bc23970a9",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_02\\variant\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_03\\control\\gdpr_1_data_breach.bpmn": "4f888ed1097fff81ad9e76e5a24afea444342108bf0c6d7ead8ea53425f29ace",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_03\\variant\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_04\\control\\gdpr_1_data_breach.bpmn": "9a908d88fc42032284fdab5cef857d196c10adf6a6ff4ba2c592072ac059b9ee",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_04\\variant\\gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_05\\control\\gdpr_7_right_to_be_forgotten.bpmn": "806880f9f160058f797e7c11eb147119c9e25bae34dd5a44eccf734fbf66dd89",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_05\\variant\\gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_06\\control\\gdpr_4_right_of_portability.bpmn": "c7e9fdc6821a08330cbcd72ce1ba333f2341f4b9d9d35928ac02be5d5aae118a",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_06\\variant\\gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_07\\control\\gdpr_3_right_to_access.bpmn": "f78a86981150777959fb3a4c7c18b6b0014c677bad4bc922eb8752a7f9833392",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_07\\variant\\gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_08\\control\\gdpr_5_right_to_withdraw.bpmn": "48aa0cbdf23a47615908d407bb61df42c65865ca8f9dda8e48a91823ba403e73",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_08\\variant\\gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_09\\control\\gdpr_3_right_to_access.bpmn": "868778b50337cab2bc81b8d52e0dbae0501ca0582b98b25ba2fb44d363ac2a5e",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_09\\variant\\gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_10\\control\\gdpr_6_right_to_rectify.bpmn": "2cec371be437e52cf85c4d43e2fdf1da9fe159e167c3ca161f439ca1e17ef854",
+    "data\\development\\stage3_synth\\syn_v2_required_condition_10\\variant\\gdpr_6_right_to_rectify.bpmn": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa"
+  },
+  "implementation_hash_mode": "canonical_lf_utf8_text",
+  "implementation_hashes": {
+    "scripts\\run_s3_formula_repair_v2.py": "5273b15f5c7a2b76dcd96630b89be3a3907b88025b9376e4f1263bdb290dc239",
+    "configs\\sun_stage3_development_v1.json": "d8b57c862d161cf27b1906db9a02288e7972a54def597e77dc9fd12c5fc42411",
+    "src\\bpc_hybrid\\sun_stage3\\sun_model.py": "c3e1b2dcda8401b64fe726c37f7502d69be69adac7c57a62e5930c90b42e2cdf",
+    "src\\bpc_hybrid\\sun_stage3\\sun_scorer.py": "a045b28631e47fdb912d5db5f922e01d894c9ba5c34dea6d8a1c26a03e34820f",
+    "src\\bpc_hybrid\\sun_stage3\\sun_rule_extraction.py": "681e7816cb21c8358e77e17ca44e9370add90e6c79aaf466017ad60cbccb2dd5",
+    "src\\bpc_hybrid\\sun_stage3\\gdpr_capsule_converter.py": "7ad2f5a93999f60dd01a59abb7b71722c849226a5badbda02a33870cf0f2b50d",
+    "src\\bpc_hybrid\\stage3_extended_violations.py": "d03acce70580c5af3b8c78999c0b0b68868137d8036a7f7163f6fde211500842",
+    "src\\bpc_hybrid\\s3_extended_unified.py": "3c3a249f2b8b45b39fb8585fab9495c89ac196914f27f1194d93fabc514be9fa",
+    "scripts\\run_gdpr_3type_linkage_v1.py": "16186278c166a90f3a02652e97ad8c4370354b66c82ad8baaab1a82787f55887",
+    "scripts\\run_gdpr_s2_s3_linkage_v1.py": "f7ace1bd6b3be74e7e5d3d2f19ecbfd7f576d3e22e2115e4578f4814768246e5",
+    "scripts\\run_s3_extended_violation_panel_v2.py": "3d1318110acbc7745361b00acfab99a4acc1e103a058383f8fe51c44bc3f38aa",
+    "scripts\\build_sun_stage3_threshold_sensitivity_v1.py": "9f97935c19fa3298b7abbcd52b541bae0358a32dc5a8e9550520b79153d037ae",
+    "scripts\\reevaluate_s3_extended_unified_v1.py": "818fd8a88eb795e8b9074f66823e9d81f02669d136d0d4d42e76ffe5d1e78df7"
+  },
+  "artifacts": {
+    "outputs\\evidence\\s3_formula_repair_v2\\threshold_sensitivity.json": "0793685a86929efbc8d3cd45aa03893e66f76c3c4268fb73ccc16740e9161197",
+    "outputs\\evidence\\s3_formula_repair_v2\\original_three\\reference\\evaluation.json": "e881da6cb62e17570baa54935aef1792bc39efb73d7e9d3c44d557e7ac20a940",
+    "outputs\\evidence\\s3_formula_repair_v2\\original_three\\reference\\predictions.jsonl": "ca6c75acff2b45b9371865af6efad4fc81ff1fc24dd7de228ef448c96090b040",
+    "outputs\\evidence\\s3_formula_repair_v2\\original_three\\reference\\rule_records.json": "5062e1a235f942dace1d495f5648a2251681bfb546c7b7d63139e94798144739",
+    "outputs\\evidence\\s3_formula_repair_v2\\original_three\\rules_only\\evaluation.json": "8ce1970371cda1125293064e5356572a3b7a483b63ac9cf75fc6c0537ec68c9e",
+    "outputs\\evidence\\s3_formula_repair_v2\\original_three\\rules_only\\predictions.jsonl": "eab93a5fb826ce2724f6f41cdf0f15af10c8ec3625c8128893d3d4621ee90488",
+    "outputs\\evidence\\s3_formula_repair_v2\\original_three\\rules_only\\rule_records.json": "9726eab57270da7a2df7706ff6fb23390ec22654f3e1e6735f04f749589020f2",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\rules_only\\bm25\\evaluation.json": "95ab07234135c0c3f9b5570eab0b344be7ae2b83655838518b6d0d62ba38e618",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\rules_only\\bm25\\predictions.jsonl": "6bacab8911e6f64264892be25f21be413e46215f0f9fa4959fb4ff070064bd72",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\rules_only\\sun\\evaluation.json": "aa455e7e384928402b80643591abf60f4fcaf1d58cdd02d2b0ccfa592127c098",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\rules_only\\sun\\predictions.jsonl": "62988a4acdd410ddfd892774b10ef96693a4c1c0bf7a63b429af65b6706eda2d",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\rules_only\\tfidf_svd\\evaluation.json": "eba8377df7af5447793148c5c8ef147d3100ba04ec9fcf007b02369d13a51ea9",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\rules_only\\tfidf_svd\\predictions.jsonl": "083b449e4bfd0d64c436d0ffdd2a6281858f18275e033d70ed883aac28821522",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\rules_only\\winter\\evaluation.json": "42944ce8c1a1a36daf74856a848d74cf3c338cf9fc6c8f796783079958d14bd7",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\rules_only\\winter\\predictions.jsonl": "dc6f16baa74f0e9dab3d1c117c7bc0461f14cba11da206c725a6907cae82e31a",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\reference\\bm25\\evaluation.json": "d51487f0683083932300e5adedf37949d842394d738df179d28ad29334d58053",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\reference\\bm25\\predictions.jsonl": "0f327d91a8a321400511dac7df67e77e912d5046b28ae0f78c4e80bfbb3a779c",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\reference\\sun\\evaluation.json": "1348d27134b8d7dac16b233a1124be45b70275038143ce27a55704ae7ed8bec4",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\reference\\sun\\predictions.jsonl": "08095d984a8605039888e5ba487149212e023c90f5ba5ab9a1090e79f0dd7ed8",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\reference\\tfidf_svd\\evaluation.json": "c47afc5d7f65886219105d19ffd306ca365c12e229f9e8321cc00686392303f4",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\reference\\tfidf_svd\\predictions.jsonl": "7c145ba8cb9c5da25313de79efd047e6fcf603e819b18c83b66ff4062327c3dc",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\reference\\winter\\evaluation.json": "0b82980f43da796798a00b8c7a45ec14dde1d138d6566d2578db169767efec7c",
+    "outputs\\evidence\\s3_formula_repair_v2\\extended_four\\reference\\winter\\predictions.jsonl": "18fa61ae9dda8c104f59360a91ef9979e7c793c9d3c1a339e069c3302e0780d7"
+  },
+  "thresholds": {
+    "tau": 0.8,
+    "tau_source": "Sun 2024 Table 9 / Table 11: most models reach highest AP/MAP at tau=0.8 (9 of 12 and 4 of 4)",
+    "gamma": 0.8,
+    "gamma_source": "Sun 2024 Figure 8: violation-detection precision is highest at gamma=0.8 for most models",
+    "theta": 0.8,
+    "theta_source": "pre-registered development setting: Sun 2024 Figure 9 reports that two of the four GDPR models reach their highest incorrect-actor precision at theta=0.8 and the other two at theta=0.7 (gamma fixed at 0.8); 0.8 is the project's fixed pre-registration, reported together with a theta sweep",
+    "sweeps": {
+      "tau": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        0.9
+      ],
+      "gamma": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        0.9
+      ],
+      "theta": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        0.9
+      ]
+    },
+    "note": "sweeps are sensitivity reports only; primary thresholds are NOT selected from this project's data"
+  },
+  "extension_thresholds": {
+    "gamma_ext": 0.5,
+    "action_gamma": {
+      "winter": 0.4,
+      "sun": 0.8,
+      "bm25": 0.5,
+      "tfidf_svd": 0.5
+    }
+  },
+  "runtime": {
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "spacy_model": {
+      "lang": "en",
+      "name": "core_web_sm",
+      "version": "3.8.0",
+      "description": "English pipeline optimized for CPU. Components: tok2vec, tagger, parser, senter, ner, attribute_ruler, lemmatizer.",
+      "author": "Explosion",
+      "email": "contact@explosion.ai",
+      "url": "https://explosion.ai",
+      "license": "MIT",
+      "spacy_version": ">=3.8.0,<3.9.0",
+      "spacy_git_version": "5010fcbd3",
+      "vectors": {
+        "width": 0,
+        "vectors": 0,
+        "keys": 0,
+        "name": null,
+        "mode": "default"
+      },
+      "labels": {
+        "tok2vec": [],
+        "tagger": [
+          "$",
+          "''",
+          ",",
+          "-LRB-",
+          "-RRB-",
+          ".",
+          ":",
+          "ADD",
+          "AFX",
+          "CC",
+          "CD",
+          "DT",
+          "EX",
+          "FW",
+          "HYPH",
+          "IN",
+          "JJ",
+          "JJR",
+          "JJS",
+          "LS",
+          "MD",
+          "NFP",
+          "NN",
+          "NNP",
+          "NNPS",
+          "NNS",
+          "PDT",
+          "POS",
+          "PRP",
+          "PRP$",
+          "RB",
+          "RBR",
+          "RBS",
+          "RP",
+          "SYM",
+          "TO",
+          "UH",
+          "VB",
+          "VBD",
+          "VBG",
+          "VBN",
+          "VBP",
+          "VBZ",
+          "WDT",
+          "WP",
+          "WP$",
+          "WRB",
+          "XX",
+          "_SP",
+          "``"
+        ],
+        "parser": [
+          "ROOT",
+          "acl",
+          "acomp",
+          "advcl",
+          "advmod",
+          "agent",
+          "amod",
+          "appos",
+          "attr",
+          "aux",
+          "auxpass",
+          "case",
+          "cc",
+          "ccomp",
+          "compound",
+          "conj",
+          "csubj",
+          "csubjpass",
+          "dative",
+          "dep",
+          "det",
+          "dobj",
+          "expl",
+          "intj",
+          "mark",
+          "meta",
+          "neg",
+          "nmod",
+          "npadvmod",
+          "nsubj",
+          "nsubjpass",
+          "nummod",
+          "oprd",
+          "parataxis",
+          "pcomp",
+          "pobj",
+          "poss",
+          "preconj",
+          "predet",
+          "prep",
+          "prt",
+          "punct",
+          "quantmod",
+          "relcl",
+          "xcomp"
+        ],
+        "attribute_ruler": [],
+        "lemmatizer": [],
+        "ner": [
+          "CARDINAL",
+          "DATE",
+          "EVENT",
+          "FAC",
+          "GPE",
+          "LANGUAGE",
+          "LAW",
+          "LOC",
+          "MONEY",
+          "NORP",
+          "ORDINAL",
+          "ORG",
+          "PERCENT",
+          "PERSON",
+          "PRODUCT",
+          "QUANTITY",
+          "TIME",
+          "WORK_OF_ART"
+        ]
+      },
+      "pipeline": [
+        "tok2vec",
+        "tagger",
+        "parser",
+        "attribute_ruler",
+        "lemmatizer",
+        "ner"
+      ],
+      "components": [
+        "tok2vec",
+        "tagger",
+        "parser",
+        "senter",
+        "attribute_ruler",
+        "lemmatizer",
+        "ner"
+      ],
+      "disabled": [
+        "senter"
+      ],
+      "performance": {
+        "token_acc": 0.9986194413,
+        "token_p": 0.9956819193,
+        "token_r": 0.9957659295000001,
+        "token_f": 0.9957239226000001,
+        "tag_acc": 0.9729372620000001,
+        "sents_p": 0.9200841934,
+        "sents_r": 0.8939244013000001,
+        "sents_f": 0.9068156724,
+        "dep_uas": 0.9176955214,
+        "dep_las": 0.8991533598,
+        "dep_las_per_type": {
+          "prep": {
+            "p": 0.8541604085000001,
+            "r": 0.8631379245,
+            "f": 0.8586257006
+          },
+          "det": {
+            "p": 0.9768729642,
+            "r": 0.9782271875,
+            "f": 0.9775496068
+          },
+          "pobj": {
+            "p": 0.9620664033,
+            "r": 0.966071078,
+            "f": 0.9640645819
+          },
+          "nsubj": {
+            "p": 0.9573684677000001,
+            "r": 0.9454983571000001,
+            "f": 0.9513963894
+          },
+          "aux": {
+            "p": 0.9792295402000001,
+            "r": 0.982106294,
+            "f": 0.9806658074000001
+          },
+          "advmod": {
+            "p": 0.8525198045,
+            "r": 0.8510853104,
+            "f": 0.8518019535
+          },
+          "relcl": {
+            "p": 0.7660107335,
+            "r": 0.776850508,
+            "f": 0.7713925419000001
+          },
+          "root": {
+            "p": 0.9179682195000001,
+            "r": 0.8917474767,
+            "f": 0.9046678936
+          },
+          "xcomp": {
+            "p": 0.8814035088000001,
+            "r": 0.9016511127,
+            "f": 0.8914123492
+          },
+          "amod": {
+            "p": 0.9161996611000001,
+            "r": 0.9109167477000001,
+            "f": 0.9135505669
+          },
+          "compound": {
+            "p": 0.916113822,
+            "r": 0.9305524616,
+            "f": 0.9232766957
+          },
+          "poss": {
+            "p": 0.9741586538,
+            "r": 0.9788647343,
+            "f": 0.9765060241
+          },
+          "ccomp": {
+            "p": 0.7786216062,
+            "r": 0.8352342159,
+            "f": 0.8059349514
+          },
+          "attr": {
+            "p": 0.8972491909,
+            "r": 0.9327165685000001,
+            "f": 0.9146391753
+          },
+          "case": {
+            "p": 0.9782608696,
+            "r": 0.9909909910000001,
+            "f": 0.9845847837
+          },
+          "mark": {
+            "p": 0.9028511088000001,
+            "r": 0.906200318,
+            "f": 0.9045226131
+          },
+          "intj": {
+            "p": 0.6679841897000001,
+            "r": 0.619047619,
+            "f": 0.6425855513000001
+          },
+          "advcl": {
+            "p": 0.6656519533,
+            "r": 0.6607907328,
+            "f": 0.6632124352000001
+          },
+          "cc": {
+            "p": 0.8345964153000001,
+            "r": 0.8298050472,
+            "f": 0.8321938347000001
+          },
+          "neg": {
+            "p": 0.9475786321,
+            "r": 0.9523331661000001,
+            "f": 0.9499499499
+          },
+          "conj": {
+            "p": 0.7649689441,
+            "r": 0.7751762336,
+            "f": 0.7700387645
+          },
+          "nsubjpass": {
+            "p": 0.9159021407,
+            "r": 0.9215384615000001,
+            "f": 0.9187116564000001
+          },
+          "auxpass": {
+            "p": 0.9494232476000001,
+            "r": 0.9749430524,
+            "f": 0.9620139357
+          },
+          "dobj": {
+            "p": 0.9231431478000001,
+            "r": 0.9399155311,
+            "f": 0.9314538419
+          },
+          "nummod": {
+            "p": 0.9353284301,
+            "r": 0.9313131313,
+            "f": 0.9333164621000001
+          },
+          "npadvmod": {
+            "p": 0.7748267898000001,
+            "r": 0.7150976909,
+            "f": 0.7437650102000001
+          },
+          "prt": {
+            "p": 0.8148760331,
+            "r": 0.8835125448000001,
+            "f": 0.8478073947
+          },
+          "pcomp": {
+            "p": 0.8693820225000001,
+            "r": 0.8669467787,
+            "f": 0.8681626928
+          },
+          "expl": {
+            "p": 0.9789029536,
+            "r": 0.9935760171,
+            "f": 0.9861849097000001
+          },
+          "acl": {
+            "p": 0.7417295415,
+            "r": 0.6972176759000001,
+            "f": 0.7187851519
+          },
+          "agent": {
+            "p": 0.8994889267,
+            "r": 0.9462365591,
+            "f": 0.9222707424000001
+          },
+          "dative": {
+            "p": 0.7669172932,
+            "r": 0.7018348624,
+            "f": 0.7329341317
+          },
+          "acomp": {
+            "p": 0.9132441163,
+            "r": 0.8975056689,
+            "f": 0.9053064959
+          },
+          "dep": {
+            "p": 0.3686006826,
+            "r": 0.1753246753,
+            "f": 0.23762376240000002
+          },
+          "csubj": {
+            "p": 0.7039106145,
+            "r": 0.7455621302000001,
+            "f": 0.724137931
+          },
+          "quantmod": {
+            "p": 0.8625336927,
+            "r": 0.7798537774000001,
+            "f": 0.8191126280000001
+          },
+          "nmod": {
+            "p": 0.7528868360000001,
+            "r": 0.5959780622,
+            "f": 0.6653061224
+          },
+          "appos": {
+            "p": 0.6866606983,
+            "r": 0.6655097614000001,
+            "f": 0.6759198061
+          },
+          "predet": {
+            "p": 0.8406374502,
+            "r": 0.9055793991000001,
+            "f": 0.8719008264
+          },
+          "preconj": {
+            "p": 0.5591397849,
+            "r": 0.6046511628,
+            "f": 0.5810055866
+          },
+          "oprd": {
+            "p": 0.8287671233,
+            "r": 0.7223880597,
+            "f": 0.7719298246
+          },
+          "parataxis": {
+            "p": 0.5860215054,
+            "r": 0.4728850325,
+            "f": 0.5234093637
+          },
+          "meta": {
+            "p": 0.8,
+            "r": 0.4615384615,
+            "f": 0.5853658537
+          },
+          "csubjpass": {
+            "p": 0.625,
+            "r": 0.8333333333,
+            "f": 0.7142857143
+          }
+        },
+        "ents_p": 0.8429743795,
+        "ents_r": 0.8436498397000001,
+        "ents_f": 0.8433119744,
+        "ents_per_type": {
+          "DATE": {
+            "p": 0.8531038722000001,
+            "r": 0.8812698413000001,
+            "f": 0.8669581512000001
+          },
+          "GPE": {
+            "p": 0.9142205757,
+            "r": 0.8948396095000001,
+            "f": 0.9044262757
+          },
+          "ORDINAL": {
+            "p": 0.7741046832,
+            "r": 0.8726708075,
+            "f": 0.8204379562
+          },
+          "ORG": {
+            "p": 0.7904834996000001,
+            "r": 0.8191940615000001,
+            "f": 0.8045827366
+          },
+          "CARDINAL": {
+            "p": 0.8149386845000001,
+            "r": 0.8692033294,
+            "f": 0.8411967779
+          },
+          "FAC": {
+            "p": 0.3904761905,
+            "r": 0.3153846154,
+            "f": 0.3489361702
+          },
+          "PERSON": {
+            "p": 0.8574969021000001,
+            "r": 0.9033942559,
+            "f": 0.8798474253
+          },
+          "NORP": {
+            "p": 0.9031224980000001,
+            "r": 0.9024000000000001,
+            "f": 0.9027611044
+          },
+          "TIME": {
+            "p": 0.7454545455,
+            "r": 0.7192982456,
+            "f": 0.7321428571
+          },
+          "LOC": {
+            "p": 0.7356321839000001,
+            "r": 0.6114649682000001,
+            "f": 0.667826087
+          },
+          "MONEY": {
+            "p": 0.915274463,
+            "r": 0.9055489965,
+            "f": 0.9103857567
+          },
+          "QUANTITY": {
+            "p": 0.8153846154000001,
+            "r": 0.5824175824,
+            "f": 0.6794871795
+          },
+          "WORK_OF_ART": {
+            "p": 0.47445255470000003,
+            "r": 0.3350515464,
+            "f": 0.3927492447
+          },
+          "EVENT": {
+            "p": 0.6341463415,
+            "r": 0.29885057470000004,
+            "f": 0.40625000000000006
+          },
+          "LAW": {
+            "p": 0.44642857140000003,
+            "r": 0.390625,
+            "f": 0.4166666667
+          },
+          "PERCENT": {
+            "p": 0.9153354633,
+            "r": 0.8774885145,
+            "f": 0.8960125098
+          },
+          "LANGUAGE": {
+            "p": 0.7692307692,
+            "r": 0.625,
+            "f": 0.6896551724000001
+          },
+          "PRODUCT": {
+            "p": 0.5287356322,
+            "r": 0.2180094787,
+            "f": 0.3087248322
+          }
+        },
+        "speed": 9426.1029865937
+      },
+      "sources": [
+        {
+          "name": "OntoNotes 5",
+          "url": "https://catalog.ldc.upenn.edu/LDC2013T19",
+          "license": "commercial (licensed by Explosion)",
+          "author": "Ralph Weischedel, Martha Palmer, Mitchell Marcus, Eduard Hovy, Sameer Pradhan, Lance Ramshaw, Nianwen Xue, Ann Taylor, Jeff Kaufman, Michelle Franchini, Mohammed El-Bachouti, Robert Belvin, Ann Houston"
+        },
+        {
+          "name": "ClearNLP Constituent-to-Dependency Conversion",
+          "url": "https://github.com/clir/clearnlp-guidelines/blob/master/md/components/dependency_conversion.md",
+          "license": "Citation provided for reference, no code packaged with model",
+          "author": "Emory University"
+        },
+        {
+          "name": "WordNet 3.0",
+          "url": "https://wordnet.princeton.edu/",
+          "author": "Princeton University",
+          "license": "WordNet 3.0 License"
+        }
+      ],
+      "requirements": []
+    }
+  },
+  "safety": {
+    "api_calls": 0,
+    "gold_modified": false,
+    "thresholds_changed": false,
+    "formal_oracle_run": false
+  },
+  "report": {
+    "path": "outputs\\reports\\s3_formula_repair_v2.json",
+    "sha256": "f46c4bd49a6e0ad0163af176d6c53b46d5b4d2b33f81a32a99abf49fa49ab35c"
+  }
+}

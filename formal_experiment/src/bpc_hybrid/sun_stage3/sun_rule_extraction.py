@@ -97,6 +97,7 @@ def extract_rule_record(rule_id: str, rule_text: str, nlp,
             sentences.append(sent)
     actions = []
     actors = []
+    actor_action_pairs = []
     for sent in sentences:
         action = _extract_action(sent)
         actor = _extract_actor(sent)
@@ -104,6 +105,8 @@ def extract_rule_record(rule_id: str, rule_text: str, nlp,
             actions.append(action)
         if actor:
             actors.append(actor)
+        if actor and action:
+            actor_action_pairs.append({"actor": actor, "action": action})
     order_relations = _extract_order_relations(sentences)
     return {
         "rule_id": rule_id,
@@ -111,6 +114,7 @@ def extract_rule_record(rule_id: str, rule_text: str, nlp,
         "modality": "obligation" if actions else None,
         "actions": actions,
         "actors": actors,
+        "actor_action_pairs": actor_action_pairs,
         "order_relations": order_relations,
         "provenance": {
             "adapter": "development Sun Rule Record adapter (spaCy dependency parsing + signalword lexicon)",

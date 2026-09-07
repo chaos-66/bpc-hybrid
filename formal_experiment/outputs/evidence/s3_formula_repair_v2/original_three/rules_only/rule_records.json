@@ -1,0 +1,261 @@
+{
+  "article15": {
+    "rule_id": "article15",
+    "schema_version": "sun_rule_record_capsule_v1@1.0.0",
+    "modality": "obligation",
+    "actions": [
+      "have the right to obtain from the controller confirmation as to whether or not",
+      "have the right",
+      "have the right to be informed of the appropriate safeguards pursuant to Article",
+      "provide a copy of the personal data undergoing processing."
+    ],
+    "actors": [
+      "The controller"
+    ],
+    "actor_action_pairs": [
+      {
+        "actor": "The controller",
+        "action": "provide a copy of the personal data undergoing processing."
+      }
+    ],
+    "order_relations": [],
+    "failed": false,
+    "failure_reasons": [],
+    "provenance": {
+      "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)",
+      "converter": "gdpr_capsule_rule_record_converter@1.1.0",
+      "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+      "gold_fields_read": false
+    }
+  },
+  "article16": {
+    "rule_id": "article16",
+    "schema_version": "sun_rule_record_capsule_v1@1.0.0",
+    "modality": "obligation",
+    "actions": [
+      "have the right to obtain from the controller without undue delay the"
+    ],
+    "actors": [],
+    "actor_action_pairs": [],
+    "order_relations": [],
+    "failed": false,
+    "failure_reasons": [],
+    "provenance": {
+      "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)",
+      "converter": "gdpr_capsule_rule_record_converter@1.1.0",
+      "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+      "gold_fields_read": false
+    }
+  },
+  "article17": {
+    "rule_id": "article17",
+    "schema_version": "sun_rule_record_capsule_v1@1.0.0",
+    "modality": "obligation",
+    "actions": [
+      "have the right to obtain from the controller the erasure of personal data",
+      "have",
+      "take reasonable steps, including technical measures, to inform controllers which"
+    ],
+    "actors": [
+      "the controller, taking account of available technology and the cost of implementation",
+      "the controller"
+    ],
+    "actor_action_pairs": [
+      {
+        "actor": "the controller, taking account of available technology and the cost of implementation",
+        "action": "take reasonable steps, including technical measures, to inform controllers which"
+      }
+    ],
+    "order_relations": [],
+    "failed": false,
+    "failure_reasons": [],
+    "provenance": {
+      "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)",
+      "converter": "gdpr_capsule_rule_record_converter@1.1.0",
+      "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+      "gold_fields_read": false
+    }
+  },
+  "article20": {
+    "rule_id": "article20",
+    "schema_version": "sun_rule_record_capsule_v1@1.0.0",
+    "modality": "obligation",
+    "actions": [
+      "have the right to have the personal data transmitted directly from one",
+      "be without prejudice to Article 17."
+    ],
+    "actors": [],
+    "actor_action_pairs": [],
+    "order_relations": [],
+    "failed": false,
+    "failure_reasons": [],
+    "provenance": {
+      "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)",
+      "converter": "gdpr_capsule_rule_record_converter@1.1.0",
+      "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+      "gold_fields_read": false
+    }
+  },
+  "article22": {
+    "rule_id": "article22",
+    "schema_version": "sun_rule_record_capsule_v1@1.0.0",
+    "modality": "obligation",
+    "actions": [
+      "have the right not to be subject to a decision based solely on automated",
+      "implement suitable measures to safeguard the data subject's rights and freedoms"
+    ],
+    "actors": [
+      "the data controller"
+    ],
+    "actor_action_pairs": [
+      {
+        "actor": "the data controller",
+        "action": "implement suitable measures to safeguard the data subject's rights and freedoms"
+      }
+    ],
+    "order_relations": [],
+    "failed": false,
+    "failure_reasons": [],
+    "provenance": {
+      "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)",
+      "converter": "gdpr_capsule_rule_record_converter@1.1.0",
+      "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+      "gold_fields_read": false
+    }
+  },
+  "article33": {
+    "rule_id": "article33",
+    "schema_version": "sun_rule_record_capsule_v1@1.0.0",
+    "modality": "obligation",
+    "actions": [
+      "notify the personal data breach to the supervisory authority competent in",
+      ", it shall be accompanied by reasons for the delay.",
+      "notify the controller without undue delay after becoming aware of a personal data breach.",
+      "describe the nature of the personal data breach including where possible, the",
+      "referred to in paragraph 1 shall at least communicate the name and contact",
+      "communicate the name and contact details of the data protection officer or other",
+      "where more information can be obtained",
+      "at least describe the likely consequences of the personal data breach.",
+      "referred to in paragraph 1 shall at least describe the measures taken or",
+      "at least describe",
+      "document any personal data breaches, comprising the facts relating to the",
+      "enable the supervisory authority to verify compliance with this Article."
+    ],
+    "actors": [
+      "the controller",
+      "The processor",
+      "The controller"
+    ],
+    "actor_action_pairs": [
+      {
+        "actor": "the controller",
+        "action": "notify the personal data breach to the supervisory authority competent in"
+      },
+      {
+        "actor": "The processor",
+        "action": "notify the controller without undue delay after becoming aware of a personal data breach."
+      },
+      {
+        "actor": "The controller",
+        "action": "document any personal data breaches, comprising the facts relating to the"
+      }
+    ],
+    "order_relations": [],
+    "failed": false,
+    "failure_reasons": [],
+    "provenance": {
+      "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)",
+      "converter": "gdpr_capsule_rule_record_converter@1.1.0",
+      "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+      "gold_fields_read": false
+    }
+  },
+  "article34": {
+    "rule_id": "article34",
+    "schema_version": "sun_rule_record_capsule_v1@1.0.0",
+    "modality": "obligation",
+    "actions": [
+      "communicate the personal data breach to the data subject without undue delay.",
+      "describe in clear and plain language the nature of the personal data breach and",
+      "communication or similar measure whereby the data subjects are informed in an"
+    ],
+    "actors": [
+      "the controller"
+    ],
+    "actor_action_pairs": [
+      {
+        "actor": "the controller",
+        "action": "communicate the personal data breach to the data subject without undue delay."
+      }
+    ],
+    "order_relations": [],
+    "failed": false,
+    "failure_reasons": [],
+    "provenance": {
+      "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)",
+      "converter": "gdpr_capsule_rule_record_converter@1.1.0",
+      "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+      "gold_fields_read": false
+    }
+  },
+  "article6": {
+    "rule_id": "article6",
+    "schema_version": "sun_rule_record_capsule_v1@1.0.0",
+    "modality": "obligation",
+    "actions": [
+      "lawful only if and to the extent that the data subject has given consent to the",
+      "lawful only if and to the extent that processing is necessary for the",
+      "Processing shall be lawful",
+      "Processing shall be lawful only if and to the extent",
+      "laid down by Union law or Member State law to which the controller is subject.",
+      "be determined in that legal basis",
+      "be necessary for the performance of a task",
+      "meet an objective of public interest and be proportionate to the legitimate aim pursued."
+    ],
+    "actors": [
+      "the controller"
+    ],
+    "actor_action_pairs": [],
+    "order_relations": [],
+    "failed": false,
+    "failure_reasons": [],
+    "provenance": {
+      "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)",
+      "converter": "gdpr_capsule_rule_record_converter@1.1.0",
+      "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+      "gold_fields_read": false
+    }
+  },
+  "article7": {
+    "rule_id": "article7",
+    "schema_version": "sun_rule_record_capsule_v1@1.0.0",
+    "modality": "obligation",
+    "actions": [
+      "able to demonstrate that the data subject has consented to processing of his or",
+      "presented in a manner which is clearly distinguishable from the other matters,",
+      "have the right to withdraw his or her consent at any time.",
+      ", the data subject shall be informed thereof.",
+      "be as easy to withdraw as to give consent.",
+      "assessing whether consent is freely given, utmost account shall be taken of",
+      "be taken"
+    ],
+    "actors": [
+      "the controller"
+    ],
+    "actor_action_pairs": [
+      {
+        "actor": "the controller",
+        "action": "able to demonstrate that the data subject has consented to processing of his or"
+      }
+    ],
+    "order_relations": [],
+    "failed": false,
+    "failure_reasons": [],
+    "provenance": {
+      "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)",
+      "converter": "gdpr_capsule_rule_record_converter@1.1.0",
+      "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+      "gold_fields_read": false
+    }
+  }
+}
