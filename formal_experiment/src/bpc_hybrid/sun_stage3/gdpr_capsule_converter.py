@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Deterministic converter: EXTERNAL GDPR Rules-Only Stage-2 capsule -> the
+"""Deterministic converter: EXTERNAL GDPR Stage-2 capsule -> the
 Sun-rule-record shape consumed by the frozen Sun Stage-3 scorer.
 
 Why this module exists
@@ -11,10 +11,19 @@ sun_scorer.py``) with a Gold-blind **development Rule Record adapter**
 parsing + signalword lexicon over the whole rule text).  This converter is
 the Stage-2 -> Stage-3 linkage experiment's substitute source: it builds the
 SAME rule-record shape (``actions`` / ``actors`` / ``order_relations``) from
-the EXTERNAL Rules-Only predictions capsule
-(``data/predictions/gdpr7_sun_rule_only_v1/predictions.json``,
-schema ``gdpr7_sun_rule_only_predictions@1.0.0``) that was produced by the
-locked B0 v10a pipeline over the same 9 GDPR rule texts.
+an EXTERNAL Stage-2 predictions capsule whose doc-level schema is one of the
+:data:`ALLOWED_CAPSULE_SCHEMAS`:
+
+- ``data/predictions/gdpr7_sun_rule_only_v1/predictions.json`` (schema
+  ``gdpr7_sun_rule_only_predictions@1.0.0``, locked B0 v10a pipeline), and
+- ``data/predictions/gdpr7_direct_llm_v1/predictions.json`` (schema
+  ``gdpr7_direct_llm_predictions@1.0.0``, Direct-LLM executor).
+
+Both schemas carry the same doc-level row shape ``{sample_id,
+request_status, record, error_category}`` with the same coordinate-only
+clause/span convention, so the converter consumes either transparently
+(``expected_schema`` may pin one explicitly; see
+``build_rule_records``).
 
 Shape contract (mirrors ``sun_rule_extraction.extract_rule_record`` output)
 --------------------------------------------------------------------------
@@ -76,8 +85,17 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Sequence
 
-CONVERTER_NAME = "gdpr_capsule_rule_record_converter@1.1.0"
+CONVERTER_NAME = "gdpr_capsule_rule_record_converter@1.2.0"
 CAPSULE_SCHEMA = "gdpr7_sun_rule_only_predictions@1.0.0"
+DIRECT_LLM_CAPSULE_SCHEMA = "gdpr7_direct_llm_predictions@1.0.0"
+# Allowed external capsule schemas whose doc-level rows share the SAME
+# envelope shape ``{sample_id, request_status, record, error_category}`` with
+# the same clause/span coordinate convention (``record`` coordinate-only).
+# ``CAPSULE_SCHEMA`` stays the historical default; the Direct-LLM executor
+# publishes the second schema to the same shape.
+ALLOWED_CAPSULE_SCHEMAS = (CAPSULE_SCHEMA, DIRECT_LLM_CAPSULE_SCHEMA)
+# Auto-detection is the default: an explicit ``expected_schema`` overrides it.
+DEFAULT_EXPECTED_SCHEMA = None
 DEFAULT_INCLUDE_MODALITIES = ("obligation",)
 RECORD_SCHEMA = "sun_rule_record_capsule_v1@1.0.0"
 
@@ -127,24 +145,56 @@ def _sample_rule_id(sample_id: str) -> str | None:
     return rest.split("_s", 1)[0]
 
 
+def _capsule_source_label(schema_version: Any) -> str:
+    """Human-readable provenance source for the detected capsule schema."""
+    if schema_version == DIRECT_LLM_CAPSULE_SCHEMA:
+        return "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+    return "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+
+
 def build_rule_records(
     capsule: Mapping[str, Any],
     texts_by_sample: Mapping[str, str],
     rule_ids: Sequence[str],
     include_modalities: Sequence[str] = DEFAULT_INCLUDE_MODALITIES,
+    expected_schema: str | None = DEFAULT_EXPECTED_SCHEMA,
 ) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
-    """Convert a Rules-Only capsule into per-rule Sun rule records.
+    """Convert an external Stage-2 capsule into per-rule Sun rule records.
 
     Returns ``(rule_records, summary)`` where ``rule_records`` maps each rule
     id in ``rule_ids`` to a rule-record dict whose ``actions``/``actors``/
     ``order_relations`` fields are consumed by the frozen Sun scorer.
 
+    Schema policy (parameterized, never silent): the doc-level capsule schema
+    must be one of :data:`ALLOWED_CAPSULE_SCHEMAS`
+    (``gdpr7_sun_rule_only_predictions@1.0.0`` and
+    ``gdpr7_direct_llm_predictions@1.0.0`` -- the two schemas share the same
+    envelope row shape).  When ``expected_schema`` is given the capsule's
+    ``schema_version`` must equal it exactly; otherwise the schema is
+    auto-detected from the allowed set.  Any other schema raises
+    ``ValueError`` (explicit error -- the converter never silently converts a
+    capsule whose schema it does not recognise).
+
     ``summary`` holds the envelope accounting: sentence/envelope failures,
-    clause inclusion/exclusion counts, span validation, and the
-    ``order_relations_absent`` diagnostic.
+    clause inclusion/exclusion counts, span validation, the detected capsule
+    schema, and the ``order_relations_absent`` diagnostic.
     """
     records: dict[str, dict[str, Any]] = {}
-    schema_ok = capsule.get("schema_version") == CAPSULE_SCHEMA
+    schema_version = capsule.get("schema_version")
+    if expected_schema is not None:
+        if schema_version != expected_schema:
+            raise ValueError(
+                f"capsule schema mismatch: got {schema_version!r}, "
+                f"expected {expected_schema!r}")
+        schema_ok = True
+    else:
+        schema_ok = schema_version in ALLOWED_CAPSULE_SCHEMAS
+        if not schema_ok:
+            raise ValueError(
+                "capsule schema not in the allowed set "
+                f"{list(ALLOWED_CAPSULE_SCHEMAS)!r}: got {schema_version!r} "
+                "(auto-detection failed; pass expected_schema to require a "
+                "specific schema)")
     by_sample: dict[str, Mapping[str, Any]] = {}
     for rec in capsule.get("records", []):
         sid = rec.get("sample_id")
@@ -153,6 +203,9 @@ def build_rule_records(
 
     summary: dict[str, Any] = {
         "converter": CONVERTER_NAME,
+        "capsule_schema": schema_version,
+        "expected_schema": expected_schema,
+        "allowed_schemas": list(ALLOWED_CAPSULE_SCHEMAS),
         "capsule_schema_ok": schema_ok,
         "capsule_records": len(capsule.get("records", [])),
         "sentence_texts_available": len(texts_by_sample),
@@ -286,8 +339,8 @@ def build_rule_records(
             "failed": failed,
             "failure_reasons": _dedupe(failed_reasons),
             "provenance": {
-                "source": "EXTERNAL Rules-Only Stage-2 capsule "
-                          "(data/predictions/gdpr7_sun_rule_only_v1)",
+                "source": _capsule_source_label(schema_version),
+                "capsule_schema": schema_version,
                 "converter": CONVERTER_NAME,
                 "mapping": (
                     "clause modality label == 'obligation' only; action/actor "
@@ -312,8 +365,10 @@ def convert_rule_records_for_items(
     texts_by_sample: Mapping[str, str],
     item_rule_ids: Sequence[str],
     include_modalities: Sequence[str] = DEFAULT_INCLUDE_MODALITIES,
+    expected_schema: str | None = DEFAULT_EXPECTED_SCHEMA,
 ) -> dict[str, dict[str, Any]]:
     """Convenience wrapper returning only the rule-record map."""
     records, _ = build_rule_records(capsule, texts_by_sample, item_rule_ids,
-                                    include_modalities)
+                                    include_modalities,
+                                    expected_schema=expected_schema)
     return records

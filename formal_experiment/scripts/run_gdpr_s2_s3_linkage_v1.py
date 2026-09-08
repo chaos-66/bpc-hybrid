@@ -61,6 +61,9 @@ from bpc_hybrid.stage3_extended_violations import (  # noqa: E402
     evaluate_extended,
     evaluate_paired,
 )
+from bpc_hybrid.sun_stage3.gdpr_change_classifier import (  # noqa: E402
+    classify_extended_item,
+)
 from bpc_hybrid.winter_stage3.winter_similarity import (  # noqa: E402
     WinterSimilarity,
 )
@@ -261,6 +264,7 @@ def substitution_changes(rows: list[dict[str, Any]], method: str,
         ref_obs = (ref_row or {}).get("observability", {}).get(
             row["expected_violation"], {})
         arm_obs = row.get("observability", {}).get(row["expected_violation"], {})
+        machine = classify_extended_item(ref_row or {}, row)
         changes.append({
             "item_id": item,
             "process_id": row["process_id"],
@@ -276,6 +280,8 @@ def substitution_changes(rows: list[dict[str, Any]], method: str,
                 "observable": arm_obs.get("observable"),
                 "reason": arm_obs.get("reason"),
             },
+            "machine_change_reason": machine["reason"],
+            "machine_change_detail": machine.get("detail"),
         })
     return {
         "method": method,
@@ -501,9 +507,14 @@ def render_markdown(agg: Mapping[str, Any], arm: str) -> str:
     lines.append("- DEV_ONLY controlled synthetic panel (40 variants + 40 controls); "
                  "NOT human Gold, NOT the formal Oracle; never merged with the "
                  "33-item human Gold.")
-    lines.append("- Rules-Only modality labels come from the locked B0 v10a "
-                 "pipeline with the disclosed English pass-through (German "
-                 "classifier contract) — a descriptive Stage-2 arm.")
+    if arm == "rules_only":
+        lines.append("- Rules-Only modality labels come from the locked B0 v10a "
+                     "pipeline with the disclosed English pass-through (German "
+                     "classifier contract) — a descriptive Stage-2 arm.")
+    elif arm == "direct_llm":
+        lines.append("- Direct-LLM rows come from the promoted formal arm capsule "
+                     "data/predictions/gdpr7_direct_llm_v1 (real authorized "
+                     "executor output; coordinate-only, containment-scanned).")
     lines.append("- Zero LLM/API/network; frozen BPMN, thresholds and panel "
                  "bytes unchanged.")
     return "\n".join(lines) + "\n"

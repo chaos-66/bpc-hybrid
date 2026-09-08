@@ -2,6 +2,20 @@
 
 Zero API. Thresholds, BPMN, source predictions and Gold are unchanged.
 Outputs have a new revision; prior predictions/reports are never overwritten.
+
+Source loop
+-----------
+The three-type loop and the four-new-type extension loop run over a
+configurable source tuple (default ``("reference", "rules_only")`` --
+unchanged historical behaviour).  The optional third source ``direct_llm``
+consumes the formal Direct-LLM arm capsule
+(``data/predictions/gdpr7_direct_llm_v1``; input path overridable via
+``capsule_paths``) with the SAME unified five-class evaluation as the other
+sources -- EXTENDED_TYPES priority / frozen gamma_ext / repaired-formula
+scores via ``unified_rows``.  The old "preset-expected-type conditional
+detection" rule is never re-applied.  A requested capsule source whose
+capsule is missing/incomplete fails closed BEFORE any heavy computation or
+write (only the affected source stops; the runner does not fabricate input).
 """
 from __future__ import annotations
 import argparse
@@ -26,6 +40,7 @@ from reevaluate_s3_extended_unified_v1 import confusion_matrix
 METHODS = ("winter", "sun", "bm25", "tfidf_svd")
 DEFAULT_OUT = ROOT / "outputs/evidence/s3_formula_repair_v2"
 REPORT = ROOT / "outputs/reports/s3_formula_repair_v2.json"
+DEFAULT_SOURCES = ("reference", "rules_only")
 
 
 def read(path):
@@ -59,16 +74,64 @@ def differences(old, new, fields):
         for r in new if any(old_by_id[r["item_id"]].get(f) != r.get(f) for f in fields)]
 
 
-def run(out=DEFAULT_OUT, report_path=REPORT):
+def resolve_capsule_paths(sources, capsule_paths):
+    """Resolve + verify every capsule source path before any heavy work.
+
+    Returns ``{arm: Path}``.  Raises ``FileNotFoundError`` (fail closed)
+    before the frozen pipeline loads anything when a requested capsule source
+    is missing -- only the affected source is stopped.
+    """
+    paths = dict(capsule_paths or {})
+    for arm in sources:
+        if arm == "reference":
+            continue
+        if arm not in original.CAPSULE_CONFIGS:
+            raise ValueError(
+                f"unknown capsule source {arm!r}; expected one of "
+                f"{sorted(original.CAPSULE_CONFIGS)} plus 'reference'")
+        path = paths.get(arm)
+        if path is None:
+            path = original.CAPSULE_CONFIGS[arm]["predictions"]
+        paths[arm] = Path(path)
+    for arm in sources:
+        if arm == "reference":
+            continue
+        path = paths[arm]
+        if not path.is_file():
+            raise FileNotFoundError(
+                f"{arm} capsule source missing: {path} -- a complete external "
+                "capsule is required before the repair run can evaluate that "
+                "source (for direct_llm run the promotion step "
+                "scripts/promote_gdpr7_direct_llm_arm_v1.py --apply first, or "
+                "pass an explicit --direct-capsule path)")
+    return paths
+
+
+def run(out=DEFAULT_OUT, report_path=REPORT, sources=DEFAULT_SOURCES,
+        capsule_paths=None):
     if out.exists() or report_path.exists():
         raise FileExistsError("Use a new output/report path; existing results are preserved")
+    sources = tuple(sources)
+    unknown = set(sources) - set(original.ARM_LABELS)
+    if unknown:
+        raise ValueError(
+            f"unknown source(s) {sorted(unknown)}; expected a subset of "
+            f"{sorted(original.ARM_LABELS)}")
+    if sources != DEFAULT_SOURCES and "reference" not in sources:
+        raise ValueError(
+            "reference is always required as the deterministic baseline source")
+    cap_paths = resolve_capsule_paths(sources, capsule_paths)
+
     frozen_paths = [original.INFERENCE_PACK, original.INPUT_PACK, original.GOLD_VIOLATION,
         original.CAPSULE_PREDICTIONS, panel_runner.PANEL, sensitivity.CORRECTION_PACK]
+    if "direct_llm" in sources:
+        frozen_paths.append(cap_paths["direct_llm"])
     frozen_paths += list(original.BPMN_DIR.glob("*.bpmn"))
     frozen_paths += list((ROOT / "data/development/stage3_synth").glob("syn_v2_*/*/*.bpmn"))
     before = {str(p.relative_to(ROOT)): sha(p) for p in frozen_paths}
     report = {"revision": "s3_formula_repair_v2", "scope": "development_only",
               "generated_utc": datetime.now(timezone.utc).isoformat(),
+              "sources": list(sources),
               "original_three_types": {}, "extended_four_types": {},
               "statistics_only_on_old_predictions": {}, "safety": {
                   "api_calls": 0, "gold_modified": False, "thresholds_changed": False,
@@ -77,8 +140,9 @@ def run(out=DEFAULT_OUT, report_path=REPORT):
     frozen = original.load_frozen(config)
     rule_ids = sorted(original.rule_texts_of(frozen["inference"]))
     reference_rules = None
-    for arm in ("reference", "rules_only"):
-        rules, diag = original.build_rule_records_for_arm(arm, frozen, rule_ids, None)
+    for arm in sources:
+        pred_path = None if arm == "reference" else cap_paths[arm]
+        rules, diag = original.build_rule_records_for_arm(arm, frozen, rule_ids, pred_path)
         if arm == "reference":
             reference_rules = rules
         rows = original.build_violation_rows(arm, frozen, rules)
@@ -86,13 +150,16 @@ def run(out=DEFAULT_OUT, report_path=REPORT):
         write_rows(folder / "predictions.jsonl", rows)  # fixed BEFORE evaluation
         write(folder / "rule_records.json", rules)
         evaluation = original.evaluate_rows(rows, original.GOLD_VIOLATION)
-        old = rows_at(ROOT / f"outputs/development/gdpr_3type_linkage_v1_{arm}/predictions.jsonl")
-        # Only Definition 6 changed. These two formula scores must match exactly.
-        assert all(a["missing_action_score"] == b["missing_action_score"] and
-                   a["out_of_order_score"] == b["out_of_order_score"]
-                   for a, b in zip(sorted(old, key=lambda x:x["item_id"]), rows))
-        delta = differences(old, rows, ("predicted_violation_type", "incorrect_actor_score",
-                                       "incorrect_actor_reason", "incorrect_actor_observable"))
+        old_path = ROOT / f"outputs/development/gdpr_3type_linkage_v1_{arm}/predictions.jsonl"
+        delta = []
+        if old_path.is_file():
+            old = rows_at(old_path)
+            # Only Definition 6 changed. These two formula scores must match exactly.
+            assert all(a["missing_action_score"] == b["missing_action_score"] and
+                       a["out_of_order_score"] == b["out_of_order_score"]
+                       for a, b in zip(sorted(old, key=lambda x:x["item_id"]), rows))
+            delta = differences(old, rows, ("predicted_violation_type", "incorrect_actor_score",
+                                           "incorrect_actor_reason", "incorrect_actor_observable"))
         result = {"evaluation": evaluation, "conversion": diag, "changes": delta,
                   "verdict_changes": sum(any(f == "predicted_violation_type" for f in d["changes"]) for d in delta),
                   "no_eligible_order_pairs": sum(r["scores"]["out_of_order_denominator"] == 0
@@ -107,10 +174,18 @@ def run(out=DEFAULT_OUT, report_path=REPORT):
     gamma_ext = float(panel["config"]["gamma_ext"])
     source_texts = panel_runner._rule_texts()
     texts = linkage._sentence_text_by_sample(read(linkage.INPUT_PACK))
-    capsule = linkage._pred_by_sample(read(original.CAPSULE_PREDICTIONS))
-    for arm in ("reference", "rules_only"):
+    for arm in sources:
         report["extended_four_types"][arm] = {}
         report["statistics_only_on_old_predictions"][arm] = {}
+        if arm != "reference":
+            cap_doc = read(cap_paths[arm])
+            if arm == "direct_llm":
+                cfg = original.CAPSULE_CONFIGS[arm]
+                original.validate_external_capsule(
+                    cap_doc, arm=arm, expected_schema=cfg["schema"],
+                    expected_records=cfg["expected_records"],
+                    label=f"{arm} capsule predictions")
+            capsule = linkage._pred_by_sample(cap_doc)
         for method in METHODS:
             if arm == "reference":
                 raw = panel_runner.build_predictions(method, panel, source_texts,
@@ -118,6 +193,8 @@ def run(out=DEFAULT_OUT, report_path=REPORT):
                     panel_runner._gamma_for(method), gamma_ext, frozen["nlp"])
             else:
                 raw, _ = linkage.build_arm_predictions(method, arm, panel, texts, capsule, frozen["nlp"], gamma_ext)
+            # Unified five-class decision on BOTH sides (never the old
+            # preset-expected-type conditional detection rule).
             rows = unified_rows(raw, gamma_ext)
             folder = out / "extended_four" / arm / method
             write_rows(folder / "predictions.jsonl", rows)  # prediction fixed first
@@ -125,16 +202,19 @@ def run(out=DEFAULT_OUT, report_path=REPORT):
             ev = evaluate_extended(rows, gold)
             paired = evaluate_paired(rows, panel, gamma_ext)
             cm = confusion_matrix(rows, gold, gamma_ext, panel)
-            old = rows_at(ROOT / f"outputs/development/s3_extended_unified_v1/{arm}/{method}/predictions.jsonl")
-            old_cm = confusion_matrix(old, gold, gamma_ext, panel)
-            report["statistics_only_on_old_predictions"][arm][method] = old_cm
-            changes = differences(old, rows, ("unified_predicted_raw", "scores", "observability"))
-            # The other three type scores and all frozen rows must remain intact.
-            for before_row, after_row in zip(sorted(old, key=lambda x:x["item_id"]), sorted(rows, key=lambda x:x["item_id"])):
-                for t in panel_runner.EXTENDED_TYPES:
-                    if t != "constraint_violated":
-                        assert before_row["scores"][t] == after_row["scores"][t]
-                        assert before_row["control_scores"][t] == after_row["control_scores"][t]
+            old_path = ROOT / f"outputs/development/s3_extended_unified_v1/{arm}/{method}/predictions.jsonl"
+            changes = []
+            if old_path.is_file():
+                old = rows_at(old_path)
+                old_cm = confusion_matrix(old, gold, gamma_ext, panel)
+                report["statistics_only_on_old_predictions"][arm][method] = old_cm
+                changes = differences(old, rows, ("unified_predicted_raw", "scores", "observability"))
+                # The other three type scores and all frozen rows must remain intact.
+                for before_row, after_row in zip(sorted(old, key=lambda x:x["item_id"]), sorted(rows, key=lambda x:x["item_id"])):
+                    for t in panel_runner.EXTENDED_TYPES:
+                        if t != "constraint_violated":
+                            assert before_row["scores"][t] == after_row["scores"][t]
+                            assert before_row["control_scores"][t] == after_row["control_scores"][t]
             result = {"variant_evaluation": ev, "paired_evaluation": paired,
                       "confusion_matrix": cm, "changes": changes,
                       "verdict_changes": sum("unified_predicted_raw" in d["changes"] for d in changes)}
@@ -168,7 +248,8 @@ def run(out=DEFAULT_OUT, report_path=REPORT):
         Path(original.__file__), Path(linkage.__file__), Path(panel_runner.__file__),
         Path(sensitivity.__file__), ROOT / "scripts/reevaluate_s3_extended_unified_v1.py"]
     manifest = {"run_id": "s3_formula_repair_v2", "scope": "development_only",
-        "command": f"python {Path(__file__).relative_to(ROOT)}",
+        "sources": list(sources),
+        "command": f"python {Path(__file__).relative_to(ROOT)} --sources {','.join(sources)}",
         "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "inputs": before,
         "implementation_hash_mode": "canonical_lf_utf8_text",
@@ -189,5 +270,17 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--output", type=Path, default=DEFAULT_OUT)
     p.add_argument("--report", type=Path, default=REPORT)
+    p.add_argument("--sources", default=",".join(DEFAULT_SOURCES),
+                   help="comma-separated source arms; default "
+                        f"{','.join(DEFAULT_SOURCES)} (historical behaviour); "
+                        "add direct_llm to include the Direct-LLM arm")
+    p.add_argument("--direct-capsule", type=Path, default=None,
+                   help="Direct-LLM capsule predictions path override "
+                        "(default data/predictions/gdpr7_direct_llm_v1/"
+                        "predictions.json)")
     args = p.parse_args()
-    run(args.output, args.report)
+    sources = tuple(s.strip() for s in args.sources.split(",") if s.strip())
+    capsule_paths = {}
+    if args.direct_capsule is not None:
+        capsule_paths["direct_llm"] = args.direct_capsule
+    run(args.output, args.report, sources=sources, capsule_paths=capsule_paths)

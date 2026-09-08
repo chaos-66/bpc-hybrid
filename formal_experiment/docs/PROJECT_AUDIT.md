@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-07
+**更新时间**：2026-09-08
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -10,6 +10,50 @@
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
 ## 1. 当前结论
+
+**2026-09-08 GDPR 人工候选预填（用户明确要求先预填、后检查修改确认）**：
+9 条款/74 句均已逐句准备，共 92 个建议条目、320 处原文字符锚点；入口为
+`data/development/human_review/gdpr7_ai_prefill_v1/请检查并修改这份预填稿.md`，
+同目录 `proposals.json`/`manifest.json` 为来源绑定底稿。每句含中文释义、六要素、
+歧义/上下文/顺序说明及空白人工修改栏。旧候选、v1/v2 decisions、Gold 和方法预测不改；
+人工确认 0/74，未冻结、未导入、未增加实验 API 调用。复合情态与重复短语坐标完整保留，
+当前 v2 导出器的取首标签/唯一出现定位不足以无损导入本稿，人工确认后不得静默降级。
+预填文件可先供用户核对；保存检查同时修正两项假响应 CLI 测试的真实时钟依赖，真实
+执行器/预算/低峰限制不变。其他 Task A–D 的未提交修改属于既有工作，本次不代为提交。
+
+**2026-09-08（四个已确认问题全部修复并通过聚焦验证；提交待低峰逐批全量审计）**：
+用户 2026-09-08 复核确认四个问题并指示修复；全部离线完成（零 LLM/API）：
+(1) **Task A 行尾指纹修复**：`formal_experiment/.gitattributes` 对授权绑定资产加窄范围
+`text eol=lf` 钉（run_s2_12×2、s2_12_execution.py、授权原句 txt、basis JSON、5 个授权事件
+文件），工作区字节归一为 LF；LF blob 与授权内嵌指纹一致（`verify_s2_12_authorization_files_v1.py`
+70/70 PASS；此前 core.autocrlf=true checkout 把 LF 资产转 CRLF 致 5 stage runner-hash
+mismatch，已消除）；新增回归测试断言钉住文件在 checkout 后仍为原始 LF 字节。
+(2) **Task B 运行文档修正**：§13.3 改为 flat 键全集 + `PROVIDER=openai_compatible`（枚举白名单；
+实测单独 `BPC_HYBRID_DeepSeek_*` 前缀无效——无 PROFILE 时不参与解析）+ 离线预检工具
+`scripts/check_api_env_ready_v1.py`（不打印密钥/不读 .env；实测缺项即 exit 2 并列出）；命令改为
+在 `formal_experiment/` 工作目录执行（相对路径全部落在活动范围内）；§13.4 落实为可执行步骤。
+**当前唯一缺项=进程环境密钥值**（由宿主/仓库外 env 文件注入；非敏感配置已全部补齐并实测）。
+(3) **Task C 裁决结构 v1.1**：v2 editable（schema `gdpr7_six_element_review_editable@1.1.0`，
+`data/development/human_review/gdpr7_six_element_review_decisions_v2.json`，74 句/9 条款/
+identity 与 blank 一致；v1 文件 byte-exact 保留）新增 rule_items（多规范元素，每项六块全决）、
+actor_action_map（隐含 1:1 + 显式跨项边）、order_relations（句内动作先后）；导出
+`export_canonical_records_v2` 生成 Rules-Only 同形坐标-only canonical 行（telemetry 非静默）；
+工具/校验/导入/冻结 schema 分派升级（v1 仍可校验、只读提示升级）；53 项合成测试全绿
+（含多执行者×多动作、一执行者多动作、先 A 后 B、无执行者/无顺序、镜像一致性、Stage-3
+first-valid-span 消费）。**唯一正式编辑入口=`scripts/gdpr7_review_tool_v1.py`（默认 v2）**；
+真实裁决 0/74。
+(4) **Task D Direct-LLM 接入 Stage 3**：`gdpr_capsule_converter.py` 双 schema 自动探测
+（sun_rule_only/direct_llm 同形行）+ 显式 pin；`run_gdpr_3type_linkage_v1.py` 增 direct_llm
+来源（74/74 ok 门控、`--allow-missing-arm`、`--arm all`、changes_vs_reference + 机器 reason
+七枚举 `gdpr_change_classifier.py`）；四类扩展链路确认 direct_llm 消费 + 机器 reason；
+`run_s3_formula_repair_v2.py`/`reevaluate_s3_extended_unified_v1.py` 来源参数化（统一五分类，
+不退回条件性检出旧口径）；promotion 可执行化 `scripts/promote_gdpr7_direct_llm_arm_v1.py`
+（真实运行门禁/74 ok/containment/原子发布+promotion manifest，§13.4 闭环）。26 项新测试绿；
+修复证据绑定测试按“历史胶囊生命周期”语义更新（漂移集恰为 Task D 声明的 5 个文件，证据产物
+byte-exact；successor 正式 repair 运行将再基线）。
+**状态**：Task A–D 代码/测试完成、提交待低峰（18:00+）逐批全量审计（批 1=A+B、批 2=C、
+批 3=D）；真实 API=0（等待进程环境密钥）；裁决 0/74；论文案例注记
+`docs/research/PAPER_CASE_SIM_GDPR_PREP_2026-09-08.md` 已备（三层标准答案清单待用户）。
 
 **2026-09-07b 论文收尾授权落地与执行链补齐（零 LLM/API，ZERO CALLS）**：用户论文收尾指令
 （句哈希 `27426de7…`，副本 `configs/paper_winddown_api_authorization_sentence_2026_09_07.txt`）

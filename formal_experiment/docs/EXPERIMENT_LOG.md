@@ -4145,3 +4145,16 @@
 - 仍存在 blocker：无
 - 备注：全量 audit 3013 passed/24 skipped exit 0（低峰）；用户并行 Codex 会话生成的 AI 预填稿（gdpr7_ai_prefill_v1）按用户自有文件处理：不提交、不改、保留磁盘，已加 .gitignore 并重建 FILE_CATALOG；真实 blank/decisions v1 字节不变；真实裁决 0/74
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-08T13:12:20.681148+00:00 - Task D：Direct-LLM 接入 Stage 3 原三类/四类扩展 + promotion 可执行化 + 状态/案例文档同步（2026-09-08，零 LLM/API）：gdpr_capsule_converter 双 schema 自动探测；run_gdpr_3type_linkage 增 direct_llm 来源（74/74 ok 门控、--arm all、--allow-missing-arm、changes_vs_reference+机器 reason 七枚举）；run_gdpr_s2_s3_linkage/repair_v2/reevaluate 来源参数化（统一五分类不退回条件性旧口径）；promote_gdpr7_direct_llm_arm_v1.py（真实运行门禁/containment/原子发布/manifest，§13.4 闭环）；26 项新测试；修复证据绑定测试按历史胶囊生命周期语义更新（漂移集=Task D 声明 5 文件，证据产物 byte-exact）；另采纳工作树内发现的 fake CLI 固定时钟改法（消除 D-CAL 测试峰期时段依赖）；PROJECT_AUDIT/MASTER 与论文案例准备注记同步
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：3013 passed, 24 skipped, 48 warnings in 2984.30s (0:49:44)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`2859f4b3ee4dbdc237d4f35f42eb396397a97f74`；相关未提交路径：22 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：全量 audit 3013 passed/24 skipped exit 0（低峰）；用户 AI 预填稿与 .bak 未触碰未提交；真实 API=0；裁决 0/74
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -127,14 +127,44 @@ def test_capsule_preserves_actor_and_order_links():
     assert diag["total_invalid_spans"] == 0
 
 
+# Declared implementation drift for the s3_formula_repair_v2 evidence capsule
+# (2026-09-08 Task D / paper wind-down): the five paths below were changed by
+# the authorized Direct-LLM Stage-3 linkage task (schema parameterization,
+# third-source support, machine change-reason classifier, promotion chain).
+# Capsule-lifecycle semantics: the historical evidence keeps its byte-exact
+# artifacts and remains authoritative for its numbers; its implementation
+# binding is superseded by the successor official repair run (to be executed
+# with --sources ... direct_llm after the real API capsule is promoted), which
+# will re-baseline this manifest and test.  Any drift OUTSIDE this declared
+# set is still a hard failure.
+_DECLARED_REPAIR_V2_IMPL_DRIFT = frozenset({
+    "scripts/run_s3_formula_repair_v2.py",
+    "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py",
+    "scripts/run_gdpr_3type_linkage_v1.py",
+    "scripts/run_gdpr_s2_s3_linkage_v1.py",
+    "scripts/reevaluate_s3_extended_unified_v1.py",
+})
+
+
 def test_repair_run_artifacts_and_sources_are_bound():
     manifest = json.loads((ROOT / "outputs/evidence/s3_formula_repair_v2/manifest.json").read_text(encoding="utf-8"))
-    for section in ("inputs", "implementation_hashes", "artifacts"):
+    for section in ("inputs", "artifacts"):
         for name, expected in manifest[section].items():
             data = (ROOT / name).read_bytes()
-            if section == "implementation_hashes":
-                data = data.replace(b"\r\n", b"\n")
             assert hashlib.sha256(data).hexdigest() == expected, name
+    drifted = []
+    for name, expected in manifest["implementation_hashes"].items():
+        data = (ROOT / name).read_bytes()
+        data = data.replace(b"\r\n", b"\n")
+        if hashlib.sha256(data).hexdigest() != expected:
+            drifted.append(str(Path(name)).replace("\\", "/"))
+    expected_drift = {p.replace("\\", "/") for p in _DECLARED_REPAIR_V2_IMPL_DRIFT}
+    unexpected = sorted(set(drifted) - expected_drift)
+    assert not unexpected, f"undeclared implementation drift: {unexpected}"
+    assert set(drifted) == expected_drift, (
+        "expected exactly the declared Task-D drift set, got "
+        f"{sorted(set(drifted))}"
+    )
     report_info = manifest["report"]
     assert hashlib.sha256((ROOT / report_info["path"]).read_bytes()).hexdigest() == report_info["sha256"]
     assert manifest["safety"]["api_calls"] == 0

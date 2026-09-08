@@ -11,7 +11,7 @@ incorrect_actor / out_of_order) on the frozen 33-item human-adjudicated
 violation-decision Gold (``data/gold/stage3/stage3_violation_gold_v1.json``,
 items v001..v033).
 
-Two arms, run one at a time (``--arm``):
+Three arms, run one at a time (``--arm``) or together (``--arm all``):
 - ``reference`` : the original S3.5 development behavior -- the dev Rule
   Record adapter (``sun_rule_extraction.extract_rule_record``) is fed the
   frozen inference-pack rule texts. Reference rows replicate the S3.5 dev
@@ -22,6 +22,21 @@ Two arms, run one at a time (``--arm``):
   Rules-Only capsule. Failed/empty envelopes are counted with reasons and
   never back-filled; order relations are absent in the frozen capsule and
   are never fabricated.
+- ``direct_llm`` : identical substitution with the external Direct-LLM
+  capsule (``data/predictions/gdpr7_direct_llm_v1``, schema
+  ``gdpr7_direct_llm_predictions@1.0.0``).  The two capsule schemas share the
+  same envelope row shape; the parameterized converter consumes both with
+  the same obligation-only gate.  Per-sample differences against the
+  reference arm are written into the run dir as ``changes_vs_reference.json``
+  with machine-classified change reasons.
+
+Missing-arm policy: when the arm's capsule directory does not exist yet (the
+Direct-LLM formal capsule only exists after
+``scripts/promote_gdpr7_direct_llm_arm_v1.py`` has published it), the default
+behaviour fails closed (exit 2) for the affected source.  With
+``--allow-missing-arm`` the missing source is recorded as ``missing`` and
+skipped so that the other runnable arms continue (2026-09-07 directive: stop
+only the affected calls/source, continue the work that can be done).
 
 Evaluation formulas and observability policy are the S3.5 common evaluator's
 (``scripts/evaluate_stage3_common.evaluate_violation``), reused verbatim.
@@ -31,7 +46,8 @@ Separations: the 33-item Gold, the 4-type synthetic panel and the formal
 Oracle are separate datasets and are never merged.
 
 Usage:
-    python scripts/run_gdpr_3type_linkage_v1.py --arm {reference,rules_only}
+    python scripts/run_gdpr_3type_linkage_v1.py --arm {reference,rules_only,direct_llm|all}
+    python scripts/run_gdpr_3type_linkage_v1.py --arm all --allow-missing-arm
     python scripts/run_gdpr_3type_linkage_v1.py --report-only <run_dir>
     python scripts/run_gdpr_3type_linkage_v1.py --compare
 """
@@ -57,7 +73,11 @@ import spacy  # noqa: E402
 
 from bpc_hybrid.sun_stage3.gdpr_capsule_converter import (  # noqa: E402
     CONVERTER_NAME,
+    DIRECT_LLM_CAPSULE_SCHEMA,
     build_rule_records,
+)
+from bpc_hybrid.sun_stage3.gdpr_change_classifier import (  # noqa: E402
+    classify_three_type_item,
 )
 from bpc_hybrid.sun_stage3.sun_model import build_sun_models  # noqa: E402
 from bpc_hybrid.sun_stage3.sun_rule_extraction import extract_rule_record  # noqa: E402
@@ -69,8 +89,10 @@ RUN_ID_PREFIX = "gdpr_3type_linkage_v1"
 ARM_LABELS = {
     "reference": "S3.5 development Rule Record adapter (deterministic spaCy + signalwords)",
     "rules_only": "EXTERNAL Rules-Only Stage-2 capsule (locked B0 v10a) via deterministic converter",
+    "direct_llm": "EXTERNAL Direct-LLM Stage-2 capsule (locked D1 recipe) via deterministic converter",
 }
 EXPECTED_INFERENCE_SHA = "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4"
+# Legacy rules-only schema constant (kept for historical callers).
 CAPSULE_SCHEMA = "gdpr7_sun_rule_only_predictions@1.0.0"
 
 CONFIG = ROOT / "configs" / "sun_stage3_development_v1.json"
@@ -82,7 +104,36 @@ GOLD_VIOLATION = ROOT / "data" / "gold" / "stage3" / "stage3_violation_gold_v1.j
 CAPSULE_DIR = ROOT / "data" / "predictions" / "gdpr7_sun_rule_only_v1"
 CAPSULE_PREDICTIONS = CAPSULE_DIR / "predictions.json"
 CAPSULE_MANIFEST = CAPSULE_DIR / "manifest.json"
+DIRECT_LLM_CAPSULE_DIR = ROOT / "data" / "predictions" / "gdpr7_direct_llm_v1"
+DIRECT_LLM_CAPSULE_PREDICTIONS = DIRECT_LLM_CAPSULE_DIR / "predictions.json"
+DIRECT_LLM_CAPSULE_MANIFEST = DIRECT_LLM_CAPSULE_DIR / "manifest.json"
 WINTER_FILES_DIR = ROOT.parent / "references" / "winter_2020_model_check" / "model_check" / "input" / "files"
+
+# Per-arm external capsule layout: doc-level predictions + manifest + the
+# expected doc schema.  Both capsule schemas share the same envelope row
+# shape, so the same converter consumes either.
+CAPSULE_CONFIGS = {
+    "rules_only": {
+        "dir": CAPSULE_DIR,
+        "predictions": CAPSULE_PREDICTIONS,
+        "manifest": CAPSULE_MANIFEST,
+        "schema": CAPSULE_SCHEMA,
+        "expected_records": 74,
+        "note": ("EXTERNAL Stage-2 predictions; produced offline by "
+                 "run_gdpr7_sun_rule_only_v1.py (locked B0 v10a); NOT rerun "
+                 "by this experiment"),
+    },
+    "direct_llm": {
+        "dir": DIRECT_LLM_CAPSULE_DIR,
+        "predictions": DIRECT_LLM_CAPSULE_PREDICTIONS,
+        "manifest": DIRECT_LLM_CAPSULE_MANIFEST,
+        "schema": DIRECT_LLM_CAPSULE_SCHEMA,
+        "expected_records": 74,
+        "note": ("EXTERNAL Direct-LLM Stage-2 predictions; executor publishes "
+                 "the development capsule only; the formal arm capsule is "
+                 "promoted by promote_gdpr7_direct_llm_arm_v1.py"),
+    },
+}
 
 OUTPUT_ROOT = ROOT / "outputs" / "development"
 REPORT_ROOT = ROOT / "outputs" / "reports"
@@ -174,6 +225,92 @@ def rule_texts_of(inference: Mapping[str, Any]) -> dict[str, str]:
     return out
 
 
+def validate_external_capsule(
+    doc: Mapping[str, Any],
+    *,
+    arm: str,
+    expected_schema: str,
+    expected_records: int,
+    label: str,
+) -> dict[str, Any]:
+    """Fail-closed integrity checks for one external Stage-2 capsule doc.
+
+    Pure (given the parsed doc): validates the doc-level schema identity, the
+    declared record count, the number of envelope rows, that every row is
+    ``request_status == "ok"`` with an empty ``error_category``, and that
+    sample ids are unique.  Raises ``RuntimeError`` with an explicit message
+    on any violation; returns a small check report otherwise.  Applied on the
+    CANONICAL capsule path (never on a caller-supplied override path), and
+    always for the ``direct_llm`` arm whose executor contract is 74/74-ok.
+    """
+    checks: dict[str, Any] = {
+        "arm": arm,
+        "schema_expected": expected_schema,
+        "schema_got": doc.get("schema_version"),
+    }
+    if doc.get("schema_version") != expected_schema:
+        raise RuntimeError(
+            f"{label} schema mismatch: got {doc.get('schema_version')!r}, "
+            f"expected {expected_schema!r}")
+    checks["record_count_declared"] = doc.get("record_count")
+    if doc.get("record_count") != expected_records:
+        raise RuntimeError(
+            f"{label} record_count drift: got {doc.get('record_count')!r}, "
+            f"expected {expected_records!r}")
+    records = doc.get("records") or []
+    checks["record_rows"] = len(records)
+    if len(records) != expected_records:
+        raise RuntimeError(
+            f"{label} row count {len(records)} != {expected_records} "
+            "(promotion gate requires a complete 74-row capsule)")
+    bad_status = sorted({
+        rec.get("sample_id"): rec.get("request_status")
+        for rec in records if rec.get("request_status") != "ok"
+    }.items())
+    if bad_status:
+        raise RuntimeError(
+            f"{label} rows with request_status != ok: {bad_status}")
+    bad_error = sorted({
+        rec.get("sample_id"): rec.get("error_category")
+        for rec in records if rec.get("error_category") not in (None, "")
+    }.items())
+    if bad_error:
+        raise RuntimeError(
+            f"{label} rows with non-null error_category: {bad_error}")
+    sample_ids = [rec.get("sample_id") for rec in records]
+    duplicates = sorted({sid for sid in sample_ids if sample_ids.count(sid) > 1})
+    if duplicates:
+        raise RuntimeError(f"{label} duplicate sample ids: {duplicates}")
+    checks["all_rows_ok"] = True
+    checks["unique_samples"] = len(sample_ids)
+    return checks
+
+
+def resolve_arm_capsule(arm: str,
+                        predictions_path: Path | None) -> tuple[Path, Path, dict[str, Any]]:
+    """Resolve one capsule arm's predictions + manifest + config.
+
+    Raises ``FileNotFoundError`` when the canonical capsule home is missing
+    (the Direct-LLM capsule only exists after the explicit promotion step).
+    """
+    if arm not in CAPSULE_CONFIGS:
+        raise ValueError(f"arm {arm!r} has no external capsule; expected "
+                         f"{sorted(CAPSULE_CONFIGS)}")
+    cfg = dict(CAPSULE_CONFIGS[arm])
+    pred = predictions_path or cfg["predictions"]
+    manifest = cfg["manifest"]
+    if not pred.is_file():
+        raise FileNotFoundError(
+            f"{arm} capsule predictions missing: {pred} "
+            f"(promote the development capsule with "
+            f"scripts/promote_gdpr7_direct_llm_arm_v1.py, or pass "
+            f"--predictions to point at an existing capsule)")
+    if not manifest.is_file():
+        raise FileNotFoundError(
+            f"{arm} capsule manifest missing: {manifest}")
+    return pred, manifest, cfg
+
+
 def build_rule_records_for_arm(arm: str, frozen: Mapping[str, Any],
                                rule_ids: Sequence[str],
                                predictions_path: Path | None,
@@ -196,27 +333,38 @@ def build_rule_records_for_arm(arm: str, frozen: Mapping[str, Any],
         }
         return records, diag
 
-    # rules_only arm -----------------------------------------------------
-    if predictions_path is None:
-        predictions_path = CAPSULE_PREDICTIONS
-    capsule = _load_json(predictions_path, "Rules-Only capsule predictions")
-    if capsule.get("schema_version") != CAPSULE_SCHEMA:
+    # external capsule arm (rules_only / direct_llm) -------------------------
+    pred_path, manifest_path, cfg = resolve_arm_capsule(arm, predictions_path)
+    capsule = _load_json(pred_path, f"{arm} capsule predictions")
+    # Canonical path: enforce the strict 74/74-ok gate.  Caller-supplied
+    # override paths (used by failure-injection tests) keep the historical
+    # envelope-driven failure accounting semantics.
+    canonical = predictions_path is None
+    integrity: dict[str, Any] | None = None
+    if canonical or arm == "direct_llm":
+        integrity = validate_external_capsule(
+            capsule, arm=arm, expected_schema=cfg["schema"],
+            expected_records=cfg["expected_records"],
+            label=f"{arm} capsule predictions")
+    if capsule.get("schema_version") != cfg["schema"]:
         raise RuntimeError(
-            f"Rules-Only capsule schema mismatch: got {capsule.get('schema_version')!r}, "
-            f"expected {CAPSULE_SCHEMA!r}")
-    if not CAPSULE_MANIFEST.is_file():
-        raise FileNotFoundError(f"Rules-Only capsule manifest missing: {CAPSULE_MANIFEST}")
+            f"{arm} capsule schema mismatch: got {capsule.get('schema_version')!r}, "
+            f"expected {cfg['schema']!r}")
     from bpc_hybrid.sun_stage3.gdpr_capsule_converter import sentence_texts_by_sample
     texts = sentence_texts_by_sample(frozen["input_doc"])
-    records, summary = build_rule_records(capsule, texts, rule_ids)
+    records, summary = build_rule_records(
+        capsule, texts, rule_ids, expected_schema=cfg["schema"])
     diag = {
-        "rule_record_source": f"EXTERNAL Rules-Only capsule converter ({CONVERTER_NAME})",
+        "rule_record_source": f"EXTERNAL {arm} capsule converter ({CONVERTER_NAME})",
+        "arm": arm,
         "capsule_used": True,
-        "capsule_path": _rel(predictions_path),
-        "capsule_sha256": _sha256(predictions_path),
+        "capsule_path": _rel(pred_path),
+        "capsule_sha256": _sha256(pred_path),
         "capsule_schema": capsule.get("schema_version"),
+        "capsule_schema_expected": cfg["schema"],
         "capsule_record_count": capsule.get("record_count"),
-        "capsule_manifest_path": _rel(CAPSULE_MANIFEST),
+        "capsule_integrity": integrity,
+        "capsule_manifest_path": _rel(manifest_path),
         "capsule_manifest_exists": True,
         "conversion_summary": summary,
         "failed_rules": [rid for rid in rule_ids if records[rid].get("failed")],
@@ -347,10 +495,15 @@ def _failed_row(arm: str, item: Mapping[str, Any], rule_id: str, check_type: str
     }
 
 
-def evaluate_rows(rows: Sequence[Mapping[str, Any]], gold_path: Path) -> dict[str, Any]:
-    """Gold ONLY enters here, after predictions are fixed and persisted.
-    Reuses the S3.5 common evaluator formulas verbatim."""
-    gold_doc = _load_json(gold_path, "33-item violation Gold")
+def evaluate_rows_doc(rows: Sequence[Mapping[str, Any]],
+                      gold_doc: Mapping[str, Any],
+                      gold_path: Path | None = None) -> dict[str, Any]:
+    """Pure evaluation against an already-loaded Gold document.
+
+    Gold ONLY enters here, after predictions are fixed and persisted.  Reuses
+    the S3.5 common evaluator formulas verbatim.  This pure form lets tests
+    inject a synthetic minimal Gold document (no frozen-file read).
+    """
     gold = {i["item_id"]: {"decision_violation_type": i["decision_violation_type"]}
             for i in gold_doc["items"]}
     missing = sorted({r["item_id"] for r in rows} - set(gold))
@@ -376,20 +529,200 @@ def evaluate_rows(rows: Sequence[Mapping[str, Any]], gold_path: Path) -> dict[st
             "incorrect_actor_reason": row.get("incorrect_actor_reason"),
             "scores": {k: raw_scores[k] for k in sorted(raw_scores)},
         })
+    gold_block = {"path": _rel(gold_path) if gold_path is not None else None,
+                  "dataset_id": gold_doc.get("dataset_id"),
+                  "count": gold_doc.get("count")}
+    if gold_path is not None:
+        gold_block["sha256"] = _sha256(gold_path)
     return {
         "schema_version": "gdpr_3type_linkage_evaluation@1.0.0",
-        "gold": {"path": _rel(gold_path), "sha256": _sha256(gold_path),
-                 "dataset_id": gold_doc.get("dataset_id"),
-                 "count": gold_doc.get("count")},
+        "gold": gold_block,
         "violation": violation,
         "items": item_rows,
     }
 
 
+def evaluate_rows(rows: Sequence[Mapping[str, Any]], gold_path: Path) -> dict[str, Any]:
+    """Gold ONLY enters here, after predictions are fixed and persisted."""
+    gold_doc = _load_json(gold_path, "33-item violation Gold")
+    return evaluate_rows_doc(rows, gold_doc, gold_path=gold_path)
+
+
+def _rules_read(run_dir: Path) -> dict[str, dict[str, Any]]:
+    """rule_id -> rule record from a persisted rule_records.jsonl."""
+    out: dict[str, dict[str, Any]] = {}
+    path = run_dir / "rule_records.jsonl"
+    if not path.is_file():
+        return out
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            rec = json.loads(line)
+            out[rec["rule_id"]] = rec
+    return out
+
+
+def diff_arm_vs_reference(
+    arm_rows: Sequence[Mapping[str, Any]],
+    reference_rows: Sequence[Mapping[str, Any]],
+    *,
+    arm: str = "direct_llm",
+    reference_records: Mapping[str, Mapping[str, Any]] | None = None,
+    arm_records: Mapping[str, Mapping[str, Any]] | None = None,
+    arm_conversion: Mapping[str, Any] | None = None,
+    gold_doc: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Pure per-sample change list of an arm vs the reference arm, with a
+    machine-classified ``change_reason`` per changed item.
+
+    No file IO and no Gold read unless a ``gold_doc`` is injected: reference
+    rows are compared item by item (same 33 items) on verdict, incorrect-actor
+    observability/reason and the three scores.  Each changed entry carries the
+    stable ``machine_change_reason`` label from
+    ``bpc_hybrid.sun_stage3.gdpr_change_classifier``.
+    """
+    ref_by_item = {r["item_id"]: r for r in reference_rows}
+    arm_by_item = {r["item_id"]: r for r in arm_rows}
+    gold_by_item = None
+    if gold_doc is not None:
+        gold_by_item = {i["item_id"]: i["decision_violation_type"]
+                        for i in gold_doc["items"]}
+    changes: list[dict[str, Any]] = []
+    same_verdict = 0
+    changed = 0
+    for item_id in sorted(ref_by_item):
+        ref = ref_by_item[item_id]
+        arm_row = arm_by_item.get(item_id)
+        if arm_row is None:
+            raise RuntimeError(f"arm rows lack reference item {item_id}")
+        verdict_change = ref["predicted_violation_type"] != arm_row["predicted_violation_type"]
+        ref_ia_obs = (ref["incorrect_actor_observable"], ref.get("incorrect_actor_reason"))
+        arm_ia_obs = (arm_row["incorrect_actor_observable"], arm_row.get("incorrect_actor_reason"))
+        obs_change = ref_ia_obs != arm_ia_obs
+        score_change = any(
+            ref.get(k) != arm_row.get(k)
+            for k in ("missing_action_score", "incorrect_actor_score",
+                      "out_of_order_score"))
+        if not verdict_change and not obs_change and not score_change:
+            same_verdict += 1
+            continue
+        changed += 1
+        machine = classify_three_type_item(
+            ref, arm_row,
+            reference_records=reference_records,
+            arm_records=arm_records,
+            arm_conversion=arm_conversion,
+        )
+        reasons: list[str] = []
+        if verdict_change:
+            reasons.append("verdict:" + _verdict_code(ref, arm_row))
+        if obs_change:
+            reasons.append("observability:" + _obs_code(ref, arm_row))
+        if score_change:
+            for score_key in ("missing_action_score", "incorrect_actor_score",
+                              "out_of_order_score"):
+                if ref.get(score_key) != arm_row.get(score_key):
+                    reasons.append(f"score:{score_key}:{ref.get(score_key)}->"
+                                   f"{arm_row.get(score_key)}")
+        if arm_row.get("rule_record_failed"):
+            reasons.append("external_failure:" + str(arm_row.get("external_failure")))
+        entry: dict[str, Any] = {
+            "item_id": item_id,
+            "process_id": ref["process_id"],
+            "rule_id": ref["rule_id"],
+            "check_type": ref.get("check_type"),
+            "gold_type": gold_by_item.get(item_id) if gold_by_item else None,
+            "reference_prediction": ref["predicted_violation_type"],
+            "arm_prediction": arm_row["predicted_violation_type"],
+            "reference_observability": {
+                "observable": ref["incorrect_actor_observable"],
+                "reason": ref.get("incorrect_actor_reason"),
+            },
+            "arm_observability": {
+                "observable": arm_row["incorrect_actor_observable"],
+                "reason": arm_row.get("incorrect_actor_reason"),
+            },
+            "reference_scores": {k: ref["scores"][k] for k in
+                                 ("missing_action", "incorrect_actor", "out_of_order")},
+            "arm_scores": {k: arm_row["scores"][k] for k in
+                           ("missing_action", "incorrect_actor", "out_of_order")},
+            "change_reason_codes": reasons,
+            "machine_change_reason": machine["reason"],
+            "machine_change_detail": machine.get("detail"),
+        }
+        changes.append(entry)
+    reason_counts: dict[str, int] = {}
+    for entry in changes:
+        reason_counts[entry["machine_change_reason"]] = (
+            reason_counts.get(entry["machine_change_reason"], 0) + 1)
+    return {
+        "schema_version": "gdpr_3type_linkage_reference_diff@1.0.0",
+        "arm": arm,
+        "arm_label": ARM_LABELS[arm],
+        "same_verdict_count": same_verdict,
+        "changed_count": changed,
+        "total_items": len(ref_by_item),
+        "machine_change_reason_counts": reason_counts,
+        "changes": changes,
+    }
+
+
+def build_source_report(
+    arm: str,
+    *,
+    rows: Sequence[Mapping[str, Any]],
+    gold_doc: Mapping[str, Any],
+    thresholds: Mapping[str, Any] | None = None,
+    arm_diag: Mapping[str, Any] | None = None,
+    reference_rows: Sequence[Mapping[str, Any]] | None = None,
+    reference_records: Mapping[str, Mapping[str, Any]] | None = None,
+    arm_records: Mapping[str, Mapping[str, Any]] | None = None,
+    arm_conversion: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Pure in-memory source report (no file writes, no Gold path reads).
+
+    Predictions are the already-fixed ``rows``; ``gold_doc`` is consumed ONLY
+    inside the evaluation step (callers that want to prove ordering inject
+    the gold after row construction).  Returns the ``summary``-shaped dict
+    that ``run_arm`` persists (evaluation + optional reference diff); used by
+    tests with synthetic rows/gold for the ``direct_llm`` arm.
+    """
+    if arm not in ARM_LABELS:
+        raise ValueError(f"unknown arm {arm!r}; expected {sorted(ARM_LABELS)}")
+    evaluation = evaluate_rows_doc(rows, gold_doc)
+    if thresholds is not None:
+        evaluation["thresholds"] = dict(thresholds)
+    failed_rows = [r for r in rows if r.get("rule_record_failed")]
+    capsule_failures = {
+        "failed_row_count": len(failed_rows),
+        "failed_item_ids": [r["item_id"] for r in failed_rows],
+        "failure_reasons": sorted({r["external_failure"] for r in failed_rows
+                                   if r.get("external_failure")}),
+    }
+    if arm_diag is not None:
+        evaluation["external_diagnostics"] = dict(arm_diag)
+    evaluation["capsule_failure_accounting"] = capsule_failures
+    summary: dict[str, Any] = {
+        "run_id": f"{RUN_ID_PREFIX}_{arm}",
+        "arm": arm,
+        "arm_label": ARM_LABELS[arm],
+        "evaluation": evaluation,
+    }
+    if reference_rows is not None:
+        summary["reference_diff"] = diff_arm_vs_reference(
+            rows, reference_rows, arm=arm,
+            reference_records=reference_records,
+            arm_records=arm_records,
+            arm_conversion=arm_conversion,
+            gold_doc=gold_doc,
+        )
+    return summary
+
+
 def run_arm(arm: str, *, output_root: Path | None = None,
             report_root: Path | None = None, overwrite: bool = False,
             gold_path: Path | None = None,
-            predictions_path: Path | None = None) -> dict[str, Any]:
+            predictions_path: Path | None = None,
+            allow_missing: bool = False) -> dict[str, Any]:
     if arm not in ARM_LABELS:
         raise ValueError(f"unknown arm {arm!r}; expected {sorted(ARM_LABELS)}")
     config = _load_json(CONFIG, "sun stage3 config")
@@ -403,6 +736,31 @@ def run_arm(arm: str, *, output_root: Path | None = None,
             f"inference pack size drift: matching={len(matching_items)} violation={len(violation_items)}")
     if len(rule_ids) != 9:
         raise RuntimeError(f"expected 9 distinct rules, got {rule_ids}")
+
+    # Missing-capsule policy (2026-09-07 directive: stop only the affected
+    # source and continue what can be done).  Default (allow_missing=False)
+    # fails closed exactly like the historical runner.  With --allow-missing-arm
+    # a missing canonical capsule home is recorded as ``status == "missing"``
+    # and nothing is written for that source.
+    if arm in CAPSULE_CONFIGS and predictions_path is None:
+        cfg = CAPSULE_CONFIGS[arm]
+        if not cfg["predictions"].is_file():
+            reason = (f"{arm} capsule home missing: {cfg['predictions']} -- the "
+                      f"Direct-LLM formal capsule is published by an explicit "
+                      f"promotion step (scripts/promote_gdpr7_direct_llm_arm_v1.py "
+                      f"--apply) after the authorized real run")
+            if not allow_missing:
+                raise FileNotFoundError(reason)
+            return {
+                "run_id": f"{RUN_ID_PREFIX}_{arm}",
+                "arm": arm,
+                "arm_label": ARM_LABELS[arm],
+                "status": "missing",
+                "reason": reason,
+                "promotion_hint": "scripts/promote_gdpr7_direct_llm_arm_v1.py "
+                                  "--capsule-dir outputs/development/"
+                                  "gdpr7_direct_llm_real_v1 --apply",
+            }
 
     run_dir = (output_root or OUTPUT_ROOT) / f"{RUN_ID_PREFIX}_{arm}"
     if run_dir.exists() and not overwrite:
@@ -443,6 +801,21 @@ def run_arm(arm: str, *, output_root: Path | None = None,
     evaluation_path = run_dir / "evaluation.json"
     evaluation_path.write_bytes(_json_bytes(evaluation))
 
+    # -------- per-sample reference diff (persisted reference arm rows only;
+    #          written as a run-dir artifact with machine-classified reasons)
+    reference_diff: dict[str, Any] | None = None
+    reference_run_dir = (output_root or OUTPUT_ROOT) / f"{RUN_ID_PREFIX}_reference"
+    if arm != "reference" and (reference_run_dir / "predictions.jsonl").is_file():
+        reference_diff = diff_arm_vs_reference(
+            rows, _read_rows(reference_run_dir), arm=arm,
+            reference_records=_rules_read(reference_run_dir),
+            arm_records=rule_records,
+            arm_conversion=arm_diag.get("conversion_summary"),
+            gold_doc=_load_json(gold, "33-item violation Gold"),
+        )
+        (run_dir / "changes_vs_reference.json").write_bytes(
+            _json_bytes(reference_diff))
+
     manifest = _build_manifest(arm, config, run_dir, arm_diag, capsule_failures,
                                rows, matching_items, violation_items,
                                gold, frozen, predictions_path,
@@ -460,6 +833,8 @@ def run_arm(arm: str, *, output_root: Path | None = None,
         "evaluation": evaluation,
         "manifest": json.loads(manifest_path.read_text(encoding="utf-8")),
     }
+    if reference_diff is not None:
+        summary["reference_diff"] = reference_diff
     report_json = write_report(arm, summary, report_root, overwrite=overwrite)
     summary["report_json"] = _rel(report_json)
     summary["report_md"] = _rel(report_json.with_suffix(".md"))
@@ -479,22 +854,41 @@ def _build_manifest(arm, config, run_dir, arm_diag, capsule_failures,
     module_hashes = {
         "runner": _sha256(Path(__file__)),
         "converter": _sha256(ROOT / "src" / "bpc_hybrid" / "sun_stage3" / "gdpr_capsule_converter.py"),
+        "change_classifier": _sha256(ROOT / "src" / "bpc_hybrid" / "sun_stage3" / "gdpr_change_classifier.py"),
         "sun_scorer": _sha256(ROOT / "src" / "bpc_hybrid" / "sun_stage3" / "sun_scorer.py"),
         "sun_rule_extraction": _sha256(ROOT / "src" / "bpc_hybrid" / "sun_stage3" / "sun_rule_extraction.py"),
         "sun_model": _sha256(ROOT / "src" / "bpc_hybrid" / "sun_stage3" / "sun_model.py"),
         "shared_similarity": _sha256(ROOT / "src" / "bpc_hybrid" / "winter_stage3" / "winter_similarity.py"),
     }
     capsule_block = None
-    if arm == "rules_only":
+    if arm in CAPSULE_CONFIGS:
+        cfg = CAPSULE_CONFIGS[arm]
+        pred = predictions_path or cfg["predictions"]
         capsule_block = {
-            "path": _rel(predictions_path or CAPSULE_PREDICTIONS),
-            "sha256": _sha256(predictions_path or CAPSULE_PREDICTIONS),
-            "schema": CAPSULE_SCHEMA,
+            "path": _rel(pred),
+            "sha256": _sha256(pred),
+            "schema": cfg["schema"],
             "record_count": arm_diag.get("capsule_record_count"),
-            "manifest_path": _rel(CAPSULE_MANIFEST),
-            "manifest_sha256": _sha256(CAPSULE_MANIFEST),
+            "manifest_path": _rel(cfg["manifest"]),
+            "manifest_sha256": _sha256(cfg["manifest"]),
             "manifest_exists": True,
-            "note": "EXTERNAL Stage-2 predictions; produced offline by run_gdpr7_sun_rule_only_v1.py (locked B0 v10a); NOT rerun by this experiment",
+            "note": cfg["note"],
+        }
+    artifacts: dict[str, Any] = {
+        "predictions": {"path": "predictions.jsonl",
+                        "sha256": _sha256(predictions_path_out)},
+        "rule_records": {"path": "rule_records.jsonl",
+                         "sha256": _sha256(rule_records_path)},
+        "evaluation": {"path": "evaluation.json",
+                       "sha256": _sha256(evaluation_path)},
+        "config_snapshot": {"path": "config_snapshot.json",
+                            "sha256": _sha256(run_dir / "config_snapshot.json")},
+    }
+    changes_path = run_dir / "changes_vs_reference.json"
+    if changes_path.is_file():
+        artifacts["changes_vs_reference"] = {
+            "path": "changes_vs_reference.json",
+            "sha256": _sha256(changes_path),
         }
     manifest = {
         "schema_version": "gdpr_3type_linkage_run_manifest@1.0.0",
@@ -558,16 +952,7 @@ def _build_manifest(arm, config, run_dir, arm_diag, capsule_failures,
             "stage2_rerun": False,
             "no_overwrite_default": True,
         },
-        "artifacts": {
-            "predictions": {"path": "predictions.jsonl",
-                            "sha256": _sha256(predictions_path_out)},
-            "rule_records": {"path": "rule_records.jsonl",
-                             "sha256": _sha256(rule_records_path)},
-            "evaluation": {"path": "evaluation.json",
-                           "sha256": _sha256(evaluation_path)},
-            "config_snapshot": {"path": "config_snapshot.json",
-                                "sha256": _sha256(run_dir / "config_snapshot.json")},
-        },
+        "artifacts": artifacts,
         "finalised": False,
     }
     return manifest
@@ -578,7 +963,7 @@ def finalise_manifest(run_dir: Path) -> None:
     back the written manifest so the recorded hashes are the persisted ones."""
     manifest_path = run_dir / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    for name in ("predictions", "rule_records", "evaluation", "config_snapshot"):
+    for name in manifest["artifacts"]:
         fname = manifest["artifacts"][name]["path"]
         manifest["artifacts"][name]["sha256"] = _sha256(run_dir / fname)
         manifest["artifacts"][name]["byte_size"] = (run_dir / fname).stat().st_size
@@ -636,7 +1021,7 @@ def render_markdown(summary: Mapping[str, Any]) -> str:
         "",
     ]
     ext = summary["evaluation"].get("external_diagnostics") or {}
-    if summary["arm"] == "rules_only":
+    if summary["arm"] in CAPSULE_CONFIGS:
         cs = ext.get("conversion_summary") or {}
         lines.append(f"- capsule records: {cs.get('capsule_records')}; "
                      f"envelopes ok {cs.get('total_envelopes_ok')} / failed "
@@ -646,12 +1031,35 @@ def render_markdown(summary: Mapping[str, Any]) -> str:
         lines.append(f"- order relations absent in capsule for rules: "
                      f"{cs.get('order_relations_absent_rules') or 'none'} "
                      f"(Definition-7 input unavailable by contract; never fabricated).")
+        integrity = ext.get("capsule_integrity")
+        if integrity:
+            lines.append(f"- capsule integrity: schema "
+                         f"{integrity.get('schema_got')} == expected "
+                         f"{integrity.get('schema_expected')}; rows "
+                         f"{integrity.get('record_rows')}/{integrity.get('record_count_declared')} "
+                         f"all ok; unique samples "
+                         f"{integrity.get('unique_samples')}.")
         cap = summary["evaluation"].get("capsule_failure_accounting") or {}
         lines.append(f"- item-level failure rows: {cap.get('failed_row_count')} "
                      f"({', '.join(cap.get('failed_item_ids') or []) or 'none'}).")
     else:
         lines.append("- Reference arm: no external capsule; the development Rule Record "
                      "adapter output is stored per rule in rule_records.jsonl.")
+
+    reference_diff = summary.get("reference_diff")
+    if reference_diff is not None:
+        lines += [
+            "",
+            "## Per-sample changes vs the reference arm (machine-classified)",
+            "",
+            f"- same verdict {reference_diff['same_verdict_count']} / changed "
+            f"{reference_diff['changed_count']} / total "
+            f"{reference_diff['total_items']}.",
+            f"- machine reason counts: "
+            f"{reference_diff.get('machine_change_reason_counts') or '{}'}.",
+            "- Item details (before/after + reason) in "
+            "`changes_vs_reference.json` inside the run dir.",
+        ]
     lines += [
         "",
         "## Boundaries",
@@ -659,8 +1067,18 @@ def render_markdown(summary: Mapping[str, Any]) -> str:
         "- DEV_ONLY linkage on the frozen 33-item human-adjudicated violation Gold "
         "(original three types). The 4-type synthetic panel and the formal Oracle "
         "are separate datasets and are never merged here.",
-        "- External Rules-Only capsule = locked B0 v10a pipeline (English pass-through, "
-        "classifier German-language contract); zero LLM/API/network in this experiment.",
+    ]
+    if summary["arm"] == "rules_only":
+        lines.append("- External Rules-Only capsule = locked B0 v10a pipeline "
+                     "(English pass-through, classifier German-language contract); "
+                     "zero LLM/API/network in this experiment.")
+    elif summary["arm"] == "direct_llm":
+        lines.append("- External Direct-LLM capsule = locked D1 recipe, real "
+                     "authorized executor output promoted to "
+                     "data/predictions/gdpr7_direct_llm_v1 by "
+                     "promote_gdpr7_direct_llm_arm_v1.py; coordinate-only rows, "
+                     "no raw text and no Gold fields (containment-scanned).")
+    lines += [
         "- Out-of-order in the reference arm is also denominator-0 for all items "
         "(no rule endpoint maps to a process action above gamma 0.8); in the rules_only "
         "arm the capsule provides no order relations at all.",
@@ -690,6 +1108,8 @@ def write_report(arm: str, summary: Mapping[str, Any],
         "run_dir": summary["run_dir"],
         "generated_deterministic": True,
     }
+    if summary.get("reference_diff") is not None:
+        report_payload["reference_diff"] = summary["reference_diff"]
     report_json.write_bytes(_json_bytes(report_payload))
     report_md = report_json.with_suffix(".md")
     report_md.write_text(render_markdown(summary), encoding="utf-8")
@@ -834,7 +1254,14 @@ def _obs_code(ref: Mapping[str, Any], arm: Mapping[str, Any]) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--arm", choices=sorted(ARM_LABELS), default=None)
+    parser.add_argument("--arm", default=None,
+                        help="one arm label, or 'all' to run every runnable arm "
+                             "in sequence")
+    parser.add_argument("--allow-missing-arm", action="store_true",
+                        help="record a missing external capsule source as "
+                             "'missing' (not evaluated) and continue the other "
+                             "requested arms; default remains fail-closed for "
+                             "the affected source")
     parser.add_argument("--report-only", type=Path, default=None,
                         help="replay evaluation+report from a persisted arm run dir")
     parser.add_argument("--compare", action="store_true",
@@ -843,7 +1270,7 @@ def main() -> int:
     parser.add_argument("--report-root", type=Path, default=None)
     parser.add_argument("--gold", type=Path, default=None)
     parser.add_argument("--predictions", type=Path, default=None,
-                        help="override Rules-Only capsule predictions path (rules_only arm)")
+                        help="override capsule predictions path for a capsule arm")
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
 
@@ -863,16 +1290,36 @@ def main() -> int:
             return 0
         if args.arm is None:
             parser.error("one of --arm / --report-only / --compare is required")
-        summary = run_arm(args.arm, output_root=args.output_root,
-                          report_root=args.report_root, overwrite=args.overwrite,
-                          gold_path=args.gold, predictions_path=args.predictions)
-        ev = summary["evaluation"]["violation"]
-        print(f"arm={summary['arm']} macro={ev['macro_f1']:.4f} "
-              f"exact={ev['exact_type_accuracy']:.4f} unobs={ev['unobservable']}")
-        print(f"  per-type: " + ", ".join(
-            f"{t}:P{ev['per_type'][t]['precision']:.3f}/R{ev['per_type'][t]['recall']:.3f}"
-            f"/F{ev['per_type'][t]['f1']:.3f}"
-            for t in ("missing_action", "incorrect_actor", "out_of_order")))
+        if args.arm == "all":
+            arms = sorted(ARM_LABELS)
+        else:
+            if args.arm not in ARM_LABELS:
+                parser.error(
+                    f"unknown arm {args.arm!r}; expected one of "
+                    f"{sorted(ARM_LABELS)} or 'all'")
+            arms = [args.arm]
+        if len(arms) > 1 and args.predictions is not None:
+            parser.error("--predictions is only valid for a single --arm run")
+        missing_arms: list[dict[str, Any]] = []
+        for arm in arms:
+            summary = run_arm(arm, output_root=args.output_root,
+                              report_root=args.report_root,
+                              overwrite=args.overwrite,
+                              gold_path=args.gold,
+                              predictions_path=args.predictions,
+                              allow_missing=args.allow_missing_arm)
+            if summary.get("status") == "missing":
+                missing_arms.append(summary)
+                print(f"arm={summary['arm']} status=missing (skipped, not "
+                      f"evaluated): {summary['reason']}", file=sys.stderr)
+                continue
+            ev = summary["evaluation"]["violation"]
+            print(f"arm={summary['arm']} macro={ev['macro_f1']:.4f} "
+                  f"exact={ev['exact_type_accuracy']:.4f} unobs={ev['unobservable']}")
+            print(f"  per-type: " + ", ".join(
+                f"{t}:P{ev['per_type'][t]['precision']:.3f}/R{ev['per_type'][t]['recall']:.3f}"
+                f"/F{ev['per_type'][t]['f1']:.3f}"
+                for t in ("missing_action", "incorrect_actor", "out_of_order")))
         return 0
     except (ValueError, FileNotFoundError, FileExistsError, RuntimeError) as exc:
         print(f"gdpr 3type linkage refused: {exc}", file=sys.stderr)

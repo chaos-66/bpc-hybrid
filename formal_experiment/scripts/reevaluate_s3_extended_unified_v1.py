@@ -31,7 +31,13 @@ Sources
   (deterministic reference extraction; NOT human Gold);
 - rules_only: the GDPR Stage-2 -> Stage-3 linkage Rules-Only arm
   ``outputs/development/gdpr_s2_s3_linkage_v1_rules_only/<method>/``
-  (external B0 v10a predictions).
+  (external B0 v10a predictions);
+- direct_llm: the GDPR Stage-2 -> Stage-3 linkage Direct-LLM arm
+  ``outputs/development/gdpr_s2_s3_linkage_v1_direct_llm/<method>/``
+  (external Direct-LLM capsule).  The direct_llm source is counted ONLY when
+  the formal arm capsule exists and is complete (74/74 ``request_status ==
+  "ok"`` rows, no ``error_category``) -- the fail-closed precondition for the
+  linkage run that produced the persisted rows.
 """
 
 from __future__ import annotations
@@ -68,6 +74,12 @@ PANEL = ROOT / "data/development/stage3_synth/synthetic_controlled_error_extensi
 OUT_ROOT = ROOT / "outputs/development"
 REPORT_ROOT = ROOT / "outputs/reports"
 METHOD_ORDER = ("winter", "sun", "bm25", "tfidf_svd")
+# Formal Direct-LLM arm capsule home (published by the explicit promotion
+# step scripts/promote_gdpr7_direct_llm_arm_v1.py after the authorized real
+# run).  A missing/incomplete capsule keeps the direct_llm source uncounted.
+DIRECT_LLM_CAPSULE_PREDICTIONS = (
+    ROOT / "data/predictions/gdpr7_direct_llm_v1/predictions.json")
+DIRECT_LLM_CAPSULE_SCHEMA = "gdpr7_direct_llm_predictions@1.0.0"
 SOURCES: dict[str, dict[str, Path]] = {
     "reference": {
         m: OUT_ROOT / f"s3_extended_violation_panel_v2_{m}" for m in METHOD_ORDER
@@ -76,16 +88,28 @@ SOURCES: dict[str, dict[str, Path]] = {
         m: OUT_ROOT / f"gdpr_s2_s3_linkage_v1_rules_only/{m}"
         for m in METHOD_ORDER
     },
+    "direct_llm": {
+        m: OUT_ROOT / f"gdpr_s2_s3_linkage_v1_direct_llm/{m}"
+        for m in METHOD_ORDER
+    },
 }
 SOURCE_LABELS = {
     "reference": "reference deterministic extraction (original S3.9-EXT run; NOT human Gold)",
     "rules_only": "external Stage-2 arm: Rules-Only (locked B0 v10a, English pass-through)",
+    "direct_llm": "external Stage-2 arm: Direct-LLM (locked D1 recipe, real authorized executor output)",
 }
 REPORT_SCHEMA = "s3_extended_unified_comparison@1.0.0"
 
 
 def _json_bytes(value: Any) -> bytes:
     return (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+
+
+def _rel(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(ROOT.resolve()))
+    except ValueError:
+        return str(path)
 
 
 def _sha(path: Path) -> str:
@@ -141,11 +165,57 @@ def confusion_matrix(rows: Sequence[Mapping[str, Any]],
             "policy": "all objects; abstentions count as FN; false compliant answers count as FP for none"}
 
 
+def check_source_capsule_ready(source: str) -> dict[str, Any] | None:
+    """Fail-closed upstream-capsule gate for the ``direct_llm`` source.
+
+    The direct_llm unified re-evaluation consumes the PERSISTED rows of the
+    s2_s3 linkage run; that run may only legitimately exist once the formal
+    Direct-LLM arm capsule was promoted (complete, 74/74 ok, no
+    error_category).  This gate refuses to count the source when the capsule
+    is missing or incomplete; reference/rules_only sources have no external
+    capsule and return None.
+    """
+    if source != "direct_llm":
+        return None
+    if not DIRECT_LLM_CAPSULE_PREDICTIONS.is_file():
+        raise FileNotFoundError(
+            "direct_llm source requires the formal Direct-LLM arm capsule "
+            f"{DIRECT_LLM_CAPSULE_PREDICTIONS} (missing; promote the "
+            "development capsule with scripts/promote_gdpr7_direct_llm_arm_"
+            "v1.py --apply before counting this source)")
+    doc = json.loads(DIRECT_LLM_CAPSULE_PREDICTIONS.read_text(encoding="utf-8"))
+    if doc.get("schema_version") != DIRECT_LLM_CAPSULE_SCHEMA:
+        raise ValueError(
+            f"direct_llm capsule schema mismatch: got "
+            f"{doc.get('schema_version')!r}, expected "
+            f"{DIRECT_LLM_CAPSULE_SCHEMA!r}")
+    records = doc.get("records") or []
+    if doc.get("record_count") != 74 or len(records) != 74:
+        raise RuntimeError(
+            "direct_llm capsule must be complete (74/74 rows); got "
+            f"declared={doc.get('record_count')} rows={len(records)}")
+    bad = sorted({rec.get("sample_id") for rec in records
+                  if rec.get("request_status") != "ok"
+                  or rec.get("error_category") not in (None, "")})
+    if bad:
+        raise RuntimeError(
+            "direct_llm capsule contains non-ok rows; refusing to count the "
+            f"source: {bad}")
+    return {
+        "path": _rel(DIRECT_LLM_CAPSULE_PREDICTIONS),
+        "sha256": _sha(DIRECT_LLM_CAPSULE_PREDICTIONS),
+        "schema_version": doc.get("schema_version"),
+        "rows": len(records),
+        "all_rows_ok": True,
+    }
+
+
 def run_source(source: str, methods: Sequence[str],
                overwrite: bool = False, output_root: Path | None = None,
                report_root: Path | None = None) -> dict[str, Any]:
     if source not in SOURCES:
         raise ValueError(f"unknown source {source!r}")
+    capsule_binding = check_source_capsule_ready(source)
     panel = json.loads(PANEL.read_text(encoding="utf-8"))
     gamma_ext = float(panel["config"]["gamma_ext"])
     gold = _gold_synthetic(panel)
@@ -221,6 +291,7 @@ def run_source(source: str, methods: Sequence[str],
             "panel": {"path": str(PANEL.relative_to(ROOT)), "sha256": _sha(PANEL)},
             "runner": {"path": "scripts/reevaluate_s3_extended_unified_v1.py",
                        "sha256": _sha(ROOT / "scripts/reevaluate_s3_extended_unified_v1.py")},
+            "upstream_capsule": capsule_binding,
             "gold_read_only_inside_evaluation": True,
             "safety": {"llm_api_calls": 0, "network_calls": 0,
                        "gold_modified": False, "original_run_dirs_modified": False},
@@ -237,6 +308,7 @@ def run_source(source: str, methods: Sequence[str],
         "source_label": SOURCE_LABELS[source],
         "decision": UNIFIED_DECISION_NAME,
         "gamma_ext": gamma_ext,
+        "upstream_capsule": capsule_binding,
         "methods": methods_out,
         "runtime_seconds": time.perf_counter() - started,
         "safety": {"llm_api_calls": 0, "network_calls": 0},

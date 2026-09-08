@@ -341,10 +341,30 @@ def test_authorization_gate_wrong_payload_set_fails(tmp_path):
 # Runners: fake end-to-end (temp dirs only)
 # ---------------------------------------------------------------------------
 
-def _run_cmd(args):
+def _run_cmd(args, *, fixed_fake_clock=False):
     import subprocess
+    command = [PY, *args]
+    if fixed_fake_clock:
+        # Only fake CLI integration tests receive a deterministic clock.
+        # Real entry points and the dedicated peak-rejection tests are intact.
+        assert "--allow-llm" not in args
+        assert args[args.index("--transport") + 1] == "fake"
+        bootstrap = """
+import sys, runpy
+from datetime import datetime, timezone
+sys.path.insert(0, sys.argv.pop(1))
+import bpc_hybrid.s2_12_execution as execution
+original = execution.StageExecutor
+def with_fixed_clock(*args, **kwargs):
+    kwargs["now_provider"] = lambda: datetime(2026, 9, 8, 5, tzinfo=timezone.utc)
+    return original(*args, **kwargs)
+execution.StageExecutor = with_fixed_clock
+sys.argv = sys.argv[1:]
+runpy.run_path(sys.argv[0], run_name="__main__")
+"""
+        command = [PY, "-c", bootstrap, str(ROOT / "src"), *args]
     proc = subprocess.run(
-        [PY, *args], capture_output=True, text=True, cwd=ROOT.parent
+        command, capture_output=True, text=True, cwd=ROOT.parent
     )
     return proc
 
@@ -357,7 +377,7 @@ def test_direct_runner_fake_dcal_end_to_end(tmp_path):
         "--transport", "fake",
         "--stage-id", "D-CAL",
         "--output-dir", str(out),
-    ])
+    ], fixed_fake_clock=True)
     assert proc.returncode == 0, proc.stdout + proc.stderr
     assert out.joinpath("manifest.json").is_file()
     manifest = json.loads(out.joinpath("manifest.json").read_text(encoding="utf-8"))
