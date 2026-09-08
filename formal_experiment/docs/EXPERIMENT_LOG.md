@@ -4119,3 +4119,16 @@
 - 仍存在 blocker：无
 - 备注：全量 audit 2966 passed/24 skipped exit 0；新增聚焦 60 项 + s2_12 回归 52 passed；verify_s2_12_authorization_files_v1.py 70/70；真实调用 0 等待进程环境凭据；不覆盖既有产物；用户文件与 .bak 未触碰
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-08T11:27:34.176791+00:00 - Task A+B 修复（2026-09-08）：(A) Git 行尾指纹修复——对授权绑定资产加窄范围 text eol=lf 钉（3 个 S2.12 代码文件/授权原句 txt/basis JSON/5 个授权事件文件）并归一工作区为 LF，verify_s2_12_authorization_files_v1.py 70/70 PASS，新增 checkout 后仍为原始 LF 的回归测试；(B) 运行文档修正——§13.3 flat 键全集+PROVIDER=openai_compatible+formal_experiment 工作目录，新增离线预检 check_api_env_ready_v1.py（不打印密钥/不读 .env），§13.4 落实为可执行 promotion/衔接步骤；官方价格核验 2026-08-17 峰谷方案不变
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：3013 passed, 24 skipped, 48 warnings in 3106.81s (0:51:46)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`efc60df95b269f00787d4c504fb17d6d3490882d`；相关未提交路径：41 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：全量 audit 3013 passed/24 skipped exit 0（18:34-19:26 低峰）；新增聚焦 66 项全绿；真实 API=0；唯一缺项=进程环境密钥值；未改 Gold/历史产物；用户文件与 .bak 未触碰
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

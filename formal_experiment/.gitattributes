@@ -59,3 +59,31 @@ data/input/stage1_stage3/gdpr7/*.bpmn text eol=lf
 # S3 formula repair v2: preserve exact bytes of this run capsule only.
 outputs/evidence/s3_formula_repair_v2/** -text
 outputs/reports/s3_formula_repair_v2.json -text
+
+# 2026-09-07 (paper wind-down authorization): narrow line-ending pins for the
+# S2.12 executor files whose LF bytes are bound inside the user-authorized
+# stage auth files (runner_implementation_hashes, recorded in
+# docs/API_AUTHORIZATION_REQUEST.md section 5) and for the verbatim user
+# instruction sentence copy whose LF bytes define the recorded
+# authorization-sentence SHA-256 (27426de7...) plus its basis JSON.  Without
+# these pins a Windows checkout (core.autocrlf=true) silently converts the
+# working-tree copies to CRLF and raw-byte hash bindings of the
+# authorization files no longer match, hard-refusing the authorized real
+# runs.  Scope stays limited to the exact registered paths; no
+# `*.py`/`*.txt`/`*.json`/`text=auto` widening, no renormalization of other
+# tracked content.  Files whose official recorded hashes are CRLF-worktree
+# based (e.g. src/bpc_hybrid/llm_client.py, h1_transport.py,
+# data/input/gdpr7_stage2_input_v1.json) are intentionally NOT listed here.
+scripts/run_s2_12_direct_llm_v1.py text eol=lf
+scripts/run_s2_12_sun_llm_fallback_v1.py text eol=lf
+src/bpc_hybrid/s2_12_execution.py text eol=lf
+configs/paper_winddown_api_authorization_sentence_2026_09_07.txt text eol=lf
+configs/paper_winddown_api_authorization_basis_2026_09_07.json text eol=lf
+# Authorization event files: their raw LF bytes are bound as
+# authorization_event_file_sha256 inside the stage auth files; same EOL
+# rationale as above.
+configs/s2_12_api_authorization_event_D-CAL.json text eol=lf
+configs/s2_12_api_authorization_event_D-REST.json text eol=lf
+configs/s2_12_api_authorization_event_F-1.json text eol=lf
+configs/s2_12_api_authorization_event_F-2.json text eol=lf
+configs/s2_12_api_authorization_event_F-3.json text eol=lf

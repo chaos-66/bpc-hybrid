@@ -532,34 +532,95 @@ English mirror:
 
 ### 13.3 真实运行命令（等待进程环境凭据后执行；每 stage 独立输出目录）
 
+> **环境配置（唯一可信方式 = flat 键全集；两个真实执行器均用
+> `LLMConfig.from_env(project_root=ROOT, load_project_env=False)` 只读进程环境，
+> 项目 `.env` 永不打开）**。实测（2026-09-07 离线）：
+> provider 必须是白名单枚举 `openai_compatible`；只设 `BPC_HYBRID_DeepSeek_*`
+> 前缀变量无效（白名单无 ENABLED/MAX_TOKENS/TEMPERATURE，且未设
+> `BPC_HYBRID_LLM_PROFILE` 时前缀根本不参与解析——单独提供这些变量会解析为
+> enabled=false/provider=mock/model=mock/max_tokens=1024，执行器将硬拒）。
+> 配置就绪性请先跑离线预检（不调用 API、不读 .env、不打印密钥）：
+> `python scripts/check_api_env_ready_v1.py`（在 formal_experiment 下运行；
+> 缺失任何一项即 exit 2 并列出该项）。
+
 ```powershell
-# 进程环境（勿写入仓库）：BPC_HYBRID_DeepSeek_ENABLED=true / _PROVIDER /
-# _BASE_URL=https://api.deepseek.com/v1 / _API_KEY / _MODEL=deepseek-v4-pro /
-# _MAX_TOKENS=4096 / _TEMPERATURE=0 / _TOP_P=1
-# Batch A（off-peak 逐次检查；每 stage 独立 --output-dir；链式 --resume-from-ledger）
-python formal_experiment/scripts/run_s2_12_direct_llm_v1.py --transport real --allow-llm `
-  --auth-file formal_experiment/configs/s2_12_api_authorization_D-CAL.json --stage-id D-CAL `
+# 进程环境（勿写入仓库，勿在聊天发送密钥值）——flat 键全集：
+$env:BPC_HYBRID_LLM_ENABLED   = 'true'
+$env:BPC_HYBRID_LLM_PROVIDER  = 'openai_compatible'   # 枚举白名单；仅此值有效
+$env:BPC_HYBRID_LLM_MODEL     = 'deepseek-v4-pro'
+$env:BPC_HYBRID_LLM_BASE_URL  = 'https://api.deepseek.com/v1'
+$env:BPC_HYBRID_LLM_API_KEY   = '<由用户在宿主/会话环境注入的安全值>'
+$env:BPC_HYBRID_LLM_MAX_TOKENS= '4096'
+$env:BPC_HYBRID_LLM_TEMPERATURE='0'
+$env:BPC_HYBRID_LLM_TOP_P     = '1'
+python formal_experiment/scripts/check_api_env_ready_v1.py   # 期望：API ENV READY / exit 0
+```
+
+> **执行目录约定**：以下命令**在 `formal_experiment/` 目录下运行**（`cd
+> formal_experiment`）；所有 `outputs/development/...` 相对路径都相对
+> `formal_experiment/`，`Path.resolve()` 后全部落在 `formal_experiment/` 内，
+> 不会越出活动范围写仓库根。从仓库根运行同一命令会把相对路径解析到仓库根，
+> 属错误用法（2026-09-07 修正）。
+>
+> 预算纪律（原授权不变）：**Batch A 的 42.09 美元是整个 direct+fallback 63 次
+> 的总上界**，不是每 stage/每方法各 42.09——各 stage 授权文件里
+> `global_usd_cost_cap` 填的是同一 42.09（D-CAL=1.00），executor 从链式 live
+> ledger 重建累计态，任何 stage 启动前发现累计已超即拒绝；最终胶囊 cost 由
+> finalize 按官方 off-peak 价重算。
+
+```powershell
+# Batch A（off-peak 逐次检查；每 stage 独立 --output-dir/--raw-dir；链式 --resume-from-ledger）
+python scripts/run_s2_12_direct_llm_v1.py --transport real --allow-llm `
+  --auth-file configs/s2_12_api_authorization_D-CAL.json --stage-id D-CAL `
   --output-dir outputs/development/s2_12_direct_llm_stage_dcal_v1 `
   --raw-dir outputs/development/s2_12_direct_llm_raw_dcal_v1
-python formal_experiment/scripts/run_s2_12_direct_llm_v1.py --transport real --allow-llm `
-  --auth-file formal_experiment/configs/s2_12_api_authorization_D-REST.json --stage-id D-REST `
+python scripts/run_s2_12_direct_llm_v1.py --transport real --allow-llm `
+  --auth-file configs/s2_12_api_authorization_D-REST.json --stage-id D-REST `
   --output-dir outputs/development/s2_12_direct_llm_stage_drest_v1 `
   --raw-dir outputs/development/s2_12_direct_llm_raw_drest_v1 `
   --resume-from-ledger outputs/development/s2_12_direct_llm_stage_dcal_v1.ledger.jsonl
-# F-1/F-2/F-3 同理（每 stage 独立 raw/capsule 目录，链式 resume）
-python formal_experiment/scripts/finalize_s2_12_arm_v1.py --arm direct_llm `
+# F-1/F-2/F-3 同理（每 stage 独立 raw/capsule 目录，链式 resume，同 --usd 总上界 42.09）
+python scripts/finalize_s2_12_arm_v1.py --arm direct_llm `
   --raw-dir outputs/development/s2_12_direct_llm_raw_dcal_v1 `
   --raw-dir outputs/development/s2_12_direct_llm_raw_drest_v1 `
   --ledger outputs/development/s2_12_direct_llm_stage_drest_v1.ledger.jsonl
-python formal_experiment/scripts/evaluate_s2_12_api_arm_v1.py --arm direct_llm --evaluate
-# Batch B
-python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py `
-  --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v1.json `
-  --authorization-file formal_experiment/configs/gdpr7_direct_llm_authorization_event_v1.json `
+python scripts/evaluate_s2_12_api_arm_v1.py --arm direct_llm --evaluate
+# Batch B（GDPR；executor 只写 dev 目录，正式 arm capsule 由后续显式 promotion 步骤发布）
+python scripts/run_gdpr7_direct_llm_v1.py `
+  --contract-file configs/ablations/gdpr7_direct_llm_execution_contract_v1.json `
+  --authorization-file configs/gdpr7_direct_llm_authorization_event_v1.json `
   --raw-dir outputs/development/gdpr7_direct_llm_raw_real_v1 `
   --capsule-dir outputs/development/gdpr7_direct_llm_real_v1
 ```
 
-每批完成后：direct/fallback→`finalize`+`evaluate_s2_12_api_arm_v1.py --arm …`；
-GDPR 74→`run_gdpr_s2_s3_linkage_v1.py` 消费 `data/predictions/gdpr7_direct_llm_v1`
-（promotion 为独立显式步骤）→ 成对比较与变化案例报告。
+每批完成后：direct/fallback→`finalize_s2_12_arm_v1.py --arm …` +
+`evaluate_s2_12_api_arm_v1.py --arm …`；GDPR 74→显式 promotion 至
+`data/predictions/gdpr7_direct_llm_v1`（可执行步骤见 §13.4/D 批实现）→
+`run_gdpr_s2_s3_linkage_v1.py` 消费 → 成对比较与变化案例报告。
+
+### 13.4 promotion 与验收钩子（2026-09-08 已实现为可执行步骤）
+
+- S2.12 API arm：`scripts/finalize_s2_12_arm_v1.py` 即正式 capsule 发布入口
+  （`data/predictions/s2_12_direct_llm_v1` / `data/predictions/s2_12_sun_llm_fallback_v1`，
+  坐标-only），随后 `scripts/evaluate_s2_12_api_arm_v1.py --arm direct_llm|sun_llm_fallback`。
+- GDPR 74：`scripts/promote_gdpr7_direct_llm_arm_v1.py`（默认 dev capsule
+  `outputs/development/gdpr7_direct_llm_real_v1` → 目标
+  `data/predictions/gdpr7_direct_llm_v1`；`--dry-run` 默认/`--apply`）：
+  校验 telemetry.status==complete、74/74 ok 且 error_category 全 null、
+  真实运行门禁（拒绝 fake rehearsal）、schema identity、manifest↔文件 sha、
+  文本/Gold 键 containment、input/preflight 绑定；目标不存在才原子发布 +
+  promotion manifest（`gdpr7_direct_llm_promotion@1.0.0`），并打印下一步衔接命令。
+- 衔接命令（promotion 后执行，Task D 已接通）：
+  `scripts/run_gdpr_3type_linkage_v1.py`（`--arm all|reference,rules_only,direct_llm`，
+  direct 胶囊经参数化 converter 双 schema 探测消费；`--allow-missing-arm` 可跳过
+  缺失来源继续其它来源）；
+  `scripts/run_gdpr_s2_s3_linkage_v1.py`（四类扩展，ARM_PATHS["direct_llm"] 就绪，
+  substitution_changes 带机器 reason）；
+  `scripts/run_s3_formula_repair_v2.py --sources reference,rules_only,direct_llm
+  --direct-capsule <path>` 与 `scripts/reevaluate_s3_extended_unified_v1.py`
+  （统一五分类来源参数化；direct 源要求胶囊存在且 74/74 ok 才计入）。
+- 每次提交后按第五节验收钩子重跑：
+  `python scripts/verify_s2_12_authorization_files_v1.py`（70/70 PASS）与
+  `python -m pytest tests/test_s2_12_authorization_files_v1.py -q`，
+  并核验 `.gitattributes` 钉住的 LF 资产在 `git checkout` 后仍为原始 LF 字节
+  （回归测试已内置）。
