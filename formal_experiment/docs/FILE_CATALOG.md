@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-08
-**收录文件**：1683 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1679 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -416,9 +416,6 @@
 | `data/development/human_review/estg_150_llm_six_element_candidates_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/estg_150_review_aids_zh_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/estg_150_translation_en_v1.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
-| `data/development/human_review/gdpr7_ai_prefill_v1/.gitattributes` | 开发/溯源 | 项目文件 |
-| `data/development/human_review/gdpr7_ai_prefill_v1/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
-| `data/development/human_review/gdpr7_ai_prefill_v1/proposals.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/gdpr7_six_element_review_blank_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/gdpr7_six_element_review_decisions_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/gdpr7_six_element_review_decisions_v2.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
@@ -1241,7 +1238,6 @@
 | `scripts/build_formal_coarse_view_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_formal_gold_authorization_packet.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_formal_gold_authorization_packet_v2.py` | 活动 | Python 实现、脚本或测试 |
-| `scripts/build_gdpr7_ai_prefill_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gdpr7_direct_llm_authorization_event_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gdpr7_direct_llm_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gdpr7_review_editable_v1.py` | 活动 | Python 实现、脚本或测试 |

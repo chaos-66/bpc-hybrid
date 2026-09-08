@@ -46,6 +46,7 @@ JSON serialization used by every writer in this workflow is
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import os
@@ -981,3 +982,1029 @@ def validate_confirmation_event(conf: Any,
                     f"{expected!r} (hash drift)"
                 )
     return problems
+
+
+# ===========================================================================
+# V2 structured review layer (schema gdpr7_six_element_review_editable@1.1.0)
+#
+# The v1 layer records one decision per sentence per element slot (six
+# single-value blocks).  The v2 layer keeps that legacy layout untouched and
+# ADDS an optional structured section to every sentence review:
+#
+#   * ``rule_items``          null | list of {item_id, modality, actor, action,
+#                             condition, constraint, exception} where each of the
+#                             six element blocks keeps the SAME {decision,
+#                             edited_value} semantics as the legacy six blocks;
+#                             item_id = "<sample_id>.i<n>" with n starting at 1
+#                             and unique within the sentence.  An item whose six
+#                             decisions are all null is rejected (a placeholder
+#                             with no decision is meaningless); a partially
+#                             decided item is only legal while the sentence is
+#                             still ``unreviewed`` (mirror of the v1 "partial
+#                             decisions keep the sentence unreviewed" rule).
+#   * ``actor_action_map``    null | list of {actor_item_id, action_item_id}
+#                             (cross-item actor -> action bindings).  The
+#                             within-item 1:1 binding (actor of item i -> action
+#                             of the same item) is IMPLICIT and needs no entry;
+#                             explicit entries express extra/alternative edges
+#                             and therefore require rule_items with >= 2 items.
+#   * ``order_relations``     null | list of {before_item_id, after_item_id}
+#                             meaning "the action of the before item precedes
+#                             the action of the after item"; likewise only
+#                             meaningful with >= 2 items.
+#
+# Multi-element consistency: whenever ``rule_items`` is non-null,
+# ``rule_items[0]`` must be an EXACT mirror of the legacy six blocks (same
+# decisions AND same edited_value), so a v2 sentence keeps the legacy
+# quick-read view in sync with the first structured item.  The editing tool
+# keeps this mirror synchronised automatically; the importer resolves any
+# conflict in favour of rule_items and re-mirrors the legacy six; validation
+# treats a mirror violation as an error.
+#
+# Canonical export (``export_canonical_records_v2``) produces coordinate-only
+# Rule-Record rows whose coordinate frame is the SENTENCE TEXT (0 .. len), the
+# same frame used by the existing Rules-Only GDPR7 capsule rows and consumed by
+# the first-valid-span projection (``bpc_hybrid.gdpr_s2_s3_projection``).  The
+# review document's ``char_span`` is rule-text-relative and (for whitespace-
+# folded sentences) does not equal the sentence text span, so it is deliberately
+# NOT reused as the clause_span of the exported rows; telemetry records any
+# anomaly.  Span values are located with ``str.find`` over the sentence text;
+# a value that is not a verbatim substring, or that matches zero / more than
+# once, is NOT exported (no fabrication) and is recorded in the telemetry.
+# ===========================================================================
+
+SCHEMA_EDITABLE_V2 = "gdpr7_six_element_review_editable@1.1.0"
+SUPERSEDES_SCHEMA_EDITABLE = SCHEMA_EDITABLE  # value of the new "supersedes" key
+PREVIOUS_EDITABLE_FILENAME = "gdpr7_six_element_review_decisions_v1.json"
+DEFAULT_EDITABLE_V2_PATH = (
+    ROOT / "data" / "development" / "human_review"
+    / "gdpr7_six_element_review_decisions_v2.json"
+)
+
+# review block keys for a v2 sentence: the eight v1 keys + the three
+# structured keys.
+REVIEW_V2_KEYS = frozenset(ALL_FIELDS) | frozenset({
+    "review_state", "notes", "rule_items", "actor_action_map",
+    "order_relations",
+})
+RULE_ITEM_KEYS = frozenset({"item_id"}) | frozenset(ALL_FIELDS)
+AAM_ENTRY_KEYS = frozenset({"actor_item_id", "action_item_id"})
+ORDER_ENTRY_KEYS = frozenset({"before_item_id", "after_item_id"})
+
+# top-level keys of a v2 editable document (v1 keys + supersedes /
+# previous_editable_file).  ``v1_editable_sha256`` is recorded by the v2
+# builder but is OPTIONAL (a pure v1->v2 migration has no separate v1 file).
+EDITABLE_V2_REQUIRED_TOP_KEYS = frozenset({
+    "schema_version", "dataset_id", "status", "counts",
+    "source_blank_sha256", "created_at_utc", "supersedes",
+    "previous_editable_file", "rules",
+})
+EDITABLE_V2_ALLOWED_TOP_KEYS = EDITABLE_V2_REQUIRED_TOP_KEYS | frozenset({
+    "v1_editable_sha256",
+})
+
+ITEM_ID_PREFIX_RE = re.compile(r"^(.+)\.i([1-9][0-9]*)$")
+
+# canonical export row constants (shape mirrors Rules-Only capsule
+# records[].record rows)
+CANONICAL_ROW_SCHEMA = "1.0.0"
+CANONICAL_METHOD_NAME = "human_review"
+CANONICAL_METHOD_VARIANT = "gdpr7_six_element_review_v2"
+TEXT_SPAN_FIELDS = TEXT_FIELDS  # actor/action/condition/constraint/exception
+
+
+# ---------------------------------------------------------------------------
+# v2 structural helpers
+# ---------------------------------------------------------------------------
+
+
+def sentence_rule_items(sentence: Mapping[str, Any]):
+    """Return the sentence's ``rule_items`` value (None when absent/malformed)."""
+    review = sentence.get("review")
+    if not isinstance(review, dict):
+        return None
+    return review.get("rule_items")
+
+
+def _legacy_review_view(sentence: Mapping[str, Any]) -> dict[str, Any]:
+    """Shallow copy of ``sentence`` whose review carries ONLY the v1 keys.
+
+    Used to reuse the v1 sentence validator (identity / candidate / legacy six
+    blocks / review_state semantics / advisory warnings) without tripping its
+    strict "no extra review keys" check on the v2 structured keys.
+    """
+    view = dict(sentence)
+    review = sentence.get("review")
+    if isinstance(review, dict):
+        view["review"] = {
+            key: review[key]
+            for key in frozenset(ALL_FIELDS) | frozenset(
+                {"review_state", "notes"})
+            if key in review
+        }
+    else:
+        view["review"] = review
+    return view
+
+
+def _validate_rule_item_blocks(item: Any,
+                               sentence_text: str,
+                               prefix: str) -> list[str]:
+    """Structural + per-block decision validation for ONE rule_item."""
+    errors: list[str] = []
+    if not isinstance(item, dict):
+        return [f"{prefix}: rule_item is not an object"]
+    extra = set(item.keys()) - RULE_ITEM_KEYS
+    if extra:
+        errors.append(f"{prefix}: rule_item has extra keys {sorted(extra)}")
+    missing = RULE_ITEM_KEYS - set(item.keys())
+    if missing:
+        errors.append(f"{prefix}: rule_item missing keys {sorted(missing)}")
+    item_id = item.get("item_id")
+    if not isinstance(item_id, str) or not item_id:
+        errors.append(f"{prefix}: rule_item.item_id must be a non-empty string")
+    for field in ALL_FIELDS:
+        entry = item.get(field)
+        if not isinstance(entry, dict):
+            errors.append(f"{prefix}: rule_item.{field} is not an object")
+            continue
+        if set(entry.keys()) != FIELD_ENTRY_KEYS:
+            errors.append(
+                f"{prefix}: rule_item.{field} keys = {sorted(entry)}; expected "
+                f"{sorted(FIELD_ENTRY_KEYS)}"
+            )
+            continue
+        decision = entry.get("decision")
+        edited_value = entry.get("edited_value")
+        if decision is None:
+            # entering structured mode means the item is fully decided
+            errors.append(
+                f"{prefix}: rule_item.{field}.decision 为 null"
+                f"（rule_item 未全决；进入结构化即全项已决，句子未完成）"
+            )
+            continue
+        ok, ferr = validate_field_decision(
+            field, decision, edited_value, sentence_text)
+        if not ok:
+            errors.extend(f"{prefix}: rule_item.{field}: {m}" for m in ferr)
+    return errors
+
+
+def _rule_item_is_empty(item: Any) -> bool:
+    """True when the item exists but none of its six blocks is decided."""
+    if not isinstance(item, dict):
+        return False
+    for field in ALL_FIELDS:
+        entry = item.get(field)
+        if isinstance(entry, dict) and entry.get("decision") in DECISION_VALUES:
+            return False
+    return True
+
+
+def _validate_rule_items(sentence: Mapping[str, Any], prefix: str) -> list[str]:
+    """v2 rule_items validation (structure, ids, mirror, decision blocks)."""
+    errors: list[str] = []
+    review = sentence.get("review")
+    if not isinstance(review, dict):
+        return errors
+    rule_items = review.get("rule_items")
+    sample_id = sentence.get("sample_id")
+    text = sentence.get("sentence_text") or ""
+    if not isinstance(sample_id, str) or not sample_id:
+        errors.append(f"{prefix}: sample_id required for rule_items")
+        return errors
+
+    if rule_items is None:
+        return errors  # legacy fast path; nothing more to check here
+    if not isinstance(rule_items, list):
+        errors.append(f"{prefix}: rule_items must be null or an array")
+        return errors
+    if not rule_items:
+        errors.append(f"{prefix}: rule_items must be a non-empty array")
+        return errors
+
+    seen_ids: set[str] = set()
+    legacy_mirror_mismatch: list[str] = []
+    for idx, item in enumerate(rule_items):
+        item_prefix = f"{prefix}.rule_items[{idx}]"
+        errors.extend(_validate_rule_item_blocks(item, text, item_prefix))
+        if _rule_item_is_empty(item):
+            errors.append(f"{item_prefix}: rule_item 六块均未决（空项不允许）")
+        if isinstance(item, dict):
+            item_id = item.get("item_id")
+            if isinstance(item_id, str):
+                if item_id in seen_ids:
+                    errors.append(
+                        f"{item_prefix}: duplicate rule_item item_id {item_id!r}")
+                seen_ids.add(item_id)
+                match = ITEM_ID_PREFIX_RE.match(item_id)
+                if match is None or match.group(1) != sample_id:
+                    errors.append(
+                        f"{item_prefix}: item_id {item_id!r} must look like "
+                        f"'{sample_id}.i<n>' (n >= 1)"
+                    )
+                elif item_id != f"{sample_id}.i{idx + 1}":
+                    errors.append(
+                        f"{item_prefix}: item_id {item_id!r} not in canonical "
+                        f"contiguous numbering; expected {sample_id}.i{idx + 1}"
+                    )
+            if idx == 0:
+                for field in ALL_FIELDS:
+                    legacy_entry = review.get(field)
+                    item_entry = item.get(field)
+                    if not isinstance(legacy_entry, dict) \
+                            or not isinstance(item_entry, dict):
+                        legacy_mirror_mismatch.append(field)
+                        continue
+                    if legacy_entry != item_entry:
+                        legacy_mirror_mismatch.append(field)
+    if legacy_mirror_mismatch:
+        errors.append(
+            f"{prefix}: legacy 六块与 rule_items[0] 镜像不一致（legacy=快捷镜像）: "
+            f"{', '.join(legacy_mirror_mismatch)}"
+        )
+    return errors
+
+
+def _validate_relation_arrays(sentence: Mapping[str, Any],
+                              prefix: str) -> list[str]:
+    """v2 actor_action_map / order_relations validation."""
+    errors: list[str] = []
+    review = sentence.get("review")
+    if not isinstance(review, dict):
+        return errors
+    rule_items = review.get("rule_items")
+    items_ok = isinstance(rule_items, list) and len(rule_items) >= 2
+    valid_ids: set[str] = set()
+    if isinstance(rule_items, list):
+        for item in rule_items:
+            if isinstance(item, dict) and isinstance(item.get("item_id"), str):
+                valid_ids.add(item["item_id"])
+
+    aam = review.get("actor_action_map")
+    if aam is not None:
+        if not isinstance(aam, list):
+            errors.append(f"{prefix}: actor_action_map must be null or an array")
+        elif aam and not items_ok:
+            errors.append(
+                f"{prefix}: actor_action_map 仅 rule_items 长度>=2 时有意义"
+            )
+        else:
+            for i, entry in enumerate(aam):
+                epath = f"{prefix}.actor_action_map[{i}]"
+                if not isinstance(entry, dict) or set(entry.keys()) != AAM_ENTRY_KEYS:
+                    errors.append(
+                        f"{epath}: keys must be exactly "
+                        f"{sorted(AAM_ENTRY_KEYS)}")
+                    continue
+                aid = entry.get("actor_item_id")
+                xid = entry.get("action_item_id")
+                if aid not in valid_ids:
+                    errors.append(f"{epath}: actor_item_id {aid!r} 引用了不存在的 item")
+                if xid not in valid_ids:
+                    errors.append(f"{epath}: action_item_id {xid!r} 引用了不存在的 item")
+                if isinstance(aid, str) and aid == xid:
+                    errors.append(
+                        f"{epath}: 自环不允许（actor==action 同项 {aid!r}）")
+
+    orders = review.get("order_relations")
+    if orders is not None:
+        if not isinstance(orders, list):
+            errors.append(f"{prefix}: order_relations must be null or an array")
+        elif orders and not items_ok:
+            errors.append(
+                f"{prefix}: order_relations 仅 rule_items 长度>=2 时有意义")
+        else:
+            for i, entry in enumerate(orders):
+                opath = f"{prefix}.order_relations[{i}]"
+                if not isinstance(entry, dict) \
+                        or set(entry.keys()) != ORDER_ENTRY_KEYS:
+                    errors.append(
+                        f"{opath}: keys must be exactly {sorted(ORDER_ENTRY_KEYS)}")
+                    continue
+                before = entry.get("before_item_id")
+                after = entry.get("after_item_id")
+                if before not in valid_ids:
+                    errors.append(f"{opath}: before_item_id {before!r} 引用不存在 item")
+                if after not in valid_ids:
+                    errors.append(f"{opath}: after_item_id {after!r} 引用不存在 item")
+                if isinstance(before, str) and before == after:
+                    errors.append(
+                        f"{opath}: 自环不允许（before==after {before!r}）")
+    return errors
+
+
+def sentence_reviewed_v2(sentence: Mapping[str, Any]) -> bool:
+    """v2 "reviewed" definition: legacy fast path == v1 six-of-six decided;
+    structured path == every rule_item fully decided (six-of-six)."""
+    rule_items = sentence_rule_items(sentence)
+    if rule_items is None:
+        return sentence_is_reviewed(sentence)
+    if not isinstance(rule_items, list) or not rule_items:
+        return False
+    for item in rule_items:
+        if not isinstance(item, dict):
+            return False
+        for field in ALL_FIELDS:
+            entry = item.get(field)
+            if not isinstance(entry, dict) \
+                    or entry.get("decision") not in DECISION_VALUES:
+                return False
+    return True
+
+
+def recompute_sentence_review_state_v2(sentence: Mapping[str, Any]) -> str:
+    """Recompute ``review.review_state`` with v2 structured semantics."""
+    review = sentence.get("review")
+    if not isinstance(review, dict):
+        return "unreviewed"
+    state = "reviewed" if sentence_reviewed_v2(sentence) else "unreviewed"
+    review["review_state"] = state
+    return state
+
+
+def _sentence_v2_undecided_detail(sentence: Mapping[str, Any]) -> list[str]:
+    """List of human-readable descriptions of the still-undecided places.
+
+    Used to explain why a ``reviewed`` state (or a freeze) is not legal.
+    """
+    details: list[str] = []
+    review = sentence.get("review")
+    if not isinstance(review, dict):
+        return ["review 缺失"]
+    undecided = [f for f in ALL_FIELDS
+                 if not (isinstance(review.get(f), dict)
+                         and review[f].get("decision") in DECISION_VALUES)]
+    if undecided:
+        details.append("legacy 六块未决: " + ", ".join(undecided))
+    rule_items = review.get("rule_items")
+    if isinstance(rule_items, list):
+        for i, item in enumerate(rule_items):
+            if not isinstance(item, dict):
+                details.append(f"rule_items[{i}] 非对象")
+                continue
+            undecided = [
+                f for f in ALL_FIELDS
+                if not (isinstance(item.get(f), dict)
+                        and item[f].get("decision") in DECISION_VALUES)]
+            if undecided:
+                details.append(
+                    f"rule_item {item.get('item_id')!r} 未决: "
+                    + ", ".join(undecided))
+    return details
+
+
+# ---------------------------------------------------------------------------
+# v2 whole-document validation
+# ---------------------------------------------------------------------------
+
+
+def validate_sentence_review_v2(sentence: Mapping[str, Any],
+                                blank_identity: Optional[Mapping[str, Any]] = None
+                                ) -> Tuple[bool, list[str], list[str]]:
+    """Validate ONE sentence under the v2 rules.
+
+    Runs the complete v1 sentence validation on the legacy view first (identity,
+    candidate, legacy six blocks, review_state semantics, advisory warnings),
+    then applies the v2 structured rules:
+
+    * the review block may carry the three v2 keys on top of the v1 keys;
+    * ``rule_items`` (when non-null): non-empty array, canonical contiguous
+      item ids, no all-undecided item, rule_items[0] == legacy mirror;
+    * ``actor_action_map`` / ``order_relations``: null or arrays, empty arrays
+      allowed (explicit "none"), non-empty arrays need >= 2 items, valid
+      references, no self-loops;
+    * a ``reviewed`` state additionally requires the v2 completeness
+      (every item fully decided).
+    """
+    errors: list[str] = []
+    warnings: list[str] = []
+    if not isinstance(sentence, dict):
+        return (False, ["sentence entry is not an object"], [])
+    sid = sentence.get("sample_id")
+    prefix = sid if isinstance(sid, str) and sid else "<sentence>"
+
+    # 1) legacy/identity/candidate/review_state semantics via the v1 validator
+    #    on a v1-only view of the sentence.
+    ok, base_errors, base_warnings = validate_sentence_review(
+        _legacy_review_view(sentence), blank_identity)
+    errors.extend(base_errors)
+    warnings.extend(base_warnings)
+
+    # 2) v2 review-key structure + rule_items + relations
+    review = sentence.get("review")
+    if isinstance(review, dict):
+        extra = set(review.keys()) - REVIEW_V2_KEYS
+        if extra:
+            errors.append(f"{prefix}: review 含未知键 {sorted(extra)}")
+    errors.extend(_validate_rule_items(sentence, prefix))
+    errors.extend(_validate_relation_arrays(sentence, prefix))
+
+    # 3) reviewed state requires v2 completeness
+    if isinstance(review, dict) and review.get("review_state") == "reviewed":
+        if not sentence_reviewed_v2(sentence):
+            errors.append(
+                f"{prefix}: review_state=reviewed 但 v2 未全决: "
+                + "; ".join(_sentence_v2_undecided_detail(sentence)))
+    return (not errors, errors, warnings)
+
+
+def validate_editable_document_v2(doc: Any) -> list[str]:
+    """Structural checks for a v2 editable document (schema 1.1.0).
+
+    Mirrors ``validate_editable_document`` for the v1 file but accepts the
+    three extra top-level keys and the three structured review keys.  Empty
+    list == pass.
+    """
+    problems: list[str] = []
+    if not isinstance(doc, dict):
+        return ["editable document is not an object"]
+    if doc.get("schema_version") != SCHEMA_EDITABLE_V2:
+        problems.append(
+            f"schema_version {doc.get('schema_version')!r} != "
+            f"{SCHEMA_EDITABLE_V2!r}"
+        )
+    extra = set(doc.keys()) - EDITABLE_V2_ALLOWED_TOP_KEYS
+    if extra:
+        problems.append(f"top-level extra keys {sorted(extra)}")
+    missing = EDITABLE_V2_REQUIRED_TOP_KEYS - set(doc.keys())
+    if missing:
+        problems.append(f"top-level missing keys {sorted(missing)}")
+    if doc.get("supersedes") != SCHEMA_EDITABLE:
+        problems.append(
+            f"supersedes {doc.get('supersedes')!r} != {SCHEMA_EDITABLE!r}")
+    if doc.get("previous_editable_file") != PREVIOUS_EDITABLE_FILENAME:
+        problems.append(
+            f"previous_editable_file {doc.get('previous_editable_file')!r} != "
+            f"{PREVIOUS_EDITABLE_FILENAME!r}")
+    if not isinstance(doc.get("dataset_id"), str) or not doc["dataset_id"]:
+        problems.append("dataset_id must be a non-empty string")
+    if not isinstance(doc.get("status"), str) or not doc["status"]:
+        problems.append("status must be a non-empty string")
+    sha = doc.get("source_blank_sha256")
+    if not isinstance(sha, str) or len(sha) != 64:
+        problems.append("source_blank_sha256 must be a 64-hex string")
+    v1_sha = doc.get("v1_editable_sha256")
+    if v1_sha is not None and (not isinstance(v1_sha, str)
+                               or len(v1_sha) != 64):
+        problems.append("v1_editable_sha256 must be a 64-hex string or null")
+    if not isinstance(doc.get("created_at_utc"), str) \
+            or not doc["created_at_utc"]:
+        problems.append("created_at_utc must be a non-empty string")
+    counts = doc.get("counts")
+    if not isinstance(counts, dict) or not isinstance(counts.get("rules"), int) \
+            or not isinstance(counts.get("sentences"), int):
+        problems.append("counts must carry integer rules/sentences")
+    rules = doc.get("rules")
+    if not isinstance(rules, list):
+        return problems + ["rules must be a list"]
+    seen_sids: set[str] = set()
+    for rule in rules:
+        if not isinstance(rule, dict):
+            problems.append("rule entry is not an object")
+            continue
+        rid = rule.get("rule_id")
+        if not isinstance(rid, str) or not rid:
+            problems.append("rule_id must be a non-empty string")
+        sentences = rule.get("sentences")
+        if not isinstance(sentences, list):
+            problems.append(f"rule {rid}: sentences must be a list")
+            continue
+        for s in sentences:
+            if not isinstance(s, dict):
+                problems.append(f"rule {rid}: sentence entry is not an object")
+                continue
+            sid = s.get("sample_id")
+            if not isinstance(sid, str) or not sid:
+                problems.append(f"rule {rid}: sentence sample_id missing")
+                continue
+            if sid in seen_sids:
+                problems.append(f"duplicate sample_id {sid}")
+            seen_sids.add(sid)
+            for key in ("sample_id", "sentence_idx", "char_span", "text_sha256",
+                        "sentence_text", "candidate", "review"):
+                if key not in s:
+                    problems.append(f"{sid}: missing {key}")
+            text = s.get("sentence_text")
+            if isinstance(text, str) and text \
+                    and s.get("text_sha256") != sha256_text(text):
+                problems.append(
+                    f"{sid}: text_sha256 does not match sentence_text bytes")
+            review = s.get("review")
+            if not isinstance(review, dict):
+                problems.append(f"{sid}: review is not an object")
+                continue
+            extra_review = set(review.keys()) - REVIEW_V2_KEYS
+            if extra_review:
+                problems.append(f"{sid}: review extra keys {sorted(extra_review)}")
+            for key in frozenset(ALL_FIELDS) | frozenset(
+                    {"review_state", "notes", "rule_items", "actor_action_map",
+                     "order_relations"}):
+                if key not in review:
+                    problems.append(f"{sid}: review missing {key}")
+    return problems
+
+
+def audit_filled_document_v2(doc: Any,
+                             blank_doc: Any = None,
+                             require_blank: bool = True) -> dict[str, Any]:
+    """Full audit of a filled v2 editable document (schema 1.1.0).
+
+    Same shape as ``audit_filled_document`` (errors / warnings /
+    sample_errors) but validates the v2 document schema and the v2 per-sentence
+    rules, and compares the immutable identity against the frozen blank.
+    """
+    errors: list[str] = []
+    warnings: list[str] = []
+    if not isinstance(doc, dict):
+        return {"errors": ["editable document is not an object"],
+                "warnings": [], "sample_errors": 0}
+    errors.extend(validate_editable_document_v2(doc))
+    if blank_doc is None:
+        if require_blank:
+            errors.append("blank surface document required for the "
+                          "immutable-identity comparison")
+    else:
+        blank_problems = validate_blank_document(blank_doc)
+        if blank_problems:
+            errors.append("blank surface document is invalid:")
+            errors.extend(f"  blank: {m}" for m in blank_problems)
+        errors.extend(identity_drift_errors(doc, blank_doc))
+
+    sample_errors = 0
+    for _rid, sentence in iter_flat_sentences(doc):
+        ok, errs, warns = validate_sentence_review_v2(sentence)
+        errors.extend(errs)
+        warnings.extend(warns)
+        if errs:
+            sample_errors += 1
+    return {"errors": errors, "warnings": warnings, "sample_errors": sample_errors}
+
+
+def collect_stats_v2(doc: Any) -> dict[str, Any]:
+    """Aggregate v2 progress statistics.
+
+    Extends :func:`collect_stats` with structured-layer counts.  For a
+    legacy-only sentence (``rule_items`` null) the adjudicated surface is the
+    six legacy blocks (v1 semantics).  For a structured sentence the surface is
+    the six blocks of EVERY rule_item (rule_items[0] is required to mirror the
+    legacy six, so the legacy six are not counted a second time).  Therefore
+    ``decisions_total == fields_total`` holds exactly when the document is
+    complete.  Extra v2 keys: ``structured_sentences``, ``items_total``,
+    ``item_fields_total`` (== items_total*6), ``item_blocks_decided`` (decided
+    blocks over all rule_items — used by the freeze/require-complete checks to
+    assert 六块全决), ``actor_action_map_total`` and
+    ``order_relations_total``.  ``reviewed`` uses the v2 completeness rule.
+    """
+    sentences_total = 0
+    reviewed = 0
+    structured_sentences = 0
+    decisions_total = 0
+    fields_total = 0
+    accepted = edited = rejected = 0
+    per_field_decided = {field: 0 for field in ALL_FIELDS}
+    items_total = 0
+    item_blocks_decided = 0
+    aam_total = 0
+    order_total = 0
+    warnings_by_sample: dict[str, list[str]] = {}
+    for _rid, sentence in iter_flat_sentences(doc):
+        sentences_total += 1
+        review = sentence.get("review")
+        if not isinstance(review, dict):
+            continue
+        rule_items = review.get("rule_items")
+        is_structured = isinstance(rule_items, list) and len(rule_items) >= 1
+        if is_structured:
+            structured_sentences += 1
+        sentence_decided = 0
+        sentence_capacity = 0
+        if is_structured:
+            for item in rule_items:
+                items_total += 1
+                if not isinstance(item, dict):
+                    continue
+                for field in ALL_FIELDS:
+                    entry = item.get(field)
+                    sentence_capacity += 1
+                    if isinstance(entry, dict) \
+                            and entry.get("decision") in DECISION_VALUES:
+                        sentence_decided += 1
+                        item_blocks_decided += 1
+                        decision = entry["decision"]
+                        if decision == "accepted":
+                            accepted += 1
+                        elif decision == "edited":
+                            edited += 1
+                        elif decision == "rejected":
+                            rejected += 1
+                if isinstance(item.get("item_id"), str):
+                    pass  # item identity is validated elsewhere
+        else:
+            for field in ALL_FIELDS:
+                entry = review.get(field)
+                sentence_capacity += 1
+                if isinstance(entry, dict) and entry.get("decision") in DECISION_VALUES:
+                    sentence_decided += 1
+                    per_field_decided[field] += 1
+                    decision = entry["decision"]
+                    if decision == "accepted":
+                        accepted += 1
+                    elif decision == "edited":
+                        edited += 1
+                    elif decision == "rejected":
+                        rejected += 1
+        decisions_total += sentence_decided
+        fields_total += sentence_capacity
+        aam = review.get("actor_action_map")
+        if isinstance(aam, list):
+            aam_total += len(aam)
+        orders = review.get("order_relations")
+        if isinstance(orders, list):
+            order_total += len(orders)
+        if sentence_reviewed_v2(sentence):
+            reviewed += 1
+        _ok, _errs, warns = validate_sentence_review_v2(sentence)
+        if warns:
+            sid = sentence.get("sample_id")
+            if isinstance(sid, str) and sid:
+                warnings_by_sample[sid] = warns
+    return {
+        "sentences_total": sentences_total,
+        "reviewed": reviewed,
+        "unreviewed": sentences_total - reviewed,
+        "decisions_total": decisions_total,
+        "fields_total": fields_total,
+        "accepted": accepted,
+        "edited": edited,
+        "rejected": rejected,
+        "per_field_decided": per_field_decided,
+        "structured_sentences": structured_sentences,
+        "items_total": items_total,
+        "item_fields_total": items_total * FIELDS_PER_SENTENCE,
+        "item_blocks_decided": item_blocks_decided,
+        "actor_action_map_total": aam_total,
+        "order_relations_total": order_total,
+        "warnings_by_sample": warnings_by_sample,
+    }
+
+
+def recompute_doc_status_v2(doc: Any) -> str:
+    """Recompute the v2 editable top-level ``status`` from current content."""
+    stats = collect_stats_v2(doc)
+    if stats["sentences_total"] and stats["reviewed"] == stats["sentences_total"]:
+        status = STATUS_EDITING_COMPLETE
+    elif stats["decisions_total"] > 0 or stats["item_blocks_decided"] > 0:
+        status = STATUS_EDITING_IN_PROGRESS
+    else:
+        status = STATUS_EDITING_UNREVIEWED
+    if isinstance(doc, dict):
+        doc["status"] = status
+    return status
+
+
+# ---------------------------------------------------------------------------
+# v1 -> v2 migration (pure)
+# ---------------------------------------------------------------------------
+
+
+def migrate_v1_to_v2(doc_v1: Any) -> dict[str, Any]:
+    """Pure v1 -> v2 structural upgrade of an EDITABLE document.
+
+    Returns a NEW document (input untouched):
+
+    * ``schema_version`` -> ``gdpr7_six_element_review_editable@1.1.0``;
+    * top level gains ``supersedes`` and ``previous_editable_file``;
+    * every sentence ``review`` gains ``rule_items`` / ``actor_action_map`` /
+      ``order_relations`` (all ``None``) when absent.
+
+    Numeric identity, counts, blank binding and any existing decisions are left
+    byte-semantically untouched (deep copied).  This function never writes a
+    file: migration only happens when the user/master explicitly requests a new
+    file (see ``scripts/import_gdpr7_review_decisions_v1.py
+    --upgrade-decisions-file``); the real v1 file bytes are never modified.
+    """
+    doc = copy.deepcopy(doc_v1) if isinstance(doc_v1, dict) else {}
+    doc["schema_version"] = SCHEMA_EDITABLE_V2
+    doc["supersedes"] = SCHEMA_EDITABLE
+    doc["previous_editable_file"] = PREVIOUS_EDITABLE_FILENAME
+    for _rid, sentence in iter_flat_sentences(doc):
+        review = sentence.get("review")
+        if isinstance(review, dict):
+            review.setdefault("rule_items", None)
+            review.setdefault("actor_action_map", None)
+            review.setdefault("order_relations", None)
+    return doc
+
+
+# ---------------------------------------------------------------------------
+# Canonical Rule-Record export (coordinate-only rows; Stage-3 consumable)
+# ---------------------------------------------------------------------------
+
+
+def _final_element_value(entry: Any, candidate_value: Any) -> Optional[str]:
+    """Resolve the FINAL value carried by one {decision, edited_value} block.
+
+    * accepted -> candidate value (may be None => "no such element");
+    * edited   -> edited_value (already verbatim-validated);
+    * rejected / undecided -> None (element absent / not yet decided).
+    """
+    if not isinstance(entry, dict):
+        return None
+    decision = entry.get("decision")
+    if decision == "edited":
+        ev = entry.get("edited_value")
+        return ev if isinstance(ev, str) and ev else None
+    if decision == "accepted":
+        return candidate_value if isinstance(candidate_value, str) \
+            and candidate_value else None
+    return None
+
+
+def _locate_once(value: str, text: str) -> Tuple[Optional[list[int]], str]:
+    """Locate ``value`` inside ``text`` as a verbatim contiguous substring.
+
+    Returns ``([start, end], reason)`` where reason is empty on a unique match,
+    otherwise (None, reason) with reason one of ``zero_match`` /
+    ``multi_match`` / ``not_substring``.  Never fabricates coordinates.
+    """
+    if not isinstance(value, str) or not value or not isinstance(text, str) \
+            or not text:
+        return (None, "no_text")
+    start = 0
+    found: list[int] = []
+    while True:
+        idx = text.find(value, start)
+        if idx < 0:
+            break
+        if text[idx:idx + len(value)] == value:
+            found.append(idx)
+        start = idx + 1
+    if not found:
+        return (None, "not_substring" if value not in text else "zero_match")
+    if len(found) > 1:
+        return (None, "multi_match")
+    return ([found[0], found[0] + len(value)], "")
+
+
+def _span_entry(start: int, end: int, span_id: str) -> dict[str, Any]:
+    """One coordinate-only span entry (no text keys leak into the row)."""
+    return {"start": start, "end": end, "id": span_id}
+
+
+def _export_clause_for_sentence(sentence: Mapping[str, Any],
+                                rule_id: str,
+                                telemetry: list[dict[str, Any]],
+                                ) -> Optional[dict[str, Any]]:
+    """Build the coordinate-only canonical clause for one sentence.
+
+    Returns None when the sentence cannot be exported at all (no usable
+    sentence text).  Telemetry entries are appended for every non-fatal
+    anomaly (non-substring / zero or multi match / modality differences /
+    skipped relation endpoints).
+    """
+    sample_id = sentence.get("sample_id")
+    text = sentence.get("sentence_text")
+    if not isinstance(text, str) or not text:
+        return None
+    review = sentence.get("review")
+    if not isinstance(review, dict):
+        return None
+    candidate = sentence.get("candidate")
+    if not isinstance(candidate, dict):
+        candidate = {}
+    prefix = sample_id if isinstance(sample_id, str) and sample_id else rule_id
+    clause_id = f"{sample_id}.c1"
+    clause_len = len(text)
+
+    def _telemetry(kind: str, detail: str, item_id: str = "") -> None:
+        telemetry.append({
+            "sample_id": sample_id,
+            "clause_id": clause_id,
+            "item_id": item_id,
+            "kind": kind,
+            "detail": detail,
+        })
+
+    # ---- decide the ordered list of elements ------------------------------
+    # Each element = (item_id, {field: final_value}).  Legacy fast path == a
+    # single virtual element named "<sample>.i1" whose values come from the
+    # legacy six blocks; structured path == the rule_items.
+    elements: list[tuple[str, dict[str, Optional[str]]]] = []
+    rule_items = review.get("rule_items")
+    if isinstance(rule_items, list) and rule_items:
+        for idx, item in enumerate(rule_items):
+            if not isinstance(item, dict):
+                continue
+            item_id = item.get("item_id") or f"{sample_id}.i{idx + 1}"
+            vals: dict[str, Optional[str]] = {}
+            for field in ALL_FIELDS:
+                vals[field] = _final_element_value(
+                    item.get(field), candidate.get(field))
+            elements.append((item_id, vals))
+    else:
+        vals = {}
+        for field in ALL_FIELDS:
+            vals[field] = _final_element_value(
+                review.get(field), candidate.get(field))
+        elements.append((f"{sample_id}.i1", vals))
+
+    # ---- modality ----------------------------------------------------------
+    # modality has no textual evidence in the review records: use the clause
+    # full span when a label is present (Rules-Only convention for labels
+    # without a text anchor).
+    modality_labels: list[tuple[str, str]] = []  # (item_id, label)
+    for item_id, vals in elements:
+        label = vals.get("modality")
+        if label is not None:
+            modality_labels.append((item_id, label))
+    modality: dict[str, Any]
+    if not modality_labels:
+        modality = {"label": None, "evidence": []}
+    else:
+        labels = [label for _iid, label in modality_labels]
+        first_label = labels[0]
+        if len(set(labels)) > 1:
+            _telemetry(
+                "modality_labels_differ",
+                f"rule_items 内 modality 标签不一致 {sorted(set(labels))}；"
+                f"行内单 label 取第一项 {first_label!r}")
+        modality = {
+            "label": first_label,
+            "evidence": [{"start": 0, "end": clause_len}],
+        }
+
+    # ---- text-field spans --------------------------------------------------
+    arrays: dict[str, list[dict[str, Any]]] = {
+        field: [] for field in TEXT_SPAN_FIELDS
+    }
+    # maps item_id -> {field: span_id} for successfully exported values
+    item_span_ids: dict[str, dict[str, str]] = {}
+    counter: dict[str, int] = {field: 0 for field in TEXT_SPAN_FIELDS}
+    for item_id, vals in elements:
+        item_span_ids[item_id] = {}
+        for field in TEXT_SPAN_FIELDS:
+            value = vals.get(field)
+            if value is None:
+                continue  # rejected / undecided / accepted-null: element absent
+            located, reason = _locate_once(value, text)
+            if located is None:
+                _telemetry(
+                    "text_span_skipped",
+                    f"字段 {field} 值 {value!r} 无法唯一定位（{reason}），"
+                    f"不导出坐标、不伪造",
+                    item_id=item_id)
+                continue
+            counter[field] += 1
+            span_id = f"{clause_id}.{field}.{counter[field]}"
+            arrays[field].append(_span_entry(located[0], located[1], span_id))
+            item_span_ids[item_id][field] = span_id
+
+    # ---- actor_action_map (implicit within-item 1:1 + explicit edges) ------
+    aam: list[dict[str, str]] = []
+    for item_id, vals in elements:
+        actor_id = item_span_ids.get(item_id, {}).get("actor")
+        action_id = item_span_ids.get(item_id, {}).get("action")
+        if actor_id and action_id:
+            aam.append({"actor_id": actor_id, "action_id": action_id})
+    explicit_aam = review.get("actor_action_map")
+    if isinstance(explicit_aam, list):
+        for entry in explicit_aam:
+            if not isinstance(entry, dict):
+                continue
+            aid = entry.get("actor_item_id")
+            xid = entry.get("action_item_id")
+            actor_id = item_span_ids.get(aid, {}).get("actor") \
+                if isinstance(aid, str) else None
+            action_id = item_span_ids.get(xid, {}).get("action") \
+                if isinstance(xid, str) else None
+            if not actor_id or not action_id:
+                _telemetry(
+                    "relation_endpoint_skipped",
+                    f"actor_action_map 边 {aid!r}->{xid!r} 端点缺值，跳过",
+                    item_id=f"{aid}>:{xid}" if isinstance(aid, str) else "")
+                continue
+            if {"actor_id": actor_id, "action_id": action_id} not in aam:
+                aam.append({"actor_id": actor_id, "action_id": action_id})
+
+    # ---- order_relations ---------------------------------------------------
+    orders: list[dict[str, str]] = []
+    explicit_orders = review.get("order_relations")
+    if isinstance(explicit_orders, list):
+        for entry in explicit_orders:
+            if not isinstance(entry, dict):
+                continue
+            before = entry.get("before_item_id")
+            after = entry.get("after_item_id")
+            before_action = item_span_ids.get(before, {}).get("action") \
+                if isinstance(before, str) else None
+            after_action = item_span_ids.get(after, {}).get("action") \
+                if isinstance(after, str) else None
+            if not before_action or not after_action:
+                _telemetry(
+                    "relation_endpoint_skipped",
+                    f"order_relations 边 {before!r}->{after!r} 端点缺值，跳过",
+                    item_id=f"{before}->{after}" if isinstance(before, str)
+                    else "")
+                continue
+            orders.append({
+                "before_action_id": before_action,
+                "after_action_id": after_action,
+            })
+
+    clause = {
+        "clause_id": clause_id,
+        "clause_span": {"start": 0, "end": clause_len},
+        "modality": modality,
+        "actors": arrays["actor"],
+        "actions": arrays["action"],
+        "conditions": arrays["condition"],
+        "constraints": arrays["constraint"],
+        "exceptions": arrays["exception"],
+        "actor_action_map": aam,
+        "order_relations": orders,
+    }
+    return clause
+
+
+def export_canonical_records_v2(
+        doc: Any,
+        source_text_by_sample: Optional[Mapping[str, str]] = None,
+) -> dict[str, Any]:
+    """Pure canonical export of a v2 editable document.
+
+    Returns ``{"rows": [...], "telemetry": [...]}`` where each row is one
+    coordinate-only canonical record whose shape mirrors the Rules-Only
+    capsule ``records[].record`` rows consumed by Stage 3:
+    ``{schema_version, sample_id, source_id, clauses, method, validation}``.
+
+    * coordinate frame == the SENTENCE TEXT (0 .. len), matching the existing
+      GDPR7 Rules-Only capsule rows and the first-valid-span projection;
+    * text values are located verbatim with ``str.find`` over the sentence
+      text; zero/multi matches or non-substring values are NOT exported and
+      are recorded in ``telemetry`` (never fabricated);
+    * modality labels carry clause-full-span evidence (no text anchor exists
+      in the review records); differing item modalities are flagged;
+    * actor_action_map contains the implicit within-item edges AND the
+      explicit cross-item edges; order_relations endpoints are action span ids;
+      relation endpoints without an exported value are skipped + telemetry;
+    * ``source_text_by_sample`` is accepted for interface symmetry: when it
+      carries a *different* text for a sample than the review sentence text,
+      a telemetry entry records the discrepancy (the export still uses the
+      review sentence text as the coordinate source — never the external one).
+
+    No I/O, no LLM/network.  This is a pure function.
+    """
+    telemetry: list[dict[str, Any]] = []
+    rows: list[dict[str, Any]] = []
+    if not isinstance(doc, dict):
+        return {"rows": [], "telemetry": telemetry}
+    for rule in doc.get("rules") or []:
+        if not isinstance(rule, dict):
+            continue
+        rid = rule.get("rule_id")
+        for sentence in rule.get("sentences") or []:
+            if not isinstance(sentence, dict):
+                continue
+            sid = sentence.get("sample_id")
+            if not isinstance(sid, str) or not sid:
+                continue
+            source_override = None
+            if source_text_by_sample is not None \
+                    and isinstance(source_text_by_sample.get(sid), str):
+                ext = source_text_by_sample[sid]
+                own = sentence.get("sentence_text")
+                if ext != own:
+                    telemetry.append({
+                        "sample_id": sid,
+                        "clause_id": f"{sid}.c1",
+                        "kind": "source_text_mismatch",
+                        "detail": "source_text_by_sample 与 review sentence_text "
+                                  "不一致；导出仍以 review sentence_text 为坐标源",
+                    })
+            clause = _export_clause_for_sentence(
+                sentence, rid if isinstance(rid, str) else "", telemetry)
+            if clause is None:
+                telemetry.append({
+                    "sample_id": sid,
+                    "kind": "export_skipped",
+                    "detail": "句子无可用文本，无法导出坐标行",
+                })
+                continue
+            row = {
+                "schema_version": CANONICAL_ROW_SCHEMA,
+                "sample_id": sid,
+                "source_id": sid,
+                "clauses": [clause],
+                "method": {
+                    "name": CANONICAL_METHOD_NAME,
+                    "method_variant": CANONICAL_METHOD_VARIANT,
+                },
+                "validation": {
+                    "schema_valid": True,
+                    "cross_field_valid": True,
+                    "errors": [],
+                },
+            }
+            rows.append(row)
+    return {"rows": rows, "telemetry": telemetry}

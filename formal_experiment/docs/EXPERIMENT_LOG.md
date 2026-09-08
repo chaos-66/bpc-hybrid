@@ -4132,3 +4132,16 @@
 - 仍存在 blocker：无
 - 备注：全量 audit 3013 passed/24 skipped exit 0（18:34-19:26 低峰）；新增聚焦 66 项全绿；真实 API=0；唯一缺项=进程环境密钥值；未改 Gold/历史产物；用户文件与 .bak 未触碰
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-08T12:20:13.765340+00:00 - Task C：GDPR 六要素人工裁决结构 v1.1（2026-09-08，零 LLM/API）：v2 editable（schema gdpr7_six_element_review_editable@1.1.0，74 句/9 条款，identity 与 blank 一致，v1 文件 byte-exact 保留）新增 rule_items（多规范元素，每项六块全决）+ actor_action_map（隐含 1:1+显式跨项边）+ order_relations（句内动作先后）；导出 export_canonical_records_v2 生成 Rules-Only 同形坐标-only canonical 行（telemetry 非静默）；工具/校验/导入/冻结 schema 分派升级（v1 仍可校验只读）；53 项合成测试（含多执行者/多动作、先 A 后 B、无执行者/无顺序、镜像一致性、Stage-3 first-valid-span 消费）；唯一正式编辑入口 gdpr7_review_tool_v1.py（默认 v2）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：3013 passed, 24 skipped, 48 warnings in 2952.52s (0:49:12)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`4abc0eee4c55768dc91ed488fd5d893e50cf0a4f`；相关未提交路径：32 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：全量 audit 3013 passed/24 skipped exit 0（低峰）；用户并行 Codex 会话生成的 AI 预填稿（gdpr7_ai_prefill_v1）按用户自有文件处理：不提交、不改、保留磁盘，已加 .gitignore 并重建 FILE_CATALOG；真实 blank/decisions v1 字节不变；真实裁决 0/74
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

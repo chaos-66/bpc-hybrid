@@ -148,3 +148,11 @@ formal_experiment/data/development/human_review/backups/
 !formal_experiment/outputs/development/stage1_predictions/*
 !formal_experiment/outputs/development/stage1_formal_capsule_v1/
 !formal_experiment/outputs/development/stage1_formal_capsule_v1/*
+
+# 2026-09-08: user-owned AI prefill drafts authored in a parallel Codex
+# session (data/development/human_review/gdpr7_ai_prefill_v1/ and its builder
+# script). Not part of this session's experiment surface; kept on disk for the
+# user's own review workflow but excluded from version control and from the
+# generated FILE_CATALOG so a fresh clone's catalog check stays consistent.
+formal_experiment/data/development/human_review/gdpr7_ai_prefill_v1/
+formal_experiment/scripts/build_gdpr7_ai_prefill_v1.py
