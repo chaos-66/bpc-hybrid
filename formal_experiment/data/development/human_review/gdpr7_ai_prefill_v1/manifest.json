@@ -1,0 +1,47 @@
+{
+  "schema_version": "gdpr7_ai_prefill_manifest@1.0.0",
+  "status": "ai_prefilled_awaiting_human_review",
+  "counts": {
+    "rules": 9,
+    "sentences": 74,
+    "items": 92,
+    "anchored_spans": 320,
+    "human_confirmed": 0
+  },
+  "source": {
+    "author": "Codex assistant; authored in this conversation",
+    "user_request": "人工的部分，你按照要求，认真预填好，我进行文件的检查与修改后然后跟你进行确认",
+    "source_blank": "data/development/human_review/gdpr7_six_element_review_blank_v1.json",
+    "source_blank_sha256": "183b8b329a93c8d7043704f318c8d3bcc09c8a6eedb7dbec2db57902c6613859",
+    "source_input_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+    "prediction_files_read_by_builder": false,
+    "outcome_labels_read_by_builder": false,
+    "independent_blind_annotator": false,
+    "disclosure": "作者已参与项目讨论；本稿是AI辅助候选，不得宣称独立盲标、纯人工或已确认Gold。",
+    "external_experimental_api_calls": 0,
+    "interpretation_sources": [
+      "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679",
+      "https://commission.europa.eu/law/law-topic/data-protection/information-individuals_en"
+    ]
+  },
+  "checks": {
+    "coverage_74": true,
+    "verbatim_spans": true,
+    "human_decisions_all_empty": true,
+    "no_gold_promotion": true
+  },
+  "artifacts": {
+    "proposals.json": {
+      "sha256": "852d158d99706a6c84c40e409c3f1c1038516cb25ecd10e13c27ad71145a2967",
+      "bytes": 196163
+    },
+    "请检查并修改这份预填稿.md": {
+      "sha256": "a6686a6babe5f043892f341aa7e105edc2b59dc0dfca50060b94da41a4e546da",
+      "bytes": 105373
+    },
+    ".gitattributes": {
+      "sha256": "99f30368927f7fd4f4d625a41beb8e00f02969582ea990b7e5f6db2b99f4d490",
+      "bytes": 180
+    }
+  }
+}

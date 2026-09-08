@@ -1,0 +1,50 @@
+{
+  "schema_version": "gdpr7_case_ai_prefill_manifest@1.0.0",
+  "status": "ai_prefilled_awaiting_human_review",
+  "is_gold": false,
+  "human_confirmed": 0,
+  "review_items": [
+    {
+      "id": 1,
+      "topic": "案例选择",
+      "decision": null,
+      "reviewer": null
+    },
+    {
+      "id": 2,
+      "topic": "原流程的局部与整体合规范围",
+      "decision": null,
+      "reviewer": null
+    },
+    {
+      "id": 3,
+      "topic": "合成正常对照的期限绑定",
+      "decision": null,
+      "reviewer": null
+    },
+    {
+      "id": 4,
+      "topic": "第22条情态争议",
+      "decision": null,
+      "reviewer": null
+    }
+  ],
+  "provenance": {
+    "author": "Codex assistant; AI-assisted proposals",
+    "independent_blind_annotator": false,
+    "prediction_used_as_gold": false,
+    "experimental_api_calls": 0,
+    "existing_gold_read_only": true
+  },
+  "sources": {
+    "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data/development/stage3_synth/syn_v2_constraint_violated_01/control/gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data/development/stage3_synth/syn_v2_constraint_violated_01/variant/gdpr_1_data_breach.bpmn": "dcc50b0b6f391aa27ee9f7882f764f062e7114940407acee62d4653d7cf776cc",
+    "data/gold/stage3/stage3_violation_gold_v1.json": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550",
+    "data/input/gdpr7_stage2_input_v1.json": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109"
+  },
+  "artifacts": {
+    ".gitattributes": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+    "论文案例人工核对预填稿.md": "c870a7a1d6439867ff895fa0b145941ad3fccb786c45c855f2f68f372b025f1b"
+  }
+}

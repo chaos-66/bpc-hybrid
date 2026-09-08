@@ -1,0 +1,5568 @@
+{
+  "schema_version": "gdpr7_ai_annotation_proposals@1.0.0",
+  "status": "ai_prefilled_awaiting_human_review",
+  "is_gold": false,
+  "human_confirmed": false,
+  "provenance": {
+    "author": "Codex assistant; authored in this conversation",
+    "user_request": "人工的部分，你按照要求，认真预填好，我进行文件的检查与修改后然后跟你进行确认",
+    "source_blank": "data/development/human_review/gdpr7_six_element_review_blank_v1.json",
+    "source_blank_sha256": "183b8b329a93c8d7043704f318c8d3bcc09c8a6eedb7dbec2db57902c6613859",
+    "source_input_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+    "prediction_files_read_by_builder": false,
+    "outcome_labels_read_by_builder": false,
+    "independent_blind_annotator": false,
+    "disclosure": "作者已参与项目讨论；本稿是AI辅助候选，不得宣称独立盲标、纯人工或已确认Gold。",
+    "external_experimental_api_calls": 0,
+    "interpretation_sources": [
+      "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679",
+      "https://commission.europa.eu/law/law-topic/data-protection/information-individuals_en"
+    ]
+  },
+  "annotation_policy": {
+    "span_unit": "zero-based, half-open Unicode character offsets in frozen sentence_text",
+    "empty_field": "未见本句可直接支持的片段，不等于整条法律没有该要求",
+    "context": "上下文链接与隐含主体单独说明，不伪造成当前句逐字span",
+    "multiple_items": "不同情态分别保留；同一动作不连续的原文证据可以多片段",
+    "action_structure": "action数组是证据片段；action_structure区分同一行为的断续片段、共享宾语的选择行为和比较对象，不能一片段当一个流程活动",
+    "import": "确认前不导入现有decisions或Gold；当前v2的单情态/唯一出现定位不能无损容纳全部候选，确认后应逐条保留条目、坐标与关系，不能取首项静默降级。"
+  },
+  "counts": {
+    "rules": 9,
+    "sentences": 74,
+    "items": 92,
+    "anchored_spans": 320,
+    "human_confirmed": 0
+  },
+  "records": [
+    {
+      "sample_id": "gdpr_article15_s001",
+      "sentence_idx": 0,
+      "char_span": [
+        0,
+        278
+      ],
+      "text_sha256": "4d55a1fb6743e546ba673fe377a388638f99a50ac240d482a0d2c394ce3256ac",
+      "sentence_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information the purposes of the processing.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "数据主体有权先确认是否处理其数据；若正在处理，还可访问数据，并获知处理目的。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s001.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+              "start": 41,
+              "end": 157
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s001.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article15_s001.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "access to the personal data and the following information the purposes of the processing",
+              "start": 188,
+              "end": 276
+            }
+          ],
+          "condition": [
+            {
+              "text": "where that is the case",
+              "start": 164,
+              "end": 186
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s001.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "确认是否处理不以‘确实正在处理’为前提；该条件只约束第二项访问权。控制者是提供方，不能把数据主体有权访问写成数据主体必须访问。列举的信息保留在访问对象内。",
+      "focus_flags": [
+        "rights_vs_duties",
+        "multiple_items"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s002",
+      "sentence_idx": 1,
+      "char_span": [
+        278,
+        541
+      ],
+      "text_sha256": "eeba2bdc8ddc3d6777aef618f07aae4249dbbd91389fd29bdad16a54642cfd77",
+      "sentence_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the categories of personal data concerned.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "数据主体有权先确认是否处理其数据；若正在处理，还可访问数据，并获知个人数据类别。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s002.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+              "start": 41,
+              "end": 157
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s002.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article15_s002.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "access to the personal data and the categories of personal data concerned",
+              "start": 188,
+              "end": 261
+            }
+          ],
+          "condition": [
+            {
+              "text": "where that is the case",
+              "start": 164,
+              "end": 186
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s002.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "确认是否处理不以‘确实正在处理’为前提；该条件只约束第二项访问权。控制者是提供方，不能把数据主体有权访问写成数据主体必须访问。列举的信息保留在访问对象内。",
+      "focus_flags": [
+        "rights_vs_duties",
+        "multiple_items"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s003",
+      "sentence_idx": 2,
+      "char_span": [
+        541,
+        937
+      ],
+      "text_sha256": "6f5c0910697a5782ffd87fc2e5922da2e62cfedec4a99a7c2e70482de21a3d37",
+      "sentence_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the recipients or categories of recipient to whom the personal data have been or will be disclosed, in particular recipients in third countries or international organisations.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "数据主体有权先确认是否处理其数据；若正在处理，还可访问数据，并获知接收方及接收方类别，尤其境外接收方。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s003.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+              "start": 41,
+              "end": 157
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s003.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article15_s003.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "access to the personal data and the recipients or categories of recipient to whom the personal data have been or will be disclosed, in particular recipients in third countries or international organisations",
+              "start": 188,
+              "end": 394
+            }
+          ],
+          "condition": [
+            {
+              "text": "where that is the case",
+              "start": 164,
+              "end": 186
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s003.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "确认是否处理不以‘确实正在处理’为前提；该条件只约束第二项访问权。控制者是提供方，不能把数据主体有权访问写成数据主体必须访问。列举的信息保留在访问对象内。",
+      "focus_flags": [
+        "rights_vs_duties",
+        "multiple_items"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s004",
+      "sentence_idx": 3,
+      "char_span": [
+        937,
+        1303
+      ],
+      "text_sha256": "829f2844a9d545a915bce1afeb0616fe62bc7e06e1294f8fbe5d81fb61997ca1",
+      "sentence_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and where possible, the envisaged period for which the personal data will be stored, or, if not possible, the criteria used to determine that period.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "数据主体有权先确认是否处理其数据；若正在处理，还可访问数据，并获知预计保存期限；无法确定时，给出确定期限的标准。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s004.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+              "start": 41,
+              "end": 157
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s004.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article15_s004.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "access to the personal data and where possible, the envisaged period for which the personal data will be stored, or, if not possible, the criteria used to determine that period",
+              "start": 188,
+              "end": 364
+            }
+          ],
+          "condition": [
+            {
+              "text": "where that is the case",
+              "start": 164,
+              "end": 186
+            },
+            {
+              "text": "where possible",
+              "start": 220,
+              "end": 234
+            },
+            {
+              "text": "if not possible",
+              "start": 305,
+              "end": 320
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s004.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "确认是否处理不以‘确实正在处理’为前提；该条件只约束第二项访问权。控制者是提供方，不能把数据主体有权访问写成数据主体必须访问。列举的信息保留在访问对象内。本句的两种期限信息是可选分支，不能把 where possible 与 if not possible 当成同时成立。",
+      "focus_flags": [
+        "rights_vs_duties",
+        "multiple_items",
+        "alternative_conditions"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s005",
+      "sentence_idx": 4,
+      "char_span": [
+        1303,
+        1730
+      ],
+      "text_sha256": "e73f34026c515df3f921bdfa22bfaea77abd6b551ef424edbb24a1d1e549067b",
+      "sentence_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the existence of the right to request from the controller rectification or erasure of personal data or restriction of processing of personal data concerning the data subject or to object to such processing.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "数据主体有权先确认是否处理其数据；若正在处理，还可访问数据，并获知更正、删除、限制处理及反对处理的权利是否存在。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s005.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+              "start": 41,
+              "end": 157
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s005.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article15_s005.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "access to the personal data and the existence of the right to request from the controller rectification or erasure of personal data or restriction of processing of personal data concerning the data subject or to object to such processing",
+              "start": 188,
+              "end": 425
+            }
+          ],
+          "condition": [
+            {
+              "text": "where that is the case",
+              "start": 164,
+              "end": 186
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s005.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "确认是否处理不以‘确实正在处理’为前提；该条件只约束第二项访问权。控制者是提供方，不能把数据主体有权访问写成数据主体必须访问。列举的信息保留在访问对象内。",
+      "focus_flags": [
+        "rights_vs_duties",
+        "multiple_items"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s006",
+      "sentence_idx": 5,
+      "char_span": [
+        1730,
+        2011
+      ],
+      "text_sha256": "8e6e57e066bf7be23a221d4c11c7b0709a513017e251dfbfbe4d08ff24820108",
+      "sentence_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the right to lodge a complaint with a supervisory authority.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "数据主体有权先确认是否处理其数据；若正在处理，还可访问数据，并获知向监管机构投诉的权利。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s006.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+              "start": 41,
+              "end": 157
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s006.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article15_s006.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "access to the personal data and the right to lodge a complaint with a supervisory authority",
+              "start": 188,
+              "end": 279
+            }
+          ],
+          "condition": [
+            {
+              "text": "where that is the case",
+              "start": 164,
+              "end": 186
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s006.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "确认是否处理不以‘确实正在处理’为前提；该条件只约束第二项访问权。控制者是提供方，不能把数据主体有权访问写成数据主体必须访问。列举的信息保留在访问对象内。",
+      "focus_flags": [
+        "rights_vs_duties",
+        "multiple_items"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s007",
+      "sentence_idx": 6,
+      "char_span": [
+        2011,
+        2342
+      ],
+      "text_sha256": "ce802b7331e7825cb49ef049c70c8c291ab36241ca1f31487bd0afc66915fa64",
+      "sentence_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and where the personal data are not collected from the data subject, any available information as to their source.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "数据主体有权先确认是否处理其数据；若正在处理，还可访问数据，并获知并非向本人收集时，可取得的数据来源信息。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s007.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+              "start": 41,
+              "end": 157
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s007.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article15_s007.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "access to the personal data and where the personal data are not collected from the data subject, any available information as to their source",
+              "start": 188,
+              "end": 329
+            }
+          ],
+          "condition": [
+            {
+              "text": "where that is the case",
+              "start": 164,
+              "end": 186
+            },
+            {
+              "text": "where the personal data are not collected from the data subject",
+              "start": 220,
+              "end": 283
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s007.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "确认是否处理不以‘确实正在处理’为前提；该条件只约束第二项访问权。控制者是提供方，不能把数据主体有权访问写成数据主体必须访问。列举的信息保留在访问对象内。",
+      "focus_flags": [
+        "rights_vs_duties",
+        "multiple_items"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s008",
+      "sentence_idx": 7,
+      "char_span": [
+        2342,
+        2843
+      ],
+      "text_sha256": "01bd2c647aed2ea32e9ed7644af252e90aa3ceed79d8301e0c22dc0570cde98a",
+      "sentence_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the existence of automated decision-making, including profiling, referred to in Article 22(1) and (4) and, at least in those cases, meaningful information about the logic involved, as well as the significance and the envisaged consequences of such processing for the data subject.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "数据主体有权先确认是否处理其数据；若正在处理，还可访问数据，并获知自动决策是否存在，以及有关逻辑、意义和预计后果的信息。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s008.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+              "start": 41,
+              "end": 157
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s008.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article15_s008.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "access to the personal data and the existence of automated decision-making, including profiling, referred to in Article 22(1) and (4) and, at least in those cases, meaningful information about the logic involved, as well as the significance and the envisaged consequences of such processing for the data subject",
+              "start": 188,
+              "end": 499
+            }
+          ],
+          "condition": [
+            {
+              "text": "where that is the case",
+              "start": 164,
+              "end": 186
+            }
+          ],
+          "constraint": [
+            {
+              "text": "at least in those cases",
+              "start": 327,
+              "end": 350
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s008.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "确认是否处理不以‘确实正在处理’为前提；该条件只约束第二项访问权。控制者是提供方，不能把数据主体有权访问写成数据主体必须访问。列举的信息保留在访问对象内。",
+      "focus_flags": [
+        "rights_vs_duties",
+        "multiple_items"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s009",
+      "sentence_idx": 8,
+      "char_span": [
+        2843,
+        3067
+      ],
+      "text_sha256": "473e53ffca9f146248ead57e9941de0bf1c3ecc1fc76b5a034d0aa302e972616",
+      "sentence_text": "Where personal data are transferred to a third country or to an international organisation, the data subject shall have the right to be informed of the appropriate safeguards pursuant to Article 46 relating to the transfer.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "数据转往第三国或国际组织时，数据主体有权获知该转移的适当保障。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s009.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 109,
+              "end": 129
+            }
+          ],
+          "actor": [
+            {
+              "text": "the data subject",
+              "start": 92,
+              "end": 108
+            }
+          ],
+          "action": [
+            {
+              "text": "be informed of the appropriate safeguards pursuant to Article 46 relating to the transfer",
+              "start": 133,
+              "end": 222
+            }
+          ],
+          "condition": [
+            {
+              "text": "Where personal data are transferred to a third country or to an international organisation",
+              "start": 0,
+              "end": 90
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s009.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "主体是权利人；动作采用原句被动表达，不补写句中没有的通知者。",
+      "focus_flags": [
+        "rights_vs_duties"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s010",
+      "sentence_idx": 9,
+      "char_span": [
+        3067,
+        3146
+      ],
+      "text_sha256": "229b77926f9d454ce81398619e8b2bcd19f0728e951515f419649b04c91d54ac",
+      "sentence_text": "The controller shall provide a copy of the personal data undergoing processing.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "控制者必须提供正在处理的个人数据的副本。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s010.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 15,
+              "end": 20
+            }
+          ],
+          "actor": [
+            {
+              "text": "The controller",
+              "start": 0,
+              "end": 14
+            }
+          ],
+          "action": [
+            {
+              "text": "provide a copy of the personal data undergoing processing",
+              "start": 21,
+              "end": 78
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s010.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "",
+      "focus_flags": [],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s011",
+      "sentence_idx": 10,
+      "char_span": [
+        3147,
+        3274
+      ],
+      "text_sha256": "36037726d5fa4458dcd1eca660d22517c3eacf08050fc4d807e755f0ea9d5078",
+      "sentence_text": "For any further copies requested by the data subject, the controller may charge a reasonable fee based on administrative costs.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "数据主体要求更多副本时，控制者可以按行政成本收取合理费用。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s011.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "may",
+              "start": 69,
+              "end": 72
+            }
+          ],
+          "actor": [
+            {
+              "text": "the controller",
+              "start": 54,
+              "end": 68
+            }
+          ],
+          "action": [
+            {
+              "text": "charge a reasonable fee",
+              "start": 73,
+              "end": 96
+            }
+          ],
+          "condition": [
+            {
+              "text": "For any further copies requested by the data subject",
+              "start": 0,
+              "end": 52
+            }
+          ],
+          "constraint": [
+            {
+              "text": "reasonable fee",
+              "start": 82,
+              "end": 96
+            },
+            {
+              "text": "based on administrative costs",
+              "start": 97,
+              "end": 126
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article15_s011.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "",
+      "focus_flags": [],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s012",
+      "sentence_idx": 11,
+      "char_span": [
+        3275,
+        3459
+      ],
+      "text_sha256": "f5af35191012bd27ed11ce1d3d498856bf02b4a604bb13048fd6cbc57e7bf377",
+      "sentence_text": "Where the data subject makes the request by electronic means, and unless otherwise requested by the data subject, the information shall be provided in a commonly used electronic form.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "通过电子方式请求的，原则上须以常用电子格式提供信息；本人另有要求的除外。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s012.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 130,
+              "end": 135
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be provided",
+              "start": 136,
+              "end": 147
+            }
+          ],
+          "condition": [
+            {
+              "text": "Where the data subject makes the request by electronic means",
+              "start": 0,
+              "end": 60
+            }
+          ],
+          "constraint": [
+            {
+              "text": "in a commonly used electronic form",
+              "start": 148,
+              "end": 182
+            }
+          ],
+          "exception": [
+            {
+              "text": "unless otherwise requested by the data subject",
+              "start": 66,
+              "end": 112
+            }
+          ],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "本句没明写提供方。控制者可从条款上下文理解，但不把条件从句中的 the data subject 错接为信息提供者。",
+      "focus_flags": [
+        "implicit_actor"
+      ],
+      "context_links": [
+        "gdpr_article15_s010"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article15_s013",
+      "sentence_idx": 12,
+      "char_span": [
+        3459,
+        3574
+      ],
+      "text_sha256": "95f8546e99ba3f37fd7524d3d0ad155fd2c8e219b0586f3d892fd7c665d9e836",
+      "sentence_text": "The right to obtain a copy referred to in paragraph 3 shall not adversely affect the rights and freedoms of others.",
+      "rule_id": "article15",
+      "rule_text_sha256": "d35ac6b9ea00bcc303fe7b8d10dc68d9c388e9281d14b33a4d877c1fe1457172",
+      "meaning_zh": "取得副本的权利不得损害他人的权利和自由。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article15_s013.p1",
+          "modality": "prohibition",
+          "modality_evidence": [
+            {
+              "text": "shall not",
+              "start": 54,
+              "end": 63
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "adversely affect the rights and freedoms of others",
+              "start": 64,
+              "end": 114
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "句法主语是权利而非执行者；保留为权利行使的禁止性边界。",
+      "focus_flags": [
+        "implicit_actor"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article16_s001",
+      "sentence_idx": 0,
+      "char_span": [
+        0,
+        156
+      ],
+      "text_sha256": "1ae6c72eb70eb6b75ce1c88d6d50adbfd098ce38eab56c892f31d07b353adbe1",
+      "sentence_text": "The data subject shall have the right to obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her.",
+      "rule_id": "article16",
+      "rule_text_sha256": "a940d3bd5929888bcee109ecaa72a5ace8ab37f6a7db3b2faa6ad9e74918b3c0",
+      "meaning_zh": "数据主体有权要求控制者及时更正有关自己的不准确个人数据。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article16_s001.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "obtain from the controller",
+              "start": 41,
+              "end": 67
+            },
+            {
+              "text": "the rectification of inaccurate personal data concerning him or her",
+              "start": 88,
+              "end": 155
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "without undue delay",
+              "start": 68,
+              "end": 87
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_predicate_multiple_evidence_fragments",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article16_s001.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "更正对象为 the rectification of inaccurate personal data concerning him or her。动作被时限短语打断，另列该原文片段为第二动作证据，不能拼接成不存在的连续原文。",
+      "focus_flags": [
+        "rights_vs_duties",
+        "discontinuous_phrase"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article16_s002",
+      "sentence_idx": 1,
+      "char_span": [
+        157,
+        349
+      ],
+      "text_sha256": "cc2b0fec609f68d671a4820bfec3a52d72a401bd37bb22789a2dd2deb081d6a7",
+      "sentence_text": "Taking into account the purposes of the processing, the data subject shall have the right to have incomplete personal data completed, including by means of providing a supplementary statement.",
+      "rule_id": "article16",
+      "rule_text_sha256": "a940d3bd5929888bcee109ecaa72a5ace8ab37f6a7db3b2faa6ad9e74918b3c0",
+      "meaning_zh": "考虑处理目的后，数据主体有权补全不完整的数据，包括提供补充声明。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article16_s002.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 69,
+              "end": 89
+            }
+          ],
+          "actor": [
+            {
+              "text": "the data subject",
+              "start": 52,
+              "end": 68
+            }
+          ],
+          "action": [
+            {
+              "text": "have incomplete personal data completed",
+              "start": 93,
+              "end": 132
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "Taking into account the purposes of the processing",
+              "start": 0,
+              "end": 50
+            },
+            {
+              "text": "including by means of providing a supplementary statement",
+              "start": 134,
+              "end": 191
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article16_s002.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "补充声明是补全数据的方式，不额外制造一条必须提交声明的义务。",
+      "focus_flags": [
+        "rights_vs_duties"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s001",
+      "sentence_idx": 0,
+      "char_span": [
+        0,
+        271
+      ],
+      "text_sha256": "ffce4b993017dcb956e232f8d9afc93daa5f6ab08ecd4c72f06b4427796f8be2",
+      "sentence_text": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies.",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "数据主体有权请求及时删除；控制者也有及时删除的义务，但须满足后面列举的至少一种理由。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s001.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "obtain from the controller the erasure of personal data concerning him or her",
+              "start": 41,
+              "end": 118
+            }
+          ],
+          "condition": [
+            {
+              "text": "where one of the following grounds applies",
+              "start": 227,
+              "end": 269
+            }
+          ],
+          "constraint": [
+            {
+              "text": "without undue delay",
+              "start": 119,
+              "end": 138
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article17_s001.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article17_s001.p2",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall have the obligation",
+              "start": 158,
+              "end": 183
+            }
+          ],
+          "actor": [
+            {
+              "text": "the controller",
+              "start": 143,
+              "end": 157
+            }
+          ],
+          "action": [
+            {
+              "text": "erase personal data",
+              "start": 187,
+              "end": 206
+            }
+          ],
+          "condition": [
+            {
+              "text": "where one of the following grounds applies",
+              "start": 227,
+              "end": 269
+            }
+          ],
+          "constraint": [
+            {
+              "text": "without undue delay",
+              "start": 207,
+              "end": 226
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article17_s001.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "同一句同时包含权利和义务，必须保留两个情态。两个 the controller、两个时限均按各自出现位置定位。后六句是可选删除理由，不能作为六项同时必须满足的条件。",
+      "focus_flags": [
+        "mixed_modalities",
+        "alternative_conditions",
+        "repeated_phrase"
+      ],
+      "context_links": [
+        "gdpr_article17_s002",
+        "gdpr_article17_s003",
+        "gdpr_article17_s004",
+        "gdpr_article17_s005",
+        "gdpr_article17_s006",
+        "gdpr_article17_s007"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s002",
+      "sentence_idx": 1,
+      "char_span": [
+        271,
+        395
+      ],
+      "text_sha256": "66693925476fcaecd988e0123ac78a0e9a949dd97dcbbc4f014966eb1a51e1d8",
+      "sentence_text": "The personal data are no longer necessary in relation to the purposes for which they were collected or otherwise processed.",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "删除理由之一：数据已不再是实现原收集或处理目的所必需的。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s002.p1",
+          "modality": "definition",
+          "modality_evidence": [],
+          "actor": [],
+          "action": [],
+          "condition": [
+            {
+              "text": "The personal data are no longer necessary in relation to the purposes for which they were collected or otherwise processed",
+              "start": 0,
+              "end": 122
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "本句是上一句的可选触发理由，未复写完整删除规范；六要素中的条件保留全文，主体/删除动作通过上下文关联表达。",
+      "focus_flags": [
+        "context_fragment",
+        "alternative_conditions"
+      ],
+      "context_links": [
+        "gdpr_article17_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s003",
+      "sentence_idx": 2,
+      "char_span": [
+        395,
+        594
+      ],
+      "text_sha256": "99b763e94c9a33139d34ce16f89f5f133c8538177c98a11e0d643d9ae4eb2126",
+      "sentence_text": "The data subject withdraws consent on which the processing is based according to point (a) of Article 6(1), or point (a) of Article 9(2), and where there is no other legal ground for the processing.",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "删除理由之一：本人撤回处理所依据的同意，而且没有其他处理依据。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s003.p1",
+          "modality": "definition",
+          "modality_evidence": [],
+          "actor": [],
+          "action": [],
+          "condition": [
+            {
+              "text": "The data subject withdraws consent on which the processing is based according to point (a) of Article 6(1), or point (a) of Article 9(2), and where there is no other legal ground for the processing",
+              "start": 0,
+              "end": 197
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "本句是上一句的可选触发理由，未复写完整删除规范；六要素中的条件保留全文，主体/删除动作通过上下文关联表达。",
+      "focus_flags": [
+        "context_fragment",
+        "alternative_conditions"
+      ],
+      "context_links": [
+        "gdpr_article17_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s004",
+      "sentence_idx": 3,
+      "char_span": [
+        594,
+        803
+      ],
+      "text_sha256": "680fc138ee22cf0322db6f1d3f36957c029ce07a151139141923c38fbe3907b3",
+      "sentence_text": "The data subject objects to the processing pursuant to Article 21(1) and there are no overriding legitimate grounds for the processing, or the data subject objects to the processing pursuant to Article 21(2).",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "删除理由之一：本人反对处理且无优先的正当理由，或本人依第21条第2款反对处理。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s004.p1",
+          "modality": "definition",
+          "modality_evidence": [],
+          "actor": [],
+          "action": [],
+          "condition": [
+            {
+              "text": "The data subject objects to the processing pursuant to Article 21(1) and there are no overriding legitimate grounds for the processing, or the data subject objects to the processing pursuant to Article 21(2)",
+              "start": 0,
+              "end": 207
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "本句是上一句的可选触发理由，未复写完整删除规范；六要素中的条件保留全文，主体/删除动作通过上下文关联表达。",
+      "focus_flags": [
+        "context_fragment",
+        "alternative_conditions"
+      ],
+      "context_links": [
+        "gdpr_article17_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s005",
+      "sentence_idx": 4,
+      "char_span": [
+        803,
+        853
+      ],
+      "text_sha256": "6ff5941f3adea9c51658d4048163db8bb9bee61dfb01433779e4f0f468017227",
+      "sentence_text": "The personal data have been unlawfully processed.",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "删除理由之一：数据曾被违法处理。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s005.p1",
+          "modality": "definition",
+          "modality_evidence": [],
+          "actor": [],
+          "action": [],
+          "condition": [
+            {
+              "text": "The personal data have been unlawfully processed",
+              "start": 0,
+              "end": 48
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "本句是上一句的可选触发理由，未复写完整删除规范；六要素中的条件保留全文，主体/删除动作通过上下文关联表达。",
+      "focus_flags": [
+        "context_fragment",
+        "alternative_conditions"
+      ],
+      "context_links": [
+        "gdpr_article17_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s006",
+      "sentence_idx": 5,
+      "char_span": [
+        853,
+        993
+      ],
+      "text_sha256": "0b3d539d2253d687b0f87818c6246dcda3990117b4196ad357c828e28b8bb2f1",
+      "sentence_text": "The personal data have to be erased for compliance with a legal obligation in Union or Member State law to which the controller is subject.",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "删除理由之一：控制者受约束的欧盟法或成员国法要求删除数据。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s006.p1",
+          "modality": "definition",
+          "modality_evidence": [],
+          "actor": [],
+          "action": [],
+          "condition": [
+            {
+              "text": "The personal data have to be erased for compliance with a legal obligation in Union or Member State law to which the controller is subject",
+              "start": 0,
+              "end": 138
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "本句属于第1款删除理由列表，主要功能是限定前句适用条件；不把这些事实陈述改写为新的处理义务。第6句虽然含 have to be erased，仍处在删除依据的列举中，请核对是否采用条件片段口径。",
+      "focus_flags": [
+        "context_fragment",
+        "alternative_conditions"
+      ],
+      "context_links": [
+        "gdpr_article17_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s007",
+      "sentence_idx": 6,
+      "char_span": [
+        993,
+        1117
+      ],
+      "text_sha256": "39d2ecedaa4d14271039c533b258779c9d5916452699474b308022adcff45dd4",
+      "sentence_text": "The personal data have been collected in relation to the offer of information society services referred to in Article 8(1).",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "删除理由之一：数据系在向儿童提供第8条所述信息社会服务时收集。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s007.p1",
+          "modality": "definition",
+          "modality_evidence": [],
+          "actor": [],
+          "action": [],
+          "condition": [
+            {
+              "text": "The personal data have been collected in relation to the offer of information society services referred to in Article 8(1)",
+              "start": 0,
+              "end": 122
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "本句是上一句的可选触发理由，未复写完整删除规范；六要素中的条件保留全文，主体/删除动作通过上下文关联表达。",
+      "focus_flags": [
+        "context_fragment",
+        "alternative_conditions"
+      ],
+      "context_links": [
+        "gdpr_article17_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s008",
+      "sentence_idx": 7,
+      "char_span": [
+        1117,
+        1579
+      ],
+      "text_sha256": "381c997c1dad6995317cb2010ebac3b05b0b8fe6a77136c1e1ab1799d3203ac6",
+      "sentence_text": "Where the controller has made the personal data public and is obliged pursuant to paragraph 1 to erase the personal data, the controller, taking account of available technology and the cost of implementation, shall take reasonable steps, including technical measures, to inform controllers which are processing the personal data that the data subject has requested the erasure by such controllers of any links to, or copy or replication of, those personal data.",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "控制者已公开数据且负有删除义务时，须考虑技术和成本，合理通知其他处理这些数据的控制者删除相关链接或副本。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s008.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 209,
+              "end": 214
+            }
+          ],
+          "actor": [
+            {
+              "text": "the controller",
+              "start": 122,
+              "end": 136
+            }
+          ],
+          "action": [
+            {
+              "text": "take reasonable steps",
+              "start": 215,
+              "end": 236
+            },
+            {
+              "text": "inform controllers which are processing the personal data that the data subject has requested the erasure by such controllers of any links to, or copy or replication of, those personal data",
+              "start": 271,
+              "end": 460
+            }
+          ],
+          "condition": [
+            {
+              "text": "Where the controller has made the personal data public and is obliged pursuant to paragraph 1 to erase the personal data",
+              "start": 0,
+              "end": 120
+            }
+          ],
+          "constraint": [
+            {
+              "text": "taking account of available technology and the cost of implementation",
+              "start": 138,
+              "end": 207
+            },
+            {
+              "text": "reasonable steps",
+              "start": 220,
+              "end": 236
+            },
+            {
+              "text": "including technical measures",
+              "start": 238,
+              "end": 266
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_predicate_multiple_evidence_fragments",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article17_s008.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "主执行者是主句第二次出现的控制者；第一处在条件中。通知内容不另外变成对收件人的独立命令。",
+      "focus_flags": [
+        "repeated_phrase",
+        "discontinuous_phrase"
+      ],
+      "context_links": [
+        "gdpr_article17_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s009",
+      "sentence_idx": 8,
+      "char_span": [
+        1579,
+        1724
+      ],
+      "text_sha256": "4a3bbbe4784529c72b889105bb865fa57c3ff83fa7e5724b5836118e85a63c70",
+      "sentence_text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information.",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "为表达与信息自由确有必要处理数据的范围内，第1、2款删除要求不适用。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s009.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not apply",
+              "start": 19,
+              "end": 34
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "to the extent that processing is necessary for exercising the right of freedom of expression and information",
+              "start": 35,
+              "end": 143
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是删除义务的适用排除，不是禁止删除，也不是无条件允许任意保留。例外应关联第1、2款，不能只从本句空动作得出无法解释整条规则。",
+      "focus_flags": [
+        "exemption_not_prohibition",
+        "context_exception"
+      ],
+      "context_links": [
+        "gdpr_article17_s001",
+        "gdpr_article17_s008"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s010",
+      "sentence_idx": 9,
+      "char_span": [
+        1724,
+        2066
+      ],
+      "text_sha256": "a8d1edd55d76185091a2888d70f4ecaed906636a4cc4b955818f999217066be2",
+      "sentence_text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for compliance with a legal obligation which requires processing by Union or Member State law to which the controller is subject or for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller.",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "为法定义务、公共利益任务或行使公权力确有必要处理数据的范围内，第1、2款删除要求不适用。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s010.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not apply",
+              "start": 19,
+              "end": 34
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "to the extent that processing is necessary for compliance with a legal obligation which requires processing by Union or Member State law to which the controller is subject or for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller",
+              "start": 35,
+              "end": 340
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是删除义务的适用排除，不是禁止删除，也不是无条件允许任意保留。例外应关联第1、2款，不能只从本句空动作得出无法解释整条规则。",
+      "focus_flags": [
+        "exemption_not_prohibition",
+        "context_exception"
+      ],
+      "context_links": [
+        "gdpr_article17_s001",
+        "gdpr_article17_s008"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s011",
+      "sentence_idx": 10,
+      "char_span": [
+        2066,
+        2283
+      ],
+      "text_sha256": "ff827f73602755ced03b16bef2dc52467fab2f486eafdd2afe878a21fc537084",
+      "sentence_text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for reasons of public interest in the area of public health in accordance with points (h) and (i) of Article 9(2) as well as Article 9(3).",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "为公共卫生方面的公共利益确有必要处理数据的范围内，第1、2款删除要求不适用。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s011.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not apply",
+              "start": 19,
+              "end": 34
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "to the extent that processing is necessary for reasons of public interest in the area of public health in accordance with points (h) and (i) of Article 9(2) as well as Article 9(3)",
+              "start": 35,
+              "end": 215
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是删除义务的适用排除，不是禁止删除，也不是无条件允许任意保留。例外应关联第1、2款，不能只从本句空动作得出无法解释整条规则。",
+      "focus_flags": [
+        "exemption_not_prohibition",
+        "context_exception"
+      ],
+      "context_links": [
+        "gdpr_article17_s001",
+        "gdpr_article17_s008"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s012",
+      "sentence_idx": 11,
+      "char_span": [
+        2283,
+        2663
+      ],
+      "text_sha256": "356151b25175e174a2c800fe34f0b031834360dfdeb56065215374be319c7743",
+      "sentence_text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) in so far as the right referred to in paragraph 1 is likely to render impossible or seriously impair the achievement of the objectives of that processing.",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "为符合第89条保障要求的公共利益存档、科研、历史研究或统计，且删除会使目标无法实现或严重受损确有必要处理数据的范围内，第1、2款删除要求不适用。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s012.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not apply",
+              "start": 19,
+              "end": 34
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "to the extent that processing is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) in so far as the right referred to in paragraph 1 is likely to render impossible or seriously impair the achievement of the objectives of that processing",
+              "start": 35,
+              "end": 378
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是删除义务的适用排除，不是禁止删除，也不是无条件允许任意保留。例外应关联第1、2款，不能只从本句空动作得出无法解释整条规则。",
+      "focus_flags": [
+        "exemption_not_prohibition",
+        "context_exception"
+      ],
+      "context_links": [
+        "gdpr_article17_s001",
+        "gdpr_article17_s008"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article17_s013",
+      "sentence_idx": 12,
+      "char_span": [
+        2663,
+        2800
+      ],
+      "text_sha256": "a2c4e00c075d9b2c1a65a64305d366e20302f2bbd97e286b06fa26e3c306c9c9",
+      "sentence_text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for the establishment, exercise or defence of legal claims.",
+      "rule_id": "article17",
+      "rule_text_sha256": "75da671a4800ee26e09327597186e8da915b34f208ff4e2f026bb1a578caf387",
+      "meaning_zh": "为提出、行使或抗辩法律请求确有必要处理数据的范围内，第1、2款删除要求不适用。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article17_s013.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not apply",
+              "start": 19,
+              "end": 34
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "to the extent that processing is necessary for the establishment, exercise or defence of legal claims",
+              "start": 35,
+              "end": 136
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是删除义务的适用排除，不是禁止删除，也不是无条件允许任意保留。例外应关联第1、2款，不能只从本句空动作得出无法解释整条规则。",
+      "focus_flags": [
+        "exemption_not_prohibition",
+        "context_exception"
+      ],
+      "context_links": [
+        "gdpr_article17_s001",
+        "gdpr_article17_s008"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article20_s001",
+      "sentence_idx": 0,
+      "char_span": [
+        0,
+        562
+      ],
+      "text_sha256": "5b63ec29d24bd77cbe3cc19136ae1b0c30f5378d28a25aebc101260d2e0023ca",
+      "sentence_text": "The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and the processing is carried out by automated means.",
+      "rule_id": "article20",
+      "rule_text_sha256": "f3e7951f23f068fe4786c0f016e72d60e19f6e4a84b518819f83ee21168e9f00",
+      "meaning_zh": "满足处理依据和自动处理条件时，本人有权取得机器可读的数据，也有权不受阻碍地把这些数据传给另一控制者。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article20_s001.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "receive the personal data concerning him or her",
+              "start": 41,
+              "end": 88
+            }
+          ],
+          "condition": [
+            {
+              "text": "which he or she has provided to a controller",
+              "start": 90,
+              "end": 134
+            },
+            {
+              "text": "where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1)",
+              "start": 344,
+              "end": 506
+            },
+            {
+              "text": "the processing is carried out by automated means",
+              "start": 512,
+              "end": 560
+            }
+          ],
+          "constraint": [
+            {
+              "text": "in a structured, commonly used and machine-readable format",
+              "start": 136,
+              "end": 194
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article20_s001.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article20_s001.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "have the right",
+              "start": 199,
+              "end": 213
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "transmit those data to another controller",
+              "start": 217,
+              "end": 258
+            }
+          ],
+          "condition": [
+            {
+              "text": "where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1)",
+              "start": 344,
+              "end": 506
+            },
+            {
+              "text": "the processing is carried out by automated means",
+              "start": 512,
+              "end": 560
+            }
+          ],
+          "constraint": [
+            {
+              "text": "without hindrance from the controller to which the personal data have been provided",
+              "start": 259,
+              "end": 342
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article20_s001.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "接收与转移是两项权利；同意或合同为可选处理依据，它们再与自动处理条件共同适用。提供过数据是对象限定，不是本句新命令。",
+      "focus_flags": [
+        "multiple_items",
+        "rights_vs_duties",
+        "alternative_conditions"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article20_s002",
+      "sentence_idx": 1,
+      "char_span": [
+        562,
+        783
+      ],
+      "text_sha256": "170f622db8c7a49619e5c08aa097b5888bb24e74cfe2371461ce4d0da419ef50",
+      "sentence_text": "In exercising his or her right to data portability pursuant to paragraph 1, the data subject shall have the right to have the personal data transmitted directly from one controller to another, where technically feasible.",
+      "rule_id": "article20",
+      "rule_text_sha256": "f3e7951f23f068fe4786c0f016e72d60e19f6e4a84b518819f83ee21168e9f00",
+      "meaning_zh": "行使数据可携权时，在技术可行的情况下，本人有权要求控制者之间直接传输数据。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article20_s002.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 93,
+              "end": 113
+            }
+          ],
+          "actor": [
+            {
+              "text": "the data subject",
+              "start": 76,
+              "end": 92
+            }
+          ],
+          "action": [
+            {
+              "text": "have the personal data transmitted directly from one controller to another",
+              "start": 117,
+              "end": 191
+            }
+          ],
+          "condition": [
+            {
+              "text": "In exercising his or her right to data portability pursuant to paragraph 1",
+              "start": 0,
+              "end": 74
+            },
+            {
+              "text": "where technically feasible",
+              "start": 193,
+              "end": 219
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article20_s002.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "where technically feasible 建议作为权利适用条件，不机械改成 unless 型例外。是否可行需要流程外证据。",
+      "focus_flags": [
+        "rights_vs_duties",
+        "condition_vs_exception"
+      ],
+      "context_links": [
+        "gdpr_article20_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article20_s003",
+      "sentence_idx": 2,
+      "char_span": [
+        783,
+        893
+      ],
+      "text_sha256": "d1a61e5172cd6117bd1270d859628c6eeae9b3a7add134778527dc3d419e75a2",
+      "sentence_text": "The exercise of the right referred to in paragraph 1 of this Article shall be without prejudice to Article 17.",
+      "rule_id": "article20",
+      "rule_text_sha256": "f3e7951f23f068fe4786c0f016e72d60e19f6e4a84b518819f83ee21168e9f00",
+      "meaning_zh": "行使数据可携权不得影响第17条规定的权利和义务。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article20_s003.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 69,
+              "end": 74
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be without prejudice to Article 17",
+              "start": 75,
+              "end": 109
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是权利行使的保留条款。原文用肯定形式 shall be without prejudice，建议义务标签；若项目统一把不损害语义标 prohibition，需要人工统一口径。不能造一个实际流程动作。",
+      "focus_flags": [
+        "scope_clause",
+        "modality_policy"
+      ],
+      "context_links": [
+        "gdpr_article17_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article20_s004",
+      "sentence_idx": 3,
+      "char_span": [
+        894,
+        1077
+      ],
+      "text_sha256": "63d54632d934c1ae327d03963d739189077a7997431a088ef8e017bc40bc6f24",
+      "sentence_text": "That right shall not apply to processing necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller.",
+      "rule_id": "article20",
+      "rule_text_sha256": "f3e7951f23f068fe4786c0f016e72d60e19f6e4a84b518819f83ee21168e9f00",
+      "meaning_zh": "为执行公共利益任务或行使公权力所必需的处理，不适用该数据可携权。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article20_s004.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not apply",
+              "start": 11,
+              "end": 26
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "processing necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller",
+              "start": 30,
+              "end": 181
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "是数据可携权的适用排除，不是禁止数据传输。",
+      "focus_flags": [
+        "exemption_not_prohibition"
+      ],
+      "context_links": [
+        "gdpr_article20_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article20_s005",
+      "sentence_idx": 4,
+      "char_span": [
+        1077,
+        1175
+      ],
+      "text_sha256": "571228cb39ab5edbc78002c907e66f0d5f3cfb9b6e19b3abe4d7f15ecb91f43b",
+      "sentence_text": "The right referred to in paragraph 1 shall not adversely affect the rights and freedoms of others.",
+      "rule_id": "article20",
+      "rule_text_sha256": "f3e7951f23f068fe4786c0f016e72d60e19f6e4a84b518819f83ee21168e9f00",
+      "meaning_zh": "行使数据可携权不得损害其他人的权利和自由。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article20_s005.p1",
+          "modality": "prohibition",
+          "modality_evidence": [
+            {
+              "text": "shall not",
+              "start": 37,
+              "end": 46
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "adversely affect the rights and freedoms of others",
+              "start": 47,
+              "end": 97
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "权利是句法主语，不能映射为业务执行者；本句是该权利的边界。",
+      "focus_flags": [
+        "implicit_actor"
+      ],
+      "context_links": [
+        "gdpr_article20_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article22_s001",
+      "sentence_idx": 0,
+      "char_span": [
+        0,
+        227
+      ],
+      "text_sha256": "bb790f71f3fb93814ca7fe7d01f304eaa82acadc867dbfc8bfd724fe1cb04e1e",
+      "sentence_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her.",
+      "rule_id": "article22",
+      "rule_text_sha256": "a6e181d9b2867f9c5475d9e895bf3c50d03241855985753cc3dcc05a57907385",
+      "meaning_zh": "原则上不得让个人承受完全由自动处理作出、并产生法律效果或类似重大影响的决定。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article22_s001.p1",
+          "modality": "prohibition",
+          "modality_evidence": [
+            {
+              "text": "shall have the right not to",
+              "start": 17,
+              "end": 44
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be subject to a decision based solely on automated processing",
+              "start": 45,
+              "end": 106
+            }
+          ],
+          "condition": [
+            {
+              "text": "which produces legal effects concerning him or her or similarly significantly affects him or her",
+              "start": 129,
+              "end": 225
+            }
+          ],
+          "constraint": [
+            {
+              "text": "based solely on automated processing, including profiling",
+              "start": 70,
+              "end": 127
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "优先建议 prohibition，依据欧盟委员会对第22条一般性禁止的解释。The data subject 是受保护者，不能标成违法决策执行者；本句没有明写 controller，actor 留空并提示上下文主体。若采用严格句法的权利人编码，可讨论 permission，但不能机械判 obligation，也不能为迎合任何方法结果选择标签。",
+      "focus_flags": [
+        "priority_adjudication",
+        "implicit_actor",
+        "rights_vs_duties"
+      ],
+      "context_links": [
+        "gdpr_article22_s002",
+        "gdpr_article22_s003",
+        "gdpr_article22_s004"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article22_s002",
+      "sentence_idx": 1,
+      "char_span": [
+        227,
+        381
+      ],
+      "text_sha256": "abdb2d697d2eecc02daf56475015a721abb31326b0a473567c842dfe76d8f1ec",
+      "sentence_text": "Paragraph 1 shall not apply if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller.",
+      "rule_id": "article22",
+      "rule_text_sha256": "a6e181d9b2867f9c5475d9e895bf3c50d03241855985753cc3dcc05a57907385",
+      "meaning_zh": "决定为与本人订立或履行合同所必需时，第1款的限制存在例外。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article22_s002.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not apply",
+              "start": 12,
+              "end": 27
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller",
+              "start": 28,
+              "end": 152
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是第1款一般性禁止的例外，不能标成新的禁止。例外彼此可选；第4句开头的 or 是冻结文本中的衔接词，原样保留。",
+      "focus_flags": [
+        "context_exception",
+        "exemption_not_prohibition"
+      ],
+      "context_links": [
+        "gdpr_article22_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article22_s003",
+      "sentence_idx": 2,
+      "char_span": [
+        381,
+        623
+      ],
+      "text_sha256": "d59dd79c162a959e8cc08227968cb115f3b4b3a7b3132acca19fe6f896006d78",
+      "sentence_text": "Paragraph 1 shall not apply if the decision is authorised by Union or Member State law to which the controller is subject and which also lays down suitable measures to safeguard the data subject's rights and freedoms and legitimate interests.",
+      "rule_id": "article22",
+      "rule_text_sha256": "a6e181d9b2867f9c5475d9e895bf3c50d03241855985753cc3dcc05a57907385",
+      "meaning_zh": "欧盟法或成员国法授权该决定且规定适当保障措施时，第1款的限制存在例外。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article22_s003.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not apply",
+              "start": 12,
+              "end": 27
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "if the decision is authorised by Union or Member State law to which the controller is subject and which also lays down suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+              "start": 28,
+              "end": 241
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是第1款一般性禁止的例外，不能标成新的禁止。例外彼此可选；第4句开头的 or 是冻结文本中的衔接词，原样保留。",
+      "focus_flags": [
+        "context_exception",
+        "exemption_not_prohibition"
+      ],
+      "context_links": [
+        "gdpr_article22_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article22_s004",
+      "sentence_idx": 3,
+      "char_span": [
+        624,
+        720
+      ],
+      "text_sha256": "4a82d9126bd4c1c7cbf7df40036da5e6f69284a370a0669bfaba0e7da19d88b4",
+      "sentence_text": "or Paragraph 1 shall not apply if the decision is based on the data subject's explicit consent.",
+      "rule_id": "article22",
+      "rule_text_sha256": "a6e181d9b2867f9c5475d9e895bf3c50d03241855985753cc3dcc05a57907385",
+      "meaning_zh": "决定以本人的明确同意为基础时，第1款的限制存在例外。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article22_s004.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not apply",
+              "start": 15,
+              "end": 30
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "if the decision is based on the data subject's explicit consent",
+              "start": 31,
+              "end": 94
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是第1款一般性禁止的例外，不能标成新的禁止。例外彼此可选；第4句开头的 or 是冻结文本中的衔接词，原样保留。",
+      "focus_flags": [
+        "context_exception",
+        "exemption_not_prohibition"
+      ],
+      "context_links": [
+        "gdpr_article22_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article22_s005",
+      "sentence_idx": 4,
+      "char_span": [
+        720,
+        1059
+      ],
+      "text_sha256": "f25a5cb8dee62cb457f918220a4ccc93bfabd88e42b4f46911c297d1637e3e5a",
+      "sentence_text": "In the cases referred to in points (a) and (c) of paragraph 2, the data controller shall implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests, at least the right to obtain human intervention on the part of the controller, to express his or her point of view and to contest the decision.",
+      "rule_id": "article22",
+      "rule_text_sha256": "a6e181d9b2867f9c5475d9e895bf3c50d03241855985753cc3dcc05a57907385",
+      "meaning_zh": "使用合同必要或明确同意这两类例外时，控制者必须采取保障措施，至少保障人工介入、表达观点和质疑决定的权利。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article22_s005.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 83,
+              "end": 88
+            }
+          ],
+          "actor": [
+            {
+              "text": "the data controller",
+              "start": 63,
+              "end": 82
+            }
+          ],
+          "action": [
+            {
+              "text": "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+              "start": 89,
+              "end": 193
+            }
+          ],
+          "condition": [
+            {
+              "text": "In the cases referred to in points (a) and (c) of paragraph 2",
+              "start": 0,
+              "end": 61
+            }
+          ],
+          "constraint": [
+            {
+              "text": "at least the right to obtain human intervention on the part of the controller, to express his or her point of view and to contest the decision",
+              "start": 195,
+              "end": 337
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article22_s005.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "列举的是保障措施至少覆盖的权利，不等于本人必须表达意见、必须提出异议。",
+      "focus_flags": [
+        "rights_vs_duties"
+      ],
+      "context_links": [
+        "gdpr_article22_s002",
+        "gdpr_article22_s004"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article22_s006",
+      "sentence_idx": 5,
+      "char_span": [
+        1059,
+        1343
+      ],
+      "text_sha256": "690d4c9cc637a3e4f865c381860e3ea027d4e32af4e44b7477d669add825f404",
+      "sentence_text": "Decisions referred to in paragraph 2 shall not be based on special categories of personal data referred to in Article 9(1), unless point (a) or (g) of Article 9(2) applies and suitable measures to safeguard the data subject's rights and freedoms and legitimate interests are in place.",
+      "rule_id": "article22",
+      "rule_text_sha256": "a6e181d9b2867f9c5475d9e895bf3c50d03241855985753cc3dcc05a57907385",
+      "meaning_zh": "第2款所涉决定原则上不能以敏感个人数据为基础；满足第9条指定依据且有适当保障时例外。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article22_s006.p1",
+          "modality": "prohibition",
+          "modality_evidence": [
+            {
+              "text": "shall not",
+              "start": 37,
+              "end": 46
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be based on special categories of personal data referred to in Article 9(1)",
+              "start": 47,
+              "end": 122
+            }
+          ],
+          "condition": [
+            {
+              "text": "Decisions referred to in paragraph 2",
+              "start": 0,
+              "end": 36
+            }
+          ],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "unless point (a) or (g) of Article 9(2) applies and suitable measures to safeguard the data subject's rights and freedoms and legitimate interests are in place",
+              "start": 124,
+              "end": 283
+            }
+          ],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "Decisions 是被约束对象，不是执行者。例外内部必须同时满足合法依据与适当保障，不能拆成二选一。",
+      "focus_flags": [
+        "implicit_actor",
+        "conjunctive_exception"
+      ],
+      "context_links": [
+        "gdpr_article22_s002",
+        "gdpr_article22_s003",
+        "gdpr_article22_s004"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article33_s001",
+      "sentence_idx": 0,
+      "char_span": [
+        0,
+        370
+      ],
+      "text_sha256": "d3327ce470720a494bfb05a72841a073e0c7bac1673f11545833dcce72ef0a65",
+      "sentence_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons.",
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "meaning_zh": "发生个人数据泄露时，控制者须及时通知主管监管机构；可行时应在知悉后72小时内通知。若泄露不大可能产生权利自由风险，则可不通知。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article33_s001.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 54,
+              "end": 59
+            }
+          ],
+          "actor": [
+            {
+              "text": "the controller",
+              "start": 39,
+              "end": 53
+            }
+          ],
+          "action": [
+            {
+              "text": "notify the personal data breach to the supervisory authority competent in accordance with Article 55",
+              "start": 158,
+              "end": 258
+            }
+          ],
+          "condition": [
+            {
+              "text": "In the case of a personal data breach",
+              "start": 0,
+              "end": 37
+            }
+          ],
+          "constraint": [
+            {
+              "text": "without undue delay",
+              "start": 60,
+              "end": 79
+            },
+            {
+              "text": "where feasible, not later than 72 hours after having become aware of it",
+              "start": 85,
+              "end": 156
+            }
+          ],
+          "exception": [
+            {
+              "text": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+              "start": 260,
+              "end": 369
+            }
+          ],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article33_s001.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "72小时从知悉泄露起算；where feasible 只修饰72小时时限，不免除整体通知义务。保留及时性与量化时限两个片段，不丢低风险例外。",
+      "focus_flags": [
+        "priority_case",
+        "constraint_scope"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [
+        "having become aware of it 在 notify the personal data breach 之前；起点是知悉，不能改成泄露发生时刻。"
+      ],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article33_s002",
+      "sentence_idx": 1,
+      "char_span": [
+        371,
+        502
+      ],
+      "text_sha256": "cd4a52281b7993bc9fecadd8633a791a6b35cca60b00306e41cdc007bad85df7",
+      "sentence_text": "Where the notification to the supervisory authority is not made within 72 hours, it shall be accompanied by reasons for the delay.",
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "meaning_zh": "向监管机构的通知没有在72小时内作出时，通知须附上延误理由。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article33_s002.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 84,
+              "end": 89
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be accompanied by reasons for the delay",
+              "start": 90,
+              "end": 129
+            }
+          ],
+          "condition": [
+            {
+              "text": "Where the notification to the supervisory authority is not made within 72 hours",
+              "start": 0,
+              "end": 79
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "it 指通知，而不是通知执行者。within 72 hours 属于‘延误’触发条件，不能解释为允许再等72小时。",
+      "focus_flags": [
+        "priority_case",
+        "implicit_actor",
+        "constraint_scope"
+      ],
+      "context_links": [
+        "gdpr_article33_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article33_s003",
+      "sentence_idx": 2,
+      "char_span": [
+        502,
+        612
+      ],
+      "text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2",
+      "sentence_text": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach.",
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "meaning_zh": "处理者一旦知悉个人数据泄露，须及时通知控制者。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article33_s003.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 14,
+              "end": 19
+            }
+          ],
+          "actor": [
+            {
+              "text": "The processor",
+              "start": 0,
+              "end": 13
+            }
+          ],
+          "action": [
+            {
+              "text": "notify the controller",
+              "start": 20,
+              "end": 41
+            }
+          ],
+          "condition": [
+            {
+              "text": "after becoming aware of a personal data breach",
+              "start": 62,
+              "end": 108
+            }
+          ],
+          "constraint": [
+            {
+              "text": "without undue delay",
+              "start": 42,
+              "end": 61
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article33_s003.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "本句执行者是 processor，接收者是 controller；本句没有72小时数字，不能从第1句移植给处理者。",
+      "focus_flags": [
+        "priority_case"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [
+        "becoming aware of a personal data breach 先于 notify the controller；原句 after 提供顺序证据。"
+      ],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article33_s004",
+      "sentence_idx": 3,
+      "char_span": [
+        612,
+        888
+      ],
+      "text_sha256": "039715a9c10424ec1e3c3b2fff320dcc49b9147b72dacd3355b9e36eb836ef20",
+      "sentence_text": "The notification referred to in paragraph 1 shall at least describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned.",
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "meaning_zh": "通知至少描述泄露性质，并在可能时给出涉及人员和数据记录的类别及约数。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article33_s004.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 44,
+              "end": 49
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+              "start": 59,
+              "end": 274
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "at least",
+              "start": 50,
+              "end": 58
+            },
+            {
+              "text": "where possible",
+              "start": 117,
+              "end": 131
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "通知是承载要求的文书，不是业务执行者；不要把 notification 当成泳道。实际提供方可联系第1款控制者，在备注中保留而不伪造本句主句actor。内容列举仍是同一通知要求。",
+      "focus_flags": [
+        "implicit_actor",
+        "document_subject"
+      ],
+      "context_links": [
+        "gdpr_article33_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article33_s005",
+      "sentence_idx": 4,
+      "char_span": [
+        888,
+        1082
+      ],
+      "text_sha256": "9bf36822d80567b6a71f8bab416e2a7b4918852ce197842e27f320b2b7de1591",
+      "sentence_text": "The notification referred to in paragraph 1 shall at least communicate the name and contact details of the data protection officer or other contact point where more information can be obtained.",
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "meaning_zh": "通知至少给出数据保护官或其他联络点的姓名及联系方式。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article33_s005.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 44,
+              "end": 49
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "communicate the name and contact details of the data protection officer or other contact point where more information can be obtained",
+              "start": 59,
+              "end": 192
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "at least",
+              "start": 50,
+              "end": 58
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "通知是承载要求的文书，不是业务执行者；不要把 notification 当成泳道。实际提供方可联系第1款控制者，在备注中保留而不伪造本句主句actor。内容列举仍是同一通知要求。",
+      "focus_flags": [
+        "implicit_actor",
+        "document_subject"
+      ],
+      "context_links": [
+        "gdpr_article33_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article33_s006",
+      "sentence_idx": 5,
+      "char_span": [
+        1082,
+        1203
+      ],
+      "text_sha256": "15d881e261d9d9ecbdb1f3f0f5bfe84efda6224ef88ad8e197ffefb559de8538",
+      "sentence_text": "The notification referred to in paragraph 1 shall at least describe the likely consequences of the personal data breach.",
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "meaning_zh": "通知至少描述泄露可能造成的后果。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article33_s006.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 44,
+              "end": 49
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "describe the likely consequences of the personal data breach",
+              "start": 59,
+              "end": 119
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "at least",
+              "start": 50,
+              "end": 58
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "通知是承载要求的文书，不是业务执行者；不要把 notification 当成泳道。实际提供方可联系第1款控制者，在备注中保留而不伪造本句主句actor。内容列举仍是同一通知要求。",
+      "focus_flags": [
+        "implicit_actor",
+        "document_subject"
+      ],
+      "context_links": [
+        "gdpr_article33_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article33_s007",
+      "sentence_idx": 6,
+      "char_span": [
+        1203,
+        1450
+      ],
+      "text_sha256": "a05e1c585ae4ad1f300c02fd027f75ea0c9adbeb6fa957ec67d9787c0884a397",
+      "sentence_text": "The notification referred to in paragraph 1 shall at least describe the measures taken or proposed to be taken by the controller to address the personal data breach, including, where appropriate, measures to mitigate its possible adverse effects.",
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "meaning_zh": "通知至少描述控制者已采取或拟采取的应对措施，适当时包括减轻不利影响的措施。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article33_s007.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 44,
+              "end": 49
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "describe the measures taken or proposed to be taken by the controller to address the personal data breach, including, where appropriate, measures to mitigate its possible adverse effects",
+              "start": 59,
+              "end": 245
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "at least",
+              "start": 50,
+              "end": 58
+            },
+            {
+              "text": "where appropriate",
+              "start": 177,
+              "end": 194
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "通知是承载要求的文书，不是业务执行者；不要把 notification 当成泳道。实际提供方可联系第1款控制者，在备注中保留而不伪造本句主句actor。内容列举仍是同一通知要求。",
+      "focus_flags": [
+        "implicit_actor",
+        "document_subject"
+      ],
+      "context_links": [
+        "gdpr_article33_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article33_s008",
+      "sentence_idx": 7,
+      "char_span": [
+        1450,
+        1610
+      ],
+      "text_sha256": "cd0f630f007aa93bee1c3dc85067883afbbfd55bfc90cd2435b69ad3de1f87e0",
+      "sentence_text": "Where, and in so far as, it is not possible to provide the information at the same time, the information may be provided in phases without undue further delay.",
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "meaning_zh": "无法一次提供全部信息时，可以分阶段提供，但不得造成不当的进一步延迟。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article33_s008.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "may",
+              "start": 105,
+              "end": 108
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be provided",
+              "start": 109,
+              "end": 120
+            }
+          ],
+          "condition": [
+            {
+              "text": "Where, and in so far as, it is not possible to provide the information at the same time",
+              "start": 0,
+              "end": 87
+            }
+          ],
+          "constraint": [
+            {
+              "text": "in phases",
+              "start": 121,
+              "end": 130
+            },
+            {
+              "text": "without undue further delay",
+              "start": 131,
+              "end": 158
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "允许分阶段不是免除提供信息；句中没有明示提供者，the information 是内容对象。",
+      "focus_flags": [
+        "implicit_actor"
+      ],
+      "context_links": [
+        "gdpr_article33_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article33_s009",
+      "sentence_idx": 8,
+      "char_span": [
+        1610,
+        1769
+      ],
+      "text_sha256": "0877dee6e1c8bddf069409062af67fd8836f3ca2fbd28d8405b4bc7f7a8ed5dd",
+      "sentence_text": "The controller shall document any personal data breaches, comprising the facts relating to the personal data breach, its effects and the remedial action taken.",
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "meaning_zh": "控制者必须记录所有个人数据泄露，包括事实、影响和补救行动。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article33_s009.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 15,
+              "end": 20
+            }
+          ],
+          "actor": [
+            {
+              "text": "The controller",
+              "start": 0,
+              "end": 14
+            }
+          ],
+          "action": [
+            {
+              "text": "document any personal data breaches",
+              "start": 21,
+              "end": 56
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "comprising the facts relating to the personal data breach, its effects and the remedial action taken",
+              "start": 58,
+              "end": 158
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article33_s009.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "记录义务覆盖 any breaches，不能把第1句低风险免通知例外自动迁移到记录义务。",
+      "focus_flags": [
+        "priority_case"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article33_s010",
+      "sentence_idx": 9,
+      "char_span": [
+        1770,
+        1867
+      ],
+      "text_sha256": "97cb2d3529241dbfebcde505c980421687aa72b43194dbe1fcce5045d1f29f43",
+      "sentence_text": "That documentation shall enable the supervisory authority to verify compliance with this Article.",
+      "rule_id": "article33",
+      "rule_text_sha256": "148a3d7a6006726c3c960b75a13ff5efcf35a603d4be23dc1a4ddd40f45fe380",
+      "meaning_zh": "上述记录应使监管机构能够核实本条的遵守情况。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article33_s010.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 19,
+              "end": 24
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "enable the supervisory authority to verify compliance with this Article",
+              "start": 25,
+              "end": 96
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "监管机构是验证者，但本句没有命令其必须验证；主要求是记录具备可供核实的功能。documentation 不是执行者。",
+      "focus_flags": [
+        "document_subject",
+        "implicit_actor"
+      ],
+      "context_links": [
+        "gdpr_article33_s009"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article34_s001",
+      "sentence_idx": 0,
+      "char_span": [
+        0,
+        211
+      ],
+      "text_sha256": "15fe84681e44264818adbcb9f11162c02d9696a581f77b0e8dff56b3eb09e5a5",
+      "sentence_text": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the personal data breach to the data subject without undue delay.",
+      "rule_id": "article34",
+      "rule_text_sha256": "6e90103bc43195c02e960ac35305d35e3c331b0d9f853656b1c8f765cf8416fb",
+      "meaning_zh": "泄露可能对个人权利自由造成高风险时，控制者必须及时告知数据主体。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article34_s001.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 127,
+              "end": 132
+            }
+          ],
+          "actor": [
+            {
+              "text": "the controller",
+              "start": 112,
+              "end": 126
+            }
+          ],
+          "action": [
+            {
+              "text": "communicate the personal data breach to the data subject",
+              "start": 133,
+              "end": 189
+            }
+          ],
+          "condition": [
+            {
+              "text": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons",
+              "start": 0,
+              "end": 110
+            }
+          ],
+          "constraint": [
+            {
+              "text": "without undue delay",
+              "start": 190,
+              "end": 209
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article34_s001.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "告知对象是 data subject，不是监管机构；本条为高风险触发，本句没有72小时期限。后续第3款给出通知豁免。",
+      "focus_flags": [
+        "priority_case"
+      ],
+      "context_links": [
+        "gdpr_article34_s003",
+        "gdpr_article34_s004",
+        "gdpr_article34_s005"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article34_s002",
+      "sentence_idx": 1,
+      "char_span": [
+        211,
+        481
+      ],
+      "text_sha256": "d4fffb5731bc634cc5911a424a8572e6d74a5a7d6559c001c0358d4dc4f811cc",
+      "sentence_text": "The communication to the data subject referred to in paragraph 1 of this Article shall describe in clear and plain language the nature of the personal data breach and contain at least the information and measures referred to in points (b), (c) and (d) of Article 33(3).",
+      "rule_id": "article34",
+      "rule_text_sha256": "6e90103bc43195c02e960ac35305d35e3c331b0d9f853656b1c8f765cf8416fb",
+      "meaning_zh": "给本人的告知须用清楚、简单的语言描述泄露性质，并至少包含第33条第3款指定的信息和措施。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article34_s002.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 81,
+              "end": 86
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "describe",
+              "start": 87,
+              "end": 95
+            },
+            {
+              "text": "the nature of the personal data breach",
+              "start": 124,
+              "end": 162
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "in clear and plain language",
+              "start": 96,
+              "end": 123
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_predicate_multiple_evidence_fragments",
+          "actor_action_map": []
+        },
+        {
+          "item_id": "gdpr_article34_s002.p2",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 81,
+              "end": 86
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "contain at least the information and measures referred to in points (b), (c) and (d) of Article 33(3)",
+              "start": 167,
+              "end": 268
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "at least",
+              "start": 175,
+              "end": 183
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "两项内容义务并列，无先后要求。动作 describe 与对象被方式短语隔开，所以保留多个原文证据片段。communication 是文书，不当作主体。",
+      "focus_flags": [
+        "multiple_items",
+        "implicit_actor",
+        "discontinuous_phrase"
+      ],
+      "context_links": [
+        "gdpr_article34_s001",
+        "gdpr_article33_s005",
+        "gdpr_article33_s006",
+        "gdpr_article33_s007"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article34_s003",
+      "sentence_idx": 2,
+      "char_span": [
+        481,
+        890
+      ],
+      "text_sha256": "91fbe85b61f646e15362e63a2446cde57df4aacb43078b1d618598679a82819c",
+      "sentence_text": "The communication to the data subject referred to in paragraph 1 shall not be required if the controller has implemented appropriate technical and organisational protection measures, and those measures were applied to the personal data affected by the personal data breach, in particular those that render the personal data unintelligible to any person who is not authorised to access it, such as encryption.",
+      "rule_id": "article34",
+      "rule_text_sha256": "6e90103bc43195c02e960ac35305d35e3c331b0d9f853656b1c8f765cf8416fb",
+      "meaning_zh": "已实施并应用适当保护措施，尤其使未经授权者无法读懂数据的措施（如加密）时，可免于逐一告知。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article34_s003.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not be required",
+              "start": 65,
+              "end": 86
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "if the controller has implemented appropriate technical and organisational protection measures, and those measures were applied to the personal data affected by the personal data breach, in particular those that render the personal data unintelligible to any person who is not authorised to access it, such as encryption",
+              "start": 87,
+              "end": 407
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是对前面通知义务的豁免，不是禁止沟通，也不是一条新的无条件许可；例外必须关联第1款，不能只凭本句无动作就丢掉豁免内容。",
+      "focus_flags": [
+        "priority_case",
+        "exemption_not_prohibition",
+        "context_exception"
+      ],
+      "context_links": [
+        "gdpr_article34_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article34_s004",
+      "sentence_idx": 3,
+      "char_span": [
+        890,
+        1164
+      ],
+      "text_sha256": "accbba5528c9af207a891a7480a1b0ae4805379deabb4db412ca3cf33f4b582f",
+      "sentence_text": "The communication to the data subject referred to in paragraph 1 shall not be required if the controller has taken subsequent measures which ensure that the high risk to the rights and freedoms of data subjects referred to in paragraph 1 is no longer likely to materialise.",
+      "rule_id": "article34",
+      "rule_text_sha256": "6e90103bc43195c02e960ac35305d35e3c331b0d9f853656b1c8f765cf8416fb",
+      "meaning_zh": "已采取后续措施，确保高风险不再可能发生时，可免于逐一告知。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article34_s004.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not be required",
+              "start": 65,
+              "end": 86
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "if the controller has taken subsequent measures which ensure that the high risk to the rights and freedoms of data subjects referred to in paragraph 1 is no longer likely to materialise",
+              "start": 87,
+              "end": 272
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是对前面通知义务的豁免，不是禁止沟通，也不是一条新的无条件许可；例外必须关联第1款，不能只凭本句无动作就丢掉豁免内容。",
+      "focus_flags": [
+        "priority_case",
+        "exemption_not_prohibition",
+        "context_exception"
+      ],
+      "context_links": [
+        "gdpr_article34_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article34_s005",
+      "sentence_idx": 4,
+      "char_span": [
+        1164,
+        1295
+      ],
+      "text_sha256": "7d01aa3b8aeebd9757599a5c3e6066976703816461eb83a196c43956c54d588b",
+      "sentence_text": "The communication to the data subject referred to in paragraph 1 shall not be required if it would involve disproportionate effort.",
+      "rule_id": "article34",
+      "rule_text_sha256": "6e90103bc43195c02e960ac35305d35e3c331b0d9f853656b1c8f765cf8416fb",
+      "meaning_zh": "逐一告知会造成不成比例的工作量时，可免于逐一告知，但须注意下一句的替代公告要求。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article34_s005.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not be required",
+              "start": 65,
+              "end": 86
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "if it would involve disproportionate effort",
+              "start": 87,
+              "end": 130
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是对前面通知义务的豁免，不是禁止沟通，也不是一条新的无条件许可；例外必须关联第1款，不能只凭本句无动作就丢掉豁免内容。",
+      "focus_flags": [
+        "priority_case",
+        "exemption_not_prohibition",
+        "context_exception"
+      ],
+      "context_links": [
+        "gdpr_article34_s001",
+        "gdpr_article34_s006"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article34_s006",
+      "sentence_idx": 5,
+      "char_span": [
+        1296,
+        1448
+      ],
+      "text_sha256": "3c3c2c92155f6c75224f096931d4c2fa3bbb5ae70f577f1133c508d00af4a58f",
+      "sentence_text": "In such a case, there shall instead be a public communication or similar measure whereby the data subjects are informed in an equally effective manner.",
+      "rule_id": "article34",
+      "rule_text_sha256": "6e90103bc43195c02e960ac35305d35e3c331b0d9f853656b1c8f765cf8416fb",
+      "meaning_zh": "在上述工作量不成比例的情况下，应改用公开沟通或同等有效的类似措施，让本人得知情况。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article34_s006.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 22,
+              "end": 27
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be a public communication or similar measure",
+              "start": 36,
+              "end": 80
+            }
+          ],
+          "condition": [
+            {
+              "text": "In such a case",
+              "start": 0,
+              "end": 14
+            }
+          ],
+          "constraint": [
+            {
+              "text": "instead",
+              "start": 28,
+              "end": 35
+            },
+            {
+              "text": "whereby the data subjects are informed in an equally effective manner",
+              "start": 81,
+              "end": 150
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "such a case 特指上一句工作量不成比例，不把公开沟通要求扩展到加密或消除风险两种豁免。执行者在本句省略。",
+      "focus_flags": [
+        "priority_case",
+        "context_reference",
+        "implicit_actor"
+      ],
+      "context_links": [
+        "gdpr_article34_s005"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article34_s007",
+      "sentence_idx": 6,
+      "char_span": [
+        1448,
+        1755
+      ],
+      "text_sha256": "a99659a91b4029cbf44507562b20753bbdc8fbb7c61c5b79c6675a4a707df027",
+      "sentence_text": "If the controller has not already communicated the personal data breach to the data subject, the supervisory authority, having considered the likelihood of the personal data breach resulting in a high risk, may require it to do so or may decide that any of the conditions referred to in paragraph 3 are met.",
+      "rule_id": "article34",
+      "rule_text_sha256": "6e90103bc43195c02e960ac35305d35e3c331b0d9f853656b1c8f765cf8416fb",
+      "meaning_zh": "若控制者尚未告知本人，监管机构考虑高风险可能性后，可以要求其告知，也可以认定第3款某项豁免成立。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article34_s007.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "may",
+              "start": 207,
+              "end": 210
+            }
+          ],
+          "actor": [
+            {
+              "text": "the supervisory authority",
+              "start": 93,
+              "end": 118
+            }
+          ],
+          "action": [
+            {
+              "text": "require it to do so",
+              "start": 211,
+              "end": 230
+            }
+          ],
+          "condition": [
+            {
+              "text": "If the controller has not already communicated the personal data breach to the data subject",
+              "start": 0,
+              "end": 91
+            }
+          ],
+          "constraint": [
+            {
+              "text": "having considered the likelihood of the personal data breach resulting in a high risk",
+              "start": 120,
+              "end": 205
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article34_s007.p1"
+            }
+          ]
+        },
+        {
+          "item_id": "gdpr_article34_s007.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "may",
+              "start": 234,
+              "end": 237
+            }
+          ],
+          "actor": [
+            {
+              "text": "the supervisory authority",
+              "start": 93,
+              "end": 118
+            }
+          ],
+          "action": [
+            {
+              "text": "decide that any of the conditions referred to in paragraph 3 are met",
+              "start": 238,
+              "end": 306
+            }
+          ],
+          "condition": [
+            {
+              "text": "If the controller has not already communicated the personal data breach to the data subject",
+              "start": 0,
+              "end": 91
+            }
+          ],
+          "constraint": [
+            {
+              "text": "having considered the likelihood of the personal data breach resulting in a high risk",
+              "start": 120,
+              "end": 205
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article34_s007.p2"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "两条权限是 or 分支；it 指控制者，do so 指告知，不把监管机构错接成向本人发送告知的执行者。原文代理指称保留供你检查。",
+      "focus_flags": [
+        "priority_case",
+        "multiple_items",
+        "coreference",
+        "alternative_actions"
+      ],
+      "context_links": [
+        "gdpr_article34_s001",
+        "gdpr_article34_s003",
+        "gdpr_article34_s004",
+        "gdpr_article34_s005"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article6_s001",
+      "sentence_idx": 0,
+      "char_span": [
+        0,
+        174
+      ],
+      "text_sha256": "ce0e6b4fb1fbb6f67a1f9c1f4b4b03c956853763ea9786c678f17970ca059a21",
+      "sentence_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes.",
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "meaning_zh": "只有在本人已就一个或多个特定目的同意处理其数据的相应范围内，处理才具备本项合法依据。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article6_s001.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall be lawful only if",
+              "start": 11,
+              "end": 34
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "Processing",
+              "start": 0,
+              "end": 10
+            }
+          ],
+          "condition": [
+            {
+              "text": "only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes",
+              "start": 27,
+              "end": 172
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "建议按有条件允许处理标 permission；shall be lawful 不是命令数据主体给出同意。本句是项目展开的第6(1)(a)项，必须与其他可选依据合看，不能推出所有处理都必须取得同意。Processing 是原文名词化行为；控制者未作主句执行者明示。",
+      "focus_flags": [
+        "alternative_conditions",
+        "implicit_actor",
+        "modality_policy"
+      ],
+      "context_links": [
+        "gdpr_article6_s002"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article6_s002",
+      "sentence_idx": 1,
+      "char_span": [
+        174,
+        1345
+      ],
+      "text_sha256": "51637f0f8a86398efe0aff728f7f034228724e25ffa10a16e05a6c370694c230",
+      "sentence_text": "Processing shall be lawful only if and to the extent that processing is necessary for the performance of a contract to which the data subject is party or in order to take steps at the request of the data subject prior to entering into a contract; Processing shall be lawful only if and to the extent that processing is necessary for compliance with a legal obligation to which the controller is subject; Processing shall be lawful only if and to the extent that processing is necessary in order to protect the vital interests of the data subject or of another natural person; Processing shall be lawful only if and to the extent that processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller; Processing shall be lawful only if and to the extent that processing is necessary for the purposes of the legitimate interests pursued by the controller or by a third party, except where such interests are overridden by the interests or fundamental rights and freedoms of the data subject which require protection of personal data, in particular where the data subject is a child.",
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "meaning_zh": "另外五种处理依据分别是：合同或订约措施所必需、履行法定义务、保护重大利益、公共任务或公权力、正当利益；最后一种受本人权益优先的限制。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article6_s002.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall be lawful only if",
+              "start": 11,
+              "end": 34
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "Processing",
+              "start": 0,
+              "end": 10
+            }
+          ],
+          "condition": [
+            {
+              "text": "only if and to the extent that processing is necessary for the performance of a contract to which the data subject is party or in order to take steps at the request of the data subject prior to entering into a contract",
+              "start": 27,
+              "end": 245
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        },
+        {
+          "item_id": "gdpr_article6_s002.p2",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall be lawful only if",
+              "start": 258,
+              "end": 281
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "Processing",
+              "start": 247,
+              "end": 257
+            }
+          ],
+          "condition": [
+            {
+              "text": "only if and to the extent that processing is necessary for compliance with a legal obligation to which the controller is subject",
+              "start": 274,
+              "end": 402
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        },
+        {
+          "item_id": "gdpr_article6_s002.p3",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall be lawful only if",
+              "start": 415,
+              "end": 438
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "Processing",
+              "start": 404,
+              "end": 414
+            }
+          ],
+          "condition": [
+            {
+              "text": "only if and to the extent that processing is necessary in order to protect the vital interests of the data subject or of another natural person",
+              "start": 431,
+              "end": 574
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        },
+        {
+          "item_id": "gdpr_article6_s002.p4",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall be lawful only if",
+              "start": 587,
+              "end": 610
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "Processing",
+              "start": 576,
+              "end": 586
+            }
+          ],
+          "condition": [
+            {
+              "text": "only if and to the extent that processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller",
+              "start": 603,
+              "end": 788
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        },
+        {
+          "item_id": "gdpr_article6_s002.p5",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall be lawful only if",
+              "start": 801,
+              "end": 824
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "Processing",
+              "start": 790,
+              "end": 800
+            }
+          ],
+          "condition": [
+            {
+              "text": "only if and to the extent that processing is necessary for the purposes of the legitimate interests pursued by the controller or by a third party",
+              "start": 817,
+              "end": 962
+            }
+          ],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "except where such interests are overridden by the interests or fundamental rights and freedoms of the data subject which require protection of personal data, in particular where the data subject is a child",
+              "start": 964,
+              "end": 1169
+            }
+          ],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "冻结分句把五个可选依据放在一句里。拆成五条建议，条目之间是 OR，不是要求公司同时满足五种依据。第5项的 except 仅约束正当利益依据。各处 Processing 用显式出现序号定位，不能全取第一处。",
+      "focus_flags": [
+        "multiple_items",
+        "alternative_conditions",
+        "repeated_phrase",
+        "exception_scope"
+      ],
+      "context_links": [
+        "gdpr_article6_s001"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article6_s003",
+      "sentence_idx": 2,
+      "char_span": [
+        1345,
+        1480
+      ],
+      "text_sha256": "23f1bc968692552435235fdf3b7853d643ca2bb191780b4eeaa7815a3be0ac43",
+      "sentence_text": "Point (f) of the first subparagraph shall not apply to processing carried out by public authorities in the performance of their tasks.",
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "meaning_zh": "公共机关执行其任务时进行的数据处理，不能以第1款(f)项正当利益作为依据。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article6_s003.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not apply",
+              "start": 36,
+              "end": 51
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [],
+          "exception": [
+            {
+              "text": "processing carried out by public authorities in the performance of their tasks",
+              "start": 55,
+              "end": 133
+            }
+          ],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "排除的是某一处理依据，不是禁止公共机关处理任何数据。public authorities 出现在例外范围中，不生成独立操作命令。",
+      "focus_flags": [
+        "exemption_not_prohibition",
+        "context_exception"
+      ],
+      "context_links": [
+        "gdpr_article6_s002"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article6_s004",
+      "sentence_idx": 3,
+      "char_span": [
+        1480,
+        1891
+      ],
+      "text_sha256": "1728316c2cee351c497d24830d13c367dfe2da15eded34817600eb3461f7609b",
+      "sentence_text": "Member States may maintain or introduce more specific provisions to adapt the application of the rules of this Regulation with regard to processing for compliance with points (c) and (e) of paragraph 1 by determining more precisely specific requirements for the processing and other measures to ensure lawful and fair processing including for other specific processing situations as provided for in Chapter IX.",
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "meaning_zh": "成员国可以保留或制定更具体的规定，使本条例适用于法定义务和公共任务等处理情况。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article6_s004.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "may",
+              "start": 14,
+              "end": 17
+            }
+          ],
+          "actor": [
+            {
+              "text": "Member States",
+              "start": 0,
+              "end": 13
+            }
+          ],
+          "action": [
+            {
+              "text": "maintain",
+              "start": 18,
+              "end": 26
+            },
+            {
+              "text": "introduce more specific provisions to adapt the application of the rules of this Regulation",
+              "start": 30,
+              "end": 121
+            }
+          ],
+          "condition": [
+            {
+              "text": "with regard to processing for compliance with points (c) and (e) of paragraph 1",
+              "start": 122,
+              "end": 201
+            }
+          ],
+          "constraint": [
+            {
+              "text": "by determining more precisely specific requirements for the processing and other measures to ensure lawful and fair processing including for other specific processing situations as provided for in Chapter IX",
+              "start": 202,
+              "end": 409
+            }
+          ],
+          "exception": [],
+          "action_structure": "alternative_predicates_shared_object",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article6_s004.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "maintain 与 introduce 是可选立法行为，共享 provisions 对象；不能把它们转成企业必须先后执行的两个活动。",
+      "focus_flags": [
+        "alternative_actions",
+        "discontinuous_phrase"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article6_s005",
+      "sentence_idx": 4,
+      "char_span": [
+        1891,
+        2056
+      ],
+      "text_sha256": "2f9bf7fb1babfacce1668975d113a6c3dd0d4a6448aa077ebace5f5d63ae3b97",
+      "sentence_text": "The basis for the processing referred to in point (c) and (e) of paragraph 1 shall be laid down by Union law or Member State law to which the controller is subject.",
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "meaning_zh": "基于第1款(c)、(e)项的处理，其依据必须由欧盟法或约束控制者的成员国法规定。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article6_s005.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 77,
+              "end": 82
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be laid down",
+              "start": 83,
+              "end": 95
+            }
+          ],
+          "condition": [
+            {
+              "text": "The basis for the processing referred to in point (c) and (e) of paragraph 1",
+              "start": 0,
+              "end": 76
+            }
+          ],
+          "constraint": [
+            {
+              "text": "by Union law or Member State law to which the controller is subject",
+              "start": 96,
+              "end": 163
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "规定的是法律依据的来源，不应将法律当作企业流程执行者；controller 只是受该法约束的主体。",
+      "focus_flags": [
+        "implicit_actor",
+        "scope_clause"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article6_s006",
+      "sentence_idx": 5,
+      "char_span": [
+        2056,
+        2347
+      ],
+      "text_sha256": "1fc9c4f76a175f260493103abbae1a250cea972fc3c681ef68835c291b351707",
+      "sentence_text": "The purpose of the processing shall be determined in that legal basis or, as regards the processing referred to in point (e) of paragraph 1, shall be necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller.",
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "meaning_zh": "处理目的应在法律依据中确定；就公共任务或公权力依据而言，目的应为执行该任务或权力所必需。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article6_s006.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 30,
+              "end": 35
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be determined",
+              "start": 36,
+              "end": 49
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "in that legal basis",
+              "start": 50,
+              "end": 69
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        },
+        {
+          "item_id": "gdpr_article6_s006.p2",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 141,
+              "end": 146
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller",
+              "start": 147,
+              "end": 290
+            }
+          ],
+          "condition": [
+            {
+              "text": "as regards the processing referred to in point (e) of paragraph 1",
+              "start": 74,
+              "end": 139
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "两种目的约束按 or 及限定条件保留，不是两个活动的先后顺序。目的不是流程执行者。",
+      "focus_flags": [
+        "multiple_items",
+        "scope_clause",
+        "alternative_conditions"
+      ],
+      "context_links": [
+        "gdpr_article6_s005"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article6_s007",
+      "sentence_idx": 6,
+      "char_span": [
+        2348,
+        2944
+      ],
+      "text_sha256": "09b8c9c4d4ee1fb5b81b20d4bac4347973f72c854719f33c427d8a282dc2cf2c",
+      "sentence_text": "That legal basis may contain specific provisions to adapt the application of rules of this Regulation, inter alia: the general conditions governing the lawfulness of processing by the controller; the types of data which are subject to the processing; the data subjects concerned; the entities to, and the purposes for which, the personal data may be disclosed; the purpose limitation; storage periods; and processing operations and processing procedures, including measures to ensure lawful and fair processing such as those for other specific processing situations as provided for in Chapter IX.",
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "meaning_zh": "该法律依据可以进一步规定处理条件、数据类型、涉及人员、接收实体和目的、保存期限及保障措施等事项。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article6_s007.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "may",
+              "start": 17,
+              "end": 20
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "contain specific provisions to adapt the application of rules of this Regulation",
+              "start": 21,
+              "end": 101
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "inter alia: the general conditions governing the lawfulness of processing by the controller; the types of data which are subject to the processing; the data subjects concerned; the entities to, and the purposes for which, the personal data may be disclosed; the purpose limitation; storage periods; and processing operations and processing procedures, including measures to ensure lawful and fair processing such as those for other specific processing situations as provided for in Chapter IX",
+              "start": 103,
+              "end": 595
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是授权法律规定的内容范围，不是要求流程逐项执行列举内容。内层 personal data may be disclosed 位于接收方/目的描述中，不独立生成为许可披露数据的规则。",
+      "focus_flags": [
+        "scope_clause",
+        "implicit_actor"
+      ],
+      "context_links": [
+        "gdpr_article6_s005"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article6_s008",
+      "sentence_idx": 7,
+      "char_span": [
+        2945,
+        3074
+      ],
+      "text_sha256": "a8ff1b9bc077e964bdc6d671966107e783552248b290d11a859f006808ed0661",
+      "sentence_text": "The Union or the Member State law shall meet an objective of public interest and be proportionate to the legitimate aim pursued.",
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "meaning_zh": "该欧盟法或成员国法必须服务于公共利益，并与追求的合法目的相称。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article6_s008.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 34,
+              "end": 39
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "meet an objective of public interest",
+              "start": 40,
+              "end": 76
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        },
+        {
+          "item_id": "gdpr_article6_s008.p2",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 34,
+              "end": 39
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be proportionate to the legitimate aim pursued",
+              "start": 81,
+              "end": 127
+            }
+          ],
+          "condition": [],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "两个并列要求针对法律本身；不把 law 当作公司流程泳道，不凭 and 添加活动顺序。",
+      "focus_flags": [
+        "multiple_items",
+        "scope_clause",
+        "implicit_actor"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article6_s009",
+      "sentence_idx": 8,
+      "char_span": [
+        3074,
+        3586
+      ],
+      "text_sha256": "47b24356d04b70feacbc6e3a535850a9dfce28fd9d531173e4fe8f54f1be7f53",
+      "sentence_text": "Where the processing for a purpose other than that for which the personal data have been collected is not based on the data subject's consent or on a Union or Member State law which constitutes a necessary and proportionate measure in a democratic society to safeguard the objectives referred to in Article 23(1), the controller shall, in order to ascertain whether processing for another purpose is compatible with the purpose for which the personal data are initially collected, take into account, inter alia:",
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "meaning_zh": "拟将数据用于不同目的，且没有本人同意或特定法律授权时，控制者必须评估新旧目的是否相容，并考虑下句列出的因素。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article6_s009.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 329,
+              "end": 334
+            }
+          ],
+          "actor": [
+            {
+              "text": "the controller",
+              "start": 314,
+              "end": 328
+            }
+          ],
+          "action": [
+            {
+              "text": "take into account, inter alia",
+              "start": 481,
+              "end": 510
+            }
+          ],
+          "condition": [
+            {
+              "text": "Where the processing for a purpose other than that for which the personal data have been collected is not based on the data subject's consent or on a Union or Member State law which constitutes a necessary and proportionate measure in a democratic society to safeguard the objectives referred to in Article 23(1)",
+              "start": 0,
+              "end": 312
+            }
+          ],
+          "constraint": [
+            {
+              "text": "in order to ascertain whether processing for another purpose is compatible with the purpose for which the personal data are initially collected",
+              "start": 336,
+              "end": 479
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article6_s009.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "原句以冒号结束，列举对象在s010。这里将评估目的保留为方式/目的限定；不能把句末缺对象当成该法规没有需考虑的内容。",
+      "focus_flags": [
+        "context_fragment"
+      ],
+      "context_links": [
+        "gdpr_article6_s010"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article6_s010",
+      "sentence_idx": 9,
+      "char_span": [
+        3586,
+        4268
+      ],
+      "text_sha256": "e8876540ea6f43dcbd2db2dcef0e3366e8a93173457145bd48d63051f958efd5",
+      "sentence_text": "Any link between the purposes for which the personal data have been collected and the purposes of the intended further processing; The context in which the personal data have been collected, in particular regarding the relationship between data subjects and the controller; The nature of the personal data, in particular whether special categories of personal data are processed, pursuant to Article 9, or whether personal data related to criminal convictions and offences are processed, pursuant to Article 10; The possible consequences of the intended further processing for data subjects; The existence of appropriate safeguards, which may include encryption or pseudonymisation.",
+      "rule_id": "article6",
+      "rule_text_sha256": "69675a82a5d523ac865da7d04b62f11955c310e8472c7be403e2518b1567ba51",
+      "meaning_zh": "需要考虑：新旧目的关联、收集背景和双方关系、数据性质、继续处理的后果，以及加密或假名化等保障措施。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article6_s010.p1",
+          "modality": "definition",
+          "modality_evidence": [],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "Any link between the purposes for which the personal data have been collected and the purposes of the intended further processing; The context in which the personal data have been collected, in particular regarding the relationship between data subjects and the controller; The nature of the personal data, in particular whether special categories of personal data are processed, pursuant to Article 9, or whether personal data related to criminal convictions and offences are processed, pursuant to Article 10; The possible consequences of the intended further processing for data subjects; The existence of appropriate safeguards, which may include encryption or pseudonymisation",
+              "start": 0,
+              "end": 681
+            }
+          ],
+          "exception": [],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这不是新的完整命令，而是上一句 take into account 的五类宾语列表。没有独立主体/动作，不从列表里随意挑一个动词作主动作。",
+      "focus_flags": [
+        "context_fragment"
+      ],
+      "context_links": [
+        "gdpr_article6_s009"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article7_s001",
+      "sentence_idx": 0,
+      "char_span": [
+        0,
+        161
+      ],
+      "text_sha256": "e00763881eb6ffcb71cd7f3dfda726448d24731fa06d9b217e2dce6dd00bce87",
+      "sentence_text": "Where processing is based on consent, the controller shall be able to demonstrate that the data subject has consented to processing of his or her personal data.",
+      "rule_id": "article7",
+      "rule_text_sha256": "6306b705540e3df738ead52895687e764641ddaa9a1822d294de1b369ae599f7",
+      "meaning_zh": "以同意为处理依据时，控制者必须能证明本人已同意处理其个人数据。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article7_s001.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 53,
+              "end": 58
+            }
+          ],
+          "actor": [
+            {
+              "text": "the controller",
+              "start": 38,
+              "end": 52
+            }
+          ],
+          "action": [
+            {
+              "text": "be able to demonstrate that the data subject has consented to processing of his or her personal data",
+              "start": 59,
+              "end": 159
+            }
+          ],
+          "condition": [
+            {
+              "text": "Where processing is based on consent",
+              "start": 0,
+              "end": 36
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article7_s001.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "has consented 是证明内容，不另设成数据主体必须同意的义务。",
+      "focus_flags": [],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article7_s002",
+      "sentence_idx": 1,
+      "char_span": [
+        161,
+        465
+      ],
+      "text_sha256": "f581ee37c327378e68c9e88ccb4a19fb9d6c8130ad9d26517ba0d42b3126cbf3",
+      "sentence_text": "If the data subject's consent is given in the context of a written declaration which also concerns other matters, the request for consent shall be presented in a manner which is clearly distinguishable from the other matters, in an intelligible and easily accessible form, using clear and plain language.",
+      "rule_id": "article7",
+      "rule_text_sha256": "6306b705540e3df738ead52895687e764641ddaa9a1822d294de1b369ae599f7",
+      "meaning_zh": "书面声明同时涉及其他事项时，同意请求须与其他内容清晰区分，并易懂、易获取、语言清楚。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article7_s002.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 138,
+              "end": 143
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be presented",
+              "start": 144,
+              "end": 156
+            }
+          ],
+          "condition": [
+            {
+              "text": "If the data subject's consent is given in the context of a written declaration which also concerns other matters",
+              "start": 0,
+              "end": 112
+            }
+          ],
+          "constraint": [
+            {
+              "text": "in a manner which is clearly distinguishable from the other matters",
+              "start": 157,
+              "end": 224
+            },
+            {
+              "text": "in an intelligible and easily accessible form",
+              "start": 226,
+              "end": 271
+            },
+            {
+              "text": "using clear and plain language",
+              "start": 273,
+              "end": 303
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "request 是呈现对象；实际请求方未明写，不把条件中的 data subject 当作提出同意请求的主体。",
+      "focus_flags": [
+        "implicit_actor",
+        "document_subject"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article7_s003",
+      "sentence_idx": 2,
+      "char_span": [
+        466,
+        572
+      ],
+      "text_sha256": "3bcd34645f3b91dc2a827b44a305fec3a22b87b4ec41263036498b7376923f8d",
+      "sentence_text": "Any part of such a declaration which constitutes an infringement of this Regulation shall not be binding.",
+      "rule_id": "article7",
+      "rule_text_sha256": "6306b705540e3df738ead52895687e764641ddaa9a1822d294de1b369ae599f7",
+      "meaning_zh": "该声明中违反本条例的部分不具有约束力。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article7_s003.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not be binding",
+              "start": 84,
+              "end": 104
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [
+            {
+              "text": "which constitutes an infringement of this Regulation",
+              "start": 31,
+              "end": 83
+            }
+          ],
+          "constraint": [
+            {
+              "text": "shall not be binding",
+              "start": 84,
+              "end": 104
+            }
+          ],
+          "exception": [],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是法律效力的说明，不是禁止本人作出声明或要求控制者执行某动作。",
+      "focus_flags": [
+        "scope_clause",
+        "exemption_not_prohibition"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article7_s004",
+      "sentence_idx": 3,
+      "char_span": [
+        572,
+        653
+      ],
+      "text_sha256": "fc7bf7ae5fc16443c9fc807d9e88d87eb2d372e068ca88c28e0bf3c1dd7b2e51",
+      "sentence_text": "The data subject shall have the right to withdraw his or her consent at any time.",
+      "rule_id": "article7",
+      "rule_text_sha256": "6306b705540e3df738ead52895687e764641ddaa9a1822d294de1b369ae599f7",
+      "meaning_zh": "本人有权随时撤回同意。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article7_s004.p1",
+          "modality": "permission",
+          "modality_evidence": [
+            {
+              "text": "shall have the right",
+              "start": 17,
+              "end": 37
+            }
+          ],
+          "actor": [
+            {
+              "text": "The data subject",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "action": [
+            {
+              "text": "withdraw his or her consent",
+              "start": 41,
+              "end": 68
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "at any time",
+              "start": 69,
+              "end": 80
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": [
+            {
+              "actor_span_index": 0,
+              "action_item_id": "gdpr_article7_s004.p1"
+            }
+          ]
+        }
+      ],
+      "review_note_zh": "有权撤回不等于必须撤回。",
+      "focus_flags": [
+        "rights_vs_duties"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article7_s005",
+      "sentence_idx": 4,
+      "char_span": [
+        654,
+        765
+      ],
+      "text_sha256": "6408bdcecb6f939df1289525e3751b8a86c83a8b87959e6d0bef1ea8d7fcf181",
+      "sentence_text": "The withdrawal of consent shall not affect the lawfulness of processing based on consent before its withdrawal.",
+      "rule_id": "article7",
+      "rule_text_sha256": "6306b705540e3df738ead52895687e764641ddaa9a1822d294de1b369ae599f7",
+      "meaning_zh": "撤回同意不会追溯影响撤回前基于同意进行处理的合法性。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article7_s005.p1",
+          "modality": "definition",
+          "modality_evidence": [
+            {
+              "text": "shall not affect",
+              "start": 26,
+              "end": 42
+            }
+          ],
+          "actor": [],
+          "action": [],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "shall not affect the lawfulness of processing based on consent before its withdrawal",
+              "start": 26,
+              "end": 110
+            }
+          ],
+          "exception": [],
+          "action_structure": "no_explicit_action",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是撤回同意的时间效力规则，不机械解释为禁止执行某个流程动作。before its withdrawal 限定既往处理；本句不授权继续处理。",
+      "focus_flags": [
+        "scope_clause"
+      ],
+      "context_links": [
+        "gdpr_article7_s004"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article7_s006",
+      "sentence_idx": 5,
+      "char_span": [
+        766,
+        834
+      ],
+      "text_sha256": "ca8b57790686197fef386cdd5bae07923ec87d0bb0af17b40d7d6750e576f7e5",
+      "sentence_text": "Prior to giving consent, the data subject shall be informed thereof.",
+      "rule_id": "article7",
+      "rule_text_sha256": "6306b705540e3df738ead52895687e764641ddaa9a1822d294de1b369ae599f7",
+      "meaning_zh": "在本人给出同意之前，应先让其知晓可撤回同意这件事。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article7_s006.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 42,
+              "end": 47
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be informed thereof",
+              "start": 48,
+              "end": 67
+            }
+          ],
+          "condition": [
+            {
+              "text": "Prior to giving consent",
+              "start": 0,
+              "end": 23
+            }
+          ],
+          "constraint": [],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "data subject 是被告知者，通知者省略；thereof 回指撤回权。不能抽成数据主体必须通知他人。",
+      "focus_flags": [
+        "implicit_actor",
+        "coreference"
+      ],
+      "context_links": [
+        "gdpr_article7_s004"
+      ],
+      "temporal_suggestions": [
+        "be informed thereof 在 giving consent 之前。前者是本句义务动作；后者只是顺序锚点，不构造必须同意的义务。"
+      ],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article7_s007",
+      "sentence_idx": 6,
+      "char_span": [
+        835,
+        887
+      ],
+      "text_sha256": "bdae30bae45fc4a004cb9fbb63941b00f600bb59418660160a998dba3f9d5a5d",
+      "sentence_text": "It shall be as easy to withdraw as to give consent.",
+      "rule_id": "article7",
+      "rule_text_sha256": "6306b705540e3df738ead52895687e764641ddaa9a1822d294de1b369ae599f7",
+      "meaning_zh": "撤回同意应当与给出同意一样容易。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article7_s007.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 3,
+              "end": 8
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "withdraw",
+              "start": 23,
+              "end": 31
+            },
+            {
+              "text": "give consent",
+              "start": 38,
+              "end": 50
+            }
+          ],
+          "condition": [],
+          "constraint": [
+            {
+              "text": "as easy to withdraw as to give consent",
+              "start": 12,
+              "end": 50
+            }
+          ],
+          "exception": [],
+          "action_structure": "comparison_operands_not_sequence",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "这是易用程度比较，不是先撤回再同意的流程顺序，也不是要求本人必须完成两项动作。两片段记录比较对象。",
+      "focus_flags": [
+        "comparative_constraint",
+        "implicit_actor"
+      ],
+      "context_links": [
+        "gdpr_article7_s004"
+      ],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    },
+    {
+      "sample_id": "gdpr_article7_s008",
+      "sentence_idx": 7,
+      "char_span": [
+        887,
+        1178
+      ],
+      "text_sha256": "7a5c82e05e06aed5e174c23dbbcea4a8e7b9916f0cae5695f6f5f43daad20619",
+      "sentence_text": "When assessing whether consent is freely given, utmost account shall be taken of whether, inter alia, the performance of a contract, including the provision of a service, is conditional on consent to the processing of personal data that is not necessary for the performance of that contract.",
+      "rule_id": "article7",
+      "rule_text_sha256": "6306b705540e3df738ead52895687e764641ddaa9a1822d294de1b369ae599f7",
+      "meaning_zh": "判断同意是否自愿时，要特别考虑合同或服务是否以同意不必要的数据处理为条件。",
+      "suggested_rule_items": [
+        {
+          "item_id": "gdpr_article7_s008.p1",
+          "modality": "obligation",
+          "modality_evidence": [
+            {
+              "text": "shall",
+              "start": 63,
+              "end": 68
+            }
+          ],
+          "actor": [],
+          "action": [
+            {
+              "text": "be taken of whether, inter alia, the performance of a contract, including the provision of a service, is conditional on consent to the processing of personal data that is not necessary for the performance of that contract",
+              "start": 69,
+              "end": 290
+            }
+          ],
+          "condition": [
+            {
+              "text": "When assessing whether consent is freely given",
+              "start": 0,
+              "end": 46
+            }
+          ],
+          "constraint": [
+            {
+              "text": "utmost account",
+              "start": 48,
+              "end": 62
+            }
+          ],
+          "exception": [],
+          "action_structure": "single_evidence_span",
+          "actor_action_map": []
+        }
+      ],
+      "review_note_zh": "被动表达省略评估者；句子要求评估捆绑同意这一因素，并非直接宣布所有合同同意无效。",
+      "focus_flags": [
+        "implicit_actor"
+      ],
+      "context_links": [],
+      "temporal_suggestions": [],
+      "human_review": {
+        "decision": null,
+        "correction": null,
+        "comment": null,
+        "reviewer": null
+      },
+      "review_state": "unreviewed",
+      "is_gold": false
+    }
+  ]
+}

@@ -53,14 +53,23 @@ compliance assessment based on multi-granularity semantic information*（DOI
   小案例（统一口径 10/7/8/6 逐样本变化；文章 LINKAGE_RULES_ONLY_RESULTS_NOTE
   案例 a/b/c）。
 - 解释结构（分贡献，不预先承诺）：
-  1. Sun 式基线（reference 确定性抽取）在 33 条三类 Gold 上的表现（macro 0.3889/
-     exact 0.3636，8853edd 修复口径，低分基线如实）；
-  2. 替换 Stage 2（Rules-Only 臂；→0.3333/0.3333；Direct-LLM 臂待真实运行）改变哪些
-     最终判定及原因（抽取/适配/检测 三类机器 reason 已实现，Task D）；
+  1. Sun 方法重建基线是 Rules-Only：在 33 条三类 Gold 上的开发口径表现为
+     macro 0.3333 / exact 0.3333；保留跨语言 pass-through 和适配限制。
+     reference 确定性抽取（0.3889 / 0.3636）仅作开发诊断，不能当成 Sun 方法臂；
+  2. 用 Direct-LLM 替换 Stage 2（GDPR 臂待真实运行），对比同配置 Rules-Only 后
+     解释最终判定变化及抽取/适配/检测原因（Task D 已提供接口，尚无该臂实验数字）；
   3. 加 Stage 3 四类扩展（S3.9-EXT DEV_ONLY 40 对）在何种意义上扩展覆盖面，受
      可观察性/映射瓶颈限制的如实表述。
 
 ## 3. 标准答案（三层，需人工确认——给用户的清单）
+
+**本轮人工编辑入口（2026-09-08 更新）**：用户已要求 AI 先认真预填，再自行检查修改确认。
+句子级请直接编辑 `data/development/human_review/gdpr7_ai_prefill_v1/请检查并修改这份预填稿.md`；
+案例四项请编辑 `data/development/human_review/gdpr7_case_ai_prefill_v1/论文案例人工核对预填稿.md`。
+两者均为待确认候选，不推进人工进度。下表所述 v2 工具是后续导入工具，本轮不要与 Markdown
+同时维护两份决定。复合情态/坐标/关系需无损对账后再导入。
+案例预填发现延误计时器与主通知期限不能直接等同；原流程局部任务判断与既有三类 Gold 的
+检查范围也需确认。故下表“正常对照无违规”是待证明事项，不能仅凭 control 目录名批量确认。
 
 论文案例任何“检出 N/M、漏检、误报、谁更对”都必须有可引用的标准答案。本项目标准答案
 分三层，各层现缺项如下：

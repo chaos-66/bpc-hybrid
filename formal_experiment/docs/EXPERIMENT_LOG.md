@@ -4158,3 +4158,16 @@
 - 仍存在 blocker：无
 - 备注：全量 audit 3013 passed/24 skipped exit 0（低峰）；用户 AI 预填稿与 .bak 未触碰未提交；真实 API=0；裁决 0/74
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-08T23:01:10.532379+00:00 - GDPR74句与论文案例人工核对预填交付及离线时钟修复
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：3013 passed, 24 skipped, 48 warnings in 3190.64s (0:53:10)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`53d91c790eb338e24c87c4c5c793addbaca07149`；相关未提交路径：21 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：用户要求AI预填后自行检查修改确认：9条款74句、92建议条目、320逐字锚点全部核验；人工确认0/74，未导入decisions或Gold。另完成案例选择、原流程局部与整体范围、合成对照期限绑定、第22条争议4项预填，均待确认；直接读图发现72小时计时器属于延误说明，主通知期限与v001/v002检查范围须核实，既有Gold和结果未修改。修正案例说明中reference与Rules-Only身份；两项CLI时钟修复已随53d91c7保存，本轮补全7项脚本测试的时间依赖，主动模拟峰期证明有效，生产低峰门禁不变。聚焦31passed；本轮全量3013passed/24skipped/48warnings，exit0。用户stage1修改与所有bak未纳入。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

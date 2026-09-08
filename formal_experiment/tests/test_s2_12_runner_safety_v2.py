@@ -26,9 +26,29 @@ for candidate in (SRC, SCRIPTS):
         sys.path.insert(0, str(candidate))
 
 import hashlib  # noqa: E402
+import pytest  # noqa: E402
 
 PY = sys.executable
 RUNTIME_HOME = Path("D:/environment/stanford-corenlp-4.5.10")
+
+
+@pytest.fixture(autouse=True)
+def _fixed_offline_executor_clock(monkeypatch):
+    """Default only the local executor seam; explicit test clocks take priority.
+
+    Scripted transports also traverse D-CAL, even when they are not CLI tests.
+    A fixed aware time keeps usage/model/cap tests independent of wall time.
+    Tests that supply a clock crossing into a peak window still exercise the
+    production gate because a call keyword overrides functools.partial's
+    default. Production code, real clocks, and authorization files are intact.
+    """
+    from functools import partial
+    import bpc_hybrid.s2_12_execution as execution
+
+    monkeypatch.setattr(execution, "StageExecutor", partial(
+        execution.StageExecutor,
+        now_provider=lambda: datetime(2026, 9, 8, 5, tzinfo=timezone.utc),
+    ))
 
 
 def _run_cmd(args, *, fixed_fake_clock=False):
@@ -512,9 +532,21 @@ def test_ledger_tamper_rejected():
 # ---------------------------------------------------------------------------
 
 
-def test_dcal_invokes_exactly_one_call():
+def test_dcal_invokes_exactly_one_call(monkeypatch):
     import bpc_hybrid.s2_12_execution as ex
     from bpc_hybrid.llm_client import OpenAICompatibleRequestBuilder
+
+    class PeakSystemDatetime(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            instant = datetime(2026, 9, 8, 7, tzinfo=timezone.utc)
+            return (instant.astimezone(tz) if tz is not None else
+                    instant.astimezone().replace(tzinfo=None))
+
+    # Prove that the offline seam works even when the system clock says peak.
+    # This would fail without the module fixture, including when CI runs at night.
+    monkeypatch.setattr(ex, "datetime", PeakSystemDatetime)
+    assert ex.is_beijing_peak() is True
 
     lock = ex.load_lock()
     report = ex.load_report()
