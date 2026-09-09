@@ -1,0 +1,168 @@
+{
+  "schema_version": "s3_downstream_paired_manifest@1.0.0",
+  "run_id": "s3_downstream_paired_v1",
+  "claim_status": "Stage-2-source paired comparison on the frozen Stage-3 evaluation surface; NOT a formal end-to-end result (S2.13 freeze and the authorized real Direct-LLM batch are still pending)",
+  "task": "S3.10 core: one frozen Stage 3, several Stage 2 rule sources",
+  "arms": {
+    "rules_only": {
+      "status": "available",
+      "predictions_sha256": "a993ef533489b7277d37eb0ad5074d9a8d1084b1aff03c2875499e0d103d136e"
+    },
+    "human_rules": {
+      "status": "available",
+      "predictions_sha256": "9d86e1b4360a8ef2d9acfacdda4cd3b5d7e2e35f7f3de68eeebaa0a793432500"
+    },
+    "direct_llm": {
+      "status": "blocked",
+      "predictions_sha256": null
+    }
+  },
+  "bindings": {
+    "violation_gold": {
+      "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+      "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550"
+    },
+    "inference_pack": {
+      "path": "data/development/human_review/stage3_gold_inference_v1.json",
+      "sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4"
+    },
+    "stage3_config": {
+      "path": "configs/sun_stage3_development_v1.json",
+      "sha256": "3ef60d5bda1e5103486d5269cd3740330e911c1b912367d822c7dbab729714c4"
+    },
+    "panel": {
+      "path": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+      "sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81"
+    },
+    "thresholds": {
+      "tau": 0.8,
+      "gamma": 0.8,
+      "theta": 0.8
+    }
+  },
+  "artifacts": {
+    "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/bm25/evaluation.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/bm25/evaluation.json",
+      "sha256": "3b46db3cadcc985e1974bc0622f411993a0f225cccc158bf1156c66839f2d4a1",
+      "byte_size": 46661
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/bm25/predictions.jsonl": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/bm25/predictions.jsonl",
+      "sha256": "d6e16e14471b4b1a3a88f18941859f0f83cf853090c7903309d927330ff85a41",
+      "byte_size": 138000
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/sun/evaluation.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/sun/evaluation.json",
+      "sha256": "67fd99811aabc66cb0cfd106bfdf3a58f0a372cace3aaa49646eb153c46a703c",
+      "byte_size": 46715
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/sun/predictions.jsonl": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/sun/predictions.jsonl",
+      "sha256": "44fbac90dd093422ff0b16a7d18af0038f1f727824b7cf86d85ca415d602c214",
+      "byte_size": 138929
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/tfidf_svd/evaluation.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/tfidf_svd/evaluation.json",
+      "sha256": "e9de8be84c7b1dcd57d0fac359fc579d79a583496cd123b763a8797026dd8922",
+      "byte_size": 50103
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/tfidf_svd/predictions.jsonl": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/tfidf_svd/predictions.jsonl",
+      "sha256": "87353011958eed23b5544809a0d8ba675e1cf2487de12dbc2f9711167000865e",
+      "byte_size": 138503
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/winter/evaluation.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/winter/evaluation.json",
+      "sha256": "33ea4aae0987b215b647a95b664771dad739fd52ac97c740c739e2948f37b093",
+      "byte_size": 53129
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/winter/predictions.jsonl": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/human_rules/winter/predictions.jsonl",
+      "sha256": "7a2d5fb52745d6a025bfd0021e59b4d8314b63a7c88c8d7c2460dd2f31b2c8cb",
+      "byte_size": 140243
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/bm25/evaluation.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/bm25/evaluation.json",
+      "sha256": "59486e5814f4c5d844887cca6e3537acc824e91e9c21921dedcd5d48a4e362be",
+      "byte_size": 41777
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/bm25/predictions.jsonl": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/bm25/predictions.jsonl",
+      "sha256": "7529475d5b2de1b917aff2a6529f70d350f765b832dd4324874895a66236f658",
+      "byte_size": 139870
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/sun/evaluation.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/sun/evaluation.json",
+      "sha256": "d958679471e6e16260e15c7f21f58f0e0151346088b7a6a7284f84cc66c67a00",
+      "byte_size": 44335
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/sun/predictions.jsonl": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/sun/predictions.jsonl",
+      "sha256": "f50de3a536f9d99e53edc2ea84c5f8052436cb4d2a5b092dcfea101a7224ecf2",
+      "byte_size": 141202
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/tfidf_svd/evaluation.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/tfidf_svd/evaluation.json",
+      "sha256": "78609372c108225e3eb56fe5103f47e9a932d8af4b6a83c3362bb447f31932da",
+      "byte_size": 54544
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/tfidf_svd/predictions.jsonl": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/tfidf_svd/predictions.jsonl",
+      "sha256": "393d663f00af157fa5cc6b2225f677d452fe427b9d45c8e58efe9713f071fa0e",
+      "byte_size": 141792
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/winter/evaluation.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/winter/evaluation.json",
+      "sha256": "700084b965a5d4d2f5ddf8d66b286674be914cf1f46b4fb6f8039aa8cc9244cd",
+      "byte_size": 55774
+    },
+    "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/winter/predictions.jsonl": {
+      "path": "outputs/development/s3_downstream_paired_v1/extended_four/rules_only/winter/predictions.jsonl",
+      "sha256": "59b7c8675a7edc652d2ec3721cfa3cc6b3938ae1fd761f3b8cedd4c50f626540",
+      "byte_size": 143145
+    },
+    "outputs/development/s3_downstream_paired_v1/original_three/human_rules/evaluation.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/original_three/human_rules/evaluation.json",
+      "sha256": "4939974754c73f448514a59d1a3f6f7896cb5f6e60550d01b56ad24626f24699",
+      "byte_size": 27823
+    },
+    "outputs/development/s3_downstream_paired_v1/original_three/human_rules/predictions.jsonl": {
+      "path": "outputs/development/s3_downstream_paired_v1/original_three/human_rules/predictions.jsonl",
+      "sha256": "284fea2d1c7f7d41b00451d8fd652fb83a345b1033ce71c994fe1a845be0269c",
+      "byte_size": 41749
+    },
+    "outputs/development/s3_downstream_paired_v1/original_three/human_rules/rule_records.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/original_three/human_rules/rule_records.json",
+      "sha256": "766be9b3c89d790dc590d959e1ac9b09bf47023fe955635cfe4d0fcaabb591f7",
+      "byte_size": 20685
+    },
+    "outputs/development/s3_downstream_paired_v1/original_three/rules_only/evaluation.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/original_three/rules_only/evaluation.json",
+      "sha256": "c76e2d6c1382d374ae3ad1140acffbddb4eaee10d35bb39295ea1dc8f1d725eb",
+      "byte_size": 28049
+    },
+    "outputs/development/s3_downstream_paired_v1/original_three/rules_only/predictions.jsonl": {
+      "path": "outputs/development/s3_downstream_paired_v1/original_three/rules_only/predictions.jsonl",
+      "sha256": "34cd3a5b6e928a59692e36940ec536225adefb02eee4c5023dded397e1a9e38c",
+      "byte_size": 40936
+    },
+    "outputs/development/s3_downstream_paired_v1/original_three/rules_only/rule_records.json": {
+      "path": "outputs/development/s3_downstream_paired_v1/original_three/rules_only/rule_records.json",
+      "sha256": "e086fd0c80bc330171aca5aa8a285ac507cca85a598941c4993b388c41f916b1",
+      "byte_size": 13049
+    }
+  },
+  "replay_command": "python formal_experiment/scripts/run_s3_downstream_paired_v1.py",
+  "boundaries": {
+    "gold_modified": false,
+    "thresholds_changed": false,
+    "processes_changed": false,
+    "existing_predictions_overwritten": false,
+    "llm_or_api_called": false,
+    "synthetic_panel_merged_into_human_gold": false,
+    "missing_arm_fabricated": false
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

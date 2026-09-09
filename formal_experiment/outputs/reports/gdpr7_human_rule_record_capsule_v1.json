@@ -1,0 +1,55 @@
+{
+  "schema_version": "gdpr7_human_rule_record_capsule@1.0.0",
+  "status": "verified_published",
+  "capsule_schema": "gdpr7_human_rule_record_predictions@1.0.0",
+  "dataset_id": "gdpr7_human_rule_record_capsule_v1",
+  "method_id": "human_adjudicated_gdpr7_rules",
+  "record_count": 74,
+  "source_rule_record_schema": "gdpr7_gold_rule_record@1.0.0",
+  "source_rule_record_dataset": "gdpr7_gold_rule_records_v1",
+  "rule_ids": [
+    "article15",
+    "article16",
+    "article17",
+    "article20",
+    "article22",
+    "article33",
+    "article34",
+    "article6",
+    "article7"
+  ],
+  "counts": {
+    "rules": 9,
+    "sentences": 74,
+    "items": 92,
+    "spans": 235,
+    "modality_evidence_spans": 85,
+    "relation_entries": 38
+  },
+  "modality_item_counts": {
+    "obligation": 30,
+    "permission": 36,
+    "prohibition": 4,
+    "definition": 22
+  },
+  "unresolved_relation_endpoints": [],
+  "order_relations_present_rules": [],
+  "bindings": {
+    "gold_rule_records": {
+      "path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+      "sha256": "7cf896abdb6e420e46efd297a8e183bcdc4c15834aa9567eb88d1af60eec627a"
+    },
+    "capsule": {
+      "path": "data/predictions/gdpr7_human_rule_record_v1/predictions.json",
+      "sha256": "9d86e1b4360a8ef2d9acfacdda4cd3b5d7e2e35f7f3de68eeebaa0a793432500"
+    }
+  },
+  "containment": {
+    "gold_read_by_runner": false,
+    "raw_text_committed": false
+  },
+  "replay_command": "python formal_experiment/scripts/build_gdpr7_gold_rule_records_v1.py --check",
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

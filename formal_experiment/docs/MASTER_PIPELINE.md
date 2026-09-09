@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.41
+**文档版本**：3.6.42
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-09-09
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,92 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-09 修订 3.6.42：GDPR-7 正式 Gold Rule Records + Oracle 与下游配对实验（零 API）
+
+**S3.7 依赖①：正式 Gold Rule Records 已发布**。用户确认的 74 句 / 92 条规范人工
+核对包（`gdpr7_human_confirmed_v1/confirmed_rule_items.json`）经**机械、无损**转换
+为正式 Rule Record 契约并发布：
+
+- Gold：`data/gold/stage3/gdpr7_gold_rule_records_v1.json`（schema
+  `gdpr7_gold_rule_record@1.0.0`，9 条款 / 74 句 / **92 条规范条目** / 235 要素 span +
+  85 情态证据 span = 320 锚点 / 38 关联条目；**一条规范 = 一个 clause**，多情态句不再
+  被取首项压平）；
+- 胶囊：`data/predictions/gdpr7_human_rule_record_v1/predictions.json`
+  （schema `gdpr7_human_rule_record_predictions@1.0.0`，74 行坐标-only，可被现有
+  `gdpr_capsule_converter` 直接消费）；
+- 转换器 `src/bpc_hybrid/gdpr7_gold_rule_records.py`（`@1.0.0`）、构建器
+  `scripts/build_gdpr7_gold_rule_records_v1.py`、**独立 verifier**
+  `scripts/verify_gdpr7_gold_rule_records_v1.py`（32 项检查：schema、span 回指、
+  逐字段往返无损、胶囊镜像、哈希绑定），15 项聚焦测试；
+- 授权事件 `configs/gdpr7_gold_rule_records_authorization_event_v1.json`（绑定用户
+  2026-09-09 确认事件 + 本次发布指令哈希；授权范围明示**只能机械转换、不得新增/推断/
+  改写/归一化**）。
+
+**S3.7 依赖②：人工规则接入 Stage 3 检查器**。`gdpr_capsule_converter@1.3.0` 新增
+第三个允许 schema（Gold Rule Record 胶囊），`run_gdpr_3type_linkage_v1.py` 新增
+`human_rules` 来源臂（`include_modalities=ALL`，92 条规范全部进入检查器），
+`run_gdpr_s2_s3_linkage_v1.py` 四类面板同步新增 `human_rules` 来源。
+
+**Oracle 单独评测已运行（`s3_oracle_gold_rules_v1`，零 API）**：
+
+| 表面 | 规则来源 | macro-F1 | exact | detected | unobservable |
+|---|---|---:|---:|---:|---:|
+| 33 条人工 violation Gold | oracle（人工规则） | 0.3333 | 0.3333 | 11 | 11 |
+| 33 条人工 violation Gold | oracle（obligation-only） | 0.3175 | 0.3030 | 10 | 11 |
+| 33 条人工 violation Gold | reference（dev 抽取器） | 0.3889 | 0.3636 | 12 | 10 |
+
+逐类型（oracle）：missing_action **P/R/F1 = 1.000/1.000/1.000**；
+incorrect_actor 与 out_of_order 均为 0（见下）。四类合成面板（oracle 规则）：
+Winter-style 0.3409 / Sun-style 0.0454 / BM25 0.0000 / TF-IDF-SVD 0.2063 macro。
+
+**根因已诊断（不是规则错误）**：`mapping_diagnostics` 逐规则给出 Definition 6 动作
+映射证据——人工确认规则使用**完整法律短语**（例 `implement suitable measures to
+safeguard the data subject's rights and freedoms and legitimate interests`），其与流程
+活动标签的相似度低于 gamma=0.8，因此 `incorrect_actor` 在 11/11 项上不可观察；
+`out_of_order` 则因人工确认条目**没有 order_relations**（确认包只含 38 条
+actor-action 关联、0 条顺序关系）而在 11/11 项上分母为 0。两者都如实计入分母
+（不可观察 = FN），不置零、不伪造。
+
+**下游配对比较已运行（`s3_downstream_paired_v1`，零 API）**：同一冻结 Stage 3、
+同一 33 条人工 Gold、同一阈值/evaluator，只换 Stage 2 规则来源：
+
+| 臂 | 状态 | macro-F1 | exact | detected |
+|---|---|---:|---:|---:|
+| rules_only（非 LLM B0） | evaluated | 0.3333 | 0.3333 | 11 |
+| human_rules（人工 Gold 规则） | evaluated | 0.3333 | 0.3333 | 11 |
+| direct_llm | **blocked**（胶囊未发布，不插值） | - | - | - |
+
+**诚实结论**：在本冻结评测面上，人工规则**没有**提高最终检查分数（Δ=0）。差异集中在
+missing_action（两侧均 1.0）与不可观察的 incorrect_actor；四类合成面板数字对人工规则
+臂**有偏差**（面板绑定 dev 抽取的 `stage3_gold_inference_v1` 且用 first-valid-span
+投影，11/40 变体落在多规范句上），已在报告中显式披露，不得据此宣称人工规则更差。
+
+**真实 LLM 对照批次（步骤 4）**：离线准备已全部验证
+（`outputs/reports/s2_llm_batches_offline_readiness_v1.json`）：授权/合同/预检资产齐备、
+声明调用数与预检一致（63 + 74）、GDPR 74 次 payload-locked 假传输 74/74 完成且
+零计费、无合同真实运行被拒、假胶囊 promotion 被拒、无凭据 S2.12 真实运行被拒。
+**真实调用仍为 0，唯一阻塞 = 进程环境凭据缺失**（离线预检 5 项 FAIL，含 API key
+absent）。Direct-LLM 胶囊不存在，故下游 LLM 臂保持 blocked。
+
+**门禁未翻转**：S2.13 仍 blocked on S2.12 API arms；S3.4-S3.6 正式 promotion 仍
+pending；**正式 S3.7 Oracle 主表未声明完成**（本轮为冻结评测面上的 Oracle 隔离运行，
+`formal_s3_7_authorization` 仍未授予）。真实 API 调用 = 0。
+
+**过渡核账 successor v9**：`outputs/reports/s2_13_s3_7_transition_readiness_v9.json`
+（builder/verifier/schema/tests 齐备，verifier 全过）。v8 的 Gold-Rule-Record 三态
+探测按设计 fail closed——候选一出现即拒绝；该候选的独立验证已完成，故 v9 用
+`exist=true + verifier_verified=true + 完整绑定` 取代 v8 的缺失判断，并记录 Oracle
+隔离运行。v8 及更早 capsule 逐字节保留（v2–v8 的 verifier 现按预期 fail closed，
+其失败签名已在 v9 的 lifecycle matrix 中逐项固定；v1 仍 verify）。
+
+**行尾可移植性修复**：`data/predictions/b0_formal_arm_v1/predictions.json` 在
+`core.autocrlf=true` 下被检出为 CRLF，导致该正式 arm 的 raw SHA-256 与 manifest
+不符（audit 报 `methods_unexpectedly_ready` / `final_experiment_not_ready`）。
+按 G0-EOL-HASH-PORTABILITY 的既有窄口径做法，在 `formal_experiment/.gitattributes`
+加**单文件** `text eol=lf` 钉并重新检出；文件内容哈希恢复为 manifest 值
+`fa94991d…`，`verify_b0_formal_arm_v1.py` 恢复 VERIFIED，`integrity_pass=true`。
+未修改任何实验数据、Gold、指标或方法。
 
 ## 2026-09-07 修订 3.6.38：S3 公式/接口/评价根因闭环
 
@@ -693,7 +779,7 @@ B0/H1/D1 的预测 Rule Records，评价误差传播。两种结果必须分表�
 | S3.4 | 完成 Winter wrapper | S1.7/S2.13 | **development wrapper verified（2026-08-08）**：Winter 2020 原型语义转写 + 可移植重放（reachability 双模式、manifest 1.1.0、export index、evidence capsule outputs/evidence/s34_winter_stage3_development_v3_clean\|prototype_literal/）；修复后重放 v3_clean/v3_prototype_literal（inference pack check_type 路由、公共 evaluator 口径）；DEV_ONLY：MAP 0.6429/binary F1 0.6111、violation macro 0.373（两模式 out_of_order 无差异）；**S1.7 依赖已满足（2026-08-13 frozen）；formal completion 仍 blocked on S2.13** | formal canonical I/O + reproducible command |
 | S3.5 | 完成 Sun Stage 3 | S3.1-S3.3 | **development implementation verified（2026-08-08）**：Def 4-7 方法级独立重建 + 契约/评价修复（Gold-blind inference pack、check_type 路由、Def 6 论文存在性语义（C=process actor+bs_obj 近似披露）、unobservable 按 check_type 统计（v2：33→10，before/after 对照）、sensitivity 真实重算）；run s35_sun_stage3_development_v2（evidence capsule 含 5 方法 comparison）；DEV_ONLY：MAP 0.8175、binary F1 0.0（如实）、violation macro 0.389/exact 0.364/unobs 10（均较 v1 口径修正）；**S1.7 依赖已满足（2026-08-13 frozen）；formal completion 仍 blocked on S2.13** | 不再是 fixture approximation；formal Oracle 主表待 formal Gold 门禁 |
 | S3.6 | 完成代表性非 LLM baseline | S3.2/S3.3 | **development baseline verified（2026-08-08）**：BM25（v3 candidate-specific：MAP 0.6595/binary F1 0.0；v1/v2 因忽略候选文本标记 superseded_invalid_candidate_agnostic_similarity，不入有效比较/论文）+ TF-IDF/SVD（v2 保留：MAP 0.5881/macro 0.542，经验证不受共享 scorer ID 修复影响）；双域 sims（action/actor 独立候选池）、真实 ID 映射、check_type 路由、sensitivity 重实例化 scorer；阈值 0.5=fixed development setting（非 blind preregistration）；evidence capsule v3/v2；**S1.7 依赖已满足（2026-08-13 frozen）；formal completion 仍 blocked on S2.13** | 相同 Gold/evaluator；正式 baseline 待 formal Oracle 门禁 |
-| S3.7 | Oracle Stage 3 比较 | S3.4-S3.6 + formal Gold publication | blocked（development Oracle 可先行；**2026-08-17 过渡核账：formal_oracle_started=false、formal_oracle_authorized=false、ready_for_oracle_authorization=false、authorization_sentence=null、no_pseudo_oracle=true**；9 个 GDPR rule IDs（article6/7/15/16/17/20/22/33/34）的正式 Gold Rule Records 不存在（matching/violation decision Gold ≠ Gold Rule Records）；S2.11=36/36 frozen 已完成、S2.12 真实运行仅 blocked on API 授权；详见 outputs/reports/s2_13_s3_7_transition_readiness_v8.json（当前 fail-closed capsule；v7 及更早为 byte-exact 历史 provenance）） | 正式 Oracle 主表隔离 Stage 3；development 结果不得替代本表 |
+| S3.7 | Oracle Stage 3 比较 | S3.4-S3.6 + formal Gold publication | **Gold Rule Records 已发布 + Oracle 隔离运行已跑（2026-09-09，零 API）**：9 个 GDPR rule IDs 的正式 Gold Rule Records 已发布（`data/gold/stage3/gdpr7_gold_rule_records_v1.json`，92 条规范条目，独立 verifier 32 项通过）；人工规则已接入检查器（`human_rules` 来源臂）；Oracle 隔离运行 `s3_oracle_gold_rules_v1` 在 33 条人工 Gold 上 missing_action P/R/F1=1.000，incorrect_actor/out_of_order 因动作映射低于 gamma 与确认条目无 order_relations 而不可观察（分母如实保留，根因诊断已记录）；四类合成面板四后端结果已出。**仍未完成**：S2.13 freeze（blocked on S2.12 API arms）、S3.4-S3.6 正式 promotion、正式 Oracle 主表授权（`formal_s3_7_authorization` 未授予）。**重要**：v7 及更早 readiness capsule 的 Gold-Rule-Record 三态探测会因新文件按设计 fail closed，需重建 successor capsule；不得用其 `exist=false` 旧结论。 | 正式 Oracle 主表隔离 Stage 3；development 结果不得替代本表 |
 | S3.8 | LLM/Hybrid Stage 3 预注册与实现 | S3.7 | blocked | prompt、预算、重复次数固定 |
 | S3.9 | 复杂 BPMN 与多违规扩展（synthetic controlled-error extension） | G0.5/S3.7/现有方法运行 | **development panel verified（2026-08-22，零 API）**：在冻结 GDPR-7 上锁定 30 个 `synthetic_controlled_error_extension` 变体（missing_action 10 / incorrect_actor 10 / out_of_order 10；每变体原始 BPMN byte-unchanged、exactly-one-error、结构校验全过、replay byte-identical；规则绑定来自冻结 inference pack）→ 用同一 evaluator 在 30 条 panel 上运行 Winter / Sun / BM25 / TF-IDF（DEV_ONLY：Winter macro 0.333/exact 0.333；Sun macro 0.333/exact 0.200/unobs 8；BM25 macro 0.333/exact 0.333/unobs 10；TF-IDF macro 0.635/exact 0.533/unobs 6；最高 TF-IDF）。**这是受控实验 panel，不得并入 33 条人工 Gold，不得冒充 Oracle。** | 复杂度和标签在结果前冻结；synthetic panel 与人工 Gold 分开报告 |
 | S3.9-EXT | Stage 3 新违规类别扩展（development-only synthetic controlled extension v2，零 API） | S3.9 现有四后端 | **development panel verified（2026-08-31）**：新增 4 类违规 × 10 = 40 变体（prohibited_action_present / required_condition_not_enforced / constraint_violated / exception_not_handled）。**选择动机已锁定**：原三类只覆盖 action presence / actor / order；四类分别补足 prohibition modality、condition、constraint、exception 的 Stage 3 下游消费者，并满足语义不重复、exactly-one-error 可控变异、BPMN 表面可观察三项原则；这是最小字段覆盖扩展，不是穷尽性法律违规分类。每变体含 synthetic compliant control + 单一目标错误 variant（源 BPMN byte-unchanged、exactly-one-error、replay byte-identical、规则绑定+六要素字段锁定自冻结 inference pack）；四方法共享同一套新类型公式，仅替换各自已有相似度后端（Winter-style extension gamma 0.4 / Sun-style extension gamma 0.8 / BM25 extension gamma 0.8 / TF-IDF-SVD extension gamma 0.5；gamma_ext=0.5 统一冻结）；同一 evaluator 输出（DEV_ONLY：Winter macro 0.655/exact 0.550/unobs 17；Sun 0.333/0.300/unobs 28；BM25 0.226/0.150/unobs 28；TF-IDF 0.379/0.325/unobs 27）。**Winter/Sun 原论文未定义这四类，报告一律写 `Winter-style extension` / `Sun-style extension`，不得声称原生能力；synthetic panel 不得并入 33 条人工 Gold，不得冒充 Oracle。** | 40 变体面板+对照+四方法 panel 与对比报告；17 项 focused tests；零 API 审计 |

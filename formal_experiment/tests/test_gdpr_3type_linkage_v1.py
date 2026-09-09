@@ -184,3 +184,89 @@ def test_all_33_items_present_in_output_rows(arm_dir: Path) -> None:
     ev = _read_json(arm_dir / "evaluation.json")
     assert ev["violation"]["denominator"]["total_items"] == 33
     assert len(ev["items"]) == 33
+
+
+# ------------------------------------------------------- (e) Oracle arm
+HUMAN_RULES_DIR = ROOT / "outputs" / "development" / "gdpr_3type_linkage_v1_human_rules"
+HUMAN_GOLD = ROOT / "data" / "gold" / "stage3" / "gdpr7_gold_rule_records_v1.json"
+HUMAN_CAPSULE = (ROOT / "data" / "predictions" / "gdpr7_human_rule_record_v1"
+                 / "predictions.json")
+
+
+def test_human_rules_arm_is_registered() -> None:
+    assert "human_rules" in linkage.ARM_LABELS
+    assert "human_rules" in linkage.CAPSULE_CONFIGS
+    cfg = linkage.CAPSULE_CONFIGS["human_rules"]
+    assert cfg["schema"] == "gdpr7_human_rule_record_predictions@1.0.0"
+    assert cfg["expected_records"] == 74
+    # the Oracle arm must NOT drop permission/prohibition/definition items
+    assert tuple(cfg["include_modalities"]) == (
+        "obligation", "permission", "prohibition", "definition")
+
+
+def test_human_rules_capsule_is_bound_to_the_gold_rule_records() -> None:
+    import hashlib
+    capsule = _read_json(HUMAN_CAPSULE)
+    gold = _read_json(HUMAN_GOLD)
+    assert capsule["schema_version"] == "gdpr7_human_rule_record_predictions@1.0.0"
+    assert capsule["record_count"] == 74
+    assert len(capsule["records"]) == 74
+    assert gold["counts"]["items"] == 92
+    assert capsule["source_rule_record_schema"] == gold["schema_version"]
+    capsule_manifest = _read_json(
+        ROOT / "data/predictions/gdpr7_human_rule_record_v1/manifest.json")
+    assert capsule_manifest["predictions_sha256"] == hashlib.sha256(
+        HUMAN_CAPSULE.read_bytes()).hexdigest()
+    assert capsule_manifest["source_rule_records"]["sha256"] == hashlib.sha256(
+        HUMAN_GOLD.read_bytes()).hexdigest()
+
+
+def test_human_rules_arm_run_is_deterministic(tmp_path: Path) -> None:
+    """Two independent Oracle-arm runs must be byte-identical."""
+    def _run(tag: str) -> bytes:
+        out = tmp_path / tag
+        linkage.run_arm("human_rules", output_root=out,
+                        report_root=out / "reports", overwrite=True)
+        return (out / "gdpr_3type_linkage_v1_human_rules"
+                / "predictions.jsonl").read_bytes()
+
+    first = _run("a")
+    second = _run("b")
+    assert first == second
+    rows = [json.loads(line) for line in first.decode("utf-8").splitlines()
+            if line.strip()]
+    assert len(rows) == 33
+    assert [r["item_id"] for r in rows] == EXPECTED_ITEM_IDS
+    # the Oracle arm receives correct rules: no rule record may have failed
+    assert all(r["rule_record_failed"] is False for r in rows)
+    assert all(r["external_failure"] is None for r in rows)
+    # predictions still precede Gold: every row is Gold-blind
+    assert all(r["gold_visible"] is False for r in rows)
+
+
+def test_human_rules_arm_includes_all_four_modalities() -> None:
+    """The Oracle arm must consume every confirmed modality, not obligation only."""
+    if not HUMAN_RULES_DIR.is_dir():
+        pytest.skip("Oracle arm run dir not present")
+    manifest = _read_json(HUMAN_RULES_DIR / "manifest.json")
+    summary = manifest["rule_record_diagnostics"]["conversion_summary"]
+    assert tuple(summary["include_modalities"]) == (
+        "obligation", "permission", "prohibition", "definition")
+    per_rule = summary["per_rule"]
+    # every clause of every rule is included: nothing excluded by modality
+    for rule_id, per in per_rule.items():
+        assert per["envelopes_failed"] == 0, rule_id
+        assert per["excluded_modality_counts"] == {}, rule_id
+        assert per["included_clause_count"] == per["clause_count"], rule_id
+        assert per["invalid_span_count"] == 0, rule_id
+
+
+def test_human_rules_arm_records_the_gold_rule_records_as_source() -> None:
+    if not HUMAN_RULES_DIR.is_dir():
+        pytest.skip("Oracle arm run dir not present")
+    manifest = _read_json(HUMAN_RULES_DIR / "manifest.json")
+    diag = manifest["rule_record_diagnostics"]
+    assert diag["capsule_schema"] == "gdpr7_human_rule_record_predictions@1.0.0"
+    assert "gdpr7_human_rule_record_v1" in diag["capsule_path"]
+    assert diag["capsule_integrity"]["all_rows_ok"] is True
+    assert diag["capsule_integrity"]["unique_samples"] == 74

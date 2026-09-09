@@ -1,0 +1,141 @@
+{
+  "schema_version": "gdpr7_gold_rule_records_manifest@1.0.0",
+  "publication_status": "verified_published",
+  "dataset_id": "gdpr7_gold_rule_records_v1",
+  "task": "S3.7 dependency: formal GDPR-7 Gold Rule Records (Oracle standard answer)",
+  "counts": {
+    "rules": 9,
+    "sentences": 74,
+    "items": 92,
+    "spans": 235,
+    "modality_evidence_spans": 85,
+    "relation_entries": 38
+  },
+  "modality_item_counts": {
+    "obligation": 30,
+    "permission": 36,
+    "prohibition": 4,
+    "definition": 22
+  },
+  "source_provenance": {
+    "annotation_origin": "AI-assisted, human-confirmed",
+    "adjudication": "user_confirmation_of_the_delivered_prefill_documents",
+    "reviewer": "hyc",
+    "confirmation_event_id": "gdpr7-prefill-human-confirmation-20260909",
+    "revisions": "none",
+    "independent_from_scratch_expert_annotation": false,
+    "derivation": "mechanical, lossless conversion of the confirmed human values; no label, span, coordinate, mapping or relation was added, inferred, normalised or dropped",
+    "authorization_event": "configs/gdpr7_gold_rule_records_authorization_event_v1.json",
+    "authorization_instruction_sha256": "b1b36fa0221e8c6e6006d55fb84815b2f21548d4b97c482a6a30e68860e0b1ee"
+  },
+  "bindings": {
+    "confirmed_bundle": {
+      "path": "data/development/human_review/gdpr7_human_confirmed_v1/confirmed_rule_items.json",
+      "sha256": "930357a9539a3e1b11fab9943eb3ca1978ca3596605f1264aea821960a47fc78",
+      "status": "human_confirmed_not_published_gold",
+      "counts": {
+        "rules": 9,
+        "sentences": 74,
+        "items": 92,
+        "anchored_spans": 320,
+        "human_confirmed": 74,
+        "item_field_decisions": 552
+      }
+    },
+    "confirmed_bundle_manifest": {
+      "path": "data/development/human_review/gdpr7_human_confirmed_v1/manifest.json",
+      "sha256": "2acb00414d16f16ec4606e19e10794ce1489bdd4b51df75aae5f719108e870f1"
+    },
+    "confirmation_event": {
+      "path": "data/development/human_review/gdpr7_prefill_confirmation_20260909.json",
+      "sha256": "e7616bdd4bbe981b862e63ac0e4f0af00da31d0390d0cdec8497162d4b4ba87d",
+      "user_message_verbatim": "可以我已经进行人工确认完毕"
+    },
+    "schema": {
+      "path": "configs/schemas/gdpr7_gold_rule_record_v1.schema.json",
+      "sha256": "f3f6ea0ceff4acd6d48b6a108b7dd70b53783131d184f570497f1a9ba0f1b185"
+    }
+  },
+  "implementation": {
+    "scripts/build_gdpr7_gold_rule_records_v1.py": {
+      "path": "scripts/build_gdpr7_gold_rule_records_v1.py",
+      "sha256": "d0ccc98a4203090e5db910229394d1033578521511ed49e1c83506f600497928"
+    },
+    "src/bpc_hybrid/gdpr7_gold_rule_records.py": {
+      "path": "src/bpc_hybrid/gdpr7_gold_rule_records.py",
+      "sha256": "913732b3e60930abc3e62d180e6cd72c51aad8289cb2d44c87f2e0d16e3d5c70"
+    },
+    "scripts/verify_gdpr7_gold_rule_records_v1.py": {
+      "path": "scripts/verify_gdpr7_gold_rule_records_v1.py",
+      "sha256": "d3119c6a324ecef1a6a17b76ae24b429f978db2aaa752acedf84aee6ec19b0e0"
+    }
+  },
+  "contracts": {
+    "rule_record_schema": "gdpr7_gold_rule_record@1.0.0",
+    "capsule_schema": "gdpr7_human_rule_record_predictions@1.0.0",
+    "converter": "gdpr7_gold_rule_record_converter@1.0.0",
+    "consumed_by_stage3": "bpc_hybrid.sun_stage3.gdpr_capsule_converter.build_rule_records (schema pinned)"
+  },
+  "artifacts": {
+    "data/gold/stage3/gdpr7_gold_rule_records_v1.json": {
+      "path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+      "sha256": "7cf896abdb6e420e46efd297a8e183bcdc4c15834aa9567eb88d1af60eec627a",
+      "byte_size": 188786
+    },
+    "data/predictions/gdpr7_human_rule_record_v1/predictions.json": {
+      "path": "data/predictions/gdpr7_human_rule_record_v1/predictions.json",
+      "sha256": "9d86e1b4360a8ef2d9acfacdda4cd3b5d7e2e35f7f3de68eeebaa0a793432500",
+      "byte_size": 140624
+    },
+    "data/predictions/gdpr7_human_rule_record_v1/manifest.json": {
+      "path": "data/predictions/gdpr7_human_rule_record_v1/manifest.json",
+      "sha256": "281f7cb6c8ee8d608eee11991cc3266a2caa48992d2b5927e32e58aca5f03a8d",
+      "byte_size": 642
+    },
+    "outputs/reports/gdpr7_human_rule_record_capsule_v1.json": {
+      "path": "outputs/reports/gdpr7_human_rule_record_capsule_v1.json",
+      "sha256": "70aa687919da1a26f1cd97fd6cf450b847f73719474f209a700487ac3e9b0dff",
+      "byte_size": 1560
+    }
+  },
+  "report": {
+    "path": "outputs/reports/gdpr7_gold_rule_records_v1.md",
+    "note": "human-readable report rendered from this manifest (listed without a self-referential hash)"
+  },
+  "replay_command": "python formal_experiment/scripts/build_gdpr7_gold_rule_records_v1.py --check",
+  "verification_command": "python formal_experiment/scripts/verify_gdpr7_gold_rule_records_v1.py",
+  "boundaries": {
+    "raw_third_party_text_committed": false,
+    "gold_changed": false,
+    "existing_stage3_gold_modified": false,
+    "stage3_oracle_started": false,
+    "llm_or_api_called": false
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  },
+  "git": {
+    "commit": "aa7f8e9d6bd23d42ea1917298f328839740c9cc2",
+    "dirty_paths": [
+      " M formal_experiment/data/development/human_review/stage1_gdpr7_human_correction_v1.json",
+      "?? formal_experiment/configs/gdpr7_gold_rule_records_authorization_event_v1.json",
+      "?? formal_experiment/configs/schemas/gdpr7_gold_rule_record_v1.schema.json",
+      "?? formal_experiment/data/development/human_review/s2_11_review_decisions_v2.json.bak",
+      "?? formal_experiment/data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+      "?? formal_experiment/data/predictions/gdpr7_human_rule_record_v1/",
+      "?? formal_experiment/outputs/reports/gdpr7_gold_rule_records_v1.manifest.json",
+      "?? formal_experiment/outputs/reports/gdpr7_gold_rule_records_v1.md",
+      "?? formal_experiment/outputs/reports/gdpr7_human_rule_record_capsule_v1.json",
+      "?? formal_experiment/outputs/reports/s2_11_batch_import_dry_run_v3.json.bak",
+      "?? formal_experiment/outputs/reports/s2_12_execution_readiness_v3.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.manifest.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.md.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7_export_index.json.bak",
+      "?? formal_experiment/scripts/build_gdpr7_gold_rule_records_v1.py",
+      "?? formal_experiment/scripts/verify_gdpr7_gold_rule_records_v1.py",
+      "?? formal_experiment/src/bpc_hybrid/gdpr7_gold_rule_records.py",
+      "?? formal_experiment/tests/test_gdpr7_gold_rule_records_v1.py"
+    ]
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gdpr7_gold_rule_record_v1.schema.json",
+  "title": "GDPR-7 human-adjudicated Gold Rule Record",
+  "description": "Formal Rule Record standard answer mechanically derived from the user's confirmed GDPR-7 human review bundle (9 rules / 74 sentences / 92 rule items). One clause per confirmed rule item; coordinates are sentence-relative; every confirmed modality label, evidence span, element span, actor-action mapping and order relation is preserved verbatim. No value may be added, inferred, normalised, re-ordered or dropped.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "status",
+    "is_gold",
+    "counts",
+    "representation",
+    "method",
+    "provenance",
+    "records"
+  ],
+  "properties": {
+    "schema_version": {"const": "gdpr7_gold_rule_record@1.0.0"},
+    "dataset_id": {"const": "gdpr7_gold_rule_records_v1"},
+    "status": {"const": "published_gold_rule_records"},
+    "is_gold": {"const": true},
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rules",
+        "sentences",
+        "items",
+        "spans",
+        "modality_evidence_spans",
+        "relation_entries"
+      ],
+      "properties": {
+        "rules": {"const": 9},
+        "sentences": {"const": 74},
+        "items": {"const": 92},
+        "spans": {"type": "integer", "minimum": 1},
+        "modality_evidence_spans": {"type": "integer", "minimum": 1},
+        "relation_entries": {"type": "integer", "minimum": 0}
+      }
+    },
+    "representation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clause_unit",
+        "coordinates",
+        "modality_policy",
+        "action_structure",
+        "relation_policy",
+        "loss_policy"
+      ],
+      "properties": {
+        "clause_unit": {"type": "string", "minLength": 1},
+        "coordinates": {"type": "string", "minLength": 1},
+        "modality_policy": {"type": "string", "minLength": 1},
+        "action_structure": {"type": "string", "minLength": 1},
+        "relation_policy": {"type": "string", "minLength": 1},
+        "loss_policy": {"type": "string", "minLength": 1}
+      }
+    },
+    "method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "method_variant", "converter"],
+      "properties": {
+        "name": {"const": "human_adjudicated_gdpr7_rules"},
+        "method_variant": {"const": "gdpr7_human_confirmed_rule_items_v1"},
+        "converter": {"const": "gdpr7_gold_rule_record_converter@1.0.0"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annotation_origin",
+        "reviewer",
+        "confirmation_event_id",
+        "source_schema",
+        "source_status",
+        "source_hashes",
+        "converter",
+        "gold_fields_read"
+      ],
+      "properties": {
+        "annotation_origin": {"type": ["string", "null"]},
+        "reviewer": {"type": ["string", "null"]},
+        "confirmation_event_id": {"type": ["string", "null"]},
+        "source_schema": {"const": "gdpr7_human_confirmed_rule_items@1.0.0"},
+        "source_status": {"type": "string", "minLength": 1},
+        "source_hashes": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        },
+        "converter": {"const": "gdpr7_gold_rule_record_converter@1.0.0"},
+        "gold_fields_read": {"const": true}
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 74,
+      "maxItems": 74,
+      "items": {"$ref": "#/$defs/sentence_record"}
+    }
+  },
+  "$defs": {
+    "text_span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "text", "id"],
+      "properties": {
+        "start": {"type": "integer", "minimum": 0},
+        "end": {"type": "integer", "minimum": 1},
+        "text": {"type": "string", "minLength": 1},
+        "id": {"type": "string", "minLength": 1}
+      }
+    },
+    "evidence_span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "text"],
+      "properties": {
+        "start": {"type": "integer", "minimum": 0},
+        "end": {"type": "integer", "minimum": 1},
+        "text": {"type": "string", "minLength": 1}
+      }
+    },
+    "clause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clause_id",
+        "item_id",
+        "clause_span",
+        "modality",
+        "actors",
+        "actions",
+        "conditions",
+        "constraints",
+        "exceptions",
+        "actor_action_map",
+        "order_relations",
+        "action_structure"
+      ],
+      "properties": {
+        "clause_id": {"type": "string", "minLength": 1},
+        "item_id": {"type": "string", "minLength": 1},
+        "clause_span": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "end"],
+          "properties": {
+            "start": {"const": 0},
+            "end": {"type": "integer", "minimum": 1}
+          }
+        },
+        "modality": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["label", "evidence"],
+          "properties": {
+            "label": {
+              "enum": ["obligation", "permission", "prohibition", "definition"]
+            },
+            "evidence": {
+              "type": "array",
+              "items": {"$ref": "#/$defs/evidence_span"}
+            }
+          }
+        },
+        "actors": {"type": "array", "items": {"$ref": "#/$defs/text_span"}},
+        "actions": {"type": "array", "items": {"$ref": "#/$defs/text_span"}},
+        "conditions": {"type": "array", "items": {"$ref": "#/$defs/text_span"}},
+        "constraints": {"type": "array", "items": {"$ref": "#/$defs/text_span"}},
+        "exceptions": {"type": "array", "items": {"$ref": "#/$defs/text_span"}},
+        "actor_action_map": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["actor_id"],
+            "properties": {
+              "actor_id": {"type": "string", "minLength": 1},
+              "action_id": {"type": "string", "minLength": 1},
+              "action_item_id": {"type": "string", "minLength": 1}
+            },
+            "oneOf": [
+              {"required": ["action_id"]},
+              {"required": ["action_item_id"]}
+            ]
+          }
+        },
+        "order_relations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["before_item_id", "after_item_id"],
+            "properties": {
+              "before_item_id": {"type": "string", "minLength": 1},
+              "after_item_id": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "action_structure": {"type": ["string", "null"]}
+      }
+    },
+    "sentence_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sample_id",
+        "rule_id",
+        "sentence_idx",
+        "char_span",
+        "text_sha256",
+        "rule_text_sha256",
+        "sentence_text",
+        "review_state",
+        "context_links",
+        "temporal_suggestions",
+        "item_count",
+        "clauses"
+      ],
+      "properties": {
+        "sample_id": {"type": "string", "minLength": 1},
+        "rule_id": {"type": "string", "minLength": 1},
+        "sentence_idx": {"type": "integer", "minimum": 0},
+        "char_span": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"type": "integer", "minimum": 0}
+        },
+        "text_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "rule_text_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "sentence_text": {"type": "string", "minLength": 1},
+        "review_state": {"const": "human_confirmed"},
+        "context_links": {"type": "array", "items": {"type": "string"}},
+        "temporal_suggestions": {"type": "array", "items": {"type": "string"}},
+        "item_count": {"type": "integer", "minimum": 1},
+        "clauses": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/clause"}
+        }
+      }
+    }
+  }
+}

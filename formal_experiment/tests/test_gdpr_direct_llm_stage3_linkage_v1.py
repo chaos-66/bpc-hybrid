@@ -51,6 +51,7 @@ from bpc_hybrid.sun_stage3.gdpr_capsule_converter import (  # noqa: E402
     ALLOWED_CAPSULE_SCHEMAS,
     CAPSULE_SCHEMA,
     DIRECT_LLM_CAPSULE_SCHEMA,
+    HUMAN_RULES_CAPSULE_SCHEMA,
     build_rule_records,
     sentence_texts_by_sample,
 )
@@ -173,6 +174,8 @@ def test_converter_accepts_both_schemas_with_identical_rows():
         assert summary["capsule_records"] == 1
         if schema == DIRECT_LLM_CAPSULE_SCHEMA:
             assert "Direct-LLM" in rec["provenance"]["source"]
+        elif schema == HUMAN_RULES_CAPSULE_SCHEMA:
+            assert "human-adjudicated Gold Rule Record" in rec["provenance"]["source"]
         else:
             assert "Rules-Only" in rec["provenance"]["source"]
     # explicit expected_schema pinning works for both

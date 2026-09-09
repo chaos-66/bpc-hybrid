@@ -1,0 +1,193 @@
+{
+  "schema_version": "s2_llm_batches_offline_readiness@1.0.0",
+  "report_id": "s2_llm_batches_offline_readiness_v1",
+  "scope": "offline readiness only; no LLM/API call is made",
+  "batches": {
+    "s2_12_batch_a": {
+      "declared_calls": 63,
+      "method": "direct_llm 36 + sun_llm_fallback 27",
+      "authorization": "authorized 2026-09-07 (off-peak, retry=0)"
+    },
+    "gdpr7_batch_b": {
+      "declared_calls": 74,
+      "method": "direct_llm (GDPR scope gdpr7_direct_llm_v1:74)",
+      "authorization": "authorized 2026-09-07 (off-peak, retry=0)"
+    }
+  },
+  "authorization_assets": {
+    "s2_12:D-CAL": {
+      "path": "configs/s2_12_api_authorization_D-CAL.json",
+      "exists": true,
+      "sha256": "b2e00f2b81fe50b69a6ad25b370d7aa7b968c63f676994d52e92f9d0d2125010"
+    },
+    "s2_12:D-REST": {
+      "path": "configs/s2_12_api_authorization_D-REST.json",
+      "exists": true,
+      "sha256": "799083ffe8259ae34b1d805b6c0c067a34c7fe4f9a6fa637c00f08814831d247"
+    },
+    "s2_12:F-1": {
+      "path": "configs/s2_12_api_authorization_F-1.json",
+      "exists": true,
+      "sha256": "79bf4ddf55aa2e53746d555818f6811512bba99be4c5f01a71ceb6f08e6068ec"
+    },
+    "s2_12:F-2": {
+      "path": "configs/s2_12_api_authorization_F-2.json",
+      "exists": true,
+      "sha256": "f0ef8b6319af59abf73da6b388f5db913963cf88abaeab420e78157c6475da05"
+    },
+    "s2_12:F-3": {
+      "path": "configs/s2_12_api_authorization_F-3.json",
+      "exists": true,
+      "sha256": "ccda11f76fde0cbb1d1480e53ae78b67d7b6e2a49d7a058b354b4456e9979f7f"
+    },
+    "gdpr7:authorization": {
+      "path": "configs/gdpr7_direct_llm_authorization_event_v1.json",
+      "exists": true,
+      "sha256": "d6689c0ef2fcc6336a29a88b9d7bc172299a771a751b75de9af5d6e71df0bde5"
+    },
+    "gdpr7:contract": {
+      "path": "configs/ablations/gdpr7_direct_llm_execution_contract_v1.json",
+      "exists": true,
+      "sha256": "281e4874e6487434de6e48f40bc830cda960c53a5fc650b8984e5e132d3989eb"
+    },
+    "gdpr7:preflight": {
+      "path": "outputs/reports/gdpr7_direct_llm_preflight_v1.json",
+      "exists": true,
+      "sha256": "602bfdfb4adbf7f2c401689ed25e3d4226bc0fdb82a7bc65b4fbc6baf8f8c56d"
+    },
+    "s2_12:preflight": {
+      "path": "outputs/reports/s2_12_api_preflight_v1.json",
+      "exists": true,
+      "sha256": "c7d33f956464f54b9b76145a1874d9111e3e41f1a904bc3751edc8b8e3c90314"
+    }
+  },
+  "authorization_assets_ok": true,
+  "declared_call_counts": {
+    "gdpr7_batch_b": {
+      "declared_calls": 74,
+      "source": "outputs/reports/gdpr7_direct_llm_preflight_v1.json"
+    },
+    "s2_12_batch_a": {
+      "declared_calls": 63,
+      "source": "outputs/reports/s2_12_api_preflight_v1.json"
+    }
+  },
+  "declared_call_counts_ok": true,
+  "credential_precheck": {
+    "command": "D:\\environment\\Python\\python.exe D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\scripts\\check_api_env_ready_v1.py",
+    "exit_code": 2,
+    "stdout_tail": [
+      "  seed_supported      : False",
+      "  timeout_seconds     : 30.0",
+      "FAIL provider is mock or not enabled (process env only)",
+      "FAIL model 'mock' != 'deepseek-v4-pro'",
+      "FAIL base_url None != 'https://api.deepseek.com/v1' (required by the GDPR executor and the locked payloads)",
+      "FAIL API key absent (BPC_HYBRID_LLM_API_KEY or BPC_HYBRID_DeepSeek_API_KEY in the process environment)",
+      "FAIL max_tokens 1024 != 4096 (locked recipe)",
+      "API ENV NOT READY (offline precheck; no API call was made, no .env was read)"
+    ],
+    "stderr_tail": [],
+    "ready": false,
+    "missing_items": [
+      "FAIL provider is mock or not enabled (process env only)",
+      "FAIL model 'mock' != 'deepseek-v4-pro'",
+      "FAIL base_url None != 'https://api.deepseek.com/v1' (required by the GDPR executor and the locked payloads)",
+      "FAIL API key absent (BPC_HYBRID_LLM_API_KEY or BPC_HYBRID_DeepSeek_API_KEY in the process environment)",
+      "FAIL max_tokens 1024 != 4096 (locked recipe)"
+    ]
+  },
+  "execution_chain": {
+    "gdpr_fake_rehearsal": {
+      "command": "D:\\environment\\Python\\python.exe D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\scripts\\run_gdpr7_direct_llm_v1.py --fake-transport --raw-dir outputs/development/s2_llm_batches_offline_readiness_v1/raw --capsule-dir outputs/development/s2_llm_batches_offline_readiness_v1/capsule",
+      "exit_code": 0,
+      "stdout_tail": [
+        "GDPR Direct-LLM executor: status=complete (fake=True)",
+        "attempted=74 completed=74 in_doubt=0 failed=0 cost_usd=0.0",
+        "capsule=outputs\\development\\s2_llm_batches_offline_readiness_v1\\capsule raw=outputs\\development\\s2_llm_batches_offline_readiness_v1\\raw",
+        "reproduce (fake verify): python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py --fake-transport",
+        "reproduce (real, after authorization): python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v1.json --authorization-file <gdpr7-direct-llm-authorization-event-file>"
+      ],
+      "stderr_tail": [],
+      "status_line": "GDPR Direct-LLM executor: status=complete (fake=True)",
+      "completed_74": true,
+      "zero_calls": true,
+      "fake_capsule_dir": "outputs/development/s2_llm_batches_offline_readiness_v1/capsule"
+    },
+    "gdpr_real_run_refusal_without_contract": {
+      "command": "D:\\environment\\Python\\python.exe D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\scripts\\run_gdpr7_direct_llm_v1.py --raw-dir outputs/development/s2_llm_batches_offline_readiness_v1/raw_refuse --capsule-dir outputs/development/s2_llm_batches_offline_readiness_v1/capsule_refuse",
+      "exit_code": 2,
+      "stdout_tail": [
+        "GDPR Direct-LLM executor refused/aborted: --contract-file is required for a real run; refusing to run"
+      ],
+      "stderr_tail": [],
+      "refused": true
+    },
+    "promotion_refusal_of_fake_capsule": {
+      "command": "D:\\environment\\Python\\python.exe D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\scripts\\promote_gdpr7_direct_llm_arm_v1.py --capsule-dir outputs/development/s2_llm_batches_offline_readiness_v1/capsule",
+      "exit_code": 2,
+      "stdout_tail": [],
+      "stderr_tail": [
+        "gdpr7 direct-llm arm promotion refused: refusing to promote a fake program-verification capsule (telemetry.fake_run_program_verification_only is true); only a real authorized run may be promoted to the formal arm home; telemetry.transport = 'fake_payload_locked'; promotion requires a real_authorized run; manifest.transport = 'fake_payload_locked'; promotion requires a real_authorized run; manifest.authorization.real_authorized is not True; only a user-authorized real run may be promoted; manifest.safety.llm_api_calls = 0; a real run must report at least 74 calls"
+      ],
+      "refused": true,
+      "refused_fake_capsule": true
+    },
+    "s2_12_real_run_refusal_without_credentials": {
+      "command": "D:\\environment\\Python\\python.exe D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\scripts\\run_s2_12_direct_llm_v1.py --transport real --allow-llm --auth-file configs/s2_12_api_authorization_D-CAL.json --stage-id D-CAL --output-dir outputs/development/s2_llm_batches_offline_readiness_v1/s212 --raw-dir outputs/development/s2_llm_batches_offline_readiness_v1/s212_raw",
+      "exit_code": 2,
+      "stdout_tail": [
+        "S2.12 direct_llm refused: real provider is not enabled (process env only)"
+      ],
+      "stderr_tail": [
+        "cls.predictions.decoder.weight             | UNEXPECTED |  | ",
+        "cls.predictions.bias                       | UNEXPECTED |  | ",
+        "cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | ",
+        "cls.predictions.decoder.bias               | UNEXPECTED |  | ",
+        "cls.predictions.transform.dense.weight     | UNEXPECTED |  | ",
+        "",
+        "Notes:",
+        "- UNEXPECTED:\tcan be ignored when loading from different task/architecture; not ok if you expect identical arch."
+      ],
+      "refused": true,
+      "reason": "S2.12 direct_llm refused: real provider is not enabled (process env only)"
+    },
+    "chain_ok": true
+  },
+  "blocker": {
+    "blocked": true,
+    "reason": "process-environment credentials absent; both runners read only the process environment and never the project .env",
+    "missing_items": [
+      "FAIL provider is mock or not enabled (process env only)",
+      "FAIL model 'mock' != 'deepseek-v4-pro'",
+      "FAIL base_url None != 'https://api.deepseek.com/v1' (required by the GDPR executor and the locked payloads)",
+      "FAIL API key absent (BPC_HYBRID_LLM_API_KEY or BPC_HYBRID_DeepSeek_API_KEY in the process environment)",
+      "FAIL max_tokens 1024 != 4096 (locked recipe)"
+    ],
+    "unblock_command": "python formal_experiment/scripts/check_api_env_ready_v1.py",
+    "required_env_keys": [
+      "BPC_HYBRID_LLM_ENABLED=true",
+      "BPC_HYBRID_LLM_PROVIDER=openai_compatible",
+      "BPC_HYBRID_LLM_MODEL=deepseek-v4-pro",
+      "BPC_HYBRID_LLM_BASE_URL=https://api.deepseek.com/v1",
+      "BPC_HYBRID_LLM_API_KEY=<injected by the host, never committed>",
+      "BPC_HYBRID_LLM_MAX_TOKENS=4096",
+      "BPC_HYBRID_LLM_TEMPERATURE=0",
+      "BPC_HYBRID_LLM_TOP_P=1"
+    ],
+    "run_commands": {
+      "s2_12_batch_a": "python scripts/run_s2_12_direct_llm_v1.py --transport real --allow-llm --auth-file configs/s2_12_api_authorization_D-CAL.json --stage-id D-CAL --output-dir outputs/development/s2_12_direct_llm_stage_dcal_v1 --raw-dir outputs/development/s2_12_direct_llm_raw_dcal_v1",
+      "gdpr7_batch_b": "python scripts/run_gdpr7_direct_llm_v1.py --contract-file configs/ablations/gdpr7_direct_llm_execution_contract_v1.json --authorization-file configs/gdpr7_direct_llm_authorization_event_v1.json --raw-dir outputs/development/gdpr7_direct_llm_raw_real_v1 --capsule-dir outputs/development/gdpr7_direct_llm_real_v1",
+      "gdpr7_promotion": "python scripts/promote_gdpr7_direct_llm_arm_v1.py --apply"
+    }
+  },
+  "conclusion": {
+    "offline_preparation_complete": true,
+    "real_calls_made": 0,
+    "real_calls_remaining": 137,
+    "blocked_on": "process-environment credentials",
+    "claim_boundary": "No S2.12 / GDPR real-LLM result exists yet; the Direct-LLM GDPR arm capsule data/predictions/gdpr7_direct_llm_v1 does not exist, so the downstream LLM-vs-rules Stage-3 comparison cannot be run on real Direct-LLM predictions."
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

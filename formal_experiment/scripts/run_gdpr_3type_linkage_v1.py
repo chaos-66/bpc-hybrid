@@ -11,8 +11,7 @@ incorrect_actor / out_of_order) on the frozen 33-item human-adjudicated
 violation-decision Gold (``data/gold/stage3/stage3_violation_gold_v1.json``,
 items v001..v033).
 
-Three arms, run one at a time (``--arm``) or together (``--arm all``):
-- ``reference`` : the original S3.5 development behavior -- the dev Rule
+Four arms, run one at a time (``--arm``) or together (``--arm all``):- ``reference`` : the original S3.5 development behavior -- the dev Rule
   Record adapter (``sun_rule_extraction.extract_rule_record``) is fed the
   frozen inference-pack rule texts. Reference rows replicate the S3.5 dev
   run on the same 33 violation items.
@@ -29,6 +28,15 @@ Three arms, run one at a time (``--arm``) or together (``--arm all``):
   the same obligation-only gate.  Per-sample differences against the
   reference arm are written into the run dir as ``changes_vs_reference.json``
   with machine-classified change reasons.
+- ``human_rules`` : the ORACLE standard-answer arm.  The capsule
+  (``data/predictions/gdpr7_human_rule_record_v1``, schema
+  ``gdpr7_human_rule_record_predictions@1.0.0``) is derived losslessly from
+  the formal GDPR-7 Gold Rule Records
+  (``data/gold/stage3/gdpr7_gold_rule_records_v1.json``), which are a
+  mechanical conversion of the user-confirmed 74-sentence / 92-item human
+  bundle.  Every confirmed rule item keeps its own modality, so this arm
+  includes all four modality classes (not the Stage-2 obligation-only
+  projection) and it is the arm that isolates the checker from Stage 2 error.
 
 Missing-arm policy: when the arm's capsule directory does not exist yet (the
 Direct-LLM formal capsule only exists after
@@ -46,7 +54,7 @@ Separations: the 33-item Gold, the 4-type synthetic panel and the formal
 Oracle are separate datasets and are never merged.
 
 Usage:
-    python scripts/run_gdpr_3type_linkage_v1.py --arm {reference,rules_only,direct_llm|all}
+    python scripts/run_gdpr_3type_linkage_v1.py --arm {reference,rules_only,direct_llm,human_rules|all}
     python scripts/run_gdpr_3type_linkage_v1.py --arm all --allow-missing-arm
     python scripts/run_gdpr_3type_linkage_v1.py --report-only <run_dir>
     python scripts/run_gdpr_3type_linkage_v1.py --compare
@@ -72,8 +80,10 @@ for p in (SRC, SCRIPTS):
 import spacy  # noqa: E402
 
 from bpc_hybrid.sun_stage3.gdpr_capsule_converter import (  # noqa: E402
+    ALL_MODALITIES,
     CONVERTER_NAME,
     DIRECT_LLM_CAPSULE_SCHEMA,
+    HUMAN_RULES_CAPSULE_SCHEMA,
     build_rule_records,
 )
 from bpc_hybrid.sun_stage3.gdpr_change_classifier import (  # noqa: E402
@@ -90,6 +100,8 @@ ARM_LABELS = {
     "reference": "S3.5 development Rule Record adapter (deterministic spaCy + signalwords)",
     "rules_only": "EXTERNAL Rules-Only Stage-2 capsule (locked B0 v10a) via deterministic converter",
     "direct_llm": "EXTERNAL Direct-LLM Stage-2 capsule (locked D1 recipe) via deterministic converter",
+    "human_rules": ("EXTERNAL human-adjudicated Gold Rule Record capsule "
+                    "(Oracle standard answer) via deterministic converter"),
 }
 EXPECTED_INFERENCE_SHA = "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4"
 # Legacy rules-only schema constant (kept for historical callers).
@@ -107,6 +119,9 @@ CAPSULE_MANIFEST = CAPSULE_DIR / "manifest.json"
 DIRECT_LLM_CAPSULE_DIR = ROOT / "data" / "predictions" / "gdpr7_direct_llm_v1"
 DIRECT_LLM_CAPSULE_PREDICTIONS = DIRECT_LLM_CAPSULE_DIR / "predictions.json"
 DIRECT_LLM_CAPSULE_MANIFEST = DIRECT_LLM_CAPSULE_DIR / "manifest.json"
+HUMAN_RULES_CAPSULE_DIR = ROOT / "data" / "predictions" / "gdpr7_human_rule_record_v1"
+HUMAN_RULES_CAPSULE_PREDICTIONS = HUMAN_RULES_CAPSULE_DIR / "predictions.json"
+HUMAN_RULES_CAPSULE_MANIFEST = HUMAN_RULES_CAPSULE_DIR / "manifest.json"
 WINTER_FILES_DIR = ROOT.parent / "references" / "winter_2020_model_check" / "model_check" / "input" / "files"
 
 # Per-arm external capsule layout: doc-level predictions + manifest + the
@@ -132,6 +147,19 @@ CAPSULE_CONFIGS = {
         "note": ("EXTERNAL Direct-LLM Stage-2 predictions; executor publishes "
                  "the development capsule only; the formal arm capsule is "
                  "promoted by promote_gdpr7_direct_llm_arm_v1.py"),
+    },
+    "human_rules": {
+        "dir": HUMAN_RULES_CAPSULE_DIR,
+        "predictions": HUMAN_RULES_CAPSULE_PREDICTIONS,
+        "manifest": HUMAN_RULES_CAPSULE_MANIFEST,
+        "schema": HUMAN_RULES_CAPSULE_SCHEMA,
+        "expected_records": 74,
+        "include_modalities": ALL_MODALITIES,
+        "note": ("EXTERNAL human-adjudicated Gold Rule Record capsule "
+                 "(data/gold/stage3/gdpr7_gold_rule_records_v1.json -> "
+                 "scripts/build_gdpr7_gold_rule_records_v1.py); the Oracle "
+                 "standard answer. Every confirmed rule item keeps its own "
+                 "modality, so all four modality classes are included"),
     },
 }
 
@@ -352,8 +380,16 @@ def build_rule_records_for_arm(arm: str, frozen: Mapping[str, Any],
             f"expected {cfg['schema']!r}")
     from bpc_hybrid.sun_stage3.gdpr_capsule_converter import sentence_texts_by_sample
     texts = sentence_texts_by_sample(frozen["input_doc"])
-    records, summary = build_rule_records(
-        capsule, texts, rule_ids, expected_schema=cfg["schema"])
+    # Arms without an explicit modality policy keep the converter default
+    # (obligation-only Stage-2 projection); the human-rule Oracle arm passes
+    # all four confirmed modality classes.
+    if cfg.get("include_modalities") is None:
+        records, summary = build_rule_records(
+            capsule, texts, rule_ids, expected_schema=cfg["schema"])
+    else:
+        records, summary = build_rule_records(
+            capsule, texts, rule_ids, cfg["include_modalities"],
+            expected_schema=cfg["schema"])
     diag = {
         "rule_record_source": f"EXTERNAL {arm} capsule converter ({CONVERTER_NAME})",
         "arm": arm,
@@ -1078,6 +1114,12 @@ def render_markdown(summary: Mapping[str, Any]) -> str:
                      "data/predictions/gdpr7_direct_llm_v1 by "
                      "promote_gdpr7_direct_llm_arm_v1.py; coordinate-only rows, "
                      "no raw text and no Gold fields (containment-scanned).")
+    elif summary["arm"] == "human_rules":
+        lines.append("- External human-rule capsule = the formal GDPR-7 Gold Rule "
+                     "Records derived losslessly from the user-confirmed 74-sentence "
+                     "/ 92-item human bundle (data/gold/stage3/"
+                     "gdpr7_gold_rule_records_v1.json); this arm is the ORACLE "
+                     "standard-answer arm: the checker receives the correct rules.")
     lines += [
         "- Out-of-order in the reference arm is also denominator-0 for all items "
         "(no rule endpoint maps to a process action above gamma 0.8); in the rules_only "

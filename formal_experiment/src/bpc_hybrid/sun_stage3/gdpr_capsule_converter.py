@@ -15,13 +15,17 @@ an EXTERNAL Stage-2 predictions capsule whose doc-level schema is one of the
 :data:`ALLOWED_CAPSULE_SCHEMAS`:
 
 - ``data/predictions/gdpr7_sun_rule_only_v1/predictions.json`` (schema
-  ``gdpr7_sun_rule_only_predictions@1.0.0``, locked B0 v10a pipeline), and
+  ``gdpr7_sun_rule_only_predictions@1.0.0``, locked B0 v10a pipeline),
 - ``data/predictions/gdpr7_direct_llm_v1/predictions.json`` (schema
-  ``gdpr7_direct_llm_predictions@1.0.0``, Direct-LLM executor).
+  ``gdpr7_direct_llm_predictions@1.0.0``, Direct-LLM executor), and
+- ``data/predictions/gdpr7_human_rule_record_v1/predictions.json`` (schema
+  ``gdpr7_human_rule_record_predictions@1.0.0``, the formal Gold Rule Records
+  derived from the user-confirmed human bundle; this is the Oracle standard
+  answer source).
 
-Both schemas carry the same doc-level row shape ``{sample_id,
+All three schemas carry the same doc-level row shape ``{sample_id,
 request_status, record, error_category}`` with the same coordinate-only
-clause/span convention, so the converter consumes either transparently
+clause/span convention, so the converter consumes any of them transparently
 (``expected_schema`` may pin one explicitly; see
 ``build_rule_records``).
 
@@ -42,11 +46,15 @@ Modality gate (fixed v1 policy, documented)
   signalwords ``shall/must/should/may`` and calls every such sentence
   ``modality=obligation``).  The capsule carries an explicit, validated
   per-clause modality label.  The converter therefore keeps **only clauses
-  whose ``modality.label`` is ``"obligation"``** -- i.e. the rule actions and
-  actors that the process is required to perform, which is the semantic
-  content Definitions 5-6 compare against a process model.  Permission,
-  prohibition and definition clauses are excluded and the exclusion is
-  counted per rule in the diagnostics (never silently dropped).
+  whose ``modality.label`` is in ``include_modalities``** -- by default
+  ``("obligation",)``, i.e. the rule actions and actors that the process is
+  required to perform, which is the semantic content Definitions 5-6 compare
+  against a process model.  Permission, prohibition and definition clauses are
+  excluded and the exclusion is counted per rule in the diagnostics (never
+  silently dropped).  The human-rule Oracle arm passes
+  :data:`ALL_MODALITIES`, because its per-item labels are the confirmed human
+  adjudication rather than a Stage-2 projection and every item must reach the
+  checker.
 - All other spans the capsule exposes (conditions / constraints / exceptions)
   are NOT consumed by the Sun scorer and are not converted.
 
@@ -85,18 +93,28 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Sequence
 
-CONVERTER_NAME = "gdpr_capsule_rule_record_converter@1.2.0"
+CONVERTER_NAME = "gdpr_capsule_rule_record_converter@1.3.0"
 CAPSULE_SCHEMA = "gdpr7_sun_rule_only_predictions@1.0.0"
 DIRECT_LLM_CAPSULE_SCHEMA = "gdpr7_direct_llm_predictions@1.0.0"
+# The formal GDPR-7 Gold Rule Records capsule (derived from the user-confirmed
+# human bundle) publishes the SAME coordinate-only envelope shape, so the same
+# converter consumes it.  It is the Oracle standard-answer source.
+HUMAN_RULES_CAPSULE_SCHEMA = "gdpr7_human_rule_record_predictions@1.0.0"
 # Allowed external capsule schemas whose doc-level rows share the SAME
 # envelope shape ``{sample_id, request_status, record, error_category}`` with
 # the same clause/span coordinate convention (``record`` coordinate-only).
 # ``CAPSULE_SCHEMA`` stays the historical default; the Direct-LLM executor
-# publishes the second schema to the same shape.
-ALLOWED_CAPSULE_SCHEMAS = (CAPSULE_SCHEMA, DIRECT_LLM_CAPSULE_SCHEMA)
+# publishes the second schema to the same shape, and the Gold Rule Record
+# builder publishes the third.
+ALLOWED_CAPSULE_SCHEMAS = (CAPSULE_SCHEMA, DIRECT_LLM_CAPSULE_SCHEMA,
+                           HUMAN_RULES_CAPSULE_SCHEMA)
 # Auto-detection is the default: an explicit ``expected_schema`` overrides it.
 DEFAULT_EXPECTED_SCHEMA = None
 DEFAULT_INCLUDE_MODALITIES = ("obligation",)
+#: all four Stage-2 modality classes (used by the human-rule Oracle arm, whose
+#: capsule carries a per-item label instead of the Stage-2 obligation-only
+#: projection).
+ALL_MODALITIES = ("obligation", "permission", "prohibition", "definition")
 RECORD_SCHEMA = "sun_rule_record_capsule_v1@1.0.0"
 
 
@@ -149,6 +167,9 @@ def _capsule_source_label(schema_version: Any) -> str:
     """Human-readable provenance source for the detected capsule schema."""
     if schema_version == DIRECT_LLM_CAPSULE_SCHEMA:
         return "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+    if schema_version == HUMAN_RULES_CAPSULE_SCHEMA:
+        return ("EXTERNAL human-adjudicated Gold Rule Record capsule "
+                "(data/predictions/gdpr7_human_rule_record_v1)")
     return "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
 
 

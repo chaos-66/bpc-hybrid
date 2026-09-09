@@ -1,0 +1,160 @@
+{
+  "schema_version": "s3_oracle_gold_rules_manifest@1.0.0",
+  "run_id": "s3_oracle_gold_rules_v1",
+  "claim_status": "Oracle isolation run on the frozen development evaluation surface; NOT the formal S3.7 main table (S2.13 and S3.4-S3.6 formal promotion still pending)",
+  "task": "S3.7 (Oracle isolation) on the frozen development evaluation surface",
+  "bindings": {
+    "gold_rule_records": {
+      "path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+      "sha256": "7cf896abdb6e420e46efd297a8e183bcdc4c15834aa9567eb88d1af60eec627a"
+    },
+    "oracle_capsule": {
+      "path": "data/predictions/gdpr7_human_rule_record_v1/predictions.json",
+      "sha256": "9d86e1b4360a8ef2d9acfacdda4cd3b5d7e2e35f7f3de68eeebaa0a793432500"
+    },
+    "oracle_capsule_manifest": {
+      "path": "data/predictions/gdpr7_human_rule_record_v1/manifest.json",
+      "sha256": "281f7cb6c8ee8d608eee11991cc3266a2caa48992d2b5927e32e58aca5f03a8d"
+    },
+    "confirmed_human_bundle": {
+      "path": "data/development/human_review/gdpr7_human_confirmed_v1/confirmed_rule_items.json",
+      "sha256": "930357a9539a3e1b11fab9943eb3ca1978ca3596605f1264aea821960a47fc78"
+    },
+    "violation_gold": {
+      "path": "data/gold/stage3/stage3_violation_gold_v1.json",
+      "sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550"
+    },
+    "inference_pack": {
+      "path": "data/development/human_review/stage3_gold_inference_v1.json",
+      "sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4"
+    },
+    "stage3_config": {
+      "path": "configs/sun_stage3_development_v1.json",
+      "sha256": "3ef60d5bda1e5103486d5269cd3740330e911c1b912367d822c7dbab729714c4"
+    },
+    "thresholds": {
+      "tau": 0.8,
+      "gamma": 0.8,
+      "theta": 0.8
+    }
+  },
+  "dependencies": {
+    "s2_13_stage2_freeze": "blocked on S2.12 API arms (not required for this isolation run)",
+    "s3_4_s3_6_formal_promotion": "pending",
+    "gold_rule_records_published": true,
+    "formal_s3_7_authorization": "not granted; this run is an isolation evaluation"
+  },
+  "implementation": {
+    "scripts/run_s3_oracle_gold_rules_v1.py": {
+      "path": "scripts/run_s3_oracle_gold_rules_v1.py",
+      "sha256": "55730d8104da3d2ec727df977ad1f425e97e3c431f5f141c85f87b26d48bbb9e"
+    },
+    "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": {
+      "path": "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py",
+      "sha256": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436"
+    },
+    "src/bpc_hybrid/gdpr7_gold_rule_records.py": {
+      "path": "src/bpc_hybrid/gdpr7_gold_rule_records.py",
+      "sha256": "913732b3e60930abc3e62d180e6cd72c51aad8289cb2d44c87f2e0d16e3d5c70"
+    }
+  },
+  "artifacts": {
+    "outputs/development/s3_oracle_gold_rules_v1/extended_four/bm25/evaluation.json": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/extended_four/bm25/evaluation.json",
+      "sha256": "00a67082972d095710f527681e0dc00af193602431f078360213024e55de2266",
+      "byte_size": 45648
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/extended_four/bm25/predictions.jsonl": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/extended_four/bm25/predictions.jsonl",
+      "sha256": "ead60bec3da5325fa1b05883887ab559790d8d61119eb1a688d896df35ed9069",
+      "byte_size": 115251
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/extended_four/sun/evaluation.json": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/extended_four/sun/evaluation.json",
+      "sha256": "fe142c8c369b5c4c1689024a4fb94ea6344cd355d1cbd7af6fccae2ec52b3aba",
+      "byte_size": 45702
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/extended_four/sun/predictions.jsonl": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/extended_four/sun/predictions.jsonl",
+      "sha256": "17135288c3140eaf5649db0f214f78257bf97546176470cd63412ce06d19f6c6",
+      "byte_size": 116156
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/extended_four/tfidf_svd/evaluation.json": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/extended_four/tfidf_svd/evaluation.json",
+      "sha256": "51778c5a83580c1f59f5908774461baa15ba4ace687b2dda163ac10839580c55",
+      "byte_size": 46610
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/extended_four/tfidf_svd/predictions.jsonl": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/extended_four/tfidf_svd/predictions.jsonl",
+      "sha256": "92d515b318e5c6dcb97ed3998cbaae70b863716495c9c169e82f9995251d863b",
+      "byte_size": 115930
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/extended_four/winter/evaluation.json": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/extended_four/winter/evaluation.json",
+      "sha256": "97adbfacae879ef178d6725259e7a10a22a3bb70cbbba885dd3f6046e0dd5cd0",
+      "byte_size": 51724
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/extended_four/winter/predictions.jsonl": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/extended_four/winter/predictions.jsonl",
+      "sha256": "ef8c6cf04aaceac3920edb2688569de2b2e093dd060ccfed174085f4fa1b74a6",
+      "byte_size": 117356
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle/evaluation.json": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle/evaluation.json",
+      "sha256": "4939974754c73f448514a59d1a3f6f7896cb5f6e60550d01b56ad24626f24699",
+      "byte_size": 27823
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle/predictions.jsonl": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle/predictions.jsonl",
+      "sha256": "284fea2d1c7f7d41b00451d8fd652fb83a345b1033ce71c994fe1a845be0269c",
+      "byte_size": 41749
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle/rule_records.json": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle/rule_records.json",
+      "sha256": "766be9b3c89d790dc590d959e1ac9b09bf47023fe955635cfe4d0fcaabb591f7",
+      "byte_size": 20685
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle_obligation_only/evaluation.json": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle_obligation_only/evaluation.json",
+      "sha256": "ef7541c24e54f324e59548302afc11fc13dacec1d012f786d37d928fb57a94db",
+      "byte_size": 27882
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle_obligation_only/predictions.jsonl": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle_obligation_only/predictions.jsonl",
+      "sha256": "7cc6918644609685af558acedf37a3d2d1a8ed12ab4064e773733b11ed54420d",
+      "byte_size": 41752
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle_obligation_only/rule_records.json": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/original_three/oracle_obligation_only/rule_records.json",
+      "sha256": "140bcb863e9107d9a159aa9e086cd512accf717d85bfdd0e388d11497d1b7af7",
+      "byte_size": 12701
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/original_three/reference/evaluation.json": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/original_three/reference/evaluation.json",
+      "sha256": "0771dd6faa4510fae8cf74fec3a2d1e02475bbbb39944f78940a931f34137d1b",
+      "byte_size": 27691
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/original_three/reference/predictions.jsonl": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/original_three/reference/predictions.jsonl",
+      "sha256": "f458e80652c1d62d6089156baaf5e9a0f27d1dd5f4db053018646a54bab35d5f",
+      "byte_size": 40352
+    },
+    "outputs/development/s3_oracle_gold_rules_v1/original_three/reference/rule_records.json": {
+      "path": "outputs/development/s3_oracle_gold_rules_v1/original_three/reference/rule_records.json",
+      "sha256": "14629b7bdd4b8fdb1a04355389892c968bf3e3fa3c4adf938dc912a05859a96c",
+      "byte_size": 58131
+    }
+  },
+  "replay_command": "python formal_experiment/scripts/run_s3_oracle_gold_rules_v1.py --check",
+  "boundaries": {
+    "gold_modified": false,
+    "thresholds_changed": false,
+    "processes_changed": false,
+    "existing_predictions_overwritten": false,
+    "llm_or_api_called": false,
+    "synthetic_panel_merged_into_human_gold": false
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0
+  }
+}

@@ -1,0 +1,585 @@
+{
+  "schema_version": "s2_13_s3_7_transition_readiness@9.0.0",
+  "report_id": "s2_13_s3_7_transition_readiness_v9",
+  "supersedes": [
+    {
+      "path": "configs/schemas/s2_13_s3_7_transition_readiness_v8.schema.json",
+      "sha256": "df75b975f17af000f5f5974983196edda1835df1cd5b9a91a8eccfa8144d3375",
+      "byte_size": 1011,
+      "reason": "v9 supersedes v8's Gold-Rule-Record absence judgment (now verified present) while preserving the v8 asset byte-exact"
+    },
+    {
+      "path": "scripts/build_s2_13_s3_7_transition_readiness_v8.py",
+      "sha256": "3508c8331d05a4cc3c1336b74b6b6d46712084858a12c7f4e287cc91258d4c7f",
+      "byte_size": 13346,
+      "reason": "v9 supersedes v8's Gold-Rule-Record absence judgment (now verified present) while preserving the v8 asset byte-exact"
+    },
+    {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v8.py",
+      "sha256": "562ce2de55992c2291b2f7bd066b53549460b32c7d6037df36e72739617ade2a",
+      "byte_size": 5748,
+      "reason": "v9 supersedes v8's Gold-Rule-Record absence judgment (now verified present) while preserving the v8 asset byte-exact"
+    },
+    {
+      "path": "tests/test_s2_13_s3_7_transition_readiness_v8.py",
+      "sha256": "112e2ad76b26feebf86a6837196c57f0e125d36b3dc14a5165d470914112e2ff",
+      "byte_size": 1708,
+      "reason": "v9 supersedes v8's Gold-Rule-Record absence judgment (now verified present) while preserving the v8 asset byte-exact"
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v8.json",
+      "sha256": "365880c25403d4fe766bcf9d8a94851c6a91d3f993c2f8e97107d6173c018e22",
+      "byte_size": 9683,
+      "reason": "v9 supersedes v8's Gold-Rule-Record absence judgment (now verified present) while preserving the v8 asset byte-exact"
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v8.md",
+      "sha256": "20f5201999477b70948b23e2851c186f85727790e684fa7204acb842ccc0bb2c",
+      "byte_size": 712,
+      "reason": "v9 supersedes v8's Gold-Rule-Record absence judgment (now verified present) while preserving the v8 asset byte-exact"
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v8.manifest.json",
+      "sha256": "81ac679c81250d93bb962bc50befbd1402cf4fb55081ba51e84b705212ddcd67",
+      "byte_size": 3637,
+      "reason": "v9 supersedes v8's Gold-Rule-Record absence judgment (now verified present) while preserving the v8 asset byte-exact"
+    },
+    {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v8_export_index.json",
+      "sha256": "c2dcdc7c36d398b0c5d4d7b026543120970c09550b82695849f2c58371b74c90",
+      "byte_size": 640,
+      "reason": "v9 supersedes v8's Gold-Rule-Record absence judgment (now verified present) while preserving the v8 asset byte-exact"
+    }
+  ],
+  "pipeline_state": {
+    "S1.7": "frozen",
+    "S2.11": "verified_frozen",
+    "S2.12": "partial_zero_api_arm_complete_api_arms_pending",
+    "S2.13": "blocked_only_on_remaining_S2.12_DoD",
+    "S3.4_S3.6": "development_only",
+    "S3.7": "gold_rule_records_published_oracle_isolation_run_formal_main_table_not_authorized"
+  },
+  "s2_11": {
+    "status": "verified_frozen",
+    "adjudicated": 36,
+    "unresolved": 0,
+    "reviewer": "hyc",
+    "formal_gold": {
+      "path": "data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json",
+      "sha256": "039ae8b2429826ae2b320667fb4a0dff96de6408b0a9637c1d9911565129c804",
+      "byte_size": 83915
+    },
+    "formal_gold_payload_sha256": "039ae8b2429826ae2b320667fb4a0dff96de6408b0a9637c1d9911565129c804",
+    "confirmation_event": {
+      "path": "configs/s2_11_batch_import_confirmation_event_v3.json",
+      "sha256": "226b47982934dafce987b34df857144a046c7cbf54b5969efa4fb19e2d079405",
+      "byte_size": 871
+    },
+    "provenance": "deepseek_offline_proposal_v3 + user batch confirmation by hyc; not independent-from-scratch expert annotation"
+  },
+  "s2_12": {
+    "status": "partial",
+    "readiness_v4": {
+      "path": "outputs/reports/s2_12_execution_readiness_v4.json",
+      "sha256": "ce249166173b7cfbf42932e9ac76f7b45266ff2b11f917f777425b9f5e77b73f",
+      "byte_size": 14613
+    },
+    "gold_blind_input": {
+      "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+      "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+      "byte_size": 17784
+    },
+    "sun_rule_only": {
+      "status": "verified_complete",
+      "single_zero_api_arm_only": true,
+      "evaluation": {
+        "path": "data/results/s2_12_sun_rule_only_v1/evaluation.json",
+        "sha256": "1696dbf9dcf85ef30f6056fc109c9952f0465ac21ac080314e57f7fa33799e16",
+        "byte_size": 11532
+      },
+      "actual_cost_usd": 0.0
+    },
+    "direct_llm": "pending_explicit_api_authorization",
+    "sun_llm_fallback": "pending_explicit_api_authorization",
+    "api_preflight": {
+      "path": "outputs/reports/s2_12_api_preflight_v1.json",
+      "sha256": "c7d33f956464f54b9b76145a1874d9111e3e41f1a904bc3751edc8b8e3c90314",
+      "byte_size": 32349
+    },
+    "offline_batch_readiness": {
+      "report": {
+        "path": "outputs/reports/s2_llm_batches_offline_readiness_v1.json",
+        "sha256": "c5cfa4613e6fbf6061fe28c8bb79b44dadcf86a915544fd6803a4c33de788de3",
+        "byte_size": 10496
+      },
+      "offline_preparation_complete": true,
+      "real_calls_made": 0,
+      "real_calls_remaining": 137,
+      "blocked_on": "process-environment credentials"
+    },
+    "three_method_comparison_complete": false,
+    "post_result_tuning_performed": false
+  },
+  "s2_13": {
+    "status": "blocked",
+    "blockers": [
+      "S2.12 remaining DoD: two API arms, three-method comparison, and S2.12 completion freeze"
+    ]
+  },
+  "stage3": {
+    "S3.4": "development_only",
+    "S3.5": "development_only",
+    "S3.6": "development_only",
+    "S3.7": {
+      "status": "gold_rule_records_published_and_oracle_isolation_run; formal main table NOT started or authorized",
+      "authorized": false,
+      "gold_rule_records_present": true,
+      "oracle_isolation_started": true,
+      "blockers": [
+        "S2.13",
+        "formal promotion of S3.4-S3.6",
+        "user authorization for the formal Oracle main table"
+      ]
+    }
+  },
+  "gold_rule_records": {
+    "exist": true,
+    "verifier_verified": true,
+    "verifier_checks": 32,
+    "counts": {
+      "rules": 9,
+      "sentences": 74,
+      "items": 92,
+      "spans": 235,
+      "modality_evidence_spans": 85,
+      "relation_entries": 38
+    },
+    "modality_item_counts": {
+      "obligation": 30,
+      "permission": 36,
+      "prohibition": 4,
+      "definition": 22
+    },
+    "covered_rule_ids": [
+      "article15",
+      "article16",
+      "article17",
+      "article20",
+      "article22",
+      "article33",
+      "article34",
+      "article6",
+      "article7"
+    ],
+    "bindings": {
+      "gold": {
+        "path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+        "sha256": "7cf896abdb6e420e46efd297a8e183bcdc4c15834aa9567eb88d1af60eec627a",
+        "byte_size": 188786
+      },
+      "manifest": {
+        "path": "outputs/reports/gdpr7_gold_rule_records_v1.manifest.json",
+        "sha256": "a9e8c51d05e50c201f747d5248c022d521c557e5b31f9ba4920207931d912efd",
+        "byte_size": 6713
+      },
+      "verifier": {
+        "path": "scripts/verify_gdpr7_gold_rule_records_v1.py",
+        "sha256": "d3119c6a324ecef1a6a17b76ae24b429f978db2aaa752acedf84aee6ec19b0e0",
+        "byte_size": 23025
+      },
+      "capsule": {
+        "path": "data/predictions/gdpr7_human_rule_record_v1/predictions.json",
+        "sha256": "9d86e1b4360a8ef2d9acfacdda4cd3b5d7e2e35f7f3de68eeebaa0a793432500",
+        "byte_size": 140624
+      },
+      "confirmed_human_bundle": {
+        "path": "data/development/human_review/gdpr7_human_confirmed_v1/confirmed_rule_items.json",
+        "sha256": "930357a9539a3e1b11fab9943eb3ca1978ca3596605f1264aea821960a47fc78",
+        "byte_size": 227804
+      },
+      "authorization_event": {
+        "path": "configs/gdpr7_gold_rule_records_authorization_event_v1.json",
+        "sha256": "aa2a09961debefd3baaf2327bb3ed78c5d066aa887ea2dbba3b532b6253f8b68",
+        "byte_size": 2028
+      },
+      "schema": {
+        "path": "configs/schemas/gdpr7_gold_rule_record_v1.schema.json",
+        "sha256": "f3f6ea0ceff4acd6d48b6a108b7dd70b53783131d184f570497f1a9ba0f1b185",
+        "byte_size": 8516
+      }
+    },
+    "note": "Formal GDPR-7 Gold Rule Records published 2026-09-09 by mechanical, lossless conversion of the user-confirmed 74-sentence / 92-item human bundle; one clause per rule item; independent verifier verified."
+  },
+  "oracle_isolation_run": {
+    "started": true,
+    "scope": "development_only_frozen_evaluation_surface",
+    "claim_status": "Oracle isolation run on the frozen development evaluation surface; NOT the formal S3.7 main table (S2.13 and S3.4-S3.6 formal promotion still pending)",
+    "report": {
+      "path": "outputs/reports/s3_oracle_gold_rules_v1.json",
+      "sha256": "6723d48a82b46d8b924102027d834cddea50996d47ff7c77be11842b19f2ed0f",
+      "byte_size": 432274
+    },
+    "manifest": {
+      "path": "outputs/reports/s3_oracle_gold_rules_v1.manifest.json",
+      "sha256": "b5f327feb7ded79c5c091e2be6687b323c4e7a1614f639d83731163205205c07",
+      "byte_size": 8466
+    },
+    "original_three_types": {
+      "oracle": {
+        "support": 33,
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "observable_only_per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "macro_f1": 0.3333,
+        "micro_f1": 0.5,
+        "observable_only_macro_f1": 0.3333,
+        "observable_only_micro_f1": 0.6667,
+        "exact_type_accuracy": 0.3333,
+        "detected": 11,
+        "missed": 22,
+        "wrong_type": 0,
+        "unobservable": 11,
+        "denominator": {
+          "total_items": 33,
+          "per_type_support": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_observable": {
+            "missing_action": 11,
+            "incorrect_actor": 0,
+            "out_of_order": 11
+          },
+          "per_type_unobservable": {
+            "missing_action": 0,
+            "incorrect_actor": 11,
+            "out_of_order": 0
+          },
+          "unobservable_total": 11,
+          "unobservable_by_reason": {
+            "action_mapping_below_gamma": 11
+          },
+          "none_gold_items": 0,
+          "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+          "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+        }
+      },
+      "reference": {
+        "support": 33,
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.0909,
+            "f1": 0.1667
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "observable_only_per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "incorrect_actor": {
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "macro_f1": 0.3889,
+        "micro_f1": 0.5333,
+        "observable_only_macro_f1": 0.6667,
+        "observable_only_micro_f1": 0.6857,
+        "exact_type_accuracy": 0.3636,
+        "detected": 12,
+        "missed": 21,
+        "wrong_type": 0,
+        "unobservable": 10,
+        "denominator": {
+          "total_items": 33,
+          "per_type_support": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_observable": {
+            "missing_action": 11,
+            "incorrect_actor": 1,
+            "out_of_order": 11
+          },
+          "per_type_unobservable": {
+            "missing_action": 0,
+            "incorrect_actor": 10,
+            "out_of_order": 0
+          },
+          "unobservable_total": 10,
+          "unobservable_by_reason": {
+            "action_mapping_below_gamma": 10
+          },
+          "none_gold_items": 0,
+          "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+          "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+        }
+      },
+      "oracle_obligation_only": {
+        "support": 33,
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.9091,
+            "f1": 0.9524
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "observable_only_per_type": {
+          "missing_action": {
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.9091,
+            "f1": 0.9524
+          },
+          "incorrect_actor": {
+            "support": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "macro_f1": 0.3175,
+        "micro_f1": 0.4651,
+        "observable_only_macro_f1": 0.3175,
+        "observable_only_micro_f1": 0.625,
+        "exact_type_accuracy": 0.303,
+        "detected": 10,
+        "missed": 23,
+        "wrong_type": 0,
+        "unobservable": 11,
+        "denominator": {
+          "total_items": 33,
+          "per_type_support": {
+            "missing_action": 11,
+            "incorrect_actor": 11,
+            "out_of_order": 11
+          },
+          "per_type_observable": {
+            "missing_action": 11,
+            "incorrect_actor": 0,
+            "out_of_order": 11
+          },
+          "per_type_unobservable": {
+            "missing_action": 0,
+            "incorrect_actor": 11,
+            "out_of_order": 0
+          },
+          "unobservable_total": 11,
+          "unobservable_by_reason": {
+            "action_mapping_below_gamma": 9,
+            "empty_rule_actor_denominator": 2
+          },
+          "none_gold_items": 0,
+          "observability_policy": "unobservable applies only to incorrect_actor check points; unobservable items count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric",
+          "compliant_specificity_note": "N/A: the frozen violation pack contains no compliant (none) gold items, so specificity / compliant accuracy has no denominator"
+        }
+      }
+    },
+    "downstream_paired_report": {
+      "path": "outputs/reports/s3_downstream_paired_v1.json",
+      "sha256": "b9566fe2395c4fac84f50a508a078a96e5c58aa943a03b41860301e798f98637",
+      "byte_size": 577484
+    },
+    "note": "Oracle isolation on the frozen development evaluation surface; NOT the formal S3.7 main table"
+  },
+  "historical_transition_verifiers": {
+    "v1": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v1.py",
+      "sha256": "5ee35fa837c05dc2e6c15168dcee0a4704486212c81c2710d16435e3e668ad1a",
+      "exit_code": 0,
+      "verified": true,
+      "outcome": "verified_current_or_preserved",
+      "failed_checks": []
+    },
+    "v2": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v2.py",
+      "sha256": "b9639016634af014e9e779ff127de49da2f26b277eef3360a202260aab7996ab",
+      "exit_code": 1,
+      "verified": false,
+      "outcome": "expected_fail_closed_superseded_snapshot",
+      "failed_checks": [
+        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
+        "oracle control flags re-derived"
+      ]
+    },
+    "v3": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v3.py",
+      "sha256": "d9f9094f44b2f6112b98f22e5de161da1a923f8d8cb0ab383a78388adf1445d0",
+      "exit_code": 1,
+      "verified": false,
+      "outcome": "expected_fail_closed_superseded_snapshot",
+      "failed_checks": [
+        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
+        "oracle control flags re-derived"
+      ]
+    },
+    "v4": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v4.py",
+      "sha256": "92460b61d7de6d9b28d79ec1872865532af5cfc64bc58408e472dd01ecfb6c34",
+      "exit_code": 1,
+      "verified": false,
+      "outcome": "expected_fail_closed_superseded_snapshot",
+      "failed_checks": [
+        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
+        "oracle control flags re-derived"
+      ]
+    },
+    "v5": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v5.py",
+      "sha256": "6dea78c5f2e6a4dbe7bd07deec0a56785019bee722a97f3720f5ae7a8a3333c4",
+      "exit_code": 1,
+      "verified": false,
+      "outcome": "expected_fail_closed_superseded_snapshot",
+      "failed_checks": [
+        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
+        "dependency matrix re-derived and compared item-by-item",
+        "manifest bindings match disk",
+        "manifest exact reconstruction matches disk (structure, keys, values; no missing/extra entries)",
+        "oracle control flags re-derived"
+      ]
+    },
+    "v6": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v6.py",
+      "sha256": "88a6f890a3af73b43bca571752bc577ff698380c147056d4300c103ada8102e8",
+      "exit_code": 1,
+      "verified": false,
+      "outcome": "expected_fail_closed_superseded_snapshot",
+      "failed_checks": [
+        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
+        "dependency matrix re-derived and compared item-by-item",
+        "manifest bindings match disk",
+        "manifest exact reconstruction matches disk (structure, keys, values; no missing/extra entries)",
+        "oracle control flags re-derived",
+        "superseded historical reports + full v1-v5 capsule present, byte-unchanged and declared"
+      ]
+    },
+    "v7": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v7.py",
+      "sha256": "0c792395478ea8c42b7db38eeed0baa8d75575bad3092a1a10067ddd346d2a01",
+      "exit_code": 1,
+      "verified": false,
+      "outcome": "expected_fail_closed_superseded_snapshot",
+      "failed_checks": [
+        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
+        "oracle control flags re-derived"
+      ]
+    },
+    "v8": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v8.py",
+      "sha256": "562ce2de55992c2291b2f7bd066b53549460b32c7d6037df36e72739617ade2a",
+      "exit_code": 1,
+      "verified": false,
+      "outcome": "expected_fail_closed_superseded_snapshot",
+      "failed_checks": [
+        "builder byte-identical replay",
+        "historical v1-v7 lifecycle matrix"
+      ]
+    }
+  },
+  "authorization": {
+    "api_authorized": false,
+    "suggested_copyable_sentence_is_not_itself_authorization": true,
+    "suggested_copyable_sentence": "我授权在 S2.12 复杂语料上运行 direct_llm（36 次）和 sun_llm_fallback（27 次）真实 DeepSeek API，模型仅限 deepseek-v4-pro，严格使用 preflight v1 锁定的 63 个请求体（单次≤17493 字节、总计≤749805 字节），最多 63 次调用、0 次重试、单次输出≤4096 tokens、总输出≤258048 tokens、总计费输入≤63000000 tokens、总费用≤US$27.63；任一模型/返回模型、输入、source、prompt、config、payload/hash、官方价格、Gold 隔离或上限不匹配时必须在调用前硬停止，不得调用 Oracle。",
+    "recommended_hard_limits": {
+      "max_calls": 63,
+      "max_request_body_utf8_bytes_per_call": 17493,
+      "max_request_body_utf8_bytes_total": 749805,
+      "max_billed_input_tokens_total": 63000000,
+      "max_output_tokens_per_call": 4096,
+      "max_output_tokens_total": 258048,
+      "max_cost_usd": 27.63,
+      "retry_count": 0
+    }
+  },
+  "safety": {
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "gold_rule_records_created": false,
+    "oracle_started": false,
+    "historical_transition_assets_modified": false,
+    "project_audit_md_modified": false
+  }
+}

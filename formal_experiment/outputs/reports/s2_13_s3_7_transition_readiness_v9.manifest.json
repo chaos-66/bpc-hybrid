@@ -1,0 +1,69 @@
+{
+  "schema_version": "s2_13_s3_7_transition_readiness_manifest@9.0.0",
+  "manifest_id": "s2_13_s3_7_transition_readiness_v9.manifest",
+  "artifacts": {
+    "report_json": {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v9.json",
+      "sha256": "e665c408077b890ccafdcec08a88f93b469fce9bcac24f7c4eeaa89791ffb04c",
+      "byte_size": 22354
+    },
+    "report_md": {
+      "path": "outputs/reports/s2_13_s3_7_transition_readiness_v9.md",
+      "sha256": "f36a66f69e310281bfc55a5c29cfb9a975ae0677cbf3f031b8ff917208f0abbe",
+      "byte_size": 1192
+    }
+  },
+  "bindings": {
+    "configs/schemas/s2_13_s3_7_transition_readiness_v8.schema.json": "df75b975f17af000f5f5974983196edda1835df1cd5b9a91a8eccfa8144d3375",
+    "scripts/build_s2_13_s3_7_transition_readiness_v8.py": "3508c8331d05a4cc3c1336b74b6b6d46712084858a12c7f4e287cc91258d4c7f",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v8.py": "562ce2de55992c2291b2f7bd066b53549460b32c7d6037df36e72739617ade2a",
+    "tests/test_s2_13_s3_7_transition_readiness_v8.py": "112e2ad76b26feebf86a6837196c57f0e125d36b3dc14a5165d470914112e2ff",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v8.json": "365880c25403d4fe766bcf9d8a94851c6a91d3f993c2f8e97107d6173c018e22",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v8.md": "20f5201999477b70948b23e2851c186f85727790e684fa7204acb842ccc0bb2c",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v8.manifest.json": "81ac679c81250d93bb962bc50befbd1402cf4fb55081ba51e84b705212ddcd67",
+    "outputs/reports/s2_13_s3_7_transition_readiness_v8_export_index.json": "c2dcdc7c36d398b0c5d4d7b026543120970c09550b82695849f2c58371b74c90",
+    "data/gold/stage3/gdpr7_gold_rule_records_v1.json": "7cf896abdb6e420e46efd297a8e183bcdc4c15834aa9567eb88d1af60eec627a",
+    "outputs/reports/gdpr7_gold_rule_records_v1.manifest.json": "a9e8c51d05e50c201f747d5248c022d521c557e5b31f9ba4920207931d912efd",
+    "scripts/verify_gdpr7_gold_rule_records_v1.py": "d3119c6a324ecef1a6a17b76ae24b429f978db2aaa752acedf84aee6ec19b0e0",
+    "configs/schemas/gdpr7_gold_rule_record_v1.schema.json": "f3f6ea0ceff4acd6d48b6a108b7dd70b53783131d184f570497f1a9ba0f1b185",
+    "configs/gdpr7_gold_rule_records_authorization_event_v1.json": "aa2a09961debefd3baaf2327bb3ed78c5d066aa887ea2dbba3b532b6253f8b68",
+    "data/predictions/gdpr7_human_rule_record_v1/predictions.json": "9d86e1b4360a8ef2d9acfacdda4cd3b5d7e2e35f7f3de68eeebaa0a793432500",
+    "data/development/human_review/gdpr7_human_confirmed_v1/confirmed_rule_items.json": "930357a9539a3e1b11fab9943eb3ca1978ca3596605f1264aea821960a47fc78",
+    "outputs/reports/s3_oracle_gold_rules_v1.json": "6723d48a82b46d8b924102027d834cddea50996d47ff7c77be11842b19f2ed0f",
+    "outputs/reports/s3_oracle_gold_rules_v1.manifest.json": "b5f327feb7ded79c5c091e2be6687b323c4e7a1614f639d83731163205205c07",
+    "outputs/reports/s3_downstream_paired_v1.json": "b9566fe2395c4fac84f50a508a078a96e5c58aa943a03b41860301e798f98637",
+    "outputs/reports/s2_llm_batches_offline_readiness_v1.json": "c5cfa4613e6fbf6061fe28c8bb79b44dadcf86a915544fd6803a4c33de788de3",
+    "outputs/reports/s2_12_execution_readiness_v4.json": "ce249166173b7cfbf42932e9ac76f7b45266ff2b11f917f777425b9f5e77b73f",
+    "outputs/reports/s2_12_api_preflight_v1.json": "c7d33f956464f54b9b76145a1874d9111e3e41f1a904bc3751edc8b8e3c90314",
+    "data/input/s2_12_complex_corpus_formal_input_v1.json": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "data/results/s2_12_sun_rule_only_v1/evaluation.json": "1696dbf9dcf85ef30f6056fc109c9952f0465ac21ac080314e57f7fa33799e16",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v1.py": "5ee35fa837c05dc2e6c15168dcee0a4704486212c81c2710d16435e3e668ad1a",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v2.py": "b9639016634af014e9e779ff127de49da2f26b277eef3360a202260aab7996ab",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v3.py": "d9f9094f44b2f6112b98f22e5de161da1a923f8d8cb0ab383a78388adf1445d0",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v4.py": "92460b61d7de6d9b28d79ec1872865532af5cfc64bc58408e472dd01ecfb6c34",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v5.py": "6dea78c5f2e6a4dbe7bd07deec0a56785019bee722a97f3720f5ae7a8a3333c4",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v6.py": "88a6f890a3af73b43bca571752bc577ff698380c147056d4300c103ada8102e8",
+    "scripts/verify_s2_13_s3_7_transition_readiness_v7.py": "0c792395478ea8c42b7db38eeed0baa8d75575bad3092a1a10067ddd346d2a01"
+  },
+  "implementation": {
+    "builder": {
+      "path": "scripts/build_s2_13_s3_7_transition_readiness_v9.py",
+      "sha256": "3961f01b92ef5a0d245078bdb0b232ba10b1591bbf9537266c5a08bf6c65be86",
+      "byte_size": 21686
+    },
+    "verifier": {
+      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v9.py",
+      "sha256": "8d200f6257ff6047bf1a81bdc3d541aad1a58711bfb6ce505cf86ecc6873711f",
+      "byte_size": 7997
+    },
+    "schema": {
+      "path": "configs/schemas/s2_13_s3_7_transition_readiness_v9.schema.json",
+      "sha256": "e5eca18d75839e0daf1fd96f8b84bb170b13180b9b0780379266e08e6ac3cda2",
+      "byte_size": 1359
+    }
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0
+  }
+}

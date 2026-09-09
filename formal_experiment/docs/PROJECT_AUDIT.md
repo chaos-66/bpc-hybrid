@@ -11,6 +11,42 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 ## 1. 当前结论
 
+**2026-09-09 收尾五步已落地（零 API，真实调用仍为 0）**：
+
+1. **正式 Gold Rule Records 已发布**：用户确认的 74 句 / 92 条规范经机械无损转换
+   为 `data/gold/stage3/gdpr7_gold_rule_records_v1.json`（独立 verifier 32 项通过，
+   15 项聚焦测试；多情态句不再取首项压平）；配套 Stage-3 胶囊
+   `data/predictions/gdpr7_human_rule_record_v1/`。复核命令：
+   `python formal_experiment/scripts/verify_gdpr7_gold_rule_records_v1.py`。
+2. **人工规则已接入检查器**：`gdpr_capsule_converter@1.3.0` 允许第三个 schema；
+   `run_gdpr_3type_linkage_v1.py --arm human_rules` 与四类面板 `human_rules` 来源
+   可用（92 条规范全部进入检查器）。
+3. **Oracle 隔离运行已跑**（`outputs/reports/s3_oracle_gold_rules_v1.{json,md}`）：
+   33 条人工 Gold 上 oracle macro 0.3333（missing_action P/R/F1=1.000）、
+   obligation-only 0.3175、dev 参考臂 0.3889；incorrect_actor 11/11 与
+   out_of_order 11/11 不可观察（根因：完整法律短语动作映射 < gamma 0.8；确认条目
+   无 order_relations），不可观察按 FN 计入分母，不置零。
+4. **真实 LLM 批次离线准备完成、真实调用仍 0**：
+   `outputs/reports/s2_llm_batches_offline_readiness_v1.json` 记录 63 + 74 声明调用数、
+   授权/合同/预检资产齐备、GDPR 74 次假传输 74/74 且零计费、三类拒绝路径全部
+   fail-closed。**唯一阻塞 = 进程环境凭据缺失**（预检 5 项 FAIL，含 API key absent）。
+5. **下游配对比较已跑**（`outputs/reports/s3_downstream_paired_v1.{json,md}`）：
+   同一冻结 Stage 3 下 rules_only 与 human_rules 均为 macro 0.3333 / exact 0.3333 /
+   detected 11（Δ=0）；direct_llm 臂 blocked（胶囊不存在，不插值）。四类合成面板对
+   人工规则臂有偏差（绑定 dev 抽取 + first-valid-span 投影），已在报告显式披露。
+
+**诚实边界**：本轮**没有**证明“人工规则优于非 LLM 基线”，也**没有**证明方法优于
+Sun；正式 S3.7 Oracle 主表、S2.13 冻结、S3.4-S3.6 正式 promotion 均未完成。
+
+**过渡核账已刷新为 v9**（`outputs/reports/s2_13_s3_7_transition_readiness_v9.json`，
+verifier 全过）：v8 的 Gold-Rule-Record 缺失判断已被“已发布 + 独立 verifier 通过 +
+完整绑定”取代；v8 及更早 capsule 逐字节保留。**并修复一处行尾可移植性问题**：
+`data/predictions/b0_formal_arm_v1/predictions.json` 在 `core.autocrlf=true` 下被检出为
+CRLF，使该正式 arm 的 raw SHA 与 manifest 不符并导致 `final_experiment_ready=false`；
+按既有窄口径在 `.gitattributes` 加单文件 `text eol=lf` 钉并重新检出后恢复
+`fa94991d…`，`verify_b0_formal_arm_v1.py` VERIFIED、`integrity_pass=true`。
+未改动任何实验数据、Gold、指标或方法。
+
 **2026-09-09 GDPR 人工确认已导入**：用户收到两份预填稿后明确回复“可以我已经进行人工确认完毕”。
 原稿与 `a1a93e7` 所交付字节一致，按当前内容确认；事件
 `data/development/human_review/gdpr7_prefill_confirmation_20260909.json` 绑定两稿、机器底稿与输入哈希。
@@ -19,7 +55,8 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 案例4项意见按稿确认；整图合规、原Gold检查范围、延误计时器与主通知期限的疑点按原意保留，
 不自动变成 none/timeout 标签。旧稿与旧v1/v2裁决面不覆盖，其0/74是旧入口的历史状态。
 当前复核命令：`python formal_experiment/scripts/import_gdpr7_confirmed_prefill_v1.py --check`。
-该目录为已确认人工输入，尚未发布正式 Gold，Oracle/真实API未运行；既有Gold/结果不改。
+该目录为已确认人工输入；正式 Gold Rule Records 已由其派生发布（见上），
+Oracle 隔离运行已跑，正式 Oracle 主表与真实API仍待门禁/凭据；既有Gold/结果不改。
 
 **历史：2026-09-08 GDPR 人工候选预填（已由上方2026-09-09确认导入推进）**：
 9 条款/74 句均已逐句准备，共 92 个建议条目、320 处原文字符锚点；入口为

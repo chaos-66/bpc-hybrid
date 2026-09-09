@@ -74,10 +74,13 @@ INPUT_PACK = ROOT / "data/input/gdpr7_stage2_input_v1.json"
 ARM_PATHS = {
     "rules_only": ROOT / "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
     "direct_llm": ROOT / "data/predictions/gdpr7_direct_llm_v1/predictions.json",
+    "human_rules": (ROOT / "data/predictions/gdpr7_human_rule_record_v1"
+                    / "predictions.json"),
 }
 ARM_PREDICTION_SCHEMAS = {
     "rules_only": "gdpr7_sun_rule_only_predictions@1.0.0",
     "direct_llm": "gdpr7_direct_llm_predictions@1.0.0",
+    "human_rules": "gdpr7_human_rule_record_predictions@1.0.0",
 }
 METHOD_ORDER = ("winter", "sun", "bm25", "tfidf_svd")
 REFERENCE_RUN_DIRS = {
@@ -87,6 +90,9 @@ REFERENCE_RUN_DIRS = {
 ARM_LABELS = {
     "rules_only": "Rules-Only (locked B0 v10a, English pass-through)",
     "direct_llm": "Direct-LLM (locked D1 recipe, English sentences)",
+    "human_rules": ("human-adjudicated Gold Rule Records (Oracle standard "
+                    "answer; the projection keeps the first confirmed item per "
+                    "sentence)"),
 }
 RUN_SCHEMA = "gdpr_s2_s3_linkage_run@1.0.0"
 GAMMA_EXT = 0.5
@@ -515,6 +521,13 @@ def render_markdown(agg: Mapping[str, Any], arm: str) -> str:
         lines.append("- Direct-LLM rows come from the promoted formal arm capsule "
                      "data/predictions/gdpr7_direct_llm_v1 (real authorized "
                      "executor output; coordinate-only, containment-scanned).")
+    elif arm == "human_rules":
+        lines.append("- human_rules rows come from the formal GDPR-7 Gold Rule "
+                     "Records capsule (user-confirmed 74 sentences / 92 items). "
+                     "This panel uses the first-valid-span projection, so for a "
+                     "multi-item sentence only the first confirmed item reaches "
+                     "the backend; the multi-clause Oracle surface is reported "
+                     "separately in outputs/reports/s3_oracle_gold_rules_v1.json.")
     lines.append("- Zero LLM/API/network; frozen BPMN, thresholds and panel "
                  "bytes unchanged.")
     return "\n".join(lines) + "\n"

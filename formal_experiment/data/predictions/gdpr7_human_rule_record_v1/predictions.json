@@ -1,0 +1,5224 @@
+{
+  "schema_version": "gdpr7_human_rule_record_predictions@1.0.0",
+  "dataset_id": "gdpr7_human_rule_record_capsule_v1",
+  "method_id": "human_adjudicated_gdpr7_rules",
+  "record_count": 74,
+  "gold_read_by_runner": false,
+  "raw_text_committed": false,
+  "source_rule_record_schema": "gdpr7_gold_rule_record@1.0.0",
+  "unresolved_relation_endpoints": [],
+  "records": [
+    {
+      "sample_id": "gdpr_article15_s001",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s001",
+        "source_id": "gdpr_article15_s001",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s001.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 277
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s001.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 157,
+                "id": "gdpr_article15_s001.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s001.c1.actor.1",
+                "action_id": "gdpr_article15_s001.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article15_s001.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 277
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s001.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 188,
+                "end": 276,
+                "id": "gdpr_article15_s001.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 164,
+                "end": 186,
+                "id": "gdpr_article15_s001.c2.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s001.c2.actor.1",
+                "action_id": "gdpr_article15_s001.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s002",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s002",
+        "source_id": "gdpr_article15_s002",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s002.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 262
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s002.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 157,
+                "id": "gdpr_article15_s002.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s002.c1.actor.1",
+                "action_id": "gdpr_article15_s002.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article15_s002.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 262
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s002.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 188,
+                "end": 261,
+                "id": "gdpr_article15_s002.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 164,
+                "end": 186,
+                "id": "gdpr_article15_s002.c2.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s002.c2.actor.1",
+                "action_id": "gdpr_article15_s002.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s003",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s003",
+        "source_id": "gdpr_article15_s003",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s003.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 395
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s003.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 157,
+                "id": "gdpr_article15_s003.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s003.c1.actor.1",
+                "action_id": "gdpr_article15_s003.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article15_s003.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 395
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s003.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 188,
+                "end": 394,
+                "id": "gdpr_article15_s003.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 164,
+                "end": 186,
+                "id": "gdpr_article15_s003.c2.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s003.c2.actor.1",
+                "action_id": "gdpr_article15_s003.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s004",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s004",
+        "source_id": "gdpr_article15_s004",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s004.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 365
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s004.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 157,
+                "id": "gdpr_article15_s004.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s004.c1.actor.1",
+                "action_id": "gdpr_article15_s004.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article15_s004.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 365
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s004.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 188,
+                "end": 364,
+                "id": "gdpr_article15_s004.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 164,
+                "end": 186,
+                "id": "gdpr_article15_s004.c2.condition.1"
+              },
+              {
+                "start": 220,
+                "end": 234,
+                "id": "gdpr_article15_s004.c2.condition.2"
+              },
+              {
+                "start": 305,
+                "end": 320,
+                "id": "gdpr_article15_s004.c2.condition.3"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s004.c2.actor.1",
+                "action_id": "gdpr_article15_s004.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s005",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s005",
+        "source_id": "gdpr_article15_s005",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s005.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 426
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s005.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 157,
+                "id": "gdpr_article15_s005.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s005.c1.actor.1",
+                "action_id": "gdpr_article15_s005.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article15_s005.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 426
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s005.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 188,
+                "end": 425,
+                "id": "gdpr_article15_s005.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 164,
+                "end": 186,
+                "id": "gdpr_article15_s005.c2.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s005.c2.actor.1",
+                "action_id": "gdpr_article15_s005.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s006",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s006",
+        "source_id": "gdpr_article15_s006",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s006.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 280
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s006.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 157,
+                "id": "gdpr_article15_s006.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s006.c1.actor.1",
+                "action_id": "gdpr_article15_s006.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article15_s006.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 280
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s006.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 188,
+                "end": 279,
+                "id": "gdpr_article15_s006.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 164,
+                "end": 186,
+                "id": "gdpr_article15_s006.c2.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s006.c2.actor.1",
+                "action_id": "gdpr_article15_s006.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s007",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s007",
+        "source_id": "gdpr_article15_s007",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s007.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 330
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s007.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 157,
+                "id": "gdpr_article15_s007.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s007.c1.actor.1",
+                "action_id": "gdpr_article15_s007.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article15_s007.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 330
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s007.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 188,
+                "end": 329,
+                "id": "gdpr_article15_s007.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 164,
+                "end": 186,
+                "id": "gdpr_article15_s007.c2.condition.1"
+              },
+              {
+                "start": 220,
+                "end": 283,
+                "id": "gdpr_article15_s007.c2.condition.2"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s007.c2.actor.1",
+                "action_id": "gdpr_article15_s007.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s008",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s008",
+        "source_id": "gdpr_article15_s008",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s008.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 500
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s008.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 157,
+                "id": "gdpr_article15_s008.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s008.c1.actor.1",
+                "action_id": "gdpr_article15_s008.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article15_s008.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 500
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article15_s008.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 188,
+                "end": 499,
+                "id": "gdpr_article15_s008.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 164,
+                "end": 186,
+                "id": "gdpr_article15_s008.c2.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 327,
+                "end": 350,
+                "id": "gdpr_article15_s008.c2.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s008.c2.actor.1",
+                "action_id": "gdpr_article15_s008.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s009",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s009",
+        "source_id": "gdpr_article15_s009",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s009.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 223
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 109,
+                  "end": 129
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 92,
+                "end": 108,
+                "id": "gdpr_article15_s009.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 133,
+                "end": 222,
+                "id": "gdpr_article15_s009.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 90,
+                "id": "gdpr_article15_s009.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s009.c1.actor.1",
+                "action_id": "gdpr_article15_s009.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s010",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s010",
+        "source_id": "gdpr_article15_s010",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s010.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 79
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 15,
+                  "end": 20
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 14,
+                "id": "gdpr_article15_s010.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 21,
+                "end": 78,
+                "id": "gdpr_article15_s010.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s010.c1.actor.1",
+                "action_id": "gdpr_article15_s010.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s011",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s011",
+        "source_id": "gdpr_article15_s011",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s011.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 127
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 69,
+                  "end": 72
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 54,
+                "end": 68,
+                "id": "gdpr_article15_s011.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 73,
+                "end": 96,
+                "id": "gdpr_article15_s011.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 52,
+                "id": "gdpr_article15_s011.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 82,
+                "end": 96,
+                "id": "gdpr_article15_s011.c1.constraint.1"
+              },
+              {
+                "start": 97,
+                "end": 126,
+                "id": "gdpr_article15_s011.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article15_s011.c1.actor.1",
+                "action_id": "gdpr_article15_s011.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s012",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s012",
+        "source_id": "gdpr_article15_s012",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s012.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 183
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 130,
+                  "end": 135
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 136,
+                "end": 147,
+                "id": "gdpr_article15_s012.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 60,
+                "id": "gdpr_article15_s012.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 148,
+                "end": 182,
+                "id": "gdpr_article15_s012.c1.constraint.1"
+              }
+            ],
+            "exceptions": [
+              {
+                "start": 66,
+                "end": 112,
+                "id": "gdpr_article15_s012.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article15_s013",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article15_s013",
+        "source_id": "gdpr_article15_s013",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article15_s013.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 115
+            },
+            "modality": {
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "start": 54,
+                  "end": 63
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 64,
+                "end": 114,
+                "id": "gdpr_article15_s013.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article16_s001",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article16_s001",
+        "source_id": "gdpr_article16_s001",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article16_s001.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 156
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article16_s001.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 67,
+                "id": "gdpr_article16_s001.c1.action.1"
+              },
+              {
+                "start": 88,
+                "end": 155,
+                "id": "gdpr_article16_s001.c1.action.2"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 68,
+                "end": 87,
+                "id": "gdpr_article16_s001.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article16_s001.c1.actor.1",
+                "action_id": "gdpr_article16_s001.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article16_s002",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article16_s002",
+        "source_id": "gdpr_article16_s002",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article16_s002.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 192
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 69,
+                  "end": 89
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 52,
+                "end": 68,
+                "id": "gdpr_article16_s002.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 93,
+                "end": 132,
+                "id": "gdpr_article16_s002.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 0,
+                "end": 50,
+                "id": "gdpr_article16_s002.c1.constraint.1"
+              },
+              {
+                "start": 134,
+                "end": 191,
+                "id": "gdpr_article16_s002.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article16_s002.c1.actor.1",
+                "action_id": "gdpr_article16_s002.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s001",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s001",
+        "source_id": "gdpr_article17_s001",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s001.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 270
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article17_s001.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 118,
+                "id": "gdpr_article17_s001.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 227,
+                "end": 269,
+                "id": "gdpr_article17_s001.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 119,
+                "end": 138,
+                "id": "gdpr_article17_s001.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article17_s001.c1.actor.1",
+                "action_id": "gdpr_article17_s001.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article17_s001.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 270
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 158,
+                  "end": 183
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 143,
+                "end": 157,
+                "id": "gdpr_article17_s001.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 187,
+                "end": 206,
+                "id": "gdpr_article17_s001.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 227,
+                "end": 269,
+                "id": "gdpr_article17_s001.c2.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 207,
+                "end": 226,
+                "id": "gdpr_article17_s001.c2.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article17_s001.c2.actor.1",
+                "action_id": "gdpr_article17_s001.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s002",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s002",
+        "source_id": "gdpr_article17_s002",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s002.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 123
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": []
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 122,
+                "id": "gdpr_article17_s002.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s003",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s003",
+        "source_id": "gdpr_article17_s003",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s003.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 198
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": []
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 197,
+                "id": "gdpr_article17_s003.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s004",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s004",
+        "source_id": "gdpr_article17_s004",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s004.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 208
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": []
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 207,
+                "id": "gdpr_article17_s004.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s005",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s005",
+        "source_id": "gdpr_article17_s005",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s005.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 49
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": []
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 48,
+                "id": "gdpr_article17_s005.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s006",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s006",
+        "source_id": "gdpr_article17_s006",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s006.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 139
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": []
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 138,
+                "id": "gdpr_article17_s006.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s007",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s007",
+        "source_id": "gdpr_article17_s007",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s007.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 123
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": []
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 122,
+                "id": "gdpr_article17_s007.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s008",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s008",
+        "source_id": "gdpr_article17_s008",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s008.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 461
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 209,
+                  "end": 214
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 122,
+                "end": 136,
+                "id": "gdpr_article17_s008.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 215,
+                "end": 236,
+                "id": "gdpr_article17_s008.c1.action.1"
+              },
+              {
+                "start": 271,
+                "end": 460,
+                "id": "gdpr_article17_s008.c1.action.2"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 120,
+                "id": "gdpr_article17_s008.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 138,
+                "end": 207,
+                "id": "gdpr_article17_s008.c1.constraint.1"
+              },
+              {
+                "start": 220,
+                "end": 236,
+                "id": "gdpr_article17_s008.c1.constraint.2"
+              },
+              {
+                "start": 238,
+                "end": 266,
+                "id": "gdpr_article17_s008.c1.constraint.3"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article17_s008.c1.actor.1",
+                "action_id": "gdpr_article17_s008.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s009",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s009",
+        "source_id": "gdpr_article17_s009",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s009.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 144
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 19,
+                  "end": 34
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 35,
+                "end": 143,
+                "id": "gdpr_article17_s009.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s010",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s010",
+        "source_id": "gdpr_article17_s010",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s010.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 341
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 19,
+                  "end": 34
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 35,
+                "end": 340,
+                "id": "gdpr_article17_s010.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s011",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s011",
+        "source_id": "gdpr_article17_s011",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s011.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 216
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 19,
+                  "end": 34
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 35,
+                "end": 215,
+                "id": "gdpr_article17_s011.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s012",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s012",
+        "source_id": "gdpr_article17_s012",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s012.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 379
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 19,
+                  "end": 34
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 35,
+                "end": 378,
+                "id": "gdpr_article17_s012.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article17_s013",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article17_s013",
+        "source_id": "gdpr_article17_s013",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article17_s013.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 137
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 19,
+                  "end": 34
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 35,
+                "end": 136,
+                "id": "gdpr_article17_s013.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article20_s001",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article20_s001",
+        "source_id": "gdpr_article20_s001",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article20_s001.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 561
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article20_s001.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 88,
+                "id": "gdpr_article20_s001.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 90,
+                "end": 134,
+                "id": "gdpr_article20_s001.c1.condition.1"
+              },
+              {
+                "start": 344,
+                "end": 506,
+                "id": "gdpr_article20_s001.c1.condition.2"
+              },
+              {
+                "start": 512,
+                "end": 560,
+                "id": "gdpr_article20_s001.c1.condition.3"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 136,
+                "end": 194,
+                "id": "gdpr_article20_s001.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article20_s001.c1.actor.1",
+                "action_id": "gdpr_article20_s001.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article20_s001.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 561
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 199,
+                  "end": 213
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article20_s001.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 217,
+                "end": 258,
+                "id": "gdpr_article20_s001.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 344,
+                "end": 506,
+                "id": "gdpr_article20_s001.c2.condition.1"
+              },
+              {
+                "start": 512,
+                "end": 560,
+                "id": "gdpr_article20_s001.c2.condition.2"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 259,
+                "end": 342,
+                "id": "gdpr_article20_s001.c2.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article20_s001.c2.actor.1",
+                "action_id": "gdpr_article20_s001.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article20_s002",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article20_s002",
+        "source_id": "gdpr_article20_s002",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article20_s002.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 220
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 93,
+                  "end": 113
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 76,
+                "end": 92,
+                "id": "gdpr_article20_s002.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 117,
+                "end": 191,
+                "id": "gdpr_article20_s002.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 74,
+                "id": "gdpr_article20_s002.c1.condition.1"
+              },
+              {
+                "start": 193,
+                "end": 219,
+                "id": "gdpr_article20_s002.c1.condition.2"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article20_s002.c1.actor.1",
+                "action_id": "gdpr_article20_s002.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article20_s003",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article20_s003",
+        "source_id": "gdpr_article20_s003",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article20_s003.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 110
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 69,
+                  "end": 74
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 75,
+                "end": 109,
+                "id": "gdpr_article20_s003.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article20_s004",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article20_s004",
+        "source_id": "gdpr_article20_s004",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article20_s004.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 182
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 11,
+                  "end": 26
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 30,
+                "end": 181,
+                "id": "gdpr_article20_s004.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article20_s005",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article20_s005",
+        "source_id": "gdpr_article20_s005",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article20_s005.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 98
+            },
+            "modality": {
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "start": 37,
+                  "end": 46
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 47,
+                "end": 97,
+                "id": "gdpr_article20_s005.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article22_s001",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article22_s001",
+        "source_id": "gdpr_article22_s001",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article22_s001.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 226
+            },
+            "modality": {
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 44
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 45,
+                "end": 106,
+                "id": "gdpr_article22_s001.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 129,
+                "end": 225,
+                "id": "gdpr_article22_s001.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 70,
+                "end": 127,
+                "id": "gdpr_article22_s001.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article22_s002",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article22_s002",
+        "source_id": "gdpr_article22_s002",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article22_s002.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 153
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 12,
+                  "end": 27
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 28,
+                "end": 152,
+                "id": "gdpr_article22_s002.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article22_s003",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article22_s003",
+        "source_id": "gdpr_article22_s003",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article22_s003.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 242
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 12,
+                  "end": 27
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 28,
+                "end": 241,
+                "id": "gdpr_article22_s003.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article22_s004",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article22_s004",
+        "source_id": "gdpr_article22_s004",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article22_s004.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 95
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 15,
+                  "end": 30
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 31,
+                "end": 94,
+                "id": "gdpr_article22_s004.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article22_s005",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article22_s005",
+        "source_id": "gdpr_article22_s005",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article22_s005.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 338
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 83,
+                  "end": 88
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 63,
+                "end": 82,
+                "id": "gdpr_article22_s005.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 89,
+                "end": 193,
+                "id": "gdpr_article22_s005.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 61,
+                "id": "gdpr_article22_s005.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 195,
+                "end": 337,
+                "id": "gdpr_article22_s005.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article22_s005.c1.actor.1",
+                "action_id": "gdpr_article22_s005.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article22_s006",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article22_s006",
+        "source_id": "gdpr_article22_s006",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article22_s006.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 284
+            },
+            "modality": {
+              "label": "prohibition",
+              "evidence": [
+                {
+                  "start": 37,
+                  "end": 46
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 47,
+                "end": 122,
+                "id": "gdpr_article22_s006.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 36,
+                "id": "gdpr_article22_s006.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 124,
+                "end": 283,
+                "id": "gdpr_article22_s006.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article33_s001",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article33_s001",
+        "source_id": "gdpr_article33_s001",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article33_s001.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 370
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 54,
+                  "end": 59
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 39,
+                "end": 53,
+                "id": "gdpr_article33_s001.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 158,
+                "end": 258,
+                "id": "gdpr_article33_s001.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 37,
+                "id": "gdpr_article33_s001.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 60,
+                "end": 79,
+                "id": "gdpr_article33_s001.c1.constraint.1"
+              },
+              {
+                "start": 85,
+                "end": 156,
+                "id": "gdpr_article33_s001.c1.constraint.2"
+              }
+            ],
+            "exceptions": [
+              {
+                "start": 260,
+                "end": 369,
+                "id": "gdpr_article33_s001.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article33_s001.c1.actor.1",
+                "action_id": "gdpr_article33_s001.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article33_s002",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article33_s002",
+        "source_id": "gdpr_article33_s002",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article33_s002.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 130
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 84,
+                  "end": 89
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 90,
+                "end": 129,
+                "id": "gdpr_article33_s002.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 79,
+                "id": "gdpr_article33_s002.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article33_s003",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article33_s003",
+        "source_id": "gdpr_article33_s003",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article33_s003.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 109
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 14,
+                  "end": 19
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 13,
+                "id": "gdpr_article33_s003.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 20,
+                "end": 41,
+                "id": "gdpr_article33_s003.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 62,
+                "end": 108,
+                "id": "gdpr_article33_s003.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 42,
+                "end": 61,
+                "id": "gdpr_article33_s003.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article33_s003.c1.actor.1",
+                "action_id": "gdpr_article33_s003.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article33_s004",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article33_s004",
+        "source_id": "gdpr_article33_s004",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article33_s004.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 275
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 44,
+                  "end": 49
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 59,
+                "end": 274,
+                "id": "gdpr_article33_s004.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 50,
+                "end": 58,
+                "id": "gdpr_article33_s004.c1.constraint.1"
+              },
+              {
+                "start": 117,
+                "end": 131,
+                "id": "gdpr_article33_s004.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article33_s005",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article33_s005",
+        "source_id": "gdpr_article33_s005",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article33_s005.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 193
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 44,
+                  "end": 49
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 59,
+                "end": 192,
+                "id": "gdpr_article33_s005.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 50,
+                "end": 58,
+                "id": "gdpr_article33_s005.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article33_s006",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article33_s006",
+        "source_id": "gdpr_article33_s006",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article33_s006.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 120
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 44,
+                  "end": 49
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 59,
+                "end": 119,
+                "id": "gdpr_article33_s006.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 50,
+                "end": 58,
+                "id": "gdpr_article33_s006.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article33_s007",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article33_s007",
+        "source_id": "gdpr_article33_s007",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article33_s007.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 246
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 44,
+                  "end": 49
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 59,
+                "end": 245,
+                "id": "gdpr_article33_s007.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 50,
+                "end": 58,
+                "id": "gdpr_article33_s007.c1.constraint.1"
+              },
+              {
+                "start": 177,
+                "end": 194,
+                "id": "gdpr_article33_s007.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article33_s008",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article33_s008",
+        "source_id": "gdpr_article33_s008",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article33_s008.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 159
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 105,
+                  "end": 108
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 109,
+                "end": 120,
+                "id": "gdpr_article33_s008.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 87,
+                "id": "gdpr_article33_s008.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 121,
+                "end": 130,
+                "id": "gdpr_article33_s008.c1.constraint.1"
+              },
+              {
+                "start": 131,
+                "end": 158,
+                "id": "gdpr_article33_s008.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article33_s009",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article33_s009",
+        "source_id": "gdpr_article33_s009",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article33_s009.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 159
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 15,
+                  "end": 20
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 14,
+                "id": "gdpr_article33_s009.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 21,
+                "end": 56,
+                "id": "gdpr_article33_s009.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 58,
+                "end": 158,
+                "id": "gdpr_article33_s009.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article33_s009.c1.actor.1",
+                "action_id": "gdpr_article33_s009.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article33_s010",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article33_s010",
+        "source_id": "gdpr_article33_s010",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article33_s010.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 97
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 19,
+                  "end": 24
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 25,
+                "end": 96,
+                "id": "gdpr_article33_s010.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article34_s001",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article34_s001",
+        "source_id": "gdpr_article34_s001",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article34_s001.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 210
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 127,
+                  "end": 132
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 112,
+                "end": 126,
+                "id": "gdpr_article34_s001.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 133,
+                "end": 189,
+                "id": "gdpr_article34_s001.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 110,
+                "id": "gdpr_article34_s001.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 190,
+                "end": 209,
+                "id": "gdpr_article34_s001.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article34_s001.c1.actor.1",
+                "action_id": "gdpr_article34_s001.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article34_s002",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article34_s002",
+        "source_id": "gdpr_article34_s002",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article34_s002.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 269
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 81,
+                  "end": 86
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 87,
+                "end": 95,
+                "id": "gdpr_article34_s002.c1.action.1"
+              },
+              {
+                "start": 124,
+                "end": 162,
+                "id": "gdpr_article34_s002.c1.action.2"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 96,
+                "end": 123,
+                "id": "gdpr_article34_s002.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article34_s002.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 269
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 81,
+                  "end": 86
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 167,
+                "end": 268,
+                "id": "gdpr_article34_s002.c2.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 175,
+                "end": 183,
+                "id": "gdpr_article34_s002.c2.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article34_s003",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article34_s003",
+        "source_id": "gdpr_article34_s003",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article34_s003.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 408
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 65,
+                  "end": 86
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 87,
+                "end": 407,
+                "id": "gdpr_article34_s003.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article34_s004",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article34_s004",
+        "source_id": "gdpr_article34_s004",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article34_s004.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 273
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 65,
+                  "end": 86
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 87,
+                "end": 272,
+                "id": "gdpr_article34_s004.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article34_s005",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article34_s005",
+        "source_id": "gdpr_article34_s005",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article34_s005.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 131
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 65,
+                  "end": 86
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 87,
+                "end": 130,
+                "id": "gdpr_article34_s005.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article34_s006",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article34_s006",
+        "source_id": "gdpr_article34_s006",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article34_s006.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 151
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 22,
+                  "end": 27
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 36,
+                "end": 80,
+                "id": "gdpr_article34_s006.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 14,
+                "id": "gdpr_article34_s006.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 28,
+                "end": 35,
+                "id": "gdpr_article34_s006.c1.constraint.1"
+              },
+              {
+                "start": 81,
+                "end": 150,
+                "id": "gdpr_article34_s006.c1.constraint.2"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article34_s007",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article34_s007",
+        "source_id": "gdpr_article34_s007",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article34_s007.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 307
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 207,
+                  "end": 210
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 93,
+                "end": 118,
+                "id": "gdpr_article34_s007.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 211,
+                "end": 230,
+                "id": "gdpr_article34_s007.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 91,
+                "id": "gdpr_article34_s007.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 120,
+                "end": 205,
+                "id": "gdpr_article34_s007.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article34_s007.c1.actor.1",
+                "action_id": "gdpr_article34_s007.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article34_s007.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 307
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 234,
+                  "end": 237
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 93,
+                "end": 118,
+                "id": "gdpr_article34_s007.c2.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 238,
+                "end": 306,
+                "id": "gdpr_article34_s007.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 91,
+                "id": "gdpr_article34_s007.c2.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 120,
+                "end": 205,
+                "id": "gdpr_article34_s007.c2.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article34_s007.c2.actor.1",
+                "action_id": "gdpr_article34_s007.c2.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article6_s001",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article6_s001",
+        "source_id": "gdpr_article6_s001",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article6_s001.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 173
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 11,
+                  "end": 34
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 0,
+                "end": 10,
+                "id": "gdpr_article6_s001.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 27,
+                "end": 172,
+                "id": "gdpr_article6_s001.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article6_s002",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article6_s002",
+        "source_id": "gdpr_article6_s002",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article6_s002.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 1170
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 11,
+                  "end": 34
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 0,
+                "end": 10,
+                "id": "gdpr_article6_s002.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 27,
+                "end": 245,
+                "id": "gdpr_article6_s002.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article6_s002.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 1170
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 258,
+                  "end": 281
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 247,
+                "end": 257,
+                "id": "gdpr_article6_s002.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 274,
+                "end": 402,
+                "id": "gdpr_article6_s002.c2.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article6_s002.c3",
+            "clause_span": {
+              "start": 0,
+              "end": 1170
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 415,
+                  "end": 438
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 404,
+                "end": 414,
+                "id": "gdpr_article6_s002.c3.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 431,
+                "end": 574,
+                "id": "gdpr_article6_s002.c3.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article6_s002.c4",
+            "clause_span": {
+              "start": 0,
+              "end": 1170
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 587,
+                  "end": 610
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 576,
+                "end": 586,
+                "id": "gdpr_article6_s002.c4.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 603,
+                "end": 788,
+                "id": "gdpr_article6_s002.c4.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article6_s002.c5",
+            "clause_span": {
+              "start": 0,
+              "end": 1170
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 801,
+                  "end": 824
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 790,
+                "end": 800,
+                "id": "gdpr_article6_s002.c5.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 817,
+                "end": 962,
+                "id": "gdpr_article6_s002.c5.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 964,
+                "end": 1169,
+                "id": "gdpr_article6_s002.c5.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article6_s003",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article6_s003",
+        "source_id": "gdpr_article6_s003",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article6_s003.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 134
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 36,
+                  "end": 51
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [
+              {
+                "start": 55,
+                "end": 133,
+                "id": "gdpr_article6_s003.c1.exception.1"
+              }
+            ],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article6_s004",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article6_s004",
+        "source_id": "gdpr_article6_s004",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article6_s004.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 410
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 14,
+                  "end": 17
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 13,
+                "id": "gdpr_article6_s004.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 18,
+                "end": 26,
+                "id": "gdpr_article6_s004.c1.action.1"
+              },
+              {
+                "start": 30,
+                "end": 121,
+                "id": "gdpr_article6_s004.c1.action.2"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 122,
+                "end": 201,
+                "id": "gdpr_article6_s004.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 202,
+                "end": 409,
+                "id": "gdpr_article6_s004.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article6_s004.c1.actor.1",
+                "action_id": "gdpr_article6_s004.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article6_s005",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article6_s005",
+        "source_id": "gdpr_article6_s005",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article6_s005.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 164
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 77,
+                  "end": 82
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 83,
+                "end": 95,
+                "id": "gdpr_article6_s005.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 76,
+                "id": "gdpr_article6_s005.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 96,
+                "end": 163,
+                "id": "gdpr_article6_s005.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article6_s006",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article6_s006",
+        "source_id": "gdpr_article6_s006",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article6_s006.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 291
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 30,
+                  "end": 35
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 36,
+                "end": 49,
+                "id": "gdpr_article6_s006.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 50,
+                "end": 69,
+                "id": "gdpr_article6_s006.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article6_s006.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 291
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 141,
+                  "end": 146
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 147,
+                "end": 290,
+                "id": "gdpr_article6_s006.c2.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 74,
+                "end": 139,
+                "id": "gdpr_article6_s006.c2.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article6_s007",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article6_s007",
+        "source_id": "gdpr_article6_s007",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article6_s007.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 596
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 20
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 21,
+                "end": 101,
+                "id": "gdpr_article6_s007.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 103,
+                "end": 595,
+                "id": "gdpr_article6_s007.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article6_s008",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article6_s008",
+        "source_id": "gdpr_article6_s008",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article6_s008.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 128
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 34,
+                  "end": 39
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 40,
+                "end": 76,
+                "id": "gdpr_article6_s008.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          },
+          {
+            "clause_id": "gdpr_article6_s008.c2",
+            "clause_span": {
+              "start": 0,
+              "end": 128
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 34,
+                  "end": 39
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 81,
+                "end": 127,
+                "id": "gdpr_article6_s008.c2.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article6_s009",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article6_s009",
+        "source_id": "gdpr_article6_s009",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article6_s009.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 511
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 329,
+                  "end": 334
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 314,
+                "end": 328,
+                "id": "gdpr_article6_s009.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 481,
+                "end": 510,
+                "id": "gdpr_article6_s009.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 312,
+                "id": "gdpr_article6_s009.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 336,
+                "end": 479,
+                "id": "gdpr_article6_s009.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article6_s009.c1.actor.1",
+                "action_id": "gdpr_article6_s009.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article6_s010",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article6_s010",
+        "source_id": "gdpr_article6_s010",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article6_s010.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 682
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": []
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 0,
+                "end": 681,
+                "id": "gdpr_article6_s010.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article7_s001",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article7_s001",
+        "source_id": "gdpr_article7_s001",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article7_s001.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 160
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 53,
+                  "end": 58
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 38,
+                "end": 52,
+                "id": "gdpr_article7_s001.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 59,
+                "end": 159,
+                "id": "gdpr_article7_s001.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 36,
+                "id": "gdpr_article7_s001.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article7_s001.c1.actor.1",
+                "action_id": "gdpr_article7_s001.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article7_s002",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article7_s002",
+        "source_id": "gdpr_article7_s002",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article7_s002.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 304
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 138,
+                  "end": 143
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 144,
+                "end": 156,
+                "id": "gdpr_article7_s002.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 112,
+                "id": "gdpr_article7_s002.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 157,
+                "end": 224,
+                "id": "gdpr_article7_s002.c1.constraint.1"
+              },
+              {
+                "start": 226,
+                "end": 271,
+                "id": "gdpr_article7_s002.c1.constraint.2"
+              },
+              {
+                "start": 273,
+                "end": 303,
+                "id": "gdpr_article7_s002.c1.constraint.3"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article7_s003",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article7_s003",
+        "source_id": "gdpr_article7_s003",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article7_s003.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 105
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 84,
+                  "end": 104
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [
+              {
+                "start": 31,
+                "end": 83,
+                "id": "gdpr_article7_s003.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 84,
+                "end": 104,
+                "id": "gdpr_article7_s003.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article7_s004",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article7_s004",
+        "source_id": "gdpr_article7_s004",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article7_s004.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 81
+            },
+            "modality": {
+              "label": "permission",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 37
+                }
+              ]
+            },
+            "actors": [
+              {
+                "start": 0,
+                "end": 16,
+                "id": "gdpr_article7_s004.c1.actor.1"
+              }
+            ],
+            "actions": [
+              {
+                "start": 41,
+                "end": 68,
+                "id": "gdpr_article7_s004.c1.action.1"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 69,
+                "end": 80,
+                "id": "gdpr_article7_s004.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [
+              {
+                "actor_id": "gdpr_article7_s004.c1.actor.1",
+                "action_id": "gdpr_article7_s004.c1.action.1"
+              }
+            ],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article7_s005",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article7_s005",
+        "source_id": "gdpr_article7_s005",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article7_s005.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 111
+            },
+            "modality": {
+              "label": "definition",
+              "evidence": [
+                {
+                  "start": 26,
+                  "end": 42
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 26,
+                "end": 110,
+                "id": "gdpr_article7_s005.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article7_s006",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article7_s006",
+        "source_id": "gdpr_article7_s006",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article7_s006.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 68
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 42,
+                  "end": 47
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 48,
+                "end": 67,
+                "id": "gdpr_article7_s006.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 23,
+                "id": "gdpr_article7_s006.c1.condition.1"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article7_s007",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article7_s007",
+        "source_id": "gdpr_article7_s007",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article7_s007.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 51
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 3,
+                  "end": 8
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 23,
+                "end": 31,
+                "id": "gdpr_article7_s007.c1.action.1"
+              },
+              {
+                "start": 38,
+                "end": 50,
+                "id": "gdpr_article7_s007.c1.action.2"
+              }
+            ],
+            "conditions": [],
+            "constraints": [
+              {
+                "start": 12,
+                "end": 50,
+                "id": "gdpr_article7_s007.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    },
+    {
+      "sample_id": "gdpr_article7_s008",
+      "request_status": "ok",
+      "record": {
+        "schema_version": "1.0.0",
+        "sample_id": "gdpr_article7_s008",
+        "source_id": "gdpr_article7_s008",
+        "clauses": [
+          {
+            "clause_id": "gdpr_article7_s008.c1",
+            "clause_span": {
+              "start": 0,
+              "end": 291
+            },
+            "modality": {
+              "label": "obligation",
+              "evidence": [
+                {
+                  "start": 63,
+                  "end": 68
+                }
+              ]
+            },
+            "actors": [],
+            "actions": [
+              {
+                "start": 69,
+                "end": 290,
+                "id": "gdpr_article7_s008.c1.action.1"
+              }
+            ],
+            "conditions": [
+              {
+                "start": 0,
+                "end": 46,
+                "id": "gdpr_article7_s008.c1.condition.1"
+              }
+            ],
+            "constraints": [
+              {
+                "start": 48,
+                "end": 62,
+                "id": "gdpr_article7_s008.c1.constraint.1"
+              }
+            ],
+            "exceptions": [],
+            "actor_action_map": [],
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "human_adjudicated_gdpr7_rules",
+          "method_variant": "gdpr7_human_confirmed_rule_items_v1"
+        },
+        "validation": {
+          "schema_valid": true,
+          "cross_field_valid": true,
+          "errors": []
+        }
+      },
+      "error_category": null
+    }
+  ]
+}

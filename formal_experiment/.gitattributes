@@ -89,3 +89,15 @@ configs/s2_12_api_authorization_event_F-2.json text eol=lf
 configs/s2_12_api_authorization_event_F-3.json text eol=lf
 # Human confirmation is byte-bound to its immutable imported review bundle.
 data/development/human_review/gdpr7_prefill_confirmation_20260909.json text eol=lf
+
+# 2026-09-09 (Gold Rule Records checkpoint): narrow line-ending pin for the
+# B0 formal arm capsule predictions file.  Its raw LF bytes are bound as
+# artifacts.predictions/predictions.json.sha256 inside
+# outputs/reports/b0_formal_arm_v1.manifest.json, which the independent
+# verifier outputs/reports/verify_b0_formal_arm_v1.py checks by raw SHA-256.
+# With core.autocrlf=true (this machine) the working-tree copy was checked out
+# as CRLF, so the raw hash no longer matched and audit_project.py reported
+# methods_unexpectedly_ready / final_experiment_not_ready.  The pin is scoped
+# to the exact registered formal arm file only; no `*.json text eol=lf`, no
+# `outputs/**` or `data/**` widening, no renormalization of tracked content.
+data/predictions/b0_formal_arm_v1/predictions.json text eol=lf

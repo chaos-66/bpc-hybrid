@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-09
-**收录文件**：1695 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1730 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -90,6 +90,7 @@
 | `configs/g05_complexity_candidate_draft_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/g05_complexity_frozen_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/gdpr7_direct_llm_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/gdpr7_gold_rule_records_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/gdpr7_sun_rule_only_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/models/estg150_b0_active_registry_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -129,6 +130,7 @@
 | `configs/schemas/estg150_ai_review_model_output_openai_strict_transport_v1_1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg150_formal_inference_input_v2.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/estg_150_canonical_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/gdpr7_gold_rule_record_v1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/human_gold_review.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/process_record.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_11_formal_gold_v1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -148,6 +150,7 @@
 | `configs/schemas/s2_13_s3_7_transition_readiness_v6.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_13_s3_7_transition_readiness_v7.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_13_s3_7_transition_readiness_v8.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/s2_13_s3_7_transition_readiness_v9.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_evaluation_report.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_human_annotation.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage1_label_semantics.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -574,6 +577,7 @@
 | `data/gold/stage1/process_records/stage1_process_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/gold/stage2/estg150_formal_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/gold/stage3/gdpr7_gold_rule_records_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/gold/stage3/stage3_matching_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/gold/stage3/stage3_violation_gold_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/input/.gitkeep` | 正式区（受门禁） | 保留当前空目录 |
@@ -596,6 +600,8 @@
 | `data/predictions/b0_formal_arm_v1_replay/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/direct_llm_formal_arm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/direct_llm_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_human_rule_record_v1/manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_human_rule_record_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/gdpr7_sun_rule_only_v1/cost.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/gdpr7_sun_rule_only_v1/manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/gdpr7_sun_rule_only_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
@@ -973,6 +979,11 @@
 | `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr7_direct_llm_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr7_gold_rule_records_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr7_gold_rule_records_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/gdpr7_human_rule_record_capsule_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_3type_linkage_v1_human_rules.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_3type_linkage_v1_human_rules.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr_3type_linkage_v1_reference.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/gdpr_3type_linkage_v1_reference.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr_3type_linkage_v1_rules_only.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1090,8 +1101,14 @@
 | `outputs/reports/s2_13_s3_7_transition_readiness_v8.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_s3_7_transition_readiness_v8.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s2_13_s3_7_transition_readiness_v8_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v9.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v9.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v9.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v9_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_stage2_freeze_gap_capsule.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_stage2_freeze_gap_capsule.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s2_llm_batches_offline_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_llm_batches_offline_readiness_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s32_s33_gold_annotation_blank_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s32_s33_gold_annotation_freeze_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s34_winter_stage3_development_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1101,6 +1118,9 @@
 | `outputs/reports/s35_sun_stage3_threshold_sensitivity_v1_figB_theta_incorrect_actor.svg` | 活动 | 历史可视化或报告 |
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_7_oracle_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_downstream_paired_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_downstream_paired_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_downstream_paired_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s3_extended_unified_v1_reference.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_extended_unified_v1_reference.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s3_extended_unified_v1_rules_only.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1109,6 +1129,9 @@
 | `outputs/reports/s3_extended_violation_comparison_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s3_formula_repair_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_formula_repair_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_oracle_gold_rules_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_oracle_gold_rules_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_oracle_gold_rules_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage1_formal_evaluation_v2.capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage1_formal_evaluation_v2.export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage1_formal_evaluation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1254,6 +1277,7 @@
 | `scripts/build_gdpr7_ai_prefill_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gdpr7_direct_llm_authorization_event_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gdpr7_direct_llm_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_gdpr7_gold_rule_records_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gdpr7_review_editable_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gdpr7_review_editable_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gdpr7_review_surface_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1284,6 +1308,8 @@
 | `scripts/build_s2_13_s3_7_transition_readiness_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v8.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s2_13_s3_7_transition_readiness_v9.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s2_llm_batches_offline_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_7_oracle_readiness.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_error_injection_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -1363,8 +1389,10 @@
 | `scripts/run_s2_12_direct_llm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s2_12_sun_llm_fallback_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s2_12_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_downstream_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_formula_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_oracle_gold_rules_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_synthetic_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_formal_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
@@ -1405,6 +1433,7 @@
 | `scripts/validate_legacy_gold_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_d1_few_shot_fixtures.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_formal_benchmark_release_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_gdpr7_gold_rule_records_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_gdpr7_review_freeze_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s1_5_freeze_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s1_7_freezer_authorization.py` | 活动 | Python 实现、脚本或测试 |
@@ -1438,6 +1467,7 @@
 | `scripts/verify_s2_13_s3_7_transition_readiness_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v8.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_s2_13_s3_7_transition_readiness_v9.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_solcand_prompt_examples_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_annotation_protocol_s15.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_evaluator_s16.py` | 活动 | Python 实现、脚本或测试 |
@@ -1496,6 +1526,7 @@
 | `src/bpc_hybrid/formal_stage2_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/g04_coarse_view.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/g05_complexity_candidate.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/gdpr7_gold_rule_records.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/gdpr7_review_rules_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/gdpr_s2_s3_projection.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/h1_context.py` | 活动 | Python 实现、脚本或测试 |
@@ -1687,6 +1718,7 @@
 | `tests/test_gdpr7_direct_llm_authorization_builder_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_direct_llm_executor_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_direct_llm_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gdpr7_gold_rule_records_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_review_surface_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_review_workflow_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_review_workflow_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -1757,12 +1789,15 @@
 | `tests/test_s2_13_s3_7_transition_readiness_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v7.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v8.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s2_13_s3_7_transition_readiness_v9.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_2_s3_3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_9_synthetic_panel.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_downstream_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_unified_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_violation_report_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_violation_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_formula_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_oracle_gold_rules_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |

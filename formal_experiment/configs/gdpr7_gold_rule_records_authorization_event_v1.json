@@ -1,0 +1,41 @@
+{
+  "schema_version": "gdpr7_gold_rule_records_authorization@1.0.0",
+  "event_id": "gdpr7-gold-rule-records-publication-20260909",
+  "task": "S3.7 dependency: formal GDPR-7 Gold Rule Records",
+  "authorization_type": "user_authorized_publication_of_derived_gold_rule_records",
+  "user_instruction_verbatim": "继续做，做完完整六步，每做完一步就进行自检，检查出错误自修，修完再检查，直到把整套实验完成",
+  "user_instruction_utf8_sha256": "b1b36fa0221e8c6e6006d55fb84815b2f21548d4b97c482a6a30e68860e0b1ee",
+  "authorization_basis": {
+    "prior_confirmation_event": {
+      "path": "data/development/human_review/gdpr7_prefill_confirmation_20260909.json",
+      "sha256": "e7616bdd4bbe981b862e63ac0e4f0af00da31d0390d0cdec8497162d4b4ba87d",
+      "user_message_verbatim": "可以我已经进行人工确认完毕",
+      "reviewer": "hyc"
+    },
+    "confirmed_bundle": {
+      "path": "data/development/human_review/gdpr7_human_confirmed_v1/confirmed_rule_items.json",
+      "sha256": "930357a9539a3e1b11fab9943eb3ca1978ca3596605f1264aea821960a47fc78",
+      "status": "human_confirmed_not_published_gold",
+      "counts": {
+        "rules": 9,
+        "sentences": 74,
+        "items": 92,
+        "anchored_spans": 320,
+        "human_confirmed": 74,
+        "item_field_decisions": 552
+      }
+    }
+  },
+  "authorized_scope": {
+    "derivation": "mechanical_lossless_conversion_of_confirmed_human_values",
+    "may_add_infer_rewrite_labels": false,
+    "may_change_coordinates": false,
+    "may_change_modality": false,
+    "may_publish_third_party_raw_text": false,
+    "may_call_llm_or_api": false,
+    "scope_note": "Publication covers ONLY the mechanical conversion of the user's already-confirmed values into the formal Rule Record contract; it does not authorize any new annotation, any Gold change, or any Stage 3 Oracle run by itself."
+  },
+  "publication_gate_status": "ready_for_formal_gold_publication",
+  "recorded_by": "agent",
+  "zero_api": {"new_llm_api_calls": 0}
+}
