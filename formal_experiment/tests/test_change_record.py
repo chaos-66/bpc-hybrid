@@ -40,6 +40,21 @@ def test_summary_extracts_pytest_terminal_line() -> None:
     assert record_change._test_summary(output) == "504 passed, 22 skipped in 30.38s"
 
 
+def test_git_chinese_paths_survive_non_utf8_host_locale(tmp_path, monkeypatch) -> None:
+    subprocess = record_change.subprocess
+    subprocess.run(["git", "init", str(tmp_path)], check=True,
+                   stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    subprocess.run(["git", "-C", str(tmp_path), "config", "core.quotepath", "false"],
+                   check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    reviewed = tmp_path / "formal_experiment" / "人工确认结果.md"
+    reviewed.parent.mkdir()
+    reviewed.write_text("已确认\n", encoding="utf-8")
+    monkeypatch.setattr(record_change, "WORKSPACE_ROOT", tmp_path)
+    # Exercise real Git bytes while reproducing the Windows GBK default.
+    monkeypatch.setattr(subprocess, "_text_encoding", lambda: "gbk")
+    assert record_change._changed_paths() == ["?? formal_experiment/人工确认结果.md"]
+
+
 def test_build_event_captures_safety_and_blockers(monkeypatch) -> None:
     monkeypatch.setattr(record_change, "_changed_paths", lambda: [" M formal_experiment/README.md"])
     monkeypatch.setattr(record_change, "_git", lambda args: "abc123")

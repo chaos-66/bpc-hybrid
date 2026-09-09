@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-09
-**收录文件**：1687 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1695 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -423,6 +423,12 @@
 | `data/development/human_review/gdpr7_case_ai_prefill_v1/.gitattributes` | 开发/溯源 | 项目文件 |
 | `data/development/human_review/gdpr7_case_ai_prefill_v1/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/gdpr7_case_ai_prefill_v1/论文案例人工核对预填稿.md` | 开发/溯源 | 说明、规范或研究文档 |
+| `data/development/human_review/gdpr7_human_confirmed_v1/.gitattributes` | 开发/溯源 | 项目文件 |
+| `data/development/human_review/gdpr7_human_confirmed_v1/case_acknowledgement.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/gdpr7_human_confirmed_v1/confirmed_rule_items.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/gdpr7_human_confirmed_v1/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/human_review/gdpr7_human_confirmed_v1/人工确认结果.md` | 开发/溯源 | 说明、规范或研究文档 |
+| `data/development/human_review/gdpr7_prefill_confirmation_20260909.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/gdpr7_six_element_review_blank_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/gdpr7_six_element_review_decisions_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/human_review/gdpr7_six_element_review_decisions_v2.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
@@ -1317,6 +1323,7 @@
 | `scripts/finalize_s2_12_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/gdpr7_review_tool_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/generate_file_catalog.py` | 活动 | 重建本逐文件目录 |
+| `scripts/import_gdpr7_confirmed_prefill_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/import_gdpr7_review_decisions_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/ingest_sun_modality.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/modality_classifier_alignment_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1676,6 +1683,7 @@
 | `tests/test_g04_and_b0_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_g05_complexity_candidate_draft_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_g07_barrientos_adapter_contract.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gdpr7_confirmed_prefill_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_direct_llm_authorization_builder_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_direct_llm_executor_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_direct_llm_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |

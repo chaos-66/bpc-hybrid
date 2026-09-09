@@ -1,5 +1,12 @@
 # GDPR7 六要素人工裁决工作流指南（V1）
 
+**2026-09-09 当前状态**：用户已在会话中确认74句AI预填稿，当前已确认人工值为
+`gdpr7_human_confirmed_v1/confirmed_rule_items.json`，说明见同目录 `人工确认结果.md`。
+74/74句已确认；绑定事件为 `gdpr7_prefill_confirmation_20260909.json`。
+使用 `python formal_experiment/scripts/import_gdpr7_confirmed_prefill_v1.py --check` 核验。
+本文下方介绍的是历史 blank/v1 工作流；旧v1/v2文件原样保留，不用其空决定覆盖已确认内容。
+本次尚未发布正式Gold或运行Oracle。
+
 > 面向**人类评审员（reviewer）**的简明操作说明。配套裁决面文件：
 > `data/development/human_review/gdpr7_six_element_review_blank_v1.json`
 > （schema `gdpr7_six_element_review_surface@1.0.0`，当前状态 `blank_unreviewed`）。

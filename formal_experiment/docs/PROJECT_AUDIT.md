@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-08
+**更新时间**：2026-09-09
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -11,7 +11,17 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 ## 1. 当前结论
 
-**2026-09-08 GDPR 人工候选预填（用户明确要求先预填、后检查修改确认）**：
+**2026-09-09 GDPR 人工确认已导入**：用户收到两份预填稿后明确回复“可以我已经进行人工确认完毕”。
+原稿与 `a1a93e7` 所交付字节一致，按当前内容确认；事件
+`data/development/human_review/gdpr7_prefill_confirmation_20260909.json` 绑定两稿、机器底稿与输入哈希。
+当前人工值入口为 `data/development/human_review/gdpr7_human_confirmed_v1/confirmed_rule_items.json`：
+**74/74句、92规范条目、552个要素决定、320原文锚点**；往返对账验证不丢失情态、坐标、关联或说明。
+案例4项意见按稿确认；整图合规、原Gold检查范围、延误计时器与主通知期限的疑点按原意保留，
+不自动变成 none/timeout 标签。旧稿与旧v1/v2裁决面不覆盖，其0/74是旧入口的历史状态。
+当前复核命令：`python formal_experiment/scripts/import_gdpr7_confirmed_prefill_v1.py --check`。
+该目录为已确认人工输入，尚未发布正式 Gold，Oracle/真实API未运行；既有Gold/结果不改。
+
+**历史：2026-09-08 GDPR 人工候选预填（已由上方2026-09-09确认导入推进）**：
 9 条款/74 句均已逐句准备，共 92 个建议条目、320 处原文字符锚点；入口为
 `data/development/human_review/gdpr7_ai_prefill_v1/请检查并修改这份预填稿.md`，
 同目录 `proposals.json`/`manifest.json` 为来源绑定底稿。每句含中文释义、六要素、

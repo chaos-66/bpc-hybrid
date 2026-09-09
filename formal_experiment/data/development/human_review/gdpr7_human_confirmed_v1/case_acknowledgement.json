@@ -1,0 +1,25 @@
+{
+  "schema_version": "gdpr7_case_review_acknowledgement@1.0.0",
+  "confirmation_event_id": "gdpr7-prefill-human-confirmation-20260909",
+  "reviewer": "hyc",
+  "document_content_acknowledged": true,
+  "is_gold": false,
+  "case_selection": {
+    "primary": "gdpr_1_data_breach/article33+article34",
+    "auxiliary": "gdpr_article22_s001"
+  },
+  "article22_s001_modality": "prohibition",
+  "local_notification_structure": {
+    "missing_notify_activity": false,
+    "incorrect_notify_actor": false,
+    "scope": "通知监管机构这一活动；不等于整条法规合规"
+  },
+  "whole_process_compliant": null,
+  "control_gold_confirmed": false,
+  "variant_timeout_gold_confirmed": false,
+  "unresolved_as_acknowledged": [
+    "既有v001/v002标签的检查范围与局部读图判断需核实",
+    "延误说明计时器不能直接证明主通知期限满足或违反"
+  ],
+  "existing_gold_modified": false
+}

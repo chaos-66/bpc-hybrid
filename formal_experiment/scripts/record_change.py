@@ -64,6 +64,9 @@ def _git(args: list[str]) -> str:
         ["git", *args],
         cwd=WORKSPACE_ROOT,
         text=True,
+        # Git emits UTF-8 paths when core.quotepath=false, including on a
+        # Windows host whose default text codec is GBK.
+        encoding="utf-8",
         stdout=subprocess.PIPE,
         stderr=subprocess.DEVNULL,
         check=False,

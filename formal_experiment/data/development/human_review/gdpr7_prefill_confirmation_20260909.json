@@ -1,0 +1,26 @@
+{
+  "schema_version": "gdpr7_prefill_user_confirmation@1.0.0",
+  "event_id": "gdpr7-prefill-human-confirmation-20260909",
+  "recorded_at_utc": "2026-09-09T00:28:11.828356+00:00",
+  "user_message_verbatim": "可以我已经进行人工确认完毕",
+  "reviewer": "hyc",
+  "recorded_by": "Codex assistant",
+  "confirmation_channel": "current user conversation",
+  "human_confirmed": true,
+  "scope": "accept_current_prefill_documents_without_edits",
+  "reviewed_commit": "a1a93e7a78df7bc9a48e4bc0e980a51b4b32af76",
+  "source_sha256": {
+    "data/input/gdpr7_stage2_input_v1.json": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+    "data/development/human_review/gdpr7_ai_prefill_v1/proposals.json": "852d158d99706a6c84c40e409c3f1c1038516cb25ecd10e13c27ad71145a2967",
+    "data/development/human_review/gdpr7_ai_prefill_v1/请检查并修改这份预填稿.md": "a6686a6babe5f043892f341aa7e105edc2b59dc0dfca50060b94da41a4e546da",
+    "data/development/human_review/gdpr7_ai_prefill_v1/manifest.json": "e016a97455511611eecd5ff7cc96d18e48940614b95539a20c75e5773e813f4c",
+    "data/development/human_review/gdpr7_case_ai_prefill_v1/论文案例人工核对预填稿.md": "c870a7a1d6439867ff895fa0b145941ad3fccb786c45c855f2f68f372b025f1b",
+    "data/development/human_review/gdpr7_case_ai_prefill_v1/manifest.json": "af35fb4d6076be2c1c86fbced177b7a1c1b7ad34c1f50e99d3bf43a7f7f93668"
+  },
+  "interpretation_zh": "用户在收到两份文件链接后明确表示人工确认完毕；本地文件与所交付版本逐字节一致，按原稿确认，不另造修改。案例稿中的不确定结论按原意确认，不能提升为整图合规或合成标签Gold。",
+  "not_authorized_by_this_confirmation": [
+    "发布或覆盖既有Gold",
+    "额外API调用",
+    "宣称Oracle或整条流水线完成"
+  ]
+}
