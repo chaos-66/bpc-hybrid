@@ -101,3 +101,20 @@ data/development/human_review/gdpr7_prefill_confirmation_20260909.json text eol=
 # to the exact registered formal arm file only; no `*.json text eol=lf`, no
 # `outputs/**` or `data/**` widening, no renormalization of tracked content.
 data/predictions/b0_formal_arm_v1/predictions.json text eol=lf
+
+# 2026-09-09 (Gold Rule Records checkpoint): narrow line-ending pins for the
+# superseded transition-capsule test modules.  Their raw bytes are bound as
+# "superseded asset" SHA-256 entries inside the v2/v3/v4/v6/v7 reports and are
+# asserted by test_report_declares_and_binds_superseded_stale_reports_and_v1;
+# with core.autocrlf=true the working-tree copies were checked out as CRLF, so
+# the raw hash no longer matched and the superseded-asset binding test failed.
+# Scope is limited to these exact test modules; no `*.py text eol=lf`, no
+# `tests/**` or `text=auto` widening, no renormalization of other content.
+tests/test_s2_13_s3_7_transition_readiness_v1.py text eol=lf
+tests/test_s2_13_s3_7_transition_readiness_v2.py text eol=lf
+tests/test_s2_13_s3_7_transition_readiness_v3.py text eol=lf
+tests/test_s2_13_s3_7_transition_readiness_v4.py text eol=lf
+tests/test_s2_13_s3_7_transition_readiness_v5.py text eol=lf
+tests/test_s2_13_s3_7_transition_readiness_v6.py text eol=lf
+tests/test_s2_13_s3_7_transition_readiness_v7.py text eol=lf
+tests/test_s2_13_s3_7_transition_readiness_v8.py text eol=lf

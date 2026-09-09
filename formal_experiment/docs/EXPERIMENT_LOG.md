@@ -4184,3 +4184,16 @@
 - 仍存在 blocker：无
 - 备注：用户明确回复“可以我已经进行人工确认完毕”；两份原稿与a1a93e7交付字节一致，确认事件绑定输入及原稿哈希。已无损导入9条款、74/74句、92个规范条目、552个六要素决定、320处原文锚点，保留多情态、不连续证据、重复短语位置和关联说明；案例证据不足结论按原稿保留，不修改既有Gold、不生成合规或超时Gold、不运行Oracle、不调用真实API。首次全量3026通过/1失败源于临时目录私有ACL导致5个确认文件在宿主环境不可见，已改为继承权限的同级目录发布并修复该新目录权限，双环境核对通过。第二次全量3029通过/1失败源于日志器按GBK读取Git的UTF-8中文文件名，已显式使用UTF-8并补真实Git回归测试。最终聚焦40通过；最终全量3031通过/24跳过，复用本次真实验证凭证。用户原有stage1人工修改及7个bak未改动、未纳入提交；原始候选与旧v1/v2编辑面保持不变。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-09T16:59:19.342255+00:00 - S3.7 Gold Rule Records publication + Oracle isolation + downstream paired comparison + human-rule Stage-3 arm + transition v9 + real-LLM batch offline readiness (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：是
+- 测试：31 failed, 3047 passed, 24 skipped, 51 warnings in 4401.98s (1:13:21)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`7735b6ca315b6574662ca4eda8e9c6b648bd3d68`；相关未提交路径：8 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：74 confirmed sentences -> 92-item formal Rule Record Gold (lossless, independent 32-check verifier); human_rules arm wired into the frozen Stage 3; Oracle isolation macro 0.3333 (missing_action 1.000; incorrect_actor/out_of_order unobservable with recorded root cause); downstream paired rules_only=human_rules=0.3333, direct_llm blocked; real LLM calls 0, blocked only on process-env credentials; transition ledger v9 binds historical capsules by hash; b0 formal arm LF pin restores integrity_pass=true
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

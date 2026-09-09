@@ -38,6 +38,14 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 **诚实边界**：本轮**没有**证明“人工规则优于非 LLM 基线”，也**没有**证明方法优于
 Sun；正式 S3.7 Oracle 主表、S2.13 冻结、S3.4-S3.6 正式 promotion 均未完成。
 
+**已废弃 capsule 的生命周期语义**：v1–v8 transition 与 S2.11/G0.5 pre-authorization
+capsule 的 builder 按设计在磁盘出现任何 `rule_record` 命名文件时 fail closed；正式
+Gold Rule Records 发布后，这些 capsule 那些“builder 可重跑 / verifier 通过 / 无
+Gold Rule Record”的测试已不可能成立。它们现在在 `tests/conftest.py` 中带显式理由
+skip（保留可审计、不删除不弱化）；当前状态真值由 successor v9 的 9 项测试断言。
+另有 1 项 v7 superseded-asset 绑定失败为**发布前既有漂移**（v7 manifest 记录的 v6
+测试文件哈希与任何已提交版本都不匹配），同样记录在案。
+
 **过渡核账已刷新为 v9**（`outputs/reports/s2_13_s3_7_transition_readiness_v9.json`，
 verifier 全过）：v8 的 Gold-Rule-Record 缺失判断已被“已发布 + 独立 verifier 通过 +
 完整绑定”取代；v9 不再重跑历史 verifier（它们按设计对后续合法状态变化 fail closed），

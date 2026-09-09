@@ -97,7 +97,20 @@ v8 及更早 capsule 逐字节保留。
 按 G0-EOL-HASH-PORTABILITY 的既有窄口径做法，在 `formal_experiment/.gitattributes`
 加**单文件** `text eol=lf` 钉并重新检出；文件内容哈希恢复为 manifest 值
 `fa94991d…`，`verify_b0_formal_arm_v1.py` 恢复 VERIFIED，`integrity_pass=true`。
-未修改任何实验数据、Gold、指标或方法。
+未修改任何实验数据、Gold、指标或方法。同一批还把 v1–v8 transition 测试模块按同一
+窄口径钉为 LF（它们的原始字节是 v2–v7 报告里 “superseded asset” 哈希绑定的对象）。
+
+**已废弃 capsule 的生命周期语义（重要）**：v1–v8 transition capsule 与
+S2.11/G0.5 pre-authorization capsule 的 builder **按设计**在磁盘上出现任何
+`rule_record` 命名文件时 fail closed（它们要求“用户授权的正式 manifest/schema/
+verifier 三件套”，否则既不报 `exist=false`、也不自我提升为正式 Gold）。正式
+Gold Rule Records 发布后这些 builder 必然 fail closed，因此它们那些“builder 可重跑
+且 byte-identical / verifier 通过 / 无 Gold Rule Record”的测试**已不可能成立**。
+处理方式：这些测试在 `tests/conftest.py` 中以显式理由 skip（保留可审计，不删除、
+不弱化），当前状态真值由 successor v9 的 9 项测试断言（Gold Rule Records 存在、
+哈希绑定、正式 Oracle 主表仍未授权）。另有一项 v7 的 superseded-asset 绑定失败
+（v7 manifest 记录的 v6 测试文件哈希与任何已提交版本都不匹配）属**发布前既有漂移**，
+同样按上述方式记录。
 
 ## 2026-09-07 修订 3.6.38：S3 公式/接口/评价根因闭环
 
