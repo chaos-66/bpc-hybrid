@@ -9,6 +9,13 @@ Gold Rule Records were published and verified by
 ``scripts/verify_gdpr7_gold_rule_records_v1.py``), so v9 replaces the probe with
 a verified PRESENT state and records the Oracle isolation run.
 
+Deliberate difference from v8: v9 does **not** re-execute the historical
+transition verifiers.  Those verifiers compare their frozen snapshot against
+the *current* audit state, so any legitimate later state change makes them fail
+closed by design; making v9 depend on their verdict would make v9 itself
+unstable.  v9 instead records the superseded assets by path + SHA-256 + byte
+size and requires them to stay byte-exact.
+
 Everything v8 judged about S2.11/S2.12/S2.13/S3.4-S3.6 is re-derived from disk
 and carried forward unchanged; the v8 asset stays byte-exact.
 """
@@ -52,49 +59,6 @@ ORACLE_MANIFEST = "outputs/reports/s3_oracle_gold_rules_v1.manifest.json"
 DOWNSTREAM_REPORT = "outputs/reports/s3_downstream_paired_v1.json"
 BATCH_READINESS = "outputs/reports/s2_llm_batches_offline_readiness_v1.json"
 
-# historical verifier lifecycle observed on 2026-09-09 after the Gold Rule
-# Records publication: v1 still verifies; v2-v7 fail closed with the exact
-# superseded-snapshot signature (their "no candidate" probe is no longer true);
-# v8 fails because its own historical matrix and builder replay are superseded.
-CURRENT_HISTORY = {1}
-SUPERSEDED_HISTORY_EXPECTED_FAILURES: dict[int, set[str]] = {
-    2: {
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "oracle control flags re-derived",
-    },
-    3: {
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "oracle control flags re-derived",
-    },
-    4: {
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "oracle control flags re-derived",
-    },
-    5: {
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "dependency matrix re-derived and compared item-by-item",
-        "manifest bindings match disk",
-        "manifest exact reconstruction matches disk (structure, keys, values; no missing/extra entries)",
-        "oracle control flags re-derived",
-    },
-    6: {
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "dependency matrix re-derived and compared item-by-item",
-        "manifest bindings match disk",
-        "manifest exact reconstruction matches disk (structure, keys, values; no missing/extra entries)",
-        "oracle control flags re-derived",
-        "superseded historical reports + full v1-v5 capsule present, byte-unchanged and declared",
-    },
-    7: {
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "oracle control flags re-derived",
-    },
-    8: {
-        "builder byte-identical replay",
-        "historical v1-v7 lifecycle matrix",
-    },
-}
-
 
 class TransitionFail(ValueError):
     """Fail-closed transition builder error."""
@@ -115,41 +79,40 @@ def _binding(rel: str) -> dict[str, Any]:
     return {"path": rel, "sha256": _sha(path), "byte_size": path.stat().st_size}
 
 
-def run_historical_verifiers() -> dict[str, Any]:
-    matrix: dict[str, Any] = {}
+def historical_asset_ledger() -> dict[str, Any]:
+    """Record every earlier capsule asset by hash (never re-executed).
+
+    The earlier transition verifiers assert their frozen snapshot against the
+    current audit state, so a legitimate later state change makes them fail
+    closed by design.  v9 therefore binds their bytes instead of depending on
+    their verdict; ``historical_verifiers_executed=false`` states that
+    explicitly.
+    """
+    ledger: dict[str, Any] = {}
     for version in range(1, 9):
-        rel = f"scripts/verify_s2_13_s3_7_transition_readiness_v{version}.py"
-        proc = subprocess.run(
-            [sys.executable, str(ROOT / rel), "--json"],
-            cwd=ROOT.parent, capture_output=True, text=True, timeout=300,
-        )
-        try:
-            payload = json.loads(proc.stdout)
-        except json.JSONDecodeError as exc:
-            raise TransitionFail(
-                f"transition v{version} verifier returned invalid JSON") from exc
-        failed = {item["name"] for item in payload.get("checks", []) if not item.get("ok")}
-        if version in CURRENT_HISTORY:
-            if proc.returncode != 0 or payload.get("verified") is not True or failed:
-                raise TransitionFail(
-                    f"transition v{version} verifier unexpectedly failed: {sorted(failed)}")
-            outcome = "verified_current_or_preserved"
-        else:
-            expected = SUPERSEDED_HISTORY_EXPECTED_FAILURES[version]
-            if proc.returncode == 0 or payload.get("verified") is not False or failed != expected:
-                raise TransitionFail(
-                    f"transition v{version} superseded fail-closed signature drift: "
-                    f"expected={sorted(expected)} actual={sorted(failed)}")
-            outcome = "expected_fail_closed_superseded_snapshot"
-        matrix[f"v{version}"] = {
-            "path": rel,
-            "sha256": _sha(ROOT / rel),
-            "exit_code": proc.returncode,
-            "verified": payload.get("verified"),
-            "outcome": outcome,
-            "failed_checks": sorted(failed),
-        }
-    return matrix
+        entry: dict[str, Any] = {}
+        # the v1 schema predates the "_v1" suffix convention
+        schema_rel = ("configs/schemas/s2_13_s3_7_transition_readiness.schema.json"
+                      if version == 1 else
+                      f"configs/schemas/s2_13_s3_7_transition_readiness_v{version}.schema.json")
+        for rel in (
+            schema_rel,
+            f"scripts/build_s2_13_s3_7_transition_readiness_v{version}.py",
+            f"scripts/verify_s2_13_s3_7_transition_readiness_v{version}.py",
+            f"outputs/reports/s2_13_s3_7_transition_readiness_v{version}.json",
+        ):
+            path = ROOT / rel
+            entry[rel] = (
+                {"sha256": _sha(path), "byte_size": path.stat().st_size}
+                if path.is_file() else None)
+        ledger[f"v{version}"] = entry
+    return {
+        "historical_verifiers_executed": False,
+        "policy": ("superseded capsules stay byte-exact; their verifiers are not "
+                   "re-executed because they fail closed on legitimate later "
+                   "state changes"),
+        "assets": ledger,
+    }
 
 
 def _verified_gold_rule_records() -> dict[str, Any]:
@@ -309,7 +272,7 @@ def build_report(history: Mapping[str, Any]) -> dict[str, Any]:
         },
         "gold_rule_records": gold,
         "oracle_isolation_run": oracle,
-        "historical_transition_verifiers": dict(history),
+        "historical_transition_verifiers": history,
         "authorization": readiness["authorization"],
         "safety": {
             "new_llm_api_calls": 0,
@@ -439,7 +402,7 @@ def main() -> int:
     mode.add_argument("--check", action="store_true")
     args = parser.parse_args()
     try:
-        history = run_historical_verifiers()
+        history = historical_asset_ledger()
         artifacts = build_artifacts(history)
         if args.publish:
             existing = [path for path in artifacts if path.exists()]

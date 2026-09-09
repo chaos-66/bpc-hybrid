@@ -466,97 +466,153 @@
     "note": "Oracle isolation on the frozen development evaluation surface; NOT the formal S3.7 main table"
   },
   "historical_transition_verifiers": {
-    "v1": {
-      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v1.py",
-      "sha256": "5ee35fa837c05dc2e6c15168dcee0a4704486212c81c2710d16435e3e668ad1a",
-      "exit_code": 0,
-      "verified": true,
-      "outcome": "verified_current_or_preserved",
-      "failed_checks": []
-    },
-    "v2": {
-      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v2.py",
-      "sha256": "b9639016634af014e9e779ff127de49da2f26b277eef3360a202260aab7996ab",
-      "exit_code": 1,
-      "verified": false,
-      "outcome": "expected_fail_closed_superseded_snapshot",
-      "failed_checks": [
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "oracle control flags re-derived"
-      ]
-    },
-    "v3": {
-      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v3.py",
-      "sha256": "d9f9094f44b2f6112b98f22e5de161da1a923f8d8cb0ab383a78388adf1445d0",
-      "exit_code": 1,
-      "verified": false,
-      "outcome": "expected_fail_closed_superseded_snapshot",
-      "failed_checks": [
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "oracle control flags re-derived"
-      ]
-    },
-    "v4": {
-      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v4.py",
-      "sha256": "92460b61d7de6d9b28d79ec1872865532af5cfc64bc58408e472dd01ecfb6c34",
-      "exit_code": 1,
-      "verified": false,
-      "outcome": "expected_fail_closed_superseded_snapshot",
-      "failed_checks": [
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "oracle control flags re-derived"
-      ]
-    },
-    "v5": {
-      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v5.py",
-      "sha256": "6dea78c5f2e6a4dbe7bd07deec0a56785019bee722a97f3720f5ae7a8a3333c4",
-      "exit_code": 1,
-      "verified": false,
-      "outcome": "expected_fail_closed_superseded_snapshot",
-      "failed_checks": [
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "dependency matrix re-derived and compared item-by-item",
-        "manifest bindings match disk",
-        "manifest exact reconstruction matches disk (structure, keys, values; no missing/extra entries)",
-        "oracle control flags re-derived"
-      ]
-    },
-    "v6": {
-      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v6.py",
-      "sha256": "88a6f890a3af73b43bca571752bc577ff698380c147056d4300c103ada8102e8",
-      "exit_code": 1,
-      "verified": false,
-      "outcome": "expected_fail_closed_superseded_snapshot",
-      "failed_checks": [
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "dependency matrix re-derived and compared item-by-item",
-        "manifest bindings match disk",
-        "manifest exact reconstruction matches disk (structure, keys, values; no missing/extra entries)",
-        "oracle control flags re-derived",
-        "superseded historical reports + full v1-v5 capsule present, byte-unchanged and declared"
-      ]
-    },
-    "v7": {
-      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v7.py",
-      "sha256": "0c792395478ea8c42b7db38eeed0baa8d75575bad3092a1a10067ddd346d2a01",
-      "exit_code": 1,
-      "verified": false,
-      "outcome": "expected_fail_closed_superseded_snapshot",
-      "failed_checks": [
-        "Gold Rule Records three-state probe: no candidate, exist=false, 9 rule IDs, checked EStG-150 Gold bound",
-        "oracle control flags re-derived"
-      ]
-    },
-    "v8": {
-      "path": "scripts/verify_s2_13_s3_7_transition_readiness_v8.py",
-      "sha256": "562ce2de55992c2291b2f7bd066b53549460b32c7d6037df36e72739617ade2a",
-      "exit_code": 1,
-      "verified": false,
-      "outcome": "expected_fail_closed_superseded_snapshot",
-      "failed_checks": [
-        "builder byte-identical replay",
-        "historical v1-v7 lifecycle matrix"
-      ]
+    "historical_verifiers_executed": false,
+    "policy": "superseded capsules stay byte-exact; their verifiers are not re-executed because they fail closed on legitimate later state changes",
+    "assets": {
+      "v1": {
+        "configs/schemas/s2_13_s3_7_transition_readiness.schema.json": {
+          "sha256": "df270ee8ee27bd2c59686d396df7c37ecf6cafb1dd35ceb0aba48a63464f6786",
+          "byte_size": 11782
+        },
+        "scripts/build_s2_13_s3_7_transition_readiness_v1.py": {
+          "sha256": "38b9d2f9c2e9f5215b28040f710857913f9c432d54c21cadb16255e210fff269",
+          "byte_size": 57377
+        },
+        "scripts/verify_s2_13_s3_7_transition_readiness_v1.py": {
+          "sha256": "5ee35fa837c05dc2e6c15168dcee0a4704486212c81c2710d16435e3e668ad1a",
+          "byte_size": 17882
+        },
+        "outputs/reports/s2_13_s3_7_transition_readiness_v1.json": {
+          "sha256": "10913862225ba4b8b5ffcf02b5ba553ab6110ec6a59bc2b01913b3a60aa79524",
+          "byte_size": 27572
+        }
+      },
+      "v2": {
+        "configs/schemas/s2_13_s3_7_transition_readiness_v2.schema.json": {
+          "sha256": "2b0d9418e748eb49753dea75ca46db072dc60226b7dc08ea1eafc6ecfd8bbaaf",
+          "byte_size": 13957
+        },
+        "scripts/build_s2_13_s3_7_transition_readiness_v2.py": {
+          "sha256": "c20c8a1f198ab357cd567a3746758b6668e4ca0f50262ee97c789829388f21d1",
+          "byte_size": 70461
+        },
+        "scripts/verify_s2_13_s3_7_transition_readiness_v2.py": {
+          "sha256": "b9639016634af014e9e779ff127de49da2f26b277eef3360a202260aab7996ab",
+          "byte_size": 23868
+        },
+        "outputs/reports/s2_13_s3_7_transition_readiness_v2.json": {
+          "sha256": "6fca5c03349dd66a34b68e9e3eba2f99c724377ed88d38a2827a860c875a1995",
+          "byte_size": 32311
+        }
+      },
+      "v3": {
+        "configs/schemas/s2_13_s3_7_transition_readiness_v3.schema.json": {
+          "sha256": "ed823a75543975fe00242685bcb02c8495926113f8ea3a805c0c8234e4444622",
+          "byte_size": 13960
+        },
+        "scripts/build_s2_13_s3_7_transition_readiness_v3.py": {
+          "sha256": "f412eaf553b57e9c5bd0892f05700bb53611769e0c1eee2f1e7cab3d40afac08",
+          "byte_size": 74225
+        },
+        "scripts/verify_s2_13_s3_7_transition_readiness_v3.py": {
+          "sha256": "d9f9094f44b2f6112b98f22e5de161da1a923f8d8cb0ab383a78388adf1445d0",
+          "byte_size": 23996
+        },
+        "outputs/reports/s2_13_s3_7_transition_readiness_v3.json": {
+          "sha256": "496b5e142f8b2dfb316f62e6533b5ab8a69cd3282eff4847cb163fdc10212fe4",
+          "byte_size": 35115
+        }
+      },
+      "v4": {
+        "configs/schemas/s2_13_s3_7_transition_readiness_v4.schema.json": {
+          "sha256": "5ed63a9cb2e0cd0dbe83604e8aae06feb1b5acad47c03fa20bcfa0354e9c528c",
+          "byte_size": 14299
+        },
+        "scripts/build_s2_13_s3_7_transition_readiness_v4.py": {
+          "sha256": "7b3c88bec0314e7abe7bd28d323910126e94061d28b568e0c9504b689a387d7b",
+          "byte_size": 80160
+        },
+        "scripts/verify_s2_13_s3_7_transition_readiness_v4.py": {
+          "sha256": "92460b61d7de6d9b28d79ec1872865532af5cfc64bc58408e472dd01ecfb6c34",
+          "byte_size": 25240
+        },
+        "outputs/reports/s2_13_s3_7_transition_readiness_v4.json": {
+          "sha256": "57a2153cfee1d75cf7bef752815aebfebe2728c052b685653a574ba7dfd43294",
+          "byte_size": 39524
+        }
+      },
+      "v5": {
+        "configs/schemas/s2_13_s3_7_transition_readiness_v5.schema.json": {
+          "sha256": "8f50d3023b056ee78aa137d296f291f55438cd4f4a93ee1579ec1786ef0274e2",
+          "byte_size": 14903
+        },
+        "scripts/build_s2_13_s3_7_transition_readiness_v5.py": {
+          "sha256": "f1b7c230e7d78f9840eeca8c7c77f96a71e4247ee98764978450de6f34ef51b3",
+          "byte_size": 86005
+        },
+        "scripts/verify_s2_13_s3_7_transition_readiness_v5.py": {
+          "sha256": "6dea78c5f2e6a4dbe7bd07deec0a56785019bee722a97f3720f5ae7a8a3333c4",
+          "byte_size": 25912
+        },
+        "outputs/reports/s2_13_s3_7_transition_readiness_v5.json": {
+          "sha256": "96c153c54f6fb2f188e00da2a7530808c34e014b08707a43b6a8b8e56131790e",
+          "byte_size": 43370
+        }
+      },
+      "v6": {
+        "configs/schemas/s2_13_s3_7_transition_readiness_v6.schema.json": {
+          "sha256": "08af2fe038525e38638eb9af8fb0ca576936e6350baae17e4e50761796863a61",
+          "byte_size": 15663
+        },
+        "scripts/build_s2_13_s3_7_transition_readiness_v6.py": {
+          "sha256": "9204d7afcfc3c0add4b7324b7e83276552a61d5b12b571961fa03bb5f1fe22c4",
+          "byte_size": 91784
+        },
+        "scripts/verify_s2_13_s3_7_transition_readiness_v6.py": {
+          "sha256": "88a6f890a3af73b43bca571752bc577ff698380c147056d4300c103ada8102e8",
+          "byte_size": 27028
+        },
+        "outputs/reports/s2_13_s3_7_transition_readiness_v6.json": {
+          "sha256": "e2c2278726a76ad56dedde599defd272cb9ca0e87a17be61583ab7b943fd91c7",
+          "byte_size": 46978
+        }
+      },
+      "v7": {
+        "configs/schemas/s2_13_s3_7_transition_readiness_v7.schema.json": {
+          "sha256": "15e5eb74dc124e1401061a132d38a6f7d1852f120546e297e3491430b719fe3d",
+          "byte_size": 15663
+        },
+        "scripts/build_s2_13_s3_7_transition_readiness_v7.py": {
+          "sha256": "8441c0dc8b3078026ac0be7056042b030f6756bc9b7e71ad11610f6e4ca72bef",
+          "byte_size": 96784
+        },
+        "scripts/verify_s2_13_s3_7_transition_readiness_v7.py": {
+          "sha256": "0c792395478ea8c42b7db38eeed0baa8d75575bad3092a1a10067ddd346d2a01",
+          "byte_size": 27591
+        },
+        "outputs/reports/s2_13_s3_7_transition_readiness_v7.json": {
+          "sha256": "1faa862f3924fe5d86aba0f9d5d106b78baf8898a22e52bd5e440a984077e784",
+          "byte_size": 50120
+        }
+      },
+      "v8": {
+        "configs/schemas/s2_13_s3_7_transition_readiness_v8.schema.json": {
+          "sha256": "df75b975f17af000f5f5974983196edda1835df1cd5b9a91a8eccfa8144d3375",
+          "byte_size": 1011
+        },
+        "scripts/build_s2_13_s3_7_transition_readiness_v8.py": {
+          "sha256": "3508c8331d05a4cc3c1336b74b6b6d46712084858a12c7f4e287cc91258d4c7f",
+          "byte_size": 13346
+        },
+        "scripts/verify_s2_13_s3_7_transition_readiness_v8.py": {
+          "sha256": "562ce2de55992c2291b2f7bd066b53549460b32c7d6037df36e72739617ade2a",
+          "byte_size": 5748
+        },
+        "outputs/reports/s2_13_s3_7_transition_readiness_v8.json": {
+          "sha256": "365880c25403d4fe766bcf9d8a94851c6a91d3f993c2f8e97107d6173c018e22",
+          "byte_size": 9683
+        }
+      }
     }
   },
   "authorization": {

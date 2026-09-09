@@ -86,8 +86,10 @@ pending；**正式 S3.7 Oracle 主表未声明完成**（本轮为冻结评测�
 （builder/verifier/schema/tests 齐备，verifier 全过）。v8 的 Gold-Rule-Record 三态
 探测按设计 fail closed——候选一出现即拒绝；该候选的独立验证已完成，故 v9 用
 `exist=true + verifier_verified=true + 完整绑定` 取代 v8 的缺失判断，并记录 Oracle
-隔离运行。v8 及更早 capsule 逐字节保留（v2–v8 的 verifier 现按预期 fail closed，
-其失败签名已在 v9 的 lifecycle matrix 中逐项固定；v1 仍 verify）。
+隔离运行。v9 **不再重跑历史 transition verifier**：那些 verifier 把冻结快照与“当前”
+audit 状态对比，任何后续合法状态变化都会让它们按设计 fail closed；因此 v9 改为按
+路径+SHA-256+字节数记录 v1–v8 资产并要求逐字节不变（`historical_verifiers_executed=false`）。
+v8 及更早 capsule 逐字节保留。
 
 **行尾可移植性修复**：`data/predictions/b0_formal_arm_v1/predictions.json` 在
 `core.autocrlf=true` 下被检出为 CRLF，导致该正式 arm 的 raw SHA-256 与 manifest

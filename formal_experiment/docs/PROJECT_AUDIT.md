@@ -40,7 +40,9 @@ Sun；正式 S3.7 Oracle 主表、S2.13 冻结、S3.4-S3.6 正式 promotion 均�
 
 **过渡核账已刷新为 v9**（`outputs/reports/s2_13_s3_7_transition_readiness_v9.json`，
 verifier 全过）：v8 的 Gold-Rule-Record 缺失判断已被“已发布 + 独立 verifier 通过 +
-完整绑定”取代；v8 及更早 capsule 逐字节保留。**并修复一处行尾可移植性问题**：
+完整绑定”取代；v9 不再重跑历史 verifier（它们按设计对后续合法状态变化 fail closed），
+改为按哈希逐字节绑定 v1–v8 资产；v8 及更早 capsule 逐字节保留。**并修复一处行尾
+可移植性问题**：
 `data/predictions/b0_formal_arm_v1/predictions.json` 在 `core.autocrlf=true` 下被检出为
 CRLF，使该正式 arm 的 raw SHA 与 manifest 不符并导致 `final_experiment_ready=false`；
 按既有窄口径在 `.gitattributes` 加单文件 `text eol=lf` 钉并重新检出后恢复

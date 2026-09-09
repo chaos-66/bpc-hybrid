@@ -4,8 +4,8 @@
   "artifacts": {
     "report_json": {
       "path": "outputs/reports/s2_13_s3_7_transition_readiness_v9.json",
-      "sha256": "e665c408077b890ccafdcec08a88f93b469fce9bcac24f7c4eeaa89791ffb04c",
-      "byte_size": 22354
+      "sha256": "1a767e64db7bbbb6f9b594d433d0c91581e0d35cf9b558b5997ec60cb5f305a4",
+      "byte_size": 25000
     },
     "report_md": {
       "path": "outputs/reports/s2_13_s3_7_transition_readiness_v9.md",
@@ -48,13 +48,13 @@
   "implementation": {
     "builder": {
       "path": "scripts/build_s2_13_s3_7_transition_readiness_v9.py",
-      "sha256": "3961f01b92ef5a0d245078bdb0b232ba10b1591bbf9537266c5a08bf6c65be86",
-      "byte_size": 21686
+      "sha256": "36e2f26b214bed2bd89f1df9e697b0fb422ceefde132284d5f5582f5b123b6b0",
+      "byte_size": 19936
     },
     "verifier": {
       "path": "scripts/verify_s2_13_s3_7_transition_readiness_v9.py",
-      "sha256": "8d200f6257ff6047bf1a81bdc3d541aad1a58711bfb6ce505cf86ecc6873711f",
-      "byte_size": 7997
+      "sha256": "57c5f4529d700fff6f751a057deaf828f8353aefad3ad13ff5fb62091c2218cc",
+      "byte_size": 8678
     },
     "schema": {
       "path": "configs/schemas/s2_13_s3_7_transition_readiness_v9.schema.json",

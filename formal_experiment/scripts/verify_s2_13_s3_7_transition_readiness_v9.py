@@ -145,14 +145,27 @@ def verify() -> dict[str, Any]:
 
     builder = _load_builder()
     try:
-        history = builder.run_historical_verifiers()
-        check("historical v1-v8 lifecycle matrix",
-              history == report["historical_transition_verifiers"])
-        expected = builder.build_artifacts(history)
+        ledger = builder.historical_asset_ledger()
+        check("historical asset ledger matches the report",
+              ledger == report["historical_transition_verifiers"])
+        check("historical verifiers are not re-executed",
+              ledger["historical_verifiers_executed"] is False)
+        # every recorded historical asset must still exist byte-exact
+        missing = []
+        for version, assets in ledger["assets"].items():
+            for rel, entry in assets.items():
+                if entry is None:
+                    missing.append(f"{version}:{rel}")
+                    continue
+                path = ROOT / rel
+                if not path.is_file() or _sha(path) != entry["sha256"]:
+                    missing.append(f"{version}:{rel}")
+        check("historical assets byte-exact", not missing, missing[:5])
+        expected = builder.build_artifacts(ledger)
         check("builder byte-identical replay",
               all(path.read_bytes() == payload for path, payload in expected.items()))
     except Exception as exc:
-        check("historical v1-v8 lifecycle matrix", False, str(exc))
+        check("historical asset ledger matches the report", False, str(exc))
         check("builder byte-identical replay", False, str(exc))
     return {"verified": all(item["ok"] for item in checks), "checks": checks}
 
