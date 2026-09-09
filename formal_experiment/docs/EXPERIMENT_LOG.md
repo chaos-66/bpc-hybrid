@@ -4197,3 +4197,16 @@
 - 仍存在 blocker：无
 - 备注：74 confirmed sentences -> 92-item formal Rule Record Gold (lossless, independent 32-check verifier); human_rules arm wired into the frozen Stage 3; Oracle isolation macro 0.3333 (missing_action 1.000; incorrect_actor/out_of_order unobservable with recorded root cause); downstream paired rules_only=human_rules=0.3333, direct_llm blocked; real LLM calls 0, blocked only on process-env credentials; transition ledger v9 binds historical capsules by hash; b0 formal arm LF pin restores integrity_pass=true
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-09T21:34:01.174757+00:00 - Lifecycle semantics for superseded Gold-Rule-Record absence tests + LF pins for superseded transition test modules (full suite green)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：3043 passed, 59 skipped, 51 warnings in 3916.12s (1:05:16)
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`43697c1030e38b0dbe994b4ebece979eefb01538`；相关未提交路径：8 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：无
+- 备注：24 historical tests that assert no rule_record file exists (or re-run builders that fail closed on one) are now skipped with an explicit reason after the documented Gold Rule Records publication; current-state truth asserted by successor v9; v1-v8 transition test modules pinned text eol=lf because their raw bytes are superseded-asset hashes in the v2-v7 reports; one v7 superseded-asset binding failure is pre-existing manifest drift and documented; full suite 3043 passed / 59 skipped / 0 failed; integrity_pass=true
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
