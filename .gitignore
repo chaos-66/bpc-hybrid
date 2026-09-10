@@ -177,3 +177,13 @@ formal_experiment/outputs/development/s3_action_matching_v2/*
 !formal_experiment/outputs/development/s3_action_matching_v2/metrics.json
 !formal_experiment/outputs/development/s3_action_matching_v2/diagnostics.json
 !formal_experiment/outputs/development/s3_action_matching_v2/manifest.json
+
+# S3-ACTION-MATCHING-V3 (2026-09-10): the versioned action-representation run.
+# Narrow allowlist: the run directory and its four exact result files only;
+# every other file under outputs/development stays ignored.
+!formal_experiment/outputs/development/s3_action_matching_v3/
+formal_experiment/outputs/development/s3_action_matching_v3/*
+!formal_experiment/outputs/development/s3_action_matching_v3/predictions.jsonl
+!formal_experiment/outputs/development/s3_action_matching_v3/metrics.json
+!formal_experiment/outputs/development/s3_action_matching_v3/diagnostics.json
+!formal_experiment/outputs/development/s3_action_matching_v3/manifest.json

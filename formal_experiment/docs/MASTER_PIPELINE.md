@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.45
+**文档版本**：3.6.46
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-09-10
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,43 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-10 修订 3.6.46：动作表示与候选匹配 v3（嵌套动作、关系结构、语义角色，零 API）
+
+在 v2 固定面板上继续只改**动作表示与候选匹配**：新增薄后继模块
+`src/bpc_hybrid/s3_action_matching_v3.py`（`s3_action_matching@3.0.0`），继承 v2 并只覆盖
+`action_match` 与其表示/比较辅助函数；v1、v2、冻结 Sun、执行者/顺序检查、unknown 聚合、
+评价器、阈值、相似度后端与 NLP 模型全部不变。
+
+- **已确认的四个问题（均由逐项证据复现）**：① 嵌套动作被丢弃 ——
+  `rectify/access/erase` 是 `acl` 槽位动词，被 v2 的对象过滤掉，三个候选对象证据完全相同
+  而并列 unknown；② 动作间关系被压平 —— `Stop running BPs using withdrawn data` 与
+  `Stop using withdrawn data` 只按词集合比较；③ 单个不匹配候选否定整个匹配 ——
+  加入 `Inspect furniture` 后 `Inspect package`↔`Examine package` 由匹配翻成冲突；
+  ④ 词集合相同掩盖语义角色相反 —— `from Alice to Bob` 与 `from Bob to Alice` 被判为一致。
+- **v3 表示**：主动作、对象内容、**嵌套动作**（`{verb, objects, slot, span}`）、
+  **介词角色绑定**（`from: {alice}`、`to: {bob}`）、否定/数量，并为每个元素记录原文 span。
+- **v3 判定**：唯一完全匹配优先；同名多 ID 仍未知；一个候选不匹配只排除自身，不再否决
+  已成立的匹配；要求被至少一个候选满足即为满足（存在语义）；只有**所有**同谓词候选都是
+  明确不满足时才判 violation，出现任一"信息不足"候选则保留 unknown；谓词一致按词元相等
+  判定，词面差异走冻结整标签相似度路径；从属子句主语计入内容；要求自身内容无法解析时
+  不伪造结构，直接记 unknown。未新增 GDPR 词表、rectify/access/erase 专项规则、BP 特判、
+  样本 ID 特判或同义词表。
+- **复测（同一冻结契约、分母不变）**：macro-F1 **Sun 0.7874 / v2 0.9630 / v3 0.9825**；
+  unknown **0 / 2 / 1**；成对成功 **16/28、26/28、27/28**；v3 逐类 missing_action 0.9474
+  （TP9 FP0 FN1 TN10，正例 unknown 1）、incorrect_actor 1.0000、out_of_order 1.0000；
+  **v2 正确而 v3 错误/unknown 0 项，v2 错误而 v3 正确 1 项**。
+- **两个原 unknown**：`syn_missing_action_04::variant` 根因为嵌套动作丢失，v3 判
+  `nested_action_substituted`（`rectify` 被 `access`/`erase` 替换）→ **unknown→violation**；
+  `syn_missing_action_06::variant` 根因为关系被压平，v3 判为**包含关系**
+  （候选 `use(withdrawn data)` 是要求结构的成分，缺 `run(BPs)`）→ **仍为 unknown**，
+  按契约解释未裁定处理：既不预设改成 violation，也不改契约与分母。
+- **契约解释问题（待协调者裁定）**：本面板的 missing_action 契约定义为"指定结构化活动是否
+  存在"（定义 A），未定义"任何实现等价业务效果的活动"（定义 B）；`syn_missing_action_06`
+  的等价性因此无法由既有定义裁定，保留 unknown 并计入漏检。
+- **边界**：development + synthetic 固定回归面，不是独立泛化结论，也不是正式法条 Stage 3
+  实验；真实法条↔流程语义映射仍未评价。复核入口
+  `python formal_experiment/scripts/run_s3_action_matching_v3.py --replay`。
 
 ## 2026-09-10 修订 3.6.45：开发检查器动作匹配缺陷修复与固定面板复测（S3-ACTION-MATCHING-V2，零 API）
 

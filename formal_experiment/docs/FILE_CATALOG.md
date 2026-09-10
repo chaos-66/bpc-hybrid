@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-10
-**收录文件**：1751 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1758 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -828,6 +828,10 @@
 | `outputs/development/s3_action_matching_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_action_matching_v2/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_action_matching_v2/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_action_matching_v3/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_action_matching_v3/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_action_matching_v3/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_action_matching_v3/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_paired_mechanism_v1/contracts_locked.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_paired_mechanism_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_paired_mechanism_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1403,6 +1407,7 @@
 | `scripts/run_s2_12_sun_llm_fallback_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s2_12_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_action_matching_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_downstream_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_evidence_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -1565,6 +1570,7 @@
 | `src/bpc_hybrid/s2_12_stratified_evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s2_12_stratified_evaluator_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_action_matching_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_evidence_checks_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_unified.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
@@ -1811,6 +1817,7 @@
 | `tests/test_s3_2_s3_3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_9_synthetic_panel.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_action_matching_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_downstream_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_evidence_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_unified_v1.py` | 活动 | Python 实现、脚本或测试 |

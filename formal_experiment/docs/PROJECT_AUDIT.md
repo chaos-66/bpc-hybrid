@@ -11,6 +11,26 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 ## 1. 当前结论
 
+**2026-09-10 动作表示与候选匹配 v3（S3-ACTION-MATCHING-V3，零 API）**：在同一冻结成对面板上
+只改动作表示与候选匹配（新增 `src/bpc_hybrid/s3_action_matching_v3.py`，继承 v2）。
+已确认并处理四个问题：**嵌套动作丢失**（`rectify/access/erase` 为 `acl` 槽位动词，被 v2 对象
+过滤掉后三个候选对象证据相同而并列 unknown）、**动作关系被压平**（`Stop running BPs using
+withdrawn data` vs `Stop using withdrawn data`）、**单个不匹配候选否决整个匹配**
+（加入 `Inspect furniture` 后原匹配翻成冲突）、**语义角色互换未识别**
+（`from Alice to Bob` vs `from Bob to Alice`）。v3 表示主动作＋对象＋嵌套动作
+（verb/objects/slot/span）＋介词角色绑定＋否定/数量，并记录原文 span。
+真实结果（落盘预测复算）：macro-F1 **Sun 0.7874 / v2 0.9630 / v3 0.9825**；unknown **0/2/1**；
+成对成功 **16/28、26/28、27/28**；v3 逐类 missing_action 0.9474（TP9 FP0 FN1 TN10）、
+incorrect_actor 1.0000、out_of_order 1.0000；**v2 正确而 v3 错误/unknown 0 项**，
+v2 错误而 v3 正确 1 项。两个原 unknown：`syn_missing_action_04::variant` 根因为嵌套动作丢失
+→ unknown→violation；`syn_missing_action_06::variant` 根因为关系被压平，v3 判为包含关系
+（候选是要求结构的成分）→ 仍 unknown，且按契约解释未裁定处理。**契约解释问题**：面板契约
+只定义"指定结构化活动是否存在"（定义 A），未定义"等价业务效果活动"（定义 B）；
+`syn_missing_action_06` 的等价性无法由既有定义裁定，分母与契约均未改，该项计入漏检。
+有效契约仍 28/30、28 对、56 实例；v1/v2 列为复用已验证预测（哈希绑定校验后引用，未重跑）。
+产物 `outputs/development/s3_action_matching_v3/`；复核命令
+`python formal_experiment/scripts/run_s3_action_matching_v3.py --replay`。
+
 **2026-09-10 开发检查器动作匹配缺陷修复与复测（S3-ACTION-MATCHING-V2，零 API）**：
 只替换动作匹配策略、其余检查逻辑不变，在**冻结的上轮成对面板**上复测（固定 30 变体、
 **有效契约仍 28**、未解决仍 2、28 对、56 个检查实例；未改分母、未修两个无效 actor 变体）。

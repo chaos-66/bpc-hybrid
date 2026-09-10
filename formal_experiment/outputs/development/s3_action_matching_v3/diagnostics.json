@@ -1,0 +1,1396 @@
+{
+  "schema_version": "s3_action_matching_v3_diagnostics@1.0.0",
+  "run_id": "s3_action_matching_v3",
+  "method": {
+    "id": "evidence_checks_v3_action_structure",
+    "scope": "action representation and candidate matching only"
+  },
+  "representation_policy": {
+    "method": "s3_action_matching@3.0.0",
+    "base_method": "s3_action_matching@2.0.0",
+    "modification_scope": "action representation and candidate matching only",
+    "representation": {
+      "predicate": "head verb lemma, else first content token lemma",
+      "objects": "nominal tokens outside subject-like slots, verbs, stopwords, and the predicate itself",
+      "nested_actions": "non-head verbs in acl/advcl/ccomp/conj/relcl/xcomp with their own object content and slot label",
+      "roles": "prepositional role markers with the nominal content bound to them",
+      "closed_class": "negation and numerals",
+      "spans": "every element carries its character span in the source label"
+    },
+    "candidate_verdicts": {
+      "satisfied": "predicate agrees and closed-class content, roles, nested actions and object coverage all agree",
+      "not_satisfied": "explicit structural difference: negation, numerals, a role bound to different content, a nested slot filled by a different action, or object content differing with no similarity support between the differing terms",
+      "undetermined": "the requirement's own content is absent, the differing terms are similar enough that equivalence is possible, or a role marker is missing; the missing component is named"
+    },
+    "global_rules": [
+      "unique exact match wins; identical labels on several ids stay unknown",
+      "a non-matching candidate excludes only itself and never vetoes a satisfied one",
+      "a requirement is satisfied if at least one candidate satisfies it",
+      "explicit non-satisfaction is reported only when every predicate-agreeing candidate is an explicit non-satisfier; any undetermined candidate keeps it unknown",
+      "predicate identity is lexical (equal lemmas); verb variation between whole labels is decided by the frozen whole-label similarity path and gamma",
+      "subordinate-clause subjects count as content; the subject-like exclusion only keeps a mis-tagged main action word out of the main clause objects",
+      "the whole-label similarity path may satisfy a requirement only when the candidate describes an action (verb predicate), unless the requirement is not an action phrase either",
+      "when the requirement's own content could not be parsed the comparison is undetermined, never satisfied"
+    ],
+    "forbidden": [
+      "no GDPR vocabulary or object list",
+      "no rectification/access/erasure rule and no BP special case",
+      "no sample-id special cases or target-label whitelist",
+      "no synonym list",
+      "no ordering by activity id to settle identical labels",
+      "no use of the frozen target id inside matching"
+    ]
+  },
+  "policy_frozen_before_panel_run": true,
+  "definitions": {
+    "correct_positive": "variant side judged violation",
+    "correct_control": "original side judged satisfied",
+    "new_errors": "v2 correct and v3 not correct",
+    "fixed_errors": "v2 not correct and v3 correct"
+  },
+  "change_summary": {
+    "unchanged": 55,
+    "corrected": 1
+  },
+  "v2_to_v3_item_changes": [
+    {
+      "item_id": "syn_incorrect_actor_01::original",
+      "pair_id": "syn_incorrect_actor_01",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_01::variant",
+      "pair_id": "syn_incorrect_actor_01",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_02::original",
+      "pair_id": "syn_incorrect_actor_02",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_02::variant",
+      "pair_id": "syn_incorrect_actor_02",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_05::original",
+      "pair_id": "syn_incorrect_actor_05",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_05::variant",
+      "pair_id": "syn_incorrect_actor_05",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_06::original",
+      "pair_id": "syn_incorrect_actor_06",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent",
+        "role_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_06::variant",
+      "pair_id": "syn_incorrect_actor_06",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent",
+        "role_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_07::original",
+      "pair_id": "syn_incorrect_actor_07",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_07::variant",
+      "pair_id": "syn_incorrect_actor_07",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_08::original",
+      "pair_id": "syn_incorrect_actor_08",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_08::variant",
+      "pair_id": "syn_incorrect_actor_08",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_09::original",
+      "pair_id": "syn_incorrect_actor_09",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_09::variant",
+      "pair_id": "syn_incorrect_actor_09",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_10::original",
+      "pair_id": "syn_incorrect_actor_10",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_incorrect_actor_10::variant",
+      "pair_id": "syn_incorrect_actor_10",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_01::original",
+      "pair_id": "syn_missing_action_01",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_01::variant",
+      "pair_id": "syn_missing_action_01",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "structure_not_satisfied"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "every predicate-agreeing candidate shows an explicit structural difference: object content differs without similarity support (['subject'] vs ['datum'], support 0.4537)"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_02::original",
+      "pair_id": "syn_missing_action_02",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_02::variant",
+      "pair_id": "syn_missing_action_02",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "structure_not_satisfied"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "every predicate-agreeing candidate shows an explicit structural difference: object content differs without similarity support (['datum'] vs ['subject'], support 0.4537)"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_03::original",
+      "pair_id": "syn_missing_action_03",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "nested_action_substituted"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_03::variant",
+      "pair_id": "syn_missing_action_03",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "structure_not_satisfied"
+      ],
+      "v3_reason_codes": [
+        "nested_action_substituted"
+      ],
+      "v3_tier_reasons": [
+        "every predicate-agreeing candidate shows an explicit structural difference: required nested action 'withdraw' replaced in slot 'acl'"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_04::original",
+      "pair_id": "syn_missing_action_04",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "nested_action_substituted",
+        "role_content_difference"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_04::variant",
+      "pair_id": "syn_missing_action_04",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "unknown",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "structure_not_satisfied"
+      ],
+      "v3_reason_codes": [
+        "nested_action_substituted",
+        "required_object_content_absent",
+        "role_content_difference"
+      ],
+      "v3_tier_reasons": [
+        "every predicate-agreeing candidate shows an explicit structural difference: role 'of' bound to different content (['datum', 'right'] vs ['right']); required nested action 'rectify' replaced in slot 'acl'"
+      ],
+      "change": "corrected"
+    },
+    {
+      "item_id": "syn_missing_action_05::original",
+      "pair_id": "syn_missing_action_05",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_05::variant",
+      "pair_id": "syn_missing_action_05",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "no_candidate_above_gamma"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "no candidate reaches gamma; best raw similarity 0.5842"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_06::original",
+      "pair_id": "syn_missing_action_06",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "nested_action_component_containment",
+        "predicate_not_equivalent",
+        "required_object_content_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_06::variant",
+      "pair_id": "syn_missing_action_06",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "unknown",
+      "v3_status": "unknown",
+      "v3_match_tiers": [
+        "structure_undetermined"
+      ],
+      "v3_reason_codes": [
+        "nested_action_component_containment",
+        "required_object_content_absent"
+      ],
+      "v3_tier_reasons": [
+        "at least one predicate-agreeing candidate cannot be decided: required nested action 'run' absent; the candidate action is a component of the requirement; required object content absent (['bp'])"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_07::original",
+      "pair_id": "syn_missing_action_07",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_07::variant",
+      "pair_id": "syn_missing_action_07",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "no_candidate_above_gamma"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "no candidate reaches gamma; best raw similarity 0.6978"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_08::original",
+      "pair_id": "syn_missing_action_08",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_08::variant",
+      "pair_id": "syn_missing_action_08",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "no_candidate_above_gamma"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "no candidate reaches gamma; best raw similarity 0.5183"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_09::original",
+      "pair_id": "syn_missing_action_09",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_09::variant",
+      "pair_id": "syn_missing_action_09",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "no_candidate_above_gamma"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "no candidate reaches gamma; best raw similarity 0.5842"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_10::original",
+      "pair_id": "syn_missing_action_10",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_missing_action_10::variant",
+      "pair_id": "syn_missing_action_10",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "no_candidate_above_gamma"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "no candidate reaches gamma; best raw similarity 0.5691"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_01::original",
+      "pair_id": "syn_out_of_order_01",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_01::variant",
+      "pair_id": "syn_out_of_order_01",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_02::original",
+      "pair_id": "syn_out_of_order_02",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_02::variant",
+      "pair_id": "syn_out_of_order_02",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_03::original",
+      "pair_id": "syn_out_of_order_03",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_03::variant",
+      "pair_id": "syn_out_of_order_03",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_04::original",
+      "pair_id": "syn_out_of_order_04",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent",
+        "required_object_content_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_04::variant",
+      "pair_id": "syn_out_of_order_04",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent",
+        "required_object_content_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_05::original",
+      "pair_id": "syn_out_of_order_05",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent",
+        "role_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_05::variant",
+      "pair_id": "syn_out_of_order_05",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent",
+        "role_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_06::original",
+      "pair_id": "syn_out_of_order_06",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent",
+        "role_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_06::variant",
+      "pair_id": "syn_out_of_order_06",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "object_content_difference",
+        "predicate_not_equivalent",
+        "role_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_07::original",
+      "pair_id": "syn_out_of_order_07",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "nested_action_component_containment",
+        "predicate_not_equivalent",
+        "required_object_content_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_07::variant",
+      "pair_id": "syn_out_of_order_07",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "nested_action_component_containment",
+        "predicate_not_equivalent",
+        "required_object_content_absent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_08::original",
+      "pair_id": "syn_out_of_order_08",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_08::variant",
+      "pair_id": "syn_out_of_order_08",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_09::original",
+      "pair_id": "syn_out_of_order_09",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_09::variant",
+      "pair_id": "syn_out_of_order_09",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_10::original",
+      "pair_id": "syn_out_of_order_10",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v2_status": "satisfied",
+      "v3_status": "satisfied",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    },
+    {
+      "item_id": "syn_out_of_order_10::variant",
+      "pair_id": "syn_out_of_order_10",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v2_status": "violation",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "exact_label"
+      ],
+      "v3_reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "v3_tier_reasons": [
+        "mapped through exact_label"
+      ],
+      "change": "unchanged"
+    }
+  ],
+  "new_errors": [],
+  "fixed_errors": [
+    {
+      "item_id": "syn_missing_action_04::variant",
+      "pair_id": "syn_missing_action_04",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v2_status": "unknown",
+      "v3_status": "violation",
+      "v3_match_tiers": [
+        "structure_not_satisfied"
+      ],
+      "v3_reason_codes": [
+        "nested_action_substituted",
+        "required_object_content_absent",
+        "role_content_difference"
+      ],
+      "v3_tier_reasons": [
+        "every predicate-agreeing candidate shows an explicit structural difference: role 'of' bound to different content (['datum', 'right'] vs ['right']); required nested action 'rectify' replaced in slot 'acl'"
+      ],
+      "change": "corrected"
+    }
+  ],
+  "focus_items": [
+    {
+      "item_id": "syn_missing_action_04::variant",
+      "check_type": "missing_action",
+      "contract_requirement": {
+        "actions": [
+          "Add \"existence of the right to rectify of personal data\""
+        ],
+        "actors": [],
+        "actor_action_pairs": [],
+        "order_relations": []
+      },
+      "target_activity_name": "Add \"existence of the right to rectify of personal data\"",
+      "target_activity_id": "sid-2CFD3957-D6FB-4CA6-95B4-86EEC4B4B4B8",
+      "v2_status": "unknown",
+      "v3_status": "violation",
+      "v3_tier": [
+        "structure_not_satisfied"
+      ],
+      "v3_tier_reason": [
+        "every predicate-agreeing candidate shows an explicit structural difference: role 'of' bound to different content (['datum', 'right'] vs ['right']); required nested action 'rectify' replaced in slot 'acl'"
+      ],
+      "v3_reason_codes": [
+        "nested_action_substituted",
+        "required_object_content_absent",
+        "role_content_difference"
+      ],
+      "checked_activity_ids": [
+        "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+        "sid-2AD781BC-EDA4-4092-AB65-CC7990C7647B",
+        "sid-7D31B869-9AC4-480E-82E8-09D588E1715C"
+      ],
+      "candidate_evidence": [
+        {
+          "activity_id": "sid-7D31B869-9AC4-480E-82E8-09D588E1715C",
+          "label": "Add \"existence of the right to access personal data\"",
+          "predicate_agrees": true,
+          "verdict": "not_satisfied",
+          "raw_similarity": 0.9067,
+          "reason_codes": [
+            "role_content_difference",
+            "nested_action_substituted"
+          ]
+        },
+        {
+          "activity_id": "sid-2AD781BC-EDA4-4092-AB65-CC7990C7647B",
+          "label": "Add \"existence of the right to erase personal data\"",
+          "predicate_agrees": true,
+          "verdict": "not_satisfied",
+          "raw_similarity": 0.8965,
+          "reason_codes": [
+            "role_content_difference",
+            "nested_action_substituted"
+          ]
+        },
+        {
+          "activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+          "label": "Add \"existence of the right to withdraw\"",
+          "predicate_agrees": true,
+          "verdict": "not_satisfied",
+          "raw_similarity": 0.8639,
+          "reason_codes": [
+            "role_content_difference",
+            "nested_action_substituted",
+            "required_object_content_absent"
+          ]
+        }
+      ]
+    },
+    {
+      "item_id": "syn_missing_action_06::variant",
+      "check_type": "missing_action",
+      "contract_requirement": {
+        "actions": [
+          "Stop running BPs using withdrawn data"
+        ],
+        "actors": [],
+        "actor_action_pairs": [],
+        "order_relations": []
+      },
+      "target_activity_name": "Stop running BPs using withdrawn data",
+      "target_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+      "v2_status": "unknown",
+      "v3_status": "unknown",
+      "v3_tier": [
+        "structure_undetermined"
+      ],
+      "v3_tier_reason": [
+        "at least one predicate-agreeing candidate cannot be decided: required nested action 'run' absent; the candidate action is a component of the requirement; required object content absent (['bp'])"
+      ],
+      "v3_reason_codes": [
+        "nested_action_component_containment",
+        "required_object_content_absent"
+      ],
+      "checked_activity_ids": [
+        "sid-1A48D305-CB15-4C57-A988-B39ED62DE531"
+      ],
+      "candidate_evidence": [
+        {
+          "activity_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "label": "Stop using withdrawn data",
+          "predicate_agrees": true,
+          "verdict": "undetermined",
+          "raw_similarity": 0.8334,
+          "reason_codes": [
+            "nested_action_component_containment",
+            "required_object_content_absent"
+          ]
+        }
+      ]
+    }
+  ],
+  "counter_examples": [
+    {
+      "name": "nested_action_substitution",
+      "requirement": "Add the right to read a file",
+      "candidates": [
+        "Add the right to delete a file"
+      ],
+      "mapped": false,
+      "match_tier": "structure_not_satisfied",
+      "reason": "requirement_evidence_not_satisfied",
+      "reason_codes": [
+        "nested_action_substituted"
+      ],
+      "expected_mapped": false,
+      "expected_reasons": [
+        "nested_action_substituted"
+      ],
+      "as_expected": true
+    },
+    {
+      "name": "relation_containment_undetermined",
+      "requirement": "Stop running the pump using coolant",
+      "candidates": [
+        "Stop using coolant"
+      ],
+      "mapped": false,
+      "match_tier": "structure_undetermined",
+      "reason": "ambiguous_action_mapping",
+      "reason_codes": [
+        "nested_action_component_containment",
+        "required_object_content_absent"
+      ],
+      "expected_mapped": false,
+      "expected_reasons": [
+        "nested_action_component_containment",
+        "required_object_content_absent"
+      ],
+      "as_expected": true
+    },
+    {
+      "name": "unrelated_candidate_does_not_veto",
+      "requirement": "Inspect package",
+      "candidates": [
+        "Examine package",
+        "Inspect furniture"
+      ],
+      "mapped": true,
+      "match_tier": "similarity_satisfied",
+      "reason": null,
+      "reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "expected_mapped": true,
+      "expected_reasons": [],
+      "as_expected": true
+    },
+    {
+      "name": "role_swap_detected",
+      "requirement": "Transfer money from Alice to Bob",
+      "candidates": [
+        "Transfer money from Bob to Alice"
+      ],
+      "mapped": false,
+      "match_tier": "structure_not_satisfied",
+      "reason": "requirement_evidence_not_satisfied",
+      "reason_codes": [
+        "role_content_difference"
+      ],
+      "expected_mapped": false,
+      "expected_reasons": [
+        "role_content_difference"
+      ],
+      "as_expected": true
+    },
+    {
+      "name": "lexical_variation_not_a_conflict",
+      "requirement": "Inspect package",
+      "candidates": [
+        "Examine package"
+      ],
+      "mapped": true,
+      "match_tier": "similarity_satisfied",
+      "reason": null,
+      "reason_codes": [
+        "predicate_not_equivalent"
+      ],
+      "expected_mapped": true,
+      "expected_reasons": [],
+      "as_expected": true
+    }
+  ],
+  "contract_interpretation": {
+    "question": "does the frozen panel require the specified structured activity to be present (A), or the absence of any activity achieving an equivalent business effect (B)?",
+    "evidence": {
+      "contracts_locked.requirement_derivation.missing_action": "required action = original target activity label (verbatim)",
+      "panel_mutation_type": "missing_action",
+      "panel_expected_violation": "missing_action",
+      "panel_removed_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+      "panel_removed_activity_name": "Stop running BPs using withdrawn data"
+    },
+    "finding": "the frozen contract defines the requirement as the original activity's own label and records the expectation from the removal of that activity, i.e. definition A; equivalence of business effect (B) is not defined anywhere in the frozen panel, contract or evaluator",
+    "decision": "definition not switched; the panel, the requirement and the denominator stay unchanged, and the undecidable item stays unknown and counts as a miss",
+    "minimum_question_for_coordinator": "should syn_missing_action_06::variant be judged under definition A (the specified scoped action is absent) or under definition B (a broader activity with an equivalent effect may satisfy it)?"
+  },
+  "reference": "per-candidate evidence lives once in predictions.jsonl; this file refers to items by item_id and repeats only decision-level codes"
+}
