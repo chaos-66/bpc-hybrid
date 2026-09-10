@@ -4,6 +4,10 @@ This directory is the only active experiment surface.
 
 ## Required Reading
 
+The full list below applies to experiment-affecting work. For artifact/prose/
+formatting-only work, read both AGENTS.md contracts and the task's relevant
+sources; do not traverse the entire experiment state or trigger its checks.
+
 1. `docs/MASTER_PIPELINE.md`
 2. `docs/PROJECT_AUDIT.md`
 3. `docs/AGENT_RUNBOOK.md`
@@ -39,12 +43,18 @@ be treated as Sun-compatible without an explicit adapter and provenance check.
 
 ## Mandatory Check and Experiment Log
 
-The legacy `audit_*` filenames refer to automated offline integrity checks and
-append-only experiment-provenance logs. They are not institutional or
-third-party audits. Keep the safeguards, but do not run the full suite during
-read-only analysis or after every tiny edit.
+The legacy `audit_*` filenames refer to offline integrity checks and experiment
+logs, not third-party audits. The root `AGENTS.md` Validation Scope and Cost
+policy and `docs/AI_CHANGE_PROTOCOL.md` govern test selection. This 2026-09-10
+policy overrides older blanket full-test instructions in task templates.
 
-From the workspace root or this directory, run before editing:
+PPT/prose/formatting/documentation-only work needs its own content/render/file
+checks, not an experiment audit, code tests, or an experiment event. A scoped
+Git commit records such work. Formula/claim checking uses existing sources;
+it does not authorize running experiments.
+
+For experiment-affecting code/config/schema/prompt/data/evaluator changes,
+run the quick check once at the batch boundaries:
 
 ```powershell
 python formal_experiment/scripts/audit_project.py
@@ -56,19 +66,19 @@ or, from this directory:
 python scripts/audit_project.py
 ```
 
-Run once after each coherent material-change batch:
+Select named tests for the changed behavior and its callers. A routine commit,
+push, checkpoint, milestone update, event, or handoff does not require full
+tests. Full tests (`audit_project.py --with-tests` or equivalent) require
+explicit user authorization for this task, a concrete reason, and an expected
+duration. Existing authorization need not be requested twice. Never run a
+duplicate suite in the shared workspace or escalate because a receipt is stale.
 
-```powershell
-python scripts/audit_project.py --with-tests
-```
-
-Then record the verified change or experiment run with
-`scripts/record_change.py`; it reuses the matching exact-state test receipt, so
-the full suite is not run twice. It appends the human and machine-readable
-experiment-provenance logs at `docs/EXPERIMENT_LOG.md` and
-`docs/EXPERIMENT_EVENTS.jsonl`. Human-facing log fields are written in Chinese.
-Declare Gold, LLM/API, and artifact handling explicitly. See
-`docs/AI_CHANGE_PROTOCOL.md`.
+For experiment-affecting changes/runs, `scripts/record_change.py` can run
+explicit `--test-target tests/test_example.py` selections (3-minute default
+timeout) or reuse a matching full-test receipt. Without either it exits
+without running tests or writing logs. Record test scope accurately; focused
+verification is not full-suite verification. Human-facing fields stay Chinese;
+declare Gold, LLM/API, and artifact handling. See `docs/AI_CHANGE_PROTOCOL.md`.
 
 `integrity_pass: true` permits continued controlled development. It does not
 permit final claims. Final metrics require:

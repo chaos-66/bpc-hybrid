@@ -41,8 +41,12 @@ Agent 和人类都按以下顺序进入：
 
 ```powershell
 python formal_experiment/scripts/audit_project.py
-python formal_experiment/scripts/audit_project.py --with-tests
 ```
+
+上面仅为快速完整性检查，不运行测试。PPT、文字、排版等纯文档工作无需执行。
+实验程序修改默认只跑相关测试；`--with-tests` 会运行整个测试集，通常耗时较长，
+必须得到用户对本轮全量测试的明确授权。提交、推送和记录日志不会自动触发全量。
+具体范围见 `AGENTS.md` 与 `docs/AI_CHANGE_PROTOCOL.md`。
 
 启动已授权的人工审核工具：
 

@@ -3,8 +3,9 @@
 This command is offline.  It never loads ``.env``, calls an LLM, or edits Gold.
 It records the caller's declared safety status together with verified test
 evidence, blockers, Git commit, and relevant dirty paths.  When the exact active
-state has already passed ``audit_project.py --with-tests``, the matching receipt
-is reused instead of running the same suite twice.
+state has already passed ``audit_project.py --with-tests``, its receipt can be
+reused. Otherwise the caller must name focused test files explicitly. Missing
+or stale receipts NEVER cause this command to launch the full suite.
 """
 
 from __future__ import annotations
@@ -14,6 +15,7 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -25,7 +27,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from formal_experiment.audit import collect_project_audit
-from audit_project import _run_tests, load_matching_verification_receipt
+from audit_project import load_matching_verification_receipt
 
 
 EVENT_LOG = FORMAL_ROOT / "docs" / "EXPERIMENT_EVENTS.jsonl"
@@ -147,9 +149,50 @@ def _enforce_expected_dirty(
 def _test_summary(output: str) -> str:
     for line in reversed(output.splitlines()):
         stripped = line.strip()
-        if re.search(r"\b(passed|failed|error|errors)\b", stripped):
+        if re.search(r"\b(passed|failed|error|errors)\b", stripped, re.IGNORECASE):
             return stripped
     return "test summary unavailable"
+
+
+def _focused_targets(targets: list[str]) -> list[str]:
+    """Allow explicit test files/node IDs, never directories, options or globs."""
+    test_root = (FORMAL_ROOT / "tests").resolve()
+    selected = []
+    for target in targets:
+        file_name, separator, node_id = target.partition("::")
+        path = (FORMAL_ROOT / file_name).resolve()
+        if (not path.is_relative_to(test_root) or not path.is_file()
+                or path.suffix != ".py" or not path.name.startswith("test_")):
+            raise ValueError(f"Name a test file under formal_experiment/tests: {target}")
+        selected.append(path.relative_to(FORMAL_ROOT.resolve()).as_posix()
+                        + (separator + node_id if separator else ""))
+    if not selected:
+        raise ValueError("At least one explicit test file or node ID is required")
+    return list(dict.fromkeys(selected))
+
+
+def _run_focused_tests(targets: list[str], timeout_seconds: int = 180) -> dict:
+    selected = _focused_targets(targets)
+    if timeout_seconds <= 0:
+        raise ValueError("Test timeout must be positive")
+    temporary_root = FORMAL_ROOT / ".tmp"
+    temporary_root.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="record-focused-", dir=temporary_root,
+                                     ignore_cleanup_errors=True) as temporary:
+        command = [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
+                   "--basetemp", str(Path(temporary) / "pytest"), *selected]
+        try:
+            result = subprocess.run(command, cwd=FORMAL_ROOT, text=True,
+                                    encoding="utf-8", errors="replace",
+                                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                    check=False, timeout=timeout_seconds)
+            returncode, output = result.returncode, result.stdout
+        except subprocess.TimeoutExpired:
+            returncode = 124
+            output = f"ERROR: focused tests timed out after {timeout_seconds}s; no wider tests started"
+    return {"command": command, "targets": selected, "scope": "focused",
+            "source": "fresh_run", "returncode": returncode,
+            "passed": returncode == 0, "output": output}
 
 
 def build_event(args: argparse.Namespace, audit: dict, tests: dict) -> dict:
@@ -166,6 +209,9 @@ def build_event(args: argparse.Namespace, audit: dict, tests: dict) -> dict:
         "test_returncode": tests["returncode"],
         "test_summary": _test_summary(str(tests["output"])),
         "test_source": tests.get("source", "fresh_run"),
+        "test_scope": tests.get("scope", "full"),
+        "test_command": tests.get("command", []),
+        "test_targets": tests.get("targets", []),
         "blocker_codes": [item["code"] for item in audit["findings"]["blockers"]],
         "warning_codes": [item["code"] for item in audit["findings"]["warnings"]],
         "git_commit": _git(["rev-parse", "HEAD"]),
@@ -209,6 +255,7 @@ def append_event(event: dict) -> None:
         f"- 命令：`{event['command']}`",
         f"- 完整性通过：{yes_no(event['integrity_pass'])}；正式实验就绪：{yes_no(event['final_experiment_ready'])}",
         f"- 测试：{event['test_summary']}",
+        f"- 测试范围：{'相关测试（非全量）' if event.get('test_scope') == 'focused' else '全量测试'}",
         f"- 测试证据：{TEST_SOURCE_ZH.get(test_source, test_source)}（`{test_source}`）",
         f"- Git：`{event['git_commit']}`；相关未提交路径：{len(event['changed_paths'])} 个",
         f"- Gold：{SAFETY_ZH.get(safety['gold'], safety['gold'])}（`{safety['gold']}`）；"
@@ -250,6 +297,14 @@ def main() -> int:
         choices=("not_created_or_overwritten", "created_no_overwrite", "authorized_overwrite"),
     )
     parser.add_argument("--notes", default="")
+    parser.add_argument(
+        "--test-target", action="append", default=[],
+        help="Run only this explicit tests/test_*.py file or node ID, relative to formal_experiment; repeatable. Never runs directories or the full suite.",
+    )
+    parser.add_argument(
+        "--test-timeout-seconds", type=int, default=180,
+        help="Total focused-test timeout (default 180s); no automatic retries or expansion.",
+    )
     parser.add_argument(
         "--event-type",
         choices=("change", "experiment_run", "milestone"),
@@ -337,14 +392,28 @@ def main() -> int:
             )
             return 3
 
-    audit = collect_project_audit()
-    tests = load_matching_verification_receipt()
-    if tests is None:
-        print("No matching verification receipt; running the offline tests once.")
-        tests = _run_tests()
-        tests["source"] = "fresh_run"
+    targets = getattr(args, "test_target", [])
+    if targets:
+        try:
+            # Validate before launching tests or writing the event.
+            targets = _focused_targets(targets)
+            timeout = getattr(args, "test_timeout_seconds", 180)
+            if timeout <= 0:
+                raise ValueError("Test timeout must be positive")
+        except ValueError as exc:
+            parser.error(str(exc))
+        tests = _run_focused_tests(targets, timeout)
     else:
-        print("Reusing the matching verified-test receipt; no duplicate test run.")
+        tests = load_matching_verification_receipt()
+        if tests is None:
+            print("No matching test receipt. No tests were started and no event was written. "
+                  "For experiment code, specify --test-target tests/test_example.py. "
+                  "For artifact/document-only work, use the scoped Git commit. "
+                  "Full tests require separate explicit user authorization.", file=sys.stderr)
+            return 3
+        tests = {**tests, "scope": "full"}
+        print("Reusing matching full-test receipt; no tests started.")
+    audit = collect_project_audit()
     event = build_event(args, audit, tests)
     append_event(event)
 
@@ -352,6 +421,9 @@ def main() -> int:
     print(f"Integrity pass: {event['integrity_pass']}")
     print(f"Final experiment ready: {event['final_experiment_ready']}")
     print(f"Tests: {event['test_summary']}")
+    print(f"Test scope: {event['test_scope']}")
+    if not tests["passed"]:
+        print(str(tests["output"]).rstrip(), file=sys.stderr)
     return 0 if event["integrity_pass"] else 1
 
 

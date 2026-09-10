@@ -16,6 +16,9 @@
    为“完成任务”伪造数据、状态或论文结果。
 6. `integrity_pass=true` 只表示可继续开发；只有相应任务的 Definition of Done 和
    上游门禁全部通过，协调 Agent 才能派发下一任务。
+7. 测试范围以两级 AGENTS.md 和 AI_CHANGE_PROTOCOL 第 3 节的 2026-09-10 成本策略
+   为准，覆盖旧任务文本中的全量要求。纯制品/文档不跑实验测试；程序改动默认
+   具名相关测试。提交、推送、完成批次不触发全量；全量须用户明确授权本轮执行。
 
 ## 2. 当前双轨安排
 
@@ -74,14 +77,17 @@ population 及其 project-reconstructed split 已由独立机器门禁锁定。�
 9. formal_experiment/configs/methods.json
 10. formal_experiment/docs/AGENT_RUNBOOK.md
 
-修改前运行快速完整性检查。开发过程中只跑相关测试；完成一个连贯修改批次后才跑
-一次全量检查，并按 AI_CHANGE_PROTOCOL 追加事件。不得读取或打印 .env；不得调用真实 LLM/API；
+实验程序修改在批次边界运行快速完整性检查，默认只运行具名相关测试。
+纯制品/文档只做内容、渲染及文件检查。完成批次、交接、提交、推送或记录日志均
+不触发全量；全量必须有用户对本轮的明确授权并预告原因与耗时，禁止重复运行。
+实验变更按 AI_CHANGE_PROTOCOL 记录范围，日志脚本不得因缺少凭证自动跑全量。
+不得读取或打印 .env；不得调用真实 LLM/API；
 不得自动修改 Gold，不得覆盖正式产物，不得修改 references/、根
 archive/ 或 _retired/。
 
 开始前先复述：任务 ID、唯一目标、已满足依赖、输入、写入范围、禁止项和 DoD。
 若依赖不满足，停止并给出证据，不得自行解锁。交付时列出：改动文件、相关测试、
-全量验证、产物状态（development/pilot/formal）、仍存 blocker、建议的下一任务 ID。
+验证范围及未覆盖项、产物状态（development/pilot/formal）、仍存 blocker、建议的下一任务 ID。
 ```
 
 ## 4. 当前可直接派发的完整 Prompt
@@ -129,7 +135,8 @@ DoD：来源可定位；实际取得文件的 hash 可复核；许可状态诚�
 development；相关测试通过；只能把 S2.1-A 标为 verified。若没有取得官方包，交付
 精确 blocker，并保持 S2.1-A 未完成。
 
-完成连贯批次后按 AGENTS.md 运行一次全量检查、更新文件目录并记录中文变更事件。
+完成批次后按 AGENTS.md 选择相关检查、更新文件目录并按需记录中文变更事件；
+不得因批次结束自行进入全量测试。
 ```
 
 ### 4.2 Agent-P1：PW1 引言与研究问题
@@ -310,7 +317,7 @@ normalization 和 evaluator，运行 E00、E10、E01、E11，分别回答 Stage 
 输入及 hash：
 输出及状态（development/pilot/formal）：
 相关测试：
-批次全量检查：
+验证范围（制品/相关/已授权全量）及未覆盖项：
 Gold：未改 / 用户明确授权导入
 LLM/API：未调用 / 用户授权详情
 仍存 blocker：

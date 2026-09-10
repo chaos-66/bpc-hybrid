@@ -29,6 +29,8 @@ def _args(**overrides) -> argparse.Namespace:
         run_status="not_applicable",
         fail_on_unexpected_dirty=False,
         expected_dirty_path=[],
+        test_target=[],
+        test_timeout_seconds=180,
     )
     for k, v in overrides.items():
         setattr(ns, k, v)
@@ -117,8 +119,8 @@ def test_main_reuses_matching_receipt_without_duplicate_tests(monkeypatch) -> No
     monkeypatch.setattr(record_change, "load_matching_verification_receipt", lambda: receipt)
     monkeypatch.setattr(
         record_change,
-        "_run_tests",
-        lambda: (_ for _ in ()).throw(AssertionError("tests must not run twice")),
+        "_run_focused_tests",
+        lambda *args: (_ for _ in ()).throw(AssertionError("tests must not run twice")),
     )
     monkeypatch.setattr(
         record_change,
@@ -137,6 +139,83 @@ def test_main_reuses_matching_receipt_without_duplicate_tests(monkeypatch) -> No
     )
 
     assert record_change.main() == 0
+
+
+def test_missing_receipt_refuses_without_tests_audit_or_log(monkeypatch, capsys):
+    monkeypatch.setattr(record_change, "load_matching_verification_receipt", lambda: None)
+    monkeypatch.setattr(record_change.argparse.ArgumentParser, "parse_args", lambda self: _args())
+    def unexpected(*args, **kwargs):
+        raise AssertionError("Missing receipt must not start work or write logs")
+    for name in ("_run_focused_tests", "collect_project_audit", "append_event"):
+        monkeypatch.setattr(record_change, name, unexpected)
+    assert record_change.main() == 3
+    assert "No tests were started" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("target", ["tests", ".", "../test_escape.py", "--help", "tests/*.py"])
+def test_focused_targets_reject_broad_or_escaping_selection(tmp_path, monkeypatch, target):
+    monkeypatch.setattr(record_change, "FORMAL_ROOT", tmp_path)
+    (tmp_path / "tests").mkdir()
+    with pytest.raises(ValueError):
+        record_change._focused_targets([target])
+
+
+def test_focused_runner_uses_only_named_nodes_and_bounded_time(tmp_path, monkeypatch):
+    monkeypatch.setattr(record_change, "FORMAL_ROOT", tmp_path)
+    tests = tmp_path / "tests"
+    tests.mkdir()
+    (tests / "test_small.py").write_text("", encoding="utf-8")
+    captured = {}
+    def run(command, **kwargs):
+        captured.update(command=command, **kwargs)
+        return argparse.Namespace(returncode=0, stdout="1 passed in 0.01s")
+    monkeypatch.setattr(record_change.subprocess, "run", run)
+    result = record_change._run_focused_tests(["tests/test_small.py::test_one"])
+    assert captured["command"][-1] == "tests/test_small.py::test_one"
+    assert "tests" not in captured["command"]
+    assert captured["timeout"] == 180
+    assert result["scope"] == "focused"
+    assert result["passed"] is True
+
+
+def test_focused_timeout_is_recorded_as_failure_without_retry(tmp_path, monkeypatch):
+    monkeypatch.setattr(record_change, "FORMAL_ROOT", tmp_path)
+    (tmp_path / "tests").mkdir()
+    (tmp_path / "tests/test_small.py").write_text("", encoding="utf-8")
+    calls = []
+    def run(command, **kwargs):
+        calls.append(command)
+        raise record_change.subprocess.TimeoutExpired(command, kwargs["timeout"])
+    monkeypatch.setattr(record_change.subprocess, "run", run)
+    result = record_change._run_focused_tests(["tests/test_small.py"], 1)
+    assert len(calls) == 1
+    assert result["passed"] is False and result["returncode"] == 124
+    assert "timed out" in record_change._test_summary(result["output"])
+
+
+def test_focused_event_does_not_claim_full_suite(monkeypatch, tmp_path):
+    selected = ["tests/test_change_record.py"]
+    monkeypatch.setattr(record_change.argparse.ArgumentParser, "parse_args",
+                        lambda self: _args(test_target=selected))
+    monkeypatch.setattr(record_change, "_focused_targets", lambda values: values)
+    monkeypatch.setattr(record_change, "_run_focused_tests", lambda targets, timeout: {
+        "scope": "focused", "targets": targets, "command": ["pytest", *targets],
+        "source": "fresh_run", "passed": True, "returncode": 0, "output": "1 passed",
+    })
+    monkeypatch.setattr(record_change, "load_matching_verification_receipt",
+                        lambda: pytest.fail("Explicit focused selection must not load a full receipt"))
+    monkeypatch.setattr(record_change, "collect_project_audit", lambda: {
+        "integrity_pass": True, "final_experiment_ready": False,
+        "findings": {"blockers": [], "warnings": []},
+    })
+    monkeypatch.setattr(record_change, "_changed_paths", lambda: [])
+    monkeypatch.setattr(record_change, "_git", lambda args: "abc123")
+    monkeypatch.setattr(record_change, "EVENT_LOG", tmp_path / "events.jsonl")
+    monkeypatch.setattr(record_change, "HUMAN_LOG", tmp_path / "events.md")
+    assert record_change.main() == 0
+    event = json.loads((tmp_path / "events.jsonl").read_text(encoding="utf-8"))
+    assert event["test_scope"] == "focused" and event["test_targets"] == selected
+    assert "相关测试（非全量）" in (tmp_path / "events.md").read_text(encoding="utf-8")
 
 
 def test_experiment_run_event_captures_reproducibility_fields(monkeypatch) -> None:

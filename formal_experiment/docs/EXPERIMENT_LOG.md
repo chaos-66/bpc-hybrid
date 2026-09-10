@@ -4291,3 +4291,31 @@
 - 仍存在 blocker：无
 - 备注：仅新增 paper/presentations/bpc_hybrid_Stage3_completed.pptx：完整20页，Stage 3为第12—16页，包含Sun四个主要公式、三类原有违规与四类扩展违规、证据与时间特例。原第1—11页及原第14—17页的XML和关系文件逐位不变，源文件SHA256=28b25bdf230309d29c36f091415644bb02704d7818a847f62f7c54b64a77d15b，产物SHA256=17c0952e27f6f860a50c8cba7b229d7688e190ec0bd36dd51016aba462132dbf。PPT包验证通过，20页已在PowerPoint渲染检查，10个原生公式、2个原生表格。复用本轮已经结束的真实audit_project.py --with-tests输出记录失败结果，不重跑测试、不修改验证逻辑：51 failed/3058 passed/59 skipped。用户要求速速结束，停止等待与扩大排查；不宣称项目全量验证通过，不推进实验任务状态。既有Gold修改及其他任务提交不属于本次PPT编辑。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-10T11:39:09.816809+00:00 - 验证成本策略修订：按影响范围检查，取消日志自动全量测试
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：是
+- 测试：1 failed, 21 passed in 1.24s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`ba19964825e944011d099ad456c3e2f2cd2b4665`；相关未提交路径：17 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：无
+- 备注：用户明确要求完善全量测试触发规则，避免无关耗时。同步两级AGENTS、两级README、AI_CHANGE_PROTOCOL与AGENT_RUNBOOK：纯PPT/文字/排版/纯文档仅做内容、渲染、文件检查并使用scoped Git记录；程序变更默认具名相关测试；提交、推送、日志、批次结束不触发全量；全量须本轮明确授权、说明具体原因/范围/耗时，禁止重复全量、凭证缺失自动升级及无变化轮询。record_change.py缺少匹配凭证且未指定目标时返回3，不启动测试不写事件；新增--test-target明确文件/节点选择（拒绝目录、越界、通配符、选项），默认180秒超时，失败/超时不扩展不重试；机器事件新增test_scope/test_command/test_targets，人类日志明确相关测试非全量。audit_project.py仅修正--with-tests帮助文字，不修改全量运行逻辑或门禁。本轮只运行tests/test_change_record.py，不运行全量；保留Gold/API/正式发布门禁及用户既有数据修改。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-10T11:40:21.087121+00:00 - 验证成本策略修订收口：相关测试通过，全量未运行
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：22 passed in 1.02s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`ba19964825e944011d099ad456c3e2f2cd2b4665`；相关未提交路径：20 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：无
+- 备注：完成本轮用户授权的测试范围与成本规则修订。前一条事件保留首次相关测试的真实失败结果；定位到超时输出为大写ERROR但摘要提取仅识别小写，现以忽略大小写提取错误摘要，失败时也显示原始诊断，修复后仅复测同一个test_change_record.py文件。规则与实现范围：纯制品/文档不跑实验测试；程序变更默认具名相关测试；全量须本轮明确授权并说明原因/范围/耗时；Git、交接、日志不自动触发全量。日志脚本取消缺凭证自动全测，具名测试默认180秒，拒绝目录/越界/通配符/选项，超时失败不扩展不重试，日志明确相关测试非全量。两级AGENTS/README、AI_CHANGE_PROTOCOL、AGENT_RUNBOOK一致；audit_project仅修正帮助说明；不改Gold/API/正式发布门禁。本轮未运行任何全量测试，不修改用户既有数据。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

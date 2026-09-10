@@ -156,7 +156,7 @@ def main() -> int:
     parser.add_argument(
         "--with-tests",
         action="store_true",
-        help="Run the focused offline regression suite after auditing",
+        help="Run the ENTIRE offline test suite (often about one hour); requires explicit user authorization under AGENTS.md. Omit for a quick integrity check.",
     )
     parser.add_argument(
         "--require-human-review-ready",
