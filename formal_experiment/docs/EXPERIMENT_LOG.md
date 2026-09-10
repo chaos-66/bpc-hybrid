@@ -4210,3 +4210,20 @@
 - 仍存在 blocker：无
 - 备注：24 historical tests that assert no rule_record file exists (or re-run builders that fail closed on one) are now skipped with an explicit reason after the documented Gold Rule Records publication; current-state truth asserted by successor v9; v1-v8 transition test modules pinned text eol=lf because their raw bytes are superseded-asset hashes in the v2-v7 reports; one v7 superseded-asset binding failure is pre-existing manifest drift and documented; full suite 3043 passed / 59 skipped / 0 failed; integrity_pass=true
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-10T03:34:58.080108+00:00 - S3.7-DIAG 证据转换、可观察性与评价范围开发修复与诊断复算（零 API）
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s3_evidence_repair_v1；阶段=stage3；方法=s3_evidence_checks@1.0.0；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_s3_evidence_repair_v1.py --replay`
+- manifest：outputs/reports/s3_evidence_repair_v1.manifest.json
+- 结果摘要：development diagnostic；33/33 条保留、dropped=0；macro-F1：rules_only 0.3333、human_all_modalities_diagnostic 0.3333、human_obligations 0.3175；incorrect_actor 与 out_of_order 两类 F1 均为 0；恢复 3 条已确认文字顺序说明；局部通知检查 missing_action/incorrect_actor 均 satisfied；无性能提升宣称
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：3066 passed, 59 skipped, 51 warnings in 3663.74s (1:01:03)
+- 测试证据：同一文件状态的已验证凭证（`verified_receipt`）
+- Git：`6e199c3abe039538bb412d6ff25fb67947021a42`；相关未提交路径：20 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：S3.7-DIAG 开发修复、诊断复算与收口。(1) 新增独立开发检查器 src/bpc_hybrid/s3_evidence_checks_v1.py（METHOD=s3_evidence_checks@1.0.0）、离线 runner scripts/run_s3_evidence_repair_v1.py 与 tests/test_s3_evidence_repair_v1.py（23 项独立合成/产物绑定测试），产物 outputs/reports/s3_evidence_repair_v1.{json,md,manifest.json}，run_id=s3_evidence_repair_v1。(2) 修复内容：已确认人工材料 temporal_suggestions 中 3 条明确先后说明被机械转换为运行时顺序边（同句唯一原文端点、保留来源、端点不新增为必须执行的动作）；空关系/未映射/歧义映射输出 unknown 且分数为空，不再返回代表无违规的数值 0；新增同谓词+共享内容词的可追溯匹配，其余情况保留既有相似度路径；执行者按匹配活动的 lane/pool 判断，不把业务对象当执行者、不跨活动混合执行者；partial/unknown 与全部评价分母保留。新检查器是独立开发版本，不是正式 Oracle，也不等同于 Sun 原有公式。(3) 冻结边界：Gold 规则仅只读用于诊断，未修改；冻结 Sun 实现、原配置、原阈值（tau/gamma/theta=0.8）、旧 33 条标签、旧预测与历史报告均未改动；未读取或打印 .env；本轮新增真实 LLM/API 调用为 0。(4) 结果属 development diagnostic（claim_scope=development_diagnostic_not_formal_oracle、performance_claim_ready=false）。33 条旧标签诊断复算：rules_only macro 0.3333、human_all_modalities_diagnostic 0.3333、human_obligations 0.3175；incorrect_actor 与 out_of_order 两类 F1 仍为 0（22/23 条无法判断）；未宣称任何性能提升，也未以提高分数作为验收条件。(5) 仍未解决：33 条旧标签全部为正标签、无合规对照（negative_control_count=0）；推断输入未绑定目标活动/规范片段/变体（unbound_target_count=33）；v018/v021/v030 证据引用未输入的 Article 12，v033 引用未输入的 Article 19；用户已确认的局部通知意见（通知活动存在、执行者为 Data Controller）与 v001/v002 旧标签的检查范围冲突仍未对齐，未自动修改 Gold。修复后的局部通知检查为 missing_action=satisfied、incorrect_actor=satisfied，仅限该通知活动，不等于整条法规合规。(6) 复核证据：run_s3_evidence_repair_v1.py --check 与 --replay 均通过（重放为确定性重算，不写入产物）；全量检查 python formal_experiment/scripts/audit_project.py --with-tests 通过（3066 passed / 59 skipped / 0 failed，3663.74s），回执 state_sha256 与当前状态一致，record_change 复用该回执而未重复跑全量。(7) 全量检查执行说明（交回协调者决定）：协调者启动的第一轮检查回执未绑定随后状态（回执 state_sha256=a3fb99d4…，当前=92c06698…），故本轮重跑；第二轮在既有基础设施 scripts/audit_project.py::_run_tests 处崩溃（subprocess.run(text=True) 按平台 GBK 解码 pytest 管道，UnicodeDecodeError: 'gbk' codec can't decode byte 0xae，退出码 1，未写回执），该文件为既有 harness、本轮未修改，改为以运行时环境 PYTHONUTF8=1 重跑第三轮并通过。工作区状态快照（.tmp 内 before/after）显示既有测试会刷新 159 个文件 mtime（内容 sha256 全部不变）并在 git-ignored 的 outputs/development/human_review/stage1_review_backups/ 新增 1 个备份文件。(8) 本轮只暂存本轮明确文件路径；工作区原有 stage1 人工修改标记（字节与 HEAD 相同）与 7 个 .bak 未改动、未暂存、未删除。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

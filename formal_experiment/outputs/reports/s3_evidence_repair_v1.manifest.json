@@ -1,0 +1,47 @@
+{
+  "schema_version": "s3_evidence_repair_manifest@1.0.0",
+  "run_id": "s3_evidence_repair_v1",
+  "git_commit_before_checkpoint": "6e199c3abe039538bb412d6ff25fb67947021a42",
+  "inputs": {
+    "data/input/gdpr7_stage2_input_v1.json": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+    "data/gold/stage3/gdpr7_gold_rule_records_v1.json": "7cf896abdb6e420e46efd297a8e183bcdc4c15834aa9567eb88d1af60eec627a",
+    "data/gold/stage3/stage3_violation_gold_v1.json": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550",
+    "data/development/human_review/stage3_gold_inference_v1.json": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+    "data/development/human_review/gdpr7_human_confirmed_v1/case_acknowledgement.json": "455876d387fcd6cf864b80b3b9f3a5673743a95b2b9127f25122148034d940c1",
+    "data/predictions/gdpr7_human_rule_record_v1/predictions.json": "9d86e1b4360a8ef2d9acfacdda4cd3b5d7e2e35f7f3de68eeebaa0a793432500",
+    "data/predictions/gdpr7_sun_rule_only_v1/predictions.json": "a993ef533489b7277d37eb0ad5074d9a8d1084b1aff03c2875499e0d103d136e",
+    "configs/sun_stage3_development_v1.json": "3ef60d5bda1e5103486d5269cd3740330e911c1b912367d822c7dbab729714c4",
+    "configs/stage1_structural_s11_s14.json": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48",
+    "outputs/reports/s3_oracle_gold_rules_v1.json": "6723d48a82b46d8b924102027d834cddea50996d47ff7c77be11842b19f2ed0f",
+    "outputs/reports/s3_downstream_paired_v1.json": "b9566fe2395c4fac84f50a508a078a96e5c58aa943a03b41860301e798f98637",
+    "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+    "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+    "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+    "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+    "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+    "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+    "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+  },
+  "implementation": {
+    "src/bpc_hybrid/s3_evidence_checks_v1.py": "c700d417f162d591304e3296824b6cb2d9d1f56f57064da000397d8dbe4034d4",
+    "scripts/run_s3_evidence_repair_v1.py": "bfd35366ab2da5b9df27761f4af6a1983fd2774bd56e04f62949d1e5052cfa97",
+    "tests/test_s3_evidence_repair_v1.py": "00a2971f4d0015cdeb6320ce0af71c7792f0f8c271e1ebf4f7219df84f2d9942",
+    "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436",
+    "src/bpc_hybrid/sun_stage3/sun_scorer.py": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
+    "src/bpc_hybrid/sun_stage3/sun_model.py": "c3e1b2dcda8401b64fe726c37f7502d69be69adac7c57a62e5930c90b42e2cdf",
+    "src/bpc_hybrid/winter_stage3/winter_similarity.py": "97632047435166b809f64b0abda6564de00a324702ad0cade32aaa51443c0ddc",
+    "src/bpc_hybrid/stage1_process.py": "d81bde594190c96bd3f3e1d7a0d943847809b20500044f12a401d6aee822c396"
+  },
+  "artifacts": {
+    "outputs/reports/s3_evidence_repair_v1.json": "48c455447359d11e87fb3a51b686b8cb6a9473ef4dd396e092b3ce5e79ae312a",
+    "outputs/reports/s3_evidence_repair_v1.md": "3d575337d34c1b55ddb0ab8228d0e086ae4530d17a7245c07ab761cc1b7c07f9"
+  },
+  "claim_scope": "development_diagnostic_not_formal_oracle",
+  "safety": {
+    "gold_modified": false,
+    "old_results_modified": false,
+    "thresholds_changed": false,
+    "new_llm_api_calls": 0,
+    "formal_promotion": false
+  }
+}

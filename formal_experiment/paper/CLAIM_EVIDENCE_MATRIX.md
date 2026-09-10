@@ -48,5 +48,7 @@
 
 | C36 | 2026-09-07 Stage 3 三项根因修复与固定数据离线复算；原三类主判定/既有阈值网格聚合不变；四类参考 macro 0.4738/0.2381/0.1429/0.3750，Rules-Only 0.3313/0.1875/0/0.3321；五分类明确保留 abstention 与误判合规 FP | VERIFIED_PROJECT_FACT（development，零 API） | `outputs/reports/s3_formula_repair_v2.json` + `outputs/evidence/s3_formula_repair_v2/manifest.json` | C30/C34 当前实现证据以本条为准；C31 聚合经本轮复核数值不变；不得把修复后参考抽取当 Direct-LLM、不得宣称全部四类有效或正式 Oracle 完成 | 本轮实现/复算已完成；API 和人工依赖仍待完成 |
 
+| C37 | S3.7 零分根因与证据修复：恢复3条已确认文字顺序说明；空关系/未映射输出未知；匹配活动的执行者不混入业务对象；局部通知判断与已确认读图意见一致 | VERIFIED_DEVELOPMENT_DIAGNOSTIC；旧33条性能解释待范围核实 | `outputs/reports/s3_evidence_repair_v1.{json,md,manifest.json}`；23项独立回归/绑定测试；7流程/33条原标签全部保留；新API=0 | 可写开发修复与错误分析。C21/C22/C31/C34/C36涉及33条违规标签的性能解释需加范围待核实：没有合规对照、未绑定目标活动/规范/变体，4条引用未输入法条，v001/v002与已确认局部意见存在范围冲突。不得将旧表用于证明分类能力或Oracle上限，不得以匹配负例充当违规合规对照 | 人工明确检查范围及原图/变体、补齐规范证据后重新发布评价契约；Gold不自动修改 |
+
 新增任何结果性句子前，先在本表新增一行。正式回填必须记录 manifest 路径、事件
 时间、样本数、失败数、模型和 evaluator 版本；否则维持 `BLOCKED_RESULT`。

@@ -118,3 +118,11 @@ tests/test_s2_13_s3_7_transition_readiness_v5.py text eol=lf
 tests/test_s2_13_s3_7_transition_readiness_v6.py text eol=lf
 tests/test_s2_13_s3_7_transition_readiness_v7.py text eol=lf
 tests/test_s2_13_s3_7_transition_readiness_v8.py text eol=lf
+
+# S3.7 evidence-repair capsule: exact raw-byte implementation/report bindings.
+src/bpc_hybrid/s3_evidence_checks_v1.py text eol=lf
+scripts/run_s3_evidence_repair_v1.py text eol=lf
+tests/test_s3_evidence_repair_v1.py text eol=lf
+outputs/reports/s3_evidence_repair_v1.json text eol=lf
+outputs/reports/s3_evidence_repair_v1.md text eol=lf
+outputs/reports/s3_evidence_repair_v1.manifest.json text eol=lf
