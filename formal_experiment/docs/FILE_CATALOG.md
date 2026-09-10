@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-10
-**收录文件**：1736 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1743 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -824,6 +824,11 @@
 | `outputs/development/s28d_h1_150_v4pro_v1/h1_telemetry.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28d_h1_150_v4pro_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s28d_h1_150_v4pro_v1/transport_capture.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_paired_mechanism_v1/contracts_locked.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_paired_mechanism_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_paired_mechanism_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_paired_mechanism_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_paired_mechanism_v1/REPORT.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/development/stage1_formal_capsule_v1/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage1_formal_capsule_v1/export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage1_formal_capsule_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1397,6 +1402,7 @@
 | `scripts/run_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_formula_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_oracle_gold_rules_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_paired_mechanism_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_synthetic_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_formal_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
@@ -1804,6 +1810,7 @@
 | `tests/test_s3_extended_violation_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_formula_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_oracle_gold_rules_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_paired_mechanism_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |

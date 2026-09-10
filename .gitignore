@@ -156,3 +156,14 @@ formal_experiment/data/development/human_review/backups/
 # generated FILE_CATALOG so a fresh clone's catalog check stays consistent.
 formal_experiment/data/development/human_review/gdpr7_ai_prefill_v1/
 formal_experiment/scripts/build_gdpr7_ai_prefill_v1.py
+
+# S3-PAIRED-MECH (2026-09-10): the versioned paired controlled-mechanism run.
+# Narrow allowlist: the run directory and its five exact result files only;
+# every other file under outputs/development stays ignored.
+!formal_experiment/outputs/development/s3_paired_mechanism_v1/
+formal_experiment/outputs/development/s3_paired_mechanism_v1/*
+!formal_experiment/outputs/development/s3_paired_mechanism_v1/contracts_locked.json
+!formal_experiment/outputs/development/s3_paired_mechanism_v1/predictions.jsonl
+!formal_experiment/outputs/development/s3_paired_mechanism_v1/metrics.json
+!formal_experiment/outputs/development/s3_paired_mechanism_v1/manifest.json
+!formal_experiment/outputs/development/s3_paired_mechanism_v1/REPORT.md

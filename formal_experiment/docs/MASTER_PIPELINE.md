@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.43
+**文档版本**：3.6.44
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-09-10
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,35 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-10 修订 3.6.44：Stage 3 三类检查的成对受控机制实验（S3-PAIRED-MECH，零 API）
+
+针对 S3.7-DIAG 遗留的“执行者/顺序两类零分”，在**受控合成面**上补齐机制证据：
+冻结 30 变体面板的每个变体配一个**原图局部对照**，构成 30 对、每类 10 对。
+本实验是 development synthetic mechanism experiment，**不是**正式 GDPR Oracle，
+**不是**人工规则与自动规则优劣比较，**没有**评价法条到流程的语义映射难度。
+
+- **契约（推断前锁定）**：30 个固定变体按原图结构与冻结目标元数据导出局部合成规范；
+  有效契约 28、未解决 2（`syn_incorrect_actor_03`/`_04` 注入 lane 名称与既有 pool
+  同名 `Data Controller`，所有权标签集未变，故不构成可靠正例；样本保留并记录原因，
+  未删除、未补写）。检查实例 56（28 对照 + 28 变体），逐项预测行 112。
+- **两个检查器同输入同配置**：`sun_2024_frozen`（冻结 Sun 重建）与
+  `evidence_checks_v1`（已提交开发检查器），同一局部合成要求、同一 Stage 1 解析、
+  同一 NLP、同一 tau/gamma/theta=0.8 与同一评价口径；每次统一计算三种检查信号，
+  评价器只取指定目标检查（指定类型的局部检测，不是自由三分类）。
+- **结果（真实复算）**：macro-F1 Sun 0.7874 / EvidenceChecks 0.7579；成对成功
+  16/28 与 17/28；总 unknown 0 与 19（全部来自“近重复动作标签”导致的中止）。
+  missing_action 两方法同为 F1 0.6667（5/10 成对）；incorrect_actor Sun F1 0.6957
+  但**对照误报 7/8**（成对仅 1/8），EvidenceChecks F1 0.8571、**对照误报 0**（成对 6/8）；
+  out_of_order Sun F1 1.0000（成对 10/10），EvidenceChecks F1 0.7500（成对 6/10，4 对中止）。
+  **没有整体提升**：不得宣称新检查器优于 Sun 或端到端提升。
+- **未知处理**：冻结 Sun 的“数值 0 + 分母 0”由只读适配层转 unknown 并保留原始返回值；
+  正例 unknown 计入漏检，对照 unknown 不计为正确拒报。
+- 产物 `outputs/development/s3_paired_mechanism_v1/`（contracts_locked / predictions /
+  metrics / manifest / REPORT）；复核入口
+  `python formal_experiment/scripts/run_s3_paired_mechanism_v1.py --replay`。
+- **仍未解决**：真实法条↔流程语义映射未评价；旧 33 条人工标签检查范围问题未变；
+  冻结面板 2 个 incorrect_actor 变体未真正改变执行者归属。
 
 ## 2026-09-10 修订 3.6.43：S3.7-DIAG 证据转换、可观察性与评价范围修复
 

@@ -11,6 +11,21 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 ## 1. 当前结论
 
+**2026-09-10 S3 三类检查成对受控机制实验（S3-PAIRED-MECH，零 API）**：为中期汇报提供
+可直接引用的机制证据。固定 30 变体面板的每个变体配一个原图局部对照 → 30 对、每类 10 对；
+契约由原图结构与冻结目标元数据在**推断前**导出并锁定：**有效契约 28、未解决 2**
+（`syn_incorrect_actor_03/04` 注入的 lane 名称等于既有 pool `Data Controller`，所有权标签集
+未变，不构成可靠正例；两项样本保留、原因记录、未删除未补写）。检查实例 56、逐项预测 112 行。
+两个检查器 `sun_2024_frozen` 与 `evidence_checks_v1` 使用完全相同的局部合成要求、原图/变体、
+Stage 1 解析、NLP、tau/gamma/theta=0.8 与评价口径。真实结果：macro-F1 **0.7874 vs 0.7579**、
+成对成功 **16/28 vs 17/28**、总 unknown **0 vs 19**（全部为近重复标签引起的中止）；
+incorrect_actor 上 Sun 对照误报 7/8（成对 1/8），EvidenceChecks 对照误报 0（成对 6/8）；
+out_of_order 上 Sun 成对 10/10，EvidenceChecks 6/10（4 对中止）。
+**结论是诚实的“无整体提升”**：动作名称直接取自原图，本实验排除了法条语义映射难度，
+只验证检查机制；真实法条映射与旧 33 条评价范围问题均未解决。
+产物 `outputs/development/s3_paired_mechanism_v1/`；复核命令
+`python formal_experiment/scripts/run_s3_paired_mechanism_v1.py --replay`。
+
 **2026-09-10 S3.7 零分根因核实与开发修复**：`outputs/reports/s3_evidence_repair_v1.{json,md}`
 及对应 manifest 已生成。此前“确认材料没有顺序信息”的说法不准确：结构化
 `order_relations` 确为空，但原样保留的 `temporal_suggestions` 含 **3 条已确认文字顺序说明**。

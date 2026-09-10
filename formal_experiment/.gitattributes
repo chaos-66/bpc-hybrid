@@ -126,3 +126,12 @@ tests/test_s3_evidence_repair_v1.py text eol=lf
 outputs/reports/s3_evidence_repair_v1.json text eol=lf
 outputs/reports/s3_evidence_repair_v1.md text eol=lf
 outputs/reports/s3_evidence_repair_v1.manifest.json text eol=lf
+
+# S3 paired mechanism experiment: exact raw-byte implementation/result bindings.
+scripts/run_s3_paired_mechanism_v1.py text eol=lf
+tests/test_s3_paired_mechanism_v1.py text eol=lf
+outputs/development/s3_paired_mechanism_v1/contracts_locked.json text eol=lf
+outputs/development/s3_paired_mechanism_v1/predictions.jsonl text eol=lf
+outputs/development/s3_paired_mechanism_v1/metrics.json text eol=lf
+outputs/development/s3_paired_mechanism_v1/manifest.json text eol=lf
+outputs/development/s3_paired_mechanism_v1/REPORT.md text eol=lf

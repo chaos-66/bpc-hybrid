@@ -1,0 +1,696 @@
+{
+  "schema_version": "s3_paired_mechanism_manifest@1.0.0",
+  "run_id": "s3_paired_mechanism_v1",
+  "started_utc": "2026-09-10T05:18:35.845265+00:00",
+  "runtime_seconds": 9.594,
+  "git_commit_before_checkpoint": "3fe8e7d644afae2c383f4d6a95778d502c317487",
+  "declarations": {
+    "development_only": true,
+    "synthetic": true,
+    "human_gold": false,
+    "formal_oracle": false,
+    "semantic_mapping_evaluated": false,
+    "new_llm_api_calls": 0
+  },
+  "hash_conventions": {
+    "sha256_raw_working_tree": "SHA-256 over the raw bytes on disk; this is the binding used by --check / --replay",
+    "git_blob_sha1_raw": "git hash-object --no-filters (SHA-1 of the raw bytes)",
+    "git_blob_sha1_after_clean_filter": "git hash-object --path=<rel> (SHA-1 after the repository's clean filter, i.e. the content that would be committed)",
+    "raw_bytes_equal_committed_bytes": "true means the working-tree bytes survive checkout unchanged, so the raw SHA-256 stays valid after commit",
+    "scope": "this run pins only its own new artifacts to text eol=lf; no frozen source file and no directory-wide attribute was changed"
+  },
+  "inputs": {
+    "data/development/stage3_synth/synthetic_controlled_error_extension_v1.json": {
+      "bytes": 63271,
+      "crlf_pairs": 1448,
+      "sha256_raw_working_tree": "e6b4da045a44ffc347a8de88909e005bef584335f63804d3c2155ef9242c3026",
+      "git_blob_sha1_raw": "f1fc2ca6d3fbeb9e84ba2dc9de94e8d20523fa39",
+      "git_blob_sha1_after_clean_filter": "4177d0c04fbc8807c13fafa1d900c4f1fce79ca6",
+      "raw_bytes_equal_committed_bytes": false
+    },
+    "configs/stage1_structural_s11_s14.json": {
+      "bytes": 3213,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48",
+      "git_blob_sha1_raw": "08087c0db72b73ab3ed3331b027d61b5eb09e02b",
+      "git_blob_sha1_after_clean_filter": "08087c0db72b73ab3ed3331b027d61b5eb09e02b",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "configs/sun_stage3_development_v1.json": {
+      "bytes": 7627,
+      "crlf_pairs": 147,
+      "sha256_raw_working_tree": "3ef60d5bda1e5103486d5269cd3740330e911c1b912367d822c7dbab729714c4",
+      "git_blob_sha1_raw": "dabdc8714a72f5ffa13a966e7a8bb9c0fa462a6d",
+      "git_blob_sha1_after_clean_filter": "6ad2ad32cd8a8dfc85077c834cbfd4799af016ea",
+      "raw_bytes_equal_committed_bytes": false
+    },
+    "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn": {
+      "bytes": 72747,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "git_blob_sha1_raw": "d7a3e8fbbc98a83b580551fbf98cd513586bd841",
+      "git_blob_sha1_after_clean_filter": "d7a3e8fbbc98a83b580551fbf98cd513586bd841",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn": {
+      "bytes": 114382,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "git_blob_sha1_raw": "a4722fe1d364a9de3ecdba1703592a3a3627729b",
+      "git_blob_sha1_after_clean_filter": "a4722fe1d364a9de3ecdba1703592a3a3627729b",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn": {
+      "bytes": 28437,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "git_blob_sha1_raw": "3ea623be3664af0462c3807b41a45bf5f53df6c1",
+      "git_blob_sha1_after_clean_filter": "3ea623be3664af0462c3807b41a45bf5f53df6c1",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn": {
+      "bytes": 31497,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "git_blob_sha1_raw": "ab3130542f3147ff37ae26d44683f5278cbb17fa",
+      "git_blob_sha1_after_clean_filter": "ab3130542f3147ff37ae26d44683f5278cbb17fa",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn": {
+      "bytes": 31175,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "git_blob_sha1_raw": "51e334cdc8c8f6afbed275d2d5192f4539832234",
+      "git_blob_sha1_after_clean_filter": "51e334cdc8c8f6afbed275d2d5192f4539832234",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn": {
+      "bytes": 17635,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "git_blob_sha1_raw": "722075be28a4a6cd8819f153ebf41d7f60a35992",
+      "git_blob_sha1_after_clean_filter": "722075be28a4a6cd8819f153ebf41d7f60a35992",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_incorrect_actor_01/gdpr_1_data_breach.bpmn": {
+      "bytes": 73385,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "82195c9c3ea3c5f6763aec4192b8faef124d801033d34e45ae6bf19e6b4dde67",
+      "git_blob_sha1_raw": "3252fd921f0df85396f772595fb7240e747a9d15",
+      "git_blob_sha1_after_clean_filter": "3252fd921f0df85396f772595fb7240e747a9d15",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_incorrect_actor_02/gdpr_1_data_breach.bpmn": {
+      "bytes": 73385,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "29db23fb8cbd1c8d96be1e9ce3574d9c46593fa283b048ada5bd2a1baec219e3",
+      "git_blob_sha1_raw": "6785a48fcb37ae98f4ca361f3c4c203e50ef42ae",
+      "git_blob_sha1_after_clean_filter": "6785a48fcb37ae98f4ca361f3c4c203e50ef42ae",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_incorrect_actor_03/gdpr_2_consent_to_use_the_data.bpmn": {
+      "bytes": 115709,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "39da2e3721e963a33b3e8d8ed4d40cb4312fa9581ac51803e7fc0f9fdd7cb08f",
+      "git_blob_sha1_raw": "2b5fe9c1c2b0bd7e9fd99f8e35824288ae291103",
+      "git_blob_sha1_after_clean_filter": "2b5fe9c1c2b0bd7e9fd99f8e35824288ae291103",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_incorrect_actor_04/gdpr_2_consent_to_use_the_data.bpmn": {
+      "bytes": 115709,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "3cc31db884671749f2dc359f3c243eaba60759caf1fc7efbf468bb394419c7c1",
+      "git_blob_sha1_raw": "ceef1f2f0fbdbb4804bed4f6d0dcdde6c039e1f9",
+      "git_blob_sha1_after_clean_filter": "ceef1f2f0fbdbb4804bed4f6d0dcdde6c039e1f9",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_incorrect_actor_05/gdpr_3_right_to_access.bpmn": {
+      "bytes": 28921,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "6596370efc95d0873f2f9bbc488b242da66a131bf731629c6f4b24579b0204ad",
+      "git_blob_sha1_raw": "5bcc0744e0e9a33ff0238c5dc5e8b0915cd3e494",
+      "git_blob_sha1_after_clean_filter": "5bcc0744e0e9a33ff0238c5dc5e8b0915cd3e494",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_incorrect_actor_06/gdpr_4_right_of_portability.bpmn": {
+      "bytes": 31953,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "5817be69d03641a31a0c37689e728dec41def704bcf554075e7aaf0a402c9f82",
+      "git_blob_sha1_raw": "ea440130f1b3a1c7034aa564577ffa027d2e6fd6",
+      "git_blob_sha1_after_clean_filter": "ea440130f1b3a1c7034aa564577ffa027d2e6fd6",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_incorrect_actor_07/gdpr_4_right_of_portability.bpmn": {
+      "bytes": 31953,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "c1c2807503a1a3c9af149f6f2c3fc9585685a7e71d762c352632f46c48c5c155",
+      "git_blob_sha1_raw": "5c20fcfcaeb441fc4c67e6cfc2676b62375152b3",
+      "git_blob_sha1_after_clean_filter": "5c20fcfcaeb441fc4c67e6cfc2676b62375152b3",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_incorrect_actor_08/gdpr_5_right_to_withdraw.bpmn": {
+      "bytes": 31406,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "0a2a895d5577941ddb54575c0fe277e506a14d471ceb0cf33aaa2f7834fe1da0",
+      "git_blob_sha1_raw": "63317f5145e7136bc5c5b9841e47ad624e2614de",
+      "git_blob_sha1_after_clean_filter": "63317f5145e7136bc5c5b9841e47ad624e2614de",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_incorrect_actor_09/gdpr_5_right_to_withdraw.bpmn": {
+      "bytes": 31406,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "4b1bc60375dfc413874739e848cb320fa6d718dfda5b1bd788993151b23687c7",
+      "git_blob_sha1_raw": "38b2038cecba9acbd008da9d4187a4f14305f620",
+      "git_blob_sha1_after_clean_filter": "38b2038cecba9acbd008da9d4187a4f14305f620",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_incorrect_actor_10/gdpr_6_right_to_rectify.bpmn": {
+      "bytes": 17793,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "72b492c26c8a4af160df898c4ac84fd23ef34faf3552eaa24c9341c17d402284",
+      "git_blob_sha1_raw": "5517904e2ba92ced7a2f3870df2170fc447d2d48",
+      "git_blob_sha1_after_clean_filter": "5517904e2ba92ced7a2f3870df2170fc447d2d48",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_missing_action_01/gdpr_1_data_breach.bpmn": {
+      "bytes": 70750,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "689657bbfe6df78c908d1ef669f79381c24cbb16b22fa7834b29d4d0d9403410",
+      "git_blob_sha1_raw": "6f0d9ba3a45c967f11283666ecf0cc731d144096",
+      "git_blob_sha1_after_clean_filter": "6f0d9ba3a45c967f11283666ecf0cc731d144096",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_missing_action_02/gdpr_1_data_breach.bpmn": {
+      "bytes": 70307,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "903cb8684b609c91e014ce36292ba89225612d71216b0fcec5594b7ded6c5224",
+      "git_blob_sha1_raw": "21b1aaa5a22349b2a6d749fab536c1bc55f4869d",
+      "git_blob_sha1_after_clean_filter": "21b1aaa5a22349b2a6d749fab536c1bc55f4869d",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_missing_action_03/gdpr_2_consent_to_use_the_data.bpmn": {
+      "bytes": 114467,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "de259b8b8256784fd4e2eb8fec1cec5c980e0e36461f9d10543af37fc8faa829",
+      "git_blob_sha1_raw": "c8e2a70d4f7028abb8a5da225ef45e601be3ed1f",
+      "git_blob_sha1_after_clean_filter": "c8e2a70d4f7028abb8a5da225ef45e601be3ed1f",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_missing_action_04/gdpr_2_consent_to_use_the_data.bpmn": {
+      "bytes": 114451,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "6a82ae727ea8cfad85294636e3a1e0b92937bdf9ce41f0dad6a2da0e7f842016",
+      "git_blob_sha1_raw": "486dee8439bfe9562b7659f08c09cb314409dab3",
+      "git_blob_sha1_after_clean_filter": "486dee8439bfe9562b7659f08c09cb314409dab3",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_missing_action_05/gdpr_3_right_to_access.bpmn": {
+      "bytes": 25666,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "f23f1a6c0c6d55aa69bdcade86ca7f05cb071341eb2df2cdd0a394146a697589",
+      "git_blob_sha1_raw": "e68b0500fcadfdf699d942ab39c008e423e09a44",
+      "git_blob_sha1_after_clean_filter": "e68b0500fcadfdf699d942ab39c008e423e09a44",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_missing_action_06/gdpr_5_right_to_withdraw.bpmn": {
+      "bytes": 30182,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "044a7245b2db98f031e28c835d4316011b3b73b823336526f9ba46fc524bd7c6",
+      "git_blob_sha1_raw": "3400f4210d432d75c26f5895ad467d6a8fd6ac38",
+      "git_blob_sha1_after_clean_filter": "3400f4210d432d75c26f5895ad467d6a8fd6ac38",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_missing_action_07/gdpr_5_right_to_withdraw.bpmn": {
+      "bytes": 29922,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "fc0dc0e9b804391ea69792f16665ec1adac5ab34e2c177bd45d96b1d72571a49",
+      "git_blob_sha1_raw": "0c5324ba2112077df7e274a376bd01189c01ca81",
+      "git_blob_sha1_after_clean_filter": "0c5324ba2112077df7e274a376bd01189c01ca81",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_missing_action_08/gdpr_6_right_to_rectify.bpmn": {
+      "bytes": 16311,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "b151a7c2c6d96a7e85895e01724f5d709751cf6773660e74830c38f26aa01558",
+      "git_blob_sha1_raw": "add6cfdaea656c9c17d3cdfc460fa5fff193e412",
+      "git_blob_sha1_after_clean_filter": "add6cfdaea656c9c17d3cdfc460fa5fff193e412",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_missing_action_09/gdpr_4_right_of_portability.bpmn": {
+      "bytes": 28692,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "7eefc1f9f396ead1551b8b72a090844b7d9b109f7b0d187338b78f61417e1c3c",
+      "git_blob_sha1_raw": "62a224db653f25f76dbb81f52b769e9d26a94d0d",
+      "git_blob_sha1_after_clean_filter": "62a224db653f25f76dbb81f52b769e9d26a94d0d",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_missing_action_10/gdpr_6_right_to_rectify.bpmn": {
+      "bytes": 16150,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "e0c5e851835a708379df3f865bb8d3ab7ed2ce749dc3f694bd51d6eac51f4735",
+      "git_blob_sha1_raw": "8620a48676b1989dd9ca2091ac36d12e4287eb24",
+      "git_blob_sha1_after_clean_filter": "8620a48676b1989dd9ca2091ac36d12e4287eb24",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_out_of_order_01/gdpr_1_data_breach.bpmn": {
+      "bytes": 73293,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "a30f85acd99afe1b6bb9b39199c8b97fb88c63a88931af93a24f961a73fddafc",
+      "git_blob_sha1_raw": "d56ba01ef8a74bedbc090e6a9d4b7d086ca41dd2",
+      "git_blob_sha1_after_clean_filter": "d56ba01ef8a74bedbc090e6a9d4b7d086ca41dd2",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_out_of_order_02/gdpr_1_data_breach.bpmn": {
+      "bytes": 73293,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "b7cce6eb272ddf518b0df3145a3cfb25788a307e236b64d337c58c6d75db95e8",
+      "git_blob_sha1_raw": "52c509aff1fbce0d5651c3a93a9c8dc7e6fd86a6",
+      "git_blob_sha1_after_clean_filter": "52c509aff1fbce0d5651c3a93a9c8dc7e6fd86a6",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_out_of_order_03/gdpr_2_consent_to_use_the_data.bpmn": {
+      "bytes": 115614,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "a664859d048e4c37e8ddb988cb9fef48e9c5f944a8be3db6aa2e4b79d2e5b36d",
+      "git_blob_sha1_raw": "e8e68058fb38d37bd8c76918d24dcab93aa7350f",
+      "git_blob_sha1_after_clean_filter": "e8e68058fb38d37bd8c76918d24dcab93aa7350f",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_out_of_order_04/gdpr_2_consent_to_use_the_data.bpmn": {
+      "bytes": 115614,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "f11423f8b77b42c278faf4bd182c5dd337269db09eef0f0248120e8c1a5e9a38",
+      "git_blob_sha1_raw": "643ffdf4c065c3af313aa096ea422536578cd34b",
+      "git_blob_sha1_after_clean_filter": "643ffdf4c065c3af313aa096ea422536578cd34b",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_out_of_order_05/gdpr_3_right_to_access.bpmn": {
+      "bytes": 28829,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "9d9834fed4b5fa426f2068bf1e596a17f10d5e2e30de6cd63233e5d7112a1d38",
+      "git_blob_sha1_raw": "dc90b12cebc534f64644c86d9422aebfce3241cb",
+      "git_blob_sha1_after_clean_filter": "dc90b12cebc534f64644c86d9422aebfce3241cb",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_out_of_order_06/gdpr_4_right_of_portability.bpmn": {
+      "bytes": 31861,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "468011b29a7d81a8303946600701ef4f0230596378ece0a3400ef6a8ba2128ee",
+      "git_blob_sha1_raw": "fbba979d416e01084b210eff2594514fb6e8c589",
+      "git_blob_sha1_after_clean_filter": "fbba979d416e01084b210eff2594514fb6e8c589",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_out_of_order_07/gdpr_5_right_to_withdraw.bpmn": {
+      "bytes": 31314,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "f6fa62e4d2f2a4cced85a3c358703fb85301a93787ef9b5815fb51fe3e5be575",
+      "git_blob_sha1_raw": "fe17971705e53d6da16fc97cecd9d59e94738143",
+      "git_blob_sha1_after_clean_filter": "fe17971705e53d6da16fc97cecd9d59e94738143",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_out_of_order_08/gdpr_5_right_to_withdraw.bpmn": {
+      "bytes": 31314,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "f856697f84f7aeb1b2b11f6e328048a3b65ad1749eec03bf6544f1d49acf628e",
+      "git_blob_sha1_raw": "5a2d0988a0552924e8691970e3d620febfdafc5e",
+      "git_blob_sha1_after_clean_filter": "5a2d0988a0552924e8691970e3d620febfdafc5e",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_out_of_order_09/gdpr_6_right_to_rectify.bpmn": {
+      "bytes": 17701,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "ba514072c73ed0b306ab873344cbda0f79082d024bd301cf96e1677aed131895",
+      "git_blob_sha1_raw": "7ec7bd10593ed81ccaf9f2d7bbb5bec741ac60d0",
+      "git_blob_sha1_after_clean_filter": "7ec7bd10593ed81ccaf9f2d7bbb5bec741ac60d0",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "data/development/stage3_synth/syn_out_of_order_10/gdpr_3_right_to_access.bpmn": {
+      "bytes": 28829,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "ddd5a5bb40b9b9cb2504ecaf90dc29a52b2b6a16e8a8d016a503d5fb0b573e23",
+      "git_blob_sha1_raw": "20878aca5d6cf87bb2b355197b70a41b8afde909",
+      "git_blob_sha1_after_clean_filter": "20878aca5d6cf87bb2b355197b70a41b8afde909",
+      "raw_bytes_equal_committed_bytes": true
+    }
+  },
+  "variants": {
+    "syn_missing_action_01": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256_recorded": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "source_bpmn_sha256_now": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_01/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256_recorded": "689657bbfe6df78c908d1ef669f79381c24cbb16b22fa7834b29d4d0d9403410",
+      "variant_bpmn_sha256_now": "689657bbfe6df78c908d1ef669f79381c24cbb16b22fa7834b29d4d0d9403410"
+    },
+    "syn_missing_action_02": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256_recorded": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "source_bpmn_sha256_now": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_02/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256_recorded": "903cb8684b609c91e014ce36292ba89225612d71216b0fcec5594b7ded6c5224",
+      "variant_bpmn_sha256_now": "903cb8684b609c91e014ce36292ba89225612d71216b0fcec5594b7ded6c5224"
+    },
+    "syn_missing_action_03": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256_recorded": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "source_bpmn_sha256_now": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256_recorded": "de259b8b8256784fd4e2eb8fec1cec5c980e0e36461f9d10543af37fc8faa829",
+      "variant_bpmn_sha256_now": "de259b8b8256784fd4e2eb8fec1cec5c980e0e36461f9d10543af37fc8faa829"
+    },
+    "syn_missing_action_04": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256_recorded": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "source_bpmn_sha256_now": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256_recorded": "6a82ae727ea8cfad85294636e3a1e0b92937bdf9ce41f0dad6a2da0e7f842016",
+      "variant_bpmn_sha256_now": "6a82ae727ea8cfad85294636e3a1e0b92937bdf9ce41f0dad6a2da0e7f842016"
+    },
+    "syn_missing_action_05": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256_recorded": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "source_bpmn_sha256_now": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_05/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256_recorded": "f23f1a6c0c6d55aa69bdcade86ca7f05cb071341eb2df2cdd0a394146a697589",
+      "variant_bpmn_sha256_now": "f23f1a6c0c6d55aa69bdcade86ca7f05cb071341eb2df2cdd0a394146a697589"
+    },
+    "syn_missing_action_06": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256_recorded": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "source_bpmn_sha256_now": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_06/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256_recorded": "044a7245b2db98f031e28c835d4316011b3b73b823336526f9ba46fc524bd7c6",
+      "variant_bpmn_sha256_now": "044a7245b2db98f031e28c835d4316011b3b73b823336526f9ba46fc524bd7c6"
+    },
+    "syn_missing_action_07": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256_recorded": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "source_bpmn_sha256_now": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_07/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256_recorded": "fc0dc0e9b804391ea69792f16665ec1adac5ab34e2c177bd45d96b1d72571a49",
+      "variant_bpmn_sha256_now": "fc0dc0e9b804391ea69792f16665ec1adac5ab34e2c177bd45d96b1d72571a49"
+    },
+    "syn_missing_action_08": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256_recorded": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "source_bpmn_sha256_now": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_08/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256_recorded": "b151a7c2c6d96a7e85895e01724f5d709751cf6773660e74830c38f26aa01558",
+      "variant_bpmn_sha256_now": "b151a7c2c6d96a7e85895e01724f5d709751cf6773660e74830c38f26aa01558"
+    },
+    "syn_missing_action_09": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256_recorded": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "source_bpmn_sha256_now": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_09/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256_recorded": "7eefc1f9f396ead1551b8b72a090844b7d9b109f7b0d187338b78f61417e1c3c",
+      "variant_bpmn_sha256_now": "7eefc1f9f396ead1551b8b72a090844b7d9b109f7b0d187338b78f61417e1c3c"
+    },
+    "syn_missing_action_10": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256_recorded": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "source_bpmn_sha256_now": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "variant_bpmn": "data/development/stage3_synth/syn_missing_action_10/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256_recorded": "e0c5e851835a708379df3f865bb8d3ab7ed2ce749dc3f694bd51d6eac51f4735",
+      "variant_bpmn_sha256_now": "e0c5e851835a708379df3f865bb8d3ab7ed2ce749dc3f694bd51d6eac51f4735"
+    },
+    "syn_incorrect_actor_01": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256_recorded": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "source_bpmn_sha256_now": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_01/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256_recorded": "82195c9c3ea3c5f6763aec4192b8faef124d801033d34e45ae6bf19e6b4dde67",
+      "variant_bpmn_sha256_now": "82195c9c3ea3c5f6763aec4192b8faef124d801033d34e45ae6bf19e6b4dde67"
+    },
+    "syn_incorrect_actor_02": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256_recorded": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "source_bpmn_sha256_now": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_02/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256_recorded": "29db23fb8cbd1c8d96be1e9ce3574d9c46593fa283b048ada5bd2a1baec219e3",
+      "variant_bpmn_sha256_now": "29db23fb8cbd1c8d96be1e9ce3574d9c46593fa283b048ada5bd2a1baec219e3"
+    },
+    "syn_incorrect_actor_03": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256_recorded": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "source_bpmn_sha256_now": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256_recorded": "39da2e3721e963a33b3e8d8ed4d40cb4312fa9581ac51803e7fc0f9fdd7cb08f",
+      "variant_bpmn_sha256_now": "39da2e3721e963a33b3e8d8ed4d40cb4312fa9581ac51803e7fc0f9fdd7cb08f"
+    },
+    "syn_incorrect_actor_04": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256_recorded": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "source_bpmn_sha256_now": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256_recorded": "3cc31db884671749f2dc359f3c243eaba60759caf1fc7efbf468bb394419c7c1",
+      "variant_bpmn_sha256_now": "3cc31db884671749f2dc359f3c243eaba60759caf1fc7efbf468bb394419c7c1"
+    },
+    "syn_incorrect_actor_05": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256_recorded": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "source_bpmn_sha256_now": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_05/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256_recorded": "6596370efc95d0873f2f9bbc488b242da66a131bf731629c6f4b24579b0204ad",
+      "variant_bpmn_sha256_now": "6596370efc95d0873f2f9bbc488b242da66a131bf731629c6f4b24579b0204ad"
+    },
+    "syn_incorrect_actor_06": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256_recorded": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "source_bpmn_sha256_now": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_06/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256_recorded": "5817be69d03641a31a0c37689e728dec41def704bcf554075e7aaf0a402c9f82",
+      "variant_bpmn_sha256_now": "5817be69d03641a31a0c37689e728dec41def704bcf554075e7aaf0a402c9f82"
+    },
+    "syn_incorrect_actor_07": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256_recorded": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "source_bpmn_sha256_now": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_07/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256_recorded": "c1c2807503a1a3c9af149f6f2c3fc9585685a7e71d762c352632f46c48c5c155",
+      "variant_bpmn_sha256_now": "c1c2807503a1a3c9af149f6f2c3fc9585685a7e71d762c352632f46c48c5c155"
+    },
+    "syn_incorrect_actor_08": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256_recorded": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "source_bpmn_sha256_now": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_08/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256_recorded": "0a2a895d5577941ddb54575c0fe277e506a14d471ceb0cf33aaa2f7834fe1da0",
+      "variant_bpmn_sha256_now": "0a2a895d5577941ddb54575c0fe277e506a14d471ceb0cf33aaa2f7834fe1da0"
+    },
+    "syn_incorrect_actor_09": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256_recorded": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "source_bpmn_sha256_now": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_09/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256_recorded": "4b1bc60375dfc413874739e848cb320fa6d718dfda5b1bd788993151b23687c7",
+      "variant_bpmn_sha256_now": "4b1bc60375dfc413874739e848cb320fa6d718dfda5b1bd788993151b23687c7"
+    },
+    "syn_incorrect_actor_10": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256_recorded": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "source_bpmn_sha256_now": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_10/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256_recorded": "72b492c26c8a4af160df898c4ac84fd23ef34faf3552eaa24c9341c17d402284",
+      "variant_bpmn_sha256_now": "72b492c26c8a4af160df898c4ac84fd23ef34faf3552eaa24c9341c17d402284"
+    },
+    "syn_out_of_order_01": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256_recorded": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "source_bpmn_sha256_now": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_01/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256_recorded": "a30f85acd99afe1b6bb9b39199c8b97fb88c63a88931af93a24f961a73fddafc",
+      "variant_bpmn_sha256_now": "a30f85acd99afe1b6bb9b39199c8b97fb88c63a88931af93a24f961a73fddafc"
+    },
+    "syn_out_of_order_02": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "source_bpmn_sha256_recorded": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "source_bpmn_sha256_now": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_02/gdpr_1_data_breach.bpmn",
+      "variant_bpmn_sha256_recorded": "b7cce6eb272ddf518b0df3145a3cfb25788a307e236b64d337c58c6d75db95e8",
+      "variant_bpmn_sha256_now": "b7cce6eb272ddf518b0df3145a3cfb25788a307e236b64d337c58c6d75db95e8"
+    },
+    "syn_out_of_order_03": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256_recorded": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "source_bpmn_sha256_now": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256_recorded": "a664859d048e4c37e8ddb988cb9fef48e9c5f944a8be3db6aa2e4b79d2e5b36d",
+      "variant_bpmn_sha256_now": "a664859d048e4c37e8ddb988cb9fef48e9c5f944a8be3db6aa2e4b79d2e5b36d"
+    },
+    "syn_out_of_order_04": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "source_bpmn_sha256_recorded": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "source_bpmn_sha256_now": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_bpmn_sha256_recorded": "f11423f8b77b42c278faf4bd182c5dd337269db09eef0f0248120e8c1a5e9a38",
+      "variant_bpmn_sha256_now": "f11423f8b77b42c278faf4bd182c5dd337269db09eef0f0248120e8c1a5e9a38"
+    },
+    "syn_out_of_order_05": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256_recorded": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "source_bpmn_sha256_now": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_05/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256_recorded": "9d9834fed4b5fa426f2068bf1e596a17f10d5e2e30de6cd63233e5d7112a1d38",
+      "variant_bpmn_sha256_now": "9d9834fed4b5fa426f2068bf1e596a17f10d5e2e30de6cd63233e5d7112a1d38"
+    },
+    "syn_out_of_order_06": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "source_bpmn_sha256_recorded": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "source_bpmn_sha256_now": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_06/gdpr_4_right_of_portability.bpmn",
+      "variant_bpmn_sha256_recorded": "468011b29a7d81a8303946600701ef4f0230596378ece0a3400ef6a8ba2128ee",
+      "variant_bpmn_sha256_now": "468011b29a7d81a8303946600701ef4f0230596378ece0a3400ef6a8ba2128ee"
+    },
+    "syn_out_of_order_07": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256_recorded": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "source_bpmn_sha256_now": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_07/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256_recorded": "f6fa62e4d2f2a4cced85a3c358703fb85301a93787ef9b5815fb51fe3e5be575",
+      "variant_bpmn_sha256_now": "f6fa62e4d2f2a4cced85a3c358703fb85301a93787ef9b5815fb51fe3e5be575"
+    },
+    "syn_out_of_order_08": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "source_bpmn_sha256_recorded": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "source_bpmn_sha256_now": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_08/gdpr_5_right_to_withdraw.bpmn",
+      "variant_bpmn_sha256_recorded": "f856697f84f7aeb1b2b11f6e328048a3b65ad1749eec03bf6544f1d49acf628e",
+      "variant_bpmn_sha256_now": "f856697f84f7aeb1b2b11f6e328048a3b65ad1749eec03bf6544f1d49acf628e"
+    },
+    "syn_out_of_order_09": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "source_bpmn_sha256_recorded": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "source_bpmn_sha256_now": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_09/gdpr_6_right_to_rectify.bpmn",
+      "variant_bpmn_sha256_recorded": "ba514072c73ed0b306ab873344cbda0f79082d024bd301cf96e1677aed131895",
+      "variant_bpmn_sha256_now": "ba514072c73ed0b306ab873344cbda0f79082d024bd301cf96e1677aed131895"
+    },
+    "syn_out_of_order_10": {
+      "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "source_bpmn_sha256_recorded": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "source_bpmn_sha256_now": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+      "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_10/gdpr_3_right_to_access.bpmn",
+      "variant_bpmn_sha256_recorded": "ddd5a5bb40b9b9cb2504ecaf90dc29a52b2b6a16e8a8d016a503d5fb0b573e23",
+      "variant_bpmn_sha256_now": "ddd5a5bb40b9b9cb2504ecaf90dc29a52b2b6a16e8a8d016a503d5fb0b573e23"
+    }
+  },
+  "contracts": {
+    "path": "outputs/development/s3_paired_mechanism_v1/contracts_locked.json",
+    "sha256": "5ae9d7453c82f26542547235980e5cfa53dea23e82c7f166a9c65158a5408ed3",
+    "valid": 28,
+    "unresolved": 2
+  },
+  "configuration": {
+    "checkers": [
+      "sun_2024_frozen",
+      "evidence_checks_v1"
+    ],
+    "thresholds": {
+      "tau": 0.8,
+      "gamma": 0.8,
+      "theta": 0.8
+    },
+    "threshold_keys": [
+      "tau",
+      "gamma",
+      "theta"
+    ],
+    "threshold_source": "configs/sun_stage3_development_v1.json",
+    "nlp_model": "en_core_web_sm",
+    "similarity_backend": "winter_stage3.winter_similarity.WinterSimilarity",
+    "normalisation": {
+      "rule": "a checker result is a violation only from an explicit positive signal with a non-empty denominator; an empty denominator or an explicitly unobservable result is unknown, never 'satisfied'",
+      "sun_zero_score_empty_denominator": "numeric score 0.0 with denominator 0 -> unknown (raw score retained)",
+      "evidence_native_status": "EvidenceChecks already returns satisfied/violation/unknown; its status is used as-is"
+    }
+  },
+  "implementation": {
+    "src/bpc_hybrid/s3_evidence_checks_v1.py": {
+      "bytes": 14761,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "c700d417f162d591304e3296824b6cb2d9d1f56f57064da000397d8dbe4034d4",
+      "git_blob_sha1_raw": "563b19d8d9f368102997587ea5e5810a9c32e764",
+      "git_blob_sha1_after_clean_filter": "563b19d8d9f368102997587ea5e5810a9c32e764",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "src/bpc_hybrid/sun_stage3/sun_scorer.py": {
+      "bytes": 11710,
+      "crlf_pairs": 257,
+      "sha256_raw_working_tree": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
+      "git_blob_sha1_raw": "86ffbab8794bf6a6c7d21cb394872be51f8f5de0",
+      "git_blob_sha1_after_clean_filter": "ed6f5719fc26375eb7abc78b4af4e1aa674f8c8c",
+      "raw_bytes_equal_committed_bytes": false
+    },
+    "src/bpc_hybrid/sun_stage3/sun_model.py": {
+      "bytes": 4938,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "c3e1b2dcda8401b64fe726c37f7502d69be69adac7c57a62e5930c90b42e2cdf",
+      "git_blob_sha1_raw": "717b1e072c3b480c71048c7813248fe90d3c40ee",
+      "git_blob_sha1_after_clean_filter": "717b1e072c3b480c71048c7813248fe90d3c40ee",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "src/bpc_hybrid/winter_stage3/winter_similarity.py": {
+      "bytes": 2142,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "97632047435166b809f64b0abda6564de00a324702ad0cade32aaa51443c0ddc",
+      "git_blob_sha1_raw": "80502e9d20ad4726a4c048188f8b4157b8e3ed1c",
+      "git_blob_sha1_after_clean_filter": "80502e9d20ad4726a4c048188f8b4157b8e3ed1c",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "src/bpc_hybrid/stage1_process.py": {
+      "bytes": 31160,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "d81bde594190c96bd3f3e1d7a0d943847809b20500044f12a401d6aee822c396",
+      "git_blob_sha1_raw": "a986adce0acadcd17d03217c77e961f32bb66842",
+      "git_blob_sha1_after_clean_filter": "a986adce0acadcd17d03217c77e961f32bb66842",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "scripts/run_s3_paired_mechanism_v1.py": {
+      "bytes": 49446,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "c03a932133aa7d6994bf4f7a1b3837ea523b2dee39d80fd9c3800322f1e11b80",
+      "git_blob_sha1_raw": "f9dc24bf3dbf37bebd0d727c60795e8f1dd773e2",
+      "git_blob_sha1_after_clean_filter": "f9dc24bf3dbf37bebd0d727c60795e8f1dd773e2",
+      "raw_bytes_equal_committed_bytes": true
+    },
+    "tests/test_s3_paired_mechanism_v1.py": {
+      "bytes": 15008,
+      "crlf_pairs": 0,
+      "sha256_raw_working_tree": "532f9e2e62af7d0e3822ad002876fbe39a0d0b553d9f9d898ef858f3320d6425",
+      "git_blob_sha1_raw": "0465d991ac96e78f9700ec5317c4f725ac43ea1e",
+      "git_blob_sha1_after_clean_filter": "0465d991ac96e78f9700ec5317c4f725ac43ea1e",
+      "raw_bytes_equal_committed_bytes": true
+    }
+  },
+  "results": {
+    "predictions": {
+      "path": "outputs/development/s3_paired_mechanism_v1/predictions.jsonl",
+      "sha256": "087798125512a8f0268a9da62c28e240a059669eeec5975d1172c50b1f5e19c0",
+      "rows": 112
+    },
+    "metrics": {
+      "path": "outputs/development/s3_paired_mechanism_v1/metrics.json",
+      "sha256": "80e1c4ce0c795979c3e7a0f6cd0d5c34c6d66a4f21bb8b009076d3933052afd5"
+    },
+    "report": {
+      "path": "outputs/development/s3_paired_mechanism_v1/REPORT.md",
+      "sha256": "68073af91348482f909c6b081719a26f8fc01ed1d102109493a0c3d2ee4b0d81"
+    }
+  },
+  "environment": {
+    "python": "3.14.6",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "safety": {
+    "gold_read": false,
+    "gold_modified": false,
+    "old_results_modified": false,
+    "frozen_variants_modified": false,
+    "original_bpmn_modified": false,
+    "network_calls": 0,
+    "llm_api_calls": 0,
+    "thresholds_changed": false,
+    "checkers_modified": false
+  }
+}

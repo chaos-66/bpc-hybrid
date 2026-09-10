@@ -50,5 +50,7 @@
 
 | C37 | S3.7 零分根因与证据修复：恢复3条已确认文字顺序说明；空关系/未映射输出未知；匹配活动的执行者不混入业务对象；局部通知判断与已确认读图意见一致 | VERIFIED_DEVELOPMENT_DIAGNOSTIC；旧33条性能解释待范围核实 | `outputs/reports/s3_evidence_repair_v1.{json,md,manifest.json}`；23项独立回归/绑定测试；7流程/33条原标签全部保留；新API=0 | 可写开发修复与错误分析。C21/C22/C31/C34/C36涉及33条违规标签的性能解释需加范围待核实：没有合规对照、未绑定目标活动/规范/变体，4条引用未输入法条，v001/v002与已确认局部意见存在范围冲突。不得将旧表用于证明分类能力或Oracle上限，不得以匹配负例充当违规合规对照 | 人工明确检查范围及原图/变体、补齐规范证据后重新发布评价契约；Gold不自动修改 |
 
+| C38 | S3-PAIRED-MECH 三类检查成对受控机制实验（development synthetic，零 API）：30 固定变体各配 1 个原图局部对照 → 有效契约 28、未解决 2、有效配对 28、检查实例 56。macro-F1 冻结 Sun 0.7874 / 开发检查器 0.7579；成对成功 16/28 与 17/28；总 unknown 0 与 19。incorrect_actor：Sun 对照误报 7/8（成对 1/8，F1 0.6957），Dev 对照误报 0（成对 6/8，F1 0.8571）。out_of_order：Sun 成对 10/10（F1 1.0000），Dev 成对 6/10（F1 0.7500，4 对 unknown）。missing_action 两方法同为 F1 0.6667（成对 5/10） | VERIFIED_PROJECT_FACT（development + synthetic 机制实验；原始/变体/契约/逐项预测全部可重放；真实 API=0） | `outputs/development/s3_paired_mechanism_v1/{contracts_locked.json,predictions.jsonl,metrics.json,manifest.json,REPORT.md}` + `scripts/run_s3_paired_mechanism_v1.py --replay` + 18 项针对性测试 | 可写“在要求直接取自原图标签的受控面上，检查机制可被验证；incorrect_actor 类出现对照误报 7/8→0 的方向性机制证据；out_of_order 上开发检查器未优于冻结 Sun（4 对无法判断）”。**不得**写整体提升、方法优于 Sun、人工规则更差或端到端提升；**不得**把本轮结果与 33 条人工标签诊断表混用；**不得**声称真实法条↔流程语义映射已解决（本实验刻意排除该难度） | 未解决：真实法条语义映射未评价；旧 33 条标签检查范围未对齐；`syn_incorrect_actor_03/04` 注入 lane 名等于既有 pool、所有权未变（保留并标注，未补写） |
+
 新增任何结果性句子前，先在本表新增一行。正式回填必须记录 manifest 路径、事件
 时间、样本数、失败数、模型和 evaluator 版本；否则维持 `BLOCKED_RESULT`。
