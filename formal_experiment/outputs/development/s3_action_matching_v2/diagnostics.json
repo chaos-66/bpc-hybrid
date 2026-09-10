@@ -1,0 +1,1096 @@
+{
+  "schema_version": "s3_action_matching_v2_diagnostics@1.0.0",
+  "run_id": "s3_action_matching_v2",
+  "method": {
+    "id": "evidence_checks_v2_action_matching",
+    "scope": "action matching only"
+  },
+  "matching_policy": {
+    "method": "s3_action_matching@2.0.0",
+    "base_method": "s3_evidence_checks@1.0.0",
+    "modification_scope": "action matching only",
+    "exact_normalisation": "Unicode NFKC, casefold, collapse whitespace runs, strip",
+    "exact_priority": "one unique exact match wins over every approximate match",
+    "exact_tie": "different activity ids with identical normalised labels stay unknown",
+    "object_evidence": "nominal tokens (NOUN/PROPN/NUM) minus the head token, minus any token whose lemma equals the predicate, minus verbs and auxiliaries, minus stopwords, and minus subject-like slots (nsubj/nsubjpass/csubj/npadvmod) where a mis-tagged action word lands; how many of the surviving tokens sit in an object relation (dobj/pobj/attr/oprd) is recorded as relation support",
+    "tiers": {
+      "exact_label": "mapped, certain",
+      "exact_label_tie": "unknown (identical labels on several activities)",
+      "predicate_object_agreement": "mapped: same predicate, identical object evidence, numerals and negation",
+      "predicate_object_agreement_tie": "unknown (several indistinguishable equivalent candidates)",
+      "object_conflict": "not mapped: same predicate with disjoint object evidence, or different numerals / negation",
+      "partial_object_overlap": "unknown (partial object overlap: under-determined)",
+      "frozen_similarity": "mapped through the frozen similarity backend above gamma",
+      "frozen_similarity_tie": "unknown (several equally similar candidates)",
+      "similarity_below_gamma": "not mapped: best similarity at or below gamma",
+      "no_process_actions": "no labelled process activity to match against"
+    },
+    "false": [
+      "no GDPR vocabulary or object list",
+      "no sample-id special cases",
+      "no target-label whitelist",
+      "no replacement table derived from panel results",
+      "no ordering by activity id to settle identical labels",
+      "no use of the frozen target id inside matching"
+    ]
+  },
+  "policy_frozen_before_panel_scoring": true,
+  "definitions": {
+    "correct_positive": "variant side judged violation",
+    "correct_control": "original side judged satisfied",
+    "v1_unknown_transitions": "of the 19 v1 unknown items, how v2 judges them now",
+    "match_tier": "decision tier per requirement/endpoint, recorded in predictions.jsonl"
+  },
+  "v1_v2_item_changes": [
+    {
+      "item_id": "syn_incorrect_actor_01::original",
+      "pair_id": "syn_incorrect_actor_01",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_01::variant",
+      "pair_id": "syn_incorrect_actor_01",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v1_status": "unknown",
+      "v2_status": "violation",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_02::original",
+      "pair_id": "syn_incorrect_actor_02",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_02::variant",
+      "pair_id": "syn_incorrect_actor_02",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_05::original",
+      "pair_id": "syn_incorrect_actor_05",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_05::variant",
+      "pair_id": "syn_incorrect_actor_05",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_06::original",
+      "pair_id": "syn_incorrect_actor_06",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_06::variant",
+      "pair_id": "syn_incorrect_actor_06",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_07::original",
+      "pair_id": "syn_incorrect_actor_07",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_07::variant",
+      "pair_id": "syn_incorrect_actor_07",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_08::original",
+      "pair_id": "syn_incorrect_actor_08",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_08::variant",
+      "pair_id": "syn_incorrect_actor_08",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v1_status": "unknown",
+      "v2_status": "violation",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_09::original",
+      "pair_id": "syn_incorrect_actor_09",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_09::variant",
+      "pair_id": "syn_incorrect_actor_09",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_10::original",
+      "pair_id": "syn_incorrect_actor_10",
+      "side": "original",
+      "check_type": "incorrect_actor",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_incorrect_actor_10::variant",
+      "pair_id": "syn_incorrect_actor_10",
+      "side": "variant",
+      "check_type": "incorrect_actor",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_01::original",
+      "pair_id": "syn_missing_action_01",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_01::variant",
+      "pair_id": "syn_missing_action_01",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v1_status": "satisfied",
+      "v2_status": "violation",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "object_conflict"
+      ],
+      "v2_tier_reasons": [
+        "same predicate with conflicting object/number/negation evidence"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_02::original",
+      "pair_id": "syn_missing_action_02",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_02::variant",
+      "pair_id": "syn_missing_action_02",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v1_status": "satisfied",
+      "v2_status": "violation",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "object_conflict"
+      ],
+      "v2_tier_reasons": [
+        "same predicate with conflicting object/number/negation evidence"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_03::original",
+      "pair_id": "syn_missing_action_03",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_03::variant",
+      "pair_id": "syn_missing_action_03",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v1_status": "unknown",
+      "v2_status": "violation",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "object_conflict"
+      ],
+      "v2_tier_reasons": [
+        "same predicate with conflicting object/number/negation evidence"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_04::original",
+      "pair_id": "syn_missing_action_04",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_04::variant",
+      "pair_id": "syn_missing_action_04",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v1_status": "unknown",
+      "v2_status": "unknown",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "predicate_object_agreement_tie"
+      ],
+      "v2_tier_reasons": [
+        "several activities carry identical required object evidence"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": "ambiguous_action_mapping"
+    },
+    {
+      "item_id": "syn_missing_action_05::original",
+      "pair_id": "syn_missing_action_05",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_05::variant",
+      "pair_id": "syn_missing_action_05",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "similarity_below_gamma"
+      ],
+      "v2_tier_reasons": [
+        "best raw similarity 0.5842 <= gamma"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_06::original",
+      "pair_id": "syn_missing_action_06",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "ambiguous_action_mapping",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_06::variant",
+      "pair_id": "syn_missing_action_06",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v1_status": "satisfied",
+      "v2_status": "unknown",
+      "change": "changed_but_still_incorrect",
+      "v2_match_tiers": [
+        "partial_object_overlap"
+      ],
+      "v2_tier_reasons": [
+        "partial object overlap; the required action set is neither equalled nor excluded"
+      ],
+      "v1_reason": null,
+      "v2_reason": "ambiguous_action_mapping"
+    },
+    {
+      "item_id": "syn_missing_action_07::original",
+      "pair_id": "syn_missing_action_07",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_07::variant",
+      "pair_id": "syn_missing_action_07",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "similarity_below_gamma"
+      ],
+      "v2_tier_reasons": [
+        "best raw similarity 0.6978 <= gamma"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_08::original",
+      "pair_id": "syn_missing_action_08",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_08::variant",
+      "pair_id": "syn_missing_action_08",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "similarity_below_gamma"
+      ],
+      "v2_tier_reasons": [
+        "best raw similarity 0.5183 <= gamma"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_09::original",
+      "pair_id": "syn_missing_action_09",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_09::variant",
+      "pair_id": "syn_missing_action_09",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "similarity_below_gamma"
+      ],
+      "v2_tier_reasons": [
+        "best raw similarity 0.5842 <= gamma"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_10::original",
+      "pair_id": "syn_missing_action_10",
+      "side": "original",
+      "check_type": "missing_action",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_missing_action_10::variant",
+      "pair_id": "syn_missing_action_10",
+      "side": "variant",
+      "check_type": "missing_action",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "similarity_below_gamma"
+      ],
+      "v2_tier_reasons": [
+        "best raw similarity 0.5691 <= gamma"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_01::original",
+      "pair_id": "syn_out_of_order_01",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "order_endpoint_unmapped",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_01::variant",
+      "pair_id": "syn_out_of_order_01",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v1_status": "unknown",
+      "v2_status": "violation",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "order_endpoint_unmapped",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_02::original",
+      "pair_id": "syn_out_of_order_02",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "order_endpoint_unmapped",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_02::variant",
+      "pair_id": "syn_out_of_order_02",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v1_status": "unknown",
+      "v2_status": "violation",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "order_endpoint_unmapped",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_03::original",
+      "pair_id": "syn_out_of_order_03",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_03::variant",
+      "pair_id": "syn_out_of_order_03",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_04::original",
+      "pair_id": "syn_out_of_order_04",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_04::variant",
+      "pair_id": "syn_out_of_order_04",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_05::original",
+      "pair_id": "syn_out_of_order_05",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_05::variant",
+      "pair_id": "syn_out_of_order_05",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_06::original",
+      "pair_id": "syn_out_of_order_06",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_06::variant",
+      "pair_id": "syn_out_of_order_06",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_07::original",
+      "pair_id": "syn_out_of_order_07",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "order_endpoint_unmapped",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_07::variant",
+      "pair_id": "syn_out_of_order_07",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v1_status": "unknown",
+      "v2_status": "violation",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "order_endpoint_unmapped",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_08::original",
+      "pair_id": "syn_out_of_order_08",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v1_status": "unknown",
+      "v2_status": "satisfied",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "order_endpoint_unmapped",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_08::variant",
+      "pair_id": "syn_out_of_order_08",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v1_status": "unknown",
+      "v2_status": "violation",
+      "change": "corrected",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": "order_endpoint_unmapped",
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_09::original",
+      "pair_id": "syn_out_of_order_09",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_09::variant",
+      "pair_id": "syn_out_of_order_09",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_10::original",
+      "pair_id": "syn_out_of_order_10",
+      "side": "original",
+      "check_type": "out_of_order",
+      "expected": "satisfied",
+      "v1_status": "satisfied",
+      "v2_status": "satisfied",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    },
+    {
+      "item_id": "syn_out_of_order_10::variant",
+      "pair_id": "syn_out_of_order_10",
+      "side": "variant",
+      "check_type": "out_of_order",
+      "expected": "violation",
+      "v1_status": "violation",
+      "v2_status": "violation",
+      "change": "unchanged",
+      "v2_match_tiers": [
+        "exact_label"
+      ],
+      "v2_tier_reasons": [
+        "mapped, certain"
+      ],
+      "v1_reason": null,
+      "v2_reason": null
+    }
+  ],
+  "change_summary": {
+    "corrected": 20,
+    "unchanged": 35,
+    "changed_but_still_incorrect": 1
+  },
+  "unknown_transitions": {
+    "v1_unknown_now_correct": 18,
+    "v1_unknown_still_unknown": 1,
+    "v1_unknown_now_wrong": 0,
+    "v1_unknown_total": 19
+  },
+  "missed_positive_corrections": {
+    "v1_satisfied_on_positive_now_violation": [
+      "syn_missing_action_01::variant",
+      "syn_missing_action_02::variant"
+    ],
+    "v1_satisfied_on_positive_still_not_flagged": [
+      "syn_missing_action_06::variant"
+    ]
+  },
+  "regressions": [],
+  "residual_failures_grouped_by_cause": {
+    "positive_target_absent_but_still_not_flagged": [
+      "syn_missing_action_06::variant"
+    ],
+    "under_determined_equivalent_candidates": [
+      "syn_missing_action_04::variant"
+    ],
+    "under_determined_partial_object_overlap": [
+      "syn_missing_action_06::variant"
+    ]
+  },
+  "v2_match_tier_counts": {
+    "incorrect_actor:exact_label": 16,
+    "missing_action:exact_label": 10,
+    "missing_action:object_conflict": 3,
+    "missing_action:partial_object_overlap": 1,
+    "missing_action:predicate_object_agreement_tie": 1,
+    "missing_action:similarity_below_gamma": 5,
+    "out_of_order:exact_label": 20
+  },
+  "reference": "per-item candidate evidence lives once in predictions.jsonl; this file refers to items by item_id only"
+}

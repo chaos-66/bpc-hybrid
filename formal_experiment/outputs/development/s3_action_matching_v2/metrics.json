@@ -1,0 +1,2179 @@
+{
+  "schema_version": "s3_action_matching_v2_metrics@1.0.0",
+  "run_id": "s3_action_matching_v2",
+  "denominator_policy": {
+    "positive": "variant side of a valid contract; expected violation",
+    "control": "original side of a valid contract; expected satisfied",
+    "tp": "positive judged violation",
+    "fn": "positive not judged violation (satisfied or unknown; positive unknown counts as a miss)",
+    "fp": "control judged violation (false alarm)",
+    "tn": "control judged satisfied",
+    "control_unknown": "not counted as tn and not counted as fp",
+    "precision": "tp/(tp+fp)",
+    "recall": "tp/(tp+fn) == tp/valid_positive_instances",
+    "control_satisfied_rate": "tn/valid_control_instances",
+    "paired_success": "control satisfied AND positive violation for the same pair"
+  },
+  "denominator_policy_source": {
+    "path": "outputs/development/s3_paired_mechanism_v1/metrics.json",
+    "sha256": "80e1c4ce0c795979c3e7a0f6cd0d5c34c6d66a4f21bb8b009076d3933052afd5",
+    "note": "inherited verbatim; the evaluator code path is unchanged"
+  },
+  "methods": {
+    "sun_2024_frozen": {
+      "per_type": {
+        "missing_action": {
+          "valid_pairs": 10,
+          "control_instances": 10,
+          "variant_instances": 10,
+          "tp": 5,
+          "fp": 0,
+          "fn": 5,
+          "tn": 10,
+          "positive_unknown": 0,
+          "control_unknown": 0,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "control_satisfied": 10,
+          "control_satisfied_rate": 1.0,
+          "paired_success": 5,
+          "paired_success_rate": 0.5,
+          "per_pair": {
+            "syn_missing_action_01": {
+              "control": "satisfied",
+              "variant": "satisfied"
+            },
+            "syn_missing_action_02": {
+              "control": "satisfied",
+              "variant": "satisfied"
+            },
+            "syn_missing_action_03": {
+              "control": "satisfied",
+              "variant": "satisfied"
+            },
+            "syn_missing_action_04": {
+              "control": "satisfied",
+              "variant": "satisfied"
+            },
+            "syn_missing_action_05": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_06": {
+              "control": "satisfied",
+              "variant": "satisfied"
+            },
+            "syn_missing_action_07": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_08": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_09": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_10": {
+              "control": "satisfied",
+              "variant": "violation"
+            }
+          }
+        },
+        "incorrect_actor": {
+          "valid_pairs": 8,
+          "control_instances": 8,
+          "variant_instances": 8,
+          "tp": 8,
+          "fp": 7,
+          "fn": 0,
+          "tn": 1,
+          "positive_unknown": 0,
+          "control_unknown": 0,
+          "precision": 0.5333333333333333,
+          "recall": 1.0,
+          "f1": 0.6956521739130436,
+          "control_satisfied": 1,
+          "control_satisfied_rate": 0.125,
+          "paired_success": 1,
+          "paired_success_rate": 0.125,
+          "per_pair": {
+            "syn_incorrect_actor_01": {
+              "control": "violation",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_02": {
+              "control": "violation",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_05": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_06": {
+              "control": "violation",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_07": {
+              "control": "violation",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_08": {
+              "control": "violation",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_09": {
+              "control": "violation",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_10": {
+              "control": "violation",
+              "variant": "violation"
+            }
+          }
+        },
+        "out_of_order": {
+          "valid_pairs": 10,
+          "control_instances": 10,
+          "variant_instances": 10,
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "tn": 10,
+          "positive_unknown": 0,
+          "control_unknown": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "control_satisfied": 10,
+          "control_satisfied_rate": 1.0,
+          "paired_success": 10,
+          "paired_success_rate": 1.0,
+          "per_pair": {
+            "syn_out_of_order_01": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_02": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_03": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_04": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_05": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_06": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_07": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_08": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_09": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_10": {
+              "control": "satisfied",
+              "variant": "violation"
+            }
+          }
+        }
+      },
+      "macro_f1": 0.78743961352657,
+      "total_unknown": 0,
+      "valid_contracts": 28,
+      "valid_contract_coverage": 0.9333333333333333,
+      "paired_success_total": 16,
+      "control_satisfied_total": 21
+    },
+    "evidence_checks_v1": {
+      "per_type": {
+        "missing_action": {
+          "valid_pairs": 10,
+          "control_instances": 10,
+          "variant_instances": 10,
+          "tp": 5,
+          "fp": 0,
+          "fn": 5,
+          "tn": 5,
+          "positive_unknown": 2,
+          "control_unknown": 5,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "control_satisfied": 5,
+          "control_satisfied_rate": 0.5,
+          "paired_success": 5,
+          "paired_success_rate": 0.5,
+          "per_pair": {
+            "syn_missing_action_01": {
+              "control": "unknown",
+              "variant": "satisfied"
+            },
+            "syn_missing_action_02": {
+              "control": "unknown",
+              "variant": "satisfied"
+            },
+            "syn_missing_action_03": {
+              "control": "unknown",
+              "variant": "unknown"
+            },
+            "syn_missing_action_04": {
+              "control": "unknown",
+              "variant": "unknown"
+            },
+            "syn_missing_action_05": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_06": {
+              "control": "unknown",
+              "variant": "satisfied"
+            },
+            "syn_missing_action_07": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_08": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_09": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_10": {
+              "control": "satisfied",
+              "variant": "violation"
+            }
+          }
+        },
+        "incorrect_actor": {
+          "valid_pairs": 8,
+          "control_instances": 8,
+          "variant_instances": 8,
+          "tp": 6,
+          "fp": 0,
+          "fn": 2,
+          "tn": 6,
+          "positive_unknown": 2,
+          "control_unknown": 2,
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "control_satisfied": 6,
+          "control_satisfied_rate": 0.75,
+          "paired_success": 6,
+          "paired_success_rate": 0.75,
+          "per_pair": {
+            "syn_incorrect_actor_01": {
+              "control": "unknown",
+              "variant": "unknown"
+            },
+            "syn_incorrect_actor_02": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_05": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_06": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_07": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_08": {
+              "control": "unknown",
+              "variant": "unknown"
+            },
+            "syn_incorrect_actor_09": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_10": {
+              "control": "satisfied",
+              "variant": "violation"
+            }
+          }
+        },
+        "out_of_order": {
+          "valid_pairs": 10,
+          "control_instances": 10,
+          "variant_instances": 10,
+          "tp": 6,
+          "fp": 0,
+          "fn": 4,
+          "tn": 6,
+          "positive_unknown": 4,
+          "control_unknown": 4,
+          "precision": 1.0,
+          "recall": 0.6,
+          "f1": 0.7499999999999999,
+          "control_satisfied": 6,
+          "control_satisfied_rate": 0.6,
+          "paired_success": 6,
+          "paired_success_rate": 0.6,
+          "per_pair": {
+            "syn_out_of_order_01": {
+              "control": "unknown",
+              "variant": "unknown"
+            },
+            "syn_out_of_order_02": {
+              "control": "unknown",
+              "variant": "unknown"
+            },
+            "syn_out_of_order_03": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_04": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_05": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_06": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_07": {
+              "control": "unknown",
+              "variant": "unknown"
+            },
+            "syn_out_of_order_08": {
+              "control": "unknown",
+              "variant": "unknown"
+            },
+            "syn_out_of_order_09": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_10": {
+              "control": "satisfied",
+              "variant": "violation"
+            }
+          }
+        }
+      },
+      "macro_f1": 0.7579365079365079,
+      "total_unknown": 19,
+      "valid_contracts": 28,
+      "valid_contract_coverage": 0.9333333333333333,
+      "paired_success_total": 17,
+      "control_satisfied_total": 17
+    },
+    "evidence_checks_v2_action_matching": {
+      "per_type": {
+        "missing_action": {
+          "valid_pairs": 10,
+          "control_instances": 10,
+          "variant_instances": 10,
+          "tp": 8,
+          "fp": 0,
+          "fn": 2,
+          "tn": 10,
+          "positive_unknown": 2,
+          "control_unknown": 0,
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888888888888889,
+          "control_satisfied": 10,
+          "control_satisfied_rate": 1.0,
+          "paired_success": 8,
+          "paired_success_rate": 0.8,
+          "per_pair": {
+            "syn_missing_action_01": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_02": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_03": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_04": {
+              "control": "satisfied",
+              "variant": "unknown"
+            },
+            "syn_missing_action_05": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_06": {
+              "control": "satisfied",
+              "variant": "unknown"
+            },
+            "syn_missing_action_07": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_08": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_09": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_missing_action_10": {
+              "control": "satisfied",
+              "variant": "violation"
+            }
+          }
+        },
+        "incorrect_actor": {
+          "valid_pairs": 8,
+          "control_instances": 8,
+          "variant_instances": 8,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0,
+          "tn": 8,
+          "positive_unknown": 0,
+          "control_unknown": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "control_satisfied": 8,
+          "control_satisfied_rate": 1.0,
+          "paired_success": 8,
+          "paired_success_rate": 1.0,
+          "per_pair": {
+            "syn_incorrect_actor_01": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_02": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_05": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_06": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_07": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_08": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_09": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_incorrect_actor_10": {
+              "control": "satisfied",
+              "variant": "violation"
+            }
+          }
+        },
+        "out_of_order": {
+          "valid_pairs": 10,
+          "control_instances": 10,
+          "variant_instances": 10,
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "tn": 10,
+          "positive_unknown": 0,
+          "control_unknown": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "control_satisfied": 10,
+          "control_satisfied_rate": 1.0,
+          "paired_success": 10,
+          "paired_success_rate": 1.0,
+          "per_pair": {
+            "syn_out_of_order_01": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_02": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_03": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_04": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_05": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_06": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_07": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_08": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_09": {
+              "control": "satisfied",
+              "variant": "violation"
+            },
+            "syn_out_of_order_10": {
+              "control": "satisfied",
+              "variant": "violation"
+            }
+          }
+        }
+      },
+      "macro_f1": 0.9629629629629629,
+      "total_unknown": 2,
+      "valid_contracts": 28,
+      "valid_contract_coverage": 0.9333333333333333,
+      "paired_success_total": 26,
+      "control_satisfied_total": 28
+    }
+  },
+  "macro_f1": {
+    "sun_2024_frozen": 0.78743961352657,
+    "evidence_checks_v1": 0.7579365079365079,
+    "evidence_checks_v2_action_matching": 0.9629629629629629
+  },
+  "total_unknown": {
+    "sun_2024_frozen": 0,
+    "evidence_checks_v1": 19,
+    "evidence_checks_v2_action_matching": 2
+  },
+  "sources": {
+    "sun_2024_frozen": {
+      "mode": "reused_verified_predictions",
+      "path": "outputs/development/s3_paired_mechanism_v1/predictions.jsonl",
+      "sha256": "087798125512a8f0268a9da62c28e240a059669eeec5975d1172c50b1f5e19c0",
+      "item_count": 56,
+      "items": [
+        {
+          "item_id": "syn_incorrect_actor_01::original",
+          "pair_id": "syn_incorrect_actor_01",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_01::variant",
+          "pair_id": "syn_incorrect_actor_01",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_02::original",
+          "pair_id": "syn_incorrect_actor_02",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_02::variant",
+          "pair_id": "syn_incorrect_actor_02",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_05::original",
+          "pair_id": "syn_incorrect_actor_05",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "satisfied",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_05::variant",
+          "pair_id": "syn_incorrect_actor_05",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_06::original",
+          "pair_id": "syn_incorrect_actor_06",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_06::variant",
+          "pair_id": "syn_incorrect_actor_06",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_07::original",
+          "pair_id": "syn_incorrect_actor_07",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_07::variant",
+          "pair_id": "syn_incorrect_actor_07",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_08::original",
+          "pair_id": "syn_incorrect_actor_08",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_08::variant",
+          "pair_id": "syn_incorrect_actor_08",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_09::original",
+          "pair_id": "syn_incorrect_actor_09",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_09::variant",
+          "pair_id": "syn_incorrect_actor_09",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_10::original",
+          "pair_id": "syn_incorrect_actor_10",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_10::variant",
+          "pair_id": "syn_incorrect_actor_10",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_01::original",
+          "pair_id": "syn_missing_action_01",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_01::variant",
+          "pair_id": "syn_missing_action_01",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_02::original",
+          "pair_id": "syn_missing_action_02",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_02::variant",
+          "pair_id": "syn_missing_action_02",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_03::original",
+          "pair_id": "syn_missing_action_03",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_03::variant",
+          "pair_id": "syn_missing_action_03",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_04::original",
+          "pair_id": "syn_missing_action_04",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_04::variant",
+          "pair_id": "syn_missing_action_04",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_05::original",
+          "pair_id": "syn_missing_action_05",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_05::variant",
+          "pair_id": "syn_missing_action_05",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "violation",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_06::original",
+          "pair_id": "syn_missing_action_06",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_06::variant",
+          "pair_id": "syn_missing_action_06",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_07::original",
+          "pair_id": "syn_missing_action_07",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_07::variant",
+          "pair_id": "syn_missing_action_07",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "violation",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_08::original",
+          "pair_id": "syn_missing_action_08",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_08::variant",
+          "pair_id": "syn_missing_action_08",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "violation",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_09::original",
+          "pair_id": "syn_missing_action_09",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_09::variant",
+          "pair_id": "syn_missing_action_09",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "violation",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_10::original",
+          "pair_id": "syn_missing_action_10",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_10::variant",
+          "pair_id": "syn_missing_action_10",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "missing_action",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "violation",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_01::original",
+          "pair_id": "syn_out_of_order_01",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_01::variant",
+          "pair_id": "syn_out_of_order_01",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_02::original",
+          "pair_id": "syn_out_of_order_02",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_02::variant",
+          "pair_id": "syn_out_of_order_02",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_03::original",
+          "pair_id": "syn_out_of_order_03",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_03::variant",
+          "pair_id": "syn_out_of_order_03",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_04::original",
+          "pair_id": "syn_out_of_order_04",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_04::variant",
+          "pair_id": "syn_out_of_order_04",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_05::original",
+          "pair_id": "syn_out_of_order_05",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_05::variant",
+          "pair_id": "syn_out_of_order_05",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_06::original",
+          "pair_id": "syn_out_of_order_06",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_06::variant",
+          "pair_id": "syn_out_of_order_06",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_07::original",
+          "pair_id": "syn_out_of_order_07",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_07::variant",
+          "pair_id": "syn_out_of_order_07",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_08::original",
+          "pair_id": "syn_out_of_order_08",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_08::variant",
+          "pair_id": "syn_out_of_order_08",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_09::original",
+          "pair_id": "syn_out_of_order_09",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_09::variant",
+          "pair_id": "syn_out_of_order_09",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_10::original",
+          "pair_id": "syn_out_of_order_10",
+          "side": "original",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_10::variant",
+          "pair_id": "syn_out_of_order_10",
+          "side": "variant",
+          "checker": "sun_2024_frozen",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        }
+      ]
+    },
+    "evidence_checks_v1": {
+      "mode": "reused_verified_predictions",
+      "path": "outputs/development/s3_paired_mechanism_v1/predictions.jsonl",
+      "sha256": "087798125512a8f0268a9da62c28e240a059669eeec5975d1172c50b1f5e19c0",
+      "item_count": 56,
+      "items": [
+        {
+          "item_id": "syn_incorrect_actor_01::original",
+          "pair_id": "syn_incorrect_actor_01",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_01::variant",
+          "pair_id": "syn_incorrect_actor_01",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_02::original",
+          "pair_id": "syn_incorrect_actor_02",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "satisfied",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_02::variant",
+          "pair_id": "syn_incorrect_actor_02",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_05::original",
+          "pair_id": "syn_incorrect_actor_05",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "satisfied",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_05::variant",
+          "pair_id": "syn_incorrect_actor_05",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_06::original",
+          "pair_id": "syn_incorrect_actor_06",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "satisfied",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_06::variant",
+          "pair_id": "syn_incorrect_actor_06",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_07::original",
+          "pair_id": "syn_incorrect_actor_07",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "satisfied",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_07::variant",
+          "pair_id": "syn_incorrect_actor_07",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_08::original",
+          "pair_id": "syn_incorrect_actor_08",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_08::variant",
+          "pair_id": "syn_incorrect_actor_08",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_09::original",
+          "pair_id": "syn_incorrect_actor_09",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "satisfied",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_09::variant",
+          "pair_id": "syn_incorrect_actor_09",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_10::original",
+          "pair_id": "syn_incorrect_actor_10",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "satisfied",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_incorrect_actor_10::variant",
+          "pair_id": "syn_incorrect_actor_10",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "incorrect_actor",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "violation",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_01::original",
+          "pair_id": "syn_missing_action_01",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_01::variant",
+          "pair_id": "syn_missing_action_01",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_02::original",
+          "pair_id": "syn_missing_action_02",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_02::variant",
+          "pair_id": "syn_missing_action_02",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_03::original",
+          "pair_id": "syn_missing_action_03",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_03::variant",
+          "pair_id": "syn_missing_action_03",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_04::original",
+          "pair_id": "syn_missing_action_04",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_04::variant",
+          "pair_id": "syn_missing_action_04",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_05::original",
+          "pair_id": "syn_missing_action_05",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_05::variant",
+          "pair_id": "syn_missing_action_05",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "violation",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_06::original",
+          "pair_id": "syn_missing_action_06",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "unknown",
+          "reason": "ambiguous_action_mapping",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_06::variant",
+          "pair_id": "syn_missing_action_06",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_07::original",
+          "pair_id": "syn_missing_action_07",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_07::variant",
+          "pair_id": "syn_missing_action_07",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "violation",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_08::original",
+          "pair_id": "syn_missing_action_08",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_08::variant",
+          "pair_id": "syn_missing_action_08",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "violation",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_09::original",
+          "pair_id": "syn_missing_action_09",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_09::variant",
+          "pair_id": "syn_missing_action_09",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "violation",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_10::original",
+          "pair_id": "syn_missing_action_10",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "satisfied",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_missing_action_10::variant",
+          "pair_id": "syn_missing_action_10",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "missing_action",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "violation",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_01::original",
+          "pair_id": "syn_out_of_order_01",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "unknown",
+          "reason": "order_endpoint_unmapped",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_01::variant",
+          "pair_id": "syn_out_of_order_01",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "unknown",
+          "reason": "order_endpoint_unmapped",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_02::original",
+          "pair_id": "syn_out_of_order_02",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "unknown",
+          "reason": "order_endpoint_unmapped",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_02::variant",
+          "pair_id": "syn_out_of_order_02",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "unknown",
+          "reason": "order_endpoint_unmapped",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_03::original",
+          "pair_id": "syn_out_of_order_03",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_03::variant",
+          "pair_id": "syn_out_of_order_03",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_04::original",
+          "pair_id": "syn_out_of_order_04",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_04::variant",
+          "pair_id": "syn_out_of_order_04",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_05::original",
+          "pair_id": "syn_out_of_order_05",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_05::variant",
+          "pair_id": "syn_out_of_order_05",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_06::original",
+          "pair_id": "syn_out_of_order_06",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_06::variant",
+          "pair_id": "syn_out_of_order_06",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_07::original",
+          "pair_id": "syn_out_of_order_07",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "unknown",
+          "reason": "order_endpoint_unmapped",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_07::variant",
+          "pair_id": "syn_out_of_order_07",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "unknown",
+          "reason": "order_endpoint_unmapped",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_08::original",
+          "pair_id": "syn_out_of_order_08",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "unknown",
+          "reason": "order_endpoint_unmapped",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_08::variant",
+          "pair_id": "syn_out_of_order_08",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "unknown",
+          "reason": "order_endpoint_unmapped",
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "unknown"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_09::original",
+          "pair_id": "syn_out_of_order_09",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_09::variant",
+          "pair_id": "syn_out_of_order_09",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_10::original",
+          "pair_id": "syn_out_of_order_10",
+          "side": "original",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "satisfied",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "satisfied"
+          }
+        },
+        {
+          "item_id": "syn_out_of_order_10::variant",
+          "pair_id": "syn_out_of_order_10",
+          "side": "variant",
+          "checker": "evidence_checks_v1",
+          "target_check": "out_of_order",
+          "status": "violation",
+          "reason": null,
+          "signals": {
+            "missing_action": "unknown",
+            "incorrect_actor": "unknown",
+            "out_of_order": "violation"
+          }
+        }
+      ]
+    },
+    "evidence_checks_v2_action_matching": {
+      "mode": "newly_generated",
+      "path": "outputs/development/s3_action_matching_v2/predictions.jsonl",
+      "item_count": 56
+    }
+  },
+  "shared_evaluator_adapter": {
+    "description": "each method's rows are scored through the previous round's evaluate() by canonicalising the in-memory method label; stored rows keep their true method id and no metric formula is reimplemented",
+    "canonical_alias": "evidence_checks_v1",
+    "faithfulness_check_against_stored_v1_metrics": {
+      "sun_2024_frozen": true,
+      "evidence_checks_v1": true
+    }
+  }
+}

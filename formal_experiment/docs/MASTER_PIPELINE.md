@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.44
+**文档版本**：3.6.45
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-09-10
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,35 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-10 修订 3.6.45：开发检查器动作匹配缺陷修复与固定面板复测（S3-ACTION-MATCHING-V2，零 API）
+
+本轮唯一改动是**开发检查器的动作匹配策略**：新增薄的后继模块
+`src/bpc_hybrid/s3_action_matching_v2.py`（`s3_action_matching@2.0.0`），继承既有
+`EvidenceChecks` 并只覆盖 `action_match` 及其内部辅助函数。v1 文件、冻结 Sun 实现、
+执行者检查、顺序判断、unknown 聚合与指标逻辑、NLP 模型、相似度后端、阈值一律不变。
+
+- **已确认缺陷（逐项证据）**：v1 给“完全匹配”和“同谓词＋共享内容词”同样 1.0，二者并列即被判为
+  歧义；其内容词集来自词性分析，短标签下动作首词被标成 NOUN 进入内容词集（实测共享集
+  `['retrieve']` 就是动作词本身），使“共享动词”伪装成“共享业务对象”；删除真正目标后，
+  同动词异对象的剩余活动仍得 1.0 → 输出 `satisfied`。
+- **v2 策略（在跑面板前冻结）**：唯一完全匹配（NFKC＋casefold＋空白折叠）优先于一切近似匹配；
+  不同活动 ID 的同名标签仍为 unknown（不按 ID 取第一、不用冻结目标 ID）；对象证据排除动作头词、
+  同谓词词元、动词/助动词与主语类槽位；同谓词但对象互斥或数字/否定不同 → 冲突；部分重叠 →
+  保留 unknown；无对象证据时沿用冻结相似度与 gamma。不新增 GDPR 词表、样本 ID 特判或白名单。
+- **复测（固定上轮面板，未改分母）**：固定变体 30、**有效契约 28**、未解决 2、28 对、56 个检查实例；
+  A 冻结 Sun 与 B v1 复用上轮已验证预测（绑定校验后复用，未重跑），只为 C 生成 56 行新预测。
+  结果：macro-F1 **0.7874 / 0.7579 / 0.9630**；总 unknown **0 / 19 / 2**；成对成功
+  **16/28、17/28、26/28**。v2 逐类：missing_action 0.8889（8/0/2/10，正例 unknown 2）、
+  incorrect_actor 1.0000（8/0/0/8）、out_of_order 1.0000（10/0/0/10）；对照误报全 0。
+- **变化审计**：19 个 v1 unknown 中 18 个转为正确、0 个转为错误、1 个仍 unknown；纠正 20 项、
+  未变 35 项、改变但仍不正确 1 项、**回归 0 项**。残余 2 项：`syn_missing_action_06::variant`
+  （部分对象重叠→unknown，此前误判 satisfied）与 `syn_missing_action_04::variant`
+  （不同活动对象证据相同→unknown）。
+- **边界**：本面板用于定位缺陷，故本轮属固定开发集回归与机制改进证据，**不是**独立测试集泛化结论；
+  不声称优于 Sun 整体方法，也不解决真实法条语义映射。产物
+  `outputs/development/s3_action_matching_v2/{predictions.jsonl,metrics.json,diagnostics.json,manifest.json}`；
+  复核入口 `python formal_experiment/scripts/run_s3_action_matching_v2.py --replay`。
 
 ## 2026-09-10 修订 3.6.44：Stage 3 三类检查的成对受控机制实验（S3-PAIRED-MECH，零 API）
 

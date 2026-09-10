@@ -135,3 +135,12 @@ outputs/development/s3_paired_mechanism_v1/predictions.jsonl text eol=lf
 outputs/development/s3_paired_mechanism_v1/metrics.json text eol=lf
 outputs/development/s3_paired_mechanism_v1/manifest.json text eol=lf
 outputs/development/s3_paired_mechanism_v1/REPORT.md text eol=lf
+
+# S3 action-matching v2: exact raw-byte implementation/result bindings.
+src/bpc_hybrid/s3_action_matching_v2.py text eol=lf
+scripts/run_s3_action_matching_v2.py text eol=lf
+tests/test_s3_action_matching_v2.py text eol=lf
+outputs/development/s3_action_matching_v2/predictions.jsonl text eol=lf
+outputs/development/s3_action_matching_v2/metrics.json text eol=lf
+outputs/development/s3_action_matching_v2/diagnostics.json text eol=lf
+outputs/development/s3_action_matching_v2/manifest.json text eol=lf

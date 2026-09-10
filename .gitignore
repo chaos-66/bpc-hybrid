@@ -167,3 +167,13 @@ formal_experiment/outputs/development/s3_paired_mechanism_v1/*
 !formal_experiment/outputs/development/s3_paired_mechanism_v1/metrics.json
 !formal_experiment/outputs/development/s3_paired_mechanism_v1/manifest.json
 !formal_experiment/outputs/development/s3_paired_mechanism_v1/REPORT.md
+
+# S3-ACTION-MATCHING-V2 (2026-09-10): the versioned action-matching successor run.
+# Narrow allowlist: the run directory and its four exact result files only;
+# every other file under outputs/development stays ignored.
+!formal_experiment/outputs/development/s3_action_matching_v2/
+formal_experiment/outputs/development/s3_action_matching_v2/*
+!formal_experiment/outputs/development/s3_action_matching_v2/predictions.jsonl
+!formal_experiment/outputs/development/s3_action_matching_v2/metrics.json
+!formal_experiment/outputs/development/s3_action_matching_v2/diagnostics.json
+!formal_experiment/outputs/development/s3_action_matching_v2/manifest.json
