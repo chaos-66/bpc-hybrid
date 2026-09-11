@@ -180,3 +180,11 @@ outputs/development/s3_extended_v3_v1/predictions.jsonl text eol=lf
 outputs/development/s3_extended_v3_v1/metrics.json text eol=lf
 outputs/development/s3_extended_v3_v1/diagnostics.json text eol=lf
 outputs/development/s3_extended_v3_v1/manifest.json text eol=lf
+
+# Offline prediction accounting: bind identical working-tree and Git bytes.
+src/bpc_hybrid/s3_extended_prediction_accounting_v1.py text eol=lf
+scripts/reconcile_s3_extended_results_v1.py text eol=lf
+tests/test_s3_extended_prediction_accounting_v1.py text eol=lf
+outputs/development/s3_extended_prediction_accounting_v1/final_predictions.jsonl text eol=lf
+outputs/development/s3_extended_prediction_accounting_v1/metrics.json text eol=lf
+outputs/development/s3_extended_prediction_accounting_v1/manifest.json text eol=lf

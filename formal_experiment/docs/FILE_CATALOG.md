@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-11
-**收录文件**：1778 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1818 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -19,6 +19,12 @@
 | 文件 | 状态 | 用途 |
 |---|---|---|
 | `.gitattributes` | 活动 | 项目文件 |
+
+## `.gitignore`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `.gitignore` | 活动 | 项目文件 |
 
 ## `_retired`
 
@@ -832,6 +838,26 @@
 | `outputs/development/s3_action_matching_v3/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_action_matching_v3/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_action_matching_v3/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_baseline_04_v1/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_baseline_04_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_baseline_04_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_baseline_04_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_prediction_accounting_v1/final_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_prediction_accounting_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_prediction_accounting_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_repair_v2_v1/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_repair_v2_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_repair_v2_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_repair_v2_v1/plan.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_repair_v2_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_v3_gamma04_v1/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_v3_gamma04_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_v3_gamma04_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_v3_gamma04_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_v3_repair_v1/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_v3_repair_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_v3_repair_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_v3_repair_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_extended_v3_v1/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_extended_v3_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_extended_v3_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -927,6 +953,11 @@
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_extended_gap_v1/comparison_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_extended_gap_v1/comparison_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/s3_extended_gap_v1/difference_lists.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_extended_gap_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_extended_gap_v1/method_change_note.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/evidence/s3_formula_repair_v2/extended_four/reference/bm25/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s3_formula_repair_v2/extended_four/reference/bm25/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s3_formula_repair_v2/extended_four/reference/sun/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1342,6 +1373,8 @@
 | `scripts/build_s2_llm_batches_offline_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_7_oracle_readiness.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_error_injection_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s3_extended_gap_comparison_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s3_extended_gap_evidence_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_adjudication_asset.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
@@ -1390,6 +1423,7 @@
 | `scripts/publish_s2_11_formal_gold_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/publish_snapshot_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/rebuild_d1_prompt.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/reconcile_s3_extended_results_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
 | `scripts/reevaluate_s3_extended_unified_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
@@ -1424,6 +1458,10 @@
 | `scripts/run_s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_downstream_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_evidence_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_extended_baseline_04_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_extended_repair_v2_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_extended_v3_gamma04_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_extended_v3_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_extended_v3_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_formula_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -1588,8 +1626,12 @@
 | `src/bpc_hybrid/s3_action_matching_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_evidence_checks_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_extended_arm_report.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_extended_prediction_accounting_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_unified.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_v3_adapter.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_extended_v3_repair.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_extended_v3_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/smoke.py` | 活动 | Python 实现、脚本或测试 |
@@ -1837,6 +1879,9 @@
 | `tests/test_s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_downstream_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_evidence_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_extended_gap_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_extended_prediction_accounting_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_extended_repair_v2_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_unified_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_v3_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_violation_report_v2.py` | 活动 | Python 实现、脚本或测试 |

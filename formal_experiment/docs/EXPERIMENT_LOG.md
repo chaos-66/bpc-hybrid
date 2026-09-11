@@ -4454,3 +4454,21 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-11T07:07:43.347996+00:00 - S3四类扩展统计修复：每个实例一个最终标签，统一对照、成对与五分类指标
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s3_extended_prediction_accounting_v1；阶段=S3；方法=offline_prediction_accounting；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/reconcile_s3_extended_results_v1.py`
+- manifest：outputs/development/s3_extended_prediction_accounting_v1/manifest.json
+- 结果摘要：纯离线复算120行既有分数为240实例，新增推断和API均0；A/B/C对照正确16/14/11，成对11/11/7；C五分类准确率0.3625、Macro-F1 0.4079；三臂变体预测和四类F1不变。
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：13 passed in 3.16s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`f764bc4ac31a6d65499d3eea9eef03b27a13b9d6`；相关未提交路径：19 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：撤回旧C成对13的优势解释；修复评分口径混用，保留各臂声明的决策规则及全部历史产物。本批收口，不新增检测优化。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

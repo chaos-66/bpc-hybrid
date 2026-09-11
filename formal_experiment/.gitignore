@@ -1,0 +1,6 @@
+# Version only the three offline accounting artifacts from this scoped repair.
+!outputs/development/s3_extended_prediction_accounting_v1/
+outputs/development/s3_extended_prediction_accounting_v1/*
+!outputs/development/s3_extended_prediction_accounting_v1/final_predictions.jsonl
+!outputs/development/s3_extended_prediction_accounting_v1/metrics.json
+!outputs/development/s3_extended_prediction_accounting_v1/manifest.json

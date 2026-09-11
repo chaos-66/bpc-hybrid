@@ -1,0 +1,33 @@
+{
+  "artifacts": {
+    "outputs/development/s3_extended_prediction_accounting_v1/final_predictions.jsonl": "3ac08a35b8a3eba18150e2368742fb9a26c16dcd6f0ee36efc7e41577ba36cd9",
+    "outputs/development/s3_extended_prediction_accounting_v1/metrics.json": "3303a2348823ecc37fc3bb271e87e8225dc5bce775a93c94a726976a3c58116b"
+  },
+  "command": "python scripts/reconcile_s3_extended_results_v1.py",
+  "git_commit": "f764bc4ac31a6d65499d3eea9eef03b27a13b9d6",
+  "implementation": {
+    "scripts/reconcile_s3_extended_results_v1.py": "adc70632c80aac8da21446d35b673c2323d80f475bc619ae69b69f2efc18b5eb",
+    "src/bpc_hybrid/s3_extended_prediction_accounting_v1.py": "ce54408d36bb5e195cffadf18d834d377f841c270f18a367d0d517d6c210f1a1",
+    "tests/test_s3_extended_prediction_accounting_v1.py": "49c10cd00561f364ca34f06d0e0528e7c8c4bd57c19e3e17d1396c44b3bf7b1d"
+  },
+  "policies": {
+    "A_v3_internal_0_4": "unified_five_class_decision_v1",
+    "B_original_path_normalized": "unified_five_class_decision_v1",
+    "C_v3_no_forced_resolution": "unified_five_class_decision_v1+comparison_gate"
+  },
+  "run_id": "s3_extended_prediction_accounting_v1",
+  "safety": {
+    "new_inference_calls": 0,
+    "new_llm_api_calls": 0,
+    "source_predictions_rewritten": 0,
+    "variant_decisions_changed": 0
+  },
+  "schema_version": "s3_extended_accounting_manifest@1.0.0",
+  "scope": "development_synthetic_offline_accounting_only",
+  "sources": {
+    "outputs/development/s3_extended_repair_v2_v1/manifest.json": "63c83b4440f0344e8e0793f20787e0fc19a718365eba5a3837e33a68d187a43c",
+    "outputs/development/s3_extended_repair_v2_v1/metrics.json": "bd04e2899413798aff5a48340da80b29369f131274e001b6d3a1b3f819d89628",
+    "outputs/development/s3_extended_repair_v2_v1/plan.json": "2cf73f819d309ccf30f31e896c2859cbd86af07f2122afc1f9023d4ed2bbf2b4",
+    "outputs/development/s3_extended_repair_v2_v1/predictions.jsonl": "475ea3082f1499a3d2b86e59ca1d802cee90d55ba232877f9b29125f299d43a4"
+  }
+}

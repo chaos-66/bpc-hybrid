@@ -1,0 +1,1454 @@
+{
+  "arms": {
+    "A_v3_internal_0_4": {
+      "A_variant_40": {
+        "accuracy": 0.55,
+        "correct_type": 22,
+        "explicit_compliance": 4,
+        "final_unknown": 1,
+        "macro_f1": 0.5690000536547851,
+        "micro_f1": 0.5866666666666667,
+        "objects": 40,
+        "per_class": {
+          "constraint_violated": {
+            "f1": 0.47058823529411764,
+            "fn": 6,
+            "fp": 3,
+            "precision": 0.5714285714285714,
+            "recall": 0.4,
+            "support": 10,
+            "tp": 4
+          },
+          "exception_not_handled": {
+            "f1": 0.46153846153846156,
+            "fn": 7,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 0.3,
+            "support": 10,
+            "tp": 3
+          },
+          "prohibited_action_present": {
+            "f1": 0.9090909090909091,
+            "fn": 0,
+            "fp": 2,
+            "precision": 0.8333333333333334,
+            "recall": 1.0,
+            "support": 10,
+            "tp": 10
+          },
+          "required_condition_not_enforced": {
+            "f1": 0.43478260869565216,
+            "fn": 5,
+            "fp": 8,
+            "precision": 0.38461538461538464,
+            "recall": 0.5,
+            "support": 10,
+            "tp": 5
+          }
+        },
+        "target_type_unobservable": 9,
+        "wrong_type": 13
+      },
+      "B_control_40": {
+        "explicit_compliance": 16,
+        "false_positives": 24,
+        "final_unknown": 0,
+        "objects": 40
+      },
+      "C_paired_40": {
+        "both_sides_correct": 11,
+        "paired_accuracy": 0.275,
+        "pairs": 40,
+        "per_pair": [
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_01",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_02",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_03",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_04",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_05",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_06",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_07",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_08",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_09",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_10",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_01",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_02",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_03",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_04",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_05",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_06",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_07",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_08",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_09",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_10",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_01",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_02",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_03",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_04",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_05",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_06",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_07",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_08",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_09",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_10",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_01",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_required_condition_02",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_03",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_04",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_05",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_06",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_07",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_08",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_required_condition_09",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_required_condition_10",
+            "variant_correct": true
+          }
+        ]
+      },
+      "D_merged_80": {
+        "accuracy": 0.475,
+        "confusion_matrix": {
+          "constraint_violated": {
+            "constraint_violated": 4,
+            "exception_not_handled": 0,
+            "none": 1,
+            "prohibited_action_present": 0,
+            "required_condition_not_enforced": 5,
+            "unknown": 0
+          },
+          "exception_not_handled": {
+            "constraint_violated": 0,
+            "exception_not_handled": 3,
+            "none": 2,
+            "prohibited_action_present": 2,
+            "required_condition_not_enforced": 3,
+            "unknown": 0
+          },
+          "none": {
+            "constraint_violated": 6,
+            "exception_not_handled": 1,
+            "none": 16,
+            "prohibited_action_present": 8,
+            "required_condition_not_enforced": 9,
+            "unknown": 0
+          },
+          "prohibited_action_present": {
+            "constraint_violated": 0,
+            "exception_not_handled": 0,
+            "none": 0,
+            "prohibited_action_present": 10,
+            "required_condition_not_enforced": 0,
+            "unknown": 0
+          },
+          "required_condition_not_enforced": {
+            "constraint_violated": 3,
+            "exception_not_handled": 0,
+            "none": 1,
+            "prohibited_action_present": 0,
+            "required_condition_not_enforced": 5,
+            "unknown": 1
+          }
+        },
+        "correct": 38,
+        "macro_f1": 0.45777950310559,
+        "micro_f1": 0.4779874213836478,
+        "objects": 80,
+        "per_class": {
+          "constraint_violated": {
+            "f1": 0.34782608695652173,
+            "fn": 6,
+            "fp": 9,
+            "precision": 0.3076923076923077,
+            "recall": 0.4,
+            "support": 10,
+            "tp": 4
+          },
+          "exception_not_handled": {
+            "f1": 0.42857142857142855,
+            "fn": 7,
+            "fp": 1,
+            "precision": 0.75,
+            "recall": 0.3,
+            "support": 10,
+            "tp": 3
+          },
+          "none": {
+            "f1": 0.5333333333333333,
+            "fn": 24,
+            "fp": 4,
+            "precision": 0.8,
+            "recall": 0.4,
+            "support": 40,
+            "tp": 16
+          },
+          "prohibited_action_present": {
+            "f1": 0.6666666666666666,
+            "fn": 0,
+            "fp": 10,
+            "precision": 0.5,
+            "recall": 1.0,
+            "support": 10,
+            "tp": 10
+          },
+          "required_condition_not_enforced": {
+            "f1": 0.3125,
+            "fn": 5,
+            "fp": 17,
+            "precision": 0.22727272727272727,
+            "recall": 0.5,
+            "support": 10,
+            "tp": 5
+          }
+        }
+      },
+      "decision_policy": "unified_five_class_decision_v1",
+      "invariants": {
+        "accuracy_identity": true,
+        "all_instances_retained": true,
+        "pair_bound": true,
+        "single_final_label_per_instance": true
+      }
+    },
+    "B_original_path_normalized": {
+      "A_variant_40": {
+        "accuracy": 0.475,
+        "correct_type": 19,
+        "explicit_compliance": 2,
+        "final_unknown": 10,
+        "macro_f1": 0.5233516483516484,
+        "micro_f1": 0.5588235294117647,
+        "objects": 40,
+        "per_class": {
+          "constraint_violated": {
+            "f1": 0.5,
+            "fn": 6,
+            "fp": 2,
+            "precision": 0.6666666666666666,
+            "recall": 0.4,
+            "support": 10,
+            "tp": 4
+          },
+          "exception_not_handled": {
+            "f1": 0.3076923076923077,
+            "fn": 8,
+            "fp": 1,
+            "precision": 0.6666666666666666,
+            "recall": 0.2,
+            "support": 10,
+            "tp": 2
+          },
+          "prohibited_action_present": {
+            "f1": 0.9523809523809523,
+            "fn": 0,
+            "fp": 1,
+            "precision": 0.9090909090909091,
+            "recall": 1.0,
+            "support": 10,
+            "tp": 10
+          },
+          "required_condition_not_enforced": {
+            "f1": 0.3333333333333333,
+            "fn": 7,
+            "fp": 5,
+            "precision": 0.375,
+            "recall": 0.3,
+            "support": 10,
+            "tp": 3
+          }
+        },
+        "target_type_unobservable": 16,
+        "wrong_type": 9
+      },
+      "B_control_40": {
+        "explicit_compliance": 14,
+        "false_positives": 20,
+        "final_unknown": 6,
+        "objects": 40
+      },
+      "C_paired_40": {
+        "both_sides_correct": 11,
+        "paired_accuracy": 0.275,
+        "pairs": 40,
+        "per_pair": [
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_01",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_02",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_03",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_04",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_05",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_06",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_07",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_08",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_09",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_10",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_01",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_02",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_03",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_04",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_05",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_06",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_07",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_08",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_09",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_10",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_01",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_02",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_03",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_04",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_05",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_06",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_07",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_08",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_09",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_10",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_01",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_02",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_03",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_04",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_05",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_06",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_07",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_08",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_required_condition_09",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_required_condition_10",
+            "variant_correct": true
+          }
+        ]
+      },
+      "D_merged_80": {
+        "accuracy": 0.4125,
+        "confusion_matrix": {
+          "constraint_violated": {
+            "constraint_violated": 4,
+            "exception_not_handled": 0,
+            "none": 0,
+            "prohibited_action_present": 0,
+            "required_condition_not_enforced": 3,
+            "unknown": 3
+          },
+          "exception_not_handled": {
+            "constraint_violated": 0,
+            "exception_not_handled": 2,
+            "none": 2,
+            "prohibited_action_present": 1,
+            "required_condition_not_enforced": 2,
+            "unknown": 3
+          },
+          "none": {
+            "constraint_violated": 4,
+            "exception_not_handled": 2,
+            "none": 14,
+            "prohibited_action_present": 5,
+            "required_condition_not_enforced": 9,
+            "unknown": 6
+          },
+          "prohibited_action_present": {
+            "constraint_violated": 0,
+            "exception_not_handled": 0,
+            "none": 0,
+            "prohibited_action_present": 10,
+            "required_condition_not_enforced": 0,
+            "unknown": 0
+          },
+          "required_condition_not_enforced": {
+            "constraint_violated": 2,
+            "exception_not_handled": 1,
+            "none": 0,
+            "prohibited_action_present": 0,
+            "required_condition_not_enforced": 3,
+            "unknown": 4
+          }
+        },
+        "correct": 33,
+        "macro_f1": 0.4316239316239316,
+        "micro_f1": 0.4583333333333333,
+        "objects": 80,
+        "per_class": {
+          "constraint_violated": {
+            "f1": 0.4,
+            "fn": 6,
+            "fp": 6,
+            "precision": 0.4,
+            "recall": 0.4,
+            "support": 10,
+            "tp": 4
+          },
+          "exception_not_handled": {
+            "f1": 0.26666666666666666,
+            "fn": 8,
+            "fp": 3,
+            "precision": 0.4,
+            "recall": 0.2,
+            "support": 10,
+            "tp": 2
+          },
+          "none": {
+            "f1": 0.5,
+            "fn": 26,
+            "fp": 2,
+            "precision": 0.875,
+            "recall": 0.35,
+            "support": 40,
+            "tp": 14
+          },
+          "prohibited_action_present": {
+            "f1": 0.7692307692307693,
+            "fn": 0,
+            "fp": 6,
+            "precision": 0.625,
+            "recall": 1.0,
+            "support": 10,
+            "tp": 10
+          },
+          "required_condition_not_enforced": {
+            "f1": 0.2222222222222222,
+            "fn": 7,
+            "fp": 14,
+            "precision": 0.17647058823529413,
+            "recall": 0.3,
+            "support": 10,
+            "tp": 3
+          }
+        }
+      },
+      "decision_policy": "unified_five_class_decision_v1",
+      "invariants": {
+        "accuracy_identity": true,
+        "all_instances_retained": true,
+        "pair_bound": true,
+        "single_final_label_per_instance": true
+      }
+    },
+    "C_v3_no_forced_resolution": {
+      "A_variant_40": {
+        "accuracy": 0.45,
+        "correct_type": 18,
+        "explicit_compliance": 0,
+        "final_unknown": 14,
+        "macro_f1": 0.4896214896214896,
+        "micro_f1": 0.5454545454545454,
+        "objects": 40,
+        "per_class": {
+          "constraint_violated": {
+            "f1": 0.5555555555555556,
+            "fn": 5,
+            "fp": 3,
+            "precision": 0.625,
+            "recall": 0.5,
+            "support": 10,
+            "tp": 5
+          },
+          "exception_not_handled": {
+            "f1": 0.3076923076923077,
+            "fn": 8,
+            "fp": 1,
+            "precision": 0.6666666666666666,
+            "recall": 0.2,
+            "support": 10,
+            "tp": 2
+          },
+          "prohibited_action_present": {
+            "f1": 0.9523809523809523,
+            "fn": 0,
+            "fp": 1,
+            "precision": 0.9090909090909091,
+            "recall": 1.0,
+            "support": 10,
+            "tp": 10
+          },
+          "required_condition_not_enforced": {
+            "f1": 0.14285714285714285,
+            "fn": 9,
+            "fp": 3,
+            "precision": 0.25,
+            "recall": 0.1,
+            "support": 10,
+            "tp": 1
+          }
+        },
+        "target_type_unobservable": 18,
+        "wrong_type": 8
+      },
+      "B_control_40": {
+        "explicit_compliance": 11,
+        "false_positives": 14,
+        "final_unknown": 15,
+        "objects": 40
+      },
+      "C_paired_40": {
+        "both_sides_correct": 7,
+        "paired_accuracy": 0.175,
+        "pairs": 40,
+        "per_pair": [
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_01",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_02",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_03",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_04",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_05",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_constraint_violated_06",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_07",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_08",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_09",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_constraint_violated_10",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_01",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_02",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_03",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_04",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_05",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_06",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_07",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_08",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_exception_not_handled_09",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_exception_not_handled_10",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_01",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_02",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_03",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_04",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_05",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_06",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_07",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_08",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_prohibited_action_09",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_prohibited_action_10",
+            "variant_correct": true
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_01",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_02",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_03",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_04",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_05",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_06",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_07",
+            "variant_correct": false
+          },
+          {
+            "control_correct": false,
+            "item_id": "syn_v2_required_condition_08",
+            "variant_correct": true
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_required_condition_09",
+            "variant_correct": false
+          },
+          {
+            "control_correct": true,
+            "item_id": "syn_v2_required_condition_10",
+            "variant_correct": false
+          }
+        ]
+      },
+      "D_merged_80": {
+        "accuracy": 0.3625,
+        "confusion_matrix": {
+          "constraint_violated": {
+            "constraint_violated": 5,
+            "exception_not_handled": 0,
+            "none": 0,
+            "prohibited_action_present": 0,
+            "required_condition_not_enforced": 2,
+            "unknown": 3
+          },
+          "exception_not_handled": {
+            "constraint_violated": 0,
+            "exception_not_handled": 2,
+            "none": 0,
+            "prohibited_action_present": 1,
+            "required_condition_not_enforced": 1,
+            "unknown": 6
+          },
+          "none": {
+            "constraint_violated": 4,
+            "exception_not_handled": 2,
+            "none": 11,
+            "prohibited_action_present": 5,
+            "required_condition_not_enforced": 3,
+            "unknown": 15
+          },
+          "prohibited_action_present": {
+            "constraint_violated": 0,
+            "exception_not_handled": 0,
+            "none": 0,
+            "prohibited_action_present": 10,
+            "required_condition_not_enforced": 0,
+            "unknown": 0
+          },
+          "required_condition_not_enforced": {
+            "constraint_violated": 3,
+            "exception_not_handled": 1,
+            "none": 0,
+            "prohibited_action_present": 0,
+            "required_condition_not_enforced": 1,
+            "unknown": 5
+          }
+        },
+        "correct": 29,
+        "macro_f1": 0.4078924996572056,
+        "micro_f1": 0.44274809160305345,
+        "objects": 80,
+        "per_class": {
+          "constraint_violated": {
+            "f1": 0.45454545454545453,
+            "fn": 5,
+            "fp": 7,
+            "precision": 0.4166666666666667,
+            "recall": 0.5,
+            "support": 10,
+            "tp": 5
+          },
+          "exception_not_handled": {
+            "f1": 0.26666666666666666,
+            "fn": 8,
+            "fp": 3,
+            "precision": 0.4,
+            "recall": 0.2,
+            "support": 10,
+            "tp": 2
+          },
+          "none": {
+            "f1": 0.43137254901960786,
+            "fn": 29,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 0.275,
+            "support": 40,
+            "tp": 11
+          },
+          "prohibited_action_present": {
+            "f1": 0.7692307692307693,
+            "fn": 0,
+            "fp": 6,
+            "precision": 0.625,
+            "recall": 1.0,
+            "support": 10,
+            "tp": 10
+          },
+          "required_condition_not_enforced": {
+            "f1": 0.11764705882352941,
+            "fn": 9,
+            "fp": 6,
+            "precision": 0.14285714285714285,
+            "recall": 0.1,
+            "support": 10,
+            "tp": 1
+          }
+        }
+      },
+      "decision_policy": "unified_five_class_decision_v1+comparison_gate",
+      "invariants": {
+        "accuracy_identity": true,
+        "all_instances_retained": true,
+        "pair_bound": true,
+        "single_final_label_per_instance": true
+      }
+    }
+  },
+  "corrections": {
+    "A_v3_internal_0_4": {
+      "control_after": {
+        "explicit_compliance": 16,
+        "false_positives": 24,
+        "final_unknown": 0,
+        "objects": 40
+      },
+      "control_before": {
+        "abstentions_the_fragile_rule_would_have_called_compliant": 5,
+        "explicit_compliance": 11,
+        "false_positive_items": [
+          {
+            "item_id": "syn_v2_prohibited_action_03",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_04",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_05",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_06",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_07",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_10",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "predicted_type": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_required_condition_03",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_06",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_07",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_01",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_04",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_10",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_01",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_06",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_09",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_10",
+            "predicted_type": "required_condition_not_enforced"
+          }
+        ],
+        "false_positives": 24,
+        "final_unknown": 5,
+        "fragile_rule_items": [
+          "syn_v2_prohibited_action_01",
+          "syn_v2_prohibited_action_02",
+          "syn_v2_prohibited_action_08",
+          "syn_v2_exception_not_handled_02",
+          "syn_v2_exception_not_handled_03"
+        ],
+        "identity": "false_positives + explicit_compliance + final_unknown == objects",
+        "note": "a control false positive changes precision only; it never removes a variant-side true positive.  'explicit compliance' means at least one condition / constraint / exception check compared the rule element against process evidence and none of the checks violated; a control abstention is never a correct rejection",
+        "objects": 40
+      },
+      "merged_accuracy_after": 0.475,
+      "merged_accuracy_before": 0.475,
+      "paired_after": 11,
+      "paired_before": 11
+    },
+    "B_original_path_normalized": {
+      "control_after": {
+        "explicit_compliance": 14,
+        "false_positives": 20,
+        "final_unknown": 6,
+        "objects": 40
+      },
+      "control_before": {
+        "abstentions_the_fragile_rule_would_have_called_compliant": 7,
+        "explicit_compliance": 7,
+        "false_positive_items": [
+          {
+            "item_id": "syn_v2_prohibited_action_03",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_04",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_07",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_10",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "predicted_type": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_required_condition_03",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_01",
+            "predicted_type": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_10",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_06",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_07",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_08",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_09",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_10",
+            "predicted_type": "required_condition_not_enforced"
+          }
+        ],
+        "false_positives": 20,
+        "final_unknown": 13,
+        "fragile_rule_items": [
+          "syn_v2_prohibited_action_01",
+          "syn_v2_prohibited_action_02",
+          "syn_v2_prohibited_action_05",
+          "syn_v2_prohibited_action_06",
+          "syn_v2_prohibited_action_08",
+          "syn_v2_exception_not_handled_02",
+          "syn_v2_exception_not_handled_03"
+        ],
+        "identity": "false_positives + explicit_compliance + final_unknown == objects",
+        "note": "a control false positive changes precision only; it never removes a variant-side true positive.  'explicit compliance' means at least one condition / constraint / exception check compared the rule element against process evidence and none of the checks violated; a control abstention is never a correct rejection",
+        "objects": 40
+      },
+      "merged_accuracy_after": 0.4125,
+      "merged_accuracy_before": 0.4125,
+      "paired_after": 11,
+      "paired_before": 11
+    },
+    "C_v3_no_forced_resolution": {
+      "control_after": {
+        "explicit_compliance": 11,
+        "false_positives": 14,
+        "final_unknown": 15,
+        "objects": 40
+      },
+      "control_before": {
+        "abstentions_the_fragile_rule_would_have_called_compliant": 8,
+        "explicit_compliance": 11,
+        "false_positive_items": [
+          {
+            "item_id": "syn_v2_prohibited_action_03",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_04",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_07",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "predicted_type": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_required_condition_03",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "predicted_type": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_01",
+            "predicted_type": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_10",
+            "predicted_type": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "predicted_type": "prohibited_action_present"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_06",
+            "predicted_type": "required_condition_not_enforced"
+          }
+        ],
+        "false_positives": 14,
+        "final_unknown": 15,
+        "fragile_rule_items": [
+          "syn_v2_prohibited_action_01",
+          "syn_v2_prohibited_action_02",
+          "syn_v2_prohibited_action_05",
+          "syn_v2_prohibited_action_06",
+          "syn_v2_prohibited_action_08",
+          "syn_v2_prohibited_action_10",
+          "syn_v2_exception_not_handled_02",
+          "syn_v2_exception_not_handled_03"
+        ],
+        "identity": "false_positives + explicit_compliance + final_unknown == objects",
+        "note": "a control false positive changes precision only; it never removes a variant-side true positive.  'explicit compliance' means at least one condition / constraint / exception check compared the rule element against process evidence and none of the checks violated; a control abstention is never a correct rejection",
+        "objects": 40
+      },
+      "merged_accuracy_after": 0.3625,
+      "merged_accuracy_before": 0.4625,
+      "paired_after": 7,
+      "paired_before": 13
+    }
+  },
+  "instances": 240,
+  "interpretation": {
+    "A_B_policy": "frozen native aggregation; the C comparison gate is not silently applied",
+    "C_policy": "existing declared comparison gate on both sides",
+    "cause": "control_partition used a new gate for A/B, while paired/merged evaluation re-decided controls using the old policy, including for C",
+    "not_claimed": "no new method improvement, causal attribution or formal Oracle result",
+    "replacement": "one declared policy per arm applied to both sides; all metrics consume the resulting immutable final labels",
+    "scope_of_none": "method output for this controlled check, not proof of whole-process legal compliance"
+  },
+  "run_id": "s3_extended_prediction_accounting_v1",
+  "safety": {
+    "new_inference_calls": 0,
+    "new_llm_api_calls": 0,
+    "source_predictions_rewritten": 0,
+    "variant_decisions_changed": 0
+  },
+  "schema_version": "s3_extended_prediction_accounting@1.0.0",
+  "scope": "development_synthetic_offline_accounting_only",
+  "source": "outputs/development/s3_extended_repair_v2_v1",
+  "source_rows": 120
+}
