@@ -4545,3 +4545,17 @@
     仅保留可核事实：accounting 口径下 C 与 W 的 10 个 prohibited 变体预测完全相同。
   - 状态：核心开发统计可用；H 作为**已知缺陷结果**披露（方法验收不通过）；不宣称正式实验或真实法律合规
     验证完成。
+
+## 2026-09-11T14:25:19.053936+00:00 - S3.9-EXT-REAL-CASE C0: SIM case checklist capsule (answer-independent) + revised task spec v4
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：14 passed in 0.10s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`e4c89c014134d624e5b61911245b1f21c7efe4ee`；相关未提交路径：14 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：New: docs/research/S3_REAL_CASE_E2E_TASK_SPEC_2026-09-11.md (v4 revision in place), data/development/sim_case_c1/case_items_v1.json (curated per-item proposals), scripts/build_sim_case_checklist_v1.py, tests/test_sim_case_checklist_v1.py (14 focused tests), outputs/reports/sim_case_c1_checklist.{json,md}, gitignored local capsule outputs/development/sim_case_c1/. Overwrite applied only to this batch's own just-created capsule after a factual correction (labelled sequence flows = 4, not 1); no Gold/prediction/evidence artifact touched. Zero LLM/API, no network, references/ read in place (BPMN sha 338c8144, requirements sha e13d9a2a, step_3 sha 96b3c1e8). Seven user-reported issues verified with evidence; 5 open questions (Q1-Q4, Q7) collected for user confirmation; taxonomy mapping demoted to a reading aid and never used for scoring.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,0 +1,1078 @@
+{
+ "schema_version": "sim_case_c1_checklist@1.0.0",
+ "case": "Case C - Barrientos Sun-derived SIM_card_scenario (derived case, not the authors' original model)",
+ "claim_scope": "development_case_checklist_pending_user_confirmation",
+ "is_gold": false,
+ "performance_claim_ready": false,
+ "inputs": {
+  "process_model": {
+   "path": "references/barrientos_2026/artifact_input/process_models/SIM_card_scenario/SIM_card_scenario.bpmn",
+   "sha256": "338c8144cd2802f0813c0cc7d6ab230bcb4adc37bc738f4ad4c5e506da144064",
+   "bytes": 67048
+  },
+  "requirements": {
+   "path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+   "sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+   "bytes": 1707
+  },
+  "step_1_baseline": {
+   "path": "references/barrientos_2026/evaluation/ground_truth/step_1_baseline.json",
+   "sha256": "83146ef0e3e47334a8e367805b7d691454e82c69d9abaa456a80e31adba33224",
+   "bytes": 9384
+  },
+  "step_2_baseline": {
+   "path": "references/barrientos_2026/evaluation/ground_truth/step_2_baseline.json",
+   "sha256": "ecd3aa81cfa92c68d9a599bd38463de589bc9108de06833c52ed90a3551b367e",
+   "bytes": 4626
+  },
+  "step_3_baseline": {
+   "path": "references/barrientos_2026/evaluation/ground_truth/step_3_baseline.json",
+   "sha256": "96b3c1e8f10e0ad45636d7620c41062f15bf03e96d537fb1ccb2e3450cac467d",
+   "bytes": 6507
+  },
+  "sun_2024_local_pdf": {
+   "path": "references/papers/Sun_2024_Design_time_BPC.pdf",
+   "sha256": "08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2",
+   "bytes": 2694008
+  },
+  "curated_items": {
+   "path": "formal_experiment/data/development/sim_case_c1/case_items_v1.json",
+   "sha256": "bdd33299c0f4e556ec696a4ea9b36b83595d2ae058195241bb52ffa21eb53302",
+   "bytes": 10734
+  },
+  "predictions_repeats": [
+   {
+    "path": "formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-01/canonical_predictions.jsonl",
+    "sha256": "6fab1108b311e105bad4780eb83ca9a74668b43602479b96a738bb0290f9f0c7",
+    "bytes": 63932
+   },
+   {
+    "path": "formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-02/canonical_predictions.jsonl",
+    "sha256": "16685a58eea1ca9119f930ebc384448d09c1662ab16724cc0fdefb2da3c6104a",
+    "bytes": 63985
+   },
+   {
+    "path": "formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-03/canonical_predictions.jsonl",
+    "sha256": "6d96729de0fb13288a60d293cacf361970c61402002bd565af0f8285ee8be840",
+    "bytes": 64094
+   },
+   {
+    "path": "formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-04/canonical_predictions.jsonl",
+    "sha256": "17e298b033898b9476522d315af71cca026a25144896ac56bd3f42601e333b59",
+    "bytes": 64517
+   },
+   {
+    "path": "formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-05/canonical_predictions.jsonl",
+    "sha256": "61dbc4ec7cfb5facab50710ba62b160092f84b34c3c7db0e60fa4b5ef141422d",
+    "bytes": 63986
+   }
+  ]
+ },
+ "binding_policy": {
+  "process_version": "single BPMN file (sha256 recorded in manifest); no second model version exists locally",
+  "rule_version_under_evaluation": "version 2 (post-change requirement text)",
+  "evaluation_unit": "one requirement id (r8-r13)",
+  "excluded_from_evaluation": [
+   {
+    "item": "r9/v1",
+    "reason": "requirement text is empty in version 1 (requirement added in v2)",
+    "rule": "must not enter extraction or detection as a normative rule"
+   },
+   {
+    "item": "r12/v2",
+    "reason": "requirement text is empty in version 2 (requirement deleted)",
+    "rule": "must not enter extraction or detection as a normative rule"
+   }
+  ],
+  "step3_baseline_context": "external deviations are stated in a requirement-change context (v1 -> v2), not as a static compliance answer key; evidence: r12/v2 is empty yet carries an over_compliant deviation, r10 mitigation matches v2 text"
+ },
+ "process_structure": {
+  "counts": {
+   "processes": 3,
+   "tasks": 11,
+   "subprocesses": 1,
+   "gateways": 6,
+   "events": 8,
+   "flows": 26,
+   "timer_event_definitions": 0,
+   "boundary_events": 0,
+   "condition_expressions": 0,
+   "labelled_flows": 4
+  },
+  "participants": [
+   "Customer",
+   "Phone company",
+   "Another phone company"
+  ],
+  "lanes": [
+   {
+    "process": "Customer",
+    "lane_id": "sid-89171A5A-B9BF-4A50-BDCE-5D346618F121",
+    "elements": [
+     "Activate SIM card",
+     "sid-BB48C585-DD26-4A6F-9A2F-C9195CBBF4F1",
+     "Receive SIM card"
+    ]
+   },
+   {
+    "process": "Phone company",
+    "lane_id": "sid-075CECD0-2F4E-484F-B452-FC8EE7547D17",
+    "elements": [
+     "Request personal data",
+     "Ask portability",
+     "Assign new number",
+     "Send SIM card",
+     "Sign contract",
+     "Request payment",
+     "sid-5DB79A16-AE0E-4F99-9754-6D6ADB14DA79",
+     "sid-CD9A6475-E538-413A-A94E-FE30F187DF16",
+     "Ask old number",
+     "Ask portability third company",
+     "sid-0DA99902-C027-4988-A2EB-2823F6D87794",
+     "Ask for consent",
+     "New client acquired",
+     "sid-4A5668DB-EF1E-40BC-9594-264FC6DC393D",
+     "sid-A0EC90A7-DC2C-4CC6-9590-F3BE114A2605",
+     "Payment received",
+     "sid-1D79CAD1-08F4-411D-8275-2F343AC61332",
+     "Store Data",
+     "sid-2583945D-844D-440F-B996-2D125D72CE7C",
+     "Delete personal data",
+     "sid-4ED76348-1073-4EF8-9E43-BA0FD0DA3459",
+     "sid-B8D4B659-96BF-4003-A00D-7951C7E0C0BE",
+     "sid-51BCFD18-5D76-486F-BB6A-904C3378AB9A"
+    ]
+   },
+   {
+    "process": "Another phone company",
+    "lane_id": "sid-7E5C63A7-DA6F-405D-8095-869788424A58",
+    "elements": []
+   }
+  ],
+  "tasks": [
+   {
+    "id": "sid-D80682C2-0CD4-4B60-93BA-E9C747E28950",
+    "label": "Activate SIM card"
+   },
+   {
+    "id": "sid-87D1789E-9525-4D33-9FF0-1FCCCAD20191",
+    "label": "Request personal data"
+   },
+   {
+    "id": "sid-4CAE720C-6B35-4636-9193-F9DDDE0B2004",
+    "label": "Ask portability"
+   },
+   {
+    "id": "sid-B72CE851-C6AF-453B-B7D3-FBBA0734B833",
+    "label": "Assign new number"
+   },
+   {
+    "id": "sid-D73852AE-5932-48A8-8079-9489B97BD910",
+    "label": "Send SIM card"
+   },
+   {
+    "id": "sid-6B3F7867-7939-43B6-8F6E-8B8A12ECCB7C",
+    "label": "Sign contract"
+   },
+   {
+    "id": "sid-E5495E81-F16D-4D23-9017-151D12C70E5F",
+    "label": "Request payment"
+   },
+   {
+    "id": "sid-B4921FBA-12CB-4B29-807E-98AFAABD0335",
+    "label": "Ask old number"
+   },
+   {
+    "id": "sid-2A9E6B0A-5051-4A54-ACDB-4123BCB36141",
+    "label": "Ask portability third company"
+   },
+   {
+    "id": "sid-9D265428-62CB-477B-B15F-7338FF62B44A",
+    "label": "Ask for consent"
+   },
+   {
+    "id": "sid-9A553255-2AEA-4B43-B86D-6409071C552E",
+    "label": "Delete personal data"
+   }
+  ],
+  "subprocesses": [
+   {
+    "id": "sid-EC14C117-9295-4853-AEB9-A162C7F770DD",
+    "label": "Store Data"
+   }
+  ],
+  "labelled_flows": [
+   {
+    "id": "sid-8A897978-076F-4C58-91C2-A82506C35F92",
+    "source": "sid-A0EC90A7-DC2C-4CC6-9590-F3BE114A2605",
+    "target": "Assign new number",
+    "label": "Not requested",
+    "condition_expression": null
+   },
+   {
+    "id": "sid-910AED7B-8C2F-4DC4-A241-80471E267B36",
+    "source": "sid-A0EC90A7-DC2C-4CC6-9590-F3BE114A2605",
+    "target": "Ask old number",
+    "label": "Requested",
+    "condition_expression": null
+   },
+   {
+    "id": "sid-ACA2A7F7-B0A2-4D10-85B5-052F50428721",
+    "source": "sid-0DA99902-C027-4988-A2EB-2823F6D87794",
+    "target": "sid-5DB79A16-AE0E-4F99-9754-6D6ADB14DA79",
+    "label": "Granted",
+    "condition_expression": null
+   },
+   {
+    "id": "sid-E888F2BE-1037-4B0C-AE98-CFABE0C44D29",
+    "source": "sid-B8D4B659-96BF-4003-A00D-7951C7E0C0BE",
+    "target": "Ask portability",
+    "label": "Debt < 100",
+    "condition_expression": null
+   }
+  ],
+  "consent_position_evidence": {
+   "activity_present": true,
+   "predecessors": [
+    "Store Data"
+   ],
+   "successors": [
+    "sid-2583945D-844D-440F-B996-2D125D72CE7C"
+   ],
+   "preceded_by_store_data": true,
+   "note_zh": "consent exists but follows Store Data (personal data already retrieved and stored)"
+  }
+ },
+ "prediction_reuse": {
+  "independent_inputs": 10,
+  "repeat_count": 5,
+  "total_rows": 50,
+  "sample_ids": [
+   "SIM_card_scenario/r10/v1",
+   "SIM_card_scenario/r10/v2",
+   "SIM_card_scenario/r11/v1",
+   "SIM_card_scenario/r11/v2",
+   "SIM_card_scenario/r12/v1",
+   "SIM_card_scenario/r13/v1",
+   "SIM_card_scenario/r13/v2",
+   "SIM_card_scenario/r8/v1",
+   "SIM_card_scenario/r8/v2",
+   "SIM_card_scenario/r9/v2"
+  ],
+  "order_relations_total_all_rows": 0,
+  "repeats_identical": true
+ },
+ "coverage": {
+  "curated_items": 6,
+  "missing_curated_items": [],
+  "unexpected_curated_items": [],
+  "empty_text_entries": [
+   "r12/v2",
+   "r9/v1"
+  ],
+  "external_deviations_per_rule": {
+   "r8": 1,
+   "r9": 1,
+   "r10": 1,
+   "r11": 1,
+   "r12": 1,
+   "r13": 1
+  },
+  "external_deviations_total": 6
+ },
+ "taxonomy_reading_aid": {
+  "missing_activity": "missing_action（活动存在性）",
+  "wrong_role": "incorrect_actor（执行者）",
+  "sequence_constraint_removal": "out_of_order（顺序）",
+  "missing_timer": "constraint_violated（时限约束）",
+  "time_constraint_removal": "constraint_violated（时限约束）",
+  "time_constraint_relaxation": "constraint_violated（时限约束）",
+  "XOR_condition_modification": "required_condition_not_enforced（条件）",
+  "missing_XOR": "required_condition_not_enforced（条件）",
+  "XOR_removal": "required_condition_not_enforced（条件）",
+  "redundant_activity": "不在本分类体系（过度合规）",
+  "unexpected_activity": "不在本分类体系（过度合规）",
+  "redundant_constraint": "不在本分类体系（过度合规）"
+ },
+ "taxonomy_reading_aid_boundary": "READING AID ONLY. It is not a scoring key, is not used to synthesise expected results, and must not be used to backfill missing fields.",
+ "items": [
+  {
+   "rule_id": "r8",
+   "version": "v2",
+   "rule_meaning_zh": "流程耗时超过 30 天时，必须终止流程",
+   "process_evidence": {
+    "timer_events": 0,
+    "boundary_events": 0,
+    "condition_expressions": 0,
+    "relevant_elements": [
+     "Send SIM card",
+     "end events (4)"
+    ],
+    "note_zh": "模型中完全没有计时器/边界事件，也没有任何条件表达式；不存在“超时即终止”的分支"
+   },
+   "external_annotation": {
+    "type": "non_compliant",
+    "bpmn_element": "missing_timer",
+    "element_label": "process termination",
+    "mitigation_zh": "应增加计时器，超过 30 天时终止流程"
+   },
+   "conflicts": [],
+   "our_relevant_types": [
+    "constraint_violated"
+   ],
+   "capability_probe": "condition_triggered_termination",
+   "proposed_expected": {
+    "status_proposal": "capability_gap_not_violation",
+    "rationale_zh": "规则要求的是“条件触发的流程终止分支”，而现有时限比较只能判断数值边界是否被满足，不能判断终止分支是否存在；缺少该语义时不得判为检出或漏检成功",
+    "capability": "unsupported",
+    "needs_confirmation": [
+     "Q7"
+    ]
+   },
+   "external_annotation_source": {
+    "deviations": [
+     {
+      "type": "non_compliant",
+      "bpmn_element": "missing_timer",
+      "element_label": "process termination",
+      "reading_aid": "constraint_violated（时限约束）"
+     }
+    ],
+    "mitigation_fragment": "It should be added a timer to ",
+    "mitigation_sha256": "a70f73df984e5ebbdbf689382338a63e5d00e689972ad685b3077ae0d9bb9855"
+   },
+   "change_context": [
+    {
+     "type": "change_modality",
+     "from": "permission",
+     "to": "obligation"
+    }
+   ],
+   "version_metadata": {
+    "both_versions": false,
+    "versions": {
+     "version_1": {
+      "norm_length": 3,
+      "precondition_length": 0
+     },
+     "version_2": {
+      "norm_length": 3,
+      "precondition_length": 0
+     }
+    }
+   },
+   "prediction_evidence": {
+    "SIM_card_scenario/r8/v1": {
+     "modality": "permission",
+     "actions": 1,
+     "actors": 1,
+     "conditions": 0,
+     "constraints": 0,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [
+      "The phone company"
+     ],
+     "action_texts": [
+      "take longer than 30 days in se"
+     ]
+    },
+    "SIM_card_scenario/r8/v2": {
+     "modality": "obligation",
+     "actions": 1,
+     "actors": 0,
+     "conditions": 1,
+     "constraints": 1,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [],
+     "action_texts": [
+      "terminated"
+     ]
+    }
+   },
+   "requirement_versions": [
+    {
+     "version": "v1",
+     "empty": false,
+     "text_length": 71,
+     "text_sha256": "14a133ae8b9d332b96f0e3f0ff8f92972e26492fc747066c962078cef56cf94e",
+     "fragment": "The phone company can take lon"
+    },
+    {
+     "version": "v2",
+     "empty": false,
+     "text_length": 92,
+     "text_sha256": "e4ad22e7f9300da841b0c018ab1746db4b9dcaea6b5d79758a691c3e35238223",
+     "fragment": "The process of phone company m"
+    }
+   ]
+  },
+  {
+   "rule_id": "r9",
+   "version": "v2",
+   "rule_meaning_zh": "收到客户个人信息后，必须核验其正确性",
+   "process_evidence": {
+    "missing_activity_expected": "verify correctness of customer personal data",
+    "insertion_anchor": "Sign contract",
+    "existing_related_activities": [
+     "Request personal data",
+     "Sign contract"
+    ],
+    "note_zh": "流程中没有任何“核验正确性”的活动；外部标注的 element_label 是插入位置基准（Sign contract），不是缺失的动作本身"
+   },
+   "external_annotation": {
+    "type": "non_compliant",
+    "bpmn_element": "missing_activity",
+    "element_label": "Sign contract",
+    "mitigation_zh": "在 “Sign contract” 之前增加一个核验客户个人信息正确性的活动"
+   },
+   "conflicts": [
+    {
+     "kind": "anchor_vs_missing_action",
+     "detail_zh": "element_label 指向已存在的 Sign contract；真正的缺失动作是核验正确性活动。以 element_label 直接映射到 missing_action 会把已存在的活动当作缺失动作"
+    }
+   ],
+   "our_relevant_types": [
+    "missing_action",
+    "out_of_order"
+   ],
+   "capability_probe": "activity_presence",
+   "proposed_expected": {
+    "status_proposal": "violation_if_action_mappable",
+    "rationale_zh": "以“核验正确性”这一动作要求为单位检查是否存在对应活动；存在则满足，不存在则为缺失。插入位置语义只作为报告说明，不参与判定",
+    "capability": "supported",
+    "needs_confirmation": [
+     "Q1"
+    ]
+   },
+   "external_annotation_source": {
+    "deviations": [
+     {
+      "type": "non_compliant",
+      "bpmn_element": "missing_activity",
+      "element_label": "Sign contract",
+      "reading_aid": "missing_action（活动存在性）"
+     }
+    ],
+    "mitigation_fragment": "Before activity 'Sign contract",
+    "mitigation_sha256": "a2143f4b0f88ba305281c80fdf74f509b4c427c58dd163d07b854475020a75b9"
+   },
+   "change_context": [
+    {
+     "type": "add_requirement",
+     "from": null,
+     "to": null
+    }
+   ],
+   "version_metadata": {
+    "both_versions": false,
+    "versions": {
+     "version_1": {
+      "norm_length": 0,
+      "precondition_length": 0
+     },
+     "version_2": {
+      "norm_length": 3,
+      "precondition_length": 0
+     }
+    }
+   },
+   "prediction_evidence": {
+    "SIM_card_scenario/r9/v2": {
+     "modality": "obligation",
+     "actions": 1,
+     "actors": 1,
+     "conditions": 1,
+     "constraints": 0,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [
+      "it"
+     ],
+     "action_texts": [
+      "verify the correctness of thei"
+     ]
+    }
+   },
+   "requirement_versions": [
+    {
+     "version": "v1",
+     "empty": true,
+     "text_length": 0,
+     "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+     "fragment": ""
+    },
+    {
+     "version": "v2",
+     "empty": false,
+     "text_length": 124,
+     "text_sha256": "d9b3db2c8352ce437669820aeaed9de14108023cee084c3b76e6c48a07509d34",
+     "fragment": "After receiving the customer’s"
+    }
+   ]
+  },
+  {
+   "rule_id": "r10",
+   "version": "v2",
+   "rule_meaning_zh": "客户收到 SIM 卡时，必须由电话公司激活 SIM 卡",
+   "process_evidence": {
+    "activity": "Activate SIM card",
+    "lane_or_participant": "Customer",
+    "flow_note_zh": "Activate SIM card 位于 Customer 参与者泳道内，由 Receive SIM card 消息启动事件触发",
+    "rule_actor": "phone company"
+   },
+   "external_annotation": {
+    "type": "non_compliant",
+    "bpmn_element": "wrong_role",
+    "element_label": "Activate SIM card",
+    "mitigation_zh": "应由电话公司执行"
+   },
+   "conflicts": [],
+   "our_relevant_types": [
+    "incorrect_actor"
+   ],
+   "capability_probe": "cross_participant_attribution",
+   "proposed_expected": {
+    "status_proposal": "violation_if_actor_mapping_works",
+    "rationale_zh": "规则执行者=电话公司，流程执行者=Customer；若动作可映射且执行者归属可解析，应判 incorrect_actor。该结论依赖参与者/泳道解析，必须在报告中给出解析证据",
+    "capability": "supported",
+    "needs_confirmation": []
+   },
+   "external_annotation_source": {
+    "deviations": [
+     {
+      "type": "non_compliant",
+      "bpmn_element": "wrong_role",
+      "element_label": "Activate SIM card",
+      "reading_aid": "incorrect_actor（执行者）"
+     }
+    ],
+    "mitigation_fragment": "Should be performed by the pho",
+    "mitigation_sha256": "956f151843b2b621e4b6c1500dd4563e945b99603ffcaf6374681c9e98d3c470"
+   },
+   "change_context": [
+    {
+     "type": "change_in_role",
+     "from": null,
+     "to": null
+    }
+   ],
+   "version_metadata": {
+    "both_versions": false,
+    "versions": {
+     "version_1": {
+      "norm_length": 3,
+      "precondition_length": 3
+     },
+     "version_2": {
+      "norm_length": 3,
+      "precondition_length": 3
+     }
+    }
+   },
+   "prediction_evidence": {
+    "SIM_card_scenario/r10/v1": {
+     "modality": "obligation",
+     "actions": 2,
+     "actors": 1,
+     "conditions": 1,
+     "constraints": 0,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [
+      "the customer"
+     ],
+     "action_texts": [
+      "receives the SIM card",
+      "activating the SIM card"
+     ]
+    },
+    "SIM_card_scenario/r10/v2": {
+     "modality": "obligation",
+     "actions": 1,
+     "actors": 1,
+     "conditions": 1,
+     "constraints": 1,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [
+      "the phone company"
+     ],
+     "action_texts": [
+      "activate the SIM card"
+     ]
+    }
+   },
+   "requirement_versions": [
+    {
+     "version": "v1",
+     "empty": false,
+     "text_length": 95,
+     "text_sha256": "17a5295cdd1ec8b7848252bb0ee98d9b9bbc599d4ffad6aa48fcf94dc83d6dfc",
+     "fragment": "When the customer receives the"
+    },
+    {
+     "version": "v2",
+     "empty": false,
+     "text_length": 136,
+     "text_sha256": "f2247ea6bc11dc4b17e811fac2bda2bdb6d160cff111da839988b352b4cec03b",
+     "fragment": "When the customer receives the"
+    }
+   ]
+  },
+  {
+   "rule_id": "r11",
+   "version": "v2",
+   "rule_meaning_zh": "从数据主体取任何个人数据之前，必须先取得其同意",
+   "process_evidence": {
+    "activity_exists": "Ask for consent",
+    "observed_order": [
+     "Request personal data",
+     "Store Data",
+     "Ask for consent"
+    ],
+    "note_zh": "同意活动已存在，但位于取数与存储之后；缺的是“前置位置”，不是活动本身"
+   },
+   "external_annotation": {
+    "type": "non_compliant",
+    "bpmn_element": "missing_activity",
+    "element_label": "Request personal data",
+    "mitigation_zh": "电话公司应执行一个名为 ask for consent 的新任务"
+   },
+   "conflicts": [
+    {
+     "kind": "missing_vs_misplaced",
+     "detail_zh": "外部标注称活动缺失，但当前模型已含同名活动且位置在取数/存数之后。必须区分“活动完全缺失 / 前置位置缺失 / 顺序错误”三种情形"
+    }
+   ],
+   "our_relevant_types": [
+    "out_of_order",
+    "required_condition_not_enforced"
+   ],
+   "capability_probe": "consent_before_retrieval_order",
+   "proposed_expected": {
+    "status_proposal": "violation_order_semantics",
+    "rationale_zh": "以“同意必须先于取数”的顺序/前置约束检查：当前顺序不满足该前置关系，应判顺序类违规；不得判为 missing_action，也不得为符合外部标注而删除或移动现有活动",
+    "capability": "partial",
+    "needs_confirmation": [
+     "Q2"
+    ]
+   },
+   "external_annotation_source": {
+    "deviations": [
+     {
+      "type": "non_compliant",
+      "bpmn_element": "missing_activity",
+      "element_label": "Request personal data",
+      "reading_aid": "missing_action（活动存在性）"
+     }
+    ],
+    "mitigation_fragment": "The phone company should execu",
+    "mitigation_sha256": "202fdb13c1ae75b4c517ff92b9bfe87b48a455edafe19a5033df87c698684f62"
+   },
+   "change_context": [
+    {
+     "type": "change_modality",
+     "from": "permission",
+     "to": "obligation"
+    },
+    {
+     "type": "switch_compliance_pattern",
+     "from": "existence_of_A",
+     "to": "A_precedes_B"
+    },
+    {
+     "type": "add_norm",
+     "from": null,
+     "to": null
+    }
+   ],
+   "version_metadata": {
+    "both_versions": false,
+    "versions": {
+     "version_1": {
+      "norm_length": 3,
+      "precondition_length": 0
+     },
+     "version_2": {
+      "norm_length": 3,
+      "precondition_length": 0
+     }
+    }
+   },
+   "prediction_evidence": {
+    "SIM_card_scenario/r11/v1": {
+     "modality": "prohibition",
+     "actions": 1,
+     "actors": 1,
+     "conditions": 0,
+     "constraints": 0,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [
+      "The phone company"
+     ],
+     "action_texts": [
+      "ask for consent to the custome"
+     ]
+    },
+    "SIM_card_scenario/r11/v2": {
+     "modality": "obligation",
+     "actions": 1,
+     "actors": 1,
+     "conditions": 1,
+     "constraints": 0,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [
+      "the Data Controller"
+     ],
+     "action_texts": [
+      "ask the Data Subject for conse"
+     ]
+    }
+   },
+   "requirement_versions": [
+    {
+     "version": "v1",
+     "empty": false,
+     "text_length": 70,
+     "text_sha256": "73768ea4f655461058f4cd129d4fbc20402a07f24c099e31793010053e20824a",
+     "fragment": "The phone company is not oblig"
+    },
+    {
+     "version": "v2",
+     "empty": false,
+     "text_length": 126,
+     "text_sha256": "ec600eceed94e17b399a334eaedceca6a0c234c23c82ee317edb9bbf5668ed28",
+     "fragment": "Before retrieving any kind of "
+    }
+   ]
+  },
+  {
+   "rule_id": "r12",
+   "version": "v1_to_v2_change",
+   "rule_meaning_zh": "第三方拒绝携号转网时须删除个人数据（v2 已删除该需求）",
+   "process_evidence": {
+    "activity": "Delete personal data",
+    "branch_zh": "位于“第三方拒绝携号转网”分支内（gateway → Delete personal data → end）"
+   },
+   "external_annotation": {
+    "type": "over_compliant",
+    "bpmn_element": "redundant_activity",
+    "element_label": "Delete personal data",
+    "mitigation_zh": "（无修复建议）"
+   },
+   "conflicts": [
+    {
+     "kind": "change_context_not_static_violation",
+     "detail_zh": "该偏差以“需求在 v2 被删除”为前提，属变化影响评价；我们的分类体系没有 over_compliant 类别，不能计入违规评分"
+    }
+   ],
+   "our_relevant_types": [],
+   "capability_probe": "not_applicable_to_taxonomy",
+   "proposed_expected": {
+    "status_proposal": "outside_taxonomy_report_only",
+    "rationale_zh": "作为“超出本分类体系”的条目单列报告，不计入违规/漏检；也不作为合规证据",
+    "capability": "not_applicable",
+    "needs_confirmation": [
+     "Q4"
+    ]
+   },
+   "external_annotation_source": {
+    "deviations": [
+     {
+      "type": "over_compliant",
+      "bpmn_element": "redundant_activity",
+      "element_label": "Delete personal data",
+      "reading_aid": "不在本分类体系（过度合规）"
+     }
+    ],
+    "mitigation_fragment": "",
+    "mitigation_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   "change_context": [
+    {
+     "type": "delete_requirement",
+     "from": null,
+     "to": null
+    }
+   ],
+   "version_metadata": {
+    "both_versions": false,
+    "versions": {
+     "version_1": {
+      "norm_length": 3,
+      "precondition_length": 3
+     },
+     "version_2": {
+      "norm_length": 0,
+      "precondition_length": 0
+     }
+    }
+   },
+   "prediction_evidence": {
+    "SIM_card_scenario/r12/v1": {
+     "modality": "obligation",
+     "actions": 1,
+     "actors": 0,
+     "conditions": 1,
+     "constraints": 1,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [],
+     "action_texts": [
+      "deleted"
+     ]
+    }
+   },
+   "requirement_versions": [
+    {
+     "version": "v1",
+     "empty": false,
+     "text_length": 101,
+     "text_sha256": "390f8189f8b8fd15a92a3f48425466147d387850fc25524bdd84da67cfff56ae",
+     "fragment": "If the third party denies port"
+    },
+    {
+     "version": "v2",
+     "empty": true,
+     "text_length": 0,
+     "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+     "fragment": ""
+    }
+   ]
+  },
+  {
+   "rule_id": "r13",
+   "version": "v2",
+   "rule_meaning_zh": "欠款超过 50 EUR 的客户不得领取新 SIM 卡",
+   "process_evidence": {
+    "condition_surface": "4 labelled sequence flows exist (Not requested / Requested / Granted / Debt < 100); only the last is a numeric condition, the other three are state labels",
+    "model_label": "Debt < 100",
+    "condition_expressions": 0,
+    "note_zh": "模型侧唯一数值条件表面是该连线标签；没有 conditionExpression，网关本身无名"
+   },
+   "external_annotation": {
+    "type": "non_compliant",
+    "bpmn_element": "XOR_condition_modification",
+    "element_label": "Debt < 100",
+    "mitigation_zh": "应把 Debt < 100 改为 Debt < 500"
+   },
+   "conflicts": [
+    {
+     "kind": "numeric_mismatch",
+     "detail_zh": "需求 v2 阈值=50；模型标签=100；外部修复建议=500。三处互不一致，保留原始文件不改，冲突如实记录"
+    },
+    {
+     "kind": "boundary_semantics",
+     "detail_zh": "“exceeding 50” 是严格大于；模型标签 “Debt < 100” 是严格小于；等于阈值的情形两侧都没有覆盖，比较时必须显式说明边界处理"
+    }
+   ],
+   "our_relevant_types": [
+    "required_condition_not_enforced",
+    "constraint_violated"
+   ],
+   "capability_probe": "numeric_boundary_condition",
+   "proposed_expected": {
+    "status_proposal": "capability_partial_plus_extraction_gap",
+    "rationale_zh": "现有条件检查针对“条件未被落实（表面缺失）”而非“条件数值与规则不一致”，因此该例主要暴露能力边界；同时 LLM 抽取把阈值留在执行者描述里、条件字段为空，属抽取问题，两条都要分别记录",
+    "capability": "partial",
+    "needs_confirmation": [
+     "Q3"
+    ]
+   },
+   "external_annotation_source": {
+    "deviations": [
+     {
+      "type": "non_compliant",
+      "bpmn_element": "XOR_condition_modification",
+      "element_label": "Debt < 100",
+      "reading_aid": "required_condition_not_enforced（条件）"
+     }
+    ],
+    "mitigation_fragment": "Should change from 'Debt < 100",
+    "mitigation_sha256": "f2d9bf74853c295861d5b3bc3163d63a7918ce20da87b23092c24965413ba405"
+   },
+   "change_context": [
+    {
+     "type": "change_in_data",
+     "from": null,
+     "to": null
+    }
+   ],
+   "version_metadata": {
+    "both_versions": false,
+    "versions": {
+     "version_1": {
+      "norm_length": 3,
+      "precondition_length": 3
+     },
+     "version_2": {
+      "norm_length": 3,
+      "precondition_length": 3
+     }
+    }
+   },
+   "prediction_evidence": {
+    "SIM_card_scenario/r13/v1": {
+     "modality": "prohibition",
+     "actions": 1,
+     "actors": 1,
+     "conditions": 0,
+     "constraints": 0,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [
+      "Customers with outstanding deb"
+     ],
+     "action_texts": [
+      "receive new SIM cards"
+     ]
+    },
+    "SIM_card_scenario/r13/v2": {
+     "modality": "prohibition",
+     "actions": 1,
+     "actors": 1,
+     "conditions": 0,
+     "constraints": 0,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [
+      "Customers with outstanding deb"
+     ],
+     "action_texts": [
+      "receive new SIM cards"
+     ]
+    }
+   },
+   "requirement_versions": [
+    {
+     "version": "v1",
+     "empty": false,
+     "text_length": 89,
+     "text_sha256": "aa28843bc3a23f7ca8694cab3b6c8e856a5655e5d911699d2a25e4c3876b185d",
+     "fragment": "Customers with outstanding deb"
+    },
+    {
+     "version": "v2",
+     "empty": false,
+     "text_length": 88,
+     "text_sha256": "509344c6d55b87c416675b53f14dd3ebd9f947425d09680c1271356da2324668",
+     "fragment": "Customers with outstanding deb"
+    }
+   ]
+  }
+ ],
+ "paper_conflict_record": {
+  "source": "local pre-publication manuscript (references/papers/Sun_2024_Design_time_BPC.pdf; page 23 text vs page 24 Figure 10)",
+  "reading_text": "R1 and R4 = missing action; R2 = out-of-order execution; R3 = incorrect actor",
+  "reading_figure": "V1/R1 and V2/R2 = Missing Action; V3/R3 = Incorrect Actor; V4/R4 = Out-of-order Execution",
+  "difference": "R2 and R4 are swapped between the two readings",
+  "version_of_record_status": "not_obtainable_in_this_environment (publisher authentication / paywall); therefore no claim is made about the published version",
+  "handling": "keep both original readings; treat neither as reliable Gold; do not merge them into one label set"
+ },
+ "capability_probes": {
+  "condition_triggered_termination": {
+   "probe": "rule r8 requires a conditional process-termination branch",
+   "model_surface": {
+    "timer_event_definitions": 0,
+    "boundary_events": 0
+   },
+   "verdict": "unsupported_by_current_checks",
+   "reason_zh": "现有时限比较判断数值边界是否满足，不判断“终止分支是否存在”；不得把两者等同"
+  },
+  "numeric_boundary_condition": {
+   "probe": "rule r13 requires a numeric debt threshold on a gateway branch",
+   "model_surface": {
+    "condition_expressions": 0,
+    "labelled_flow_count": 4,
+    "labelled_flows": [
+     "Not requested",
+     "Requested",
+     "Granted",
+     "Debt < 100"
+    ]
+   },
+   "verdict": "partial",
+   "reason_zh": "4 条带标签 flow 中只有一条是数值条件，其余为状态标签；现有条件检查针对“条件未被落实”，不针对“条件数值与规则不一致”，故本探针只部分支持"
+  },
+  "consent_before_retrieval_order": {
+   "probe": "rule r11 requires consent before any personal-data retrieval",
+   "model_surface": {
+    "activity_present": true,
+    "predecessors": [
+     "Store Data"
+    ],
+    "successors": [
+     "sid-2583945D-844D-440F-B996-2D125D72CE7C"
+    ],
+    "preceded_by_store_data": true,
+    "note_zh": "consent exists but follows Store Data (personal data already retrieved and stored)"
+   },
+   "extraction_surface": {
+    "order_relations_all_rows": 0
+   },
+   "verdict": "partial",
+   "reason_zh": "模型顺序可读；但现有 LLM 抽取全部 0 条 order_relations，顺序检查在 B/C 组缺少规则侧关系"
+  },
+  "cross_participant_attribution": {
+   "probe": "rule r10 requires the phone company (not the customer) to activate the SIM card",
+   "model_surface": {
+    "lanes": [
+     {
+      "process": "Customer",
+      "elements": [
+       "Activate SIM card",
+       "sid-BB48C585-DD26-4A6F-9A2F-C9195CBBF4F1",
+       "Receive SIM card"
+      ]
+     },
+     {
+      "process": "Phone company",
+      "elements": [
+       "Request personal data",
+       "Ask portability",
+       "Assign new number",
+       "Send SIM card",
+       "Sign contract",
+       "Request payment",
+       "sid-5DB79A16-AE0E-4F99-9754-6D6ADB14DA79",
+       "sid-CD9A6475-E538-413A-A94E-FE30F187DF16",
+       "Ask old number",
+       "Ask portability third company",
+       "sid-0DA99902-C027-4988-A2EB-2823F6D87794",
+       "Ask for consent",
+       "New client acquired",
+       "sid-4A5668DB-EF1E-40BC-9594-264FC6DC393D",
+       "sid-A0EC90A7-DC2C-4CC6-9590-F3BE114A2605",
+       "Payment received",
+       "sid-1D79CAD1-08F4-411D-8275-2F343AC61332",
+       "Store Data",
+       "sid-2583945D-844D-440F-B996-2D125D72CE7C",
+       "Delete personal data",
+       "sid-4ED76348-1073-4EF8-9E43-BA0FD0DA3459",
+       "sid-B8D4B659-96BF-4003-A00D-7951C7E0C0BE",
+       "sid-51BCFD18-5D76-486F-BB6A-904C3378AB9A"
+      ]
+     },
+     {
+      "process": "Another phone company",
+      "elements": []
+     }
+    ],
+    "target_activity": "Activate SIM card"
+   },
+   "verdict": "supported_if_actor_resolution_holds",
+   "reason_zh": "活动归属可由参与者/泳道解析；需在运行报告给出解析证据"
+  }
+ },
+ "open_questions": [
+  "Q7",
+  "Q1",
+  "Q2",
+  "Q4",
+  "Q3"
+ ]
+}
