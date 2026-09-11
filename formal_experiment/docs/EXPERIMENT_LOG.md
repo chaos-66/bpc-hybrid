@@ -4502,3 +4502,21 @@
   - 计数断言全部通过：每臂变体 正确+错类+none+unknown=40、对照 报警+none+unknown=40、成对≤两侧正确数、合并准确率=(变体正确+对照正确)/80、unknown 不从主分母移除；160 个新对象完整保留。
   - 范围：本批结果只能称 development regression，面板已被反复用于开发。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-11T11:35:44.561821+00:00 - S3 扩展 W/H 离线验收纠错：只读复算主表与目标字段视图，撤回 prohibited 退步与 condition 机制改善两项错误结论，unknown/not_applicable 分列、运行次数分列
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：18 passed in 0.07s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`c8ad2f783aeb33be5f75982629d6ffc5b4d3e823`；相关未提交路径：12 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：本批不运行任何面板推断、不加载模型、不调用检查器。新增 scripts/recompute_s3_extended_acceptance_v1.py 与 tests/test_s3_extended_acceptance_recompute_v1.py，产物 outputs/development/s3_extended_acceptance_recompute_v1/{metrics.json,diagnostics.json,manifest.json}，全部来源按路径+sha256 绑定。复算与已存 s3_extended_evidence_scope_v1/metrics.json 及 s3_extended_prediction_accounting_v1/metrics.json 逐项一致（differences=0）：主表数字本身无误，纠错针对解释与目标字段视图。撤回：①W 有 5 个 prohibited 变体退步（系 C 的 per-type 门判定与 W 最终标签混比；accounting 口径下 C 与 W 在全部 10 个 prohibited 变体上预测相同，W 真实差异仅 4 个非 prohibited 实例）；②condition TP 3→5 证明机制改善（同检查另有 27 条 unconditional_bypass_branch 记录，12 变体 15 对照，该判据未证明旁支可绕过条件回到目标活动，原测试预期亦错）。修正：unknown 与 not_applicable 分列；运行次数分为尝试 3 次/成功 2 次/累计 320 个对象预测/保留 160 行，'两次成功预测完全相同'标为无法独立核实。H 保留为有已知实现缺陷的开发结果，方法验收不通过。
+- 追加更正（不改历史事件）：主表数字本身**无误**（复算与两份已存 metrics 逐项一致，differences=0），
+  错的是此前的**解释**与目标字段视图。撤回"W 有 5 个 prohibited 变体退步"（跨视图混比）。目标字段视图改按
+  每类 10 个目标变体 + 10 个目标对照给出 真/假/不可判定/不适用 与单列不适用计数，且不报逐类 P/R/F1。
+  H 保留为有已知实现缺陷的开发结果，方法验收不通过。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

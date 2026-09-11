@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.53
+**文档版本**：3.6.54
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-09-11
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -50,21 +50,44 @@
 
   分类别 F1（变体）：C 0.9524/0.1429/0.5556/0.3077，W 0.9524/**0.3333**/0.5/0.3077，
   H 0.9524/0.4545/**0.0**/**0.0**（prohibited/condition/constraint/exception）。
-- **W 的变化可与接线修复直接对应**：condition 检查的候选面在多数模型里为空，旧代码传入的
-  `mapped_id=None` 与检查实际使用的回退活动不一致，修复后 condition 面按最终活动构建，F1 0.1429→0.3333；
-  同时 W 新增 6 个对照侧 `required_condition_not_enforced` 报警（20 vs 14）。
-  **W 也有退步**：5 个 prohibited 变体（01/02/05/06/08）由正确变为 unknown、1 个变为 none、1 个变为
-  condition——原因是 C 的比较门要求"非禁止类检查做过比较"，而这些行的 condition 面无候选，
-  于是真正的禁止存在性违规被判 unknown。H 的聚合已按"纯禁止规则不强制要求非禁止类比较"改写。
+  合并 80 准确率：C 0.3625、W **0.3250（26/80）**、H 0.2500（20/80）；成对只算"变体正确且对照明确合规"。
+- **2026-09-11 修订 3.6.54 原位修正（原叙述有误，此处已改写）**：
+  1. **撤回"W 有 5 个 prohibited 变体退步"**：该比较把 C 的 **per-type 门判定**与 W 的**最终标签**混在一起比。
+     按 accounting 口径重算，C 与 W 在**全部 10 个 prohibited 变体上预测完全相同**，一个 prohibited 变体都没有变。
+     W 相对 C 的真实差异只有 4 个实例（全部非 prohibited）：`constraint_violated_05` 与
+     `required_condition_05` 由错类改为正确（+2 正确），`exception_not_handled_05`、`required_condition_10`
+     由弃权/错类改为错类（−2 正确）；因此变体正确 18→19、Macro-F1 0.4896→0.5234 来自这 4 个实例。
+     接线修复的直接作用是 condition 目标检查 TP 1→3（condition 候选面在多数模型里为空，旧代码传入的
+     `mapped_id=None` 与检查实际使用的回退活动不一致），但 W 的对照报警同时由 14 升到 20。
+  2. **unknown 与 not_applicable 不再混为一谈**：最终 unknown 是聚合弃权；目标检查层面的不可判定来自
+     可观测性；`not_applicable` 表示**规则本身没有该元素**，是第三种状态。H 的 not_applicable 仅出现在
+     目标切片之外的行上（cross-type 计数：condition 7、constraint 20、exception 24；每类目标切片内为 0）。
+  3. **撤回"condition TP 3→5 证明机制改善"**：同一 H condition 检查另有 12 个变体经
+     `unconditional_bypass_branch` 判 violated，而该判据只证明"被到达网关的兄弟分支没有条件"，
+     **没有证明旁支能绕过条件回到目标活动**，故不构成绕过证明；对应测试原先的预期（有旁支即 violated）也是错的。
+     H 保留为**存在已知实现缺陷的开发结果，方法验收不通过**。
+  4. **运行次数分列**：推断**尝试 3 次**、成功写出预测 **2 次**、累计计算量 2×160=320 个对象预测、
+     最终保留 **160 行**（每臂各一次，80 行/臂）。"两次成功的预测完全相同"**无留存证据可独立核实**：
+     第一次成功的产物未保留，磁盘上只有第二次。
 - **H 不是靠多判 unknown 减少报警换来改善**：报警 20→19（−1）、对照明确合规 7→5（−2）、
   对照 unknown 13→16（+3）、变体正确 19→15（−4）、成对 6→5、Macro-F1 0.5234→0.3517。
-  H 的 constraint/exception 目标检查在 40 个变体上**全部 unknown**（该两类的对照侧也 40/40 unknown），
-  即作用域收紧后这两类在本面板失去可判定性；condition 目标检查则改善（TP 3→5）。
+  H 的 constraint/exception 目标检查在其**自己的 10 个目标变体上全部不可判定**（`variant_true` 与
+  `variant_false` 均为 0），即作用域收紧后这两类在本面板失去可判定性；condition 目标检查在切片内为
+  5 真 / 5 不可判定，但**对照侧同样 5 真**，成对成功 0。
   结论：**H 相对 W 是退步**，其证据作用域改造在本面板没有转化为更好的判定，如实保留该结果。
 - 产物 `outputs/development/s3_extended_evidence_scope_v1/{plan.json,predictions.jsonl,metrics.json,diagnostics.json,manifest.json}`；
   复核 `python formal_experiment/scripts/run_s3_extended_evidence_scope_v1.py --check`（哈希绑定）与 `--replay`
   （仅从已存行复算指标，不重做推断）；测试 `tests/test_s3_extended_evidence_scope_v1.py`（22 项，含 10 项
   非面板小流程行为验证）。
+- **离线验收复算（2026-09-11 修订 3.6.54，零推断）**：
+  `scripts/recompute_s3_extended_acceptance_v1.py` 只读已存 JSON/JSONL 重算全部主表与目标字段视图，
+  产物 `outputs/development/s3_extended_acceptance_recompute_v1/{metrics.json,diagnostics.json,manifest.json}`；
+  复核 `--check`；测试 `tests/test_s3_extended_acceptance_recompute_v1.py`（18 项，含手工可算小表）。
+  复算与 `s3_extended_evidence_scope_v1/metrics.json` 及 `s3_extended_prediction_accounting_v1/metrics.json`
+  **逐项一致（differences = 0）**：主表数字本身没错，错的是此前的解释与目标字段视图。
+  目标字段视图现按"每类 10 个目标变体 / 10 个目标对照"分别给出 真/假/不可判定/不适用，并单列
+  不适用计数；正例判假即漏检，对照判真才是目标字段报警，TN 只来自目标对照。**未报告任何逐类 P/R/F1**：
+  每类只有 10 个标注正例，不可判定既非正也非负，其他类型的变体不是人工确认的负例。
 - **边界**：旧预测/metrics/manifest 与绑定实现逐字节保留，`s3_extended_prediction_accounting_v1.py` 未改，
   新臂经薄适配层注册并验证与最新修正后的 A/B/C 数字一致；未搜索阈值、未新增白名单/同义词/ID 特判、
   未读 `.env`、未调用 LLM/API。

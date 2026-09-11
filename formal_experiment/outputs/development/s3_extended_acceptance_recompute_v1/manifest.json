@@ -1,0 +1,81 @@
+{
+  "schema_version": "s3_extended_acceptance_manifest@1.0.0",
+  "run_id": "s3_extended_acceptance_recompute_v1",
+  "started_utc": "2026-09-11T11:34:52.324127+00:00",
+  "git_commit": "c8ad2f783aeb33be5f75982629d6ffc5b4d3e823",
+  "command": "python scripts\\recompute_s3_extended_acceptance_v1.py",
+  "kind": "offline_recompute_of_stored_predictions",
+  "no_inference": true,
+  "checkers_imported": [],
+  "sources": {
+    "panel": {
+      "path": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+      "sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81"
+    },
+    "scope_predictions": {
+      "path": "outputs/development/s3_extended_evidence_scope_v1/predictions.jsonl",
+      "sha256": "9a38d447d98658cf96342f551bc49d320b1de4800d9d63a1548394d66e0f22d6"
+    },
+    "scope_metrics": {
+      "path": "outputs/development/s3_extended_evidence_scope_v1/metrics.json",
+      "sha256": "2d0c380b110cd0fd2a14e94f83d57a6365ecb2f78e10148aedffca061457b936"
+    },
+    "scope_plan": {
+      "path": "outputs/development/s3_extended_evidence_scope_v1/plan.json",
+      "sha256": "0d9822214523092ca177a18839e5a3917d4d1da5302c5ae29f64456ea55d06e3"
+    },
+    "accounting_predictions": {
+      "path": "outputs/development/s3_extended_prediction_accounting_v1/final_predictions.jsonl",
+      "sha256": "3ac08a35b8a3eba18150e2368742fb9a26c16dcd6f0ee36efc7e41577ba36cd9"
+    },
+    "accounting_metrics": {
+      "path": "outputs/development/s3_extended_prediction_accounting_v1/metrics.json",
+      "sha256": "3303a2348823ecc37fc3bb271e87e8225dc5bce775a93c94a726976a3c58116b"
+    },
+    "repair_v2_predictions": {
+      "path": "outputs/development/s3_extended_repair_v2_v1/predictions.jsonl",
+      "sha256": "475ea3082f1499a3d2b86e59ca1d802cee90d55ba232877f9b29125f299d43a4"
+    },
+    "gap_difference_lists": {
+      "path": "outputs/evidence/s3_extended_gap_v1/difference_lists.json",
+      "sha256": "6b53e8cf729f9e489e05fc2f84c96372db4c3498dda6ebaf09c20b0198da2b5f"
+    },
+    "frozen_winter_predictions": {
+      "path": "outputs/evidence/s3_formula_repair_v2/extended_four/reference/winter/predictions.jsonl",
+      "sha256": "18fa61ae9dda8c104f59360a91ef9979e7c793c9d3c1a339e069c3302e0780d7"
+    },
+    "frozen_sun_predictions": {
+      "path": "outputs/evidence/s3_formula_repair_v2/extended_four/reference/sun/predictions.jsonl",
+      "sha256": "08095d984a8605039888e5ba487149212e023c90f5ba5ab9a1090e79f0dd7ed8"
+    }
+  },
+  "implementation": {
+    "script": {
+      "path": "scripts/recompute_s3_extended_acceptance_v1.py",
+      "sha256": "fe8a6d0a7d59e6ef8f5526cfc903df8db0d0e4efd8f01ff6b26c62060a570e65"
+    },
+    "tests": {
+      "path": "tests/test_s3_extended_acceptance_recompute_v1.py",
+      "sha256": "26edb3f4d8699917135db0b896326d5c1fc2587b0e7d812e5c42ea19034c34c7"
+    }
+  },
+  "results": {
+    "metrics": {
+      "path": "outputs/development/s3_extended_acceptance_recompute_v1/metrics.json",
+      "sha256": "a31ace74fb192b99c32ae87d8e4c3b97bbfdf4f47f90c1d9f8bc162ec267e50a"
+    },
+    "diagnostics": {
+      "path": "outputs/development/s3_extended_acceptance_recompute_v1/diagnostics.json",
+      "sha256": "fa4471d405fe521a415974a6fc8078ab79cb5ac19e2f181e3318cb4a2db7232a"
+    }
+  },
+  "safety": {
+    "api_calls": 0,
+    "llm_api_calls": 0,
+    "gold_modified": false,
+    "panel_modified": false,
+    "existing_results_rewritten": false,
+    "predictions_regenerated": false,
+    "old_manifests_rebound": false
+  }
+}

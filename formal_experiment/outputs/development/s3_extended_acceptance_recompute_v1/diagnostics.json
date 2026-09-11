@@ -1,0 +1,452 @@
+{
+  "schema_version": "s3_extended_acceptance_diagnostics@1.0.0",
+  "run_id": "s3_extended_acceptance_recompute_v1",
+  "corrections": {
+    "prohibited_regression_claim": {
+      "status": "retracted",
+      "claim": "'W regressed on five prohibited variants (01/02/05/06/08) because the comparison gate turned them into unknown'",
+      "why": "that comparison was made against C's per-type gate decisions while W's table used its final labels; under the accounting labels both arms answer all ten prohibited variants with prohibited_action_present",
+      "prohibited_prediction_differences_between_C_and_W": [],
+      "cross_view_note": "the same stored row can carry three different labels - the final five-class label, the target type's own decision, and a per-type gate decision - and they must not be compared across views"
+    },
+    "W_vs_C_changes_under_the_accounting_labels": [
+      {
+        "item_id": "syn_v2_constraint_violated_05",
+        "expected": "constraint_violated",
+        "C": "constraint_violated",
+        "W": "required_condition_not_enforced",
+        "W_correct": false,
+        "C_correct": true
+      },
+      {
+        "item_id": "syn_v2_exception_not_handled_05",
+        "expected": "exception_not_handled",
+        "C": null,
+        "W": "required_condition_not_enforced",
+        "W_correct": false,
+        "C_correct": false
+      },
+      {
+        "item_id": "syn_v2_required_condition_05",
+        "expected": "required_condition_not_enforced",
+        "C": "constraint_violated",
+        "W": "required_condition_not_enforced",
+        "W_correct": true,
+        "C_correct": false
+      },
+      {
+        "item_id": "syn_v2_required_condition_10",
+        "expected": "required_condition_not_enforced",
+        "C": null,
+        "W": "required_condition_not_enforced",
+        "W_correct": true,
+        "C_correct": false
+      }
+    ],
+    "target_field_view": {
+      "status": "corrected",
+      "was": "the target-field view consumed the aggregate per-type decision, so a check that never ran and a check that ran and found no violation were collapsed into one 'unknown'",
+      "now": "each target check is read from its own stored check record: violation -> true, ran-and-no-violation -> false, everything else undecidable, and not_applicable is a column of its own"
+    },
+    "unknown_vs_not_applicable": {
+      "status": "corrected",
+      "was": "'the rule requires this element but it cannot be checked' and 'the rule does not require this element' were reported as one number",
+      "now": "the target-field view reports variant_not_applicable and control_not_applicable separately from the undecidable columns",
+      "H_not_applicable_counts": {
+        "prohibited_action_present": {
+          "variant": 0,
+          "control": 0
+        },
+        "required_condition_not_enforced": {
+          "variant": 0,
+          "control": 0
+        },
+        "constraint_violated": {
+          "variant": 0,
+          "control": 0
+        },
+        "exception_not_handled": {
+          "variant": 0,
+          "control": 0
+        }
+      }
+    },
+    "run_counts": {
+      "status": "corrected",
+      "distinction": "attempts (inference invocations started), successes (invocations that wrote predictions), cumulative computation (object-scorings performed across all attempts) and retained rows (what the stored artifact holds) are four different numbers and were previously reported as one",
+      "recorded": {
+        "attempts": 3,
+        "successes_that_wrote_predictions": 2,
+        "cumulative_object_predictions_computed": 320,
+        "retained_rows_in_the_stored_artifact": 160,
+        "retained_rows_are_one_run_per_arm": true,
+        "identical_predictions_across_the_two_successful_runs": "cannot be independently verified from the surviving artifacts: no copy of the first successful run was retained, so only the second is on disk"
+      }
+    },
+    "conditional_mechanism_claim": {
+      "status": "retracted",
+      "claim": "'the H condition TP rose 3 -> 5, showing the mechanism improved'",
+      "why": "the same H condition check also returns a violated verdict for 12 instances through an unproved bypass criterion, so the target-count change is not evidence of a working mechanism"
+    }
+  },
+  "condition_bypass_records": [
+    {
+      "item_id": "syn_v2_prohibited_action_07",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_required_condition_01",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_required_condition_01",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_required_condition_03",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_required_condition_03",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_required_condition_04",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_required_condition_04",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_required_condition_08",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-DFB327FD-78D3-4012-8BAC-82AF87341389",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_required_condition_08",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-DFB327FD-78D3-4012-8BAC-82AF87341389",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_required_condition_09",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_required_condition_09",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_01",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_01",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_04",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_04",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_06",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_06",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_09",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-DFB327FD-78D3-4012-8BAC-82AF87341389",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_09",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-DFB327FD-78D3-4012-8BAC-82AF87341389",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_10",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-8C6443CA-D075-4BD1-BD49-A821B09172AA",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_10",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-8C6443CA-D075-4BD1-BD49-A821B09172AA",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_01",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_01",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_07",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "syn_handler_syn_v2_exception_not_handled_07",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_08",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "syn_handler_syn_v2_exception_not_handled_08",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_10",
+      "side": "variant",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_10",
+      "side": "control",
+      "reason": "unconditional_bypass_branch",
+      "target_activity_id": "syn_handler_syn_v2_exception_not_handled_10",
+      "evidence_sources_from_manifest": null,
+      "stopped_at_arbitration": true,
+      "bypass_evidence_persisted": false
+    }
+  ],
+  "condition_bypass_provenance": {
+    "verdict_count": 27,
+    "stored_evidence": "the stored predictions persist the verdict, the reason and the resolved target activity, but not the sibling branch list; that list is only reproducible by re-running the checker, which this batch does not do",
+    "arbitration": "the original criterion marked the condition violated as soon as a sibling branch of a reached gateway carried no condition; it never established that the sibling branch leads back to the target activity without the condition, so a bypass was not proved"
+  },
+  "acceptance_limits": {
+    "scope": "development regression on a panel already used for repeated development",
+    "H_status": "kept as a development result with a known implementation defect; the method is NOT accepted",
+    "not_an_independent_validation": true,
+    "no_new_inference_in_this_batch": true
+  },
+  "reconciliation": {
+    "scope_metrics_arms": {
+      "W_action_resolution_wiring": {
+        "A_variant_40": {
+          "correct_type": 19,
+          "wrong_type": 9,
+          "explicit_compliance": 0,
+          "final_unknown": 12
+        },
+        "B_control_40": {
+          "false_positives": 20,
+          "explicit_compliance": 7,
+          "final_unknown": 13
+        },
+        "paired": 6,
+        "merged_accuracy": 0.325
+      },
+      "H_scoped_evidence_and_verdicts": {
+        "A_variant_40": {
+          "correct_type": 15,
+          "wrong_type": 8,
+          "explicit_compliance": 0,
+          "final_unknown": 17
+        },
+        "B_control_40": {
+          "false_positives": 19,
+          "explicit_compliance": 5,
+          "final_unknown": 16
+        },
+        "paired": 5,
+        "merged_accuracy": 0.25
+      }
+    },
+    "accounting_arms": {
+      "A_v3_internal_0_4": {
+        "A_variant_40": {
+          "correct_type": 22,
+          "wrong_type": 13,
+          "explicit_compliance": 4,
+          "final_unknown": 1
+        },
+        "B_control_40": {
+          "false_positives": 24,
+          "explicit_compliance": 16,
+          "final_unknown": 0
+        },
+        "paired": 11,
+        "merged_accuracy": 0.475
+      },
+      "B_original_path_normalized": {
+        "A_variant_40": {
+          "correct_type": 19,
+          "wrong_type": 9,
+          "explicit_compliance": 2,
+          "final_unknown": 10
+        },
+        "B_control_40": {
+          "false_positives": 20,
+          "explicit_compliance": 14,
+          "final_unknown": 6
+        },
+        "paired": 11,
+        "merged_accuracy": 0.4125
+      },
+      "C_v3_no_forced_resolution": {
+        "A_variant_40": {
+          "correct_type": 18,
+          "wrong_type": 8,
+          "explicit_compliance": 0,
+          "final_unknown": 14
+        },
+        "B_control_40": {
+          "false_positives": 14,
+          "explicit_compliance": 11,
+          "final_unknown": 15
+        },
+        "paired": 7,
+        "merged_accuracy": 0.3625
+      }
+    },
+    "differences": [],
+    "agreements": [
+      {
+        "arm": "W_action_resolution_wiring",
+        "scope": "s3_extended_evidence_scope_v1"
+      },
+      {
+        "arm": "H_scoped_evidence_and_verdicts",
+        "scope": "s3_extended_evidence_scope_v1"
+      },
+      {
+        "arm": "A_v3_internal_0_4",
+        "scope": "s3_extended_prediction_accounting_v1"
+      },
+      {
+        "arm": "B_original_path_normalized",
+        "scope": "s3_extended_prediction_accounting_v1"
+      },
+      {
+        "arm": "C_v3_no_forced_resolution",
+        "scope": "s3_extended_prediction_accounting_v1"
+      }
+    ]
+  }
+}

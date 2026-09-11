@@ -1,0 +1,3016 @@
+{
+  "schema_version": "s3_extended_acceptance_metrics@1.0.0",
+  "run_id": "s3_extended_acceptance_recompute_v1",
+  "generated_utc": "2026-09-11T11:34:52.324127+00:00",
+  "scope": "offline acceptance re-evaluation of stored predictions; development regression against the old synthetic panel labels, NOT an independent validation, NOT the formal Oracle and NOT real legal compliance performance",
+  "sources": {
+    "panel": {
+      "path": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+      "sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81"
+    },
+    "scope_predictions": {
+      "path": "outputs/development/s3_extended_evidence_scope_v1/predictions.jsonl",
+      "sha256": "9a38d447d98658cf96342f551bc49d320b1de4800d9d63a1548394d66e0f22d6"
+    },
+    "scope_metrics": {
+      "path": "outputs/development/s3_extended_evidence_scope_v1/metrics.json",
+      "sha256": "2d0c380b110cd0fd2a14e94f83d57a6365ecb2f78e10148aedffca061457b936"
+    },
+    "scope_plan": {
+      "path": "outputs/development/s3_extended_evidence_scope_v1/plan.json",
+      "sha256": "0d9822214523092ca177a18839e5a3917d4d1da5302c5ae29f64456ea55d06e3"
+    },
+    "accounting_predictions": {
+      "path": "outputs/development/s3_extended_prediction_accounting_v1/final_predictions.jsonl",
+      "sha256": "3ac08a35b8a3eba18150e2368742fb9a26c16dcd6f0ee36efc7e41577ba36cd9"
+    },
+    "accounting_metrics": {
+      "path": "outputs/development/s3_extended_prediction_accounting_v1/metrics.json",
+      "sha256": "3303a2348823ecc37fc3bb271e87e8225dc5bce775a93c94a726976a3c58116b"
+    },
+    "repair_v2_predictions": {
+      "path": "outputs/development/s3_extended_repair_v2_v1/predictions.jsonl",
+      "sha256": "475ea3082f1499a3d2b86e59ca1d802cee90d55ba232877f9b29125f299d43a4"
+    },
+    "gap_difference_lists": {
+      "path": "outputs/evidence/s3_extended_gap_v1/difference_lists.json",
+      "sha256": "6b53e8cf729f9e489e05fc2f84c96372db4c3498dda6ebaf09c20b0198da2b5f"
+    },
+    "frozen_winter_predictions": {
+      "path": "outputs/evidence/s3_formula_repair_v2/extended_four/reference/winter/predictions.jsonl",
+      "sha256": "18fa61ae9dda8c104f59360a91ef9979e7c793c9d3c1a339e069c3302e0780d7"
+    },
+    "frozen_sun_predictions": {
+      "path": "outputs/evidence/s3_formula_repair_v2/extended_four/reference/sun/predictions.jsonl",
+      "sha256": "08095d984a8605039888e5ba487149212e023c90f5ba5ab9a1090e79f0dd7ed8"
+    }
+  },
+  "arms": {
+    "A_v3_internal_0_4": {
+      "label_policy": "one stored final label per instance; variant outcomes are correct_type / wrong_type / explicit_compliance / final_unknown and control outcomes are false_positives / explicit_compliance / final_unknown",
+      "A_variant_40": {
+        "objects": 40,
+        "correct_type": 22,
+        "wrong_type": 13,
+        "explicit_compliance": 4,
+        "final_unknown": 1,
+        "per_class": {
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.8333333333333334,
+            "recall": 1.0,
+            "f1": 0.9090909090909091
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 5,
+            "fp": 8,
+            "fn": 5,
+            "precision": 0.38461538461538464,
+            "recall": 0.5,
+            "f1": 0.43478260869565216
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 4,
+            "fp": 3,
+            "fn": 6,
+            "precision": 0.5714285714285714,
+            "recall": 0.4,
+            "f1": 0.47058823529411764
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 3,
+            "fp": 0,
+            "fn": 7,
+            "precision": 1.0,
+            "recall": 0.3,
+            "f1": 0.46153846153846156
+          }
+        },
+        "macro_f1": 0.5690000536547851,
+        "micro_f1": 0.5866666666666667,
+        "accuracy": 0.55,
+        "unknown_not_in_denominator": 0,
+        "undecidable_policy": "the five-class view has no separate abstention class: a null final label is carried as its own prediction and counts as an error for the row, so it is never removed from a denominator and never counted as a correct rejection"
+      },
+      "B_control_40": {
+        "objects": 40,
+        "false_positives": 24,
+        "explicit_compliance": 16,
+        "final_unknown": 0
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 11,
+        "paired_accuracy": 0.275,
+        "definition": "a pair succeeds only when the variant carries the expected type AND its control is answered with explicit compliance 'none'; a control abstention is never a correct rejection",
+        "per_pair": [
+          {
+            "item_id": "syn_v2_constraint_violated_01",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_02",
+            "expected": "constraint_violated",
+            "variant_predicted": "none",
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_03",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_04",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_06",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_07",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_08",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_10",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_01",
+            "expected": "exception_not_handled",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_02",
+            "expected": "exception_not_handled",
+            "variant_predicted": "none",
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_03",
+            "expected": "exception_not_handled",
+            "variant_predicted": "none",
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "expected": "exception_not_handled",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": false,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "expected": "exception_not_handled",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": false,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_06",
+            "expected": "exception_not_handled",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_07",
+            "expected": "exception_not_handled",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_08",
+            "expected": "exception_not_handled",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_09",
+            "expected": "exception_not_handled",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_10",
+            "expected": "exception_not_handled",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": true,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_01",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_02",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_03",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_04",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_05",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_06",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_07",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_08",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_09",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_10",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "exception_not_handled",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_02",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "none",
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_required_condition_03",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": false,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_06",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": false,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_07",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": false,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_09",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_required_condition_10",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          }
+        ]
+      },
+      "D_merged_80": {
+        "objects": 80,
+        "correct": 38,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 16,
+            "fp": 4,
+            "fn": 24,
+            "precision": 0.8,
+            "recall": 0.4,
+            "f1": 0.5333333333333333
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 10,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 5,
+            "fp": 17,
+            "fn": 5,
+            "precision": 0.22727272727272727,
+            "recall": 0.5,
+            "f1": 0.3125
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 4,
+            "fp": 9,
+            "fn": 6,
+            "precision": 0.3076923076923077,
+            "recall": 0.4,
+            "f1": 0.34782608695652173
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 3,
+            "fp": 1,
+            "fn": 7,
+            "precision": 0.75,
+            "recall": 0.3,
+            "f1": 0.42857142857142855
+          }
+        },
+        "macro_f1": 0.45777950310559,
+        "micro_f1": 0.4779874213836478,
+        "accuracy": 0.475,
+        "unknown_not_in_denominator": 0,
+        "undecidable_policy": "the five-class view has no separate abstention class: a null final label is carried as its own prediction and counts as an error for the row, so it is never removed from a denominator and never counted as a correct rejection"
+      }
+    },
+    "B_original_path_normalized": {
+      "label_policy": "one stored final label per instance; variant outcomes are correct_type / wrong_type / explicit_compliance / final_unknown and control outcomes are false_positives / explicit_compliance / final_unknown",
+      "A_variant_40": {
+        "objects": 40,
+        "correct_type": 19,
+        "wrong_type": 9,
+        "explicit_compliance": 2,
+        "final_unknown": 10,
+        "per_class": {
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9090909090909091,
+            "recall": 1.0,
+            "f1": 0.9523809523809523
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 3,
+            "fp": 5,
+            "fn": 7,
+            "precision": 0.375,
+            "recall": 0.3,
+            "f1": 0.3333333333333333
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 4,
+            "fp": 2,
+            "fn": 6,
+            "precision": 0.6666666666666666,
+            "recall": 0.4,
+            "f1": 0.5
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 2,
+            "fp": 1,
+            "fn": 8,
+            "precision": 0.6666666666666666,
+            "recall": 0.2,
+            "f1": 0.3076923076923077
+          }
+        },
+        "macro_f1": 0.5233516483516484,
+        "micro_f1": 0.5588235294117647,
+        "accuracy": 0.475,
+        "unknown_not_in_denominator": 0,
+        "undecidable_policy": "the five-class view has no separate abstention class: a null final label is carried as its own prediction and counts as an error for the row, so it is never removed from a denominator and never counted as a correct rejection"
+      },
+      "B_control_40": {
+        "objects": 40,
+        "false_positives": 20,
+        "explicit_compliance": 14,
+        "final_unknown": 6
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 11,
+        "paired_accuracy": 0.275,
+        "definition": "a pair succeeds only when the variant carries the expected type AND its control is answered with explicit compliance 'none'; a control abstention is never a correct rejection",
+        "per_pair": [
+          {
+            "item_id": "syn_v2_constraint_violated_01",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "exception_not_handled",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_02",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_03",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_04",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_06",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_07",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_08",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_10",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_01",
+            "expected": "exception_not_handled",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_02",
+            "expected": "exception_not_handled",
+            "variant_predicted": "none",
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_03",
+            "expected": "exception_not_handled",
+            "variant_predicted": "none",
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "expected": "exception_not_handled",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": false,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "expected": "exception_not_handled",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_06",
+            "expected": "exception_not_handled",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_07",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_08",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_09",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_10",
+            "expected": "exception_not_handled",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": true,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_01",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_02",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_03",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_04",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_05",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_06",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_07",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_08",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_09",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_10",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": false,
+            "control_predicted": "exception_not_handled",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_02",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_03",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": false,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": false,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_06",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_07",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_09",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_required_condition_10",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          }
+        ]
+      },
+      "D_merged_80": {
+        "objects": 80,
+        "correct": 33,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 14,
+            "fp": 2,
+            "fn": 26,
+            "precision": 0.875,
+            "recall": 0.35,
+            "f1": 0.5
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 6,
+            "fn": 0,
+            "precision": 0.625,
+            "recall": 1.0,
+            "f1": 0.7692307692307693
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 3,
+            "fp": 14,
+            "fn": 7,
+            "precision": 0.17647058823529413,
+            "recall": 0.3,
+            "f1": 0.2222222222222222
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 4,
+            "fp": 6,
+            "fn": 6,
+            "precision": 0.4,
+            "recall": 0.4,
+            "f1": 0.4
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 2,
+            "fp": 3,
+            "fn": 8,
+            "precision": 0.4,
+            "recall": 0.2,
+            "f1": 0.26666666666666666
+          }
+        },
+        "macro_f1": 0.4316239316239316,
+        "micro_f1": 0.4583333333333333,
+        "accuracy": 0.4125,
+        "unknown_not_in_denominator": 0,
+        "undecidable_policy": "the five-class view has no separate abstention class: a null final label is carried as its own prediction and counts as an error for the row, so it is never removed from a denominator and never counted as a correct rejection"
+      }
+    },
+    "C_v3_no_forced_resolution": {
+      "label_policy": "one stored final label per instance; variant outcomes are correct_type / wrong_type / explicit_compliance / final_unknown and control outcomes are false_positives / explicit_compliance / final_unknown",
+      "A_variant_40": {
+        "objects": 40,
+        "correct_type": 18,
+        "wrong_type": 8,
+        "explicit_compliance": 0,
+        "final_unknown": 14,
+        "per_class": {
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9090909090909091,
+            "recall": 1.0,
+            "f1": 0.9523809523809523
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 1,
+            "fp": 3,
+            "fn": 9,
+            "precision": 0.25,
+            "recall": 0.1,
+            "f1": 0.14285714285714285
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 5,
+            "fp": 3,
+            "fn": 5,
+            "precision": 0.625,
+            "recall": 0.5,
+            "f1": 0.5555555555555556
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 2,
+            "fp": 1,
+            "fn": 8,
+            "precision": 0.6666666666666666,
+            "recall": 0.2,
+            "f1": 0.3076923076923077
+          }
+        },
+        "macro_f1": 0.4896214896214896,
+        "micro_f1": 0.5454545454545454,
+        "accuracy": 0.45,
+        "unknown_not_in_denominator": 0,
+        "undecidable_policy": "the five-class view has no separate abstention class: a null final label is carried as its own prediction and counts as an error for the row, so it is never removed from a denominator and never counted as a correct rejection"
+      },
+      "B_control_40": {
+        "objects": 40,
+        "false_positives": 14,
+        "explicit_compliance": 11,
+        "final_unknown": 15
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 7,
+        "paired_accuracy": 0.175,
+        "definition": "a pair succeeds only when the variant carries the expected type AND its control is answered with explicit compliance 'none'; a control abstention is never a correct rejection",
+        "per_pair": [
+          {
+            "item_id": "syn_v2_constraint_violated_01",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "exception_not_handled",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_02",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_03",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_04",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_06",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_07",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_08",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_10",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_01",
+            "expected": "exception_not_handled",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_02",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_03",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "expected": "exception_not_handled",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": false,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_06",
+            "expected": "exception_not_handled",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_07",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_08",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_09",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_10",
+            "expected": "exception_not_handled",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_01",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_02",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_03",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_04",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_05",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_06",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_07",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_08",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_09",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_10",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": false,
+            "control_predicted": "exception_not_handled",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_02",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_03",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": false,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": false,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": false,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_06",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_07",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_09",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_required_condition_10",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          }
+        ]
+      },
+      "D_merged_80": {
+        "objects": 80,
+        "correct": 29,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 11,
+            "fp": 0,
+            "fn": 29,
+            "precision": 1.0,
+            "recall": 0.275,
+            "f1": 0.43137254901960786
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 6,
+            "fn": 0,
+            "precision": 0.625,
+            "recall": 1.0,
+            "f1": 0.7692307692307693
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 1,
+            "fp": 6,
+            "fn": 9,
+            "precision": 0.14285714285714285,
+            "recall": 0.1,
+            "f1": 0.11764705882352941
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 5,
+            "fp": 7,
+            "fn": 5,
+            "precision": 0.4166666666666667,
+            "recall": 0.5,
+            "f1": 0.45454545454545453
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 2,
+            "fp": 3,
+            "fn": 8,
+            "precision": 0.4,
+            "recall": 0.2,
+            "f1": 0.26666666666666666
+          }
+        },
+        "macro_f1": 0.4078924996572056,
+        "micro_f1": 0.44274809160305345,
+        "accuracy": 0.3625,
+        "unknown_not_in_denominator": 0,
+        "undecidable_policy": "the five-class view has no separate abstention class: a null final label is carried as its own prediction and counts as an error for the row, so it is never removed from a denominator and never counted as a correct rejection"
+      }
+    },
+    "H_scoped_evidence_and_verdicts": {
+      "label_policy": "one stored final label per instance; variant outcomes are correct_type / wrong_type / explicit_compliance / final_unknown and control outcomes are false_positives / explicit_compliance / final_unknown",
+      "A_variant_40": {
+        "objects": 40,
+        "correct_type": 15,
+        "wrong_type": 8,
+        "explicit_compliance": 0,
+        "final_unknown": 17,
+        "per_class": {
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9090909090909091,
+            "recall": 1.0,
+            "f1": 0.9523809523809523
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 5,
+            "fp": 7,
+            "fn": 5,
+            "precision": 0.4166666666666667,
+            "recall": 0.5,
+            "f1": 0.45454545454545453
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "macro_f1": 0.35173160173160173,
+        "micro_f1": 0.47619047619047616,
+        "accuracy": 0.375,
+        "unknown_not_in_denominator": 0,
+        "undecidable_policy": "the five-class view has no separate abstention class: a null final label is carried as its own prediction and counts as an error for the row, so it is never removed from a denominator and never counted as a correct rejection"
+      },
+      "B_control_40": {
+        "objects": 40,
+        "false_positives": 19,
+        "explicit_compliance": 5,
+        "final_unknown": 16
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 5,
+        "paired_accuracy": 0.125,
+        "definition": "a pair succeeds only when the variant carries the expected type AND its control is answered with explicit compliance 'none'; a control abstention is never a correct rejection",
+        "per_pair": [
+          {
+            "item_id": "syn_v2_constraint_violated_01",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_02",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_03",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_04",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_06",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_07",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_08",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_10",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_01",
+            "expected": "exception_not_handled",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_02",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_03",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "expected": "exception_not_handled",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": false,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_06",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_07",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_08",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_09",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_10",
+            "expected": "exception_not_handled",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_01",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_02",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_03",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_04",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_05",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_06",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_07",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_08",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_09",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_10",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_02",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_03",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_06",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_07",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_09",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_10",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          }
+        ]
+      },
+      "D_merged_80": {
+        "objects": 80,
+        "correct": 20,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 5,
+            "fp": 0,
+            "fn": 35,
+            "precision": 1.0,
+            "recall": 0.125,
+            "f1": 0.2222222222222222
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 6,
+            "fn": 0,
+            "precision": 0.625,
+            "recall": 1.0,
+            "f1": 0.7692307692307693
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 5,
+            "fp": 21,
+            "fn": 5,
+            "precision": 0.19230769230769232,
+            "recall": 0.5,
+            "f1": 0.2777777777777778
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "macro_f1": 0.25384615384615383,
+        "micro_f1": 0.31496062992125984,
+        "accuracy": 0.25,
+        "unknown_not_in_denominator": 0,
+        "undecidable_policy": "the five-class view has no separate abstention class: a null final label is carried as its own prediction and counts as an error for the row, so it is never removed from a denominator and never counted as a correct rejection"
+      }
+    },
+    "W_action_resolution_wiring": {
+      "label_policy": "one stored final label per instance; variant outcomes are correct_type / wrong_type / explicit_compliance / final_unknown and control outcomes are false_positives / explicit_compliance / final_unknown",
+      "A_variant_40": {
+        "objects": 40,
+        "correct_type": 19,
+        "wrong_type": 9,
+        "explicit_compliance": 0,
+        "final_unknown": 12,
+        "per_class": {
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9090909090909091,
+            "recall": 1.0,
+            "f1": 0.9523809523809523
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 3,
+            "fp": 5,
+            "fn": 7,
+            "precision": 0.375,
+            "recall": 0.3,
+            "f1": 0.3333333333333333
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 4,
+            "fp": 2,
+            "fn": 6,
+            "precision": 0.6666666666666666,
+            "recall": 0.4,
+            "f1": 0.5
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 2,
+            "fp": 1,
+            "fn": 8,
+            "precision": 0.6666666666666666,
+            "recall": 0.2,
+            "f1": 0.3076923076923077
+          }
+        },
+        "macro_f1": 0.5233516483516484,
+        "micro_f1": 0.5588235294117647,
+        "accuracy": 0.475,
+        "unknown_not_in_denominator": 0,
+        "undecidable_policy": "the five-class view has no separate abstention class: a null final label is carried as its own prediction and counts as an error for the row, so it is never removed from a denominator and never counted as a correct rejection"
+      },
+      "B_control_40": {
+        "objects": 40,
+        "false_positives": 20,
+        "explicit_compliance": 7,
+        "final_unknown": 13
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 6,
+        "paired_accuracy": 0.15,
+        "definition": "a pair succeeds only when the variant carries the expected type AND its control is answered with explicit compliance 'none'; a control abstention is never a correct rejection",
+        "per_pair": [
+          {
+            "item_id": "syn_v2_constraint_violated_01",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "exception_not_handled",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_02",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_03",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_04",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_06",
+            "expected": "constraint_violated",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_07",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_08",
+            "expected": "constraint_violated",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_10",
+            "expected": "constraint_violated",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_01",
+            "expected": "exception_not_handled",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_02",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_03",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "expected": "exception_not_handled",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": false,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "expected": "exception_not_handled",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_06",
+            "expected": "exception_not_handled",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_07",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_08",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_09",
+            "expected": "exception_not_handled",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_10",
+            "expected": "exception_not_handled",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": true,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_01",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_02",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_03",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_04",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_05",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_06",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_07",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "prohibited_action_present",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_08",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_09",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_10",
+            "expected": "prohibited_action_present",
+            "variant_predicted": "prohibited_action_present",
+            "variant_correct": true,
+            "control_predicted": "required_condition_not_enforced",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "exception_not_handled",
+            "variant_correct": false,
+            "control_predicted": "exception_not_handled",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_02",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_03",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": false,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "constraint_violated",
+            "variant_correct": false,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_06",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_07",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": null,
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "constraint_violated",
+            "control_correct": false
+          },
+          {
+            "item_id": "syn_v2_required_condition_09",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": null,
+            "variant_correct": false,
+            "control_predicted": "none",
+            "control_correct": true
+          },
+          {
+            "item_id": "syn_v2_required_condition_10",
+            "expected": "required_condition_not_enforced",
+            "variant_predicted": "required_condition_not_enforced",
+            "variant_correct": true,
+            "control_predicted": "none",
+            "control_correct": true
+          }
+        ]
+      },
+      "D_merged_80": {
+        "objects": 80,
+        "correct": 26,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 7,
+            "fp": 0,
+            "fn": 33,
+            "precision": 1.0,
+            "recall": 0.175,
+            "f1": 0.2978723404255319
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 6,
+            "fn": 0,
+            "precision": 0.625,
+            "recall": 1.0,
+            "f1": 0.7692307692307693
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 3,
+            "fp": 14,
+            "fn": 7,
+            "precision": 0.17647058823529413,
+            "recall": 0.3,
+            "f1": 0.2222222222222222
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 4,
+            "fp": 6,
+            "fn": 6,
+            "precision": 0.4,
+            "recall": 0.4,
+            "f1": 0.4
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 2,
+            "fp": 3,
+            "fn": 8,
+            "precision": 0.4,
+            "recall": 0.2,
+            "f1": 0.26666666666666666
+          }
+        },
+        "macro_f1": 0.391198399709038,
+        "micro_f1": 0.3851851851851852,
+        "accuracy": 0.325,
+        "unknown_not_in_denominator": 0,
+        "undecidable_policy": "the five-class view has no separate abstention class: a null final label is carried as its own prediction and counts as an error for the row, so it is never removed from a denominator and never counted as a correct rejection"
+      }
+    }
+  },
+  "target_field_diagnostic": {
+    "A_v3_internal_0_4": {
+      "per_type": {
+        "prohibited_action_present": {
+          "rule_field": "action",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 10,
+          "variant_false": 0,
+          "variant_undecidable": 0,
+          "variant_not_applicable": 0,
+          "control_true": 6,
+          "control_false": 4,
+          "control_undecidable": 0,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 6,
+          "true_negative_from_target_controls": 4,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "required_condition_not_enforced": {
+          "rule_field": "condition",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 5,
+          "variant_false": 0,
+          "variant_undecidable": 5,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 10,
+          "control_undecidable": 0,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 10,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "constraint_violated": {
+          "rule_field": "constraint",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 9,
+          "variant_false": 1,
+          "variant_undecidable": 0,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 10,
+          "control_undecidable": 0,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 1,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 10,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "exception_not_handled": {
+          "rule_field": "exception",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 5,
+          "variant_false": 1,
+          "variant_undecidable": 4,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 6,
+          "control_undecidable": 4,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 1,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 6,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        }
+      },
+      "paired": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "both_sides_ok": 4,
+          "definition": "variant target check true AND control target check false"
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "both_sides_ok": 5,
+          "definition": "variant target check true AND control target check false"
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "both_sides_ok": 9,
+          "definition": "variant target check true AND control target check false"
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "both_sides_ok": 5,
+          "definition": "variant target check true AND control target check false"
+        }
+      },
+      "not_applicable": {
+        "prohibited_action_present": {
+          "variant": 0,
+          "control": 0
+        },
+        "required_condition_not_enforced": {
+          "variant": 0,
+          "control": 0
+        },
+        "constraint_violated": {
+          "variant": 0,
+          "control": 0
+        },
+        "exception_not_handled": {
+          "variant": 0,
+          "control": 0
+        }
+      },
+      "applicability_across_all_40_rows": {
+        "prohibited_action_present": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "undecidable": 3,
+            "true": 1
+          }
+        },
+        "required_condition_not_enforced": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "true": 3,
+            "undecidable": 1
+          }
+        },
+        "constraint_violated": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "true": 1,
+            "undecidable": 3
+          }
+        },
+        "exception_not_handled": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "undecidable": 3,
+            "true": 1
+          }
+        }
+      }
+    },
+    "B_original_path_normalized": {
+      "per_type": {
+        "prohibited_action_present": {
+          "rule_field": "action",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 10,
+          "variant_false": 0,
+          "variant_undecidable": 0,
+          "variant_not_applicable": 0,
+          "control_true": 3,
+          "control_false": 7,
+          "control_undecidable": 0,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 3,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "required_condition_not_enforced": {
+          "rule_field": "condition",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 3,
+          "variant_false": 0,
+          "variant_undecidable": 7,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 7,
+          "control_undecidable": 3,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "constraint_violated": {
+          "rule_field": "constraint",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 7,
+          "variant_false": 0,
+          "variant_undecidable": 3,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 7,
+          "control_undecidable": 3,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "exception_not_handled": {
+          "rule_field": "exception",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 3,
+          "variant_false": 1,
+          "variant_undecidable": 6,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 7,
+          "control_undecidable": 3,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 1,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        }
+      },
+      "paired": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "both_sides_ok": 7,
+          "definition": "variant target check true AND control target check false"
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "both_sides_ok": 3,
+          "definition": "variant target check true AND control target check false"
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "both_sides_ok": 7,
+          "definition": "variant target check true AND control target check false"
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "both_sides_ok": 3,
+          "definition": "variant target check true AND control target check false"
+        }
+      },
+      "not_applicable": {
+        "prohibited_action_present": {
+          "variant": 0,
+          "control": 0
+        },
+        "required_condition_not_enforced": {
+          "variant": 0,
+          "control": 0
+        },
+        "constraint_violated": {
+          "variant": 0,
+          "control": 0
+        },
+        "exception_not_handled": {
+          "variant": 0,
+          "control": 0
+        }
+      },
+      "applicability_across_all_40_rows": {
+        "prohibited_action_present": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "undecidable": 3,
+            "true": 1
+          }
+        },
+        "required_condition_not_enforced": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "true": 3,
+            "undecidable": 1
+          }
+        },
+        "constraint_violated": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "true": 1,
+            "undecidable": 3
+          }
+        },
+        "exception_not_handled": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "undecidable": 3,
+            "true": 1
+          }
+        }
+      }
+    },
+    "C_v3_no_forced_resolution": {
+      "per_type": {
+        "prohibited_action_present": {
+          "rule_field": "action",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 10,
+          "variant_false": 0,
+          "variant_undecidable": 0,
+          "variant_not_applicable": 0,
+          "control_true": 3,
+          "control_false": 7,
+          "control_undecidable": 0,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 3,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "required_condition_not_enforced": {
+          "rule_field": "condition",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 1,
+          "variant_false": 0,
+          "variant_undecidable": 9,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 7,
+          "control_undecidable": 3,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "constraint_violated": {
+          "rule_field": "constraint",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 7,
+          "variant_false": 0,
+          "variant_undecidable": 3,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 7,
+          "control_undecidable": 3,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "exception_not_handled": {
+          "rule_field": "exception",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 3,
+          "variant_false": 1,
+          "variant_undecidable": 6,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 6,
+          "control_undecidable": 4,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 1,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 6,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        }
+      },
+      "paired": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "both_sides_ok": 7,
+          "definition": "variant target check true AND control target check false"
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "both_sides_ok": 1,
+          "definition": "variant target check true AND control target check false"
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "both_sides_ok": 7,
+          "definition": "variant target check true AND control target check false"
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "both_sides_ok": 3,
+          "definition": "variant target check true AND control target check false"
+        }
+      },
+      "not_applicable": {
+        "prohibited_action_present": {
+          "variant": 0,
+          "control": 0
+        },
+        "required_condition_not_enforced": {
+          "variant": 0,
+          "control": 0
+        },
+        "constraint_violated": {
+          "variant": 0,
+          "control": 0
+        },
+        "exception_not_handled": {
+          "variant": 0,
+          "control": 0
+        }
+      },
+      "applicability_across_all_40_rows": {
+        "prohibited_action_present": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "undecidable": 3,
+            "true": 1
+          }
+        },
+        "required_condition_not_enforced": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "true": 2,
+            "undecidable": 2
+          }
+        },
+        "constraint_violated": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "true": 1,
+            "undecidable": 3
+          }
+        },
+        "exception_not_handled": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "undecidable": 3,
+            "true": 1
+          }
+        }
+      }
+    },
+    "H_scoped_evidence_and_verdicts": {
+      "per_type": {
+        "prohibited_action_present": {
+          "rule_field": "action",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 10,
+          "variant_false": 0,
+          "variant_undecidable": 0,
+          "variant_not_applicable": 0,
+          "control_true": 3,
+          "control_false": 7,
+          "control_undecidable": 0,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 3,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "required_condition_not_enforced": {
+          "rule_field": "condition",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 5,
+          "variant_false": 0,
+          "variant_undecidable": 5,
+          "variant_not_applicable": 0,
+          "control_true": 5,
+          "control_false": 1,
+          "control_undecidable": 4,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 5,
+          "true_negative_from_target_controls": 1,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "constraint_violated": {
+          "rule_field": "constraint",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 0,
+          "variant_false": 0,
+          "variant_undecidable": 10,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 0,
+          "control_undecidable": 10,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 0,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "exception_not_handled": {
+          "rule_field": "exception",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 0,
+          "variant_false": 0,
+          "variant_undecidable": 10,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 0,
+          "control_undecidable": 10,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 0,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        }
+      },
+      "paired": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "both_sides_ok": 7,
+          "definition": "variant target check true AND control target check false"
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "both_sides_ok": 0,
+          "definition": "variant target check true AND control target check false"
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "both_sides_ok": 0,
+          "definition": "variant target check true AND control target check false"
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "both_sides_ok": 0,
+          "definition": "variant target check true AND control target check false"
+        }
+      },
+      "not_applicable": {
+        "prohibited_action_present": {
+          "variant": 0,
+          "control": 0
+        },
+        "required_condition_not_enforced": {
+          "variant": 0,
+          "control": 0
+        },
+        "constraint_violated": {
+          "variant": 0,
+          "control": 0
+        },
+        "exception_not_handled": {
+          "variant": 0,
+          "control": 0
+        }
+      },
+      "applicability_across_all_40_rows": {
+        "prohibited_action_present": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "undecidable": 3,
+            "true": 1
+          }
+        },
+        "required_condition_not_enforced": {
+          "variant_not_applicable": 7,
+          "control_not_applicable": 7,
+          "variant_outcome_by_target_type": {
+            "true": 2,
+            "undecidable": 2
+          }
+        },
+        "constraint_violated": {
+          "variant_not_applicable": 20,
+          "control_not_applicable": 20,
+          "variant_outcome_by_target_type": {
+            "undecidable": 1,
+            "not_applicable": 3
+          }
+        },
+        "exception_not_handled": {
+          "variant_not_applicable": 24,
+          "control_not_applicable": 24,
+          "variant_outcome_by_target_type": {
+            "not_applicable": 2,
+            "undecidable": 2
+          }
+        }
+      }
+    },
+    "W_action_resolution_wiring": {
+      "per_type": {
+        "prohibited_action_present": {
+          "rule_field": "action",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 10,
+          "variant_false": 0,
+          "variant_undecidable": 0,
+          "variant_not_applicable": 0,
+          "control_true": 3,
+          "control_false": 7,
+          "control_undecidable": 0,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 3,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "required_condition_not_enforced": {
+          "rule_field": "condition",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 3,
+          "variant_false": 0,
+          "variant_undecidable": 7,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 7,
+          "control_undecidable": 3,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "constraint_violated": {
+          "rule_field": "constraint",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 7,
+          "variant_false": 0,
+          "variant_undecidable": 3,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 7,
+          "control_undecidable": 3,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 0,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 7,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        },
+        "exception_not_handled": {
+          "rule_field": "exception",
+          "target_variants": 10,
+          "target_controls": 10,
+          "variant_true": 3,
+          "variant_false": 1,
+          "variant_undecidable": 6,
+          "variant_not_applicable": 0,
+          "control_true": 0,
+          "control_false": 6,
+          "control_undecidable": 4,
+          "control_not_applicable": 0,
+          "positive_missed_on_variant": 1,
+          "control_alarm": 0,
+          "true_negative_from_target_controls": 6,
+          "no_prf1_reason": "no precision/recall/F1 is reported per target type: the only labelled positives are that type's 10 variants, undecidable cases are neither positives nor negatives, and another type's variants are not human-confirmed negatives for this check"
+        }
+      },
+      "paired": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "both_sides_ok": 7,
+          "definition": "variant target check true AND control target check false"
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "both_sides_ok": 3,
+          "definition": "variant target check true AND control target check false"
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "both_sides_ok": 7,
+          "definition": "variant target check true AND control target check false"
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "both_sides_ok": 3,
+          "definition": "variant target check true AND control target check false"
+        }
+      },
+      "not_applicable": {
+        "prohibited_action_present": {
+          "variant": 0,
+          "control": 0
+        },
+        "required_condition_not_enforced": {
+          "variant": 0,
+          "control": 0
+        },
+        "constraint_violated": {
+          "variant": 0,
+          "control": 0
+        },
+        "exception_not_handled": {
+          "variant": 0,
+          "control": 0
+        }
+      },
+      "applicability_across_all_40_rows": {
+        "prohibited_action_present": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "undecidable": 3,
+            "true": 1
+          }
+        },
+        "required_condition_not_enforced": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "true": 3,
+            "undecidable": 1
+          }
+        },
+        "constraint_violated": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "true": 1,
+            "undecidable": 3
+          }
+        },
+        "exception_not_handled": {
+          "variant_not_applicable": 0,
+          "control_not_applicable": 0,
+          "variant_outcome_by_target_type": {
+            "undecidable": 3,
+            "true": 1
+          }
+        }
+      }
+    }
+  },
+  "counts": {
+    "instances": 400,
+    "arms": [
+      "A_v3_internal_0_4",
+      "B_original_path_normalized",
+      "C_v3_no_forced_resolution",
+      "H_scoped_evidence_and_verdicts",
+      "W_action_resolution_wiring"
+    ],
+    "rows_per_arm": {
+      "W_action_resolution_wiring": 80,
+      "H_scoped_evidence_and_verdicts": 80,
+      "A_v3_internal_0_4": 80,
+      "B_original_path_normalized": 80,
+      "C_v3_no_forced_resolution": 80
+    },
+    "total_row_objects_retained": 400,
+    "unknown_removed_from_any_denominator": 0
+  }
+}
