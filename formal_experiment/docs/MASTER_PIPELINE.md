@@ -11,7 +11,75 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
+## 2026-09-11 修订 3.6.51：S3 扩展实验的限定返修——执行错误纠正与三臂对照（S3-EXTENDED-REPAIR-V2，零 API）
+
+**3.6.50 的四条结论被本批撤回**，原因是那批的"v3+0.4 诊断臂"从未真正把 0.4 传给 v3：脚本从 Sun 配置读
+`gamma=0.8` 构造 `EvidenceChecksV3`，`ACTION_GAMMA=0.4` 只到了外层适配器；产物自身就同时记录
+`action_mapping_gamma=0.4` 与 `v3_thresholds.gamma=0.8`。因此"门槛在 v3 路径中不起作用""门槛解释零个失败"
+"30 个失败都由结构拒绝造成""误报挤掉两个正确样本""非 None 即检出违规""修复版无指标超过原路径"
+以及未经对照证明的"结构匹配贡献"全部撤回或改写（逐条替代见产物 `diagnostics.json.previous_claims`）。
+
+本批只读复用旧 Winter / Sun / 旧 v3 / 上一轮修复版，新增**一个后继模块、一个统一脚本、一个测试文件、
+一个新输出目录**，三个臂各跑一次 80 实例（零 API，无阈值搜索，无按样本选路，无新词表）：
+
+| 臂 | 匹配路径 | v3 内部 gamma | 标签回退 gamma | gamma_ext |
+|---|---|---|---|---|
+| A | v3 结构匹配（**真实**传 0.4） | 0.4 | 0.4 | 0.5 |
+| B | 冻结原始标签 argmax，关闭 v3，双侧空白折叠 | — | 0.4 | 0.5 |
+| C | v3 匹配 + 无强制解析 + 比较门（**双层配置**） | 0.8 | 0.4 | 0.5 |
+
+- **推断前断言**：脚本在打分前断言"声明 gamma == 实例 `EvidenceChecksV3.gamma`"，并断言 tau/theta 仍为
+  冻结 0.8；错配立即失败。`plan.json` 在任何打分之前写盘并记录实现哈希，逐行 `thresholds` 记录
+  `v3_internal_gamma` / `label_fallback_gamma` / `gamma_ext` / `configuration_levels`。
+- **真正修好的执行错误**：①门限传递（A 臂 0.4 真的进入 v3 实例）；②空白不对称——上一轮只折叠规则动作、
+  不折叠活动标签，而冻结 GDPR-7 里存在尾部换行的标签（`'Communicate the rectification\n'`），实测
+  `constraint_violated_03` 0.282807→0.483290、`required_condition_10` 0.266066→0.466753，0.4 落在两者之间，
+  所以那 2 个"新增命中"其实由换行决定；③解析歧义——v3 返回 `undetermined` 时不再用 argmax 硬选活动，
+  标签回退在最高分并列于不同节点时也不选，需要唯一活动的检查一律保持不可判断；④新增**比较门**：只有当
+  condition/constraint/exception 至少有一项真正做过比较时，聚合答案才允许是"明确合规"，否则一律弃权
+  （禁止动作存在性检查单独说明：它只回答"该动作是否出现在流程里"，不承载合规结论）。
+- **三个因果问题的实测答案**（完整差异清单在 `diagnostics.json.differences_vs_reference_cells`）：
+  1. **把 v3 内部阈值真正改成 0.4**：40 行中 **32 行决策改变**、**25 行最终预测改变**、21 行"金标类型"
+     由不可判断变为可判断，31 行对照侧分数改变。A 臂变体 **22 正确 / 13 错类 / 4 明确合规 / 1 unknown**，
+     Macro-F1 **0.5690**（旧 v3 0.2273、原路径+0.4 0.4738）；对照误报 **24**（旧 v3 8、原路径+0.4 20），
+     即分数提升伴随更多对照误报，两者都如实报告。
+  2. **只加空白规范化、不用 v3**：B 臂与冻结 Winter 臂 **35/40 行决策完全相同**，5 行不同，其中仅 **2 行
+     预测翻转**，恰为 `required_condition_10` 与 `constraint_violated_03`（Winter 均弃权 → B 正确）；另外
+     3 行只有分数/对照侧变化。**结论：这 2 个新增命中完全由空白规范化解释，与结构匹配无关**；同时该规范化
+     也改变了 3 个对照侧分数（B 对照误报 20 = Winter 20）。
+  3. **歧义修复改变了什么**：本面板 **0 行**触发并列或 `undetermined`，因此"禁止强制解析/禁止任选并列"
+     这条规则在本面板没有生效，**尚不能分离**它对结果的影响；C 臂相对上一轮修复版的 12 行差异实际来自
+     "双侧折叠 + 比较门"。改动方向：2 行由错误类型改为正确类型（`required_condition_05`、
+     `constraint_violated_05`）、2 行由错误类型改为弃权（`required_condition_10`、`exception_not_handled_05`）、
+     2 行由"上一轮误报的明确合规"改为弃权（`exception_not_handled_02/03`）；对照误报 20→**14**、成对正确
+     11→**13**，但变体正确 19→**18**（净退步 1）。**比较门是把"未比较就宣布合规"的错误答案改掉，不是
+     为了提高分数**。
+- **同口径最终表**（互斥计数守恒；"目标类型不可观测"单独统计，不混入四分类）：
+
+  | 臂 | A 正确 | A 错类 | A 明确合规 | A unknown | 和 | 目标类型不可观测 | A Macro-F1 | B 误报 | B 明确合规 | B unknown | C 成对 | D 五分类 acc / Macro-F1 |
+  |---|---|---|---|---|---|---|---|---|---|---|---|---|
+  | A（v3 真 0.4） | **22** | 13 | 4 | 1 | 40 | 9 | **0.5690** | 24 | 11 | 5 | 11 | 0.4750 / 0.4578 |
+  | B（原路径+折叠） | 19 | 9 | 2 | 10 | 40 | 16 | 0.5233 | 20 | 7 | 13 | 11 | 0.4125 / 0.4316 |
+  | C（后继+比较门） | 18 | 8 | 0 | 14 | 40 | 18 | 0.4896 | **14** | 11 | 15 | **13** | 0.4625 / 0.4504 |
+
+  对照 A/B 两臂沿用了上一轮的脆弱聚合规则（只要某类型可观测且无违规就答"明确合规"）：若按上一轮口径，
+  它们会把 5 / 7 个弃权冒充成"明确合规"；C 臂的比较门把这类答案改为弃权。
+- **边界**：development-only 受控面板；旧预测 / metrics / manifest 及其绑定实现逐字节保留，未重绑旧 manifest；
+  旧"v3+0.4"批次在新记录中标记为 **"外层记录 0.4、实际 v3 仍 0.8，不能支持阈值因果结论"**；四类仍是项目
+  自定义扩展，不得改称"我们的方法"或声称 Winter/Sun 原生能力。
+- 产物：`outputs/development/s3_extended_repair_v2_v1/{plan.json,predictions.jsonl,metrics.json,diagnostics.json,manifest.json}`；
+  复核入口 `python formal_experiment/scripts/run_s3_extended_repair_v2_v1.py --check`；测试
+  `tests/test_s3_extended_repair_v2_v1.py`（25 项，含三项不来自面板的行为验证）。
+
 ## 2026-09-11 修订 3.6.50：四类扩展"Winter 为何高于 v3"的同条件归因与修复（S3-EXTENDED-GAP，零 API）
+
+> **2026-09-11 修订 3.6.51 撤回声明**：本修订的 `v3+0.4` 诊断臂从未把 0.4 传给 `EvidenceChecksV3`
+> （脚本从 Sun 配置读 0.8），因此本节下列结论作废，只保留为历史记录：
+> "关键结论 1（门槛不是原因）"、"v3+0.4 与 v3+0.8 逐条预测完全相同"、"门槛差异解释 0 个失败"、
+> "同样是 0.4 时结构匹配在伤害定位"中关于 0.4 的部分、"30 个失败都由结构拒绝造成"、
+> "误报挤掉两个正确样本"、"修复臂在 Winter 正确的全部 17 个实例上仍然正确"中关于 A2 的因果表述、
+> "修复臂没有任何指标超过原路径"。D1/D2/D3 三个缺陷的**代码与逐项产物证据**仍然成立，但 D1 的判别样例
+> 需要更换（1.0000 与 0.5040 都高于 0.5，不能证明跨越门槛）；替代证据见 3.6.51。
 
 3.6.49 把 v3 接进四类面板后只交付了"新臂分数更低 + 瓶颈在动作定位"的结论。本轮按要求先做**同条件分离**，
 再针对**已证实**的缺陷修改并复评。复用旧臂，不重跑 Winter/Sun/BM25/TF-IDF。
@@ -1075,7 +1143,8 @@ B0/H1/D1 的预测 Rule Records，评价误差传播。两种结果必须分表�
 | S3.9 | 复杂 BPMN 与多违规扩展（synthetic controlled-error extension） | G0.5/S3.7/现有方法运行 | **development panel verified（2026-08-22，零 API）**：在冻结 GDPR-7 上锁定 30 个 `synthetic_controlled_error_extension` 变体（missing_action 10 / incorrect_actor 10 / out_of_order 10；每变体原始 BPMN byte-unchanged、exactly-one-error、结构校验全过、replay byte-identical；规则绑定来自冻结 inference pack）→ 用同一 evaluator 在 30 条 panel 上运行 Winter / Sun / BM25 / TF-IDF（DEV_ONLY：Winter macro 0.333/exact 0.333；Sun macro 0.333/exact 0.200/unobs 8；BM25 macro 0.333/exact 0.333/unobs 10；TF-IDF macro 0.635/exact 0.533/unobs 6；最高 TF-IDF）。**这是受控实验 panel，不得并入 33 条人工 Gold，不得冒充 Oracle。** | 复杂度和标签在结果前冻结；synthetic panel 与人工 Gold 分开报告 |
 | S3.9-EXT | Stage 3 新违规类别扩展（development-only synthetic controlled extension v2，零 API） | S3.9 现有四后端 | **development panel verified（2026-08-31）**：新增 4 类违规 × 10 = 40 变体（prohibited_action_present / required_condition_not_enforced / constraint_violated / exception_not_handled）。**选择动机已锁定**：原三类只覆盖 action presence / actor / order；四类分别补足 prohibition modality、condition、constraint、exception 的 Stage 3 下游消费者，并满足语义不重复、exactly-one-error 可控变异、BPMN 表面可观察三项原则；这是最小字段覆盖扩展，不是穷尽性法律违规分类。每变体含 synthetic compliant control + 单一目标错误 variant（源 BPMN byte-unchanged、exactly-one-error、replay byte-identical、规则绑定+六要素字段锁定自冻结 inference pack）；四方法共享同一套新类型公式，仅替换各自已有相似度后端（Winter-style extension gamma 0.4 / Sun-style extension gamma 0.8 / BM25 extension gamma 0.8 / TF-IDF-SVD extension gamma 0.5；gamma_ext=0.5 统一冻结）；同一 evaluator 输出（DEV_ONLY：Winter macro 0.655/exact 0.550/unobs 17；Sun 0.333/0.300/unobs 28；BM25 0.226/0.150/unobs 28；TF-IDF 0.379/0.325/unobs 27）。**Winter/Sun 原论文未定义这四类，报告一律写 `Winter-style extension` / `Sun-style extension`，不得声称原生能力；synthetic panel 不得并入 33 条人工 Gold，不得冒充 Oracle。** | 40 变体面板+对照+四方法 panel 与对比报告；17 项 focused tests；零 API 审计 |
 | S3.9-EXT-REPORT | Stage 3 收尾：paired control-plus-variant 评价与报告修正（零 API，零重跑） | S3.9-EXT | **reporting closed（2026-08-31）**：仅从持久化四方法 predictions 离线新增 80 对象配对评价（40 control Gold=none + 40 variant；control 预测由持久化 control_scores 按原阈值 gamma_ext=0.5 与固定 EXTENDED_TYPES 优先级重建，未改阈值/顺序/样本）；paired 口径（DEV_ONLY）：Winter 5-class acc 0.425 / variant exact 0.550 / control FP rate 0.500 / paired acc 0.225；Sun 0.263 / 0.300 / 0.125 / 0.175；BM25 0.250 / 0.150 / 0.000 / 0.100；TF-IDF 0.338 / 0.325 / 0.275 / 0.300。七类 overview 改为仅 7 个 per-class F1（无联合 Macro-F1/Exact/Unobservable，注明 v1/v2 双 panel 差异）；结论收紧：prohibited=可行性支持、constraint=部分支持、condition/exception=主要揭示可观察性与映射瓶颈，不写“全部四类都证明下游价值”；报告生成器 --report-only 确定性重放；原三类 Gold/schema/预测、40 变体、四方法原始产物字节不变 | 配对评价+报告修正+39 项 focused tests；零 API 审计 |
-| S3.9-EXT-GAP | 四类扩展 Winter-vs-v3 同条件归因与修复（零 API） | S3.9-EXT-REPORT / S3-EXTENDED-V3 | **completed（2026-09-11）**：新增 `orig+0.4` 重推格（与冻结 Winter 臂逐决策字段相同）与 **`v3+0.4` 诊断臂**（v3 匹配路径 + 迁移 Winter 冻结 0.4，预指定非搜索），证明**门槛在 v3 路径中不起作用**（0.4 与 0.8 臂逐条预测相同）；同 gamma 0.4 下标签 argmax 映射 27/40、v3 只映射 10/40。逐项产物证实三个缺陷：D1 prohibited 用词元化分数接 0.5 原始尺度门槛、D2 定位结论与禁止动作结论不一致（未定位仍回退候选最高分）、D3 验证判定被当作证据检查的硬定位门。修复臂 `s3_extended_v3_repair@1.0.0` 只替换动作解析入口（唯一解析 + 公式本尺度 + contradiction 同门）：A 19/40、Macro-F1 0.5233、B 误报 20/40、C 成对 11/40，**在 Winter 正确的 17 个实例上全部保持正确并新增 2 例**，代价是误报由旧 v3 的 8 升到与 Winter 相同的 20（冻结公式属性，如实报告）；旧 v3 0.8 产物与冻结臂逐字节保留 | 三个臂 manifest + `outputs/evidence/s3_extended_gap_v1/` 对比表与差异清单 + 24 项新 focused tests；零 API 审计 |
+| S3.9-EXT-GAP | 四类扩展 Winter-vs-v3 同条件归因与修复（零 API） | S3.9-EXT-REPORT / S3-EXTENDED-V3 | **superseded by S3.9-EXT-REPAIR-V2（2026-09-11）**：结论作废，原因是其 `v3+0.4` 诊断臂没有真正改变 v3 内部阈值（外层记录 0.4、实际 v3 仍 0.8），不能支持阈值因果结论；实现与产物保留为历史记录，D1/D2/D3 的代码证据仍有效 | —— |
+| S3.9-EXT-REPAIR-V2 | S3 扩展实验限定返修：真实 v3 阈值臂、空白规范化隔离臂、去强制解析/比较门后继臂（零 API） | S3.9-EXT-GAP | **completed（2026-09-11）**：三臂各跑一次 80 实例。A（v3 内部真 0.4）32/40 行决策改变、25 行预测改变、A 22 正确 / Macro-F1 0.5690 / 对照误报 24；B（关闭 v3 只加空白折叠）与冻结 Winter 臂 35/40 决策相同、仅 2 行预测翻转且恰为此前归因于结构匹配的 2 例；C（v3 0.8+回退 0.4+无强制解析+比较门）对照误报 20→14、成对 11→13、变体正确 19→18。本面板 0 行触发并列或 undetermined，"歧义修复"影响无法分离；比较门纠正的是"未比较就宣布合规"，不是提高分数 | `outputs/development/s3_extended_repair_v2_v1/`（plan/predictions/metrics/diagnostics/manifest）+ 25 项 focused tests；零 API |
 | S3.10 | end-to-end 误差传播 | S2.13/S3.7 | blocked | B0/H1/D1 进入同一 Stage 3 |
 | S3.11 | Stage 3 冻结 | S3.1-S3.10 | blocked | 数据、方法、Gold、指标、manifest 完整 |
 

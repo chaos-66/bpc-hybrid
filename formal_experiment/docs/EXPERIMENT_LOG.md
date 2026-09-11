@@ -4431,3 +4431,26 @@
 - 仍存在 blocker：无
 - 备注：human Gold 未读取未修改。需要精确披露的是：outputs/evidence/s3_extended_gap_v1/difference_lists.json 由 build_s3_extended_gap_evidence_v1.py 生成，它读取冻结面板的 expected_violation 仅用于'选出要报告哪些行'（A/B/C/D 清单），不进入任何臂的推断；三个臂的预测均在读标签之前写盘，oracle/localization/分数/最终决策不使用期望类型、变异说明或目标节点 ID（tests/test_s3_extended_gap_v1.py 的 test_repair_reads_no_label_field 与清单内 mutation_metadata_read=false 字段共同固定该边界）。另外披露：冻结面板的 40 个对照与 40 个变体同属 synthetic controlled 数据，不是人工 Gold，也不是正式 Oracle。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-11T06:06:22.860760+00:00 - S3 扩展实验限定返修：真实 v3 内部阈值臂、空白规范化隔离臂、无强制解析+比较门后继臂（S3-EXTENDED-REPAIR-V2，零 API）
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s3_extended_repair_v2_v1；阶段=S3；方法=A_v3_internal_0_4 / B_original_path_normalized / C_v3_no_forced_resolution；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_s3_extended_repair_v2_v1.py`
+- manifest：outputs/development/s3_extended_repair_v2_v1/manifest.json
+- 结果摘要：三臂各一次 80 实例：A(v3内部真0.4) 22正确 macroF1 0.5690 对照误报24；B(原路径+空白折叠) 与冻结Winter 35/40决策相同、仅2行预测翻转且即此前归因于结构匹配的2例；C(0.8+回退0.4+比较门) 18正确 macroF1 0.4896 对照误报14 成对13
+- 技术小结（闸门证据，补充记录）：
+  - 撤回声明：上一批 `s3_extended_gap_v1` 的 "v3+0.4" 臂没有真正改变 v3 阈值（脚本从 Sun 配置读 gamma=0.8 构造 `EvidenceChecksV3`，`ACTION_GAMMA=0.4` 只到外层适配器；产物自身记录 `action_mapping_gamma=0.4` + `v3_thresholds.gamma=0.8`）。据此撤回："门槛无影响"、"门槛解释零个失败"、"30 个失败都由结构拒绝造成"、"误报挤掉两个正确样本"、"非 None 即检出违规"、"修复版无指标超过原路径"、未经对照证明的"结构匹配贡献"、以及目标类型不可观测与最终 unknown 的混用。旧产物与绑定实现逐字节保留，未重绑旧 manifest。
+  - 三个预指定臂（`plan.json` 在打分前写盘并存实现哈希；推断前断言"声明 gamma == 实例 `EvidenceChecksV3.gamma`"且 tau/theta=0.8，错配即失败）：A = v3 结构匹配且**真实**传 0.4；B = 冻结原始标签 argmax（关闭 v3）+ 双侧空白折叠；C = v3 0.8 + 标签回退 0.4 + 无强制解析 + 比较门（**双层配置**，不称统一 0.4）。
+  - 因果结论：①真正改 v3 内部阈值为 0.4 → 32/40 行决策改变、25 行预测改变、21 行金标类型由不可判断变可判断；A 臂变体 22 正确 / 13 错类 / 4 明确合规 / 1 unknown，Macro-F1 0.5690，对照误报 24（分数与误报同时上升）。②只加空白规范化、关闭 v3 → 与冻结 Winter 臂 35/40 决策相同，仅 2 行预测翻转，恰为 `required_condition_10` 与 `constraint_violated_03`：**该 2 例由空白处理解释，与结构匹配无关**（尾部换行使原始标签相似度 0.282807 / 0.266066，折叠后 0.483290 / 0.466753，0.4 落在两者之间）。③歧义修复 → 本面板 0 行触发并列或 `undetermined`，**该规则未生效，影响尚不能分离**；C 臂相对上一轮修复版的 12 行差异来自"双侧折叠 + 比较门"，2 行改对、2 行改弃权、2 行由"误报的明确合规"改为弃权；对照误报 20→14、成对 11→13，但变体正确 19→18（净退步 1）。
+  - 结论边界：比较门纠正的是"未比较就宣布合规"，不是提分手段；不对 A 臂相对 Winter 做单因素归因（匹配路径与阈值同时不同）；未搜索任何新阈值、未按样本选路、未新增词表、未改 Gold/面板/冻结公式。
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：25 passed in 5.76s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`1fa8da5fbdc4eb2aa9cd4877e64b8fb23af70921`；相关未提交路径：13 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
