@@ -1,0 +1,43 @@
+{
+  "schema_version": "s3_extended_gap_manifest@1.0.0",
+  "run_id": "s3_extended_gap_v1",
+  "scope": "development_only; zero API; read-only over stored predictions",
+  "command": "python scripts\\build_s3_extended_gap_evidence_v1.py",
+  "inputs": {
+    "outputs/evidence/s3_formula_repair_v2/extended_four/reference/winter/predictions.jsonl": "18fa61ae9dda8c104f59360a91ef9979e7c793c9d3c1a339e069c3302e0780d7",
+    "outputs/evidence/s3_formula_repair_v2/extended_four/reference/sun/predictions.jsonl": "08095d984a8605039888e5ba487149212e023c90f5ba5ab9a1090e79f0dd7ed8",
+    "outputs/development/s3_extended_baseline_04_v1/predictions.jsonl": "44affe2d0e5c041e57c5b4f3dd621690bddb3b188c806be8c8198adda1b4883f",
+    "outputs/development/s3_extended_v3_v1/predictions.jsonl": "4a3056aed1331f78c972402b5bf273546b71dbfa29d4306becbfe9cd44df5002",
+    "outputs/development/s3_extended_v3_gamma04_v1/predictions.jsonl": "fea10b84fcc249f5deacdc1077e2acc667583d477189b694d9a4c03f17ce3a29",
+    "outputs/development/s3_extended_v3_repair_v1/predictions.jsonl": "797792ba460763187ac599e76d697ee4186dbee7c47318b690dd155ca2d59b6c"
+  },
+  "implementation": {
+    "scripts\\build_s3_extended_gap_evidence_v1.py": "cfc065e4bff641dc19b2f24d82b3b69e2f005d145d4672d73de327011fa4b5ce",
+    "src/bpc_hybrid/s3_extended_v3_repair.py": "2e0d8e3029ab845cbcdfb3755316b7a103ed23c9fd9ca08d378aac0c6f1861bf",
+    "src/bpc_hybrid/s3_extended_arm_report.py": "3f24e99d458e0c6dfe6148973d966d784599e1910c4bdb9a2245afb29c8f313e"
+  },
+  "artifacts": {
+    "difference_lists": {
+      "path": "outputs/evidence/s3_extended_gap_v1/difference_lists.json",
+      "sha256": "6b53e8cf729f9e489e05fc2f84c96372db4c3498dda6ebaf09c20b0198da2b5f"
+    },
+    "method_change_note": {
+      "path": "outputs/evidence/s3_extended_gap_v1/method_change_note.md",
+      "sha256": "82fedb9676cf9bce9e0f15eef1556f641e3b6b6ea58faa6f72aa89c818d05246"
+    },
+    "comparison_json": {
+      "path": "outputs/evidence/s3_extended_gap_v1/comparison_v1.json",
+      "sha256": "f9bc379039da924083fa952f4a984f37a7cb94c6fc9e0b67265168a314a799cf"
+    },
+    "comparison_markdown": {
+      "path": "outputs/evidence/s3_extended_gap_v1/comparison_v1.md",
+      "sha256": "294a4490ec0a458cffb003fbfa46cc3011ea409990d2a997902dc8341e9457aa"
+    }
+  },
+  "safety": {
+    "api_calls": 0,
+    "gold_modified": false,
+    "predictions_rewritten": false,
+    "panel_modified": false
+  }
+}

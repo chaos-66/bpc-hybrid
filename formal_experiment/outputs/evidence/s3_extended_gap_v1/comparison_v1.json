@@ -1,0 +1,1599 @@
+{
+  "schema_version": "s3_extended_gap_comparison@1.0.0",
+  "scope": "development_only synthetic four-type panel v2 (40 controlled variants + 40 synthetic compliant controls); NOT human Gold; NOT the formal Oracle; zero API",
+  "panel": {
+    "path": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+    "sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+    "variants": 40,
+    "controls": 40,
+    "gamma_ext": 0.5
+  },
+  "arms": {
+    "winter_frozen": {
+      "label": "Winter-style extension (frozen)",
+      "matching_path": "original label argmax on raw label text",
+      "action_gamma": 0.4,
+      "gamma_ext": 0.5,
+      "source": {
+        "path": "outputs/reports/s3_formula_repair_v2.json",
+        "sha256": "f46c4bd49a6e0ad0163af176d6c53b46d5b4d2b33f81a32a99abf49fa49ab35c",
+        "block": "extended_four_types.reference.winter",
+        "read_only": true,
+        "rerun": false
+      },
+      "predictions_sha256": "18fa61ae9dda8c104f59360a91ef9979e7c793c9d3c1a339e069c3302e0780d7",
+      "A_variant_only_40": {
+        "evaluation": {
+          "support": 40,
+          "per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "required_condition_not_enforced": {
+              "support": 10,
+              "precision": 0.2857,
+              "recall": 0.2,
+              "f1": 0.2353
+            },
+            "constraint_violated": {
+              "support": 10,
+              "precision": 0.6,
+              "recall": 0.3,
+              "f1": 0.4
+            },
+            "exception_not_handled": {
+              "support": 10,
+              "precision": 0.6667,
+              "recall": 0.2,
+              "f1": 0.3077
+            }
+          },
+          "observable_only_per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "required_condition_not_enforced": {
+              "support": 2,
+              "precision": 0.3333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "constraint_violated": {
+              "support": 6,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "exception_not_handled": {
+              "support": 4,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            }
+          },
+          "macro_f1": 0.4738,
+          "micro_f1": 0.5152,
+          "observable_only_macro_f1": 0.6965,
+          "observable_only_micro_f1": 0.7727,
+          "exact_type_accuracy": 0.425,
+          "detected": 17,
+          "missed": 23,
+          "wrong_type": 9,
+          "unobservable": 18,
+          "denominator": {
+            "total_items": 40,
+            "per_type_support": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 10,
+              "constraint_violated": 10,
+              "exception_not_handled": 10
+            },
+            "per_type_observable": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 2,
+              "constraint_violated": 6,
+              "exception_not_handled": 4
+            },
+            "per_type_unobservable": {
+              "prohibited_action_present": 0,
+              "required_condition_not_enforced": 8,
+              "constraint_violated": 4,
+              "exception_not_handled": 6
+            },
+            "unobservable_total": 18,
+            "unobservable_by_reason": {
+              "no_condition_candidates": 4,
+              "action_mapping_below_gamma": 13,
+              "no_exception_candidates": 1
+            },
+            "observability_policy": "unobservable items keep predicted=None and count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric; unobservable scores are never hard-filled with 0.0 or 1.0"
+          }
+        },
+        "partition": {
+          "correct": 17,
+          "wrong_type": 9,
+          "abstained": 18,
+          "false_compliance": null,
+          "objects": 40,
+          "identity": "correct + wrong_type + abstained == objects in the frozen evaluator's own fields; the frozen evaluator reports an explicitly compliant variant prediction inside the ``unobservable`` field, so an exact abstention/false-compliance split is not available from the frozen table and the value is reported verbatim"
+        }
+      },
+      "B_control_40": {
+        "objects": 40,
+        "explicitly_compliant": 12,
+        "false_positives": 20,
+        "abstained": 8,
+        "false_positive_rate": 0.5
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 9,
+        "paired_accuracy": 0.225
+      },
+      "D_merged_80": {
+        "denominator": 80,
+        "five_class_accuracy": 0.3625,
+        "macro_f1_four_violation_types": 0.3764,
+        "macro_f1_five_classes": 0.39,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 12,
+            "fp": 2,
+            "fn": 28,
+            "precision": 0.8571,
+            "recall": 0.3,
+            "f1": 0.4444
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 6,
+            "fn": 0,
+            "precision": 0.625,
+            "recall": 1.0,
+            "f1": 0.7692
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 2,
+            "fp": 14,
+            "fn": 8,
+            "precision": 0.125,
+            "recall": 0.2,
+            "f1": 0.1538
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 3,
+            "fp": 6,
+            "fn": 7,
+            "precision": 0.3333,
+            "recall": 0.3,
+            "f1": 0.3158
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 2,
+            "fp": 3,
+            "fn": 8,
+            "precision": 0.4,
+            "recall": 0.2,
+            "f1": 0.2667
+          }
+        }
+      },
+      "per_type_f1": {
+        "prohibited_action_present": 0.9524,
+        "required_condition_not_enforced": 0.2353,
+        "constraint_violated": 0.4,
+        "exception_not_handled": 0.3077
+      },
+      "per_type_precision_recall": {
+        "prohibited_action_present": {
+          "precision": 0.9091,
+          "recall": 1.0
+        },
+        "required_condition_not_enforced": {
+          "precision": 0.2857,
+          "recall": 0.2
+        },
+        "constraint_violated": {
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        "exception_not_handled": {
+          "precision": 0.6667,
+          "recall": 0.2
+        }
+      }
+    },
+    "sun_frozen": {
+      "label": "Sun-style extension (frozen)",
+      "matching_path": "original label argmax on raw label text",
+      "action_gamma": 0.8,
+      "gamma_ext": 0.5,
+      "source": {
+        "path": "outputs/reports/s3_formula_repair_v2.json",
+        "sha256": "f46c4bd49a6e0ad0163af176d6c53b46d5b4d2b33f81a32a99abf49fa49ab35c",
+        "block": "extended_four_types.reference.sun",
+        "read_only": true,
+        "rerun": false
+      },
+      "predictions_sha256": "08095d984a8605039888e5ba487149212e023c90f5ba5ab9a1090e79f0dd7ed8",
+      "A_variant_only_40": {
+        "evaluation": {
+          "support": 40,
+          "per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "required_condition_not_enforced": {
+              "support": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "constraint_violated": {
+              "support": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "exception_not_handled": {
+              "support": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "observable_only_per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "required_condition_not_enforced": {
+              "support": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "constraint_violated": {
+              "support": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "exception_not_handled": {
+              "support": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "macro_f1": 0.2381,
+          "micro_f1": 0.3922,
+          "observable_only_macro_f1": 0.25,
+          "observable_only_micro_f1": 1.0,
+          "exact_type_accuracy": 0.25,
+          "detected": 10,
+          "missed": 30,
+          "wrong_type": 1,
+          "unobservable": 30,
+          "denominator": {
+            "total_items": 40,
+            "per_type_support": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 10,
+              "constraint_violated": 10,
+              "exception_not_handled": 10
+            },
+            "per_type_observable": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 0,
+              "constraint_violated": 0,
+              "exception_not_handled": 0
+            },
+            "per_type_unobservable": {
+              "prohibited_action_present": 0,
+              "required_condition_not_enforced": 10,
+              "constraint_violated": 10,
+              "exception_not_handled": 10
+            },
+            "unobservable_total": 30,
+            "unobservable_by_reason": {
+              "action_mapping_below_gamma": 30
+            },
+            "observability_policy": "unobservable items keep predicted=None and count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric; unobservable scores are never hard-filled with 0.0 or 1.0"
+          }
+        },
+        "partition": {
+          "correct": 10,
+          "wrong_type": 1,
+          "abstained": 30,
+          "false_compliance": null,
+          "objects": 40,
+          "identity": "correct + wrong_type + abstained == objects in the frozen evaluator's own fields; the frozen evaluator reports an explicitly compliant variant prediction inside the ``unobservable`` field, so an exact abstention/false-compliance split is not available from the frozen table and the value is reported verbatim"
+        }
+      },
+      "B_control_40": {
+        "objects": 40,
+        "explicitly_compliant": 9,
+        "false_positives": 5,
+        "abstained": 26,
+        "false_positive_rate": 0.125
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 7,
+        "paired_accuracy": 0.175
+      },
+      "D_merged_80": {
+        "denominator": 80,
+        "five_class_accuracy": 0.2375,
+        "macro_f1_four_violation_types": 0.1923,
+        "macro_f1_five_classes": 0.2231,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 9,
+            "fp": 3,
+            "fn": 31,
+            "precision": 0.75,
+            "recall": 0.225,
+            "f1": 0.3462
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 6,
+            "fn": 0,
+            "precision": 0.625,
+            "recall": 1.0,
+            "f1": 0.7692
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "per_type_f1": {
+        "prohibited_action_present": 0.9524,
+        "required_condition_not_enforced": 0.0,
+        "constraint_violated": 0.0,
+        "exception_not_handled": 0.0
+      },
+      "per_type_precision_recall": {
+        "prohibited_action_present": {
+          "precision": 0.9091,
+          "recall": 1.0
+        },
+        "required_condition_not_enforced": {
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "constraint_violated": {
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "exception_not_handled": {
+          "precision": 0.0,
+          "recall": 0.0
+        }
+      }
+    },
+    "orig_04_rederived": {
+      "label": "original path + 0.4 (re-derived)",
+      "matching_path": "original label argmax on raw label text",
+      "action_gamma": 0.4,
+      "gamma_ext": 0.5,
+      "source": {
+        "path": "outputs/development/s3_extended_baseline_04_v1",
+        "sha256": "44affe2d0e5c041e57c5b4f3dd621690bddb3b188c806be8c8198adda1b4883f",
+        "manifest": "outputs/development/s3_extended_baseline_04_v1/manifest.json",
+        "manifest_sha256": "da5478b7ae99ecf8f1dbfaabcc8986f957a56e9a13e3601eab0b7bf38bfc1e9c",
+        "read_only": true,
+        "rerun": false
+      },
+      "predictions_sha256": "44affe2d0e5c041e57c5b4f3dd621690bddb3b188c806be8c8198adda1b4883f",
+      "A_variant_only_40": {
+        "evaluation": {
+          "support": 40,
+          "per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "required_condition_not_enforced": {
+              "support": 10,
+              "precision": 0.2857,
+              "recall": 0.2,
+              "f1": 0.2353
+            },
+            "constraint_violated": {
+              "support": 10,
+              "precision": 0.6,
+              "recall": 0.3,
+              "f1": 0.4
+            },
+            "exception_not_handled": {
+              "support": 10,
+              "precision": 0.6667,
+              "recall": 0.2,
+              "f1": 0.3077
+            }
+          },
+          "observable_only_per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "required_condition_not_enforced": {
+              "support": 2,
+              "precision": 0.3333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "constraint_violated": {
+              "support": 6,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            },
+            "exception_not_handled": {
+              "support": 4,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            }
+          },
+          "macro_f1": 0.4738,
+          "micro_f1": 0.5152,
+          "observable_only_macro_f1": 0.6965,
+          "observable_only_micro_f1": 0.7727,
+          "exact_type_accuracy": 0.425,
+          "detected": 17,
+          "missed": 23,
+          "wrong_type": 9,
+          "unobservable": 18,
+          "denominator": {
+            "total_items": 40,
+            "per_type_support": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 10,
+              "constraint_violated": 10,
+              "exception_not_handled": 10
+            },
+            "per_type_observable": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 2,
+              "constraint_violated": 6,
+              "exception_not_handled": 4
+            },
+            "per_type_unobservable": {
+              "prohibited_action_present": 0,
+              "required_condition_not_enforced": 8,
+              "constraint_violated": 4,
+              "exception_not_handled": 6
+            },
+            "unobservable_total": 18,
+            "unobservable_by_reason": {
+              "no_condition_candidates": 4,
+              "action_mapping_below_gamma": 13,
+              "no_exception_candidates": 1
+            },
+            "observability_policy": "unobservable items keep predicted=None and count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric; unobservable scores are never hard-filled with 0.0 or 1.0"
+          }
+        },
+        "partition": {
+          "correct": 17,
+          "wrong_type": 9,
+          "abstained": 12,
+          "false_compliance": 2,
+          "objects": 40,
+          "identity": "correct + wrong_type + abstained + false_compliance == objects",
+          "items": {
+            "correct": [
+              "syn_v2_prohibited_action_01",
+              "syn_v2_prohibited_action_02",
+              "syn_v2_prohibited_action_03",
+              "syn_v2_prohibited_action_04",
+              "syn_v2_prohibited_action_05",
+              "syn_v2_prohibited_action_06",
+              "syn_v2_prohibited_action_07",
+              "syn_v2_prohibited_action_08",
+              "syn_v2_prohibited_action_09",
+              "syn_v2_prohibited_action_10",
+              "syn_v2_required_condition_05",
+              "syn_v2_required_condition_08",
+              "syn_v2_constraint_violated_01",
+              "syn_v2_constraint_violated_04",
+              "syn_v2_constraint_violated_06",
+              "syn_v2_exception_not_handled_01",
+              "syn_v2_exception_not_handled_10"
+            ],
+            "wrong_type": [
+              "syn_v2_required_condition_01",
+              "syn_v2_required_condition_03",
+              "syn_v2_required_condition_04",
+              "syn_v2_constraint_violated_05",
+              "syn_v2_constraint_violated_09",
+              "syn_v2_constraint_violated_10",
+              "syn_v2_exception_not_handled_04",
+              "syn_v2_exception_not_handled_05",
+              "syn_v2_exception_not_handled_06"
+            ],
+            "abstained": [
+              "syn_v2_required_condition_02",
+              "syn_v2_required_condition_06",
+              "syn_v2_required_condition_07",
+              "syn_v2_required_condition_09",
+              "syn_v2_required_condition_10",
+              "syn_v2_constraint_violated_02",
+              "syn_v2_constraint_violated_03",
+              "syn_v2_constraint_violated_07",
+              "syn_v2_constraint_violated_08",
+              "syn_v2_exception_not_handled_07",
+              "syn_v2_exception_not_handled_08",
+              "syn_v2_exception_not_handled_09"
+            ],
+            "false_compliance": [
+              "syn_v2_exception_not_handled_02",
+              "syn_v2_exception_not_handled_03"
+            ]
+          },
+          "abstained_by_reason": {
+            "action_mapping_below_gamma": 11,
+            "no_condition_candidates": 1
+          }
+        }
+      },
+      "B_control_40": {
+        "objects": 40,
+        "explicitly_compliant": 12,
+        "false_positives": 20,
+        "false_positive_rate": 0.5,
+        "abstained": 8,
+        "identity": "explicitly_compliant + false_positives + abstained == objects",
+        "abstained_by_reason": {
+          "action_mapping_below_gamma": 8,
+          "empty_rule_condition": 1,
+          "empty_rule_constraint": 1,
+          "empty_rule_exception": 8,
+          "rule_modality_not_prohibition": 8
+        },
+        "false_positive_items": [
+          "syn_v2_constraint_violated_01",
+          "syn_v2_constraint_violated_05",
+          "syn_v2_constraint_violated_09",
+          "syn_v2_constraint_violated_10",
+          "syn_v2_exception_not_handled_04",
+          "syn_v2_exception_not_handled_05",
+          "syn_v2_exception_not_handled_06",
+          "syn_v2_exception_not_handled_07",
+          "syn_v2_exception_not_handled_08",
+          "syn_v2_exception_not_handled_09",
+          "syn_v2_exception_not_handled_10",
+          "syn_v2_prohibited_action_03",
+          "syn_v2_prohibited_action_04",
+          "syn_v2_prohibited_action_07",
+          "syn_v2_prohibited_action_10",
+          "syn_v2_required_condition_01",
+          "syn_v2_required_condition_03",
+          "syn_v2_required_condition_04",
+          "syn_v2_required_condition_05",
+          "syn_v2_required_condition_08"
+        ]
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 9,
+        "paired_accuracy": 0.225
+      },
+      "D_merged_80": {
+        "label": "merged_80_objects (40 variants + 40 controls)",
+        "classes": [
+          "none",
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "denominator": 80,
+        "five_class_accuracy": 0.3625,
+        "macro_f1_four_violation_types": 0.3764,
+        "macro_f1_five_classes": 0.39,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 12,
+            "fp": 2,
+            "fn": 28,
+            "precision": 0.8571,
+            "recall": 0.3,
+            "f1": 0.4444
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 6,
+            "fn": 0,
+            "precision": 0.625,
+            "recall": 1.0,
+            "f1": 0.7692
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 2,
+            "fp": 14,
+            "fn": 8,
+            "precision": 0.125,
+            "recall": 0.2,
+            "f1": 0.1538
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 3,
+            "fp": 6,
+            "fn": 7,
+            "precision": 0.3333,
+            "recall": 0.3,
+            "f1": 0.3158
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 2,
+            "fp": 3,
+            "fn": 8,
+            "precision": 0.4,
+            "recall": 0.2,
+            "f1": 0.2667
+          }
+        },
+        "warning": "the merged view is NOT the variant-only table A: it mixes 40 violation objects with 40 compliant objects"
+      },
+      "per_type_f1": {
+        "prohibited_action_present": 0.9524,
+        "required_condition_not_enforced": 0.2353,
+        "constraint_violated": 0.4,
+        "exception_not_handled": 0.3077
+      },
+      "per_type_precision_recall": {
+        "prohibited_action_present": {
+          "precision": 0.9091,
+          "recall": 1.0
+        },
+        "required_condition_not_enforced": {
+          "precision": 0.2857,
+          "recall": 0.2
+        },
+        "constraint_violated": {
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        "exception_not_handled": {
+          "precision": 0.6667,
+          "recall": 0.2
+        }
+      }
+    },
+    "v3_08_existing": {
+      "label": "v3 matching path + 0.8 (existing)",
+      "matching_path": "v3 structured action match",
+      "action_gamma": 0.8,
+      "gamma_ext": 0.5,
+      "source": {
+        "path": "outputs/development/s3_extended_v3_v1",
+        "sha256": "4a3056aed1331f78c972402b5bf273546b71dbfa29d4306becbfe9cd44df5002",
+        "manifest": "outputs/development/s3_extended_v3_v1/manifest.json",
+        "manifest_sha256": "0b6c6f228570e14ff1b068584cbae1a0d56058f52a2c3c07b572f4f8e996d0cb",
+        "read_only": true,
+        "rerun": false
+      },
+      "predictions_sha256": "4a3056aed1331f78c972402b5bf273546b71dbfa29d4306becbfe9cd44df5002",
+      "A_variant_only_40": {
+        "evaluation": {
+          "support": 40,
+          "per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 0.8333,
+              "recall": 1.0,
+              "f1": 0.9091
+            },
+            "required_condition_not_enforced": {
+              "support": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "constraint_violated": {
+              "support": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "exception_not_handled": {
+              "support": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "observable_only_per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "required_condition_not_enforced": {
+              "support": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "constraint_violated": {
+              "support": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "exception_not_handled": {
+              "support": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "macro_f1": 0.2273,
+          "micro_f1": 0.3846,
+          "observable_only_macro_f1": 0.25,
+          "observable_only_micro_f1": 1.0,
+          "exact_type_accuracy": 0.25,
+          "detected": 10,
+          "missed": 30,
+          "wrong_type": 2,
+          "unobservable": 30,
+          "denominator": {
+            "total_items": 40,
+            "per_type_support": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 10,
+              "constraint_violated": 10,
+              "exception_not_handled": 10
+            },
+            "per_type_observable": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 0,
+              "constraint_violated": 0,
+              "exception_not_handled": 0
+            },
+            "per_type_unobservable": {
+              "prohibited_action_present": 0,
+              "required_condition_not_enforced": 10,
+              "constraint_violated": 10,
+              "exception_not_handled": 10
+            },
+            "unobservable_total": 30,
+            "unobservable_by_reason": {
+              "requirement_evidence_not_satisfied": 4,
+              "no_candidate_above_gamma": 26
+            },
+            "observability_policy": "unobservable items keep predicted=None and count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric; unobservable scores are never hard-filled with 0.0 or 1.0"
+          }
+        },
+        "partition": {
+          "correct": 10,
+          "wrong_type": 2,
+          "abstained": 26,
+          "false_compliance": 2,
+          "objects": 40,
+          "identity": "correct + wrong_type + abstained + false_compliance == objects",
+          "items": {
+            "correct": [
+              "syn_v2_prohibited_action_01",
+              "syn_v2_prohibited_action_02",
+              "syn_v2_prohibited_action_03",
+              "syn_v2_prohibited_action_04",
+              "syn_v2_prohibited_action_05",
+              "syn_v2_prohibited_action_06",
+              "syn_v2_prohibited_action_07",
+              "syn_v2_prohibited_action_08",
+              "syn_v2_prohibited_action_09",
+              "syn_v2_prohibited_action_10"
+            ],
+            "wrong_type": [
+              "syn_v2_exception_not_handled_04",
+              "syn_v2_exception_not_handled_05"
+            ],
+            "abstained": [
+              "syn_v2_required_condition_01",
+              "syn_v2_required_condition_02",
+              "syn_v2_required_condition_03",
+              "syn_v2_required_condition_04",
+              "syn_v2_required_condition_05",
+              "syn_v2_required_condition_06",
+              "syn_v2_required_condition_07",
+              "syn_v2_required_condition_08",
+              "syn_v2_required_condition_09",
+              "syn_v2_required_condition_10",
+              "syn_v2_constraint_violated_01",
+              "syn_v2_constraint_violated_02",
+              "syn_v2_constraint_violated_03",
+              "syn_v2_constraint_violated_04",
+              "syn_v2_constraint_violated_05",
+              "syn_v2_constraint_violated_06",
+              "syn_v2_constraint_violated_07",
+              "syn_v2_constraint_violated_08",
+              "syn_v2_constraint_violated_09",
+              "syn_v2_constraint_violated_10",
+              "syn_v2_exception_not_handled_01",
+              "syn_v2_exception_not_handled_06",
+              "syn_v2_exception_not_handled_07",
+              "syn_v2_exception_not_handled_08",
+              "syn_v2_exception_not_handled_09",
+              "syn_v2_exception_not_handled_10"
+            ],
+            "false_compliance": [
+              "syn_v2_exception_not_handled_02",
+              "syn_v2_exception_not_handled_03"
+            ]
+          },
+          "abstained_by_reason": {
+            "no_candidate_above_gamma": 22,
+            "requirement_evidence_not_satisfied": 4
+          }
+        }
+      },
+      "B_control_40": {
+        "objects": 40,
+        "explicitly_compliant": 6,
+        "false_positives": 8,
+        "false_positive_rate": 0.2,
+        "abstained": 26,
+        "identity": "explicitly_compliant + false_positives + abstained == objects",
+        "abstained_by_reason": {
+          "empty_rule_condition": 1,
+          "empty_rule_constraint": 6,
+          "empty_rule_exception": 18,
+          "no_candidate_above_gamma": 22,
+          "requirement_evidence_not_satisfied": 4,
+          "rule_modality_not_prohibition": 26
+        },
+        "false_positive_items": [
+          "syn_v2_exception_not_handled_04",
+          "syn_v2_exception_not_handled_05",
+          "syn_v2_prohibited_action_03",
+          "syn_v2_prohibited_action_04",
+          "syn_v2_prohibited_action_05",
+          "syn_v2_prohibited_action_06",
+          "syn_v2_prohibited_action_07",
+          "syn_v2_prohibited_action_10"
+        ]
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 4,
+        "paired_accuracy": 0.1
+      },
+      "D_merged_80": {
+        "label": "merged_80_objects (40 variants + 40 controls)",
+        "classes": [
+          "none",
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "denominator": 80,
+        "five_class_accuracy": 0.2,
+        "macro_f1_four_violation_types": 0.1667,
+        "macro_f1_five_classes": 0.1833,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 6,
+            "fp": 2,
+            "fn": 34,
+            "precision": 0.75,
+            "recall": 0.15,
+            "f1": 0.25
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 10,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6667
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "warning": "the merged view is NOT the variant-only table A: it mixes 40 violation objects with 40 compliant objects"
+      },
+      "per_type_f1": {
+        "prohibited_action_present": 0.9091,
+        "required_condition_not_enforced": 0.0,
+        "constraint_violated": 0.0,
+        "exception_not_handled": 0.0
+      },
+      "per_type_precision_recall": {
+        "prohibited_action_present": {
+          "precision": 0.8333,
+          "recall": 1.0
+        },
+        "required_condition_not_enforced": {
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "constraint_violated": {
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "exception_not_handled": {
+          "precision": 0.0,
+          "recall": 0.0
+        }
+      }
+    },
+    "v3_04_diagnostic": {
+      "label": "v3 matching path + 0.4 (diagnostic)",
+      "matching_path": "v3 structured action match",
+      "action_gamma": 0.4,
+      "gamma_ext": 0.5,
+      "source": {
+        "path": "outputs/development/s3_extended_v3_gamma04_v1",
+        "sha256": "fea10b84fcc249f5deacdc1077e2acc667583d477189b694d9a4c03f17ce3a29",
+        "manifest": "outputs/development/s3_extended_v3_gamma04_v1/manifest.json",
+        "manifest_sha256": "52de3f218dca616c98ce534af9f2e16b38ee6d0af76a93a03dbd2bafc3ad2d6f",
+        "read_only": true,
+        "rerun": false
+      },
+      "predictions_sha256": "fea10b84fcc249f5deacdc1077e2acc667583d477189b694d9a4c03f17ce3a29",
+      "A_variant_only_40": {
+        "evaluation": {
+          "support": 40,
+          "per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 0.8333,
+              "recall": 1.0,
+              "f1": 0.9091
+            },
+            "required_condition_not_enforced": {
+              "support": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "constraint_violated": {
+              "support": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "exception_not_handled": {
+              "support": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "observable_only_per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "required_condition_not_enforced": {
+              "support": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "constraint_violated": {
+              "support": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "exception_not_handled": {
+              "support": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "macro_f1": 0.2273,
+          "micro_f1": 0.3846,
+          "observable_only_macro_f1": 0.25,
+          "observable_only_micro_f1": 1.0,
+          "exact_type_accuracy": 0.25,
+          "detected": 10,
+          "missed": 30,
+          "wrong_type": 2,
+          "unobservable": 30,
+          "denominator": {
+            "total_items": 40,
+            "per_type_support": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 10,
+              "constraint_violated": 10,
+              "exception_not_handled": 10
+            },
+            "per_type_observable": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 0,
+              "constraint_violated": 0,
+              "exception_not_handled": 0
+            },
+            "per_type_unobservable": {
+              "prohibited_action_present": 0,
+              "required_condition_not_enforced": 10,
+              "constraint_violated": 10,
+              "exception_not_handled": 10
+            },
+            "unobservable_total": 30,
+            "unobservable_by_reason": {
+              "requirement_evidence_not_satisfied": 4,
+              "no_candidate_above_gamma": 26
+            },
+            "observability_policy": "unobservable items keep predicted=None and count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric; unobservable scores are never hard-filled with 0.0 or 1.0"
+          }
+        },
+        "partition": {
+          "correct": 10,
+          "wrong_type": 2,
+          "abstained": 26,
+          "false_compliance": 2,
+          "objects": 40,
+          "identity": "correct + wrong_type + abstained + false_compliance == objects",
+          "items": {
+            "correct": [
+              "syn_v2_prohibited_action_01",
+              "syn_v2_prohibited_action_02",
+              "syn_v2_prohibited_action_03",
+              "syn_v2_prohibited_action_04",
+              "syn_v2_prohibited_action_05",
+              "syn_v2_prohibited_action_06",
+              "syn_v2_prohibited_action_07",
+              "syn_v2_prohibited_action_08",
+              "syn_v2_prohibited_action_09",
+              "syn_v2_prohibited_action_10"
+            ],
+            "wrong_type": [
+              "syn_v2_exception_not_handled_04",
+              "syn_v2_exception_not_handled_05"
+            ],
+            "abstained": [
+              "syn_v2_required_condition_01",
+              "syn_v2_required_condition_02",
+              "syn_v2_required_condition_03",
+              "syn_v2_required_condition_04",
+              "syn_v2_required_condition_05",
+              "syn_v2_required_condition_06",
+              "syn_v2_required_condition_07",
+              "syn_v2_required_condition_08",
+              "syn_v2_required_condition_09",
+              "syn_v2_required_condition_10",
+              "syn_v2_constraint_violated_01",
+              "syn_v2_constraint_violated_02",
+              "syn_v2_constraint_violated_03",
+              "syn_v2_constraint_violated_04",
+              "syn_v2_constraint_violated_05",
+              "syn_v2_constraint_violated_06",
+              "syn_v2_constraint_violated_07",
+              "syn_v2_constraint_violated_08",
+              "syn_v2_constraint_violated_09",
+              "syn_v2_constraint_violated_10",
+              "syn_v2_exception_not_handled_01",
+              "syn_v2_exception_not_handled_06",
+              "syn_v2_exception_not_handled_07",
+              "syn_v2_exception_not_handled_08",
+              "syn_v2_exception_not_handled_09",
+              "syn_v2_exception_not_handled_10"
+            ],
+            "false_compliance": [
+              "syn_v2_exception_not_handled_02",
+              "syn_v2_exception_not_handled_03"
+            ]
+          },
+          "abstained_by_reason": {
+            "no_candidate_above_gamma": 22,
+            "requirement_evidence_not_satisfied": 4
+          }
+        }
+      },
+      "B_control_40": {
+        "objects": 40,
+        "explicitly_compliant": 6,
+        "false_positives": 8,
+        "false_positive_rate": 0.2,
+        "abstained": 26,
+        "identity": "explicitly_compliant + false_positives + abstained == objects",
+        "abstained_by_reason": {
+          "empty_rule_condition": 1,
+          "empty_rule_constraint": 6,
+          "empty_rule_exception": 18,
+          "no_candidate_above_gamma": 22,
+          "requirement_evidence_not_satisfied": 4,
+          "rule_modality_not_prohibition": 26
+        },
+        "false_positive_items": [
+          "syn_v2_exception_not_handled_04",
+          "syn_v2_exception_not_handled_05",
+          "syn_v2_prohibited_action_03",
+          "syn_v2_prohibited_action_04",
+          "syn_v2_prohibited_action_05",
+          "syn_v2_prohibited_action_06",
+          "syn_v2_prohibited_action_07",
+          "syn_v2_prohibited_action_10"
+        ]
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 4,
+        "paired_accuracy": 0.1
+      },
+      "D_merged_80": {
+        "label": "merged_80_objects (40 variants + 40 controls)",
+        "classes": [
+          "none",
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "denominator": 80,
+        "five_class_accuracy": 0.2,
+        "macro_f1_four_violation_types": 0.1667,
+        "macro_f1_five_classes": 0.1833,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 6,
+            "fp": 2,
+            "fn": 34,
+            "precision": 0.75,
+            "recall": 0.15,
+            "f1": 0.25
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 10,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6667
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "warning": "the merged view is NOT the variant-only table A: it mixes 40 violation objects with 40 compliant objects"
+      },
+      "per_type_f1": {
+        "prohibited_action_present": 0.9091,
+        "required_condition_not_enforced": 0.0,
+        "constraint_violated": 0.0,
+        "exception_not_handled": 0.0
+      },
+      "per_type_precision_recall": {
+        "prohibited_action_present": {
+          "precision": 0.8333,
+          "recall": 1.0
+        },
+        "required_condition_not_enforced": {
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "constraint_violated": {
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "exception_not_handled": {
+          "precision": 0.0,
+          "recall": 0.0
+        }
+      }
+    },
+    "v3_04_repaired": {
+      "label": "v3 matching path + 0.4 repaired (final)",
+      "matching_path": "v3 match + one action resolution",
+      "action_gamma": 0.4,
+      "gamma_ext": 0.5,
+      "source": {
+        "path": "outputs/development/s3_extended_v3_repair_v1",
+        "sha256": "797792ba460763187ac599e76d697ee4186dbee7c47318b690dd155ca2d59b6c",
+        "manifest": "outputs/development/s3_extended_v3_repair_v1/manifest.json",
+        "manifest_sha256": "e612d299890eb5eb224077b25cf1e4b24a7f5c597f512b23c37e3a412d1c4e3c",
+        "read_only": true,
+        "rerun": false
+      },
+      "predictions_sha256": "797792ba460763187ac599e76d697ee4186dbee7c47318b690dd155ca2d59b6c",
+      "A_variant_only_40": {
+        "evaluation": {
+          "support": 40,
+          "per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "required_condition_not_enforced": {
+              "support": 10,
+              "precision": 0.375,
+              "recall": 0.3,
+              "f1": 0.3333
+            },
+            "constraint_violated": {
+              "support": 10,
+              "precision": 0.6667,
+              "recall": 0.4,
+              "f1": 0.5
+            },
+            "exception_not_handled": {
+              "support": 10,
+              "precision": 0.6667,
+              "recall": 0.2,
+              "f1": 0.3077
+            }
+          },
+          "observable_only_per_type": {
+            "prohibited_action_present": {
+              "support": 10,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "required_condition_not_enforced": {
+              "support": 3,
+              "precision": 0.4286,
+              "recall": 1.0,
+              "f1": 0.6
+            },
+            "constraint_violated": {
+              "support": 7,
+              "precision": 1.0,
+              "recall": 0.5714,
+              "f1": 0.7273
+            },
+            "exception_not_handled": {
+              "support": 4,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            }
+          },
+          "macro_f1": 0.5233,
+          "micro_f1": 0.5588,
+          "observable_only_macro_f1": 0.7366,
+          "observable_only_micro_f1": 0.7917,
+          "exact_type_accuracy": 0.475,
+          "detected": 19,
+          "missed": 21,
+          "wrong_type": 9,
+          "unobservable": 16,
+          "denominator": {
+            "total_items": 40,
+            "per_type_support": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 10,
+              "constraint_violated": 10,
+              "exception_not_handled": 10
+            },
+            "per_type_observable": {
+              "prohibited_action_present": 10,
+              "required_condition_not_enforced": 3,
+              "constraint_violated": 7,
+              "exception_not_handled": 4
+            },
+            "per_type_unobservable": {
+              "prohibited_action_present": 0,
+              "required_condition_not_enforced": 7,
+              "constraint_violated": 3,
+              "exception_not_handled": 6
+            },
+            "unobservable_total": 16,
+            "unobservable_by_reason": {
+              "no_condition_candidates": 4,
+              "action_not_resolvable_to_activity": 11,
+              "no_exception_candidates": 1
+            },
+            "observability_policy": "unobservable items keep predicted=None and count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric; unobservable scores are never hard-filled with 0.0 or 1.0"
+          }
+        },
+        "partition": {
+          "correct": 19,
+          "wrong_type": 9,
+          "abstained": 10,
+          "false_compliance": 2,
+          "objects": 40,
+          "identity": "correct + wrong_type + abstained + false_compliance == objects",
+          "items": {
+            "correct": [
+              "syn_v2_prohibited_action_01",
+              "syn_v2_prohibited_action_02",
+              "syn_v2_prohibited_action_03",
+              "syn_v2_prohibited_action_04",
+              "syn_v2_prohibited_action_05",
+              "syn_v2_prohibited_action_06",
+              "syn_v2_prohibited_action_07",
+              "syn_v2_prohibited_action_08",
+              "syn_v2_prohibited_action_09",
+              "syn_v2_prohibited_action_10",
+              "syn_v2_required_condition_05",
+              "syn_v2_required_condition_08",
+              "syn_v2_required_condition_10",
+              "syn_v2_constraint_violated_01",
+              "syn_v2_constraint_violated_03",
+              "syn_v2_constraint_violated_04",
+              "syn_v2_constraint_violated_06",
+              "syn_v2_exception_not_handled_01",
+              "syn_v2_exception_not_handled_10"
+            ],
+            "wrong_type": [
+              "syn_v2_required_condition_01",
+              "syn_v2_required_condition_03",
+              "syn_v2_required_condition_04",
+              "syn_v2_constraint_violated_05",
+              "syn_v2_constraint_violated_09",
+              "syn_v2_constraint_violated_10",
+              "syn_v2_exception_not_handled_04",
+              "syn_v2_exception_not_handled_05",
+              "syn_v2_exception_not_handled_06"
+            ],
+            "abstained": [
+              "syn_v2_required_condition_02",
+              "syn_v2_required_condition_06",
+              "syn_v2_required_condition_07",
+              "syn_v2_required_condition_09",
+              "syn_v2_constraint_violated_02",
+              "syn_v2_constraint_violated_07",
+              "syn_v2_constraint_violated_08",
+              "syn_v2_exception_not_handled_07",
+              "syn_v2_exception_not_handled_08",
+              "syn_v2_exception_not_handled_09"
+            ],
+            "false_compliance": [
+              "syn_v2_exception_not_handled_02",
+              "syn_v2_exception_not_handled_03"
+            ]
+          },
+          "abstained_by_reason": {
+            "action_not_resolvable_to_activity": 9,
+            "no_condition_candidates": 1
+          }
+        }
+      },
+      "B_control_40": {
+        "objects": 40,
+        "explicitly_compliant": 14,
+        "false_positives": 20,
+        "false_positive_rate": 0.5,
+        "abstained": 6,
+        "identity": "explicitly_compliant + false_positives + abstained == objects",
+        "abstained_by_reason": {
+          "action_not_resolvable_to_activity": 6,
+          "empty_rule_exception": 6,
+          "rule_modality_not_prohibition": 6
+        },
+        "false_positive_items": [
+          "syn_v2_constraint_violated_01",
+          "syn_v2_constraint_violated_05",
+          "syn_v2_constraint_violated_09",
+          "syn_v2_constraint_violated_10",
+          "syn_v2_exception_not_handled_04",
+          "syn_v2_exception_not_handled_05",
+          "syn_v2_exception_not_handled_06",
+          "syn_v2_exception_not_handled_07",
+          "syn_v2_exception_not_handled_08",
+          "syn_v2_exception_not_handled_09",
+          "syn_v2_exception_not_handled_10",
+          "syn_v2_prohibited_action_03",
+          "syn_v2_prohibited_action_04",
+          "syn_v2_prohibited_action_07",
+          "syn_v2_prohibited_action_10",
+          "syn_v2_required_condition_01",
+          "syn_v2_required_condition_03",
+          "syn_v2_required_condition_04",
+          "syn_v2_required_condition_05",
+          "syn_v2_required_condition_08"
+        ]
+      },
+      "C_paired_40": {
+        "pairs": 40,
+        "both_sides_correct": 11,
+        "paired_accuracy": 0.275
+      },
+      "D_merged_80": {
+        "label": "merged_80_objects (40 variants + 40 controls)",
+        "classes": [
+          "none",
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "denominator": 80,
+        "five_class_accuracy": 0.4125,
+        "macro_f1_four_violation_types": 0.4145,
+        "macro_f1_five_classes": 0.4316,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "tp": 14,
+            "fp": 2,
+            "fn": 26,
+            "precision": 0.875,
+            "recall": 0.35,
+            "f1": 0.5
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 6,
+            "fn": 0,
+            "precision": 0.625,
+            "recall": 1.0,
+            "f1": 0.7692
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 3,
+            "fp": 14,
+            "fn": 7,
+            "precision": 0.1765,
+            "recall": 0.3,
+            "f1": 0.2222
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 4,
+            "fp": 6,
+            "fn": 6,
+            "precision": 0.4,
+            "recall": 0.4,
+            "f1": 0.4
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 2,
+            "fp": 3,
+            "fn": 8,
+            "precision": 0.4,
+            "recall": 0.2,
+            "f1": 0.2667
+          }
+        },
+        "warning": "the merged view is NOT the variant-only table A: it mixes 40 violation objects with 40 compliant objects"
+      },
+      "per_type_f1": {
+        "prohibited_action_present": 0.9524,
+        "required_condition_not_enforced": 0.3333,
+        "constraint_violated": 0.5,
+        "exception_not_handled": 0.3077
+      },
+      "per_type_precision_recall": {
+        "prohibited_action_present": {
+          "precision": 0.9091,
+          "recall": 1.0
+        },
+        "required_condition_not_enforced": {
+          "precision": 0.375,
+          "recall": 0.3
+        },
+        "constraint_violated": {
+          "precision": 0.6667,
+          "recall": 0.4
+        },
+        "exception_not_handled": {
+          "precision": 0.6667,
+          "recall": 0.2
+        }
+      }
+    }
+  },
+  "notes": [
+    "every arm is reported on the same 40 variants / 40 controls / 80 objects; no sample is dropped",
+    "a control abstention is NOT counted as a correct rejection",
+    "the frozen Winter-style and Sun-style blocks are read from the frozen report and never re-run",
+    "the original path + 0.4 cell is re-derived in the current code state and reproduces the frozen Winter-style arm on every decision-relevant field",
+    "the two v3 cells at 0.8 and 0.4 hold identical predictions; they differ only in the recorded action gamma",
+    "the D view is not the A view: it mixes 40 violation objects with 40 compliant objects"
+  ]
+}

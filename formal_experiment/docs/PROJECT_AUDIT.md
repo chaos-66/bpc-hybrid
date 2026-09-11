@@ -49,6 +49,65 @@ article16 无 obligation 动作、article20 无 actor、9 条法条无结构化 
 条件/约束/例外不被消费。产物 `outputs/development/s3_real_rule_diagnostic_corrections_v1/`；复核命令
 `python formal_experiment/scripts/repair_s3_real_rule_diagnostics_v1.py --replay`。
 
+**2026-09-11 四类扩展 Winter-vs-v3 同条件归因与修复（S3-EXTENDED-GAP，零 API）**：
+上一轮只交付了"v3 分数更低、瓶颈在动作定位"。本轮先做**同条件分离**再修**已证实缺陷**，复用全部旧臂
+（未重跑 Winter/Sun/BM25/TF-IDF），新增两个臂：`orig+0.4` 重推格（当前代码状态下重新推导，与冻结 Winter 臂
+在每一个决策字段上逐项相同，同时校验 0.8 重推能逐字节复现冻结 Sun 臂）与 **`v3+0.4` 诊断臂**
+（v3 匹配路径 + 迁移 Winter 冻结 `gamma=0.4`；0.4 是**预先指定的 Winter 配置迁移**，非阈值搜索：
+无网格、无逐样本门槛、无按标签选参）。
+
+- **门槛不是原因，它在 v3 路径里根本不起作用**：`v3+0.4` 与既有 `v3+0.8` 的**逐条预测完全相同**——
+  每行的分数、可判断性、动作定位记录与最终预测一致，两份文件只差记录用的 `action_mapping_gamma`。
+  原因是 v3 的 `structure_not_satisfied` 由结构比较而非 gamma 判定，两个 gamma 下都拒掉同样 30/40。
+- **同 gamma 0.4 下结构匹配在伤害定位**：标签 argmax 路径映射 **27/40** 个规则动作，v3 只映射 **10/40**
+  （全部是精确标签的 prohibited 插入）；v3 拒掉的 30 条中 26 条 `no_candidate_above_gamma`、4 条
+  `structure_not_satisfied`。condition/constraint/exception 的动作门槛就是这个判定，因此这三类在变体侧
+  永远不可判断。
+- **三个已证实缺陷（逐项产物直接证明）**：**D1** `prohibited_action_present` 报告 v3 的**词元化**
+  `candidate_max_similarity`，而冻结公式与 `gamma_ext=0.5` 锁在**原始标签**相似度尺度
+  （`prohibited_action_04` 原始 1.0000 / 词元化 0.5040；`exception_not_handled_04` 原始 0.5080 /
+  词元化 0.5040——同一个 0.5 落在两尺度两侧）；**D2** 同一条检查里"动作指哪个活动"有两个答案：
+  `prohibited_action` 在 v3 未定位时仍回退候选最高分给出分数，`_missing_evidence` 却弃权，于是
+  `exception_not_handled_04/05` 被报成 prohibited 违规；**D3** 把"必需动作是否存在"的**验证判定**当作
+  四类证据检查的**硬定位门**，法条短语与流程标签对象内容不同时直接掐断全部下游比较。
+- **修复臂 `s3_extended_v3_repair@1.0.0`**（`src/bpc_hybrid/s3_extended_v3_repair.py`，子类化
+  `V3ExtendedScorer`，只替换动作解析入口）：继承冻结面板/规则绑定/六要素抽取器/四个候选面/四条公式/
+  `gamma_ext`/统一五分类/评价器/可判断性策略与 v3 结构化表示；改动三处对应三个缺陷——① prohibited 用本臂
+  声明的原始标签公式 `max sim(rule_action, process_activity)` 计分且报告布尔即该分数决策；② 全行**唯一
+  动作解析**（v3 满足匹配优先，否则本臂标签 argmax 且需达本臂动作 gamma）同时供分数决策、候选面、证据分数与
+  contradiction 门槛使用，解析不到就明确记不可判断；③ contradiction 只经同一解析活动与同一 gamma 可达。
+- **同条件结果（互斥计数守恒）**：
+
+  | 臂 | 匹配路径 | 动作gamma | A正确 | A错类 | A弃权 | A判合规 | A Macro-F1 | B误报 | B合规 | B弃权 | C成对 |
+  |---|---|---|---|---|---|---|---|---|---|---|---|
+  | Winter（冻结） | 原始标签 argmax | 0.4 | 17 | 9 | 18* | * | 0.4738 | 20 | 12 | 8 | 9 |
+  | Sun（冻结） | 原始标签 argmax | 0.8 | 10 | 1 | 30* | * | 0.2381 | 5 | 9 | 26 | 7 |
+  | orig+0.4（重推） | 原始标签 argmax | 0.4 | 17 | 9 | 12 | 2 | 0.4738 | 20 | 12 | 8 | 9 |
+  | v3+0.8（既有） | v3 结构匹配 | 0.8 | 10 | 2 | 26 | 2 | 0.2273 | 8 | 6 | 26 | 4 |
+  | v3+0.4（诊断） | v3 结构匹配 | 0.4 | 10 | 2 | 26 | 2 | 0.2273 | 8 | 6 | 26 | 4 |
+  | v3+0.4 修复 | v3 匹配 + 唯一解析 | 0.4 | **19** | 9 | 10 | 2 | **0.5233** | 20 | 14 | 6 | **11** |
+
+  `*` 冻结臂由冻结评价器原样报告，其 `unobservable` 字段把"明确判合规"合并在内，故这两行无法拆分该列；
+  重新推导的行把两者分开计数。
+- **改善与回退同时如实报告**：修复臂在 Winter 正确的**全部 17 个实例上仍然正确**（A2 清单为 0），并新增 2 个
+  Winter 因 `action_mapping_below_gamma` 弃权而修复臂能判断的实例（`constraint_violated_03`、
+  `required_condition_10`）；分类别 F1：condition 0.2353→0.3333、constraint 0.4000→0.5000、
+  exception 0.3077 持平、prohibited 0.9524 持平。**代价**：对照误报 **20/40**，比旧 v3 臂的 8/40 明显变差，
+  与 Winter 臂持平——这是 D1 纠正后的真实水平，误报来自冻结公式与 `gamma_ext=0.5` 本身
+  （在原始标签尺度上把边界标签对判成违规），不是修复引入；换 `gamma_ext` 属于新的预注册，本轮不做。
+- **仍未解决**：① 三类证据检查在变体侧仍有 10 例弃权（8 例 `action_not_resolvable_to_activity`、
+  1 例 `no_condition_candidates`、1 例 `requirement_evidence_not_satisfied`），即规则动作在流程中确实找不到
+  任何 ≥0.4 的锚点；② 证据比较文本与 `gamma_ext` 的尺度口径（候选面混合多来源标签/注释/时间文本）是 v2 之前
+  的遗留问题，本轮只披露未改；③ 修复臂没有任何指标超过"原路径+0.4"，即**同 gamma 下 v3 结构匹配在本面板
+  可测得的净贡献仅是精确标签层加 D2/D3 一致性**，不得反向表述为结构匹配提升了四类检测。
+- 产物：`outputs/development/{s3_extended_baseline_04_v1,s3_extended_v3_gamma04_v1,s3_extended_v3_repair_v1}/`
+  （各四件含 manifest 与实施哈希）；证据 `outputs/evidence/s3_extended_gap_v1/`
+  （`comparison_v1.json/.md`、`difference_lists.json`、`method_change_note.md`、`manifest.json`）；
+  复核命令 `python formal_experiment/scripts/build_s3_extended_gap_comparison_v1.py --check`、
+  `.../build_s3_extended_gap_evidence_v1.py --check`、三个臂各自的 `--check`。
+- **边界**：development-only 受控面板；四类仍是项目自定义扩展，不是 Winter/Sun 原生能力，也不得改称
+  "我们的方法"；旧 v3 0.8 配置与产物逐字节保留；未改 Gold、面板标签、历史结果、Sun/Winter 本体与冻结公式。
+
 **2026-09-11 四类扩展的 v3 方法臂（S3-EXTENDED-V3，零 API）**：把既有 v3 动作匹配接到四类扩展检查上，
 在**同一冻结面板**（40 变体 + 40 既有对照，每类 10 对）与 `s3_formula_repair_v2` 的 reference 规则来源上
 完成一次真实比较。薄适配层 `src/bpc_hybrid/s3_extended_v3_adapter.py` 只替换动作定位（v3

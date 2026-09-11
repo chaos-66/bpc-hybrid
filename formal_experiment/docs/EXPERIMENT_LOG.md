@@ -4391,3 +4391,43 @@
 - 仍存在 blocker：无
 - 备注：薄适配层只替换动作定位（v3 action_match 取代纯相似度 argmax），四类公式/gamma_ext 决策/冻结评价器未改，未改 Sun/Winter/v3 本体与阈值；定位活动与证据采集共用同一活动；v3 的歧义/不满足语义保留为不可判断，不用 1.0/0.0 冒充布尔；未按 expected_violation/check_type 只启用目标类型（每实例计算全部四类后按统一规则决策）；无样本 ID 特判、无新依赖、真实 LLM/API 调用 0。结果如实交付：分数未提高，且已逐项定位差异来源（v3 词元化相似度与结构层级）。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-11T04:33:19.726279+00:00 - S3.9-EXT 差距归因与修复：v3 四类臂同条件对照、0.4 门槛迁移诊断臂与 D1/D2/D3 修复臂（零 API）
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s3_extended_gap_v1；阶段=S3；方法=v3_localization_repaired / v3_localization_gamma_0_4 / original_label_argmax_gamma_0_4；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_s3_extended_baseline_04_v1.py ; python scripts/run_s3_extended_v3_gamma04_v1.py ; python scripts/run_s3_extended_v3_repair_v1.py ; python scripts/build_s3_extended_gap_comparison_v1.py ; python scripts/build_s3_extended_gap_evidence_v1.py`
+- manifest：outputs/development/s3_extended_v3_repair_v1/manifest.json
+- 结果摘要：门槛迁移臂与 0.8 臂逐条相同（门槛在 v3 路径中不起作用）；修复臂 variant 19/40、macro-F1 0.5233、对照误报 20、成对正确 11
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：66 passed, 4 warnings in 13.32s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c902fee67342b642ce546a77a51b128107e1f83`；相关未提交路径：21 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 技术小结（闸门证据，补充记录）：
+  - 同条件四格（同面板/同评价器/同指标模块）：`orig+0.4`（重推，与冻结 Winter 臂在每个决策字段上逐项相同，且 0.8 重推逐字节复现冻结 Sun 臂）、`orig+0.8`（冻结 Sun）、`v3+0.8`（既有 v3）、`v3+0.4`（新增诊断臂）。新增臂为**预先指定的 Winter 冻结 0.4 迁移**，不是阈值搜索：无网格、无逐样本门槛、无按标签选参、无 `expected_violation` 进入推断。
+  - 诊断结论：`v3+0.4` 与 `v3+0.8` 的逐条预测完全相同（分数、可判断性、动作定位记录、最终预测全部一致，仅记录用的 `action_mapping_gamma` 不同）→ **门槛差异解释 0 个失败**。同 gamma 0.4 下标签 argmax 映射 27/40、v3 只映射 10/40（26 条 `no_candidate_above_gamma` + 4 条 `structure_not_satisfied`）→ 差距由**结构匹配被当作硬定位门**造成。
+  - 已证实缺陷：D1 prohibited 用词元化分数接原始尺度门槛（`prohibited_action_04` 1.0000 vs 0.5040；`exception_not_handled_04` 0.5080 vs 0.5040）；D2 定位结论与禁止动作结论不一致（未定位仍回退候选最高分，`exception_not_handled_04/05` 因此被报成 prohibited）；D3 验证判定被当作四类证据检查的定位门。
+  - 修复臂 `s3_extended_v3_repair@1.0.0`：继承冻结面板/规则绑定/抽取器/四个候选面/四条公式/`gamma_ext=0.5`/统一五分类/评价器/可判断性策略与 v3 结构化表示；只替换动作解析入口（唯一解析 + 公式本尺度 + contradiction 同门）。动作 gamma 仍为 Winter 冻结 0.4。
+  - 结果（互斥守恒）：A 变体 19 正确 + 9 错类 + 10 弃权 + 2 判合规 = 40；B 对照 14 明确合规 + 20 误报 + 6 弃权 = 40；C 成对 11/40；A Macro-F1 0.5233（旧 v3 0.2273，Winter 0.4738）。分类别 F1：prohibited 0.9524 持平、condition 0.2353→0.3333、constraint 0.4000→0.5000、exception 0.3077 持平。
+  - 回退如实报告：对照误报由旧 v3 的 8/40 升至 20/40（与 Winter 持平），来源是 D1 纠正后在原始标签尺度上冻结公式与 `gamma_ext=0.5` 本身把边界标签对判成违规；变体侧相对 Winter 无退步（A2 清单 0 项），并新增 2 例（`constraint_violated_03`、`required_condition_10`）。
+  - 仍未解决：三类证据检查变体侧 10 例弃权（8 例 `action_not_resolvable_to_activity`）；证据比较文本与 `gamma_ext` 的尺度口径为遗留问题仅披露；同 gamma 下 v3 结构匹配在本面板的净贡献仅为精确标签层加 D2/D3 一致性，不得反向表述为结构匹配提升了检测。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-11T04:35:08.920634+00:00 - S3-EXTENDED-GAP 日志补充：说明面板标签的读取范围（差异清单按 expected_violation 选择报告行；任何臂推断均未读标签）
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：66 passed, 4 warnings in 13.80s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3c902fee67342b642ce546a77a51b128107e1f83`；相关未提交路径：25 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：无
+- 备注：human Gold 未读取未修改。需要精确披露的是：outputs/evidence/s3_extended_gap_v1/difference_lists.json 由 build_s3_extended_gap_evidence_v1.py 生成，它读取冻结面板的 expected_violation 仅用于'选出要报告哪些行'（A/B/C/D 清单），不进入任何臂的推断；三个臂的预测均在读标签之前写盘，oracle/localization/分数/最终决策不使用期望类型、变异说明或目标节点 ID（tests/test_s3_extended_gap_v1.py 的 test_repair_reads_no_label_field 与清单内 mutation_metadata_read=false 字段共同固定该边界）。另外披露：冻结面板的 40 个对照与 40 个变体同属 synthetic controlled 数据，不是人工 Gold，也不是正式 Oracle。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
