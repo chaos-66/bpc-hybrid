@@ -1,0 +1,620 @@
+{
+  "schema_version": "s3_real_rule_diagnostic_corrected_summary@1.0.0",
+  "run_id": "s3_real_rule_diagnostic_corrections_v1",
+  "supersedes_run_id": "s3_real_rule_diagnostic_v1",
+  "claim_scope": "development_diagnostic_correction_on_real_legal_rule_input",
+  "performance_claim_ready": false,
+  "formal_oracle_promotion": false,
+  "predictions": {
+    "modified": false,
+    "rows": 66,
+    "predictions_sha256": "c36d1265ff82672f31353c07ca68d29a5d6d45b104f2de07f6ddcbb2a4fdc3e4",
+    "v1_manifest_bound_sha256": "c36d1265ff82672f31353c07ca68d29a5d6d45b104f2de07f6ddcbb2a4fdc3e4",
+    "byte_identical": true,
+    "declaration": "all 66 original prediction rows are reused unchanged; this round only corrects evidence association, reason classification and coverage accounting"
+  },
+  "v1_reference": {
+    "run_id": "s3_real_rule_diagnostic_v1",
+    "directory": "outputs/development/s3_real_rule_diagnostic_v1",
+    "sha256": {
+      "predictions.jsonl": "c36d1265ff82672f31353c07ca68d29a5d6d45b104f2de07f6ddcbb2a4fdc3e4",
+      "mapping_evidence.jsonl": "7f24d65d0588cf5be123795770a4b846b021387766cd8bb4c058cdb61d46924a",
+      "scope_review.json": "80853cdf88f2ccebe64bdde94b2ab28673ccf009661cf06ee900673a597c58b4",
+      "summary.json": "7ac7c780bae9321ca4b5f938726f0af5931d291644f9cf86d395906b6c288842",
+      "manifest.json": "e4d44ae3712451af4c08d8f7e9dffe78919fdeba7f52e2d6cdfe71043b9a268f"
+    },
+    "copied": false,
+    "note": "the v1 predictions and scope review are referenced by path and hash and are never copied into this directory"
+  },
+  "status_totals": {
+    "sun_2024_frozen": {
+      "violation": 10,
+      "unknown": 23
+    },
+    "evidence_checks_v3_action_structure": {
+      "violation": 10,
+      "unknown": 23
+    }
+  },
+  "counts_per_method_and_check": {
+    "sun_2024_frozen": {
+      "missing_action": {
+        "violation": 10,
+        "unknown": 1
+      },
+      "incorrect_actor": {
+        "unknown": 11
+      },
+      "out_of_order": {
+        "unknown": 11
+      }
+    },
+    "evidence_checks_v3_action_structure": {
+      "missing_action": {
+        "violation": 10,
+        "unknown": 1
+      },
+      "incorrect_actor": {
+        "unknown": 11
+      },
+      "out_of_order": {
+        "unknown": 11
+      }
+    }
+  },
+  "method_differences_count": 0,
+  "coverage": {
+    "note": "reference counts and unique counts are reported separately; the three requirement families are never merged into one overall mapping rate",
+    "families": {
+      "action_requirement": {
+        "definition": "one required action of a rule, for one method and process",
+        "dedup_key_fields": [
+          "method",
+          "family",
+          "process_id",
+          "rule_id",
+          "requirement_text"
+        ],
+        "per_method": {
+          "sun_2024_frozen": {
+            "unique_units": 42,
+            "requirement_references": 84,
+            "references_by_check_type": {
+              "incorrect_actor": 42,
+              "missing_action": 42
+            },
+            "dedup_reduction": 42,
+            "check_contexts_without_a_requirement_level_return": 42,
+            "clause_level_aggregate_units": 0,
+            "per_pair_field_absent_units": 0,
+            "state_counts": {
+              "expression_differs_unresolved": 41,
+              "mapped_unique": 1
+            },
+            "judgment_support_complete_units": 1
+          },
+          "evidence_checks_v3_action_structure": {
+            "unique_units": 42,
+            "requirement_references": 84,
+            "references_by_check_type": {
+              "incorrect_actor": 42,
+              "missing_action": 42
+            },
+            "dedup_reduction": 42,
+            "check_contexts_without_a_requirement_level_return": 29,
+            "clause_level_aggregate_units": 0,
+            "per_pair_field_absent_units": 0,
+            "state_counts": {
+              "expression_differs_unresolved": 38,
+              "mapped_unique": 2,
+              "structure_parse_insufficient": 2
+            },
+            "judgment_support_complete_units": 2
+          }
+        },
+        "unique_units_total": 84,
+        "unit_total_note": "both methods keep their own unit population; a unit is never shared across methods"
+      },
+      "actor_action_pair": {
+        "definition": "one declared actor-action pair of a rule, for one method and process",
+        "dedup_key_fields": [
+          "method",
+          "family",
+          "process_id",
+          "rule_id",
+          "actor_requirement",
+          "linked_action_requirement"
+        ],
+        "per_method": {
+          "sun_2024_frozen": {
+            "unique_units": 13,
+            "requirement_references": 13,
+            "references_by_check_type": {
+              "incorrect_actor": 13
+            },
+            "dedup_reduction": 0,
+            "check_contexts_without_a_requirement_level_return": 13,
+            "clause_level_aggregate_units": 13,
+            "per_pair_field_absent_units": 13,
+            "state_counts": {
+              "linked_action_not_reliably_mapped": 13
+            },
+            "judgment_support_complete_units": 0
+          },
+          "evidence_checks_v3_action_structure": {
+            "unique_units": 13,
+            "requirement_references": 13,
+            "references_by_check_type": {
+              "incorrect_actor": 13
+            },
+            "dedup_reduction": 0,
+            "check_contexts_without_a_requirement_level_return": 0,
+            "clause_level_aggregate_units": 0,
+            "per_pair_field_absent_units": 0,
+            "state_counts": {
+              "linked_action_not_reliably_mapped": 13
+            },
+            "judgment_support_complete_units": 0
+          }
+        },
+        "unique_units_total": 26,
+        "unit_total_note": "both methods keep their own unit population; a unit is never shared across methods"
+      },
+      "order_endpoint": {
+        "definition": "one endpoint of one declared order relation, for one method and process",
+        "dedup_key_fields": [
+          "method",
+          "family",
+          "process_id",
+          "rule_id",
+          "order_position",
+          "endpoint_text",
+          "order_constraint"
+        ],
+        "per_method": {
+          "sun_2024_frozen": {
+            "unique_units": 8,
+            "requirement_references": 8,
+            "references_by_check_type": {
+              "out_of_order": 8
+            },
+            "dedup_reduction": 0,
+            "check_contexts_without_a_requirement_level_return": 0,
+            "clause_level_aggregate_units": 0,
+            "per_pair_field_absent_units": 0,
+            "state_counts": {
+              "unmatched_kind_unknown": 8
+            },
+            "judgment_support_complete_units": 0
+          },
+          "evidence_checks_v3_action_structure": {
+            "unique_units": 8,
+            "requirement_references": 8,
+            "references_by_check_type": {
+              "out_of_order": 8
+            },
+            "dedup_reduction": 0,
+            "check_contexts_without_a_requirement_level_return": 0,
+            "clause_level_aggregate_units": 0,
+            "per_pair_field_absent_units": 0,
+            "state_counts": {
+              "matched_to_activity": 1,
+              "unmatched_kind_unknown": 7
+            },
+            "judgment_support_complete_units": 0
+          }
+        },
+        "unique_units_total": 16,
+        "unit_total_note": "both methods keep their own unit population; a unit is never shared across methods"
+      }
+    },
+    "order_endpoint_named_states": {
+      "evidence_checks_v3_action_structure|matched_to_activity": 1,
+      "evidence_checks_v3_action_structure|unmatched_kind_unknown": 7,
+      "sun_2024_frozen|unmatched_kind_unknown": 8
+    },
+    "order_endpoint_source_states": {
+      "evidence_checks_v3_action_structure|clause_span": 3,
+      "evidence_checks_v3_action_structure|projected_temporal_note": 5,
+      "sun_2024_frozen|clause_span": 3,
+      "sun_2024_frozen|projected_temporal_note": 5
+    },
+    "order_endpoint_state_cross": {
+      "evidence_checks_v3_action_structure|matched_to_activity|clause_span": 1,
+      "evidence_checks_v3_action_structure|unmatched_kind_unknown|clause_span": 2,
+      "evidence_checks_v3_action_structure|unmatched_kind_unknown|projected_temporal_note": 5,
+      "sun_2024_frozen|unmatched_kind_unknown|clause_span": 3,
+      "sun_2024_frozen|unmatched_kind_unknown|projected_temporal_note": 5
+    },
+    "item_level_states": {
+      "rule_has_no_action_requirement": 2,
+      "rule_has_no_actor_requirement": 4,
+      "rule_has_no_order_relation": 16
+    },
+    "old_accounting_defects": {
+      "counted_references_as_unique": true,
+      "class_depended_on_the_referencing_check_type": true,
+      "evidence_supports_judgment_included_unmapped_units": true
+    },
+    "model_representation": {
+      "events_are_match_candidates": true,
+      "source": "src/bpc_hybrid/sun_stage3/sun_model.py",
+      "declaration": "SunProcessModel.actions = record['activities'] + record['events']; reachability comes from record['control_flow']['reachable_pairs']"
+    }
+  },
+  "applicability": {
+    "evaluation": "not_evaluated",
+    "evaluated_by_checkers": false,
+    "reason": "the frozen converter (gdpr_capsule_converter.build_rule_records) and both scorers consume modality, actions, actors and order relations only; condition, constraint and exception clauses are recorded in the confirmed rule records but are never consumed, so rule applicability to a process is not evaluated",
+    "old_diagnostic_defect": {
+      "function": "clause_has_conditions",
+      "old_behaviour": "the scan returned after the first sentence record of a rule",
+      "boolean_unchanged_for_every_rule": true,
+      "old_reported_items": [
+        "v001",
+        "v002",
+        "v003",
+        "v004",
+        "v005",
+        "v006",
+        "v007",
+        "v008",
+        "v009",
+        "v010",
+        "v011",
+        "v012",
+        "v013",
+        "v014",
+        "v015",
+        "v016",
+        "v017",
+        "v018",
+        "v019",
+        "v020",
+        "v021",
+        "v022",
+        "v023",
+        "v024",
+        "v025",
+        "v026",
+        "v027",
+        "v028",
+        "v029",
+        "v030",
+        "v031",
+        "v032",
+        "v033"
+      ],
+      "aggregate_counts_reported": false
+    },
+    "per_rule": {
+      "article15": {
+        "sentence_count": 13,
+        "clause_count": 21,
+        "clauses_with_conditions": 11,
+        "clauses_with_constraints": 3,
+        "clauses_with_exceptions": 1,
+        "condition_spans": 14,
+        "constraint_spans": 4,
+        "exception_spans": 1,
+        "first_sentence_clause_count": 2,
+        "first_sentence_v1_boolean": true
+      },
+      "article16": {
+        "sentence_count": 2,
+        "clause_count": 2,
+        "clauses_with_conditions": 0,
+        "clauses_with_constraints": 2,
+        "clauses_with_exceptions": 0,
+        "condition_spans": 0,
+        "constraint_spans": 3,
+        "exception_spans": 0,
+        "first_sentence_clause_count": 1,
+        "first_sentence_v1_boolean": true
+      },
+      "article17": {
+        "sentence_count": 13,
+        "clause_count": 14,
+        "clauses_with_conditions": 9,
+        "clauses_with_constraints": 3,
+        "clauses_with_exceptions": 5,
+        "condition_spans": 9,
+        "constraint_spans": 5,
+        "exception_spans": 5,
+        "first_sentence_clause_count": 2,
+        "first_sentence_v1_boolean": true
+      },
+      "article20": {
+        "sentence_count": 5,
+        "clause_count": 6,
+        "clauses_with_conditions": 3,
+        "clauses_with_constraints": 2,
+        "clauses_with_exceptions": 1,
+        "condition_spans": 7,
+        "constraint_spans": 2,
+        "exception_spans": 1,
+        "first_sentence_clause_count": 2,
+        "first_sentence_v1_boolean": true
+      },
+      "article22": {
+        "sentence_count": 6,
+        "clause_count": 6,
+        "clauses_with_conditions": 3,
+        "clauses_with_constraints": 2,
+        "clauses_with_exceptions": 4,
+        "condition_spans": 3,
+        "constraint_spans": 2,
+        "exception_spans": 4,
+        "first_sentence_clause_count": 1,
+        "first_sentence_v1_boolean": true
+      },
+      "article33": {
+        "sentence_count": 10,
+        "clause_count": 10,
+        "clauses_with_conditions": 4,
+        "clauses_with_constraints": 8,
+        "clauses_with_exceptions": 1,
+        "condition_spans": 4,
+        "constraint_spans": 12,
+        "exception_spans": 1,
+        "first_sentence_clause_count": 1,
+        "first_sentence_v1_boolean": true
+      },
+      "article34": {
+        "sentence_count": 7,
+        "clause_count": 9,
+        "clauses_with_conditions": 4,
+        "clauses_with_constraints": 6,
+        "clauses_with_exceptions": 3,
+        "condition_spans": 4,
+        "constraint_spans": 7,
+        "exception_spans": 3,
+        "first_sentence_clause_count": 1,
+        "first_sentence_v1_boolean": true
+      },
+      "article6": {
+        "sentence_count": 10,
+        "clause_count": 16,
+        "clauses_with_conditions": 10,
+        "clauses_with_constraints": 6,
+        "clauses_with_exceptions": 2,
+        "condition_spans": 10,
+        "constraint_spans": 6,
+        "exception_spans": 2,
+        "first_sentence_clause_count": 1,
+        "first_sentence_v1_boolean": true
+      },
+      "article7": {
+        "sentence_count": 8,
+        "clause_count": 8,
+        "clauses_with_conditions": 5,
+        "clauses_with_constraints": 6,
+        "clauses_with_exceptions": 0,
+        "condition_spans": 5,
+        "constraint_spans": 8,
+        "exception_spans": 0,
+        "first_sentence_clause_count": 1,
+        "first_sentence_v1_boolean": true
+      }
+    },
+    "totals": {
+      "rules": 9,
+      "sentences": 74,
+      "clauses": 92,
+      "clauses_with_conditions": 49,
+      "clauses_with_constraints": 38,
+      "clauses_with_exceptions": 17,
+      "condition_spans": 56,
+      "constraint_spans": 49,
+      "exception_spans": 17
+    },
+    "items_with_unconsumed_condition_context": [
+      "v001",
+      "v002",
+      "v003",
+      "v004",
+      "v005",
+      "v006",
+      "v007",
+      "v008",
+      "v009",
+      "v010",
+      "v011",
+      "v012",
+      "v013",
+      "v014",
+      "v015",
+      "v016",
+      "v017",
+      "v018",
+      "v019",
+      "v020",
+      "v021",
+      "v022",
+      "v023",
+      "v024",
+      "v025",
+      "v026",
+      "v027",
+      "v028",
+      "v029",
+      "v030",
+      "v031",
+      "v032",
+      "v033"
+    ],
+    "per_item_evaluation": {
+      "v001": "not_evaluated",
+      "v002": "not_evaluated",
+      "v003": "not_evaluated",
+      "v004": "not_evaluated",
+      "v005": "not_evaluated",
+      "v006": "not_evaluated",
+      "v007": "not_evaluated",
+      "v008": "not_evaluated",
+      "v009": "not_evaluated",
+      "v010": "not_evaluated",
+      "v011": "not_evaluated",
+      "v012": "not_evaluated",
+      "v013": "not_evaluated",
+      "v014": "not_evaluated",
+      "v015": "not_evaluated",
+      "v016": "not_evaluated",
+      "v017": "not_evaluated",
+      "v018": "not_evaluated",
+      "v019": "not_evaluated",
+      "v020": "not_evaluated",
+      "v021": "not_evaluated",
+      "v022": "not_evaluated",
+      "v023": "not_evaluated",
+      "v024": "not_evaluated",
+      "v025": "not_evaluated",
+      "v026": "not_evaluated",
+      "v027": "not_evaluated",
+      "v028": "not_evaluated",
+      "v029": "not_evaluated",
+      "v030": "not_evaluated",
+      "v031": "not_evaluated",
+      "v032": "not_evaluated",
+      "v033": "not_evaluated"
+    }
+  },
+  "top_blockers": [
+    {
+      "blocker": "rule_side_requirements_absent_after_obligation_only_conversion",
+      "items": [
+        "v020",
+        "v028",
+        "v029",
+        "v030"
+      ],
+      "detail": "article16 carries no obligation clause with an action (v028/v029/v030) and article20 carries none with an actor (v020/v029), so those items have an empty requirement population instead of an unmatched one"
+    },
+    {
+      "blocker": "order_check_without_rule_side_order_relation_or_unmatched_endpoints",
+      "items": [
+        "v006",
+        "v012",
+        "v015",
+        "v018",
+        "v021",
+        "v027",
+        "v030",
+        "v033"
+      ],
+      "detail": "eight of the eleven order-checked items have no rule-side order relation; for the remaining three items the rule endpoints do not map to process nodes, so the frozen check keeps an empty denominator"
+    },
+    {
+      "blocker": "conditions_constraints_exceptions_not_consumed",
+      "items": [
+        "v001",
+        "v002",
+        "v003",
+        "v004",
+        "v005",
+        "v006",
+        "v007",
+        "v008",
+        "v009",
+        "v010",
+        "v011",
+        "v012",
+        "v013",
+        "v014",
+        "v015",
+        "v016",
+        "v017",
+        "v018",
+        "v019",
+        "v020",
+        "v021",
+        "v022",
+        "v023",
+        "v024",
+        "v025",
+        "v026",
+        "v027",
+        "v028",
+        "v029",
+        "v030",
+        "v031",
+        "v032",
+        "v033"
+      ],
+      "detail": "the confirmed clauses carry conditions, constraints and exceptions that the frozen converter and scorers do not consume, so applicability is recorded as not_evaluated"
+    }
+  ],
+  "corrected_evidence": {
+    "rows": 126,
+    "families": {
+      "action_requirement": 84,
+      "actor_action_pair": 26,
+      "order_endpoint": 16
+    },
+    "dedup_keys": {
+      "action_requirement": [
+        "method",
+        "family",
+        "process_id",
+        "rule_id",
+        "requirement_text"
+      ],
+      "actor_action_pair": [
+        "method",
+        "family",
+        "process_id",
+        "rule_id",
+        "actor_requirement",
+        "linked_action_requirement"
+      ],
+      "order_endpoint": [
+        "method",
+        "family",
+        "process_id",
+        "rule_id",
+        "order_position",
+        "endpoint_text",
+        "order_constraint"
+      ]
+    },
+    "id_namespace": "cev_<sha1-16 of the corrected de-dup key>",
+    "v1_id_reuse_forbidden": true,
+    "state_vocabulary": {
+      "action_requirement": [
+        "mapped_unique",
+        "expression_differs_unresolved",
+        "multiple_candidates_insufficient",
+        "structure_parse_insufficient",
+        "native_requirement_field_absent"
+      ],
+      "actor_action_pair": [
+        "executor_comparison_performed",
+        "linked_action_not_reliably_mapped",
+        "matched_activity_executors_unobservable"
+      ],
+      "order_endpoint": [
+        "matched_to_activity",
+        "matched_to_event",
+        "unmatched_kind_unknown",
+        "endpoint_source_not_located"
+      ]
+    },
+    "item_level_state_vocabulary": [
+      "rule_has_no_action_requirement",
+      "rule_has_no_actor_requirement",
+      "rule_has_no_order_relation"
+    ]
+  },
+  "native_recomputation": {
+    "performed": true,
+    "calls": 4,
+    "items": [
+      "v026",
+      "v032"
+    ],
+    "check_type": "incorrect_actor",
+    "label": "recomputed_native_repair",
+    "note": "the four recovered actor-action associations are new measurements of this repair run; they are not evidence the original v1 run saved"
+  },
+  "separation_note": "the summary is derived from the stored v1 predictions, the frozen rule structure and the four authorised native calls; no label and no human answer is read"
+}

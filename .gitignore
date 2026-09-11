@@ -198,3 +198,14 @@ formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/*
 !formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/scope_review.json
 !formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/summary.json
 !formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/manifest.json
+
+# S3-REAL-RULE-DIAGNOSTIC-CORRECTIONS (2026-09-11): the bounded repair of the
+# real legal-rule diagnostic's evidence association, reason classification and
+# coverage accounting.  Narrow allowlist: the correction directory and its four
+# exact files only; every other file under outputs/development stays ignored.
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_corrections_v1/
+formal_experiment/outputs/development/s3_real_rule_diagnostic_corrections_v1/*
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_corrections_v1/mapping_evidence.jsonl
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_corrections_v1/summary.json
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_corrections_v1/corrections.json
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_corrections_v1/manifest.json

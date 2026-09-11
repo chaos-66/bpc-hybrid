@@ -162,3 +162,11 @@ outputs/development/s3_real_rule_diagnostic_v1/mapping_evidence.jsonl text eol=l
 outputs/development/s3_real_rule_diagnostic_v1/scope_review.json text eol=lf
 outputs/development/s3_real_rule_diagnostic_v1/summary.json text eol=lf
 outputs/development/s3_real_rule_diagnostic_v1/manifest.json text eol=lf
+
+# S3 real-rule diagnostic corrections: exact raw-byte bindings of the repair.
+scripts/repair_s3_real_rule_diagnostics_v1.py text eol=lf
+tests/test_s3_real_rule_diagnostic_corrections_v1.py text eol=lf
+outputs/development/s3_real_rule_diagnostic_corrections_v1/mapping_evidence.jsonl text eol=lf
+outputs/development/s3_real_rule_diagnostic_corrections_v1/summary.json text eol=lf
+outputs/development/s3_real_rule_diagnostic_corrections_v1/corrections.json text eol=lf
+outputs/development/s3_real_rule_diagnostic_corrections_v1/manifest.json text eol=lf

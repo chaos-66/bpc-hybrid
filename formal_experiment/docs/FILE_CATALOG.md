@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-11
-**收录文件**：1765 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：1771 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -837,6 +837,10 @@
 | `outputs/development/s3_paired_mechanism_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_paired_mechanism_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_paired_mechanism_v1/REPORT.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/development/s3_real_rule_diagnostic_corrections_v1/corrections.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_real_rule_diagnostic_corrections_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_real_rule_diagnostic_corrections_v1/mapping_evidence.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_real_rule_diagnostic_corrections_v1/summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_real_rule_diagnostic_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_real_rule_diagnostic_v1/mapping_evidence.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_real_rule_diagnostic_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1385,6 +1389,7 @@
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
 | `scripts/reevaluate_s3_extended_unified_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/repair_s3_real_rule_diagnostics_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/restore_layer_e_adjudication_from_56d2b03.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/review_s2_11_candidates.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/review_s2_11_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -1832,6 +1837,7 @@
 | `tests/test_s3_formula_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_oracle_gold_rules_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_paired_mechanism_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_real_rule_diagnostic_corrections_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_real_rule_diagnostic_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |

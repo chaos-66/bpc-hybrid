@@ -1,8 +1,8 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.47
+**文档版本**：3.6.48
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
-**最后更新**：2026-09-10
+**最后更新**：2026-09-11
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
 **当前实施优先级**：实验先完成 Stage 2，再补 Stage 1 和 Stage 3；论文非结果章节从现在并行写作；2026-08-08 导师汇报后方向锁定见 §8.8
 
@@ -10,6 +10,39 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-11 修订 3.6.48：真实法条诊断的证据关联、原因分类与覆盖统计返修（S3-REAL-RULE-DIAGNOSTIC-CORRECTIONS，零 API）
+
+这是 3.6.47 的**限定返修**，不是新一轮方法优化：不运行新批次实验，不改检查器、Gold、阈值、规则输入与
+既有 66 条预测（逐字节复用，哈希与 v1 manifest 绑定一致），真实 LLM/API 调用仍为 0。
+
+- **问题 1（未映射被算作“证据支持判断”）**：`evidence_supports_judgment` 作为映射类别被撤销。
+  只有“检查具备所需信息 + 活动已可靠确定 + 执行者可观测”才可归入正向支持。v3 的 13 条 actor-action
+  对全部为 `linked_action_not_reliably_mapped`，`executor_comparison_performed` 0 条；Sun 的 Definition 6
+  只返回条款级聚合，原生缺失字段记为“原生证据缺失/推导范围”，不再声称“规则缺少执行者信息”。
+  `mapping.matched_activity_executors` 更名为 `candidate_best_activity_executors` +
+  `executors_of_matched_activity`（候选的执行者不得冒充已匹配活动的执行者）。
+- **问题 2（不同 actor-action 对被合并）**：actor 证据去重键加入 `linked_action_requirement`；
+  v026/v032 各恢复为 2 条正确绑定的对。该信息在已存产物中不可恢复，因此对这两个 item × 两方法执行
+  **4 次原生 `IncorrectActor` 调用**（上限 4）：原生 status/score/denominator/reason 与已存预测完全一致，
+  新增证据标注 `recomputed_native_repair`，不声称原运行已保存。来源改为来源列表（同一要求多句来源全部保留）。
+- **问题 3（引用次数写作去重数）**：分列 **A 引用次数**（84 动作引用 / 13 执行者对引用 / 8 端点引用）
+  与 **B 去重数量**（42 动作要求 / 13 执行者对 / 8 端点），去重键显式写出，动作、执行者对、顺序端点
+  三类各自给分子分母，不合成“总体映射率”；同一动作被 missing_action 与 incorrect_actor 引用时唯一数只计一次；
+  两种检查上下文的返回信息分别保留（不再“先写入覆盖后来结果”）。
+- **问题 4（未映射端点被断称“不是活动”）**：端点为**未匹配 / 匹配到活动 / 匹配到事件 / 来源未定位**四种状态；
+  未匹配时节点种类为 **unknown**，只有真实节点 `kind` 才能确定类型。**撤销**“事件不受支持导致顺序检查无法判断”
+  的过度结论：`SunProcessModel.actions` 同时包含 activity 与 event，且可达表覆盖它们；本诊断端点的真实阻碍是
+  规则侧无 order 关系（8/11 项）与端点未映射（3 项）。不新增事件解析器，不把“知悉泄露”等同于“泄露发生”。
+- **问题 5（条件只看条款首句）**：`clause_has_conditions` 在 rule 的首条句子后即返回；修正版按同一 rule 的
+  **全部句子与规范**聚合（9 条法条 / 74 句 / 92 条规范：含条件 49、约束 38、例外 17），并因冻结转换器与两个
+  检查器都不消费这些要素，把适用性统一记为 `not_evaluated`，而不是“没有条件”。该函数对布尔结论本身无影响
+  （9 条法条首句均已含条件/约束/例外），受影响的是聚合口径与幅度。
+- **产物与复核**：`outputs/development/s3_real_rule_diagnostic_corrections_v1/{mapping_evidence.jsonl,summary.json,corrections.json,manifest.json}`；
+  不复制 predictions/scope_review/BPMN/Gold，全部按路径+哈希引用；每个原始 item/method 都有显式
+  v1→修正证据关联。复核入口 `python formal_experiment/scripts/repair_s3_real_rule_diagnostics_v1.py --replay`。
+- **修正后仍成立的瓶颈**：article16 无 obligation 动作（v028/v029/v030）、article20 无 actor（v020/v029）、
+  9 条法条无结构化 order 关系、条件/约束/例外不被消费。**本轮不改变任何预测，不构成性能声明或 Gold 发布。**
 
 ## 2026-09-10 修订 3.6.47：真实法条输入上的 Sun×v3 逐条诊断（S3-REAL-RULE-DIAGNOSTIC，零 API）
 
@@ -29,9 +62,13 @@
   Sun：mapped_unique 1、expression_differs_unresolved 83、order_endpoint_not_an_activity 8、
   rule_lacks_required_information 13；v3：mapped_unique 2、expression_differs_unresolved 80、
   structure_parse_insufficient 2、order_endpoint_not_an_activity 7、evidence_supports_judgment 14。
+  **（2026-09-11 修订 3.6.48 修正：这里的 84/13/8 是检查实例引用次数而非去重数量，去重后为 42/13/8；
+  上述类别计数按引用计得，且 `evidence_supports_judgment` 含有未映射证据，均已作废。）**
 - **三类主要阻碍（附实例）**：① 无 obligation 子句 → v028/v029/v030 无可检查动作；
   ② 顺序检查缺规则侧关系 → v006/v012/v015/v018/v021/v027/v030/v033 分母为空；
   ③ 执行者检查缺 actor → v020/v029 不可观测。另记录条件/约束/例外未被转换器消费（适用性未评估）。
+  **（2026-09-11 修订 3.6.48 补正：适用性对全部 33 项记为 `not_evaluated`；顺序端点的真实阻碍是规则侧
+  无 order 关系与端点未匹配，与事件表示无关。）**
 - **范围核查（33 项，5 组最小问题）**：G1 目标 clause/活动绑定（33）、G2 原图或变体（33）、
   G3 证据引用缺失法条 Article 12/19（v018/v021/v030/v033）、G4 v001/v002 与已确认局部通知意见冲突（2）、
   G5 无合规对照（33）。机器只提出候选绑定并标注 machine_proposed/human_confirmed=false，未改 Gold、未新增对照。
