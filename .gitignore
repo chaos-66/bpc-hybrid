@@ -187,3 +187,14 @@ formal_experiment/outputs/development/s3_action_matching_v3/*
 !formal_experiment/outputs/development/s3_action_matching_v3/metrics.json
 !formal_experiment/outputs/development/s3_action_matching_v3/diagnostics.json
 !formal_experiment/outputs/development/s3_action_matching_v3/manifest.json
+
+# S3-REAL-RULE-DIAGNOSTIC (2026-09-10): the real legal-rule diagnostic run.
+# Narrow allowlist: the run directory and its five exact result files only;
+# every other file under outputs/development stays ignored.
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/
+formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/*
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/predictions.jsonl
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/mapping_evidence.jsonl
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/scope_review.json
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/summary.json
+!formal_experiment/outputs/development/s3_real_rule_diagnostic_v1/manifest.json

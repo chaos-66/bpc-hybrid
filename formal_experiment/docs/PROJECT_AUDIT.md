@@ -11,6 +11,27 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 ## 1. 当前结论
 
+**2026-09-10 真实法条输入上的 Sun×v3 逐条诊断（S3-REAL-RULE-DIAGNOSTIC，零 API）**：
+首次把已确认人工法条规则接到 7 张原始 BPMN 实跑。人工 Gold Rule Records（74 句/92 条规范）经既有机械
+转换器（**仅 obligation**）转成检查记录，已确认的 3 条文字顺序说明按既有运行时投影为顺序边；
+冻结 Sun 与 v3 各跑旧推断输入的 **33 个 item**（指定检查类型），共 **66 条输出**，
+预测先落盘、标签后读取。**结果两者完全相同**：missing_action 10 violation + 1 unknown、
+incorrect_actor 11 unknown、out_of_order 11 unknown（method_differences = 0）。
+映射覆盖（84 必需动作 / 13 必需执行者 / 8 顺序端点）：Sun mapped_unique 1、expression_differs 83、
+端点非活动 8、规则缺信息 13；v3 mapped_unique 2、expression_differs 80、结构解析不足 2、
+端点非活动 7、证据支持判断 14。**三类主要阻碍**：① article16 无 obligation 子句 → v028/v029/v030
+无可检查动作（article20 无 actor → v020/v029 执行者不可观测）；② 顺序检查缺规则侧关系 →
+v006/v012/v015/v018/v021/v027/v030/v033 分母为空（9 条法条结构化 order 全为 0，仅 3 条已确认说明生效）；
+③ 条件/约束/例外不被冻结转换器消费 → 适用性未评估。
+**范围核查 33 项 / 5 组最小问题**：G1 目标 clause 与活动绑定（33）、G2 原图或变体（33）、
+G3 证据引用缺失法条 Article 12/19（v018/v021/v030/v033）、G4 v001/v002 与已确认局部通知意见冲突（2）、
+G5 缺合规对照（33）。机器只给候选绑定并标注 machine_proposed/human_confirmed=false，未改 Gold、
+未新增对照、未切换定义。旧标签诊断仅置于 `legacy_label_diagnostic`（33 项全保留、正例 unknown 计 FN、
+scope_unresolved=true、performance_claim_ready=false）：两方法 macro-F1 均 0.3175。
+**本轮是 development diagnostic，不是正式 S3.7 Oracle promotion、不是 Gold 发布；合成面板 0.9825 未带入。**
+产物 `outputs/development/s3_real_rule_diagnostic_v1/`；复核命令
+`python formal_experiment/scripts/run_s3_real_rule_diagnostic_v1.py --replay`。
+
 **2026-09-10 动作表示与候选匹配 v3（S3-ACTION-MATCHING-V3，零 API）**：在同一冻结成对面板上
 只改动作表示与候选匹配（新增 `src/bpc_hybrid/s3_action_matching_v3.py`，继承 v2）。
 已确认并处理四个问题：**嵌套动作丢失**（`rectify/access/erase` 为 `acl` 槽位动词，被 v2 对象

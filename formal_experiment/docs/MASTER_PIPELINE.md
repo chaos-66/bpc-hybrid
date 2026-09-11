@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.46
+**文档版本**：3.6.47
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-09-10
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,36 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-10 修订 3.6.47：真实法条输入上的 Sun×v3 逐条诊断（S3-REAL-RULE-DIAGNOSTIC，零 API）
+
+首次把**已确认的人工法条规则**接到 7 张**原始 BPMN** 上实跑：冻结 Sun 与当前 v3 各跑一遍
+旧推断输入的 33 个 item（指定检查类型），共 66 条输出，先落盘预测再读标签。
+
+- **输入与主策略**：人工 Gold Rule Records（74 句 / 92 条规范）经既有机械转换器转成检查记录，
+  **仅 obligation** 模态；已确认的 3 条文字顺序说明按既有运行时投影成为顺序边（端点不新增为必须动作）；
+  只加载 7 张原图，不加载任何合成变体。
+- **obligation-only 的真实覆盖**：article16 无 obligation 子句（0 动作）、article20 无执行者（0 actor）、
+  9 条法条的结构化 order_relations 全为 0；被排除的 permission/prohibition/definition 子句数量逐条记录。
+- **结果（66 条，分母各 11）**：Sun 与 v3 **完全相同**——missing_action 10 violation + 1 unknown、
+  incorrect_actor 11 unknown、out_of_order 11 unknown（method_differences = 0）。
+  unknown 原因：v3 为 missing_rule_order_relations 8、no_candidate_above_gamma 8、order_endpoint_unmapped 3、
+  missing_rule_actor_action_map 2、empty_rule_action_set 1、requirement_evidence_not_satisfied 1。
+- **映射覆盖（去重单元）**：84 个必需动作 / 13 个必需执行者 / 8 个顺序端点。
+  Sun：mapped_unique 1、expression_differs_unresolved 83、order_endpoint_not_an_activity 8、
+  rule_lacks_required_information 13；v3：mapped_unique 2、expression_differs_unresolved 80、
+  structure_parse_insufficient 2、order_endpoint_not_an_activity 7、evidence_supports_judgment 14。
+- **三类主要阻碍（附实例）**：① 无 obligation 子句 → v028/v029/v030 无可检查动作；
+  ② 顺序检查缺规则侧关系 → v006/v012/v015/v018/v021/v027/v030/v033 分母为空；
+  ③ 执行者检查缺 actor → v020/v029 不可观测。另记录条件/约束/例外未被转换器消费（适用性未评估）。
+- **范围核查（33 项，5 组最小问题）**：G1 目标 clause/活动绑定（33）、G2 原图或变体（33）、
+  G3 证据引用缺失法条 Article 12/19（v018/v021/v030/v033）、G4 v001/v002 与已确认局部通知意见冲突（2）、
+  G5 无合规对照（33）。机器只提出候选绑定并标注 machine_proposed/human_confirmed=false，未改 Gold、未新增对照。
+- **旧标签诊断**（仅 `legacy_label_diagnostic`，33 项全保留、正例 unknown 计 FN、scope_unresolved=true、
+  performance_claim_ready=false）：两方法 macro-F1 均 0.3175（missing_action F1 0.9524，另两类 0）。
+  **这不是本轮主结果，也不是正式 S3.7 Oracle 或 Gold 发布**；合成面板的 0.9825 不得带入本轮。
+- 产物 `outputs/development/s3_real_rule_diagnostic_v1/{predictions,mapping_evidence,scope_review,summary,manifest}`；
+  复核入口 `python formal_experiment/scripts/run_s3_real_rule_diagnostic_v1.py --replay`。
 
 ## 2026-09-10 修订 3.6.46：动作表示与候选匹配 v3（嵌套动作、关系结构、语义角色，零 API）
 

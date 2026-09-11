@@ -153,3 +153,12 @@ outputs/development/s3_action_matching_v3/predictions.jsonl text eol=lf
 outputs/development/s3_action_matching_v3/metrics.json text eol=lf
 outputs/development/s3_action_matching_v3/diagnostics.json text eol=lf
 outputs/development/s3_action_matching_v3/manifest.json text eol=lf
+
+# S3 real-rule diagnostic: exact raw-byte implementation/result bindings.
+scripts/run_s3_real_rule_diagnostic_v1.py text eol=lf
+tests/test_s3_real_rule_diagnostic_v1.py text eol=lf
+outputs/development/s3_real_rule_diagnostic_v1/predictions.jsonl text eol=lf
+outputs/development/s3_real_rule_diagnostic_v1/mapping_evidence.jsonl text eol=lf
+outputs/development/s3_real_rule_diagnostic_v1/scope_review.json text eol=lf
+outputs/development/s3_real_rule_diagnostic_v1/summary.json text eol=lf
+outputs/development/s3_real_rule_diagnostic_v1/manifest.json text eol=lf

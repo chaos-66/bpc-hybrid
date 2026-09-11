@@ -1,0 +1,615 @@
+{
+  "schema_version": "s3_real_rule_diagnostic_summary@1.0.0",
+  "run_id": "s3_real_rule_diagnostic_v1",
+  "claim_scope": "development_diagnostic_on_real_legal_rule_input",
+  "performance_claim_ready": false,
+  "formal_oracle_promotion": false,
+  "inputs_used": {
+    "human_rule_capsule": "data/predictions/gdpr7_human_rule_record_v1/predictions.json",
+    "gold_rule_records": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+    "legal_text_input": "data/input/gdpr7_stage2_input_v1.json",
+    "inference_items": "data/development/human_review/stage3_gold_inference_v1.json",
+    "bpmn": [
+      "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "data/input/stage1_stage3/gdpr7/gdpr_7_right_to_be_forgotten.bpmn"
+    ],
+    "synthetic_variants_loaded": false
+  },
+  "counts_per_method_and_check": {
+    "sun_2024_frozen": {
+      "missing_action": {
+        "violation": 10,
+        "unknown": 1
+      },
+      "incorrect_actor": {
+        "unknown": 11
+      },
+      "out_of_order": {
+        "unknown": 11
+      }
+    },
+    "evidence_checks_v3_action_structure": {
+      "missing_action": {
+        "violation": 10,
+        "unknown": 1
+      },
+      "incorrect_actor": {
+        "unknown": 11
+      },
+      "out_of_order": {
+        "unknown": 11
+      }
+    }
+  },
+  "status_totals": {
+    "sun_2024_frozen": {
+      "violation": 10,
+      "unknown": 23
+    },
+    "evidence_checks_v3_action_structure": {
+      "violation": 10,
+      "unknown": 23
+    }
+  },
+  "mapping_coverage": {
+    "definition": "each unit counts once per method; units are de-duplicated rule requirements (one per method/action/process or actor/process or endpoint)",
+    "classes": [
+      "mapped_unique",
+      "expression_differs_unresolved",
+      "multiple_candidates_insufficient",
+      "structure_parse_insufficient",
+      "order_endpoint_not_an_activity",
+      "rule_lacks_required_information",
+      "needs_condition_or_context",
+      "evidence_supports_judgment"
+    ],
+    "denominators": {
+      "sun_2024_frozen": {
+        "required_actions_checked": 84,
+        "required_actors_checked": 13,
+        "order_endpoints_checked": 8
+      },
+      "evidence_checks_v3_action_structure": {
+        "required_actions_checked": 84,
+        "required_actors_checked": 13,
+        "order_endpoints_checked": 8
+      }
+    },
+    "counts": {
+      "sun_2024_frozen": {
+        "mapped_unique": 1,
+        "expression_differs_unresolved": 83,
+        "multiple_candidates_insufficient": 0,
+        "structure_parse_insufficient": 0,
+        "order_endpoint_not_an_activity": 8,
+        "rule_lacks_required_information": 13,
+        "needs_condition_or_context": 0,
+        "evidence_supports_judgment": 0
+      },
+      "evidence_checks_v3_action_structure": {
+        "mapped_unique": 2,
+        "expression_differs_unresolved": 80,
+        "multiple_candidates_insufficient": 0,
+        "structure_parse_insufficient": 2,
+        "order_endpoint_not_an_activity": 7,
+        "rule_lacks_required_information": 0,
+        "needs_condition_or_context": 0,
+        "evidence_supports_judgment": 14
+      }
+    }
+  },
+  "rule_conversion": {
+    "include_modalities": [
+      "obligation"
+    ],
+    "per_rule": {
+      "article15": {
+        "envelopes_failed": 0,
+        "clause_count": 21,
+        "included_clause_count": 2,
+        "excluded_modality_counts": {
+          "permission": 18,
+          "prohibition": 1
+        },
+        "order_relations_count": 0,
+        "action_count": 2,
+        "actor_count": 1,
+        "order_relations_absent": true
+      },
+      "article16": {
+        "envelopes_failed": 0,
+        "clause_count": 2,
+        "included_clause_count": 0,
+        "excluded_modality_counts": {
+          "permission": 2
+        },
+        "order_relations_count": 0,
+        "action_count": 0,
+        "actor_count": 0,
+        "order_relations_absent": true
+      },
+      "article17": {
+        "envelopes_failed": 0,
+        "clause_count": 14,
+        "included_clause_count": 2,
+        "excluded_modality_counts": {
+          "permission": 1,
+          "definition": 11
+        },
+        "order_relations_count": 0,
+        "action_count": 3,
+        "actor_count": 1,
+        "order_relations_absent": true
+      },
+      "article20": {
+        "envelopes_failed": 0,
+        "clause_count": 6,
+        "included_clause_count": 1,
+        "excluded_modality_counts": {
+          "permission": 3,
+          "definition": 1,
+          "prohibition": 1
+        },
+        "order_relations_count": 0,
+        "action_count": 1,
+        "actor_count": 0,
+        "order_relations_absent": true
+      },
+      "article22": {
+        "envelopes_failed": 0,
+        "clause_count": 6,
+        "included_clause_count": 1,
+        "excluded_modality_counts": {
+          "prohibition": 2,
+          "definition": 3
+        },
+        "order_relations_count": 0,
+        "action_count": 1,
+        "actor_count": 1,
+        "order_relations_absent": true
+      },
+      "article33": {
+        "envelopes_failed": 0,
+        "clause_count": 10,
+        "included_clause_count": 9,
+        "excluded_modality_counts": {
+          "permission": 1
+        },
+        "order_relations_count": 0,
+        "action_count": 9,
+        "actor_count": 3,
+        "order_relations_absent": true
+      },
+      "article34": {
+        "envelopes_failed": 0,
+        "clause_count": 9,
+        "included_clause_count": 4,
+        "excluded_modality_counts": {
+          "definition": 3,
+          "permission": 2
+        },
+        "order_relations_count": 0,
+        "action_count": 5,
+        "actor_count": 1,
+        "order_relations_absent": true
+      },
+      "article6": {
+        "envelopes_failed": 0,
+        "clause_count": 16,
+        "included_clause_count": 6,
+        "excluded_modality_counts": {
+          "permission": 8,
+          "definition": 2
+        },
+        "order_relations_count": 0,
+        "action_count": 6,
+        "actor_count": 1,
+        "order_relations_absent": true
+      },
+      "article7": {
+        "envelopes_failed": 0,
+        "clause_count": 8,
+        "included_clause_count": 5,
+        "excluded_modality_counts": {
+          "definition": 2,
+          "permission": 1
+        },
+        "order_relations_count": 0,
+        "action_count": 6,
+        "actor_count": 1,
+        "order_relations_absent": true
+      }
+    },
+    "temporal_projection": {
+      "accepted": [
+        {
+          "sample_id": "gdpr_article33_s001",
+          "rule_id": "article33",
+          "note": "having become aware of it 在 notify the personal data breach 之前；起点是知悉，不能改成泄露发生时刻。",
+          "before": {
+            "text": "having become aware of it",
+            "start": 131,
+            "end": 156
+          },
+          "after": {
+            "text": "notify the personal data breach",
+            "start": 158,
+            "end": 189
+          },
+          "source": "confirmed_temporal_note",
+          "creates_mandatory_action": false
+        },
+        {
+          "sample_id": "gdpr_article33_s003",
+          "rule_id": "article33",
+          "note": "becoming aware of a personal data breach 先于 notify the controller；原句 after 提供顺序证据。",
+          "before": {
+            "text": "becoming aware of a personal data breach",
+            "start": 68,
+            "end": 108
+          },
+          "after": {
+            "text": "notify the controller",
+            "start": 20,
+            "end": 41
+          },
+          "source": "confirmed_temporal_note",
+          "creates_mandatory_action": false
+        },
+        {
+          "sample_id": "gdpr_article7_s006",
+          "rule_id": "article7",
+          "note": "be informed thereof 在 giving consent 之前。前者是本句义务动作；后者只是顺序锚点，不构造必须同意的义务。",
+          "before": {
+            "text": "be informed thereof",
+            "start": 48,
+            "end": 67
+          },
+          "after": {
+            "text": "giving consent",
+            "start": 9,
+            "end": 23
+          },
+          "source": "confirmed_temporal_note",
+          "creates_mandatory_action": false
+        }
+      ],
+      "rejected": [],
+      "note": "the three confirmed sentence-level order statements are projected as runtime order edges only; endpoints are not added as mandatory actions"
+    }
+  },
+  "method_differences": [],
+  "scope_review": {
+    "item_count": 33,
+    "clear_scope_items": [],
+    "items_with_missing_input_articles": [
+      "v018",
+      "v021",
+      "v030",
+      "v033"
+    ],
+    "items_with_confirmed_opinion_conflict": [
+      "v001",
+      "v002"
+    ],
+    "items_requiring_human_clarification": [
+      "v001",
+      "v002",
+      "v003",
+      "v004",
+      "v005",
+      "v006",
+      "v007",
+      "v008",
+      "v009",
+      "v010",
+      "v011",
+      "v012",
+      "v013",
+      "v014",
+      "v015",
+      "v016",
+      "v017",
+      "v018",
+      "v019",
+      "v020",
+      "v021",
+      "v022",
+      "v023",
+      "v024",
+      "v025",
+      "v026",
+      "v027",
+      "v028",
+      "v029",
+      "v030",
+      "v031",
+      "v032",
+      "v033"
+    ],
+    "question_groups": [
+      {
+        "group_id": "G1_target_binding",
+        "items": [
+          "v001",
+          "v002",
+          "v003",
+          "v004",
+          "v005",
+          "v006",
+          "v007",
+          "v008",
+          "v009",
+          "v010",
+          "v011",
+          "v012",
+          "v013",
+          "v014",
+          "v015",
+          "v016",
+          "v017",
+          "v018",
+          "v019",
+          "v020",
+          "v021",
+          "v022",
+          "v023",
+          "v024",
+          "v025",
+          "v026",
+          "v027",
+          "v028",
+          "v029",
+          "v030",
+          "v031",
+          "v032",
+          "v033"
+        ],
+        "item_count": 33,
+        "question": "每一项检查的目标是哪个 clause/规范条目与哪个具体活动？",
+        "why": "33 项只携带 rule_id（整条法条），没有目标句/规范片段/活动绑定，机器无法唯一确定检查对象"
+      },
+      {
+        "group_id": "G2_original_or_variant",
+        "items": [
+          "v001",
+          "v002",
+          "v003",
+          "v004",
+          "v005",
+          "v006",
+          "v007",
+          "v008",
+          "v009",
+          "v010",
+          "v011",
+          "v012",
+          "v013",
+          "v014",
+          "v015",
+          "v016",
+          "v017",
+          "v018",
+          "v019",
+          "v020",
+          "v021",
+          "v022",
+          "v023",
+          "v024",
+          "v025",
+          "v026",
+          "v027",
+          "v028",
+          "v029",
+          "v030",
+          "v031",
+          "v032",
+          "v033"
+        ],
+        "item_count": 33,
+        "question": "每一项应在原图还是某个变体上检查？",
+        "why": "33 项均未标注 original/variant，也未给出变体文件路径"
+      },
+      {
+        "group_id": "G3_missing_cited_article",
+        "items": [
+          "v018",
+          "v021",
+          "v030",
+          "v033"
+        ],
+        "item_count": 4,
+        "question": "证据引用的 Article 12 / Article 19 是否补齐为输入？",
+        "why": "v018/v021/v030 的证据引用 Article 12、v033 引用 Article 19，而当前输入只有 article6/7/15/16/17/20/22/33/34"
+      },
+      {
+        "group_id": "G4_confirmed_local_conflict",
+        "items": [
+          "v001",
+          "v002"
+        ],
+        "item_count": 2,
+        "question": "v001/v002 的检查范围是否覆盖 Article 33 通知活动？",
+        "why": "用户已确认的局部读图意见认为该通知活动存在且执行者正确，与这两项的旧正标签存在范围冲突"
+      },
+      {
+        "group_id": "G5_no_negative_control",
+        "items": [
+          "v001",
+          "v002",
+          "v003",
+          "v004",
+          "v005",
+          "v006",
+          "v007",
+          "v008",
+          "v009",
+          "v010",
+          "v011",
+          "v012",
+          "v013",
+          "v014",
+          "v015",
+          "v016",
+          "v017",
+          "v018",
+          "v019",
+          "v020",
+          "v021",
+          "v022",
+          "v023",
+          "v024",
+          "v025",
+          "v026",
+          "v027",
+          "v028",
+          "v029",
+          "v030",
+          "v031",
+          "v032",
+          "v033"
+        ],
+        "item_count": 33,
+        "question": "是否为该表补齐合规/负例对照，或明确只作正例诊断？",
+        "why": "33 项全部是正标签，没有合规对照，无法据此评估误报"
+      }
+    ]
+  },
+  "top_blockers": [
+    {
+      "blocker": "obligation_only_rules_without_actions",
+      "rules": [
+        "article16"
+      ],
+      "items": [
+        "v028",
+        "v029",
+        "v030"
+      ],
+      "detail": "these articles carry no obligation clause, so the frozen obligation-only policy leaves nothing to check for their items"
+    },
+    {
+      "blocker": "out_of_order_items_without_rule_order_information",
+      "items": [
+        "v006",
+        "v012",
+        "v015",
+        "v018",
+        "v021",
+        "v027",
+        "v030",
+        "v033"
+      ],
+      "detail": "the rule record has no order relation and the confirmed temporal notes do not cover these rules, so the order check has an empty denominator"
+    },
+    {
+      "blocker": "incorrect_actor_items_without_rule_actor_information",
+      "items": [
+        "v020",
+        "v029"
+      ],
+      "detail": "the rule record has no actor for these items, so the actor check cannot be observed"
+    }
+  ],
+  "legacy_label_diagnostic": {
+    "label": "legacy_label_diagnostic",
+    "source": "data/gold/stage3/stage3_violation_gold_v1.json",
+    "scope_unresolved": true,
+    "performance_claim_ready": false,
+    "denominator_policy": "positive unknown counts as FN; every one of the 33 legacy items is retained; no subset selection",
+    "negative_control_count": 0,
+    "methods": {
+      "sun_2024_frozen": {
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "tp": 10,
+            "fp": 0,
+            "fn": 1,
+            "tn": 0,
+            "unknown": 1,
+            "precision": 1.0,
+            "recall": 0.9090909090909091,
+            "f1": 0.9523809523809523
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "tp": 0,
+            "fp": 0,
+            "fn": 11,
+            "tn": 0,
+            "unknown": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "tp": 0,
+            "fp": 0,
+            "fn": 11,
+            "tn": 0,
+            "unknown": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "macro_f1": 0.31746031746031744,
+        "items_retained": 33
+      },
+      "evidence_checks_v3_action_structure": {
+        "per_type": {
+          "missing_action": {
+            "support": 11,
+            "tp": 10,
+            "fp": 0,
+            "fn": 1,
+            "tn": 0,
+            "unknown": 1,
+            "precision": 1.0,
+            "recall": 0.9090909090909091,
+            "f1": 0.9523809523809523
+          },
+          "incorrect_actor": {
+            "support": 11,
+            "tp": 0,
+            "fp": 0,
+            "fn": 11,
+            "tn": 0,
+            "unknown": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "out_of_order": {
+            "support": 11,
+            "tp": 0,
+            "fp": 0,
+            "fn": 11,
+            "tn": 0,
+            "unknown": 11,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "macro_f1": 0.31746031746031744,
+        "items_retained": 33
+      }
+    },
+    "note": "these numbers are a diagnostic against the legacy labels whose check scope is still unresolved; they are not the round's main result and must not be used to claim an improvement"
+  },
+  "capability_limits": [
+    "the frozen converter consumes the obligation modality only; permission, prohibition and definition clauses are recorded but never checked",
+    "the frozen converter does not consume conditions, constraints or exceptions, so applicability of a rule to a process is not evaluated",
+    "the frozen scorer matches order endpoints against activities and events together and requires a rule-side order relation; structured order relations are absent for all nine articles and only the three confirmed temporal sentences are projected",
+    "an IncorrectActor check needs an actor-action mapping; articles without actors cannot be observed"
+  ],
+  "separation_note": "prediction outputs are written before any label is read; the summary is derived from the stored predictions and the rule structure only"
+}
