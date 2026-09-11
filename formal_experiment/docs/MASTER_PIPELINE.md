@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.52
+**文档版本**：3.6.53
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-09-11
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,64 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-11 修订 3.6.53：四类扩展的定位接线修复与证据范围臂（S3-EXTENDED-EVIDENCE-SCOPE，零 API）
+
+本批只做用户指定的两个新臂（W/H），各跑一次固定面板；旧 A/B/C、Winter 等按哈希只读复用，未重跑。
+范围声明：面板已被反复用于开发，全部结果只能称 **development regression**，不是独立验证、不是正式 Oracle、
+也不是真实法律合规性能。
+
+- **R1–R6 逐项核实**（结论写入 `diagnostics.json.findings`）：
+  1. **R1 定位接线（已证实，机制与旧描述不同）**：runner 的 `score_side()` 用
+     `localize().matched_activity_id` 建候选面，检查器内部却调 `resolve_action()`。只读重放 C 臂自身 scorer
+     于 80 个单侧实例：**45 个单侧实例（变体 19 + 对照 26）候选面以 `None` 建成**，而检查消费了回退活动。
+     旧描述需要修正：`surface_activity_id` 只对 constraint 面填充，故 14+14 是**检查引用计数**，不是 28 个
+     独立流程；且回退只在 v3 未满足匹配时发生，不存在"面绑 A、检查用 B"的两活动冲突。B 臂原生没有
+     `matched_activity_id` 字段属构造差异，不是绑定错误。
+  2. **R2 全图候选（已证实）**：传入活动 ID 对 condition/constraint/exception 候选**增加 0 条**；
+     `syn_v2_required_condition_01` 上 25 条 constraint、3 条 exception 全部与目标活动无关，condition 面为空。
+     仅 `ConstraintSurface.bound_texts` 的数值比较原本就绑定活动。
+  3. **R3 缺证据与反证混用（已证实）**：`_missing_evidence` 用 `1-max_similarity`；空候选直接 unknown，
+     未区分"明确矛盾 / 完整范围内确认缺失 / 文本无法表达 / 范围信息不足"。H 实现四值判定 + 分别记录
+     `applicability` 与 `evidence_status`。
+  4. **R4 上游规则与面板范围（属输入问题，不是打分缺陷）**：`syn_v2_required_condition_05` 的规则动作是
+     "have the obligation to erase personal data …"，生成器把条件挂在其 `mutation_config.target_activity_id`
+     所指活动上；`syn_v2_exception_not_handled_04` 的 "Paragraph 1 shall not apply…" 被冻结抽取器读成
+     prohibition(action=apply) 且同时读成 exception。本批**不修订冻结抽取**，`target_activity_id` 自始至终
+     只作生成器元数据、未当答案键使用。
+  5. **R5 对照范围（评价契约问题，已证实）**：生成器只补目标字段证据，"相对 none 报警"不等于已证实法律误报；
+     已作为独立诊断类别记录，未删除/重标任何实例。
+  6. **R6 诊断字段（已证实并修复）**：旧 `comparison_strings` 按违规类型名查 sentence 字段，condition/
+     constraint/exception 被记成空串。W/H 改用"元素→字段"映射并记录检查实际消费的文本，
+     `comparison_strings_check.checked=640, mismatches=0`。**这是诊断修复，不改变任何预测。**
+- **两个新臂的实测（历史五分类口径，160 个新对象预测；成对=变体正确且对照明确合规）**：
+
+  | 臂 | 变体正确 | 错类 | 明确合规 | unknown | Macro-F1 | 对照报警 | 对照 none | 对照 unknown | 成对 |
+  |---|---|---|---|---|---|---|---|---|---|
+  | C（旧，适配层复算一致） | 18 | 8 | 0 | 14 | 0.4896 | 14 | 11 | 15 | **7** |
+  | W（只修接线） | **19** | 9 | 0 | 12 | **0.5234** | 20 | 7 | 13 | 6 |
+  | H（W+证据范围与四值判定） | 15 | 8 | 0 | 17 | 0.3517 | 19 | 5 | 16 | 5 |
+
+  分类别 F1（变体）：C 0.9524/0.1429/0.5556/0.3077，W 0.9524/**0.3333**/0.5/0.3077，
+  H 0.9524/0.4545/**0.0**/**0.0**（prohibited/condition/constraint/exception）。
+- **W 的变化可与接线修复直接对应**：condition 检查的候选面在多数模型里为空，旧代码传入的
+  `mapped_id=None` 与检查实际使用的回退活动不一致，修复后 condition 面按最终活动构建，F1 0.1429→0.3333；
+  同时 W 新增 6 个对照侧 `required_condition_not_enforced` 报警（20 vs 14）。
+  **W 也有退步**：5 个 prohibited 变体（01/02/05/06/08）由正确变为 unknown、1 个变为 none、1 个变为
+  condition——原因是 C 的比较门要求"非禁止类检查做过比较"，而这些行的 condition 面无候选，
+  于是真正的禁止存在性违规被判 unknown。H 的聚合已按"纯禁止规则不强制要求非禁止类比较"改写。
+- **H 不是靠多判 unknown 减少报警换来改善**：报警 20→19（−1）、对照明确合规 7→5（−2）、
+  对照 unknown 13→16（+3）、变体正确 19→15（−4）、成对 6→5、Macro-F1 0.5234→0.3517。
+  H 的 constraint/exception 目标检查在 40 个变体上**全部 unknown**（该两类的对照侧也 40/40 unknown），
+  即作用域收紧后这两类在本面板失去可判定性；condition 目标检查则改善（TP 3→5）。
+  结论：**H 相对 W 是退步**，其证据作用域改造在本面板没有转化为更好的判定，如实保留该结果。
+- 产物 `outputs/development/s3_extended_evidence_scope_v1/{plan.json,predictions.jsonl,metrics.json,diagnostics.json,manifest.json}`；
+  复核 `python formal_experiment/scripts/run_s3_extended_evidence_scope_v1.py --check`（哈希绑定）与 `--replay`
+  （仅从已存行复算指标，不重做推断）；测试 `tests/test_s3_extended_evidence_scope_v1.py`（22 项，含 10 项
+  非面板小流程行为验证）。
+- **边界**：旧预测/metrics/manifest 与绑定实现逐字节保留，`s3_extended_prediction_accounting_v1.py` 未改，
+  新臂经薄适配层注册并验证与最新修正后的 A/B/C 数字一致；未搜索阈值、未新增白名单/同义词/ID 特判、
+  未读 `.env`、未调用 LLM/API。
 
 ## 2026-09-11 修订 3.6.52：四类扩展最终预测与统计口径统一（S3-EXTENDED-ACCOUNTING，离线复算）
 

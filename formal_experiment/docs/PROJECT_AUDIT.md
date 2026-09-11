@@ -11,6 +11,53 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 ## 1. 当前结论
 
+**2026-09-11 四类扩展定位接线修复与证据范围臂（S3-EXTENDED-EVIDENCE-SCOPE，零 API）**：
+本批只做用户指定的两个新臂，各跑一次固定面板（160 个新对象预测）；旧 A/B/C、Winter 等按哈希只读复用。
+**范围声明：面板已被反复用于开发，结果只能称 development regression，不是独立验证、不是正式 Oracle，
+也不是真实法律合规性能。**
+
+- **R1 定位接线（已证实，机制与旧描述不同）**：runner 用 `localize().matched_activity_id` 建候选面，
+  检查器内部却调 `resolve_action()`。只读重放 C 臂 scorer 于 80 个单侧实例：**45 个单侧实例
+  （变体 19 + 对照 26）候选面以 `None` 建成**，而检查消费了回退活动。`surface_activity_id` 只对 constraint
+  面填充，14+14 是**检查引用计数**，不是 28 个独立流程；且回退只在 v3 未满足匹配时发生，不存在
+  "面绑 A、检查用 B"的两活动冲突；B 臂原生缺 `matched_activity_id` 字段不是绑定错误。
+- **R2 全图候选（已证实）**：传入活动 ID 对 condition/constraint/exception 候选**增加 0 条**
+  （`required_condition_01`：25 条 constraint、3 条 exception 全部与目标活动无关，condition 面为空）。
+- **R3 缺证据与反证混用（已证实）**：`_missing_evidence` 用 `1-max_similarity`，空候选直接 unknown；
+  H 实现 `satisfied/violated/unknown/not_applicable` 四值 + 分离 `applicability` 与 `evidence_status`。
+- **R4 上游输入问题（非打分缺陷）**：`required_condition_05` 的规则动作是"删除个人数据"，生成器把条件挂在
+  其 `mutation_config.target_activity_id` 所指活动；`exception_not_handled_04` 的 "Paragraph 1 shall not
+  apply…" 被冻结抽取器读成 prohibition(action=apply) 且同时读成 exception。本批不修订冻结抽取，
+  `target_activity_id` 只作生成器元数据、未当答案键使用。
+- **R5 对照范围（评价契约问题，已证实）**：生成器只补目标字段证据，对照报警不等于已证实法律误报；
+  作为独立诊断类别记录，未删除/重标任何实例。
+- **R6 诊断字段（已证实并修复）**：旧 `comparison_strings` 按类型名查字段导致 condition/constraint/
+  exception 记成空串；改用"元素→字段"映射并断言记录文本等于实际消费文本（640 条检查，0 不一致）。
+  **诊断修复，不影响预测。**
+
+| 臂 | 变体正确 | 错类 | 明确合规 | unknown | Macro-F1 | 对照报警 | 对照 none | 对照 unknown | 成对 |
+|---|---|---|---|---|---|---|---|---|---|
+| C（旧，适配层复算一致） | 18 | 8 | 0 | 14 | 0.4896 | 14 | 11 | 15 | **7** |
+| W（只修接线） | **19** | 9 | 0 | 12 | **0.5234** | 20 | 7 | 13 | 6 |
+| H（W+证据范围与四值判定） | 15 | 8 | 0 | 17 | 0.3517 | 19 | 5 | 16 | 5 |
+
+分类别 F1（变体）：C 0.9524/0.1429/0.5556/0.3077，W 0.9524/**0.3333**/0.5/0.3077，
+H 0.9524/0.4545/**0.0**/**0.0**。
+
+- **W 的改善可与接线修复直接对应**：修复后 condition 面按最终活动构建，condition F1 0.1429→0.3333；
+  同时新增 6 个对照侧 condition 报警（20 vs 14）。**W 的退步**：5 个 prohibited 变体（01/02/05/06/08）
+  变为 unknown、1 个 none、1 个 condition——C 的比较门要求"非禁止类检查做过比较"，这些行 condition 面无候选，
+  真正存在的禁止动作被判 unknown。
+- **H 是相对 W 的退步，不是靠多判 unknown 换低报警**：报警 20→19（−1）、对照明确合规 7→5（−2）、
+  对照 unknown 13→16（+3）、变体正确 19→15（−4）、成对 6→5、Macro-F1 0.5234→0.3517；
+  H 的 constraint/exception 目标检查 40/40 变体全部 unknown（对照侧同样 40/40），作用域收紧后这两类
+  在本面板失去可判定性；condition 目标检查改善（TP 3→5）。如实保留该结果，不继续试参数。
+- 产物 `outputs/development/s3_extended_evidence_scope_v1/`（plan/predictions/metrics/diagnostics/manifest）；
+  复核 `python formal_experiment/scripts/run_s3_extended_evidence_scope_v1.py --check` 与 `--replay`；
+  测试 `tests/test_s3_extended_evidence_scope_v1.py`（22 项，其中 10 项为非面板小流程行为验证）。
+  旧产物与绑定实现逐字节保留；`s3_extended_prediction_accounting_v1.py` 未改，新臂经薄适配层注册，
+  并与最新修正后的 A/B/C 数字逐项一致。
+
 **2026-09-11 S3-EXTENDED-ACCOUNTING 统计修复并收口**：仅复算已存三臂分数，未运行
 检测器或 LLM/API。A/B 原图与变体均按其冻结规则，C 两侧均按声明的比较门，所有指标
 只读取一份 240 实例最终预测。A/B/C 对照“误报/判合规/unknown”分别为

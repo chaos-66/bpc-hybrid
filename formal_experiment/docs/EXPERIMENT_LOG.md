@@ -4472,3 +4472,33 @@
 - 仍存在 blocker：无
 - 备注：撤回旧C成对13的优势解释；修复评分口径混用，保留各臂声明的决策规则及全部历史产物。本批收口，不新增检测优化。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-11T11:18:46.426023+00:00 - 四类扩展定位接线修复与证据范围臂 W/H：单次动作解析、来源化证据、四值判定（S3-EXTENDED-EVIDENCE-SCOPE，零 API）
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s3_extended_evidence_scope_v1；阶段=S3；方法=W_action_resolution_wiring / H_scoped_evidence_and_verdicts；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_s3_extended_evidence_scope_v1.py`
+- manifest：outputs/development/s3_extended_evidence_scope_v1/manifest.json
+- 结果摘要：W 19正确/9错类/12unknown，Macro-F1 0.5234，对照报警20，成对6；H 15正确/8错类/17unknown，Macro-F1 0.3517，对照报警19，成对5；旧 C 18/8/14，0.4896，14，7。H 相对 W 退步，如实保留
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：35 passed in 4.54s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`543a3c3a6e958e40c5dc1d182e28d6841e4044b9`；相关未提交路径：13 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 技术小结（闸门证据，补充记录）：
+  - 实际推断次数：2 次（第 1 次在写出预测前因行表示缺少视图读取的标签字段而失败；第 2 次成功；随后修正 `--replay` 守卫改变了 runner 字节，因 plan 绑定实现哈希而重跑 1 次使产物与 plan/manifest 一致）。第 2 次与第 3 次的预测标签完全相同；plan.json 在任何推断之前写盘。
+  - R1（定位接线，已证实）：C 臂候选面由 `localize().matched_activity_id` 构建，检查内部走 `resolve_action()`；只读重放其 scorer 于 80 个单侧实例，45 个（变体 19 + 对照 26）候选面以 `None` 建成而检查消费了回退活动。`surface_activity_id` 仅对 constraint 面填充，故 14+14 是检查引用计数而非 28 个独立流程；不存在"面绑 A、检查用 B"的两活动冲突；B 臂原生缺该字段不是绑定错误。
+  - R2（全图候选，已证实）：传入活动 ID 对 condition/constraint/exception 候选增加 0 条。
+  - R3（缺证据/反证混用，已证实）：H 实现 satisfied/violated/unknown/not_applicable 四值并分离 applicability 与 evidence_status，未把低相似度直接当法律矛盾。
+  - R4（上游输入问题）：required_condition_05 的规则动作是"删除个人数据"而生成器把条件挂到其 mutation_config.target_activity_id 所指活动；exception_not_handled_04 的 "Paragraph 1 shall not apply…" 被冻结抽取器读成 prohibition(action=apply) 且同时读成 exception。本批不修订冻结抽取，target_activity_id 仅作生成器元数据。
+  - R5（评价契约问题）：对照只补目标字段证据，对照报警不等于已证实法律误报；独立类别记录，未删/未重标实例。
+  - R6（诊断修复）：comparison_strings 改用"元素→字段"映射并断言记录文本等于实际消费文本（640 条，0 不一致），不影响任何预测。
+  - W 相对 C：condition F1 0.1429→0.3333（候选面按最终活动构建），但 prohibited 有 5 例（01/02/05/06/08）由正确变 unknown、1 例 none、1 例 condition——C 的比较门要求"非禁止类检查做过比较"，这些行 condition 面无候选。H 的聚合已改为纯禁止规则不强制要求非禁止类比较。
+  - H 相对 W：报警 20→19、对照明确合规 7→5、对照 unknown 13→16、变体正确 19→15、成对 6→5、Macro-F1 0.5234→0.3517；constraint/exception 目标检查 40/40 变体全部 unknown（对照侧同）。结论为退步，如实保留，不继续试参数。
+  - 计数断言全部通过：每臂变体 正确+错类+none+unknown=40、对照 报警+none+unknown=40、成对≤两侧正确数、合并准确率=(变体正确+对照正确)/80、unknown 不从主分母移除；160 个新对象完整保留。
+  - 范围：本批结果只能称 development regression，面板已被反复用于开发。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

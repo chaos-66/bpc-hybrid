@@ -1,0 +1,712 @@
+{
+  "schema_version": "s3_extended_evidence_scope_diagnostics@1.0.0",
+  "run_id": "s3_extended_evidence_scope_v1",
+  "findings": {
+    "R1": {
+      "confirmed": true,
+      "statement": "the runner built the candidate surfaces from localize().matched_activity_id while the checks called resolve_action() internally; whenever v3 did not localize the first was None and the second fell back to the label argmax",
+      "measurement": "read-only replay of arm C's own scorer over the 80 side-instances: 45 side-instances (19 variant + 26 control) built their surfaces with None while the checks consumed an activity",
+      "not_claimed": "the stored binding field surface_activity_id is only populated for the constraint surface, so the 14+14 records are check reference counts, not 28 independent processes; and arm B has no matched_activity_id field by construction, which is not a binding error"
+    },
+    "R2": {
+      "confirmed": true,
+      "statement": "condition, constraint and exception candidates were collected graph-wide; passing the activity id added no candidate",
+      "measurement": "on syn_v2_required_condition_01 the activity id added 0 of 25 constraint candidates and 0 of 3 exception candidates; the condition candidate list is empty for that model",
+      "not_claimed": "the strict numeric comparison inside ConstraintSurface.bound_texts was already activity-bound"
+    },
+    "R3": {
+      "confirmed": true,
+      "statement": "_missing_evidence answered with 1 - max_similarity and treated an empty candidate list as unknown, so 'contradicted', 'confirmed absent in a complete scope', 'cannot be expressed' and 'insufficient scope' were not separated",
+      "measurement": "arm H implements the four outcomes and reports applicability and evidence_status separately",
+      "not_claimed": "the four outcomes are a code-level distinction, not new legal semantics"
+    },
+    "R4": {
+      "confirmed": true,
+      "scope": "upstream rule extraction and panel generation, NOT a scoring bug",
+      "instances": {
+        "syn_v2_required_condition_05": {
+          "frozen_rule_action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+          "frozen_rule_condition": "where one of the following grounds applies",
+          "observation": "the generator attached the condition to the activity its own mutation_config names as target_activity_id; the rule action itself speaks about erasing personal data",
+          "status": "recorded as an input problem; target_activity_id is generator metadata and was NOT used as an answer key anywhere"
+        },
+        "syn_v2_exception_not_handled_04": {
+          "frozen_rule_element": {
+            "modality": "prohibition",
+            "action": "apply",
+            "exception": "shall not apply if the decision is necessary for entering into"
+          },
+          "observation": "the frozen six-element extractor reads 'Paragraph 1 shall not apply ...' as a prohibition on the action 'apply' and also as an exception; the batch does not revise frozen extraction",
+          "status": "recorded as an upstream parsing problem"
+        }
+      }
+    },
+    "R5": {
+      "confirmed": true,
+      "scope": "evaluation contract",
+      "statement": "the generator adds evidence for the target field only, so the controls are not proof that every other element holds; alarming on a control is therefore not a confirmed legal false positive",
+      "measurement": "reported as a separate contract-diagnosis category; no case is removed, relabelled or excluded"
+    },
+    "R6": {
+      "confirmed": true,
+      "statement": "the diagnostic comparison_strings looked the sentence up by violation-type name, so condition / constraint / exception were recorded as empty strings",
+      "measurement": "arm W and arm H record rule_field_consumed from the element-to-field mapping and rule_text_consumed from the field the check actually used; a test asserts they are equal",
+      "not_claimed": "this is a diagnostics repair and changes no prediction"
+    }
+  },
+  "policy_notes": {
+    "scope": "development regression on a panel already used for repeated development; not an independent validation, not the formal Oracle and not real legal compliance performance",
+    "arm_policies": {
+      "W_action_resolution_wiring": "unified_five_class_decision_v1+comparison_gate",
+      "H_scoped_evidence_and_verdicts": "scope_verdict_aggregation_v1"
+    },
+    "diagnostics_repair_does_not_affect_predictions": true
+  },
+  "contract_diagnosis": [
+    {
+      "item_id": "syn_v2_constraint_violated_01",
+      "rule_id": "article33",
+      "mutation_hash": "ac9e463690d7884b",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_02",
+      "rule_id": "article33",
+      "mutation_hash": "304d00e3572c6cd9",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_03",
+      "rule_id": "article16",
+      "mutation_hash": "84437a34eb557a80",
+      "categories": [
+        "whole_rule_control_unverified"
+      ],
+      "entries": [
+        {
+          "category": "whole_rule_control_unverified",
+          "detail": "the control only carries evidence for the target field; the other three checks were not constructed to be satisfied, so a control alarm is not a confirmed legal false positive"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_04",
+      "rule_id": "article34",
+      "mutation_hash": "7bcbce045475e8cc",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_05",
+      "rule_id": "article17",
+      "mutation_hash": "a3e673e9ebb0258a",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_06",
+      "rule_id": "article17",
+      "mutation_hash": "603cfdf4dd8bb2fc",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_07",
+      "rule_id": "article20",
+      "mutation_hash": "9756cdbc1c331613",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_08",
+      "rule_id": "article20",
+      "mutation_hash": "48d70855ef8b9291",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_09",
+      "rule_id": "article17",
+      "mutation_hash": "b5d2cf36a9a7968a",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_10",
+      "rule_id": "article7",
+      "mutation_hash": "b4c5f51d7ced1ed4",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_01",
+      "rule_id": "article33",
+      "mutation_hash": "c0d093e8a760d0cd",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_02",
+      "rule_id": "article34",
+      "mutation_hash": "8ede3c1101306637",
+      "categories": [
+        "target_evidence_construction",
+        "semantic_target_binding_uncertain"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        },
+        {
+          "category": "semantic_target_binding_uncertain",
+          "detail": "the frozen extractor reads one sentence as both a prohibition on the action and an exception; the batch does not revise frozen extraction"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_03",
+      "rule_id": "article34",
+      "mutation_hash": "427169b3256590f6",
+      "categories": [
+        "target_evidence_construction",
+        "semantic_target_binding_uncertain"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        },
+        {
+          "category": "semantic_target_binding_uncertain",
+          "detail": "the frozen extractor reads one sentence as both a prohibition on the action and an exception; the batch does not revise frozen extraction"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_04",
+      "rule_id": "article22",
+      "mutation_hash": "cd09818eb532de9c",
+      "categories": [
+        "target_evidence_construction",
+        "semantic_target_binding_uncertain"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        },
+        {
+          "category": "semantic_target_binding_uncertain",
+          "detail": "the frozen extractor reads one sentence as both a prohibition on the action and an exception; the batch does not revise frozen extraction"
+        }
+      ],
+      "arm_H_control_final_label": "prohibited_action_present"
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_05",
+      "rule_id": "article17",
+      "mutation_hash": "a21e78eea7105e9e",
+      "categories": [
+        "target_evidence_construction",
+        "semantic_target_binding_uncertain"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        },
+        {
+          "category": "semantic_target_binding_uncertain",
+          "detail": "the frozen extractor reads one sentence as both a prohibition on the action and an exception; the batch does not revise frozen extraction"
+        }
+      ],
+      "arm_H_control_final_label": "prohibited_action_present"
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_06",
+      "rule_id": "article33",
+      "mutation_hash": "f2f689fbb8b11bc3",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_07",
+      "rule_id": "article20",
+      "mutation_hash": "a1cc2aef48af2eab",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_08",
+      "rule_id": "article20",
+      "mutation_hash": "29165eec88dfb756",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_09",
+      "rule_id": "article20",
+      "mutation_hash": "f8b0b166a4a5d209",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_10",
+      "rule_id": "article15",
+      "mutation_hash": "443fe1c09a42f2c3",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_prohibited_action_01",
+      "rule_id": "article22",
+      "mutation_hash": "f9d7984b1be60d63",
+      "categories": [
+        "whole_rule_control_unverified"
+      ],
+      "entries": [
+        {
+          "category": "whole_rule_control_unverified",
+          "detail": "the control only carries evidence for the target field; the other three checks were not constructed to be satisfied, so a control alarm is not a confirmed legal false positive"
+        }
+      ],
+      "arm_H_control_final_label": "none"
+    },
+    {
+      "item_id": "syn_v2_prohibited_action_02",
+      "rule_id": "article22",
+      "mutation_hash": "00c35a199fbb6a45",
+      "categories": [
+        "whole_rule_control_unverified"
+      ],
+      "entries": [
+        {
+          "category": "whole_rule_control_unverified",
+          "detail": "the control only carries evidence for the target field; the other three checks were not constructed to be satisfied, so a control alarm is not a confirmed legal false positive"
+        }
+      ],
+      "arm_H_control_final_label": "none"
+    },
+    {
+      "item_id": "syn_v2_prohibited_action_03",
+      "rule_id": "article22",
+      "mutation_hash": "b7dcce466f7fea22",
+      "categories": [
+        "target_evidence_construction",
+        "semantic_target_binding_uncertain"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        },
+        {
+          "category": "semantic_target_binding_uncertain",
+          "detail": "the frozen extractor reads one sentence as both a prohibition on the action and an exception; the batch does not revise frozen extraction"
+        }
+      ],
+      "arm_H_control_final_label": "prohibited_action_present"
+    },
+    {
+      "item_id": "syn_v2_prohibited_action_04",
+      "rule_id": "article22",
+      "mutation_hash": "6214c3a576d005ad",
+      "categories": [
+        "target_evidence_construction",
+        "semantic_target_binding_uncertain"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        },
+        {
+          "category": "semantic_target_binding_uncertain",
+          "detail": "the frozen extractor reads one sentence as both a prohibition on the action and an exception; the batch does not revise frozen extraction"
+        }
+      ],
+      "arm_H_control_final_label": "prohibited_action_present"
+    },
+    {
+      "item_id": "syn_v2_prohibited_action_05",
+      "rule_id": "article7",
+      "mutation_hash": "664e38bbca4b4771",
+      "categories": [
+        "whole_rule_control_unverified"
+      ],
+      "entries": [
+        {
+          "category": "whole_rule_control_unverified",
+          "detail": "the control only carries evidence for the target field; the other three checks were not constructed to be satisfied, so a control alarm is not a confirmed legal false positive"
+        }
+      ],
+      "arm_H_control_final_label": "none"
+    },
+    {
+      "item_id": "syn_v2_prohibited_action_06",
+      "rule_id": "article7",
+      "mutation_hash": "1f5c901cc95bad2c",
+      "categories": [
+        "whole_rule_control_unverified"
+      ],
+      "entries": [
+        {
+          "category": "whole_rule_control_unverified",
+          "detail": "the control only carries evidence for the target field; the other three checks were not constructed to be satisfied, so a control alarm is not a confirmed legal false positive"
+        }
+      ],
+      "arm_H_control_final_label": "none"
+    },
+    {
+      "item_id": "syn_v2_prohibited_action_07",
+      "rule_id": "article7",
+      "mutation_hash": "edd4dfe384074175",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "prohibited_action_present"
+    },
+    {
+      "item_id": "syn_v2_prohibited_action_08",
+      "rule_id": "article15",
+      "mutation_hash": "f0ef91dda07b43cd",
+      "categories": [
+        "whole_rule_control_unverified"
+      ],
+      "entries": [
+        {
+          "category": "whole_rule_control_unverified",
+          "detail": "the control only carries evidence for the target field; the other three checks were not constructed to be satisfied, so a control alarm is not a confirmed legal false positive"
+        }
+      ],
+      "arm_H_control_final_label": "none"
+    },
+    {
+      "item_id": "syn_v2_prohibited_action_09",
+      "rule_id": "article20",
+      "mutation_hash": "4fa2a30abbb6401e",
+      "categories": [
+        "semantic_target_binding_uncertain",
+        "whole_rule_control_unverified"
+      ],
+      "entries": [
+        {
+          "category": "semantic_target_binding_uncertain",
+          "detail": "the frozen extractor reads one sentence as both a prohibition on the action and an exception; the batch does not revise frozen extraction"
+        },
+        {
+          "category": "whole_rule_control_unverified",
+          "detail": "the control only carries evidence for the target field; the other three checks were not constructed to be satisfied, so a control alarm is not a confirmed legal false positive"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_prohibited_action_10",
+      "rule_id": "article17",
+      "mutation_hash": "974d42203d9b4670",
+      "categories": [
+        "target_evidence_construction",
+        "semantic_target_binding_uncertain"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        },
+        {
+          "category": "semantic_target_binding_uncertain",
+          "detail": "the frozen extractor reads one sentence as both a prohibition on the action and an exception; the batch does not revise frozen extraction"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_required_condition_01",
+      "rule_id": "article33",
+      "mutation_hash": "5c329d885ff2a26f",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_required_condition_02",
+      "rule_id": "article33",
+      "mutation_hash": "9ee5bf5be562ebe4",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_required_condition_03",
+      "rule_id": "article33",
+      "mutation_hash": "469bfc7748dbcc22",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_required_condition_04",
+      "rule_id": "article34",
+      "mutation_hash": "3d9799bf075a1c4e",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_required_condition_05",
+      "rule_id": "article17",
+      "mutation_hash": "ff576056900e2a51",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_required_condition_06",
+      "rule_id": "article20",
+      "mutation_hash": "8e09c1e6abd48cc9",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_required_condition_07",
+      "rule_id": "article20",
+      "mutation_hash": "8e09c1e6abd48cc9",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    },
+    {
+      "item_id": "syn_v2_required_condition_08",
+      "rule_id": "article17",
+      "mutation_hash": "b807eb0a00e35963",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_required_condition_09",
+      "rule_id": "article15",
+      "mutation_hash": "c5222bca1a1250f7",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": "required_condition_not_enforced"
+    },
+    {
+      "item_id": "syn_v2_required_condition_10",
+      "rule_id": "article15",
+      "mutation_hash": "9342d0897d091154",
+      "categories": [
+        "target_evidence_construction"
+      ],
+      "entries": [
+        {
+          "category": "target_evidence_construction",
+          "detail": "the generator adds the condition to the activity its own mutation_config names; this is the panel's construction choice, not a legal answer key"
+        }
+      ],
+      "arm_H_control_final_label": null
+    }
+  ],
+  "comparison_strings_check": {
+    "checked": 640,
+    "mismatches": 0,
+    "note": "rule_text_consumed equals the sentence field the check used"
+  }
+}
