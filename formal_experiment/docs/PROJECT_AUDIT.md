@@ -49,6 +49,25 @@ article16 无 obligation 动作、article20 无 actor、9 条法条无结构化 
 条件/约束/例外不被消费。产物 `outputs/development/s3_real_rule_diagnostic_corrections_v1/`；复核命令
 `python formal_experiment/scripts/repair_s3_real_rule_diagnostics_v1.py --replay`。
 
+**2026-09-11 四类扩展的 v3 方法臂（S3-EXTENDED-V3，零 API）**：把既有 v3 动作匹配接到四类扩展检查上，
+在**同一冻结面板**（40 变体 + 40 既有对照，每类 10 对）与 `s3_formula_repair_v2` 的 reference 规则来源上
+完成一次真实比较。薄适配层 `src/bpc_hybrid/s3_extended_v3_adapter.py` 只替换动作定位（v3
+`action_match` 取代 `ExtendedViolationScorer._best_action` 的纯相似度 argmax）：四类公式、`gamma_ext`
+决策规则、冻结评价器均未改；定位出的**同一个活动**供分数门槛、exact-contradiction 门槛与
+condition/constraint/exception 候选面共用；v3 的唯一匹配/歧义/明确不满足三分语义保留（歧义与不满足保持
+不可判断，布尔结果不写成 1.0/0.0）。**结果（同口径四视图，A 变体 40 / B 对照 40 / C 成对 40 / D 合并 80）**：
+新臂 A Macro-F1 **0.2273**（Winter 0.4738、Sun 0.2381），四类中仅 prohibited F1 0.9091（10/10 命中，
+2 个错误类型），condition/constraint/exception 三类仍全为 0；B 误报 8/40（Sun 5、Winter 20）、明确合规 6、
+不可判断 26；C 成对成功 4/40（Sun 7、Winter 9）；D 五类 Macro-F1 0.1833。Sun→v3 逐项：unknown→正确 0、
+unknown→错误 0、正确→错误/unknown 0、保持 unknown 26、保持正确 10、其他 4。
+**低分卡点（有数量）**：30/30 个 condition/constraint/exception 变体在**动作定位**这一步就被挡住——
+涉及 14 个不同的规则侧动作短语，最佳候选相似度 0.3177–0.6683（全部低于冻结动作 gamma 0.8），
+26 个 `no_candidate_above_gamma`、4 个 `structure_not_satisfied`，且 **0 例**由 v3 结构层级打开了纯相似度
+门槛关着的门（`matched_with_similarity_below_recorded_gamma=0`），即 v3 的结构匹配未能补偿规则短语与
+流程标签之间的语义落差（例：`have the right to obtain from the controller confirmation …` → 最佳候选
+`Retrieve available data of the data subject` 0.6341；`apply` → `Ask consent` 0.5040）。产物
+`outputs/development/s3_extended_v3_v1/`；复核命令 `python formal_experiment/scripts/run_s3_extended_v3_v1.py --check`。
+
 **2026-09-10 动作表示与候选匹配 v3（S3-ACTION-MATCHING-V3，零 API）**：在同一冻结成对面板上
 只改动作表示与候选匹配（新增 `src/bpc_hybrid/s3_action_matching_v3.py`，继承 v2）。
 已确认并处理四个问题：**嵌套动作丢失**（`rectify/access/erase` 为 `acl` 槽位动词，被 v2 对象

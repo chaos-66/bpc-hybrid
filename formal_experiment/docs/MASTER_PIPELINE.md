@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.6.48
+**文档版本**：3.6.49
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
 **最后更新**：2026-09-11
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,37 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-11 修订 3.6.49：四类扩展的 v3 方法臂（S3-EXTENDED-V3，零 API）
+
+原三类的 v3 已有受控结果，但一直不是**扩展四类结果表**里的方法臂。本轮补齐：在 s3_formula_repair_v2 的
+reference 四类面板（40 变体 + 40 既有对照，每类 10 对）上实跑 v3 臂，同一面板、同一规则来源、同一评价口径。
+
+- **薄适配层**（`src/bpc_hybrid/s3_extended_v3_adapter.py`）：只替换动作定位——v3 `action_match` 取代
+  `ExtendedViolationScorer._best_action` 的纯相似度 argmax。四类既有公式、`gamma_ext` 决策规则、合规侧与
+  变体侧共用的统一决策、冻结评价器均未改；未改 Sun/Winter/v3 本体、相似度模型与任何阈值。
+- **一致性**：定位出的**同一个匹配活动**同时供"动作门槛 / exact-contradiction 门槛 / condition、
+  constraint、exception 候选面"使用；v3 的唯一匹配、歧义、明确不满足、候选面缺失三分语义保留，歧义与
+  不满足一律保持**不可判断**，绝不用 1.0/0.0 冒充布尔结果；不新增样本 ID 特判或词表。
+- **运行规模**：只跑新臂 40 个变体（含各自对照）= **80 个评价对象**；Winter/Sun/BM25/TF-IDF 旧臂按哈希
+  只读复用，未重跑、未改写。预测先落盘、标签后读取，真实 LLM/API 调用 0。
+- **同一口径结果**（A 变体 40 / B 对照 40 / C 成对 40 / D 合并 80）：新臂 **A Macro-F1 0.2273**、
+  A 命中 10、错误类型 2、不可判断 30；B 误报 **8/40**、明确合规 6、不可判断 26；C 成对成功 **4/40**；
+  D 五类 Macro-F1 0.1833。对照旧臂：Winter 0.4738 / 20 / 9（A/B 误报/C）、Sun 0.2381 / 5 / 7、
+  BM25 0.1429 / 0 / 4、TF-IDF 0.3750 / 11 / 12。分类别：仅 prohibited F1 0.9091，其余三类 0。
+- **Sun→v3 逐项**：unknown→正确 0、unknown→错误 0、正确→错误或 unknown 0、保持 unknown 26、保持正确 10、
+  其他 4（均为例外变体上 prohibited 类型触发）。**分数没有提高，如实交付**：新臂与 Sun 在变体侧同为
+  "只有 prohibited 可用"，对照侧与成对侧略差（8 vs 5 误报、4 vs 7 成对），差异来源已逐项定位到
+  v3 自身的词元化相似度与结构层级（例：3 个对照的 prohibited 分数因词元化越过 0.5 而误报）。
+- **低分卡点（有数量）**：30/30 个 condition/constraint/exception 变体卡在**动作定位**：14 个不同的规则侧
+  动作短语，最佳候选相似度 0.3177–0.6683（全部 < 冻结动作 gamma 0.8），26 个 `no_candidate_above_gamma`、
+  4 个 `structure_not_satisfied`；`matched_with_similarity_below_recorded_gamma = 0`，即 v3 结构层级从未
+  打开纯相似度门槛关着的门。**结论是规则短语↔流程标签的语义落差（14 个短语全部有动词谓词，不是抽取崩溃），
+  不是检查公式或后续判断的问题**；该瓶颈需在规则侧动作规范化/对齐层面解决，本轮不做。
+- 产物 `outputs/development/s3_extended_v3_v1/{predictions.jsonl,metrics.json,diagnostics.json,manifest.json}`；
+  复核入口 `python formal_experiment/scripts/run_s3_extended_v3_v1.py --check`。
+- **边界**：development-only 受控面板，不是 S3.9-EXT 的 Gold/Oracle 结论；原三类的 0.9825 不得搬入四类表；
+  Winter-style 仍名为 Winter-style，未被改称"我们的方法"。
 
 ## 2026-09-11 修订 3.6.48：真实法条诊断的证据关联、原因分类与覆盖统计返修（S3-REAL-RULE-DIAGNOSTIC-CORRECTIONS，零 API）
 

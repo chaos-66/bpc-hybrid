@@ -170,3 +170,13 @@ outputs/development/s3_real_rule_diagnostic_corrections_v1/mapping_evidence.json
 outputs/development/s3_real_rule_diagnostic_corrections_v1/summary.json text eol=lf
 outputs/development/s3_real_rule_diagnostic_corrections_v1/corrections.json text eol=lf
 outputs/development/s3_real_rule_diagnostic_corrections_v1/manifest.json text eol=lf
+
+# S3 four-type extension v3 arm: the adapter, the runner, the focused test and
+# the four run artifacts, pinned to LF for exact binding.
+src/bpc_hybrid/s3_extended_v3_adapter.py text eol=lf
+scripts/run_s3_extended_v3_v1.py text eol=lf
+tests/test_s3_extended_v3_v1.py text eol=lf
+outputs/development/s3_extended_v3_v1/predictions.jsonl text eol=lf
+outputs/development/s3_extended_v3_v1/metrics.json text eol=lf
+outputs/development/s3_extended_v3_v1/diagnostics.json text eol=lf
+outputs/development/s3_extended_v3_v1/manifest.json text eol=lf

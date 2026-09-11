@@ -209,3 +209,13 @@ formal_experiment/outputs/development/s3_real_rule_diagnostic_corrections_v1/*
 !formal_experiment/outputs/development/s3_real_rule_diagnostic_corrections_v1/summary.json
 !formal_experiment/outputs/development/s3_real_rule_diagnostic_corrections_v1/corrections.json
 !formal_experiment/outputs/development/s3_real_rule_diagnostic_corrections_v1/manifest.json
+
+# S3-EXTENDED-V3 (2026-09-11): the four-type extension arm with v3 action
+# localization.  Narrow allowlist: the run directory and its four exact files
+# only; every other file under outputs/development stays ignored.
+!formal_experiment/outputs/development/s3_extended_v3_v1/
+formal_experiment/outputs/development/s3_extended_v3_v1/*
+!formal_experiment/outputs/development/s3_extended_v3_v1/predictions.jsonl
+!formal_experiment/outputs/development/s3_extended_v3_v1/metrics.json
+!formal_experiment/outputs/development/s3_extended_v3_v1/diagnostics.json
+!formal_experiment/outputs/development/s3_extended_v3_v1/manifest.json

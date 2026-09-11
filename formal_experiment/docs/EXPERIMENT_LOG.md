@@ -4373,3 +4373,21 @@
 - 仍存在 blocker：无
 - 备注：五处已确认缺陷的返修，未改检查器/Gold/阈值/规则输入/预测，未运行新批次实验，真实 LLM/API 调用 0；允许的 4 次原生补算仅用于 v026/v032 的 IncorrectActor 证据恢复，未扩为 66 条重跑，补算结果与原预测一致，新增证据标注 recomputed_native_repair。原 v1 运行器、测试、预测、报告与 manifest 保持字节不变；修正产物在 outputs/development/s3_real_rule_diagnostic_corrections_v1/ 且只含四个文件，v1 产物按路径+哈希引用未复制。本事件明确：旧诊断汇总（84/13/8 去重数、evidence_supports_judgment 14、order_endpoint_not_an_activity、clause_has_conditions 首句口径）由本轮修正。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-11T03:04:34.732035+00:00 - 四类扩展的 v3 方法臂：把 v3 动作匹配接入四个新类型检查并在冻结面板上实跑（S3-EXTENDED-V3，零 API）
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s3_extended_v3_v1；阶段=S3；方法=v3_extended_action_structure (four-type extension with v3 action localization)；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_s3_extended_v3_v1.py`
+- manifest：outputs/development/s3_extended_v3_v1/manifest.json
+- 结果摘要：同面板 40 变体+40 对照=80 个评价对象，只跑新臂，旧四臂按哈希只读复用。A 变体 40：Macro-F1 0.2273（Winter 0.4738 / Sun 0.2381 / BM25 0.1429 / TF-IDF 0.3750），命中 10、错误类型 2、不可判断 30；B 对照 40：误报 8（Sun 5）、明确合规 6、不可判断 26；C 成对 4/40（Sun 7）；D 合并 80 五类 Macro-F1 0.1833。分类别仅 prohibited F1 0.9091，其余三类 0。Sun→v3：unknown→正确 0、unknown→错误 0、正确→错误/unknown 0、保持 unknown 26、保持正确 10、其他 4。低分卡点：30/30 个 condition/constraint/exception 变体在动作定位被挡，14 个规则动作短语最佳相似度 0.3177-0.6683 全低于冻结 gamma 0.8，0 例由 v3 结构层级补偿。
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：19 passed, 1 warning in 4.60s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`59b150f247cfb703fea02e1d45ccdff367eb8c1e`；相关未提交路径：20 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：薄适配层只替换动作定位（v3 action_match 取代纯相似度 argmax），四类公式/gamma_ext 决策/冻结评价器未改，未改 Sun/Winter/v3 本体与阈值；定位活动与证据采集共用同一活动；v3 的歧义/不满足语义保留为不可判断，不用 1.0/0.0 冒充布尔；未按 expected_violation/check_type 只启用目标类型（每实例计算全部四类后按统一规则决策）；无样本 ID 特判、无新依赖、真实 LLM/API 调用 0。结果如实交付：分数未提高，且已逐项定位差异来源（v3 词元化相似度与结构层级）。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
