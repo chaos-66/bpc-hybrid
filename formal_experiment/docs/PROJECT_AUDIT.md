@@ -44,29 +44,45 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 合并 80 准确率：C 0.3625、W **0.3250（26/80）**、H 0.2500（20/80）。分类别 F1（变体）：
 C 0.9524/0.1429/0.5556/0.3077，W 0.9524/**0.3333**/0.5/0.3077，H 0.9524/0.4545/**0.0**/**0.0**。
 
-- **2026-09-11 修订 3.6.54 原位修正（原叙述有误，此处已改写）**：①**撤回"W 有 5 个 prohibited 变体退步"**——
-  那是把 C 的 per-type 门判定与 W 的最终标签混比；按 accounting 口径 C 与 W 在全部 10 个 prohibited 变体上
-  预测完全相同，W 的真实差异只有 4 个非 prohibited 实例（2 个由错类改对、2 个由弃权/错类改错），
-  接线修复的直接作用是 condition 目标检查 TP 1→3，而 W 的对照报警由 14 升到 20。
+- **2026-09-11 修订 3.6.54 原位修正（原叙述有误；3.6.55 验收注记再次更正）**：①**撤回"W 有 5 个 prohibited
+  变体退步"**——按 accounting 口径 C 与 W 在全部 10 个 prohibited 变体上预测完全相同；旧叙述给出的
+  "跨视图混比"**确定归因无留存证据支持，已撤回**。W 的真实差异是 **4 个变体变化 + 6 个对照变化**：
+  变体侧 `constraint_violated_05` 正确→错类、`required_condition_05` 错类→正确、`required_condition_10`
+  unknown→正确、`exception_not_handled_05` unknown→错类，**正确数净增 1**；
+  对照侧 6 例均变为 condition 报警，**总对照报警 14→20，其中 condition 报警 3→9**。
+  接线修复的直接作用是 condition 目标检查 TP 1→3。
   ②**unknown / not_applicable 分列**：最终 unknown 是聚合弃权，目标检查不可判定来自可观测性，
   `not_applicable` 是"规则没有该元素"的第三种状态；H 的 not_applicable 只在目标切片之外出现
   （cross-type：condition 7 / constraint 20 / exception 24）。③**撤回"condition TP 3→5 证明机制改善"**：
-  H 另有 12 个变体经 `unconditional_bypass_branch` 判 violated，该判据未证明旁支可绕过条件回到目标活动，
-  对应测试预期也是错的；H 保留为**有已知实现缺陷的开发结果，方法验收不通过**。④**运行次数分列**：
-  尝试 3 次、成功 2 次、累计 320 个对象预测、最终保留 160 行；"两次成功预测完全相同"无留存证据、
+  H 另有 **27 条 `unconditional_bypass_branch` 记录（12 变体 + 15 对照）**，该判据未证明旁支可绕过条件
+  回到目标活动；这 27 条**包含** condition 目标切片的 **5 个条件目标命中**，而**验收方对哈希匹配 BPMN
+  的静态遍历显示，对应旁支均无法到达目标活动**（解析原图做静态核查不等于重新推断），对应测试预期也是错的；
+  H 保留为**有已知实现缺陷的开发结果，方法验收不通过**。
+  ④**运行次数分列（运行量来源＝执行回执）**：尝试 3 次、成功 2 次，**两次成功运行合计 320 个对象**；
+  **失败尝试计算量未知**，故**总量至少 320**；最终保留 160 行。"两次成功预测完全相同"无留存证据、
   无法独立核实（第一次成功的产物未保留）。
 - **离线验收复算（零推断）**：`scripts/recompute_s3_extended_acceptance_v1.py` 只读已存 JSON/JSONL 重算，
   产物 `outputs/development/s3_extended_acceptance_recompute_v1/`；与 scope 及 accounting 两份已存 metrics
   **逐项一致（differences = 0）**——主表数字本身没错，错在此前的解释与目标字段视图。目标字段视图改为
   "每类 10 目标变体 / 10 目标对照"的真/假/不可判定/不适用分区 + 单列不适用计数，且**不给逐类 P/R/F1**
-  （每类仅 10 个标注正例，不可判定既非正也非负，其他类型变体不是人工确认负例）。
+  （每类仅 10 个标注正例，不可判定既非正也非负，其他类型变体不是人工确认负例）。**停止引用**其中的
+  `variant_outcome_by_target_type`：该字段循环写入被覆盖，每个目标类型只剩**最后一个实例**；主表、
+  目标分区与成对结果已独立核对通过，**不受影响**。
+- **2026-09-11 验收注记（3.6.55）**：旧目标字段视图统计错误的三项已核实成因是 ①正例 False 被误记为 FP
+  （W 的 `exception_not_handled_04` 判定 False 即漏检，旧记 `fp=1`）；②目标对照报警漏计（prohibited 的
+  3 个目标对照报警旧记成 `tn=3`，未作报警呈现）；③TN 来源错误（condition 的 7 个目标对照阴性旧记
+  `tn=0`，constraint 的 `tn=2` 在目标对照分区无对应项）。**撤回**"禁止类退步由跨视图混比产生"这一
+  无证据的确定归因。旧产物中的上述错误说明以本注记为准。
 - **W 的改善可与接线修复直接对应**：修复后 condition 候选面按最终活动构建，condition F1 0.1429→0.3333；
-  代价是对照侧 condition 报警 14→20。**W 的退步**：`exception_not_handled_05`、`required_condition_10`
-  由弃权/错类变为错类；收益：`constraint_violated_05`、`required_condition_05` 由错类变为正确。
+  代价是对照侧 condition 报警 3→9（总对照报警 14→20）。**W 的退步**：`constraint_violated_05`
+  （正确→错类）、`exception_not_handled_05`（unknown→错类）；收益：`required_condition_05`（错类→正确）、
+  `required_condition_10`（unknown→正确）。正确数净增 1。
 - **H 是相对 W 的退步，不是靠多判 unknown 换低报警**：报警 20→19（−1）、对照明确合规 7→5（−2）、
   对照 unknown 13→16（+3）、变体正确 19→15（−4）、成对 6→5、Macro-F1 0.5234→0.3517；
   H 的 constraint/exception 目标检查在各自 10 个目标变体上真/假均为 0（全部不可判定），
-  condition 目标切片 5 真/5 不可判定但**对照侧同样 5 真**、成对 0。如实保留，不继续试参数。
+  condition 目标切片 5 真/5 不可判定但**对照侧同样 5 真**、成对 0；该 5 真包含在 27 条
+  `unconditional_bypass_branch` 记录内，验收方的静态遍历否定了其绕过结论，故不构成绕过证明。
+  如实保留，不继续试参数。
 - 产物 `outputs/development/s3_extended_evidence_scope_v1/`（plan/predictions/metrics/diagnostics/manifest）；
   复核 `python formal_experiment/scripts/run_s3_extended_evidence_scope_v1.py --check` 与 `--replay`；
   测试 `tests/test_s3_extended_evidence_scope_v1.py`（22 项，其中 10 项为非面板小流程行为验证）。

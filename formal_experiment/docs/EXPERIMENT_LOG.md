@@ -4520,3 +4520,28 @@
   每类 10 个目标变体 + 10 个目标对照给出 真/假/不可判定/不适用 与单列不适用计数，且不报逐类 P/R/F1。
   H 保留为有已知实现缺陷的开发结果，方法验收不通过。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+- 追加更正（2026-09-11 验收注记，二次更正；不改历史事件与上方任何条目）：
+  - 范围：纯文档更正，只改 `docs/MASTER_PIPELINE.md`（修订 3.6.55）与 `docs/PROJECT_AUDIT.md` 的对应段落，
+    并在本日志末尾追加本注记。未运行 `record_change.py`、未运行检查器/模型/代码测试，未改任何代码、JSON、
+    预测或 manifest；历史事件与旧产物逐字节保留。**旧产物中的上述错误说明以本次验收注记为准。**
+  - 更正 C→W 逐项：W 相对 C 是 **4 个变体变化 + 6 个对照变化**。变体侧 `constraint_violated_05` 正确→错类、
+    `required_condition_05` 错类→正确、`required_condition_10` unknown→正确、`exception_not_handled_05`
+    unknown→错类，正确数净增 1（18→19）；对照侧 6 例（`constraint_violated_05`、
+    `exception_not_handled_07/08/09/10`、`prohibited_action_10`）均由 none 变为
+    `required_condition_not_enforced`，**总对照报警 14→20，其中 condition 报警 3→9**。
+    （上方该事件"W 真实差异仅 4 个非 prohibited 实例"未列对照侧变化，以本注记为准。）
+  - 更正 H 条件旁支数量与判据：H 的 **27 条 `unconditional_bypass_branch` 记录 = 12 变体 + 15 对照**，其中
+    **包含** condition 目标切片的 **5 个条件目标命中**；**验收方对哈希匹配 BPMN 的静态遍历显示，对应旁支
+    均无法到达目标活动**（解析原图做静态核查不等于重新推断）。**H 方法验收不通过的结论保留。**
+  - 更正运行量（来源＝执行回执）：**两次成功运行合计 320 个对象**；**失败尝试的计算量未知**，
+    故**总量至少 320**；最终保留 **160 行**。
+  - 停止引用：acceptance metrics 中的 `variant_outcome_by_target_type` 在按目标类型循环时被覆盖，每个目标
+    类型仅余**最后一个实例**，不得再作为统计引用；主表、四类目标分区与成对结果已独立核对通过，**不受影响**。
+  - 根因更正：旧统计错误的三项已核实成因是 ①**正例 False 误记 FP**（W 的 `exception_not_handled_04` 判定
+    False 即漏检，旧视图记成 `fp=1`）；②**目标对照报警漏计**（prohibited 的 3 个目标对照报警旧记成
+    `tn=3`，未作报警呈现）；③**TN 来源错误**（condition 的 7 个目标对照阴性旧记 `tn=0`，constraint 的
+    `tn=2` 在目标对照分区无对应项）。**撤回**旧叙述"禁止类退步由跨视图混比产生"这一无证据支持的确定归因，
+    仅保留可核事实：accounting 口径下 C 与 W 的 10 个 prohibited 变体预测完全相同。
+  - 状态：核心开发统计可用；H 作为**已知缺陷结果**披露（方法验收不通过）；不宣称正式实验或真实法律合规
+    验证完成。
