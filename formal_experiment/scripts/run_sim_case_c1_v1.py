@@ -502,7 +502,29 @@ def render_md(capsule: dict) -> str:
             f"（{', '.join(item['reference_sources'][:2])}…） | {item['primary_lens']} | "
             f"{'是' if item['consistency']['group_C_found'] else '否'} | "
             f"{item['consistency']['miss_kind'] or '—'} | {', '.join(attr.get('changed_fields', [])) or '无'} |")
-    lines += ["", "## 5. 修复对照（程序构造的最小开发对照）", "",
+    lines += ["", "## 5. 误报检查（未修改原图上的检出，启发式筛查）", "",
+              "> 没有独立的人工合规对照，因此这里只能按**证据强度**做启发式筛查："
+              "`likely_spurious` 表示判定依赖的相似度低于 0.75（本后端无词向量，"
+              "该数值不构成语义同义的证据），`incidental` 表示检出落在参考问题视角之外。"
+              "这两类**不等于已证实的误报**，也不改变上面的状态与计数。", "",
+              "| 规则 | 检测项 | 分数 | 最强候选 | 相似度 | 与参考问题关系 | 筛查标记 |",
+              "|---|---|---|---|---|---|---|"]
+    for rule_id in core.MAIN_RULES:
+        entry = capsule["rules"][rule_id]
+        side = entry["sides"].get("C") or {}
+        lenses = set(LENS_MAP[rule_id]["secondary"]) | {LENS_MAP[rule_id]["primary"]}
+        for name, result in (side.get("checks") or {}).items():
+            if result.get("status") != core.STATUS_VIOLATION:
+                continue
+            if name in ("missing_action", "incorrect_actor", "out_of_order"):
+                continue  # inherited from B; listed in section 2
+            sim = result.get("max_sim")
+            weak = sim is not None and sim < 0.75
+            relation = "参考问题视角内" if name in lenses else "参考问题视角之外（附带检出）"
+            flag = "incidental" if name not in lenses else ("likely_spurious" if weak else "—")
+            lines.append(f"| {rule_id}/v2 | {name} | {result.get('score')} | {result.get('best_candidate')} | "
+                         f"{sim} | {relation} | {flag} |")
+    lines += ["", "## 6. 修复对照（程序构造的最小开发对照）", "",
               "| 修复 | 规则 | 视角 | 操作 | C 组修复前 | C 组修复后 | 问题是否消除 |",
               "|---|---|---|---|---|---|---|"]
     for row in capsule["repairs"]:
@@ -510,7 +532,7 @@ def render_md(capsule: dict) -> str:
         lines.append(f"| {row['repair_id']} | {row['rule_id']} | {row['lens']} | {row['semantic_zh']} | "
                      f"{after.get('before_status')} | {after.get('after_status')} | "
                      f"{'是' if after.get('problem_removed') else '否'} |")
-    lines += ["", "## 6. 计数（不做七类总 F1）", "",
+    lines += ["", "## 7. 计数（不做七类总 F1）", "",
               "| 组 | 检查数 | violation | satisfied | undetermined | not_applicable |",
               "|---|---|---|---|---|---|"]
     for group, block in capsule["summary"].items():
@@ -518,7 +540,7 @@ def render_md(capsule: dict) -> str:
         lines.append(f"| {group} | {block['checks']} | {counts.get('violation', 0)} | "
                      f"{counts.get('satisfied', 0)} | {counts.get('undetermined', 0)} | "
                      f"{counts.get('not_applicable', 0)} |")
-    lines += ["", "## 7. 边界", "",
+    lines += ["", "## 8. 边界", "",
               "- 本结果是开发性案例分析：不是正式 Gold、不是作者原始实验复现、不是独立测试、不是企业验证。",
               "- 单案例只给逐条结果与计数，不合成七类总 F1；5 轮预测只作稳定性证据。",
               "- Barrientos 语料按本地只读使用，不提交其原文；修复件是程序构造的开发对照。",
