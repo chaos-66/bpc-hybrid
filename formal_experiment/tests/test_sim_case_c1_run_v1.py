@@ -107,6 +107,73 @@ def test_run_covers_the_five_v2_rules_and_reports_counts(run_result):
         assert sum(block["status_counts"].values()) == block["checks"]
 
 
+def test_order_derivation_handles_comma_and_comma_less_conditions():
+    """P1.3: the temporal adapter must not require a comma (regression guard)."""
+    action = {"action": "verify the correctness of their personal information"}
+    comma = core.derive_order_relations({**action, "condition": "After receiving the data, the controller verifies it"})
+    assert comma == [("receiving the data", action["action"])]
+    no_comma = core.derive_order_relations({**action, "condition": "After receiving the customer's personal information"})
+    assert no_comma == [("receiving the customer's personal information", action["action"])]
+    before = core.derive_order_relations({"action": "ask for consent",
+                                          "condition": "Before retrieving any kind of personal data"})
+    assert before == [("ask for consent", "retrieving any kind of personal data")]
+    for non_order in ("if it takes more than 30 days for any reason",
+                      "When the customer receives the SIM card", ""):
+        assert core.derive_order_relations({**action, "condition": non_order}) == []
+
+
+def test_group_a_consumes_the_locked_non_llm_baseline(run_result):
+    capsule = json.loads((ROOT / "outputs/development/sim_case_c1/run_v1/capsule.json")
+                         .read_text(encoding="utf-8"))
+    for rule_id in core.MAIN_RULES:
+        meta = capsule["rules"][rule_id]["sides"]["A"]["stage2_meta"]
+        assert meta["source"] == "sun_rule_only_b0_v10a"
+        assert meta["ok"] is True
+    assert capsule["plan"]["components"]["A.stage2"]["profile"] == "PROFILE_V10A"
+
+
+def test_group_c_uses_the_accepted_repair_with_comparison_gate(run_result):
+    capsule = json.loads((ROOT / "outputs/development/sim_case_c1/run_v1/capsule.json")
+                         .read_text(encoding="utf-8"))
+    component = capsule["plan"]["components"]["C.stage3"]["four_types"]
+    assert "RepairedExtendedScorerV2" in component
+    assert "aggregate_with_comparison_gate" in component
+    for rule_id in core.MAIN_RULES:
+        gate = capsule["rules"][rule_id]["sides"]["C"]["gate"]
+        assert "evidence_comparisons_performed" in gate
+        assert gate["explicit_compliance_requires_an_evidence_comparison"] is True
+
+
+def test_repairs_are_independently_verified_and_scope_is_recorded(run_result):
+    capsule = json.loads((ROOT / "outputs/development/sim_case_c1/run_v1/capsule.json")
+                         .read_text(encoding="utf-8"))
+    repairs = {row["repair_id"]: row for row in capsule["repairs"]}
+    assert set(repairs) == {"r8_timeout_termination", "r9_add_verification", "r10_activation_owner",
+                            "r11_consent_before_retrieval", "r13_threshold_50"}
+    for row in repairs.values():
+        assert row["independent_verification"]["fix_expressed"] is True, row["repair_id"]
+    r8 = repairs["r8_timeout_termination"]["independent_verification"]
+    assert r8["scope"] == "task_scoped_timeout"
+    assert r8["scope_matches_rule_semantics"] is False
+    assert "整个流程" in r8["scope_note_zh"]
+
+
+def test_chains_record_where_information_was_lost(run_result):
+    capsule = json.loads((ROOT / "outputs/development/sim_case_c1/run_v1/capsule.json")
+                         .read_text(encoding="utf-8"))
+    for rule_id in core.MAIN_RULES:
+        chain = capsule["rules"][rule_id]["chain"]
+        assert chain["groups"]["B"]["ok"] is True
+        verdicts = {v["verdict"] for v in chain["groups"]["B"]["field_flow"].values()}
+        assert verdicts <= {"carried", "not_extracted", "lost_in_adaptation",
+                            "derived_by_declared_policy", "present_in_record_without_raw"}
+    # the fixed temporal adapter derives order relations for the two temporal rules
+    assert capsule["rules"]["r11"]["chain"]["groups"]["B"]["field_flow"]["order_relations"]["verdict"] \
+        == "derived_by_declared_policy"
+    # the non-LLM baseline failed to extract any action for r9 and r13
+    assert capsule["rules"]["r9"]["chain"]["groups"]["A"]["field_flow"]["actions"]["verdict"] == "not_extracted"
+
+
 def test_group_c_reuses_group_b_three_type_rows(run_result):
     capsule = json.loads((ROOT / "outputs/development/sim_case_c1/run_v1/capsule.json")
                          .read_text(encoding="utf-8"))

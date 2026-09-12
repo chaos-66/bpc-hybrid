@@ -57,13 +57,19 @@ ADAPTATION_POLICY = {
     "role_binding": {"Data Controller": "Phone company", "Data Subject": "Customer"},
     "primary_sentence": "longest_sentence_text_v1",
     "order_relation_derivation": {
-        "name": "temporal_marker_from_condition_v1",
+        "name": "temporal_marker_from_condition_v2",
         "rule_zh": (
             "当抽取出的 condition 以 before/after 时间标记开头时，按该标记在主动作与条件内动作之间生成一条顺序关系："
-            "'Before X, Y' -> (Y, X)；'After X, Y' -> (X, Y)。两个端点分别取条件内动词短语与主句动作，"
-            "由同一 policy 对 A/B 两组统一施加；不读取任何外部答案或偏离标签"
+            "'Before X, Y' -> (Y, X)；'After X, Y' -> (X, Y)。端点取逗号前的条件片段；"
+            "没有逗号时取整个条件片段（两种写法语义相同）。非时间标记的条件（if / when 等）不生成顺序关系，"
+            "所以条件触发不会被当成顺序断言。该 policy 对 A/B 两组统一施加，不读取任何外部答案或偏离标签"
         ),
         "applies_to_groups": ["A", "B", "C"],
+        "comma_handling": "comma_optional_v2",
+        "fix_note_zh": (
+            "v1 的正则要求条件片段里必须有逗号，而本案例的抽取结果（如 After receiving the customer's personal "
+            "information）没有逗号，导致 r9/r11 在三组里都报 no_mapped_rule_order_endpoints。v2 允许无逗号。"
+        ),
     },
     "forbidden": [
         "不得按结果新增角色绑定、动作同义词或规则 ID 特判",
@@ -193,23 +199,40 @@ def apply_role_binding(sentence: dict[str, Any]) -> dict[str, Any]:
     return bound
 
 
-_ORDER_AFTER = re.compile(r"^\s*after\s+(?P<before>.+?)\s*,\s*(?P<rest>.*)$", re.IGNORECASE)
-_ORDER_BEFORE = re.compile(r"^\s*before\s+(?P<after>.+?)\s*,\s*(?P<rest>.*)$", re.IGNORECASE)
+_ORDER_AFTER = re.compile(r"^\s*after\s+(?P<clause>.+)$", re.IGNORECASE | re.DOTALL)
+_ORDER_BEFORE = re.compile(r"^\s*before\s+(?P<clause>.+)$", re.IGNORECASE | re.DOTALL)
+
+
+def _split_marker_clause(clause: str) -> str:
+    """Take the temporal clause, with or without a comma separator.
+
+    Extractions may look like "After receiving the customer's personal
+    information" (no comma) or "After receiving the data, the controller shall
+    notify" (comma).  Both are the same temporal marker; the endpoint is what
+    precedes the comma, or the whole remainder when no comma is present.
+    """
+    head = re.split(r",", clause, maxsplit=1)[0]
+    return head.strip(" .;")
 
 
 def derive_order_relations(sentence: dict[str, Any]) -> list[tuple[str, str]]:
-    """Declared, group-independent template policy (see ADAPTATION_POLICY)."""
+    """Declared, group-independent template policy (see ADAPTATION_POLICY).
+
+    Applies to comma and comma-less temporal conditions alike; conditions whose
+    marker is not a temporal precedence marker (e.g. "if", "when") yield no
+    relation, so a conditional trigger is never turned into an order claim.
+    """
     condition = (sentence.get("condition") or "").strip()
     action = (sentence.get("action") or "").strip()
     if not condition or not action:
         return []
     match = _ORDER_AFTER.match(condition)
     if match:
-        before = match.group("before").strip(" .;")
+        before = _split_marker_clause(match.group("clause"))
         return [(before, action)] if before else []
     match = _ORDER_BEFORE.match(condition)
     if match:
-        after = match.group("after").strip(" .;")
+        after = _split_marker_clause(match.group("clause"))
         return [(action, after)] if after else []
     return []
 
@@ -311,11 +334,13 @@ def run_extended_types(scorer, sentence: dict[str, Any], model: Any, record: dic
             "best_candidate": result.get("best_candidate"),
             "max_sim": result.get("max_sim"),
             "gamma_ext": scorer.gamma_ext,
+            "comparison_performed": bool(result.get("comparison_performed")),
+            "exact_contradiction": result.get("exact_contradiction"),
         }
     return rows, {"condition_candidates": list(map(str, cond)),
                   "constraint_candidates": list(map(str, cons)),
                   "exception_candidates": list(map(str, exc)),
-                  "activity_id": activity_id}
+                  "activity_id": activity_id}, raw
 
 
 def best_activity_for(sentence: dict[str, Any], model: Any, sim) -> tuple[str | None, float | None, str | None]:

@@ -14,8 +14,9 @@
       "rule_id": "r8",
       "lens": "constraint_violated",
       "declared_issue_zh": "模型没有任何超时终止机制",
-      "operation_zh": "在 Send SIM card 上挂 30 天边界计时器，并连到“Process terminated”结束事件",
-      "expected_effect_zh": "模型出现超时终止表面；若方法正确，该条的“未表达”问题应消失"
+      "operation_zh": "在 Send SIM card 上挂 30 天可中断边界计时器，并连到“Process terminated”结束事件",
+      "expected_effect_zh": "模型出现超时终止表面（任务级）；进程级超时语义见 scope_limitation_zh",
+      "scope_limitation_zh": "该修复是任务级（发卡任务）超时，不等于规则要求的“整个流程超过 30 天则终止”；进程级超时需要重构控制流（事件子流程/事件网关），超出最小修复范围。修复正确性由独立结构核验单独判定，检测结果按此前提解读。"
     },
     {
       "repair_id": "r9_add_verification",

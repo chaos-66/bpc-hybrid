@@ -3,16 +3,17 @@
  "run_id": "sim_case_c1_run_v1",
  "claim_scope": "development_case_study_not_formal_gold",
  "groups": {
-  "A": "non-LLM deterministic adapter + frozen Sun-style three-type detection",
-  "B": "real-LLM predictions (repeat-01) + SAME three-type detection as A",
-  "C": "SAME stage2 and three-type rows as B + four extended types"
+  "A": "project non-LLM baseline sun_rule_only / B0 v10a (CoreNLP + Tregex + locked BERT-TextCNN) + frozen Sun-style three-type detection",
+  "B": "existing real-LLM predictions (repeat-01) + SAME three-type detection as A",
+  "C": "SAME stage2 and three-type rows as B + the project's accepted four-type repair (REPAIR-V2 arm C: v3 localization + comparison gate)"
  },
  "thresholds": {
   "tau": 0.8,
   "gamma": 0.8,
   "theta": 0.8,
   "gamma_ext": 0.5,
-  "source": "configs/sun_stage3_development_v1.json + frozen extended gamma"
+  "label_fallback_gamma": 0.4,
+  "source": "configs/sun_stage3_development_v1.json + REPAIR-V2 arm C configuration"
  },
  "declared_policy": {
   "name": "sim_case_c1_public_adaptation_v1",
@@ -23,13 +24,15 @@
   },
   "primary_sentence": "longest_sentence_text_v1",
   "order_relation_derivation": {
-   "name": "temporal_marker_from_condition_v1",
-   "rule_zh": "当抽取出的 condition 以 before/after 时间标记开头时，按该标记在主动作与条件内动作之间生成一条顺序关系：'Before X, Y' -> (Y, X)；'After X, Y' -> (X, Y)。两个端点分别取条件内动词短语与主句动作，由同一 policy 对 A/B 两组统一施加；不读取任何外部答案或偏离标签",
+   "name": "temporal_marker_from_condition_v2",
+   "rule_zh": "当抽取出的 condition 以 before/after 时间标记开头时，按该标记在主动作与条件内动作之间生成一条顺序关系：'Before X, Y' -> (Y, X)；'After X, Y' -> (X, Y)。端点取逗号前的条件片段；没有逗号时取整个条件片段（两种写法语义相同）。非时间标记的条件（if / when 等）不生成顺序关系，所以条件触发不会被当成顺序断言。该 policy 对 A/B 两组统一施加，不读取任何外部答案或偏离标签",
    "applies_to_groups": [
     "A",
     "B",
     "C"
-   ]
+   ],
+   "comma_handling": "comma_optional_v2",
+   "fix_note_zh": "v1 的正则要求条件片段里必须有逗号，而本案例的抽取结果（如 After receiving the customer's personal information）没有逗号，导致 r9/r11 在三组里都报 no_mapped_rule_order_endpoints。v2 允许无逗号。"
   },
   "forbidden": [
    "不得按结果新增角色绑定、动作同义词或规则 ID 特判",
@@ -72,8 +75,8 @@
   },
   "repair_specs": {
    "path": "formal_experiment/data/development/sim_case_c1/repair_specs_v1.json",
-   "sha256": "cfed705925dc0228a2cbb9ac5f5c9616ef835d0a1e5359beb6a8f0311b4eb674",
-   "bytes": 2661
+   "sha256": "1e8197f35763b5dd549ca332fcc7dd371b75b2e4235c3d694de099731f2218a8",
+   "bytes": 3004
   },
   "predictions_repeat01": {
    "path": "formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-01/canonical_predictions.jsonl",
@@ -89,15 +92,20 @@
    "path": "formal_experiment/configs/sun_stage3_development_v1.json",
    "sha256": "3ef60d5bda1e5103486d5269cd3740330e911c1b912367d822c7dbab729714c4",
    "bytes": 7627
+  },
+  "stage2_baseline_capsule": {
+   "path": "formal_experiment/outputs/development/sim_case_c1/stage2_baseline_v1/capsule.json",
+   "sha256": "cd13e08a2c3422e2500adf014c9194b095efdb4c4b30d17fb5fbc309f6c1d62b",
+   "bytes": 17358
   }
  },
  "summary": {
   "A": {
    "checks": 15,
    "status_counts": {
-    "violation": 5,
-    "undetermined": 9,
-    "satisfied": 1
+    "violation": 3,
+    "undetermined": 10,
+    "not_applicable": 2
    }
   },
   "B": {
@@ -111,8 +119,8 @@
   "C": {
    "checks": 35,
    "status_counts": {
-    "violation": 8,
-    "undetermined": 25,
+    "violation": 10,
+    "undetermined": 23,
     "satisfied": 2
    }
   }
@@ -154,26 +162,26 @@
      ],
      "lens_results": {
       "constraint_violated": {
-       "status": "undetermined",
-       "score": null,
-       "reason": "action_mapping_below_gamma"
+       "status": "violation",
+       "score": 0.674966,
+       "reason": null
       },
       "required_condition_not_enforced": {
-       "status": "undetermined",
-       "score": null,
-       "reason": "action_mapping_below_gamma"
+       "status": "violation",
+       "score": 1.0,
+       "reason": null
       }
      },
-     "found_corresponding_problem": false,
-     "all_lenses_undetermined": true,
-     "type_name_match": false
+     "found_corresponding_problem": true,
+     "all_lenses_undetermined": false,
+     "type_name_match": true
     }
    },
    "consistency": {
     "reference_issue_present": true,
-    "group_C_found": false,
-    "group_C_undetermined": true,
-    "miss_kind": "undetermined"
+    "group_C_found": true,
+    "group_C_undetermined": false,
+    "miss_kind": null
    }
   },
   {
@@ -195,14 +203,14 @@
      ],
      "lens_results": {
       "missing_action": {
-       "status": "violation",
-       "score": 1.0,
-       "reason": null
+       "status": "not_applicable",
+       "score": 0.0,
+       "reason": "empty_rule_action"
       }
      },
-     "found_corresponding_problem": true,
-     "all_lenses_undetermined": false,
-     "type_name_match": true
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
     },
     "B": {
      "covered_lenses": [
@@ -261,14 +269,14 @@
      ],
      "lens_results": {
       "incorrect_actor": {
-       "status": "violation",
-       "score": 1.0,
-       "reason": null
+       "status": "undetermined",
+       "score": null,
+       "reason": "action_mapping_below_gamma"
       }
      },
-     "found_corresponding_problem": true,
-     "all_lenses_undetermined": false,
-     "type_name_match": true
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
     },
     "B": {
      "covered_lenses": [
@@ -367,7 +375,7 @@
       "required_condition_not_enforced": {
        "status": "undetermined",
        "score": null,
-       "reason": "action_mapping_below_gamma"
+       "reason": "v3_localization_undetermined"
       }
      },
      "found_corresponding_problem": false,
@@ -463,53 +471,63 @@
    ],
    "semantic_zh": "增加 30 天超时边界计时器与终止分支",
    "model_evidence": {
-    "flattened_xml_sha256": "79289b1d7ebc98cb9c17c7e7a9ece2a7cb5a6c9b676f02e64755bd7dba0bfd1a",
-    "process_record_sha256": "3f78ee2e7bd9836722da4bb9d66fe69fe14bac7505b969b2044cdb6f8a8dcabf",
+    "flattened_xml_sha256": "1f58d6132a7f605393b70f373af1bf3d53ae01c1ea0ceb4d534b0ebce200e0bc",
+    "process_record_sha256": "6fee5b0fa51da2714eb2a5e7bf251464f328b91836a288d9ede2ec71ef9cf7ad",
     "activities": 12,
     "gateways": 6,
     "events": 10,
     "flows": 27,
     "lanes": [
-     "SIM card scenario (flattened)",
      "Phone company",
      "Another phone company",
      "Customer"
     ]
    },
+   "independent_verification": {
+    "boundary_event": true,
+    "timer_definition": true,
+    "attached_to": "Send SIM card",
+    "interrupting": "true",
+    "has_termination_path": true,
+    "fix_expressed": true,
+    "scope": "task_scoped_timeout",
+    "scope_matches_rule_semantics": false,
+    "scope_note_zh": "计时器挂在单个任务（Send SIM card）上：它表达的是“发卡任务超时即中断”，而规则 R1/r8 要求的是“整个流程耗时超过 30 天则终止流程”。在扁平化的单流程模型里，进程级超时需要重构控制流（例如用事件子流程或事件网关包住全流程），那已超出“最小修复”的范围，因此本修复件只部分表达该要求，检测结果按此前提解读。"
+   },
    "before": {
     "group": "B",
     "before_status": null,
     "before_score": null,
-    "after_status": "undetermined",
-    "after_score": null,
-    "after_reason": "action_mapping_below_gamma",
+    "after_status": "violation",
+    "after_score": 0.663005,
+    "after_reason": null,
     "problem_removed": false
    },
    "after": {
     "group": "C",
-    "before_status": "undetermined",
-    "before_score": null,
-    "after_status": "undetermined",
-    "after_score": null,
-    "after_reason": "action_mapping_below_gamma",
+    "before_status": "violation",
+    "before_score": 0.674966,
+    "after_status": "violation",
+    "after_score": 0.663005,
+    "after_reason": null,
     "problem_removed": false
    },
    "group_B": {
     "group": "B",
     "before_status": null,
     "before_score": null,
-    "after_status": "undetermined",
-    "after_score": null,
-    "after_reason": "action_mapping_below_gamma",
+    "after_status": "violation",
+    "after_score": 0.663005,
+    "after_reason": null,
     "problem_removed": false
    },
    "group_C": {
     "group": "C",
-    "before_status": "undetermined",
-    "before_score": null,
-    "after_status": "undetermined",
-    "after_score": null,
-    "after_reason": "action_mapping_below_gamma",
+    "before_status": "violation",
+    "before_score": 0.674966,
+    "after_status": "violation",
+    "after_score": 0.663005,
+    "after_reason": null,
     "problem_removed": false
    }
   },
@@ -531,8 +549,8 @@
    ],
    "semantic_zh": "在 Sign contract 之前插入核验个人信息正确性的活动",
    "model_evidence": {
-    "flattened_xml_sha256": "2188c09a8347f46ca8b70865663cf8ed733564a39de0991bfac3781046502b3f",
-    "process_record_sha256": "89fb7cef9693f20336cdce64470e12147cd225f1bdeddd4da5979323fe42e399",
+    "flattened_xml_sha256": "68f60df3b5bc520b01cf754a71cb10a4b60ce1ad3fbe0492a2b4a701362e56e3",
+    "process_record_sha256": "318294cb9975a3cf0fe8ab3781095ecf43523a2bda6e3aed2089450239e5e10a",
     "activities": 13,
     "gateways": 6,
     "events": 8,
@@ -542,6 +560,12 @@
      "Another phone company",
      "Customer"
     ]
+   },
+   "independent_verification": {
+    "activity_present": true,
+    "reachable_from_request_personal_data": true,
+    "reaches_sign_contract": true,
+    "fix_expressed": true
    },
    "before": {
     "group": "B",
@@ -594,8 +618,8 @@
    ],
    "semantic_zh": "把 Activate SIM card 的归属从 Customer 改为 Phone company",
    "model_evidence": {
-    "flattened_xml_sha256": "992e3bf8a25c1e470a2eb710416f37816e2b7b770a94fdb8ad0176eb3dfea0e0",
-    "process_record_sha256": "45191274a7c3eb5a26b6acab1b53544a346c9485b207febdde3dd9a4ab2166fe",
+    "flattened_xml_sha256": "366c419ae455d51bd1f01857d8217ce1b597c6090b424ffd19ebdc61b2f9ce18",
+    "process_record_sha256": "73b3e624c38984107dab3d2ff17b0df2ad6b9fa5059353358482e5bfcdd90e7b",
     "activities": 12,
     "gateways": 6,
     "events": 8,
@@ -605,6 +629,12 @@
      "Another phone company",
      "Customer"
     ]
+   },
+   "independent_verification": {
+    "activity": "Activate SIM card",
+    "lane": "Phone company",
+    "expected_lane": "Phone company",
+    "fix_expressed": true
    },
    "before": {
     "group": "B",
@@ -673,8 +703,8 @@
    ],
    "semantic_zh": "把同意活动移到取数之前（同意 -> 取数），并恢复 Store Data 的原后继路径",
    "model_evidence": {
-    "flattened_xml_sha256": "bb243de87af9625a6f2138db02f9592c239559dc73d6df7c4523d1500f3736ac",
-    "process_record_sha256": "c712182c29ef610c2ac2912f7730d7454455dc649717b53143a736fa467426e0",
+    "flattened_xml_sha256": "35253ec875aa38fd227ed18a139247bad0768e11eba3379583e11f8365b9bae6",
+    "process_record_sha256": "78a2e7d49a830eed75f3e1a8e5a627e9ae85bf53333c5ff7ad6da87d7fef0c31",
     "activities": 12,
     "gateways": 6,
     "events": 8,
@@ -684,6 +714,11 @@
      "Another phone company",
      "Customer"
     ]
+   },
+   "independent_verification": {
+    "consent_reaches_retrieval": true,
+    "retrieval_reaches_consent": false,
+    "fix_expressed": true
    },
    "before": {
     "group": "B",
@@ -736,8 +771,8 @@
    ],
    "semantic_zh": "把路由条件标签改为 Debt <= 50，使欠款超过 50 的客户被排除",
    "model_evidence": {
-    "flattened_xml_sha256": "37b0ef4b7b52bdb90fea7d48cfa9289907ad73bec07b9ea7158d17b82d4ac89d",
-    "process_record_sha256": "03f4ede8c930491acee41a3d78d1aefe5b9adc023a5fe2f735ef3bad4b63da98",
+    "flattened_xml_sha256": "e053cb19b984d2064197ede9160d3a781b68276a3063c57f71c531f923947123",
+    "process_record_sha256": "7866f918f511f0402c171fdcf2d531211ded80ac65a029dac5e071702920f8c5",
     "activities": 12,
     "gateways": 6,
     "events": 8,
@@ -747,6 +782,17 @@
      "Another phone company",
      "Customer"
     ]
+   },
+   "independent_verification": {
+    "labels": [
+     "Not requested",
+     "Requested",
+     "Granted",
+     "Debt <= 50"
+    ],
+    "old_label_present": false,
+    "new_label_present": true,
+    "fix_expressed": true
    },
    "before": {
     "group": "B",
@@ -790,37 +836,40 @@
   "a_to_b": {
    "r8": {
     "changed_fields": [
-     "actor_action_pairs",
-     "actors",
+     "actions",
      "constraint"
     ],
     "attribution": "extraction",
     "detail_fragments": {
-     "actors": {
-      "A": "[\"The process of phone company…(sha256 641e290a7001)",
-      "B": "[]"
-     },
-     "actor_action_pairs": {
-      "A": "[{\"actor\": \"The process of pho…(sha256 06db15bfe0d9)",
-      "B": "[]"
+     "actions": {
+      "A": "[\"be terminated\"]",
+      "B": "[\"terminated\"]"
      },
      "constraint": {
-      "A": "null",
+      "A": "more than 30 days for any reas…(sha256 8d558e03883c)",
       "B": "more than 30 days"
      }
     }
    },
    "r9": {
     "changed_fields": [
+     "actions",
      "actor_action_pairs",
      "actors",
-     "modality"
+     "condition",
+     "constraint",
+     "modality",
+     "order_relations"
     ],
     "attribution": "extraction",
     "detail_fragments": {
      "modality": {
-      "A": "null",
+      "A": "definition",
       "B": "obligation"
+     },
+     "actions": {
+      "A": "[]",
+      "B": "[\"verify the correctness of th…(sha256 81c2c242b707)"
      },
      "actors": {
       "A": "[]",
@@ -829,23 +878,35 @@
      "actor_action_pairs": {
       "A": "[]",
       "B": "[{\"actor\": \"it\", \"action\": \"ve…(sha256 75e39777086b)"
+     },
+     "order_relations": {
+      "A": "[]",
+      "B": "[[\"receiving the customer’s pe…(sha256 4325c0c11ee7)"
+     },
+     "condition": {
+      "A": "null",
+      "B": "After receiving the customer’s…(sha256 ce0f00ff159c)"
+     },
+     "constraint": {
+      "A": "After receiving the customer’s…(sha256 ce0f00ff159c)",
+      "B": "null"
      }
     }
    },
    "r10": {
     "changed_fields": [
+     "actions",
      "actor_action_pairs",
-     "actors",
      "constraint"
     ],
     "attribution": "extraction",
     "detail_fragments": {
-     "actors": {
-      "A": "[\"the customer\"]",
-      "B": "[\"the phone company\"]"
+     "actions": {
+      "A": "[\", the phone company must act…(sha256 5b12c37d6e2e)",
+      "B": "[\"activate the SIM card\"]"
      },
      "actor_action_pairs": {
-      "A": "[{\"actor\": \"the customer\", \"ac…(sha256 e9ace3b9e5e9)",
+      "A": "[{\"actor\": \"the phone company\"…(sha256 e1aa9c8e47c7)",
       "B": "[{\"actor\": \"the phone company\"…(sha256 d7325c3d678f)"
      },
      "constraint": {
@@ -856,23 +917,23 @@
    },
    "r11": {
     "changed_fields": [
-     "actions",
-     "actor_action_pairs",
-     "modality"
+     "condition",
+     "constraint",
+     "order_relations"
     ],
     "attribution": "extraction",
     "detail_fragments": {
-     "modality": {
+     "order_relations": {
+      "A": "[]",
+      "B": "[[\"ask the Data Subject for co…(sha256 8f4a0a956525)"
+     },
+     "condition": {
       "A": "null",
-      "B": "obligation"
+      "B": "Before retrieving any kind of …(sha256 808e79d5e3be)"
      },
-     "actions": {
-      "A": "[\"ask the Data Subject\"]",
-      "B": "[\"ask the Data Subject for con…(sha256 9b3a18d86560)"
-     },
-     "actor_action_pairs": {
-      "A": "[{\"actor\": \"Phone company\", \"a…(sha256 409cf63e789e)",
-      "B": "[{\"actor\": \"Phone company\", \"a…(sha256 107f8e2d0d5d)"
+     "constraint": {
+      "A": "Before retrieving any kind of …(sha256 808e79d5e3be)",
+      "B": "null"
      }
     }
    },
@@ -880,21 +941,31 @@
     "changed_fields": [
      "actions",
      "actor_action_pairs",
+     "actors",
+     "constraint",
      "modality"
     ],
     "attribution": "extraction",
     "detail_fragments": {
      "modality": {
-      "A": "null",
+      "A": "definition",
       "B": "prohibition"
      },
      "actions": {
-      "A": "[\"are eligible to receive new …(sha256 2b5afe4dff70)",
+      "A": "[]",
       "B": "[\"receive new SIM cards\"]"
      },
+     "actors": {
+      "A": "[]",
+      "B": "[\"Customers with outstanding d…(sha256 0366faa1ae58)"
+     },
      "actor_action_pairs": {
-      "A": "[{\"actor\": \"Customers with out…(sha256 38ddd4f0de3a)",
+      "A": "[]",
       "B": "[{\"actor\": \"Customers with out…(sha256 3e747a73786b)"
+     },
+     "constraint": {
+      "A": "with outstanding debt exceedin…(sha256 1d6738a9b4f1)",
+      "B": "null"
      }
     }
    }

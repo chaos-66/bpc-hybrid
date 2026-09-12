@@ -76,7 +76,8 @@ def _write(path: Path, text: str, overwrite: bool) -> dict:
 
 def run(overwrite: bool, check_only: bool) -> dict:
     import spacy
-    from bpc_hybrid.stage3_extended_violations import ExtendedViolationScorer
+    from bpc_hybrid.s3_action_matching_v3 import EvidenceChecksV3
+    from bpc_hybrid.s3_extended_v3_repair_v2 import RepairedExtendedScorerV2
     from bpc_hybrid.sun_stage3.sun_scorer import SunScorer
     from bpc_hybrid.winter_stage3.winter_similarity import WinterSimilarity
 
@@ -85,7 +86,9 @@ def run(overwrite: bool, check_only: bool) -> dict:
     tau, gamma, theta = float(thresholds["tau"]), float(thresholds["gamma"]), float(thresholds["theta"])
     sim = WinterSimilarity(nlp)
     sun = SunScorer(sim, tau, gamma, theta, nlp=nlp)
-    ext = ExtendedViolationScorer(sim.text_pair, sim.text_pair, gamma, GAMMA_EXT)
+    # Same accepted four-type implementation as the main case (REPAIR-V2 arm C).
+    v3 = EvidenceChecksV3(sim, tau, gamma, theta, nlp)
+    ext = RepairedExtendedScorerV2(v3, sim.text_pair, 0.4, GAMMA_EXT)
 
     table13 = core.load_json(TABLE13)
     stage1 = _parse(RECON.read_bytes(), "sun10_reconstruction")
@@ -139,8 +142,8 @@ def run(overwrite: bool, check_only: bool) -> dict:
         record = core.build_rule_record(sentence)
         three = core.run_three_types(sun, record, model)
         activity_id, activity_sim, activity_name = core.best_activity_for(sentence, model, sim)
-        four, surfaces = core.run_extended_types(ext, sentence, model, stage1["record"],
-                                                stage1["xml_root"], activity_id)
+        four, surfaces, _raw = core.run_extended_types(ext, sentence, model, stage1["record"],
+                                                      stage1["xml_root"], activity_id)
         for name, result in {**three, **four}.items():
             rows.append({"rule_id": rule["rule_id"], "check": name, "status": result["status"],
                          "score": result.get("score"), "reason": result.get("reason"),

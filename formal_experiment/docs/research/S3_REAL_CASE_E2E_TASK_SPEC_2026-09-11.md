@@ -318,8 +318,20 @@ v3 的"外部 `bpmn_element` → 我们七类"映射表**降级为阅读辅助**
 process_expressiveness / rule_not_applicable / unattributed）。① ② 存于
 `data/development/sim_case_c1/case_items_v2.json`，③④⑤ 只由运行胶囊填充，**不得回填**。
 
-## 11. 批准后要做的治理动作
+## 11. 问题与处理表（P4，2026-09-11 第二轮）
 
+| # | 问题表现 | 发生阶段 | 根因证据 | 处理方式 | 验证结果 | 是否关闭 | 影响的主线步骤 |
+|---|---|---|---|---|---|---|---|
+| 1 | A 组用简化确定性抽取器代表 Sun 式基线 | P1 组件错配 | `capsule.plan.groups.A` 旧值为 "non-LLM deterministic adapter" | 接入项目锁定非 LLM 基线 B0 v10a（`run_b0_batch_v10`，PROFILE_V10A，CoreNLP+Tregex+BERT-TextCNN） | A 计数由 5/9/1 变为 **3/10/2**；`sides.A.stage2_meta.source=sun_rule_only_b0_v10a` | **已关闭** | P2、P3 |
+| 2 | C 组调用旧 `ExtendedViolationScorer`，未用已验收修复 | P1 组件错配 | pipeline 3.6.51/3.6.52：REPAIR-V2 的 C 臂（v3 定位 + 比较门）是当前口径 | 改用 `RepairedExtendedScorerV2`（v3=EvidenceChecksV3 γ0.8、标签回退 0.4、γ_ext 0.5）+ `aggregate_with_comparison_gate` | C 计数由 8/25/2 变为 **10/23/2**；gate 现能区分“比较过/未比较”（r8、r10 各 2 次证据比较，r9/r11/r13 为 0） | **已关闭** | P2、P3 |
+| 3 | r9/r11 的顺序关系在三组都缺失 | P1 适配缺陷 | 旧正则要求 before/after 片段含逗号，而抽取结果是 `After receiving the customer’s personal information`（无逗号） | 改为逗号可选（`comma_optional_v2`），并提供有逗号 / 无逗号 / 非顺序条件三类验证 | r9/r11 的 B 组记录出现 `order_relations`（`derived_by_declared_policy`）；检查仍报 `no_mapped_rule_order_endpoints` | **适配部分已关闭；剩余为映射能力限制**（见 #5） | P2、P3 |
+| 4 | 修复件被二次扁平化，与原图处理不一致 | P1 适配缺陷 | 修复输入已是扁平化 XML，`_parse_flattened` 再次调用 `flatten_collaboration` | 加 `already_flattened=True` 分支 | 5 个修复件的独立结构核验 `fix_expressed` 全为 **true** | **已关闭** | P4 |
+| 5 | r8 修复件的计时范围与规则语义不符 | P4 修复语义 | 修复把 30 天计时器挂在发卡任务上，规则要求的是整流程超时终止 | 保留最小修复件，但显式记录 `scope=task_scoped_timeout`、`scope_matches_rule_semantics=false` 与前提说明 | 独立核验 `fix_expressed=true`、`scope_matches_rule_semantics=false`；检测前后均为 `violation`（方法侧） | **已关闭（作为已声明的部分表达）** | P5 |
+| 6 | r13 的“是否检出”存在报告/图/论文不一致风险 | P4 一致性 | 参考视角（条件）未检出，但另有附带检出（`incorrect_actor`、`prohibited_action_present`） | 以运行胶囊为唯一口径，三处统一 | 结果表、图、论文小节均写“参考问题未检出；附带检出 incorrect_actor 与 prohibited” | **已关闭** | P5 |
+| 7 | 相似度后端被描述为“字符串相似” | P1 事实错误 | `WinterSimilarity._similarity` 走 `Doc.similarity`（spaCy W007：无静态词向量，基于 tensor） | 更正为“无静态词向量的 tensor 相似度”；不改模型、不降阈值 | `plan.components.similarity_backend` 记录实际类与行为 | **已关闭** | P4、P5 |
+| 8 | 协作图扁平化丢弃消息流 | P1 适配限制 | 扁平化只保留 process 子元素；消息流位于 collaboration 下 | 参与者边界以命名泳道保留；消息流未建模，作为已知适配限制记录 | 活动归属（r10）在修复前后可区分，说明归属信息未丢失 | **已关闭（记录为限制）** | P4 |
+
+## 12. 批准后要做的治理动作
 1. `docs/MASTER_PIPELINE.md` §9.5 增加任务行（依赖、DoD、边界与本文一致）；
 2. `docs/AGENT_RUNBOOK.md` 增加 copy-ready prompt；
 3. `docs/PROJECT_AUDIT.md` 当前派工行登记；

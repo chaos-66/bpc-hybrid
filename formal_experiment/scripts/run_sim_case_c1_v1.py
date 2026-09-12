@@ -35,6 +35,36 @@ LENS_MAP = {  # declared comparison mapping (comparison stage only, never fed to
     "r13": {"primary": "required_condition_not_enforced", "secondary": ["constraint_violated"]},
 }
 GAMMA_EXT = 0.5
+LABEL_FALLBACK_GAMMA = 0.4  # REPAIR-V2 arm C configuration
+BASELINE_CAPSULE = ROOT / "outputs" / "development" / "sim_case_c1" / "stage2_baseline_v1" / "capsule.json"
+
+
+def _load_baseline_capsule() -> tuple[Path, dict]:
+    if not BASELINE_CAPSULE.exists():
+        raise SystemExit(
+            "group A baseline capsule missing: run "
+            "`python scripts/run_sim_case_stage2_baseline_v1.py --overwrite` first")
+    return BASELINE_CAPSULE, json.loads(BASELINE_CAPSULE.read_text(encoding="utf-8"))
+
+
+def stage2_group_a_baseline(rule_id: str, rule_text: str, baseline: dict) -> dict:
+    """Group A Stage 2 = the project's locked non-LLM baseline capsule row."""
+    import sys as _sys
+
+    _sys.path.insert(0, str(ROOT / "src"))
+    from bpc_hybrid.gdpr_s2_s3_projection import project_external_sentence
+
+    sample_id = f"sim_{rule_id}_v2"
+    row = next((r for r in baseline.get("records", []) if r.get("sample_id") == sample_id), None)
+    if row is None:
+        return {"ok": False, "error": "baseline_row_missing", "sentence": None}
+    projected = project_external_sentence(row, rule_text, sample_id)
+    if not projected.get("ok"):
+        return {"ok": False, "error": projected.get("error"), "sentence": None,
+                "diagnostics": projected.get("diagnostics")}
+    return {"ok": True, "error": None, "sentence": projected["sentence"],
+            "diagnostics": projected.get("diagnostics"),
+            "source": "sun_rule_only_b0_v10a"}
 
 
 def _sha(text: str) -> str:
@@ -62,13 +92,22 @@ def _sun_thresholds() -> dict:
             "theta": float(thresholds["theta"])}
 
 
-def _parse_flattened(payload: bytes, label: str, contract_config: Path) -> dict:
-    """Flatten a collaboration view and parse it with the frozen Stage 1 contract."""
+def _parse_flattened(payload: bytes, label: str, contract_config: Path,
+                     already_flattened: bool = False) -> dict:
+    """Parse a model view with the frozen Stage 1 contract.
+
+    ``already_flattened`` must be True for repair variants, which are produced
+    FROM the flattened original: flattening twice would re-wrap lanes and add a
+    second, unintended adaptation step.
+    """
     import xml.etree.ElementTree as ET
 
     from bpc_hybrid.stage1_process import load_stage1_contract, parse_bpmn_bytes, validate_process_record
 
-    flattened, info = flatten_collaboration(payload)
+    if already_flattened:
+        flattened, info = payload, {"transform": "already_flattened", "reason": "repair input"}
+    else:
+        flattened, info = flatten_collaboration(payload)
     contract = load_stage1_contract(contract_config)
     record = parse_bpmn_bytes(flattened, source_path=f"{label}.bpmn", contract=contract)
     validation = validate_process_record(record)
@@ -100,15 +139,16 @@ def _group_rows(scorers: dict, sentence: dict, model, stage1: dict, rule: dict) 
 
 def _extended_rows(scorers: dict, sentence: dict, model, stage1: dict, rule: dict) -> dict:
     activity_id, activity_sim, activity_name = core.best_activity_for(sentence, model, scorers["sim"])
-    rows, surfaces = core.run_extended_types(scorers["ext"], sentence, model, stage1["record"],
-                                            stage1["xml_root"], activity_id)
-    return {"extended": rows, "surfaces": surfaces,
+    rows, surfaces, raw = core.run_extended_types(scorers["ext"], sentence, model, stage1["record"],
+                                                  stage1["xml_root"], activity_id)
+    gate = scorers["gate"](raw, GAMMA_EXT)
+    return {"extended": rows, "surfaces": surfaces, "gate": gate,
             "mapped_activity": {"id": activity_id, "name": activity_name, "similarity": activity_sim}}
 
 
 def _rule_side(rule_id: str, rule_text: str, group: str, context: dict) -> dict:
     if group == "A":
-        outcome = core.stage2_group_a(rule_id, rule_text, context["nlp"])
+        outcome = stage2_group_a_baseline(rule_id, rule_text, context["baseline"])
     else:
         outcome = core.stage2_group_b(rule_id, rule_text, context["predictions"])
     if not outcome.get("ok"):
@@ -153,6 +193,143 @@ def _fragment(value) -> str:
     return f"{text[:30]}…(sha256 {_sha(text)[:12]})" if len(text) > 30 else text
 
 
+def _id_of(model, name: str) -> str | None:
+    return next((a["id"] for a in model.actions if (a.get("name") or "") == name), None)
+
+
+def _lane_of_record(record: dict, node_id: str) -> str | None:
+    for lane in record.get("lanes", []):
+        if node_id in (lane.get("flow_node_refs") or []):
+            return lane.get("name")
+    return None
+
+
+def verify_repair(repair_id: str, repaired: dict, model) -> dict:
+    """Independent structural verification of the repaired model.
+
+    Answers "does the repaired model actually express the intended fix?" WITHOUT
+    asking the detector.  The detector's answer is recorded separately, so
+    "the program did not notice the repair" can never be confused with
+    "the model was not repaired".
+    """
+    import xml.etree.ElementTree as ET
+
+    root = ET.fromstring(repaired["flattened_xml"])
+    tag = lambda e: e.tag.split("}")[1]  # noqa: E731
+    evidence: dict = {}
+    if repair_id == "r8_timeout_termination":
+        boundary = next((e for e in root.iter() if tag(e) == "boundaryEvent"), None)
+        timer = next((e for e in root.iter() if tag(e) == "timerEventDefinition"), None)
+        attached = boundary.get("attachedToRef") if boundary is not None else None
+        attached_name = next((a["name"] for a in model.actions if a["id"] == attached), attached)
+        evidence = {
+            "boundary_event": boundary is not None, "timer_definition": timer is not None,
+            "attached_to": attached_name, "interrupting": boundary.get("cancelActivity") if boundary is not None else None,
+            "has_termination_path": any(
+                f.get("sourceRef") == (boundary.get("id") if boundary is not None else None)
+                and f.get("targetRef") and any(
+                    e.get("id") == f.get("targetRef") and tag(e) == "endEvent" for e in root.iter())
+                for f in root.iter() if tag(f) == "sequenceFlow"),
+        }
+        evidence["fix_expressed"] = all([evidence["boundary_event"], evidence["timer_definition"],
+                                         bool(attached), evidence["has_termination_path"]])
+        evidence["scope"] = "task_scoped_timeout"
+        evidence["scope_matches_rule_semantics"] = False
+        evidence["scope_note_zh"] = (
+            "计时器挂在单个任务（Send SIM card）上：它表达的是“发卡任务超时即中断”，"
+            "而规则 R1/r8 要求的是“整个流程耗时超过 30 天则终止流程”。"
+            "在扁平化的单流程模型里，进程级超时需要重构控制流（例如用事件子流程或事件网关包住全流程），"
+            "那已超出“最小修复”的范围，因此本修复件只部分表达该要求，检测结果按此前提解读。")
+    elif repair_id == "r9_add_verification":
+        target = _id_of(model, "Verify correctness of customer personal data")
+        before = _id_of(model, "Request personal data")
+        after = _id_of(model, "Sign contract")
+        evidence = {
+            "activity_present": target is not None,
+            "reachable_from_request_personal_data": bool(target and before and model.is_reachable(before, target)),
+            "reaches_sign_contract": bool(target and after and model.is_reachable(target, after)),
+        }
+        evidence["fix_expressed"] = all(evidence.values())
+    elif repair_id == "r10_activation_owner":
+        activity = _id_of(model, "Activate SIM card")
+        lane = _lane_of_record(repaired["record"], activity) if activity else None
+        evidence = {"activity": "Activate SIM card", "lane": lane, "expected_lane": "Phone company"}
+        evidence["fix_expressed"] = lane == "Phone company"
+    elif repair_id == "r11_consent_before_retrieval":
+        consent = _id_of(model, "Ask for consent")
+        retrieval = _id_of(model, "Request personal data")
+        evidence = {
+            "consent_reaches_retrieval": bool(consent and retrieval and model.is_reachable(consent, retrieval)),
+            "retrieval_reaches_consent": bool(consent and retrieval and model.is_reachable(retrieval, consent)),
+        }
+        evidence["fix_expressed"] = evidence["consent_reaches_retrieval"] and not evidence["retrieval_reaches_consent"]
+    elif repair_id == "r13_threshold_50":
+        labels = [f.get("name") for f in root.iter() if tag(f) == "sequenceFlow" and f.get("name")]
+        evidence = {"labels": labels, "old_label_present": "Debt < 100" in labels,
+                    "new_label_present": "Debt <= 50" in labels}
+        evidence["fix_expressed"] = evidence["new_label_present"] and not evidence["old_label_present"]
+    else:
+        evidence = {"fix_expressed": False, "reason": "unknown repair"}
+    return evidence
+
+
+def _raw_field_presence(row: dict) -> dict:
+    clause = (row.get("record") or {}).get("clauses") or [{}]
+    c0 = clause[0] if clause else {}
+    counts = {f: len(c0.get(f) or []) for f in ("actions", "actors", "conditions",
+                                                "constraints", "exceptions", "order_relations")}
+    return {"counts": counts, "any": {f: bool(v) for f, v in counts.items()}}
+
+
+def build_chain(rule_id: str, rule_text: str, sides: dict, raw_by_group: dict) -> dict:
+    """Rule text -> raw extraction -> adapted record -> process binding -> evidence.
+
+    The last column answers the P2 question directly: was a rule element never
+    extracted, or was it extracted and then lost during adaptation?
+    """
+    mapping = {"actions": "actions", "actors": "actors", "conditions": "condition",
+               "constraints": "constraint", "exceptions": "exception",
+               "order_relations": "order_relations"}
+    chain = {"rule_id": rule_id, "version": "v2", "rule_text_sha256": _sha(rule_text),
+             "rule_text_length": len(rule_text), "groups": {}}
+    for group, side in sides.items():
+        if not side.get("ok"):
+            chain["groups"][group] = {"ok": False, "error": side.get("error")}
+            continue
+        rule = side["rule"]
+        raw = raw_by_group.get(group) or {}
+        presence = _raw_field_presence(raw) if raw else None
+        field_flow = {}
+        if presence:
+            for raw_field, record_field in mapping.items():
+                in_raw = presence["any"].get(raw_field, False)
+                in_record = bool(rule.get(record_field))
+                if raw_field == "order_relations" and in_record and not in_raw:
+                    verdict = "derived_by_declared_policy"
+                elif in_raw and in_record:
+                    verdict = "carried"
+                elif in_raw and not in_record:
+                    verdict = "lost_in_adaptation"
+                elif not in_raw and not in_record:
+                    verdict = "not_extracted"
+                else:
+                    verdict = "present_in_record_without_raw"
+                field_flow[raw_field] = {"raw_count": presence["counts"].get(raw_field),
+                                         "in_adapted_record": in_record, "verdict": verdict}
+        chain["groups"][group] = {
+            "ok": True,
+            "raw_extraction": presence,
+            "adapted_record": rule,
+            "field_flow": field_flow,
+            "process_binding": {"mapped_activity": side.get("mapped_activity"),
+                                "surfaces": side.get("surfaces"),
+                                "candidate_activity_id": (side.get("surfaces") or {}).get("activity_id")},
+            "checks": side.get("checks"),
+            "gate": side.get("gate"),
+        }
+    return chain
+
+
 def run(overwrite: bool, check_only: bool) -> dict:
     nlp = _load_nlp()
     thresholds = _sun_thresholds()
@@ -161,7 +338,10 @@ def run(overwrite: bool, check_only: bool) -> dict:
     predictions = core.load_predictions(1)
     repair_specs = core.load_json(core.REPAIR_SPECS)
 
-    from bpc_hybrid.stage3_extended_violations import ExtendedViolationScorer  # noqa: E402
+    from bpc_hybrid.s3_action_matching_v3 import EvidenceChecksV3  # noqa: E402
+    from bpc_hybrid.s3_extended_v3_repair_v2 import (  # noqa: E402
+        RepairedExtendedScorerV2, aggregate_with_comparison_gate,
+    )
     from bpc_hybrid.sun_stage3.sun_scorer import SunScorer  # noqa: E402
     from bpc_hybrid.winter_stage3.winter_similarity import WinterSimilarity  # noqa: E402
 
@@ -172,8 +352,14 @@ def run(overwrite: bool, check_only: bool) -> dict:
     original = core.BPMN.read_bytes()
     stage1 = _parse_flattened(original, "sim_original", core.STAGE1_CONTRACT)
     model = core.build_model(stage1, nlp)
-    scorers["ext"] = ExtendedViolationScorer(sim.text_pair, sim.text_pair,
-                                             thresholds["gamma"], GAMMA_EXT)
+    # Group C uses the project's ACCEPTED four-type repair (REPAIR-V2 arm C):
+    # v3 action localization at the frozen gamma plus the comparison gate, with
+    # no forced resolution.  The original ExtendedViolationScorer is kept only
+    # for the diagnostic comparison recorded in the capsule.
+    v3 = EvidenceChecksV3(sim, thresholds["tau"], thresholds["gamma"], thresholds["theta"], nlp)
+    scorers["ext"] = RepairedExtendedScorerV2(v3, sim.text_pair, LABEL_FALLBACK_GAMMA, GAMMA_EXT)
+    scorers["gate"] = aggregate_with_comparison_gate
+    baseline_path, baseline = _load_baseline_capsule()
 
     plan = {
         "schema_version": "sim_case_c1_plan@1.0.0",
@@ -183,13 +369,38 @@ def run(overwrite: bool, check_only: bool) -> dict:
         "main_denominator": [f"{rid}/v2" for rid in core.MAIN_RULES],
         "background_items": core.BACKGROUND_RULES,
         "groups": {
-            "A": "non-LLM deterministic adapter + frozen Sun-style three-type detection",
-            "B": "real-LLM predictions (repeat-01) + SAME three-type detection as A",
-            "C": "SAME stage2 and three-type rows as B + four extended types",
+            "A": "project non-LLM baseline sun_rule_only / B0 v10a (CoreNLP + Tregex + locked "
+                 "BERT-TextCNN) + frozen Sun-style three-type detection",
+            "B": "existing real-LLM predictions (repeat-01) + SAME three-type detection as A",
+            "C": "SAME stage2 and three-type rows as B + the project's accepted four-type "
+                 "repair (REPAIR-V2 arm C: v3 localization + comparison gate)",
+        },
+        "components": {
+            "A.stage2": {"entry_point": "bpc_hybrid.estg150_b0_development_v10.run_b0_batch_v10",
+                         "profile": "PROFILE_V10A",
+                         "capsule": str(baseline_path.relative_to(core.REPO)).replace("\\", "/"),
+                         "runner": "scripts/run_sim_case_stage2_baseline_v1.py",
+                         "language_boundary": "English sentences through the German-contract classifier slot"},
+            "A.stage3": {"three_types": "bpc_hybrid.sun_stage3.sun_scorer.SunScorer (Def5-7)",
+                         "four_types": "not run"},
+            "B.stage2": {"source": "outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-01",
+                         "projection": "bpc_hybrid.gdpr_s2_s3_projection.project_external_sentence"},
+            "B.stage3": {"three_types": "identical code and thresholds to A", "four_types": "not run"},
+            "C.stage2": {"source": "identical to B (same row objects)"},
+            "C.stage3": {"three_types": "identical rows reused from B",
+                         "four_types": "bpc_hybrid.s3_extended_v3_repair_v2.RepairedExtendedScorerV2 "
+                                       "(v3=EvidenceChecksV3 gamma 0.8, label fallback 0.4, gamma_ext 0.5) "
+                                       "+ aggregate_with_comparison_gate"},
+            "similarity_backend": {"class": "bpc_hybrid.winter_stage3.winter_similarity.WinterSimilarity",
+                                   "nlp": "en_core_web_sm",
+                                   "behaviour": "Doc.similarity over context-sensitive tensors (spaCy warns W007: "
+                                                "the model ships no static word vectors); it is NOT a string "
+                                                "similarity and NOT a static-embedding similarity"},
         },
         "declared_policy": core.ADAPTATION_POLICY,
         "thresholds": {**thresholds, "gamma_ext": GAMMA_EXT,
-                       "source": "configs/sun_stage3_development_v1.json + frozen extended gamma"},
+                       "label_fallback_gamma": LABEL_FALLBACK_GAMMA,
+                       "source": "configs/sun_stage3_development_v1.json + REPAIR-V2 arm C configuration"},
         "lens_map": LENS_MAP,
         "inputs": {
             "bpmn": core.artifact(core.BPMN),
@@ -200,6 +411,7 @@ def run(overwrite: bool, check_only: bool) -> dict:
             "predictions_repeat01": predictions["artifact"],
             "stage1_contract": core.artifact(core.STAGE1_CONTRACT),
             "sun_config": core.artifact(core.SUN_CONFIG),
+            "stage2_baseline_capsule": core.artifact(baseline_path),
         },
         "stage1_public_record": stage1["evidence"],
         "implementation_hashes": {
@@ -219,7 +431,8 @@ def run(overwrite: bool, check_only: bool) -> dict:
     rule_records: dict[str, dict] = {}
     for rule_id in core.MAIN_RULES:
         rule_text = requirements[(rule_id, 2)]
-        sides = {group: _rule_side(rule_id, rule_text, group, {"nlp": nlp, "predictions": predictions})
+        sides = {group: _rule_side(rule_id, rule_text, group,
+                                   {"nlp": nlp, "predictions": predictions, "baseline": baseline})
                  for group in ("A", "B")}
         entry = {"rule_id": rule_id, "version": "v2", "rule_text_sha256": _sha(rule_text),
                  "rule_text_length": len(rule_text), "sides": {}}
@@ -252,6 +465,7 @@ def run(overwrite: bool, check_only: bool) -> dict:
                 "rule": side_b["rule"],
                 "checks": {**entry["sides"]["B"]["checks"], **ext["extended"]},
                 "surfaces": ext["surfaces"], "mapped_activity": ext["mapped_activity"],
+                "gate": ext["gate"],
                 "reuses_group_b": ["stage2", "three_type_rows"],
             }
             for check, result in entry["sides"]["B"]["checks"].items():
@@ -272,6 +486,14 @@ def run(overwrite: bool, check_only: bool) -> dict:
             entry["sides"]["C"] = {"ok": False, "error": side_b.get("error")}
         entry["a_to_b"] = (_compare_records(entry["sides"]["A"]["rule"], entry["sides"]["B"]["rule"])
                            if entry["sides"]["A"].get("ok") and entry["sides"]["B"].get("ok") else None)
+        raw_by_group = {
+            "A": next((r for r in baseline.get("records", [])
+                       if r.get("sample_id") == f"sim_{rule_id}_v2"), {}),
+            "B": predictions["rows"].get(f"SIM_card_scenario/{rule_id}/v2", {}),
+        }
+        entry["chain"] = build_chain(rule_id, rule_text,
+                                     {g: entry["sides"].get(g) or {} for g in ("A", "B", "C")},
+                                     raw_by_group)
         rule_records[rule_id] = entry
         stage1 = stage1  # single public record consumed by all groups
 
@@ -330,12 +552,14 @@ def run(overwrite: bool, check_only: bool) -> dict:
     repairs = []
     for spec in repair_specs["repairs"]:
         repaired_payload, detail = repair_variant(stage1["flattened_xml"], spec["repair_id"])
-        repaired = _parse_flattened(repaired_payload, f"repair_{spec['repair_id']}", core.STAGE1_CONTRACT)
+        repaired = _parse_flattened(repaired_payload, f"repair_{spec['repair_id']}", core.STAGE1_CONTRACT,
+                                    already_flattened=True)
         repaired_model = core.build_model(repaired, nlp)
         rule_text = requirements[(spec["rule_id"], 2)]
         row = {"repair_id": spec["repair_id"], "rule_id": spec["rule_id"], "lens": spec["lens"],
                "operations": detail["operations"], "semantic_zh": detail["semantic_zh"],
                "model_evidence": repaired["evidence"],
+               "independent_verification": verify_repair(spec["repair_id"], repaired, repaired_model),
                "before": None, "after": None}
         for group in ("B", "C"):
             side = rule_records[spec["rule_id"]]["sides"].get(group, {})
@@ -447,13 +671,26 @@ def render_md(capsule: dict) -> str:
         f"- 角色绑定：{json.dumps(plan['declared_policy']['role_binding'], ensure_ascii=False)}"
         "（打分前声明，三组共用）",
         "",
-        "## 1. 三组定义与实际组件",
+        "## 1. 组件对应表（P1：这三组究竟跑了什么）",
         "",
-        "| 组 | Stage 2 | 原三类检测 | 四类扩展 |",
+        "| 组 | Stage 2（实际入口/模型） | Stage 3 三类 | Stage 3 四类 |",
         "|---|---|---|---|",
-        "| A | 非 LLM 确定性抽取（开发适配器） | 冻结 Sun 式（Def5-7） | 无 |",
-        "| B | 既有真实 LLM 预测（repeat-01） | 与 A 同一代码/阈值 | 无 |",
-        "| C | 与 B 完全相同 | 与 B 完全相同（复用同一结果） | 四类扩展（gamma_ext=0.5） |",
+        "| A | 项目锁定非 LLM 基线 `run_b0_batch_v10`（B0 v10a：CoreNLP+Tregex+BERT-TextCNN，"
+        "英文句经德语合同分类器槽 pass-through） | 冻结 Sun 式 Def5-7 | 无 |",
+        "| B | 既有真实 LLM 预测（`OURS-FULL/repeat-01`，经 `project_external_sentence` 投影） | "
+        "与 A 同一代码与阈值 | 无 |",
+        "| C | 与 B 完全相同（复用同一行对象） | 与 B 完全相同（逐行复用） | REPAIR-V2 C 臂："
+        "`RepairedExtendedScorerV2`（v3 γ=0.8 + 标签回退 0.4 + γ_ext=0.5）+ 比较门 |",
+        "",
+        f"- 相似度后端：`{plan['components']['similarity_backend']['class']}`，nlp="
+        f"`{plan['components']['similarity_backend']['nlp']}`；行为："
+        f"{plan['components']['similarity_backend']['behaviour']}",
+        f"- 阈值：tau={plan['thresholds']['tau']}, gamma={plan['thresholds']['gamma']}, "
+        f"theta={plan['thresholds']['theta']}, gamma_ext={plan['thresholds']['gamma_ext']}, "
+        f"label_fallback={plan['thresholds']['label_fallback_gamma']}",
+        f"- 角色绑定：{json.dumps(plan['declared_policy']['role_binding'], ensure_ascii=False)}；"
+        f"顺序推导政策：`{plan['declared_policy']['order_relation_derivation']['name']}`"
+        f"（{plan['declared_policy']['order_relation_derivation'].get('comma_handling')}）",
         "",
         "## 2. 逐条结果（③ 方法实际输出）",
         "",
@@ -491,7 +728,21 @@ def render_md(capsule: dict) -> str:
             for name, result in checks.items():
                 lines.append(f"| {rule_id}/v2 | {group} | {map_cell} | {name} | {result['status']} | "
                              f"{result.get('score')} | {result.get('reason') or '—'} | {cand} |")
-    lines += ["", "## 4. 与开发参考判断的逐条对照（① ② ④ ⑤）", "",
+    lines += ["", "## 4. 信息去向（P2：没抽出来，还是抽出来后在适配里丢了）", "",
+              "| 规则 | 组 | actions | actors | condition | constraint | exception | order_relations |",
+              "|---|---|---|---|---|---|---|---|"]
+    for rule_id in core.MAIN_RULES:
+        chain = capsule["rules"][rule_id]["chain"]["groups"]
+        for group in ("A", "B"):
+            flow = (chain.get(group) or {}).get("field_flow") or {}
+            cells = [((flow.get(f) or {}).get("verdict") or "—") for f in
+                     ("actions", "actors", "conditions", "constraints", "exceptions", "order_relations")]
+            lines.append(f"| {rule_id}/v2 | {group} | " + " | ".join(cells) + " |")
+    lines += ["",
+              "判定含义：`carried`=抽取到且进入适配记录；`not_extracted`=原始抽取里就没有；"
+              "`lost_in_adaptation`=抽取到但适配后丢失；`derived_by_declared_policy`=原始无该字段、"
+              "由已声明的顺序推导政策生成（不是回填答案）。",
+              "", "## 5. 与开发参考判断的逐条对照（① ② ④ ⑤）", "",
               "| 规则 | ① 语义问题 | ② 参考判断（来源） | 主检测视角 | C 组检出 | 未检出类型 | ⑤ A→B 变化字段 |",
               "|---|---|---|---|---|---|---|"]
     for item in capsule["comparison"]:
@@ -502,7 +753,7 @@ def render_md(capsule: dict) -> str:
             f"（{', '.join(item['reference_sources'][:2])}…） | {item['primary_lens']} | "
             f"{'是' if item['consistency']['group_C_found'] else '否'} | "
             f"{item['consistency']['miss_kind'] or '—'} | {', '.join(attr.get('changed_fields', [])) or '无'} |")
-    lines += ["", "## 5. 误报检查（未修改原图上的检出，启发式筛查）", "",
+    lines += ["", "## 6. 误报检查（未修改原图上的检出，启发式筛查）", "",
               "> 没有独立的人工合规对照，因此这里只能按**证据强度**做启发式筛查："
               "`likely_spurious` 表示判定依赖的相似度低于 0.75（本后端无词向量，"
               "该数值不构成语义同义的证据），`incidental` 表示检出落在参考问题视角之外。"
@@ -524,15 +775,20 @@ def render_md(capsule: dict) -> str:
             flag = "incidental" if name not in lenses else ("likely_spurious" if weak else "—")
             lines.append(f"| {rule_id}/v2 | {name} | {result.get('score')} | {result.get('best_candidate')} | "
                          f"{sim} | {relation} | {flag} |")
-    lines += ["", "## 6. 修复对照（程序构造的最小开发对照）", "",
-              "| 修复 | 规则 | 视角 | 操作 | C 组修复前 | C 组修复后 | 问题是否消除 |",
-              "|---|---|---|---|---|---|---|"]
+    lines += ["", "## 7. 修复对照（程序构造的最小开发对照）", "",
+              "> 修复正确性由**独立结构核验**判定（`independent_verification.fix_expressed`），与检测器是否识别无关；"
+              "最后一列只说明方法表现。", "",
+              "| 修复 | 规则 | 视角 | 操作 | 独立核验：表达了修复 | C 组修复前 | C 组修复后 | 检测器是否识别 |",
+              "|---|---|---|---|---|---|---|---|"]
     for row in capsule["repairs"]:
         after = row.get("group_C") or {}
+        iv = row.get("independent_verification") or {}
+        scope = "（范围限制：任务级计时≠进程级终止）" if iv.get("scope_matches_rule_semantics") is False else ""
         lines.append(f"| {row['repair_id']} | {row['rule_id']} | {row['lens']} | {row['semantic_zh']} | "
+                     f"{'是' if iv.get('fix_expressed') else '否'}{scope} | "
                      f"{after.get('before_status')} | {after.get('after_status')} | "
                      f"{'是' if after.get('problem_removed') else '否'} |")
-    lines += ["", "## 7. 计数（不做七类总 F1）", "",
+    lines += ["", "## 8. 计数（不做七类总 F1）", "",
               "| 组 | 检查数 | violation | satisfied | undetermined | not_applicable |",
               "|---|---|---|---|---|---|"]
     for group, block in capsule["summary"].items():
@@ -540,7 +796,7 @@ def render_md(capsule: dict) -> str:
         lines.append(f"| {group} | {block['checks']} | {counts.get('violation', 0)} | "
                      f"{counts.get('satisfied', 0)} | {counts.get('undetermined', 0)} | "
                      f"{counts.get('not_applicable', 0)} |")
-    lines += ["", "## 8. 边界", "",
+    lines += ["", "## 9. 边界", "",
               "- 本结果是开发性案例分析：不是正式 Gold、不是作者原始实验复现、不是独立测试、不是企业验证。",
               "- 单案例只给逐条结果与计数，不合成七类总 F1；5 轮预测只作稳定性证据。",
               "- Barrientos 语料按本地只读使用，不提交其原文；修复件是程序构造的开发对照。",

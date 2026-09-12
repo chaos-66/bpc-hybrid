@@ -27,37 +27,37 @@
 | R1 | incorrect_actor | three_types | undetermined | None | action_mapping_below_gamma |
 | R1 | out_of_order | three_types | undetermined | 0.0 | no_mapped_rule_order_endpoints |
 | R1 | prohibited_action_present | four_extended_extension | undetermined | None | rule_modality_not_prohibition |
-| R1 | required_condition_not_enforced | four_extended_extension | undetermined | None | action_mapping_below_gamma |
+| R1 | required_condition_not_enforced | four_extended_extension | violation | 1.0 | — |
 | R1 | constraint_violated | four_extended_extension | undetermined | None | empty_rule_constraint |
 | R1 | exception_not_handled | four_extended_extension | undetermined | None | empty_rule_exception |
 | R2 | missing_action | three_types | violation | 1.0 | — |
 | R2 | incorrect_actor | three_types | undetermined | None | empty_rule_actor_denominator |
 | R2 | out_of_order | three_types | undetermined | 0.0 | no_mapped_rule_order_endpoints |
 | R2 | prohibited_action_present | four_extended_extension | undetermined | None | rule_modality_not_prohibition |
-| R2 | required_condition_not_enforced | four_extended_extension | undetermined | None | action_mapping_below_gamma |
+| R2 | required_condition_not_enforced | four_extended_extension | undetermined | None | label_argmax_below_action_gamma |
 | R2 | constraint_violated | four_extended_extension | undetermined | None | empty_rule_constraint |
 | R2 | exception_not_handled | four_extended_extension | undetermined | None | empty_rule_exception |
 | R3 | missing_action | three_types | violation | 1.0 | — |
 | R3 | incorrect_actor | three_types | undetermined | None | action_mapping_below_gamma |
 | R3 | out_of_order | three_types | undetermined | 0.0 | no_mapped_rule_order_endpoints |
 | R3 | prohibited_action_present | four_extended_extension | undetermined | None | rule_modality_not_prohibition |
-| R3 | required_condition_not_enforced | four_extended_extension | undetermined | None | action_mapping_below_gamma |
+| R3 | required_condition_not_enforced | four_extended_extension | violation | 0.753439 | — |
 | R3 | constraint_violated | four_extended_extension | undetermined | None | empty_rule_constraint |
 | R3 | exception_not_handled | four_extended_extension | undetermined | None | empty_rule_exception |
 | R4 | missing_action | three_types | violation | 1.0 | — |
 | R4 | incorrect_actor | three_types | undetermined | None | action_mapping_below_gamma |
 | R4 | out_of_order | three_types | undetermined | 0.0 | no_mapped_rule_order_endpoints |
 | R4 | prohibited_action_present | four_extended_extension | undetermined | None | rule_modality_not_prohibition |
-| R4 | required_condition_not_enforced | four_extended_extension | undetermined | None | action_mapping_below_gamma |
+| R4 | required_condition_not_enforced | four_extended_extension | violation | 1.0 | — |
 | R4 | constraint_violated | four_extended_extension | undetermined | None | empty_rule_constraint |
 | R4 | exception_not_handled | four_extended_extension | undetermined | None | empty_rule_exception |
 
 ## 4. 规则记录与映射（证据）
 
 - **R1**（Company regulation）：actions=['terminated']，actors=['The process of phone company']，order_relations=[]，condition='if it takes more than 30 days for any reason'，best_activity={'id': 'sun10_new_client_acquired', 'name': 'New client acquired', 'similarity': 0.446202}
-- **R2**（Company regulation）：actions=['verify the correctness of their personal information']，actors=[]，order_relations=[]，condition="After receiving the customer's personal information"，best_activity={'id': 'sun10_ask_portability_third_party', 'name': 'Ask portability third party', 'similarity': 0.386329}
+- **R2**（Company regulation）：actions=['verify the correctness of their personal information']，actors=[]，order_relations=[("receiving the customer's personal information", 'verify the correctness of their personal information')]，condition="After receiving the customer's personal information"，best_activity={'id': 'sun10_ask_portability_third_party', 'name': 'Ask portability third party', 'similarity': 0.386329}
 - **R3**（Company regulation）：actions=['activate the sim card']，actors=['the customer']，order_relations=[]，condition='When the customer receives the sim card'，best_activity={'id': 'sun10_send_sim_card', 'name': 'Send SIM card', 'similarity': 0.706705}
-- **R4**（GDPR）：actions=['ask the Data Subject']，actors=['Phone company']，order_relations=[]，condition='Before retrieving any kind of personal data from the Data Subject'，best_activity={'id': 'sun10_ask_portability_third_party', 'name': 'Ask portability third party', 'similarity': 0.545584}
+- **R4**（GDPR）：actions=['ask the Data Subject']，actors=['Phone company']，order_relations=[('ask the Data Subject', 'retrieving any kind of personal data from the Data Subject')]，condition='Before retrieving any kind of personal data from the Data Subject'，best_activity={'id': 'sun10_ask_portability_third_party', 'name': 'Ask portability third party', 'similarity': 0.545584}
 
 ## 5. 论文两种读法（仅作文献声明，不作 Gold）
 

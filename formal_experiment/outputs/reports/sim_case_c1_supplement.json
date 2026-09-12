@@ -88,9 +88,9 @@
  "summary": {
   "checks": 28,
   "status_counts": {
-   "violation": 4,
+   "violation": 7,
    "satisfied": 0,
-   "undetermined": 24,
+   "undetermined": 21,
    "not_applicable": 0
   }
  },
@@ -134,9 +134,9 @@
   {
    "rule_id": "R1",
    "check": "required_condition_not_enforced",
-   "status": "undetermined",
-   "score": null,
-   "reason": "action_mapping_below_gamma",
+   "status": "violation",
+   "score": 1.0,
+   "reason": null,
    "group": "A",
    "family": "four_extended_extension"
   },
@@ -199,7 +199,7 @@
    "check": "required_condition_not_enforced",
    "status": "undetermined",
    "score": null,
-   "reason": "action_mapping_below_gamma",
+   "reason": "label_argmax_below_action_gamma",
    "group": "A",
    "family": "four_extended_extension"
   },
@@ -260,9 +260,9 @@
   {
    "rule_id": "R3",
    "check": "required_condition_not_enforced",
-   "status": "undetermined",
-   "score": null,
-   "reason": "action_mapping_below_gamma",
+   "status": "violation",
+   "score": 0.753439,
+   "reason": null,
    "group": "A",
    "family": "four_extended_extension"
   },
@@ -323,9 +323,9 @@
   {
    "rule_id": "R4",
    "check": "required_condition_not_enforced",
-   "status": "undetermined",
-   "score": null,
-   "reason": "action_mapping_below_gamma",
+   "status": "violation",
+   "score": 1.0,
+   "reason": null,
    "group": "A",
    "family": "four_extended_extension"
   },
