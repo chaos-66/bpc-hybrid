@@ -1,0 +1,292 @@
+{
+  "target_paired_before": {
+    "schema_version": "s3_target_paired_evaluator@2.0.0",
+    "evaluation_kind": "target_paired_causal",
+    "primary": true,
+    "total_pairs": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "pairs": 10,
+        "variant": {
+          "TP": 10,
+          "FN": 0,
+          "unknown": 0
+        },
+        "control": {
+          "TN": 8,
+          "FP": 0,
+          "unknown": 2
+        },
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "balanced_accuracy": 1.0,
+        "pair_success": 8,
+        "pair_success_rate": 0.8
+      },
+      "required_condition_not_enforced": {
+        "pairs": 10,
+        "variant": {
+          "TP": 9,
+          "FN": 1,
+          "unknown": 1
+        },
+        "control": {
+          "TN": 9,
+          "FP": 1,
+          "unknown": 0
+        },
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9,
+        "balanced_accuracy": 0.9,
+        "pair_success": 8,
+        "pair_success_rate": 0.8
+      },
+      "constraint_violated": {
+        "pairs": 10,
+        "variant": {
+          "TP": 2,
+          "FN": 8,
+          "unknown": 8
+        },
+        "control": {
+          "TN": 2,
+          "FP": 0,
+          "unknown": 8
+        },
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "balanced_accuracy": 0.6,
+        "pair_success": 2,
+        "pair_success_rate": 0.2
+      },
+      "exception_not_handled": {
+        "pairs": 10,
+        "variant": {
+          "TP": 3,
+          "FN": 7,
+          "unknown": 7
+        },
+        "control": {
+          "TN": 9,
+          "FP": 0,
+          "unknown": 1
+        },
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615,
+        "balanced_accuracy": 0.65,
+        "pair_success": 3,
+        "pair_success_rate": 0.3
+      }
+    },
+    "macro_f1_four_types": 0.6737,
+    "control_target_false_positive_rate": 0.025,
+    "target_field_unknown_rate": 0.3375,
+    "pair_success_rate": 0.525,
+    "pair_success_count": 21,
+    "variant_unknown_count": 16,
+    "control_unknown_count": 11,
+    "uses_expected_only_for_evaluation_grouping": true,
+    "does_not_mutate_predictions": true
+  },
+  "target_paired_after": {
+    "schema_version": "s3_target_paired_evaluator@2.0.0",
+    "evaluation_kind": "target_paired_causal",
+    "primary": true,
+    "total_pairs": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "pairs": 10,
+        "variant": {
+          "TP": 10,
+          "FN": 0,
+          "unknown": 0
+        },
+        "control": {
+          "TN": 8,
+          "FP": 0,
+          "unknown": 2
+        },
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "balanced_accuracy": 1.0,
+        "pair_success": 8,
+        "pair_success_rate": 0.8
+      },
+      "required_condition_not_enforced": {
+        "pairs": 10,
+        "variant": {
+          "TP": 9,
+          "FN": 1,
+          "unknown": 1
+        },
+        "control": {
+          "TN": 9,
+          "FP": 1,
+          "unknown": 0
+        },
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9,
+        "balanced_accuracy": 0.9,
+        "pair_success": 8,
+        "pair_success_rate": 0.8
+      },
+      "constraint_violated": {
+        "pairs": 10,
+        "variant": {
+          "TP": 2,
+          "FN": 8,
+          "unknown": 8
+        },
+        "control": {
+          "TN": 2,
+          "FP": 0,
+          "unknown": 8
+        },
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "balanced_accuracy": 0.6,
+        "pair_success": 2,
+        "pair_success_rate": 0.2
+      },
+      "exception_not_handled": {
+        "pairs": 10,
+        "variant": {
+          "TP": 3,
+          "FN": 7,
+          "unknown": 7
+        },
+        "control": {
+          "TN": 9,
+          "FP": 0,
+          "unknown": 1
+        },
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615,
+        "balanced_accuracy": 0.65,
+        "pair_success": 3,
+        "pair_success_rate": 0.3
+      }
+    },
+    "macro_f1_four_types": 0.6737,
+    "control_target_false_positive_rate": 0.025,
+    "target_field_unknown_rate": 0.3375,
+    "pair_success_rate": 0.525,
+    "pair_success_count": 21,
+    "variant_unknown_count": 16,
+    "control_unknown_count": 11,
+    "uses_expected_only_for_evaluation_grouping": true,
+    "does_not_mutate_predictions": true
+  },
+  "legacy_unified_after": {
+    "schema_version": "s3_unified_evaluator@2.0.0",
+    "total_objects": 80,
+    "control_objects": 40,
+    "variant_objects": 40,
+    "five_class_accuracy": 0.35,
+    "per_class": {
+      "none": {
+        "support": 40,
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222
+      },
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 0.7692,
+        "recall": 1.0,
+        "f1": 0.8696
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.2581,
+        "recall": 0.8,
+        "f1": 0.3902
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 0.6667,
+        "recall": 0.2,
+        "f1": 0.3077
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.375,
+        "recall": 0.3,
+        "f1": 0.3333
+      }
+    },
+    "macro_f1_four_violation_types": 0.4752,
+    "macro_f1_five_classes": 0.4246,
+    "abstentions": 20,
+    "denominator_policy": "None is an abstention and counts as an error for the Gold class; it is never counted as a compliant or violating prediction."
+  },
+  "clean_unified_after": {
+    "schema_version": "s3_unified_evaluator@2.0.0",
+    "total_objects": 45,
+    "control_objects": 5,
+    "variant_objects": 40,
+    "five_class_accuracy": 0.6222,
+    "per_class": {
+      "none": {
+        "support": 5,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.4706,
+        "recall": 0.8,
+        "f1": 0.5926
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.75,
+        "recall": 0.3,
+        "f1": 0.4286
+      }
+    },
+    "macro_f1_four_violation_types": 0.5886,
+    "macro_f1_five_classes": 0.6709,
+    "abstentions": 7,
+    "denominator_policy": "None is an abstention and counts as an error for the Gold class; it is never counted as a compliant or violating prediction."
+  },
+  "control_global_compliance_after": {
+    "unknown": 13,
+    "verified_compliant": 5,
+    "violated_other_field": 22
+  },
+  "fallback_transitions": {
+    "counts": {
+      "unknown_to_correct": 0,
+      "unknown_to_wrong": 0,
+      "ambiguous_to_correct": 0,
+      "ambiguous_to_wrong": 0,
+      "unchanged_unknown": 11,
+      "unchanged_ambiguous": 0
+    },
+    "transitions": []
+  },
+  "mock_only_not_experimental": true,
+  "note": "Mock transport only: this file proves evaluator/ablation wiring. It must not be cited as an experimental LLM result."
+}

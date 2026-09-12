@@ -100,6 +100,23 @@
 - 文档/排版按内容和文件检查验收；代码按两级 AGENTS.md 与 AI_CHANGE_PROTOCOL 做快速检查和具名相关测试。
   提交、推送、交稿本身不触发完整代码测试。本次计划更新使用 scoped commit 作为记录。
 
+## 2026-09-12 修订 3.6.57：Stage 3 四类扩展评价协议修正、deterministic v2 冻结与 LLM fallback real-run 预检（S3-SEMANTIC-GROUNDING-V2，零 API）
+
+**范围**：仅新增 revision `s3_semantic_grounding_v2`；不覆盖 C36、v1、33 条人工 Gold、frozen panel、Sun scorer 或旧证据。v1 C40 保留为历史。
+
+**评价修正**：
+- 真正 collision 改为 composite input identity：model-visible canonical Rule Input hash + canonical Process Input hash + different expected labels。修正后 true collision = **9 组 / 20 个 side objects**；旧 BPMN-only v1 audit 为 7 组 / 28 variants，忽略 Rule Input 且只算 variant 侧，属于过度估计。
+- control 不再默认全局 none。由四个 structural check 离线计算 `verified_compliant / violated_other_field / unknown`；本数据为 **5 / 22 / 13**。
+- 主口径改为 **target-paired causal evaluation**（每对只评 mutation target field）；统一 80 对象降级为 secondary diagnostic；新增 clean unified（40 variants + verified controls）。
+
+**Deterministic v2 结果**：target-paired Macro-F1 **0.6737**，prohibited/condition/constraint/exception F1 = **1.0000 / 0.9000 / 0.3333 / 0.4615**；target control FP **0.0250**；pair success **0.5250**；unknown rate **0.3375**。Variant binary Macro-F1 **0.5619**。clean unified 5-class Macro-F1 **0.6709**；legacy 80 对象 5-class Macro-F1 **0.4246**（仅 continuity diagnostic）。两次全量 deterministic 运行 predictions byte-identical。
+
+**Fallback subset**：`llm_fallback_candidate_pack_v1.json` 冻结 **20 条**（7 variant + 13 control），只含 deterministic final abstention；explicit compliant/violation 不送 LLM。
+
+**LLM real-run 准备**：request builder、canonical payload/hash、strict JSON + evidence-ID validator、response parser、fail-closed policy、retry=0、token/cost estimator、budget cap、append-only ledger、resume/no-double-send、raw/normalized storage、evaluator/ablation wiring 均完成并通过 mock/offline full execution（20/20）。Preflight：20 calls、62,333 estimated input tokens、10,240 output-token cap、USD cap 0.18 / RMB 1.30、off-peak only；request set hash `1ac203ec1b2bc4e4a4ac3b057788abe79b9fbf143b981ea635dc238925bdaf04`，pack hash `512b06b8f847caac98e53059570e5473017cb8da2a9620ae394fd9fd02d5102e`。仓库中 0 个匹配 scope 的有效授权；94 个非匹配授权/合同被拒绝复用。真实 API calls = 0，Arm C = **IMPLEMENTED_READY_FOR_AUTHORIZATION**。
+
+**证据**：`outputs/reports/s3_semantic_grounding_v2.{json,md}`、`..._arm_comparison.{json,md}`、`..._llm_preflight.json`、`..._llm_authorization_request.{json,md}`、`..._llm_mock_execution.json`；`outputs/evidence/s3_semantic_grounding_v2/`。
+
 ## 2026-09-12 修订 3.6.56：Stage 3 四类扩展的 deterministic-first semantic grounding 与 fail-closed LLM fallback 实现（S3-SEMANTIC-GROUNDING-V1，零 API）
 
 **范围**：development-only 受控面板 40 variant + 40 control；仅新增 revision `s3_semantic_grounding_v1`，不覆盖 `s3_formula_repair_v2`、33 条人工 Gold、frozen GDPR-7 membership、原三类结果或已有 panel/synthetic 数据。

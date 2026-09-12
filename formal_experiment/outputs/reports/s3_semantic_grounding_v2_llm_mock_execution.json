@@ -1,0 +1,586 @@
+{
+  "schema_version": "s3_semantic_grounding_llm_execution@1.0.0",
+  "runner_revision": "s3_semantic_grounding_llm_v1",
+  "base_revision": "s3_semantic_grounding_v2",
+  "mode": "mock",
+  "counts": {
+    "item_count": 20,
+    "attempted": 20,
+    "succeeded": 20,
+    "malformed": 0,
+    "rejected_by_validator": 0,
+    "ambiguous": 18,
+    "resolved": 2,
+    "skipped_resume_protected": 0,
+    "in_doubt": 0,
+    "failed": 0
+  },
+  "total_input_tokens_estimate": 62333,
+  "results": [
+    {
+      "source_index": 17,
+      "fallback_item_id": "fb_v2_0001",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0024",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "d1323d2b33924f9f5e8e7c7739e7b9532499a660d153f6194ed79f97abcb49d5"
+    },
+    {
+      "source_index": 22,
+      "fallback_item_id": "fb_v2_0002",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0011",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "8484b0fd088e75540be60d0d25d2e7a58e8d475fac333e642b942e17e1585e25"
+    },
+    {
+      "source_index": 28,
+      "fallback_item_id": "fb_v2_0003",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0024",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "d1323d2b33924f9f5e8e7c7739e7b9532499a660d153f6194ed79f97abcb49d5"
+    },
+    {
+      "source_index": 31,
+      "fallback_item_id": "fb_v2_0004",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0003",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "b3e8c6d3b4a7b756c4bfe9b0ebab96314ecdda79f8584fdbb34136e5b49bb9d5"
+    },
+    {
+      "source_index": 32,
+      "fallback_item_id": "fb_v2_0005",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0003",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "b3e8c6d3b4a7b756c4bfe9b0ebab96314ecdda79f8584fdbb34136e5b49bb9d5"
+    },
+    {
+      "source_index": 33,
+      "fallback_item_id": "fb_v2_0006",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0044",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "dffe35a612014d2bd6ef0dc922311fda56187614ef5cfd1888ef50e6eabbbe43"
+    },
+    {
+      "source_index": 35,
+      "fallback_item_id": "fb_v2_0007",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0020",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "2d3034cda236893ae54607f2511da0d6f99c07f077827c102edf516a758129a8"
+    },
+    {
+      "source_index": 40,
+      "fallback_item_id": "fb_v2_0008",
+      "status": "resolved",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0031",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "4a6d36c8ce2721303f32e53d1ebe5bd7daa3d44229ceee71839986bdef4f209d"
+    },
+    {
+      "source_index": 41,
+      "fallback_item_id": "fb_v2_0009",
+      "status": "resolved",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0031",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "4a6d36c8ce2721303f32e53d1ebe5bd7daa3d44229ceee71839986bdef4f209d"
+    },
+    {
+      "source_index": 42,
+      "fallback_item_id": "fb_v2_0010",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0044",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "dffe35a612014d2bd6ef0dc922311fda56187614ef5cfd1888ef50e6eabbbe43"
+    },
+    {
+      "source_index": 43,
+      "fallback_item_id": "fb_v2_0011",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0044",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "dffe35a612014d2bd6ef0dc922311fda56187614ef5cfd1888ef50e6eabbbe43"
+    },
+    {
+      "source_index": 52,
+      "fallback_item_id": "fb_v2_0012",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0003",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "bd166ca14d8180eb2be63e06a0e8593711aa648d366e839acd176f9bbba3e015"
+    },
+    {
+      "source_index": 53,
+      "fallback_item_id": "fb_v2_0013",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0003",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "bd166ca14d8180eb2be63e06a0e8593711aa648d366e839acd176f9bbba3e015"
+    },
+    {
+      "source_index": 54,
+      "fallback_item_id": "fb_v2_0014",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0006",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "a9e58d1d211ac519c2edef688eaae34f897bf954197852ee9aa525d9afccce16"
+    },
+    {
+      "source_index": 55,
+      "fallback_item_id": "fb_v2_0015",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0005",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "1f702b30ddccb21ee3444bcb430d23b81e833495d7ba43aeab0e670ee66bbac6"
+    },
+    {
+      "source_index": 56,
+      "fallback_item_id": "fb_v2_0016",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0003",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "bd166ca14d8180eb2be63e06a0e8593711aa648d366e839acd176f9bbba3e015"
+    },
+    {
+      "source_index": 57,
+      "fallback_item_id": "fb_v2_0017",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0024",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "d1323d2b33924f9f5e8e7c7739e7b9532499a660d153f6194ed79f97abcb49d5"
+    },
+    {
+      "source_index": 62,
+      "fallback_item_id": "fb_v2_0018",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0011",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "8484b0fd088e75540be60d0d25d2e7a58e8d475fac333e642b942e17e1585e25"
+    },
+    {
+      "source_index": 68,
+      "fallback_item_id": "fb_v2_0019",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0024",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "d1323d2b33924f9f5e8e7c7739e7b9532499a660d153f6194ed79f97abcb49d5"
+    },
+    {
+      "source_index": 71,
+      "fallback_item_id": "fb_v2_0020",
+      "status": "ambiguous",
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0004",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "7e2b5ed7d592780bcc65f514936d5c0640e9d3f9ab113d8a0a6e2150e4cc260a"
+    }
+  ],
+  "ledger_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s3_semantic_grounding_v2\\s3_semantic_grounding_llm_v1_mock_run\\execution_ledger.jsonl",
+  "normalized_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s3_semantic_grounding_v2\\s3_semantic_grounding_llm_v1_mock_run\\normalized_grounding.jsonl",
+  "raw_response_dir": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s3_semantic_grounding_v2\\s3_semantic_grounding_llm_v1_mock_run\\raw_responses",
+  "retry": 0,
+  "no_double_send": true
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": "s3_semantic_grounding_llm_preflight@1.0.0",
+  "status": "READY_FOR_AUTHORIZATION_DECISION",
+  "real_api_calls": 0,
+  "network_calls": 0,
+  "request_count": 20,
+  "request_set_sha256": "1ac203ec1b2bc4e4a4ac3b057788abe79b9fbf143b981ea635dc238925bdaf04",
+  "candidate_pack_sha256": "512b06b8f847caac98e53059570e5473017cb8da2a9620ae394fd9fd02d5102e",
+  "expected_input_tokens": 62333,
+  "total_output_token_cap": 10240,
+  "usd_cap_requested": 0.18,
+  "rmb_cap_requested": 1.3,
+  "matching_authorization_files": [],
+  "authorization_inventory_count": 95,
+  "non_matching_authorization_count": 94,
+  "non_matching_authorization_examples": [
+    {
+      "path": "configs/ablations/barrientos_paper_ablation_v1.json",
+      "scope": null,
+      "status": "prepared_not_authorized_not_run",
+      "model": "deepseek-v4-pro"
+    },
+    {
+      "path": "configs/ablations/gdpr7_direct_llm_execution_contract_v1.json",
+      "scope": "gdpr7_direct_llm_v1:74",
+      "status": "payloads_locked_real_execution_refuses_until_authorization",
+      "model": "deepseek-v4-pro"
+    },
+    {
+      "path": "configs/datasets/stage1_stage3_gdpr7_v1.json",
+      "scope": null,
+      "status": "frozen_all_seven_extension_membership",
+      "model": null
+    },
+    {
+      "path": "configs/estg150_ai_review_gpt56sol_v1.json",
+      "scope": null,
+      "status": "development_pilot_prepared_not_authorized",
+      "model": {
+        "request_model_id": "gpt-5.6-sol",
+        "required_returned_model_ids": [
+          "gpt-5.6-sol"
+        ],
+        "reasoning_effort": "high",
+        "structured_output": "strict_json_schema",
+        "temperature_field_policy": "omit",
+        "max_completion_tokens_per_call": 6500,
+        "calls_per_new_sample": 2
+      }
+    },
+    {
+      "path": "configs/g05_authorization_event_v1.json",
+      "scope": "future_external_complex_corpora_only",
+      "status": null,
+      "model": null
+    },
+    {
+      "path": "configs/g05_authorization_manifest_v1.json",
+      "scope": "future_external_complex_corpora_only",
+      "status": null,
+      "model": null
+    },
+    {
+      "path": "configs/g05_complexity_candidate_draft_v1.json",
+      "scope": "Applies ONLY to future, not-yet-activated external complex corpora and their process (BPMN) inputs. It is NEVER applied retrospectively to existing S2.10 / Stage 2 results, and its use never makes those results preregistered.",
+      "status": "draft_not_frozen",
+      "model": null
+    },
+    {
+      "path": "configs/g05_complexity_frozen_v1.json",
+      "scope": "future_external_complex_corpora_only",
+      "status": "frozen",
+      "model": null
+    }
+  ],
+  "authorization_required_scope": "S3-SEMANTIC-GROUNDING-V2-FALLBACK",
+  "authorization_request_path": "outputs/reports/s3_semantic_grounding_v2_llm_authorization_request.json",
+  "authorization_request_md_path": "outputs/reports/s3_semantic_grounding_v2_llm_authorization_request.md",
+  "execution_command": "python formal_experiment/scripts/run_s3_semantic_grounding_llm_v1.py --real --authorization outputs/reports/s3_semantic_grounding_v2_llm_authorization.json",
+  "suggested_authorization_sentence": "我授权在 S3-SEMANTIC-GROUNDING-V2-FALLBACK 范围内使用 openai_compatible/deepseek-v4-pro 对已冻结的 20 个 fallback items 执行真实 API 调用；retry=0，仅低峰运行，总费用上限 USD 0.18 / RMB 1.30，输入 token 上限 124666，输出总 token 上限 10240，请求集 hash=1ac203ec1b2bc4e4a4ac3b057788abe79b9fbf143b981ea635dc238925bdaf04，候选 pack hash=512b06b8f847caac98e53059570e5473017cb8da2a9620ae394fd9fd02d5102e。",
+  "suggested_authorization_sentence_sha256": "fa6811de304ce81ddf620181721b28dd64a0cc26a32fd9aa01ca66a64602fa52",
+  "old_task_authorizations_not_reused": true
+}

@@ -9,6 +9,48 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## 0. Latest revision: s3_semantic_grounding_v2 (2026-09-12, zero API)
+
+**Status**: VERIFIED_PROJECT_FACT (development-only synthetic controlled panel). The v2 revision repairs the evaluation protocol around the unchanged v1 deterministic scorer and freezes the LLM fallback subset. No real API call was made.
+
+**Evaluation corrections**
+- True collision identity is now `canonical_rule_input_hash + canonical_process_input_hash` over the model-visible Rule Input and Process Record/XML. True collision requires identical composite input and different expected labels.
+- Corrected true collisions: **9 groups / 20 side objects**. The old BPMN-only v1 audit reported 7 variant groups / 28 variants; it overestimated because it ignored the Rule Input and counted only the variant side.
+- Controls are no longer treated as globally none. Offline global-compliance status from the four structural checks gave **5 verified_compliant / 22 violated_other_field / 13 unknown** controls.
+- Primary evaluation is now **target-paired causal**: only `checks[target_field]` is scored per pair. The legacy 80-object unified view is retained as a secondary diagnostic.
+
+**Deterministic v2 result (reference/winter backend)**
+- Target-paired: Macro-F1 **0.6737**; per-type F1 prohibited **1.0000**, condition **0.9000**, constraint **0.3333**, exception **0.4615**; control target-field FP rate **0.0250**; pair success **21/40 = 0.5250**; target-field unknown rate **0.3375**.
+- Variant binary checks: Macro-F1 **0.5619**.
+- Clean unified (40 variants + 5 verified compliant controls): 5-class Macro-F1 **0.6709**; 4-type Macro-F1 **0.5886**.
+- Legacy 80-object diagnostic: 5-class Macro-F1 **0.4246**; 4-type Macro-F1 **0.4752**; it is not a pure none-Gold benchmark.
+- Deterministic replay: two full runs produced byte-identical `predictions.jsonl` (SHA-256 `a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85`).
+
+**Fallback subset and LLM preparation**
+- Frozen fallback candidate pack: **20 items** (7 variant + 13 control), restricted to final deterministic abstentions (`predicted_violation_type = None`) with documented semantic ambiguity; clear deterministic compliant/violation objects are excluded.
+- Strict executor is implemented: canonical request builder, payload hash, strict JSON validator, evidence-ID validation, response parser, fail-closed policy, retry=0, token/cost estimator, budget caps, append-only execution ledger, resume/no-double-send protection, raw-response storage, normalized grounding storage, and program-side evaluator/ablation wiring.
+- Full mock/offline execution succeeded: 20/20 requests, 18 ambiguous / 2 resolved, 0 malformed, 0 rejected, 0 in-doubt. This is plumbing evidence only and is not an experimental LLM result.
+- Preflight: 20 calls, 62,333 estimated input tokens, 10,240 total output-token cap, USD cap 0.18 (peak-contingency) / RMB 1.30, retry=0, off-peak only; request set SHA-256 `1ac203ec1b2bc4e4a4ac3b057788abe79b9fbf143b981ea635dc238925bdaf04`; candidate pack SHA-256 `512b06b8f847caac98e53059570e5473017cb8da2a9620ae394fd9fd02d5102e`.
+- Authorization check: 0 matching `S3-SEMANTIC-GROUNDING-V2-FALLBACK` authorizations; 94 non-matching authorization/contract records were seen and rejected. Existing S2.12/GDPR authorizations are explicitly not reused.
+- Arm C status: **IMPLEMENTED_READY_FOR_AUTHORIZATION**; real API calls = 0.
+
+**Paths**
+- `outputs/reports/s3_semantic_grounding_v2.{json,md}`
+- `outputs/reports/s3_semantic_grounding_v2_arm_comparison.{json,md}`
+- `outputs/reports/s3_semantic_grounding_v2_llm_preflight.json`
+- `outputs/reports/s3_semantic_grounding_v2_llm_authorization_request.{json,md}`
+- `outputs/reports/s3_semantic_grounding_v2_llm_mock_execution.json`
+- `outputs/evidence/s3_semantic_grounding_v2/{manifest,metrics,predictions,artifact_hashes,llm_fallback_candidate_pack_v1,llm_preflight,llm_authorization_request_v1}.{json,jsonl}`
+- `src/bpc_hybrid/s3_semantic_grounding_v2.py`
+- `src/bpc_hybrid/s3_semantic_grounding_llm_v1.py`
+- `scripts/run_s3_semantic_grounding_v2.py`
+- `scripts/run_s3_semantic_grounding_llm_v1.py`
+- `scripts/build_s3_semantic_grounding_llm_authorization_v1.py`
+- `configs/stage3_semantic_grounding_v2.json`
+- `tests/test_s3_semantic_grounding_v2.py`
+
+**Boundary**: development-only synthetic panel; not formal Oracle, not human Gold, not native Winter/Sun capability for the four extension types. The LLM arm has no real-run metrics.
+
 ## 0. Latest revision: s3_semantic_grounding_v1 (2026-09-12, zero API)
 
 **Status**: VERIFIED_PROJECT_FACT (development-only synthetic controlled panel). The real API is not authorized; the strict LLM semantic-grounding fallback is **IMPLEMENTED / NOT REAL-RUN** (0 calls, 0 network).

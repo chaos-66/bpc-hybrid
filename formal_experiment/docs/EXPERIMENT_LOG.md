@@ -4655,3 +4655,21 @@
 - 仍存在 blocker：无
 - 备注：manifest and predictions under outputs/development/s3_semantic_grounding_v1; original-three and C36 artifacts hash-verified unchanged
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-12T15:49:28.369024+00:00 - S3 semantic-grounding v2 evaluation repair, deterministic re-run, fallback pack freeze, and LLM preflight/mock wiring
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s3_semantic_grounding_v2；阶段=stage3；方法=semantic_grounding_v2_deterministic；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_s3_semantic_grounding_v2.py --overwrite; python scripts/run_s3_semantic_grounding_llm_v1.py --preflight; python scripts/run_s3_semantic_grounding_llm_v1.py --mock`
+- manifest：outputs/evidence/s3_semantic_grounding_v2/manifest.json
+- 结果摘要：target-paired macro 0.6737; true collisions 9 groups/20 items; 5 verified controls; 20 fallback items; mock LLM 20/20; real API=0
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：13 passed in 0.11s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`0d2c568b5fc8e077185226b322f0529e294bbcea`；相关未提交路径：40 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：C36/v1/frozen panel preserved; Arm C = IMPLEMENTED_READY_FOR_AUTHORIZATION
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

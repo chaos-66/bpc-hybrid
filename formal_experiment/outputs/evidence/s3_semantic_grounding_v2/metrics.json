@@ -1,0 +1,4138 @@
+{
+  "schema_version": "s3_semantic_grounding_v2_metrics@1.0.0",
+  "run_id": "s3_semantic_grounding_v2",
+  "revision": "s3_semantic_grounding_v2",
+  "scope": "development_only_synthetic_controlled_panel",
+  "evaluator_version": "s3_semantic_grounding_v2_evaluator@1.0.0",
+  "evaluation_protocol": {
+    "primary": "target_paired_causal",
+    "secondary": [
+      "clean_unified_verified_controls",
+      "legacy_unified_80_diagnostic"
+    ],
+    "legacy_control_scope": "all 40 controls as none is retained for continuity only; controls are target-field controls, not globally compliant objects"
+  },
+  "target_paired": {
+    "schema_version": "s3_target_paired_evaluator@2.0.0",
+    "evaluation_kind": "target_paired_causal",
+    "primary": true,
+    "total_pairs": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "pairs": 10,
+        "variant": {
+          "TP": 10,
+          "FN": 0,
+          "unknown": 0
+        },
+        "control": {
+          "TN": 8,
+          "FP": 0,
+          "unknown": 2
+        },
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "balanced_accuracy": 1.0,
+        "pair_success": 8,
+        "pair_success_rate": 0.8
+      },
+      "required_condition_not_enforced": {
+        "pairs": 10,
+        "variant": {
+          "TP": 9,
+          "FN": 1,
+          "unknown": 1
+        },
+        "control": {
+          "TN": 9,
+          "FP": 1,
+          "unknown": 0
+        },
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9,
+        "balanced_accuracy": 0.9,
+        "pair_success": 8,
+        "pair_success_rate": 0.8
+      },
+      "constraint_violated": {
+        "pairs": 10,
+        "variant": {
+          "TP": 2,
+          "FN": 8,
+          "unknown": 8
+        },
+        "control": {
+          "TN": 2,
+          "FP": 0,
+          "unknown": 8
+        },
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "balanced_accuracy": 0.6,
+        "pair_success": 2,
+        "pair_success_rate": 0.2
+      },
+      "exception_not_handled": {
+        "pairs": 10,
+        "variant": {
+          "TP": 3,
+          "FN": 7,
+          "unknown": 7
+        },
+        "control": {
+          "TN": 9,
+          "FP": 0,
+          "unknown": 1
+        },
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615,
+        "balanced_accuracy": 0.65,
+        "pair_success": 3,
+        "pair_success_rate": 0.3
+      }
+    },
+    "macro_f1_four_types": 0.6737,
+    "control_target_false_positive_rate": 0.025,
+    "target_field_unknown_rate": 0.3375,
+    "pair_success_rate": 0.525,
+    "pair_success_count": 21,
+    "variant_unknown_count": 16,
+    "control_unknown_count": 11,
+    "uses_expected_only_for_evaluation_grouping": true,
+    "does_not_mutate_predictions": true
+  },
+  "variant_binary": {
+    "per_type": {
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.36,
+        "recall": 0.9,
+        "f1": 0.5143
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.6,
+        "recall": 0.3,
+        "f1": 0.4
+      }
+    },
+    "macro_f1_four_types": 0.5619
+  },
+  "legacy_unified_80": {
+    "schema_version": "s3_unified_evaluator@2.0.0",
+    "total_objects": 80,
+    "control_objects": 40,
+    "variant_objects": 40,
+    "five_class_accuracy": 0.35,
+    "per_class": {
+      "none": {
+        "support": 40,
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222
+      },
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 0.7692,
+        "recall": 1.0,
+        "f1": 0.8696
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.2581,
+        "recall": 0.8,
+        "f1": 0.3902
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 0.6667,
+        "recall": 0.2,
+        "f1": 0.3077
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.375,
+        "recall": 0.3,
+        "f1": 0.3333
+      }
+    },
+    "macro_f1_four_violation_types": 0.4752,
+    "macro_f1_five_classes": 0.4246,
+    "abstentions": 20,
+    "denominator_policy": "None is an abstention and counts as an error for the Gold class; it is never counted as a compliant or violating prediction."
+  },
+  "clean_unified": {
+    "metric_status": "ok",
+    "verified_control_count": 5,
+    "total_objects": 45,
+    "control_global_compliance_counts": {
+      "unknown": 13,
+      "verified_compliant": 5,
+      "violated_other_field": 22
+    },
+    "metrics": {
+      "schema_version": "s3_unified_evaluator@2.0.0",
+      "total_objects": 45,
+      "control_objects": 5,
+      "variant_objects": 40,
+      "five_class_accuracy": 0.6222,
+      "per_class": {
+        "none": {
+          "support": 5,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "prohibited_action_present": {
+          "support": 10,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "required_condition_not_enforced": {
+          "support": 10,
+          "precision": 0.4706,
+          "recall": 0.8,
+          "f1": 0.5926
+        },
+        "constraint_violated": {
+          "support": 10,
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.3333
+        },
+        "exception_not_handled": {
+          "support": 10,
+          "precision": 0.75,
+          "recall": 0.3,
+          "f1": 0.4286
+        }
+      },
+      "macro_f1_four_violation_types": 0.5886,
+      "macro_f1_five_classes": 0.6709,
+      "abstentions": 7,
+      "denominator_policy": "None is an abstention and counts as an error for the Gold class; it is never counted as a compliant or violating prediction."
+    }
+  },
+  "control_global_compliance": {
+    "control_status_by_item": {
+      "syn_v2_prohibited_action_01": {
+        "status": "unknown",
+        "clean_types": [
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "prohibited_action_present"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_02": {
+        "status": "unknown",
+        "clean_types": [
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "prohibited_action_present"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_03": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_04": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_05": {
+        "status": "verified_compliant",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_06": {
+        "status": "verified_compliant",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_07": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_08": {
+        "status": "verified_compliant",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_09": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_10": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_01": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_02": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_03": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_04": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_05": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_06": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_07": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_08": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_09": {
+        "status": "verified_compliant",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_10": {
+        "status": "verified_compliant",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_01": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_02": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_03": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_04": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_05": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_06": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_07": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_08": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_09": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "required_condition_not_enforced",
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_10": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_01": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_02": {
+        "status": "unknown",
+        "clean_types": [
+          "constraint_violated"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_03": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_04": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "prohibited_action_present"
+        ],
+        "unknown_types": [
+          "required_condition_not_enforced"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_05": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_06": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "constraint_violated"
+        ],
+        "unknown_types": [
+          "required_condition_not_enforced"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_07": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_08": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_09": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_10": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      }
+    },
+    "counts": {
+      "unknown": 13,
+      "verified_compliant": 5,
+      "violated_other_field": 22
+    },
+    "verified_compliant_item_ids": [
+      "syn_v2_prohibited_action_05",
+      "syn_v2_prohibited_action_06",
+      "syn_v2_prohibited_action_08",
+      "syn_v2_required_condition_09",
+      "syn_v2_required_condition_10"
+    ],
+    "violated_other_field_item_ids": [
+      "syn_v2_constraint_violated_01",
+      "syn_v2_constraint_violated_02",
+      "syn_v2_constraint_violated_04",
+      "syn_v2_constraint_violated_05",
+      "syn_v2_constraint_violated_06",
+      "syn_v2_constraint_violated_07",
+      "syn_v2_constraint_violated_08",
+      "syn_v2_constraint_violated_10",
+      "syn_v2_exception_not_handled_01",
+      "syn_v2_exception_not_handled_03",
+      "syn_v2_exception_not_handled_04",
+      "syn_v2_exception_not_handled_05",
+      "syn_v2_exception_not_handled_06",
+      "syn_v2_exception_not_handled_07",
+      "syn_v2_exception_not_handled_08",
+      "syn_v2_exception_not_handled_09",
+      "syn_v2_exception_not_handled_10",
+      "syn_v2_prohibited_action_07",
+      "syn_v2_prohibited_action_09",
+      "syn_v2_prohibited_action_10",
+      "syn_v2_required_condition_01",
+      "syn_v2_required_condition_02"
+    ],
+    "unknown_item_ids": [
+      "syn_v2_constraint_violated_03",
+      "syn_v2_constraint_violated_09",
+      "syn_v2_exception_not_handled_02",
+      "syn_v2_prohibited_action_01",
+      "syn_v2_prohibited_action_02",
+      "syn_v2_prohibited_action_03",
+      "syn_v2_prohibited_action_04",
+      "syn_v2_required_condition_03",
+      "syn_v2_required_condition_04",
+      "syn_v2_required_condition_05",
+      "syn_v2_required_condition_06",
+      "syn_v2_required_condition_07",
+      "syn_v2_required_condition_08"
+    ],
+    "reads_expected_label": false
+  },
+  "collision_audit": {
+    "schema_version": "s3_composite_input_identifiability@2.0.0",
+    "identity_definition": "canonical_rule_input_hash (model-visible Rule Input) + canonical_process_input_hash (model-visible Process Record/XML) + different expected labels",
+    "true_collision_group_count": 9,
+    "true_collision_item_count": 20,
+    "true_collision_groups": [
+      {
+        "group_key": [
+          "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+          "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_01",
+            "side": "variant",
+            "expected_label": "exception_not_handled",
+            "canonical_rule_input_hash": "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_01",
+            "side": "control",
+            "expected_label": "none",
+            "canonical_rule_input_hash": "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "6b3a707ccc137ceef6d0c01225168f963130fdff52df00607a72e0941b59b9c8",
+          "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_02",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "6b3a707ccc137ceef6d0c01225168f963130fdff52df00607a72e0941b59b9c8",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_02",
+            "side": "control",
+            "expected_label": "none",
+            "canonical_rule_input_hash": "6b3a707ccc137ceef6d0c01225168f963130fdff52df00607a72e0941b59b9c8",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "afcba6d513e07cdff9d95e3bfa2854341556f3d938c669d370cbcf8fb969636c",
+          "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "afcba6d513e07cdff9d95e3bfa2854341556f3d938c669d370cbcf8fb969636c",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_04",
+            "side": "variant",
+            "expected_label": "constraint_violated",
+            "canonical_rule_input_hash": "afcba6d513e07cdff9d95e3bfa2854341556f3d938c669d370cbcf8fb969636c",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+          "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+            "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+            "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "side": "variant",
+            "expected_label": "constraint_violated",
+            "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+            "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+            "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+          "bb3e09c90b5a46624cb7784661a44c2d6a4e788e85e13fbea1039905d6f4d403"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_06",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+            "canonical_process_input_hash": "bb3e09c90b5a46624cb7784661a44c2d6a4e788e85e13fbea1039905d6f4d403",
+            "bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_08",
+            "side": "variant",
+            "expected_label": "constraint_violated",
+            "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+            "canonical_process_input_hash": "bb3e09c90b5a46624cb7784661a44c2d6a4e788e85e13fbea1039905d6f4d403",
+            "bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+          "85d0814359285c9b5dd23c81ba48167cf2b96cad509acb7f6424162d3d5a1b10"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_07",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+            "canonical_process_input_hash": "85d0814359285c9b5dd23c81ba48167cf2b96cad509acb7f6424162d3d5a1b10",
+            "bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_07",
+            "side": "variant",
+            "expected_label": "constraint_violated",
+            "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+            "canonical_process_input_hash": "85d0814359285c9b5dd23c81ba48167cf2b96cad509acb7f6424162d3d5a1b10",
+            "bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+          "1c3a0e886144ead8750b578db25076ca22c5a806e4249eed69b905fa77f92325"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+            "canonical_process_input_hash": "1c3a0e886144ead8750b578db25076ca22c5a806e4249eed69b905fa77f92325",
+            "bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "side": "variant",
+            "expected_label": "constraint_violated",
+            "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+            "canonical_process_input_hash": "1c3a0e886144ead8750b578db25076ca22c5a806e4249eed69b905fa77f92325",
+            "bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+          "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "side": "variant",
+            "expected_label": "exception_not_handled",
+            "canonical_rule_input_hash": "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+            "canonical_process_input_hash": "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17",
+            "bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_03",
+            "side": "control",
+            "expected_label": "none",
+            "canonical_rule_input_hash": "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+            "canonical_process_input_hash": "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17",
+            "bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_04",
+            "side": "control",
+            "expected_label": "none",
+            "canonical_rule_input_hash": "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+            "canonical_process_input_hash": "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17",
+            "bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "0461e1c3cc604c324e4bdce799f355765fb00ef06ef4939a9c8cfbd4d8a3ab12",
+          "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "side": "variant",
+            "expected_label": "exception_not_handled",
+            "canonical_rule_input_hash": "0461e1c3cc604c324e4bdce799f355765fb00ef06ef4939a9c8cfbd4d8a3ab12",
+            "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+            "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_10",
+            "side": "control",
+            "expected_label": "none",
+            "canonical_rule_input_hash": "0461e1c3cc604c324e4bdce799f355765fb00ef06ef4939a9c8cfbd4d8a3ab12",
+            "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+            "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+          }
+        ]
+      }
+    ],
+    "old_bpmn_only_variant_collision_group_count": 7,
+    "old_bpmn_only_variant_item_count": 28,
+    "old_bpmn_only_all_side_collision_group_count": 7,
+    "old_bpmn_only_all_side_item_count": 40,
+    "old_audit_overestimate_reason": "The v1 audit grouped only by variant BPMN bytes.  The Stage 3 input also contains the Rule Input; two byte-identical BPMN files with different model-visible rule fields are distinguishable and therefore are not true input collisions.  The v1 audit also counted only the variant scope, while the corrected audit checks both variant and control side objects and requires different expected labels only after the identity grouping is fixed.",
+    "no_expected_label_in_identity": true
+  },
+  "fallback_pack_summary": {
+    "item_count": 20,
+    "side_counts": {
+      "variant": 7,
+      "control": 13
+    },
+    "trigger_counts": {
+      "action_grounding_ambiguous": 10,
+      "condition_semantic_ambiguous": 10,
+      "unsupported_abstract_constraint": 11,
+      "action_grounding_unresolved": 5,
+      "exception_semantic_ambiguous": 3,
+      "other_documented_semantic_ambiguity": 1,
+      "exception_handler_semantic_ambiguous": 1
+    },
+    "pack_schema": "s3_semantic_grounding_fallback_candidate_pack@1.0.0"
+  },
+  "diagnostics": {
+    "unknown_by_reason": {
+      "action_grounding_unresolved": 11,
+      "condition_surface_ambiguous_or_incomplete": 11,
+      "dedicated_handler_candidate_exists_but_semantics_ambiguous": 1,
+      "no_handler_and_action_grounding_ambiguous": 6,
+      "time_bound_absence_not_decidable_from_ambiguous_grounding": 1,
+      "unbound_global_constraint_evidence_requires_semantic_grounding": 1,
+      "unsupported_abstract_constraint_kind": 28
+    },
+    "control_global_compliance_counts": {
+      "unknown": 13,
+      "verified_compliant": 5,
+      "violated_other_field": 22
+    },
+    "control_global_compliance_status_by_item": {
+      "syn_v2_prohibited_action_01": {
+        "status": "unknown",
+        "clean_types": [
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "prohibited_action_present"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_02": {
+        "status": "unknown",
+        "clean_types": [
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "prohibited_action_present"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_03": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_04": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_05": {
+        "status": "verified_compliant",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_06": {
+        "status": "verified_compliant",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_07": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_08": {
+        "status": "verified_compliant",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_09": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_prohibited_action_10": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_01": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_02": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_03": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_04": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_05": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_06": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_07": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_08": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_09": {
+        "status": "verified_compliant",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_required_condition_10": {
+        "status": "verified_compliant",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_01": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_02": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_03": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_04": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_05": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_06": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_07": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_08": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_09": {
+        "status": "unknown",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "required_condition_not_enforced",
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_constraint_violated_10": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_01": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_02": {
+        "status": "unknown",
+        "clean_types": [
+          "constraint_violated"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_03": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_04": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "prohibited_action_present"
+        ],
+        "unknown_types": [
+          "required_condition_not_enforced"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_05": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_06": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "constraint_violated"
+        ],
+        "unknown_types": [
+          "required_condition_not_enforced"
+        ],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_07": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_08": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_09": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      },
+      "syn_v2_exception_not_handled_10": {
+        "status": "violated_other_field",
+        "clean_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "reads_expected_label": false,
+        "definition": "all applicable checks negative/not_applicable => verified_compliant; any positive check => violated_other_field; otherwise unknown"
+      }
+    },
+    "target_paired": {
+      "schema_version": "s3_target_paired_evaluator@2.0.0",
+      "evaluation_kind": "target_paired_causal",
+      "primary": true,
+      "total_pairs": 40,
+      "per_type": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "variant": {
+            "TP": 10,
+            "FN": 0,
+            "unknown": 0
+          },
+          "control": {
+            "TN": 8,
+            "FP": 0,
+            "unknown": 2
+          },
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "balanced_accuracy": 1.0,
+          "pair_success": 8,
+          "pair_success_rate": 0.8
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "variant": {
+            "TP": 9,
+            "FN": 1,
+            "unknown": 1
+          },
+          "control": {
+            "TN": 9,
+            "FP": 1,
+            "unknown": 0
+          },
+          "precision": 0.9,
+          "recall": 0.9,
+          "f1": 0.9,
+          "balanced_accuracy": 0.9,
+          "pair_success": 8,
+          "pair_success_rate": 0.8
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "variant": {
+            "TP": 2,
+            "FN": 8,
+            "unknown": 8
+          },
+          "control": {
+            "TN": 2,
+            "FP": 0,
+            "unknown": 8
+          },
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.3333,
+          "balanced_accuracy": 0.6,
+          "pair_success": 2,
+          "pair_success_rate": 0.2
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "variant": {
+            "TP": 3,
+            "FN": 7,
+            "unknown": 7
+          },
+          "control": {
+            "TN": 9,
+            "FP": 0,
+            "unknown": 1
+          },
+          "precision": 1.0,
+          "recall": 0.3,
+          "f1": 0.4615,
+          "balanced_accuracy": 0.65,
+          "pair_success": 3,
+          "pair_success_rate": 0.3
+        }
+      },
+      "macro_f1_four_types": 0.6737,
+      "control_target_false_positive_rate": 0.025,
+      "target_field_unknown_rate": 0.3375,
+      "pair_success_rate": 0.525,
+      "pair_success_count": 21,
+      "variant_unknown_count": 16,
+      "control_unknown_count": 11,
+      "uses_expected_only_for_evaluation_grouping": true,
+      "does_not_mutate_predictions": true
+    },
+    "variant_binary": {
+      "per_type": {
+        "prohibited_action_present": {
+          "support": 10,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "required_condition_not_enforced": {
+          "support": 10,
+          "precision": 0.36,
+          "recall": 0.9,
+          "f1": 0.5143
+        },
+        "constraint_violated": {
+          "support": 10,
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.3333
+        },
+        "exception_not_handled": {
+          "support": 10,
+          "precision": 0.6,
+          "recall": 0.3,
+          "f1": 0.4
+        }
+      },
+      "macro_f1_four_types": 0.5619
+    },
+    "legacy_unified_80": {
+      "schema_version": "s3_unified_evaluator@2.0.0",
+      "total_objects": 80,
+      "control_objects": 40,
+      "variant_objects": 40,
+      "five_class_accuracy": 0.35,
+      "per_class": {
+        "none": {
+          "support": 40,
+          "precision": 1.0,
+          "recall": 0.125,
+          "f1": 0.2222
+        },
+        "prohibited_action_present": {
+          "support": 10,
+          "precision": 0.7692,
+          "recall": 1.0,
+          "f1": 0.8696
+        },
+        "required_condition_not_enforced": {
+          "support": 10,
+          "precision": 0.2581,
+          "recall": 0.8,
+          "f1": 0.3902
+        },
+        "constraint_violated": {
+          "support": 10,
+          "precision": 0.6667,
+          "recall": 0.2,
+          "f1": 0.3077
+        },
+        "exception_not_handled": {
+          "support": 10,
+          "precision": 0.375,
+          "recall": 0.3,
+          "f1": 0.3333
+        }
+      },
+      "macro_f1_four_violation_types": 0.4752,
+      "macro_f1_five_classes": 0.4246,
+      "abstentions": 20,
+      "denominator_policy": "None is an abstention and counts as an error for the Gold class; it is never counted as a compliant or violating prediction."
+    },
+    "clean_unified": {
+      "metric_status": "ok",
+      "verified_control_count": 5,
+      "total_objects": 45,
+      "control_global_compliance_counts": {
+        "unknown": 13,
+        "verified_compliant": 5,
+        "violated_other_field": 22
+      },
+      "metrics": {
+        "schema_version": "s3_unified_evaluator@2.0.0",
+        "total_objects": 45,
+        "control_objects": 5,
+        "variant_objects": 40,
+        "five_class_accuracy": 0.6222,
+        "per_class": {
+          "none": {
+            "support": 5,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "precision": 0.4706,
+            "recall": 0.8,
+            "f1": 0.5926
+          },
+          "constraint_violated": {
+            "support": 10,
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.3333
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "precision": 0.75,
+            "recall": 0.3,
+            "f1": 0.4286
+          }
+        },
+        "macro_f1_four_violation_types": 0.5886,
+        "macro_f1_five_classes": 0.6709,
+        "abstentions": 7,
+        "denominator_policy": "None is an abstention and counts as an error for the Gold class; it is never counted as a compliant or violating prediction."
+      }
+    },
+    "collision_audit": {
+      "schema_version": "s3_composite_input_identifiability@2.0.0",
+      "identity_definition": "canonical_rule_input_hash (model-visible Rule Input) + canonical_process_input_hash (model-visible Process Record/XML) + different expected labels",
+      "true_collision_group_count": 9,
+      "true_collision_item_count": 20,
+      "true_collision_groups": [
+        {
+          "group_key": [
+            "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+            "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb"
+          ],
+          "members": [
+            {
+              "item_id": "syn_v2_required_condition_01",
+              "side": "variant",
+              "expected_label": "required_condition_not_enforced",
+              "canonical_rule_input_hash": "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+              "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+              "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_01",
+              "side": "variant",
+              "expected_label": "exception_not_handled",
+              "canonical_rule_input_hash": "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+              "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+              "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_01",
+              "side": "control",
+              "expected_label": "none",
+              "canonical_rule_input_hash": "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+              "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+              "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+            }
+          ]
+        },
+        {
+          "group_key": [
+            "6b3a707ccc137ceef6d0c01225168f963130fdff52df00607a72e0941b59b9c8",
+            "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb"
+          ],
+          "members": [
+            {
+              "item_id": "syn_v2_required_condition_02",
+              "side": "variant",
+              "expected_label": "required_condition_not_enforced",
+              "canonical_rule_input_hash": "6b3a707ccc137ceef6d0c01225168f963130fdff52df00607a72e0941b59b9c8",
+              "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+              "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_02",
+              "side": "control",
+              "expected_label": "none",
+              "canonical_rule_input_hash": "6b3a707ccc137ceef6d0c01225168f963130fdff52df00607a72e0941b59b9c8",
+              "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+              "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+            }
+          ]
+        },
+        {
+          "group_key": [
+            "afcba6d513e07cdff9d95e3bfa2854341556f3d938c669d370cbcf8fb969636c",
+            "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb"
+          ],
+          "members": [
+            {
+              "item_id": "syn_v2_required_condition_04",
+              "side": "variant",
+              "expected_label": "required_condition_not_enforced",
+              "canonical_rule_input_hash": "afcba6d513e07cdff9d95e3bfa2854341556f3d938c669d370cbcf8fb969636c",
+              "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+              "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_04",
+              "side": "variant",
+              "expected_label": "constraint_violated",
+              "canonical_rule_input_hash": "afcba6d513e07cdff9d95e3bfa2854341556f3d938c669d370cbcf8fb969636c",
+              "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+              "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+            }
+          ]
+        },
+        {
+          "group_key": [
+            "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+            "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5"
+          ],
+          "members": [
+            {
+              "item_id": "syn_v2_required_condition_05",
+              "side": "variant",
+              "expected_label": "required_condition_not_enforced",
+              "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+              "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+              "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_05",
+              "side": "variant",
+              "expected_label": "constraint_violated",
+              "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+              "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+              "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+            }
+          ]
+        },
+        {
+          "group_key": [
+            "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+            "bb3e09c90b5a46624cb7784661a44c2d6a4e788e85e13fbea1039905d6f4d403"
+          ],
+          "members": [
+            {
+              "item_id": "syn_v2_required_condition_06",
+              "side": "variant",
+              "expected_label": "required_condition_not_enforced",
+              "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+              "canonical_process_input_hash": "bb3e09c90b5a46624cb7784661a44c2d6a4e788e85e13fbea1039905d6f4d403",
+              "bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_08",
+              "side": "variant",
+              "expected_label": "constraint_violated",
+              "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+              "canonical_process_input_hash": "bb3e09c90b5a46624cb7784661a44c2d6a4e788e85e13fbea1039905d6f4d403",
+              "bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11"
+            }
+          ]
+        },
+        {
+          "group_key": [
+            "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+            "85d0814359285c9b5dd23c81ba48167cf2b96cad509acb7f6424162d3d5a1b10"
+          ],
+          "members": [
+            {
+              "item_id": "syn_v2_required_condition_07",
+              "side": "variant",
+              "expected_label": "required_condition_not_enforced",
+              "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+              "canonical_process_input_hash": "85d0814359285c9b5dd23c81ba48167cf2b96cad509acb7f6424162d3d5a1b10",
+              "bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_07",
+              "side": "variant",
+              "expected_label": "constraint_violated",
+              "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+              "canonical_process_input_hash": "85d0814359285c9b5dd23c81ba48167cf2b96cad509acb7f6424162d3d5a1b10",
+              "bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1"
+            }
+          ]
+        },
+        {
+          "group_key": [
+            "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+            "1c3a0e886144ead8750b578db25076ca22c5a806e4249eed69b905fa77f92325"
+          ],
+          "members": [
+            {
+              "item_id": "syn_v2_required_condition_08",
+              "side": "variant",
+              "expected_label": "required_condition_not_enforced",
+              "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+              "canonical_process_input_hash": "1c3a0e886144ead8750b578db25076ca22c5a806e4249eed69b905fa77f92325",
+              "bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_09",
+              "side": "variant",
+              "expected_label": "constraint_violated",
+              "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+              "canonical_process_input_hash": "1c3a0e886144ead8750b578db25076ca22c5a806e4249eed69b905fa77f92325",
+              "bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0"
+            }
+          ]
+        },
+        {
+          "group_key": [
+            "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+            "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17"
+          ],
+          "members": [
+            {
+              "item_id": "syn_v2_exception_not_handled_04",
+              "side": "variant",
+              "expected_label": "exception_not_handled",
+              "canonical_rule_input_hash": "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+              "canonical_process_input_hash": "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17",
+              "bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_03",
+              "side": "control",
+              "expected_label": "none",
+              "canonical_rule_input_hash": "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+              "canonical_process_input_hash": "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17",
+              "bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_04",
+              "side": "control",
+              "expected_label": "none",
+              "canonical_rule_input_hash": "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+              "canonical_process_input_hash": "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17",
+              "bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+            }
+          ]
+        },
+        {
+          "group_key": [
+            "0461e1c3cc604c324e4bdce799f355765fb00ef06ef4939a9c8cfbd4d8a3ab12",
+            "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5"
+          ],
+          "members": [
+            {
+              "item_id": "syn_v2_exception_not_handled_05",
+              "side": "variant",
+              "expected_label": "exception_not_handled",
+              "canonical_rule_input_hash": "0461e1c3cc604c324e4bdce799f355765fb00ef06ef4939a9c8cfbd4d8a3ab12",
+              "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+              "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_10",
+              "side": "control",
+              "expected_label": "none",
+              "canonical_rule_input_hash": "0461e1c3cc604c324e4bdce799f355765fb00ef06ef4939a9c8cfbd4d8a3ab12",
+              "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+              "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+            }
+          ]
+        }
+      ],
+      "old_bpmn_only_variant_collision_group_count": 7,
+      "old_bpmn_only_variant_item_count": 28,
+      "old_bpmn_only_all_side_collision_group_count": 7,
+      "old_bpmn_only_all_side_item_count": 40,
+      "old_audit_overestimate_reason": "The v1 audit grouped only by variant BPMN bytes.  The Stage 3 input also contains the Rule Input; two byte-identical BPMN files with different model-visible rule fields are distinguishable and therefore are not true input collisions.  The v1 audit also counted only the variant scope, while the corrected audit checks both variant and control side objects and requires different expected labels only after the identity grouping is fixed.",
+      "no_expected_label_in_identity": true
+    },
+    "fallback_pack_summary": {
+      "item_count": 20,
+      "side_counts": {
+        "variant": 7,
+        "control": 13
+      },
+      "trigger_counts": {
+        "action_grounding_ambiguous": 10,
+        "condition_semantic_ambiguous": 10,
+        "unsupported_abstract_constraint": 11,
+        "action_grounding_unresolved": 5,
+        "exception_semantic_ambiguous": 3,
+        "other_documented_semantic_ambiguity": 1,
+        "exception_handler_semantic_ambiguous": 1
+      }
+    }
+  },
+  "baseline_comparison": {
+    "c36_reference_winter": {
+      "variant_evaluation": {
+        "support": 40,
+        "per_type": {
+          "prohibited_action_present": {
+            "support": 10,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "precision": 0.2857,
+            "recall": 0.2,
+            "f1": 0.2353
+          },
+          "constraint_violated": {
+            "support": 10,
+            "precision": 0.6,
+            "recall": 0.3,
+            "f1": 0.4
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "precision": 0.6667,
+            "recall": 0.2,
+            "f1": 0.3077
+          }
+        },
+        "observable_only_per_type": {
+          "prohibited_action_present": {
+            "support": 10,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "required_condition_not_enforced": {
+            "support": 2,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          "constraint_violated": {
+            "support": 6,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          },
+          "exception_not_handled": {
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6667
+          }
+        },
+        "macro_f1": 0.4738,
+        "micro_f1": 0.5152,
+        "observable_only_macro_f1": 0.6965,
+        "observable_only_micro_f1": 0.7727,
+        "exact_type_accuracy": 0.425,
+        "detected": 17,
+        "missed": 23,
+        "wrong_type": 9,
+        "unobservable": 18,
+        "denominator": {
+          "total_items": 40,
+          "per_type_support": {
+            "prohibited_action_present": 10,
+            "required_condition_not_enforced": 10,
+            "constraint_violated": 10,
+            "exception_not_handled": 10
+          },
+          "per_type_observable": {
+            "prohibited_action_present": 10,
+            "required_condition_not_enforced": 2,
+            "constraint_violated": 6,
+            "exception_not_handled": 4
+          },
+          "per_type_unobservable": {
+            "prohibited_action_present": 0,
+            "required_condition_not_enforced": 8,
+            "constraint_violated": 4,
+            "exception_not_handled": 6
+          },
+          "unobservable_total": 18,
+          "unobservable_by_reason": {
+            "no_condition_candidates": 4,
+            "action_mapping_below_gamma": 13,
+            "no_exception_candidates": 1
+          },
+          "observability_policy": "unobservable items keep predicted=None and count as FN in the primary macro/micro/exact denominators; an observable-only diagnostic subset is reported separately and is not the primary metric; unobservable scores are never hard-filled with 0.0 or 1.0"
+        }
+      },
+      "paired_evaluation": {
+        "schema_version": "s3_extended_paired_evaluation@1.0.0",
+        "evaluation_kind": "paired_control_plus_variant",
+        "total_objects": 80,
+        "control_objects": 40,
+        "variant_objects": 40,
+        "five_class_accuracy": 0.3625,
+        "variant_exact_type_accuracy": 0.425,
+        "control_false_positive_rate": 0.5,
+        "paired_accuracy": 0.225,
+        "per_type": {
+          "none": {
+            "support": 40,
+            "tp": 12,
+            "fp": 2,
+            "fn": 28,
+            "precision": 0.8571,
+            "recall": 0.3,
+            "f1": 0.4444
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "tp": 10,
+            "fp": 6,
+            "fn": 0,
+            "precision": 0.625,
+            "recall": 1.0,
+            "f1": 0.7692
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "tp": 2,
+            "fp": 14,
+            "fn": 8,
+            "precision": 0.125,
+            "recall": 0.2,
+            "f1": 0.1538
+          },
+          "constraint_violated": {
+            "support": 10,
+            "tp": 3,
+            "fp": 6,
+            "fn": 7,
+            "precision": 0.3333,
+            "recall": 0.3,
+            "f1": 0.3158
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "tp": 2,
+            "fp": 3,
+            "fn": 8,
+            "precision": 0.4,
+            "recall": 0.2,
+            "f1": 0.2667
+          }
+        },
+        "macro_f1_four_violation_types": 0.3764,
+        "macro_f1_five_classes": 0.39,
+        "wrong_type": 9,
+        "unobservable": {
+          "total": 26,
+          "variant": 18,
+          "control": 8,
+          "by_reason": {
+            "no_condition_candidates": 4,
+            "action_mapping_below_gamma": 21,
+            "empty_rule_exception": 8,
+            "rule_modality_not_prohibition": 8,
+            "empty_rule_constraint": 1,
+            "empty_rule_condition": 1,
+            "no_exception_candidates": 1
+          }
+        },
+        "cases": {
+          "control_false_positive": [
+            {
+              "item_id": "syn_v2_prohibited_action_03",
+              "process_id": "gdpr_2_consent_to_use_the_data",
+              "rule_id": "article22",
+              "control_predicted": "prohibited_action_present",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": 0.507951,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 1.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_constraint",
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": 0.364093,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_04",
+              "process_id": "gdpr_2_consent_to_use_the_data",
+              "rule_id": "article22",
+              "control_predicted": "prohibited_action_present",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": 0.507951,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 1.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_constraint",
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": 0.364093,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article7",
+              "control_predicted": "prohibited_action_present",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": 0.509156,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "no_condition_candidates",
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_constraint",
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_exception",
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_10",
+              "process_id": "gdpr_7_right_to_be_forgotten",
+              "rule_id": "article17",
+              "control_predicted": "required_condition_not_enforced",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": 0.450191,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 1.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_constraint",
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "no_exception_candidates",
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_01",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "control_predicted": "exception_not_handled",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": 0.455127,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "no_conflicting_value_found"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": 0.618531,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_03",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "control_predicted": "constraint_violated",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": 0.519377,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_exception",
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_04",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article34",
+              "control_predicted": "constraint_violated",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": 0.519377,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_exception",
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_05",
+              "process_id": "gdpr_7_right_to_be_forgotten",
+              "rule_id": "article17",
+              "control_predicted": "constraint_violated",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": 0.519377,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_exception",
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_08",
+              "process_id": "gdpr_5_right_to_withdraw",
+              "rule_id": "article17",
+              "control_predicted": "constraint_violated",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": 0.627352,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_exception",
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_01",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "control_predicted": "exception_not_handled",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "no_condition_candidates",
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": 0.455127,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "no_conflicting_value_found"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": 0.618531,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_05",
+              "process_id": "gdpr_7_right_to_be_forgotten",
+              "rule_id": "article17",
+              "control_predicted": "required_condition_not_enforced",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.857079,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_exception",
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_09",
+              "process_id": "gdpr_5_right_to_withdraw",
+              "rule_id": "article17",
+              "control_predicted": "required_condition_not_enforced",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 1.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_exception",
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_10",
+              "process_id": "gdpr_2_consent_to_use_the_data",
+              "rule_id": "article7",
+              "control_predicted": "required_condition_not_enforced",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 1.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_exception",
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_04",
+              "process_id": "gdpr_2_consent_to_use_the_data",
+              "rule_id": "article22",
+              "control_predicted": "prohibited_action_present",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": 0.507951,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 1.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_constraint",
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_05",
+              "process_id": "gdpr_7_right_to_be_forgotten",
+              "rule_id": "article17",
+              "control_predicted": "prohibited_action_present",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": 0.95156,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.057361,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_constraint",
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_06",
+              "process_id": "gdpr_5_right_to_withdraw",
+              "rule_id": "article33",
+              "control_predicted": "required_condition_not_enforced",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 1.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": 0.660812,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "no_conflicting_value_found"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article20",
+              "control_predicted": "required_condition_not_enforced",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.885654,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_constraint",
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_08",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article20",
+              "control_predicted": "required_condition_not_enforced",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.885654,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_constraint",
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_09",
+              "process_id": "gdpr_6_right_to_rectify",
+              "rule_id": "article20",
+              "control_predicted": "required_condition_not_enforced",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.885654,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_constraint",
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "no_exception_candidates",
+                  "exact_contradiction": null
+                }
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_10",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article15",
+              "control_predicted": "required_condition_not_enforced",
+              "control_scores": {
+                "prohibited_action_present": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "rule_modality_not_prohibition",
+                  "exact_contradiction": null
+                },
+                "required_condition_not_enforced": {
+                  "score": 0.891751,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                },
+                "constraint_violated": {
+                  "score": null,
+                  "observable": false,
+                  "reason": "empty_rule_constraint",
+                  "exact_contradiction": {
+                    "contradiction": false,
+                    "reason": "unsupported_or_ambiguous_time_bound"
+                  }
+                },
+                "exception_not_handled": {
+                  "score": 0.0,
+                  "observable": true,
+                  "reason": null,
+                  "exact_contradiction": null
+                }
+              }
+            }
+          ],
+          "variant_detected": [
+            {
+              "item_id": "syn_v2_prohibited_action_01",
+              "process_id": "gdpr_2_consent_to_use_the_data",
+              "rule_id": "article22",
+              "expected": "prohibited_action_present",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 1.0,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_02",
+              "process_id": "gdpr_2_consent_to_use_the_data",
+              "rule_id": "article22",
+              "expected": "prohibited_action_present",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 1.0,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_03",
+              "process_id": "gdpr_2_consent_to_use_the_data",
+              "rule_id": "article22",
+              "expected": "prohibited_action_present",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 1.0,
+                "required_condition_not_enforced": 1.0,
+                "constraint_violated": null,
+                "exception_not_handled": 0.364093
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_04",
+              "process_id": "gdpr_2_consent_to_use_the_data",
+              "rule_id": "article22",
+              "expected": "prohibited_action_present",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 1.0,
+                "required_condition_not_enforced": 1.0,
+                "constraint_violated": null,
+                "exception_not_handled": 0.364093
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_05",
+              "process_id": "gdpr_5_right_to_withdraw",
+              "rule_id": "article7",
+              "expected": "prohibited_action_present",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 1.0,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_06",
+              "process_id": "gdpr_5_right_to_withdraw",
+              "rule_id": "article7",
+              "expected": "prohibited_action_present",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 1.0,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article7",
+              "expected": "prohibited_action_present",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 1.0,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_08",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article15",
+              "expected": "prohibited_action_present",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 1.0,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_09",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article20",
+              "expected": "prohibited_action_present",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 1.0,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": 0.474797
+              }
+            },
+            {
+              "item_id": "syn_v2_prohibited_action_10",
+              "process_id": "gdpr_7_right_to_be_forgotten",
+              "rule_id": "article17",
+              "expected": "prohibited_action_present",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 1.0,
+                "required_condition_not_enforced": 1.0,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_05",
+              "process_id": "gdpr_7_right_to_be_forgotten",
+              "rule_id": "article17",
+              "expected": "required_condition_not_enforced",
+              "predicted": "required_condition_not_enforced",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": 0.857079,
+                "constraint_violated": 0.519377,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_08",
+              "process_id": "gdpr_5_right_to_withdraw",
+              "rule_id": "article17",
+              "expected": "required_condition_not_enforced",
+              "predicted": "required_condition_not_enforced",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": 1.0,
+                "constraint_violated": 0.627352,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_01",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "expected": "constraint_violated",
+              "predicted": "constraint_violated",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": 0.514049,
+                "exception_not_handled": 0.618531
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_04",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article34",
+              "expected": "constraint_violated",
+              "predicted": "constraint_violated",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": 0.519377,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_06",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article17",
+              "expected": "constraint_violated",
+              "predicted": "constraint_violated",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": 0.544422,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_01",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "expected": "exception_not_handled",
+              "predicted": "exception_not_handled",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": 0.455127,
+                "exception_not_handled": 0.618531
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_10",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article15",
+              "expected": "exception_not_handled",
+              "predicted": "exception_not_handled",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": 0.597268
+              }
+            }
+          ],
+          "variant_missed": [
+            {
+              "item_id": "syn_v2_required_condition_01",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "expected": "required_condition_not_enforced",
+              "predicted": "exception_not_handled",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": 0.455127,
+                "exception_not_handled": 0.618531
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_02",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "expected": "required_condition_not_enforced",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_03",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "expected": "required_condition_not_enforced",
+              "predicted": "constraint_violated",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": 0.519377,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_04",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article34",
+              "expected": "required_condition_not_enforced",
+              "predicted": "constraint_violated",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": 0.519377,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_06",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article20",
+              "expected": "required_condition_not_enforced",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article20",
+              "expected": "required_condition_not_enforced",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_09",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article15",
+              "expected": "required_condition_not_enforced",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_required_condition_10",
+              "process_id": "gdpr_6_right_to_rectify",
+              "rule_id": "article15",
+              "expected": "required_condition_not_enforced",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_02",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "expected": "constraint_violated",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_03",
+              "process_id": "gdpr_6_right_to_rectify",
+              "rule_id": "article16",
+              "expected": "constraint_violated",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_05",
+              "process_id": "gdpr_7_right_to_be_forgotten",
+              "rule_id": "article17",
+              "expected": "constraint_violated",
+              "predicted": "required_condition_not_enforced",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": 0.857079,
+                "constraint_violated": 0.519377,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article20",
+              "expected": "constraint_violated",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_08",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article20",
+              "expected": "constraint_violated",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_09",
+              "process_id": "gdpr_5_right_to_withdraw",
+              "rule_id": "article17",
+              "expected": "constraint_violated",
+              "predicted": "required_condition_not_enforced",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": 1.0,
+                "constraint_violated": 0.627352,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_10",
+              "process_id": "gdpr_2_consent_to_use_the_data",
+              "rule_id": "article7",
+              "expected": "constraint_violated",
+              "predicted": "required_condition_not_enforced",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": 1.0,
+                "constraint_violated": 0.623114,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_02",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article34",
+              "expected": "exception_not_handled",
+              "predicted": "none",
+              "scores": {
+                "prohibited_action_present": 0.137246,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_03",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article34",
+              "expected": "exception_not_handled",
+              "predicted": "none",
+              "scores": {
+                "prohibited_action_present": 0.137246,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_04",
+              "process_id": "gdpr_2_consent_to_use_the_data",
+              "rule_id": "article22",
+              "expected": "exception_not_handled",
+              "predicted": "prohibited_action_present",
+              "scores": {
+                "prohibited_action_present": 0.507951,
+                "required_condition_not_enforced": 1.0,
+                "constraint_violated": null,
+                "exception_not_handled": 0.364093
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_05",
+              "process_id": "gdpr_7_right_to_be_forgotten",
+              "rule_id": "article17",
+              "expected": "exception_not_handled",
+              "predicted": "required_condition_not_enforced",
+              "scores": {
+                "prohibited_action_present": 0.450191,
+                "required_condition_not_enforced": 1.0,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_06",
+              "process_id": "gdpr_5_right_to_withdraw",
+              "rule_id": "article33",
+              "expected": "exception_not_handled",
+              "predicted": "required_condition_not_enforced",
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": 1.0,
+                "constraint_violated": 0.660812,
+                "exception_not_handled": 0.610823
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article20",
+              "expected": "exception_not_handled",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_08",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article20",
+              "expected": "exception_not_handled",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_09",
+              "process_id": "gdpr_6_right_to_rectify",
+              "rule_id": "article20",
+              "expected": "exception_not_handled",
+              "predicted": null,
+              "scores": {
+                "prohibited_action_present": null,
+                "required_condition_not_enforced": null,
+                "constraint_violated": null,
+                "exception_not_handled": null
+              }
+            }
+          ],
+          "variant_unobservable": [
+            {
+              "item_id": "syn_v2_required_condition_01",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "expected": "required_condition_not_enforced",
+              "reason": "no_condition_candidates"
+            },
+            {
+              "item_id": "syn_v2_required_condition_02",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "expected": "required_condition_not_enforced",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_required_condition_03",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "expected": "required_condition_not_enforced",
+              "reason": "no_condition_candidates"
+            },
+            {
+              "item_id": "syn_v2_required_condition_04",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article34",
+              "expected": "required_condition_not_enforced",
+              "reason": "no_condition_candidates"
+            },
+            {
+              "item_id": "syn_v2_required_condition_06",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article20",
+              "expected": "required_condition_not_enforced",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_required_condition_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article20",
+              "expected": "required_condition_not_enforced",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_required_condition_09",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article15",
+              "expected": "required_condition_not_enforced",
+              "reason": "no_condition_candidates"
+            },
+            {
+              "item_id": "syn_v2_required_condition_10",
+              "process_id": "gdpr_6_right_to_rectify",
+              "rule_id": "article15",
+              "expected": "required_condition_not_enforced",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_02",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "expected": "constraint_violated",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_03",
+              "process_id": "gdpr_6_right_to_rectify",
+              "rule_id": "article16",
+              "expected": "constraint_violated",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article20",
+              "expected": "constraint_violated",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_08",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article20",
+              "expected": "constraint_violated",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_02",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article34",
+              "expected": "exception_not_handled",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_03",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article34",
+              "expected": "exception_not_handled",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_05",
+              "process_id": "gdpr_7_right_to_be_forgotten",
+              "rule_id": "article17",
+              "expected": "exception_not_handled",
+              "reason": "no_exception_candidates"
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article20",
+              "expected": "exception_not_handled",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_08",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article20",
+              "expected": "exception_not_handled",
+              "reason": "action_mapping_below_gamma"
+            },
+            {
+              "item_id": "syn_v2_exception_not_handled_09",
+              "process_id": "gdpr_6_right_to_rectify",
+              "rule_id": "article20",
+              "expected": "exception_not_handled",
+              "reason": "action_mapping_below_gamma"
+            }
+          ],
+          "control_unobservable": [
+            {
+              "item_id": "syn_v2_required_condition_02",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "control_predicted": null,
+              "reasons": [
+                "action_mapping_below_gamma",
+                "empty_rule_exception",
+                "rule_modality_not_prohibition"
+              ]
+            },
+            {
+              "item_id": "syn_v2_required_condition_06",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article20",
+              "control_predicted": null,
+              "reasons": [
+                "action_mapping_below_gamma",
+                "empty_rule_exception",
+                "rule_modality_not_prohibition"
+              ]
+            },
+            {
+              "item_id": "syn_v2_required_condition_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article20",
+              "control_predicted": null,
+              "reasons": [
+                "action_mapping_below_gamma",
+                "empty_rule_exception",
+                "rule_modality_not_prohibition"
+              ]
+            },
+            {
+              "item_id": "syn_v2_required_condition_10",
+              "process_id": "gdpr_6_right_to_rectify",
+              "rule_id": "article15",
+              "control_predicted": null,
+              "reasons": [
+                "action_mapping_below_gamma",
+                "empty_rule_constraint",
+                "empty_rule_exception",
+                "rule_modality_not_prohibition"
+              ]
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_02",
+              "process_id": "gdpr_1_data_breach",
+              "rule_id": "article33",
+              "control_predicted": null,
+              "reasons": [
+                "action_mapping_below_gamma",
+                "empty_rule_exception",
+                "rule_modality_not_prohibition"
+              ]
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_03",
+              "process_id": "gdpr_6_right_to_rectify",
+              "rule_id": "article16",
+              "control_predicted": null,
+              "reasons": [
+                "action_mapping_below_gamma",
+                "empty_rule_condition",
+                "empty_rule_exception",
+                "rule_modality_not_prohibition"
+              ]
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_07",
+              "process_id": "gdpr_3_right_to_access",
+              "rule_id": "article20",
+              "control_predicted": null,
+              "reasons": [
+                "action_mapping_below_gamma",
+                "empty_rule_exception",
+                "rule_modality_not_prohibition"
+              ]
+            },
+            {
+              "item_id": "syn_v2_constraint_violated_08",
+              "process_id": "gdpr_4_right_of_portability",
+              "rule_id": "article20",
+              "control_predicted": null,
+              "reasons": [
+                "action_mapping_below_gamma",
+                "empty_rule_exception",
+                "rule_modality_not_prohibition"
+              ]
+            }
+          ]
+        },
+        "denominator_policy": "all 80 objects (40 control + 40 variant) stay in every denominator; a None prediction (unobservable) counts as an error for both sides; no sample is dropped",
+        "decision_policy": "variant predictions are the PERSISTED predicted_violation_type of the original run; control predictions are re-derived from the PERSISTED control_scores with the original per-type rules, the frozen gamma_ext, and fixed EXTENDED_TYPES priority order for the rare multi-violation control case; no threshold or order was changed to improve results"
+      },
+      "protocol_note": "C36 variant/paired metrics use the old BPMN-only collision view and the legacy all-controls-as-none unified view."
+    },
+    "v1_semantic_grounding": {
+      "variant_evaluation": {
+        "support": 40,
+        "per_type": {
+          "prohibited_action_present": {
+            "support": 10,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "precision": 0.4706,
+            "recall": 0.8,
+            "f1": 0.5926
+          },
+          "constraint_violated": {
+            "support": 10,
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.3333
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "precision": 0.75,
+            "recall": 0.3,
+            "f1": 0.4286
+          }
+        },
+        "macro_f1_four_types": 0.5886,
+        "micro_f1": 0.6301,
+        "exact_type_accuracy": 0.575,
+        "unobservable": 7,
+        "unobservable_by_reason": {
+          "condition_surface_ambiguous_or_incomplete": 1,
+          "unsupported_abstract_constraint_kind": 2,
+          "action_grounding_unresolved": 2,
+          "no_handler_and_action_grounding_ambiguous": 1,
+          "dedicated_handler_candidate_exists_but_semantics_ambiguous": 1
+        }
+      },
+      "per_type_check_evaluation": {
+        "support": 40,
+        "per_type": {
+          "prohibited_action_present": {
+            "support": 10,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "precision": 0.36,
+            "recall": 0.9,
+            "f1": 0.5143
+          },
+          "constraint_violated": {
+            "support": 10,
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.3333
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "precision": 0.6,
+            "recall": 0.3,
+            "f1": 0.4
+          }
+        },
+        "macro_f1_four_types": 0.5619,
+        "note": "each type is evaluated as an independent binary structural check on the variant side; no final single-label priority is applied here"
+      },
+      "target_field_diagnostic": {
+        "per_type": {
+          "prohibited_action_present": {
+            "variant_support": 10,
+            "variant_detected": 10,
+            "variant_not_detected": 0,
+            "variant_unknown": 0,
+            "control_target_violation": 0,
+            "control_target_unknown": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "required_condition_not_enforced": {
+            "variant_support": 10,
+            "variant_detected": 9,
+            "variant_not_detected": 1,
+            "variant_unknown": 1,
+            "control_target_violation": 1,
+            "control_target_unknown": 0,
+            "precision": 0.9,
+            "recall": 0.9,
+            "f1": 0.9
+          },
+          "constraint_violated": {
+            "variant_support": 10,
+            "variant_detected": 2,
+            "variant_not_detected": 8,
+            "variant_unknown": 8,
+            "control_target_violation": 0,
+            "control_target_unknown": 8,
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.3333
+          },
+          "exception_not_handled": {
+            "variant_support": 10,
+            "variant_detected": 3,
+            "variant_not_detected": 7,
+            "variant_unknown": 7,
+            "control_target_violation": 0,
+            "control_target_unknown": 1,
+            "precision": 1.0,
+            "recall": 0.3,
+            "f1": 0.4615
+          }
+        },
+        "macro_f1_four_types": 0.6737,
+        "control_target_false_positive_rate": 0.025,
+        "note": "target-field-only diagnostic; controls are not globally compliant for the other three rule fields, so this is reported separately from the unified paired controls"
+      },
+      "paired_evaluation": {
+        "schema_version": "s3_semantic_grounding_paired_evaluator@1.0.0",
+        "total_objects": 80,
+        "control_objects": 40,
+        "variant_objects": 40,
+        "five_class_accuracy": 0.35,
+        "variant_exact_type_accuracy": 0.575,
+        "control_false_positive_rate": 0.55,
+        "paired_accuracy": 0.125,
+        "per_class": {
+          "none": {
+            "support": 40,
+            "precision": 1.0,
+            "recall": 0.125,
+            "f1": 0.2222
+          },
+          "prohibited_action_present": {
+            "support": 10,
+            "precision": 0.7692,
+            "recall": 1.0,
+            "f1": 0.8696
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "precision": 0.2581,
+            "recall": 0.8,
+            "f1": 0.3902
+          },
+          "constraint_violated": {
+            "support": 10,
+            "precision": 0.6667,
+            "recall": 0.2,
+            "f1": 0.3077
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "precision": 0.375,
+            "recall": 0.3,
+            "f1": 0.3333
+          }
+        },
+        "macro_f1_four_violation_types": 0.4752,
+        "macro_f1_five_classes": 0.4246,
+        "unobservable": {
+          "total": 20,
+          "variant": 7,
+          "control": 13,
+          "by_reason": {
+            "control_abstention": 13,
+            "condition_surface_ambiguous_or_incomplete": 1,
+            "unsupported_abstract_constraint_kind": 2,
+            "action_grounding_unresolved": 2,
+            "no_handler_and_action_grounding_ambiguous": 1,
+            "dedicated_handler_candidate_exists_but_semantics_ambiguous": 1
+          }
+        },
+        "denominator_policy": "all 80 objects stay in every denominator; None is an abstention and counts as an error, never as a violation or as explicit compliance"
+      },
+      "identifiability_audit": {
+        "audit_kind": "variant_input_identifiability",
+        "collision_group_count": 7,
+        "variant_count_in_collisions": 28,
+        "collision_groups": [
+          {
+            "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+            "variants": [
+              {
+                "item_id": "syn_v2_required_condition_01",
+                "expected_violation": "required_condition_not_enforced"
+              },
+              {
+                "item_id": "syn_v2_required_condition_02",
+                "expected_violation": "required_condition_not_enforced"
+              },
+              {
+                "item_id": "syn_v2_required_condition_03",
+                "expected_violation": "required_condition_not_enforced"
+              },
+              {
+                "item_id": "syn_v2_required_condition_04",
+                "expected_violation": "required_condition_not_enforced"
+              },
+              {
+                "item_id": "syn_v2_constraint_violated_04",
+                "expected_violation": "constraint_violated"
+              },
+              {
+                "item_id": "syn_v2_exception_not_handled_01",
+                "expected_violation": "exception_not_handled"
+              },
+              {
+                "item_id": "syn_v2_exception_not_handled_02",
+                "expected_violation": "exception_not_handled"
+              },
+              {
+                "item_id": "syn_v2_exception_not_handled_03",
+                "expected_violation": "exception_not_handled"
+              }
+            ]
+          },
+          {
+            "variant_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+            "variants": [
+              {
+                "item_id": "syn_v2_required_condition_06",
+                "expected_violation": "required_condition_not_enforced"
+              },
+              {
+                "item_id": "syn_v2_constraint_violated_06",
+                "expected_violation": "constraint_violated"
+              },
+              {
+                "item_id": "syn_v2_constraint_violated_08",
+                "expected_violation": "constraint_violated"
+              },
+              {
+                "item_id": "syn_v2_exception_not_handled_08",
+                "expected_violation": "exception_not_handled"
+              }
+            ]
+          },
+          {
+            "variant_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+            "variants": [
+              {
+                "item_id": "syn_v2_required_condition_05",
+                "expected_violation": "required_condition_not_enforced"
+              },
+              {
+                "item_id": "syn_v2_constraint_violated_05",
+                "expected_violation": "constraint_violated"
+              },
+              {
+                "item_id": "syn_v2_exception_not_handled_05",
+                "expected_violation": "exception_not_handled"
+              }
+            ]
+          },
+          {
+            "variant_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+            "variants": [
+              {
+                "item_id": "syn_v2_constraint_violated_10",
+                "expected_violation": "constraint_violated"
+              },
+              {
+                "item_id": "syn_v2_exception_not_handled_04",
+                "expected_violation": "exception_not_handled"
+              }
+            ]
+          },
+          {
+            "variant_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+            "variants": [
+              {
+                "item_id": "syn_v2_required_condition_10",
+                "expected_violation": "required_condition_not_enforced"
+              },
+              {
+                "item_id": "syn_v2_constraint_violated_03",
+                "expected_violation": "constraint_violated"
+              },
+              {
+                "item_id": "syn_v2_exception_not_handled_09",
+                "expected_violation": "exception_not_handled"
+              }
+            ]
+          },
+          {
+            "variant_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+            "variants": [
+              {
+                "item_id": "syn_v2_required_condition_08",
+                "expected_violation": "required_condition_not_enforced"
+              },
+              {
+                "item_id": "syn_v2_constraint_violated_09",
+                "expected_violation": "constraint_violated"
+              },
+              {
+                "item_id": "syn_v2_exception_not_handled_06",
+                "expected_violation": "exception_not_handled"
+              }
+            ]
+          },
+          {
+            "variant_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+            "variants": [
+              {
+                "item_id": "syn_v2_required_condition_07",
+                "expected_violation": "required_condition_not_enforced"
+              },
+              {
+                "item_id": "syn_v2_required_condition_09",
+                "expected_violation": "required_condition_not_enforced"
+              },
+              {
+                "item_id": "syn_v2_constraint_violated_07",
+                "expected_violation": "constraint_violated"
+              },
+              {
+                "item_id": "syn_v2_exception_not_handled_07",
+                "expected_violation": "exception_not_handled"
+              },
+              {
+                "item_id": "syn_v2_exception_not_handled_10",
+                "expected_violation": "exception_not_handled"
+              }
+            ]
+          }
+        ],
+        "implication": "single-label unified accuracy is bounded below 1 by input collisions; per-type binary checks and explicit abstention are the valid reporting views"
+      }
+    }
+  },
+  "runtime_seconds": 4.475
+}

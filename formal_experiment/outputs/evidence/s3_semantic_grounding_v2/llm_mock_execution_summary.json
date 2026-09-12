@@ -1,0 +1,23 @@
+{
+  "schema_version": "s3_semantic_grounding_llm_execution@1.0.0",
+  "mode": "mock",
+  "mock_only_not_experimental": true,
+  "counts": {
+    "item_count": 20,
+    "attempted": 20,
+    "succeeded": 20,
+    "malformed": 0,
+    "rejected_by_validator": 0,
+    "ambiguous": 18,
+    "resolved": 2,
+    "skipped_resume_protected": 0,
+    "in_doubt": 0,
+    "failed": 0
+  },
+  "request_set_sha256": "1ac203ec1b2bc4e4a4ac3b057788abe79b9fbf143b981ea635dc238925bdaf04",
+  "candidate_pack_sha256": "512b06b8f847caac98e53059570e5473017cb8da2a9620ae394fd9fd02d5102e",
+  "total_input_tokens_estimate": 62333,
+  "ledger_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s3_semantic_grounding_v2\\s3_semantic_grounding_llm_v1_mock_run\\execution_ledger.jsonl",
+  "normalized_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s3_semantic_grounding_v2\\s3_semantic_grounding_llm_v1_mock_run\\normalized_grounding.jsonl",
+  "raw_response_dir": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s3_semantic_grounding_v2\\s3_semantic_grounding_llm_v1_mock_run\\raw_responses"
+}

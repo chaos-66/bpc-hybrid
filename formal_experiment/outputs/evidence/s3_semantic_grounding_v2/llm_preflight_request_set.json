@@ -1,0 +1,15 @@
+{
+  "schema_version": "s3_semantic_grounding_llm_request_set@1.0.0",
+  "runner_revision": "s3_semantic_grounding_llm_v1",
+  "base_revision": "s3_semantic_grounding_v2",
+  "model": "deepseek-v4-pro",
+  "temperature": 0.0,
+  "top_p": 1.0,
+  "max_output_tokens_per_call": 512,
+  "request_count": 20,
+  "total_input_tokens_estimate": 62333,
+  "total_output_token_cap": 10240,
+  "required_peak_usd_cap": 0.18,
+  "required_off_peak_usd_cap": 0.09,
+  "request_set_sha256": "1ac203ec1b2bc4e4a4ac3b057788abe79b9fbf143b981ea635dc238925bdaf04"
+}

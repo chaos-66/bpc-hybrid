@@ -1,0 +1,93 @@
+{
+  "schema_version": "s3_semantic_grounding_v2_manifest@1.0.0",
+  "run_id": "s3_semantic_grounding_v2",
+  "revision": "s3_semantic_grounding_v2",
+  "scope": "development_only",
+  "generated_utc": "2026-09-12T15:47:53.608986+00:00",
+  "git": {
+    "commit": "unknown",
+    "dirty": null,
+    "dirty_paths": []
+  },
+  "evaluator_version": "s3_semantic_grounding_v2_evaluator@1.0.0",
+  "sample_count": {
+    "variants": 40,
+    "controls": 40,
+    "objects": 80
+  },
+  "inputs": {
+    "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+    "data/development/human_review/stage3_gold_inference_v1.json": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+    "configs/stage1_structural_s11_s14.json": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48",
+    "outputs/reports/s3_semantic_grounding_v1.json": "e9866db975dfd6e32c674d25c9826dd5fbe073cfb23ed13c628a12a0ddb8606a",
+    "outputs/evidence/s3_semantic_grounding_v1/manifest.json": "d466f21164668b4b47ad0b97286f06dfefd622d0515b74230a51109fc7e47770",
+    "outputs/reports/s3_formula_repair_v2.json": "f46c4bd49a6e0ad0163af176d6c53b46d5b4d2b33f81a32a99abf49fa49ab35c",
+    "outputs/evidence/s3_formula_repair_v2/manifest.json": "561a51300380be56e4c03e16b20ce899eda3418fbe300815a4726bfa0ec0a77d"
+  },
+  "implementation_hashes": {
+    "scripts/run_s3_semantic_grounding_v2.py": "a654bc8c33056e3175068881fb79124b3af702d9fea97a7cb48560d691efb18f",
+    "src/bpc_hybrid/s3_semantic_grounding_v2.py": "b00c11c3cf53ad9d9e619c0d0ad78dd9999d4c5a4420a8aa3f7f50b84a43ca4c",
+    "src/bpc_hybrid/s3_semantic_grounding_llm_v1.py": "cdd9eb147d6afabfc75be28ca5343bfd512d4391fcd65b7f2190199ff9a9ef39",
+    "configs/stage3_semantic_grounding_v2.json": "82b86c8d7a17b38f70252d096cba5d53bfa31717a02fddbec78d0b9cbf77b21d",
+    "tests/test_s3_semantic_grounding_v2.py": "288623c36acf9d0eeb20a76fa6526557ca80ec362393dd42ddd00aaab1f65306"
+  },
+  "frozen_original_three_regression": {
+    "historical_manifest": "outputs/evidence/s3_formula_repair_v2/manifest.json",
+    "original_three_artifacts": {
+      "outputs/evidence/s3_formula_repair_v2/original_three/reference/evaluation.json": {
+        "expected_sha256": "e881da6cb62e17570baa54935aef1792bc39efb73d7e9d3c44d557e7ac20a940",
+        "actual_sha256": "e881da6cb62e17570baa54935aef1792bc39efb73d7e9d3c44d557e7ac20a940",
+        "match": true
+      },
+      "outputs/evidence/s3_formula_repair_v2/original_three/reference/predictions.jsonl": {
+        "expected_sha256": "ca6c75acff2b45b9371865af6efad4fc81ff1fc24dd7de228ef448c96090b040",
+        "actual_sha256": "ca6c75acff2b45b9371865af6efad4fc81ff1fc24dd7de228ef448c96090b040",
+        "match": true
+      },
+      "outputs/evidence/s3_formula_repair_v2/original_three/reference/rule_records.json": {
+        "expected_sha256": "5062e1a235f942dace1d495f5648a2251681bfb546c7b7d63139e94798144739",
+        "actual_sha256": "5062e1a235f942dace1d495f5648a2251681bfb546c7b7d63139e94798144739",
+        "match": true
+      },
+      "outputs/evidence/s3_formula_repair_v2/original_three/rules_only/evaluation.json": {
+        "expected_sha256": "8ce1970371cda1125293064e5356572a3b7a483b63ac9cf75fc6c0537ec68c9e",
+        "actual_sha256": "8ce1970371cda1125293064e5356572a3b7a483b63ac9cf75fc6c0537ec68c9e",
+        "match": true
+      },
+      "outputs/evidence/s3_formula_repair_v2/original_three/rules_only/predictions.jsonl": {
+        "expected_sha256": "eab93a5fb826ce2724f6f41cdf0f15af10c8ec3625c8128893d3d4621ee90488",
+        "actual_sha256": "eab93a5fb826ce2724f6f41cdf0f15af10c8ec3625c8128893d3d4621ee90488",
+        "match": true
+      },
+      "outputs/evidence/s3_formula_repair_v2/original_three/rules_only/rule_records.json": {
+        "expected_sha256": "9726eab57270da7a2df7706ff6fb23390ec22654f3e1e6735f04f749589020f2",
+        "actual_sha256": "9726eab57270da7a2df7706ff6fb23390ec22654f3e1e6735f04f749589020f2",
+        "match": true
+      }
+    },
+    "original_three_all_match": true,
+    "sun_scorer": {
+      "path": "src/bpc_hybrid/sun_stage3/sun_scorer.py",
+      "historical_hash_mode": "canonical_lf_utf8_text",
+      "expected_sha256": "a045b28631e47fdb912d5db5f922e01d894c9ba5c34dea6d8a1c26a03e34820f",
+      "actual_sha256": "a045b28631e47fdb912d5db5f922e01d894c9ba5c34dea6d8a1c26a03e34820f",
+      "match": true
+    }
+  },
+  "llm_fallback": {
+    "status": "PACK_FROZEN_READY_FOR_PREFLIGHT",
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "pack_item_count": 20
+  },
+  "safety": {
+    "human_gold_read": false,
+    "human_gold_modified": false,
+    "panel_modified": false,
+    "original_three_modified": false,
+    "v1_outputs_overwritten": false,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "development_only_not_formal_oracle": true
+  }
+}

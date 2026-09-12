@@ -1,0 +1,80 @@
+{
+  "schema_version": "stage3_semantic_grounding@2.0.0",
+  "revision": "s3_semantic_grounding_v2",
+  "task_id": "S3-SEMANTIC-GROUNDING-V2",
+  "base_revision": "s3_semantic_grounding_v1",
+  "scope": "development_only",
+  "claim": "Evaluation-protocol repair for the four development-only extended violation types, deterministic re-run with the frozen v1 scorer, composite-input collision audit, target-paired causal evaluation, offline control-global-compliance status, clean unified subset, and a frozen Gold-blind LLM fallback candidate pack. No real API call without a new scope-specific authorization.",
+  "thresholds": {
+    "gamma_ext": 0.5,
+    "action_similarity_gamma": 0.4,
+    "action_top_k_similarity": 5,
+    "action_top_k_lexical": 5,
+    "lexical_strong_coverage": 0.5,
+    "lexical_supported_coverage": 0.3,
+    "lexical_supported_similarity": 0.3,
+    "resolved_similarity_margin": 0.15,
+    "max_local_nodes": 500,
+    "downstream_depth": 8,
+    "upstream_depth": 6
+  },
+  "evaluation_protocol": {
+    "primary": "target_paired_causal",
+    "secondary": ["clean_unified_verified_controls", "legacy_unified_80_diagnostic"],
+    "true_collision_identity": [
+      "canonical_rule_input_hash",
+      "canonical_process_input_hash",
+      "different_expected_labels"
+    ],
+    "old_bpmn_only_audit_role": "historical_overestimate_for_comparison_only",
+    "control_global_compliance": {
+      "verified_compliant": "all applicable structural checks negative or not_applicable",
+      "violated_other_field": "at least one positive structural check",
+      "unknown": "no positive check but at least one unknown/ambiguous check",
+      "reads_expected_label": false
+    }
+  },
+  "llm_fallback": {
+    "schema_version": "s3_semantic_grounding_llm_response@2.0.0",
+    "runner_revision": "s3_semantic_grounding_llm_v1",
+    "status": "IMPLEMENTED_READY_FOR_AUTHORIZATION",
+    "scope": "S3-SEMANTIC-GROUNDING-V2-FALLBACK",
+    "provider": "openai_compatible",
+    "model": "deepseek-v4-pro",
+    "base_url_env_var": "BPC_HYBRID_DeepSeek_BASE_URL",
+    "api_key_env_var": "BPC_HYBRID_DeepSeek_API_KEY",
+    "max_output_tokens_per_call": 512,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "timeout_seconds": 60.0,
+    "retry": 0,
+    "off_peak_only": true,
+    "confidence_threshold": 0.8,
+    "price_snapshot": {
+      "version": "project_peak_off_peak_snapshot@2026-08-17",
+      "peak": {"input_cache_miss_per_million": 1.32, "output_per_million": 3.96},
+      "off_peak": {"input_cache_miss_per_million": 0.66, "output_per_million": 1.98}
+    },
+    "forbidden_payload_fields": [
+      "expected_violation",
+      "mutation_type",
+      "target_field",
+      "mutation_config",
+      "Gold",
+      "synthetic_type_name",
+      "control_variant_difference",
+      "paired_counterpart_prediction"
+    ],
+    "final_decision_owner": "program"
+  },
+  "safety": {
+    "human_gold_read": false,
+    "human_gold_modified": false,
+    "frozen_panel_modified": false,
+    "c36_modified": false,
+    "v1_outputs_overwritten": false,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "development_only_not_formal_oracle": true
+  }
+}
