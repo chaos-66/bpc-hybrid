@@ -120,9 +120,9 @@
 
 - **r8**：`missing_action` A/B/C 均 score 1.0、denominator 1、最佳模型动作相似度 0.7524；C 组
   `required_condition_not_enforced` / `constraint_violated` / `exception_not_handled` 候选数 4 / 29 / 6，score 为 null。
-- **r9 / r10 / r11**：四类中未判定的行（r9 与 r11 的 `required_condition_not_enforced`、`constraint_violated`，
-  r10 的 `exception_not_handled`）score 均为 null；r9/r11 的候选数分别为 4 与 29，r10 为 6；`missing_action` 方面
-  r9 为 score 1.0（相似度 0.4219）、r11 为 score 1.0（A 侧 0.6042、B/C 侧 0.7401）。
+- **r9 / r10 / r11**：四类中未判定的行（r9 与 r11 的 `required_condition_not_enforced`、`constraint_violated` 与
+  `exception_not_handled`，r10 的 `exception_not_handled`）score 均为 null；r9 与 r11 的条件/约束候选数为 4 与 29，
+  例外候选数为 6；`missing_action` 方面 r9 为 1.0（0.4219）、r11 为 1.0（A 侧 0.6042、B/C 侧 0.7401）。
 - **r10**：`missing_action` A/B/C 均 score 0.0、denominator 1、相似度 0.8582；`incorrect_actor` A 组 score 1.0、
   denominator 1、最小参与者相似度 0.3898，B/C 组 score 1.0、最小参与者相似度 0.3334；C 组
   `required_condition_not_enforced` score 0.92683（best_candidate `Requested`、max_sim 0.07317）、
@@ -149,7 +149,8 @@
 
 ### 4.1 A → B：规则记录的变化字段与归因
 
-A→B 的每处变化都归因为**抽取（extraction）**，5 条规则的 `attribution` 全为 `extraction`（`capsule.stage_attribution.a_to_b.<id>`）。
+A→B 的每处变化都归因为**抽取（extraction）**，5 条规则的 `attribution` 全为 `extraction`
+（`capsule.stage_attribution.a_to_b.<id>`）。
 
 | 规则 | A→B 变化字段 | 变化要点 | 归因 |
 |---|---|---|---|
@@ -248,10 +249,10 @@ BPMN 永不修改，修复后的 XML 只在 gitignored 本地目录生成；下�
 **范围**：对象是**重建模型（reconstructed model）**——按 Sun 等（2024）Figure 10 与论文叙述重建的
 `data/development/sim_case_c1/sun_figure10_reconstruction.bpmn`。该重建件**已存在**，并**已通过解析与 schema 校验**：
 解析输出 activities 11 / gateways 4 / events 5，`validate_process_record` 返回 `valid=True`（`schema_valid=True`、
-`cross_field_valid=True`、`errors=[]`）；文件 sha256 `773c4691…`、26673 字节，另含顺序流 20 条、消息流 14 条、
-数据关联 4 条、participant 3 个、lane 3 个、collaboration 1 个，`cycle_detected = False`
-（`sun_figure10_reconstruction_provenance.md` §10）。它**不是**作者原始文件，**不得**称为 “Sun original” 或 “exact Sun”
-（同文件 §1、§11）；Figure 10 上的四个 violation 标注框不进入模型，因为它们是论文的检查结果而非流程内容（同文件 §1、§8）。
+`cross_field_valid=True`、`errors=[]`）；文件 sha256 `773c4691…`、26673 字节，另含顺序流 20 条、消息流 14 条、数据关联
+4 条、participant 3 个、lane 3 个、collaboration 1 个，`cycle_detected = False`（`…reconstruction_provenance.md` §10）。
+它**不是**作者原始文件，**不得**称为 “Sun original” 或 “exact Sun”；Figure 10 上的四个 violation 标注框不进入模型，
+因为它们是论文的检查结果而非流程内容（同文件 §1、§8、§11）。
 
 **缺项（如实列出）**：①**LLM 组缺失及原因——未做**：论文 Table 13 的规则文本与仓库中既有预测输入的规则文本不一致，
 在完成一致性核验前**不得复用**这些预测作为该补充案例的 Stage 2。②**因此本补充案例只完成非 LLM 基线部分**；LLM 组、
