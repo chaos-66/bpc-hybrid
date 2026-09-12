@@ -1,379 +1,412 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="4535" viewBox="0 0 1800 4535" version="1.1">
-<title>SIM 卡入网案例：A/B/C 开发性检测与参考问题对应图</title>
-<desc>Read-only render from capsule.json. Machine alarms, evidence-checked reference correspondence, undetermined checks, and repair-control limits are shown separately.</desc>
-<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#17202a"/></marker></defs><rect x="0.0" y="0.0" width="1800.0" height="265.0" rx="0" fill="#12395b" stroke="none" stroke-width="1"/>
-<text x="40.0" y="62.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="start">SIM 卡入网案例：A/B/C 开发性检测与参考问题对应图</text>
-<text x="40.0" y="96.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="16" font-weight="normal" fill="#d6eaf8" text-anchor="start">run=sim_case_c1_run_v1 · claim_scope=development_case_study_not_formal_gold · 同一 capsule 渲染</text>
-<text x="40.0" y="126.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="16" font-weight="normal" fill="#eaf2f8" text-anchor="start">A 组=项目锁定非 LLM 基线 B0 v10a + 冻结 Sun 式三类；B 组=已有真实 LLM Stage 2 预测 + 与 A 同一三类；C 组=与 B 相同 Stage 2/三类 + REPAIR-V2 四类扩展。主分母固定为 r8/v2、r9/v2、r10/v2、r11/v2、r13/v2。</text>
-<text x="40.0" y="148.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="normal" fill="#d6eaf8" text-anchor="start">本图不把论文 Figure 10 的 Violation 标签当作本方法输出；图中所有状态、分数、报警和计数均来自同一 capsule。红色=机器实际报警，绿色=有证据对应参考问题，橙色=参考问题未检出/报警未证实，灰色=undetermined，紫色=来源/表示限制。</text>
-<rect x="40.0" y="293.0" width="275.0" height="48.0" rx="6" fill="#fdecea" stroke="#b03a2e" stroke-width="2"/>
-<text x="52.0" y="323.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#b03a2e" text-anchor="start">机器报警（原始输出）</text>
-<rect x="323.0" y="293.0" width="275.0" height="48.0" rx="6" fill="#eafaf1" stroke="#1e8449" stroke-width="2"/>
-<text x="335.0" y="323.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1e8449" text-anchor="start">有证据对应参考问题</text>
-<rect x="606.0" y="293.0" width="275.0" height="48.0" rx="6" fill="#fef5e7" stroke="#b9770e" stroke-width="2"/>
-<text x="618.0" y="323.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#b9770e" text-anchor="start">参考问题未检出或报警未证实</text>
-<rect x="889.0" y="293.0" width="275.0" height="48.0" rx="6" fill="#eef2f5" stroke="#566573" stroke-width="2"/>
-<text x="901.0" y="323.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#566573" text-anchor="start">undetermined / 无法判断</text>
-<rect x="1172.0" y="293.0" width="275.0" height="48.0" rx="6" fill="#f4ecf7" stroke="#6c3483" stroke-width="2"/>
-<text x="1184.0" y="323.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#6c3483" text-anchor="start">来源、表达或解析限制</text>
-<rect x="1455.0" y="293.0" width="275.0" height="48.0" rx="6" fill="#fbeee6" stroke="#873600" stroke-width="2"/>
-<text x="1467.0" y="323.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#873600" text-anchor="start">修复件无效/部分/不可评价</text>
-<rect x="40.0" y="371.0" width="1720.0" height="850.0" rx="10" fill="#ffffff" stroke="#bdc3c7" stroke-width="1"/>
-<text x="60.0" y="405.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="22" font-weight="bold" fill="#17202a" text-anchor="start">流程模型：实际 BPMN 节点、网关、连线和条件标签（只读坐标）</text>
-<text x="60.0" y="429.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#5d6d7e" text-anchor="start">节点与连线来自 sim_original_flattened.bpmn 的 BPMNDI；颜色和标注读取本轮 capsule 结果。</text>
-<rect x="-12.5" y="424.5" width="1793.3" height="121.9" rx="7" fill="#f2f6f9" stroke="#dde5ea" stroke-width="1"/>
-<rect x="-9.6" y="587.3" width="1760.8" height="383.8" rx="7" fill="#f2f6f9" stroke="#dde5ea" stroke-width="1"/>
-<rect x="-9.6" y="995.9" width="1760.8" height="88.0" rx="7" fill="#f2f6f9" stroke="#dde5ea" stroke-width="1"/>
-<rect x="14.7" y="424.5" width="1766.1" height="121.9" rx="7" fill="#f2f6f9" stroke="#dde5ea" stroke-width="1"/>
-<rect x="17.6" y="587.3" width="1733.6" height="383.8" rx="7" fill="#f2f6f9" stroke="#dde5ea" stroke-width="1"/>
-<rect x="212.8" y="868.4" width="79.8" height="31.1" rx="7" fill="#f2f6f9" stroke="#dde5ea" stroke-width="1"/>
-<rect x="17.6" y="995.9" width="1733.6" height="88.0" rx="7" fill="#f2f6f9" stroke="#dde5ea" stroke-width="1"/>
-<polyline points="653.9,665.5 826.1,665.5" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="826.1,665.5 820.1,668.8 820.1,662.2" fill="#bdc3c7" stroke="none"/>
-<polyline points="1652.6,485.3 1714.6,485.3" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="1714.6,485.3 1708.6,488.6 1708.6,482.0" fill="#bdc3c7" stroke="none"/>
-<polyline points="1079.5,665.5 1101.0,665.5" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="1101.0,665.5 1095.0,668.8 1095.0,662.2" fill="#bdc3c7" stroke="none"/>
-<polyline points="1286.4,665.5 1329.8,665.5" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="1329.8,665.5 1323.8,668.8 1323.8,662.2" fill="#bdc3c7" stroke="none"/>
-<polyline points="1500.0,484.4 1562.0,485.3" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="1562.0,485.3 1555.9,488.5 1556.0,481.9" fill="#bdc3c7" stroke="none"/>
-<polyline points="454.4,778.9 498.1,778.9" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="498.1,778.9 492.1,782.2 492.1,775.6" fill="#bdc3c7" stroke="none"/>
-<polyline points="1137.3,669.2 1195.7,669.2" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="1195.7,669.2 1189.7,672.5 1189.7,665.9" fill="#bdc3c7" stroke="none"/>
-<polyline points="785.3,779.5 826.1,779.4" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="826.1,779.4 820.1,782.7 820.1,776.1" fill="#bdc3c7" stroke="none"/>
-<polyline points="218.7,778.9 239.1,779.3" fill="none" stroke="#b9770e" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
-<polygon points="239.1,779.3 233.0,782.5 233.1,775.9" fill="#b9770e" stroke="none"/>
-<polyline points="1607.6,665.5 1648.4,665.5" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="1648.4,665.5 1642.4,668.8 1642.4,662.2" fill="#bdc3c7" stroke="none"/>
-<polyline points="862.4,665.2 988.9,665.5" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="988.9,665.5 982.9,668.8 982.9,662.2" fill="#bdc3c7" stroke="none"/>
-<polyline points="982.5,779.4 1021.5,778.9" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="1021.5,778.9 1015.6,782.2 1015.5,775.6" fill="#bdc3c7" stroke="none"/>
-<polyline points="1117.6,683.7 1117.6,779.8 1166.6,779.8" fill="none" stroke="#b9770e" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
-<polygon points="1166.6,779.8 1160.6,783.1 1160.6,776.5" fill="#b9770e" stroke="none"/>
-<polyline points="1257.3,778.9 1327.2,778.9" fill="none" stroke="#b9770e" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
-<polygon points="1327.2,778.9 1321.2,782.2 1321.2,775.6" fill="#b9770e" stroke="none"/>
-<polyline points="87.2,779.3 128.0,778.9" fill="none" stroke="#b9770e" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
-<polygon points="128.0,778.9 122.0,782.2 122.0,775.6" fill="#b9770e" stroke="none"/>
-<polyline points="516.5,760.7 516.5,667.4 563.2,667.4" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="563.2,667.4 557.2,670.7 557.2,664.1" fill="#bdc3c7" stroke="none"/>
-<polyline points="534.4,778.2 563.2,778.8" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="563.2,778.8 557.1,782.0 557.3,775.4" fill="#bdc3c7" stroke="none"/>
-<polyline points="1417.9,778.9 1460.0,778.9 1460.0,683.7" fill="none" stroke="#b9770e" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
-<polygon points="1460.0,683.7 1463.3,689.7 1456.7,689.7" fill="#b9770e" stroke="none"/>
-<polyline points="653.9,778.9 694.7,779.4" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="694.7,779.4 688.6,782.7 688.7,776.1" fill="#bdc3c7" stroke="none"/>
-<polyline points="844.3,760.7 844.3,683.7" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="844.3,683.7 847.6,689.7 841.0,689.7" fill="#bdc3c7" stroke="none"/>
-<polyline points="1357.0,665.5 1441.4,665.7" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="1441.4,665.7 1435.4,669.0 1435.4,662.4" fill="#bdc3c7" stroke="none"/>
-<polyline points="862.4,779.7 891.9,779.5" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="891.9,779.5 885.9,782.8 885.8,776.2" fill="#bdc3c7" stroke="none"/>
-<polyline points="1477.7,666.4 1517.0,666.4" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="1517.0,666.4 1511.0,669.7 1511.0,663.1" fill="#bdc3c7" stroke="none"/>
-<polyline points="322.9,778.9 363.7,778.9" fill="none" stroke="#6c3483" stroke-width="2.8" marker-end="url(#arrow)"/>
-<polygon points="363.7,778.9 357.7,782.2 357.7,775.6" fill="#6c3483" stroke="none"/>
-<rect x="308.5" y="765.9" width="69.6" height="17.0" rx="3" fill="#ffffff" stroke="#dfe6ea" stroke-width="0.6"/>
-<text x="343.3" y="778.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="11" font-weight="bold" fill="#6c3483" text-anchor="middle">Debt &lt; 100</text>
-<polyline points="266.3,779.5 286.7,779.5" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="286.7,779.5 280.7,782.8 280.7,776.2" fill="#bdc3c7" stroke="none"/>
-<polyline points="307.8,797.0 307.8,833.9" fill="none" stroke="#bdc3c7" stroke-width="1.5" marker-end="url(#arrow)"/>
-<polygon points="307.8,833.9 304.5,827.9 311.1,827.9" fill="#bdc3c7" stroke="none"/>
-<rect x="694.7" y="743.2" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="740.0" y="770.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Ask</text>
-<text x="740.0" y="782.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">portability</text>
-<text x="740.0" y="794.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">third company</text>
-<text x="740.0" y="812.7" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<rect x="363.7" y="742.6" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="409.1" y="775.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Ask</text>
-<text x="409.1" y="787.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">portability</text>
-<text x="409.1" y="812.1" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<rect x="988.9" y="629.3" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="1034.2" y="668.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Sign contract</text>
-<text x="1034.2" y="698.8" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<rect x="128.0" y="742.6" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="173.3" y="775.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Request</text>
-<text x="173.3" y="787.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">personal data</text>
-<text x="173.3" y="812.1" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<rect x="891.9" y="743.2" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="937.2" y="776.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Delete</text>
-<text x="937.2" y="788.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">personal data</text>
-<text x="937.2" y="812.7" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<rect x="1327.2" y="742.6" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#b9770e" stroke-width="2.4"/>
-<text x="1372.5" y="775.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Ask for</text>
-<text x="1372.5" y="787.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">consent</text>
-<text x="1372.5" y="812.1" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<text x="1327.2" y="826.1" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="9" font-weight="bold" fill="#b9770e" text-anchor="start">r11 out_of_order=undetermined</text>
-<rect x="563.2" y="742.6" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="608.5" y="781.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Ask old number</text>
-<text x="608.5" y="812.1" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<rect x="563.2" y="629.3" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="608.5" y="662.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Assign new</text>
-<text x="608.5" y="674.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">number</text>
-<text x="608.5" y="698.8" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<rect x="1517.0" y="629.3" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="1562.3" y="668.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Send SIM card</text>
-<text x="1562.3" y="698.8" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<rect x="1562.0" y="449.0" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#1e8449" stroke-width="2.4"/>
-<text x="1607.3" y="482.3" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Activate SIM</text>
-<text x="1607.3" y="494.3" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">card</text>
-<text x="1607.3" y="518.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Customer</text>
-<text x="1557.4" y="532.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="9" font-weight="bold" fill="#1e8449" text-anchor="start">r10 incorrect_actor=violation score=1.0</text>
-<text x="1486.9" y="543.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="9" font-weight="bold" fill="#1e8449" text-anchor="start">owner=Customer evidence=found_with_reference_evidence</text>
-<rect x="1195.7" y="629.3" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="1241.1" y="662.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Request</text>
-<text x="1241.1" y="674.5" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">payment</text>
-<text x="1241.1" y="698.8" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<rect x="1166.6" y="742.6" width="90.7" height="72.5" rx="8" fill="#ffffff" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="1212.0" y="781.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Store Data</text>
-<text x="1212.0" y="812.1" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="8" font-weight="normal" fill="#5d6d7e" text-anchor="middle">Phone company</text>
-<rect x="1648.4" y="652.8" width="30.0" height="26.0" rx="13.0" fill="#eafaf1" stroke="#bdc3c7" stroke-width="1.2"/>
-<rect x="239.1" y="765.9" width="30.0" height="27.2" rx="13.59968498844728" fill="#eafaf1" stroke="#bdc3c7" stroke-width="1.2"/>
-<rect x="1021.5" y="766.8" width="30.0" height="26.0" rx="13.0" fill="#eafaf1" stroke="#bdc3c7" stroke-width="1.2"/>
-<rect x="297.5" y="833.9" width="30.0" height="26.0" rx="13.0" fill="#eafaf1" stroke="#bdc3c7" stroke-width="1.2"/>
-<rect x="1472.8" y="471.7" width="30.0" height="27.2" rx="13.599684988447336" fill="#eafaf1" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="1487.8" y="480.7" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Rece</text>
-<text x="1487.8" y="492.7" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">ive</text>
-<text x="1487.8" y="504.7" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">SIM</text>
-<rect x="1714.6" y="472.6" width="30.0" height="26.0" rx="13.0" fill="#eafaf1" stroke="#bdc3c7" stroke-width="1.2"/>
-<rect x="60.0" y="765.9" width="30.0" height="27.2" rx="13.59968498844728" fill="#eafaf1" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="75.0" y="774.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">clie</text>
-<text x="75.0" y="786.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">New</text>
-<text x="75.0" y="798.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">acqu</text>
-<rect x="1329.8" y="651.9" width="30.0" height="27.2" rx="13.59968498844728" fill="#eafaf1" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="1344.8" y="660.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">Paym</text>
-<text x="1344.8" y="672.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">rece</text>
-<text x="1344.8" y="684.9" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="bold" fill="#17202a" text-anchor="middle">ent</text>
-<polygon points="844.2,760.7 862.4,778.9 844.2,797.0 826.1,778.9" fill="#fff4e6" stroke="#bdc3c7" stroke-width="1.2"/>
-<polygon points="1459.6,647.4 1477.7,665.5 1459.6,683.7 1441.4,665.5" fill="#fff4e6" stroke="#bdc3c7" stroke-width="1.2"/>
-<polygon points="844.2,647.4 862.4,665.5 844.2,683.7 826.1,665.5" fill="#fff4e6" stroke="#bdc3c7" stroke-width="1.2"/>
-<polygon points="516.3,760.7 534.4,778.9 516.3,797.0 498.1,778.9" fill="#fff4e6" stroke="#bdc3c7" stroke-width="1.2"/>
-<polygon points="304.8,760.7 322.9,778.9 304.8,797.0 286.7,778.9" fill="#fff4e6" stroke="#bdc3c7" stroke-width="1.2"/>
-<polygon points="1119.2,647.4 1137.3,665.5 1119.2,683.7 1101.0,665.5" fill="#fff4e6" stroke="#bdc3c7" stroke-width="1.2"/>
-<text x="60.0" y="1139.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="normal" fill="#6c3483" text-anchor="start">r8 process scope: timer=0, boundary=0, terminate=0, event_subprocess=0; repair effective=False, exclusion=repair_semantics_not_carried_by_stage1</text>
-<text x="60.0" y="1155.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="normal" fill="#b9770e" text-anchor="start">r11 order evidence: out_of_order=undetermined reason=no_mapped_rule_order_endpoints; consent/retrieval nodes are connected by actual BPMN sequence flows; missing_action is not substituted.</text>
-<text x="60.0" y="1171.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="10" font-weight="normal" fill="#6c3483" text-anchor="start">r13 field attribution: model flow label Debt &lt; 100; required_condition=undetermined reason=empty_rule_condition; condition/constraint fields are empty.</text>
-<rect x="1080.0" y="1103.0" width="260.0" height="52.0" rx="8" fill="#ffffff" stroke="#b9770e" stroke-width="2" stroke-dasharray="7 5"/>
-<text x="1090.0" y="1123.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="12" font-weight="bold" fill="#b9770e" text-anchor="start">缺失活动（模型中不存在）</text>
-<text x="1090.0" y="1141.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="9" font-weight="normal" fill="#5d6d7e" text-anchor="start">r9 missing_action=violation reason=None</text>
-<polyline points="1080.0,1129.0 1034.2,665.5" fill="none" stroke="#b9770e" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
-<polygon points="1034.2,665.5 1038.1,671.2 1031.5,671.8" fill="#b9770e" stroke="none"/>
-<rect x="40.0" y="1249.0" width="1720.0" height="540.0" rx="10" fill="#ffffff" stroke="#bdc3c7" stroke-width="1"/>
-<rect x="40.0" y="1249.0" width="1720.0" height="44.0" rx="10" fill="#b9770e" stroke="none" stroke-width="1"/>
-<text x="58.0" y="1279.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="start">r8/v2 · issue_present</text>
-<text x="58.0" y="1319.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 A</text>
-<text x="145.0" y="1319.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=violation (1.0) · actor=undetermined · order=undetermined (0.0) · condition=— · constraint=—</text>
-<text x="58.0" y="1345.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 B</text>
-<text x="145.0" y="1345.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=violation (1.0) · actor=undetermined · order=undetermined (0.0) · condition=— · constraint=—</text>
-<text x="58.0" y="1371.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 C</text>
-<text x="145.0" y="1371.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=violation (1.0) · actor=undetermined · order=undetermined (0.0) · condition=violation (1.0) ·</text>
-<text x="145.0" y="1389.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">constraint=violation (0.674966)</text>
-<text x="970.0" y="1315.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">参考问题</text>
-<text x="1050.0" y="1315.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">当前可见模型中不存在任何超时终止机制（无计时器、无边界事件、无超时分支），规则要求的“超时即终止”义务未在模</text>
-<text x="1050.0" y="1333.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">型中表达</text>
-<text x="970.0" y="1359.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#b03a2e" text-anchor="start">C 机器报警</text>
-<text x="1050.0" y="1359.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing_action=violation/1.0；required_condition_not_enforced=violation/1.0；</text>
-<text x="1050.0" y="1377.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">constraint_violated=violation/0.674966</text>
-<text x="970.0" y="1403.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#b9770e" text-anchor="start">对应评价</text>
-<text x="1050.0" y="1403.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">machine_alarm_but_reference_correspondence_unverified；有证据对应=False</text>
-<text x="970.0" y="1429.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#5d6d7e" text-anchor="start">证据链</text>
-<text x="1050.0" y="1429.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing_action: machine alarm retained, but no model-side alarm value supplies an actual 30-day</text>
-<text x="1050.0" y="1447.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">bound or terminate label; process-scope fields are absent. Reference correspondence remains</text>
-<text x="1050.0" y="1465.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">unverified. required_condition_not_enforced: machine alarm retained, but no model-side alarm</text>
-<text x="1050.0" y="1483.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">value supplies an actual 30-day bound or terminate label; process-scope fields are absent.</text>
-<text x="1050.0" y="1501.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">Reference correspondence remains unverified. constraint_violated: machine alarm retained, but no</text>
-<text x="1050.0" y="1519.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">model-side alarm value supplies an actual 30-day bound or terminate label; process-scope fields</text>
-<text x="1050.0" y="1537.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">are absent. Reference correspondence remains unverified. r8 requires time, termination, and</text>
-<text x="1050.0" y="1555.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">process-scope evidence from explicit sources; keyword co-occurrence in the alarm object is not</text>
-<text x="1050.0" y="1573.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">used.</text>
-<text x="970.0" y="1599.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#6c3483" text-anchor="start">修复对照</text>
-<text x="1050.0" y="1599.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r8_timeout_termination：语义有效=True，进入检测链=False，有效分母=False，排除</text>
-<text x="1050.0" y="1617.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">=repair_semantics_not_carried_by_stage1；C_original=violation -&gt; C_repaired=violation</text>
-<rect x="40.0" y="1809.0" width="1720.0" height="420.0" rx="10" fill="#ffffff" stroke="#bdc3c7" stroke-width="1"/>
-<rect x="40.0" y="1809.0" width="1720.0" height="44.0" rx="10" fill="#1e8449" stroke="none" stroke-width="1"/>
-<text x="58.0" y="1839.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="start">r9/v2 · issue_present</text>
-<text x="58.0" y="1879.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 A</text>
-<text x="145.0" y="1879.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=undetermined (0.0) · actor=undetermined · order=undetermined (0.0) · condition=— · constraint=—</text>
-<text x="58.0" y="1905.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 B</text>
-<text x="145.0" y="1905.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=violation (1.0) · actor=undetermined · order=undetermined (0.0) · condition=— · constraint=—</text>
-<text x="58.0" y="1931.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 C</text>
-<text x="145.0" y="1931.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=violation (1.0) · actor=undetermined · order=undetermined (0.0) · condition=undetermined ·</text>
-<text x="145.0" y="1949.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">constraint=undetermined</text>
-<text x="970.0" y="1875.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">参考问题</text>
-<text x="1050.0" y="1875.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">模型缺少“收到个人信息后进行正确性核验”的活动；外部标注的 element_label（Sign contract）只是插入位置参照</text>
-<text x="970.0" y="1901.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#b03a2e" text-anchor="start">C 机器报警</text>
-<text x="1050.0" y="1901.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing_action=violation/1.0</text>
-<text x="970.0" y="1927.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1e8449" text-anchor="start">对应评价</text>
-<text x="1050.0" y="1927.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">found_with_reference_evidence；有证据对应=True</text>
-<text x="970.0" y="1953.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#5d6d7e" text-anchor="start">证据链</text>
-<text x="1050.0" y="1953.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">Extracted verification action is checked by missing_action; best process candidate is Ask</text>
-<text x="1050.0" y="1971.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">portability third company at similarity 0.4219, and the original activity inventory has no</text>
-<text x="1050.0" y="1989.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">verify/correctness activity. Sign contract (sid-6B3F7867-7939-43B6-8F6E-8B8A12ECCB7C) is only</text>
-<text x="1050.0" y="2007.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">the positional anchor, not the missing action.</text>
-<text x="970.0" y="2033.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1e8449" text-anchor="start">修复对照</text>
-<text x="1050.0" y="2033.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r9_add_verification：语义有效=True，进入检测链=True，有效分母=True，排除=—；C_original=violation -&gt;</text>
-<text x="1050.0" y="2051.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">C_repaired=violation</text>
-<rect x="40.0" y="2249.0" width="1720.0" height="440.0" rx="10" fill="#ffffff" stroke="#bdc3c7" stroke-width="1"/>
-<rect x="40.0" y="2249.0" width="1720.0" height="44.0" rx="10" fill="#1e8449" stroke="none" stroke-width="1"/>
-<text x="58.0" y="2279.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="start">r10/v2 · issue_present</text>
-<text x="58.0" y="2319.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 A</text>
-<text x="145.0" y="2319.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=violation (1.0) · actor=undetermined · order=undetermined (0.0) · condition=— · constraint=—</text>
-<text x="58.0" y="2345.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 B</text>
-<text x="145.0" y="2345.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=satisfied (0.0) · actor=violation (1.0) · order=undetermined (0.0) · condition=— · constraint=—</text>
-<text x="58.0" y="2371.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 C</text>
-<text x="145.0" y="2371.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=satisfied (0.0) · actor=violation (1.0) · order=undetermined (0.0) · condition=violation (0.92683)</text>
-<text x="145.0" y="2389.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">· constraint=violation (0.623876)</text>
-<text x="970.0" y="2315.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">参考问题</text>
-<text x="1050.0" y="2315.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">当前激活活动由 Customer 执行，与 v2 要求的 Phone company 执行不一致</text>
-<text x="970.0" y="2341.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#b03a2e" text-anchor="start">C 机器报警</text>
-<text x="1050.0" y="2341.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">incorrect_actor=violation/1.0；required_condition_not_enforced=violation/0.92683；</text>
-<text x="1050.0" y="2359.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">constraint_violated=violation/0.623876</text>
-<text x="970.0" y="2385.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1e8449" text-anchor="start">对应评价</text>
-<text x="1050.0" y="2385.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">found_with_reference_evidence；有证据对应=True</text>
-<text x="970.0" y="2411.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#5d6d7e" text-anchor="start">证据链</text>
-<text x="1050.0" y="2411.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">Rule action maps to Activate SIM card (sid-D80682C2-0CD4-4B60-93BA-E9C747E28950); its concrete</text>
-<text x="1050.0" y="2429.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">owner evidence is ['Customer']; required actor is the phone company. This is the fixed r10</text>
-<text x="1050.0" y="2447.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">actor-mismatch evidence. Other matched candidates are listed separately and are not attributed</text>
-<text x="1050.0" y="2465.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">to Customer.</text>
-<text x="970.0" y="2491.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1e8449" text-anchor="start">修复对照</text>
-<text x="1050.0" y="2491.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r10_activation_owner：语义有效=True，进入检测链=True，有效分母=True，排除=—；C_original=violation -&gt;</text>
-<text x="1050.0" y="2509.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">C_repaired=violation</text>
-<rect x="40.0" y="2709.0" width="1720.0" height="420.0" rx="10" fill="#ffffff" stroke="#bdc3c7" stroke-width="1"/>
-<rect x="40.0" y="2709.0" width="1720.0" height="44.0" rx="10" fill="#b9770e" stroke="none" stroke-width="1"/>
-<text x="58.0" y="2739.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="start">r11/v2 · issue_present</text>
-<text x="58.0" y="2779.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 A</text>
-<text x="145.0" y="2779.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=violation (1.0) · actor=undetermined · order=undetermined (0.0) · condition=— · constraint=—</text>
-<text x="58.0" y="2805.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 B</text>
-<text x="145.0" y="2805.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=violation (1.0) · actor=undetermined · order=undetermined (0.0) · condition=— · constraint=—</text>
-<text x="58.0" y="2831.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 C</text>
-<text x="145.0" y="2831.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=violation (1.0) · actor=undetermined · order=undetermined (0.0) · condition=undetermined ·</text>
-<text x="145.0" y="2849.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">constraint=undetermined</text>
-<text x="970.0" y="2775.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">参考问题</text>
-<text x="1050.0" y="2775.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">同意活动已存在，但位于取数与存数之后，违反规则要求的先后关系；问题性质是前置位置/顺序，而不是活动缺失</text>
-<text x="970.0" y="2801.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#b03a2e" text-anchor="start">C 机器报警</text>
-<text x="1050.0" y="2801.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing_action=violation/1.0</text>
-<text x="970.0" y="2827.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#b9770e" text-anchor="start">对应评价</text>
-<text x="1050.0" y="2827.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">machine_alarm_but_reference_correspondence_unverified；有证据对应=False</text>
-<text x="970.0" y="2853.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#5d6d7e" text-anchor="start">证据链</text>
-<text x="1050.0" y="2853.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r11 correspondence requires a positive out_of_order alarm whose mapped endpoints include consent</text>
-<text x="1050.0" y="2871.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">and request personal data. The present missing_action alarm is retained as a machine alarm but</text>
-<text x="1050.0" y="2889.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">cannot substitute for the order issue; consent activity present=True, retrieval activity</text>
-<text x="1050.0" y="2907.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">present=True.</text>
-<text x="970.0" y="2933.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1e8449" text-anchor="start">修复对照</text>
-<text x="1050.0" y="2933.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r11_consent_before_retrieval：语义有效=True，进入检测链=True，有效分母=True，排除=—；</text>
-<text x="1050.0" y="2951.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">C_original=undetermined -&gt; C_repaired=undetermined</text>
-<rect x="40.0" y="3149.0" width="1720.0" height="440.0" rx="10" fill="#ffffff" stroke="#bdc3c7" stroke-width="1"/>
-<rect x="40.0" y="3149.0" width="1720.0" height="44.0" rx="10" fill="#b9770e" stroke="none" stroke-width="1"/>
-<text x="58.0" y="3179.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="start">r13/v2 · issue_present_with_premise</text>
-<text x="58.0" y="3219.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 A</text>
-<text x="145.0" y="3219.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=undetermined (0.0) · actor=undetermined · order=undetermined (0.0) · condition=— · constraint=—</text>
-<text x="58.0" y="3245.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 B</text>
-<text x="145.0" y="3245.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=satisfied (0.0) · actor=violation (1.0) · order=undetermined (0.0) · condition=— · constraint=—</text>
-<text x="58.0" y="3271.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">组 C</text>
-<text x="145.0" y="3271.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">missing=satisfied (0.0) · actor=violation (1.0) · order=undetermined (0.0) · condition=undetermined ·</text>
-<text x="145.0" y="3289.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">constraint=undetermined</text>
-<text x="970.0" y="3215.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#17202a" text-anchor="start">参考问题</text>
-<text x="1050.0" y="3215.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">把图示连线标签作为路由条件解释时，模型门槛无法阻止欠款处于 50 到 100 欧元之间的客户继续进入后续流程</text>
-<text x="970.0" y="3241.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#b03a2e" text-anchor="start">C 机器报警</text>
-<text x="1050.0" y="3241.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">incorrect_actor=violation/1.0；prohibited_action_present=violation/0.628643</text>
-<text x="970.0" y="3267.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#b9770e" text-anchor="start">对应评价</text>
-<text x="1050.0" y="3267.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">machine_alarm_but_reference_correspondence_unverified；有证据对应=False</text>
-<text x="970.0" y="3293.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#5d6d7e" text-anchor="start">证据链</text>
-<text x="1050.0" y="3293.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">No condition/constraint alarm contains the locatable 50 EUR rule threshold, the model Debt &lt; 100</text>
-<text x="1050.0" y="3311.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">threshold, and an alarm-level mapping between them. Single numbers, isolated number</text>
-<text x="1050.0" y="3329.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">co-occurrence, and similarity-score digits are not accepted. Actor threshold text is recorded as</text>
-<text x="1050.0" y="3347.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">a field-attribution gap, not copied into condition/constraint. Other alarms are ['</text>
-<text x="1050.0" y="3365.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">incorrect_actor', 'prohibited_action_present'].</text>
-<text x="970.0" y="3391.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="bold" fill="#6c3483" text-anchor="start">修复对照</text>
-<text x="1050.0" y="3391.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r13_threshold_50：语义有效=True，进入检测链=True，有效分母=False，排除=empty_rule_condition；</text>
-<text x="1050.0" y="3409.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">C_original=undetermined -&gt; C_repaired=undetermined</text>
-<rect x="40.0" y="3609.0" width="1720.0" height="250.0" rx="10" fill="#ffffff" stroke="#bdc3c7" stroke-width="1"/>
-<text x="60.0" y="3643.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="22" font-weight="bold" fill="#17202a" text-anchor="start">逐检测项计数（不是七类总 F1）</text>
-<text x="65.0" y="3675.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#12395b" text-anchor="start">组</text>
-<text x="145.0" y="3675.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#12395b" text-anchor="start">checks</text>
-<text x="255.0" y="3675.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#12395b" text-anchor="start">violation</text>
-<text x="375.0" y="3675.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#12395b" text-anchor="start">satisfied</text>
-<text x="505.0" y="3675.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#12395b" text-anchor="start">undetermined</text>
-<text x="665.0" y="3675.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#12395b" text-anchor="start">not_applicable</text>
-<text x="830.0" y="3675.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#12395b" text-anchor="start">机器状态计数</text>
-<text x="1210.0" y="3675.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#12395b" text-anchor="start">参考问题有证据对应</text>
-<text x="1400.0" y="3675.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#12395b" text-anchor="start">报警未证实</text>
-<text x="1590.0" y="3675.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#12395b" text-anchor="start">无 positive alarm</text>
-<text x="65.0" y="3701.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">A</text>
-<text x="145.0" y="3701.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">15</text>
-<text x="255.0" y="3701.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">3</text>
-<text x="375.0" y="3701.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">0</text>
-<text x="505.0" y="3701.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">12</text>
-<text x="665.0" y="3701.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">0</text>
-<text x="830.0" y="3701.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">violation=3, undetermined=10, not_applicable=2</text>
-<text x="1210.0" y="3701.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">0</text>
-<text x="1400.0" y="3701.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">3</text>
-<text x="1590.0" y="3701.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">2</text>
-<text x="65.0" y="3727.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">B</text>
-<text x="145.0" y="3727.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">15</text>
-<text x="255.0" y="3727.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">5</text>
-<text x="375.0" y="3727.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">2</text>
-<text x="505.0" y="3727.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">8</text>
-<text x="665.0" y="3727.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">0</text>
-<text x="830.0" y="3727.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">violation=5, undetermined=8, satisfied=2</text>
-<text x="1210.0" y="3727.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">2</text>
-<text x="1400.0" y="3727.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">3</text>
-<text x="1590.0" y="3727.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">0</text>
-<text x="65.0" y="3753.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">C</text>
-<text x="145.0" y="3753.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">35</text>
-<text x="255.0" y="3753.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">10</text>
-<text x="375.0" y="3753.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">2</text>
-<text x="505.0" y="3753.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">23</text>
-<text x="665.0" y="3753.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">0</text>
-<text x="830.0" y="3753.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">violation=10, undetermined=23, satisfied=2</text>
-<text x="1210.0" y="3753.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">2</text>
-<text x="1400.0" y="3753.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">3</text>
-<text x="1590.0" y="3753.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#17202a" text-anchor="start">0</text>
-<text x="65.0" y="3835.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#5d6d7e" text-anchor="start">counts = 评价状态（empty_rule_action→undetermined）；机器状态计数保留 not_applicable 等原始公式结果；参考问题对应为证据核对结果，不是检测器类型投票。</text>
-<rect x="40.0" y="3883.0" width="1720.0" height="480.0" rx="10" fill="#ffffff" stroke="#bdc3c7" stroke-width="1"/>
-<text x="60.0" y="3917.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="22" font-weight="bold" fill="#17202a" text-anchor="start">修复对照：有效、部分/无效与不可评价</text>
-<text x="65.0" y="3949.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#17202a" text-anchor="start">修复件</text>
-<text x="460.0" y="3949.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#17202a" text-anchor="start">语义有效</text>
-<text x="580.0" y="3949.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#17202a" text-anchor="start">进入检测链</text>
-<text x="740.0" y="3949.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#17202a" text-anchor="start">有效分母</text>
-<text x="880.0" y="3949.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="bold" fill="#17202a" text-anchor="start">C_original-&gt;C_repaired</text>
-<text x="1130.0" y="3949.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#17202a" text-anchor="start">排除/限制原因</text>
-<text x="65.0" y="3975.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r8_timeout_termination</text>
-<text x="460.0" y="3975.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="580.0" y="3975.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">False</text>
-<text x="740.0" y="3975.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">False</text>
-<text x="880.0" y="3975.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">violation → violation</text>
-<text x="1130.0" y="3975.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="12" font-weight="normal" fill="#5d6d7e" text-anchor="start">repair_semantics_not_carried_by_stage1</text>
-<text x="1130.0" y="3997.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="12" font-weight="normal" fill="#873600" text-anchor="start">legacy task-scoped control: invalid scope, excluded</text>
-<text x="65.0" y="4045.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r9_add_verification</text>
-<text x="460.0" y="4045.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="580.0" y="4045.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="740.0" y="4045.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="880.0" y="4045.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">violation → violation</text>
-<text x="1130.0" y="4045.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="12" font-weight="normal" fill="#5d6d7e" text-anchor="start">—</text>
-<text x="65.0" y="4093.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r10_activation_owner</text>
-<text x="460.0" y="4093.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="580.0" y="4093.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="740.0" y="4093.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="880.0" y="4093.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">violation → violation</text>
-<text x="1130.0" y="4093.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="12" font-weight="normal" fill="#5d6d7e" text-anchor="start">—</text>
-<text x="65.0" y="4141.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r11_consent_before_retrieval</text>
-<text x="460.0" y="4141.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="580.0" y="4141.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="740.0" y="4141.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="880.0" y="4141.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">undetermined → undetermined</text>
-<text x="1130.0" y="4141.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="12" font-weight="normal" fill="#5d6d7e" text-anchor="start">—</text>
-<text x="65.0" y="4189.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">r13_threshold_50</text>
-<text x="460.0" y="4189.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="580.0" y="4189.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">True</text>
-<text x="740.0" y="4189.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">False</text>
-<text x="880.0" y="4189.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="13" font-weight="normal" fill="#17202a" text-anchor="start">undetermined → undetermined</text>
-<text x="1130.0" y="4189.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="12" font-weight="normal" fill="#5d6d7e" text-anchor="start">empty_rule_condition</text>
-<rect x="40.0" y="4387.0" width="1720.0" height="118.0" rx="10" fill="#eef2f5" stroke="#bdc3c7" stroke-width="1"/>
-<text x="60.0" y="4421.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#5d6d7e" text-anchor="start">边界：开发性单案例；不是正式 Gold，不是作者原始实验复现，不是企业验证；不合成七类总 F1。</text>
-<text x="60.0" y="4447.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#5d6d7e" text-anchor="start">B 组复用已有 repeat-01 真实 LLM 预测；重复运行只作稳定性证据，不作为新增独立样本。</text>
-<text x="60.0" y="4473.0" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="normal" fill="#5d6d7e" text-anchor="start">原始 BPMN、需求、Gold、原始预测未修改；参考判断只在评价阶段读取。</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1260" viewBox="0 0 2400 1260" role="img">
+<title>SIM onboarding: process annotations and development-case results</title>
+<desc>Source-preserving control-flow diagram styled for a research paper. Only r9 and r10 have supported reference correspondence. Other callouts describe unverified alarms or undetermined checks. The missing-activity box is an annotation, not a source process node.</desc>
+<metadata>{&quot;source_capsule_sha256&quot;: &quot;481f068ca45562d5d6c28250284ef02e91abc1ae2cc5f4e2e8373a923af7a4ab&quot;, &quot;claim_scope&quot;: &quot;development_case_study_not_formal_gold&quot;, &quot;display_group&quot;: &quot;C&quot;, &quot;layout_only&quot;: true, &quot;data_associations_omitted&quot;: true, &quot;process_nodes&quot;: [&quot;sid-2A9E6B0A-5051-4A54-ACDB-4123BCB36141&quot;, &quot;sid-4CAE720C-6B35-4636-9193-F9DDDE0B2004&quot;, &quot;sid-6B3F7867-7939-43B6-8F6E-8B8A12ECCB7C&quot;, &quot;sid-87D1789E-9525-4D33-9FF0-1FCCCAD20191&quot;, &quot;sid-9A553255-2AEA-4B43-B86D-6409071C552E&quot;, &quot;sid-9D265428-62CB-477B-B15F-7338FF62B44A&quot;, &quot;sid-B4921FBA-12CB-4B29-807E-98AFAABD0335&quot;, &quot;sid-B72CE851-C6AF-453B-B7D3-FBBA0734B833&quot;, &quot;sid-D73852AE-5932-48A8-8079-9489B97BD910&quot;, &quot;sid-D80682C2-0CD4-4B60-93BA-E9C747E28950&quot;, &quot;sid-E5495E81-F16D-4D23-9017-151D12C70E5F&quot;, &quot;sid-EC14C117-9295-4853-AEB9-A162C7F770DD&quot;, &quot;sid-1D79CAD1-08F4-411D-8275-2F343AC61332&quot;, &quot;sid-4A5668DB-EF1E-40BC-9594-264FC6DC393D&quot;, &quot;sid-4ED76348-1073-4EF8-9E43-BA0FD0DA3459&quot;, &quot;sid-51BCFD18-5D76-486F-BB6A-904C3378AB9A&quot;, &quot;sid-71D2A247-542F-4E09-926B-06CC716878DF&quot;, &quot;sid-BB48C585-DD26-4A6F-9A2F-C9195CBBF4F1&quot;, &quot;sid-F2A5FCC5-B3CE-4F63-ADE0-6CFB0DA58140&quot;, &quot;sid-F34F5D97-B41A-49C6-BB2A-186BF7B13A4F&quot;, &quot;sid-0DA99902-C027-4988-A2EB-2823F6D87794&quot;, &quot;sid-2583945D-844D-440F-B996-2D125D72CE7C&quot;, &quot;sid-5DB79A16-AE0E-4F99-9754-6D6ADB14DA79&quot;, &quot;sid-A0EC90A7-DC2C-4CC6-9590-F3BE114A2605&quot;, &quot;sid-B8D4B659-96BF-4003-A00D-7951C7E0C0BE&quot;, &quot;sid-CD9A6475-E538-413A-A94E-FE30F187DF16&quot;], &quot;sequence_flows&quot;: [&quot;sid-0FB6DEC4-F472-4489-B1D4-8B6B9CB7B393&quot;, &quot;sid-1316801C-4296-4E47-B77D-DE9583F38A19&quot;, &quot;sid-15732A1E-49C2-4545-A5AD-D827C8094482&quot;, &quot;sid-170F71F5-2566-4816-9AED-BF80FAD36CD2&quot;, &quot;sid-1D1F60B5-01D4-4577-A6BD-2776A59F4104&quot;, &quot;sid-1D9D755D-CFE0-4D42-8902-C8C4D1E2D577&quot;, &quot;sid-22A1BDB9-C4C8-45CC-AA09-EFA070656704&quot;, &quot;sid-23FBC3CC-72E2-42B7-A661-2130381E67C4&quot;, &quot;sid-2673F7BE-190B-4A29-B042-F26FE1273508&quot;, &quot;sid-2FB4D48A-21B0-4712-B539-921D0B9AF90A&quot;, &quot;sid-3A866116-0712-44D8-894E-9AC156BD68AD&quot;, &quot;sid-448F8B64-D475-4C83-B675-A38663B39E50&quot;, &quot;sid-48D92906-396A-4B76-9660-6B02561A407A&quot;, &quot;sid-516FAE46-6F3D-4F30-B88E-BA21DFDC88C8&quot;, &quot;sid-68DD057D-7D66-40BB-8250-839F6E9D59CC&quot;, &quot;sid-8A897978-076F-4C58-91C2-A82506C35F92&quot;, &quot;sid-910AED7B-8C2F-4DC4-A241-80471E267B36&quot;, &quot;sid-93CB785B-0851-4F8A-87CB-B79EFEE56691&quot;, &quot;sid-9AE7DC8B-A7B7-4D8C-9877-369E6C978F34&quot;, &quot;sid-ACA2A7F7-B0A2-4D10-85B5-052F50428721&quot;, &quot;sid-BBABD0B8-9B72-4BA1-8600-F0FAD38D0EAA&quot;, &quot;sid-D32B4C7D-B805-4BED-8AA3-33B3B1810EE1&quot;, &quot;sid-D8533572-7EC4-46D6-AFBE-C9A06E874674&quot;, &quot;sid-E888F2BE-1037-4B0C-AE98-CFABE0C44D29&quot;, &quot;sid-E965697A-165F-4586-B050-908E907A73E2&quot;, &quot;sid-ED791D16-1193-456C-8427-B34ED951774F&quot;], &quot;message_flows&quot;: [&quot;sid-401941AE-8BCE-46DA-8489-5AB71F23C242&quot;, &quot;sid-305130A3-90B4-4742-B8FB-2340194BA2BD&quot;, &quot;sid-917E6709-58C3-4767-BAD6-28D9B0723087&quot;, &quot;sid-73DDAE03-F506-4D7D-BD21-23FDBBD7DEAB&quot;, &quot;sid-C11FE551-7C06-4526-BA00-E0D2B13AD5C0&quot;, &quot;sid-39A63DDC-7C48-4E6D-8F1E-253D55A7D02D&quot;, &quot;sid-34F35AFC-6FCD-4D96-9EAE-7DE7D0BD3770&quot;, &quot;sid-16AD108F-77CB-4A4B-9B75-4D27C7C81B59&quot;, &quot;sid-06A47FE4-EC2F-4E33-8B84-5A3CF2F74003&quot;, &quot;sid-4B33689E-BFD8-4092-A3E7-E35BD78F178D&quot;, &quot;sid-95087619-281C-46A2-AE04-32CFA92DE385&quot;, &quot;sid-B932B01B-D7F9-451C-A0D9-3C7AFF93DD9F&quot;, &quot;sid-129B3F74-A085-401A-A724-C34FDCAF46AE&quot;, &quot;sid-2D7DA1DE-A940-445D-9FC0-D87B56F9F78A&quot;], &quot;repair_comparison_in_accompanying_report&quot;: [&quot;C_original&quot;, &quot;C_repaired&quot;]}</metadata>
+<defs><marker id="sequence" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#202020"/></marker><marker id="message" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="white" stroke="#515151" stroke-width="1.2"/></marker><marker id="arrow-r9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 1 L10 5 L0 9 Z" fill="#367cc0"/></marker><marker id="arrow-r10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 1 L10 5 L0 9 Z" fill="#c38b12"/></marker><marker id="arrow-r11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 1 L10 5 L0 9 Z" fill="#c8733e"/></marker><marker id="arrow-r13" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 1 L10 5 L0 9 Z" fill="#827298"/></marker><marker id="arrow-r8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 1 L10 5 L0 9 Z" fill="#668580"/></marker></defs>
+<rect x="0" y="0" width="2400" height="1260" rx="0" fill="white" stroke="none" stroke-width="1.8"/>
+<g id="participant-Customer" data-kind="participant" >
+<title>Customer</title>
+<rect x="55" y="250" width="2290" height="125" rx="0" fill="white" stroke="#202020" stroke-width="2"/>
+<polyline points="120,250 120,375" fill="none" stroke="#202020" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="95" y="312.5" font-family="Times New Roman, Liberation Serif, serif" font-size="24" fill="#202020" font-weight="normal" text-anchor="middle" transform="rotate(-90 95 312.5)">Customer</text>
+</g>
+<g id="participant-Phone-company" data-kind="participant" >
+<title>Phone company</title>
+<rect x="55" y="430" width="2290" height="410" rx="0" fill="white" stroke="#202020" stroke-width="2"/>
+<polyline points="120,430 120,840" fill="none" stroke="#202020" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="95" y="635.0" font-family="Times New Roman, Liberation Serif, serif" font-size="24" fill="#202020" font-weight="normal" text-anchor="middle" transform="rotate(-90 95 635.0)">Phone company</text>
+</g>
+<g id="participant-Another-phone-company" data-kind="participant" >
+<title>Another phone company</title>
+<rect x="55" y="880" width="2290" height="80" rx="0" fill="white" stroke="#202020" stroke-width="2"/>
+<polyline points="120,880 120,960" fill="none" stroke="#202020" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="87.5" y="905.44" font-family="Times New Roman, Liberation Serif, serif" font-size="16" fill="#202020" font-weight="normal" text-anchor="middle">Another</text>
+<text x="87.5" y="925.44" font-family="Times New Roman, Liberation Serif, serif" font-size="16" fill="#202020" font-weight="normal" text-anchor="middle">phone</text>
+<text x="87.5" y="945.44" font-family="Times New Roman, Liberation Serif, serif" font-size="16" fill="#202020" font-weight="normal" text-anchor="middle">company</text>
+</g>
+<g id="region-r9" data-kind="annotation-region" >
+<rect x="234" y="462" width="240" height="160" rx="0" fill="none" stroke="#367cc0" stroke-width="2" stroke-dasharray="8 6"/>
+</g>
+<g id="region-r10" data-kind="annotation-region" >
+<rect x="2054" y="251" width="162" height="103" rx="0" fill="none" stroke="#c38b12" stroke-width="2" stroke-dasharray="8 6"/>
+</g>
+<g id="region-r11" data-kind="annotation-region" >
+<rect x="1403" y="632" width="338" height="110" rx="0" fill="none" stroke="#c8733e" stroke-width="2" stroke-dasharray="8 6"/>
+</g>
+<g id="region-r13" data-kind="annotation-region" >
+<rect x="479" y="478" width="56" height="85" rx="0" fill="none" stroke="#827298" stroke-width="2" stroke-dasharray="8 6"/>
+</g>
+<g id="sid-0FB6DEC4-F472-4489-B1D4-8B6B9CB7B393" data-kind="sequence-flow" data-source="sid-B72CE851-C6AF-453B-B7D3-FBBA0734B833" data-target="sid-5DB79A16-AE0E-4F99-9754-6D6ADB14DA79">
+<polyline points="1005,520.0 1060,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-1316801C-4296-4E47-B77D-DE9583F38A19" data-kind="sequence-flow" data-source="sid-D80682C2-0CD4-4B60-93BA-E9C747E28950" data-target="sid-BB48C585-DD26-4A6F-9A2F-C9195CBBF4F1">
+<polyline points="2200,302.0 2258,302.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-15732A1E-49C2-4545-A5AD-D827C8094482" data-kind="sequence-flow" data-source="sid-6B3F7867-7939-43B6-8F6E-8B8A12ECCB7C" data-target="sid-CD9A6475-E538-413A-A94E-FE30F187DF16">
+<polyline points="1272,520.0 1311,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-170F71F5-2566-4816-9AED-BF80FAD36CD2" data-kind="sequence-flow" data-source="sid-E5495E81-F16D-4D23-9017-151D12C70E5F" data-target="sid-F34F5D97-B41A-49C6-BB2A-186BF7B13A4F">
+<polyline points="1534,520.0 1588,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-1D1F60B5-01D4-4577-A6BD-2776A59F4104" data-kind="sequence-flow" data-source="sid-71D2A247-542F-4E09-926B-06CC716878DF" data-target="sid-D80682C2-0CD4-4B60-93BA-E9C747E28950">
+<polyline points="1952,302.0 2070,302.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-1D9D755D-CFE0-4D42-8902-C8C4D1E2D577" data-kind="sequence-flow" data-source="sid-4CAE720C-6B35-4636-9193-F9DDDE0B2004" data-target="sid-A0EC90A7-DC2C-4CC6-9590-F3BE114A2605">
+<polyline points="724,520.0 762,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-22A1BDB9-C4C8-45CC-AA09-EFA070656704" data-kind="sequence-flow" data-source="sid-CD9A6475-E538-413A-A94E-FE30F187DF16" data-target="sid-E5495E81-F16D-4D23-9017-151D12C70E5F">
+<polyline points="1355,520.0 1410,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-23FBC3CC-72E2-42B7-A661-2130381E67C4" data-kind="sequence-flow" data-source="sid-2A9E6B0A-5051-4A54-ACDB-4123BCB36141" data-target="sid-0DA99902-C027-4988-A2EB-2823F6D87794">
+<polyline points="1038,686.0 1060,686.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-2673F7BE-190B-4A29-B042-F26FE1273508" data-kind="sequence-flow" data-source="sid-87D1789E-9525-4D33-9FF0-1FCCCAD20191" data-target="sid-4A5668DB-EF1E-40BC-9594-264FC6DC393D">
+<polyline points="374,520.0 405,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-2FB4D48A-21B0-4712-B539-921D0B9AF90A" data-kind="sequence-flow" data-source="sid-D73852AE-5932-48A8-8079-9489B97BD910" data-target="sid-1D79CAD1-08F4-411D-8275-2F343AC61332">
+<polyline points="2010,520.0 2088,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-3A866116-0712-44D8-894E-9AC156BD68AD" data-kind="sequence-flow" data-source="sid-5DB79A16-AE0E-4F99-9754-6D6ADB14DA79" data-target="sid-6B3F7867-7939-43B6-8F6E-8B8A12ECCB7C">
+<polyline points="1104,520.0 1146,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-448F8B64-D475-4C83-B675-A38663B39E50" data-kind="sequence-flow" data-source="sid-9A553255-2AEA-4B43-B86D-6409071C552E" data-target="sid-4ED76348-1073-4EF8-9E43-BA0FD0DA3459">
+<polyline points="1298,754.0 1348,754.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-48D92906-396A-4B76-9660-6B02561A407A" data-kind="sequence-flow" data-source="sid-CD9A6475-E538-413A-A94E-FE30F187DF16" data-target="sid-EC14C117-9295-4853-AEB9-A162C7F770DD">
+<polyline points="1333.0,542 1333,686 1420,686.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-516FAE46-6F3D-4F30-B88E-BA21DFDC88C8" data-kind="sequence-flow" data-source="sid-EC14C117-9295-4853-AEB9-A162C7F770DD" data-target="sid-9D265428-62CB-477B-B15F-7338FF62B44A">
+<polyline points="1544,686.0 1595,686.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-68DD057D-7D66-40BB-8250-839F6E9D59CC" data-kind="sequence-flow" data-source="sid-F2A5FCC5-B3CE-4F63-ADE0-6CFB0DA58140" data-target="sid-87D1789E-9525-4D33-9FF0-1FCCCAD20191">
+<polyline points="202,520.0 250,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-8A897978-076F-4C58-91C2-A82506C35F92" data-kind="sequence-flow" data-source="sid-A0EC90A7-DC2C-4CC6-9590-F3BE114A2605" data-target="sid-B72CE851-C6AF-453B-B7D3-FBBA0734B833">
+<title>Not requested</title>
+<polyline points="806,520.0 875,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+<text x="839" y="475.78" font-family="Times New Roman, Liberation Serif, serif" font-size="17" fill="#202020" font-weight="normal" text-anchor="middle">Not</text>
+<text x="839" y="495.78" font-family="Times New Roman, Liberation Serif, serif" font-size="17" fill="#202020" font-weight="normal" text-anchor="middle">requested</text>
+</g>
+<g id="sid-910AED7B-8C2F-4DC4-A241-80471E267B36" data-kind="sequence-flow" data-source="sid-A0EC90A7-DC2C-4CC6-9590-F3BE114A2605" data-target="sid-B4921FBA-12CB-4B29-807E-98AFAABD0335">
+<title>Requested</title>
+<polyline points="784.0,542 784,615 788,615 788.0,650" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+<text x="798" y="603" font-family="Times New Roman, Liberation Serif, serif" font-size="18" fill="#202020" font-weight="normal" text-anchor="start">Requested</text>
+</g>
+<g id="sid-93CB785B-0851-4F8A-87CB-B79EFEE56691" data-kind="sequence-flow" data-source="sid-9D265428-62CB-477B-B15F-7338FF62B44A" data-target="sid-2583945D-844D-440F-B996-2D125D72CE7C">
+<polyline points="1719,686.0 1790,686 1790.0,542" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-9AE7DC8B-A7B7-4D8C-9877-369E6C978F34" data-kind="sequence-flow" data-source="sid-B4921FBA-12CB-4B29-807E-98AFAABD0335" data-target="sid-2A9E6B0A-5051-4A54-ACDB-4123BCB36141">
+<polyline points="848,686.0 888,686.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-ACA2A7F7-B0A2-4D10-85B5-052F50428721" data-kind="sequence-flow" data-source="sid-0DA99902-C027-4988-A2EB-2823F6D87794" data-target="sid-5DB79A16-AE0E-4F99-9754-6D6ADB14DA79">
+<title>Granted</title>
+<polyline points="1082.0,664 1082.0,542" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+<text x="1094" y="610" font-family="Times New Roman, Liberation Serif, serif" font-size="18" fill="#202020" font-weight="normal" text-anchor="start">Granted</text>
+</g>
+<g id="sid-BBABD0B8-9B72-4BA1-8600-F0FAD38D0EAA" data-kind="sequence-flow" data-source="sid-F34F5D97-B41A-49C6-BB2A-186BF7B13A4F" data-target="sid-2583945D-844D-440F-B996-2D125D72CE7C">
+<polyline points="1632,520.0 1768,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-D32B4C7D-B805-4BED-8AA3-33B3B1810EE1" data-kind="sequence-flow" data-source="sid-0DA99902-C027-4988-A2EB-2823F6D87794" data-target="sid-9A553255-2AEA-4B43-B86D-6409071C552E">
+<polyline points="1104,686.0 1125,686 1125,754 1160,754.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-D8533572-7EC4-46D6-AFBE-C9A06E874674" data-kind="sequence-flow" data-source="sid-2583945D-844D-440F-B996-2D125D72CE7C" data-target="sid-D73852AE-5932-48A8-8079-9489B97BD910">
+<polyline points="1812,520.0 1880,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-E888F2BE-1037-4B0C-AE98-CFABE0C44D29" data-kind="sequence-flow" data-source="sid-B8D4B659-96BF-4003-A00D-7951C7E0C0BE" data-target="sid-4CAE720C-6B35-4636-9193-F9DDDE0B2004">
+<title>Debt &lt; 100</title>
+<polyline points="527,520.0 594,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+<rect x="528" y="446" width="133" height="28" rx="0" fill="white" stroke="none" stroke-width="1.8"/>
+<text x="594.5" y="467" font-family="Times New Roman, Liberation Serif, serif" font-size="21" fill="#827298" font-weight="normal" text-anchor="middle">Debt &lt; 100</text>
+</g>
+<g id="sid-E965697A-165F-4586-B050-908E907A73E2" data-kind="sequence-flow" data-source="sid-4A5668DB-EF1E-40BC-9594-264FC6DC393D" data-target="sid-B8D4B659-96BF-4003-A00D-7951C7E0C0BE">
+<polyline points="449,520.0 483,520.0" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-ED791D16-1193-456C-8427-B34ED951774F" data-kind="sequence-flow" data-source="sid-B8D4B659-96BF-4003-A00D-7951C7E0C0BE" data-target="sid-51BCFD18-5D76-486F-BB6A-904C3378AB9A">
+<polyline points="505.0,542 505.0,678" fill="none" stroke="#202020" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#sequence)"/>
+</g>
+<g id="sid-401941AE-8BCE-46DA-8489-5AB71F23C242" data-kind="message-flow" data-source="sid-87D1789E-9525-4D33-9FF0-1FCCCAD20191" data-target="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B">
+<title>Request</title>
+<polyline points="312.0,482 312.0,375" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="312.0" cy="482" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+<text x="300.0" y="408" font-family="Times New Roman, Liberation Serif, serif" font-size="17" fill="#202020" font-weight="normal" text-anchor="end">Request</text>
+</g>
+<g id="sid-305130A3-90B4-4742-B8FB-2340194BA2BD" data-kind="message-flow" data-source="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B" data-target="sid-4A5668DB-EF1E-40BC-9594-264FC6DC393D">
+<title>Send personal data</title>
+<polyline points="427.0,375 427.0,498" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="427.0" cy="375" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+<text x="415.0" y="402" font-family="Times New Roman, Liberation Serif, serif" font-size="17" fill="#202020" font-weight="normal" text-anchor="end">Send personal</text>
+<text x="415.0" y="422" font-family="Times New Roman, Liberation Serif, serif" font-size="17" fill="#202020" font-weight="normal" text-anchor="end">data</text>
+</g>
+<g id="sid-917E6709-58C3-4767-BAD6-28D9B0723087" data-kind="message-flow" data-source="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B" data-target="sid-4CAE720C-6B35-4636-9193-F9DDDE0B2004">
+<polyline points="650.0,375 650.0,482" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="650.0" cy="375" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+</g>
+<g id="sid-73DDAE03-F506-4D7D-BD21-23FDBBD7DEAB" data-kind="message-flow" data-source="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B" data-target="sid-F2A5FCC5-B3CE-4F63-ADE0-6CFB0DA58140">
+<polyline points="180.0,375 180.0,498" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="180.0" cy="375" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+</g>
+<g id="sid-C11FE551-7C06-4526-BA00-E0D2B13AD5C0" data-kind="message-flow" data-source="sid-2A9E6B0A-5051-4A54-ACDB-4123BCB36141" data-target="sid-7B97FBE3-52B7-4415-B940-62D8E9EB429D">
+<polyline points="972.0,722 972.0,880" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="972.0" cy="722" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+</g>
+<g id="sid-39A63DDC-7C48-4E6D-8F1E-253D55A7D02D" data-kind="message-flow" data-source="sid-7B97FBE3-52B7-4415-B940-62D8E9EB429D" data-target="sid-2A9E6B0A-5051-4A54-ACDB-4123BCB36141">
+<polyline points="954.0,880 954.0,722" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="954.0" cy="880" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+</g>
+<g id="sid-34F35AFC-6FCD-4D96-9EAE-7DE7D0BD3770" data-kind="message-flow" data-source="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B" data-target="sid-B72CE851-C6AF-453B-B7D3-FBBA0734B833">
+<polyline points="931.0,375 931.0,482" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="931.0" cy="375" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+</g>
+<g id="sid-16AD108F-77CB-4A4B-9B75-4D27C7C81B59" data-kind="message-flow" data-source="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B" data-target="sid-6B3F7867-7939-43B6-8F6E-8B8A12ECCB7C">
+<polyline points="1200.0,375 1200.0,482" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="1200.0" cy="375" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+</g>
+<g id="sid-06A47FE4-EC2F-4E33-8B84-5A3CF2F74003" data-kind="message-flow" data-source="sid-6B3F7867-7939-43B6-8F6E-8B8A12ECCB7C" data-target="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B">
+<polyline points="1218.0,482 1218.0,375" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="1218.0" cy="482" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+</g>
+<g id="sid-4B33689E-BFD8-4092-A3E7-E35BD78F178D" data-kind="message-flow" data-source="sid-E5495E81-F16D-4D23-9017-151D12C70E5F" data-target="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B">
+<title>Request</title>
+<polyline points="1472.0,482 1472.0,375" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="1472.0" cy="482" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+<text x="1484.0" y="410" font-family="Times New Roman, Liberation Serif, serif" font-size="17" fill="#202020" font-weight="normal" text-anchor="start">Request</text>
+</g>
+<g id="sid-95087619-281C-46A2-AE04-32CFA92DE385" data-kind="message-flow" data-source="sid-4CAE720C-6B35-4636-9193-F9DDDE0B2004" data-target="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B">
+<polyline points="668.0,482 668.0,375" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="668.0" cy="482" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+</g>
+<g id="sid-B932B01B-D7F9-451C-A0D9-3C7AFF93DD9F" data-kind="message-flow" data-source="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B" data-target="sid-F34F5D97-B41A-49C6-BB2A-186BF7B13A4F">
+<title>Payment</title>
+<polyline points="1610.0,375 1610.0,498" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="1610.0" cy="375" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+<text x="1622.0" y="410" font-family="Times New Roman, Liberation Serif, serif" font-size="17" fill="#202020" font-weight="normal" text-anchor="start">Payment</text>
+</g>
+<g id="sid-129B3F74-A085-401A-A724-C34FDCAF46AE" data-kind="message-flow" data-source="sid-B72CE851-C6AF-453B-B7D3-FBBA0734B833" data-target="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B">
+<polyline points="949.0,482 949.0,375" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="949.0" cy="482" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+</g>
+<g id="sid-2D7DA1DE-A940-445D-9FC0-D87B56F9F78A" data-kind="message-flow" data-source="sid-D73852AE-5932-48A8-8079-9489B97BD910" data-target="sid-F2B6DFA1-DAF3-4A51-BEF1-B9792CC43F9B">
+<polyline points="1945.0,482 1945.0,375" fill="none" stroke="#515151" stroke-width="1.25" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#message)"/>
+<circle cx="1945.0" cy="482" r="2.6" fill="white" stroke="#202020" stroke-width="1.1"/>
+</g>
+<g id="sid-2A9E6B0A-5051-4A54-ACDB-4123BCB36141" data-kind="process-node" data-bpmn-type="task">
+<title>Ask portability third company</title>
+<rect x="888" y="650" width="150" height="72" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="963.0" y="680.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Ask portability</text>
+<text x="963.0" y="705.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">third company</text>
+</g>
+<g id="sid-4CAE720C-6B35-4636-9193-F9DDDE0B2004" data-kind="process-node" data-bpmn-type="task">
+<title>Ask portability</title>
+<rect x="594" y="482" width="130" height="76" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="659.0" y="514.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Ask</text>
+<text x="659.0" y="539.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">portability</text>
+</g>
+<g id="sid-6B3F7867-7939-43B6-8F6E-8B8A12ECCB7C" data-kind="process-node" data-bpmn-type="task">
+<title>Sign contract</title>
+<rect x="1146" y="482" width="126" height="76" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="1209.0" y="527.48" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Sign contract</text>
+</g>
+<g id="sid-87D1789E-9525-4D33-9FF0-1FCCCAD20191" data-kind="process-node" data-bpmn-type="task">
+<title>Request personal data</title>
+<rect x="250" y="482" width="124" height="76" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="312.0" y="514.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Request</text>
+<text x="312.0" y="539.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">personal data</text>
+</g>
+<g id="sid-9A553255-2AEA-4B43-B86D-6409071C552E" data-kind="process-node" data-bpmn-type="task">
+<title>Delete personal data</title>
+<rect x="1160" y="718" width="138" height="72" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="1229.0" y="748.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Delete</text>
+<text x="1229.0" y="773.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">personal data</text>
+</g>
+<g id="sid-9D265428-62CB-477B-B15F-7338FF62B44A" data-kind="process-node" data-bpmn-type="task">
+<title>Ask for consent</title>
+<rect x="1595" y="650" width="124" height="72" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="1657.0" y="680.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Ask for</text>
+<text x="1657.0" y="705.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">consent</text>
+</g>
+<g id="sid-B4921FBA-12CB-4B29-807E-98AFAABD0335" data-kind="process-node" data-bpmn-type="task">
+<title>Ask old number</title>
+<rect x="728" y="650" width="120" height="72" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="788.0" y="680.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Ask</text>
+<text x="788.0" y="705.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">old number</text>
+</g>
+<g id="sid-B72CE851-C6AF-453B-B7D3-FBBA0734B833" data-kind="process-node" data-bpmn-type="task">
+<title>Assign new number</title>
+<rect x="875" y="482" width="130" height="76" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="940.0" y="514.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Assign</text>
+<text x="940.0" y="539.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">new number</text>
+</g>
+<g id="sid-D73852AE-5932-48A8-8079-9489B97BD910" data-kind="process-node" data-bpmn-type="task">
+<title>Send SIM card</title>
+<rect x="1880" y="482" width="130" height="76" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="1945.0" y="514.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Send</text>
+<text x="1945.0" y="539.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">SIM card</text>
+</g>
+<g id="sid-D80682C2-0CD4-4B60-93BA-E9C747E28950" data-kind="process-node" data-bpmn-type="task">
+<title>Activate SIM card</title>
+<rect x="2070" y="266" width="130" height="72" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="2135.0" y="296.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Activate</text>
+<text x="2135.0" y="321.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">SIM card</text>
+</g>
+<g id="sid-E5495E81-F16D-4D23-9017-151D12C70E5F" data-kind="process-node" data-bpmn-type="task">
+<title>Request payment</title>
+<rect x="1410" y="482" width="124" height="76" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="1472.0" y="514.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Request</text>
+<text x="1472.0" y="539.98" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">payment</text>
+</g>
+<g id="sid-EC14C117-9295-4853-AEB9-A162C7F770DD" data-kind="process-node" data-bpmn-type="subProcess">
+<title>Store Data</title>
+<rect x="1420" y="650" width="124" height="72" rx="12" fill="white" stroke="#202020" stroke-width="1.7"/>
+<text x="1482.0" y="693.48" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#202020" font-weight="normal" text-anchor="middle">Store Data</text>
+</g>
+<g id="sid-1D79CAD1-08F4-411D-8275-2F343AC61332" data-kind="process-node" data-bpmn-type="endEvent">
+<title>endEvent</title>
+<circle cx="2110.0" cy="520.0" r="21" fill="white" stroke="#202020" stroke-width="4"/>
+</g>
+<g id="sid-4A5668DB-EF1E-40BC-9594-264FC6DC393D" data-kind="process-node" data-bpmn-type="intermediateCatchEvent">
+<title>intermediateCatchEvent</title>
+<circle cx="427.0" cy="520.0" r="21" fill="white" stroke="#202020" stroke-width="1.8"/>
+<circle cx="427.0" cy="520.0" r="17.2" fill="white" stroke="#202020" stroke-width="1.1"/>
+<rect x="415.0" y="512.0" width="24" height="16" rx="0" fill="white" stroke="#202020" stroke-width="1.2"/>
+<polyline points="415.0,512.0 427.0,521.0 439.0,512.0" fill="none" stroke="#202020" stroke-width="1.1" stroke-linejoin="round"/>
+<text x="415.0" y="581.46" font-family="Times New Roman, Liberation Serif, serif" font-size="19" fill="#202020" font-weight="normal" text-anchor="middle">Personal data</text>
+<text x="415.0" y="603.46" font-family="Times New Roman, Liberation Serif, serif" font-size="19" fill="#202020" font-weight="normal" text-anchor="middle">received</text>
+</g>
+<g id="sid-4ED76348-1073-4EF8-9E43-BA0FD0DA3459" data-kind="process-node" data-bpmn-type="endEvent">
+<title>endEvent</title>
+<circle cx="1370.0" cy="754.0" r="21" fill="white" stroke="#202020" stroke-width="4"/>
+</g>
+<g id="sid-51BCFD18-5D76-486F-BB6A-904C3378AB9A" data-kind="process-node" data-bpmn-type="endEvent">
+<title>endEvent</title>
+<circle cx="505.0" cy="700.0" r="21" fill="white" stroke="#202020" stroke-width="4"/>
+</g>
+<g id="sid-71D2A247-542F-4E09-926B-06CC716878DF" data-kind="process-node" data-bpmn-type="startEvent">
+<title>Receive SIM card</title>
+<circle cx="1930.0" cy="302.0" r="21" fill="white" stroke="#202020" stroke-width="1.8"/>
+<rect x="1918.0" y="294.0" width="24" height="16" rx="0" fill="white" stroke="#202020" stroke-width="1.2"/>
+<polyline points="1918.0,294.0 1930.0,303.0 1942.0,294.0" fill="none" stroke="#202020" stroke-width="1.1" stroke-linejoin="round"/>
+<text x="1930.0" y="345.46" font-family="Times New Roman, Liberation Serif, serif" font-size="19" fill="#202020" font-weight="normal" text-anchor="middle">Receive</text>
+<text x="1930.0" y="367.46" font-family="Times New Roman, Liberation Serif, serif" font-size="19" fill="#202020" font-weight="normal" text-anchor="middle">SIM card</text>
+</g>
+<g id="sid-BB48C585-DD26-4A6F-9A2F-C9195CBBF4F1" data-kind="process-node" data-bpmn-type="endEvent">
+<title>endEvent</title>
+<circle cx="2280.0" cy="302.0" r="21" fill="white" stroke="#202020" stroke-width="4"/>
+</g>
+<g id="sid-F2A5FCC5-B3CE-4F63-ADE0-6CFB0DA58140" data-kind="process-node" data-bpmn-type="startEvent">
+<title>New client acquired</title>
+<circle cx="180.0" cy="520.0" r="21" fill="white" stroke="#202020" stroke-width="1.8"/>
+<rect x="168.0" y="512.0" width="24" height="16" rx="0" fill="white" stroke="#202020" stroke-width="1.2"/>
+<polyline points="168.0,512.0 180.0,521.0 192.0,512.0" fill="none" stroke="#202020" stroke-width="1.1" stroke-linejoin="round"/>
+<text x="180.0" y="563.46" font-family="Times New Roman, Liberation Serif, serif" font-size="19" fill="#202020" font-weight="normal" text-anchor="middle">New client</text>
+<text x="180.0" y="585.46" font-family="Times New Roman, Liberation Serif, serif" font-size="19" fill="#202020" font-weight="normal" text-anchor="middle">acquired</text>
+</g>
+<g id="sid-F34F5D97-B41A-49C6-BB2A-186BF7B13A4F" data-kind="process-node" data-bpmn-type="intermediateCatchEvent">
+<title>Payment received</title>
+<circle cx="1610.0" cy="520.0" r="21" fill="white" stroke="#202020" stroke-width="1.8"/>
+<circle cx="1610.0" cy="520.0" r="17.2" fill="white" stroke="#202020" stroke-width="1.1"/>
+<rect x="1598.0" y="512.0" width="24" height="16" rx="0" fill="white" stroke="#202020" stroke-width="1.2"/>
+<polyline points="1598.0,512.0 1610.0,521.0 1622.0,512.0" fill="none" stroke="#202020" stroke-width="1.1" stroke-linejoin="round"/>
+<text x="1610.0" y="563.46" font-family="Times New Roman, Liberation Serif, serif" font-size="19" fill="#202020" font-weight="normal" text-anchor="middle">Payment</text>
+<text x="1610.0" y="585.46" font-family="Times New Roman, Liberation Serif, serif" font-size="19" fill="#202020" font-weight="normal" text-anchor="middle">received</text>
+</g>
+<g id="sid-0DA99902-C027-4988-A2EB-2823F6D87794" data-kind="process-node" data-bpmn-type="exclusiveGateway">
+<title>exclusiveGateway</title>
+<polygon points="1082.0,664 1104,686.0 1082.0,708 1060,686.0" fill="white" stroke="#202020" stroke-width="1.8"/>
+<polyline points="1074.0,678.0 1090.0,694.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1074.0,694.0 1090.0,678.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<g id="sid-2583945D-844D-440F-B996-2D125D72CE7C" data-kind="process-node" data-bpmn-type="parallelGateway">
+<title>parallelGateway</title>
+<polygon points="1790.0,498 1812,520.0 1790.0,542 1768,520.0" fill="white" stroke="#202020" stroke-width="1.8"/>
+<polyline points="1780.0,520.0 1800.0,520.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1790.0,510.0 1790.0,530.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<g id="sid-5DB79A16-AE0E-4F99-9754-6D6ADB14DA79" data-kind="process-node" data-bpmn-type="exclusiveGateway">
+<title>exclusiveGateway</title>
+<polygon points="1082.0,498 1104,520.0 1082.0,542 1060,520.0" fill="white" stroke="#202020" stroke-width="1.8"/>
+<polyline points="1074.0,512.0 1090.0,528.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1074.0,528.0 1090.0,512.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<g id="sid-A0EC90A7-DC2C-4CC6-9590-F3BE114A2605" data-kind="process-node" data-bpmn-type="exclusiveGateway">
+<title>exclusiveGateway</title>
+<polygon points="784.0,498 806,520.0 784.0,542 762,520.0" fill="white" stroke="#202020" stroke-width="1.8"/>
+<polyline points="776.0,512.0 792.0,528.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="776.0,528.0 792.0,512.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<g id="sid-B8D4B659-96BF-4003-A00D-7951C7E0C0BE" data-kind="process-node" data-bpmn-type="exclusiveGateway">
+<title>exclusiveGateway</title>
+<polygon points="505.0,498 527,520.0 505.0,542 483,520.0" fill="white" stroke="#202020" stroke-width="1.8"/>
+<polyline points="497.0,512.0 513.0,528.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="497.0,528.0 513.0,512.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<g id="sid-CD9A6475-E538-413A-A94E-FE30F187DF16" data-kind="process-node" data-bpmn-type="parallelGateway">
+<title>parallelGateway</title>
+<polygon points="1333.0,498 1355,520.0 1333.0,542 1311,520.0" fill="white" stroke="#202020" stroke-width="1.8"/>
+<polyline points="1323.0,520.0 1343.0,520.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1333.0,510.0 1333.0,530.0" fill="none" stroke="#202020" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<g id="missing-activity-r9" data-kind="annotation-placeholder" >
+<title>缺失活动（模型中不存在）</title>
+<rect x="252" y="632" width="215" height="72" rx="9" fill="#eaf3fc" stroke="#367cc0" stroke-width="1.8" stroke-dasharray="7 5"/>
+<text x="359.5" y="658" font-family="Times New Roman, Liberation Serif, serif" font-size="22" fill="#367cc0" font-weight="bold" text-anchor="middle">Missing activity</text>
+<text x="359.5" y="686" font-family="Times New Roman, Liberation Serif, serif" font-size="21" fill="#202020" font-weight="normal" text-anchor="middle">Verify personal data</text>
+<polyline points="359.5,622 359.5,632" fill="none" stroke="#367cc0" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="4 4"/>
+</g>
+<g id="scope-r8" data-kind="annotation-scope" >
+<polyline points="65,846 65,853 2335,853 2335,846" fill="none" stroke="#668580" stroke-width="1.5" stroke-linejoin="round"/>
+</g>
+<g id="leader-r9" data-kind="annotation-leader" >
+<polyline points="390,204 390,229 215,229 215,490 234,490" fill="none" stroke="#367cc0" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#arrow-r9)"/>
+</g>
+<g id="leader-r13" data-kind="annotation-leader" >
+<polyline points="920,204 920,227 505,227 505,478" fill="none" stroke="#827298" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#arrow-r13)"/>
+</g>
+<g id="leader-r10" data-kind="annotation-leader" >
+<polyline points="2135,204 2135,251" fill="none" stroke="#c38b12" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#arrow-r10)"/>
+</g>
+<g id="leader-r11" data-kind="annotation-leader" >
+<polyline points="1800,1000 1800,980 1752,980 1752,755 1670,755 1670,742" fill="none" stroke="#c8733e" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#arrow-r11)"/>
+</g>
+<g id="leader-r8" data-kind="annotation-leader" >
+<polyline points="440,1000 440,853" fill="none" stroke="#668580" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#arrow-r8)"/>
+</g>
+<g id="annotation-r9" data-kind="annotation" data-correspondence="true">
+<rect x="130" y="32" width="520" height="172" rx="18" fill="#eaf3fc" stroke="#367cc0" stroke-width="2"/>
+<text x="148" y="67" font-family="Times New Roman, Liberation Serif, serif" font-size="27" fill="#202020" font-weight="bold" text-anchor="start">r9/v2 | Missing action</text>
+<text x="148" y="104" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">Expected: verify personal-data correctness.</text>
+<text x="148" y="135" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">C alarm: violation.</text>
+<text x="148" y="166" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">Reference correspondence: supported.</text>
+</g>
+<g id="annotation-r13" data-kind="annotation" data-correspondence="false">
+<rect x="705" y="32" width="620" height="172" rx="18" fill="#f3eff8" stroke="#827298" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="723" y="67" font-family="Times New Roman, Liberation Serif, serif" font-size="27" fill="#202020" font-weight="bold" text-anchor="start">r13/v2 | Debt threshold</text>
+<text x="723" y="104" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">Rule: debt &gt; 50 EUR; model: Debt &lt; 100.</text>
+<text x="723" y="135" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">C condition / constraint: undetermined / undetermined.</text>
+<text x="723" y="166" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">Reference correspondence: not established.</text>
+</g>
+<g id="annotation-r10" data-kind="annotation" data-correspondence="true">
+<rect x="1700" y="32" width="620" height="172" rx="18" fill="#fff5d9" stroke="#c38b12" stroke-width="2"/>
+<text x="1718" y="67" font-family="Times New Roman, Liberation Serif, serif" font-size="27" fill="#202020" font-weight="bold" text-anchor="start">r10/v2 | Incorrect actor</text>
+<text x="1718" y="104" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">Required: Phone company; actual: Customer.</text>
+<text x="1718" y="135" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">C alarm: violation.</text>
+<text x="1718" y="166" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">Reference correspondence: supported.</text>
+</g>
+<g id="annotation-r8" data-kind="annotation" data-correspondence="false">
+<rect x="140" y="1000" width="710" height="172" rx="18" fill="#eef5f3" stroke="#668580" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="158" y="1035" font-family="Times New Roman, Liberation Serif, serif" font-size="27" fill="#202020" font-weight="bold" text-anchor="start">r8/v2 | Process timeout</text>
+<text x="158" y="1072" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">Rule: terminate the process after 30 days.</text>
+<text x="158" y="1103" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">C alarms: 3; reference correspondence: not established.</text>
+<text x="158" y="1134" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">Scope: the entire phone-company process.</text>
+</g>
+<g id="annotation-r11" data-kind="annotation" data-correspondence="false">
+<rect x="1330" y="1000" width="990" height="172" rx="18" fill="#fff0e6" stroke="#c8733e" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="1348" y="1035" font-family="Times New Roman, Liberation Serif, serif" font-size="27" fill="#202020" font-weight="bold" text-anchor="start">r11/v2 | Out-of-order execution</text>
+<text x="1348" y="1072" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">Required: consent before personal-data retrieval.</text>
+<text x="1348" y="1103" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">C order: undetermined; missing-action alarm: violation.</text>
+<text x="1348" y="1134" font-family="Times New Roman, Liberation Serif, serif" font-size="23" fill="#202020" font-weight="normal" text-anchor="start">Reference correspondence: not established.</text>
+</g>
+<g id="figure-caption" data-kind="caption" >
+<text x="55" y="1207" font-family="Times New Roman, Liberation Serif, serif" font-size="21" fill="#555555" font-weight="normal" text-anchor="start">Black arrows: sequence flow. Dashed black arrows: messages. Colored outlines and leaders: annotations. Data associations omitted.</text>
+<text x="55" y="1238" font-family="Times New Roman, Liberation Serif, serif" font-size="21" fill="#555555" font-weight="normal" text-anchor="start">Group C shown (REPAIR-V2). Supported reference issues: A=0, B=2, C=2 of five rules. Development case; full A/B/C results in the accompanying table.</text>
+</g>
 </svg>
